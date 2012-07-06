@@ -4,7 +4,6 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
-import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.block.Block;
@@ -48,6 +47,7 @@ public class Schematic {
     public void buildInnerTARDIS(String[][][] s, Player p, Location l, Constants.COMPASS d) {
         int level, row, col, id, x = 0, y, z = 0, startx = 0, starty = 15, startz = 0, resetx = 0, resetz = 0, cx = 0, cy = 0, cz = 0, rid = 0, multiplier = 1;
         byte data = 0x0;
+        short damage = 0;
         String tmp, replacedBlocks = "";
         World world = l.getWorld();
         // calculate startx, starty, startz
@@ -344,12 +344,14 @@ public class Schematic {
                     System.err.println("Could not convert to number");
                 }
                 switch (rid) {
-                    case 16: rid = 263; break;
-                    case 56: rid = 264; break;
-                    case 73: rid = 331; multiplier = 4; break;
+                    case 16: rid = 263; break; // coal
+                    case 21: rid = 351; multiplier = 4; damage = 4; break; // lapis
+                    case 56: rid = 264; break; // diamond
+                    case 73: rid = 331; multiplier = 4; break; // redstone
                 }
-                chestInv.addItem(new ItemStack(rid,multiplier));
+                chestInv.addItem(new ItemStack(rid,multiplier,damage));
                 multiplier = 1; // reset multiplier
+                damage = 0; // reset damage
             }
         }
     }

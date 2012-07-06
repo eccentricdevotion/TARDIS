@@ -1,5 +1,5 @@
 author: eccentric_nz
-description: A plugin for all Doctor Who fans - create and use a TARDIS! Teleport to random destinations, fight randomly spawning monsters - it's bigger on the inside!
+description: A plugin for all Doctor Who fans - create and use a TARDIS! Teleport to random destinations, fight randomly spawning monsters, bonus chests - it's bigger on the inside!
 main: me.eccentric_nz.plugins.TARDIS.TARDIS
 name: TARDIS
 startup: postworld
@@ -18,6 +18,7 @@ permissions:
       TARDIS.timetravel: true
       TARDIS.list: true
       TARDIS.enter: true
+      TARDIS.find: true
     default: op
   TARDIS.create:
     description: Allow players to create a TARDIS.
@@ -33,6 +34,9 @@ permissions:
     default: op
   TARDIS.enter:
     description: Allow players to enter a TARDIS.
+    default: op
+  TARDIS.find:
+    description: Allow players to find their TARDIS.
     default: op
   TARDIS.help:
     description: Allow players to view TARDIS help pages.
@@ -59,6 +63,11 @@ commands:
       description: List saved time travel locations.
       usage: /<command> list
       permission: TARDIS.list
+      permission-message: You don't have the permission <permission> to use this command
+    find:
+      description: Shows you the location of your TARDIS.
+      usage: /<command> find
+      permission: TARDIS.find
       permission-message: You don't have the permission <permission> to use this command
     admin:
       description: Set TARDIS configuration options.
