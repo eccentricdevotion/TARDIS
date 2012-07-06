@@ -50,7 +50,7 @@ public class TARDISexecutor implements CommandExecutor {
                 return true;
             }
             // the command list - first argument MUST appear here!
-            if (!args[0].equalsIgnoreCase("create") && !args[0].equalsIgnoreCase("timetravel") && !args[0].equalsIgnoreCase("list") && !args[0].equalsIgnoreCase("delete") && !args[0].equalsIgnoreCase("admin")) {
+            if (!args[0].equalsIgnoreCase("create") && !args[0].equalsIgnoreCase("timetravel") && !args[0].equalsIgnoreCase("list") && !args[0].equalsIgnoreCase("delete") && !args[0].equalsIgnoreCase("admin") && !args[0].equalsIgnoreCase("help") && !args[0].equalsIgnoreCase("find")) {
                 sender.sendMessage("Do you want to create, time travel or delete?");
                 return false;
             }

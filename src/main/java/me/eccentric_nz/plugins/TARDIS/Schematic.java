@@ -320,10 +320,8 @@ public class Schematic {
         if (plugin.config.getBoolean("bonus_chest") == Boolean.valueOf("true")) {
             replacedBlocks = replacedBlocks.substring(0, replacedBlocks.length() - 1);
             String[] replaceddata = replacedBlocks.split(":");
-            System.out.println(replacedBlocks);
             // get saved chest location
             String saved_chestloc = plugin.timelords.getString(p.getName() + ".chest");
-            System.out.println(saved_chestloc);
             String[] cdata = saved_chestloc.split(":");
             World cw = plugin.getServer().getWorld(cdata[0]);
             try {
@@ -344,12 +342,23 @@ public class Schematic {
                     System.err.println("Could not convert to number");
                 }
                 switch (rid) {
-                    case 16: rid = 263; break; // coal
-                    case 21: rid = 351; multiplier = 4; damage = 4; break; // lapis
-                    case 56: rid = 264; break; // diamond
-                    case 73: rid = 331; multiplier = 4; break; // redstone
+                    case 16: // coal
+                        rid = 263;
+                        break;
+                    case 21: // lapis
+                        rid = 351;
+                        multiplier = 4;
+                        damage = 4;
+                        break;
+                    case 56: // diamond
+                        rid = 264;
+                        break;
+                    case 73: // redstone
+                        rid = 331;
+                        multiplier = 4;
+                        break;
                 }
-                chestInv.addItem(new ItemStack(rid,multiplier,damage));
+                chestInv.addItem(new ItemStack(rid, multiplier, damage));
                 multiplier = 1; // reset multiplier
                 damage = 0; // reset damage
             }
