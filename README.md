@@ -7,4 +7,3 @@ As a player, you can:
 * Time travel to a random location.
 * Time travel back home (where you created the TARDIS initially).
 * Save and list interesting time travel locations, so you can return to them easily.             
-=======
