@@ -3,11 +3,8 @@ TARDIS_limit: 1
 TARDIS_blocks:
   LAPIS_BLOCK: 1
   IRON_BLOCK: 1
-  GOLD_BLOCK: 1
-  LEVER: 1
-  IRON_DOOR: 1
-  REDSTONE: 10
-require_blocks: false
+  REDSTONE: 1
+require_blocks: true
 require_spout: false
 bonus_chest: true
 tp_radius: 200
