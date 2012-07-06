@@ -1,0 +1,10 @@
+## timelords
+dummy_user:
+  location:
+    world: world
+    x: 200
+    uppery: 63
+    lowery: 15
+    z: -200
+  direction: NORTH
+  save: Gallifrey:36:63:280

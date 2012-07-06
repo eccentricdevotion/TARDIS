@@ -1,0 +1,72 @@
+author: eccentric_nz
+description: A plugin for all Doctor Who fans - create and use a TARDIS! Teleport to random destinations, fight randomly spawning monsters - it's bigger on the inside!
+main: me.eccentric_nz.plugins.TARDIS.TARDIS
+name: TARDIS
+startup: postworld
+dev-url: http://dev.bukkit.org/server-mods/TARDIS/
+url: http://www.thenosefairy.co.nz/
+version: '1.0'
+permissions:
+  TARDIS.admin:
+    description: Allow players access to the TARDIS admin commands.
+    default: op
+  TARDIS.*:
+    description: Allow players to create & delete a TARDIS, and teleport to destinations.
+    children:
+      TARDIS.create: true
+      TARDIS.delete: true
+      TARDIS.timetravel: true
+      TARDIS.list: true
+      TARDIS.enter: true
+    default: op
+  TARDIS.create:
+    description: Allow players to create a TARDIS.
+    default: op
+  TARDIS.delete:
+    description: Allow players to delete a TARDIS.
+    default: op
+  TARDIS.timetravel:
+    TARDIS: Allow players to teleport to random locations and saved destinations.
+    default: op
+  TARDIS.list:
+    TARDIS: Allow players to list saved time travel destinations.
+    default: op
+  TARDIS.enter:
+    description: Allow players to enter a TARDIS.
+    default: op
+  TARDIS.help:
+    description: Allow players to view TARDIS help pages.
+    default: true
+commands:
+  tardis:
+    description: Manipulate TARDISs (TARDII?) with various arguments (create, delete, timetravel). Type /TARDIS help - to see more.
+    create:
+      description: Create a TARDIS.
+      usage: /<command> create
+      permission: TARDIS.create
+      permission-message: You don't have the permission <permission> to use this command
+    delete:
+      description: Remove a TARDIS.
+      usage: /<command> delete
+      permission: TARDIS.delete
+      permission-message: You don't have the permission <permission> to use this command
+    timetravel:
+      description: Teleport to a random location.
+      usage: /<command> timetravel (or tt)
+      permission: TARDIS.timetravel
+      permission-message: You don't have the permission <permission> to use this command
+    list:
+      description: List saved time travel locations.
+      usage: /<command> list
+      permission: TARDIS.list
+      permission-message: You don't have the permission <permission> to use this command
+    admin:
+      description: Set TARDIS configuration options.
+      usage: /<command> admin [config option] [value]
+      permission: TARDIS.admin
+      permission-message: You don't have the permission <permission> to use this command
+    help:
+      description: View TARDIS help pages.
+      usage: /<command> help [command]
+      permission: TARDIS.help
+      permission-message: You don't have the permission <permission> to use this command
