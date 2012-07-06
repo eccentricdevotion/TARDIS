@@ -21,16 +21,18 @@ public class TARDISexecutor implements CommandExecutor {
     private TARDIS plugin;
     private World world;
     private Block targetBlock;
-    private Location spawnLoc;
+    private Location bluebox_loc;
     private LivingEntity thetardis;
     private UUID secID;
-    private double secLocX;
-    private double secLocY;
-    private double secLocZ;
-    private String secWorld;
+    private int bb_locX;
+    private int bb_locY;
+    private int bb_locZ;
+    private String bb_world;
+    private String d;
     private static Logger log;
     private boolean fences = false;
     private boolean plates = false;
+    private int hx = 0, hy = 0, hz = 0;
 
     public TARDISexecutor(TARDIS plugin) {
         this.plugin = plugin;
@@ -50,8 +52,8 @@ public class TARDISexecutor implements CommandExecutor {
                 return true;
             }
             // the command list - first argument MUST appear here!
-            if (!args[0].equalsIgnoreCase("create") && !args[0].equalsIgnoreCase("timetravel") && !args[0].equalsIgnoreCase("list") && !args[0].equalsIgnoreCase("delete") && !args[0].equalsIgnoreCase("admin") && !args[0].equalsIgnoreCase("help") && !args[0].equalsIgnoreCase("find")) {
-                sender.sendMessage("Do you want to create, time travel or delete?");
+            if (!args[0].equalsIgnoreCase("create") && !args[0].equalsIgnoreCase("timetravel") && !args[0].equalsIgnoreCase("tt") && !args[0].equalsIgnoreCase("list") && !args[0].equalsIgnoreCase("delete") && !args[0].equalsIgnoreCase("admin") && !args[0].equalsIgnoreCase("help") && !args[0].equalsIgnoreCase("find")) {
+                sender.sendMessage("Do you want to create, time travel, list, find or delete?");
                 return false;
             }
             if (args[0].equalsIgnoreCase("admin")) {
@@ -63,19 +65,15 @@ public class TARDISexecutor implements CommandExecutor {
                     sender.sendMessage("Too few command arguments!");
                     return false;
                 } else {
-                    if (args[1].equalsIgnoreCase("s_limit")) {
-                        String a = args[2];
-                        int val;
-                        try {
-                            val = Integer.parseInt(a);
-                        } catch (NumberFormatException nfe) {
-                            // not a number
-                            sender.sendMessage("The last argument must be a number!");
+                    if (args[1].equalsIgnoreCase("bonus")) {
+                        String tf = args[2].toLowerCase();
+                        if (!tf.equals("true") && !tf.equals("false")) {
+                            sender.sendMessage(ChatColor.RED + "The last argument must be true or false!");
                             return false;
                         }
-                        plugin.config.set("tardis_limit", val);
+                        plugin.config.set("bonus_chest", tf);
                     }
-                    if (args[1].equalsIgnoreCase("t_limit")) {
+                    if (args[1].equalsIgnoreCase("max_rad")) {
                         String a = args[2];
                         int val;
                         try {
@@ -85,19 +83,16 @@ public class TARDISexecutor implements CommandExecutor {
                             sender.sendMessage("The last argument must be a number!");
                             return false;
                         }
-                        plugin.config.set("todo_limit", val);
+                        plugin.config.set("tp_radius", val);
                     }
-                    if (args[1].equalsIgnoreCase("r_limit")) {
-                        String a = args[2];
-                        int val;
-                        try {
-                            val = Integer.parseInt(a);
-                        } catch (NumberFormatException nfe) {
-                            // not a number
-                            sender.sendMessage("The last argument must be a number!");
+                    if (args[1].equalsIgnoreCase("spout")) {
+                        // check they typed true of false
+                        String tf = args[2].toLowerCase();
+                        if (!tf.equals("true") && !tf.equals("false")) {
+                            sender.sendMessage(ChatColor.RED + "The last argument must be true or false!");
                             return false;
                         }
-                        plugin.config.set("reminder_limit", val);
+                        plugin.config.set("require_spout", tf);
                     }
                     if (args[1].equalsIgnoreCase("use_inv")) {
                         // check they typed true of false
@@ -106,7 +101,7 @@ public class TARDISexecutor implements CommandExecutor {
                             sender.sendMessage(ChatColor.RED + "The last argument must be true or false!");
                             return false;
                         }
-                        plugin.config.set("use_inventory", Boolean.valueOf(tf));
+                        plugin.config.set("require_blocks", Boolean.valueOf(tf));
                     }
                     try {
                         plugin.config.save(plugin.myconfigfile);
@@ -126,32 +121,30 @@ public class TARDISexecutor implements CommandExecutor {
                         // check if TARDIS limit has been reached
                         String configPath = player.getName();
                         if (plugin.timelords.isSet(configPath)) {
-                            Set<String> tardislist = plugin.timelords.getConfigurationSection(configPath).getKeys(false);
-                            int size = tardislist.size();
-                            int limit = plugin.config.getInt("tardis_limit");
-                            if (size >= limit) {
-                                sender.sendMessage("You have reached the maximum allowed number of secretaries! The limit is " + limit + " per player.");
-                                return false;
-                            }
+                            String leftLoc = plugin.timelords.getString(configPath + ".save");
+                            String[] leftData = leftLoc.split(":");
+                            player.sendMessage("You already have a TARDIS, you left it in " + leftData[0] + " at x:" + leftData[1] + " y:" + leftData[2] + " z:" + leftData[3]);
+                            return false;
                         }
-                        if (plugin.config.getBoolean("use_inventory") == true && player.getGameMode() == GameMode.SURVIVAL) {
-                            if (!player.getInventory().contains(Material.FENCE, 8)) {
-                                sender.sendMessage("You do not have enough wood fences, (at least are 8 needed).");
+                        if (plugin.config.getBoolean("require_blocks") == true && player.getGameMode() == GameMode.SURVIVAL) {
+                            if (!player.getInventory().contains(Material.IRON_BLOCK, 1)) {
+                                sender.sendMessage("You do not have an IRON BLOCK, you better get that pick-axe out!");
                                 return false;
                             }
-                            if (!player.getInventory().contains(Material.WOOD_PLATE, 3)) {
-                                sender.sendMessage("You do not have enough wood pressure plates, (at least are 3 needed).");
+                            if (!player.getInventory().contains(Material.LAPIS_BLOCK, 1)) {
+                                sender.sendMessage("You do not have a LAPIS BLOCK, time to go mining!");
+                                return false;
+                            }
+                            if (!player.getInventory().contains(Material.REDSTONE_TORCH_ON, 1)) {
+                                sender.sendMessage("You do not have a REDSTONE TORCH, you should probably make one!");
                                 return false;
                             }
                             // remove the items from the players inventory
-                            player.getInventory().removeItem(new ItemStack(Material.FENCE, 8));
-                            player.getInventory().removeItem(new ItemStack(Material.WOOD_PLATE, 3));
+                            player.getInventory().removeItem(new ItemStack(Material.IRON_BLOCK, 1));
+                            player.getInventory().removeItem(new ItemStack(Material.LAPIS_BLOCK, 1));
+                            player.getInventory().removeItem(new ItemStack(Material.REDSTONE_TORCH_ON, 1));
                         }
 
-                        EntityType et = EntityType.fromName("VILLAGER");
-                        if (et == null) {
-                            return true;
-                        }
                         // correct for negative yaw
                         float pyaw = player.getLocation().getYaw();
                         if (pyaw >= 0) {
@@ -159,44 +152,40 @@ public class TARDISexecutor implements CommandExecutor {
                         } else {
                             pyaw = (360 + (pyaw % 360));
                         }
-                        spawnLoc = player.getTargetBlock(null, 50).getLocation();
-                        /*
-                         * need to set the x and z values + 0.5 as block coords
-                         * seem to start from the corner of the block causing
-                         * the spawned villager to take damage from surrounding
-                         * blocks. also need to set the y value + 1 as block
-                         * coords seem to start from bottom of the block and we
-                         * want to spawn the villager on top of and in the
-                         * middle of the block!
-                         */
-                        double lowX = spawnLoc.getX();
-                        double lowY = spawnLoc.getY();
-                        double lowZ = spawnLoc.getZ();
-                        spawnLoc.setX(lowX + 0.5);
-                        spawnLoc.setY(lowY + 1);
-                        spawnLoc.setZ(lowZ + 0.5);
+                        if (pyaw >= 315 || pyaw < 45) {
+                            d = "NORTH";
+                        }
+                        if (pyaw >= 225 && pyaw < 315) {
+                            d = "WEST";
+                        }
+                        if (pyaw >= 135 && pyaw < 225) {
+                            d = "SOUTH";
+                        }
+                        if (pyaw >= 45 && pyaw < 135) {
+                            d = "EAST";
+                        }
+                        bluebox_loc = player.getTargetBlock(null, 50).getLocation();
+                        double lowY = bluebox_loc.getY();
+                        bluebox_loc.setY(lowY + 1);
 
                         // setBlock(World w, int x, int y, int z, float yaw, float min, float max, String compare)
-                        Constants.buildOuterTARDIS(player, spawnLoc, pyaw);
+                        Constants.buildOuterTARDIS(player, bluebox_loc, pyaw);
+                        Schematic s = new Schematic(plugin);
+                        s.buildInnerTARDIS(plugin.schematic, player, bluebox_loc, Constants.COMPASS.valueOf(d));
 
-                        secLocX = thetardis.getLocation().getX();
-                        secLocY = thetardis.getLocation().getY();
-                        secLocZ = thetardis.getLocation().getZ();
-                        secWorld = world.getName();
-                        plugin.timelords.set(player.getName() + ".location.world", secWorld);
-                        plugin.timelords.set(player.getName() + ".location.x", secLocX);
-                        plugin.timelords.set(player.getName() + ".location.y", secLocY);
-                        plugin.timelords.set(player.getName() + ".location.z", secLocZ);
-                        int px = player.getLocation().getBlockX();
-                        int py = player.getLocation().getBlockY();
-                        int pz = player.getLocation().getBlockZ();
-                        plugin.PlayerTARDISMap.put(player, secWorld + "|" + px + "|" + py + "|" + pz);
+                        bb_locX = bluebox_loc.getBlockX();
+                        bb_locY = bluebox_loc.getBlockY();
+                        bb_locZ = bluebox_loc.getBlockZ();
+                        bb_world = player.getWorld().getName();
+                        plugin.timelords.set(configPath + ".home", bb_world+":"+bb_locX+":"+bb_locY+":"+bb_locZ);
+                        plugin.timelords.set(configPath + ".save", bb_world+":"+bb_locX+":"+bb_locY+":"+bb_locZ);
+                        plugin.timelords.set(configPath + ".direction", d);
                         try {
                             plugin.timelords.save(plugin.timelordsfile);
                         } catch (IOException e) {
                             sender.sendMessage("There was a problem saving the TARDIS settings!");
+                            System.err.println(Constants.MY_PLUGIN_NAME + " Could not save the time lords file!");
                         }
-                        sender.sendMessage("The TARDIS " + ChatColor.AQUA + " was created and selected successfully!");
                         sender.sendMessage(Constants.INSTRUCTIONS.split("\n"));
                         return true;
                     } else {
@@ -204,29 +193,37 @@ public class TARDISexecutor implements CommandExecutor {
                         return false;
                     }
                 }
-                if (args[0].equalsIgnoreCase("timetravel")) {
+                if (args[0].equalsIgnoreCase("timetravel") || args[0].equalsIgnoreCase("tt")) {
                     if (player.hasPermission("TARDIS.timetravel")) {
-                        if (!plugin.PlayerTARDISMap.containsKey(player)) {
-                            sender.sendMessage("You need to inside your TARDIS before you can time travel!");
+                        String configPath = player.getName();
+                        if (!plugin.PlayerTARDISMap.containsKey(configPath)) {
+                            sender.sendMessage("You need to be inside your TARDIS before you can time travel!");
                             return false;
                         }
-                        String saved_loc = plugin.PlayerTARDISMap.get(player);
-                        String configPath = player.getName() + "." + saved_loc;
+                        float yaw = player.getLocation().getYaw();
+                        float pitch = player.getLocation().getPitch();
                         if (!args[1].equalsIgnoreCase("home") && !args[1].equalsIgnoreCase("random") && !args[1].equalsIgnoreCase("dest")) {
                             sender.sendMessage("Do you want to time travel to a random, saved or home destination?");
                             return false;
                         }
                         if (args[1].equalsIgnoreCase("home")) {
-                            // check if todo limit has been reached
-                            if (plugin.timelords.isSet(configPath)) {
-                                Set<String> todolist = plugin.timelords.getConfigurationSection(configPath).getKeys(false);
-                                int size = todolist.size();
-                                int limit = plugin.config.getInt("todo_limit");
-                                if (size >= limit) {
-                                    sender.sendMessage("You have reached the maximum allowed number of timelords! The limit is " + limit + " per player.");
-                                    return false;
-                                }
+                            // destination = place where TARDIS was first created
+                            String home = plugin.timelords.getString(configPath + ".home");
+                            String h_data[] = home.split(":");
+                            World h_world = Bukkit.getServer().getWorld(h_data[0]);
+                            try {
+                                hx = Integer.parseInt(h_data[1]);
+                                hy = Integer.parseInt(h_data[2]);
+                                hz = Integer.parseInt(h_data[3]);
+                            } catch (NumberFormatException n) {
+                                System.err.println(Constants.MY_PLUGIN_NAME + "Could not convert to number");
                             }
+                            Location exitTardis = new Location(h_world, hx, hy, hz, yaw, pitch);
+                            // System.out.println("exitTardis: " + exitTardis);
+                            h_world.getChunkAt(exitTardis).load();
+                            // exit TARDIS!
+                            player.teleport(exitTardis);
+                            plugin.PlayerTARDISMap.remove(player.getName());
                             if (args.length < 3) {
                                 sender.sendMessage("Too few command arguments!");
                                 return false;
@@ -249,40 +246,8 @@ public class TARDISexecutor implements CommandExecutor {
                             return true;
                         }
                         if (args[1].equalsIgnoreCase("random")) {
-                            if (args.length < 3) {
-                                sender.sendMessage("Too few command arguments!");
-                                return false;
-                            }
-                            Set<String> todolist = plugin.timelords.getConfigurationSection(configPath).getKeys(false);
-                            String a = args[2];
-                            int val;
-                            try {
-                                val = Integer.parseInt(a);
-                            } catch (NumberFormatException nfe) {
-                                // not a number
-                                sender.sendMessage("The last argument must be a number!");
-                                return false;
-                            }
-                            int i = 1;
-                            for (String str : todolist) {
-                                int num = plugin.timelords.getInt(configPath + "." + str + ".status");
-                                if (i == val) {
-                                    if (num == 0) {
-                                        plugin.timelords.set(configPath + "." + str + ".status", 1);
-                                        sender.sendMessage("Item " + i + " marked as done.");
-                                    } else {
-                                        plugin.timelords.set(configPath + "." + str + ".status", 0);
-                                        sender.sendMessage("Item " + i + " unmarked.");
-                                    }
-                                    try {
-                                        plugin.timelords.save(plugin.timelordsfile);
-                                    } catch (IOException e) {
-                                        sender.sendMessage("There was a problem changing the todo status!");
-                                    }
-                                    break;
-                                }
-                                i++;
-                            }
+                            // randomness is determined by the position of the repeaters on the console
+                            // r1 (by door) determines
                             return true;
                         }
                         if (args[1].equalsIgnoreCase("dest")) {
@@ -323,7 +288,7 @@ public class TARDISexecutor implements CommandExecutor {
                 }
                 if (args[0].equalsIgnoreCase("list")) {
                     if (player.hasPermission("TARDIS.timetravel")) {
-                        if (!plugin.PlayerTARDISMap.containsKey(player)) {
+                        if (!plugin.PlayerTARDISMap.containsKey(player.getName())) {
                             sender.sendMessage("You need to inside your TARDIS before you can time travel!");
                             return false;
                         }
@@ -331,12 +296,12 @@ public class TARDISexecutor implements CommandExecutor {
                 }
                 if (args[0].equalsIgnoreCase("delete")) {
                     if (player.hasPermission("TARDIS.delete")) {
-                        if (!plugin.PlayerTARDISMap.containsKey(player)) {
+                        if (!plugin.PlayerTARDISMap.containsKey(player.getName())) {
                             sender.sendMessage("You need to select the TARDIS with a " + plugin.config.getString("select_material") + " before you can delete it!");
                             return false;
                         } else {
                             String name = "";
-                            String EntID = plugin.PlayerTARDISMap.get(player);
+                            Boolean EntID = plugin.PlayerTARDISMap.get(player.getName());
                             String configPath = player.getName() + "." + EntID;
                             world = player.getWorld();
                             Set<String> seclist = plugin.timelords.getConfigurationSection(player.getName()).getKeys(false);
@@ -372,7 +337,7 @@ public class TARDISexecutor implements CommandExecutor {
                                     }
                                 }
                                 try {
-                                    plugin.PlayerTARDISMap.remove(player);
+                                    plugin.PlayerTARDISMap.remove(player.getName());
                                     plugin.timelords.save(plugin.timelordsfile);
                                 } catch (IOException io) {
                                     System.out.println("Could not save the config files!");

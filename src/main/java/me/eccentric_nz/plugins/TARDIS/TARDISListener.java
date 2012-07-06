@@ -1,7 +1,6 @@
 package me.eccentric_nz.plugins.TARDIS;
 
 import java.io.IOException;
-import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -66,16 +65,13 @@ public class TARDISListener implements Listener {
                     Schematic s = new Schematic(plugin);
                     s.buildInnerTARDIS(plugin.schematic, player, block_loc, Constants.COMPASS.valueOf(d));
                     // save data to timelords file
-                    plugin.timelords.set(configPath + ".location.world", block_loc.getWorld().getName());
-                    plugin.timelords.set(configPath + ".location.x", block_loc.getBlockX());
-                    plugin.timelords.set(configPath + ".location.uppery", block_loc.getBlockY());
-                    plugin.timelords.set(configPath + ".location.lowery", 19);
-                    plugin.timelords.set(configPath + ".location.z", block_loc.getBlockZ());
+                    plugin.timelords.set(configPath + ".home", block_loc.getWorld().getName() + ":" + block_loc.getBlockX() + ":" + block_loc.getBlockY() + ":" + block_loc.getBlockZ());
+                    plugin.timelords.set(configPath + ".save", block_loc.getWorld().getName() + ":" + block_loc.getBlockX() + ":" + block_loc.getBlockY() + ":" + block_loc.getBlockZ());
                     plugin.timelords.set(configPath + ".direction", d);
                     try {
                         plugin.timelords.save(plugin.timelordsfile);
                     } catch (IOException io) {
-                        System.err.println("[TARDIS] Could not save the time lords file!");
+                        System.err.println(Constants.MY_PLUGIN_NAME + " Could not save the time lords file!");
                     }
                 } else {
                     String leftLoc = plugin.timelords.getString(player.getName() + ".save");
@@ -104,94 +100,85 @@ public class TARDISListener implements Listener {
                     player.sendMessage("You clicked the iron door with a redstone torch.");
                     if (block != null) {
                         Location block_loc = block.getLocation();
-                        //System.out.println("block_loc: " + block_loc);
+                        System.out.println("block_loc: " + block_loc);
                         String configPath = player.getName();
                         plugin.timelords = YamlConfiguration.loadConfiguration(plugin.timelordsfile);
-
                         if (player.hasPermission("TARDIS.enter")) {
                             if (plugin.timelords.contains(configPath)) {
-                                // check location
-                                String tworld = plugin.timelords.getString(configPath + ".location.world");
-                                World w = Bukkit.getServer().getWorld(tworld);
-                                int x = plugin.timelords.getInt(configPath + ".location.x");
-                                int tpx = x;
-                                int y = plugin.timelords.getInt(configPath + ".location.uppery");
-                                int ly = plugin.timelords.getInt(configPath + ".location.lowery");
-                                int z = plugin.timelords.getInt(configPath + ".location.z");
-                                int tpz = z;
                                 String d = plugin.timelords.getString(configPath + ".direction");
+                                float yaw = player.getLocation().getYaw();
+                                float pitch = player.getLocation().getPitch();
+                                // get last known BLUEBOX location
+                                Location door_loc = Constants.getLocationFromFile(player.getName(), "save", yaw, pitch, plugin.timelords);
+                                // get INNER TARDIS location
+                                Location tardis_loc = Constants.getLocationFromFile(player.getName(), "home", yaw, pitch, plugin.timelords);
+                                tardis_loc.setY(19);
+                                //System.out.println("tardis_loc: " + tardis_loc);
+                                World w = player.getWorld();
+                                double x = door_loc.getX();
+                                double z = door_loc.getZ();
                                 switch (Constants.COMPASS.valueOf(d)) {
                                     case NORTH:
-                                        z = z - 1;
+                                        door_loc.setZ(z - 1);
                                         break;
                                     case EAST:
-                                        x = x + 1;
+                                        door_loc.setX(x + 1);
                                         break;
                                     case SOUTH:
-                                        z = z + 1;
+                                        door_loc.setZ(z + 1);
                                         break;
                                     case WEST:
-                                        x = x - 1;
+                                        door_loc.setX(x - 1);
                                         break;
                                 }
-                                Location bluebox_loc = new Location(w, x, y - 1, z);
-                                //System.out.println("bluebox_loc: " + bluebox_loc);
-                                if (block_loc.getBlockX() == bluebox_loc.getBlockX() && block_loc.getBlockZ() == bluebox_loc.getBlockZ()) {
-                                    // get player location, yaw and pitch
-                                    int px = player.getLocation().getBlockX();
-                                    int py = player.getLocation().getBlockY();
-                                    int pz = player.getLocation().getBlockZ();
-                                    float yaw = player.getLocation().getYaw();
-                                    float pitch = player.getLocation().getPitch();
-                                    Location tardis_loc = new Location(w, tpx, ly, tpz, yaw, pitch);
-                                    //System.out.println("tardis_loc: " + tardis_loc);
-                                    // needs to be either top or bottom of door! This is the inside tardis location
-                                    if (block_loc.getBlockY() == tardis_loc.getBlockY() || block_loc.getBlockY() == tardis_loc.getBlockY() + 1) {
-                                        // get location from hash map
-                                        String saved_loc = plugin.timelords.getString(player.getName() + ".save");
-                                        String[] data = saved_loc.split(":");
-                                        //System.out.println("saved world: " + data[0]);
-                                        World savedw = Bukkit.getServer().getWorld(data[0]);
-                                        try {
-                                            savedx = Integer.parseInt(data[1]);
-                                            savedy = Integer.parseInt(data[2]);
-                                            savedz = Integer.parseInt(data[3]);
-                                        } catch (NumberFormatException n) {
-                                            System.err.println("Could not convert to number");
-                                        }
-                                        Location exitTardis = new Location(savedw, savedx, savedy, savedz, yaw, pitch);
-                                       // System.out.println("exitTardis: " + exitTardis);
-                                        w.getChunkAt(exitTardis).load();
-                                        // exit TARDIS!
-                                        player.teleport(exitTardis);
+                                System.out.println("door_loc: " + door_loc);
+                                if (plugin.PlayerTARDISMap.containsKey(configPath)) {
+                                    // player is in the TARDIS
+                                    // get location from timelords file
+                                    Location exitTardis = Constants.getLocationFromFile(player.getName(), "save", yaw, pitch, plugin.timelords);
+                                    // make location safe ie. outside of the bluebox
+                                    double ex = exitTardis.getX();
+                                    double ez = exitTardis.getZ();
+                                    double ey = exitTardis.getY();
+                                    switch (Constants.COMPASS.valueOf(d)) {
+                                        case NORTH:
+                                            exitTardis.setZ(ez - 2);
+                                            break;
+                                        case EAST:
+                                            exitTardis.setX(ex + 2);
+                                            break;
+                                        case SOUTH:
+                                            exitTardis.setZ(ez + 2);
+                                            break;
+                                        case WEST:
+                                            exitTardis.setX(ex - 2);
+                                            break;
+                                    }
+                                    exitTardis.setY(ey - 2);
+                                    System.out.println("exitTardis: " + exitTardis);
+                                    w.getChunkAt(exitTardis).load();
+                                    // exit TARDIS!
+                                    player.teleport(exitTardis);
+                                    plugin.PlayerTARDISMap.remove(player.getName());
+                                } else {
+                                    // needs to be either top or bottom of door! This is the current bluebox door location
+                                    if (block_loc.getBlockX() == door_loc.getBlockX() && block_loc.getBlockZ() == door_loc.getBlockZ() && (block_loc.getBlockY() == door_loc.getBlockY() || block_loc.getBlockY() == door_loc.getBlockY() - 1)) {
+                                        // enter TARDIS!
+                                        w.getChunkAt(tardis_loc).load();
+                                        player.teleport(tardis_loc);
+                                        plugin.PlayerTARDISMap.put(player.getName(), Boolean.valueOf("true"));
                                     } else {
-                                        // needs to be either top or bottom of door! This is the bluebox location
-                                        if (block_loc.getBlockY() == bluebox_loc.getBlockY() || block_loc.getBlockY() == bluebox_loc.getBlockY() - 1) {
-                                            plugin.timelords.set(player.getName() + ".save", w.getName() + ":" + px + ":" + py + ":" + pz);
-                                            try {
-                                                plugin.timelords.save(plugin.timelordsfile);
-                                            } catch (IOException io) {
-                                                System.err.println("[TARDIS] Could not save the time lords file!");
-                                            }
-                                            // enter TARDIS!
-                                            //Location enterTardis = new Location(w, tpx, ly, tpz, yaw, pitch);
-                                            //w.getChunkAt(enterTardis).load();
-                                            //player.teleport(enterTardis);
-                                            w.getChunkAt(tardis_loc).load();
-                                            player.teleport(tardis_loc);
-                                        } else {
-                                            player.sendMessage(Constants.NOT_OWNER);
-                                        }
+                                        player.sendMessage(Constants.NOT_OWNER);
                                     }
                                 }
                             } else {
-                                player.sendMessage(Constants.NOT_OWNER);
+                                player.sendMessage(Constants.NO_TARDIS);
                             }
                         } else {
                             player.sendMessage(Constants.NO_PERMS_MESSAGE);
                         }
                     } else {
-                        System.err.println("Could not get block");
+                        System.err.println(Constants.MY_PLUGIN_NAME + "Could not get block");
                     }
                 } else {
                     player.sendMessage(Constants.WRONG_MATERIAL + " You have a " + material + " in our hand!");

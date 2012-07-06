@@ -1,11 +1,13 @@
 package me.eccentric_nz.plugins.TARDIS;
 
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.block.Sign;
+import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.material.Lever;
 
@@ -16,19 +18,21 @@ public class Constants {
     public Constants(TARDIS plugin) {
         this.plugin = plugin;
     }
-
     public static String MY_PLUGIN_NAME;
     public static String SCHEMATIC_FILE_NAME = "schematic.csv";
     public static String CONFIG_FILE_NAME = "config.yml";
     public static String TIMELORDS_FILE_NAME = "timelords.yml";
     // messages
-    public static final String INSTRUCTIONS = "Secretaries must be selected to perform commands on them.\nRight-click the TARDIS with a FEATHER to toggle selection on and off.\nRight-click the TARDIS with PAPER to view your todo list.\nRight-click the TARDIS with an INK_SACK to view your reminders.\nType " + ChatColor.GOLD + "/TARDIS help" + ChatColor.RESET + " in chat to see more instructions.";
+    public static final String INSTRUCTIONS = "Your TARDIS is ready!\nRight-click the TARDIS door with your TARDIS key (a REDSTONE TORCH) to enter.\nTo time travel, adjust the repeaters on the console. For more help, type " + ChatColor.GOLD + "/TARDIS help timetravel" + ChatColor.RESET + " in chat to see more instructions.";
     public static final String COMMANDS = "Type " + ChatColor.GOLD + "/TARDIS help <command>" + ChatColor.RESET + " to see more details about a command.\nCommands\n" + ChatColor.GOLD + "/TARDIS create" + ChatColor.RESET + " - makes a new TARDIS.\n" + ChatColor.GOLD + "/TARDIS delete" + ChatColor.RESET + " - remove a TARDIS\n" + ChatColor.GOLD + "/TARDIS timetravel [dest] - teleports you to a random or saved location.\n" + ChatColor.GOLD + "/TARDIS list" + ChatColor.RESET + " - list saved time travel destinations.\n" + ChatColor.GOLD + "/TARDIS find" + ChatColor.RESET + " - show the co-ordinates of a lost TARDIS.";
 
     public enum COMPASS {
+
         NORTH, EAST, SOUTH, WEST;
     }
+
     public enum CMDS {
+
         CREATE, DELETE, TIMETRAVEL, LIST, FIND, ADMIN;
     }
     public static final String COMMAND_CREATE = "You can create a TARDIS in one of two ways:\nby placing a specific pattern of blocks,\nor using the command /TARDIS create.\nEither way, you will need to have an IRON BLOCK, a LAPIS BLOCK, and a redstone torch in your inventory.\nYou then either place the blocks where you want the TARDIS to be,\nor look at the block where you want the TARDIS to stand and type the command " + ChatColor.GOLD + "/TARDIS create" + ChatColor.RESET + ".\nThe TARDIS takes up a 3 x 3 x 4 area (w x d x h), so keep this in mind.";
@@ -39,6 +43,7 @@ public class Constants {
     public static final String COMMAND_ADMIN = "Arguments\n" + ChatColor.GOLD + "/TARDIS admin bonus [true|false]" + ChatColor.RESET + " - toggle whether the TARDIS chest is filled with items replaced during the TARDIS construction. Default: true.\n" + ChatColor.GOLD + "/TARDIS admin max_rad [x]" + ChatColor.RESET + " - set the maximum distance (in blocks) you can time travel in the TARDIS. Default: 200\n" + ChatColor.GOLD + "/TARDIS admin use_inv [true|false]" + ChatColor.RESET + " - set whether a player must have the required blocks in their inventory to create a TARDIS. SURVIVAL mode only. Default: true\n" + ChatColor.GOLD + "/TARDIS admin spout [true|false]" + ChatColor.RESET + " - set whether the player must be using the Spout client to create and use a TARDIS. Default: false";
     public static final String NO_PERMS_MESSAGE = "You do not have permission to do that!";
     public static final String NOT_OWNER = "This is not your TARDIS!";
+    public static final String NO_TARDIS = "You have not created a TARDIS yet!";
     public static final String WRONG_MATERIAL = "The TARDIS key is a REDSTONE TORCH!";
 
     public static void setBlock(World w, int x, int y, int z, int m, byte d) {
@@ -202,9 +207,27 @@ public class Constants {
         setBlock(world, x, down2y, minusz, north, bdn);
         setBlock(world, plusx, down2y, minusz, 35, blue);
         // put torch on top
-        setBlock(world, x, plusy, z, 50, (byte)5);
+        setBlock(world, x, plusy, z, 50, (byte) 5);
         // remove the IRON & LAPIS blocks
         setBlock(world, x, minusy, z, 0, norm);
         setBlock(world, x, down2y, z, 0, norm);
+    }
+
+    public static Location getLocationFromFile(String p, String s, float yaw, float pitch, FileConfiguration c) {
+        int savedx = 0, savedy = 0, savedz = 0;
+        // get location from timelords file
+        String saved_loc = c.getString(p + "."+s);
+        String[] data = saved_loc.split(":");
+        //System.out.println("saved world: " + data[0]);
+        World savedw = Bukkit.getServer().getWorld(data[0]);
+        try {
+            savedx = Integer.parseInt(data[1]);
+            savedy = Integer.parseInt(data[2]);
+            savedz = Integer.parseInt(data[3]);
+        } catch (NumberFormatException n) {
+            System.err.println(Constants.MY_PLUGIN_NAME + "Could not convert to number");
+        }
+        Location dest = new Location(savedw, savedx, savedy, savedz, yaw, pitch);
+        return dest;
     }
 }

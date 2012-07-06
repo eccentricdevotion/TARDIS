@@ -19,7 +19,7 @@ public class TARDIS extends JavaPlugin implements Listener {
     public PluginDescriptionFile pdfFile;
     public FileConfiguration config = null;
     public FileConfiguration timelords = null;
-    public HashMap<Player, String> PlayerTARDISMap = new HashMap<Player, String>();
+    public HashMap<String, Boolean> PlayerTARDISMap = new HashMap<String, Boolean>();
     public File schematicfile = null;
     public File myconfigfile = null;
     public File timelordsfile = null;
