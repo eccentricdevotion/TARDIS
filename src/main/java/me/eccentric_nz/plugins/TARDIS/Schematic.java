@@ -4,7 +4,10 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.block.Chest;
@@ -28,7 +31,7 @@ public class Schematic {
             blocks = new String[8][11][11];
 
             BufferedReader bufRdr = new BufferedReader(new FileReader(file));
-            String line = null;
+            String line;
             //read each line of text file
             for (int level = 0; level < 8; level++) {
                 for (int row = 0; row < 11; row++) {
@@ -45,46 +48,22 @@ public class Schematic {
     }
 
     public void buildInnerTARDIS(String[][][] s, Player p, Location l, Constants.COMPASS d) {
-        int level, row, col, id, x = 0, y, z = 0, startx = 0, starty = 15, startz = 0, resetx = 0, resetz = 0, cx = 0, cy = 0, cz = 0, rid = 0, multiplier = 1;
+        int level, row, col, id, x, y, z, startx, starty = 15, startz, resetx, resetz, cx = 0, cy = 0, cz = 0, rid = 0, multiplier = 1, tx = 0, ty = 0, tz = 0;
         byte data = 0x0;
         short damage = 0;
+        List<String> torches = new ArrayList<String>();
         String tmp, replacedBlocks = "";
         World world = l.getWorld();
         // calculate startx, starty, startz
-        switch (d) {
-            case NORTH:
-                startx = l.getBlockX() - 5;
-                resetx = startx;
-                startz = l.getBlockZ() - 1;
-                resetz = startz;
-                x = 1;
-                z = 1;
-                break;
-            case EAST:
-                startx = l.getBlockX() + 1;
-                resetx = startx;
-                startz = l.getBlockZ() - 5;
-                resetz = startz;
-                x = -1;
-                z = 1;
-                break;
-            case SOUTH:
-                startx = l.getBlockX() + 5;
-                resetx = startx;
-                startz = l.getBlockZ() + 1;
-                resetz = startz;
-                x = -1;
-                z = -1;
-                break;
-            case WEST:
-                startx = l.getBlockX() - 1;
-                resetx = startx;
-                startz = l.getBlockZ() + 5;
-                resetz = startz;
-                x = 1;
-                z = -1;
-                break;
-        }
+        // getStartLocation(Location loc, Constants.COMPASS dir)
+        int gsl[] = getStartLocation(l, d);
+        startx = gsl[0];
+        resetx = gsl[1];
+        startz = gsl[2];
+        resetz = gsl[3];
+        x = gsl[4];
+        z = gsl[5];
+
         for (level = 0; level < 8; level++) {
             for (row = 0; row < 11; row++) {
                 for (col = 0; col < 11; col++) {
@@ -233,7 +212,7 @@ public class Schematic {
                                             break;
                                     }
                                 }
-                                if (id == 93 && row == 7 && col == 5 && level == 5) { // redstone repeater facing away door
+                                if (id == 93 && row == 7 && col == 5 && level == 5) { // redstone repeater facing away from door
                                     switch (d) {
                                         case NORTH:
                                             data = 0x0;
@@ -264,6 +243,12 @@ public class Schematic {
                                             data = 0x0;
                                             break;
                                     }
+                                }
+                                if (id == 50) { // torch set to air and remember location
+                                    id = 0;
+                                    data = 0x0;
+                                    torches.add(startx + ":" + starty + ":" + startz);
+                                    System.out.println(torches);
                                 }
                             } else {
                                 data = Byte.parseByte(iddata[1]);
@@ -317,6 +302,18 @@ public class Schematic {
             }
             starty += 1;
         }
+        // reinstate torches
+        for (String t_locs : torches) {
+            String[] t_data = t_locs.split(":");
+            try {
+                tx = Integer.parseInt(t_data[0]);
+                ty = Integer.parseInt(t_data[1]);
+                tz = Integer.parseInt(t_data[2]);
+            } catch (NumberFormatException n) {
+                System.err.println("Could not convert to number");
+            }
+            Constants.setBlock(world, tx, ty, tz, 50, (byte) 5);
+        }
         if (plugin.config.getBoolean("bonus_chest") == Boolean.valueOf("true")) {
             replacedBlocks = replacedBlocks.substring(0, replacedBlocks.length() - 1);
             String[] replaceddata = replacedBlocks.split(":");
@@ -363,5 +360,147 @@ public class Schematic {
                 damage = 0; // reset damage
             }
         }
+    }
+
+    public void destroyTARDIS(Player p, Location l, Constants.COMPASS d) {
+        int cx = 0, cy = 0, cz = 0;
+        // remove chest contents first
+        String saved_chestloc = plugin.timelords.getString(p.getName() + ".chest");
+        String[] cdata = saved_chestloc.split(":");
+        World cw = plugin.getServer().getWorld(cdata[0]);
+        try {
+            cx = Integer.parseInt(cdata[1]);
+            cy = Integer.parseInt(cdata[2]);
+            cz = Integer.parseInt(cdata[3]);
+        } catch (NumberFormatException n) {
+            System.err.println("Could not convert to number");
+        }
+        Location chest_loc = new Location(cw, cx, cy, cz);
+        Block bonus_chest = chest_loc.getBlock();
+        Chest chest = (Chest) bonus_chest.getState();
+        Inventory chestInv = chest.getInventory();
+        chestInv.clear();
+        // should probably clear furnace too
+        // inner TARDIS
+        int level, row, col, x, y, z, startx, starty = 15, startz, resetx, resetz;
+        World world = l.getWorld();
+        // calculate startx, starty, startz
+        int gsl[] = getStartLocation(l, d);
+        startx = gsl[0];
+        resetx = gsl[1];
+        startz = gsl[2];
+        resetz = gsl[3];
+        x = gsl[4];
+        z = gsl[5];
+        for (level = 0; level < 8; level++) {
+            for (row = 0; row < 11; row++) {
+                for (col = 0; col < 11; col++) {
+                    // set the block to stone
+                    Block b = world.getBlockAt(startx, starty, startz);
+                    Material m = b.getType();
+                    if (m != Material.CHEST && m != Material.FURNACE) {
+                        Constants.setBlock(world, startx, starty, startz, 1, (byte) 0);
+                    }
+                    switch (d) {
+                        case NORTH:
+                        case SOUTH:
+                            startx += x;
+                            break;
+                        case EAST:
+                        case WEST:
+                            startz += z;
+                            break;
+                    }
+                }
+                switch (d) {
+                    case NORTH:
+                    case SOUTH:
+                        startx = resetx;
+                        startz += z;
+                        break;
+                    case EAST:
+                    case WEST:
+                        startz = resetz;
+                        startx += x;
+                        break;
+                }
+            }
+            switch (d) {
+                case NORTH:
+                case SOUTH:
+                    startz = resetz;
+                    break;
+                case EAST:
+                case WEST:
+                    startx = resetx;
+                    break;
+            }
+            starty += 1;
+        }
+        // remove bluebox
+        int sbx = l.getBlockX() - 1;
+        int rbx = sbx;
+        int sby = l.getBlockY() - 2;
+        int sbz = l.getBlockZ() - 1;
+        int rbz = sbz;
+        for (int yy = 0; yy < 4; yy++) {
+            for (int xx = 0; xx < 3; xx++) {
+                for (int zz = 0; zz < 3; zz++) {
+                    Constants.setBlock(world, sbx, sby, sbz, 0, (byte) 0);
+                    sbx++;
+                }
+                sbx = rbx;
+                sbz++;
+            }
+            sbz = rbz;
+            sby++;
+        }
+        // remove player from timelords
+        String configPath = p.getName();
+        plugin.timelords.set(configPath, null);
+        try {
+            plugin.timelords.save(plugin.timelordsfile);
+        } catch (IOException io) {
+            System.err.println(Constants.MY_PLUGIN_NAME + " Could not save timelords file!");
+        }
+    }
+    private static int[] startLoc = new int[6];
+
+    public int[] getStartLocation(Location loc, Constants.COMPASS dir) {
+        switch (dir) {
+            case NORTH:
+                startLoc[0] = loc.getBlockX() - 5;
+                startLoc[1] = startLoc[0];
+                startLoc[2] = loc.getBlockZ() - 1;
+                startLoc[3] = startLoc[2];
+                startLoc[4] = 1;
+                startLoc[5] = 1;
+                break;
+            case EAST:
+                startLoc[0] = loc.getBlockX() + 1;
+                startLoc[1] = startLoc[0];
+                startLoc[2] = loc.getBlockZ() - 5;
+                startLoc[3] = startLoc[2];
+                startLoc[4] = -1;
+                startLoc[5] = 1;
+                break;
+            case SOUTH:
+                startLoc[0] = loc.getBlockX() + 5;
+                startLoc[1] = startLoc[0];
+                startLoc[2] = loc.getBlockZ() + 1;
+                startLoc[3] = startLoc[2];
+                startLoc[4] = -1;
+                startLoc[5] = -1;
+                break;
+            case WEST:
+                startLoc[0] = loc.getBlockX() - 1;
+                startLoc[1] = startLoc[0];
+                startLoc[2] = loc.getBlockZ() + 5;
+                startLoc[3] = startLoc[2];
+                startLoc[4] = 1;
+                startLoc[5] = -1;
+                break;
+        }
+        return startLoc;
     }
 }

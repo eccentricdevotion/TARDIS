@@ -89,13 +89,6 @@ public class Constants {
     public static void buildOuterTARDIS(Player p, Location l, float yaw) {
         World world;
         // expand placed blocks to a police box
-        /*
-         * need to set the x and z values + 0.5 as block coords seem to start
-         * from the corner of the block causing the spawned villager to take
-         * damage from surrounding blocks. also need to set the y value + 1 as
-         * block coords seem to start from bottom of the block and we want to
-         * spawn the villager on top of and in the middle of the block!
-         */
         double lowX = l.getX();
         double lowY = l.getY();
         double lowZ = l.getZ();

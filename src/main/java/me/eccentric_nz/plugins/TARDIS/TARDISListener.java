@@ -12,6 +12,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
+import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
@@ -82,6 +83,53 @@ public class TARDISListener implements Listener {
         }
     }
 
+    @EventHandler(priority = EventPriority.LOW)
+    public void onBlockBreak(BlockBreakEvent event) {
+        int signx = 0, signz = 0;
+        Player player = event.getPlayer();
+        String configPath = player.getName();
+        float yaw = player.getLocation().getYaw();
+        float pitch = player.getLocation().getPitch();
+        Block block = event.getBlock();
+        Material blockType = block.getType();
+        if (blockType == Material.WALL_SIGN && plugin.timelords.contains(configPath + ".direction")) {
+            player.sendMessage("You destroyed a wall sign");
+            // check the sign location
+            Location sign_loc = block.getLocation();
+            player.sendMessage("Sign location: "+ sign_loc);
+            Location bb_loc = Constants.getLocationFromFile(player.getName(), "save", yaw, pitch, plugin.timelords);
+            player.sendMessage("BB location: "+ bb_loc);
+            // get TARDIS direction
+            Constants.COMPASS d = Constants.COMPASS.valueOf(plugin.timelords.getString(configPath + ".direction"));
+            switch (d) {
+                case EAST:
+                    signx = 2;
+                    signz = 0;
+                    break;
+                case SOUTH:
+                    signx = 0;
+                    signz = 2;
+                    break;
+                case WEST:
+                    signx = -2;
+                    signz = 0;
+                    break;
+                case NORTH:
+                    signx = 0;
+                    signz = -2;
+                    break;
+            }
+            // if the sign was on the TARDIS destroy the TARDIS!
+            if (sign_loc.getBlockX() == bb_loc.getBlockX() + signx && sign_loc.getBlockY() == bb_loc.getBlockY() && sign_loc.getBlockZ() == bb_loc.getBlockZ() + signz) {
+                Schematic s = new Schematic(plugin);
+                s.destroyTARDIS(player, bb_loc, d);
+            } else {
+                // cancel the event because it's not the player's TARDIS
+                event.isCancelled();
+            }
+        }
+    }
+
     @EventHandler(priority = EventPriority.MONITOR)
     public void onPlayerInteract(PlayerInteractEvent event) {
 
@@ -100,11 +148,11 @@ public class TARDISListener implements Listener {
                     player.sendMessage("You clicked the iron door with a redstone torch.");
                     if (block != null) {
                         Location block_loc = block.getLocation();
-                        System.out.println("block_loc: " + block_loc);
+                        //System.out.println("block_loc: " + block_loc);
                         String configPath = player.getName();
                         plugin.timelords = YamlConfiguration.loadConfiguration(plugin.timelordsfile);
                         if (player.hasPermission("TARDIS.enter")) {
-                            if (plugin.timelords.contains(configPath)) {
+                            if (plugin.timelords.contains(configPath + ".direction")) {
                                 String d = plugin.timelords.getString(configPath + ".direction");
                                 float yaw = player.getLocation().getYaw();
                                 float pitch = player.getLocation().getPitch();
@@ -131,7 +179,7 @@ public class TARDISListener implements Listener {
                                         door_loc.setX(x - 1);
                                         break;
                                 }
-                                System.out.println("door_loc: " + door_loc);
+                                //System.out.println("door_loc: " + door_loc);
                                 if (plugin.PlayerTARDISMap.containsKey(configPath)) {
                                     // player is in the TARDIS
                                     // get location from timelords file
@@ -155,14 +203,14 @@ public class TARDISListener implements Listener {
                                             break;
                                     }
                                     exitTardis.setY(ey - 2);
-                                    System.out.println("exitTardis: " + exitTardis);
+                                    //System.out.println("exitTardis: " + exitTardis);
                                     w.getChunkAt(exitTardis).load();
                                     // exit TARDIS!
                                     player.teleport(exitTardis);
                                     plugin.PlayerTARDISMap.remove(player.getName());
                                 } else {
                                     // needs to be either top or bottom of door! This is the current bluebox door location
-                                    if (block_loc.getBlockX() == door_loc.getBlockX() && block_loc.getBlockZ() == door_loc.getBlockZ() && (block_loc.getBlockY() == door_loc.getBlockY() || block_loc.getBlockY() == door_loc.getBlockY() - 1)) {
+                                    if (block_loc.getBlockX() == door_loc.getBlockX() && block_loc.getBlockZ() == door_loc.getBlockZ() && (block_loc.getBlockY() == door_loc.getBlockY() - 2 || block_loc.getBlockY() == door_loc.getBlockY() - 1)) {
                                         // enter TARDIS!
                                         w.getChunkAt(tardis_loc).load();
                                         player.teleport(tardis_loc);

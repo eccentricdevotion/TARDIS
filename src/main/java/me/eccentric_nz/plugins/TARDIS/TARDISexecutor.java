@@ -165,7 +165,7 @@ public class TARDISexecutor implements CommandExecutor {
                             d = "EAST";
                         }
                         bluebox_loc = player.getTargetBlock(null, 50).getLocation();
-                        double lowY = bluebox_loc.getY();
+                        int lowY = bluebox_loc.getBlockY();
                         bluebox_loc.setY(lowY + 1);
 
                         // setBlock(World w, int x, int y, int z, float yaw, float min, float max, String compare)
