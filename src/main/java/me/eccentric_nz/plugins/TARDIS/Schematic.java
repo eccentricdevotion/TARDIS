@@ -63,7 +63,58 @@ public class Schematic {
         resetz = gsl[3];
         x = gsl[4];
         z = gsl[5];
-
+        // need to set TARDIS space to air first otherwise torches may be placed askew
+        // also getting and storing block ids for bonus chest if configured
+        for (level = 0; level < 8; level++) {
+            for (row = 0; row < 11; row++) {
+                for (col = 0; col < 11; col++) {
+                    if (plugin.config.getBoolean("bonus_chest") == Boolean.valueOf("true")) {
+                        // get block at location
+                        Location replaceLoc = new Location(world, startx, starty, startz);
+                        int replacedMaterialId = replaceLoc.getBlock().getTypeId();
+                        replacedBlocks += replacedMaterialId + ":";
+                    }
+                    Constants.setBlock(world, startx, starty, startz, 0, (byte) 0);
+                    switch (d) {
+                        case NORTH:
+                        case SOUTH:
+                            startx += x;
+                            break;
+                        case EAST:
+                        case WEST:
+                            startz += z;
+                            break;
+                    }
+                }
+                switch (d) {
+                    case NORTH:
+                    case SOUTH:
+                        startx = resetx;
+                        startz += z;
+                        break;
+                    case EAST:
+                    case WEST:
+                        startz = resetz;
+                        startx += x;
+                        break;
+                }
+            }
+            switch (d) {
+                case NORTH:
+                case SOUTH:
+                    startz = resetz;
+                    break;
+                case EAST:
+                case WEST:
+                    startx = resetx;
+                    break;
+            }
+            starty += 1;
+        }
+        // reset start positions and do over
+        startx = resetx;
+        starty = 15;
+        startz = resetz;
         for (level = 0; level < 8; level++) {
             for (row = 0; row < 11; row++) {
                 for (col = 0; col < 11; col++) {
@@ -164,6 +215,25 @@ public class Schematic {
                                             break;
                                     }
                                 }
+                                if (id == 77) { // stone button
+                                    switch (d) {
+                                        case NORTH:
+                                            data = 0x3;
+                                            break;
+                                        case WEST:
+                                            data = 0x1;
+                                            break;
+                                        case SOUTH:
+                                            data = 0x4;
+                                            break;
+                                        case EAST:
+                                            data = 0x2;
+                                            break;
+                                    }
+                                    // remember the location of this button
+                                    plugin.timelords.set(p.getName() + ".button", world.getName() + ":" + startx + ":" + starty + ":" + startz);
+
+                                }
                                 if (id == 93 && row == 3 && col == 5 && level == 5) { // redstone repeater facing towards door
                                     switch (d) {
                                         case NORTH:
@@ -179,6 +249,8 @@ public class Schematic {
                                             data = 0x1;
                                             break;
                                     }
+                                    // save repeater location
+                                    plugin.timelords.set(p.getName() + ".repeater0", world.getName() + ":" + startx + ":" + starty + ":" + startz);
                                 }
                                 if (id == 93 && row == 5 && col == 3 && level == 5) { // redstone repeater facing right from door
                                     switch (d) {
@@ -195,6 +267,8 @@ public class Schematic {
                                             data = 0x0;
                                             break;
                                     }
+                                    // save repeater location
+                                    plugin.timelords.set(p.getName() + ".repeater1", world.getName() + ":" + startx + ":" + starty + ":" + startz);
                                 }
                                 if (id == 93 && row == 5 && col == 7 && level == 5) { // redstone repeater facing left from door
                                     switch (d) {
@@ -211,6 +285,8 @@ public class Schematic {
                                             data = 0x2;
                                             break;
                                     }
+                                    // save repeater location
+                                    plugin.timelords.set(p.getName() + ".repeater2", world.getName() + ":" + startx + ":" + starty + ":" + startz);
                                 }
                                 if (id == 93 && row == 7 && col == 5 && level == 5) { // redstone repeater facing away from door
                                     switch (d) {
@@ -227,6 +303,8 @@ public class Schematic {
                                             data = 0x3;
                                             break;
                                     }
+                                    // save repeater location
+                                    plugin.timelords.set(p.getName() + ".repeater3", world.getName() + ":" + startx + ":" + starty + ":" + startz);
                                 }
                                 if (id == 71) { // iron door bottom
                                     switch (d) {
@@ -244,24 +322,12 @@ public class Schematic {
                                             break;
                                     }
                                 }
-                                if (id == 50) { // torch set to air and remember location
-                                    id = 0;
-                                    data = 0x0;
-                                    torches.add(startx + ":" + starty + ":" + startz);
-                                    System.out.println(torches);
-                                }
                             } else {
                                 data = Byte.parseByte(iddata[1]);
                             }
                         } else {
                             id = Integer.parseInt(tmp);
                             data = 0x0;
-                        }
-                        if (plugin.config.getBoolean("bonus_chest") == Boolean.valueOf("true")) {
-                            // get block at location
-                            Location replaceLoc = new Location(world, startx, starty, startz);
-                            int replacedMaterialId = replaceLoc.getBlock().getTypeId();
-                            replacedBlocks += replacedMaterialId + ":";
                         }
                         //setBlock(World w, int x, int y, int z, int m, byte d)
                         Constants.setBlock(world, startx, starty, startz, id, data);
@@ -302,19 +368,8 @@ public class Schematic {
             }
             starty += 1;
         }
-        // reinstate torches
-        for (String t_locs : torches) {
-            String[] t_data = t_locs.split(":");
-            try {
-                tx = Integer.parseInt(t_data[0]);
-                ty = Integer.parseInt(t_data[1]);
-                tz = Integer.parseInt(t_data[2]);
-            } catch (NumberFormatException n) {
-                System.err.println("Could not convert to number");
-            }
-            Constants.setBlock(world, tx, ty, tz, 50, (byte) 5);
-        }
         if (plugin.config.getBoolean("bonus_chest") == Boolean.valueOf("true")) {
+            // get rid of last ":" and assign ids to an array
             replacedBlocks = replacedBlocks.substring(0, replacedBlocks.length() - 1);
             String[] replaceddata = replacedBlocks.split(":");
             // get saved chest location
@@ -331,7 +386,9 @@ public class Schematic {
             Location chest_loc = new Location(cw, cx, cy, cz);
             Block bonus_chest = chest_loc.getBlock();
             Chest chest = (Chest) bonus_chest.getState();
+            // get chest inventory
             Inventory chestInv = chest.getInventory();
+            // convert non-smeltable ores to items
             for (String i : replaceddata) {
                 try {
                     rid = Integer.parseInt(i);
@@ -355,32 +412,21 @@ public class Schematic {
                         multiplier = 4;
                         break;
                 }
+                // add items to chest
                 chestInv.addItem(new ItemStack(rid, multiplier, damage));
                 multiplier = 1; // reset multiplier
                 damage = 0; // reset damage
             }
         }
+        // save the timelords file
+        try {
+            plugin.timelords.save(plugin.timelordsfile);
+        } catch (IOException io) {
+            System.err.println(Constants.MY_PLUGIN_NAME + " Could not save timelords file!");
+        }
     }
 
     public void destroyTARDIS(Player p, Location l, Constants.COMPASS d) {
-        int cx = 0, cy = 0, cz = 0;
-        // remove chest contents first
-        String saved_chestloc = plugin.timelords.getString(p.getName() + ".chest");
-        String[] cdata = saved_chestloc.split(":");
-        World cw = plugin.getServer().getWorld(cdata[0]);
-        try {
-            cx = Integer.parseInt(cdata[1]);
-            cy = Integer.parseInt(cdata[2]);
-            cz = Integer.parseInt(cdata[3]);
-        } catch (NumberFormatException n) {
-            System.err.println("Could not convert to number");
-        }
-        Location chest_loc = new Location(cw, cx, cy, cz);
-        Block bonus_chest = chest_loc.getBlock();
-        Chest chest = (Chest) bonus_chest.getState();
-        Inventory chestInv = chest.getInventory();
-        chestInv.clear();
-        // should probably clear furnace too
         // inner TARDIS
         int level, row, col, x, y, z, startx, starty = 15, startz, resetx, resetz;
         World world = l.getWorld();
@@ -438,23 +484,7 @@ public class Schematic {
             starty += 1;
         }
         // remove bluebox
-        int sbx = l.getBlockX() - 1;
-        int rbx = sbx;
-        int sby = l.getBlockY() - 2;
-        int sbz = l.getBlockZ() - 1;
-        int rbz = sbz;
-        for (int yy = 0; yy < 4; yy++) {
-            for (int xx = 0; xx < 3; xx++) {
-                for (int zz = 0; zz < 3; zz++) {
-                    Constants.setBlock(world, sbx, sby, sbz, 0, (byte) 0);
-                    sbx++;
-                }
-                sbx = rbx;
-                sbz++;
-            }
-            sbz = rbz;
-            sby++;
-        }
+        destroyBlueBox(l, world);
         // remove player from timelords
         String configPath = p.getName();
         plugin.timelords.set(configPath, null);
@@ -464,6 +494,28 @@ public class Schematic {
             System.err.println(Constants.MY_PLUGIN_NAME + " Could not save timelords file!");
         }
     }
+
+    public void destroyBlueBox(Location l, World w) {
+
+        int sbx = l.getBlockX() - 1;
+        int rbx = sbx;
+        int sby = l.getBlockY() - 2;
+        int sbz = l.getBlockZ() - 1;
+        int rbz = sbz;
+        for (int yy = 0; yy < 4; yy++) {
+            for (int xx = 0; xx < 3; xx++) {
+                for (int zz = 0; zz < 3; zz++) {
+                    Constants.setBlock(w, sbx, sby, sbz, 0, (byte) 0);
+                    sbx++;
+                }
+                sbx = rbx;
+                sbz++;
+            }
+            sbz = rbz;
+            sby++;
+        }
+    }
+
     private static int[] startLoc = new int[6];
 
     public int[] getStartLocation(Location loc, Constants.COMPASS dir) {

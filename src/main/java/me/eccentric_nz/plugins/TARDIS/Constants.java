@@ -24,7 +24,7 @@ public class Constants {
     public static String TIMELORDS_FILE_NAME = "timelords.yml";
     // messages
     public static final String INSTRUCTIONS = "Your TARDIS is ready!\nRight-click the TARDIS door with your TARDIS key (a REDSTONE TORCH) to enter.\nTo time travel, adjust the repeaters on the console. For more help, type " + ChatColor.GOLD + "/TARDIS help timetravel" + ChatColor.RESET + " in chat to see more instructions.";
-    public static final String COMMANDS = "Type " + ChatColor.GOLD + "/TARDIS help <command>" + ChatColor.RESET + " to see more details about a command.\nCommands\n" + ChatColor.GOLD + "/TARDIS create" + ChatColor.RESET + " - makes a new TARDIS.\n" + ChatColor.GOLD + "/TARDIS delete" + ChatColor.RESET + " - remove a TARDIS\n" + ChatColor.GOLD + "/TARDIS timetravel [dest] - teleports you to a random or saved location.\n" + ChatColor.GOLD + "/TARDIS list" + ChatColor.RESET + " - list saved time travel destinations.\n" + ChatColor.GOLD + "/TARDIS find" + ChatColor.RESET + " - show the co-ordinates of a lost TARDIS.";
+    public static final String COMMANDS = "Type " + ChatColor.GOLD + "/TARDIS help <command>" + ChatColor.RESET + " to see more details about a command.\nType " + ChatColor.GOLD + "/TARDIS help create|delete" + ChatColor.RESET + " for instructions on creating and removing a TARDIS.\nCommands\n" + ChatColor.GOLD + "/TARDIS timetravel [dest] - teleports you to a random or saved location.\nDestinations are determined by the delay settings of the redstone repeaters on the TARDIS console." + ChatColor.GOLD + "/TARDIS list" + ChatColor.RESET + " - list saved time travel destinations.\nThere are 4 save slots, one of which is reserved for the 'home' destination." + ChatColor.GOLD + "/TARDIS find" + ChatColor.RESET + " - show the co-ordinates of a lost TARDIS.";
 
     public enum COMPASS {
 
@@ -35,8 +35,8 @@ public class Constants {
 
         CREATE, DELETE, TIMETRAVEL, LIST, FIND, ADMIN;
     }
-    public static final String COMMAND_CREATE = "You can create a TARDIS in one of two ways:\nby placing a specific pattern of blocks,\nor using the command /TARDIS create.\nEither way, you will need to have an IRON BLOCK, a LAPIS BLOCK, and a redstone torch in your inventory.\nYou then either place the blocks where you want the TARDIS to be,\nor look at the block where you want the TARDIS to stand and type the command " + ChatColor.GOLD + "/TARDIS create" + ChatColor.RESET + ".\nThe TARDIS takes up a 3 x 3 x 4 area (w x d x h), so keep this in mind.";
-    public static final String COMMAND_DELETE = "This is the safe way to remove your TARDIS. You will recoop the original blocks that you created the tardis with.\nJust type the command " + ChatColor.GOLD + "/TARDIS delete" + ChatColor.RESET + ".\n" + ChatColor.RED + "WARNING:" + ChatColor.RESET + " Breaking the TARDIS manually means you will lose your blocks.";
+    public static final String COMMAND_CREATE = "You create a TARDIS by placing a " + ChatColor.GOLD + "specific pattern of blocks." + ChatColor.RESET + "\nYou will need to have an IRON BLOCK, a LAPIS BLOCK, and a redstone torch in your inventory.\nYou place the blocks where you want the TARDIS to be,in the following order:\nBottom - IRON BLOCK, middle - LAPIS BLOCK, top - REDSTONE TORCH\nThe TARDIS takes up a 3 x 3 x 4 area (w x d x h), so keep this in mind.";
+    public static final String COMMAND_DELETE = "To remove your TARDIS, " + ChatColor.GOLD + "break the 'POLICE BOX' wall sign" + ChatColor.RESET + " on the front of the TARDIS.\n" + ChatColor.RED + "WARNING:" + ChatColor.RESET + " You will lose any items you have stored in your TARDIS chest.";
     public static final String COMMAND_TIMETRAVEL = "Select the TARDIS you want to add a todo to\nby right-clicking it with a FEATHER\nTo add a todo, type " + ChatColor.GOLD + "/TARDIS todo add [the thing you need to do]" + ChatColor.RESET + "\nTo list your todos, type " + ChatColor.GOLD + "/TARDIS todo list" + ChatColor.RESET + " (or right-click with PAPER).\nTo mark a todo as DONE, list the todos to get the todo's number,\nthen type " + ChatColor.GOLD + "/TARDIS todo mark [x]" + ChatColor.RESET + ", where [x] is a number.\nTo delete a todo, list the todos to get the todo's number,\nthen type " + ChatColor.GOLD + "/TARDIS todo delete [x]" + ChatColor.RESET + ", where [x] is a number.";
     public static final String COMMAND_LIST = "Select the TARDIS you want to add a todo to\nby right-clicking it with a FEATHER\nTo add a todo, type " + ChatColor.GOLD + "/TARDIS todo add [the thing you need to do]" + ChatColor.RESET + "\nTo list your todos, type " + ChatColor.GOLD + "/TARDIS todo list" + ChatColor.RESET + " (or right-click with PAPER).\nTo mark a todo as DONE, list the todos to get the todo's number,\nthen type " + ChatColor.GOLD + "/TARDIS todo mark [x]" + ChatColor.RESET + ", where [x] is a number.\nTo delete a todo, list the todos to get the todo's number,\nthen type " + ChatColor.GOLD + "/TARDIS todo delete [x]" + ChatColor.RESET + ", where [x] is a number.";
     public static final String COMMAND_FIND = "Simply type " + ChatColor.GOLD + "/TARDIS find" + ChatColor.RESET + "\nTo display the world name and x, y, z co-ordinates of the last saved location of your TARDIS.";
@@ -49,7 +49,7 @@ public class Constants {
     public static void setBlock(World w, int x, int y, int z, int m, byte d) {
         Block b = w.getBlockAt(x, y, z);
         b.setTypeIdAndData(m, d, true);
-        if (m == 76) {
+        if (m == 69) {
             Lever lever = new Lever(b.getData());
             lever.setFacingDirection(BlockFace.DOWN);
             lever.setPowered(false);
@@ -88,6 +88,7 @@ public class Constants {
 
     public static void buildOuterTARDIS(Player p, Location l, float yaw) {
         World world;
+        Location under_door = null;
         // expand placed blocks to a police box
         double lowX = l.getX();
         double lowY = l.getY();
@@ -103,12 +104,14 @@ public class Constants {
         int plusy = (l.getBlockY() + 1);
         int minusy = (l.getBlockY() - 1);
         int down2y = (l.getBlockY() - 2);
+        int down3y = (l.getBlockY() - 3);
         int z = (l.getBlockZ());
         int plusz = (l.getBlockZ() + 1);
         int minusz = (l.getBlockZ() - 1);
         int signx = x;
         int signz = z;
         world = l.getWorld();
+        byte grey = 8;
         byte blue = 11;
         byte norm = 0;
         byte sd = 2;
@@ -165,6 +168,16 @@ public class Constants {
             mdn = blue;
             bdn = blue;
         }
+        // base layer - light grey wool
+        setBlock(world, x, down3y, z, 35, grey); // center
+        setBlock(world, plusx, down3y, z, 35, grey); // east
+        setBlock(world, plusx, down3y, plusz, 35, grey);
+        setBlock(world, x, down3y, plusz, 35, grey); // south
+        setBlock(world, minusx, down3y, plusz, 35, grey);
+        setBlock(world, minusx, down3y, z, 35, grey); // west
+        setBlock(world, minusx, down3y, minusz, 35, grey);
+        setBlock(world, x, down3y, minusz, 35, grey); // north
+        setBlock(world, plusx, down3y, minusz, 35, grey);
         // top layer
         setBlock(world, x, y, z, 35, blue); // center
         setBlock(world, plusx, y, z, 35, blue); // east
@@ -209,7 +222,7 @@ public class Constants {
     public static Location getLocationFromFile(String p, String s, float yaw, float pitch, FileConfiguration c) {
         int savedx = 0, savedy = 0, savedz = 0;
         // get location from timelords file
-        String saved_loc = c.getString(p + "."+s);
+        String saved_loc = c.getString(p + "." + s);
         String[] data = saved_loc.split(":");
         //System.out.println("saved world: " + data[0]);
         World savedw = Bukkit.getServer().getWorld(data[0]);

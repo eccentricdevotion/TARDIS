@@ -52,7 +52,7 @@ public class TARDISexecutor implements CommandExecutor {
                 return true;
             }
             // the command list - first argument MUST appear here!
-            if (!args[0].equalsIgnoreCase("create") && !args[0].equalsIgnoreCase("timetravel") && !args[0].equalsIgnoreCase("tt") && !args[0].equalsIgnoreCase("list") && !args[0].equalsIgnoreCase("delete") && !args[0].equalsIgnoreCase("admin") && !args[0].equalsIgnoreCase("help") && !args[0].equalsIgnoreCase("find")) {
+            if (!args[0].equalsIgnoreCase("timetravel") && !args[0].equalsIgnoreCase("tt") && !args[0].equalsIgnoreCase("list") && !args[0].equalsIgnoreCase("admin") && !args[0].equalsIgnoreCase("help") && !args[0].equalsIgnoreCase("find")) {
                 sender.sendMessage("Do you want to create, time travel, list, find or delete?");
                 return false;
             }
@@ -116,83 +116,6 @@ public class TARDISexecutor implements CommandExecutor {
                 sender.sendMessage("This command can only be run by a player");
                 return false;
             } else {
-                if (args[0].equalsIgnoreCase("create")) {
-                    if (player.hasPermission("TARDIS.create")) {
-                        // check if TARDIS limit has been reached
-                        String configPath = player.getName();
-                        if (plugin.timelords.isSet(configPath)) {
-                            String leftLoc = plugin.timelords.getString(configPath + ".save");
-                            String[] leftData = leftLoc.split(":");
-                            player.sendMessage("You already have a TARDIS, you left it in " + leftData[0] + " at x:" + leftData[1] + " y:" + leftData[2] + " z:" + leftData[3]);
-                            return false;
-                        }
-                        if (plugin.config.getBoolean("require_blocks") == true && player.getGameMode() == GameMode.SURVIVAL) {
-                            if (!player.getInventory().contains(Material.IRON_BLOCK, 1)) {
-                                sender.sendMessage("You do not have an IRON BLOCK, you better get that pick-axe out!");
-                                return false;
-                            }
-                            if (!player.getInventory().contains(Material.LAPIS_BLOCK, 1)) {
-                                sender.sendMessage("You do not have a LAPIS BLOCK, time to go mining!");
-                                return false;
-                            }
-                            if (!player.getInventory().contains(Material.REDSTONE_TORCH_ON, 1)) {
-                                sender.sendMessage("You do not have a REDSTONE TORCH, you should probably make one!");
-                                return false;
-                            }
-                            // remove the items from the players inventory
-                            player.getInventory().removeItem(new ItemStack(Material.IRON_BLOCK, 1));
-                            player.getInventory().removeItem(new ItemStack(Material.LAPIS_BLOCK, 1));
-                            player.getInventory().removeItem(new ItemStack(Material.REDSTONE_TORCH_ON, 1));
-                        }
-
-                        // correct for negative yaw
-                        float pyaw = player.getLocation().getYaw();
-                        if (pyaw >= 0) {
-                            pyaw = (pyaw % 360);
-                        } else {
-                            pyaw = (360 + (pyaw % 360));
-                        }
-                        if (pyaw >= 315 || pyaw < 45) {
-                            d = "NORTH";
-                        }
-                        if (pyaw >= 225 && pyaw < 315) {
-                            d = "WEST";
-                        }
-                        if (pyaw >= 135 && pyaw < 225) {
-                            d = "SOUTH";
-                        }
-                        if (pyaw >= 45 && pyaw < 135) {
-                            d = "EAST";
-                        }
-                        bluebox_loc = player.getTargetBlock(null, 50).getLocation();
-                        int lowY = bluebox_loc.getBlockY();
-                        bluebox_loc.setY(lowY + 1);
-
-                        // setBlock(World w, int x, int y, int z, float yaw, float min, float max, String compare)
-                        Constants.buildOuterTARDIS(player, bluebox_loc, pyaw);
-                        Schematic s = new Schematic(plugin);
-                        s.buildInnerTARDIS(plugin.schematic, player, bluebox_loc, Constants.COMPASS.valueOf(d));
-
-                        bb_locX = bluebox_loc.getBlockX();
-                        bb_locY = bluebox_loc.getBlockY();
-                        bb_locZ = bluebox_loc.getBlockZ();
-                        bb_world = player.getWorld().getName();
-                        plugin.timelords.set(configPath + ".home", bb_world+":"+bb_locX+":"+bb_locY+":"+bb_locZ);
-                        plugin.timelords.set(configPath + ".save", bb_world+":"+bb_locX+":"+bb_locY+":"+bb_locZ);
-                        plugin.timelords.set(configPath + ".direction", d);
-                        try {
-                            plugin.timelords.save(plugin.timelordsfile);
-                        } catch (IOException e) {
-                            sender.sendMessage("There was a problem saving the TARDIS settings!");
-                            System.err.println(Constants.MY_PLUGIN_NAME + " Could not save the time lords file!");
-                        }
-                        sender.sendMessage(Constants.INSTRUCTIONS.split("\n"));
-                        return true;
-                    } else {
-                        sender.sendMessage(Constants.NO_PERMS_MESSAGE);
-                        return false;
-                    }
-                }
                 if (args[0].equalsIgnoreCase("timetravel") || args[0].equalsIgnoreCase("tt")) {
                     if (player.hasPermission("TARDIS.timetravel")) {
                         String configPath = player.getName();
@@ -224,25 +147,6 @@ public class TARDISexecutor implements CommandExecutor {
                             // exit TARDIS!
                             player.teleport(exitTardis);
                             plugin.PlayerTARDISMap.remove(player.getName());
-                            if (args.length < 3) {
-                                sender.sendMessage("Too few command arguments!");
-                                return false;
-                            }
-                            int count = args.length;
-                            String t = "";
-                            for (int i = 2; i < count; i++) {
-                                t += args[i] + " ";
-                            }
-                            t = t.substring(0, t.length() - 1);
-                            // need to make there are no periods(.) in the text
-                            String nodots = StringUtils.replace(t, ".", "_");
-                            plugin.timelords.set(configPath + "." + nodots + ".status", 0);
-                            try {
-                                plugin.timelords.save(plugin.timelordsfile);
-                            } catch (IOException e) {
-                                sender.sendMessage("There was a problem saving the todo item!");
-                            }
-                            sender.sendMessage("The todo was added successfully!");
                             return true;
                         }
                         if (args[1].equalsIgnoreCase("random")) {
@@ -292,63 +196,6 @@ public class TARDISexecutor implements CommandExecutor {
                             sender.sendMessage("You need to inside your TARDIS before you can time travel!");
                             return false;
                         }
-                    }
-                }
-                if (args[0].equalsIgnoreCase("delete")) {
-                    if (player.hasPermission("TARDIS.delete")) {
-                        if (!plugin.PlayerTARDISMap.containsKey(player.getName())) {
-                            sender.sendMessage("You need to select the TARDIS with a " + plugin.config.getString("select_material") + " before you can delete it!");
-                            return false;
-                        } else {
-                            String name = "";
-                            Boolean EntID = plugin.PlayerTARDISMap.get(player.getName());
-                            String configPath = player.getName() + "." + EntID;
-                            world = player.getWorld();
-                            Set<String> seclist = plugin.timelords.getConfigurationSection(player.getName()).getKeys(false);
-                            Set<String> todolist = plugin.timelords.getConfigurationSection(player.getName()).getKeys(false);
-                            Set<String> reminderlist = plugin.timelords.getConfigurationSection(player.getName()).getKeys(false);
-                            boolean found = false;
-                            for (String u : seclist) {
-                                if (u.equals(EntID.toString())) {
-                                    found = true;
-                                    name = "'" + plugin.timelords.getString(player.getName() + "." + u + ".name") + "'";
-                                    plugin.timelords.set(configPath, null);
-                                    // remove the villager
-                                    List<LivingEntity> elist = world.getLivingEntities();
-                                    for (LivingEntity l : elist) {
-                                        if (l.getUniqueId().equals(EntID)) {
-                                            l.remove();
-                                        }
-                                    }
-                                }
-                            }
-                            if (found == false) {
-                                sender.sendMessage("Could not find the TARDIS's config!");
-                                return false;
-                            } else {
-                                for (String t : todolist) {
-                                    if (t.equals(EntID.toString())) {
-                                        plugin.timelords.set(configPath, null);
-                                    }
-                                }
-                                for (String r : todolist) {
-                                    if (r.equals(EntID.toString())) {
-                                        plugin.timelords.set(configPath, null);
-                                    }
-                                }
-                                try {
-                                    plugin.PlayerTARDISMap.remove(player.getName());
-                                    plugin.timelords.save(plugin.timelordsfile);
-                                } catch (IOException io) {
-                                    System.out.println("Could not save the config files!");
-                                }
-                                sender.sendMessage("The TARDIS " + name + " was deleted successfully!");
-                                return true;
-                            }
-                        }
-                    } else {
-                        sender.sendMessage(Constants.NO_PERMS_MESSAGE);
-                        return false;
                     }
                 }
                 if (args[0].equalsIgnoreCase("help")) {
