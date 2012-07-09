@@ -49,7 +49,8 @@ public class TARDISListener implements Listener {
                     }
                     Location block_loc = blockBottom.getLocation();
                     // turn the block stack into a TARDIS
-                    Constants.buildOuterTARDIS(player, block_loc, pyaw);
+                    Constants c = new Constants(plugin);
+                    c.buildOuterTARDIS(player, block_loc, pyaw);
                     // determine direction player is facing
                     String d = "";
                     if (pyaw >= 315 || pyaw < 45) {
@@ -94,12 +95,9 @@ public class TARDISListener implements Listener {
         Block block = event.getBlock();
         Material blockType = block.getType();
         if (blockType == Material.WALL_SIGN && plugin.timelords.contains(configPath + ".direction")) {
-            player.sendMessage("You destroyed a wall sign");
             // check the sign location
             Location sign_loc = block.getLocation();
-            player.sendMessage("Sign location: " + sign_loc);
             Location bb_loc = Constants.getLocationFromFile(configPath, "save", yaw, pitch, plugin.timelords);
-            player.sendMessage("BB location: " + bb_loc);
             // get TARDIS direction
             Constants.COMPASS d = Constants.COMPASS.valueOf(plugin.timelords.getString(configPath + ".direction"));
             switch (d) {
@@ -144,13 +142,13 @@ public class TARDISListener implements Listener {
             Material blockType = block.getType();
             ItemStack stack = player.getItemInHand();
             Material material = stack.getType();
-            player.sendMessage("The material ID is: " + blockType.getId() + ", the data value is: " + block.getData()); // returns 71 if an IRON_DOOR_BLOCK
+            //player.sendMessage("The material ID is: " + blockType.getId() + ", the data value is: " + block.getData()); // returns 71 if an IRON_DOOR_BLOCK
             if (blockType == Material.IRON_DOOR_BLOCK) {
                 if (material == Material.REDSTONE_TORCH_ON) {
-                    player.sendMessage("You clicked the iron door with a redstone torch.");
+                    //player.sendMessage("You clicked the iron door with a redstone torch.");
                     if (block != null) {
                         Location block_loc = block.getLocation();
-                        System.out.println("block_loc: " + block_loc);
+                        //System.out.println("block_loc: " + block_loc);
                         //plugin.timelords = YamlConfiguration.loadConfiguration(plugin.timelordsfile);
                         if (player.hasPermission("TARDIS.enter")) {
                             if (plugin.timelords.contains(configPath + ".direction")) {
@@ -180,7 +178,7 @@ public class TARDISListener implements Listener {
                                         door_loc.setX(x - 1);
                                         break;
                                 }
-                                System.out.println("door_loc: " + door_loc);
+                                //System.out.println("door_loc: " + door_loc);
                                 if (plugin.PlayerTARDISMap.containsKey(configPath)) {
                                     // should only get this message if exiting the TARDIS
                                     player.sendMessage("Exiting the TARDIS");
@@ -195,7 +193,7 @@ public class TARDISListener implements Listener {
                                     switch (Constants.COMPASS.valueOf(d)) {
                                         case NORTH:
                                             exitTardis.setZ(ez - 2);
-                                            //pyaw = 0;
+                                            pyaw = 0;
                                             break;
                                         case EAST:
                                             exitTardis.setX(ex + 2);
@@ -210,7 +208,7 @@ public class TARDISListener implements Listener {
                                             pyaw = 270;
                                             break;
                                     }
-                                    exitTardis.setY(ey - 1);
+                                    exitTardis.setY(ey - 2);
                                     // destroy current TARDIS location
                                     String sl = plugin.timelords.getString(configPath + ".save");
                                     String cl = plugin.timelords.getString(configPath + ".current");
@@ -233,7 +231,8 @@ public class TARDISListener implements Listener {
                                     }
                                     // rebuild blue box
                                     if (newl != null) {
-                                        Constants.buildOuterTARDIS(player, newl, pyaw);
+                                        Constants c = new Constants(plugin);
+                                        c.buildOuterTARDIS(player, newl, pyaw);
                                     }
                                     // exit TARDIS!
                                     player.teleport(exitTardis);
@@ -285,7 +284,7 @@ public class TARDISListener implements Listener {
                     Location r3_loc = Constants.getLocationFromFile(configPath, "repeater3", 0, 0, plugin.timelords);
                     Block r3 = r3_loc.getBlock();
                     byte r3_data = r3.getData();
-                    player.sendMessage("0:" + r0_data + ", 1:" + r1_data + ", 2:" + r2_data + ", 3:" + r3_data);
+                    //player.sendMessage("0:" + r0_data + ", 1:" + r1_data + ", 2:" + r2_data + ", 3:" + r3_data);
                     if (r0_data <= 3 && r1_data <= 3 && r2_data <= 3 && r3_data <= 3) { // first position
                         player.sendMessage("Home destination selected!");
                         // always teleport to home location
@@ -311,7 +310,6 @@ public class TARDISListener implements Listener {
                         }
                     }
                     if (r0_data >= 12 && r0_data <= 15 && r1_data <= 3 && r2_data <= 3 && r3_data <= 3) { // last position
-                        player.sendMessage("Save 3 position set!");
                         if (plugin.timelords.contains(configPath + ".dest3")) {
                             String d = plugin.timelords.getString(configPath + ".dest3");
                             plugin.timelords.set(configPath + ".save", d);
@@ -321,10 +319,9 @@ public class TARDISListener implements Listener {
                         }
                     }
                     if (r1_data > 3 || r2_data > 3 || r3_data > 3) {
-                        long seed = r3_data;
                         // create a random destination
                         TARDISTimetravel tt = new TARDISTimetravel(plugin);
-                        Location rand = tt.randomDestination(player, player.getWorld(), seed, r1_data, r2_data);
+                        Location rand = tt.randomDestination(player, player.getWorld(), r1_data, r2_data, r3_data);
                         String d = rand.getWorld().getName() + ":" + rand.getBlockX() + ":" + rand.getBlockY() + ":" + rand.getBlockZ();
                         player.sendMessage(d);
                         plugin.timelords.set(configPath + ".save", d);

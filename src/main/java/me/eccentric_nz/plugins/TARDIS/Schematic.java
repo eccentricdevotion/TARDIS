@@ -42,7 +42,7 @@ public class Schematic {
             }
             //System.out.println(blocks[2][5][5]);
         } catch (IOException io) {
-            System.out.println("Could not read csv file");
+            System.err.println("Could not read csv file");
         }
         return blocks;
     }

@@ -23,12 +23,12 @@ public class TARDISTimetravel {
         this.plugin = plugin;
     }
 
-    public Location randomDestination(Player p, World w, long seed, byte rx, byte rz) {
+    public Location randomDestination(Player p, World w, byte rx, byte rz, byte multiplier) {
         int level, row, col, x, y, z, startx, starty, startz, resetx, resetz;
         int[] bad_blockids = {8, 9, 10, 11, 51, 81};
         Boolean danger = true;
         // there needs to be room for the TARDIS and the player!
-        Random rand = new Random(seed);
+        Random rand = new Random();
         // get max_radius from config
         int max = plugin.config.getInt("tp_radius");
         int quarter = (max + 4 - 1) / 4;
@@ -62,6 +62,8 @@ public class TARDISTimetravel {
             wherex = wherex - max;
             wherez = wherez - max;
 
+            // use multiplier
+
             wherey = w.getHighestBlockYAt(wherex, wherez);
             Location chunk_loc = new Location(w, wherex, wherey, wherez);
             w.getChunkAt(chunk_loc).load();
@@ -83,6 +85,7 @@ public class TARDISTimetravel {
                 for (row = 0; row < 3; row++) {
                     for (col = 0; col < 5; col++) {
                         int id = w.getBlockAt(startx, starty, startz).getTypeId();
+                        System.out.println(id);
                         if (Arrays.asList(bad_blockids).contains(id)) {
                             danger = true;
                         } else {
@@ -124,6 +127,7 @@ public class TARDISTimetravel {
                 }
                 starty += 1;
             }
+            System.out.println("Finding safe location");
         }
         wherey = w.getHighestBlockYAt(wherex, wherez) + 3;
         dest = new Location(w, wherex, wherey, wherez);
