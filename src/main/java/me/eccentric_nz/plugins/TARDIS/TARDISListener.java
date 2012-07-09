@@ -14,6 +14,8 @@ import org.bukkit.event.block.Action;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.event.player.PlayerTeleportEvent;
+import org.bukkit.event.player.PlayerTeleportEvent.TeleportCause;
 import org.bukkit.inventory.ItemStack;
 
 public class TARDISListener implements Listener {
@@ -208,7 +210,7 @@ public class TARDISListener implements Listener {
                                             pyaw = 270;
                                             break;
                                     }
-                                    exitTardis.setY(ey - 2);
+                                    exitTardis.setY(ey - 1);
                                     // destroy current TARDIS location
                                     String sl = plugin.timelords.getString(configPath + ".save");
                                     String cl = plugin.timelords.getString(configPath + ".current");
@@ -335,5 +337,13 @@ public class TARDISListener implements Listener {
                 }
             }
         }
+    }
+
+    @EventHandler(priority = EventPriority.MONITOR)
+    public void onPlayerTp(PlayerTeleportEvent event) {
+        Player p = event.getPlayer();
+        Location from = event.getFrom();
+        Location to = event.getTo();
+        TeleportCause cause = event.getCause();
     }
 }
