@@ -1,8 +1,15 @@
 ## timelords
 dummy_user:
   direction: NORTH
+  travelling: false
   home: Gallifrey:36:63:280
   save: Gallifrey:36:63:280
-  dest1: Gallifrey:36:63:280
-  dest2: Gallifrey:36:63:280
-  dest3: Gallifrey:36:63:280
+  dest1:
+    name: Mine
+    location: Gallifrey:36:63:280
+  dest2:
+    name: Farm
+    location: Gallifrey:36:63:280
+  dest3:
+    name: Jungle
+    location: Gallifrey:36:63:280

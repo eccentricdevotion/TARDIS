@@ -3,13 +3,12 @@ package me.eccentric_nz.plugins.TARDIS;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
-import org.bukkit.block.BlockFace;
 import org.bukkit.block.Sign;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
-import org.bukkit.material.Lever;
 
 public class Constants {
 
@@ -30,7 +29,7 @@ public class Constants {
     public static String TIMELORDS_FILE_NAME = "timelords.yml";
     // messages
     public static String INSTRUCTIONS = "Your TARDIS is ready!\nRight-click the TARDIS door with your TARDIS key (a REDSTONE TORCH) to enter.\nTo time travel, adjust the repeaters on the console. For more help, type " + ChatColor.GOLD + "/TARDIS help timetravel" + ChatColor.RESET + " in chat to see more instructions.";
-    public static String COMMANDS = "Type " + ChatColor.GOLD + "/TARDIS help <command>" + ChatColor.RESET + " to see more details about a command.\nType " + ChatColor.GOLD + "/TARDIS help create|delete" + ChatColor.RESET + " for instructions on creating and removing a TARDIS.\nCommands\n" + ChatColor.GOLD + "/TARDIS timetravel [dest] - teleports you to a random or saved location.\nDestinations are determined by the delay settings of the redstone repeaters on the TARDIS console." + ChatColor.GOLD + "/TARDIS list" + ChatColor.RESET + " - list saved time travel destinations.\nThere are 4 save slots, one of which is reserved for the 'home' destination." + ChatColor.GOLD + "/TARDIS find" + ChatColor.RESET + " - show the co-ordinates of a lost TARDIS.";
+    public static String COMMANDS = ChatColor.BLUE + "TARDIS help\n" + ChatColor.RESET + "Type " + ChatColor.GOLD + "/TARDIS help <command>" + ChatColor.RESET + " to see more details about a command.\nType " + ChatColor.GOLD + "/TARDIS help create|delete|timetravel" + ChatColor.RESET + " for instructions on creating and removing a TARDIS and how to time travel.\nCommands\n" + ChatColor.GOLD + "/TARDIS list" + ChatColor.RESET + " - list saved time travel destinations.\nThere are 4 save slots, one of which is reserved for the 'home' destination.\n" + ChatColor.GOLD + "/TARDIS save [slot number] [name]" + ChatColor.RESET + " - save the co-ordinates of a destintation to the specified slot.\n" + ChatColor.GOLD + "/TARDIS find" + ChatColor.RESET + " - show the co-ordinates of a lost TARDIS.";
 
     public enum COMPASS {
 
@@ -39,14 +38,15 @@ public class Constants {
 
     public enum CMDS {
 
-        CREATE, DELETE, TIMETRAVEL, LIST, FIND, ADMIN;
+        CREATE, DELETE, TIMETRAVEL, LIST, SAVE, FIND, ADMIN;
     }
-    public static String COMMAND_CREATE = "You create a TARDIS by placing a " + ChatColor.GOLD + "specific pattern of blocks." + ChatColor.RESET + "\nYou will need to have an IRON BLOCK, a LAPIS BLOCK, and a redstone torch in your inventory.\nYou place the blocks where you want the TARDIS to be,in the following order:\nBottom - IRON BLOCK, middle - LAPIS BLOCK, top - REDSTONE TORCH\nThe TARDIS takes up a 3 x 3 x 4 area (w x d x h), so keep this in mind.";
-    public static String COMMAND_DELETE = "To remove your TARDIS, " + ChatColor.GOLD + "break the 'POLICE BOX' wall sign" + ChatColor.RESET + " on the front of the TARDIS.\n" + ChatColor.RED + "WARNING:" + ChatColor.RESET + " You will lose any items you have stored in your TARDIS chest.";
-    public static String COMMAND_TIMETRAVEL = "Select the TARDIS you want to add a todo to\nby right-clicking it with a FEATHER\nTo add a todo, type " + ChatColor.GOLD + "/TARDIS todo add [the thing you need to do]" + ChatColor.RESET + "\nTo list your todos, type " + ChatColor.GOLD + "/TARDIS todo list" + ChatColor.RESET + " (or right-click with PAPER).\nTo mark a todo as DONE, list the todos to get the todo's number,\nthen type " + ChatColor.GOLD + "/TARDIS todo mark [x]" + ChatColor.RESET + ", where [x] is a number.\nTo delete a todo, list the todos to get the todo's number,\nthen type " + ChatColor.GOLD + "/TARDIS todo delete [x]" + ChatColor.RESET + ", where [x] is a number.";
-    public static String COMMAND_LIST = "Select the TARDIS you want to add a todo to\nby right-clicking it with a FEATHER\nTo add a todo, type " + ChatColor.GOLD + "/TARDIS todo add [the thing you need to do]" + ChatColor.RESET + "\nTo list your todos, type " + ChatColor.GOLD + "/TARDIS todo list" + ChatColor.RESET + " (or right-click with PAPER).\nTo mark a todo as DONE, list the todos to get the todo's number,\nthen type " + ChatColor.GOLD + "/TARDIS todo mark [x]" + ChatColor.RESET + ", where [x] is a number.\nTo delete a todo, list the todos to get the todo's number,\nthen type " + ChatColor.GOLD + "/TARDIS todo delete [x]" + ChatColor.RESET + ", where [x] is a number.";
-    public static String COMMAND_FIND = "Simply type " + ChatColor.GOLD + "/TARDIS find" + ChatColor.RESET + "\nTo display the world name and x, y, z co-ordinates of the last saved location of your TARDIS.";
-    public static String COMMAND_ADMIN = "Arguments\n" + ChatColor.GOLD + "/TARDIS admin bonus [true|false]" + ChatColor.RESET + " - toggle whether the TARDIS chest is filled with items replaced during the TARDIS construction. Default: true.\n" + ChatColor.GOLD + "/TARDIS admin max_rad [x]" + ChatColor.RESET + " - set the maximum distance (in blocks) you can time travel in the TARDIS. Default: 200\n" + ChatColor.GOLD + "/TARDIS admin use_inv [true|false]" + ChatColor.RESET + " - set whether a player must have the required blocks in their inventory to create a TARDIS. SURVIVAL mode only. Default: true\n" + ChatColor.GOLD + "/TARDIS admin spout [true|false]" + ChatColor.RESET + " - set whether the player must be using the Spout client to create and use a TARDIS. Default: false";
+    public static String COMMAND_CREATE = ChatColor.BLUE + "Creating a TARDIS\n" + ChatColor.RESET + "You create a TARDIS by placing a " + ChatColor.GOLD + "specific pattern of blocks." + ChatColor.RESET + "\nYou will need to have an IRON BLOCK, a LAPIS BLOCK, and a redstone torch in your inventory.\nYou place the blocks where you want the TARDIS to be, in the following order:\nBottom - IRON BLOCK, middle - LAPIS BLOCK, top - REDSTONE TORCH\nThe TARDIS takes up a 3 x 3 x 4 area (w x d x h), so keep this in mind.\nTo enter the TARDIS, right-click the door with your TARDIS key (a redstone torch).";
+    public static String COMMAND_DELETE = ChatColor.BLUE + "Removing a TARDIS\n" + ChatColor.RESET + "To remove your TARDIS, " + ChatColor.GOLD + "break the 'POLICE BOX' wall sign" + ChatColor.RESET + " on the front of the TARDIS.\n" + ChatColor.RED + "WARNING:" + ChatColor.RESET + " You will lose any items you have stored in your TARDIS chest, and any saved time travel destinations.";
+    public static String COMMAND_TIMETRAVEL = ChatColor.BLUE + "Time travelling in the TARDIS\n" + ChatColor.RESET + "You can time travel in the TARDIS by changing the delay settings of the redstone repeaters on the TARDIS console.\nThe repeater closest to the door controls the saved time travel destinations - the 1-tick delay setting holds the 'Home' destination (where the TARDIS was first created), and the 2-4 tick delay settings are slots that you can save destinations to.\nTo travel to saved destinations all the other repeaters must be set to the 1-tick delay setting. You then select the saved slot as desired, then click the stone button at the rear of the TARDIS console.\nTo travel to a random destination, set any of the other repeaters to a 2-4 tick delay, then click the stone button at the rear of the TARDIS console.\nWhen exiting the TARDIS (right-click the door with your TARDIS key - a redstone torch) you will time travel to the destination of choice.";
+    public static String COMMAND_LIST = ChatColor.BLUE + "Listing time travel destinations\n" + ChatColor.RESET + "Simply type " + ChatColor.GOLD + "/TARDIS list" + ChatColor.RESET + "\nto list the destinations saved in the TARDIS console.";
+    public static String COMMAND_SAVE = ChatColor.BLUE + "Saving time travel destinations\n" + ChatColor.RESET + "To save the current TARDIS destination, type\n" + ChatColor.GOLD + "/TARDIS save [slot number] [name]" + ChatColor.RESET + "\nWhere [slot number] is a number from 1 to 3 and [name] is a what you want to call the destination.\n" + ChatColor.RED + "WARNING:" + ChatColor.RESET + " Specifying a slot number that already has a saved destination will cause that destination to be overwritten with the new one.";
+    public static String COMMAND_FIND = ChatColor.BLUE + "Finding the TARDIS\n" + ChatColor.RESET + "Simply type " + ChatColor.GOLD + "/TARDIS find" + ChatColor.RESET + "\nTo display the world name and x, y, z co-ordinates of the last saved location of your TARDIS.";
+    public static String COMMAND_ADMIN = ChatColor.BLUE + "TARDIS admin commands\n" + ChatColor.RESET + "Arguments\n" + ChatColor.GOLD + "/TARDIS admin bonus [true|false]" + ChatColor.RESET + " - toggle whether the TARDIS chest is filled with items replaced during the TARDIS construction. Default: true.\n" + ChatColor.GOLD + "/TARDIS admin max_rad [x]" + ChatColor.RESET + " - set the maximum distance (in blocks) you can time travel in the TARDIS. Default: 256\n" + ChatColor.GOLD + "/TARDIS admin protect [true|false]" + ChatColor.RESET + " - set whether the TARDIS blocks will be unaffected by fire/lava. Default: true\n" + ChatColor.GOLD + "/TARDIS admin spout [true|false]" + ChatColor.RESET + " - set whether the player must be using the Spout client to create and use a TARDIS. Default: false";
     public static String NO_PERMS_MESSAGE = "You do not have permission to do that!";
     public static String NOT_OWNER = "This is not your TARDIS!";
     public static String NO_TARDIS = "You have not created a TARDIS yet!";
@@ -55,12 +55,13 @@ public class Constants {
     public static void setBlock(World w, int x, int y, int z, int m, byte d) {
         Block b = w.getBlockAt(x, y, z);
         b.setTypeIdAndData(m, d, true);
-        if (m == 69) {
-            Lever lever = new Lever(b.getData());
-            lever.setFacingDirection(BlockFace.DOWN);
-            lever.setPowered(false);
-            lever.setData(d);
-            b.setData(lever.getData());
+    }
+
+    public static void setBlockCheck(World w, int x, int y, int z, int m, byte d) {
+        Block b = w.getBlockAt(x, y, z);
+        Material mat = b.getType();
+        if (mat == Material.AIR || mat == Material.SNOW || mat == Material.LEAVES || mat == Material.WATER || mat == Material.STATIONARY_WATER) {
+            b.setTypeIdAndData(m, d, true);
         }
     }
     public static String[] EFFECT_TYPES = {
@@ -134,16 +135,16 @@ public class Constants {
         final byte bde = getDoorBotDataEast(yaw);
 
         // setBlock(World w, int x, int y, int z, int m, byte d)
-        // base layer - light grey wool
-        setBlock(world, x, down3y, z, 35, grey); // center
-        setBlock(world, plusx, down3y, z, 35, grey); // east
-        setBlock(world, plusx, down3y, plusz, 35, grey);
-        setBlock(world, x, down3y, plusz, 35, grey); // south
-        setBlock(world, minusx, down3y, plusz, 35, grey);
-        setBlock(world, minusx, down3y, z, 35, grey); // west
-        setBlock(world, minusx, down3y, minusz, 35, grey);
-        setBlock(world, x, down3y, minusz, 35, grey); // north
-        setBlock(world, plusx, down3y, minusz, 35, grey);
+        // base layer - light grey wool - only set if block is air or water or leaves
+        setBlockCheck(world, x, down3y, z, 35, grey); // center
+        setBlockCheck(world, plusx, down3y, z, 35, grey); // east
+        setBlockCheck(world, plusx, down3y, plusz, 35, grey);
+        setBlockCheck(world, x, down3y, plusz, 35, grey); // south
+        setBlockCheck(world, minusx, down3y, plusz, 35, grey);
+        setBlockCheck(world, minusx, down3y, z, 35, grey); // west
+        setBlockCheck(world, minusx, down3y, minusz, 35, grey);
+        setBlockCheck(world, x, down3y, minusz, 35, grey); // north
+        setBlockCheck(world, plusx, down3y, minusz, 35, grey);
         // bottom layer corners
         setBlock(world, plusx, down2y, plusz, 35, blue);
         setBlock(world, minusx, down2y, plusz, 35, blue);
@@ -175,21 +176,16 @@ public class Constants {
         // remove the IRON & LAPIS blocks
         setBlock(world, x, minusy, z, 0, norm);
         setBlock(world, x, down2y, z, 0, norm);
-        // wait a bit
-        //plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
-           // public void run() {
-                // bottom layer with door bottom
-                setBlock(world, plusx, down2y, z, east, bde);
-                setBlock(world, x, down2y, plusz, south, bds);
-                setBlock(world, minusx, down2y, z, west, bdw);
-                setBlock(world, x, down2y, minusz, north, bdn);
-                // middle layer with door top
-                setBlock(world, plusx, minusy, z, east, mde);
-                setBlock(world, x, minusy, plusz, south, mds);
-                setBlock(world, minusx, minusy, z, west, mdw);
-                setBlock(world, x, minusy, minusz, north, mdn);
-           // }
-        //}, 20L);
+        // bottom layer with door bottom
+        setBlock(world, plusx, down2y, z, east, bde);
+        setBlock(world, x, down2y, plusz, south, bds);
+        setBlock(world, minusx, down2y, z, west, bdw);
+        setBlock(world, x, down2y, minusz, north, bdn);
+        // middle layer with door top
+        setBlock(world, plusx, minusy, z, east, mde);
+        setBlock(world, x, minusy, plusz, south, mds);
+        setBlock(world, minusx, minusy, z, west, mdw);
+        setBlock(world, x, minusy, minusz, north, mdn);
     }
 
     public static Location getLocationFromFile(String p, String s, float yaw, float pitch, FileConfiguration c) {
@@ -368,5 +364,37 @@ public class Constants {
             sign = (minusz - 1);
         }
         return sign;
+    }
+
+    public static void list(FileConfiguration c, Player p) {
+        String configPath = p.getName();
+        // construct home string
+        String h = c.getString(configPath + ".home");
+        String[] h_data = h.split(":");
+        p.sendMessage(ChatColor.GREEN + "HOME: " + h_data[0] + " at x:" + h_data[1] + " y:" + h_data[2] + " z:" + h_data[3]);
+        if (c.isSet(configPath + ".dest1")) {
+            String d1 = c.getString(configPath + ".dest1.location");
+            String d1_name = c.getString(configPath + ".dest1.name");
+            String[] d1_data = d1.split(":");
+            p.sendMessage(ChatColor.GREEN + "1. [" + d1_name + "]: " + d1_data[0] + " at x:" + d1_data[1] + " y:" + d1_data[2] + " z:" + d1_data[3]);
+        } else {
+            p.sendMessage(ChatColor.GREEN + "1. No destination saved");
+        }
+        if (c.isSet(configPath + ".dest2")) {
+            String d2 = c.getString(configPath + ".dest2.location");
+            String d2_name = c.getString(configPath + ".dest2.name");
+            String[] d2_data = d2.split(":");
+            p.sendMessage(ChatColor.GREEN + "2. [" + d2_name + "]: " + d2_data[0] + " at x:" + d2_data[1] + " y:" + d2_data[2] + " z:" + d2_data[3]);
+        } else {
+            p.sendMessage(ChatColor.GREEN + "2. No destination saved");
+        }
+        if (c.isSet(configPath + ".dest3")) {
+            String d3 = c.getString(configPath + ".dest3.location");
+            String d3_name = c.getString(configPath + ".dest3.name");
+            String[] d3_data = d3.split(":");
+            p.sendMessage(ChatColor.GREEN + "3. [" + d3_name + "]: " + d3_data[0] + " at x:" + d3_data[1] + " y:" + d3_data[2] + " z:" + d3_data[3]);
+        } else {
+            p.sendMessage(ChatColor.GREEN + "3. No destination saved");
+        }
     }
 }

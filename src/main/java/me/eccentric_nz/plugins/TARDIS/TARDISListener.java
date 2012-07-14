@@ -12,7 +12,9 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.block.BlockBreakEvent;
+import org.bukkit.event.block.BlockBurnEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
+import org.bukkit.event.block.BlockSpreadEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerTeleportEvent;
 import org.bukkit.event.player.PlayerTeleportEvent.TeleportCause;
@@ -159,7 +161,7 @@ public class TARDISListener implements Listener {
                                 Location door_loc = Constants.getLocationFromFile(configPath, "save", yaw, pitch, plugin.timelords);
                                 // get INNER TARDIS location
                                 Location tardis_loc = Constants.getLocationFromFile(configPath, "home", yaw, pitch, plugin.timelords);
-                                tardis_loc.setY(19);
+                                tardis_loc.setY(20.5);
                                 //System.out.println("tardis_loc: " + tardis_loc);
                                 World w = player.getWorld();
                                 double x = door_loc.getX();
@@ -178,13 +180,13 @@ public class TARDISListener implements Listener {
                                         door_loc.setX(x - 1);
                                         break;
                                 }
-                                //System.out.println("door_loc: " + door_loc);
-                                if (plugin.PlayerTARDISMap.containsKey(configPath)) {
-                                    // should only get this message if exiting the TARDIS
-                                    player.sendMessage("Exiting the TARDIS");
+                                System.out.println(plugin.timelords.getBoolean(configPath + ".travelling"));
+                                if (plugin.timelords.getBoolean(configPath + ".travelling") == Boolean.valueOf("true")) {
                                     // player is in the TARDIS
                                     // get location from timelords file
                                     Location exitTardis = Constants.getLocationFromFile(configPath, "save", yaw, pitch, plugin.timelords);
+                                    // should only get this message if exiting the TARDIS
+                                    player.sendMessage("Exiting the TARDIS");
                                     // make location safe ie. outside of the bluebox
                                     double ex = exitTardis.getX();
                                     double ez = exitTardis.getZ();
@@ -208,7 +210,7 @@ public class TARDISListener implements Listener {
                                             pyaw = 270;
                                             break;
                                     }
-                                    exitTardis.setY(ey - 2);
+                                    //exitTardis.setY(ey - 1);
                                     // destroy current TARDIS location
                                     String sl = plugin.timelords.getString(configPath + ".save");
                                     String cl = plugin.timelords.getString(configPath + ".current");
@@ -235,8 +237,14 @@ public class TARDISListener implements Listener {
                                         c.buildOuterTARDIS(player, newl, pyaw);
                                     }
                                     // exit TARDIS!
+                                    player.sendMessage("Just before teleport the Location is: " + exitTardis);
                                     player.teleport(exitTardis);
-                                    plugin.PlayerTARDISMap.remove(configPath);
+                                    plugin.timelords.set(configPath + ".travelling", false);
+                                    try {
+                                        plugin.timelords.save(plugin.timelordsfile);
+                                    } catch (IOException io) {
+                                        System.err.println(Constants.MY_PLUGIN_NAME + " could not save timelords file!");
+                                    }
                                 } else {
                                     // needs to be either top or bottom of door! This is the current bluebox door location
                                     if (block_loc.getBlockX() == door_loc.getBlockX() && block_loc.getBlockZ() == door_loc.getBlockZ() && (block_loc.getBlockY() == door_loc.getBlockY() - 2 || block_loc.getBlockY() == door_loc.getBlockY() - 1)) {
@@ -245,9 +253,14 @@ public class TARDISListener implements Listener {
                                         // enter TARDIS!
                                         w.getChunkAt(tardis_loc).load();
                                         player.teleport(tardis_loc);
-                                        plugin.PlayerTARDISMap.put(configPath, Boolean.valueOf("true"));
+                                        plugin.timelords.set(configPath + ".travelling", true);
                                         // update current TARDIS location
                                         plugin.timelords.set(configPath + ".current", plugin.timelords.getString(configPath + ".save"));
+                                        try {
+                                            plugin.timelords.save(plugin.timelordsfile);
+                                        } catch (IOException io) {
+                                            System.err.println(Constants.MY_PLUGIN_NAME + " could not save timelords file!");
+                                        }
                                     } else {
                                         player.sendMessage(Constants.NOT_OWNER);
                                     }
@@ -265,7 +278,7 @@ public class TARDISListener implements Listener {
                     player.sendMessage(Constants.WRONG_MATERIAL + " You have a " + material + " in our hand!");
                 }
             }
-            if (blockType == Material.STONE_BUTTON && plugin.PlayerTARDISMap.containsKey(configPath)) {
+            if (blockType == Material.STONE_BUTTON && plugin.timelords.getBoolean(configPath + ".travelling") == Boolean.valueOf("true")) {
                 // get saved button location
                 Location pp = Constants.getLocationFromFile(configPath, "button", 0, 0, plugin.timelords);
                 // get clicked block location
@@ -293,27 +306,30 @@ public class TARDISListener implements Listener {
                     }
                     if (r0_data >= 4 && r0_data <= 7 && r1_data <= 3 && r2_data <= 3 && r3_data <= 3) { // second position
                         if (plugin.timelords.contains(configPath + ".dest1")) {
-                            String d = plugin.timelords.getString(configPath + ".dest1");
+                            String d = plugin.timelords.getString(configPath + ".dest1.location");
+                            String n = plugin.timelords.getString(configPath + ".dest1.name");
                             plugin.timelords.set(configPath + ".save", d);
-                            player.sendMessage("Destination 1 selected!");
+                            player.sendMessage("Destination 1 [" + n + "] selected!");
                         } else {
                             player.sendMessage("There is no destination saved to slot 1!");
                         }
                     }
                     if (r0_data >= 8 && r0_data <= 11 && r1_data <= 3 && r2_data <= 3 && r3_data <= 3) { // third position
                         if (plugin.timelords.contains(configPath + ".dest2")) {
-                            String d = plugin.timelords.getString(configPath + ".dest2");
+                            String d = plugin.timelords.getString(configPath + ".dest2.location");
+                            String n = plugin.timelords.getString(configPath + ".dest2.name");
                             plugin.timelords.set(configPath + ".save", d);
-                            player.sendMessage("Destination 2 selected!");
+                            player.sendMessage("Destination 2 [" + n + "] selected!");
                         } else {
                             player.sendMessage("There is no destination saved to slot 2!");
                         }
                     }
                     if (r0_data >= 12 && r0_data <= 15 && r1_data <= 3 && r2_data <= 3 && r3_data <= 3) { // last position
                         if (plugin.timelords.contains(configPath + ".dest3")) {
-                            String d = plugin.timelords.getString(configPath + ".dest3");
+                            String d = plugin.timelords.getString(configPath + ".dest3.location");
+                            String n = plugin.timelords.getString(configPath + ".dest3.name");
                             plugin.timelords.set(configPath + ".save", d);
-                            player.sendMessage("Destination 3 selected!");
+                            player.sendMessage("Destination 3 [" + n + "] selected!");
                         } else {
                             player.sendMessage("There is no destination saved to slot 3!");
                         }
@@ -342,5 +358,27 @@ public class TARDISListener implements Listener {
         Location from = event.getFrom();
         Location to = event.getTo();
         TeleportCause cause = event.getCause();
+    }
+
+    @EventHandler(priority = EventPriority.LOWEST)
+    public void onFireSpread(BlockSpreadEvent event) {
+        if (plugin.config.getBoolean("protect_blocks") == Boolean.valueOf("true")) {
+            int i = event.getBlock().getTypeId();
+            byte d = event.getBlock().getData();
+            if (i == 35 && (d == 1 || d == 4 || d == 7 || d == 8 || d == 11)) {
+                event.setCancelled(true);
+            }
+        }
+    }
+
+    @EventHandler(priority = EventPriority.LOWEST)
+    public void onBlockBurn(BlockBurnEvent event) {
+        if (plugin.config.getBoolean("protect_blocks") == Boolean.valueOf("true")) {
+            int i = event.getBlock().getTypeId();
+            byte d = event.getBlock().getData();
+            if (i == 35 && (d == 1 || d == 4 || d == 7 || d == 8 || d == 11)) {
+                event.setCancelled(true);
+            }
+        }
     }
 }

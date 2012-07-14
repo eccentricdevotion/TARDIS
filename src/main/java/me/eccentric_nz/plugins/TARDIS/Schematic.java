@@ -499,9 +499,12 @@ public class Schematic {
 
         int sbx = l.getBlockX() - 1;
         int rbx = sbx;
+        int gbx = sbx;
         int sby = l.getBlockY() - 2;
+        int sbywool = l.getBlockY() - 3;
         int sbz = l.getBlockZ() - 1;
         int rbz = sbz;
+        int gbz = sbz;
         for (int yy = 0; yy < 4; yy++) {
             for (int xx = 0; xx < 3; xx++) {
                 for (int zz = 0; zz < 3; zz++) {
@@ -514,8 +517,21 @@ public class Schematic {
             sbz = rbz;
             sby++;
         }
+        // remove base - only if light grey wool
+        for (int gxx = 0; gxx < 3; gxx++) {
+            for (int gzz = 0; gzz < 3; gzz++) {
+                Block b = w.getBlockAt(gbx, sbywool, gbz);
+                Material mat = b.getType();
+                byte data = b.getData();
+                if (mat == Material.WOOL && data == 8) {
+                    Constants.setBlock(w, gbx, sbywool, gbz, 0, (byte) 0);
+                }
+                gbx++;
+            }
+            gbx = rbx;
+            gbz++;
+        }
     }
-
     private static int[] startLoc = new int[6];
 
     public int[] getStartLocation(Location loc, Constants.COMPASS dir) {

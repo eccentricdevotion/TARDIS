@@ -17,6 +17,7 @@ permissions:
       TARDIS.delete: true
       TARDIS.timetravel: true
       TARDIS.list: true
+      TARDIS.save: true
       TARDIS.enter: true
       TARDIS.find: true
     default: op
@@ -31,6 +32,9 @@ permissions:
     default: op
   TARDIS.list:
     TARDIS: Allow players to list saved time travel destinations.
+    default: op
+  TARDIS.save:
+    TARDIS: Allow players to save time travel destinations.
     default: op
   TARDIS.enter:
     description: Allow players to enter a TARDIS.

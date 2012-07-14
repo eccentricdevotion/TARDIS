@@ -1,14 +1,11 @@
 package me.eccentric_nz.plugins.TARDIS;
 
 import java.io.*;
-import java.util.HashMap;
-import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.bukkit.Material;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
-import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -19,7 +16,6 @@ public class TARDIS extends JavaPlugin implements Listener {
     public PluginDescriptionFile pdfFile;
     public FileConfiguration config = null;
     public FileConfiguration timelords = null;
-    public HashMap<String, Boolean> PlayerTARDISMap = new HashMap<String, Boolean>();
     public File schematicfile = null;
     public File myconfigfile = null;
     public File timelordsfile = null;
@@ -44,8 +40,8 @@ public class TARDIS extends JavaPlugin implements Listener {
                 getDataFolder().mkdir();
             }
         } catch (Exception e) {
-            System.out.println("TARDIS 1.0 could not create directory!");
-            System.out.println("TARDIS 1.0 requires you to manually make the TARDIS/ directory!");
+            System.out.println(Constants.MY_PLUGIN_NAME + " could not create directory!");
+            System.out.println(Constants.MY_PLUGIN_NAME + " requires you to manually make the TARDIS/ directory!");
         }
 
         getDataFolder().setWritable(true);
@@ -94,12 +90,6 @@ public class TARDIS extends JavaPlugin implements Listener {
         }
         config = YamlConfiguration.loadConfiguration(myconfigfile);
         timelords = YamlConfiguration.loadConfiguration(timelordsfile);
-
-        // read the values we need and convert them to ENUM
-        Set<String> block_set = config.getConfigurationSection("TARDIS_blocks").getKeys(false);
-        String r_str = config.getString("remind_material");
-        String s_str = config.getString("select_material");
-
 
         return config;
     }
