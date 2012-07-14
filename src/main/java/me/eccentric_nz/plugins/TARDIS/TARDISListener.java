@@ -16,6 +16,7 @@ import org.bukkit.event.block.BlockIgniteEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
+import org.getspout.spoutapi.SpoutManager;
 
 public class TARDISListener implements Listener {
 
@@ -263,6 +264,9 @@ public class TARDISListener implements Listener {
                                         } catch (IOException io) {
                                             System.err.println(Constants.MY_PLUGIN_NAME + " could not save timelords file!");
                                         }
+                                        if (plugin.getServer().getPluginManager().getPlugin("Spout") != null && SpoutManager.getPlayer(player).isSpoutCraftEnabled()) {
+                                            SpoutManager.getSoundManager().playCustomSoundEffect(plugin, SpoutManager.getPlayer(player), "https://dl.dropbox.com/u/53758864/tardis_hum.mp3", false, tardis_loc, 9, 25);
+                                        }
                                     } else {
                                         player.sendMessage(Constants.NOT_OWNER);
                                     }
@@ -348,6 +352,9 @@ public class TARDISListener implements Listener {
                         plugin.timelords.save(plugin.timelordsfile);
                     } catch (IOException io) {
                         System.err.println(Constants.MY_PLUGIN_NAME + " Could not save timelords file!");
+                    }
+                    if (plugin.getServer().getPluginManager().getPlugin("Spout") != null && SpoutManager.getPlayer(player).isSpoutCraftEnabled()) {
+                        SpoutManager.getSoundManager().playCustomSoundEffect(plugin, SpoutManager.getPlayer(player), "https://dl.dropbox.com/u/53758864/tardis_takeoff.mp3", false, pp, 9, 75);
                     }
                 }
             }
