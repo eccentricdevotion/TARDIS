@@ -10,6 +10,7 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
+import org.bukkit.block.BlockFace;
 import org.bukkit.block.Chest;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
@@ -40,7 +41,6 @@ public class Schematic {
                     System.arraycopy(strArr, 0, blocks[level][row], 0, 11);
                 }
             }
-            //System.out.println(blocks[2][5][5]);
         } catch (IOException io) {
             System.err.println("Could not read csv file");
         }
@@ -484,7 +484,7 @@ public class Schematic {
             starty += 1;
         }
         // remove bluebox
-        destroyBlueBox(l, world);
+        destroyBlueBox(l, world, d);
         // remove player from timelords
         String configPath = p.getName();
         plugin.timelords.set(configPath, null);
@@ -495,8 +495,7 @@ public class Schematic {
         }
     }
 
-    public void destroyBlueBox(Location l, World w) {
-
+    public void destroyBlueBox(Location l, World w, Constants.COMPASS d) {
         int sbx = l.getBlockX() - 1;
         int rbx = sbx;
         int gbx = sbx;
@@ -505,7 +504,8 @@ public class Schematic {
         int sbz = l.getBlockZ() - 1;
         int rbz = sbz;
         int gbz = sbz;
-        for (int yy = 0; yy < 4; yy++) {
+        // remove blue wool and door
+        for (int yy = 0; yy < 3; yy++) {
             for (int xx = 0; xx < 3; xx++) {
                 for (int zz = 0; zz < 3; zz++) {
                     Constants.setBlock(w, sbx, sby, sbz, 0, (byte) 0);
@@ -524,13 +524,49 @@ public class Schematic {
                 Material mat = b.getType();
                 byte data = b.getData();
                 if (mat == Material.WOOL && data == 8) {
-                    Constants.setBlock(w, gbx, sbywool, gbz, 0, (byte) 0);
+                    if (b.getRelative(BlockFace.DOWN).isLiquid()) {
+                        Constants.setBlock(w, gbx, sbywool, gbz, 9, (byte) 0);
+                    } else {
+                        Constants.setBlock(w, gbx, sbywool, gbz, 0, (byte) 0);
+                    }
                 }
                 gbx++;
             }
             gbx = rbx;
             gbz++;
         }
+    }
+
+    public void destroySign(Location l, Constants.COMPASS d) {
+        World w = l.getWorld();
+        int signx = 0, signz = 0;
+        switch (d) {
+            case EAST:
+                signx = 2;
+                signz = 0;
+                break;
+            case SOUTH:
+                signx = 0;
+                signz = 2;
+                break;
+            case WEST:
+                signx = -2;
+                signz = 0;
+                break;
+            case NORTH:
+                signx = 0;
+                signz = -2;
+                break;
+        }
+        Constants.setBlock(w, l.getBlockX() + signx, l.getBlockY(), l.getBlockZ() + signz, 0, (byte) 0);
+    }
+
+    public void destroyTorch(Location l) {
+        World w = l.getWorld();
+        int tx = l.getBlockX();
+        int ty = l.getBlockY() + 1;
+        int tz = l.getBlockZ();
+        Constants.setBlock(w, tx, ty, tz, 0, (byte) 0);
     }
     private static int[] startLoc = new int[6];
 

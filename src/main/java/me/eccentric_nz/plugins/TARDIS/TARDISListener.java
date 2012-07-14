@@ -12,12 +12,9 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.block.BlockBreakEvent;
-import org.bukkit.event.block.BlockBurnEvent;
+import org.bukkit.event.block.BlockIgniteEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
-import org.bukkit.event.block.BlockSpreadEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
-import org.bukkit.event.player.PlayerTeleportEvent;
-import org.bukkit.event.player.PlayerTeleportEvent.TeleportCause;
 import org.bukkit.inventory.ItemStack;
 
 public class TARDISListener implements Listener {
@@ -122,11 +119,16 @@ public class TARDISListener implements Listener {
             }
             // if the sign was on the TARDIS destroy the TARDIS!
             if (sign_loc.getBlockX() == bb_loc.getBlockX() + signx && sign_loc.getBlockY() == bb_loc.getBlockY() && sign_loc.getBlockZ() == bb_loc.getBlockZ() + signz) {
+                // don't drop the sign
+                //block.getDrops().clear();
                 Schematic s = new Schematic(plugin);
+                // clear the torch
+                s.destroyTorch(bb_loc);
+                s.destroySign(bb_loc, d);
                 s.destroyTARDIS(player, bb_loc, d);
             } else {
                 // cancel the event because it's not the player's TARDIS
-                event.isCancelled();
+                event.setCancelled(true);
             }
         }
     }
@@ -147,10 +149,8 @@ public class TARDISListener implements Listener {
             //player.sendMessage("The material ID is: " + blockType.getId() + ", the data value is: " + block.getData()); // returns 71 if an IRON_DOOR_BLOCK
             if (blockType == Material.IRON_DOOR_BLOCK) {
                 if (material == Material.REDSTONE_TORCH_ON) {
-                    //player.sendMessage("You clicked the iron door with a redstone torch.");
                     if (block != null) {
                         Location block_loc = block.getLocation();
-                        //System.out.println("block_loc: " + block_loc);
                         //plugin.timelords = YamlConfiguration.loadConfiguration(plugin.timelordsfile);
                         if (player.hasPermission("TARDIS.enter")) {
                             if (plugin.timelords.contains(configPath + ".direction")) {
@@ -162,7 +162,6 @@ public class TARDISListener implements Listener {
                                 // get INNER TARDIS location
                                 Location tardis_loc = Constants.getLocationFromFile(configPath, "home", yaw, pitch, plugin.timelords);
                                 tardis_loc.setY(20.5);
-                                //System.out.println("tardis_loc: " + tardis_loc);
                                 World w = player.getWorld();
                                 double x = door_loc.getX();
                                 double z = door_loc.getZ();
@@ -180,7 +179,6 @@ public class TARDISListener implements Listener {
                                         door_loc.setX(x - 1);
                                         break;
                                 }
-                                System.out.println(plugin.timelords.getBoolean(configPath + ".travelling"));
                                 if (plugin.timelords.getBoolean(configPath + ".travelling") == Boolean.valueOf("true")) {
                                     // player is in the TARDIS
                                     // get location from timelords file
@@ -222,7 +220,12 @@ public class TARDISListener implements Listener {
                                         double old_y = newl.getY();
                                         newl.setY(old_y - 2);
                                         Schematic s = new Schematic(plugin);
-                                        s.destroyBlueBox(l, w);
+                                        // remove torch
+                                        s.destroyTorch(l);
+                                        // remove sign
+                                        s.destroySign(l, Constants.COMPASS.valueOf(d));
+                                        // remove blue box
+                                        s.destroyBlueBox(l, w, Constants.COMPASS.valueOf(d));
                                         //rebuild = true;
                                     }
                                     // try preloading destination chunk
@@ -237,7 +240,6 @@ public class TARDISListener implements Listener {
                                         c.buildOuterTARDIS(player, newl, pyaw);
                                     }
                                     // exit TARDIS!
-                                    player.sendMessage("Just before teleport the Location is: " + exitTardis);
                                     player.teleport(exitTardis);
                                     plugin.timelords.set(configPath + ".travelling", false);
                                     try {
@@ -352,32 +354,17 @@ public class TARDISListener implements Listener {
         }
     }
 
-    @EventHandler(priority = EventPriority.MONITOR)
-    public void onPlayerTp(PlayerTeleportEvent event) {
-        Player p = event.getPlayer();
-        Location from = event.getFrom();
-        Location to = event.getTo();
-        TeleportCause cause = event.getCause();
-    }
-
     @EventHandler(priority = EventPriority.LOWEST)
-    public void onFireSpread(BlockSpreadEvent event) {
+    public void onBlockIgnite(BlockIgniteEvent event) {
         if (plugin.config.getBoolean("protect_blocks") == Boolean.valueOf("true")) {
-            int i = event.getBlock().getTypeId();
-            byte d = event.getBlock().getData();
-            if (i == 35 && (d == 1 || d == 4 || d == 7 || d == 8 || d == 11)) {
-                event.setCancelled(true);
-            }
-        }
-    }
-
-    @EventHandler(priority = EventPriority.LOWEST)
-    public void onBlockBurn(BlockBurnEvent event) {
-        if (plugin.config.getBoolean("protect_blocks") == Boolean.valueOf("true")) {
-            int i = event.getBlock().getTypeId();
-            byte d = event.getBlock().getData();
-            if (i == 35 && (d == 1 || d == 4 || d == 7 || d == 8 || d == 11)) {
-                event.setCancelled(true);
+            String[] set = {"EAST", "SOUTH", "WEST", "NORTH", "UP", "DOWN"};
+            for (String f : set) {
+                int id = event.getBlock().getRelative(BlockFace.valueOf(f)).getTypeId();
+                byte d = event.getBlock().getRelative(BlockFace.valueOf(f)).getData();
+                if (id == 35 && (d == 1 || d == 4 || d == 7 || d == 8 || d == 11)) {
+                    event.setCancelled(true);
+                    break;
+                }
             }
         }
     }

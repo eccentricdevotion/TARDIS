@@ -65,7 +65,6 @@ public class TARDISTimetravel {
             wherez = wherez * 2;
             wherex = wherex - max;
             wherez = wherez - max;
-            //System.out.println("Initial wherey = " + wherey);
 
             Block currentBlock = w.getBlockAt(wherex, wherey, wherez);
             while (currentBlock.getType() == Material.AIR || currentBlock.getType() == Material.SNOW || currentBlock.getType() == Material.LONG_GRASS || currentBlock.getType() == Material.RED_ROSE || currentBlock.getType() == Material.YELLOW_FLOWER || currentBlock.getType() == Material.BROWN_MUSHROOM || currentBlock.getType() == Material.RED_MUSHROOM && currentBlock.getType() != Material.SAPLING) {
@@ -73,7 +72,6 @@ public class TARDISTimetravel {
             }
             Location chunk_loc = currentBlock.getLocation();
             double getY = chunk_loc.getBlockY();
-            //System.out.println("Current Lowest block: " + currentBlock.getType() + " - " + getY);
 
             w.getChunkAt(chunk_loc).load();
             w.getChunkAt(chunk_loc).load(true);
@@ -94,13 +92,11 @@ public class TARDISTimetravel {
                 for (row = 0; row < 3; row++) {
                     for (col = 0; col < 5; col++) {
                         int id = w.getBlockAt(startx, starty, startz).getTypeId();
-                        //System.out.println(Material.getMaterial(id));
                         if (isItSafe(id)) {
                             danger = true;
                         } else {
                             danger = false;
                         }
-                        //System.out.println(danger);
                         switch (d) {
                             case NORTH:
                             case SOUTH:

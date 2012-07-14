@@ -2,7 +2,6 @@ package me.eccentric_nz.plugins.TARDIS;
 
 import java.io.IOException;
 import java.util.UUID;
-import java.util.logging.Logger;
 import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.command.Command;
@@ -24,7 +23,6 @@ public class TARDISexecutor implements CommandExecutor {
     private int bb_locZ;
     private String bb_world;
     private String d;
-    private static Logger log;
     private boolean fences = false;
     private boolean plates = false;
     private int hx = 0, hy = 0, hz = 0;
@@ -134,7 +132,7 @@ public class TARDISexecutor implements CommandExecutor {
                         } else {
                             String curDest;
                             // get current destination
-                            if (plugin.timelords.getBoolean(player.getName()+".travelling") == Boolean.valueOf("true")) {
+                            if (plugin.timelords.getBoolean(player.getName() + ".travelling") == Boolean.valueOf("true")) {
                                 // inside TARDIS
                                 curDest = plugin.timelords.getString(player.getName() + ".current");
                             } else {

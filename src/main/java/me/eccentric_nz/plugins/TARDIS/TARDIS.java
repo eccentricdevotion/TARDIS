@@ -30,7 +30,7 @@ public class TARDIS extends JavaPlugin implements Listener {
     @Override
     public void onEnable() {
         plugin = this;
-        new TARDISListener(this);
+        TARDISListener tardisListener = new TARDISListener(this);
 
         pdfFile = getDescription();
         Constants.MY_PLUGIN_NAME = "[" + pdfFile.getName() + "]";
@@ -105,7 +105,7 @@ public class TARDIS extends JavaPlugin implements Listener {
             out.close();
             in.close();
         } catch (Exception e) {
-            log.log(Level.INFO, "{0} could not save the config file.", Constants.MY_PLUGIN_NAME);
+            System.err.println(Constants.MY_PLUGIN_NAME + " could not save the config file.");
         }
     }
 
@@ -116,7 +116,7 @@ public class TARDIS extends JavaPlugin implements Listener {
         try {
             config.save(myconfigfile);
         } catch (IOException ex) {
-            Logger.getLogger(JavaPlugin.class.getName()).log(Level.SEVERE, "Could not save config to " + myconfigfile, ex);
+            System.err.println(Constants.MY_PLUGIN_NAME + "Could not save config to " + myconfigfile);
         }
     }
 }

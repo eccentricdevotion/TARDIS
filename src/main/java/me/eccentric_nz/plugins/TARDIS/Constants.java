@@ -193,7 +193,6 @@ public class Constants {
         // get location from timelords file
         String saved_loc = c.getString(p + "." + s);
         String[] data = saved_loc.split(":");
-        //System.out.println("saved world: " + data[0]);
         World savedw = Bukkit.getServer().getWorld(data[0]);
         try {
             savedx = Integer.parseInt(data[1]);
