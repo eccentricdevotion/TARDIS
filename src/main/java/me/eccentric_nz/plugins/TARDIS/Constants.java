@@ -168,8 +168,8 @@ public class Constants {
         // set sign
         setBlock(world, signx, y, signz, 68, sd);
         Sign s = (Sign) world.getBlockAt(signx, y, signz).getState();
-        s.setLine(1, "POLICE");
-        s.setLine(2, "BOX");
+        s.setLine(1, "¤fPOLICE");
+        s.setLine(2, "¤fBOX");
         s.update();
         // put torch on top
         setBlock(world, x, plusy, z, 50, (byte) 5);

@@ -162,7 +162,7 @@ public class TARDISListener implements Listener {
                                 Location door_loc = Constants.getLocationFromFile(configPath, "save", yaw, pitch, plugin.timelords);
                                 // get INNER TARDIS location
                                 Location tardis_loc = Constants.getLocationFromFile(configPath, "home", yaw, pitch, plugin.timelords);
-                                tardis_loc.setY(20.5);
+                                tardis_loc.setY(19.5);
                                 World w = player.getWorld();
                                 double x = door_loc.getX();
                                 double z = door_loc.getZ();
@@ -185,7 +185,7 @@ public class TARDISListener implements Listener {
                                     // get location from timelords file
                                     Location exitTardis = Constants.getLocationFromFile(configPath, "save", yaw, pitch, plugin.timelords);
                                     // should only get this message if exiting the TARDIS
-                                    player.sendMessage("Exiting the TARDIS");
+                                    //player.sendMessage("Exiting the TARDIS");
                                     // make location safe ie. outside of the bluebox
                                     double ex = exitTardis.getX();
                                     double ez = exitTardis.getZ();
@@ -209,7 +209,7 @@ public class TARDISListener implements Listener {
                                             pyaw = 270;
                                             break;
                                     }
-                                    //exitTardis.setY(ey - 1);
+                                    exitTardis.setY(ey - 0.5);
                                     // destroy current TARDIS location
                                     String sl = plugin.timelords.getString(configPath + ".save");
                                     String cl = plugin.timelords.getString(configPath + ".current");
@@ -252,7 +252,7 @@ public class TARDISListener implements Listener {
                                     // needs to be either top or bottom of door! This is the current bluebox door location
                                     if (block_loc.getBlockX() == door_loc.getBlockX() && block_loc.getBlockZ() == door_loc.getBlockZ() && (block_loc.getBlockY() == door_loc.getBlockY() - 2 || block_loc.getBlockY() == door_loc.getBlockY() - 1)) {
                                         // should only get this message if entering the TARDIS
-                                        player.sendMessage("Entering the TARDIS");
+                                        //player.sendMessage("Entering the TARDIS");
                                         // enter TARDIS!
                                         w.getChunkAt(tardis_loc).load();
                                         player.teleport(tardis_loc);
@@ -303,6 +303,7 @@ public class TARDISListener implements Listener {
                     Location r3_loc = Constants.getLocationFromFile(configPath, "repeater3", 0, 0, plugin.timelords);
                     Block r3 = r3_loc.getBlock();
                     byte r3_data = r3.getData();
+                    boolean playSound = true;
                     //player.sendMessage("0:" + r0_data + ", 1:" + r1_data + ", 2:" + r2_data + ", 3:" + r3_data);
                     if (r0_data <= 3 && r1_data <= 3 && r2_data <= 3 && r3_data <= 3) { // first position
                         player.sendMessage("Home destination selected!");
@@ -318,6 +319,7 @@ public class TARDISListener implements Listener {
                             player.sendMessage("Destination 1 [" + n + "] selected!");
                         } else {
                             player.sendMessage("There is no destination saved to slot 1!");
+                            playSound = false;
                         }
                     }
                     if (r0_data >= 8 && r0_data <= 11 && r1_data <= 3 && r2_data <= 3 && r3_data <= 3) { // third position
@@ -328,6 +330,7 @@ public class TARDISListener implements Listener {
                             player.sendMessage("Destination 2 [" + n + "] selected!");
                         } else {
                             player.sendMessage("There is no destination saved to slot 2!");
+                            playSound = false;
                         }
                     }
                     if (r0_data >= 12 && r0_data <= 15 && r1_data <= 3 && r2_data <= 3 && r3_data <= 3) { // last position
@@ -338,6 +341,7 @@ public class TARDISListener implements Listener {
                             player.sendMessage("Destination 3 [" + n + "] selected!");
                         } else {
                             player.sendMessage("There is no destination saved to slot 3!");
+                            playSound = false;
                         }
                     }
                     if (r1_data > 3 || r2_data > 3 || r3_data > 3) {
@@ -345,7 +349,7 @@ public class TARDISListener implements Listener {
                         TARDISTimetravel tt = new TARDISTimetravel(plugin);
                         Location rand = tt.randomDestination(player, player.getWorld(), r1_data, r2_data, r3_data);
                         String d = rand.getWorld().getName() + ":" + rand.getBlockX() + ":" + rand.getBlockY() + ":" + rand.getBlockZ();
-                        player.sendMessage(d);
+                        //player.sendMessage(d);
                         plugin.timelords.set(configPath + ".save", d);
                     }
                     try {
@@ -353,7 +357,7 @@ public class TARDISListener implements Listener {
                     } catch (IOException io) {
                         System.err.println(Constants.MY_PLUGIN_NAME + " Could not save timelords file!");
                     }
-                    if (plugin.getServer().getPluginManager().getPlugin("Spout") != null && SpoutManager.getPlayer(player).isSpoutCraftEnabled()) {
+                    if (plugin.getServer().getPluginManager().getPlugin("Spout") != null && SpoutManager.getPlayer(player).isSpoutCraftEnabled() && playSound == true) {
                         SpoutManager.getSoundManager().playCustomSoundEffect(plugin, SpoutManager.getPlayer(player), "https://dl.dropbox.com/u/53758864/tardis_takeoff.mp3", false, pp, 9, 75);
                     }
                 }
@@ -368,7 +372,7 @@ public class TARDISListener implements Listener {
             for (String f : set) {
                 int id = event.getBlock().getRelative(BlockFace.valueOf(f)).getTypeId();
                 byte d = event.getBlock().getRelative(BlockFace.valueOf(f)).getData();
-                if (id == 35 && (d == 1 || d == 4 || d == 7 || d == 8 || d == 11)) {
+                if (id == 35 && (d == 1 || d == 7 || d == 8 || d == 11)) {
                     event.setCancelled(true);
                     break;
                 }
