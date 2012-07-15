@@ -47,26 +47,16 @@ permissions:
     default: true
 commands:
   tardis:
-    description: Manipulate TARDISs (TARDII?) with various arguments (create, delete, timetravel). Type /TARDIS help - to see more.
-    create:
-      description: Create a TARDIS.
-      usage: /<command> create
-      permission: TARDIS.create
-      permission-message: You don't have the permission <permission> to use this command
-    delete:
-      description: Remove a TARDIS.
-      usage: /<command> delete
-      permission: TARDIS.delete
-      permission-message: You don't have the permission <permission> to use this command
-    timetravel:
-      description: Teleport to a random location.
-      usage: /<command> timetravel (or tt)
-      permission: TARDIS.timetravel
-      permission-message: You don't have the permission <permission> to use this command
+    description: Manipulate TARDISs (TARDII?) with various arguments (list, save, find, help, admin). Type /TARDIS help - to see more.
     list:
       description: List saved time travel locations.
       usage: /<command> list
       permission: TARDIS.list
+      permission-message: You don't have the permission <permission> to use this command
+    save:
+      description: Saved a time travel location.
+      usage: /<command> save [slot number] [name]
+      permission: TARDIS.save
       permission-message: You don't have the permission <permission> to use this command
     find:
       description: Shows you the location of your TARDIS.
@@ -81,5 +71,3 @@ commands:
     help:
       description: View TARDIS help pages.
       usage: /<command> help [command]
-      permission: TARDIS.help
-      permission-message: You don't have the permission <permission> to use this command

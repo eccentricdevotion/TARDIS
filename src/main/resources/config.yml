@@ -1,6 +1,5 @@
 # config file
-require_blocks: true
-require_spout: false
 bonus_chest: true
 tp_radius: 256
 protect_blocks: true
+require_spout: false

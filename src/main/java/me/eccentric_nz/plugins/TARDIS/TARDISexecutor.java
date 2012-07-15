@@ -2,6 +2,7 @@ package me.eccentric_nz.plugins.TARDIS;
 
 import java.io.IOException;
 import java.util.UUID;
+import org.apache.commons.lang.StringUtils;
 import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.command.Command;
@@ -130,6 +131,14 @@ public class TARDISexecutor implements CommandExecutor {
                             sender.sendMessage("Too few command arguments!");
                             return false;
                         } else {
+                            int count = args.length;
+							String t = "";
+							for (int i = 2; i < count; i++) {
+								t += args[i] + " ";
+							}
+							t = t.substring(0, t.length() - 1);
+							// need to make there are no periods(.) in the text
+							String nodots = StringUtils.replace(t, ".", "_");
                             String curDest;
                             // get current destination
                             if (plugin.timelords.getBoolean(player.getName() + ".travelling") == Boolean.valueOf("true")) {
@@ -139,7 +148,7 @@ public class TARDISexecutor implements CommandExecutor {
                                 // outside TARDIS
                                 curDest = plugin.timelords.getString(player.getName() + ".save");
                             }
-                            plugin.timelords.set(player.getName() + ".dest" + args[1] + ".name", args[2]);
+                            plugin.timelords.set(player.getName() + ".dest" + args[1] + ".name", nodots);
                             plugin.timelords.set(player.getName() + ".dest" + args[1] + ".location", curDest);
                             // save file
                             try {
