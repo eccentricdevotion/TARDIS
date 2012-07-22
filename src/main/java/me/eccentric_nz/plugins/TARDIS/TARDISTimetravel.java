@@ -1,9 +1,12 @@
 package me.eccentric_nz.plugins.TARDIS;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
+import org.bukkit.World.Environment;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Player;
@@ -18,8 +21,9 @@ public class TARDISTimetravel {
     }
 
     public Location randomDestination(Player p, World w, byte rx, byte rz, byte ry) {
-        int level, row, col, x, y, z, startx, starty, startz, resetx, resetz;
-        int[] bad_blockids = {8, 9, 10, 11, 51, 81};
+        int level, row, col, x, y, z, startx, starty, startz, resetx, resetz, listlen, rw;
+        //int[] bad_blockids = {8, 9, 10, 11, 51, 81};
+        World randworld = w;
         Boolean danger = true;
         // there needs to be room for the TARDIS and the player!
         Random rand = new Random();
@@ -28,6 +32,20 @@ public class TARDISTimetravel {
         int quarter = (max + 4 - 1) / 4;
         int range = quarter + 1;
         int wherex = 0, wherey = 0, wherez = 0;
+
+        // get worlds
+        List<World> worldlist = plugin.getServer().getWorlds();
+        List<World> normalWorlds = new ArrayList<World>();
+        for (World o : worldlist) {
+            if (o.getEnvironment() == Environment.NORMAL) {
+                if (plugin.config.getBoolean("include_default_world") == Boolean.valueOf("true")) {
+                    normalWorlds.add(o);
+                } else if (!o.getName().equals(plugin.config.getString("default_world"))) {
+                    normalWorlds.add(o);
+                }
+            }
+        }
+        listlen = normalWorlds.size();
 
         while (danger == true) {
             wherex = rand.nextInt(range);
@@ -66,17 +84,26 @@ public class TARDISTimetravel {
             wherex = wherex - max;
             wherez = wherez - max;
 
-            Block currentBlock = w.getBlockAt(wherex, wherey, wherez);
+            // random world
+            rw = rand.nextInt(listlen);
+            int i = 0;
+            for (World wobj : normalWorlds) {
+                if (i == rw) {
+                    randworld = wobj;
+                }
+                i = i + 1;
+            }
+
+            Block currentBlock = randworld.getBlockAt(wherex, wherey, wherez);
             while (currentBlock.getType() == Material.AIR || currentBlock.getType() == Material.SNOW || currentBlock.getType() == Material.LONG_GRASS || currentBlock.getType() == Material.RED_ROSE || currentBlock.getType() == Material.YELLOW_FLOWER || currentBlock.getType() == Material.BROWN_MUSHROOM || currentBlock.getType() == Material.RED_MUSHROOM && currentBlock.getType() != Material.SAPLING) {
                 currentBlock = currentBlock.getRelative(BlockFace.DOWN);
             }
             Location chunk_loc = currentBlock.getLocation();
-            double getY = chunk_loc.getBlockY();
 
-            w.getChunkAt(chunk_loc).load();
-            w.getChunkAt(chunk_loc).load(true);
-            while (!w.getChunkAt(chunk_loc).isLoaded()) {
-                w.getChunkAt(chunk_loc).load();
+            randworld.getChunkAt(chunk_loc).load();
+            randworld.getChunkAt(chunk_loc).load(true);
+            while (!randworld.getChunkAt(chunk_loc).isLoaded()) {
+                randworld.getChunkAt(chunk_loc).load();
             }
             Constants.COMPASS d = Constants.COMPASS.valueOf(plugin.timelords.getString(p.getName() + ".direction"));
             // get start location for checking there is enough space
@@ -135,13 +162,13 @@ public class TARDISTimetravel {
             }
             p.sendMessage("Finding safe location...");
         }
-        wherey = w.getHighestBlockYAt(wherex, wherez) + 2;
-        dest = new Location(w, wherex, wherey, wherez);
+        wherey = randworld.getHighestBlockYAt(wherex, wherez) + 2;
+        dest = new Location(randworld, wherex, wherey, wherez);
         return dest;
     }
 
     private boolean isItSafe(int id) {
-        if (id == 0 || id == 80 || id == 31 || id == 38 || id == 37 || id == 39 || id == 40 || id == 6) {
+        if (id == 0 || id == 78 || id == 80 || id == 31 || id == 38 || id == 37 || id == 39 || id == 40 || id == 6 || id == 50) {
             return false;
         } else {
             return true;
@@ -152,22 +179,6 @@ public class TARDISTimetravel {
     public int[] getStartLocation(Location loc, Constants.COMPASS dir) {
         switch (dir) {
             case NORTH:
-                startLoc[0] = loc.getBlockX() + 1;
-                startLoc[1] = startLoc[0];
-                startLoc[2] = loc.getBlockZ() + 3;
-                startLoc[3] = startLoc[2];
-                startLoc[4] = -1;
-                startLoc[5] = -1;
-                break;
-            case EAST:
-                startLoc[0] = loc.getBlockX() - 3;
-                startLoc[1] = startLoc[0];
-                startLoc[2] = loc.getBlockZ() + 1;
-                startLoc[3] = startLoc[2];
-                startLoc[4] = 1;
-                startLoc[5] = -1;
-                break;
-            case SOUTH:
                 startLoc[0] = loc.getBlockX() - 1;
                 startLoc[1] = startLoc[0];
                 startLoc[2] = loc.getBlockZ() - 3;
@@ -175,13 +186,29 @@ public class TARDISTimetravel {
                 startLoc[4] = 1;
                 startLoc[5] = 1;
                 break;
-            case WEST:
+            case EAST:
                 startLoc[0] = loc.getBlockX() + 3;
                 startLoc[1] = startLoc[0];
                 startLoc[2] = loc.getBlockZ() - 1;
                 startLoc[3] = startLoc[2];
                 startLoc[4] = -1;
                 startLoc[5] = 1;
+                break;
+            case SOUTH:
+                startLoc[0] = loc.getBlockX() + 1;
+                startLoc[1] = startLoc[0];
+                startLoc[2] = loc.getBlockZ() + 3;
+                startLoc[3] = startLoc[2];
+                startLoc[4] = -1;
+                startLoc[5] = -1;
+                break;
+            case WEST:
+                startLoc[0] = loc.getBlockX() - 3;
+                startLoc[1] = startLoc[0];
+                startLoc[2] = loc.getBlockZ() + 1;
+                startLoc[3] = startLoc[2];
+                startLoc[4] = 1;
+                startLoc[5] = -1;
                 break;
         }
         return startLoc;

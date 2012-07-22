@@ -1,6 +1,10 @@
 package me.eccentric_nz.plugins.TARDIS;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
+import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -41,40 +45,76 @@ public class TARDISListener implements Listener {
                 String configPath = player.getName();
                 // check to see if they already have a TARDIS
                 if (!plugin.timelords.contains(configPath)) {
-                    float pyaw = player.getLocation().getYaw();
-                    if (pyaw >= 0) {
-                        pyaw = (pyaw % 360);
+                    // check if the chunk already contains a TARDIS
+                    // get this chunk co-ords
+                    Chunk chunk = blockBottom.getChunk();
+                    String cw;
+                    World chunkworld;
+                    // check config to see whether we are using a default world to store TARDII
+                    if (plugin.config.getBoolean("default_world") == Boolean.valueOf("true")) {
+                        cw = plugin.config.getString("default_world_name");
+                        chunkworld = plugin.getServer().getWorld(cw);
                     } else {
-                        pyaw = (360 + (pyaw % 360));
+                        chunkworld = chunk.getWorld();
+                        cw = chunkworld.getName();
                     }
-                    Location block_loc = blockBottom.getLocation();
-                    // turn the block stack into a TARDIS
-                    Constants c = new Constants(plugin);
-                    c.buildOuterTARDIS(player, block_loc, pyaw);
-                    // determine direction player is facing
-                    String d = "";
-                    if (pyaw >= 315 || pyaw < 45) {
-                        d = "NORTH";
-                    }
-                    if (pyaw >= 225 && pyaw < 315) {
-                        d = "WEST";
-                    }
-                    if (pyaw >= 135 && pyaw < 225) {
-                        d = "SOUTH";
-                    }
-                    if (pyaw >= 45 && pyaw < 135) {
-                        d = "EAST";
-                    }
-                    Schematic s = new Schematic(plugin);
-                    s.buildInnerTARDIS(plugin.schematic, player, block_loc, Constants.COMPASS.valueOf(d));
-                    // save data to timelords file
-                    plugin.timelords.set(configPath + ".home", block_loc.getWorld().getName() + ":" + block_loc.getBlockX() + ":" + block_loc.getBlockY() + ":" + block_loc.getBlockZ());
-                    plugin.timelords.set(configPath + ".save", block_loc.getWorld().getName() + ":" + block_loc.getBlockX() + ":" + block_loc.getBlockY() + ":" + block_loc.getBlockZ());
-                    plugin.timelords.set(configPath + ".direction", d);
-                    try {
-                        plugin.timelords.save(plugin.timelordsfile);
-                    } catch (IOException io) {
-                        System.err.println(Constants.MY_PLUGIN_NAME + " Could not save the time lords file!");
+                    int cx = chunk.getX();
+                    int cz = chunk.getZ();
+
+                    if (!Constants.checkChunk(plugin, cw, cx, cz)) {
+                        try {
+                            File file = new File(plugin.getDataFolder() + File.separator + "chunks" + File.separator + cw + ".chunks");
+                            BufferedWriter bw = new BufferedWriter(new FileWriter(file, true));
+                            bw.write(cw + ":" + cx + ":" + cz);
+                            bw.newLine();
+                            bw.close();
+                            plugin.timelords.save(plugin.timelordsfile);
+                        } catch (IOException io) {
+                            System.err.println(Constants.MY_PLUGIN_NAME + " Could not save the time lords file!");
+                        }
+                        float pyaw = player.getLocation().getYaw();
+                        if (pyaw >= 0) {
+                            pyaw = (pyaw % 360);
+                        } else {
+                            pyaw = (360 + (pyaw % 360));
+                        }
+                        Location block_loc = blockBottom.getLocation();
+                        // determine direction player is facing
+                        String d = "";
+                        if (pyaw >= 315 || pyaw < 45) {
+                            d = "SOUTH";
+                        }
+                        if (pyaw >= 225 && pyaw < 315) {
+                            d = "EAST";
+                        }
+                        if (pyaw >= 135 && pyaw < 225) {
+                            d = "NORTH";
+                        }
+                        if (pyaw >= 45 && pyaw < 135) {
+                            d = "WEST";
+                        }
+                        // turn the block stack into a TARDIS
+                        Constants c = new Constants();
+                        c.buildOuterTARDIS(player, block_loc, Constants.COMPASS.valueOf(d));
+                        // save data to timelords file
+                        plugin.timelords.set(configPath + ".home", block_loc.getWorld().getName() + ":" + block_loc.getBlockX() + ":" + block_loc.getBlockY() + ":" + block_loc.getBlockZ());
+                        plugin.timelords.set(configPath + ".chunk", cw + ":" + cx + ":" + cz);
+                        plugin.timelords.set(configPath + ".save", block_loc.getWorld().getName() + ":" + block_loc.getBlockX() + ":" + block_loc.getBlockY() + ":" + block_loc.getBlockZ());
+                        plugin.timelords.set(configPath + ".direction", d);
+                        try {
+                            File file = new File(plugin.getDataFolder() + File.separator + "chunks" + File.separator + block_loc.getWorld().getName() + ".chunks");
+                            BufferedWriter bw = new BufferedWriter(new FileWriter(file, true));
+                            bw.write(cw + ":" + cx + ":" + cz);
+                            bw.newLine();
+                            bw.close();
+                            plugin.timelords.save(plugin.timelordsfile);
+                        } catch (IOException io) {
+                            System.err.println(Constants.MY_PLUGIN_NAME + " Could not save the time lords file!");
+                        }
+                        Schematic s = new Schematic(plugin);
+                        s.buildInnerTARDIS(plugin.schematic, player, chunkworld, Constants.COMPASS.valueOf(d));
+                    } else {
+                        player.sendMessage("A TARDIS already exists at this location, please try another chunk!");
                     }
                 } else {
                     String leftLoc = plugin.timelords.getString(configPath + ".save");
@@ -102,20 +142,20 @@ public class TARDISListener implements Listener {
             Constants.COMPASS d = Constants.COMPASS.valueOf(plugin.timelords.getString(configPath + ".direction"));
             switch (d) {
                 case EAST:
-                    signx = 2;
+                    signx = -2;
                     signz = 0;
                     break;
                 case SOUTH:
                     signx = 0;
-                    signz = 2;
+                    signz = -2;
                     break;
                 case WEST:
-                    signx = -2;
+                    signx = 2;
                     signz = 0;
                     break;
                 case NORTH:
                     signx = 0;
-                    signz = -2;
+                    signz = 2;
                     break;
             }
             // if the sign was on the TARDIS destroy the TARDIS!
@@ -126,6 +166,12 @@ public class TARDISListener implements Listener {
                 // clear the torch
                 s.destroyTorch(bb_loc);
                 s.destroySign(bb_loc, d);
+                // also remove the location of the chunk from file
+                String chunkLoc = plugin.timelords.getString(configPath + ".chunk");
+                String[] chunkworld = chunkLoc.split(":");
+                File chunkfile = new File(plugin.getDataFolder() + File.separator + "chunks" + File.separator + chunkworld[0] + ".chunks");
+                Constants c = new Constants();
+                c.removeLineFromFile(chunkfile, chunkLoc);
                 s.destroyTARDIS(player, bb_loc, d);
             } else {
                 // cancel the event because it's not the player's TARDIS
@@ -139,7 +185,7 @@ public class TARDISListener implements Listener {
 
         Player player = event.getPlayer();
         String configPath = player.getName();
-        int savedx = 0, savedy = 0, savedz = 0;
+        int savedx = 0, savedy = 0, savedz = 0, cx = 0, cz = 0;
 
         Block block = event.getClickedBlock();
         Action action = event.getAction();
@@ -147,12 +193,11 @@ public class TARDISListener implements Listener {
             Material blockType = block.getType();
             ItemStack stack = player.getItemInHand();
             Material material = stack.getType();
-            //player.sendMessage("The material ID is: " + blockType.getId() + ", the data value is: " + block.getData()); // returns 71 if an IRON_DOOR_BLOCK
+            // only proceed if they are clicking an iron door with a redstone torch!
             if (blockType == Material.IRON_DOOR_BLOCK) {
                 if (material == Material.REDSTONE_TORCH_ON) {
                     if (block != null) {
                         Location block_loc = block.getLocation();
-                        //plugin.timelords = YamlConfiguration.loadConfiguration(plugin.timelordsfile);
                         if (player.hasPermission("TARDIS.enter")) {
                             if (plugin.timelords.contains(configPath + ".direction")) {
                                 String d = plugin.timelords.getString(configPath + ".direction");
@@ -161,31 +206,42 @@ public class TARDISListener implements Listener {
                                 // get last known BLUEBOX location
                                 Location door_loc = Constants.getLocationFromFile(configPath, "save", yaw, pitch, plugin.timelords);
                                 // get INNER TARDIS location
-                                Location tardis_loc = Constants.getLocationFromFile(configPath, "home", yaw, pitch, plugin.timelords);
-                                tardis_loc.setY(19.5);
+                                Location tardis_loc = null;
+                                String chunkstr = plugin.timelords.getString(configPath + ".chunk");
+                                String[] split = chunkstr.split(":");
+                                World cw = plugin.getServer().getWorld(split[0]);
+                                try {
+                                    cx = Integer.parseInt(split[1]);
+                                    cz = Integer.parseInt(split[2]);
+                                } catch (NumberFormatException nfe) {
+                                    System.err.println(Constants.MY_PLUGIN_NAME + " Could not convert to number!");
+                                }
+                                Chunk chunk = cw.getChunkAt(cx, cz);
                                 World w = player.getWorld();
                                 double x = door_loc.getX();
                                 double z = door_loc.getZ();
                                 switch (Constants.COMPASS.valueOf(d)) {
                                     case NORTH:
-                                        door_loc.setZ(z - 1);
-                                        break;
-                                    case EAST:
-                                        door_loc.setX(x + 1);
-                                        break;
-                                    case SOUTH:
+                                        tardis_loc = chunk.getBlock(9, 19, 13).getLocation();
                                         door_loc.setZ(z + 1);
                                         break;
-                                    case WEST:
+                                    case EAST:
+                                        tardis_loc = chunk.getBlock(3, 19, 9).getLocation();
                                         door_loc.setX(x - 1);
+                                        break;
+                                    case SOUTH:
+                                        tardis_loc = chunk.getBlock(6, 19, 3).getLocation();
+                                        door_loc.setZ(z - 1);
+                                        break;
+                                    case WEST:
+                                        tardis_loc = chunk.getBlock(13, 19, 6).getLocation();
+                                        door_loc.setX(x + 1);
                                         break;
                                 }
                                 if (plugin.timelords.getBoolean(configPath + ".travelling") == Boolean.valueOf("true")) {
                                     // player is in the TARDIS
                                     // get location from timelords file
                                     Location exitTardis = Constants.getLocationFromFile(configPath, "save", yaw, pitch, plugin.timelords);
-                                    // should only get this message if exiting the TARDIS
-                                    //player.sendMessage("Exiting the TARDIS");
                                     // make location safe ie. outside of the bluebox
                                     double ex = exitTardis.getX();
                                     double ez = exitTardis.getZ();
@@ -193,23 +249,23 @@ public class TARDISListener implements Listener {
                                     float pyaw = 0;
                                     switch (Constants.COMPASS.valueOf(d)) {
                                         case NORTH:
-                                            exitTardis.setZ(ez - 2);
-                                            pyaw = 0;
-                                            break;
-                                        case EAST:
-                                            exitTardis.setX(ex + 2);
-                                            pyaw = 90;
-                                            break;
-                                        case SOUTH:
                                             exitTardis.setZ(ez + 2);
                                             pyaw = 180;
                                             break;
-                                        case WEST:
+                                        case EAST:
                                             exitTardis.setX(ex - 2);
                                             pyaw = 270;
                                             break;
+                                        case SOUTH:
+                                            exitTardis.setZ(ez - 2);
+                                            pyaw = 0;
+                                            break;
+                                        case WEST:
+                                            exitTardis.setX(ex + 2);
+                                            pyaw = 90;
+                                            break;
                                     }
-                                    exitTardis.setY(ey - 0.5);
+                                    exitTardis.setY(ey - 1.5);
                                     // destroy current TARDIS location
                                     String sl = plugin.timelords.getString(configPath + ".save");
                                     String cl = plugin.timelords.getString(configPath + ".current");
@@ -237,8 +293,8 @@ public class TARDISListener implements Listener {
                                     }
                                     // rebuild blue box
                                     if (newl != null) {
-                                        Constants c = new Constants(plugin);
-                                        c.buildOuterTARDIS(player, newl, pyaw);
+                                        Constants c = new Constants();
+                                        c.buildOuterTARDIS(player, newl, Constants.COMPASS.valueOf(d));
                                     }
                                     // exit TARDIS!
                                     player.teleport(exitTardis);
@@ -251,10 +307,10 @@ public class TARDISListener implements Listener {
                                 } else {
                                     // needs to be either top or bottom of door! This is the current bluebox door location
                                     if (block_loc.getBlockX() == door_loc.getBlockX() && block_loc.getBlockZ() == door_loc.getBlockZ() && (block_loc.getBlockY() == door_loc.getBlockY() - 2 || block_loc.getBlockY() == door_loc.getBlockY() - 1)) {
-                                        // should only get this message if entering the TARDIS
-                                        //player.sendMessage("Entering the TARDIS");
                                         // enter TARDIS!
                                         w.getChunkAt(tardis_loc).load();
+                                        tardis_loc.setPitch(pitch);
+                                        tardis_loc.setYaw(yaw);
                                         player.teleport(tardis_loc);
                                         plugin.timelords.set(configPath + ".travelling", true);
                                         // update current TARDIS location
@@ -349,7 +405,7 @@ public class TARDISListener implements Listener {
                         TARDISTimetravel tt = new TARDISTimetravel(plugin);
                         Location rand = tt.randomDestination(player, player.getWorld(), r1_data, r2_data, r3_data);
                         String d = rand.getWorld().getName() + ":" + rand.getBlockX() + ":" + rand.getBlockY() + ":" + rand.getBlockZ();
-                        //player.sendMessage(d);
+                        player.sendMessage(d);
                         plugin.timelords.set(configPath + ".save", d);
                     }
                     try {

@@ -1,9 +1,9 @@
 package me.eccentric_nz.plugins.TARDIS;
 
 import java.io.*;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import org.bukkit.Material;
+import java.util.List;
+import org.bukkit.World;
+import org.bukkit.World.Environment;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.event.Listener;
@@ -12,20 +12,15 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 public class TARDIS extends JavaPlugin implements Listener {
 
-    private static Logger log;
     public PluginDescriptionFile pdfFile;
     public FileConfiguration config = null;
     public FileConfiguration timelords = null;
     public File schematicfile = null;
     public File myconfigfile = null;
     public File timelordsfile = null;
-    private Material t;
-    private Material r;
-    private Material s;
     private TARDISexecutor tardisExecutor;
     public String[][][] schematic;
-    private boolean profession = false;
-    public static TARDIS plugin;
+    protected static TARDIS plugin;
 
     @Override
     public void onEnable() {
@@ -35,17 +30,34 @@ public class TARDIS extends JavaPlugin implements Listener {
         pdfFile = getDescription();
         Constants.MY_PLUGIN_NAME = "[" + pdfFile.getName() + "]";
 
-        try {
-            if (!getDataFolder().exists()) {
-                getDataFolder().mkdir();
+        if (!getDataFolder().exists()) {
+            if (!getDataFolder().mkdir()) {
+                System.out.println(Constants.MY_PLUGIN_NAME + " could not create directory!");
+                System.out.println(Constants.MY_PLUGIN_NAME + " requires you to manually make the TARDIS/ directory!");
             }
-        } catch (Exception e) {
-            System.out.println(Constants.MY_PLUGIN_NAME + " could not create directory!");
-            System.out.println(Constants.MY_PLUGIN_NAME + " requires you to manually make the TARDIS/ directory!");
+            getDataFolder().setWritable(true);
+            getDataFolder().setExecutable(true);
         }
 
-        getDataFolder().setWritable(true);
-        getDataFolder().setExecutable(true);
+        File dir = new File(plugin.getDataFolder() + File.separator + "chunks");
+        if (!dir.exists()) {
+            dir.mkdirs();
+            dir.setWritable(true);
+            dir.setExecutable(true);
+        }
+
+        List<World> worldList = plugin.getServer().getWorlds();
+        for (World w : worldList) {
+            String strWorldName = w.getName();
+            File file = new File(plugin.getDataFolder() + File.separator + "chunks" + File.separator + strWorldName + ".chunks");
+            if (!file.exists() && w.getEnvironment() == Environment.NORMAL) {
+                try {
+                    file.createNewFile();
+                } catch (IOException io) {
+                    System.out.println(Constants.MY_PLUGIN_NAME + " could not create ["+strWorldName+"] world chunk file!");
+                }
+            }
+        }
 
         if (config == null) {
             loadConfig();
@@ -53,7 +65,6 @@ public class TARDIS extends JavaPlugin implements Listener {
 
         tardisExecutor = new TARDISexecutor(this);
         getCommand("TARDIS").setExecutor(tardisExecutor);
-
     }
 
     @Override
@@ -68,25 +79,19 @@ public class TARDIS extends JavaPlugin implements Listener {
                 copy(getResource(Constants.SCHEMATIC_FILE_NAME), schematicfile);
             }
             schematic = Schematic.schematic(schematicfile);
-        } catch (Exception e) {
-            System.out.println(Constants.MY_PLUGIN_NAME + " failed to retrieve schematic from directory. Using defaults.");
-        }
-        try {
+
             myconfigfile = new File(getDataFolder(), Constants.CONFIG_FILE_NAME);
             if (!myconfigfile.exists()) {
                 // load the default values into file
                 copy(getResource(Constants.CONFIG_FILE_NAME), myconfigfile);
             }
-        } catch (Exception e) {
-            System.out.println(Constants.MY_PLUGIN_NAME + " failed to retrieve configuration from directory. Using defaults.");
-        }
-        try {
+
             timelordsfile = new File(getDataFolder(), Constants.TIMELORDS_FILE_NAME);
             if (!timelordsfile.exists()) {
                 copy(getResource(Constants.TIMELORDS_FILE_NAME), timelordsfile);
             }
         } catch (Exception e) {
-            System.out.println(Constants.MY_PLUGIN_NAME + " failed to retrieve timelords from directory. Using defaults.");
+            System.out.println(Constants.MY_PLUGIN_NAME + " failed to retrieve files from directory. Using defaults.");
         }
         config = YamlConfiguration.loadConfiguration(myconfigfile);
         timelords = YamlConfiguration.loadConfiguration(timelordsfile);

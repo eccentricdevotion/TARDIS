@@ -3,9 +3,10 @@ description: A plugin for all Doctor Who fans - create and use a TARDIS! Telepor
 main: me.eccentric_nz.plugins.TARDIS.TARDIS
 name: TARDIS
 startup: postworld
+softdepend: [Multiverse-Core]
 dev-url: http://dev.bukkit.org/server-mods/TARDIS/
 url: http://www.thenosefairy.co.nz/
-version: '1.0'
+version: '1.1'
 permissions:
   TARDIS.admin:
     description: Allow players access to the TARDIS admin commands.
@@ -36,6 +37,9 @@ permissions:
   TARDIS.save:
     TARDIS: Allow players to save time travel destinations.
     default: op
+  TARDIS.home:
+    TARDIS: Allow players to save a time travel destination as their home.
+    default: op
   TARDIS.enter:
     description: Allow players to enter a TARDIS.
     default: op
@@ -54,9 +58,14 @@ commands:
       permission: TARDIS.list
       permission-message: You don't have the permission <permission> to use this command
     save:
-      description: Saved a time travel location.
+      description: Save a time travel location.
       usage: /<command> save [slot number] [name]
       permission: TARDIS.save
+      permission-message: You don't have the permission <permission> to use this command
+    home:
+      description: Save a time travel location as home.
+      usage: /<command> home
+      permission: TARDIS.home
       permission-message: You don't have the permission <permission> to use this command
     find:
       description: Shows you the location of your TARDIS.
@@ -66,6 +75,11 @@ commands:
     admin:
       description: Set TARDIS configuration options.
       usage: /<command> admin [config option] [value]
+      permission: TARDIS.admin
+      permission-message: You don't have the permission <permission> to use this command
+    reload:
+      description: Reloads the TARDIS configuration.
+      usage: /<command> reload
       permission: TARDIS.admin
       permission-message: You don't have the permission <permission> to use this command
     help:

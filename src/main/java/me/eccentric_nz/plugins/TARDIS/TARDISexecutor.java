@@ -1,32 +1,16 @@
 package me.eccentric_nz.plugins.TARDIS;
 
 import java.io.IOException;
-import java.util.UUID;
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.*;
-import org.bukkit.block.Block;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
-import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 
 public class TARDISexecutor implements CommandExecutor {
 
     private TARDIS plugin;
-    private World world;
-    private Block targetBlock;
-    private Location bluebox_loc;
-    private LivingEntity thetardis;
-    private UUID secID;
-    private int bb_locX;
-    private int bb_locY;
-    private int bb_locZ;
-    private String bb_world;
-    private String d;
-    private boolean fences = false;
-    private boolean plates = false;
-    private int hx = 0, hy = 0, hz = 0;
 
     public TARDISexecutor(TARDIS plugin) {
         this.plugin = plugin;
@@ -46,9 +30,13 @@ public class TARDISexecutor implements CommandExecutor {
                 return true;
             }
             // the command list - first argument MUST appear here!
-            if (!args[0].equalsIgnoreCase("save") && !args[0].equalsIgnoreCase("list") && !args[0].equalsIgnoreCase("admin") && !args[0].equalsIgnoreCase("help") && !args[0].equalsIgnoreCase("find")) {
+            if (!args[0].equalsIgnoreCase("save") && !args[0].equalsIgnoreCase("list") && !args[0].equalsIgnoreCase("admin") && !args[0].equalsIgnoreCase("help") && !args[0].equalsIgnoreCase("find") && !args[0].equalsIgnoreCase("reload")) {
                 sender.sendMessage("Do you want to list destinations, save a destination, or find the TARDIS?");
                 return false;
+            }
+            if (args[0].equalsIgnoreCase("reload")) {
+                plugin.loadConfig();
+                sender.sendMessage("TARDIS config reloaded.");
             }
             if (args[0].equalsIgnoreCase("admin")) {
                 if (args.length == 1) {
@@ -59,13 +47,17 @@ public class TARDISexecutor implements CommandExecutor {
                     sender.sendMessage("Too few command arguments!");
                     return false;
                 } else {
+                    if (!args[1].equalsIgnoreCase("bonus") && !args[1].equalsIgnoreCase("protect") && !args[1].equalsIgnoreCase("max_rad") && !args[1].equalsIgnoreCase("spout") && !args[1].equalsIgnoreCase("default") && !args[1].equalsIgnoreCase("name") && !args[1].equalsIgnoreCase("include")) {
+                       sender.sendMessage("TARDIS does not recognise that command argument!");
+                       return false;
+                    }
                     if (args[1].equalsIgnoreCase("bonus")) {
                         String tf = args[2].toLowerCase();
                         if (!tf.equals("true") && !tf.equals("false")) {
                             sender.sendMessage(ChatColor.RED + "The last argument must be true or false!");
                             return false;
                         }
-                        plugin.config.set("bonus_chest", tf);
+                        plugin.config.set("bonus_chest", Boolean.valueOf(tf));
                     }
                     if (args[1].equalsIgnoreCase("protect")) {
                         String tf = args[2].toLowerCase();
@@ -73,7 +65,7 @@ public class TARDISexecutor implements CommandExecutor {
                             sender.sendMessage(ChatColor.RED + "The last argument must be true or false!");
                             return false;
                         }
-                        plugin.config.set("bonus_chest", tf);
+                        plugin.config.set("protect_blocks", Boolean.valueOf(tf));
                     }
                     if (args[1].equalsIgnoreCase("max_rad")) {
                         String a = args[2];
@@ -94,7 +86,38 @@ public class TARDISexecutor implements CommandExecutor {
                             sender.sendMessage(ChatColor.RED + "The last argument must be true or false!");
                             return false;
                         }
-                        plugin.config.set("require_spout", tf);
+                        plugin.config.set("require_spout", Boolean.valueOf(tf));
+                    }
+                    if (args[1].equalsIgnoreCase("default")) {
+                        // check they typed true of false
+                        String tf = args[2].toLowerCase();
+                        if (!tf.equals("true") && !tf.equals("false")) {
+                            sender.sendMessage(ChatColor.RED + "The last argument must be true or false!");
+                            return false;
+                        }
+                        plugin.config.set("default_world", Boolean.valueOf(tf));
+                    }
+                    if (args[1].equalsIgnoreCase("name")) {
+                        // get world name
+                        int count = args.length;
+                        StringBuilder buf = new StringBuilder();
+                        for (int i = 2; i < count; i++) {
+                            buf.append(args[i]).append(" ");
+                        }
+                        String tmp = buf.toString();
+                        String t = tmp.substring(0, tmp.length() - 1);
+                        // need to make there are no periods(.) in the text
+                        String nodots = StringUtils.replace(t, ".", "_");
+                        plugin.config.set("default_world_name", nodots);
+                    }
+                    if (args[1].equalsIgnoreCase("include")) {
+                        // check they typed true of false
+                        String tf = args[2].toLowerCase();
+                        if (!tf.equals("true") && !tf.equals("false")) {
+                            sender.sendMessage(ChatColor.RED + "The last argument must be true or false!");
+                            return false;
+                        }
+                        plugin.config.set("include_default_world", Boolean.valueOf(tf));
                     }
                     try {
                         plugin.config.save(plugin.myconfigfile);
@@ -132,13 +155,14 @@ public class TARDISexecutor implements CommandExecutor {
                             return false;
                         } else {
                             int count = args.length;
-							String t = "";
-							for (int i = 2; i < count; i++) {
-								t += args[i] + " ";
-							}
-							t = t.substring(0, t.length() - 1);
-							// need to make there are no periods(.) in the text
-							String nodots = StringUtils.replace(t, ".", "_");
+                            StringBuilder buf = new StringBuilder();
+                            for (int i = 2; i < count; i++) {
+                                buf.append(args[i]).append(" ");
+                            }
+                            String tmp = buf.toString();
+                            String t = tmp.substring(0, tmp.length() - 1);
+                            // need to make there are no periods(.) in the text
+                            String nodots = StringUtils.replace(t, ".", "_");
                             String curDest;
                             // get current destination
                             if (plugin.timelords.getBoolean(player.getName() + ".travelling") == Boolean.valueOf("true")) {

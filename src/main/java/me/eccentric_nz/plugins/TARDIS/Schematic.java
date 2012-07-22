@@ -4,11 +4,11 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
+import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
+import org.bukkit.WorldType;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.block.Chest;
@@ -47,16 +47,14 @@ public class Schematic {
         return blocks;
     }
 
-    public void buildInnerTARDIS(String[][][] s, Player p, Location l, Constants.COMPASS d) {
+    public void buildInnerTARDIS(String[][][] s, Player p, World world, Constants.COMPASS d) {
         int level, row, col, id, x, y, z, startx, starty = 15, startz, resetx, resetz, cx = 0, cy = 0, cz = 0, rid = 0, multiplier = 1, tx = 0, ty = 0, tz = 0;
         byte data = 0x0;
         short damage = 0;
-        List<String> torches = new ArrayList<String>();
         String tmp, replacedBlocks = "";
-        World world = l.getWorld();
         // calculate startx, starty, startz
         // getStartLocation(Location loc, Constants.COMPASS dir)
-        int gsl[] = getStartLocation(l, d);
+        int gsl[] = getStartLocation(p, d);
         startx = gsl[0];
         resetx = gsl[1];
         startz = gsl[2];
@@ -65,6 +63,7 @@ public class Schematic {
         z = gsl[5];
         // need to set TARDIS space to air first otherwise torches may be placed askew
         // also getting and storing block ids for bonus chest if configured
+        StringBuilder sb = new StringBuilder();
         for (level = 0; level < 8; level++) {
             for (row = 0; row < 11; row++) {
                 for (col = 0; col < 11; col++) {
@@ -72,7 +71,7 @@ public class Schematic {
                         // get block at location
                         Location replaceLoc = new Location(world, startx, starty, startz);
                         int replacedMaterialId = replaceLoc.getBlock().getTypeId();
-                        replacedBlocks += replacedMaterialId + ":";
+                        sb.append(replacedMaterialId).append(":");
                     }
                     Constants.setBlock(world, startx, starty, startz, 0, (byte) 0);
                     switch (d) {
@@ -128,64 +127,64 @@ public class Schematic {
                                 if (id == 76 && row == 1) { // 1st redstone torch
                                     switch (d) {
                                         case NORTH:
-                                            data = 0x4;
-                                            break;
-                                        case EAST:
-                                            data = 0x1;
-                                            break;
-                                        case SOUTH:
                                             data = 0x3;
                                             break;
-                                        case WEST:
+                                        case EAST:
                                             data = 0x2;
+                                            break;
+                                        case SOUTH:
+                                            data = 0x4;
+                                            break;
+                                        case WEST:
+                                            data = 0x1;
                                             break;
                                     }
                                 }
                                 if (id == 76 && row == 3) { // 2nd redstone torch
                                     switch (d) {
                                         case NORTH:
-                                            data = 0x1;
-                                            break;
-                                        case EAST:
-                                            data = 0x3;
-                                            break;
-                                        case SOUTH:
                                             data = 0x2;
                                             break;
-                                        case WEST:
+                                        case EAST:
                                             data = 0x4;
+                                            break;
+                                        case SOUTH:
+                                            data = 0x1;
+                                            break;
+                                        case WEST:
+                                            data = 0x3;
                                             break;
                                     }
                                 }
                                 if (id == 93 && col == 2 && level == 1) { // repeaters facing towards door
                                     switch (d) {
                                         case NORTH:
-                                            data = 0x4;
-                                            break;
-                                        case EAST:
-                                            data = 0x5;
-                                            break;
-                                        case SOUTH:
                                             data = 0x6;
                                             break;
-                                        case WEST:
+                                        case EAST:
                                             data = 0x7;
+                                            break;
+                                        case SOUTH:
+                                            data = 0x4;
+                                            break;
+                                        case WEST:
+                                            data = 0x5;
                                             break;
                                     }
                                 }
                                 if (id == 93 && col == 3 && level == 1) { // repeaters facing away from door
                                     switch (d) {
                                         case NORTH:
-                                            data = 0x6;
-                                            break;
-                                        case EAST:
-                                            data = 0x7;
-                                            break;
-                                        case SOUTH:
                                             data = 0x4;
                                             break;
-                                        case WEST:
+                                        case EAST:
                                             data = 0x5;
+                                            break;
+                                        case SOUTH:
+                                            data = 0x6;
+                                            break;
+                                        case WEST:
+                                            data = 0x7;
                                             break;
                                     }
                                 }
@@ -193,11 +192,11 @@ public class Schematic {
                                     switch (d) {
                                         case NORTH:
                                         case EAST:
-                                            data = 0x3;
+                                            data = 0x2;
                                             break;
                                         case SOUTH:
                                         case WEST:
-                                            data = 0x2;
+                                            data = 0x3;
                                             break;
                                     }
                                     // remember the location of this chest
@@ -207,27 +206,27 @@ public class Schematic {
                                     switch (d) {
                                         case NORTH:
                                         case WEST:
-                                            data = 0x2;
+                                            data = 0x3;
                                             break;
                                         case SOUTH:
                                         case EAST:
-                                            data = 0x3;
+                                            data = 0x2;
                                             break;
                                     }
                                 }
                                 if (id == 77) { // stone button
                                     switch (d) {
                                         case NORTH:
-                                            data = 0x3;
-                                            break;
-                                        case WEST:
-                                            data = 0x1;
-                                            break;
-                                        case SOUTH:
                                             data = 0x4;
                                             break;
-                                        case EAST:
+                                        case WEST:
                                             data = 0x2;
+                                            break;
+                                        case SOUTH:
+                                            data = 0x3;
+                                            break;
+                                        case EAST:
+                                            data = 0x1;
                                             break;
                                     }
                                     // remember the location of this button
@@ -237,16 +236,16 @@ public class Schematic {
                                 if (id == 93 && row == 3 && col == 5 && level == 5) { // redstone repeater facing towards door
                                     switch (d) {
                                         case NORTH:
-                                            data = 0x2;
-                                            break;
-                                        case EAST:
-                                            data = 0x3;
-                                            break;
-                                        case SOUTH:
                                             data = 0x0;
                                             break;
-                                        case WEST:
+                                        case EAST:
                                             data = 0x1;
+                                            break;
+                                        case SOUTH:
+                                            data = 0x2;
+                                            break;
+                                        case WEST:
+                                            data = 0x3;
                                             break;
                                     }
                                     // save repeater location
@@ -255,16 +254,16 @@ public class Schematic {
                                 if (id == 93 && row == 5 && col == 3 && level == 5) { // redstone repeater facing right from door
                                     switch (d) {
                                         case NORTH:
-                                            data = 0x1;
-                                            break;
-                                        case EAST:
-                                            data = 0x2;
-                                            break;
-                                        case SOUTH:
                                             data = 0x3;
                                             break;
-                                        case WEST:
+                                        case EAST:
                                             data = 0x0;
+                                            break;
+                                        case SOUTH:
+                                            data = 0x1;
+                                            break;
+                                        case WEST:
+                                            data = 0x2;
                                             break;
                                     }
                                     // save repeater location
@@ -273,16 +272,16 @@ public class Schematic {
                                 if (id == 93 && row == 5 && col == 7 && level == 5) { // redstone repeater facing left from door
                                     switch (d) {
                                         case NORTH:
-                                            data = 0x3;
-                                            break;
-                                        case EAST:
-                                            data = 0x0;
-                                            break;
-                                        case SOUTH:
                                             data = 0x1;
                                             break;
-                                        case WEST:
+                                        case EAST:
                                             data = 0x2;
+                                            break;
+                                        case SOUTH:
+                                            data = 0x3;
+                                            break;
+                                        case WEST:
+                                            data = 0x0;
                                             break;
                                     }
                                     // save repeater location
@@ -291,16 +290,16 @@ public class Schematic {
                                 if (id == 93 && row == 7 && col == 5 && level == 5) { // redstone repeater facing away from door
                                     switch (d) {
                                         case NORTH:
-                                            data = 0x0;
-                                            break;
-                                        case EAST:
-                                            data = 0x1;
-                                            break;
-                                        case SOUTH:
                                             data = 0x2;
                                             break;
-                                        case WEST:
+                                        case EAST:
                                             data = 0x3;
+                                            break;
+                                        case SOUTH:
+                                            data = 0x0;
+                                            break;
+                                        case WEST:
+                                            data = 0x1;
                                             break;
                                     }
                                     // save repeater location
@@ -309,16 +308,16 @@ public class Schematic {
                                 if (id == 71) { // iron door bottom
                                     switch (d) {
                                         case NORTH:
-                                            data = 0x1;
-                                            break;
-                                        case EAST:
-                                            data = 0x2;
-                                            break;
-                                        case SOUTH:
                                             data = 0x3;
                                             break;
-                                        case WEST:
+                                        case EAST:
                                             data = 0x0;
+                                            break;
+                                        case SOUTH:
+                                            data = 0x1;
+                                            break;
+                                        case WEST:
+                                            data = 0x2;
                                             break;
                                     }
                                 }
@@ -370,7 +369,8 @@ public class Schematic {
         }
         if (plugin.config.getBoolean("bonus_chest") == Boolean.valueOf("true")) {
             // get rid of last ":" and assign ids to an array
-            replacedBlocks = replacedBlocks.substring(0, replacedBlocks.length() - 1);
+            String rb = sb.toString();
+            replacedBlocks = rb.substring(0, rb.length() - 1);
             String[] replaceddata = replacedBlocks.split(":");
             // get saved chest location
             String saved_chestloc = plugin.timelords.getString(p.getName() + ".chest");
@@ -431,7 +431,7 @@ public class Schematic {
         int level, row, col, x, y, z, startx, starty = 15, startz, resetx, resetz;
         World world = l.getWorld();
         // calculate startx, starty, startz
-        int gsl[] = getStartLocation(l, d);
+        int gsl[] = getStartLocation(p, d);
         startx = gsl[0];
         resetx = gsl[1];
         startz = gsl[2];
@@ -445,7 +445,11 @@ public class Schematic {
                     Block b = world.getBlockAt(startx, starty, startz);
                     Material m = b.getType();
                     if (m != Material.CHEST && m != Material.FURNACE) {
-                        Constants.setBlock(world, startx, starty, startz, 1, (byte) 0);
+                        if (world.getWorldType() == WorldType.FLAT) {
+                            Constants.setBlock(world, startx, starty, startz, 0, (byte) 0);
+                        } else {
+                            Constants.setBlock(world, startx, starty, startz, 1, (byte) 0);
+                        }
                     }
                     switch (d) {
                         case NORTH:
@@ -542,20 +546,20 @@ public class Schematic {
         int signx = 0, signz = 0;
         switch (d) {
             case EAST:
-                signx = 2;
+                signx = -2;
                 signz = 0;
                 break;
             case SOUTH:
                 signx = 0;
-                signz = 2;
+                signz = -2;
                 break;
             case WEST:
-                signx = -2;
+                signx = 2;
                 signz = 0;
                 break;
             case NORTH:
                 signx = 0;
-                signz = -2;
+                signz = 2;
                 break;
         }
         Constants.setBlock(w, l.getBlockX() + signx, l.getBlockY(), l.getBlockZ() + signz, 0, (byte) 0);
@@ -570,39 +574,50 @@ public class Schematic {
     }
     private static int[] startLoc = new int[6];
 
-    public int[] getStartLocation(Location loc, Constants.COMPASS dir) {
+    public int[] getStartLocation(Player p, Constants.COMPASS dir) {
+        int cx = 0, cz = 0;
+        String chunkstr = plugin.timelords.getString(p.getName() + ".chunk");
+        String[] split = chunkstr.split(":");
+        World w = plugin.getServer().getWorld(split[0]);
+        try {
+            cx = Integer.parseInt(split[1]);
+            cz = Integer.parseInt(split[2]);
+        } catch (NumberFormatException nfe) {
+            System.err.println(Constants.MY_PLUGIN_NAME + " Could not convert to number!");
+        }
+        Chunk chunk = w.getChunkAt(cx, cz);
         switch (dir) {
             case NORTH:
-                startLoc[0] = loc.getBlockX() - 5;
+                startLoc[0] = chunk.getBlock(14, 15, 14).getX();
                 startLoc[1] = startLoc[0];
-                startLoc[2] = loc.getBlockZ() - 1;
+                startLoc[2] = chunk.getBlock(14, 15, 14).getZ();
                 startLoc[3] = startLoc[2];
-                startLoc[4] = 1;
-                startLoc[5] = 1;
+                startLoc[4] = -1;
+                startLoc[5] = -1;
                 break;
             case EAST:
-                startLoc[0] = loc.getBlockX() + 1;
+                startLoc[0] = chunk.getBlock(1, 15, 14).getX();
                 startLoc[1] = startLoc[0];
-                startLoc[2] = loc.getBlockZ() - 5;
-                startLoc[3] = startLoc[2];
-                startLoc[4] = -1;
-                startLoc[5] = 1;
-                break;
-            case SOUTH:
-                startLoc[0] = loc.getBlockX() + 5;
-                startLoc[1] = startLoc[0];
-                startLoc[2] = loc.getBlockZ() + 1;
-                startLoc[3] = startLoc[2];
-                startLoc[4] = -1;
-                startLoc[5] = -1;
-                break;
-            case WEST:
-                startLoc[0] = loc.getBlockX() - 1;
-                startLoc[1] = startLoc[0];
-                startLoc[2] = loc.getBlockZ() + 5;
+                startLoc[2] = chunk.getBlock(1, 15, 14).getZ();
                 startLoc[3] = startLoc[2];
                 startLoc[4] = 1;
                 startLoc[5] = -1;
+                break;
+            case SOUTH:
+                startLoc[0] = chunk.getBlock(1, 15, 1).getX();
+                startLoc[1] = startLoc[0];
+                startLoc[2] = chunk.getBlock(1, 15, 1).getZ();
+                startLoc[3] = startLoc[2];
+                startLoc[4] = 1;
+                startLoc[5] = 1;
+                break;
+            case WEST:
+                startLoc[0] = chunk.getBlock(14, 15, 1).getX();
+                startLoc[1] = startLoc[0];
+                startLoc[2] = chunk.getBlock(14, 15, 1).getZ();
+                startLoc[3] = startLoc[2];
+                startLoc[4] = -1;
+                startLoc[5] = 1;
                 break;
         }
         return startLoc;
