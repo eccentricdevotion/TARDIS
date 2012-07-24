@@ -40,9 +40,12 @@ public class TARDISTimetravel {
             if (o.getEnvironment() == Environment.NORMAL) {
                 if (plugin.config.getBoolean("include_default_world") == Boolean.valueOf("true")) {
                     normalWorlds.add(o);
-                } else if (!o.getName().equals(plugin.config.getString("default_world"))) {
-                    normalWorlds.add(o);
+                } else {
+                    if (!o.getName().equals(plugin.config.getString("default_world_name"))) {
+                        normalWorlds.add(o);
+                    }
                 }
+
             }
         }
         listlen = normalWorlds.size();
