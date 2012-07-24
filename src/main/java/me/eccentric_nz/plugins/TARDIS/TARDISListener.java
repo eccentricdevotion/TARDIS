@@ -8,6 +8,7 @@ import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
+import org.bukkit.WorldType;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.block.Sign;
@@ -29,7 +30,6 @@ public class TARDISListener implements Listener {
 
     public TARDISListener(TARDIS plugin) {
         this.plugin = plugin;
-        plugin.getServer().getPluginManager().registerEvents(this, plugin);
     }
 
     @EventHandler(priority = EventPriority.MONITOR)
@@ -179,7 +179,11 @@ public class TARDISListener implements Listener {
                         File chunkfile = new File(plugin.getDataFolder() + File.separator + "chunks" + File.separator + chunkworld[0] + ".chunks");
                         Constants c = new Constants();
                         c.removeLineFromFile(chunkfile, chunkLoc);
-                        s.destroyTARDIS(player, bb_loc, cw, d);
+                        s.destroyTARDIS(player, bb_loc, cw, d, 1);
+                        if (cw.getWorldType() == WorldType.FLAT) {
+                            // replace stone blocks with AIR
+                            s.destroyTARDIS(player, bb_loc, cw, d, 0);
+                        }
                         s.destroyBlueBox(bb_loc, d, configPath);
                         // remove player from timelords
                         plugin.timelords.set(configPath, null);
@@ -302,8 +306,6 @@ public class TARDISListener implements Listener {
                                         //rebuild = true;
                                     }
                                     // try preloading destination chunk
-                                    //w.getChunkAt(exitTardis).load();
-                                    //w.getChunkAt(exitTardis).load(true);
                                     while (!w.getChunkAt(exitTardis).isLoaded()) {
                                         w.getChunkAt(exitTardis).load();
                                     }
@@ -420,7 +422,7 @@ public class TARDISListener implements Listener {
                         TARDISTimetravel tt = new TARDISTimetravel(plugin);
                         Location rand = tt.randomDestination(player, player.getWorld(), r1_data, r2_data, r3_data);
                         String d = rand.getWorld().getName() + ":" + rand.getBlockX() + ":" + rand.getBlockY() + ":" + rand.getBlockZ();
-                        //player.sendMessage(d);
+                        player.sendMessage("Destination: "+rand.getWorld().getName());
                         plugin.timelords.set(configPath + ".save", d);
                     }
                     try {
