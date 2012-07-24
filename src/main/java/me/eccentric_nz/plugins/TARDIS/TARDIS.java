@@ -62,6 +62,7 @@ public class TARDIS extends JavaPlugin implements Listener {
         if (config == null) {
             loadConfig();
         }
+        Constants.TARDIS_KEY = config.getString("key");
 
         tardisExecutor = new TARDISexecutor(this);
         getCommand("TARDIS").setExecutor(tardisExecutor);
