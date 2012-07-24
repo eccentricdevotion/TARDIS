@@ -2,12 +2,14 @@ package me.eccentric_nz.plugins.TARDIS;
 
 import java.io.*;
 import java.util.List;
+import org.bukkit.Bukkit;
 import org.bukkit.World;
 import org.bukkit.World.Environment;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.PluginDescriptionFile;
+import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class TARDIS extends JavaPlugin implements Listener {
@@ -21,11 +23,13 @@ public class TARDIS extends JavaPlugin implements Listener {
     private TARDISexecutor tardisExecutor;
     public String[][][] schematic;
     protected static TARDIS plugin;
+    TARDISListener tardisListener = new TARDISListener(this);
+    PluginManager pm = Bukkit.getServer().getPluginManager();
 
     @Override
     public void onEnable() {
         plugin = this;
-        TARDISListener tardisListener = new TARDISListener(this);
+        pm.registerEvents(tardisListener, this);
 
         pdfFile = getDescription();
         Constants.MY_PLUGIN_NAME = "[" + pdfFile.getName() + "]";
@@ -54,7 +58,7 @@ public class TARDIS extends JavaPlugin implements Listener {
                 try {
                     file.createNewFile();
                 } catch (IOException io) {
-                    System.out.println(Constants.MY_PLUGIN_NAME + " could not create ["+strWorldName+"] world chunk file!");
+                    System.out.println(Constants.MY_PLUGIN_NAME + " could not create [" + strWorldName + "] world chunk file!");
                 }
             }
         }
