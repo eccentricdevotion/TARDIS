@@ -38,7 +38,8 @@ public class TARDISTimetravel {
         List<World> normalWorlds = new ArrayList<World>();
         for (World o : worldlist) {
             if (o.getEnvironment() == Environment.NORMAL) {
-                if (plugin.config.getBoolean("include_default_world") == Boolean.valueOf("true")) {
+                if (plugin.config.getBoolean("include_default_world") == Boolean.valueOf("true")
+                        || plugin.config.getBoolean("default_world") == Boolean.valueOf("false")) {
                     normalWorlds.add(o);
                 } else {
                     if (!o.getName().equals(plugin.config.getString("default_world_name"))) {
@@ -163,7 +164,7 @@ public class TARDISTimetravel {
                 }
                 starty += 1;
             }
-            p.sendMessage("Finding safe location...");
+            //p.sendMessage("Finding safe location...");
         }
         wherey = randworld.getHighestBlockYAt(wherex, wherez) + 2;
         dest = new Location(randworld, wherex, wherey, wherez);
