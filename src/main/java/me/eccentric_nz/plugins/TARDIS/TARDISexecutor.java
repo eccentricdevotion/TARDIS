@@ -1,6 +1,7 @@
 package me.eccentric_nz.plugins.TARDIS;
 
 import java.io.IOException;
+import java.util.Arrays;
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.*;
 import org.bukkit.command.Command;
@@ -47,9 +48,19 @@ public class TARDISexecutor implements CommandExecutor {
                     sender.sendMessage("Too few command arguments!");
                     return false;
                 } else {
-                    if (!args[1].equalsIgnoreCase("bonus") && !args[1].equalsIgnoreCase("protect") && !args[1].equalsIgnoreCase("max_rad") && !args[1].equalsIgnoreCase("spout") && !args[1].equalsIgnoreCase("default") && !args[1].equalsIgnoreCase("name") && !args[1].equalsIgnoreCase("include")) {
-                       sender.sendMessage("TARDIS does not recognise that command argument!");
-                       return false;
+                    if (!args[1].equalsIgnoreCase("bonus") && !args[1].equalsIgnoreCase("protect") && !args[1].equalsIgnoreCase("max_rad") && !args[1].equalsIgnoreCase("spout") && !args[1].equalsIgnoreCase("default") && !args[1].equalsIgnoreCase("name") && !args[1].equalsIgnoreCase("include") && !args[1].equalsIgnoreCase("key")) {
+                        sender.sendMessage("TARDIS does not recognise that command argument!");
+                        return false;
+                    }
+                    if (args[1].equalsIgnoreCase("key")) {
+                        String setMaterial = args[2].toUpperCase();
+                        if (!Arrays.asList(Materials.MATERIAL_LIST).contains(setMaterial)) {
+                            sender.sendMessage(ChatColor.RED + "That is not a valid Material! Try checking http://jd.bukkit.org/apidocs/org/bukkit/Material.html");
+                            return false;
+                        } else {
+                            plugin.config.set("key", setMaterial);
+                            Constants.TARDIS_KEY = setMaterial;
+                        }
                     }
                     if (args[1].equalsIgnoreCase("bonus")) {
                         String tf = args[2].toLowerCase();
@@ -139,6 +150,21 @@ public class TARDISexecutor implements CommandExecutor {
                             return false;
                         }
                         Constants.list(plugin.timelords, player);
+                    } else {
+                        sender.sendMessage(Constants.NO_PERMS_MESSAGE);
+                        return false;
+                    }
+                }
+                if (args[0].equalsIgnoreCase("find")) {
+                    if (player.hasPermission("TARDIS.find")) {
+                        if (!plugin.timelords.contains(player.getName())) {
+                            sender.sendMessage("You have not created a TARDIS yet!");
+                            return false;
+                        }
+                        String loc = plugin.timelords.getString(player.getName()+".save");
+                        String[] findData = loc.split(":");
+                        sender.sendMessage("You you left your TARDIS in " + findData[0] + " at x:" + findData[1] + " y:" + findData[2] + " z:" + findData[3]);
+                        return true;
                     } else {
                         sender.sendMessage(Constants.NO_PERMS_MESSAGE);
                         return false;
