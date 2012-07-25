@@ -422,7 +422,7 @@ public class TARDISListener implements Listener {
                         TARDISTimetravel tt = new TARDISTimetravel(plugin);
                         Location rand = tt.randomDestination(player, player.getWorld(), r1_data, r2_data, r3_data);
                         String d = rand.getWorld().getName() + ":" + rand.getBlockX() + ":" + rand.getBlockY() + ":" + rand.getBlockZ();
-                        player.sendMessage("Destination: "+rand.getWorld().getName());
+                        player.sendMessage("Destination world: "+rand.getWorld().getName());
                         plugin.timelords.set(configPath + ".save", d);
                     }
                     try {
