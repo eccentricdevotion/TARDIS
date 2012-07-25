@@ -7,8 +7,6 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -115,7 +113,7 @@ public class Constants {
         try {
             //File inFile = new File(file);
             if (!file.isFile()) {
-                System.out.println("Parameter is not an existing file");
+                System.out.println(Constants.MY_PLUGIN_NAME + "Parameter is not an existing file");
                 return;
             }
             //Construct the new file that will later be renamed to the original filename.
@@ -135,17 +133,17 @@ public class Constants {
             br.close();
             //Delete the original file
             if (!file.delete()) {
-                System.out.println("Could not delete file");
+                System.out.println(Constants.MY_PLUGIN_NAME + "Could not delete file");
                 return;
             }
             //Rename the new file to the filename the original file had.
             if (!tempFile.renameTo(file)) {
-                System.out.println("Could not rename file");
+                System.out.println(Constants.MY_PLUGIN_NAME + "Could not rename file");
             }
         } catch (FileNotFoundException ex) {
-            Logger.getLogger(Constants.class.getName()).log(Level.SEVERE, "Chunk file does not exist!", ex);
+            System.err.println(Constants.MY_PLUGIN_NAME + "Chunk file does not exist!" + ex);
         } catch (IOException ex) {
-            Logger.getLogger(Constants.class.getName()).log(Level.SEVERE, "Could not read chunk file!", ex);
+            System.err.println(Constants.MY_PLUGIN_NAME + "Could not read chunk file!" + ex);
         }
     }
 }
