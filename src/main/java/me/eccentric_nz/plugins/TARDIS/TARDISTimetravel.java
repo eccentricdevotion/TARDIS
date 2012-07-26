@@ -172,7 +172,7 @@ public class TARDISTimetravel {
     }
 
     private boolean isItSafe(int id) {
-        if (id == 0 || id == 78 || id == 80 || id == 31 || id == 38 || id == 37 || id == 39 || id == 40 || id == 6 || id == 50) {
+        if (id == 0 || id == 78 || id == 31 || id == 38 || id == 37 || id == 39 || id == 40 || id == 6) {
             return false;
         } else {
             return true;
@@ -183,33 +183,33 @@ public class TARDISTimetravel {
     public int[] getStartLocation(Location loc, Constants.COMPASS dir) {
         switch (dir) {
             case NORTH:
-                startLoc[0] = loc.getBlockX() - 1;
+                startLoc[0] = loc.getBlockX() + 1;
                 startLoc[1] = startLoc[0];
-                startLoc[2] = loc.getBlockZ() - 3;
+                startLoc[2] = loc.getBlockZ() + 3;
                 startLoc[3] = startLoc[2];
                 startLoc[4] = 1;
                 startLoc[5] = 1;
                 break;
             case EAST:
-                startLoc[0] = loc.getBlockX() + 3;
+                startLoc[0] = loc.getBlockX() - 3;
                 startLoc[1] = startLoc[0];
-                startLoc[2] = loc.getBlockZ() - 1;
+                startLoc[2] = loc.getBlockZ() + 1;
                 startLoc[3] = startLoc[2];
                 startLoc[4] = -1;
                 startLoc[5] = 1;
                 break;
             case SOUTH:
-                startLoc[0] = loc.getBlockX() + 1;
+                startLoc[0] = loc.getBlockX() - 1;
                 startLoc[1] = startLoc[0];
-                startLoc[2] = loc.getBlockZ() + 3;
+                startLoc[2] = loc.getBlockZ() - 3;
                 startLoc[3] = startLoc[2];
                 startLoc[4] = -1;
                 startLoc[5] = -1;
                 break;
             case WEST:
-                startLoc[0] = loc.getBlockX() - 3;
+                startLoc[0] = loc.getBlockX() + 3;
                 startLoc[1] = startLoc[0];
-                startLoc[2] = loc.getBlockZ() + 1;
+                startLoc[2] = loc.getBlockZ() - 1;
                 startLoc[3] = startLoc[2];
                 startLoc[4] = 1;
                 startLoc[5] = -1;
