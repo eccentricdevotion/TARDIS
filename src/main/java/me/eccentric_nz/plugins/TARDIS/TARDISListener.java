@@ -179,10 +179,10 @@ public class TARDISListener implements Listener {
                         File chunkfile = new File(plugin.getDataFolder() + File.separator + "chunks" + File.separator + chunkworld[0] + ".chunks");
                         Constants c = new Constants();
                         c.removeLineFromFile(chunkfile, chunkLoc);
-                        s.destroyTARDIS(player, bb_loc, cw, d, 1);
+                        s.destroyTARDIS(player, cw, d, 1);
                         if (cw.getWorldType() == WorldType.FLAT) {
                             // replace stone blocks with AIR
-                            s.destroyTARDIS(player, bb_loc, cw, d, 0);
+                            s.destroyTARDIS(player, cw, d, 0);
                         }
                         s.destroyBlueBox(bb_loc, d, configPath);
                         // remove player from timelords
@@ -206,7 +206,7 @@ public class TARDISListener implements Listener {
     @EventHandler(priority = EventPriority.MONITOR)
     public void onPlayerInteract(PlayerInteractEvent event) {
 
-        Player player = event.getPlayer();
+        final Player player = event.getPlayer();
         String configPath = player.getName();
         int savedx = 0, savedy = 0, savedz = 0, cx = 0, cz = 0;
 
@@ -231,7 +231,7 @@ public class TARDISListener implements Listener {
                                 // get last known BLUEBOX location
                                 Location door_loc = Constants.getLocationFromFile(configPath, "save", yaw, pitch, plugin.timelords);
                                 // get INNER TARDIS location
-                                Location tardis_loc = null;
+                                Location tmp_loc = null;
                                 String chunkstr = plugin.timelords.getString(configPath + ".chunk");
                                 String[] split = chunkstr.split(":");
                                 World cw = plugin.getServer().getWorld(split[0]);
@@ -247,26 +247,26 @@ public class TARDISListener implements Listener {
                                 double z = door_loc.getZ();
                                 switch (Constants.COMPASS.valueOf(d)) {
                                     case NORTH:
-                                        tardis_loc = chunk.getBlock(9, 19, 13).getLocation();
+                                        tmp_loc = chunk.getBlock(9, 19, 13).getLocation();
                                         door_loc.setZ(z + 1);
                                         break;
                                     case EAST:
-                                        tardis_loc = chunk.getBlock(3, 19, 9).getLocation();
+                                        tmp_loc = chunk.getBlock(3, 19, 9).getLocation();
                                         door_loc.setX(x - 1);
                                         break;
                                     case SOUTH:
-                                        tardis_loc = chunk.getBlock(6, 19, 3).getLocation();
+                                        tmp_loc = chunk.getBlock(6, 19, 3).getLocation();
                                         door_loc.setZ(z - 1);
                                         break;
                                     case WEST:
-                                        tardis_loc = chunk.getBlock(13, 19, 6).getLocation();
+                                        tmp_loc = chunk.getBlock(13, 19, 6).getLocation();
                                         door_loc.setX(x + 1);
                                         break;
                                 }
                                 if (plugin.timelords.getBoolean(configPath + ".travelling") == Boolean.valueOf("true")) {
                                     // player is in the TARDIS
                                     // get location from timelords file
-                                    Location exitTardis = Constants.getLocationFromFile(configPath, "save", yaw, pitch, plugin.timelords);
+                                    final Location exitTardis = Constants.getLocationFromFile(configPath, "save", yaw, pitch, plugin.timelords);
                                     // make location safe ie. outside of the bluebox
                                     double ex = exitTardis.getX();
                                     double ez = exitTardis.getZ();
@@ -314,7 +314,19 @@ public class TARDISListener implements Listener {
                                         s.buildOuterTARDIS(player, newl, Constants.COMPASS.valueOf(d));
                                     }
                                     // exit TARDIS!
-                                    player.teleport(exitTardis);
+                                    plugin.getServer().getScheduler().scheduleSyncDelayedTask(this.plugin, new Runnable() {
+                                        public void run() {
+                                            player.teleport(exitTardis);
+                                            player.setFlying(true);
+                                        }
+                                    }, 20L);
+
+                                    plugin.getServer().getScheduler().scheduleSyncDelayedTask(this.plugin, new Runnable() {
+                                        public void run() {
+                                            player.teleport(exitTardis);
+                                            player.setFlying(false);
+                                        }
+                                    }, 20L);
                                     plugin.timelords.set(configPath + ".travelling", false);
                                     try {
                                         plugin.timelords.save(plugin.timelordsfile);
@@ -325,10 +337,22 @@ public class TARDISListener implements Listener {
                                     // needs to be either top or bottom of door! This is the current bluebox door location
                                     if (block_loc.getBlockX() == door_loc.getBlockX() && block_loc.getBlockZ() == door_loc.getBlockZ() && (block_loc.getBlockY() == door_loc.getBlockY() - 2 || block_loc.getBlockY() == door_loc.getBlockY() - 1)) {
                                         // enter TARDIS!
-                                        w.getChunkAt(tardis_loc).load();
-                                        tardis_loc.setPitch(pitch);
-                                        tardis_loc.setYaw(yaw);
-                                        player.teleport(tardis_loc);
+                                        w.getChunkAt(tmp_loc).load();
+                                        tmp_loc.setPitch(pitch);
+                                        tmp_loc.setYaw(yaw);
+                                        final Location tardis_loc = tmp_loc;
+                                        plugin.getServer().getScheduler().scheduleSyncDelayedTask(this.plugin, new Runnable() {
+                                            public void run() {
+                                                player.teleport(tardis_loc);
+                                                player.setFlying(true);
+                                            }
+                                        }, 20L);
+                                        plugin.getServer().getScheduler().scheduleSyncDelayedTask(this.plugin, new Runnable() {
+                                            public void run() {
+                                                player.teleport(tardis_loc);
+                                                player.setFlying(false);
+                                            }
+                                        }, 20L);
                                         plugin.timelords.set(configPath + ".travelling", true);
                                         // update current TARDIS location
                                         plugin.timelords.set(configPath + ".current", plugin.timelords.getString(configPath + ".save"));
@@ -422,7 +446,7 @@ public class TARDISListener implements Listener {
                         TARDISTimetravel tt = new TARDISTimetravel(plugin);
                         Location rand = tt.randomDestination(player, player.getWorld(), r1_data, r2_data, r3_data);
                         String d = rand.getWorld().getName() + ":" + rand.getBlockX() + ":" + rand.getBlockY() + ":" + rand.getBlockZ();
-                        player.sendMessage("Destination world: "+rand.getWorld().getName());
+                        player.sendMessage("Destination world: " + rand.getWorld().getName());
                         plugin.timelords.set(configPath + ".save", d);
                     }
                     try {
