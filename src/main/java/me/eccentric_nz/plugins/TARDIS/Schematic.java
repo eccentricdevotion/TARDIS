@@ -25,11 +25,11 @@ import org.bukkit.inventory.ItemStack;
 public class Schematic {
 
     private final TARDIS plugin;
+    private static String[][][] blocks;
 
     public Schematic(TARDIS plugin) {
         this.plugin = plugin;
     }
-    private static String[][][] blocks;
 
     public static String[][][] schematic(File file) {
 
@@ -590,7 +590,7 @@ public class Schematic {
         }
     }
 
-    public void destroyTARDIS(Player p, Location l, World w, Constants.COMPASS d, int i) {
+    public void destroyTARDIS(Player p, World w, Constants.COMPASS d, int i) {
         // inner TARDIS
         int level, row, col, x, y, z, startx, starty = 22, startz, resetx, resetz;
         // calculate startx, starty, startz
@@ -610,15 +610,17 @@ public class Schematic {
                     // if it's a chest clear the inventory first
                     if (m == Material.CHEST) {
                         Chest che = (Chest) b.getState();
-                        che.getInventory().clear();
+                        Inventory inv = che.getBlockInventory();
+                        inv.clear();
                     }
                     // if it's a furnace clear the inventory first
                     if (m == Material.FURNACE) {
                         Furnace fur = (Furnace) b.getState();
                         fur.getInventory().clear();
                     }
-                    // normal world - set to stone
-                    setBlock(w, startx, starty, startz, i, (byte) 0);
+                    if (m != Material.CHEST) {
+                        setBlock(w, startx, starty, startz, i, (byte) 0);
+                    }
                     switch (d) {
                         case NORTH:
                         case SOUTH:
