@@ -317,6 +317,7 @@ public class TARDISListener implements Listener {
                                     plugin.getServer().getScheduler().scheduleSyncDelayedTask(this.plugin, new Runnable() {
                                         public void run() {
                                             player.teleport(exitTardis);
+                                            player.setAllowFlight(true);
                                             player.setFlying(true);
                                         }
                                     }, 20L);
@@ -325,6 +326,7 @@ public class TARDISListener implements Listener {
                                         public void run() {
                                             player.teleport(exitTardis);
                                             player.setFlying(false);
+                                            player.setAllowFlight(false);
                                         }
                                     }, 20L);
                                     plugin.timelords.set(configPath + ".travelling", false);
@@ -344,6 +346,7 @@ public class TARDISListener implements Listener {
                                         plugin.getServer().getScheduler().scheduleSyncDelayedTask(this.plugin, new Runnable() {
                                             public void run() {
                                                 player.teleport(tardis_loc);
+                                                player.setAllowFlight(true);
                                                 player.setFlying(true);
                                             }
                                         }, 20L);
@@ -351,6 +354,7 @@ public class TARDISListener implements Listener {
                                             public void run() {
                                                 player.teleport(tardis_loc);
                                                 player.setFlying(false);
+                                                player.setAllowFlight(false);
                                             }
                                         }, 20L);
                                         plugin.timelords.set(configPath + ".travelling", true);
