@@ -3,8 +3,11 @@ package me.eccentric_nz.plugins.TARDIS;
 import java.io.*;
 import java.util.List;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
+import org.bukkit.Server;
 import org.bukkit.World;
 import org.bukkit.World.Environment;
+import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.event.Listener;
@@ -14,6 +17,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 public class TARDIS extends JavaPlugin implements Listener {
 
+    TARDISdatabase service = TARDISdatabase.getInstance();
     public PluginDescriptionFile pdfFile;
     public FileConfiguration config = null;
     public FileConfiguration timelords = null;
@@ -23,13 +27,19 @@ public class TARDIS extends JavaPlugin implements Listener {
     private TARDISexecutor tardisExecutor;
     public String[][][] schematic;
     protected static TARDIS plugin;
-    TARDISListener tardisListener = new TARDISListener(this);
+    TARDISBlockPlaceListener tardisBlockPlaceListener = new TARDISBlockPlaceListener(this);
+    TARDISBlockBreakListener tardisBlockBreakListener = new TARDISBlockBreakListener(this);
+    TARDISPlayerListener tardisPlayerListener = new TARDISPlayerListener(this);
+    TARDISBlockProtectListener tardisProtectListener = new TARDISBlockProtectListener(this);
     PluginManager pm = Bukkit.getServer().getPluginManager();
 
     @Override
     public void onEnable() {
         plugin = this;
-        pm.registerEvents(tardisListener, this);
+        pm.registerEvents(tardisBlockPlaceListener, this);
+        pm.registerEvents(tardisBlockBreakListener, this);
+        pm.registerEvents(tardisPlayerListener, this);
+        pm.registerEvents(tardisProtectListener, this);
 
         pdfFile = getDescription();
         Constants.MY_PLUGIN_NAME = "[" + pdfFile.getName() + "]";
@@ -43,24 +53,12 @@ public class TARDIS extends JavaPlugin implements Listener {
             getDataFolder().setExecutable(true);
         }
 
-        File dir = new File(plugin.getDataFolder() + File.separator + "chunks");
-        if (!dir.exists()) {
-            dir.mkdirs();
-            dir.setWritable(true);
-            dir.setExecutable(true);
-        }
-
-        List<World> worldList = plugin.getServer().getWorlds();
-        for (World w : worldList) {
-            String strWorldName = w.getName();
-            File file = new File(plugin.getDataFolder() + File.separator + "chunks" + File.separator + strWorldName + ".chunks");
-            if (!file.exists() && w.getEnvironment() == Environment.NORMAL) {
-                try {
-                    file.createNewFile();
-                } catch (IOException io) {
-                    System.out.println(Constants.MY_PLUGIN_NAME + " could not create [" + strWorldName + "] world chunk file!");
-                }
-            }
+        try {
+            String path = getDataFolder() + File.separator + "TARDIS.db";
+            service.setConnection(path);
+            service.createTables();
+        } catch (Exception e) {
+            System.err.println(Constants.MY_PLUGIN_NAME + " Connection and Tables Error: " + e);
         }
 
         if (config == null) {
@@ -78,6 +76,8 @@ public class TARDIS extends JavaPlugin implements Listener {
     }
 
     public FileConfiguration loadConfig() {
+        Server server = plugin.getServer();
+        ConsoleCommandSender console = server.getConsoleSender();
         try {
             schematicfile = new File(getDataFolder(), Constants.SCHEMATIC_FILE_NAME);
             if (!schematicfile.exists()) {
@@ -92,14 +92,23 @@ public class TARDIS extends JavaPlugin implements Listener {
             }
 
             timelordsfile = new File(getDataFolder(), Constants.TIMELORDS_FILE_NAME);
-            if (!timelordsfile.exists()) {
-                copy(getResource(Constants.TIMELORDS_FILE_NAME), timelordsfile);
-            }
         } catch (Exception e) {
-            System.out.println(Constants.MY_PLUGIN_NAME + " failed to retrieve files from directory. Using defaults.");
+            System.err.println(Constants.MY_PLUGIN_NAME + " failed to retrieve files from directory. Using defaults.");
         }
         config = YamlConfiguration.loadConfiguration(myconfigfile);
-        timelords = YamlConfiguration.loadConfiguration(timelordsfile);
+
+        // add worlds
+        List<World> worlds = this.getServer().getWorlds();
+        for (World w : worlds) {
+            String worldname = "worlds." + w.getName();
+            if (w.getEnvironment() == Environment.NORMAL && !config.contains(worldname)) {
+                config.set(worldname, true);
+                console.sendMessage(Constants.MY_PLUGIN_NAME + " Added '" + w.getName() + "' to config. To exclude this world run: " + ChatColor.GREEN + "tardis admin exclude " + w.getName());
+            }
+        }
+        if (timelordsfile.exists()) {
+            timelords = YamlConfiguration.loadConfiguration(timelordsfile);
+        }
 
         return config;
     }
