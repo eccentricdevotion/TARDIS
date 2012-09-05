@@ -7,3 +7,6 @@ require_spout: false
 default_world: false
 default_world_name: world
 include_default_world: false
+worlds:
+  world: true
+  world 2: false
