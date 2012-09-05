@@ -3,6 +3,7 @@ package me.eccentric_nz.plugins.TARDIS;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.Set;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -20,7 +21,7 @@ public class TARDISTimetravel {
         this.plugin = plugin;
     }
 
-    public Location randomDestination(Player p, World w, byte rx, byte rz, byte ry) {
+    public Location randomDestination(Player p, World w, byte rx, byte rz, byte ry, String dir) {
         int level, row, col, x, y, z, startx, starty, startz, resetx, resetz, listlen, rw;
         //int[] bad_blockids = {8, 9, 10, 11, 51, 81};
         World randworld = w;
@@ -32,23 +33,28 @@ public class TARDISTimetravel {
         int quarter = (max + 4 - 1) / 4;
         int range = quarter + 1;
         int wherex = 0, wherey = 0, wherez = 0;
+        Constants.COMPASS d = Constants.COMPASS.valueOf(dir);
 
         // get worlds
-        List<World> worldlist = plugin.getServer().getWorlds();
+        Set<String> worldlist = plugin.config.getConfigurationSection("worlds").getKeys(false);
         List<World> normalWorlds = new ArrayList<World>();
-        for (World o : worldlist) {
-            if (o.getEnvironment() == Environment.NORMAL) {
+        for (String o : worldlist) {
+            if (plugin.getServer().getWorld(o).getEnvironment() == Environment.NORMAL) {
                 if (plugin.config.getBoolean("include_default_world") == Boolean.valueOf("true")
                         || plugin.config.getBoolean("default_world") == Boolean.valueOf("false")) {
-                    normalWorlds.add(o);
+                    if (plugin.config.getBoolean("worlds." + o) == Boolean.valueOf("true")) {
+                        normalWorlds.add(plugin.getServer().getWorld(o));
+                    }
                 } else {
-                    if (!o.getName().equals(plugin.config.getString("default_world_name"))) {
-                        normalWorlds.add(o);
+                    if (!o.equals(plugin.config.getString("default_world_name"))) {
+                        if (plugin.config.getBoolean("worlds." + o) == Boolean.valueOf("true")) {
+                            normalWorlds.add(plugin.getServer().getWorld(o));
+                        }
                     }
                 }
-
             }
         }
+
         listlen = normalWorlds.size();
 
         while (danger == true) {
@@ -65,15 +71,6 @@ public class TARDISTimetravel {
             if (rx >= 12 && rx <= 15) {
                 wherex += (quarter * 3);
             }
-            if (ry >= 4 && ry <= 7) {
-                wherey += (quarter);
-            }
-            if (ry >= 8 && ry <= 11) {
-                wherey += (quarter * 2);
-            }
-            if (ry >= 12 && ry <= 15) {
-                wherey += (quarter * 3);
-            }
             if (rz >= 4 && rz <= 7) {
                 wherez += (quarter);
             }
@@ -83,10 +80,26 @@ public class TARDISTimetravel {
             if (rz >= 12 && rz <= 15) {
                 wherez += (quarter * 3);
             }
+
+            // add chance of negative values
             wherex = wherex * 2;
             wherez = wherez * 2;
             wherex = wherex - max;
             wherez = wherez - max;
+
+            // use multiplier based on position of third repeater
+            if (ry >= 4 && ry <= 7) {
+                wherex = wherex * 2;
+                wherez = wherez * 2;
+            }
+            if (ry >= 8 && ry <= 11) {
+                wherex = wherex * 3;
+                wherez = wherez * 3;
+            }
+            if (ry >= 12 && ry <= 15) {
+                wherex = wherex * 4;
+                wherez = wherez * 4;
+            }
 
             // random world
             rw = rand.nextInt(listlen);
@@ -99,7 +112,7 @@ public class TARDISTimetravel {
             }
 
             Block currentBlock = randworld.getBlockAt(wherex, wherey, wherez);
-            while (currentBlock.getType() == Material.AIR || currentBlock.getType() == Material.SNOW || currentBlock.getType() == Material.LONG_GRASS || currentBlock.getType() == Material.RED_ROSE || currentBlock.getType() == Material.YELLOW_FLOWER || currentBlock.getType() == Material.BROWN_MUSHROOM || currentBlock.getType() == Material.RED_MUSHROOM && currentBlock.getType() != Material.SAPLING) {
+            while ((currentBlock.getType() == Material.AIR || currentBlock.getType() == Material.SNOW || currentBlock.getType() == Material.LONG_GRASS || currentBlock.getType() == Material.RED_ROSE || currentBlock.getType() == Material.YELLOW_FLOWER || currentBlock.getType() == Material.BROWN_MUSHROOM || currentBlock.getType() == Material.RED_MUSHROOM && currentBlock.getType() != Material.SAPLING) && currentBlock.getY() > 0) {
                 currentBlock = currentBlock.getRelative(BlockFace.DOWN);
             }
             Location chunk_loc = currentBlock.getLocation();
@@ -109,7 +122,6 @@ public class TARDISTimetravel {
             while (!randworld.getChunkAt(chunk_loc).isLoaded()) {
                 randworld.getChunkAt(chunk_loc).load();
             }
-            Constants.COMPASS d = Constants.COMPASS.valueOf(plugin.timelords.getString(p.getName() + ".direction"));
             // get start location for checking there is enough space
             int gsl[] = getStartLocation(chunk_loc, d);
             startx = gsl[0];
@@ -166,7 +178,7 @@ public class TARDISTimetravel {
             }
             //p.sendMessage("Finding safe location...");
         }
-        wherey = randworld.getHighestBlockYAt(wherex, wherez) + 2;
+        wherey = randworld.getHighestBlockYAt(wherex, wherez);
         dest = new Location(randworld, wherex, wherey, wherez);
         return dest;
     }
