@@ -6,7 +6,7 @@ startup: postworld
 softdepend: [Multiverse-Core]
 dev-url: http://dev.bukkit.org/server-mods/TARDIS/
 url: http://www.thenosefairy.co.nz/
-version: '1.2.1'
+version: '1.3'
 permissions:
   TARDIS.admin:
     description: Allow players access to the TARDIS admin commands.
@@ -21,6 +21,7 @@ permissions:
       TARDIS.save: true
       TARDIS.enter: true
       TARDIS.find: true
+      TARDIS.add: true
     default: op
   TARDIS.create:
     description: Allow players to create a TARDIS.
@@ -45,6 +46,9 @@ permissions:
     default: op
   TARDIS.find:
     description: Allow players to find their TARDIS.
+    default: op
+  TARDIS.add:
+    description: Allow players to add/remove companions to their TARDIS.
     default: op
   TARDIS.help:
     description: Allow players to view TARDIS help pages.
@@ -71,6 +75,16 @@ commands:
       description: Shows you the location of your TARDIS.
       usage: /<command> find
       permission: TARDIS.find
+      permission-message: You don't have the permission <permission> to use this command
+    add:
+      description: Add a companion that can travel with you in your TARDIS.
+      usage: /<command> add [player name]
+      permission: TARDIS.add
+      permission-message: You don't have the permission <permission> to use this command
+    remove:
+      description: Remove a companion from your TARDIS.
+      usage: /<command> remove [player name]
+      permission: TARDIS.add
       permission-message: You don't have the permission <permission> to use this command
     admin:
       description: Set TARDIS configuration options.
