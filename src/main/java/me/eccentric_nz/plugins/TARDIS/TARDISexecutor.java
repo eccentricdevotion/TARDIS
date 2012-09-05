@@ -1,7 +1,16 @@
 package me.eccentric_nz.plugins.TARDIS;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
 import java.io.IOException;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.Arrays;
+import java.util.List;
+import java.util.Set;
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.*;
 import org.bukkit.command.Command;
@@ -12,6 +21,7 @@ import org.bukkit.entity.Player;
 public class TARDISexecutor implements CommandExecutor {
 
     private TARDIS plugin;
+    TARDISdatabase service = TARDISdatabase.getInstance();
 
     public TARDISexecutor(TARDIS plugin) {
         this.plugin = plugin;
@@ -31,7 +41,7 @@ public class TARDISexecutor implements CommandExecutor {
                 return true;
             }
             // the command list - first argument MUST appear here!
-            if (!args[0].equalsIgnoreCase("save") && !args[0].equalsIgnoreCase("list") && !args[0].equalsIgnoreCase("admin") && !args[0].equalsIgnoreCase("help") && !args[0].equalsIgnoreCase("find") && !args[0].equalsIgnoreCase("reload")) {
+            if (!args[0].equalsIgnoreCase("save") && !args[0].equalsIgnoreCase("list") && !args[0].equalsIgnoreCase("admin") && !args[0].equalsIgnoreCase("help") && !args[0].equalsIgnoreCase("find") && !args[0].equalsIgnoreCase("reload") && !args[0].equalsIgnoreCase("add") && !args[0].equalsIgnoreCase("remove")) {
                 sender.sendMessage("Do you want to list destinations, save a destination, or find the TARDIS?");
                 return false;
             }
@@ -44,14 +54,78 @@ public class TARDISexecutor implements CommandExecutor {
                     sender.sendMessage(Constants.COMMAND_ADMIN.split("\n"));
                     return true;
                 }
+                if (args[1].equalsIgnoreCase("update")) {
+                    // put timelords to tardis table
+                    Set<String> timelords = plugin.timelords.getKeys(false);
+                    for (String p : timelords) {
+                        String c = plugin.timelords.getString(p + ".chunk");
+                        String d = plugin.timelords.getString(p + ".direction");
+                        String h = plugin.timelords.getString(p + ".home");
+                        String s = plugin.timelords.getString(p + ".save");
+                        String cur = plugin.timelords.getString(p + ".current");
+                        String r = plugin.timelords.getString(p + ".replaced");
+                        String chest = plugin.timelords.getString(p + ".chest");
+                        String b = plugin.timelords.getString(p + ".button");
+                        String r0 = plugin.timelords.getString(p + ".repeater0");
+                        String r1 = plugin.timelords.getString(p + ".repeater1");
+                        String r2 = plugin.timelords.getString(p + ".repeater2");
+                        String r3 = plugin.timelords.getString(p + ".repeater3");
+                        String s1 = plugin.timelords.getString(p + ".save1");
+                        String s2 = plugin.timelords.getString(p + ".save2");
+                        String s3 = plugin.timelords.getString(p + ".save3");
+                        String t = plugin.timelords.getString(p + ".travelling");
+                        try {
+                            service.getConnection();
+                            service.insertTimelords(p, c, d, h, s, cur, r, chest, b, r0, r1, r2, r3, s1, s2, s3, t);
+                        } catch (Exception e) {
+                            System.err.println(Constants.MY_PLUGIN_NAME + " Timelords to DB Error: " + e);
+                        }
+                    }
+                    // put chunks to chunks table
+                    BufferedReader br = null;
+                    List<World> worldList = plugin.getServer().getWorlds();
+                    for (World w : worldList) {
+                        String strWorldName = w.getName();
+                        File chunkFile = new File(plugin.getDataFolder() + File.separator + "chunks" + File.separator + strWorldName + ".chunks");
+                        if (chunkFile.exists() && w.getEnvironment() == World.Environment.NORMAL) {
+                            // read file
+                            try {
+                                br = new BufferedReader(new FileReader(chunkFile));
+                                String str;
+                                int cx = 0, cz = 0;
+                                while ((str = br.readLine()) != null) {
+                                    // System.out.println(str);
+                                    String[] chunkData = str.split(":");
+                                    try {
+                                        cx = Integer.parseInt(chunkData[1]);
+                                        cz = Integer.parseInt(chunkData[2]);
+                                    } catch (NumberFormatException nfe) {
+                                        System.err.println(Constants.MY_PLUGIN_NAME + " Could not convert to number!");
+                                    }
+                                    try {
+                                        service.getConnection();
+                                        service.insertChunks(chunkData[0], cx, cz);
+                                    } catch (Exception e) {
+                                        System.err.println(Constants.MY_PLUGIN_NAME + " Chunk File to DB Error: " + e);
+                                    }
+                                }
+                            } catch (IOException io) {
+                                System.err.println(Constants.MY_PLUGIN_NAME + " could not create [" + strWorldName + "] world chunk file!");
+                            }
+                        }
+                    }
+                    sender.sendMessage(Constants.MY_PLUGIN_NAME + "The config files were successfully inserted into the database.");
+                    return true;
+                }
                 if (args.length < 3) {
                     sender.sendMessage("Too few command arguments!");
                     return false;
                 } else {
-                    if (!args[1].equalsIgnoreCase("bonus") && !args[1].equalsIgnoreCase("protect") && !args[1].equalsIgnoreCase("max_rad") && !args[1].equalsIgnoreCase("spout") && !args[1].equalsIgnoreCase("default") && !args[1].equalsIgnoreCase("name") && !args[1].equalsIgnoreCase("include") && !args[1].equalsIgnoreCase("key")) {
+                    if (!args[1].equalsIgnoreCase("bonus") && !args[1].equalsIgnoreCase("protect") && !args[1].equalsIgnoreCase("max_rad") && !args[1].equalsIgnoreCase("spout") && !args[1].equalsIgnoreCase("default") && !args[1].equalsIgnoreCase("name") && !args[1].equalsIgnoreCase("include") && !args[1].equalsIgnoreCase("key") && !args[1].equalsIgnoreCase("update") && !args[1].equalsIgnoreCase("exclude")) {
                         sender.sendMessage("TARDIS does not recognise that command argument!");
                         return false;
                     }
+
                     if (args[1].equalsIgnoreCase("key")) {
                         String setMaterial = args[2].toUpperCase();
                         if (!Arrays.asList(Materials.MATERIAL_LIST).contains(setMaterial)) {
@@ -130,6 +204,19 @@ public class TARDISexecutor implements CommandExecutor {
                         }
                         plugin.config.set("include_default_world", Boolean.valueOf(tf));
                     }
+                    if (args[1].equalsIgnoreCase("exclude")) {
+                        // get world name
+                        int count = args.length;
+                        StringBuilder buf = new StringBuilder();
+                        for (int i = 2; i < count; i++) {
+                            buf.append(args[i]).append(" ");
+                        }
+                        String tmp = buf.toString();
+                        String t = tmp.substring(0, tmp.length() - 1);
+                        // need to make there are no periods(.) in the text
+                        String nodots = StringUtils.replace(t, ".", "_");
+                        plugin.config.set("worlds." + nodots, false);
+                    }
                     try {
                         plugin.config.save(plugin.myconfigfile);
                         sender.sendMessage(Constants.MY_PLUGIN_NAME + " The config was updated!");
@@ -145,11 +232,22 @@ public class TARDISexecutor implements CommandExecutor {
             } else {
                 if (args[0].equalsIgnoreCase("list")) {
                     if (player.hasPermission("TARDIS.list")) {
-                        if (!plugin.timelords.contains(player.getName())) {
-                            sender.sendMessage("You have not created a TARDIS yet!");
-                            return false;
+                        try {
+                            Connection connection = service.getConnection();
+                            Statement statement = connection.createStatement();
+                            String queryList = "SELECT owner FROM tardis WHERE owner = '" + player.getName() + "'";
+                            ResultSet rs = statement.executeQuery(queryList);
+                            if (rs == null || !rs.next()) {
+                                sender.sendMessage("You have not created a TARDIS yet!");
+                                return false;
+                            }
+                            Constants.list(player);
+                            rs.close();
+                            statement.close();
+                            return true;
+                        } catch (SQLException e) {
+                            System.err.println(Constants.MY_PLUGIN_NAME + " List Saves Error: " + e);
                         }
-                        Constants.list(plugin.timelords, player);
                     } else {
                         sender.sendMessage(Constants.NO_PERMS_MESSAGE);
                         return false;
@@ -157,14 +255,117 @@ public class TARDISexecutor implements CommandExecutor {
                 }
                 if (args[0].equalsIgnoreCase("find")) {
                     if (player.hasPermission("TARDIS.find")) {
-                        if (!plugin.timelords.contains(player.getName())) {
-                            sender.sendMessage("You have not created a TARDIS yet!");
-                            return false;
+                        try {
+                            Connection connection = service.getConnection();
+                            Statement statement = connection.createStatement();
+                            String queryList = "SELECT save FROM tardis WHERE owner = '" + player.getName() + "'";
+                            ResultSet rs = statement.executeQuery(queryList);
+                            if (rs == null || !rs.next()) {
+                                sender.sendMessage("You have not created a TARDIS yet!");
+                                return false;
+                            }
+                            String loc = rs.getString("save");
+                            String[] findData = loc.split(":");
+                            sender.sendMessage("You you left your TARDIS in " + findData[0] + " at x:" + findData[1] + " y:" + findData[2] + " z:" + findData[3]);
+                            rs.close();
+                            statement.close();
+                            return true;
+                        } catch (SQLException e) {
+                            System.err.println(Constants.MY_PLUGIN_NAME + " Find TARDIS Error: " + e);
                         }
-                        String loc = plugin.timelords.getString(player.getName()+".save");
-                        String[] findData = loc.split(":");
-                        sender.sendMessage("You you left your TARDIS in " + findData[0] + " at x:" + findData[1] + " y:" + findData[2] + " z:" + findData[3]);
-                        return true;
+                    } else {
+                        sender.sendMessage(Constants.NO_PERMS_MESSAGE);
+                        return false;
+                    }
+                }
+                if (args[0].equalsIgnoreCase("add")) {
+                    if (player.hasPermission("TARDIS.add")) {
+                        try {
+                            Connection connection = service.getConnection();
+                            Statement statement = connection.createStatement();
+                            String queryList = "SELECT tardis_id, companions FROM tardis WHERE owner = '" + player.getName() + "'";
+                            ResultSet rs = statement.executeQuery(queryList);
+                            String comps;
+                            int id;
+                            if (rs == null || !rs.next()) {
+                                sender.sendMessage("You have not created a TARDIS yet!");
+                                return false;
+                            } else {
+                                comps = rs.getString("companions");
+                                id = rs.getInt("tardis_id");
+                                rs.close();
+                            }
+                            if (args.length < 2) {
+                                sender.sendMessage("Too few command arguments!");
+                                return false;
+                            } else {
+                                String queryCompanions;
+                                if (comps != null && !comps.equals("") && !comps.equals("[Null]")) {
+                                    // add to the list
+                                    String newList = comps + ":" + args[1];
+                                    queryCompanions = "UPDATE tardis SET companions = '" + newList + "' WHERE tardis_id = " + id;
+                                } else {
+                                    // make a list
+                                    queryCompanions = "UPDATE tardis SET companions = '" + args[1] + "' WHERE tardis_id = " + id;
+                                }
+                                statement.executeUpdate(queryCompanions);
+                                player.sendMessage("You added " + ChatColor.GREEN + args[1] + ChatColor.RESET + " as a TARDIS companion.");
+                                statement.close();
+                                return true;
+                            }
+                        } catch (SQLException e) {
+                            System.err.println(Constants.MY_PLUGIN_NAME + " Companion Save Error: " + e);
+                        }
+                    } else {
+                        sender.sendMessage(Constants.NO_PERMS_MESSAGE);
+                        return false;
+                    }
+                }
+                if (args[0].equalsIgnoreCase("remove")) {
+                    if (player.hasPermission("TARDIS.add")) {
+                        try {
+                            Connection connection = service.getConnection();
+                            Statement statement = connection.createStatement();
+                            String queryList = "SELECT tardis_id, companions FROM tardis WHERE owner = '" + player.getName() + "'";
+                            ResultSet rs = statement.executeQuery(queryList);
+                            String comps;
+                            int id;
+                            if (rs == null || !rs.next()) {
+                                sender.sendMessage("You have not created a TARDIS yet!");
+                                return false;
+                            } else {
+                                id = rs.getInt("tardis_id");
+                                comps = rs.getString("companions");
+                                rs.close();
+                            }
+                            if (comps.equals("") || comps.equals("[Null]") || comps == null) {
+                                sender.sendMessage("You have not added any TARDIS companions yet!");
+                                return false;
+                            }
+                            if (args.length < 2) {
+                                sender.sendMessage("Too few command arguments!");
+                                return false;
+                            } else {
+                                String[] split = comps.split(":");
+                                String newList = "";
+                                // recompile string without the specified player
+                                for (String c : split) {
+                                    if (!c.equals(args[1])) {
+                                        // add to new string
+                                        newList += c + ":";
+                                    }
+                                }
+                                // remove trailing colon
+                                newList = newList.substring(0, newList.length() - 1);
+                                String queryCompanions = "UPDATE tardis SET companions = '" + newList + "' WHERE tardis_id = " + id;
+                                statement.executeUpdate(queryCompanions);
+                                player.sendMessage("You removed " + ChatColor.GREEN + args[1] + ChatColor.RESET + " as a TARDIS companion.");
+                                statement.close();
+                                return true;
+                            }
+                        } catch (SQLException e) {
+                            System.err.println(Constants.MY_PLUGIN_NAME + " Companion Save Error: " + e);
+                        }
                     } else {
                         sender.sendMessage(Constants.NO_PERMS_MESSAGE);
                         return false;
@@ -172,40 +373,51 @@ public class TARDISexecutor implements CommandExecutor {
                 }
                 if (args[0].equalsIgnoreCase("save")) {
                     if (player.hasPermission("TARDIS.save")) {
-                        if (!plugin.timelords.contains(player.getName())) {
-                            sender.sendMessage("You have not created a TARDIS yet!");
-                            return false;
-                        }
-                        if (args.length < 3) {
-                            sender.sendMessage("Too few command arguments!");
-                            return false;
-                        } else {
-                            int count = args.length;
-                            StringBuilder buf = new StringBuilder();
-                            for (int i = 2; i < count; i++) {
-                                buf.append(args[i]).append(" ");
+                        try {
+                            Connection connection = service.getConnection();
+                            Statement statement = connection.createStatement();
+                            String queryList = "SELECT * FROM tardis WHERE owner = '" + player.getName() + "'";
+                            ResultSet rs = statement.executeQuery(queryList);
+                            if (rs == null || !rs.next()) {
+                                sender.sendMessage("You have not created a TARDIS yet!");
+                                return false;
                             }
-                            String tmp = buf.toString();
-                            String t = tmp.substring(0, tmp.length() - 1);
-                            // need to make there are no periods(.) in the text
-                            String nodots = StringUtils.replace(t, ".", "_");
-                            String curDest;
-                            // get current destination
-                            if (plugin.timelords.getBoolean(player.getName() + ".travelling") == Boolean.valueOf("true")) {
-                                // inside TARDIS
-                                curDest = plugin.timelords.getString(player.getName() + ".current");
+                            if (args.length < 3) {
+                                sender.sendMessage("Too few command arguments!");
+                                return false;
                             } else {
-                                // outside TARDIS
-                                curDest = plugin.timelords.getString(player.getName() + ".save");
+                                String cur = rs.getString("current");
+                                String sav = rs.getString("save");
+                                int id = rs.getInt("tardis_id");
+                                int count = args.length;
+                                StringBuilder buf = new StringBuilder();
+                                for (int i = 2; i < count; i++) {
+                                    buf.append(args[i]).append(" ");
+                                }
+                                String tmp = buf.toString();
+                                String t = tmp.substring(0, tmp.length() - 1);
+                                // need to make there are no periods(.) in the text
+                                String nodots = StringUtils.replace(t, ".", "_");
+                                String curDest;
+                                // get current destination
+                                String queryTraveller = "SELECT * FROM travellers WHERE player = '" + player.getName() + "'";
+                                ResultSet rsTraveller = statement.executeQuery(queryTraveller);
+                                if (rsTraveller != null && rsTraveller.next()) {
+                                    // inside TARDIS
+                                    curDest = nodots + ":" + cur;
+                                } else {
+                                    // outside TARDIS
+                                    curDest = nodots + "~" + sav;
+                                }
+                                String querySave = "UPDATE tardis SET save" + args[1] + " = '" + curDest + "' WHERE tardis_id = " + id;
+                                statement.executeUpdate(querySave);
+                                rs.close();
+                                rsTraveller.close();
+                                statement.close();
+                                return true;
                             }
-                            plugin.timelords.set(player.getName() + ".dest" + args[1] + ".name", nodots);
-                            plugin.timelords.set(player.getName() + ".dest" + args[1] + ".location", curDest);
-                            // save file
-                            try {
-                                plugin.timelords.save(plugin.timelordsfile);
-                            } catch (IOException io) {
-                                System.err.println(Constants.MY_PLUGIN_NAME + " Could not save Timelords file!");
-                            }
+                        } catch (SQLException e) {
+                            System.err.println(Constants.MY_PLUGIN_NAME + " Companion Save Error: " + e);
                         }
                     } else {
                         sender.sendMessage(Constants.NO_PERMS_MESSAGE);
@@ -236,6 +448,9 @@ public class TARDISexecutor implements CommandExecutor {
                                 break;
                             case SAVE:
                                 sender.sendMessage(Constants.COMMAND_SAVE.split("\n"));
+                                break;
+                            case ADD:
+                                sender.sendMessage(Constants.COMMAND_ADD.split("\n"));
                                 break;
                             case ADMIN:
                                 sender.sendMessage(Constants.COMMAND_ADMIN.split("\n"));
