@@ -4,9 +4,12 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.block.Chest;
@@ -57,7 +60,7 @@ public class TARDISBuilder {
         try {
             Connection connection = service.getConnection();
             statement = connection.createStatement();
-            // get direction player id facing from yaw place block under door if block is in list of blocks an iron door cannot go on
+            // get direction player is facing from yaw place block under door if block is in list of blocks an iron door cannot go on
             switch (d) {
                 case SOUTH:
                     //if (yaw >= 315 || yaw < 45)
@@ -104,54 +107,92 @@ public class TARDISBuilder {
                     bdw = 2;
                     break;
             }
-            String queryDoor = "INSERT INTO doors (tardis_id, door_type, door_location) VALUES (" + id + ", 0, '" + doorloc + "')";
+            // should insert the door when tardis is first made, and the update location there after!
+            String queryInsertOrUpdate = "SELECT door_id FROM doors WHERE door_type = 0 AND tardis_id = " + id;
+            ResultSet rs = statement.executeQuery(queryInsertOrUpdate);
+            String queryDoor;
+            if (rs != null && rs.next()) {
+                queryDoor = "UPDATE doors SET door_location = '" + doorloc + "' WHERE door_id = " + rs.getInt("door_id");
+            } else {
+                queryDoor = "INSERT INTO doors (tardis_id, door_type, door_location) VALUES (" + id + ", 0, '" + doorloc + "')";
+            }
             statement.executeUpdate(queryDoor);
+
+            // bottom layer corners
+            utils.setBlock(world, plusx, down2y, plusz, 35, blue);
+            utils.setBlock(world, minusx, down2y, plusz, 35, blue);
+            utils.setBlock(world, minusx, down2y, minusz, 35, blue);
+            utils.setBlock(world, plusx, down2y, minusz, 35, blue);
+            // middle layer corners
+            utils.setBlock(world, plusx, minusy, plusz, 35, blue);
+            utils.setBlock(world, minusx, minusy, plusz, 35, blue);
+            utils.setBlock(world, minusx, minusy, minusz, 35, blue);
+            utils.setBlock(world, plusx, minusy, minusz, 35, blue);
+            // top layer
+            utils.setBlock(world, x, y, z, 35, blue); // center
+            utils.setBlock(world, plusx, y, z, 35, blue); // east
+            utils.setBlock(world, plusx, y, plusz, 35, blue);
+            utils.setBlock(world, x, y, plusz, 35, blue); // south
+            utils.setBlock(world, minusx, y, plusz, 35, blue);
+            utils.setBlock(world, minusx, y, z, 35, blue); // west
+            utils.setBlock(world, minusx, y, minusz, 35, blue);
+            utils.setBlock(world, x, y, minusz, 35, blue); // north
+            utils.setBlock(world, plusx, y, minusz, 35, blue);
+            // set sign
+            utils.setBlock(world, signx, y, signz, 68, sd);
+            Sign s = (Sign) world.getBlockAt(signx, y, signz).getState();
+            s.setLine(1, "口POLICE");
+            s.setLine(2, "口BOX");
+            s.update();
+            // put torch on top
+            utils.setBlock(world, x, plusy, z, 50, (byte) 5);
+            // remove the IRON & LAPIS blocks
+            utils.setBlock(world, x, minusy, z, 0, norm);
+            utils.setBlock(world, x, down2y, z, 0, norm);
+            // bottom layer with door bottom
+            utils.setBlock(world, plusx, down2y, z, west, bdw);
+            utils.setBlock(world, x, down2y, plusz, north, bdn);
+            utils.setBlock(world, minusx, down2y, z, east, bde);
+            utils.setBlock(world, x, down2y, minusz, south, bds);
+            // middle layer with door top
+            utils.setBlock(world, plusx, minusy, z, west, mdw);
+            utils.setBlock(world, x, minusy, plusz, north, mdn);
+            utils.setBlock(world, minusx, minusy, z, east, mde);
+            utils.setBlock(world, x, minusy, minusz, south, mds);
+            // add platform if configured and necessary
+            if (plugin.config.getBoolean("platform") == Boolean.valueOf("true")) {
+                List<Block> platform_blocks = null;
+                switch (d) {
+                    case SOUTH:
+                        platform_blocks = Arrays.asList(world.getBlockAt(x - 1, down3y, minusz - 1), world.getBlockAt(x, down3y, minusz - 1), world.getBlockAt(x + 1, down3y, minusz - 1), world.getBlockAt(x - 1, down3y, minusz - 2), world.getBlockAt(x, down3y, minusz - 2), world.getBlockAt(x + 1, down3y, minusz - 2));
+                        break;
+                    case EAST:
+                        platform_blocks = Arrays.asList(world.getBlockAt(minusx - 1, down3y, z - 1), world.getBlockAt(minusx - 1, down3y, z), world.getBlockAt(minusx - 1, down3y, z + 1), world.getBlockAt(minusx - 2, down3y, z - 1), world.getBlockAt(x, down3y, z), world.getBlockAt(x + 1, down3y, z + 1));
+                        break;
+                    case NORTH:
+                        platform_blocks = Arrays.asList(world.getBlockAt(x + 1, down3y, plusz + 1), world.getBlockAt(x, down3y, plusz + 1), world.getBlockAt(x - 1, down3y, plusz + 1), world.getBlockAt(x + 1, down3y, plusz + 2), world.getBlockAt(x, down3y, plusz + 2), world.getBlockAt(x - 1, down3y, plusz + 2));
+                        break;
+                    case WEST:
+                        platform_blocks = Arrays.asList(world.getBlockAt(plusx + 1, down3y, z + 1), world.getBlockAt(plusx + 1, down3y, z), world.getBlockAt(plusx + 1, down3y, z - 1), world.getBlockAt(plusx + 2, down3y, z + 1), world.getBlockAt(plusx + 2, down3y, z), world.getBlockAt(plusx + 2, down3y, z - 1));
+                        break;
+                }
+                StringBuilder sb = new StringBuilder();
+                for (Block pb : platform_blocks) {
+                    if (pb.getType() == Material.AIR) {
+                        utils.setBlock(world, pb.getX(), pb.getY(), pb.getZ(), 35, grey);
+                        String p_tmp = world.getName() + ":" + pb.getX() + ":" + pb.getY() + ":" + pb.getZ();
+                        sb.append(p_tmp).append("~");
+                    }
+                }
+                String recall = sb.toString();
+                String platform_recall = recall.substring(0, recall.length() - 1);
+                String queryPlatform = "UPDATE tardis SET platform = '" + platform_recall + "' WHERE tardis_id = " + id;
+                statement.executeUpdate(queryPlatform);
+            }
             statement.close();
         } catch (SQLException e) {
             System.err.println(Constants.MY_PLUGIN_NAME + " Door Insert Error: " + e);
         }
-
-        // bottom layer corners
-        utils.setBlock(world, plusx, down2y, plusz, 35, blue);
-        utils.setBlock(world, minusx, down2y, plusz, 35, blue);
-        utils.setBlock(world, minusx, down2y, minusz, 35, blue);
-        utils.setBlock(world, plusx, down2y, minusz, 35, blue);
-        // middle layer corners
-        utils.setBlock(world, plusx, minusy, plusz, 35, blue);
-        utils.setBlock(world, minusx, minusy, plusz, 35, blue);
-        utils.setBlock(world, minusx, minusy, minusz, 35, blue);
-        utils.setBlock(world, plusx, minusy, minusz, 35, blue);
-        // top layer
-        utils.setBlock(world, x, y, z, 35, blue); // center
-        utils.setBlock(world, plusx, y, z, 35, blue); // east
-        utils.setBlock(world, plusx, y, plusz, 35, blue);
-        utils.setBlock(world, x, y, plusz, 35, blue); // south
-        utils.setBlock(world, minusx, y, plusz, 35, blue);
-        utils.setBlock(world, minusx, y, z, 35, blue); // west
-        utils.setBlock(world, minusx, y, minusz, 35, blue);
-        utils.setBlock(world, x, y, minusz, 35, blue); // north
-        utils.setBlock(world, plusx, y, minusz, 35, blue);
-        // set sign
-        utils.setBlock(world, signx, y, signz, 68, sd);
-        Sign s = (Sign) world.getBlockAt(signx, y, signz).getState();
-        s.setLine(1, "口POLICE");
-        s.setLine(2, "口BOX");
-        s.update();
-        // put torch on top
-        utils.setBlock(world, x, plusy, z, 50, (byte) 5);
-        // remove the IRON & LAPIS blocks
-        utils.setBlock(world, x, minusy, z, 0, norm);
-        utils.setBlock(world, x, down2y, z, 0, norm);
-        // bottom layer with door bottom
-        utils.setBlock(world, plusx, down2y, z, west, bdw);
-        utils.setBlock(world, x, down2y, plusz, north, bdn);
-        utils.setBlock(world, minusx, down2y, z, east, bde);
-        utils.setBlock(world, x, down2y, minusz, south, bds);
-        // middle layer with door top
-        utils.setBlock(world, plusx, minusy, z, west, mdw);
-        utils.setBlock(world, x, minusy, plusz, north, mdn);
-        utils.setBlock(world, minusx, minusy, z, east, mde);
-        utils.setBlock(world, x, minusy, minusz, south, mds);
     }
 
     public void buildInnerTARDIS(String[][][] s, World world, Constants.COMPASS d, int dbID) {
