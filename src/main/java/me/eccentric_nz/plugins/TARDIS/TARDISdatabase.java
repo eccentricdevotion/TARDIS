@@ -2,9 +2,11 @@ package me.eccentric_nz.plugins.TARDIS;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import org.bukkit.Bukkit;
 import org.bukkit.Chunk;
 import org.bukkit.World;
 
@@ -63,75 +65,83 @@ public class TARDISdatabase {
             String queryTimelordInsert = "INSERT INTO tardis (owner,chunk,direction,home,save,current,replaced,chest,button,repeater0,repeater1,repeater2,repeater3,save1,save2,save3) VALUES ('" + p + "','" + c + "','" + d + "','" + h + "','" + s + "','" + cur + "','" + r + "','" + chest + "','" + b + "','" + r0 + "','" + r1 + "','" + r2 + "','" + r3 + "','" + s1 + "','" + s2 + "','" + s3 + "')";
             statement.executeUpdate(queryTimelordInsert);
             ResultSet rs = statement.getGeneratedKeys();
-            int id = 0;
+            int id;
             if (rs != null && rs.next()) {
                 id = rs.getInt(1);
-            }
-            Constants.COMPASS dir = Constants.COMPASS.valueOf(d);
-            // determine door location
-            String[] inner_data = c.split(":");
-            String[] outer_data = cur.split(":");
-            //World inner_world = plugin.getServer().getWorld(inner_data[0]);
-            String innerdoorloc = "";
-            String outerdoorloc = "";
-            int savedix = 0, savediy = 0, savediz = 0, savedox = 0, savedoy = 0, savedoz = 0, newox = 0, newoz = 0, newix = 0, newiz = 0;
-            try {
-                savedix = Integer.parseInt(inner_data[1]);
-                savediz = Integer.parseInt(inner_data[2]);
-                savedox = Integer.parseInt(outer_data[1]);
-                savedoy = Integer.parseInt(outer_data[2]);
-                savedoz = Integer.parseInt(outer_data[3]);
-            } catch (NumberFormatException n) {
-                System.err.println(Constants.MY_PLUGIN_NAME + "Could not convert to number");
-            }
-            World w = plugin.getServer().getWorld(inner_data[0]);
-            Chunk chunk = w.getChunkAt(savedix, savediz);
-            int newoy = savedoy - 2;
-            switch (dir) {
-                case SOUTH:
-                    newix = chunk.getBlock(6, 19, 1).getX();
-                    newiz = chunk.getBlock(6, 19, 1).getZ();
-                    newox = savedox;
-                    newoz = savedoz - 1;
-                    innerdoorloc = inner_data[0] + ":" + newix + ":19:" + newiz;
-                    outerdoorloc = outer_data[0] + ":" + newox + ":" + newoy + ":" + newoz;
-                    break;
-                case EAST:
-                    newix = chunk.getBlock(1, 19, 9).getX();
-                    newiz = chunk.getBlock(1, 19, 9).getZ();
-                    newox = savedox - 1;
-                    newoz = savedoz;
-                    innerdoorloc = inner_data[0] + ":" + newix + ":19:" + newiz;
-                    outerdoorloc = outer_data[0] + ":" + newox + ":" + newoy + ":" + newoz;
-                    break;
-                case NORTH:
-                    newix = chunk.getBlock(9, 19, 14).getX();
-                    newiz = chunk.getBlock(9, 19, 14).getZ();
-                    newox = savedox;
-                    newoz = savedoz + 1;
-                    innerdoorloc = inner_data[0] + ":" + newix + ":19:" + newiz;
-                    outerdoorloc = outer_data[0] + ":" + newox + ":" + newoy + ":" + newoz;
-                    break;
-                case WEST:
-                    newix = chunk.getBlock(14, 19, 1).getX();
-                    newiz = chunk.getBlock(14, 19, 1).getZ();
-                    newox = savedox + 1;
-                    newoz = savedoz;
-                    innerdoorloc = inner_data[0] + ":" + newix + ":19:" + newiz;
-                    outerdoorloc = outer_data[0] + ":" + newox + ":" + newoy + ":" + newoz;
-                    break;
-            }
-            String queryDoorInner = "INSERT INTO doors (tardis_id, door_type, door_location) VALUES (" + id + ", 0, '" + innerdoorloc + "')";
-            String queryDoorOuter = "INSERT INTO doors (tardis_id, door_type, door_location) VALUES (" + id + ", 0, '" + outerdoorloc + "')";
-            statement.executeQuery(queryDoorInner);
-            statement.executeQuery(queryDoorOuter);
-            if (t.equals("true")) {
-                String queryTraveller = "INSERT INTO travellers (tardis_id,player) VALUES (" + id + ",'" + p + "')";
-                statement.executeUpdate(queryTraveller);
+                Constants.COMPASS dir = Constants.COMPASS.valueOf(d);
+                // determine door location
+                String[] inner_data = c.split(":");
+                String[] outer_data = s.split(":");
+                String innerdoorloc = "";
+                String outerdoorloc = "";
+                int savedix = 0, savediy = 0, savediz = 0, savedox = 0, savedoy = 0, savedoz = 0, newox = 0, newoz = 0, newix = 0, newiz = 0;
+                try {
+                    savedix = Integer.parseInt(inner_data[1]);
+                    savediz = Integer.parseInt(inner_data[2]);
+                    savedox = Integer.parseInt(outer_data[1]);
+                    savedoy = Integer.parseInt(outer_data[2]);
+                    savedoz = Integer.parseInt(outer_data[3]);
+                } catch (NumberFormatException n) {
+                    System.err.println(Constants.MY_PLUGIN_NAME + "Could not convert to number");
+                }
+                World w = Bukkit.getServer().getWorld(inner_data[0]);
+                Chunk chunk = w.getChunkAt(savedix, savediz);
+                int newoy = savedoy - 2;
+                switch (dir) {
+                    case SOUTH:
+                        newix = chunk.getBlock(6, 19, 1).getX();
+                        newiz = chunk.getBlock(6, 19, 1).getZ();
+                        newox = savedox;
+                        newoz = savedoz - 1;
+                        innerdoorloc = inner_data[0] + ":" + newix + ":19:" + newiz;
+                        outerdoorloc = outer_data[0] + ":" + newox + ":" + newoy + ":" + newoz;
+                        break;
+                    case EAST:
+                        newix = chunk.getBlock(1, 19, 9).getX();
+                        newiz = chunk.getBlock(1, 19, 9).getZ();
+                        newox = savedox - 1;
+                        newoz = savedoz;
+                        innerdoorloc = inner_data[0] + ":" + newix + ":19:" + newiz;
+                        outerdoorloc = outer_data[0] + ":" + newox + ":" + newoy + ":" + newoz;
+                        break;
+                    case NORTH:
+                        newix = chunk.getBlock(9, 19, 14).getX();
+                        newiz = chunk.getBlock(9, 19, 14).getZ();
+                        newox = savedox;
+                        newoz = savedoz + 1;
+                        innerdoorloc = inner_data[0] + ":" + newix + ":19:" + newiz;
+                        outerdoorloc = outer_data[0] + ":" + newox + ":" + newoy + ":" + newoz;
+                        break;
+                    case WEST:
+                        newix = chunk.getBlock(14, 19, 6).getX();
+                        newiz = chunk.getBlock(14, 19, 6).getZ();
+                        newox = savedox + 1;
+                        newoz = savedoz;
+                        innerdoorloc = inner_data[0] + ":" + newix + ":19:" + newiz;
+                        outerdoorloc = outer_data[0] + ":" + newox + ":" + newoy + ":" + newoz;
+                        break;
+                }
+                PreparedStatement prep = connection.prepareStatement("INSERT INTO doors VALUES (?,?,?,?)");
+                //outer door
+                prep.setInt(2, id);
+                prep.setInt(3, 0);
+                prep.setString(4, outerdoorloc);
+                prep.execute();
+                // inner door
+                prep.setInt(2, id);
+                prep.setInt(3, 1);
+                prep.setString(4, innerdoorloc);
+                prep.execute();
+                if (t.equals("true")) {
+                    String queryTraveller = "INSERT INTO travellers (tardis_id,player) VALUES (" + id + ",'" + p + "')";
+                    statement.executeUpdate(queryTraveller);
+                }
+            } else {
+                System.err.println(Constants.MY_PLUGIN_NAME + " Doors/Travellers insert error: Empty Result Set");
             }
             statement.close();
         } catch (SQLException e) {
-            System.err.println("[TARDIS] Timelords insert error: " + e);
+            System.err.println(Constants.MY_PLUGIN_NAME + " Timelords insert error: " + e);
         }
     }
 
