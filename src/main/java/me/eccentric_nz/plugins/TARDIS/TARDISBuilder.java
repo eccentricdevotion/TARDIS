@@ -178,14 +178,18 @@ public class TARDISBuilder {
                 }
                 StringBuilder sb = new StringBuilder();
                 for (Block pb : platform_blocks) {
-                    if (pb.getType() == Material.AIR || pb.getType() == Material.WATER) {
+                    Material mat = pb.getType();
+                    if (mat == Material.AIR || mat == Material.STATIONARY_WATER) {
                         utils.setBlock(world, pb.getX(), pb.getY(), pb.getZ(), 35, grey);
-                        String p_tmp = world.getName() + ":" + pb.getX() + ":" + pb.getY() + ":" + pb.getZ() + ":" + pb.getType().toString();
+                        String p_tmp = world.getName() + ":" + pb.getX() + ":" + pb.getY() + ":" + pb.getZ() + ":" + mat.toString();
                         sb.append(p_tmp).append("~");
                     }
                 }
                 String recall = sb.toString();
-                String platform_recall = recall.substring(0, recall.length() - 1);
+                String platform_recall = "";
+                if (recall.length() > 0) {
+                    platform_recall = recall.substring(0, recall.length() - 1);
+                }
                 String queryPlatform = "UPDATE tardis SET platform = '" + platform_recall + "' WHERE tardis_id = " + id;
                 statement.executeUpdate(queryPlatform);
             }
