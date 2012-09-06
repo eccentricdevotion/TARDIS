@@ -53,7 +53,6 @@ public class TARDISUtils {
             Connection connection = service.getConnection();
             Statement statement = connection.createStatement();
             String queryChunk = "SELECT chunk FROM tardis WHERE tardis_id = " + id + " LIMIT 1";
-            //System.out.println(queryChunk);
             ResultSet rs = statement.executeQuery(queryChunk);
             String chunkstr = rs.getString("chunk");
             String[] split = chunkstr.split(":");

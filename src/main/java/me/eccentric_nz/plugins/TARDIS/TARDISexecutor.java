@@ -96,7 +96,6 @@ public class TARDISexecutor implements CommandExecutor {
                                 String str;
                                 int cx = 0, cz = 0;
                                 while ((str = br.readLine()) != null) {
-                                    // System.out.println(str);
                                     String[] chunkData = str.split(":");
                                     try {
                                         cx = Integer.parseInt(chunkData[1]);

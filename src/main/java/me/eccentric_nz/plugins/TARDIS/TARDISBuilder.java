@@ -278,7 +278,6 @@ public class TARDISBuilder {
             for (level = 0; level < 8; level++) {
                 for (row = 0; row < 11; row++) {
                     for (col = 0; col < 11; col++) {
-                        //System.out.println("x:" + startx + ", y:" + starty + ", z:" + startz);
                         tmp = s[level][row][col];
                         if (!tmp.equals("-")) {
                             if (tmp.contains(":")) {

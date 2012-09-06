@@ -46,7 +46,7 @@ public class TARDIS extends JavaPlugin implements Listener {
 
         if (!getDataFolder().exists()) {
             if (!getDataFolder().mkdir()) {
-                System.out.println(Constants.MY_PLUGIN_NAME + " could not create directory!");
+                System.err.println(Constants.MY_PLUGIN_NAME + " could not create directory!");
                 System.out.println(Constants.MY_PLUGIN_NAME + " requires you to manually make the TARDIS/ directory!");
             }
             getDataFolder().setWritable(true);
