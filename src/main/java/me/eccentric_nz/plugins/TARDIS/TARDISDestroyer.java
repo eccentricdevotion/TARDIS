@@ -157,6 +157,7 @@ public class TARDISDestroyer {
                         for (String sb : str_blocks) {
                             String[] p_data = sb.split(":");
                             World pw = plugin.getServer().getWorld(p_data[0]);
+                            Material mat = Material.valueOf(p_data[4]);
                             try {
                                 px = Integer.valueOf(p_data[1]);
                                 py = Integer.valueOf(p_data[2]);
@@ -164,13 +165,16 @@ public class TARDISDestroyer {
                             } catch (NumberFormatException nfe) {
                                 System.err.println(Constants.MY_PLUGIN_NAME + "Could not convert to number!");
                             }
-                            Block pb = pw.getBlockAt(px,py,pz);
-                            pb.setType(Material.AIR);
+                            Block pb = pw.getBlockAt(px, py, pz);
+                            pb.setType(mat);
                         }
                     }
+                    // forget the platform blocks
+                    String queryEmptyP = "UPDATE tardis SET platform = '' WHERE tardis_id = " + id;
+                    statement.executeUpdate(queryEmptyP);
                 }
+                prs.close();
             }
-
             statement.close();
         } catch (SQLException e) {
             System.err.println(Constants.MY_PLUGIN_NAME + " Save Replaced Block Error: " + e);
