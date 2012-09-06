@@ -138,13 +138,39 @@ public class TARDISDestroyer {
                     } catch (NumberFormatException nfe) {
                         System.err.println(Constants.MY_PLUGIN_NAME + "Could not convert to number!");
                     }
-                    Block b = w.getBlockAt(rx, ry, rz);
+                    Block b = rw.getBlockAt(rx, ry, rz);
                     b.setTypeIdAndData(rID, rb, true);
                 }
             }
             // finally forget the replaced block
             String queryForget = "UPDATE tardis SET replaced = '' WHERE tardis_id = " + id;
             statement.executeUpdate(queryForget);
+
+            // get rid of platform is there is one
+            if (plugin.config.getBoolean("platform") == Boolean.valueOf("true")) {
+                String queryPlatform = "SELECT platform FROM tardis WHERE tardis_id = " + id;
+                ResultSet prs = statement.executeQuery(queryPlatform);
+                if (prs != null && prs.next()) {
+                    if (!prs.getString("platform").equals("[Null]") && !prs.getString("platform").equals("") && prs.getString("platform") != null) {
+                        int px = 0, py = 0, pz = 0;
+                        String[] str_blocks = prs.getString("platform").split("~");
+                        for (String sb : str_blocks) {
+                            String[] p_data = sb.split(":");
+                            World pw = plugin.getServer().getWorld(p_data[0]);
+                            try {
+                                px = Integer.valueOf(p_data[1]);
+                                py = Integer.valueOf(p_data[2]);
+                                pz = Integer.valueOf(p_data[3]);
+                            } catch (NumberFormatException nfe) {
+                                System.err.println(Constants.MY_PLUGIN_NAME + "Could not convert to number!");
+                            }
+                            Block pb = pw.getBlockAt(px,py,pz);
+                            pb.setType(Material.AIR);
+                        }
+                    }
+                }
+            }
+
             statement.close();
         } catch (SQLException e) {
             System.err.println(Constants.MY_PLUGIN_NAME + " Save Replaced Block Error: " + e);
