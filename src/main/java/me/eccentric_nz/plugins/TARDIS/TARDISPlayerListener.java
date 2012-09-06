@@ -126,7 +126,7 @@ public class TARDISPlayerListener implements Listener {
                                             builder.buildOuterTARDIS(id, newl, Constants.COMPASS.valueOf(d));
                                         }
                                         // exit TARDIS!
-                                        tt(player,exitTardis);
+                                        tt(player, exitTardis);
                                         // remove player from traveller table
                                         String queryTraveller = "DELETE FROM travellers WHERE player = '" + playerNameStr + "'";
                                         statement.executeUpdate(queryTraveller);
@@ -190,7 +190,7 @@ public class TARDISPlayerListener implements Listener {
                                             tmp_loc.setPitch(pitch);
                                             tmp_loc.setYaw(yaw);
                                             final Location tardis_loc = tmp_loc;
-                                            tt(player,tardis_loc);
+                                            tt(player, tardis_loc);
                                             String queryTravellerUpdate = "INSERT INTO travellers (tardis_id, player) VALUES (" + id + ", '" + playerNameStr + "')";
                                             statement.executeUpdate(queryTravellerUpdate);
                                             // update current TARDIS location
@@ -335,7 +335,6 @@ public class TARDISPlayerListener implements Listener {
         final Player thePlayer = p;
         final Location theLocation = l;
         if ((thePlayer.getAllowFlight()) && (!thePlayer.isFlying())) {
-            thePlayer.setFlying(true);
             Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
                 public void run() {
                     thePlayer.teleport(theLocation);
@@ -362,11 +361,11 @@ public class TARDISPlayerListener implements Listener {
             }, 10L);
         }
         if (!thePlayer.getAllowFlight()) {
-            thePlayer.setAllowFlight(true);
-            thePlayer.setFlying(true);
+            //thePlayer.setFlying(true);
             Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
                 public void run() {
                     thePlayer.teleport(theLocation);
+                    thePlayer.setAllowFlight(true);
                     thePlayer.setFlying(true);
                 }
             }, 10L);
