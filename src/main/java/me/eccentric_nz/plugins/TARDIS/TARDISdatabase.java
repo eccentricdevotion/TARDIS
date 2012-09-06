@@ -43,7 +43,7 @@ public class TARDISdatabase {
             String queryDoors = "CREATE TABLE IF NOT EXISTS doors (door_id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, tardis_id INTEGER, door_type INTEGER, door_location TEXT)";
             statement.executeUpdate(queryDoors);
         } catch (SQLException e) {
-            System.err.println("[TARDIS] Create table error: " + e);
+            System.err.println(Constants.MY_PLUGIN_NAME + " Create table error: " + e);
         }
     }
 
@@ -54,7 +54,7 @@ public class TARDISdatabase {
             statement.executeUpdate(queryChunkInsert);
             statement.close();
         } catch (SQLException e) {
-            System.err.println("[TARDIS] Chunk insert error: " + e);
+            System.err.println(Constants.MY_PLUGIN_NAME + " Chunk insert error: " + e);
         }
     }
     // service.insertTimelords(c,d,h,s,cur,r,chest,b,r0,r1,r2,r3,s1,s2,s3,t);
