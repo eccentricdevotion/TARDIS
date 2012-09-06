@@ -58,27 +58,29 @@ public class TARDISexecutor implements CommandExecutor {
                     // put timelords to tardis table
                     Set<String> timelords = plugin.timelords.getKeys(false);
                     for (String p : timelords) {
-                        String c = plugin.timelords.getString(p + ".chunk");
-                        String d = plugin.timelords.getString(p + ".direction");
-                        String h = plugin.timelords.getString(p + ".home");
-                        String s = plugin.timelords.getString(p + ".save");
-                        String cur = plugin.timelords.getString(p + ".current");
-                        String r = plugin.timelords.getString(p + ".replaced");
-                        String chest = plugin.timelords.getString(p + ".chest");
-                        String b = plugin.timelords.getString(p + ".button");
-                        String r0 = plugin.timelords.getString(p + ".repeater0");
-                        String r1 = plugin.timelords.getString(p + ".repeater1");
-                        String r2 = plugin.timelords.getString(p + ".repeater2");
-                        String r3 = plugin.timelords.getString(p + ".repeater3");
-                        String s1 = plugin.timelords.getString(p + ".save1");
-                        String s2 = plugin.timelords.getString(p + ".save2");
-                        String s3 = plugin.timelords.getString(p + ".save3");
-                        String t = plugin.timelords.getString(p + ".travelling");
-                        try {
-                            service.getConnection();
-                            service.insertTimelords(p, c, d, h, s, cur, r, chest, b, r0, r1, r2, r3, s1, s2, s3, t);
-                        } catch (Exception e) {
-                            System.err.println(Constants.MY_PLUGIN_NAME + " Timelords to DB Error: " + e);
+                        if (!p.equals("dummy_user")) {
+                            String c = plugin.timelords.getString(p + ".chunk");
+                            String d = plugin.timelords.getString(p + ".direction");
+                            String h = plugin.timelords.getString(p + ".home");
+                            String s = plugin.timelords.getString(p + ".save");
+                            String cur = plugin.timelords.getString(p + ".current");
+                            String r = plugin.timelords.getString(p + ".replaced");
+                            String chest = plugin.timelords.getString(p + ".chest");
+                            String b = plugin.timelords.getString(p + ".button");
+                            String r0 = plugin.timelords.getString(p + ".repeater0");
+                            String r1 = plugin.timelords.getString(p + ".repeater1");
+                            String r2 = plugin.timelords.getString(p + ".repeater2");
+                            String r3 = plugin.timelords.getString(p + ".repeater3");
+                            String s1 = plugin.timelords.getString(p + ".save1");
+                            String s2 = plugin.timelords.getString(p + ".save2");
+                            String s3 = plugin.timelords.getString(p + ".save3");
+                            String t = plugin.timelords.getString(p + ".travelling");
+                            try {
+                                service.getConnection();
+                                service.insertTimelords(p, c, d, h, s, cur, r, chest, b, r0, r1, r2, r3, s1, s2, s3, t);
+                            } catch (Exception e) {
+                                System.err.println(Constants.MY_PLUGIN_NAME + " Timelords to DB Error: " + e);
+                            }
                         }
                     }
                     // put chunks to chunks table
