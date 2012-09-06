@@ -178,9 +178,9 @@ public class TARDISBuilder {
                 }
                 StringBuilder sb = new StringBuilder();
                 for (Block pb : platform_blocks) {
-                    if (pb.getType() == Material.AIR) {
+                    if (pb.getType() == Material.AIR || pb.getType() == Material.WATER) {
                         utils.setBlock(world, pb.getX(), pb.getY(), pb.getZ(), 35, grey);
-                        String p_tmp = world.getName() + ":" + pb.getX() + ":" + pb.getY() + ":" + pb.getZ();
+                        String p_tmp = world.getName() + ":" + pb.getX() + ":" + pb.getY() + ":" + pb.getZ() + ":" + pb.getType().toString();
                         sb.append(p_tmp).append("~");
                     }
                 }
