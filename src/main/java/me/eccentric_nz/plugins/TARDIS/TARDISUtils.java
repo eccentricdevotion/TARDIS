@@ -37,7 +37,7 @@ public class TARDISUtils {
                 Connection connection = service.getConnection();
                 Statement statement = connection.createStatement();
                 String replaced = w.getName() + ":" + x + ":" + y + ":" + z + ":" + bId + ":" + bData;
-                String queryReplaced = "UPDATE tardis SET replaced = '" + replaced + "' WHERE tardis_id = " + id + " LIMIT 1";
+                String queryReplaced = "UPDATE tardis SET replaced = '" + replaced + "' WHERE tardis_id = " + id;
                 statement.executeUpdate(queryReplaced);
                 statement.close();
             } catch (SQLException e) {
