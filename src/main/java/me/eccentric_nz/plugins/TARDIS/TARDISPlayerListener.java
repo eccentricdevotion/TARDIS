@@ -10,6 +10,7 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
+import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -99,7 +100,7 @@ public class TARDISPlayerListener implements Listener {
                                                 exitTardis.setX(ex + 2.5);
                                                 break;
                                         }
-                                        //exitTardis.setY(ey - 1.75);
+                                        exitTardis.setY(ey + .25);
                                         World exitWorld = exitTardis.getWorld();
                                         // destroy current TARDIS location
                                         Location newl = null;
@@ -143,7 +144,7 @@ public class TARDISPlayerListener implements Listener {
                                                         // is the player in the comapnion list
                                                         String[] companionData = companions.split(":");
                                                         for (String c : companionData) {
-                                                            if (c.equals(playerNameStr)) {
+                                                            if (c.equalsIgnoreCase(playerNameStr)) {
                                                                 chkCompanion = true;
                                                                 break;
                                                             }
@@ -219,7 +220,12 @@ public class TARDISPlayerListener implements Listener {
                         System.err.println(Constants.MY_PLUGIN_NAME + " Could not get block");
                     }
                 } else {
-                    player.sendMessage(Constants.WRONG_MATERIAL + Constants.TARDIS_KEY + ". You have a " + material + " in your hand!");
+                    Block blockAbove = block.getRelative(BlockFace.UP);
+                    Material baType = blockAbove.getType();
+                    byte baData = blockAbove.getData();
+                    if (baType == Material.WOOL && (baData == 1 || baData == 11)) {
+                        player.sendMessage(Constants.WRONG_MATERIAL + Constants.TARDIS_KEY + ". You have a " + material + " in your hand!");
+                    }
                 }
             }
             if (blockType == Material.STONE_BUTTON) {
@@ -327,55 +333,62 @@ public class TARDISPlayerListener implements Listener {
                     System.err.println(Constants.MY_PLUGIN_NAME + " Get TARDIS from Button Error: " + e);
                 }
             }
-
         }
     }
 
     private void tt(Player p, Location l) {
         final Player thePlayer = p;
         final Location theLocation = l;
-        if ((thePlayer.getAllowFlight()) && (!thePlayer.isFlying())) {
-            Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
-                public void run() {
-                    thePlayer.teleport(theLocation);
-                    thePlayer.setFlying(true);
-                }
-            }, 10L);
-            Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
-                public void run() {
-                    thePlayer.teleport(theLocation);
-                    thePlayer.setFlying(false);
-                }
-            }, 10L);
-        }
-        if ((thePlayer.getAllowFlight()) && (thePlayer.isFlying())) {
-            Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
-                public void run() {
-                    thePlayer.teleport(theLocation);
-                }
-            }, 10L);
-            Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
-                public void run() {
-                    thePlayer.teleport(theLocation);
-                }
-            }, 10L);
-        }
-        if (!thePlayer.getAllowFlight()) {
-            //thePlayer.setFlying(true);
-            Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
-                public void run() {
-                    thePlayer.teleport(theLocation);
-                    thePlayer.setAllowFlight(true);
-                    thePlayer.setFlying(true);
-                }
-            }, 10L);
-            Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
-                public void run() {
-                    thePlayer.teleport(theLocation);
-                    thePlayer.setFlying(false);
-                    thePlayer.setAllowFlight(false);
-                }
-            }, 10L);
-        }
+        /*
+         if ((thePlayer.getAllowFlight()) && (!thePlayer.isFlying())) {* */
+        Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
+            public void run() {
+                thePlayer.teleport(theLocation);
+                /*
+                 thePlayer.setFlying(true);
+                 thePlayer.sendMessage("AF true, NotF, flying enabled: " + thePlayer.isFlying());*/
+            }
+        }, 10L);
+        Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
+            public void run() {
+                thePlayer.teleport(theLocation);
+//         thePlayer.setFlying(false);
+//         thePlayer.sendMessage("AF true, NotF, flying disabled: " + thePlayer.isFlying());
+            }
+        }, 10L);
+        /*}
+         if ((thePlayer.getAllowFlight()) && (thePlayer.isFlying())) {
+         Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
+         public void run() {
+         thePlayer.sendMessage("AF true, IsF, just teleport: " + thePlayer.isFlying());
+         thePlayer.teleport(theLocation);
+         }
+         }, 10L);
+         Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
+         public void run() {
+         thePlayer.teleport(theLocation);
+         thePlayer.sendMessage("AF true, IsF, just teleport: " + thePlayer.isFlying());
+         }
+         }, 10L);
+         }
+         if (!thePlayer.getAllowFlight()) {
+         Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
+         public void run() {
+         thePlayer.teleport(theLocation);
+         thePlayer.setAllowFlight(true);
+         thePlayer.setFlying(true);
+         thePlayer.sendMessage("AF false, Set AF true, flying enabled: " + thePlayer.isFlying());
+         }
+         }, 10L);
+         Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
+         public void run() {
+         thePlayer.teleport(theLocation);
+         thePlayer.setFlying(false);
+         thePlayer.setAllowFlight(false);
+         thePlayer.sendMessage("AF false, Set AF false, flying disabled: " + thePlayer.isFlying());
+         }
+         }, 10L);
+         }
+         * */
     }
 }
