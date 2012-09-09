@@ -68,6 +68,13 @@ public class TARDIS extends JavaPlugin implements Listener {
 
         tardisExecutor = new TARDISexecutor(this);
         getCommand("TARDIS").setExecutor(tardisExecutor);
+
+        try {
+            MetricsLite metrics = new MetricsLite(this);
+            metrics.start();
+        } catch (IOException e) {
+            // Failed to submit the stats :-(
+        }
     }
 
     @Override
