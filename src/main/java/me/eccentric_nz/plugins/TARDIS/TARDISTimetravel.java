@@ -26,13 +26,14 @@ public class TARDISTimetravel {
         //int[] bad_blockids = {8, 9, 10, 11, 51, 81};
         World randworld = w;
         Boolean danger = true;
+        int count = 0;
         // there needs to be room for the TARDIS and the player!
         Random rand = new Random();
         // get max_radius from config
         int max = plugin.config.getInt("tp_radius");
         int quarter = (max + 4 - 1) / 4;
         int range = quarter + 1;
-        int wherex = 0, wherey = 0, wherez = 0;
+        int wherex = 0, highest = 256, wherez = 0;
         Constants.COMPASS d = Constants.COMPASS.valueOf(dir);
 
         // get worlds
@@ -58,8 +59,8 @@ public class TARDISTimetravel {
         listlen = normalWorlds.size();
 
         while (danger == true) {
+            count = 0;
             wherex = rand.nextInt(range);
-            wherey = rand.nextInt(range);
             wherez = rand.nextInt(range);
             // add the distance from the x and z repeaters
             if (rx >= 4 && rx <= 7) {
@@ -110,9 +111,9 @@ public class TARDISTimetravel {
                 }
                 i = i + 1;
             }
-
-            Block currentBlock = randworld.getBlockAt(wherex, wherey, wherez);
-            while ((currentBlock.getType() == Material.AIR || currentBlock.getType() == Material.SNOW || currentBlock.getType() == Material.LONG_GRASS || currentBlock.getType() == Material.RED_ROSE || currentBlock.getType() == Material.YELLOW_FLOWER || currentBlock.getType() == Material.BROWN_MUSHROOM || currentBlock.getType() == Material.RED_MUSHROOM && currentBlock.getType() != Material.SAPLING) && currentBlock.getY() > 0) {
+            highest = randworld.getHighestBlockYAt(wherex, wherez);
+            Block currentBlock = randworld.getBlockAt(wherex, highest, wherez);
+            if (currentBlock.getType() == Material.AIR || currentBlock.getType() == Material.SNOW || currentBlock.getType() == Material.LONG_GRASS || currentBlock.getType() == Material.RED_ROSE || currentBlock.getType() == Material.YELLOW_FLOWER || currentBlock.getType() == Material.BROWN_MUSHROOM || currentBlock.getType() == Material.RED_MUSHROOM || currentBlock.getType() == Material.SAPLING) {
                 currentBlock = currentBlock.getRelative(BlockFace.DOWN);
             }
             Location chunk_loc = currentBlock.getLocation();
@@ -136,9 +137,7 @@ public class TARDISTimetravel {
                     for (col = 0; col < 5; col++) {
                         int id = w.getBlockAt(startx, starty, startz).getTypeId();
                         if (isItSafe(id)) {
-                            danger = true;
-                        } else {
-                            danger = false;
+                            count++;
                         }
                         switch (d) {
                             case NORTH:
@@ -176,54 +175,57 @@ public class TARDISTimetravel {
                 }
                 starty += 1;
             }
-            //p.sendMessage("Finding safe location...");
+            //System.out.println("Finding safe location...");
+            if (count == 0) {
+                danger = false;
+                break;
+            }
         }
-        wherey = randworld.getHighestBlockYAt(wherex, wherez);
-        dest = new Location(randworld, wherex, wherey, wherez);
+        dest = new Location(randworld, wherex, highest, wherez);
         return dest;
     }
 
     private boolean isItSafe(int id) {
-        if (id == 0 || id == 78 || id == 31 || id == 38 || id == 37 || id == 39 || id == 40 || id == 6) {
-            return false;
-        } else {
-            return true;
+        boolean safe = true;
+        if (id == 0 || id == 6 || id == 31 ||  id == 32 || id == 37  || id == 38|| id == 39 || id == 40 || id == 78) {
+            safe = false;
         }
+        return safe;
     }
     private static int[] startLoc = new int[6];
 
     public int[] getStartLocation(Location loc, Constants.COMPASS dir) {
         switch (dir) {
-            case NORTH:
-                startLoc[0] = loc.getBlockX() + 1;
-                startLoc[1] = startLoc[0];
-                startLoc[2] = loc.getBlockZ() + 3;
-                startLoc[3] = startLoc[2];
-                startLoc[4] = 1;
-                startLoc[5] = 1;
-                break;
             case EAST:
                 startLoc[0] = loc.getBlockX() - 3;
                 startLoc[1] = startLoc[0];
                 startLoc[2] = loc.getBlockZ() + 1;
                 startLoc[3] = startLoc[2];
-                startLoc[4] = -1;
-                startLoc[5] = 1;
+                startLoc[4] = 1;
+                startLoc[5] = -1;
                 break;
             case SOUTH:
                 startLoc[0] = loc.getBlockX() - 1;
                 startLoc[1] = startLoc[0];
                 startLoc[2] = loc.getBlockZ() - 3;
                 startLoc[3] = startLoc[2];
-                startLoc[4] = -1;
-                startLoc[5] = -1;
+                startLoc[4] = 1;
+                startLoc[5] = 1;
                 break;
             case WEST:
                 startLoc[0] = loc.getBlockX() + 3;
                 startLoc[1] = startLoc[0];
                 startLoc[2] = loc.getBlockZ() - 1;
                 startLoc[3] = startLoc[2];
-                startLoc[4] = 1;
+                startLoc[4] = -1;
+                startLoc[5] = 1;
+                break;
+            case NORTH:
+                startLoc[0] = loc.getBlockX() + 1;
+                startLoc[1] = startLoc[0];
+                startLoc[2] = loc.getBlockZ() + 3;
+                startLoc[3] = startLoc[2];
+                startLoc[4] = -1;
                 startLoc[5] = -1;
                 break;
         }
