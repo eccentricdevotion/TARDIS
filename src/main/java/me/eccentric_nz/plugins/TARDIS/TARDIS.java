@@ -1,6 +1,7 @@
 package me.eccentric_nz.plugins.TARDIS;
 
 import java.io.*;
+import java.util.HashMap;
 import java.util.List;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -32,6 +33,7 @@ public class TARDIS extends JavaPlugin implements Listener {
     TARDISPlayerListener tardisPlayerListener = new TARDISPlayerListener(this);
     TARDISBlockProtectListener tardisProtectListener = new TARDISBlockProtectListener(this);
     PluginManager pm = Bukkit.getServer().getPluginManager();
+    public HashMap<String, String> trackPlayers = new HashMap<String, String>();
 
     @Override
     public void onEnable() {
