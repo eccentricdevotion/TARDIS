@@ -253,7 +253,7 @@ public class TARDISexecutor implements CommandExecutor {
                         try {
                             Connection connection = service.getConnection();
                             Statement statement = connection.createStatement();
-                            String queryInTARDIS = "SELECT tardis.owner, travellers.player FROM tardis, travellers WHERE travellers.player = '" + player.getName() + "' AND traveller.tardis_id = tardis.tardis_id AND travellers.player = tardis.owner";
+                            String queryInTARDIS = "SELECT tardis.owner, travellers.player FROM tardis, travellers WHERE travellers.player = '" + player.getName() + "' AND travellers.tardis_id = tardis.tardis_id AND travellers.player = tardis.owner";
                             //String queryInTARDIS = "SELECT player FROM travellers WHERE player = '" + player.getName() + "'";
                             ResultSet rs = statement.executeQuery(queryInTARDIS);
                             if (rs == null || !rs.next()) {
