@@ -196,18 +196,19 @@ public class TARDISPlayerListener implements Listener {
                                                             // is the player in the comapnion list
                                                             String[] companionData = companions.split(":");
                                                             for (String c : companionData) {
-                                                                if (c.equalsIgnoreCase(playerNameStr)) {
+                                                                String lc_name = c.toLowerCase();
+                                                                if (lc_name.equalsIgnoreCase(playerNameStr)) {
                                                                     chkCompanion = true;
                                                                     break;
                                                                 }
                                                             }
                                                         } else {
-                                                            player.sendMessage(Constants.TIMELORD_NOT_IN);
+                                                            player.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " " + Constants.TIMELORD_NOT_IN);
                                                             TLOnline = true;
                                                         }
                                                     }
                                                 } else {
-                                                    player.sendMessage(Constants.TIMELORD_OFFLINE);
+                                                    player.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " " + Constants.TIMELORD_OFFLINE);
                                                     TLOnline = true;
                                                 }
                                             }
@@ -254,19 +255,19 @@ public class TARDISPlayerListener implements Listener {
                                                 }
                                             } else {
                                                 if (TLOnline == false) {
-                                                    player.sendMessage(Constants.NOT_OWNER);
+                                                    player.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " " + Constants.NOT_OWNER);
                                                 }
                                             }
                                         }
                                     } else {
-                                        player.sendMessage(Constants.NO_TARDIS);
+                                        player.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " " + Constants.NO_TARDIS);
                                     }
 //                                statement.close();
                                 } catch (SQLException e) {
                                     System.err.println(Constants.MY_PLUGIN_NAME + " Get TARDIS from Door Error: " + e);
                                 }
                             } else {
-                                player.sendMessage(Constants.NO_PERMS_MESSAGE);
+                                player.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " " + Constants.NO_PERMS_MESSAGE);
                             }
                         } else {
                             System.err.println(Constants.MY_PLUGIN_NAME + " Could not get block");
@@ -276,7 +277,7 @@ public class TARDISPlayerListener implements Listener {
                         Material baType = blockAbove.getType();
                         byte baData = blockAbove.getData();
                         if (baType == Material.WOOL && (baData == 1 || baData == 11)) {
-                            player.sendMessage(Constants.WRONG_MATERIAL + Constants.TARDIS_KEY + ". You have a " + material + " in your hand!");
+                            player.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " " + Constants.WRONG_MATERIAL + Constants.TARDIS_KEY + ". You have a " + material + " in your hand!");
                         }
                     }
                 }
@@ -326,7 +327,7 @@ public class TARDISPlayerListener implements Listener {
                                 boolean playSound = true;
                                 //player.sendMessage("0:" + r0_data + ", 1:" + r1_data + ", 2:" + r2_data + ", 3:" + r3_data);
                                 if (r0_data <= 3 && r1_data <= 3 && r2_data <= 3 && r3_data <= 3) { // first position
-                                    player.sendMessage("Home destination selected!");
+                                    player.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " Home destination selected!");
                                     // always teleport to home location
                                     String querySave = "UPDATE tardis SET save = home WHERE tardis_id = " + id;
                                     statement.executeUpdate(querySave);
@@ -336,9 +337,9 @@ public class TARDISPlayerListener implements Listener {
                                         String[] s1_data = s1_str.split("~");
                                         String querySave = "UPDATE tardis SET save = '" + s1_data[1] + "' WHERE tardis_id = " + id;
                                         statement.executeUpdate(querySave);
-                                        player.sendMessage("Destination 1 [" + s1_data[0] + "] selected!");
+                                        player.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " Destination 1 [" + s1_data[0] + "] selected!");
                                     } else {
-                                        player.sendMessage("There is no destination saved to slot 1!");
+                                        player.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " There is no destination saved to slot 1!");
                                         playSound = false;
                                     }
                                 }
@@ -347,9 +348,9 @@ public class TARDISPlayerListener implements Listener {
                                         String[] s2_data = s2_str.split("~");
                                         String querySave = "UPDATE tardis SET save = '" + s2_data[1] + "' WHERE tardis_id = " + id;
                                         statement.executeUpdate(querySave);
-                                        player.sendMessage("Destination 2 [" + s2_data[0] + "] selected!");
+                                        player.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " Destination 2 [" + s2_data[0] + "] selected!");
                                     } else {
-                                        player.sendMessage("There is no destination saved to slot 2!");
+                                        player.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " There is no destination saved to slot 2!");
                                         playSound = false;
                                     }
                                 }
@@ -358,9 +359,9 @@ public class TARDISPlayerListener implements Listener {
                                         String[] s3_data = s3_str.split("~");
                                         String querySave = "UPDATE tardis SET save = '" + s3_data[1] + "' WHERE tardis_id = " + id;
                                         statement.executeUpdate(querySave);
-                                        player.sendMessage("Destination 3 [" + s3_data[0] + "] selected!");
+                                        player.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " Destination 3 [" + s3_data[0] + "] selected!");
                                     } else {
-                                        player.sendMessage("There is no destination saved to slot 3!");
+                                        player.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " There is no destination saved to slot 3!");
                                         playSound = false;
                                     }
                                 }
@@ -369,7 +370,18 @@ public class TARDISPlayerListener implements Listener {
                                     TARDISTimetravel tt = new TARDISTimetravel(plugin);
                                     Location rand = tt.randomDestination(player, player.getWorld(), r1_data, r2_data, r3_data, dir);
                                     String d = rand.getWorld().getName() + ":" + rand.getBlockX() + ":" + rand.getBlockY() + ":" + rand.getBlockZ();
-                                    player.sendMessage("Destination world: " + rand.getWorld().getName());
+                                    String queryCompanions = "SELECT companions FROM tardis WHERE tardis_id = " + id;
+                                    ResultSet rsCom = statement.executeQuery(queryCompanions);
+                                    if (rsCom != null && rsCom.next()) {
+                                        String[] companions = rsCom.getString("companions").split(":");
+                                        for (String c : companions) {
+                                            if (plugin.getServer().getPlayer(c) != null) {
+                                                plugin.getServer().getPlayer(c).sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " Destination world: " + rand.getWorld().getName());
+                                            }
+                                        }
+
+                                    }
+                                    player.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " Destination world: " + rand.getWorld().getName());
                                     String querySave = "UPDATE tardis SET save = '" + d + "' WHERE tardis_id = " + id;
                                     statement.executeUpdate(querySave);
                                 }
