@@ -11,6 +11,9 @@ permissions:
   TARDIS.admin:
     description: Allow players access to the TARDIS admin commands.
     default: op
+  TARDIS.delete:
+    description: Allow players to delete any TARDIS.
+    default: false
   TARDIS.*:
     description: Allow players to create & delete a TARDIS, and teleport to destinations.
     children:
@@ -95,6 +98,14 @@ commands:
       description: Modify the interior of the TARDIS.
       usage: /<command> update [door|button|save-repeater|x-repeater|z-repeater|y-repeater]
       permission: TARDIS.update
+      permission-message: You don't have the permission <permission> to use this command
+    travel:
+      description: Modify the interior of the TARDIS.
+      usage: |
+        /<command> travel [player] or /<command> travel world x y z
+        Example: /<command> travel eccentric_nz - travel to a players location
+        Example: /<command> travel New_new_earth -117 64 273 - travel to co-ordinates in a specific world
+      permission: TARDIS.timetravel
       permission-message: You don't have the permission <permission> to use this command
     admin:
       description: Set TARDIS configuration options.
