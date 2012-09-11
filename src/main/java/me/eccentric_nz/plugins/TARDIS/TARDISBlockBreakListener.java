@@ -4,11 +4,13 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.WorldType;
 import org.bukkit.block.Block;
+import org.bukkit.block.BlockFace;
 import org.bukkit.block.Sign;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -40,9 +42,32 @@ public class TARDISBlockBreakListener implements Listener {
             String line1 = sign.getLine(1);
             String line2 = sign.getLine(2);
             boolean isTimelord = false;
+            String queryCheck;
+            Location sign_loc = block.getLocation();
             if (line1.equals("¤fPOLICE") && line2.equals("¤fBOX")) {
-                String queryCheck = "SELECT * FROM tardis WHERE owner = '" + playerNameStr + "'";
-                try {
+                if (player.hasPermission("TARDIS.delete")) {
+                    Block blockbehind = null;
+                    byte data = block.getData();
+                    if (data == 4) {
+                        blockbehind = block.getRelative(BlockFace.SOUTH, 2);
+                    }
+                    if (data == 5) {
+                        blockbehind = block.getRelative(BlockFace.NORTH, 2);
+                    }
+                    if (data == 3) {
+                        blockbehind = block.getRelative(BlockFace.EAST, 2);
+                    }
+                    if (data == 2) {
+                        blockbehind = block.getRelative(BlockFace.WEST, 2);
+                    }
+                    Block blockDown = blockbehind.getRelative(BlockFace.DOWN, 2);
+                    Location bd_loc = blockDown.getLocation();
+                    String bd_str = bd_loc.getWorld().getName() + ":" + bd_loc.getBlockX() + ":" + bd_loc.getBlockY() + ":" + bd_loc.getBlockZ();
+                    queryCheck = "SELECT * FROM tardis WHERE save = '" + bd_str + "'";
+                } else {
+                    queryCheck = "SELECT * FROM tardis WHERE owner = '" + playerNameStr + "'";
+                }
+                occupied: try {
                     Connection connection = service.getConnection();
                     Statement statement = connection.createStatement();
                     ResultSet rs = statement.executeQuery(queryCheck);
@@ -52,8 +77,16 @@ public class TARDISBlockBreakListener implements Listener {
                         int id = rs.getInt("tardis_id");
                         Constants.COMPASS d = Constants.COMPASS.valueOf(rs.getString("direction"));
 
+                        // need to check that a player is not currently in the TARDIS (if admin delete - maybe always?)
+                        if (player.hasPermission("TARDIS.delete")) {
+                            String queryOccupied = "SELECT player FROM travellers WHERE tardis_id = " + id;
+                            ResultSet rsOcc = statement.executeQuery(queryOccupied);
+                            if (rsOcc != null || rsOcc.next()) {
+                                player.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RED + " You cannot delete this TARDIS as it is occupied!");
+                                break occupied;
+                            }
+                        }
                         // check the sign location
-                        Location sign_loc = block.getLocation();
                         Location bb_loc = Constants.getLocationFromDB(saveLoc, yaw, pitch);
                         // get TARDIS direction
                         switch (d) {
