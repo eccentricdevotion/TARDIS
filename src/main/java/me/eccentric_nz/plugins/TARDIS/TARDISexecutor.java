@@ -13,6 +13,7 @@ import java.util.List;
 import java.util.Set;
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.*;
+import org.bukkit.block.Block;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -41,7 +42,7 @@ public class TARDISexecutor implements CommandExecutor {
                 return true;
             }
             // the command list - first argument MUST appear here!
-            if (!args[0].equalsIgnoreCase("save") && !args[0].equalsIgnoreCase("list") && !args[0].equalsIgnoreCase("admin") && !args[0].equalsIgnoreCase("help") && !args[0].equalsIgnoreCase("find") && !args[0].equalsIgnoreCase("reload") && !args[0].equalsIgnoreCase("add") && !args[0].equalsIgnoreCase("remove") && !args[0].equalsIgnoreCase("update")) {
+            if (!args[0].equalsIgnoreCase("save") && !args[0].equalsIgnoreCase("list") && !args[0].equalsIgnoreCase("admin") && !args[0].equalsIgnoreCase("help") && !args[0].equalsIgnoreCase("find") && !args[0].equalsIgnoreCase("reload") && !args[0].equalsIgnoreCase("add") && !args[0].equalsIgnoreCase("remove") && !args[0].equalsIgnoreCase("update") && !args[0].equalsIgnoreCase("travel")) {
                 sender.sendMessage("Do you want to list destinations, save a destination, update the TARDIS, add/remove companions, do some admin stuff or find the TARDIS?");
                 return false;
             }
@@ -239,6 +240,80 @@ public class TARDISexecutor implements CommandExecutor {
                 sender.sendMessage("This command can only be run by a player");
                 return false;
             } else {
+                if (args[0].equalsIgnoreCase("travel")) {
+                    if (args.length < 2) {
+                        sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " Too few command arguments!");
+                        return false;
+                    }
+                    TARDISTimetravel tt = new TARDISTimetravel(plugin);
+                    // get tardis_id & direction
+                    try {
+                        Connection connection = service.getConnection();
+                        Statement statement = connection.createStatement();
+                        String queryDirection = "SELECT tardis.tardis_id, tardis.direction, travellers.player FROM tardis, travellers WHERE tardis.owner = '" + player.getName() + "' AND tardis.owner = travellers.player";
+                        ResultSet rs = statement.executeQuery(queryDirection);
+                        if (rs == null || !rs.next()) {
+                            sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " Either you are not a Timelord, or you are not inside your TARDIS. You need to be both to run this command!");
+                            return false;
+                        }
+                        int id = rs.getInt("tardis_id");
+                        Constants.COMPASS d = Constants.COMPASS.valueOf(rs.getString("direction"));
+                        rs.close();
+                        if (args.length == 2) {
+                            // we're thinking this is a player's name
+                            if (plugin.getServer().getPlayer(args[1]) == null) {
+                                sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " That player is not online!");
+                                return false;
+                            }
+                            Player destPlayer = plugin.getServer().getPlayer(args[1]);
+                            Location player_loc = destPlayer.getLocation();
+                            World w = player_loc.getWorld();
+                            int[] start_loc = tt.getStartLocation(player_loc, d);
+                            int count = tt.safeLocation(start_loc[0] - 5, player_loc.getBlockY(), start_loc[2], start_loc[1], start_loc[3], start_loc[4], start_loc[5], w, d);
+                            if (count > 0) {
+                                sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " The player's location would not be safe! Please tell the player to move!");
+                                return false;
+                            } else {
+                                String save_loc = player_loc.getWorld().getName() + ":" + player_loc.getBlockX() + ":" + player_loc.getBlockY() + ":" + player_loc.getBlockZ();
+                                String querySave = "UPDATE tardis SET save = '" + save_loc + "' WHERE tardis_id = " + id;
+                                statement.executeUpdate(querySave);
+                                sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " The player location was saved succesfully. Please exit the TARDIS!");
+                                return true;
+                            }
+                        }
+                        if (args.length > 2 && args.length < 6) {
+                            // must be a location then
+                            int x = 0, y = 0, z = 0;
+                            World w = plugin.getServer().getWorld(args[1]);
+                            try {
+                                x = Integer.valueOf(args[2]);
+                                y = Integer.valueOf(args[3]);
+                                z = Integer.valueOf(args[4]);
+                            } catch (NumberFormatException nfe) {
+                                System.err.println(Constants.MY_PLUGIN_NAME + "Couldn't covert to number: " + nfe);
+                            }
+                            Block block = w.getBlockAt(x, y, z);
+                            Location location = block.getLocation();
+
+                            // check location
+                            int[] start_loc = tt.getStartLocation(location, d);
+                            int count = tt.safeLocation(start_loc[0], location.getBlockY(), start_loc[2], start_loc[1], start_loc[3], start_loc[4], start_loc[5], w, d);
+                            if (count > 0) {
+                                sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " The specified location would not be safe! Please try another.");
+                                return false;
+                            } else {
+                                String save_loc = location.getWorld().getName() + ":" + location.getBlockX() + ":" + location.getBlockY() + ":" + location.getBlockZ();
+                                String querySave = "UPDATE tardis SET save = '" + save_loc + "' WHERE tardis_id = " + id;
+                                statement.executeUpdate(querySave);
+                                sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " The specified location was saved succesfully. Please exit the TARDIS!");
+                                return true;
+                            }
+                        }
+                        statement.close();
+                    } catch (SQLException e) {
+                        System.err.println(Constants.MY_PLUGIN_NAME + " /TARDIS travel to location Error: " + e);
+                    }
+                }
                 if (args[0].equalsIgnoreCase("update")) {
                     if (player.hasPermission("TARDIS.update")) {
                         String[] validBlockNames = {"door", "button", "save-repeater", "x-repeater", "z-repeater", "y-repeater"};
@@ -257,16 +332,16 @@ public class TARDISexecutor implements CommandExecutor {
                             //String queryInTARDIS = "SELECT player FROM travellers WHERE player = '" + player.getName() + "'";
                             ResultSet rs = statement.executeQuery(queryInTARDIS);
                             if (rs == null || !rs.next()) {
-                                sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " Either you are not the Timelord, or you are not inside your TARDIS. You need to be both to run this command!");
+                                sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " Either you are not a Timelord, or you are not inside your TARDIS. You need to be both to run this command!");
                                 return false;
                             }
                             rs.close();
                             statement.close();
                         } catch (SQLException e) {
-                            System.err.println(Constants.MY_PLUGIN_NAME + " List Saves Error: " + e);
+                            System.err.println(Constants.MY_PLUGIN_NAME + " Update TARDIS Blocks Error: " + e);
                         }
                         plugin.trackPlayers.put(player.getName(), args[1].toLowerCase());
-                        player.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " Click the TARDIS " + args[1].toLowerCase() + " with to update its position.");
+                        player.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " Click the TARDIS " + args[1].toLowerCase() + " to update its position.");
                         return true;
                     } else {
                         sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + Constants.NO_PERMS_MESSAGE);
@@ -284,12 +359,16 @@ public class TARDISexecutor implements CommandExecutor {
                                 sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " You have not created a TARDIS yet!");
                                 return false;
                             }
-                            Constants.list(player);
+                            if (args.length < 2 || (!args[1].equalsIgnoreCase("saves") && !args[1].equalsIgnoreCase("companions"))) {
+                                sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " You need to specify which TARDIS list you want to view! [saves|companions]");
+                                return false;
+                            }
+                            Constants.list(player, args[1]);
                             rs.close();
                             statement.close();
                             return true;
                         } catch (SQLException e) {
-                            System.err.println(Constants.MY_PLUGIN_NAME + " List Saves Error: " + e);
+                            System.err.println(Constants.MY_PLUGIN_NAME + " List Companions Error: " + e);
                         }
                     } else {
                         sender.sendMessage(Constants.NO_PERMS_MESSAGE);
@@ -447,7 +526,7 @@ public class TARDISexecutor implements CommandExecutor {
                                 ResultSet rsTraveller = statement.executeQuery(queryTraveller);
                                 if (rsTraveller != null && rsTraveller.next()) {
                                     // inside TARDIS
-                                    curDest = nodots + ":" + cur;
+                                    curDest = nodots + "~" + cur;
                                 } else {
                                     // outside TARDIS
                                     curDest = nodots + "~" + sav;
@@ -457,6 +536,7 @@ public class TARDISexecutor implements CommandExecutor {
                                 rs.close();
                                 rsTraveller.close();
                                 statement.close();
+                                sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " The location '" + nodots + "' was saved successfully.");
                                 return true;
                             }
                         } catch (SQLException e) {
