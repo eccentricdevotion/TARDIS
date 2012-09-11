@@ -76,39 +76,56 @@ public class Constants {
         return dest;
     }
 
-    public static void list(Player p) {
+    public static void list(Player p, String l) {
         String playerNameStr = p.getName();
-        String querySaves = "SELECT * FROM tardis WHERE owner = '" + playerNameStr + "' LIMIT 1";
         try {
             Connection connection = service.getConnection();
             Statement statement = connection.createStatement();
+            String querySaves = "SELECT * FROM tardis WHERE owner = '" + playerNameStr + "' LIMIT 1";
+
             ResultSet rs = statement.executeQuery(querySaves);
             if (rs != null && rs.next()) {
-                // construct home string
-                String h = rs.getString("home");
-                String[] h_data = h.split(":");
-                p.sendMessage(ChatColor.GREEN + "HOME: " + h_data[0] + " at x:" + h_data[1] + " y:" + h_data[2] + " z:" + h_data[3]);
-                if (!rs.getString("save1").equals("") && !rs.getString("save1").equals("null") && rs.getString("save1") != null) {
-                    String[] s1 = rs.getString("save1").split("~");
-                    String[] d1_data = s1[1].split(":");
-                    p.sendMessage(ChatColor.GREEN + "1. [" + s1[0] + "]: " + d1_data[0] + " at x:" + d1_data[1] + " y:" + d1_data[2] + " z:" + d1_data[3]);
-                } else {
-                    p.sendMessage(ChatColor.GREEN + "1. No destination saved");
+                // list saves
+                if (l.equalsIgnoreCase("saves")) {
+                    // construct home string
+                    String h = rs.getString("home");
+                    String[] h_data = h.split(":");
+                    p.sendMessage(ChatColor.GREEN + "HOME: " + h_data[0] + " at x:" + h_data[1] + " y:" + h_data[2] + " z:" + h_data[3]);
+                    if (!rs.getString("save1").equals("") && !rs.getString("save1").equals("null") && rs.getString("save1") != null) {
+                        String[] s1 = rs.getString("save1").split("~");
+                        String[] d1_data = s1[1].split(":");
+                        p.sendMessage(ChatColor.GREEN + "1. [" + s1[0] + "]: " + d1_data[0] + " at x:" + d1_data[1] + " y:" + d1_data[2] + " z:" + d1_data[3]);
+                    } else {
+                        p.sendMessage(ChatColor.GREEN + "1. No destination saved");
+                    }
+                    if (!rs.getString("save2").equals("") && !rs.getString("save2").equals("null") && rs.getString("save2") != null) {
+                        String[] s2 = rs.getString("save2").split("~");
+                        String[] d2_data = s2[1].split(":");
+                        p.sendMessage(ChatColor.GREEN + "2. [" + s2[0] + "]: " + d2_data[0] + " at x:" + d2_data[1] + " y:" + d2_data[2] + " z:" + d2_data[3]);
+                    } else {
+                        p.sendMessage(ChatColor.GREEN + "2. No destination saved");
+                    }
+                    if (!rs.getString("save3").equals("") && !rs.getString("save3").equals("null") && rs.getString("save3") != null) {
+                        String[] s3 = rs.getString("save3").split("~");
+                        String[] d3_data = s3[1].split(":");
+                        p.sendMessage(ChatColor.GREEN + "3. [" + s3[0] + "]: " + d3_data[0] + " at x:" + d3_data[1] + " y:" + d3_data[2] + " z:" + d3_data[3]);
+                    } else {
+                        p.sendMessage(ChatColor.GREEN + "3. No destination saved");
+                    }
                 }
-            }
-            if (!rs.getString("save2").equals("") && !rs.getString("save2").equals("null") && rs.getString("save2") != null) {
-                String[] s2 = rs.getString("save2").split("~");
-                String[] d2_data = s2[1].split(":");
-                p.sendMessage(ChatColor.GREEN + "2. [" + s2[0] + "]: " + d2_data[0] + " at x:" + d2_data[1] + " y:" + d2_data[2] + " z:" + d2_data[3]);
-            } else {
-                p.sendMessage(ChatColor.GREEN + "2. No destination saved");
-            }
-            if (!rs.getString("save3").equals("") && !rs.getString("save3").equals("null") && rs.getString("save3") != null) {
-                String[] s3 = rs.getString("save3").split("~");
-                String[] d3_data = s3[1].split(":");
-                p.sendMessage(ChatColor.GREEN + "3. [" + s3[0] + "]: " + d3_data[0] + " at x:" + d3_data[1] + " y:" + d3_data[2] + " z:" + d3_data[3]);
-            } else {
-                p.sendMessage(ChatColor.GREEN + "3. No destination saved");
+                if (l.equalsIgnoreCase("companions")) {
+                    // list companions
+                    String comps = rs.getString("companions");
+                    if (comps != null && !comps.equals("") && !comps.equals("[Null]")) {
+                        String[] companionData = comps.split(":");
+                        p.sendMessage(ChatColor.DARK_BLUE + "Your TARDIS companions are:");
+                        for (String c : companionData) {
+                            p.sendMessage(c);
+                        }
+                    } else {
+                        p.sendMessage(ChatColor.DARK_BLUE + "You don't have any TARDIS companions yet." + ChatColor.RESET + " Use " + ChatColor.GREEN + "/tardis add [player]" + ChatColor.RESET + " to add some");
+                    }
+                }
             }
             rs.close();
             statement.close();
