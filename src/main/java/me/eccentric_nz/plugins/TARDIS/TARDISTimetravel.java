@@ -132,6 +132,8 @@ public class TARDISTimetravel {
             resetz = gsl[3];
             x = gsl[4];
             z = gsl[5];
+            count = safeLocation(startx, starty, startz, resetx, resetz, x, z, w, d);
+            /*
             for (level = 0; level < 4; level++) {
                 for (row = 0; row < 3; row++) {
                     for (col = 0; col < 5; col++) {
@@ -175,6 +177,7 @@ public class TARDISTimetravel {
                 }
                 starty += 1;
             }
+            */
             //System.out.println("Finding safe location...");
             if (count == 0) {
                 danger = false;
@@ -183,6 +186,54 @@ public class TARDISTimetravel {
         }
         dest = new Location(randworld, wherex, highest, wherez);
         return dest;
+    }
+
+    public int safeLocation(int startx, int starty, int startz, int resetx, int resetz, int x, int z, World w, Constants.COMPASS d) {
+        int level, row, col, count = 0;
+        for (level = 0; level < 4; level++) {
+                for (row = 0; row < 3; row++) {
+                    for (col = 0; col < 5; col++) {
+                        int id = w.getBlockAt(startx, starty, startz).getTypeId();
+                        if (isItSafe(id)) {
+                            count++;
+                        }
+                        switch (d) {
+                            case NORTH:
+                            case SOUTH:
+                                startx += x;
+                                break;
+                            case EAST:
+                            case WEST:
+                                startz += z;
+                                break;
+                        }
+                    }
+                    switch (d) {
+                        case NORTH:
+                        case SOUTH:
+                            startx = resetx;
+                            startz += z;
+                            break;
+                        case EAST:
+                        case WEST:
+                            startz = resetz;
+                            startx += x;
+                            break;
+                    }
+                }
+                switch (d) {
+                    case NORTH:
+                    case SOUTH:
+                        startz = resetz;
+                        break;
+                    case EAST:
+                    case WEST:
+                        startx = resetx;
+                        break;
+                }
+                starty += 1;
+            }
+        return count;
     }
 
     private boolean isItSafe(int id) {
