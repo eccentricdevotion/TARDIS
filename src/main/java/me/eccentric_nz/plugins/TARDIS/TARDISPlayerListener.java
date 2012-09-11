@@ -187,9 +187,10 @@ public class TARDISPlayerListener implements Listener {
                                                 boolean TLOnline = false;
                                                 if (!playerNameStr.equals(tl)) {
                                                     if (plugin.getServer().getPlayer(tl) != null) {
-                                                        if (!companions.equals("") && companions != null) {
+                                                        if (companions != null && !companions.equals("") && !companions.equals("[Null]")) {
                                                             // is the timelord in the TARDIS?
                                                             String queryTraveller = "SELECT * FROM travellers WHERE tardis_id = " + id + " AND player = '" + tl + "' LIMIT 1";
+                                                            //System.out.println(queryTraveller);
                                                             ResultSet timelordIsIn = statement.executeQuery(queryTraveller);
                                                             if (timelordIsIn != null && timelordIsIn.next()) {
                                                                 // is the player in the comapnion list
