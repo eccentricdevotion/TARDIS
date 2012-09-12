@@ -269,12 +269,12 @@ public class TARDISexecutor implements CommandExecutor {
                             Location player_loc = destPlayer.getLocation();
                             World w = player_loc.getWorld();
                             int[] start_loc = tt.getStartLocation(player_loc, d);
-                            int count = tt.safeLocation(start_loc[0] - 5, player_loc.getBlockY(), start_loc[2], start_loc[1], start_loc[3], start_loc[4], start_loc[5], w, d);
+                            int count = tt.safeLocation(start_loc[0] - 3, player_loc.getBlockY(), start_loc[2], start_loc[1], start_loc[3], start_loc[4], start_loc[5], w, d);
                             if (count > 0) {
                                 sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " The player's location would not be safe! Please tell the player to move!");
                                 return false;
                             } else {
-                                String save_loc = player_loc.getWorld().getName() + ":" + player_loc.getBlockX() + ":" + player_loc.getBlockY() + ":" + player_loc.getBlockZ();
+                                String save_loc = player_loc.getWorld().getName() + ":" + (player_loc.getBlockX()-3) + ":" + player_loc.getBlockY() + ":" + player_loc.getBlockZ();
                                 String querySave = "UPDATE tardis SET save = '" + save_loc + "' WHERE tardis_id = " + id;
                                 statement.executeUpdate(querySave);
                                 sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " The player location was saved succesfully. Please exit the TARDIS!");
