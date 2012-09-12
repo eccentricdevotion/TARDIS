@@ -43,12 +43,12 @@ public class TARDISexecutor implements CommandExecutor {
             }
             // the command list - first argument MUST appear here!
             if (!args[0].equalsIgnoreCase("save") && !args[0].equalsIgnoreCase("list") && !args[0].equalsIgnoreCase("admin") && !args[0].equalsIgnoreCase("help") && !args[0].equalsIgnoreCase("find") && !args[0].equalsIgnoreCase("reload") && !args[0].equalsIgnoreCase("add") && !args[0].equalsIgnoreCase("remove") && !args[0].equalsIgnoreCase("update") && !args[0].equalsIgnoreCase("travel")) {
-                sender.sendMessage("Do you want to list destinations, save a destination, travel, update the TARDIS, add/remove companions, do some admin stuff or find the TARDIS?");
+                sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " Do you want to list destinations, save a destination, travel, update the TARDIS, add/remove companions, do some admin stuff or find the TARDIS?");
                 return false;
             }
             if (args[0].equalsIgnoreCase("reload")) {
                 plugin.loadConfig();
-                sender.sendMessage("TARDIS config reloaded.");
+                sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " TARDIS config reloaded.");
             }
             if (args[0].equalsIgnoreCase("admin")) {
                 if (args.length == 1) {
@@ -120,7 +120,7 @@ public class TARDISexecutor implements CommandExecutor {
                     return true;
                 }
                 if (args.length < 3) {
-                    sender.sendMessage("Too few command arguments!");
+                    sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " Too few command arguments!");
                     return false;
                 } else {
                     if (!args[1].equalsIgnoreCase("bonus") && !args[1].equalsIgnoreCase("protect") && !args[1].equalsIgnoreCase("max_rad") && !args[1].equalsIgnoreCase("spout") && !args[1].equalsIgnoreCase("default") && !args[1].equalsIgnoreCase("name") && !args[1].equalsIgnoreCase("include") && !args[1].equalsIgnoreCase("key") && !args[1].equalsIgnoreCase("update") && !args[1].equalsIgnoreCase("exclude") && !args[1].equalsIgnoreCase("platform")) {
@@ -237,7 +237,7 @@ public class TARDISexecutor implements CommandExecutor {
                 return true;
             }
             if (player == null) {
-                sender.sendMessage("This command can only be run by a player");
+                sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RED + " This command can only be run by a player");
                 return false;
             } else {
                 if (args[0].equalsIgnoreCase("travel")) {
@@ -371,7 +371,7 @@ public class TARDISexecutor implements CommandExecutor {
                             System.err.println(Constants.MY_PLUGIN_NAME + " List Companions Error: " + e);
                         }
                     } else {
-                        sender.sendMessage(Constants.NO_PERMS_MESSAGE);
+                        sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + Constants.NO_PERMS_MESSAGE);
                         return false;
                     }
                 }
@@ -439,7 +439,7 @@ public class TARDISexecutor implements CommandExecutor {
                             System.err.println(Constants.MY_PLUGIN_NAME + " Companion Save Error: " + e);
                         }
                     } else {
-                        sender.sendMessage(Constants.NO_PERMS_MESSAGE);
+                        sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + Constants.NO_PERMS_MESSAGE);
                         return false;
                     }
                 }
@@ -489,7 +489,7 @@ public class TARDISexecutor implements CommandExecutor {
                             System.err.println(Constants.MY_PLUGIN_NAME + " Companion Save Error: " + e);
                         }
                     } else {
-                        sender.sendMessage(Constants.NO_PERMS_MESSAGE);
+                        sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + Constants.NO_PERMS_MESSAGE);
                         return false;
                     }
                 }
@@ -543,7 +543,7 @@ public class TARDISexecutor implements CommandExecutor {
                             System.err.println(Constants.MY_PLUGIN_NAME + " Companion Save Error: " + e);
                         }
                     } else {
-                        sender.sendMessage(Constants.NO_PERMS_MESSAGE);
+                        sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + Constants.NO_PERMS_MESSAGE);
                         return false;
                     }
                 }
