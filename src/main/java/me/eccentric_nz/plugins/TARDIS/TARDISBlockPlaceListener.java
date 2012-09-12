@@ -90,27 +90,27 @@ public class TARDISBlockPlaceListener implements Listener {
                             }
                             // save data to database (tardis table)
                             int lastInsertId = 0;
-                                String chun = cw + ":" + cx + ":" + cz;
-                                String home = block_loc.getWorld().getName() + ":" + block_loc.getBlockX() + ":" + block_loc.getBlockY() + ":" + block_loc.getBlockZ();
-                                String save = block_loc.getWorld().getName() + ":" + block_loc.getBlockX() + ":" + block_loc.getBlockY() + ":" + block_loc.getBlockZ();
-                                String queryInsert = "INSERT INTO tardis (owner,chunk,direction,home,save) VALUES ('" + playerNameStr + "','" + chun + "','" + d + "','" + home + "','" + save + "')";
-                                statement.executeUpdate(queryInsert);
-                                ResultSet idRS = statement.getGeneratedKeys();
-                                if (idRS != null && idRS.next()) {
-                                    lastInsertId = idRS.getInt(1);
-                                }
-                                statement.close();
+                            String chun = cw + ":" + cx + ":" + cz;
+                            String home = block_loc.getWorld().getName() + ":" + block_loc.getBlockX() + ":" + block_loc.getBlockY() + ":" + block_loc.getBlockZ();
+                            String save = block_loc.getWorld().getName() + ":" + block_loc.getBlockX() + ":" + block_loc.getBlockY() + ":" + block_loc.getBlockZ();
+                            String queryInsert = "INSERT INTO tardis (owner,chunk,direction,home,save) VALUES ('" + playerNameStr + "','" + chun + "','" + d + "','" + home + "','" + save + "')";
+                            statement.executeUpdate(queryInsert);
+                            ResultSet idRS = statement.getGeneratedKeys();
+                            if (idRS != null && idRS.next()) {
+                                lastInsertId = idRS.getInt(1);
+                            }
+                            statement.close();
                             // turn the block stack into a TARDIS
                             builder.buildOuterTARDIS(lastInsertId, block_loc, Constants.COMPASS.valueOf(d));
                             builder.buildInnerTARDIS(plugin.schematic, chunkworld, Constants.COMPASS.valueOf(d), lastInsertId);
                         } else {
-                            player.sendMessage("A TARDIS already exists at this location, please try another chunk!");
+                            player.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " A TARDIS already exists at this location, please try another chunk!");
                         }
                     } else {
                         //ResultSet rsLeft = statement.executeQuery("SELECT save FROM tardis WHERE owner ='" + player + "'");
                         String leftLoc = rs.getString("save");
                         String[] leftData = leftLoc.split(":");
-                        player.sendMessage("You already have a TARDIS, you left it in " + leftData[0] + " at x:" + leftData[1] + " y:" + leftData[2] + " z:" + leftData[3]);
+                        player.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " You already have a TARDIS, you left it in " + leftData[0] + " at x:" + leftData[1] + " y:" + leftData[2] + " z:" + leftData[3]);
                     }
                     rs.close();
                     statement.close();
