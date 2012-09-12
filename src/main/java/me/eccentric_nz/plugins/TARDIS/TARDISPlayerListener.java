@@ -24,8 +24,6 @@ import org.getspout.spoutapi.SpoutManager;
 public class TARDISPlayerListener implements Listener {
 
     private TARDIS plugin;
-    private boolean playerIsFlying;
-    private boolean playerCanFly;
     TARDISdatabase service = TARDISdatabase.getInstance();
 
     public TARDISPlayerListener(TARDIS plugin) {
@@ -104,6 +102,8 @@ public class TARDISPlayerListener implements Listener {
                         if (material == key) {
                             if (block != null) {
                                 if (player.hasPermission("TARDIS.enter")) {
+                                    //allowFlying.put(playerNameStr, player.getAllowFlight());
+                                    //isFlying.put(playerNameStr, player.isFlying());
                                     Location block_loc = block.getLocation();
                                     String bw = block_loc.getWorld().getName();
                                     int bx = block_loc.getBlockX();
@@ -141,16 +141,16 @@ public class TARDISPlayerListener implements Listener {
                                                 double ey = exitTardis.getY();
                                                 switch (Constants.COMPASS.valueOf(d)) {
                                                     case NORTH:
-                                                        exitTardis.setZ(ez + 2.5);
+                                                        exitTardis.setZ(ez + 2);
                                                         break;
                                                     case EAST:
-                                                        exitTardis.setX(ex - 2.5);
+                                                        exitTardis.setX(ex - 2);
                                                         break;
                                                     case SOUTH:
-                                                        exitTardis.setZ(ez - 2.5);
+                                                        exitTardis.setZ(ez - 2);
                                                         break;
                                                     case WEST:
-                                                        exitTardis.setX(ex + 2.5);
+                                                        exitTardis.setX(ex + 2);
                                                         break;
                                                 }
                                                 exitTardis.setY(ey + .25);
@@ -262,7 +262,6 @@ public class TARDISPlayerListener implements Listener {
                                         } else {
                                             player.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " " + Constants.NO_TARDIS);
                                         }
-//                                statement.close();
                                     } catch (SQLException e) {
                                         System.err.println(Constants.MY_PLUGIN_NAME + " Get TARDIS from Door Error: " + e);
                                     }
@@ -417,56 +416,54 @@ public class TARDISPlayerListener implements Listener {
     private void tt(Player p, Location l) {
         final Player thePlayer = p;
         final Location theLocation = l;
-        /*
-         if ((thePlayer.getAllowFlight()) && (!thePlayer.isFlying())) {* */
-        Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
-            public void run() {
-                thePlayer.teleport(theLocation);
-                /*
-                 thePlayer.setFlying(true);
-                 thePlayer.sendMessage("AF true, NotF, flying enabled: " + thePlayer.isFlying());*/
-            }
-        }, 10L);
-        Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
-            public void run() {
-                thePlayer.teleport(theLocation);
-//         thePlayer.setFlying(false);
-//         thePlayer.sendMessage("AF true, NotF, flying disabled: " + thePlayer.isFlying());
-            }
-        }, 10L);
-        /*}
-         if ((thePlayer.getAllowFlight()) && (thePlayer.isFlying())) {
-         Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
-         public void run() {
-         thePlayer.sendMessage("AF true, IsF, just teleport: " + thePlayer.isFlying());
-         thePlayer.teleport(theLocation);
-         }
-         }, 10L);
-         Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
-         public void run() {
-         thePlayer.teleport(theLocation);
-         thePlayer.sendMessage("AF true, IsF, just teleport: " + thePlayer.isFlying());
-         }
-         }, 10L);
-         }
-         if (!thePlayer.getAllowFlight()) {
-         Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
-         public void run() {
-         thePlayer.teleport(theLocation);
-         thePlayer.setAllowFlight(true);
-         thePlayer.setFlying(true);
-         thePlayer.sendMessage("AF false, Set AF true, flying enabled: " + thePlayer.isFlying());
-         }
-         }, 10L);
-         Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
-         public void run() {
-         thePlayer.teleport(theLocation);
-         thePlayer.setFlying(false);
-         thePlayer.setAllowFlight(false);
-         thePlayer.sendMessage("AF false, Set AF false, flying disabled: " + thePlayer.isFlying());
-         }
-         }, 10L);
-         }
-         * */
+
+        if ((thePlayer.getAllowFlight()) && (!thePlayer.isFlying())) {
+            //thePlayer.sendMessage("Is not flying");
+            Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
+                public void run() {
+                    thePlayer.teleport(theLocation);
+                    thePlayer.setAllowFlight(true);
+                    thePlayer.setFlying(true);
+                }
+            }, 10L);
+            Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
+                public void run() {
+                    //thePlayer.teleport(theLocation);
+                    thePlayer.setAllowFlight(true);
+                    thePlayer.setFlying(false);
+                }
+            }, 10L);
+        }
+        if ((thePlayer.getAllowFlight()) && (thePlayer.isFlying())) {
+            //thePlayer.sendMessage("Is flying already");
+            Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
+                public void run() {
+                    thePlayer.teleport(theLocation);
+                }
+            }, 10L);
+            Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
+                public void run() {
+                    thePlayer.setAllowFlight(true);
+                    thePlayer.setFlying(true);
+                }
+            }, 10L);
+        }
+        if (!thePlayer.getAllowFlight()) {
+            //thePlayer.sendMessage("Not allowed to fly");
+            Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
+                public void run() {
+                    thePlayer.teleport(theLocation);
+                    thePlayer.setAllowFlight(true);
+                    thePlayer.setFlying(true);
+                }
+            }, 10L);
+            Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
+                public void run() {
+                    //thePlayer.teleport(theLocation);
+                    thePlayer.setFlying(false);
+                    thePlayer.setAllowFlight(false);
+                }
+            }, 10L);
+        }
     }
 }
