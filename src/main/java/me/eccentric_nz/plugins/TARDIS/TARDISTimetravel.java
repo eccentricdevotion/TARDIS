@@ -23,7 +23,6 @@ public class TARDISTimetravel {
 
     public Location randomDestination(Player p, World w, byte rx, byte rz, byte ry, String dir) {
         int level, row, col, x, y, z, startx, starty, startz, resetx, resetz, listlen, rw;
-        //int[] bad_blockids = {8, 9, 10, 11, 51, 81};
         World randworld = w;
         Boolean danger = true;
         int count = 0;
