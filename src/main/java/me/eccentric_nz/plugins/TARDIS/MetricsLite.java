@@ -27,9 +27,6 @@ package me.eccentric_nz.plugins.TARDIS;
  * authors and contributors and should not be interpreted as representing official policies,
  * either expressed or implied, of anybody else.
  */
-
-//package org.mcstats;
-
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
@@ -54,47 +51,38 @@ public class MetricsLite {
      * The current revision number
      */
     private final static int REVISION = 5;
-
     /**
      * The base url of the metrics domain
      */
     private static final String BASE_URL = "http://mcstats.org";
-
     /**
      * The url used to report a server's status
      */
     private static final String REPORT_URL = "/report/%s";
-
     /**
      * Interval of time to ping (in minutes)
      */
     private final static int PING_INTERVAL = 10;
-
     /**
      * The plugin this metrics submits for
      */
     private final Plugin plugin;
-
     /**
      * The plugin configuration file
      */
     private final YamlConfiguration configuration;
-
     /**
      * The plugin configuration file
      */
     private final File configurationFile;
-
     /**
      * Unique server id
      */
     private final String guid;
-
     /**
      * Lock for synchronization
      */
     private final Object optOutLock = new Object();
-
     /**
      * Id of the scheduled task
      */
@@ -126,9 +114,10 @@ public class MetricsLite {
     }
 
     /**
-     * Start measuring statistics. This will immediately create an async repeating task as the plugin and send
-     * the initial data to the metrics backend, and then after that it will post in increments of
-     * PING_INTERVAL * 1200 ticks.
+     * Start measuring statistics. This will immediately create an async
+     * repeating task as the plugin and send the initial data to the metrics
+     * backend, and then after that it will post in increments of PING_INTERVAL
+     * * 1200 ticks.
      *
      * @return True if statistics measuring is running, otherwise false.
      */
@@ -146,7 +135,6 @@ public class MetricsLite {
 
             // Begin hitting the server with glorious data
             taskId = plugin.getServer().getScheduler().scheduleAsyncRepeatingTask(plugin, new Runnable() {
-
                 private boolean firstPost = true;
 
                 public void run() {
@@ -184,7 +172,7 @@ public class MetricsLite {
      * @return true if metrics should be opted out of it
      */
     public boolean isOptOut() {
-        synchronized(optOutLock) {
+        synchronized (optOutLock) {
             try {
                 // Reload the metrics file
                 configuration.load(getConfigFile());
@@ -200,7 +188,8 @@ public class MetricsLite {
     }
 
     /**
-     * Enables metrics for the server by setting "opt-out" to false in the config file and starting the metrics task.
+     * Enables metrics for the server by setting "opt-out" to false in the
+     * config file and starting the metrics task.
      *
      * @throws IOException
      */
@@ -221,7 +210,8 @@ public class MetricsLite {
     }
 
     /**
-     * Disables metrics for the server by setting "opt-out" to true in the config file and canceling the metrics task.
+     * Disables metrics for the server by setting "opt-out" to true in the
+     * config file and canceling the metrics task.
      *
      * @throws IOException
      */
@@ -243,7 +233,8 @@ public class MetricsLite {
     }
 
     /**
-     * Gets the File object of the config file that should be used to store data such as the GUID and opt-out status
+     * Gets the File object of the config file that should be used to store data
+     * such as the GUID and opt-out status
      *
      * @return the File object for the config file
      */
@@ -315,7 +306,8 @@ public class MetricsLite {
     }
 
     /**
-     * Check if mineshafter is present. If it is, we need to bypass it to send POST requests
+     * Check if mineshafter is present. If it is, we need to bypass it to send
+     * POST requests
      *
      * @return true if mineshafter is installed on the server
      */
@@ -329,8 +321,9 @@ public class MetricsLite {
     }
 
     /**
-     * <p>Encode a key/value data pair to be used in a HTTP post request. This INCLUDES a & so the first
-     * key/value pair MUST be included manually, e.g:</p>
+     * <p>Encode a key/value data pair to be used in a HTTP post request. This
+     * INCLUDES a & so the first key/value pair MUST be included manually,
+     * e.g:</p>
      * <code>
      * StringBuffer data = new StringBuffer();
      * data.append(encode("guid")).append('=').append(encode(guid));
@@ -354,5 +347,4 @@ public class MetricsLite {
     private static String encode(final String text) throws UnsupportedEncodingException {
         return URLEncoder.encode(text, "UTF-8");
     }
-
 }
