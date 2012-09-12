@@ -606,12 +606,15 @@ public class TARDISBuilder {
                             multiplier = 4;
                             damage = 4;
                             break;
-                        case 56: // diamond ore to dimonds
+                        case 56: // diamond ore to diamonds
                             rid = 264;
                             break;
                         case 73: // redstone ore to redstone dust
                             rid = 331;
                             multiplier = 4;
+                            break;
+                        case 129: // emerald ore to emerald
+                            rid = 388;
                             break;
                     }
                     // add items to chest
