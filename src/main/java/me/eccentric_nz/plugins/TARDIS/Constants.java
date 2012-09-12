@@ -120,9 +120,9 @@ public class Constants {
                     String comps = rs.getString("companions");
                     if (comps != null && !comps.equals("") && !comps.equals("[Null]")) {
                         String[] companionData = comps.split(":");
-                        p.sendMessage(ChatColor.DARK_BLUE + "Your TARDIS companions are:");
+                        p.sendMessage(ChatColor.BLUE + "Your TARDIS companions are:");
                         for (String c : companionData) {
-                            p.sendMessage(c);
+                            p.sendMessage(ChatColor.BLUE + c);
                         }
                     } else {
                         p.sendMessage(ChatColor.DARK_BLUE + "You don't have any TARDIS companions yet." + ChatColor.RESET + " Use " + ChatColor.GREEN + "/tardis add [player]" + ChatColor.RESET + " to add some");
