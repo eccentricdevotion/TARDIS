@@ -113,71 +113,30 @@ public class TARDISTimetravel {
             }
             highest = randworld.getHighestBlockYAt(wherex, wherez);
             Block currentBlock = randworld.getBlockAt(wherex, highest, wherez);
-            if (currentBlock.getType() == Material.AIR || currentBlock.getType() == Material.SNOW || currentBlock.getType() == Material.LONG_GRASS || currentBlock.getType() == Material.RED_ROSE || currentBlock.getType() == Material.YELLOW_FLOWER || currentBlock.getType() == Material.BROWN_MUSHROOM || currentBlock.getType() == Material.RED_MUSHROOM || currentBlock.getType() == Material.SAPLING) {
-                currentBlock = currentBlock.getRelative(BlockFace.DOWN);
-            }
-            Location chunk_loc = currentBlock.getLocation();
+            if (highest > 0) {
+                if (currentBlock.getType() == Material.AIR || currentBlock.getType() == Material.SNOW || currentBlock.getType() == Material.LONG_GRASS || currentBlock.getType() == Material.RED_ROSE || currentBlock.getType() == Material.YELLOW_FLOWER || currentBlock.getType() == Material.BROWN_MUSHROOM || currentBlock.getType() == Material.RED_MUSHROOM || currentBlock.getType() == Material.SAPLING) {
+                    currentBlock = currentBlock.getRelative(BlockFace.DOWN);
+                }
+                Location chunk_loc = currentBlock.getLocation();
 
-            randworld.getChunkAt(chunk_loc).load();
-            randworld.getChunkAt(chunk_loc).load(true);
-            while (!randworld.getChunkAt(chunk_loc).isLoaded()) {
                 randworld.getChunkAt(chunk_loc).load();
-            }
-            // get start location for checking there is enough space
-            int gsl[] = getStartLocation(chunk_loc, d);
-            startx = gsl[0];
-            resetx = gsl[1];
-            starty = chunk_loc.getBlockY();
-            startz = gsl[2];
-            resetz = gsl[3];
-            x = gsl[4];
-            z = gsl[5];
-            count = safeLocation(startx, starty, startz, resetx, resetz, x, z, w, d);
-            /*
-            for (level = 0; level < 4; level++) {
-                for (row = 0; row < 3; row++) {
-                    for (col = 0; col < 5; col++) {
-                        int id = w.getBlockAt(startx, starty, startz).getTypeId();
-                        if (isItSafe(id)) {
-                            count++;
-                        }
-                        switch (d) {
-                            case NORTH:
-                            case SOUTH:
-                                startx += x;
-                                break;
-                            case EAST:
-                            case WEST:
-                                startz += z;
-                                break;
-                        }
-                    }
-                    switch (d) {
-                        case NORTH:
-                        case SOUTH:
-                            startx = resetx;
-                            startz += z;
-                            break;
-                        case EAST:
-                        case WEST:
-                            startz = resetz;
-                            startx += x;
-                            break;
-                    }
+                randworld.getChunkAt(chunk_loc).load(true);
+                while (!randworld.getChunkAt(chunk_loc).isLoaded()) {
+                    randworld.getChunkAt(chunk_loc).load();
                 }
-                switch (d) {
-                    case NORTH:
-                    case SOUTH:
-                        startz = resetz;
-                        break;
-                    case EAST:
-                    case WEST:
-                        startx = resetx;
-                        break;
-                }
-                starty += 1;
+                // get start location for checking there is enough space
+                int gsl[] = getStartLocation(chunk_loc, d);
+                startx = gsl[0];
+                resetx = gsl[1];
+                starty = chunk_loc.getBlockY();
+                startz = gsl[2];
+                resetz = gsl[3];
+                x = gsl[4];
+                z = gsl[5];
+                count = safeLocation(startx, starty, startz, resetx, resetz, x, z, randworld, d);
+            } else {
+                count = 1;
             }
-            */
             //System.out.println("Finding safe location...");
             if (count == 0) {
                 danger = false;
@@ -191,54 +150,54 @@ public class TARDISTimetravel {
     public int safeLocation(int startx, int starty, int startz, int resetx, int resetz, int x, int z, World w, Constants.COMPASS d) {
         int level, row, col, count = 0;
         for (level = 0; level < 4; level++) {
-                for (row = 0; row < 3; row++) {
-                    for (col = 0; col < 5; col++) {
-                        int id = w.getBlockAt(startx, starty, startz).getTypeId();
-                        if (isItSafe(id)) {
-                            count++;
-                        }
-                        switch (d) {
-                            case NORTH:
-                            case SOUTH:
-                                startx += x;
-                                break;
-                            case EAST:
-                            case WEST:
-                                startz += z;
-                                break;
-                        }
+            for (row = 0; row < 3; row++) {
+                for (col = 0; col < 5; col++) {
+                    int id = w.getBlockAt(startx, starty, startz).getTypeId();
+                    if (isItSafe(id)) {
+                        count++;
                     }
                     switch (d) {
                         case NORTH:
                         case SOUTH:
-                            startx = resetx;
-                            startz += z;
+                            startx += x;
                             break;
                         case EAST:
                         case WEST:
-                            startz = resetz;
-                            startx += x;
+                            startz += z;
                             break;
                     }
                 }
                 switch (d) {
                     case NORTH:
                     case SOUTH:
-                        startz = resetz;
+                        startx = resetx;
+                        startz += z;
                         break;
                     case EAST:
                     case WEST:
-                        startx = resetx;
+                        startz = resetz;
+                        startx += x;
                         break;
                 }
-                starty += 1;
             }
+            switch (d) {
+                case NORTH:
+                case SOUTH:
+                    startz = resetz;
+                    break;
+                case EAST:
+                case WEST:
+                    startx = resetx;
+                    break;
+            }
+            starty += 1;
+        }
         return count;
     }
 
     private boolean isItSafe(int id) {
         boolean safe = true;
-        if (id == 0 || id == 6 || id == 31 ||  id == 32 || id == 37  || id == 38|| id == 39 || id == 40 || id == 78) {
+        if (id == 0 || id == 6 || id == 31 || id == 32 || id == 37 || id == 38 || id == 39 || id == 40 || id == 78) {
             safe = false;
         }
         return safe;
