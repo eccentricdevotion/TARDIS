@@ -56,6 +56,15 @@ public class TARDISTimetravel {
         }
 
         listlen = normalWorlds.size();
+        // random world
+        rw = rand.nextInt(listlen);
+        int i = 0;
+        for (World wobj : normalWorlds) {
+            if (i == rw) {
+                randworld = wobj;
+            }
+            i = i + 1;
+        }
 
         while (danger == true) {
             count = 0;
@@ -101,15 +110,6 @@ public class TARDISTimetravel {
                 wherez = wherez * 4;
             }
 
-            // random world
-            rw = rand.nextInt(listlen);
-            int i = 0;
-            for (World wobj : normalWorlds) {
-                if (i == rw) {
-                    randworld = wobj;
-                }
-                i = i + 1;
-            }
             highest = randworld.getHighestBlockYAt(wherex, wherez);
             Block currentBlock = randworld.getBlockAt(wherex, highest, wherez);
             if (highest > 0) {
