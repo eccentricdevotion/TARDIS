@@ -95,6 +95,7 @@ public class TARDISPlayerListener implements Listener {
             } else {
                 Action action = event.getAction();
                 if (action == Action.RIGHT_CLICK_BLOCK) {
+                    World playerWorld = player.getLocation().getWorld();
                     ItemStack stack = player.getItemInHand();
                     Material material = stack.getType();
                     // get key material from config
@@ -180,7 +181,7 @@ public class TARDISPlayerListener implements Listener {
                                                     builder.buildOuterTARDIS(id, newl, Constants.COMPASS.valueOf(d));
                                                 }
                                                 // exit TARDIS!
-                                                tt(player, exitTardis);
+                                                tt(player, exitTardis, true, playerWorld);
                                                 // remove player from traveller table
                                                 String queryTraveller = "DELETE FROM travellers WHERE player = '" + playerNameStr + "'";
                                                 statement.executeUpdate(queryTraveller);
@@ -246,7 +247,7 @@ public class TARDISPlayerListener implements Listener {
                                                     tmp_loc.setPitch(pitch);
                                                     tmp_loc.setYaw(yaw);
                                                     final Location tardis_loc = tmp_loc;
-                                                    tt(player, tardis_loc);
+                                                    tt(player, tardis_loc, false, playerWorld);
                                                     String queryTravellerUpdate = "INSERT INTO travellers (tardis_id, player) VALUES (" + id + ", '" + playerNameStr + "')";
                                                     statement.executeUpdate(queryTravellerUpdate);
                                                     // update current TARDIS location
@@ -430,13 +431,18 @@ public class TARDISPlayerListener implements Listener {
     };
     Random r = new Random();
 
-    private void tt(Player p, Location l) {
+    private void tt(Player p, Location l, boolean exit, final World from) {
 
         final int i = r.nextInt(12);
         final Player thePlayer = p;
         final Location theLocation = l;
         final Location firstLocation = l;
-        firstLocation.setY(theLocation.getY() + 1);
+        if (exit) {
+            firstLocation.setY(theLocation.getY() + 2);
+        }
+        final World to = theLocation.getWorld();
+        final boolean allowFlight = thePlayer.getAllowFlight();
+        final boolean crossWorlds = from != to;
 
         Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
             public void run() {
@@ -446,69 +452,11 @@ public class TARDISPlayerListener implements Listener {
         Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
             public void run() {
                 thePlayer.teleport(theLocation);
-                if (thePlayer.getGameMode() == GameMode.CREATIVE) {
+                if (thePlayer.getGameMode() == GameMode.CREATIVE || (allowFlight && crossWorlds)) {
                     thePlayer.setAllowFlight(true);
                 }
                 thePlayer.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " " + quote[i]);
             }
         }, 5L);
-
-        /*
-         if ((thePlayer.getAllowFlight()) && (!thePlayer.isFlying())) {
-         Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
-         public void run() {
-         thePlayer.teleport(theLocation);
-         thePlayer.setAllowFlight(true);
-         thePlayer.setFlying(true);
-         }
-         }, 10L);
-         Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
-         public void run() {
-         //thePlayer.teleport(theLocation);
-         //thePlayer.setAllowFlight(true);
-         if (thePlayer.isFlying()) {
-         thePlayer.sendMessage("Making you NOT fly");
-         thePlayer.setFlying(false);
-         }
-         thePlayer.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " " + quote[i]);
-         }
-         }, 10L);
-         }
-         if (((thePlayer.getAllowFlight()) || thePlayer.getGameMode() == GameMode.CREATIVE) && (thePlayer.isFlying())) {
-         Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
-         public void run() {
-         thePlayer.teleport(theLocation);
-         }
-         }, 10L);
-         Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
-         public void run() {
-         //thePlayer.setAllowFlight(true);
-         if (!thePlayer.isFlying()) {
-         thePlayer.sendMessage("Making you fly");
-         thePlayer.setFlying(true);
-         }
-         thePlayer.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " " + quote[i]);
-         }
-         }, 10L);
-         }
-         if (!thePlayer.getAllowFlight()) {
-         Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
-         public void run() {
-         thePlayer.teleport(theLocation);
-         thePlayer.setAllowFlight(true);
-         thePlayer.setFlying(true);
-         }
-         }, 10L);
-         Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
-         public void run() {
-         //thePlayer.teleport(theLocation);
-         //thePlayer.setFlying(false);
-         thePlayer.sendMessage("Turning off flying");
-         thePlayer.setAllowFlight(false);
-         thePlayer.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " " + quote[i]);
-         }
-         }, 10L);
-         }
-         */
     }
 }
