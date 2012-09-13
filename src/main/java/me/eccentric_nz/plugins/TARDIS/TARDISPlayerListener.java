@@ -418,7 +418,7 @@ public class TARDISPlayerListener implements Listener {
         final Location theLocation = l;
 
         if ((thePlayer.getAllowFlight()) && (!thePlayer.isFlying())) {
-            //thePlayer.sendMessage("Is not flying");
+            thePlayer.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " Don't blink. Blink and you're dead.");
             Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
                 public void run() {
                     thePlayer.teleport(theLocation);
@@ -435,7 +435,7 @@ public class TARDISPlayerListener implements Listener {
             }, 10L);
         }
         if ((thePlayer.getAllowFlight()) && (thePlayer.isFlying())) {
-            //thePlayer.sendMessage("Is flying already");
+            thePlayer.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " Anybody remotely interesting is mad, in some way or another.");
             Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
                 public void run() {
                     thePlayer.teleport(theLocation);
@@ -449,7 +449,7 @@ public class TARDISPlayerListener implements Listener {
             }, 10L);
         }
         if (!thePlayer.getAllowFlight()) {
-            //thePlayer.sendMessage("Not allowed to fly");
+            thePlayer.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " First things first, but not necessarily in that order.");
             Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
                 public void run() {
                     thePlayer.teleport(theLocation);
