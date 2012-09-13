@@ -4,9 +4,11 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Random;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Chunk;
+import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -412,58 +414,101 @@ public class TARDISPlayerListener implements Listener {
             }
         }
     }
+    final String[] quote = {
+        "Don't blink. Blink and you're dead.",
+        "First things first, but not necessarily in that order.",
+        "Good place to put things - cellars.",
+        "According to classical aerodynamics, it is impossible for a bumblebee to fly",
+        "Logic merely enables one to be wrong with authority.",
+        "Anybody remotely interesting is mad, in some way or another.",
+        "Bad laws were made to be broken.",
+        "If you're a doctor, then why does your box say 'Police'?",
+        "No, no, no. I love yogurt. Yogurt's my favourite. Give me yogurt.",
+        "Rest is for the weary, sleep is for the dead.",
+        "According to... Article 15 of the Shadow Proclamation. I command you to leave this world!",
+        "Anybody remotely interesting is mad, in some way or another."
+    };
+    Random r = new Random();
 
     private void tt(Player p, Location l) {
+
+        final int i = r.nextInt(12);
         final Player thePlayer = p;
         final Location theLocation = l;
+        final Location firstLocation = l;
+        firstLocation.setY(theLocation.getY() + 1);
 
-        if ((thePlayer.getAllowFlight()) && (!thePlayer.isFlying())) {
-            thePlayer.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " Don't blink. Blink and you're dead.");
-            Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
-                public void run() {
-                    thePlayer.teleport(theLocation);
+        Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
+            public void run() {
+                thePlayer.teleport(firstLocation);
+            }
+        }, 5L);
+        Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
+            public void run() {
+                thePlayer.teleport(theLocation);
+                if (thePlayer.getGameMode() == GameMode.CREATIVE) {
                     thePlayer.setAllowFlight(true);
-                    thePlayer.setFlying(true);
                 }
-            }, 10L);
-            Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
-                public void run() {
-                    //thePlayer.teleport(theLocation);
-                    thePlayer.setAllowFlight(true);
-                    thePlayer.setFlying(false);
-                }
-            }, 10L);
-        }
-        if ((thePlayer.getAllowFlight()) && (thePlayer.isFlying())) {
-            thePlayer.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " Anybody remotely interesting is mad, in some way or another.");
-            Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
-                public void run() {
-                    thePlayer.teleport(theLocation);
-                }
-            }, 10L);
-            Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
-                public void run() {
-                    thePlayer.setAllowFlight(true);
-                    thePlayer.setFlying(true);
-                }
-            }, 10L);
-        }
-        if (!thePlayer.getAllowFlight()) {
-            thePlayer.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " First things first, but not necessarily in that order.");
-            Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
-                public void run() {
-                    thePlayer.teleport(theLocation);
-                    thePlayer.setAllowFlight(true);
-                    thePlayer.setFlying(true);
-                }
-            }, 10L);
-            Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
-                public void run() {
-                    //thePlayer.teleport(theLocation);
-                    thePlayer.setFlying(false);
-                    thePlayer.setAllowFlight(false);
-                }
-            }, 10L);
-        }
+                thePlayer.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " " + quote[i]);
+            }
+        }, 5L);
+
+        /*
+         if ((thePlayer.getAllowFlight()) && (!thePlayer.isFlying())) {
+         Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
+         public void run() {
+         thePlayer.teleport(theLocation);
+         thePlayer.setAllowFlight(true);
+         thePlayer.setFlying(true);
+         }
+         }, 10L);
+         Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
+         public void run() {
+         //thePlayer.teleport(theLocation);
+         //thePlayer.setAllowFlight(true);
+         if (thePlayer.isFlying()) {
+         thePlayer.sendMessage("Making you NOT fly");
+         thePlayer.setFlying(false);
+         }
+         thePlayer.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " " + quote[i]);
+         }
+         }, 10L);
+         }
+         if (((thePlayer.getAllowFlight()) || thePlayer.getGameMode() == GameMode.CREATIVE) && (thePlayer.isFlying())) {
+         Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
+         public void run() {
+         thePlayer.teleport(theLocation);
+         }
+         }, 10L);
+         Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
+         public void run() {
+         //thePlayer.setAllowFlight(true);
+         if (!thePlayer.isFlying()) {
+         thePlayer.sendMessage("Making you fly");
+         thePlayer.setFlying(true);
+         }
+         thePlayer.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " " + quote[i]);
+         }
+         }, 10L);
+         }
+         if (!thePlayer.getAllowFlight()) {
+         Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
+         public void run() {
+         thePlayer.teleport(theLocation);
+         thePlayer.setAllowFlight(true);
+         thePlayer.setFlying(true);
+         }
+         }, 10L);
+         Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
+         public void run() {
+         //thePlayer.teleport(theLocation);
+         //thePlayer.setFlying(false);
+         thePlayer.sendMessage("Turning off flying");
+         thePlayer.setAllowFlight(false);
+         thePlayer.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " " + quote[i]);
+         }
+         }, 10L);
+         }
+         */
     }
 }
