@@ -1,14 +1,13 @@
 package me.eccentric_nz.plugins.TARDIS;
 
 import java.io.*;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
-import org.bukkit.Server;
 import org.bukkit.World;
 import org.bukkit.World.Environment;
-import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.event.Listener;
@@ -35,6 +34,9 @@ public class TARDIS extends JavaPlugin implements Listener {
     TARDISBlockProtectListener tardisProtectListener = new TARDISBlockProtectListener(this);
     PluginManager pm = Bukkit.getServer().getPluginManager();
     public HashMap<String, String> trackPlayers = new HashMap<String, String>();
+    private static ArrayList<String> quotes = new ArrayList<String>();
+    public ArrayList<String> quote;
+    public int quotelen;
 
     @Override
     public void onEnable() {
@@ -78,6 +80,8 @@ public class TARDIS extends JavaPlugin implements Listener {
         } catch (IOException e) {
             // Failed to submit the stats :-(
         }
+        quote = quotes();
+        quotelen = quote.size();
     }
 
     @Override
@@ -86,8 +90,6 @@ public class TARDIS extends JavaPlugin implements Listener {
     }
 
     public FileConfiguration loadConfig() {
-        Server server = plugin.getServer();
-        ConsoleCommandSender console = server.getConsoleSender();
         try {
             schematicfile = new File(getDataFolder(), Constants.SCHEMATIC_FILE_NAME);
             if (!schematicfile.exists()) {
@@ -118,7 +120,7 @@ public class TARDIS extends JavaPlugin implements Listener {
             String worldname = "worlds." + w.getName();
             if (w.getEnvironment() == Environment.NORMAL && !config.contains(worldname)) {
                 config.set(worldname, true);
-                console.sendMessage(Constants.MY_PLUGIN_NAME + " Added '" + w.getName() + "' to config. To exclude this world run: " + ChatColor.GREEN + "tardis admin exclude " + w.getName());
+                System.out.println(Constants.MY_PLUGIN_NAME + " Added '" + w.getName() + "' to config. To exclude this world run: " + ChatColor.GREEN + "tardis admin exclude " + w.getName());
             }
         }
         if (timelordsfile.exists()) {
@@ -152,5 +154,22 @@ public class TARDIS extends JavaPlugin implements Listener {
         } catch (IOException ex) {
             System.err.println(Constants.MY_PLUGIN_NAME + "Could not save config to " + myconfigfile);
         }
+    }
+
+    public ArrayList<String> quotes() {
+        // load quotes from txt file
+        if (quotesfile != null) {
+            try {
+                BufferedReader bufRdr = new BufferedReader(new FileReader(quotesfile));
+                String line;
+                //read each line of text file
+                while ((line = bufRdr.readLine()) != null) {
+                    quotes.add(line);
+                }
+            } catch (IOException io) {
+                System.err.println(Constants.MY_PLUGIN_NAME + " Could not read quotes file");
+            }
+        }
+        return quotes;
     }
 }
