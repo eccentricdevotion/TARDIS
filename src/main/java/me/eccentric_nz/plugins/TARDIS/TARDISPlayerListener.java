@@ -1,5 +1,8 @@
 package me.eccentric_nz.plugins.TARDIS;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -415,25 +418,32 @@ public class TARDISPlayerListener implements Listener {
             }
         }
     }
-    final String[] quote = {
-        "Don't blink. Blink and you're dead.",
-        "First things first, but not necessarily in that order.",
-        "Good place to put things - cellars.",
-        "According to classical aerodynamics, it is impossible for a bumblebee to fly",
-        "Logic merely enables one to be wrong with authority.",
-        "Anybody remotely interesting is mad, in some way or another.",
-        "Bad laws were made to be broken.",
-        "If you're a doctor, then why does your box say 'Police'?",
-        "No, no, no. I love yogurt. Yogurt's my favourite. Give me yogurt.",
-        "Rest is for the weary, sleep is for the dead.",
-        "According to... Article 15 of the Shadow Proclamation. I command you to leave this world!",
-        "Anybody remotely interesting is mad, in some way or another."
-    };
+    private static String[] quotes;
+
+    private String[] quotes() {
+        int i = 0;
+        // load quotes from txt file
+        try {
+            BufferedReader bufRdr = new BufferedReader(new FileReader(plugin.quotesfile));
+            String line;
+            //read each line of text file
+            while ((line = bufRdr.readLine()) != null) {
+                quotes[i] = line;
+                i++;
+            }
+        } catch (IOException io) {
+            System.err.println("Could not read csv file");
+        }
+        return quotes;
+    }
+
+    final String[] quote = quotes();
+    int len = quote.length;
     Random r = new Random();
 
     private void tt(Player p, Location l, boolean exit, final World from) {
 
-        final int i = r.nextInt(12);
+        final int i = r.nextInt(len);
         final Player thePlayer = p;
         final Location theLocation = l;
         final Location firstLocation = l;
