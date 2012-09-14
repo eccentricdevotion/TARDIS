@@ -70,7 +70,7 @@ public class TARDISBlockBreakListener implements Listener {
                     Connection connection = service.getConnection();
                     Statement statement = connection.createStatement();
                     ResultSet rs = statement.executeQuery(queryCheck);
-                    if (rs != null && rs.next()) {
+                    if (rs.next()) {
                         String saveLoc = rs.getString("save");
                         String chunkLoc = rs.getString("chunk");
                         int id = rs.getInt("tardis_id");
