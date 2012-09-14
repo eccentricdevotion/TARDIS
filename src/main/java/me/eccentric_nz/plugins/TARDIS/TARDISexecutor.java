@@ -274,7 +274,7 @@ public class TARDISexecutor implements CommandExecutor {
                                 sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " The player's location would not be safe! Please tell the player to move!");
                                 return false;
                             } else {
-                                String save_loc = player_loc.getWorld().getName() + ":" + (player_loc.getBlockX()-3) + ":" + player_loc.getBlockY() + ":" + player_loc.getBlockZ();
+                                String save_loc = player_loc.getWorld().getName() + ":" + (player_loc.getBlockX() - 3) + ":" + player_loc.getBlockY() + ":" + player_loc.getBlockZ();
                                 String querySave = "UPDATE tardis SET save = '" + save_loc + "' WHERE tardis_id = " + id;
                                 statement.executeUpdate(querySave);
                                 sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " The player location was saved succesfully. Please exit the TARDIS!");
@@ -329,7 +329,6 @@ public class TARDISexecutor implements CommandExecutor {
                             Connection connection = service.getConnection();
                             Statement statement = connection.createStatement();
                             String queryInTARDIS = "SELECT tardis.owner, travellers.player FROM tardis, travellers WHERE travellers.player = '" + player.getName() + "' AND travellers.tardis_id = tardis.tardis_id AND travellers.player = tardis.owner";
-                            //String queryInTARDIS = "SELECT player FROM travellers WHERE player = '" + player.getName() + "'";
                             ResultSet rs = statement.executeQuery(queryInTARDIS);
                             if (rs == null || !rs.next()) {
                                 sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " Either you are not a Timelord, or you are not inside your TARDIS. You need to be both to run this command!");
@@ -342,6 +341,62 @@ public class TARDISexecutor implements CommandExecutor {
                         }
                         plugin.trackPlayers.put(player.getName(), args[1].toLowerCase());
                         player.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " Click the TARDIS " + args[1].toLowerCase() + " to update its position.");
+                        return true;
+                    } else {
+                        sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + Constants.NO_PERMS_MESSAGE);
+                        return false;
+                    }
+                }
+                if (args[0].equalsIgnoreCase("rebuild")) {
+                    if (player.hasPermission("TARDIS.rebuild")) {
+                        String save = "", chunk = "";
+                        World w = null;
+                        int x = 0, y = 0, z = 0, id = -1;
+                        Constants.COMPASS d = Constants.COMPASS.EAST;
+                        String[] validT = {"outer", "inner"};
+                        if (args.length < 2) {
+                            sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " Too few command arguments!");
+                            return false;
+                        }
+                        if (!Arrays.asList(validT).contains(args[1].toLowerCase())) {
+                            player.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " You need to specify which part of the TARDIS you want rebuild! [outer|inner]");
+                            return false;
+                        }
+                        TARDISBuilder builder = new TARDISBuilder(plugin);
+                        try {
+                            Connection connection = service.getConnection();
+                            Statement statement = connection.createStatement();
+                            String queryTARDIS = "SELECT * FROM tardis WHERE owner = '" + player.getName();
+                            ResultSet rs = statement.executeQuery(queryTARDIS);
+                            if (rs == null || !rs.next()) {
+                                sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " You have not created a TARDIS yet!");
+                                return false;
+                            }
+                            save = rs.getString("save");
+                            chunk = rs.getString("chunk");
+                            id = rs.getInt("tardis_id");
+                            d = Constants.COMPASS.valueOf(rs.getString("direction"));
+                            rs.close();
+                            statement.close();
+                        } catch (SQLException e) {
+                            System.err.println(Constants.MY_PLUGIN_NAME + " Select TARDIS By Owner Error: " + e);
+                        }
+                        if (args[1].equalsIgnoreCase("outer")) {
+                            String[] save_data = save.split(":");
+                            w = plugin.getServer().getWorld(save_data[0]);
+                            try {
+                                x = Integer.parseInt(save_data[1]);
+                                y = Integer.parseInt(save_data[2]);
+                                z = Integer.parseInt(save_data[3]);
+                            } catch (NumberFormatException nfe) {
+                                System.err.println(Constants.MY_PLUGIN_NAME + " Could not format number: " + nfe);
+                            }
+                            Location l = new Location(w, x, y, z);
+                            builder.buildOuterTARDIS(id, l, d);
+                            sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " The TARDIS Police Box was rebuilt!");
+                        }
+                        if (args[1].equalsIgnoreCase("inner")) {
+                        }
                         return true;
                     } else {
                         sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + Constants.NO_PERMS_MESSAGE);
