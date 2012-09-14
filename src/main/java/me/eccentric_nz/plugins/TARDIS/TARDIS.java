@@ -25,6 +25,7 @@ public class TARDIS extends JavaPlugin implements Listener {
     public File schematicfile = null;
     public File myconfigfile = null;
     public File timelordsfile = null;
+    public File quotesfile = null;
     private TARDISexecutor tardisExecutor;
     public String[][][] schematic;
     protected static TARDIS plugin;
@@ -98,6 +99,11 @@ public class TARDIS extends JavaPlugin implements Listener {
             if (!myconfigfile.exists()) {
                 // load the default values into file
                 copy(getResource(Constants.CONFIG_FILE_NAME), myconfigfile);
+            }
+
+            quotesfile = new File(getDataFolder(), Constants.QUOTES_FILE_NAME);
+            if (!quotesfile.exists()) {
+                copy(getResource(Constants.QUOTES_FILE_NAME), quotesfile);
             }
 
             timelordsfile = new File(getDataFolder(), Constants.TIMELORDS_FILE_NAME);
