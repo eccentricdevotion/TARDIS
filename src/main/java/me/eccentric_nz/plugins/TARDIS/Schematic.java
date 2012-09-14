@@ -31,7 +31,7 @@ public class Schematic {
                 }
             }
         } catch (IOException io) {
-            System.err.println("Could not read csv file");
+            System.err.println(Constants.MY_PLUGIN_NAME + " Could not read csv file");
         }
         return blocks;
     }
