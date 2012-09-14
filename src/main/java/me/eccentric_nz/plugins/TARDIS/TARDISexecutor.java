@@ -396,6 +396,9 @@ public class TARDISexecutor implements CommandExecutor {
                             sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " The TARDIS Police Box was rebuilt!");
                         }
                         if (args[1].equalsIgnoreCase("inner")) {
+                            String[] chunk_data = chunk.split(":");
+                            w = plugin.getServer().getWorld(chunk_data[0]);
+                            builder.buildInnerTARDIS(plugin.schematic, w, d, id);
                         }
                         return true;
                     } else {
