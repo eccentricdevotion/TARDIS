@@ -41,7 +41,6 @@ public class TARDISBlockBreakListener implements Listener {
             Sign sign = (Sign) block.getState();
             String line1 = sign.getLine(1);
             String line2 = sign.getLine(2);
-            boolean isTimelord = false;
             String queryCheck;
             Location sign_loc = block.getLocation();
             if (line1.equals("¤fPOLICE") && line2.equals("¤fBOX")) {
@@ -81,8 +80,10 @@ public class TARDISBlockBreakListener implements Listener {
                         if (player.hasPermission("TARDIS.delete")) {
                             String queryOccupied = "SELECT player FROM travellers WHERE tardis_id = " + id;
                             ResultSet rsOcc = statement.executeQuery(queryOccupied);
-                            if (rsOcc != null || rsOcc.next()) {
+                            if (rsOcc.next()) {
                                 player.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RED + " You cannot delete this TARDIS as it is occupied!");
+                                event.setCancelled(true);
+                                sign.update();
                                 break occupied;
                             }
                         }
