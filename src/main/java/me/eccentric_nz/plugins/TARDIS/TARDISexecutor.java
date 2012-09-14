@@ -366,7 +366,7 @@ public class TARDISexecutor implements CommandExecutor {
                         try {
                             Connection connection = service.getConnection();
                             Statement statement = connection.createStatement();
-                            String queryTARDIS = "SELECT * FROM tardis WHERE owner = '" + player.getName();
+                            String queryTARDIS = "SELECT * FROM tardis WHERE owner = '" + player.getName() + "'";
                             ResultSet rs = statement.executeQuery(queryTARDIS);
                             if (rs == null || !rs.next()) {
                                 sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " You have not created a TARDIS yet!");
