@@ -6,4 +6,5 @@ As a player, you can:
 * Create a TARDIS that is bigger on the inside.
 * Time travel to a random location.
 * Time travel back home (where you created the TARDIS initially).
-* Save and list interesting time travel locations, so you can return to them easily.             
+* Save and list interesting time travel locations, so you can return to them easily.
+* Take companions with you when you time travel.          
