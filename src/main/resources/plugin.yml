@@ -105,7 +105,7 @@ commands:
       permission-message: You don't have the permission <permission> to use this command
     rebuild:
       description: Rebuild the TARDIS.
-      usage: /<command> rebuild [outer|inner]
+      usage: /<command> rebuild
       permission: TARDIS.rebuild
       permission-message: You don't have the permission <permission> to use this command
     travel:

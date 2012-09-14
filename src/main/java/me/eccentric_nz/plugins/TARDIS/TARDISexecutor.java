@@ -349,19 +349,10 @@ public class TARDISexecutor implements CommandExecutor {
                 }
                 if (args[0].equalsIgnoreCase("rebuild")) {
                     if (player.hasPermission("TARDIS.rebuild")) {
-                        String save = "", chunk = "";
+                        String save = "";
                         World w = null;
                         int x = 0, y = 0, z = 0, id = -1;
                         Constants.COMPASS d = Constants.COMPASS.EAST;
-                        String[] validT = {"outer", "inner"};
-                        if (args.length < 2) {
-                            sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " Too few command arguments!");
-                            return false;
-                        }
-                        if (!Arrays.asList(validT).contains(args[1].toLowerCase())) {
-                            player.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " You need to specify which part of the TARDIS you want rebuild! [outer|inner]");
-                            return false;
-                        }
                         TARDISBuilder builder = new TARDISBuilder(plugin);
                         try {
                             Connection connection = service.getConnection();
@@ -373,7 +364,6 @@ public class TARDISexecutor implements CommandExecutor {
                                 return false;
                             }
                             save = rs.getString("save");
-                            chunk = rs.getString("chunk");
                             id = rs.getInt("tardis_id");
                             d = Constants.COMPASS.valueOf(rs.getString("direction"));
                             rs.close();
@@ -381,25 +371,19 @@ public class TARDISexecutor implements CommandExecutor {
                         } catch (SQLException e) {
                             System.err.println(Constants.MY_PLUGIN_NAME + " Select TARDIS By Owner Error: " + e);
                         }
-                        if (args[1].equalsIgnoreCase("outer")) {
-                            String[] save_data = save.split(":");
-                            w = plugin.getServer().getWorld(save_data[0]);
-                            try {
-                                x = Integer.parseInt(save_data[1]);
-                                y = Integer.parseInt(save_data[2]);
-                                z = Integer.parseInt(save_data[3]);
-                            } catch (NumberFormatException nfe) {
-                                System.err.println(Constants.MY_PLUGIN_NAME + " Could not format number: " + nfe);
-                            }
-                            Location l = new Location(w, x, y, z);
-                            builder.buildOuterTARDIS(id, l, d);
-                            sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " The TARDIS Police Box was rebuilt!");
+                        String[] save_data = save.split(":");
+                        w = plugin.getServer().getWorld(save_data[0]);
+                        try {
+                            x = Integer.parseInt(save_data[1]);
+                            y = Integer.parseInt(save_data[2]);
+                            z = Integer.parseInt(save_data[3]);
+                        } catch (NumberFormatException nfe) {
+                            System.err.println(Constants.MY_PLUGIN_NAME + " Could not format number: " + nfe);
                         }
-                        if (args[1].equalsIgnoreCase("inner")) {
-                            String[] chunk_data = chunk.split(":");
-                            w = plugin.getServer().getWorld(chunk_data[0]);
-                            builder.buildInnerTARDIS(plugin.schematic, w, d, id);
-                        }
+                        Location l = new Location(w, x, y, z);
+                        builder.buildOuterTARDIS(id, l, d);
+                        sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " The TARDIS Police Box was rebuilt!");
+
                         return true;
                     } else {
                         sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + Constants.NO_PERMS_MESSAGE);
