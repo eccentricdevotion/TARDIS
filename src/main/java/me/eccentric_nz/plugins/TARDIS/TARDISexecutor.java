@@ -42,7 +42,7 @@ public class TARDISexecutor implements CommandExecutor {
                 return true;
             }
             // the command list - first argument MUST appear here!
-            if (!args[0].equalsIgnoreCase("save") && !args[0].equalsIgnoreCase("list") && !args[0].equalsIgnoreCase("admin") && !args[0].equalsIgnoreCase("help") && !args[0].equalsIgnoreCase("find") && !args[0].equalsIgnoreCase("reload") && !args[0].equalsIgnoreCase("add") && !args[0].equalsIgnoreCase("remove") && !args[0].equalsIgnoreCase("update") && !args[0].equalsIgnoreCase("travel")) {
+            if (!args[0].equalsIgnoreCase("save") && !args[0].equalsIgnoreCase("list") && !args[0].equalsIgnoreCase("admin") && !args[0].equalsIgnoreCase("help") && !args[0].equalsIgnoreCase("find") && !args[0].equalsIgnoreCase("reload") && !args[0].equalsIgnoreCase("add") && !args[0].equalsIgnoreCase("remove") && !args[0].equalsIgnoreCase("update") && !args[0].equalsIgnoreCase("travel") && !args[0].equalsIgnoreCase("rebuild")) {
                 sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " Do you want to list destinations, save a destination, travel, update the TARDIS, add/remove companions, do some admin stuff or find the TARDIS?");
                 return false;
             }
@@ -638,6 +638,9 @@ public class TARDISexecutor implements CommandExecutor {
                                 break;
                             case UPDATE:
                                 sender.sendMessage(Constants.COMMAND_UPDATE.split("\n"));
+                                break;
+                            case REBUILD:
+                                sender.sendMessage(Constants.COMMAND_REBUILD.split("\n"));
                                 break;
                             case ADMIN:
                                 sender.sendMessage(Constants.COMMAND_ADMIN.split("\n"));
