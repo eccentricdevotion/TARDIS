@@ -179,7 +179,7 @@ public class TARDISBuilder {
                 StringBuilder sb = new StringBuilder();
                 for (Block pb : platform_blocks) {
                     Material mat = pb.getType();
-                    if (mat == Material.AIR || mat == Material.STATIONARY_WATER || mat == Material.WATER || mat == Material.VINE) {
+                    if (mat == Material.AIR || mat == Material.STATIONARY_WATER || mat == Material.WATER || mat == Material.VINE || mat == Material.RED_MUSHROOM || mat == Material.BROWN_MUSHROOM || mat == Material.LONG_GRASS || mat == Material.SAPLING || mat == Material.DEAD_BUSH || mat == Material.RED_ROSE || mat == Material.YELLOW_FLOWER) {
                         utils.setBlock(world, pb.getX(), pb.getY(), pb.getZ(), 35, grey);
                         String p_tmp = world.getName() + ":" + pb.getX() + ":" + pb.getY() + ":" + pb.getZ() + ":" + mat.toString();
                         sb.append(p_tmp).append("~");
