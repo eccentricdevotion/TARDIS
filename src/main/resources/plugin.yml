@@ -6,7 +6,7 @@ startup: postworld
 softdepend: [Multiverse-Core]
 dev-url: http://dev.bukkit.org/server-mods/TARDIS/
 url: http://www.thenosefairy.co.nz/
-version: '1.4.1'
+version: '1.4.2'
 permissions:
   TARDIS.admin:
     description: Allow players access to the TARDIS admin commands.
@@ -27,6 +27,7 @@ permissions:
       TARDIS.add: true
       TARDIS.help: true
       TARDIS.update: true
+      TARDIS.rebuild: true
     default: op
   TARDIS.create:
     description: Allow players to create a TARDIS.
@@ -60,6 +61,9 @@ permissions:
     default: true
   TARDIS.update:
     description: Allow players to modify the TARDIS interior.
+    default: true
+  TARDIS.rebuild:
+    description: Allow players to rebuild the TARDIS.
     default: true
 commands:
   tardis:
@@ -98,6 +102,11 @@ commands:
       description: Modify the interior of the TARDIS.
       usage: /<command> update [door|button|save-repeater|x-repeater|z-repeater|y-repeater]
       permission: TARDIS.update
+      permission-message: You don't have the permission <permission> to use this command
+    rebuild:
+      description: Rebuild the TARDIS.
+      usage: /<command> rebuild [outer|inner]
+      permission: TARDIS.rebuild
       permission-message: You don't have the permission <permission> to use this command
     travel:
       description: Modify the interior of the TARDIS.
