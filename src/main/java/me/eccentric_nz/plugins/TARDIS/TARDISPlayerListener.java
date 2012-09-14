@@ -1,8 +1,5 @@
 package me.eccentric_nz.plugins.TARDIS;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -418,32 +415,11 @@ public class TARDISPlayerListener implements Listener {
             }
         }
     }
-    private static String[] quotes;
-
-    private String[] quotes() {
-        int i = 0;
-        // load quotes from txt file
-        try {
-            BufferedReader bufRdr = new BufferedReader(new FileReader(plugin.quotesfile));
-            String line;
-            //read each line of text file
-            while ((line = bufRdr.readLine()) != null) {
-                quotes[i] = line;
-                i++;
-            }
-        } catch (IOException io) {
-            System.err.println("Could not read csv file");
-        }
-        return quotes;
-    }
-
-    final String[] quote = quotes();
-    int len = quote.length;
     Random r = new Random();
 
     private void tt(Player p, Location l, boolean exit, final World from) {
 
-        final int i = r.nextInt(len);
+        final int i = r.nextInt(plugin.quotelen);
         final Player thePlayer = p;
         final Location theLocation = l;
         final Location firstLocation = l;
@@ -465,7 +441,7 @@ public class TARDISPlayerListener implements Listener {
                 if (thePlayer.getGameMode() == GameMode.CREATIVE || (allowFlight && crossWorlds)) {
                     thePlayer.setAllowFlight(true);
                 }
-                thePlayer.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " " + quote[i]);
+                thePlayer.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " " + plugin.quote.get(i));
             }
         }, 5L);
     }
