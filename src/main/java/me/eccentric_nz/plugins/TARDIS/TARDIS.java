@@ -87,6 +87,11 @@ public class TARDIS extends JavaPlugin implements Listener {
     @Override
     public void onDisable() {
         saveCustomConfig();
+        try {
+            service.connection.close();
+        } catch (Exception e) {
+            System.err.println(Constants.MY_PLUGIN_NAME + " Could not close database connection: " + e);
+        }
     }
 
     public FileConfiguration loadConfig() {
