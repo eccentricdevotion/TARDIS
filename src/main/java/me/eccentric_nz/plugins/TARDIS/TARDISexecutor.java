@@ -14,6 +14,8 @@ import java.util.Set;
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.*;
 import org.bukkit.block.Block;
+import org.bukkit.block.BlockFace;
+import org.bukkit.block.Sign;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -42,8 +44,8 @@ public class TARDISexecutor implements CommandExecutor {
                 return true;
             }
             // the command list - first argument MUST appear here!
-            if (!args[0].equalsIgnoreCase("save") && !args[0].equalsIgnoreCase("list") && !args[0].equalsIgnoreCase("admin") && !args[0].equalsIgnoreCase("help") && !args[0].equalsIgnoreCase("find") && !args[0].equalsIgnoreCase("reload") && !args[0].equalsIgnoreCase("add") && !args[0].equalsIgnoreCase("remove") && !args[0].equalsIgnoreCase("update") && !args[0].equalsIgnoreCase("travel") && !args[0].equalsIgnoreCase("rebuild") && !args[0].equalsIgnoreCase("chameleon")) {
-                sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " Do you want to list destinations, save a destination, travel, update the TARDIS, add/remove companions, do some admin stuff or find the TARDIS?");
+            if (!args[0].equalsIgnoreCase("save") && !args[0].equalsIgnoreCase("list") && !args[0].equalsIgnoreCase("admin") && !args[0].equalsIgnoreCase("help") && !args[0].equalsIgnoreCase("find") && !args[0].equalsIgnoreCase("reload") && !args[0].equalsIgnoreCase("add") && !args[0].equalsIgnoreCase("remove") && !args[0].equalsIgnoreCase("update") && !args[0].equalsIgnoreCase("travel") && !args[0].equalsIgnoreCase("rebuild") && !args[0].equalsIgnoreCase("chameleon") && !args[0].equalsIgnoreCase("sfx") && !args[0].equalsIgnoreCase("platform")) {
+                sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " Do you want to list destinations, save a destination, travel, update the TARDIS, add/remove companions, turn the Chameleon Circuit or SFX on or off, do some admin stuff or find the TARDIS?");
                 return false;
             }
             if (args[0].equalsIgnoreCase("reload")) {
@@ -123,7 +125,7 @@ public class TARDISexecutor implements CommandExecutor {
                     sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " Too few command arguments!");
                     return false;
                 } else {
-                    if (!args[1].equalsIgnoreCase("bonus") && !args[1].equalsIgnoreCase("protect") && !args[1].equalsIgnoreCase("max_rad") && !args[1].equalsIgnoreCase("spout") && !args[1].equalsIgnoreCase("default") && !args[1].equalsIgnoreCase("name") && !args[1].equalsIgnoreCase("include") && !args[1].equalsIgnoreCase("key") && !args[1].equalsIgnoreCase("update") && !args[1].equalsIgnoreCase("exclude") && !args[1].equalsIgnoreCase("platform")) {
+                    if (!args[1].equalsIgnoreCase("bonus") && !args[1].equalsIgnoreCase("protect") && !args[1].equalsIgnoreCase("max_rad") && !args[1].equalsIgnoreCase("spout") && !args[1].equalsIgnoreCase("default") && !args[1].equalsIgnoreCase("name") && !args[1].equalsIgnoreCase("include") && !args[1].equalsIgnoreCase("key") && !args[1].equalsIgnoreCase("update") && !args[1].equalsIgnoreCase("exclude") && !args[1].equalsIgnoreCase("platform") && !args[1].equalsIgnoreCase("sfx")) {
                         sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " TARDIS does not recognise that command argument!");
                         return false;
                     }
@@ -227,6 +229,15 @@ public class TARDISexecutor implements CommandExecutor {
                         String nodots = StringUtils.replace(t, ".", "_");
                         plugin.config.set("worlds." + nodots, false);
                     }
+                    if (args[1].equalsIgnoreCase("sfx")) {
+                        // check they typed true of false
+                        String tf = args[2].toLowerCase();
+                        if (!tf.equals("true") && !tf.equals("false")) {
+                            sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RED + "The last argument must be true or false!");
+                            return false;
+                        }
+                        plugin.config.set("sfx", Boolean.valueOf(tf));
+                    }
                     try {
                         plugin.config.save(plugin.myconfigfile);
                         sender.sendMessage(Constants.MY_PLUGIN_NAME + " The config was updated!");
@@ -241,77 +252,79 @@ public class TARDISexecutor implements CommandExecutor {
                 return false;
             } else {
                 if (args[0].equalsIgnoreCase("travel")) {
-                    if (args.length < 2) {
-                        sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " Too few command arguments!");
-                        return false;
-                    }
-                    TARDISTimetravel tt = new TARDISTimetravel(plugin);
-                    // get tardis_id & direction
-                    try {
-                        Connection connection = service.getConnection();
-                        Statement statement = connection.createStatement();
-                        String queryDirection = "SELECT tardis.tardis_id, tardis.direction, travellers.player FROM tardis, travellers WHERE tardis.owner = '" + player.getName() + "' AND tardis.owner = travellers.player";
-                        ResultSet rs = statement.executeQuery(queryDirection);
-                        if (rs == null || !rs.next()) {
-                            sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " Either you are not a Timelord, or you are not inside your TARDIS. You need to be both to run this command!");
+                    if (player.hasPermission("TARDIS.timetravel")) {
+                        if (args.length < 2) {
+                            sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " Too few command arguments!");
                             return false;
                         }
-                        int id = rs.getInt("tardis_id");
-                        Constants.COMPASS d = Constants.COMPASS.valueOf(rs.getString("direction"));
-                        rs.close();
-                        if (args.length == 2) {
-                            // we're thinking this is a player's name
-                            if (plugin.getServer().getPlayer(args[1]) == null) {
-                                sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " That player is not online!");
+                        TARDISTimetravel tt = new TARDISTimetravel(plugin);
+                        // get tardis_id & direction
+                        try {
+                            Connection connection = service.getConnection();
+                            Statement statement = connection.createStatement();
+                            String queryDirection = "SELECT tardis.tardis_id, tardis.direction, travellers.player FROM tardis, travellers WHERE tardis.owner = '" + player.getName() + "' AND tardis.owner = travellers.player";
+                            ResultSet rs = statement.executeQuery(queryDirection);
+                            if (rs == null || !rs.next()) {
+                                sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " Either you are not a Timelord, or you are not inside your TARDIS. You need to be both to run this command!");
                                 return false;
                             }
-                            Player destPlayer = plugin.getServer().getPlayer(args[1]);
-                            Location player_loc = destPlayer.getLocation();
-                            World w = player_loc.getWorld();
-                            int[] start_loc = tt.getStartLocation(player_loc, d);
-                            int count = tt.safeLocation(start_loc[0] - 3, player_loc.getBlockY(), start_loc[2], start_loc[1], start_loc[3], start_loc[4], start_loc[5], w, d);
-                            if (count > 0) {
-                                sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " The player's location would not be safe! Please tell the player to move!");
-                                return false;
-                            } else {
-                                String save_loc = player_loc.getWorld().getName() + ":" + (player_loc.getBlockX() - 3) + ":" + player_loc.getBlockY() + ":" + player_loc.getBlockZ();
-                                String querySave = "UPDATE tardis SET save = '" + save_loc + "' WHERE tardis_id = " + id;
-                                statement.executeUpdate(querySave);
-                                sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " The player location was saved succesfully. Please exit the TARDIS!");
-                                return true;
+                            int id = rs.getInt("tardis_id");
+                            Constants.COMPASS d = Constants.COMPASS.valueOf(rs.getString("direction"));
+                            rs.close();
+                            if (args.length == 2) {
+                                // we're thinking this is a player's name
+                                if (plugin.getServer().getPlayer(args[1]) == null) {
+                                    sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " That player is not online!");
+                                    return false;
+                                }
+                                Player destPlayer = plugin.getServer().getPlayer(args[1]);
+                                Location player_loc = destPlayer.getLocation();
+                                World w = player_loc.getWorld();
+                                int[] start_loc = tt.getStartLocation(player_loc, d);
+                                int count = tt.safeLocation(start_loc[0] - 3, player_loc.getBlockY(), start_loc[2], start_loc[1], start_loc[3], start_loc[4], start_loc[5], w, d);
+                                if (count > 0) {
+                                    sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " The player's location would not be safe! Please tell the player to move!");
+                                    return false;
+                                } else {
+                                    String save_loc = player_loc.getWorld().getName() + ":" + (player_loc.getBlockX() - 3) + ":" + player_loc.getBlockY() + ":" + player_loc.getBlockZ();
+                                    String querySave = "UPDATE tardis SET save = '" + save_loc + "' WHERE tardis_id = " + id;
+                                    statement.executeUpdate(querySave);
+                                    sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " The player location was saved succesfully. Please exit the TARDIS!");
+                                    return true;
+                                }
                             }
-                        }
-                        if (args.length > 2 && args.length < 6) {
-                            // must be a location then
-                            int x = 0, y = 0, z = 0;
-                            World w = plugin.getServer().getWorld(args[1]);
-                            try {
-                                x = Integer.valueOf(args[2]);
-                                y = Integer.valueOf(args[3]);
-                                z = Integer.valueOf(args[4]);
-                            } catch (NumberFormatException nfe) {
-                                System.err.println(Constants.MY_PLUGIN_NAME + "Couldn't covert to number: " + nfe);
-                            }
-                            Block block = w.getBlockAt(x, y, z);
-                            Location location = block.getLocation();
+                            if (args.length > 2 && args.length < 6) {
+                                // must be a location then
+                                int x = 0, y = 0, z = 0;
+                                World w = plugin.getServer().getWorld(args[1]);
+                                try {
+                                    x = Integer.valueOf(args[2]);
+                                    y = Integer.valueOf(args[3]);
+                                    z = Integer.valueOf(args[4]);
+                                } catch (NumberFormatException nfe) {
+                                    System.err.println(Constants.MY_PLUGIN_NAME + "Couldn't covert to number: " + nfe);
+                                }
+                                Block block = w.getBlockAt(x, y, z);
+                                Location location = block.getLocation();
 
-                            // check location
-                            int[] start_loc = tt.getStartLocation(location, d);
-                            int count = tt.safeLocation(start_loc[0], location.getBlockY(), start_loc[2], start_loc[1], start_loc[3], start_loc[4], start_loc[5], w, d);
-                            if (count > 0) {
-                                sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " The specified location would not be safe! Please try another.");
-                                return false;
-                            } else {
-                                String save_loc = location.getWorld().getName() + ":" + location.getBlockX() + ":" + location.getBlockY() + ":" + location.getBlockZ();
-                                String querySave = "UPDATE tardis SET save = '" + save_loc + "' WHERE tardis_id = " + id;
-                                statement.executeUpdate(querySave);
-                                sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " The specified location was saved succesfully. Please exit the TARDIS!");
-                                return true;
+                                // check location
+                                int[] start_loc = tt.getStartLocation(location, d);
+                                int count = tt.safeLocation(start_loc[0], location.getBlockY(), start_loc[2], start_loc[1], start_loc[3], start_loc[4], start_loc[5], w, d);
+                                if (count > 0) {
+                                    sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " The specified location would not be safe! Please try another.");
+                                    return false;
+                                } else {
+                                    String save_loc = location.getWorld().getName() + ":" + location.getBlockX() + ":" + location.getBlockY() + ":" + location.getBlockZ();
+                                    String querySave = "UPDATE tardis SET save = '" + save_loc + "' WHERE tardis_id = " + id;
+                                    statement.executeUpdate(querySave);
+                                    sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " The specified location was saved succesfully. Please exit the TARDIS!");
+                                    return true;
+                                }
                             }
+                            statement.close();
+                        } catch (SQLException e) {
+                            System.err.println(Constants.MY_PLUGIN_NAME + " /TARDIS travel to location Error: " + e);
                         }
-                        statement.close();
-                    } catch (SQLException e) {
-                        System.err.println(Constants.MY_PLUGIN_NAME + " /TARDIS travel to location Error: " + e);
                     }
                 }
                 if (args[0].equalsIgnoreCase("update")) {
@@ -353,6 +366,7 @@ public class TARDISexecutor implements CommandExecutor {
                         World w = null;
                         int x = 0, y = 0, z = 0, id = -1;
                         Constants.COMPASS d = Constants.COMPASS.EAST;
+                        boolean cham = false;
                         TARDISBuilder builder = new TARDISBuilder(plugin);
                         try {
                             Connection connection = service.getConnection();
@@ -365,6 +379,7 @@ public class TARDISexecutor implements CommandExecutor {
                             }
                             save = rs.getString("save");
                             id = rs.getInt("tardis_id");
+                            cham = rs.getBoolean("chamele_on");
                             d = Constants.COMPASS.valueOf(rs.getString("direction"));
                             rs.close();
                             statement.close();
@@ -381,7 +396,7 @@ public class TARDISexecutor implements CommandExecutor {
                             System.err.println(Constants.MY_PLUGIN_NAME + " Could not format number: " + nfe);
                         }
                         Location l = new Location(w, x, y, z);
-                        builder.buildOuterTARDIS(id, l, d);
+                        builder.buildOuterTARDIS(id, l, d, cham, player);
                         sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " The TARDIS Police Box was rebuilt!");
 
                         return true;
@@ -395,8 +410,8 @@ public class TARDISexecutor implements CommandExecutor {
                         try {
                             Connection connection = service.getConnection();
                             Statement statement = connection.createStatement();
-                            String queryList = "SELECT owner FROM tardis WHERE owner = '" + player.getName() + "'";
-                            ResultSet rs = statement.executeQuery(queryList);
+                            //String queryList = "SELECT owner FROM tardis WHERE owner = '" + player.getName() + "'";
+                            ResultSet rs = service.getTardis(player.getName(), "owner");
                             if (rs == null || !rs.next()) {
                                 sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " You have not created a TARDIS yet!");
                                 return false;
@@ -422,8 +437,8 @@ public class TARDISexecutor implements CommandExecutor {
                         try {
                             Connection connection = service.getConnection();
                             Statement statement = connection.createStatement();
-                            String queryList = "SELECT save FROM tardis WHERE owner = '" + player.getName() + "'";
-                            ResultSet rs = statement.executeQuery(queryList);
+                            //String queryList = "SELECT save FROM tardis WHERE owner = '" + player.getName() + "'";
+                            ResultSet rs = service.getTardis(player.getName(), "save");
                             if (rs == null || !rs.next()) {
                                 sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " You have not created a TARDIS yet!");
                                 return false;
@@ -590,40 +605,176 @@ public class TARDISexecutor implements CommandExecutor {
                     }
                 }
                 if (args[0].equalsIgnoreCase("chameleon")) {
-                    if (args.length < 2) {
-                        sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " Too few command arguments!");
-                        return false;
-                    } else {
+                    if (player.hasPermission("TARDIS.timetravel")) {
+                        if (args.length < 2 || (!args[1].equalsIgnoreCase("on") && !args[1].equalsIgnoreCase("off") && !args[1].equalsIgnoreCase("add"))) {
+                            sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " Too few command arguments!");
+                            return false;
+                        }
                         // get the players TARDIS id
                         try {
                             Connection connection = service.getConnection();
                             Statement statement = connection.createStatement();
-                            //String queryList = "SELECT * FROM tardis WHERE owner = '" + player.getName() + "'";
                             ResultSet rs = service.getTardis(player.getName(), "*");
                             if (rs == null || !rs.next()) {
                                 sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " You have not created a TARDIS yet!");
                                 return false;
                             }
                             int id = rs.getInt("tardis_id");
-                            if (args[1].equalsIgnoreCase("on")) {
-                                String queryChameleon = "UPADTE tardis SET chamele_on = 1 WHERE tardis_id = "+id;
-                                statement.executeUpdate(queryChameleon);
-                                sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " The Chameleon Circuit was turned ON!");
-                            }
-                            if (args[1].equalsIgnoreCase("off")) {
-                                String queryChameleon = "UPADTE tardis SET chamele_on = 0 WHERE tardis_id = "+id;
-                                statement.executeUpdate(queryChameleon);
-                                sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " The Chameleon Circuit was turned OFF.");
+                            String chamStr = rs.getString("chameleon");
+                            if (chamStr.equals("")) {
+                                sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " Could not find the Chameleon Circuit!");
+                                return false;
+                            } else {
+                                int x = 0, y = 0, z = 0;
+                                String[] chamData = chamStr.split(":");
+                                World w = plugin.getServer().getWorld(chamData[0]);
+                                Constants.COMPASS d = Constants.COMPASS.valueOf(rs.getString("direction"));
+                                try {
+                                    x = Integer.parseInt(chamData[1]);
+                                    y = Integer.parseInt(chamData[2]);
+                                    z = Integer.parseInt(chamData[3]);
+                                } catch (NumberFormatException nfe) {
+                                    System.err.println(Constants.MY_PLUGIN_NAME + " Could not format number: " + nfe);
+                                }
+                                Block chamBlock = w.getBlockAt(x, y, z);
+                                Sign cs = (Sign) chamBlock.getState();
+                                if (args[1].equalsIgnoreCase("on")) {
+                                    String queryChameleon = "UPDATE tardis SET chamele_on = 1 WHERE tardis_id = " + id;
+                                    statement.executeUpdate(queryChameleon);
+                                    sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " The Chameleon Circuit was turned ON!");
+                                    cs.setLine(3, "¤aON");
+                                }
+                                if (args[1].equalsIgnoreCase("off")) {
+                                    String queryChameleon = "UPDATE tardis SET chamele_on = 0 WHERE tardis_id = " + id;
+                                    statement.executeUpdate(queryChameleon);
+                                    sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " The Chameleon Circuit was turned OFF.");
+                                    cs.setLine(3, "¤cOFF");
+                                }
+                                cs.update();
                             }
                             if (args[1].equalsIgnoreCase("add")) {
-                                // add sign to back wall
-
+                                int x = 0, y = 0, z = 0;
+                                Byte data = 4;
+                                BlockFace face = BlockFace.WEST;
+                                String buttonStr = rs.getString("button");
+                                String[] buttonData = buttonStr.split(":");
+                                World w = plugin.getServer().getWorld(buttonData[0]);
+                                Constants.COMPASS d = Constants.COMPASS.valueOf(rs.getString("direction"));
+                                try {
+                                    x = Integer.parseInt(buttonData[1]);
+                                    y = Integer.parseInt(buttonData[2]);
+                                    z = Integer.parseInt(buttonData[3]);
+                                } catch (NumberFormatException nfe) {
+                                    System.err.println(Constants.MY_PLUGIN_NAME + " Could not format number: " + nfe);
+                                }
+                                Block buttonBlock = w.getBlockAt(x, y, z);
+                                Block upBlock = buttonBlock.getRelative(BlockFace.UP);
+                                switch (d) {
+                                    case EAST:
+                                        face = BlockFace.SOUTH;
+                                        data = 4;
+                                        break;
+                                    case NORTH:
+                                        face = BlockFace.EAST;
+                                        data = 3;
+                                        break;
+                                    case WEST:
+                                        face = BlockFace.NORTH;
+                                        data = 5;
+                                        break;
+                                    case SOUTH:
+                                        face = BlockFace.WEST;
+                                        data = 2;
+                                        break;
+                                }
+                                Block signBlock = upBlock.getRelative(face);
+                                int lx = signBlock.getLocation().getBlockX();
+                                int ly = signBlock.getLocation().getBlockY();
+                                int lz = signBlock.getLocation().getBlockZ();
+                                TARDISUtils utils = new TARDISUtils(plugin);
+                                utils.setBlock(w, lx, ly, lz, 68, data);
+                                Sign s = (Sign) signBlock.getState();
+                                s.setLine(0, "Chameleon");
+                                s.setLine(1, "Circuit");
+                                s.setLine(3, "¤cOFF");
+                                s.update();
+                                String chameleonloc = w.getName() + ":" + lx + ":" + ly + ":" + lz;
+                                String queryChameleon = "UPDATE tardis SET chameleon = '" + chameleonloc + "', chamele_on = 0 WHERE tardis_id = " + id;
+                                statement.executeUpdate(queryChameleon);
                             }
                             rs.close();
                             statement.close();
                             return true;
                         } catch (SQLException e) {
                             System.err.println(Constants.MY_PLUGIN_NAME + " Chameleon Circuit Save Error: " + e);
+                        }
+                    }
+                }
+                if (args[0].equalsIgnoreCase("sfx")) {
+                    if (player.hasPermission("TARDIS.timetravel")) {
+                        if (args.length < 2 || (!args[1].equalsIgnoreCase("on") && !args[1].equalsIgnoreCase("off"))) {
+                            sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " You need to specify if sound effects should be on or off!");
+                            return false;
+                        }
+                        // get the players sfx setting
+                        try {
+                            Connection connection = service.getConnection();
+                            Statement statement = connection.createStatement();
+                            String querySFX = "SELECT * FROM player_prefs WHERE player = '" + player.getName() + "'";
+                            ResultSet rs = statement.executeQuery(querySFX);
+                            if (rs == null || !rs.next()) {
+                                String queryInsert = "INSERT INTO player_prefs (player) VALUES ('" + player.getName() + "')";
+                                statement.executeUpdate(queryInsert);
+                            }
+                            if (args[1].equalsIgnoreCase("on")) {
+                                String queryUpdate = "UPDATE player_prefs SET sfx_on = 1 WHERE player = '" + player.getName() + "'";
+                                statement.executeUpdate(queryUpdate);
+                                sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " Sound effects were turned ON!");
+                            }
+                            if (args[1].equalsIgnoreCase("off")) {
+                                String queryUpdate = "UPDATE player_prefs SET sfx_on = 0 WHERE player = '" + player.getName() + "'";
+                                statement.executeUpdate(queryUpdate);
+                                sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " Sound effects were turned OFF.");
+                            }
+                            rs.close();
+                            statement.close();
+                            return true;
+                        } catch (SQLException e) {
+                            System.err.println(Constants.MY_PLUGIN_NAME + " SFX Preferences Save Error: " + e);
+                        }
+                    }
+                }
+                if (args[0].equalsIgnoreCase("platform")) {
+                    if (player.hasPermission("TARDIS.timetravel")) {
+                        if (args.length < 2 || (!args[1].equalsIgnoreCase("on") && !args[1].equalsIgnoreCase("off"))) {
+                            sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " You need to specify if TARDIS platfrom building should be on or off!");
+                            return false;
+                        }
+                        // get the players platform setting
+                        try {
+                            Connection connection = service.getConnection();
+                            Statement statement = connection.createStatement();
+                            String queryPlatform = "SELECT * FROM player_prefs WHERE player = '" + player.getName() + "'";
+                            ResultSet rs = statement.executeQuery(queryPlatform);
+                            if (rs == null || !rs.next()) {
+                                String queryInsert = "INSERT INTO player_prefs (player) VALUES ('" + player.getName() + "')";
+                                statement.executeUpdate(queryInsert);
+                            }
+                            if (args[1].equalsIgnoreCase("on")) {
+                                String queryUpdate = "UPDATE player_prefs SET platform_on = 1 WHERE player = '" + player.getName() + "'";
+                                statement.executeUpdate(queryUpdate);
+                                sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " The TARDIS platform was turned ON!");
+                            }
+                            if (args[1].equalsIgnoreCase("off")) {
+                                String queryUpdate = "UPDATE player_prefs SET platform_on = 0 WHERE player = '" + player.getName() + "'";
+                                statement.executeUpdate(queryUpdate);
+                                sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " The TARDIS platform was turned OFF.");
+                            }
+                            rs.close();
+                            statement.close();
+                            return true;
+                        } catch (SQLException e) {
+                            System.err.println(Constants.MY_PLUGIN_NAME + " Platform Preferences Save Error: " + e);
                         }
                     }
                 }
@@ -663,6 +814,15 @@ public class TARDISexecutor implements CommandExecutor {
                                 break;
                             case REBUILD:
                                 sender.sendMessage(Constants.COMMAND_REBUILD.split("\n"));
+                                break;
+                            case CHAMELEON:
+                                sender.sendMessage(Constants.COMMAND_CHAMELEON.split("\n"));
+                                break;
+                            case SFX:
+                                sender.sendMessage(Constants.COMMAND_SFX.split("\n"));
+                                break;
+                            case PLATFORM:
+                                sender.sendMessage(Constants.COMMAND_PLATFORM.split("\n"));
                                 break;
                             case ADMIN:
                                 sender.sendMessage(Constants.COMMAND_ADMIN.split("\n"));
