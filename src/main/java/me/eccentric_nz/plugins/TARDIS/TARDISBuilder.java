@@ -206,6 +206,7 @@ public class TARDISBuilder {
         String tmp, replacedBlocks = "";
         HashMap<Block, Byte> postDoorBlocks = new HashMap<Block, Byte>();
         HashMap<Block, Byte> postTorchBlocks = new HashMap<Block, Byte>();
+        HashMap<Block, Byte> postSignBlocks = new HashMap<Block, Byte>();
         // calculate startx, starty, startz
         TARDISUtils utils = new TARDISUtils(plugin);
         int gsl[] = utils.getStartLocation(dbID, d);
@@ -511,6 +512,9 @@ public class TARDISBuilder {
                                                 data = 5;
                                                 break;
                                         }
+                                        String chameleonloc = world.getName() + ":" + startx + ":" + starty + ":" + startz;
+                                        String queryDoor = "UPDATE tardis SET chameleon = '" + chameleonloc + "', chamele_on = 0 WHERE tardis_id = " + dbID;
+                                        statement.executeUpdate(queryDoor);
                                     }
                                 } else {
                                     data = Byte.parseByte(iddata[1]);
@@ -525,15 +529,10 @@ public class TARDISBuilder {
                                 postDoorBlocks.put(world.getBlockAt(startx, starty, startz), data);
                             } else if (id == 76) {
                                 postTorchBlocks.put(world.getBlockAt(startx, starty, startz), data);
+                            } else if (id == 68) {
+                                postSignBlocks.put(world.getBlockAt(startx, starty, startz), data);
                             } else {
                                 utils.setBlock(world, startx, starty, startz, id, data);
-                                if (id == 68) {
-                                    Sign cs = (Sign) world.getBlockAt(startx, starty, startz).getState();
-                                    cs.setLine(0, "Chameleon");
-                                    cs.setLine(1, "Circuit");
-                                    cs.setLine(3, "¤cOFF");
-                                    cs.update();
-                                }
                             }
                         }
                         switch (d) {
@@ -585,6 +584,16 @@ public class TARDISBuilder {
             Block ptb = entry.getKey();
             byte ptdata = Byte.valueOf(entry.getValue());
             ptb.setTypeIdAndData(76, ptdata, true);
+        }
+        for (Map.Entry<Block, Byte> entry : postSignBlocks.entrySet()) {
+            Block psb = entry.getKey();
+            byte psdata = Byte.valueOf(entry.getValue());
+            psb.setTypeIdAndData(68, psdata, true);
+            Sign cs = (Sign) psb.getState();
+            cs.setLine(0, "Chameleon");
+            cs.setLine(1, "Circuit");
+            cs.setLine(3, "¤cOFF");
+            cs.update();
         }
         if (plugin.config.getBoolean("bonus_chest") == Boolean.valueOf("true")) {
             // get rid of last ":" and assign ids to an array
