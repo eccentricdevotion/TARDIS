@@ -85,7 +85,7 @@ public class TARDISPlayerListener implements Listener {
                             queryBlockUpdate = "UPDATE tardis SET repeater3 = '" + blockLocStr + "' WHERE tardis_id = " + id;
                         }
                         if (blockName.equalsIgnoreCase("chameleon") && (blockType == Material.WALL_SIGN || blockType == Material.SIGN_POST)) {
-                            queryBlockUpdate = "UPDATE tardis SET chameleon = '" + blockLocStr + "' WHERE tardis_id = " + id;
+                            queryBlockUpdate = "UPDATE tardis SET chameleon = '" + blockLocStr + "', chamele_on = 0 WHERE tardis_id = " + id;
                             // add text to sign
                             Sign s = (Sign) block.getState();
                             s.setLine(0, "Chameleon");
@@ -422,7 +422,6 @@ public class TARDISPlayerListener implements Listener {
                         }
                     }
                     if (blockType == Material.WALL_SIGN || blockType == Material.SIGN_POST) {
-                        player.sendMessage("Data" + block.getData());
                         // get clicked block location
                         Location b = block.getLocation();
                         String bw = b.getWorld().getName();
