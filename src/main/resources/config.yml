@@ -2,6 +2,8 @@
 key: REDSTONE_TORCH_ON
 bonus_chest: true
 tp_radius: 256
+max_distance: -1
+border: square
 protect_blocks: true
 require_spout: false
 default_world: false
@@ -9,3 +11,4 @@ default_world_name: world
 include_default_world: false
 platform: false
 chameleon: true
+sfx: true
