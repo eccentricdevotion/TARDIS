@@ -6,7 +6,7 @@ startup: postworld
 softdepend: [Multiverse-Core]
 dev-url: http://de.bukkit.org/server-mods/TARDIS/
 url: http://www.thenosefairy.co.nz/
-version: '1.4.5'
+version: '1.5'
 permissions:
   TARDIS.admin:
     description: Allow players access to the TARDIS admin commands.
@@ -27,6 +27,7 @@ permissions:
       TARDIS.help: true
       TARDIS.update: true
       TARDIS.rebuild: true
+      TARDIS.chameleon: true
     default: op
   TARDIS.create:
     description: Allow players to create a TARDIS.
@@ -63,6 +64,9 @@ permissions:
     default: true
   TARDIS.rebuild:
     description: Allow players to rebuild the TARDIS.
+    default: true
+  TARDIS.chameleon:
+    description: Allow players to use the TARDIS Chameleon Circuit.
     default: true
 commands:
   tardis:
@@ -106,6 +110,11 @@ commands:
       description: Rebuild the TARDIS.
       usage: /<command> rebuild
       permission: TARDIS.rebuild
+      permission-message: You don't have the permission <permission> to use this command
+    chameleon:
+      description: Use the TARDIS Chameleon Circuit.
+      usage: /<command> chameleon [on|off|add]
+      permission: TARDIS.chameleon
       permission-message: You don't have the permission <permission> to use this command
     travel:
       description: Modify the interior of the TARDIS.
