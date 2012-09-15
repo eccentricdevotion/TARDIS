@@ -85,7 +85,7 @@ public class Constants {
         try {
             Connection connection = service.getConnection();
             Statement statement = connection.createStatement();
-            String querySaves = "SELECT * FROM tardis WHERE owner = '" + playerNameStr + "' LIMIT 1";
+            String querySaves = "SELECT * FROM tardis WHERE owner = '" + playerNameStr + "'";
 
             ResultSet rs = statement.executeQuery(querySaves);
             if (rs != null && rs.next()) {
