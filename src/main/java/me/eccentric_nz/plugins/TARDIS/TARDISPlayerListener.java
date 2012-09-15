@@ -61,8 +61,8 @@ public class TARDISPlayerListener implements Listener {
                     String queryBlockUpdate = "";
                     Connection connection = service.getConnection();
                     Statement statement = connection.createStatement();
-                    String queryTARDIS = "SELECT tardis_id FROM tardis WHERE owner = '" + playerNameStr + "'";
-                    ResultSet rs = statement.executeQuery(queryTARDIS);
+                    //String queryTARDIS = "SELECT tardis_id FROM tardis WHERE owner = '" + playerNameStr + "'";
+                    ResultSet rs = service.getTardis(playerNameStr, "tardis_id");
                     if (rs.next()) {
                         id = rs.getInt("tardis_id");
                         rs.close();
@@ -141,6 +141,7 @@ public class TARDISPlayerListener implements Listener {
                                             String companions = rs.getString("companions");
                                             String save = rs.getString("save");
                                             String cl = rs.getString("current");
+                                            boolean cham = rs.getBoolean("chamele_on");
                                             float yaw = player.getLocation().getYaw();
                                             float pitch = player.getLocation().getPitch();
                                             // get last known BLUEBOX location
@@ -188,7 +189,7 @@ public class TARDISPlayerListener implements Listener {
                                                 // rebuild blue box
                                                 TARDISBuilder builder = new TARDISBuilder(plugin);
                                                 if (newl != null) {
-                                                    builder.buildOuterTARDIS(id, newl, Constants.COMPASS.valueOf(d));
+                                                    builder.buildOuterTARDIS(id, newl, Constants.COMPASS.valueOf(d), cham, player);
                                                 }
                                                 // exit TARDIS!
                                                 tt(player, exitTardis, true, playerWorld);
@@ -203,7 +204,6 @@ public class TARDISPlayerListener implements Listener {
                                                         if (companions != null && !companions.equals("") && !companions.equals("[Null]")) {
                                                             // is the timelord in the TARDIS?
                                                             String queryTraveller = "SELECT * FROM travellers WHERE tardis_id = " + id + " AND player = '" + tl + "' LIMIT 1";
-                                                            //System.out.println(queryTraveller);
                                                             ResultSet timelordIsIn = statement.executeQuery(queryTraveller);
                                                             if (timelordIsIn != null && timelordIsIn.next()) {
                                                                 // is the player in the comapnion list
@@ -441,11 +441,11 @@ public class TARDISPlayerListener implements Listener {
                                 Sign s = (Sign) block.getState();
                                 if (rs.getBoolean("chamele_on")) {
                                     queryChameleon = "UPDATE tardis SET chamele_on = 0 WHERE tardis_id = " + id;
-                                    s.setLine(3, "¤aON");
+                                    s.setLine(3, "¤cOFF");
                                     s.update();
                                 } else {
                                     queryChameleon = "UPDATE tardis SET chamele_on = 1 WHERE tardis_id = " + id;
-                                    s.setLine(3, "¤cOFF");
+                                    s.setLine(3, "¤aON");
                                     s.update();
                                 }
                                 statement.executeUpdate(queryChameleon);
@@ -467,7 +467,7 @@ public class TARDISPlayerListener implements Listener {
         final Location theLocation = l;
         final Location firstLocation = l;
         if (exit) {
-            firstLocation.setY(theLocation.getY() + 2);
+            firstLocation.setY(theLocation.getY() + 0.25);
         }
         final World to = theLocation.getWorld();
         final boolean allowFlight = thePlayer.getAllowFlight();
@@ -477,7 +477,7 @@ public class TARDISPlayerListener implements Listener {
             public void run() {
                 thePlayer.teleport(firstLocation);
             }
-        }, 5L);
+        }, 10L);
         Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
             public void run() {
                 thePlayer.teleport(theLocation);
@@ -486,6 +486,6 @@ public class TARDISPlayerListener implements Listener {
                 }
                 thePlayer.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " " + plugin.quote.get(i));
             }
-        }, 5L);
+        }, 10L);
     }
 }
