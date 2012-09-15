@@ -14,6 +14,7 @@ import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
+import org.bukkit.block.Sign;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -82,6 +83,14 @@ public class TARDISPlayerListener implements Listener {
                         }
                         if (blockName.equalsIgnoreCase("y-repeater") && (blockType == Material.DIODE_BLOCK_OFF || blockType == Material.DIODE_BLOCK_ON)) {
                             queryBlockUpdate = "UPDATE tardis SET repeater3 = '" + blockLocStr + "' WHERE tardis_id = " + id;
+                        }
+                        if (blockName.equalsIgnoreCase("chameleon") && (blockType == Material.WALL_SIGN || blockType == Material.SIGN_POST)) {
+                            queryBlockUpdate = "UPDATE tardis SET chameleon = '" + blockLocStr + "' WHERE tardis_id = " + id;
+                            // add text to sign
+                            Sign s = (Sign) block.getState();
+                            s.setLine(0, "Chameleon");
+                            s.setLine(1, "Circuit");
+                            s.update();
                         }
                         statement.executeUpdate(queryBlockUpdate);
                         player.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " The position of the TARDIS " + blockName + " was updated successfully.");
@@ -407,6 +416,39 @@ public class TARDISPlayerListener implements Listener {
                             }
                             rs.close();
                             statement.close();
+                        } catch (SQLException e) {
+                            System.err.println(Constants.MY_PLUGIN_NAME + " Get TARDIS from Button Error: " + e);
+                        }
+                    }
+                    if (blockType == Material.WALL_SIGN || blockType == Material.SIGN_POST) {
+                        // get clicked block location
+                        Location b = block.getLocation();
+                        String bw = b.getWorld().getName();
+                        int bx = b.getBlockX();
+                        int by = b.getBlockY();
+                        int bz = b.getBlockZ();
+                        String signloc = bw + ":" + bx + ":" + by + ":" + bz;
+                        // get tardis from saved button location
+                        try {
+                            Connection connection = service.getConnection();
+                            Statement statement = connection.createStatement();
+                            String queryTardis = "SELECT * FROM tardis WHERE chameleon = '" + signloc + "'";
+                            ResultSet rs = statement.executeQuery(queryTardis);
+                            if (rs.next()) {
+                                int id = rs.getInt("tardis_id");
+                                String queryChameleon = "";
+                                    Sign s = (Sign) block.getState();
+                                if (rs.getBoolean("chamele_on")) {
+                                    queryChameleon = "UPDATE tardis SET chamele_on = 0 WHERE tardis_id = " + id;
+                                    s.setLine(3, "¤aON");
+                                    s.update();
+                                } else {
+                                    queryChameleon = "UPDATE tardis SET chamele_on = 1 WHERE tardis_id = " + id;
+                                    s.setLine(3, "¤cOFF");
+                                    s.update();
+                                }
+                                statement.executeUpdate(queryChameleon);
+                            }
                         } catch (SQLException e) {
                             System.err.println(Constants.MY_PLUGIN_NAME + " Get TARDIS from Button Error: " + e);
                         }

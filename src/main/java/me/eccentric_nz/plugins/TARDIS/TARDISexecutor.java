@@ -42,7 +42,7 @@ public class TARDISexecutor implements CommandExecutor {
                 return true;
             }
             // the command list - first argument MUST appear here!
-            if (!args[0].equalsIgnoreCase("save") && !args[0].equalsIgnoreCase("list") && !args[0].equalsIgnoreCase("admin") && !args[0].equalsIgnoreCase("help") && !args[0].equalsIgnoreCase("find") && !args[0].equalsIgnoreCase("reload") && !args[0].equalsIgnoreCase("add") && !args[0].equalsIgnoreCase("remove") && !args[0].equalsIgnoreCase("update") && !args[0].equalsIgnoreCase("travel") && !args[0].equalsIgnoreCase("rebuild")) {
+            if (!args[0].equalsIgnoreCase("save") && !args[0].equalsIgnoreCase("list") && !args[0].equalsIgnoreCase("admin") && !args[0].equalsIgnoreCase("help") && !args[0].equalsIgnoreCase("find") && !args[0].equalsIgnoreCase("reload") && !args[0].equalsIgnoreCase("add") && !args[0].equalsIgnoreCase("remove") && !args[0].equalsIgnoreCase("update") && !args[0].equalsIgnoreCase("travel") && !args[0].equalsIgnoreCase("rebuild") && !args[0].equalsIgnoreCase("chameleon")) {
                 sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " Do you want to list destinations, save a destination, travel, update the TARDIS, add/remove companions, do some admin stuff or find the TARDIS?");
                 return false;
             }
@@ -316,7 +316,7 @@ public class TARDISexecutor implements CommandExecutor {
                 }
                 if (args[0].equalsIgnoreCase("update")) {
                     if (player.hasPermission("TARDIS.update")) {
-                        String[] validBlockNames = {"door", "button", "save-repeater", "x-repeater", "z-repeater", "y-repeater"};
+                        String[] validBlockNames = {"door", "button", "save-repeater", "x-repeater", "z-repeater", "y-repeater", "chameleon"};
                         if (args.length < 2) {
                             sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " Too few command arguments!");
                             return false;
@@ -587,6 +587,44 @@ public class TARDISexecutor implements CommandExecutor {
                     } else {
                         sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + Constants.NO_PERMS_MESSAGE);
                         return false;
+                    }
+                }
+                if (args[0].equalsIgnoreCase("chameleon")) {
+                    if (args.length < 2) {
+                        sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " Too few command arguments!");
+                        return false;
+                    } else {
+                        // get the players TARDIS id
+                        try {
+                            Connection connection = service.getConnection();
+                            Statement statement = connection.createStatement();
+                            //String queryList = "SELECT * FROM tardis WHERE owner = '" + player.getName() + "'";
+                            ResultSet rs = service.getTardis(player.getName(), "*");
+                            if (rs == null || !rs.next()) {
+                                sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " You have not created a TARDIS yet!");
+                                return false;
+                            }
+                            int id = rs.getInt("tardis_id");
+                            if (args[1].equalsIgnoreCase("on")) {
+                                String queryChameleon = "UPADTE tardis SET chamele_on = 1 WHERE tardis_id = "+id;
+                                statement.executeUpdate(queryChameleon);
+                                sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " The Chameleon Circuit was turned ON!");
+                            }
+                            if (args[1].equalsIgnoreCase("off")) {
+                                String queryChameleon = "UPADTE tardis SET chamele_on = 0 WHERE tardis_id = "+id;
+                                statement.executeUpdate(queryChameleon);
+                                sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " The Chameleon Circuit was turned OFF.");
+                            }
+                            if (args[1].equalsIgnoreCase("add")) {
+                                // add sign to back wall
+
+                            }
+                            rs.close();
+                            statement.close();
+                            return true;
+                        } catch (SQLException e) {
+                            System.err.println(Constants.MY_PLUGIN_NAME + " Chameleon Circuit Save Error: " + e);
+                        }
                     }
                 }
                 if (args[0].equalsIgnoreCase("help")) {

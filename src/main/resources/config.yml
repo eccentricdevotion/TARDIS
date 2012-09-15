@@ -8,3 +8,4 @@ default_world: false
 default_world_name: world
 include_default_world: false
 platform: false
+chameleon: true

@@ -34,7 +34,7 @@ public class TARDISdatabase {
     public void createTables() {
         try {
             statement = connection.createStatement();
-            String queryTARDIS = "CREATE TABLE IF NOT EXISTS tardis (tardis_id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, owner TEXT COLLATE NOCASE, chunk TEXT, direction TEXT, home TEXT, save TEXT, current TEXT, replaced TEXT DEFAULT '', chest TEXT, button TEXT, repeater0 TEXT, repeater1 TEXT, repeater2 TEXT, repeater3 TEXT, save1 TEXT DEFAULT '', save2 TEXT DEFAULT '', save3 TEXT DEFAULT '', companions TEXT, platform TEXT)";
+            String queryTARDIS = "CREATE TABLE IF NOT EXISTS tardis (tardis_id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, owner TEXT COLLATE NOCASE, chunk TEXT, direction TEXT, home TEXT, save TEXT, current TEXT, replaced TEXT DEFAULT '', chest TEXT, button TEXT, repeater0 TEXT, repeater1 TEXT, repeater2 TEXT, repeater3 TEXT, save1 TEXT DEFAULT '', save2 TEXT DEFAULT '', save3 TEXT DEFAULT '', companions TEXT, platform TEXT, chameleon TEXT, chamele_on INTEGER)";
             statement.executeUpdate(queryTARDIS);
             String queryTravellers = "CREATE TABLE IF NOT EXISTS travellers (traveller_id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, tardis_id INTEGER, player TEXT COLLATE NOCASE)";
             statement.executeUpdate(queryTravellers);
@@ -42,6 +42,16 @@ public class TARDISdatabase {
             statement.executeUpdate(queryChunks);
             String queryDoors = "CREATE TABLE IF NOT EXISTS doors (door_id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, tardis_id INTEGER, door_type INTEGER, door_location TEXT)";
             statement.executeUpdate(queryDoors);
+            // update tardis if there is no chameleon column
+            String queryChameleon = "SELECT sql FROM sqlite_master WHERE tbl_name = 'tardis' AND sql LIKE '%chameleon TEXT%'";
+            ResultSet rsChameleon = statement.executeQuery(queryChameleon);
+            if (!rsChameleon.next()) {
+                String queryAlter1 = "ALTER TABLE tardis ADD chameleon TEXT";
+                String queryAlter2 = "ALTER TABLE tardis ADD chamele_on INTEGER";
+                statement.executeUpdate(queryAlter1);
+                statement.executeUpdate(queryAlter2);
+                System.out.println(Constants.MY_PLUGIN_NAME + " Adding new chameleon circuit!");
+            }
         } catch (SQLException e) {
             System.err.println(Constants.MY_PLUGIN_NAME + " Create table error: " + e);
         }
@@ -143,6 +153,19 @@ public class TARDISdatabase {
         } catch (SQLException e) {
             System.err.println(Constants.MY_PLUGIN_NAME + " Timelords insert error: " + e);
         }
+    }
+
+    public ResultSet getTardis(String name, String cols) {
+        ResultSet tardis = null;
+        try {
+            statement = connection.createStatement();
+            String queryTardis = "SELECT " + cols + " FROM tardis WHERE owner = '" + name + "'";
+            tardis = statement.executeQuery(queryTardis);
+        } catch (SQLException e) {
+            System.err.println(Constants.MY_PLUGIN_NAME + " Timelords insert error: " + e);
+        }
+
+        return tardis;
     }
 
     @Override
