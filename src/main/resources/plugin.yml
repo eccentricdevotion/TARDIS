@@ -4,9 +4,9 @@ main: me.eccentric_nz.plugins.TARDIS.TARDIS
 name: TARDIS
 startup: postworld
 softdepend: [Multiverse-Core]
-dev-url: http://dev.bukkit.org/server-mods/TARDIS/
+dev-url: http://de.bukkit.org/server-mods/TARDIS/
 url: http://www.thenosefairy.co.nz/
-version: '1.4.4'
+version: '1.4.5'
 permissions:
   TARDIS.admin:
     description: Allow players access to the TARDIS admin commands.
@@ -18,7 +18,6 @@ permissions:
     description: Allow players to create & delete a TARDIS, and teleport to destinations.
     children:
       TARDIS.create: true
-      TARDIS.delete: true
       TARDIS.timetravel: true
       TARDIS.list: true
       TARDIS.save: true
