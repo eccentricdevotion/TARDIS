@@ -496,6 +496,22 @@ public class TARDISBuilder {
                                         String queryDoor = "INSERT INTO doors (tardis_id, door_type, door_location) VALUES (" + dbID + ", 1, '" + doorloc + "')";
                                         statement.executeUpdate(queryDoor);
                                     }
+                                    if (id == 68) { // chameleon circuit sign
+                                        switch (d) {
+                                            case NORTH:
+                                                data = 3;
+                                                break;
+                                            case EAST:
+                                                data = 4;
+                                                break;
+                                            case SOUTH:
+                                                data = 2;
+                                                break;
+                                            case WEST:
+                                                data = 5;
+                                                break;
+                                        }
+                                    }
                                 } else {
                                     data = Byte.parseByte(iddata[1]);
                                 }
@@ -511,6 +527,13 @@ public class TARDISBuilder {
                                 postTorchBlocks.put(world.getBlockAt(startx, starty, startz), data);
                             } else {
                                 utils.setBlock(world, startx, starty, startz, id, data);
+                                if (id == 68) {
+                                    Sign cs = (Sign) world.getBlockAt(startx, starty, startz).getState();
+                                    cs.setLine(0, "Chameleon");
+                                    cs.setLine(1, "Circuit");
+                                    cs.setLine(3, "¤cOFF");
+                                    cs.update();
+                                }
                             }
                         }
                         switch (d) {
