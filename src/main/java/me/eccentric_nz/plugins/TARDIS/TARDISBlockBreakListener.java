@@ -135,6 +135,7 @@ public class TARDISBlockBreakListener implements Listener {
                             // remove doors from doors table
                             String queryDeleteDoors = "DELETE FROM doors WHERE tardis_id = " + id;
                             statement.executeUpdate(queryDeleteDoors);
+                            player.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " The TARDIS was removed from the world and database successfully.");
                         } else {
                             // cancel the event because it's not the player's TARDIS
                             event.setCancelled(true);
