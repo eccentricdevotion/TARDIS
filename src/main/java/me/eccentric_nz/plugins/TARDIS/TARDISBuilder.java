@@ -12,8 +12,10 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
+import org.bukkit.block.BlockFace;
 import org.bukkit.block.Chest;
 import org.bukkit.block.Sign;
+import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
@@ -27,13 +29,45 @@ public class TARDISBuilder {
         this.plugin = plugin;
     }
 
-    public void buildOuterTARDIS(int id, Location l, Constants.COMPASS d) {
-        int plusx;
-        int minusx;
-        int x;
-        int plusz;
-        int minusz;
-        int z;
+    public void buildOuterTARDIS(int id, Location l, Constants.COMPASS d, boolean c, Player p) {
+        int plusx, minusx, x, plusz, minusz, z, wall_block = 0;
+        byte sd = 0, norm = 0, grey = 8, blue = 11, chameleonData = 11;
+        if (c) {
+            // chameleon circuit is on - get block under TARDIS
+            Block chameleonBlock = l.getBlock().getRelative(BlockFace.DOWN);
+            int chameleonType = chameleonBlock.getTypeId();
+            // determine wall_block
+            if (Constants.CHAMELEON_BLOCKS_VALID.contains((Integer) chameleonType)) {
+                wall_block = chameleonType;
+                chameleonData = chameleonBlock.getData();
+            }
+            if (Constants.CHAMELEON_BLOCKS_BAD.contains((Integer) chameleonType)) {
+                wall_block = 35;
+                chameleonData = blue;
+                p.sendMessage(Constants.MY_PLUGIN_NAME + " Bummer, the TARDIS could not engage the Chameleon Circuit!");
+            }
+            if (Constants.CHAMELEON_BLOCKS_CHANGE.contains((Integer) chameleonType)) {
+                wall_block = Constants.swapId(chameleonType);
+                switch (chameleonType) {
+                    case 134:
+                        chameleonData = 1;
+                        break;
+                    case 135:
+                        chameleonData = 2;
+                        break;
+                    case 136:
+                        chameleonData = 3;
+                        break;
+                    default:
+                        chameleonData = chameleonBlock.getData();
+                        break;
+                }
+            }
+        } else {
+            wall_block = 35;
+            chameleonData = blue;
+        }
+        byte mds = chameleonData, mdw = chameleonData, mdn = chameleonData, mde = chameleonData, bds = chameleonData, bdw = chameleonData, bdn = chameleonData, bde = chameleonData;
         final World world;
         // expand placed blocks to a police box
         double lowX = l.getX();
@@ -52,8 +86,7 @@ public class TARDISBuilder {
         plusz = (l.getBlockZ() + 1);
         minusz = (l.getBlockZ() - 1);
         world = l.getWorld();
-        int south = 35, west = 35, north = 35, east = 35, signx = 0, signz = 0;
-        byte sd = 0, mds = 11, mdw = 11, mdn = 11, mde = 11, bds = 11, bdw = 11, bdn = 11, bde = 11, norm = 0, grey = 8, blue = 11;
+        int south = wall_block, west = wall_block, north = wall_block, east = wall_block, signx = 0, signz = 0;
         String doorloc = "";
 
         TARDISUtils utils = new TARDISUtils(plugin);
@@ -119,25 +152,29 @@ public class TARDISBuilder {
             statement.executeUpdate(queryDoor);
 
             // bottom layer corners
-            utils.setBlock(world, plusx, down2y, plusz, 35, blue);
-            utils.setBlock(world, minusx, down2y, plusz, 35, blue);
-            utils.setBlock(world, minusx, down2y, minusz, 35, blue);
-            utils.setBlock(world, plusx, down2y, minusz, 35, blue);
+            utils.setBlock(world, plusx, down2y, plusz, wall_block, chameleonData);
+            utils.setBlock(world, minusx, down2y, plusz, wall_block, chameleonData);
+            utils.setBlock(world, minusx, down2y, minusz, wall_block, chameleonData);
+            utils.setBlock(world, plusx, down2y, minusz, wall_block, chameleonData);
             // middle layer corners
-            utils.setBlock(world, plusx, minusy, plusz, 35, blue);
-            utils.setBlock(world, minusx, minusy, plusz, 35, blue);
-            utils.setBlock(world, minusx, minusy, minusz, 35, blue);
-            utils.setBlock(world, plusx, minusy, minusz, 35, blue);
+            utils.setBlock(world, plusx, minusy, plusz, wall_block, chameleonData);
+            utils.setBlock(world, minusx, minusy, plusz, wall_block, chameleonData);
+            utils.setBlock(world, minusx, minusy, minusz, wall_block, chameleonData);
+            utils.setBlock(world, plusx, minusy, minusz, wall_block, chameleonData);
             // top layer
-            utils.setBlock(world, x, y, z, 35, blue); // center
-            utils.setBlock(world, plusx, y, z, 35, blue); // east
-            utils.setBlock(world, plusx, y, plusz, 35, blue);
-            utils.setBlock(world, x, y, plusz, 35, blue); // south
-            utils.setBlock(world, minusx, y, plusz, 35, blue);
-            utils.setBlock(world, minusx, y, z, 35, blue); // west
-            utils.setBlock(world, minusx, y, minusz, 35, blue);
-            utils.setBlock(world, x, y, minusz, 35, blue); // north
-            utils.setBlock(world, plusx, y, minusz, 35, blue);
+            if (wall_block == 18) {
+                utils.setBlock(world, x, y, z, 17, chameleonData); // center
+            } else {
+                utils.setBlock(world, x, y, z, wall_block, chameleonData); // center
+            }
+            utils.setBlock(world, plusx, y, z, wall_block, chameleonData); // east
+            utils.setBlock(world, plusx, y, plusz, wall_block, chameleonData);
+            utils.setBlock(world, x, y, plusz, wall_block, chameleonData); // south
+            utils.setBlock(world, minusx, y, plusz, wall_block, chameleonData);
+            utils.setBlock(world, minusx, y, z, wall_block, chameleonData); // west
+            utils.setBlock(world, minusx, y, minusz, wall_block, chameleonData);
+            utils.setBlock(world, x, y, minusz, wall_block, chameleonData); // north
+            utils.setBlock(world, plusx, y, minusz, wall_block, chameleonData);
             // set sign
             utils.setBlock(world, signx, y, signz, 68, sd);
             Sign s = (Sign) world.getBlockAt(signx, y, signz).getState();
@@ -161,37 +198,48 @@ public class TARDISBuilder {
             utils.setBlock(world, x, minusy, minusz, south, mds);
             // add platform if configured and necessary
             if (plugin.config.getBoolean("platform") == Boolean.valueOf("true")) {
-                List<Block> platform_blocks = null;
-                switch (d) {
-                    case SOUTH:
-                        platform_blocks = Arrays.asList(world.getBlockAt(x - 1, down3y, minusz - 1), world.getBlockAt(x, down3y, minusz - 1), world.getBlockAt(x + 1, down3y, minusz - 1), world.getBlockAt(x - 1, down3y, minusz - 2), world.getBlockAt(x, down3y, minusz - 2), world.getBlockAt(x + 1, down3y, minusz - 2));
-                        break;
-                    case EAST:
-                        platform_blocks = Arrays.asList(world.getBlockAt(minusx - 1, down3y, z - 1), world.getBlockAt(minusx - 1, down3y, z), world.getBlockAt(minusx - 1, down3y, z + 1), world.getBlockAt(minusx - 2, down3y, z - 1), world.getBlockAt(minusx - 2, down3y, z), world.getBlockAt(minusx - 2, down3y, z + 1));
-                        break;
-                    case NORTH:
-                        platform_blocks = Arrays.asList(world.getBlockAt(x + 1, down3y, plusz + 1), world.getBlockAt(x, down3y, plusz + 1), world.getBlockAt(x - 1, down3y, plusz + 1), world.getBlockAt(x + 1, down3y, plusz + 2), world.getBlockAt(x, down3y, plusz + 2), world.getBlockAt(x - 1, down3y, plusz + 2));
-                        break;
-                    case WEST:
-                        platform_blocks = Arrays.asList(world.getBlockAt(plusx + 1, down3y, z + 1), world.getBlockAt(plusx + 1, down3y, z), world.getBlockAt(plusx + 1, down3y, z - 1), world.getBlockAt(plusx + 2, down3y, z + 1), world.getBlockAt(plusx + 2, down3y, z), world.getBlockAt(plusx + 2, down3y, z - 1));
-                        break;
+                // check if user has platform pref
+                String queryGetPlatform = "SELECT platform_on FROM player_prefs WHERE player = '" + p.getName() + "'";
+                ResultSet rsPlatform = statement.executeQuery(queryGetPlatform);
+                boolean userPlatform;
+                if (rsPlatform.next()) {
+                    userPlatform = rsPlatform.getBoolean("platform_on");
+                } else {
+                    userPlatform = true;
                 }
-                StringBuilder sb = new StringBuilder();
-                for (Block pb : platform_blocks) {
-                    Material mat = pb.getType();
-                    if (mat == Material.AIR || mat == Material.STATIONARY_WATER || mat == Material.WATER || mat == Material.VINE || mat == Material.RED_MUSHROOM || mat == Material.BROWN_MUSHROOM || mat == Material.LONG_GRASS || mat == Material.SAPLING || mat == Material.DEAD_BUSH || mat == Material.RED_ROSE || mat == Material.YELLOW_FLOWER) {
-                        utils.setBlock(world, pb.getX(), pb.getY(), pb.getZ(), 35, grey);
-                        String p_tmp = world.getName() + ":" + pb.getX() + ":" + pb.getY() + ":" + pb.getZ() + ":" + mat.toString();
-                        sb.append(p_tmp).append("~");
+                if (userPlatform) {
+                    List<Block> platform_blocks = null;
+                    switch (d) {
+                        case SOUTH:
+                            platform_blocks = Arrays.asList(world.getBlockAt(x - 1, down3y, minusz - 1), world.getBlockAt(x, down3y, minusz - 1), world.getBlockAt(x + 1, down3y, minusz - 1), world.getBlockAt(x - 1, down3y, minusz - 2), world.getBlockAt(x, down3y, minusz - 2), world.getBlockAt(x + 1, down3y, minusz - 2));
+                            break;
+                        case EAST:
+                            platform_blocks = Arrays.asList(world.getBlockAt(minusx - 1, down3y, z - 1), world.getBlockAt(minusx - 1, down3y, z), world.getBlockAt(minusx - 1, down3y, z + 1), world.getBlockAt(minusx - 2, down3y, z - 1), world.getBlockAt(minusx - 2, down3y, z), world.getBlockAt(minusx - 2, down3y, z + 1));
+                            break;
+                        case NORTH:
+                            platform_blocks = Arrays.asList(world.getBlockAt(x + 1, down3y, plusz + 1), world.getBlockAt(x, down3y, plusz + 1), world.getBlockAt(x - 1, down3y, plusz + 1), world.getBlockAt(x + 1, down3y, plusz + 2), world.getBlockAt(x, down3y, plusz + 2), world.getBlockAt(x - 1, down3y, plusz + 2));
+                            break;
+                        case WEST:
+                            platform_blocks = Arrays.asList(world.getBlockAt(plusx + 1, down3y, z + 1), world.getBlockAt(plusx + 1, down3y, z), world.getBlockAt(plusx + 1, down3y, z - 1), world.getBlockAt(plusx + 2, down3y, z + 1), world.getBlockAt(plusx + 2, down3y, z), world.getBlockAt(plusx + 2, down3y, z - 1));
+                            break;
                     }
+                    StringBuilder sb = new StringBuilder();
+                    for (Block pb : platform_blocks) {
+                        Material mat = pb.getType();
+                        if (mat == Material.AIR || mat == Material.STATIONARY_WATER || mat == Material.WATER || mat == Material.VINE || mat == Material.RED_MUSHROOM || mat == Material.BROWN_MUSHROOM || mat == Material.LONG_GRASS || mat == Material.SAPLING || mat == Material.DEAD_BUSH || mat == Material.RED_ROSE || mat == Material.YELLOW_FLOWER) {
+                            utils.setBlock(world, pb.getX(), pb.getY(), pb.getZ(), 35, grey);
+                            String p_tmp = world.getName() + ":" + pb.getX() + ":" + pb.getY() + ":" + pb.getZ() + ":" + mat.toString();
+                            sb.append(p_tmp).append("~");
+                        }
+                    }
+                    String recall = sb.toString();
+                    String platform_recall = "";
+                    if (recall.length() > 0) {
+                        platform_recall = recall.substring(0, recall.length() - 1);
+                    }
+                    String queryPlatform = "UPDATE tardis SET platform = '" + platform_recall + "' WHERE tardis_id = " + id;
+                    statement.executeUpdate(queryPlatform);
                 }
-                String recall = sb.toString();
-                String platform_recall = "";
-                if (recall.length() > 0) {
-                    platform_recall = recall.substring(0, recall.length() - 1);
-                }
-                String queryPlatform = "UPDATE tardis SET platform = '" + platform_recall + "' WHERE tardis_id = " + id;
-                statement.executeUpdate(queryPlatform);
             }
             statement.close();
         } catch (SQLException e) {
@@ -513,8 +561,8 @@ public class TARDISBuilder {
                                                 break;
                                         }
                                         String chameleonloc = world.getName() + ":" + startx + ":" + starty + ":" + startz;
-                                        String queryDoor = "UPDATE tardis SET chameleon = '" + chameleonloc + "', chamele_on = 0 WHERE tardis_id = " + dbID;
-                                        statement.executeUpdate(queryDoor);
+                                        String queryChameleon = "UPDATE tardis SET chameleon = '" + chameleonloc + "', chamele_on = 0 WHERE tardis_id = " + dbID;
+                                        statement.executeUpdate(queryChameleon);
                                     }
                                 } else {
                                     data = Byte.parseByte(iddata[1]);
