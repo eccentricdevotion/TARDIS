@@ -82,6 +82,14 @@ public class TARDIS extends JavaPlugin implements Listener {
         }
         quote = quotes();
         quotelen = quote.size();
+
+        if (plugin.getServer().getPluginManager().getPlugin("Spout") != null && config.getBoolean("sfx") == Boolean.valueOf("true")) {
+            this.getServer().getScheduler().scheduleSyncRepeatingTask(this, new Runnable() {
+                public void run() {
+                    TARDISSounds.randomTARDISSound();
+                }
+            }, 60L, 1200L);
+        }
     }
 
     @Override
@@ -98,7 +106,7 @@ public class TARDIS extends JavaPlugin implements Listener {
         try {
             schematicfile = new File(getDataFolder(), Constants.SCHEMATIC_FILE_NAME);
             //if (!schematicfile.exists()) {
-                copy(getResource(Constants.SCHEMATIC_FILE_NAME), schematicfile);
+            copy(getResource(Constants.SCHEMATIC_FILE_NAME), schematicfile);
             //}
             schematic = Schematic.schematic(schematicfile);
 
