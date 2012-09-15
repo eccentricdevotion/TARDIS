@@ -27,7 +27,6 @@ permissions:
       TARDIS.help: true
       TARDIS.update: true
       TARDIS.rebuild: true
-      TARDIS.chameleon: true
     default: op
   TARDIS.create:
     description: Allow players to create a TARDIS.
@@ -64,9 +63,6 @@ permissions:
     default: true
   TARDIS.rebuild:
     description: Allow players to rebuild the TARDIS.
-    default: true
-  TARDIS.chameleon:
-    description: Allow players to use the TARDIS Chameleon Circuit.
     default: true
 commands:
   tardis:
@@ -112,9 +108,14 @@ commands:
       permission: TARDIS.rebuild
       permission-message: You don't have the permission <permission> to use this command
     chameleon:
-      description: Use the TARDIS Chameleon Circuit.
+      description: Toggle the TARDIS Chameleon Circuit on and off.
       usage: /<command> chameleon [on|off|add]
-      permission: TARDIS.chameleon
+      permission: TARDIS.timetravel
+      permission-message: You don't have the permission <permission> to use this command
+    sfx:
+      description: Toggle the TARDIS sound effects on and off.
+      usage: /<command> sfx [on|off]
+      permission: TARDIS.timetravel
       permission-message: You don't have the permission <permission> to use this command
     travel:
       description: Modify the interior of the TARDIS.
