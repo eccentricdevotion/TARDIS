@@ -102,13 +102,12 @@ public class TARDISBlockPlaceListener implements Listener {
                                 }
                                 statement.close();
                                 // turn the block stack into a TARDIS
-                                builder.buildOuterTARDIS(lastInsertId, block_loc, Constants.COMPASS.valueOf(d));
+                                builder.buildOuterTARDIS(lastInsertId, block_loc, Constants.COMPASS.valueOf(d), false, player);
                                 builder.buildInnerTARDIS(plugin.schematic, chunkworld, Constants.COMPASS.valueOf(d), lastInsertId);
                             } else {
                                 player.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " A TARDIS already exists at this location, please try another chunk!");
                             }
                         } else {
-                            //ResultSet rsLeft = statement.executeQuery("SELECT save FROM tardis WHERE owner ='" + player + "'");
                             String leftLoc = rs.getString("save");
                             String[] leftData = leftLoc.split(":");
                             player.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " You already have a TARDIS, you left it in " + leftData[0] + " at x:" + leftData[1] + " y:" + leftData[2] + " z:" + leftData[3]);
