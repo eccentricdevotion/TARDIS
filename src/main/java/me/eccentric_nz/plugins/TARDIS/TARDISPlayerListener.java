@@ -62,7 +62,7 @@ public class TARDISPlayerListener implements Listener {
                     Statement statement = connection.createStatement();
                     String queryTARDIS = "SELECT tardis_id FROM tardis WHERE owner = '" + playerNameStr + "'";
                     ResultSet rs = statement.executeQuery(queryTARDIS);
-                    if (rs != null && rs.next()) {
+                    if (rs.next()) {
                         id = rs.getInt("tardis_id");
                         rs.close();
                         if (blockName.equalsIgnoreCase("door") && blockType == Material.IRON_DOOR_BLOCK) {
@@ -297,7 +297,7 @@ public class TARDISPlayerListener implements Listener {
                             Statement statement = connection.createStatement();
                             String queryTardis = "SELECT * FROM tardis WHERE button = '" + buttonloc + "'";
                             ResultSet rs = statement.executeQuery(queryTardis);
-                            if (rs != null && rs.next()) {
+                            if (rs.next()) {
                                 int id = rs.getInt("tardis_id");
                                 String tl = rs.getString("owner");
                                 String r0_str = rs.getString("repeater0");
@@ -312,7 +312,7 @@ public class TARDISPlayerListener implements Listener {
                                 // check if player is travelling
                                 String queryTraveller = "SELECT * FROM travellers WHERE tardis_id = " + id + " AND player = '" + tl + "'";
                                 ResultSet timelordIsIn = statement.executeQuery(queryTraveller);
-                                if (timelordIsIn != null && timelordIsIn.next()) {
+                                if (timelordIsIn.next()) {
                                     // get repeater settings
                                     Location r0_loc = Constants.getLocationFromDB(r0_str, 0, 0);
                                     Block r0 = r0_loc.getBlock();
@@ -375,7 +375,7 @@ public class TARDISPlayerListener implements Listener {
                                         String queryCompanions = "SELECT owner, companions FROM tardis WHERE tardis_id = " + id;
                                         ResultSet rsCom = statement.executeQuery(queryCompanions);
                                         boolean isTL = true;
-                                        if (rsCom != null && rsCom.next()) {
+                                        if (rsCom.next()) {
                                             String comps = rsCom.getString("companions");
                                             if (comps != null && !comps.equals("") && !comps.equals("[Null]")) {
                                                 String[] companions = comps.split(":");

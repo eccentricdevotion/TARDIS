@@ -111,7 +111,7 @@ public class TARDISBuilder {
             String queryInsertOrUpdate = "SELECT door_id FROM doors WHERE door_type = 0 AND tardis_id = " + id;
             ResultSet rs = statement.executeQuery(queryInsertOrUpdate);
             String queryDoor;
-            if (rs != null && rs.next()) {
+            if (rs.next()) {
                 queryDoor = "UPDATE doors SET door_location = '" + doorloc + "' WHERE door_id = " + rs.getInt("door_id");
             } else {
                 queryDoor = "INSERT INTO doors (tardis_id, door_type, door_location) VALUES (" + id + ", 0, '" + doorloc + "')";

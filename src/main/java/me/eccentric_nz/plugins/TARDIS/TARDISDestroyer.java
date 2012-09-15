@@ -122,7 +122,7 @@ public class TARDISDestroyer {
             Statement statement = connection.createStatement();
             String queryReplaced = "SELECT replaced FROM tardis WHERE tardis_id = '" + id + "' LIMIT 1";
             ResultSet rs = statement.executeQuery(queryReplaced);
-            if (rs != null && rs.next()) {
+            if (rs.next()) {
                 String replacedData = rs.getString("replaced");
                 if (!replacedData.equals("") && replacedData != null) {
                     String[] parts = replacedData.split(":");
@@ -150,7 +150,7 @@ public class TARDISDestroyer {
             if (plugin.config.getBoolean("platform") == Boolean.valueOf("true")) {
                 String queryPlatform = "SELECT platform FROM tardis WHERE tardis_id = " + id;
                 ResultSet prs = statement.executeQuery(queryPlatform);
-                if (prs != null && prs.next()) {
+                if (prs.next()) {
                     if (!prs.getString("platform").equals("[Null]") && !prs.getString("platform").equals("") && prs.getString("platform") != null) {
                         int px = 0, py = 0, pz = 0;
                         String[] str_blocks = prs.getString("platform").split("~");

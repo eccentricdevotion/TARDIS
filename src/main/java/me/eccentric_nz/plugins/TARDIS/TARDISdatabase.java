@@ -66,7 +66,7 @@ public class TARDISdatabase {
             statement.executeUpdate(queryTimelordInsert);
             ResultSet rs = statement.getGeneratedKeys();
             int id;
-            if (rs != null && rs.next()) {
+            if (rs.next()) {
                 id = rs.getInt(1);
                 Constants.COMPASS dir = Constants.COMPASS.valueOf(d);
                 // determine door location

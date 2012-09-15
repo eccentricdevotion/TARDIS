@@ -113,7 +113,7 @@ public class TARDISUtils {
             Connection connection = service.getConnection();
             Statement statement = connection.createStatement();
             ResultSet rs = statement.executeQuery(queryCheck);
-            if (rs != null && rs.next()) {
+            if (rs.next()) {
                 chunkchk = true;
             }
             rs.close();
