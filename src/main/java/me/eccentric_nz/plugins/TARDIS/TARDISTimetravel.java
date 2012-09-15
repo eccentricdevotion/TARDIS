@@ -65,7 +65,6 @@ public class TARDISTimetravel {
             }
             i = i + 1;
         }
-
         while (danger == true) {
             count = 0;
             wherex = rand.nextInt(range);
@@ -112,7 +111,7 @@ public class TARDISTimetravel {
 
             highest = randworld.getHighestBlockYAt(wherex, wherez);
             Block currentBlock = randworld.getBlockAt(wherex, highest, wherez);
-            if (highest > 0) {
+            if (highest > 3) {
                 if (currentBlock.getType() == Material.AIR || currentBlock.getType() == Material.SNOW || currentBlock.getType() == Material.LONG_GRASS || currentBlock.getType() == Material.RED_ROSE || currentBlock.getType() == Material.YELLOW_FLOWER || currentBlock.getType() == Material.BROWN_MUSHROOM || currentBlock.getType() == Material.RED_MUSHROOM || currentBlock.getType() == Material.SAPLING) {
                     currentBlock = currentBlock.getRelative(BlockFace.DOWN);
                 }
@@ -127,7 +126,7 @@ public class TARDISTimetravel {
                 int gsl[] = getStartLocation(chunk_loc, d);
                 startx = gsl[0];
                 resetx = gsl[1];
-                starty = chunk_loc.getBlockY();
+                starty = chunk_loc.getBlockY() + 1;
                 startz = gsl[2];
                 resetz = gsl[3];
                 x = gsl[4];
