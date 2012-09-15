@@ -97,9 +97,9 @@ public class TARDIS extends JavaPlugin implements Listener {
     public FileConfiguration loadConfig() {
         try {
             schematicfile = new File(getDataFolder(), Constants.SCHEMATIC_FILE_NAME);
-            if (!schematicfile.exists()) {
+            //if (!schematicfile.exists()) {
                 copy(getResource(Constants.SCHEMATIC_FILE_NAME), schematicfile);
-            }
+            //}
             schematic = Schematic.schematic(schematicfile);
 
             myconfigfile = new File(getDataFolder(), Constants.CONFIG_FILE_NAME);
@@ -137,7 +137,7 @@ public class TARDIS extends JavaPlugin implements Listener {
 
     private void copy(InputStream in, File file) {
         try {
-            OutputStream out = new FileOutputStream(file);
+            OutputStream out = new FileOutputStream(file, false);
             byte[] buf = new byte[1024];
             int len;
             while ((len = in.read(buf)) > 0) {
