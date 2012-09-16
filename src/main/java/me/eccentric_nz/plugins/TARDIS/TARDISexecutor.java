@@ -293,7 +293,11 @@ public class TARDISexecutor implements CommandExecutor {
                                     return true;
                                 }
                             }
-                            if (args.length > 2 && args.length < 6) {
+                            if (args.length > 2 && args.length < 5) {
+                                sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " Too few command arguments for co-ordinates travel!");
+                                return false;
+                            }
+                            if (args.length == 5) {
                                 // must be a location then
                                 int x = 0, y = 0, z = 0;
                                 World w = plugin.getServer().getWorld(args[1]);
