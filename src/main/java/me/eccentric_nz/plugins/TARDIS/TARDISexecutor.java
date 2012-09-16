@@ -57,75 +57,93 @@ public class TARDISexecutor implements CommandExecutor {
                     sender.sendMessage(Constants.COMMAND_ADMIN.split("\n"));
                     return true;
                 }
-                if (args[1].equalsIgnoreCase("update")) {
-                    // put timelords to tardis table
-                    Set<String> timelords = plugin.timelords.getKeys(false);
-                    for (String p : timelords) {
-                        if (!p.equals("dummy_user")) {
-                            String c = plugin.timelords.getString(p + ".chunk");
-                            String d = plugin.timelords.getString(p + ".direction");
-                            String h = plugin.timelords.getString(p + ".home");
-                            String s = plugin.timelords.getString(p + ".save");
-                            String cur = plugin.timelords.getString(p + ".current");
-                            String r = plugin.timelords.getString(p + ".replaced");
-                            String chest = plugin.timelords.getString(p + ".chest");
-                            String b = plugin.timelords.getString(p + ".button");
-                            String r0 = plugin.timelords.getString(p + ".repeater0");
-                            String r1 = plugin.timelords.getString(p + ".repeater1");
-                            String r2 = plugin.timelords.getString(p + ".repeater2");
-                            String r3 = plugin.timelords.getString(p + ".repeater3");
-                            String s1 = plugin.timelords.getString(p + ".save1");
-                            String s2 = plugin.timelords.getString(p + ".save2");
-                            String s3 = plugin.timelords.getString(p + ".save3");
-                            String t = plugin.timelords.getString(p + ".travelling");
-                            try {
-                                service.getConnection();
-                                service.insertTimelords(p, c, d, h, s, cur, r, chest, b, r0, r1, r2, r3, s1, s2, s3, t);
-                            } catch (Exception e) {
-                                System.err.println(Constants.MY_PLUGIN_NAME + " Timelords to DB Error: " + e);
-                            }
-                        }
-                    }
-                    // put chunks to chunks table
-                    BufferedReader br = null;
-                    List<World> worldList = plugin.getServer().getWorlds();
-                    for (World w : worldList) {
-                        String strWorldName = w.getName();
-                        File chunkFile = new File(plugin.getDataFolder() + File.separator + "chunks" + File.separator + strWorldName + ".chunks");
-                        if (chunkFile.exists() && w.getEnvironment() == World.Environment.NORMAL) {
-                            // read file
-                            try {
-                                br = new BufferedReader(new FileReader(chunkFile));
-                                String str;
-                                int cx = 0, cz = 0;
-                                while ((str = br.readLine()) != null) {
-                                    String[] chunkData = str.split(":");
-                                    try {
-                                        cx = Integer.parseInt(chunkData[1]);
-                                        cz = Integer.parseInt(chunkData[2]);
-                                    } catch (NumberFormatException nfe) {
-                                        System.err.println(Constants.MY_PLUGIN_NAME + " Could not convert to number!");
-                                    }
-                                    try {
-                                        service.getConnection();
-                                        service.insertChunks(chunkData[0], cx, cz);
-                                    } catch (Exception e) {
-                                        System.err.println(Constants.MY_PLUGIN_NAME + " Chunk File to DB Error: " + e);
-                                    }
+                if (args.length == 2) {
+                    if (args[1].equalsIgnoreCase("config")) {
+                        Set<String> configNames = plugin.config.getKeys(false);
+                        sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RED + " Here are the current plugin config options!");
+                        for (String cname : configNames) {
+                            String value = plugin.config.getString(cname);
+                            if (cname.equals("worlds")) {
+                                sender.sendMessage(ChatColor.AQUA + cname + ":" + ChatColor.RESET);
+                                Set<String> worldNames = plugin.config.getConfigurationSection("worlds").getKeys(false);
+                                for (String wname : worldNames) {
+                                    String enabled = plugin.config.getString("worlds." + wname);
+                                    sender.sendMessage("      " + ChatColor.GREEN + wname + ": " + ChatColor.RESET + enabled);
                                 }
-                            } catch (IOException io) {
-                                System.err.println(Constants.MY_PLUGIN_NAME + " could not create [" + strWorldName + "] world chunk file!");
+                            } else {
+                                sender.sendMessage(ChatColor.AQUA + cname + ": " + ChatColor.RESET + value);
                             }
                         }
                     }
-                    sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " The config files were successfully inserted into the database.");
-                    return true;
-                }
-                if (args.length < 3) {
+                    if (args[1].equalsIgnoreCase("update")) {
+                        // put timelords to tardis table
+                        Set<String> timelords = plugin.timelords.getKeys(false);
+                        for (String p : timelords) {
+                            if (!p.equals("dummy_user")) {
+                                String c = plugin.timelords.getString(p + ".chunk");
+                                String d = plugin.timelords.getString(p + ".direction");
+                                String h = plugin.timelords.getString(p + ".home");
+                                String s = plugin.timelords.getString(p + ".save");
+                                String cur = plugin.timelords.getString(p + ".current");
+                                String r = plugin.timelords.getString(p + ".replaced");
+                                String chest = plugin.timelords.getString(p + ".chest");
+                                String b = plugin.timelords.getString(p + ".button");
+                                String r0 = plugin.timelords.getString(p + ".repeater0");
+                                String r1 = plugin.timelords.getString(p + ".repeater1");
+                                String r2 = plugin.timelords.getString(p + ".repeater2");
+                                String r3 = plugin.timelords.getString(p + ".repeater3");
+                                String s1 = plugin.timelords.getString(p + ".save1");
+                                String s2 = plugin.timelords.getString(p + ".save2");
+                                String s3 = plugin.timelords.getString(p + ".save3");
+                                String t = plugin.timelords.getString(p + ".travelling");
+                                try {
+                                    service.getConnection();
+                                    service.insertTimelords(p, c, d, h, s, cur, r, chest, b, r0, r1, r2, r3, s1, s2, s3, t);
+                                } catch (Exception e) {
+                                    System.err.println(Constants.MY_PLUGIN_NAME + " Timelords to DB Error: " + e);
+                                }
+                            }
+                        }
+                        // put chunks to chunks table
+                        BufferedReader br = null;
+                        List<World> worldList = plugin.getServer().getWorlds();
+                        for (World w : worldList) {
+                            String strWorldName = w.getName();
+                            File chunkFile = new File(plugin.getDataFolder() + File.separator + "chunks" + File.separator + strWorldName + ".chunks");
+                            if (chunkFile.exists() && w.getEnvironment() == World.Environment.NORMAL) {
+                                // read file
+                                try {
+                                    br = new BufferedReader(new FileReader(chunkFile));
+                                    String str;
+                                    int cx = 0, cz = 0;
+                                    while ((str = br.readLine()) != null) {
+                                        String[] chunkData = str.split(":");
+                                        try {
+                                            cx = Integer.parseInt(chunkData[1]);
+                                            cz = Integer.parseInt(chunkData[2]);
+                                        } catch (NumberFormatException nfe) {
+                                            System.err.println(Constants.MY_PLUGIN_NAME + " Could not convert to number!");
+                                        }
+                                        try {
+                                            service.getConnection();
+                                            service.insertChunks(chunkData[0], cx, cz);
+                                        } catch (Exception e) {
+                                            System.err.println(Constants.MY_PLUGIN_NAME + " Chunk File to DB Error: " + e);
+                                        }
+                                    }
+                                } catch (IOException io) {
+                                    System.err.println(Constants.MY_PLUGIN_NAME + " could not create [" + strWorldName + "] world chunk file!");
+                                }
+                            }
+                        }
+                        sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " The config files were successfully inserted into the database.");
+                        return true;
+                    }
+                } else if (args.length < 3) {
                     sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " Too few command arguments!");
                     return false;
                 } else {
-                    if (!args[1].equalsIgnoreCase("bonus") && !args[1].equalsIgnoreCase("protect") && !args[1].equalsIgnoreCase("max_rad") && !args[1].equalsIgnoreCase("spout") && !args[1].equalsIgnoreCase("default") && !args[1].equalsIgnoreCase("name") && !args[1].equalsIgnoreCase("include") && !args[1].equalsIgnoreCase("key") && !args[1].equalsIgnoreCase("update") && !args[1].equalsIgnoreCase("exclude") && !args[1].equalsIgnoreCase("platform") && !args[1].equalsIgnoreCase("sfx")) {
+                    if (!args[1].equalsIgnoreCase("bonus") && !args[1].equalsIgnoreCase("protect") && !args[1].equalsIgnoreCase("max_rad") && !args[1].equalsIgnoreCase("spout") && !args[1].equalsIgnoreCase("default") && !args[1].equalsIgnoreCase("name") && !args[1].equalsIgnoreCase("include") && !args[1].equalsIgnoreCase("key") && !args[1].equalsIgnoreCase("update") && !args[1].equalsIgnoreCase("exclude") && !args[1].equalsIgnoreCase("platform") && !args[1].equalsIgnoreCase("sfx") && !args[1].equalsIgnoreCase("config")) {
                         sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " TARDIS does not recognise that command argument!");
                         return false;
                     }
