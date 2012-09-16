@@ -62,6 +62,11 @@ public class TARDISTimetravel {
         for (World wobj : normalWorlds) {
             if (i == rw) {
                 randworld = wobj;
+//                if (plugin.config.getInt("max_distance") > 0) {
+//                    // get worlds spawn location
+//                    Location spawn = wobj.getSpawnLocation();
+//                    System.out.println(spawn);
+//                }
             }
             i = i + 1;
         }
@@ -135,7 +140,7 @@ public class TARDISTimetravel {
             } else {
                 count = 1;
             }
-            //System.out.println("Finding safe location...");
+            System.out.println("Finding safe location...");
             if (count == 0) {
                 danger = false;
                 break;
