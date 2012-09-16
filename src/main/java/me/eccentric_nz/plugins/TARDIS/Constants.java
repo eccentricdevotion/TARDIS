@@ -7,7 +7,6 @@ import java.sql.Statement;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -24,7 +23,7 @@ public class Constants {
     public static final String TIMELORDS_FILE_NAME = "timelords.yml";
     public static final String QUOTES_FILE_NAME = "quotes.txt";
     // chameleon blocks
-    private static final Integer[] CHAMELEON_BLOCKS_VALID_ARR = new Integer[] {1, 3, 4, 5, 7, 14, 15, 16, 17, 18, 19, 20, 21, 22, 24, 35, 41, 42, 43, 45, 47, 48, 49, 56, 57, 73, 74, 79, 82, 86, 87, 88, 89, 91, 98, 99, 100, 103, 110, 112, 121, 123, 124, 129, 133};
+    private static final Integer[] CHAMELEON_BLOCKS_VALID_ARR = new Integer[] {1, 3, 4, 5, 7, 14, 15, 16, 17, 18, 19, 20, 21, 22, 24, 35, 41, 42, 43, 45, 47, 48, 49, 56, 57, 73, 74, 79, 80, 82, 86, 87, 88, 89, 91, 98, 99, 100, 103, 110, 112, 121, 123, 124, 129, 133};
     public static List<Integer> CHAMELEON_BLOCKS_VALID = Arrays.asList(CHAMELEON_BLOCKS_VALID_ARR);
     private static final Integer[] CHAMELEON_BLOCKS_BAD_ARR = new Integer[] {6, 8, 9, 10, 11, 23, 25, 26, 29, 33, 34, 50, 51, 52, 54, 55, 58, 59, 60, 61, 62, 63, 64, 65, 68, 70, 71, 72, 75, 76, 77, 83, 84, 85, 90, 92, 93, 94, 95, 101, 107, 111, 115, 116, 117, 118, 119, 122, 127, 130, 131, 132};
     public static List<Integer> CHAMELEON_BLOCKS_BAD = Arrays.asList(CHAMELEON_BLOCKS_BAD_ARR);
