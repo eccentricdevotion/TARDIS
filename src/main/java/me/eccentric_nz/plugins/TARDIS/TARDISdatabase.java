@@ -54,6 +54,14 @@ public class TARDISdatabase {
                 statement.executeUpdate(queryAlter2);
                 System.out.println(Constants.MY_PLUGIN_NAME + " Adding new chameleon circuit!");
             }
+            // update player_prefs if there is no quotes_on column
+            String queryQuotes = "SELECT sql FROM sqlite_master WHERE tbl_name = 'player_prefs' AND sql LIKE '%quotes_on INTEGER%'";
+            ResultSet rsQuotes = statement.executeQuery(queryQuotes);
+            if (!rsQuotes.next()) {
+                String queryAlter3 = "ALTER TABLE player_prefs ADD quotes_on INTEGER DEFAULT 1";
+                statement.executeUpdate(queryAlter3);
+                System.out.println(Constants.MY_PLUGIN_NAME + " Adding new quotes to player prefs!");
+            }
         } catch (SQLException e) {
             System.err.println(Constants.MY_PLUGIN_NAME + " Create table error: " + e);
         }
@@ -69,7 +77,6 @@ public class TARDISdatabase {
             System.err.println(Constants.MY_PLUGIN_NAME + " Chunk insert error: " + e);
         }
     }
-    // service.insertTimelords(c,d,h,s,cur,r,chest,b,r0,r1,r2,r3,s1,s2,s3,t);
 
     public void insertTimelords(String p, String c, String d, String h, String s, String cur, String r, String chest, String b, String r0, String r1, String r2, String r3, String s1, String s2, String s3, String t) {
         try {
