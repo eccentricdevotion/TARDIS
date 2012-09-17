@@ -61,7 +61,6 @@ public class TARDISPlayerListener implements Listener {
                     String queryBlockUpdate = "";
                     Connection connection = service.getConnection();
                     Statement statement = connection.createStatement();
-                    //String queryTARDIS = "SELECT tardis_id FROM tardis WHERE owner = '" + playerNameStr + "'";
                     ResultSet rs = service.getTardis(playerNameStr, "tardis_id");
                     if (rs.next()) {
                         id = rs.getInt("tardis_id");
@@ -115,8 +114,6 @@ public class TARDISPlayerListener implements Listener {
                         if (material == key) {
                             if (block != null) {
                                 if (player.hasPermission("TARDIS.enter")) {
-                                    //allowFlying.put(playerNameStr, player.getAllowFlight());
-                                    //isFlying.put(playerNameStr, player.isFlying());
                                     Location block_loc = block.getLocation();
                                     String bw = block_loc.getWorld().getName();
                                     int bx = block_loc.getBlockX();
@@ -144,7 +141,15 @@ public class TARDISPlayerListener implements Listener {
                                             boolean cham = rs.getBoolean("chamele_on");
                                             float yaw = player.getLocation().getYaw();
                                             float pitch = player.getLocation().getPitch();
-                                            // get last known BLUEBOX location
+                                            // get quotes player prefs
+                                            String queryQuotes = "SELECT quotes_on FROM player_prefs WHERE player = '" + playerNameStr + "'";
+                                            ResultSet rsQuotes = statement.executeQuery(queryQuotes);
+                                            boolean userQuotes;
+                                            if (rsQuotes.next()) {
+                                                userQuotes = rsQuotes.getBoolean("quotes_on");
+                                            } else {
+                                                userQuotes = true;
+                                            }
                                             if (doortype == 1) {
                                                 // player is in the TARDIS
                                                 // get location from database
@@ -192,7 +197,7 @@ public class TARDISPlayerListener implements Listener {
                                                     builder.buildOuterTARDIS(id, newl, Constants.COMPASS.valueOf(d), cham, player);
                                                 }
                                                 // exit TARDIS!
-                                                tt(player, exitTardis, true, playerWorld);
+                                                tt(player, exitTardis, true, playerWorld, userQuotes);
                                                 // remove player from traveller table
                                                 String queryTraveller = "DELETE FROM travellers WHERE player = '" + playerNameStr + "'";
                                                 statement.executeUpdate(queryTraveller);
@@ -257,7 +262,7 @@ public class TARDISPlayerListener implements Listener {
                                                     tmp_loc.setPitch(pitch);
                                                     tmp_loc.setYaw(yaw);
                                                     final Location tardis_loc = tmp_loc;
-                                                    tt(player, tardis_loc, false, playerWorld);
+                                                    tt(player, tardis_loc, false, playerWorld, userQuotes);
                                                     String queryTravellerUpdate = "INSERT INTO travellers (tardis_id, player) VALUES (" + id + ", '" + playerNameStr + "')";
                                                     statement.executeUpdate(queryTravellerUpdate);
                                                     // update current TARDIS location
@@ -337,7 +342,6 @@ public class TARDISPlayerListener implements Listener {
                                     Block r3 = r3_loc.getBlock();
                                     byte r3_data = r3.getData();
                                     boolean playSound = true;
-                                    //player.sendMessage("0:" + r0_data + ", 1:" + r1_data + ", 2:" + r2_data + ", 3:" + r3_data);
                                     if (r0_data <= 3 && r1_data <= 3 && r2_data <= 3 && r3_data <= 3) { // first position
                                         player.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " Home destination selected!");
                                         // always teleport to home location
@@ -460,7 +464,7 @@ public class TARDISPlayerListener implements Listener {
     }
     Random r = new Random();
 
-    private void tt(Player p, Location l, boolean exit, final World from) {
+    private void tt(Player p, Location l, boolean exit, final World from, boolean q) {
 
         final int i = r.nextInt(plugin.quotelen);
         final Player thePlayer = p;
@@ -472,20 +476,31 @@ public class TARDISPlayerListener implements Listener {
         final World to = theLocation.getWorld();
         final boolean allowFlight = thePlayer.getAllowFlight();
         final boolean crossWorlds = from != to;
+        final boolean quotes = q;
+
+        // try loading chunk
+        World world = l.getWorld();
+        Chunk chunk = world.getChunkAt(l);
+        if (!world.isChunkLoaded(chunk)) {
+            world.loadChunk(chunk);
+        }
+        world.refreshChunk(chunk.getX(), chunk.getZ());
 
         Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
             public void run() {
                 thePlayer.teleport(firstLocation);
             }
-        }, 10L);
+        }, 20L);
         Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
             public void run() {
                 thePlayer.teleport(theLocation);
                 if (thePlayer.getGameMode() == GameMode.CREATIVE || (allowFlight && crossWorlds)) {
                     thePlayer.setAllowFlight(true);
                 }
-                thePlayer.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " " + plugin.quote.get(i));
+                if (quotes) {
+                    thePlayer.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " " + plugin.quote.get(i));
+                }
             }
-        }, 10L);
+        }, 5L);
     }
 }
