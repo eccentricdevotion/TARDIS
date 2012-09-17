@@ -115,7 +115,7 @@ public class TARDISBlockPlaceListener implements Listener {
                         rs.close();
                         statement.close();
                     } catch (SQLException e) {
-                        player.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RED + " Block Place Listener Error: " + ChatColor.WHITE + e);
+                        System.out.println(Constants.MY_PLUGIN_NAME + " Block Place Listener Error: " + e);
                     }
                 } else {
                     player.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " You don't have permission to build a TARDIS!");
