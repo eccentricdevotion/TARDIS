@@ -62,11 +62,6 @@ public class TARDISTimetravel {
         for (World wobj : normalWorlds) {
             if (i == rw) {
                 randworld = wobj;
-//                if (plugin.config.getInt("max_distance") > 0) {
-//                    // get worlds spawn location
-//                    Location spawn = wobj.getSpawnLocation();
-//                    System.out.println(spawn);
-//                }
             }
             i = i + 1;
         }

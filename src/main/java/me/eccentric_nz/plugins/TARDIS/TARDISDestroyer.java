@@ -96,7 +96,6 @@ public class TARDISDestroyer {
         int sbx = l.getBlockX() - 1;
         int rbx = sbx;
         int gbx = sbx;
-        //int sby = l.getBlockY() - 2;
         int sby = l.getBlockY();
         int sbywool = l.getBlockY() - 3;
         int sbz = l.getBlockZ() - 1;
