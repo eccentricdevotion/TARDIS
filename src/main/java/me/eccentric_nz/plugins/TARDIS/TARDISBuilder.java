@@ -8,6 +8,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -30,7 +31,7 @@ public class TARDISBuilder {
     }
 
     public void buildOuterTARDIS(int id, Location l, Constants.COMPASS d, boolean c, Player p) {
-        int plusx, minusx, x, plusz, minusz, z, wall_block = 0;
+        int plusx, minusx, x, plusz, minusz, z, wall_block = 35;
         byte sd = 0, norm = 0, grey = 8, blue = 11, chameleonData = 11;
         if (c) {
             // chameleon circuit is on - get block under TARDIS
@@ -42,9 +43,7 @@ public class TARDISBuilder {
                 chameleonData = chameleonBlock.getData();
             }
             if (Constants.CHAMELEON_BLOCKS_BAD.contains((Integer) chameleonType)) {
-                wall_block = 35;
-                chameleonData = blue;
-                p.sendMessage(Constants.MY_PLUGIN_NAME + " Bummer, the TARDIS could not engage the Chameleon Circuit!");
+                p.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " Bummer, the TARDIS could not engage the Chameleon Circuit!");
             }
             if (Constants.CHAMELEON_BLOCKS_CHANGE.contains((Integer) chameleonType)) {
                 wall_block = Constants.swapId(chameleonType);
@@ -63,9 +62,37 @@ public class TARDISBuilder {
                         break;
                 }
             }
-        } else {
-            wall_block = 35;
-            chameleonData = blue;
+
+            if (Constants.CHAMELEON_BLOCKS_NEXT.contains((Integer) chameleonType)) {
+                List<BlockFace> surrounding = Arrays.asList(new BlockFace[]{BlockFace.EAST, BlockFace.SOUTH, BlockFace.WEST, BlockFace.NORTH, BlockFace.NORTH_EAST, BlockFace.NORTH_WEST, BlockFace.SOUTH_EAST, BlockFace.SOUTH_WEST});                // try the surrounding blocks
+                for (BlockFace bf : surrounding) {
+                    Block surroundblock = chameleonBlock.getRelative(bf);
+                    int eid = surroundblock.getTypeId();
+                    if (Constants.CHAMELEON_BLOCKS_VALID.contains((Integer) eid)) {
+                        wall_block = eid;
+                        chameleonData = surroundblock.getData();
+                        break;
+                    }
+                    if (Constants.CHAMELEON_BLOCKS_CHANGE.contains((Integer) eid)) {
+                        wall_block = Constants.swapId(eid);
+                        switch (eid) {
+                            case 134:
+                                chameleonData = 1;
+                                break;
+                            case 135:
+                                chameleonData = 2;
+                                break;
+                            case 136:
+                                chameleonData = 3;
+                                break;
+                            default:
+                                chameleonData = chameleonBlock.getData();
+                                break;
+                        }
+                        break;
+                    }
+                }
+            }
         }
         byte mds = chameleonData, mdw = chameleonData, mdn = chameleonData, mde = chameleonData, bds = chameleonData, bdw = chameleonData, bdn = chameleonData, bde = chameleonData;
         final World world;
@@ -162,10 +189,22 @@ public class TARDISBuilder {
             utils.setBlock(world, minusx, minusy, minusz, wall_block, chameleonData);
             utils.setBlock(world, plusx, minusy, minusz, wall_block, chameleonData);
             // top layer
-            if (wall_block == 18) {
-                utils.setBlock(world, x, y, z, 17, chameleonData); // center
-            } else {
-                utils.setBlock(world, x, y, z, wall_block, chameleonData); // center
+            switch (wall_block) {
+                case 18:
+                    utils.setBlock(world, x, y, z, 17, chameleonData);
+                    break;
+                case 46:
+                    utils.setBlock(world, x, y, z, 35, (byte) 14);
+                    break;
+                case 79:
+                    utils.setBlock(world, x, y, z, 35, (byte) 3);
+                    break;
+                case 89:
+                    utils.setBlock(world, x, y, z, 35, (byte) 4);
+                    break;
+                default:
+                    utils.setBlock(world, x, y, z, wall_block, chameleonData);
+                    break;
             }
             utils.setBlock(world, plusx, y, z, wall_block, chameleonData); // east
             utils.setBlock(world, plusx, y, plusz, wall_block, chameleonData);
@@ -182,7 +221,11 @@ public class TARDISBuilder {
             s.setLine(2, "¤fBOX");
             s.update();
             // put torch on top
-            utils.setBlock(world, x, plusy, z, 50, (byte) 5);
+            if (wall_block == 79) {
+                utils.setBlock(world, x, plusy, z, 76, (byte) 5);
+            } else {
+                utils.setBlock(world, x, plusy, z, 50, (byte) 5);
+            }
             // remove the IRON & LAPIS blocks
             utils.setBlock(world, x, minusy, z, 0, norm);
             utils.setBlock(world, x, down2y, z, 0, norm);
