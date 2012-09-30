@@ -112,7 +112,7 @@ public class TARDISTimetravel {
             highest = randworld.getHighestBlockYAt(wherex, wherez);
             Block currentBlock = randworld.getBlockAt(wherex, highest, wherez);
             if (highest > 3) {
-                if (currentBlock.getType() == Material.AIR || currentBlock.getType() == Material.SNOW || currentBlock.getType() == Material.LONG_GRASS || currentBlock.getType() == Material.RED_ROSE || currentBlock.getType() == Material.YELLOW_FLOWER || currentBlock.getType() == Material.BROWN_MUSHROOM || currentBlock.getType() == Material.RED_MUSHROOM || currentBlock.getType() == Material.SAPLING) {
+                if (currentBlock.getType() == Material.AIR || currentBlock.getType() == Material.SNOW || currentBlock.getType() == Material.LONG_GRASS || currentBlock.getType() == Material.RED_ROSE || currentBlock.getType() == Material.YELLOW_FLOWER || currentBlock.getType() == Material.BROWN_MUSHROOM || currentBlock.getType() == Material.RED_MUSHROOM || currentBlock.getType() == Material.SAPLING || currentBlock.getType() == Material.SNOW) {
                     currentBlock = currentBlock.getRelative(BlockFace.DOWN);
                 }
                 Location chunk_loc = currentBlock.getLocation();
