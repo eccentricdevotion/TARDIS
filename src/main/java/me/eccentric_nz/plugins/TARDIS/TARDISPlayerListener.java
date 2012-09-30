@@ -160,16 +160,20 @@ public class TARDISPlayerListener implements Listener {
                                                 double ey = exitTardis.getY();
                                                 switch (Constants.COMPASS.valueOf(d)) {
                                                     case NORTH:
-                                                        exitTardis.setZ(ez + 2);
+                                                        exitTardis.setX(ex + 0.5);
+                                                        exitTardis.setZ(ez + 1.5);
                                                         break;
                                                     case EAST:
-                                                        exitTardis.setX(ex - 2);
+                                                        exitTardis.setX(ex - 1.5);
+                                                        exitTardis.setZ(ez + 0.5);
                                                         break;
                                                     case SOUTH:
-                                                        exitTardis.setZ(ez - 2);
+                                                        exitTardis.setX(ex - 0.5);
+                                                        exitTardis.setZ(ez - 1.5);
                                                         break;
                                                     case WEST:
-                                                        exitTardis.setX(ex + 2);
+                                                        exitTardis.setX(ex + 1.5);
+                                                        exitTardis.setZ(ez - 0.5);
                                                         break;
                                                 }
                                                 exitTardis.setY(ey + .25);
@@ -232,7 +236,7 @@ public class TARDISPlayerListener implements Listener {
                                                 }
                                                 if (playerNameStr.equals(tl) || chkCompanion == true) {
                                                     // get INNER TARDIS location
-                                                    String queryInnerDoor = "SELECT * FROM doors WHERE doot_type = 1 AND tardis_id = " + id;
+                                                    String queryInnerDoor = "SELECT * FROM doors WHERE door_type = 1 AND tardis_id = " + id;
                                                     ResultSet doorRS = statement.executeQuery(queryInnerDoor);
                                                     if (doorRS.next()) {
                                                         String doorLocStr = doorRS.getString("door_location");
@@ -251,19 +255,23 @@ public class TARDISPlayerListener implements Listener {
                                                         switch (Constants.COMPASS.valueOf(d)) {
                                                             case NORTH:
                                                                 // z -ve
-                                                                tmp_loc.setZ(getz - 1);
+                                                                tmp_loc.setX(getx + 0.5);
+                                                                tmp_loc.setZ(getz - 1.5);
                                                                 break;
                                                             case EAST:
                                                                 // x +ve
-                                                                tmp_loc.setX(getx + 1);
+                                                                tmp_loc.setX(getx + 1.5);
+                                                                tmp_loc.setZ(getz + 0.5);
                                                                 break;
                                                             case SOUTH:
                                                                 // z +ve
-                                                                tmp_loc.setZ(getz + 1);
+                                                                tmp_loc.setX(getx - 0.5);
+                                                                tmp_loc.setZ(getz + 1.5);
                                                                 break;
                                                             case WEST:
                                                                 // x -ve
-                                                                tmp_loc.setX(getx - 1);
+                                                                tmp_loc.setX(getx - 1.5);
+                                                                tmp_loc.setZ(getz - 0.5);
                                                                 break;
                                                         }
                                                         // enter TARDIS!
