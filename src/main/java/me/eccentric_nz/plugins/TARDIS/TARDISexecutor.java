@@ -716,37 +716,6 @@ public class TARDISexecutor implements CommandExecutor {
                             }
                             int id = rs.getInt("tardis_id");
                             String chamStr = rs.getString("chameleon");
-                            if (chamStr.equals("")) {
-                                sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " Could not find the Chameleon Circuit!");
-                                return false;
-                            } else {
-                                int x = 0, y = 0, z = 0;
-                                String[] chamData = chamStr.split(":");
-                                World w = plugin.getServer().getWorld(chamData[0]);
-                                Constants.COMPASS d = Constants.COMPASS.valueOf(rs.getString("direction"));
-                                try {
-                                    x = Integer.parseInt(chamData[1]);
-                                    y = Integer.parseInt(chamData[2]);
-                                    z = Integer.parseInt(chamData[3]);
-                                } catch (NumberFormatException nfe) {
-                                    System.err.println(Constants.MY_PLUGIN_NAME + " Could not format number: " + nfe);
-                                }
-                                Block chamBlock = w.getBlockAt(x, y, z);
-                                Sign cs = (Sign) chamBlock.getState();
-                                if (args[1].equalsIgnoreCase("on")) {
-                                    String queryChameleon = "UPDATE tardis SET chamele_on = 1 WHERE tardis_id = " + id;
-                                    statement.executeUpdate(queryChameleon);
-                                    sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " The Chameleon Circuit was turned ON!");
-                                    cs.setLine(3, "¤aON");
-                                }
-                                if (args[1].equalsIgnoreCase("off")) {
-                                    String queryChameleon = "UPDATE tardis SET chamele_on = 0 WHERE tardis_id = " + id;
-                                    statement.executeUpdate(queryChameleon);
-                                    sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " The Chameleon Circuit was turned OFF.");
-                                    cs.setLine(3, "¤cOFF");
-                                }
-                                cs.update();
-                            }
                             if (args[1].equalsIgnoreCase("add")) {
                                 int x = 0, y = 0, z = 0;
                                 Byte data = 4;
@@ -796,6 +765,38 @@ public class TARDISexecutor implements CommandExecutor {
                                 String chameleonloc = w.getName() + ":" + lx + ":" + ly + ":" + lz;
                                 String queryChameleon = "UPDATE tardis SET chameleon = '" + chameleonloc + "', chamele_on = 0 WHERE tardis_id = " + id;
                                 statement.executeUpdate(queryChameleon);
+                            } else {
+                                if (chamStr.equals("")) {
+                                    sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " Could not find the Chameleon Circuit!");
+                                    return false;
+                                } else {
+                                    int x = 0, y = 0, z = 0;
+                                    String[] chamData = chamStr.split(":");
+                                    World w = plugin.getServer().getWorld(chamData[0]);
+                                    Constants.COMPASS d = Constants.COMPASS.valueOf(rs.getString("direction"));
+                                    try {
+                                        x = Integer.parseInt(chamData[1]);
+                                        y = Integer.parseInt(chamData[2]);
+                                        z = Integer.parseInt(chamData[3]);
+                                    } catch (NumberFormatException nfe) {
+                                        System.err.println(Constants.MY_PLUGIN_NAME + " Could not format number: " + nfe);
+                                    }
+                                    Block chamBlock = w.getBlockAt(x, y, z);
+                                    Sign cs = (Sign) chamBlock.getState();
+                                    if (args[1].equalsIgnoreCase("on")) {
+                                        String queryChameleon = "UPDATE tardis SET chamele_on = 1 WHERE tardis_id = " + id;
+                                        statement.executeUpdate(queryChameleon);
+                                        sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " The Chameleon Circuit was turned ON!");
+                                        cs.setLine(3, "¤aON");
+                                    }
+                                    if (args[1].equalsIgnoreCase("off")) {
+                                        String queryChameleon = "UPDATE tardis SET chamele_on = 0 WHERE tardis_id = " + id;
+                                        statement.executeUpdate(queryChameleon);
+                                        sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " The Chameleon Circuit was turned OFF.");
+                                        cs.setLine(3, "¤cOFF");
+                                    }
+                                    cs.update();
+                                }
                             }
                             rs.close();
                             statement.close();
