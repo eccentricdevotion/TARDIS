@@ -471,7 +471,7 @@ public class TARDISexecutor implements CommandExecutor {
                             Statement statement = connection.createStatement();
                             ResultSet rs = service.getTardis(player.getName(), "*");;
                             if (!rs.next()) {
-                                sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " You have not created a TARDIS yet!");
+                                sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " " + Constants.NO_TARDIS);
                                 return false;
                             }
                             save = rs.getString("save");
@@ -509,7 +509,7 @@ public class TARDISexecutor implements CommandExecutor {
                             Statement statement = connection.createStatement();
                             ResultSet rs = service.getTardis(player.getName(), "owner");
                             if (rs == null || !rs.next()) {
-                                sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " You have not created a TARDIS yet!");
+                                sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " " + Constants.NO_TARDIS);
                                 return false;
                             }
                             if (args.length < 2 || (!args[1].equalsIgnoreCase("saves") && !args[1].equalsIgnoreCase("companions"))) {
@@ -535,7 +535,7 @@ public class TARDISexecutor implements CommandExecutor {
                             Statement statement = connection.createStatement();
                             ResultSet rs = service.getTardis(player.getName(), "save");
                             if (rs == null || !rs.next()) {
-                                sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " You have not created a TARDIS yet!");
+                                sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " " + Constants.NO_TARDIS);
                                 return false;
                             }
                             String loc = rs.getString("save");
@@ -562,7 +562,7 @@ public class TARDISexecutor implements CommandExecutor {
                             String comps;
                             int id;
                             if (rs == null || !rs.next()) {
-                                sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " You have not created a TARDIS yet!");
+                                sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " " + Constants.NO_TARDIS);
                                 return false;
                             } else {
                                 comps = rs.getString("companions");
@@ -605,7 +605,7 @@ public class TARDISexecutor implements CommandExecutor {
                             String comps;
                             int id;
                             if (rs == null || !rs.next()) {
-                                sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " You have not created a TARDIS yet!");
+                                sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " " + Constants.NO_TARDIS);
                                 return false;
                             } else {
                                 id = rs.getInt("tardis_id");
@@ -653,7 +653,7 @@ public class TARDISexecutor implements CommandExecutor {
                             String queryList = "SELECT * FROM tardis WHERE owner = '" + player.getName() + "'";
                             ResultSet rs = statement.executeQuery(queryList);
                             if (rs == null || !rs.next()) {
-                                sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " You have not created a TARDIS yet!");
+                                sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " " + Constants.NO_TARDIS);
                                 return false;
                             }
                             if (args.length < 3) {
@@ -711,7 +711,7 @@ public class TARDISexecutor implements CommandExecutor {
                             Statement statement = connection.createStatement();
                             ResultSet rs = service.getTardis(player.getName(), "*");
                             if (rs == null || !rs.next()) {
-                                sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " You have not created a TARDIS yet!");
+                                sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " " + Constants.NO_TARDIS);
                                 return false;
                             }
                             int id = rs.getInt("tardis_id");
