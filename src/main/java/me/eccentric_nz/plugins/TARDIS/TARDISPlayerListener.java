@@ -38,7 +38,7 @@ public class TARDISPlayerListener implements Listener {
 
         final Player player = event.getPlayer();
         String playerNameStr = player.getName();
-        int savedx = 0, savedy = 0, savedz = 0, cx = 0, cz = 0;
+        int savedx = 0, savedy = 0, savedz = 0, cx = 0, cy = 0, cz = 0;
 
         Block block = event.getClickedBlock();
         if (block != null) {
@@ -232,44 +232,54 @@ public class TARDISPlayerListener implements Listener {
                                                 }
                                                 if (playerNameStr.equals(tl) || chkCompanion == true) {
                                                     // get INNER TARDIS location
-                                                    Location tmp_loc = null;
-                                                    //String chunkstr = rs.getString("chunk");
-                                                    String[] split = chunkstr.split(":");
-                                                    World cw = plugin.getServer().getWorld(split[0]);
-                                                    try {
-                                                        cx = Integer.parseInt(split[1]);
-                                                        cz = Integer.parseInt(split[2]);
-                                                    } catch (NumberFormatException nfe) {
-                                                        System.err.println(Constants.MY_PLUGIN_NAME + " Could not convert to number!");
-                                                    }
-                                                    Chunk chunk = cw.getChunkAt(cx, cz);
-                                                    switch (Constants.COMPASS.valueOf(d)) {
-                                                        case NORTH:
-                                                            tmp_loc = chunk.getBlock(9, 19, 13).getLocation();
-                                                            break;
-                                                        case EAST:
-                                                            tmp_loc = chunk.getBlock(3, 19, 9).getLocation();
-                                                            break;
-                                                        case SOUTH:
-                                                            tmp_loc = chunk.getBlock(6, 19, 3).getLocation();
-                                                            break;
-                                                        case WEST:
-                                                            tmp_loc = chunk.getBlock(13, 19, 6).getLocation();
-                                                            break;
-                                                    }
-                                                    // enter TARDIS!
-                                                    cw.getChunkAt(tmp_loc).load();
-                                                    tmp_loc.setPitch(pitch);
-                                                    tmp_loc.setYaw(yaw);
-                                                    final Location tardis_loc = tmp_loc;
-                                                    tt(player, tardis_loc, false, playerWorld, userQuotes);
-                                                    String queryTravellerUpdate = "INSERT INTO travellers (tardis_id, player) VALUES (" + id + ", '" + playerNameStr + "')";
-                                                    statement.executeUpdate(queryTravellerUpdate);
-                                                    // update current TARDIS location
-                                                    String queryLocUpdate = "UPDATE tardis SET current = '" + save + "' WHERE tardis_id = " + id;
-                                                    statement.executeUpdate(queryLocUpdate);
-                                                    if (plugin.getServer().getPluginManager().getPlugin("Spout") != null && SpoutManager.getPlayer(player).isSpoutCraftEnabled()) {
-                                                        SpoutManager.getSoundManager().playCustomSoundEffect(plugin, SpoutManager.getPlayer(player), "https://dl.dropbox.com/u/53758864/tardis_hum.mp3", false, tardis_loc, 9, 25);
+                                                    String queryInnerDoor = "SELECT * FROM doors WHERE doot_type = 1 AND tardis_id = " + id;
+                                                    ResultSet doorRS = statement.executeQuery(queryInnerDoor);
+                                                    if (doorRS.next()) {
+                                                        String doorLocStr = doorRS.getString("door_location");
+                                                        String[] split = doorLocStr.split(":");
+                                                        World cw = plugin.getServer().getWorld(split[0]);
+                                                        try {
+                                                            cx = Integer.parseInt(split[1]);
+                                                            cy = Integer.parseInt(split[2]);
+                                                            cz = Integer.parseInt(split[3]);
+                                                        } catch (NumberFormatException nfe) {
+                                                            System.err.println(Constants.MY_PLUGIN_NAME + " Could not convert to number!");
+                                                        }
+                                                        Location tmp_loc = cw.getBlockAt(cx, cy, cz).getLocation();
+                                                        int getx = tmp_loc.getBlockX();
+                                                        int getz = tmp_loc.getBlockZ();
+                                                        switch (Constants.COMPASS.valueOf(d)) {
+                                                            case NORTH:
+                                                                // z -ve
+                                                                tmp_loc.setZ(getz - 1);
+                                                                break;
+                                                            case EAST:
+                                                                // x +ve
+                                                                tmp_loc.setX(getx + 1);
+                                                                break;
+                                                            case SOUTH:
+                                                                // z +ve
+                                                                tmp_loc.setZ(getz + 1);
+                                                                break;
+                                                            case WEST:
+                                                                // x -ve
+                                                                tmp_loc.setX(getx - 1);
+                                                                break;
+                                                        }
+                                                        // enter TARDIS!
+                                                        cw.getChunkAt(tmp_loc).load();
+                                                        tmp_loc.setPitch(pitch);
+                                                        tmp_loc.setYaw(yaw);
+                                                        final Location tardis_loc = tmp_loc;
+                                                        tt(player, tardis_loc, false, playerWorld, userQuotes);
+                                                        String queryTravellerUpdate = "INSERT INTO travellers (tardis_id, player) VALUES (" + id + ", '" + playerNameStr + "')";
+                                                        statement.executeUpdate(queryTravellerUpdate);
+                                                        // update current TARDIS location
+                                                        String queryLocUpdate = "UPDATE tardis SET current = '" + save + "' WHERE tardis_id = " + id;
+                                                        statement.executeUpdate(queryLocUpdate);
+                                                        if (plugin.getServer().getPluginManager().getPlugin("Spout") != null && SpoutManager.getPlayer(player).isSpoutCraftEnabled()) {
+                                                            SpoutManager.getSoundManager().playCustomSoundEffect(plugin, SpoutManager.getPlayer(player), "https://dl.dropbox.com/u/53758864/tardis_hum.mp3", false, tardis_loc, 9, 25);
+                                                        }
                                                     }
                                                 } else {
                                                     if (TLOnline == false) {
@@ -277,9 +287,9 @@ public class TARDISPlayerListener implements Listener {
                                                     }
                                                 }
                                             }
-                                        } else {
-                                            player.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " " + Constants.NO_TARDIS);
-                                        }
+                                        } //else {
+                                        //player.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " " + Constants.NO_TARDIS);
+                                        //}
                                     } catch (SQLException e) {
                                         System.err.println(Constants.MY_PLUGIN_NAME + " Get TARDIS from Door Error: " + e);
                                     }
