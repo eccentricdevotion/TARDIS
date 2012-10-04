@@ -40,7 +40,7 @@ public class TARDISdatabase {
             statement.executeUpdate(queryTravellers);
             String queryChunks = "CREATE TABLE IF NOT EXISTS chunks (chunk_id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, world TEXT, x INTEGER, z INTEGER)";
             statement.executeUpdate(queryChunks);
-            String queryDoors = "CREATE TABLE IF NOT EXISTS doors (door_id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, tardis_id INTEGER, door_type INTEGER, door_location TEXT)";
+            String queryDoors = "CREATE TABLE IF NOT EXISTS doors (door_id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, tardis_id INTEGER, door_type INTEGER, door_location TEXT, door_direction TEXT)";
             statement.executeUpdate(queryDoors);
             String queryPlayers = "CREATE TABLE IF NOT EXISTS player_prefs (pp_id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, player TEXT COLLATE NOCASE, sfx_on INTEGER DEFAULT 0, platform_on INTEGER DEFAULT 0)";
             statement.executeUpdate(queryPlayers);
@@ -61,6 +61,23 @@ public class TARDISdatabase {
                 String queryAlter3 = "ALTER TABLE player_prefs ADD quotes_on INTEGER DEFAULT 1";
                 statement.executeUpdate(queryAlter3);
                 System.out.println(Constants.MY_PLUGIN_NAME + " Adding new quotes to player prefs!");
+            }
+            // update doors if there is no door_direction
+            String queryDoorDirection = "SELECT sql FROM sqlite_master WHERE tbl_name = 'doors' AND sql LIKE '%door_direction TEXT%'";
+            ResultSet rsDoorDirection = statement.executeQuery(queryDoorDirection);
+            if (!rsDoorDirection.next()) {
+                String queryAlter4 = "ALTER TABLE doors ADD door_direction TEXT";
+                statement.executeUpdate(queryAlter4);
+                // find all TARDISs get & add direction to doors table
+                String queryTardii = "SELECT tardis_id, direction FROM tardis";
+                ResultSet rsTardii = statement.executeQuery(queryTardii);
+                while (rsTardii.next()) {
+                    int tid = rsTardii.getInt("tardis_id");
+                    String dir = rsTardii.getString("direction");
+                    String queryAddDoor = "UPDATE doors SET door_direction = '" + dir + "' WHERE tardis_id = " + tid;
+                    statement.executeUpdate(queryAddDoor);
+                }
+                System.out.println(Constants.MY_PLUGIN_NAME + " Adding door directions to doors table!");
             }
         } catch (SQLException e) {
             System.err.println(Constants.MY_PLUGIN_NAME + " Create table error: " + e);
