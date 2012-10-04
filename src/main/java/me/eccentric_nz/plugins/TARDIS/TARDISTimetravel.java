@@ -135,7 +135,7 @@ public class TARDISTimetravel {
             } else {
                 count = 1;
             }
-            System.out.println("Finding safe location...");
+            //System.out.println("Finding safe location...");
             if (count == 0) {
                 danger = false;
                 break;
