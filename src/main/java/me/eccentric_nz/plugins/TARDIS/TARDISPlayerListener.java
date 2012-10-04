@@ -66,7 +66,23 @@ public class TARDISPlayerListener implements Listener {
                         id = rs.getInt("tardis_id");
                         rs.close();
                         if (blockName.equalsIgnoreCase("door") && blockType == Material.IRON_DOOR_BLOCK) {
-                            queryBlockUpdate = "UPDATE doors SET door_location = '" + blockLocStr + "' WHERE door_type = 1 AND tardis_id = " + id;
+                            // get door data this should let us determine the direction
+                            String d = "EAST";
+                            switch (blockData) {
+                                case 0:
+                                    d = "EAST";
+                                    break;
+                                case 1:
+                                    d = "SOUTH";
+                                    break;
+                                case 2:
+                                    d = "WEST";
+                                    break;
+                                case 3:
+                                    d = "NORTH";
+                                    break;
+                            }
+                            queryBlockUpdate = "UPDATE doors SET door_location = '" + blockLocStr + "', door_direction = '" + d + "' WHERE door_type = 1 AND tardis_id = " + id;
                         }
                         if (blockName.equalsIgnoreCase("button") && blockType == Material.STONE_BUTTON) {
                             queryBlockUpdate = "UPDATE tardis SET button = '" + blockLocStr + "' WHERE tardis_id = " + id;
@@ -127,7 +143,7 @@ public class TARDISPlayerListener implements Listener {
                                     try {
                                         Connection connection = service.getConnection();
                                         Statement statement = connection.createStatement();
-                                        String queryTardis = "SELECT tardis.*, doors.door_type FROM tardis, doors WHERE doors.door_location = '" + doorloc + "' AND doors.tardis_id = tardis.tardis_id";
+                                        String queryTardis = "SELECT tardis.*, doors.door_type, doors.door_direction FROM tardis, doors WHERE doors.door_location = '" + doorloc + "' AND doors.tardis_id = tardis.tardis_id";
                                         ResultSet rs = statement.executeQuery(queryTardis);
                                         if ((rs != null && rs.next())) {
                                             int id = rs.getInt("tardis_id");
@@ -252,7 +268,8 @@ public class TARDISPlayerListener implements Listener {
                                                         Location tmp_loc = cw.getBlockAt(cx, cy, cz).getLocation();
                                                         int getx = tmp_loc.getBlockX();
                                                         int getz = tmp_loc.getBlockZ();
-                                                        switch (Constants.COMPASS.valueOf(d)) {
+                                                        String doorDirStr = doorRS.getString("door_direction");
+                                                        switch (Constants.COMPASS.valueOf(doorDirStr)) {
                                                             case NORTH:
                                                                 // z -ve
                                                                 tmp_loc.setX(getx + 0.5);
