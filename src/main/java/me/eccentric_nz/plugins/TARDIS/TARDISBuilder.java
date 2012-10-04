@@ -34,8 +34,13 @@ public class TARDISBuilder {
         int plusx, minusx, x, plusz, minusz, z, wall_block = 35;
         byte sd = 0, norm = 0, grey = 8, blue = 11, chameleonData = 11;
         if (c) {
+            Block chameleonBlock;
             // chameleon circuit is on - get block under TARDIS
-            Block chameleonBlock = l.getBlock().getRelative(BlockFace.DOWN);
+            if (l.getBlock().getType() == Material.SNOW) {
+                chameleonBlock = l.getBlock();
+            } else {
+                chameleonBlock = l.getBlock().getRelative(BlockFace.DOWN);
+            }
             int chameleonType = chameleonBlock.getTypeId();
             // determine wall_block
             if (Constants.CHAMELEON_BLOCKS_VALID.contains((Integer) chameleonType)) {
@@ -167,7 +172,7 @@ public class TARDISBuilder {
                     bdw = 2;
                     break;
             }
-            // should insert the door when tardis is first made, and the update location there after!
+            // should insert the door when tardis is first made, and then update location there after!
             String queryInsertOrUpdate = "SELECT door_id FROM doors WHERE door_type = 0 AND tardis_id = " + id;
             ResultSet rs = statement.executeQuery(queryInsertOrUpdate);
             String queryDoor;
@@ -585,7 +590,7 @@ public class TARDISBuilder {
                                                 break;
                                         }
                                         String doorloc = world.getName() + ":" + startx + ":" + starty + ":" + startz;
-                                        String queryDoor = "INSERT INTO doors (tardis_id, door_type, door_location) VALUES (" + dbID + ", 1, '" + doorloc + "')";
+                                        String queryDoor = "INSERT INTO doors (tardis_id, door_type, door_location, door_direction) VALUES (" + dbID + ", 1, '" + doorloc + "', '" + d + "')";
                                         statement.executeUpdate(queryDoor);
                                     }
                                     if (id == 68) { // chameleon circuit sign
