@@ -141,7 +141,7 @@ public class TARDISexecutor implements CommandExecutor {
                                             }
                                         }
                                     } catch (IOException io) {
-                                        System.err.println(Constants.MY_PLUGIN_NAME + " could not create [" + strWorldName + "] world chunk file!");
+                                        System.err.println(Constants.MY_PLUGIN_NAME + " could not read [" + strWorldName + "] world chunk file!");
                                     }
                                 }
                             }
@@ -284,8 +284,11 @@ public class TARDISexecutor implements CommandExecutor {
                 if (args[0].equalsIgnoreCase("comehere")) {
                     if (player.hasPermission("TARDIS.timetravel")) {
                         final Location eyeLocation = player.getTargetBlock(null, 50).getLocation();
-                        int yplusone = eyeLocation.getBlockY();
-                        eyeLocation.setY(yplusone + 1);
+                        Material m = player.getTargetBlock(null, 50).getType();
+                        if (m != Material.SNOW) {
+                            int yplusone = eyeLocation.getBlockY();
+                            eyeLocation.setY(yplusone + 1);
+                        }
                         // set save location
                         try {
                             Connection connection = service.getConnection();
