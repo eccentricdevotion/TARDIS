@@ -177,22 +177,21 @@ public class TARDISPlayerListener implements Listener {
                                                 switch (Constants.COMPASS.valueOf(d)) {
                                                     case NORTH:
                                                         exitTardis.setX(ex + 0.5);
-                                                        exitTardis.setZ(ez + 1.5);
+                                                        exitTardis.setZ(ez + 2.5);
                                                         break;
                                                     case EAST:
                                                         exitTardis.setX(ex - 1.5);
                                                         exitTardis.setZ(ez + 0.5);
                                                         break;
                                                     case SOUTH:
-                                                        exitTardis.setX(ex - 0.5);
+                                                        exitTardis.setX(ex + 0.5);
                                                         exitTardis.setZ(ez - 1.5);
                                                         break;
                                                     case WEST:
-                                                        exitTardis.setX(ex + 1.5);
-                                                        exitTardis.setZ(ez - 0.5);
+                                                        exitTardis.setX(ex + 2.5);
+                                                        exitTardis.setZ(ez + 0.5);
                                                         break;
                                                 }
-                                                exitTardis.setY(ey + .25);
                                                 World exitWorld = exitTardis.getWorld();
                                                 // destroy current TARDIS location
                                                 Location newl = null;
@@ -273,7 +272,7 @@ public class TARDISPlayerListener implements Listener {
                                                             case NORTH:
                                                                 // z -ve
                                                                 tmp_loc.setX(getx + 0.5);
-                                                                tmp_loc.setZ(getz - 1.5);
+                                                                tmp_loc.setZ(getz - 0.5);
                                                                 break;
                                                             case EAST:
                                                                 // x +ve
@@ -282,13 +281,13 @@ public class TARDISPlayerListener implements Listener {
                                                                 break;
                                                             case SOUTH:
                                                                 // z +ve
-                                                                tmp_loc.setX(getx - 0.5);
+                                                                tmp_loc.setX(getx + 0.5);
                                                                 tmp_loc.setZ(getz + 1.5);
                                                                 break;
                                                             case WEST:
                                                                 // x -ve
-                                                                tmp_loc.setX(getx - 1.5);
-                                                                tmp_loc.setZ(getz - 0.5);
+                                                                tmp_loc.setX(getx - 0.5);
+                                                                tmp_loc.setZ(getz + 0.5);
                                                                 break;
                                                         }
                                                         // enter TARDIS!
@@ -504,10 +503,6 @@ public class TARDISPlayerListener implements Listener {
         final int i = r.nextInt(plugin.quotelen);
         final Player thePlayer = p;
         final Location theLocation = l;
-        final Location firstLocation = l;
-        if (exit) {
-            firstLocation.setY(theLocation.getY() + 0.25);
-        }
         final World to = theLocation.getWorld();
         final boolean allowFlight = thePlayer.getAllowFlight();
         final boolean crossWorlds = from != to;
@@ -523,9 +518,9 @@ public class TARDISPlayerListener implements Listener {
 
         Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
             public void run() {
-                thePlayer.teleport(firstLocation);
+                thePlayer.teleport(theLocation);
             }
-        }, 20L);
+        }, 10L);
         Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
             public void run() {
                 thePlayer.teleport(theLocation);
