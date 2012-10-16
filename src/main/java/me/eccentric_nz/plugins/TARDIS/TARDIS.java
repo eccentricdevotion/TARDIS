@@ -92,7 +92,7 @@ public class TARDIS extends JavaPlugin implements Listener {
             }, 60L, 1200L);
         }
         TARDISSchematicReader reader = new TARDISSchematicReader(plugin);
-        String str = getDataFolder() + File.separator + Constants.SCHEMATIC_BUDGET;
+        String str = getDataFolder() + File.separator + Constants.SCHEMATIC_BIGGER;
         reader.main(str);
     }
 
