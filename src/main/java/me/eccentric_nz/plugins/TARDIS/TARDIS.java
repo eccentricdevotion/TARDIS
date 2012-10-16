@@ -85,11 +85,15 @@ public class TARDIS extends JavaPlugin implements Listener {
 
         if (plugin.getServer().getPluginManager().getPlugin("Spout") != null && config.getBoolean("sfx") == Boolean.valueOf("true")) {
             this.getServer().getScheduler().scheduleSyncRepeatingTask(this, new Runnable() {
+                @Override
                 public void run() {
                     TARDISSounds.randomTARDISSound();
                 }
             }, 60L, 1200L);
         }
+        TARDISSchematicReader reader = new TARDISSchematicReader(plugin);
+        String str = getDataFolder() + File.separator + Constants.SCHEMATIC_BUDGET;
+        reader.main(str);
     }
 
     @Override
