@@ -53,6 +53,21 @@ public class TARDISBuilder {
             if (Constants.CHAMELEON_BLOCKS_CHANGE.contains((Integer) chameleonType)) {
                 wall_block = Constants.swapId(chameleonType);
                 switch (chameleonType) {
+                    case 22:
+                        chameleonData = 11;
+                        break;
+                    case 41:
+                        chameleonData = 4;
+                        break;
+                    case 42:
+                        chameleonData = 8;
+                        break;
+                    case 57:
+                        chameleonData = 3;
+                        break;
+                    case 133:
+                        chameleonData = 5;
+                        break;
                     case 134:
                         chameleonData = 1;
                         break;
