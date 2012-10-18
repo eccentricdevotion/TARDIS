@@ -22,11 +22,22 @@ public class TARDIS extends JavaPlugin implements Listener {
     public FileConfiguration config = null;
     public FileConfiguration timelords = null;
     public File schematicfile = null;
+    public File budgetschematicfile = null;
+    public File biggerschematicfile = null;
+    public File deluxeschematicfile = null;
+    public File budgetschematiccsv = null;
+    public File biggerschematiccsv = null;
+    public File deluxeschematiccsv = null;
     public File myconfigfile = null;
     public File timelordsfile = null;
     public File quotesfile = null;
     private TARDISexecutor tardisExecutor;
-    public String[][][] schematic;
+    public String[][][] budgetschematic;
+    public String[][][] biggerschematic;
+    public String[][][] deluxeschematic;
+    public short[] budgetdimensions = new short[3];
+    public short[] biggerdimensions = new short[3];
+    public short[] deluxedimensions = new short[3];
     protected static TARDIS plugin;
     TARDISBlockPlaceListener tardisBlockPlaceListener = new TARDISBlockPlaceListener(this);
     TARDISBlockBreakListener tardisBlockBreakListener = new TARDISBlockBreakListener(this);
@@ -66,6 +77,26 @@ public class TARDIS extends JavaPlugin implements Listener {
             System.err.println(Constants.MY_PLUGIN_NAME + " Connection and Tables Error: " + e);
         }
 
+        TARDISSchematicReader reader = new TARDISSchematicReader(plugin);
+        String budstr = getDataFolder() + File.separator + Constants.SCHEMATIC_BUDGET;
+        budgetschematicfile = new File(budstr);
+        if (!budgetschematicfile.exists()) {
+            copy(getResource(Constants.SCHEMATIC_BUDGET), budgetschematicfile);
+        }
+        String bigstr = getDataFolder() + File.separator + Constants.SCHEMATIC_BIGGER;
+        biggerschematicfile = new File(bigstr);
+        if (!biggerschematicfile.exists()) {
+            copy(getResource(Constants.SCHEMATIC_BIGGER), biggerschematicfile);
+        }
+        String delstr = getDataFolder() + File.separator + Constants.SCHEMATIC_DELUXE;
+        deluxeschematicfile = new File(delstr);
+        if (!deluxeschematicfile.exists()) {
+            copy(getResource(Constants.SCHEMATIC_DELUXE), deluxeschematicfile);
+        }
+        reader.main(budstr, Constants.SCHEMATIC.BUDGET);
+        reader.main(bigstr, Constants.SCHEMATIC.BIGGER);
+        reader.main(delstr, Constants.SCHEMATIC.DELUXE);
+
         if (config == null) {
             loadConfig();
         }
@@ -91,9 +122,6 @@ public class TARDIS extends JavaPlugin implements Listener {
                 }
             }, 60L, 1200L);
         }
-        TARDISSchematicReader reader = new TARDISSchematicReader(plugin);
-        String str = getDataFolder() + File.separator + Constants.SCHEMATIC_BIGGER;
-        reader.main(str);
     }
 
     @Override
@@ -109,10 +137,15 @@ public class TARDIS extends JavaPlugin implements Listener {
     public FileConfiguration loadConfig() {
         try {
             schematicfile = new File(getDataFolder(), Constants.SCHEMATIC_FILE_NAME);
-            //if (!schematicfile.exists()) {
-            copy(getResource(Constants.SCHEMATIC_FILE_NAME), schematicfile);
-            //}
-            schematic = Schematic.schematic(schematicfile);
+            budgetschematiccsv = new File(getDataFolder(), Constants.SCHEMATIC_BUDGET + ".csv");
+            biggerschematiccsv = new File(getDataFolder(), Constants.SCHEMATIC_BIGGER + ".csv");
+            deluxeschematiccsv = new File(getDataFolder(), Constants.SCHEMATIC_DELUXE + ".csv");
+            if (!schematicfile.exists()) {
+                copy(getResource(Constants.SCHEMATIC_FILE_NAME), schematicfile);
+            }
+            budgetschematic = Schematic.schematic(budgetschematiccsv, budgetdimensions[0], budgetdimensions[1], budgetdimensions[2]);
+            biggerschematic = Schematic.schematic(biggerschematiccsv, biggerdimensions[0], biggerdimensions[1], biggerdimensions[2]);
+            deluxeschematic = Schematic.schematic(deluxeschematiccsv, deluxedimensions[0], deluxedimensions[1], deluxedimensions[2]);
 
             myconfigfile = new File(getDataFolder(), Constants.CONFIG_FILE_NAME);
             if (!myconfigfile.exists()) {
