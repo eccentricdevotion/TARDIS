@@ -19,9 +19,14 @@ public class Constants {
     public static String MY_PLUGIN_NAME;
     public static String TARDIS_KEY;
     public static final String SCHEMATIC_FILE_NAME = "schematic.csv";
-    public static final String SCHEMATIC_BUDGET = "budget.schematic.gz";
-    public static final String SCHEMATIC_BIGGER = "bigger.schematic.gz";
-    public static final String SCHEMATIC_DELUXE = "deluxe.schematic.gz";
+    public static final String SCHEMATIC_BUDGET = "budget.schematic";
+    public static final String SCHEMATIC_BIGGER = "bigger.schematic";
+    public static final String SCHEMATIC_DELUXE = "deluxe.schematic";
+
+    public enum SCHEMATIC {
+
+        BUDGET, BIGGER, DELUXE;
+    }
     public static final String CONFIG_FILE_NAME = "config.yml";
     public static final String TIMELORDS_FILE_NAME = "timelords.yml";
     public static final String QUOTES_FILE_NAME = "quotes.txt";
