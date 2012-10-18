@@ -123,4 +123,14 @@ public class TARDISUtils {
         }
         return chunkchk;
     }
+
+    public int parseNum(String i) {
+        int num = 0;
+        try {
+            num = Integer.parseInt(i);
+        } catch (NumberFormatException n) {
+            System.err.println("Could not convert to number");
+        }
+        return num;
+    }
 }
