@@ -36,7 +36,19 @@ public class TARDISBlockPlaceListener implements Listener {
             Block blockBelow = block.getRelative(BlockFace.DOWN);
             Block blockBottom = blockBelow.getRelative(BlockFace.DOWN);
             // only continue if the redstone torch is placed on top of a LAPIS_BLOCK on top of an IRON_BLOCK
-            if (blockBelow.getType() == Material.LAPIS_BLOCK && blockBottom.getType() == Material.IRON_BLOCK) {
+            if (blockBelow.getType() == Material.LAPIS_BLOCK && (blockBottom.getType() == Material.IRON_BLOCK || blockBottom.getType() == Material.GOLD_BLOCK || blockBottom.getType() == Material.DIAMOND_BLOCK)) {
+                Constants.SCHEMATIC schm;
+                switch (blockBottom.getType()) {
+                    case GOLD_BLOCK:
+                        schm = Constants.SCHEMATIC.BIGGER;
+                        break;
+                    case DIAMOND_BLOCK:
+                        schm = Constants.SCHEMATIC.DELUXE;
+                        break;
+                    default:
+                        schm = Constants.SCHEMATIC.BUDGET;
+                        break;
+                }
                 Player player = event.getPlayer();
                 if (player.hasPermission("TARDIS.create")) {
                     String playerNameStr = player.getName();
@@ -103,7 +115,7 @@ public class TARDISBlockPlaceListener implements Listener {
                                 statement.close();
                                 // turn the block stack into a TARDIS
                                 builder.buildOuterTARDIS(lastInsertId, block_loc, Constants.COMPASS.valueOf(d), false, player);
-                                builder.buildInnerTARDIS(plugin.schematic, chunkworld, Constants.COMPASS.valueOf(d), lastInsertId);
+                                builder.buildInnerTARDIS(schm, chunkworld, Constants.COMPASS.valueOf(d), lastInsertId);
                             } else {
                                 player.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " A TARDIS already exists at this location, please try another chunk!");
                             }
