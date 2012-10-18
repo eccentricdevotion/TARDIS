@@ -14,20 +14,20 @@ public class Schematic {
         this.plugin = plugin;
     }
 
-    public static String[][][] schematic(File file) {
+    public static String[][][] schematic(File file, short h, short w, short l) {
 
         // load data from csv file
         try {
-            blocks = new String[8][11][11];
+            blocks = new String[h][w][l];
 
             BufferedReader bufRdr = new BufferedReader(new FileReader(file));
             String line;
             //read each line of text file
-            for (int level = 0; level < 8; level++) {
-                for (int row = 0; row < 11; row++) {
+            for (int level = 0; level < h; level++) {
+                for (int row = 0; row < w; row++) {
                     line = bufRdr.readLine();
                     String[] strArr = line.split(",");
-                    System.arraycopy(strArr, 0, blocks[level][row], 0, 11);
+                    System.arraycopy(strArr, 0, blocks[level][row], 0, l);
                 }
             }
         } catch (IOException io) {
