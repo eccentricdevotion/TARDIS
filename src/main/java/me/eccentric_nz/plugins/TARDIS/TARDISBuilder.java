@@ -310,7 +310,29 @@ public class TARDISBuilder {
         }
     }
 
-    public void buildInnerTARDIS(String[][][] s, World world, Constants.COMPASS d, int dbID) {
+    public void buildInnerTARDIS(Constants.SCHEMATIC schm, World world, Constants.COMPASS d, int dbID) {
+        String[][][] s = null;
+        short h, w, l;
+        switch (schm) {
+            case BIGGER:
+                s = plugin.biggerschematic;
+                h = plugin.biggerdimensions[0];
+                w = plugin.biggerdimensions[1];
+                l = plugin.biggerdimensions[2];
+                break;
+            case DELUXE:
+                s = plugin.deluxeschematic;
+                h = plugin.deluxedimensions[0];
+                w = plugin.deluxedimensions[1];
+                l = plugin.deluxedimensions[2];
+                break;
+            default:
+                s = plugin.budgetschematic;
+                h = plugin.budgetdimensions[0];
+                w = plugin.budgetdimensions[1];
+                l = plugin.budgetdimensions[2];
+                break;
+        }
         int level, row, col, id, x, y, z, startx, starty = 15, startz, resetx, resetz, cx = 0, cy = 0, cz = 0, rid = 0, multiplier = 1, tx = 0, ty = 0, tz = 0;
         byte data = 0;
         short damage = 0;
@@ -331,9 +353,9 @@ public class TARDISBuilder {
         // need to set TARDIS space to air first otherwise torches may be placed askew
         // also getting and storing block ids for bonus chest if configured
         StringBuilder sb = new StringBuilder();
-        for (level = 0; level < 8; level++) {
-            for (row = 0; row < 11; row++) {
-                for (col = 0; col < 11; col++) {
+        for (level = 0; level < h; level++) {
+            for (row = 0; row < w; row++) {
+                for (col = 0; col < l; col++) {
                     if (plugin.config.getBoolean("bonus_chest") == Boolean.valueOf("true")) {
                         // get block at location
                         Location replaceLoc = new Location(world, startx, starty, startz);
@@ -387,14 +409,14 @@ public class TARDISBuilder {
             Connection connection = service.getConnection();
             statement = connection.createStatement();
 
-            for (level = 0; level < 8; level++) {
-                for (row = 0; row < 11; row++) {
-                    for (col = 0; col < 11; col++) {
+            for (level = 0; level < h; level++) {
+                for (row = 0; row < w; row++) {
+                    for (col = 0; col < l; col++) {
                         tmp = s[level][row][col];
                         if (!tmp.equals("-")) {
                             if (tmp.contains(":")) {
                                 String[] iddata = tmp.split(":");
-                                id = Integer.parseInt(iddata[0]);
+                                id = utils.parseNum(iddata[0]);
                                 if (iddata[1].equals("~")) {
                                     // determine data bit from direction (d) and block type
                                     if (id == 76 && row == 1) { // 1st redstone torch
@@ -631,7 +653,7 @@ public class TARDISBuilder {
                                     data = Byte.parseByte(iddata[1]);
                                 }
                             } else {
-                                id = Integer.parseInt(tmp);
+                                id = utils.parseNum(tmp);
                                 data = 0;
                             }
                             //utils.setBlock(World w, int x, int y, int z, int m, byte d)
@@ -718,13 +740,9 @@ public class TARDISBuilder {
                 String saved_chestloc = chestRS.getString("chest");
                 String[] cdata = saved_chestloc.split(":");
                 World cw = plugin.getServer().getWorld(cdata[0]);
-                try {
-                    cx = Integer.parseInt(cdata[1]);
-                    cy = Integer.parseInt(cdata[2]);
-                    cz = Integer.parseInt(cdata[3]);
-                } catch (NumberFormatException n) {
-                    System.err.println("Could not convert to number");
-                }
+                cx = utils.parseNum(cdata[1]);
+                cy = utils.parseNum(cdata[2]);
+                cz = utils.parseNum(cdata[3]);
                 Location chest_loc = new Location(cw, cx, cy, cz);
                 Block bonus_chest = chest_loc.getBlock();
                 Chest chest = (Chest) bonus_chest.getState();
@@ -732,11 +750,7 @@ public class TARDISBuilder {
                 Inventory chestInv = chest.getInventory();
                 // convert non-smeltable ores to items
                 for (String i : replaceddata) {
-                    try {
-                        rid = Integer.parseInt(i);
-                    } catch (NumberFormatException n) {
-                        System.err.println("Could not convert to number");
-                    }
+                    rid = utils.parseNum(i);
                     switch (rid) {
                         case 1: // stone to cobblestone
                             rid = 4;
