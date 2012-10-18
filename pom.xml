@@ -2,7 +2,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>me.eccentric_nz.plugins.TARDIS</groupId>
     <artifactId>TARDIS</artifactId>
-    <version>1.5.2</version>
+    <version>1.6-beta</version>
     <name>TARDIS</name>
     <url>http://www.thenosefairy.co.nz/</url>
     <repositories>
@@ -28,14 +28,21 @@
         <dependency>
             <groupId>org.bukkit</groupId>
             <artifactId>bukkit</artifactId>
-            <version>1.3.2-R1.1</version>
+            <version>1.3.2-R2.1-SNAPSHOT</version>
+            <type>jar</type>
+            <scope>compile</scope>
+        </dependency>
+		<dependency>
+            <groupId>sk89q.com</groupId>
+            <artifactId>WorldEdit</artifactId>
+            <version>5.4.2</version>
             <type>jar</type>
             <scope>compile</scope>
         </dependency>
 		<dependency>
             <groupId>org.spout</groupId>
             <artifactId>spout</artifactId>
-            <version>spoutplugin</version>
+            <version>spoutplugin-dev-SNAPSHOT</version>
             <type>jar</type>
             <scope>compile</scope>
         </dependency>
