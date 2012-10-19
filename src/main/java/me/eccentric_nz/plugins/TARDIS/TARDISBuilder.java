@@ -314,20 +314,20 @@ public class TARDISBuilder {
         String[][][] s = null;
         short h, w, l;
         switch (schm) {
-            case BIGGER:
-                s = plugin.biggerschematic;
-                h = plugin.biggerdimensions[0];
-                w = plugin.biggerdimensions[1];
-                l = plugin.biggerdimensions[2];
-                break;
+            //case BIGGER:
+                //s = plugin.biggerschematic_SOUTH;
+                //h = plugin.biggerdimensions[0];
+                //w = plugin.biggerdimensions[1];
+                //l = plugin.biggerdimensions[2];
+                //break;
             case DELUXE:
-                s = plugin.deluxeschematic;
+                s = plugin.deluxeschematic_SOUTH;
                 h = plugin.deluxedimensions[0];
                 w = plugin.deluxedimensions[1];
                 l = plugin.deluxedimensions[2];
                 break;
             default:
-                s = plugin.budgetschematic;
+                s = plugin.budgetschematic_SOUTH;
                 h = plugin.budgetdimensions[0];
                 w = plugin.budgetdimensions[1];
                 l = plugin.budgetdimensions[2];
