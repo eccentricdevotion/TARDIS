@@ -737,47 +737,51 @@ public class TARDISBuilder {
             try {
                 String queryGetChest = "SELECT chest FROM tardis WHERE tardis_id = " + dbID;
                 ResultSet chestRS = statement.executeQuery(queryGetChest);
-                String saved_chestloc = chestRS.getString("chest");
-                String[] cdata = saved_chestloc.split(":");
-                World cw = plugin.getServer().getWorld(cdata[0]);
-                cx = utils.parseNum(cdata[1]);
-                cy = utils.parseNum(cdata[2]);
-                cz = utils.parseNum(cdata[3]);
-                Location chest_loc = new Location(cw, cx, cy, cz);
-                Block bonus_chest = chest_loc.getBlock();
-                Chest chest = (Chest) bonus_chest.getState();
-                // get chest inventory
-                Inventory chestInv = chest.getInventory();
-                // convert non-smeltable ores to items
-                for (String i : replaceddata) {
-                    rid = utils.parseNum(i);
-                    switch (rid) {
-                        case 1: // stone to cobblestone
-                            rid = 4;
-                            break;
-                        case 16: // coal ore to coal
-                            rid = 263;
-                            break;
-                        case 21: // lapis ore to lapis dye
-                            rid = 351;
-                            multiplier = 4;
-                            damage = 4;
-                            break;
-                        case 56: // diamond ore to diamonds
-                            rid = 264;
-                            break;
-                        case 73: // redstone ore to redstone dust
-                            rid = 331;
-                            multiplier = 4;
-                            break;
-                        case 129: // emerald ore to emerald
-                            rid = 388;
-                            break;
+                if (chestRS.next()) {
+                    String saved_chestloc = chestRS.getString("chest");
+                    String[] cdata = saved_chestloc.split(":");
+                    World cw = plugin.getServer().getWorld(cdata[0]);
+                    cx = utils.parseNum(cdata[1]);
+                    cy = utils.parseNum(cdata[2]);
+                    cz = utils.parseNum(cdata[3]);
+                    Location chest_loc = new Location(cw, cx, cy, cz);
+                    Block bonus_chest = chest_loc.getBlock();
+                    Chest chest = (Chest) bonus_chest.getState();
+                    // get chest inventory
+                    Inventory chestInv = chest.getInventory();
+                    // convert non-smeltable ores to items
+                    for (String i : replaceddata) {
+                        rid = utils.parseNum(i);
+                        switch (rid) {
+                            case 1: // stone to cobblestone
+                                rid = 4;
+                                break;
+                            case 16: // coal ore to coal
+                                rid = 263;
+                                break;
+                            case 21: // lapis ore to lapis dye
+                                rid = 351;
+                                multiplier = 4;
+                                damage = 4;
+                                break;
+                            case 56: // diamond ore to diamonds
+                                rid = 264;
+                                break;
+                            case 73: // redstone ore to redstone dust
+                                rid = 331;
+                                multiplier = 4;
+                                break;
+                            case 129: // emerald ore to emerald
+                                rid = 388;
+                                break;
+                        }
+                        // add items to chest
+                        chestInv.addItem(new ItemStack(rid, multiplier, damage));
+                        multiplier = 1; // reset multiplier
+                        damage = 0; // reset damage
                     }
-                    // add items to chest
-                    chestInv.addItem(new ItemStack(rid, multiplier, damage));
-                    multiplier = 1; // reset multiplier
-                    damage = 0; // reset damage
+                } else {
+                    System.err.append(Constants.MY_PLUGIN_NAME + " Could not find chest location in DB!");
                 }
                 chestRS.close();
                 statement.close();
