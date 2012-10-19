@@ -19,9 +19,18 @@ public class Constants {
     public static String MY_PLUGIN_NAME;
     public static String TARDIS_KEY;
     public static final String SCHEMATIC_FILE_NAME = "schematic.csv";
-    public static final String SCHEMATIC_BUDGET = "budget.schematic";
-    public static final String SCHEMATIC_BIGGER = "bigger.schematic";
-    public static final String SCHEMATIC_DELUXE = "deluxe.schematic";
+    public static final String SCHEMATIC_NORTH_BUDGET = "NORTHBudget.schematic";
+    public static final String SCHEMATIC_WEST_BUDGET = "WESTBudget.schematic";
+    public static final String SCHEMATIC_SOUTH_BUDGET = "SOUTHBudget.schematic";
+    public static final String SCHEMATIC_EAST_BUDGET = "EASTBudget.schematic";
+    public static final String SCHEMATIC_NORTH_BIGGER = "NORTHBigger.schematic";
+    public static final String SCHEMATIC_WEST_BIGGER = "WESTBigger.schematic";
+    public static final String SCHEMATIC_SOUTH_BIGGER = "SOUTHBigger.schematic";
+    public static final String SCHEMATIC_EAST_BIGGER = "EASTBigger.schematic";
+    public static final String SCHEMATIC_NORTH_DELUXE = "NORTHDeluxe.schematic";
+    public static final String SCHEMATIC_WEST_DELUXE = "WESTDeluxe.schematic";
+    public static final String SCHEMATIC_SOUTH_DELUXE = "SOUTHDeluxe.schematic";
+    public static final String SCHEMATIC_EAST_DELUXE = "EASTDeluxe.schematic";
 
     public enum SCHEMATIC {
 
