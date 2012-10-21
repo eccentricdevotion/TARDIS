@@ -4,11 +4,13 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import org.bukkit.ChatColor;
+import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -315,11 +317,11 @@ public class TARDISBuilder {
         short h, w, l;
         switch (schm) {
             //case BIGGER:
-                //s = plugin.biggerschematic_SOUTH;
-                //h = plugin.biggerdimensions[0];
-                //w = plugin.biggerdimensions[1];
-                //l = plugin.biggerdimensions[2];
-                //break;
+            //s = plugin.biggerschematic_SOUTH;
+            //h = plugin.biggerdimensions[0];
+            //w = plugin.biggerdimensions[1];
+            //l = plugin.biggerdimensions[2];
+            //break;
             case DELUXE:
                 s = plugin.deluxeschematic_SOUTH;
                 h = plugin.deluxedimensions[0];
@@ -333,7 +335,7 @@ public class TARDISBuilder {
                 l = plugin.budgetdimensions[2];
                 break;
         }
-        int level, row, col, id, x, y, z, startx, starty = 15, startz, resetx, resetz, cx = 0, cy = 0, cz = 0, rid = 0, multiplier = 1, tx = 0, ty = 0, tz = 0;
+        int level, row, col, id, x, y, z, startx, starty = 15, startz, resetx, resetz, cx = 0, cy = 0, cz = 0, rid = 0, multiplier = 1, tx = 0, ty = 0, tz = 0, j = 0;
         byte data = 0;
         short damage = 0;
         String tmp, replacedBlocks = "";
@@ -353,12 +355,18 @@ public class TARDISBuilder {
         // need to set TARDIS space to air first otherwise torches may be placed askew
         // also getting and storing block ids for bonus chest if configured
         StringBuilder sb = new StringBuilder();
+        List<Chunk> chunkList = new ArrayList<Chunk>();
         for (level = 0; level < h; level++) {
             for (row = 0; row < w; row++) {
                 for (col = 0; col < l; col++) {
+                    Location replaceLoc = new Location(world, startx, starty, startz);
+                    // get list of used chunks
+                    Chunk thisChunk = world.getChunkAt(replaceLoc);
+                    if (!chunkList.contains(thisChunk)) {
+                        chunkList.add(thisChunk);
+                    }
                     if (plugin.config.getBoolean("bonus_chest") == Boolean.valueOf("true")) {
                         // get block at location
-                        Location replaceLoc = new Location(world, startx, starty, startz);
                         int replacedMaterialId = replaceLoc.getBlock().getTypeId();
                         if (replacedMaterialId != 8 && replacedMaterialId != 9 && replacedMaterialId != 10 && replacedMaterialId != 11) {
                             sb.append(replacedMaterialId).append(":");
@@ -401,6 +409,16 @@ public class TARDISBuilder {
             }
             starty += 1;
         }
+        // update chunks list in DB
+        try {
+            for (Chunk c : chunkList) {
+                int chunkx = c.getX();
+                int chunkz = c.getZ();
+                statement.executeUpdate("INSERT INTO chunks (tardis_id,world,x,z) VALUES (" + dbID + ", '" + world + "'," + chunkx + "," + chunkz + ")");
+            }
+        } catch (SQLException e) {
+            System.err.println(Constants.MY_PLUGIN_NAME + " Could not insert reserved chunks into DB!");
+        }
         // reset start positions and do over
         startx = resetx;
         starty = 15;
@@ -417,241 +435,184 @@ public class TARDISBuilder {
                             if (tmp.contains(":")) {
                                 String[] iddata = tmp.split(":");
                                 id = utils.parseNum(iddata[0]);
-                                if (iddata[1].equals("~")) {
-                                    // determine data bit from direction (d) and block type
-                                    if (id == 76 && row == 1) { // 1st redstone torch
-                                        switch (d) {
-                                            case NORTH:
-                                                data = 3;
-                                                break;
-                                            case EAST:
-                                                data = 2;
-                                                break;
-                                            case SOUTH:
-                                                data = 4;
-                                                break;
-                                            case WEST:
-                                                data = 1;
-                                                break;
-                                        }
-                                    }
-                                    if (id == 76 && row == 3) { // 2nd redstone torch
-                                        switch (d) {
-                                            case NORTH:
-                                                data = 2;
-                                                break;
-                                            case EAST:
-                                                data = 4;
-                                                break;
-                                            case SOUTH:
-                                                data = 1;
-                                                break;
-                                            case WEST:
-                                                data = 3;
-                                                break;
-                                        }
-                                    }
-                                    if (id == 93 && col == 2 && level == 1) { // repeaters facing towards door
-                                        switch (d) {
-                                            case NORTH:
-                                                data = 6;
-                                                break;
-                                            case EAST:
-                                                data = 7;
-                                                break;
-                                            case SOUTH:
-                                                data = 4;
-                                                break;
-                                            case WEST:
-                                                data = 5;
-                                                break;
-                                        }
-                                    }
-                                    if (id == 93 && col == 3 && level == 1) { // repeaters facing away from door
-                                        switch (d) {
-                                            case NORTH:
-                                                data = 4;
-                                                break;
-                                            case EAST:
-                                                data = 5;
-                                                break;
-                                            case SOUTH:
-                                                data = 6;
-                                                break;
-                                            case WEST:
-                                                data = 7;
-                                                break;
-                                        }
-                                    }
-                                    if (id == 54) { // chest
-                                        switch (d) {
-                                            case NORTH:
-                                            case EAST:
-                                                data = 2;
-                                                break;
-                                            case SOUTH:
-                                            case WEST:
-                                                data = 3;
-                                                break;
-                                        }
-                                        // remember the location of this chest
-                                        String chest = world.getName() + ":" + startx + ":" + starty + ":" + startz;
-                                        String queryChest = "UPDATE tardis SET chest = '" + chest + "' WHERE tardis_id = " + dbID;
-                                        statement.executeUpdate(queryChest);
-                                    }
-                                    if (id == 61) { // furnace
-                                        switch (d) {
-                                            case NORTH:
-                                            case WEST:
-                                                data = 3;
-                                                break;
-                                            case SOUTH:
-                                            case EAST:
-                                                data = 2;
-                                                break;
-                                        }
-                                    }
-                                    if (id == 77) { // stone button
-                                        switch (d) {
-                                            case NORTH:
-                                                data = 4;
-                                                break;
-                                            case WEST:
-                                                data = 2;
-                                                break;
-                                            case SOUTH:
-                                                data = 3;
-                                                break;
-                                            case EAST:
-                                                data = 1;
-                                                break;
-                                        }
-                                        // remember the location of this button
-                                        String button = world.getName() + ":" + startx + ":" + starty + ":" + startz;
-                                        String queryButton = "UPDATE tardis SET button = '" + button + "' WHERE tardis_id = " + dbID;
-                                        statement.executeUpdate(queryButton);
-                                    }
-                                    if (id == 93 && row == 3 && col == 5 && level == 5) { // redstone repeater facing towards door
-                                        switch (d) {
-                                            case NORTH:
-                                                data = 0;
-                                                break;
-                                            case EAST:
-                                                data = 1;
-                                                break;
-                                            case SOUTH:
-                                                data = 2;
-                                                break;
-                                            case WEST:
-                                                data = 3;
-                                                break;
-                                        }
-                                        // save repeater location
-                                        String repeater0 = world.getName() + ":" + startx + ":" + starty + ":" + startz;
-                                        String queryRepeater0 = "UPDATE tardis SET repeater0 = '" + repeater0 + "' WHERE tardis_id = " + dbID;
-                                        statement.executeUpdate(queryRepeater0);
-                                    }
-                                    if (id == 93 && row == 5 && col == 3 && level == 5) { // redstone repeater facing right from door
-                                        switch (d) {
-                                            case NORTH:
-                                                data = 3;
-                                                break;
-                                            case EAST:
-                                                data = 0;
-                                                break;
-                                            case SOUTH:
-                                                data = 1;
-                                                break;
-                                            case WEST:
-                                                data = 2;
-                                                break;
-                                        }
-                                        // save repeater location
-                                        String repeater1 = world.getName() + ":" + startx + ":" + starty + ":" + startz;
-                                        String queryRepeater1 = "UPDATE tardis SET repeater1 = '" + repeater1 + "' WHERE tardis_id = " + dbID;
-                                        statement.executeUpdate(queryRepeater1);
-                                    }
-                                    if (id == 93 && row == 5 && col == 7 && level == 5) { // redstone repeater facing left from door
-                                        switch (d) {
-                                            case NORTH:
-                                                data = 1;
-                                                break;
-                                            case EAST:
-                                                data = 2;
-                                                break;
-                                            case SOUTH:
-                                                data = 3;
-                                                break;
-                                            case WEST:
-                                                data = 0;
-                                                break;
-                                        }
-                                        // save repeater location
-                                        String repeater2 = world.getName() + ":" + startx + ":" + starty + ":" + startz;
-                                        String queryRepeater2 = "UPDATE tardis SET repeater2 = '" + repeater2 + "' WHERE tardis_id = " + dbID;
-                                        statement.executeUpdate(queryRepeater2);
-                                    }
-                                    if (id == 93 && row == 7 && col == 5 && level == 5) { // redstone repeater facing away from door
-                                        switch (d) {
-                                            case NORTH:
-                                                data = 2;
-                                                break;
-                                            case EAST:
-                                                data = 3;
-                                                break;
-                                            case SOUTH:
-                                                data = 0;
-                                                break;
-                                            case WEST:
-                                                data = 1;
-                                                break;
-                                        }
-                                        // save repeater location
-                                        String repeater3 = world.getName() + ":" + startx + ":" + starty + ":" + startz;
-                                        String queryRepeater3 = "UPDATE tardis SET repeater3 = '" + repeater3 + "' WHERE tardis_id = " + dbID;
-                                        statement.executeUpdate(queryRepeater3);
-                                    }
-                                    if (id == 71) { // iron door bottom
-                                        switch (d) {
-                                            case NORTH:
-                                                data = 3;
-                                                break;
-                                            case EAST:
-                                                data = 0;
-                                                break;
-                                            case SOUTH:
-                                                data = 1;
-                                                break;
-                                            case WEST:
-                                                data = 2;
-                                                break;
-                                        }
-                                        String doorloc = world.getName() + ":" + startx + ":" + starty + ":" + startz;
-                                        String queryDoor = "INSERT INTO doors (tardis_id, door_type, door_location, door_direction) VALUES (" + dbID + ", 1, '" + doorloc + "', '" + d + "')";
-                                        statement.executeUpdate(queryDoor);
-                                    }
-                                    if (id == 68) { // chameleon circuit sign
-                                        switch (d) {
-                                            case NORTH:
-                                                data = 3;
-                                                break;
-                                            case EAST:
-                                                data = 4;
-                                                break;
-                                            case SOUTH:
-                                                data = 2;
-                                                break;
-                                            case WEST:
-                                                data = 5;
-                                                break;
-                                        }
-                                        String chameleonloc = world.getName() + ":" + startx + ":" + starty + ":" + startz;
-                                        String queryChameleon = "UPDATE tardis SET chameleon = '" + chameleonloc + "', chamele_on = 0 WHERE tardis_id = " + dbID;
-                                        statement.executeUpdate(queryChameleon);
-                                    }
-                                } else {
-                                    data = Byte.parseByte(iddata[1]);
+                                data = Byte.parseByte(iddata[1]);
+                                /*
+                                 if (iddata[1].equals("~")) {
+                                 // determine data bit from direction (d) and block type
+                                 if (id == 76 && row == 1) { // 1st redstone torch
+                                 switch (d) {
+                                 case NORTH:
+                                 data = 3;
+                                 break;
+                                 case EAST:
+                                 data = 2;
+                                 break;
+                                 case SOUTH:
+                                 data = 4;
+                                 break;
+                                 case WEST:
+                                 data = 1;
+                                 break;
+                                 }
+                                 }
+                                 if (id == 76 && row == 3) { // 2nd redstone torch
+                                 switch (d) {
+                                 case NORTH:
+                                 data = 2;
+                                 break;
+                                 case EAST:
+                                 data = 4;
+                                 break;
+                                 case SOUTH:
+                                 data = 1;
+                                 break;
+                                 case WEST:
+                                 data = 3;
+                                 break;
+                                 }
+                                 }
+                                 if (id == 93 && col == 2 && level == 1) { // repeaters facing towards door
+                                 switch (d) {
+                                 case NORTH:
+                                 data = 6;
+                                 break;
+                                 case EAST:
+                                 data = 7;
+                                 break;
+                                 case SOUTH:
+                                 data = 4;
+                                 break;
+                                 case WEST:
+                                 data = 5;
+                                 break;
+                                 }
+                                 }
+                                 if (id == 93 && col == 3 && level == 1) { // repeaters facing away from door
+                                 switch (d) {
+                                 case NORTH:
+                                 data = 4;
+                                 break;
+                                 case EAST:
+                                 data = 5;
+                                 break;
+                                 case SOUTH:
+                                 data = 6;
+                                 break;
+                                 case WEST:
+                                 data = 7;
+                                 break;
+                                 }
+                                 }
+                                 */
+                                if (id == 54) { // chest
+                                    // remember the location of this chest
+                                    String chest = world.getName() + ":" + startx + ":" + starty + ":" + startz;
+                                    String queryChest = "UPDATE tardis SET chest = '" + chest + "' WHERE tardis_id = " + dbID;
+                                    statement.executeUpdate(queryChest);
                                 }
+                                if (id == 77) { // stone button
+                                    // remember the location of this button
+                                    String button = world.getName() + ":" + startx + ":" + starty + ":" + startz;
+                                    String queryButton = "UPDATE tardis SET button = '" + button + "' WHERE tardis_id = " + dbID;
+                                    statement.executeUpdate(queryButton);
+                                }
+                                if (id == 93) { // remember the location of this redstone repeater
+                                    // save repeater location
+                                    String repeater = world.getName() + ":" + startx + ":" + starty + ":" + startz;
+                                    String queryRepeater = "UPDATE tardis SET repeater" + j + " = '" + repeater + "' WHERE tardis_id = " + dbID;
+                                    statement.executeUpdate(queryRepeater);
+                                    j++;
+                                }
+                                /*
+                                 if (id == 93 && row == 5 && col == 3 && level == 5) { // redstone repeater facing right from door
+                                 switch (d) {
+                                 case NORTH:
+                                 data = 3;
+                                 break;
+                                 case EAST:
+                                 data = 0;
+                                 break;
+                                 case SOUTH:
+                                 data = 1;
+                                 break;
+                                 case WEST:
+                                 data = 2;
+                                 break;
+                                 }
+                                 // save repeater location
+                                 String repeater1 = world.getName() + ":" + startx + ":" + starty + ":" + startz;
+                                 String queryRepeater1 = "UPDATE tardis SET repeater1 = '" + repeater1 + "' WHERE tardis_id = " + dbID;
+                                 statement.executeUpdate(queryRepeater1);
+                                 }
+                                 if (id == 93 && row == 5 && col == 7 && level == 5) { // redstone repeater facing left from door
+                                 switch (d) {
+                                 case NORTH:
+                                 data = 1;
+                                 break;
+                                 case EAST:
+                                 data = 2;
+                                 break;
+                                 case SOUTH:
+                                 data = 3;
+                                 break;
+                                 case WEST:
+                                 data = 0;
+                                 break;
+                                 }
+                                 // save repeater location
+                                 String repeater2 = world.getName() + ":" + startx + ":" + starty + ":" + startz;
+                                 String queryRepeater2 = "UPDATE tardis SET repeater2 = '" + repeater2 + "' WHERE tardis_id = " + dbID;
+                                 statement.executeUpdate(queryRepeater2);
+                                 }
+                                 if (id == 93 && row == 7 && col == 5 && level == 5) { // redstone repeater facing away from door
+                                 switch (d) {
+                                 case NORTH:
+                                 data = 2;
+                                 break;
+                                 case EAST:
+                                 data = 3;
+                                 break;
+                                 case SOUTH:
+                                 data = 0;
+                                 break;
+                                 case WEST:
+                                 data = 1;
+                                 break;
+                                 }
+                                 // save repeater location
+                                 String repeater3 = world.getName() + ":" + startx + ":" + starty + ":" + startz;
+                                 String queryRepeater3 = "UPDATE tardis SET repeater3 = '" + repeater3 + "' WHERE tardis_id = " + dbID;
+                                 statement.executeUpdate(queryRepeater3);
+                                 }
+                                 if (id == 71) { // iron door bottom
+                                 switch (d) {
+                                 case NORTH:
+                                 data = 3;
+                                 break;
+                                 case EAST:
+                                 data = 0;
+                                 break;
+                                 case SOUTH:
+                                 data = 1;
+                                 break;
+                                 case WEST:
+                                 data = 2;
+                                 break;
+                                 }
+                                 String doorloc = world.getName() + ":" + startx + ":" + starty + ":" + startz;
+                                 String queryDoor = "INSERT INTO doors (tardis_id, door_type, door_location, door_direction) VALUES (" + dbID + ", 1, '" + doorloc + "', '" + d + "')";
+                                 statement.executeUpdate(queryDoor);
+                                 } */
+                                if (id == 68) { // chameleon circuit sign
+                                    String chameleonloc = world.getName() + ":" + startx + ":" + starty + ":" + startz;
+                                    String queryChameleon = "UPDATE tardis SET chameleon = '" + chameleonloc + "', chamele_on = 0 WHERE tardis_id = " + dbID;
+                                    statement.executeUpdate(queryChameleon);
+                                }
+                                /*
+                                 } else {
+                                 data = Byte.parseByte(iddata[1]);
+                                 }
+                                 */
                             } else {
                                 id = utils.parseNum(tmp);
                                 data = 0;
