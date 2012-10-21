@@ -79,7 +79,7 @@ public class TARDISBlockPlaceListener implements Listener {
                             TARDISBuilder builder = new TARDISBuilder(plugin);
                             TARDISUtils utils = new TARDISUtils(plugin);
                             if (!utils.checkChunk(cw, cx, cz)) {
-                                statement.executeUpdate("INSERT INTO chunks (world,x,z) VALUES ('" + cw + "'," + cx + "," + cz + ")");
+                                //statement.executeUpdate("INSERT INTO chunks (world,x,z) VALUES ('" + cw + "'," + cx + "," + cz + ")");
                                 float pyaw = player.getLocation().getYaw();
                                 if (pyaw >= 0) {
                                     pyaw = (pyaw % 360);
@@ -106,7 +106,7 @@ public class TARDISBlockPlaceListener implements Listener {
                                 String chun = cw + ":" + cx + ":" + cz;
                                 String home = block_loc.getWorld().getName() + ":" + block_loc.getBlockX() + ":" + block_loc.getBlockY() + ":" + block_loc.getBlockZ();
                                 String save = block_loc.getWorld().getName() + ":" + block_loc.getBlockX() + ":" + block_loc.getBlockY() + ":" + block_loc.getBlockZ();
-                                String queryInsert = "INSERT INTO tardis (owner,chunk,direction,home,save) VALUES ('" + playerNameStr + "','" + chun + "','" + d + "','" + home + "','" + save + "')";
+                                String queryInsert = "INSERT INTO tardis (owner,chunk,direction,home,save,size) VALUES ('" + playerNameStr + "','" + chun + "','" + d + "','" + home + "','" + save + "','" + schm.name() + "')";
                                 statement.executeUpdate(queryInsert);
                                 ResultSet idRS = statement.getGeneratedKeys();
                                 if (idRS.next()) {
