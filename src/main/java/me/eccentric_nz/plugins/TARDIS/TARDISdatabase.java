@@ -34,11 +34,11 @@ public class TARDISdatabase {
     public void createTables() {
         try {
             statement = connection.createStatement();
-            String queryTARDIS = "CREATE TABLE IF NOT EXISTS tardis (tardis_id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, owner TEXT COLLATE NOCASE, chunk TEXT, direction TEXT, home TEXT, save TEXT, current TEXT, replaced TEXT DEFAULT '', chest TEXT, button TEXT, repeater0 TEXT, repeater1 TEXT, repeater2 TEXT, repeater3 TEXT, save1 TEXT DEFAULT '', save2 TEXT DEFAULT '', save3 TEXT DEFAULT '', companions TEXT, platform TEXT DEFAULT '', chameleon TEXT DEFAULT '', chamele_on INTEGER DEFAULT 0)";
+            String queryTARDIS = "CREATE TABLE IF NOT EXISTS tardis (tardis_id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, owner TEXT COLLATE NOCASE, chunk TEXT, direction TEXT, home TEXT, save TEXT, current TEXT, replaced TEXT DEFAULT '', chest TEXT, button TEXT, repeater0 TEXT, repeater1 TEXT, repeater2 TEXT, repeater3 TEXT, save1 TEXT DEFAULT '', save2 TEXT DEFAULT '', save3 TEXT DEFAULT '', companions TEXT, platform TEXT DEFAULT '', chameleon TEXT DEFAULT '', chamele_on INTEGER DEFAULT 0, size TEXT DEFAULT '')";
             statement.executeUpdate(queryTARDIS);
             String queryTravellers = "CREATE TABLE IF NOT EXISTS travellers (traveller_id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, tardis_id INTEGER, player TEXT COLLATE NOCASE)";
             statement.executeUpdate(queryTravellers);
-            String queryChunks = "CREATE TABLE IF NOT EXISTS chunks (chunk_id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, world TEXT, x INTEGER, z INTEGER)";
+            String queryChunks = "CREATE TABLE IF NOT EXISTS chunks (chunk_id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, tardis_id INTEGER, world TEXT, x INTEGER, z INTEGER)";
             statement.executeUpdate(queryChunks);
             String queryDoors = "CREATE TABLE IF NOT EXISTS doors (door_id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, tardis_id INTEGER, door_type INTEGER, door_location TEXT, door_direction TEXT)";
             statement.executeUpdate(queryDoors);
@@ -79,6 +79,33 @@ public class TARDISdatabase {
                 }
                 System.out.println(Constants.MY_PLUGIN_NAME + " Adding door directions to doors table!");
             }
+            // update chunks if there is no tardis_id column
+            String queryUpChunks = "SELECT sql FROM sqlite_master WHERE tbl_name = 'chunks' AND sql LIKE '%tardis_id INTEGER%'";
+            ResultSet rsUpChunks = statement.executeQuery(queryUpChunks);
+            if (!rsUpChunks.next()) {
+                String queryAlter5 = "ALTER TABLE chunks ADD tardis_id INTEGER";
+                statement.executeUpdate(queryAlter5);
+                // add tardis IDs to chunks table
+                String queryAllChunks = "SELECT * FROM chunks";
+                ResultSet rsAllChunks = statement.executeQuery(queryAllChunks);
+                while (rsAllChunks.next()) {
+                    String queryTardisIDs = "SELECT tardis_id FROM tardis WHERE chunk = '" + rsAllChunks.getString("world") + ":" + rsAllChunks.getString("x") + ":" + rsAllChunks.getString("z") + "'";
+                    ResultSet rsTID = statement.executeQuery(queryTardisIDs);
+                    String queryUpdateChunks = "UPDATE chunks SET tardis_id = " + rsTID.getInt("tardis_id") + " WHERE chunk_id = " + rsAllChunks.getInt("chunk_id") + "";
+                    statement.executeUpdate(queryUpdateChunks);
+                }
+            }
+            // update tardis if there is no size column
+            String querySize = "SELECT sql FROM sqlite_master WHERE tbl_name = 'tardis' AND sql LIKE '%size TEXT%'";
+            ResultSet rsSize = statement.executeQuery(querySize);
+            if (!rsSize.next()) {
+                String queryAlter6 = "ALTER TABLE tardis ADD size TEXT DEFAULT ''";
+                statement.executeUpdate(queryAlter6);
+                System.out.println(Constants.MY_PLUGIN_NAME + " Adding new TARDIS size to DB!");
+                String queryAddSize = "UPDATE tardis SET size = 'BUDGET' WHERE size = ''";
+                statement.executeUpdate(queryAddSize);
+            }
+
         } catch (SQLException e) {
             System.err.println(Constants.MY_PLUGIN_NAME + " Create table error: " + e);
         }
