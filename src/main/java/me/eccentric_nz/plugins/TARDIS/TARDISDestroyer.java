@@ -21,7 +21,25 @@ public class TARDISDestroyer {
         this.plugin = plugin;
     }
 
-    public void destroyTARDIS(int id, World w, Constants.COMPASS d, int i) {
+    public void destroyTARDIS(Constants.SCHEMATIC schm, int id, World w, Constants.COMPASS d, int i) {
+        short h, width, l;
+        switch (schm) {
+            //case BIGGER:
+            //h = plugin.biggerdimensions[0];
+            //width = plugin.biggerdimensions[1];
+            //l = plugin.biggerdimensions[2];
+            //break;
+            case DELUXE:
+                h = plugin.deluxedimensions[0];
+                width = plugin.deluxedimensions[1];
+                l = plugin.deluxedimensions[2];
+                break;
+            default:
+                h = plugin.budgetdimensions[0];
+                width = plugin.budgetdimensions[1];
+                l = plugin.budgetdimensions[2];
+                break;
+        }
         // inner TARDIS
         int level, row, col, x, y, z, startx, starty = 22, startz, resetx, resetz;
         // calculate startx, starty, startz
@@ -33,9 +51,9 @@ public class TARDISDestroyer {
         resetz = gsl[3];
         x = gsl[4];
         z = gsl[5];
-        for (level = 0; level < 8; level++) {
-            for (row = 0; row < 11; row++) {
-                for (col = 0; col < 11; col++) {
+        for (level = 0; level < h; level++) {
+            for (row = 0; row < width; row++) {
+                for (col = 0; col < l; col++) {
                     // set the block to stone
                     Block b = w.getBlockAt(startx, starty, startz);
                     Material m = b.getType();
