@@ -73,6 +73,7 @@ public class TARDISBlockBreakListener implements Listener {
                     if (rs.next()) {
                         String saveLoc = rs.getString("save");
                         String chunkLoc = rs.getString("chunk");
+                        Constants.SCHEMATIC schm = Constants.SCHEMATIC.valueOf(rs.getString("size"));
                         int id = rs.getInt("tardis_id");
                         Constants.COMPASS d = Constants.COMPASS.valueOf(rs.getString("direction"));
 
@@ -121,12 +122,13 @@ public class TARDISBlockBreakListener implements Listener {
                             // also remove the location of the chunk from chunks table
                             String[] chunkworld = chunkLoc.split(":");
                             World cw = plugin.getServer().getWorld(chunkworld[0]);
-                            String queryDeleteChunk = "DELETE FROM chunks WHERE world = '" + chunkworld[0] + "' AND x = " + chunkworld[1] + " AND z = " + chunkworld[2];
+                            //String queryDeleteChunk = "DELETE FROM chunks WHERE world = '" + chunkworld[0] + "' AND x = " + chunkworld[1] + " AND z = " + chunkworld[2];
+                            String queryDeleteChunk = "DELETE FROM chunks WHERE tardis_id = " + id;
                             statement.executeUpdate(queryDeleteChunk);
-                            destroyer.destroyTARDIS(id, cw, d, 1);
+                            destroyer.destroyTARDIS(schm, id, cw, d, 1);
                             if (cw.getWorldType() == WorldType.FLAT) {
                                 // replace stone blocks with AIR
-                                destroyer.destroyTARDIS(id, cw, d, 0);
+                                destroyer.destroyTARDIS(schm, id, cw, d, 0);
                             }
                             destroyer.destroyBlueBox(bb_loc, d, id);
                             // remove record from tardis table
