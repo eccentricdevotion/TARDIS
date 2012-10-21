@@ -32,13 +32,7 @@
             <type>jar</type>
             <scope>compile</scope>
         </dependency>
-		<dependency>
-            <groupId>sk89q.com</groupId>
-            <artifactId>WorldEdit</artifactId>
-            <version>5.4.2</version>
-            <type>jar</type>
-            <scope>compile</scope>
-        </dependency>
+
 		<dependency>
             <groupId>org.spout</groupId>
             <artifactId>spout</artifactId>
