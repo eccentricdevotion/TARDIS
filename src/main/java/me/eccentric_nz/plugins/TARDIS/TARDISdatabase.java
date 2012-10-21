@@ -44,6 +44,8 @@ public class TARDISdatabase {
             statement.executeUpdate(queryDoors);
             String queryPlayers = "CREATE TABLE IF NOT EXISTS player_prefs (pp_id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, player TEXT COLLATE NOCASE, sfx_on INTEGER DEFAULT 0, platform_on INTEGER DEFAULT 0)";
             statement.executeUpdate(queryPlayers);
+            String queryProtectBlocks = "CREATE TABLE IF NOT EXISTS blocks (b_id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, tardis_id INTEGER, location TEXT COLLATE NOCASE DEFAULT '')";
+            statement.executeUpdate(queryProtectBlocks);
             // update tardis if there is no chameleon column
             String queryChameleon = "SELECT sql FROM sqlite_master WHERE tbl_name = 'tardis' AND sql LIKE '%chameleon TEXT%'";
             ResultSet rsChameleon = statement.executeQuery(queryChameleon);
