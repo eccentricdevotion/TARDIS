@@ -64,24 +64,40 @@ public class TARDISSchematicReader {
             nbt.close();
             fis.close();
             int i = 0;
-            String[] blockdata = new String[width*height*length];
+            String[] blockdata = new String[width * height * length];
             for (byte b : blocks) {
                 blockdata[i] = b + ":" + data[i];
                 i++;
             }
-            List<String[]> lines = splitArray(blockdata, width);
+            int j = 0;
+            List<String[][]> layers = new ArrayList<String[][]>();
+            for (int h = 0; h < height; h++) {
+                String[][] strarr = new String[width][length];
+                for (int w = 0; w < width; w++) {
+                    for (int l = 0; l < length; l++) {
+                        strarr[w][l] = blockdata[j];
+                        j++;
+                    }
+                }
+                if (fileStr.toLowerCase().contains("east") || fileStr.toLowerCase().contains("west")) {
+                    strarr = rotateCW(strarr);
+                }
+                layers.add(strarr);
+            }
             try {
                 String csvFile = fileStr + ".csv";
                 File file = new File(csvFile);
-                BufferedWriter bw = new BufferedWriter(new FileWriter(file, true));
-                for (String[] l : lines) {
-                    String commas = "";
-                    for (String bd : l) {
-                        commas += bd+",";
+                BufferedWriter bw = new BufferedWriter(new FileWriter(file, false));
+                for (String[][] l : layers) {
+                    for (String[] lines : l) {
+                        String commas = "";
+                        for (String bd : lines) {
+                            commas += bd + ",";
+                        }
+                        String strCommas = commas.substring(0, (commas.length() - 1));
+                        bw.write(strCommas);
+                        bw.newLine();
                     }
-                    String strCommas = commas.substring(0, (commas.length()-1));
-                    bw.write(strCommas);
-                    bw.newLine();
                 }
                 bw.close();
             } catch (IOException io) {
@@ -92,21 +108,15 @@ public class TARDISSchematicReader {
         }
     }
 
-    public static List<String[]> splitArray(String[] array, int max) {
-        int x = array.length / max;
-        int lower = 0;
-        int upper = 0;
-        List<String[]> list = new ArrayList<String[]>();
-        for (int i = 0; i < x; i++) {
-            upper += max;
-            list.add(Arrays.copyOfRange(array, lower, upper));
-            lower = upper;
+    static String[][] rotateCW(String[][] mat) {
+        final int M = mat.length;
+        final int N = mat[0].length;
+        String[][] ret = new String[N][M];
+        for (int r = 0; r < M; r++) {
+            for (int c = 0; c < N; c++) {
+                ret[c][M - 1 - r] = mat[r][c];
+            }
         }
-        if (upper < array.length - 1) {
-            lower = upper;
-            upper = array.length;
-            list.add(Arrays.copyOfRange(array, lower, upper));
-        }
-        return list;
+        return ret;
     }
 }
