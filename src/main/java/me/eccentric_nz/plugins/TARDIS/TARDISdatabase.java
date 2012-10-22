@@ -94,6 +94,7 @@ public class TARDISdatabase {
                     String queryTardisIDs = "SELECT tardis_id FROM tardis WHERE chunk = '" + rsAllChunks.getString("world") + ":" + rsAllChunks.getString("x") + ":" + rsAllChunks.getString("z") + "'";
                     ResultSet rsTID = statement.executeQuery(queryTardisIDs);
                     String queryUpdateChunks = "UPDATE chunks SET tardis_id = " + rsTID.getInt("tardis_id") + " WHERE chunk_id = " + rsAllChunks.getInt("chunk_id") + "";
+                    System.out.println(queryUpdateChunks);
                     statement.executeUpdate(queryUpdateChunks);
                 }
             }
@@ -107,7 +108,6 @@ public class TARDISdatabase {
                 String queryAddSize = "UPDATE tardis SET size = 'BUDGET' WHERE size = ''";
                 statement.executeUpdate(queryAddSize);
             }
-
         } catch (SQLException e) {
             System.err.println(Constants.MY_PLUGIN_NAME + " Create table error: " + e);
         }
