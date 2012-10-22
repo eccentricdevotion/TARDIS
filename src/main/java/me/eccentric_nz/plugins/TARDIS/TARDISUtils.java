@@ -57,47 +57,43 @@ public class TARDISUtils {
             String chunkstr = rs.getString("chunk");
             String[] split = chunkstr.split(":");
             World w = plugin.getServer().getWorld(split[0]);
-            try {
-                cx = Integer.parseInt(split[1]);
-                cz = Integer.parseInt(split[2]);
-            } catch (NumberFormatException nfe) {
-                System.err.println(Constants.MY_PLUGIN_NAME + " Could not convert to number!");
-            }
+            cx = parseNum(split[1]);
+            cz = parseNum(split[2]);
             Chunk chunk = w.getChunkAt(cx, cz);
-            switch (dir) {
-                case NORTH:
-                    startLoc[0] = chunk.getBlock(14, 15, 14).getX();
+//            switch (dir) {
+//                case NORTH:
+//                    startLoc[0] = chunk.getBlock(14, 15, 14).getX();
+//                    startLoc[1] = startLoc[0];
+//                    startLoc[2] = chunk.getBlock(14, 15, 14).getZ();
+//                    startLoc[3] = startLoc[2];
+//                    startLoc[4] = 1;
+//                    startLoc[5] = 1;
+//                    break;
+//                case EAST:
+//                    startLoc[0] = chunk.getBlock(1, 15, 14).getX();
+//                    startLoc[1] = startLoc[0];
+//                    startLoc[2] = chunk.getBlock(1, 15, 14).getZ();
+//                    startLoc[3] = startLoc[2];
+//                    startLoc[4] = 1;
+//                    startLoc[5] = 1;
+//                    break;
+//                case SOUTH:
+                    startLoc[0] = chunk.getBlock(0, 15, 0).getX();
                     startLoc[1] = startLoc[0];
-                    startLoc[2] = chunk.getBlock(14, 15, 14).getZ();
-                    startLoc[3] = startLoc[2];
-                    startLoc[4] = -1;
-                    startLoc[5] = -1;
-                    break;
-                case EAST:
-                    startLoc[0] = chunk.getBlock(1, 15, 14).getX();
-                    startLoc[1] = startLoc[0];
-                    startLoc[2] = chunk.getBlock(1, 15, 14).getZ();
-                    startLoc[3] = startLoc[2];
-                    startLoc[4] = 1;
-                    startLoc[5] = -1;
-                    break;
-                case SOUTH:
-                    startLoc[0] = chunk.getBlock(1, 15, 1).getX();
-                    startLoc[1] = startLoc[0];
-                    startLoc[2] = chunk.getBlock(1, 15, 1).getZ();
+                    startLoc[2] = chunk.getBlock(0, 15, 0).getZ();
                     startLoc[3] = startLoc[2];
                     startLoc[4] = 1;
                     startLoc[5] = 1;
-                    break;
-                case WEST:
-                    startLoc[0] = chunk.getBlock(14, 15, 1).getX();
-                    startLoc[1] = startLoc[0];
-                    startLoc[2] = chunk.getBlock(14, 15, 1).getZ();
-                    startLoc[3] = startLoc[2];
-                    startLoc[4] = -1;
-                    startLoc[5] = 1;
-                    break;
-            }
+//                    break;
+//                case WEST:
+//                    startLoc[0] = chunk.getBlock(14, 15, 1).getX();
+//                    startLoc[1] = startLoc[0];
+//                    startLoc[2] = chunk.getBlock(14, 15, 1).getZ();
+//                    startLoc[3] = startLoc[2];
+//                    startLoc[4] = 1;
+//                    startLoc[5] = 1;
+//                    break;
+//            }
             rs.close();
             statement.close();
         } catch (SQLException e) {
