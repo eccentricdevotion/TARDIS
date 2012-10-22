@@ -218,6 +218,9 @@ public class TARDIS extends JavaPlugin implements Listener {
     public FileConfiguration loadConfig() {
         try {
             schematicfile = new File(getDataFolder(), Constants.SCHEMATIC_FILE_NAME);
+            if (!schematicfile.exists()) {
+                copy(getResource(Constants.SCHEMATIC_FILE_NAME), schematicfile);
+            }
             budgetNschematiccsv = new File(getDataFolder(), Constants.SCHEMATIC_NORTH_BUDGET + ".csv");
             budgetWschematiccsv = new File(getDataFolder(), Constants.SCHEMATIC_WEST_BUDGET + ".csv");
             budgetSschematiccsv = new File(getDataFolder(), Constants.SCHEMATIC_SOUTH_BUDGET + ".csv");
@@ -230,9 +233,6 @@ public class TARDIS extends JavaPlugin implements Listener {
             deluxeWschematiccsv = new File(getDataFolder(), Constants.SCHEMATIC_WEST_DELUXE + ".csv");
             deluxeSschematiccsv = new File(getDataFolder(), Constants.SCHEMATIC_SOUTH_DELUXE + ".csv");
             deluxeEschematiccsv = new File(getDataFolder(), Constants.SCHEMATIC_EAST_DELUXE + ".csv");
-            if (!schematicfile.exists()) {
-                copy(getResource(Constants.SCHEMATIC_FILE_NAME), schematicfile);
-            }
             budgetschematic_NORTH = Schematic.schematic(budgetNschematiccsv, budgetdimensions[0], budgetdimensions[1], budgetdimensions[2]);
             budgetschematic_WEST = Schematic.schematic(budgetWschematiccsv, budgetdimensions[0], budgetdimensions[1], budgetdimensions[2]);
             budgetschematic_SOUTH = Schematic.schematic(budgetSschematiccsv, budgetdimensions[0], budgetdimensions[1], budgetdimensions[2]);
@@ -251,7 +251,6 @@ public class TARDIS extends JavaPlugin implements Listener {
                 // load the default values into file
                 copy(getResource(Constants.CONFIG_FILE_NAME), myconfigfile);
             }
-
             quotesfile = new File(getDataFolder(), Constants.QUOTES_FILE_NAME);
             if (!quotesfile.exists()) {
                 copy(getResource(Constants.QUOTES_FILE_NAME), quotesfile);
