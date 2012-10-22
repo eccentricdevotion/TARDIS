@@ -41,7 +41,7 @@ public class TARDISDestroyer {
                 break;
         }
         // inner TARDIS
-        int level, row, col, x, y, z, startx, starty = 22, startz, resetx, resetz;
+        int level, row, col, x, y, z, startx, starty = (14+h), startz, resetx, resetz;
         // calculate startx, starty, startz
         TARDISUtils utils = new TARDISUtils(plugin);
         int gsl[] = utils.getStartLocation(id, d);
