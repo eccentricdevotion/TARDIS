@@ -86,7 +86,8 @@ public class TARDISBuilder {
             }
 
             if (Constants.CHAMELEON_BLOCKS_NEXT.contains((Integer) chameleonType)) {
-                List<BlockFace> surrounding = Arrays.asList(new BlockFace[]{BlockFace.EAST, BlockFace.SOUTH, BlockFace.WEST, BlockFace.NORTH, BlockFace.NORTH_EAST, BlockFace.NORTH_WEST, BlockFace.SOUTH_EAST, BlockFace.SOUTH_WEST});                // try the surrounding blocks
+                List<BlockFace> surrounding = Arrays.asList(new BlockFace[]{BlockFace.EAST, BlockFace.SOUTH, BlockFace.WEST, BlockFace.NORTH, BlockFace.NORTH_EAST, BlockFace.NORTH_WEST, BlockFace.SOUTH_EAST, BlockFace.SOUTH_WEST});
+                // try the surrounding blocks
                 for (BlockFace bf : surrounding) {
                     Block surroundblock = chameleonBlock.getRelative(bf);
                     int eid = surroundblock.getTypeId();
@@ -313,23 +314,66 @@ public class TARDISBuilder {
     }
 
     public void buildInnerTARDIS(Constants.SCHEMATIC schm, World world, Constants.COMPASS d, int dbID) {
-        String[][][] s = null;
+        String[][][] s;
         short h, w, l;
         switch (schm) {
             //case BIGGER:
-            //s = plugin.biggerschematic_SOUTH;
+//                switch (d) {
+//                    case NORTH:
+//                        s = plugin.biggerschematic_NORTH;
+//                        break;
+//                    case WEST:
+//                        s = plugin.biggerschematic_WEST;
+//                        break;
+//                    case SOUTH:
+//                        s = plugin.biggerschematic_SOUTH;
+//                        break;
+//                    default:
+//                        s = plugin.biggerschematic_EAST;
+//                        break;
+//                }
             //h = plugin.biggerdimensions[0];
             //w = plugin.biggerdimensions[1];
             //l = plugin.biggerdimensions[2];
             //break;
             case DELUXE:
-                s = plugin.deluxeschematic_SOUTH;
+                switch (d) {
+                    case NORTH:
+                        s = plugin.deluxeschematic_NORTH;
+                        break;
+                    case WEST:
+                        s = plugin.deluxeschematic_WEST;
+                        break;
+                    case SOUTH:
+                        s = plugin.deluxeschematic_SOUTH;
+                        break;
+                    default:
+                        s = plugin.deluxeschematic_EAST;
+                        break;
+                }
                 h = plugin.deluxedimensions[0];
                 w = plugin.deluxedimensions[1];
                 l = plugin.deluxedimensions[2];
                 break;
             default:
-                s = plugin.budgetschematic_SOUTH;
+                switch (d) {
+                    case NORTH:
+                        s = plugin.budgetschematic_NORTH;
+                        System.out.println("North");
+                        break;
+                    case WEST:
+                        s = plugin.budgetschematic_WEST;
+                        System.out.println("West");
+                        break;
+                    case SOUTH:
+                        s = plugin.budgetschematic_SOUTH;
+                        System.out.println("South");
+                        break;
+                    default:
+                        s = plugin.budgetschematic_EAST;
+                        System.out.println("East");
+                        break;
+                }
                 h = plugin.budgetdimensions[0];
                 w = plugin.budgetdimensions[1];
                 l = plugin.budgetdimensions[2];
@@ -414,7 +458,7 @@ public class TARDISBuilder {
             for (Chunk c : chunkList) {
                 int chunkx = c.getX();
                 int chunkz = c.getZ();
-                statement.executeUpdate("INSERT INTO chunks (tardis_id,world,x,z) VALUES (" + dbID + ", '" + world + "'," + chunkx + "," + chunkz + ")");
+                statement.executeUpdate("INSERT INTO chunks (tardis_id,world,x,z) VALUES (" + dbID + ", '" + world.getName() + "'," + chunkx + "," + chunkz + ")");
             }
         } catch (SQLException e) {
             System.err.println(Constants.MY_PLUGIN_NAME + " Could not insert reserved chunks into DB!");
@@ -584,25 +628,12 @@ public class TARDISBuilder {
                                  String queryRepeater3 = "UPDATE tardis SET repeater3 = '" + repeater3 + "' WHERE tardis_id = " + dbID;
                                  statement.executeUpdate(queryRepeater3);
                                  }
-                                 if (id == 71) { // iron door bottom
-                                 switch (d) {
-                                 case NORTH:
-                                 data = 3;
-                                 break;
-                                 case EAST:
-                                 data = 0;
-                                 break;
-                                 case SOUTH:
-                                 data = 1;
-                                 break;
-                                 case WEST:
-                                 data = 2;
-                                 break;
-                                 }
-                                 String doorloc = world.getName() + ":" + startx + ":" + starty + ":" + startz;
-                                 String queryDoor = "INSERT INTO doors (tardis_id, door_type, door_location, door_direction) VALUES (" + dbID + ", 1, '" + doorloc + "', '" + d + "')";
-                                 statement.executeUpdate(queryDoor);
-                                 } */
+                                 */
+                                if (id == 71 && data != (byte) 8) { // iron door bottom
+                                    String doorloc = world.getName() + ":" + startx + ":" + starty + ":" + startz;
+                                    String queryDoor = "INSERT INTO doors (tardis_id, door_type, door_location, door_direction) VALUES (" + dbID + ", 1, '" + doorloc + "', '" + d + "')";
+                                    statement.executeUpdate(queryDoor);
+                                }
                                 if (id == 68) { // chameleon circuit sign
                                     String chameleonloc = world.getName() + ":" + startx + ":" + starty + ":" + startz;
                                     String queryChameleon = "UPDATE tardis SET chameleon = '" + chameleonloc + "', chamele_on = 0 WHERE tardis_id = " + dbID;
