@@ -105,9 +105,10 @@ public class TARDISdatabase {
                 String queryAlter6 = "ALTER TABLE tardis ADD size TEXT DEFAULT ''";
                 statement.executeUpdate(queryAlter6);
                 System.out.println(Constants.MY_PLUGIN_NAME + " Adding new TARDIS size to DB!");
-                String queryAddSize = "UPDATE tardis SET size = 'BUDGET' WHERE size = ''";
+                String queryAddSize = "UPDATE tardis SET size = 'BUDGET' WHERE size != 'BUDGET'";
                 statement.executeUpdate(queryAddSize);
             }
+            statement.close();
         } catch (SQLException e) {
             System.err.println(Constants.MY_PLUGIN_NAME + " Create table error: " + e);
         }
