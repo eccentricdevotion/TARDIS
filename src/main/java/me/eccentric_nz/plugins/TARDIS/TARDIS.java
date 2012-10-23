@@ -20,7 +20,7 @@ public class TARDIS extends JavaPlugin implements Listener {
     TARDISdatabase service = TARDISdatabase.getInstance();
     public PluginDescriptionFile pdfFile;
     public FileConfiguration config = null;
-    public FileConfiguration timelords = null;
+    //public FileConfiguration timelords = null;
     public File schematicfile = null;
     public File budgetNschematicfile = null;
     public File budgetWschematicfile = null;
@@ -70,6 +70,7 @@ public class TARDIS extends JavaPlugin implements Listener {
     TARDISBlockBreakListener tardisBlockBreakListener = new TARDISBlockBreakListener(this);
     TARDISPlayerListener tardisPlayerListener = new TARDISPlayerListener(this);
     TARDISBlockProtectListener tardisProtectListener = new TARDISBlockProtectListener(this);
+    TARDISBlockDamageListener tardisDamageListener = new TARDISBlockDamageListener(this);
     PluginManager pm = Bukkit.getServer().getPluginManager();
     public HashMap<String, String> trackPlayers = new HashMap<String, String>();
     private static ArrayList<String> quotes = new ArrayList<String>();
@@ -83,6 +84,7 @@ public class TARDIS extends JavaPlugin implements Listener {
         pm.registerEvents(tardisBlockBreakListener, this);
         pm.registerEvents(tardisPlayerListener, this);
         pm.registerEvents(tardisProtectListener, this);
+        pm.registerEvents(tardisDamageListener, this);
 
         pdfFile = getDescription();
         Constants.MY_PLUGIN_NAME = "[" + pdfFile.getName() + "]";
@@ -271,9 +273,9 @@ public class TARDIS extends JavaPlugin implements Listener {
                 System.out.println(Constants.MY_PLUGIN_NAME + " Added '" + w.getName() + "' to config. To exclude this world run: " + ChatColor.GREEN + "tardis admin exclude " + w.getName());
             }
         }
-        if (timelordsfile.exists()) {
-            timelords = YamlConfiguration.loadConfiguration(timelordsfile);
-        }
+//        if (timelordsfile.exists()) {
+//            timelords = YamlConfiguration.loadConfiguration(timelordsfile);
+//        }
 
         return config;
     }
