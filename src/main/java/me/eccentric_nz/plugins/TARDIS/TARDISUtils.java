@@ -24,6 +24,20 @@ public class TARDISUtils {
         b.setTypeIdAndData(m, d, true);
     }
 
+    public void setBlockAndRemember(World w, int x, int y, int z, int m, byte d, int id) {
+        Block b = w.getBlockAt(x, y, z);
+        String l = b.getLocation().toString();
+        try {
+            Connection connection = service.getConnection();
+            Statement statement = connection.createStatement();
+            String queryAddBlock = "INSERT INTo blocks (tardis_id, location) VALUES (" + id + ",'" + l + "')";
+            statement.executeUpdate(queryAddBlock);
+        } catch (SQLException e) {
+            System.err.println(Constants.MY_PLUGIN_NAME + " Could not save block location to DB!");
+        }
+        b.setTypeIdAndData(m, d, true);
+    }
+
     public void setBlockCheck(World w, int x, int y, int z, int m, byte d, int id) {
         // List of blocks that a door cannot be placed on
         List<Integer> ids = Arrays.asList(0, 6, 8, 9, 10, 11, 18, 20, 26, 27, 28, 29, 30, 31, 32, 33, 34, 37, 38, 39, 40, 44, 46, 50, 51, 53, 54, 55, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 75, 76, 77, 78, 79, 81, 83, 85, 89, 92, 93, 94, 96, 101, 102, 104, 105, 106, 107, 108, 109, 111, 113, 114, 115, 116, 117, 118, 119, 120, 122, 128, 130, 131, 132, 134, 135, 136);
@@ -78,12 +92,12 @@ public class TARDISUtils {
 //                    startLoc[5] = 1;
 //                    break;
 //                case SOUTH:
-                    startLoc[0] = chunk.getBlock(0, 15, 0).getX();
-                    startLoc[1] = startLoc[0];
-                    startLoc[2] = chunk.getBlock(0, 15, 0).getZ();
-                    startLoc[3] = startLoc[2];
-                    startLoc[4] = 1;
-                    startLoc[5] = 1;
+            startLoc[0] = chunk.getBlock(0, 15, 0).getX();
+            startLoc[1] = startLoc[0];
+            startLoc[2] = chunk.getBlock(0, 15, 0).getZ();
+            startLoc[3] = startLoc[2];
+            startLoc[4] = 1;
+            startLoc[5] = 1;
 //                    break;
 //                case WEST:
 //                    startLoc[0] = chunk.getBlock(14, 15, 1).getX();
@@ -128,5 +142,9 @@ public class TARDISUtils {
             System.err.println("Could not convert to number");
         }
         return num;
+    }
+
+    public static String colorSign(String txt) {
+        return txt.replace('&', '¤');
     }
 }
