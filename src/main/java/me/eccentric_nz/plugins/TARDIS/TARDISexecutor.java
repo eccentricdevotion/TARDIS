@@ -1,20 +1,15 @@
 package me.eccentric_nz.plugins.TARDIS;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Arrays;
-import java.util.List;
 import java.util.Set;
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.*;
 import org.bukkit.block.Block;
-import org.bukkit.block.BlockFace;
 import org.bukkit.block.Sign;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -734,37 +729,37 @@ public class TARDISexecutor implements CommandExecutor {
                         return false;
                     }
                 }
-                if (args[0].equalsIgnoreCase("sfx")) {
+                if (args[0].equalsIgnoreCase("platform")) {
                     if (player.hasPermission("TARDIS.timetravel")) {
                         if (args.length < 2 || (!args[1].equalsIgnoreCase("on") && !args[1].equalsIgnoreCase("off"))) {
                             sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " You need to specify if sound effects should be on or off!");
                             return false;
                         }
-                        // get the players sfx setting
+                        // get the players platform setting
                         try {
                             Connection connection = service.getConnection();
                             Statement statement = connection.createStatement();
-                            String querySFX = "SELECT * FROM player_prefs WHERE player = '" + player.getName() + "'";
-                            ResultSet rs = statement.executeQuery(querySFX);
+                            String queryPlatform = "SELECT * FROM player_prefs WHERE player = '" + player.getName() + "'";
+                            ResultSet rs = statement.executeQuery(queryPlatform);
                             if (rs == null || !rs.next()) {
                                 String queryInsert = "INSERT INTO player_prefs (player) VALUES ('" + player.getName() + "')";
                                 statement.executeUpdate(queryInsert);
                             }
                             if (args[1].equalsIgnoreCase("on")) {
-                                String queryUpdate = "UPDATE player_prefs SET sfx_on = 1 WHERE player = '" + player.getName() + "'";
+                                String queryUpdate = "UPDATE player_prefs SET platform_on = 1 WHERE player = '" + player.getName() + "'";
                                 statement.executeUpdate(queryUpdate);
-                                sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " Sound effects were turned ON!");
+                                sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " The safety platform was turned ON!");
                             }
                             if (args[1].equalsIgnoreCase("off")) {
-                                String queryUpdate = "UPDATE player_prefs SET sfx_on = 0 WHERE player = '" + player.getName() + "'";
+                                String queryUpdate = "UPDATE player_prefs SET platform_on = 0 WHERE player = '" + player.getName() + "'";
                                 statement.executeUpdate(queryUpdate);
-                                sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " Sound effects were turned OFF.");
+                                sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " safety platform was turned OFF.");
                             }
                             rs.close();
                             statement.close();
                             return true;
                         } catch (SQLException e) {
-                            System.err.println(Constants.MY_PLUGIN_NAME + " SFX Preferences Save Error: " + e);
+                            System.err.println(Constants.MY_PLUGIN_NAME + " Platform Preferences Save Error: " + e);
                         }
                     } else {
                         sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + Constants.NO_PERMS_MESSAGE);
