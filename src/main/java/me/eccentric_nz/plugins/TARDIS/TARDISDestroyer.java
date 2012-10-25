@@ -24,11 +24,11 @@ public class TARDISDestroyer {
     public void destroyTARDIS(Constants.SCHEMATIC schm, int id, World w, Constants.COMPASS d, int i) {
         short h, width, l;
         switch (schm) {
-            //case BIGGER:
-            //h = plugin.biggerdimensions[0];
-            //width = plugin.biggerdimensions[1];
-            //l = plugin.biggerdimensions[2];
-            //break;
+            case BIGGER:
+            h = plugin.biggerdimensions[0];
+            width = plugin.biggerdimensions[1];
+            l = plugin.biggerdimensions[2];
+            break;
             case DELUXE:
                 h = plugin.deluxedimensions[0];
                 width = plugin.deluxedimensions[1];
