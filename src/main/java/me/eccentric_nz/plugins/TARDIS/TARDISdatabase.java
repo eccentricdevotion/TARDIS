@@ -87,15 +87,18 @@ public class TARDISdatabase {
             if (!rsUpChunks.next()) {
                 String queryAlter5 = "ALTER TABLE chunks ADD tardis_id INTEGER";
                 statement.executeUpdate(queryAlter5);
+
                 // add tardis IDs to chunks table
-                String queryAllChunks = "SELECT * FROM chunks";
+                String queryAllChunks = "SELECT * FROM chunks WHERE chunk_id != 0";
                 ResultSet rsAllChunks = statement.executeQuery(queryAllChunks);
                 while (rsAllChunks.next()) {
+                    int chunkID = rsAllChunks.getInt("chunk_id");
                     String queryTardisIDs = "SELECT tardis_id FROM tardis WHERE chunk = '" + rsAllChunks.getString("world") + ":" + rsAllChunks.getString("x") + ":" + rsAllChunks.getString("z") + "'";
                     ResultSet rsTID = statement.executeQuery(queryTardisIDs);
-                    String queryUpdateChunks = "UPDATE chunks SET tardis_id = " + rsTID.getInt("tardis_id") + " WHERE chunk_id = " + rsAllChunks.getInt("chunk_id") + "";
-                    System.out.println(queryUpdateChunks);
+                    rsTID.next();
+                    String queryUpdateChunks = "UPDATE chunks SET tardis_id = " + rsTID.getInt("tardis_id") + " WHERE chunk_id = " + chunkID + "";
                     statement.executeUpdate(queryUpdateChunks);
+                    System.out.println(Constants.MY_PLUGIN_NAME + " Adding tardis_ids to chunks table.");
                 }
             }
             // update tardis if there is no size column
