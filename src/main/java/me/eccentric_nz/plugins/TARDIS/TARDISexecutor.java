@@ -801,7 +801,7 @@ public class TARDISexecutor implements CommandExecutor {
                             statement.close();
                             return true;
                         } catch (SQLException e) {
-                            System.err.println(Constants.MY_PLUGIN_NAME + " Platform Preferences Save Error: " + e);
+                            System.err.println(Constants.MY_PLUGIN_NAME + " Quotes Preferences Save Error: " + e);
                         }
                     } else {
                         sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + Constants.NO_PERMS_MESSAGE);
