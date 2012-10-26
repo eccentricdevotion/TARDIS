@@ -27,10 +27,28 @@ import org.getspout.spoutapi.SpoutManager;
 public class TARDISPlayerListener implements Listener {
 
     private TARDIS plugin;
+    float[][] adjustYaw = new float[4][4];
     TARDISdatabase service = TARDISdatabase.getInstance();
 
     public TARDISPlayerListener(TARDIS plugin) {
         this.plugin = plugin;
+        // yaw adjustments if inner and outer door directions are different
+        adjustYaw[0][0] = 0;
+        adjustYaw[0][1] = -90;
+        adjustYaw[0][2] = 180;
+        adjustYaw[0][3] = 90;
+        adjustYaw[1][0] = 90;
+        adjustYaw[1][1] = 0;
+        adjustYaw[1][2] = -90;
+        adjustYaw[1][3] = 180;
+        adjustYaw[2][0] = 180;
+        adjustYaw[2][1] = 90;
+        adjustYaw[2][2] = 0;
+        adjustYaw[2][3] = -90;
+        adjustYaw[3][0] = -90;
+        adjustYaw[3][1] = 180;
+        adjustYaw[3][2] = 90;
+        adjustYaw[3][3] = 0;
     }
 
     @EventHandler(priority = EventPriority.MONITOR)
@@ -136,7 +154,7 @@ public class TARDISPlayerListener implements Listener {
                                     int by = block_loc.getBlockY();
                                     int bz = block_loc.getBlockZ();
                                     byte doorData = block.getData();
-                                    if (doorData == 8) {
+                                    if (doorData >= 8) {
                                         by = (by - 1);
                                     }
                                     String doorloc = bw + ":" + bx + ":" + by + ":" + bz;
@@ -149,6 +167,7 @@ public class TARDISPlayerListener implements Listener {
                                             int id = rs.getInt("tardis_id");
                                             int doortype = rs.getInt("door_type");
                                             String d = rs.getString("direction");
+                                            String dd = rs.getString("door_direction");
                                             String chunkstr = rs.getString("chunk");
                                             String tl = rs.getString("owner");
                                             String companions = rs.getString("companions");
@@ -168,6 +187,23 @@ public class TARDISPlayerListener implements Listener {
                                             }
                                             if (doortype == 1) {
                                                 // player is in the TARDIS
+                                                // change the yaw if the door directions are different
+                                                if (!dd.equals(d)) {
+                                                    switch (Constants.COMPASS.valueOf(dd)) {
+                                                        case NORTH:
+                                                            yaw = yaw + adjustYaw[0][Constants.COMPASS.valueOf(d).ordinal()];
+                                                            break;
+                                                        case WEST:
+                                                            yaw = yaw + adjustYaw[1][Constants.COMPASS.valueOf(d).ordinal()];
+                                                            break;
+                                                        case SOUTH:
+                                                            yaw = yaw + adjustYaw[2][Constants.COMPASS.valueOf(d).ordinal()];
+                                                            break;
+                                                        case EAST:
+                                                            yaw = yaw + adjustYaw[3][Constants.COMPASS.valueOf(d).ordinal()];
+                                                            break;
+                                                    }
+                                                }
                                                 // get location from database
                                                 final Location exitTardis = Constants.getLocationFromDB(save, yaw, pitch);
                                                 // make location safe ie. outside of the bluebox
@@ -254,6 +290,7 @@ public class TARDISPlayerListener implements Listener {
                                                     String queryInnerDoor = "SELECT * FROM doors WHERE door_type = 1 AND tardis_id = " + id;
                                                     ResultSet doorRS = statement.executeQuery(queryInnerDoor);
                                                     if (doorRS.next()) {
+                                                        String innerD = doorRS.getString("door_direction");
                                                         String doorLocStr = doorRS.getString("door_location");
                                                         String[] split = doorLocStr.split(":");
                                                         World cw = plugin.getServer().getWorld(split[0]);
@@ -293,6 +330,23 @@ public class TARDISPlayerListener implements Listener {
                                                         // enter TARDIS!
                                                         cw.getChunkAt(tmp_loc).load();
                                                         tmp_loc.setPitch(pitch);
+                                                        // get inner door direction so we can adjust yaw if necessary
+                                                        if (!innerD.equals(d)) {
+                                                            switch (Constants.COMPASS.valueOf(d)) {
+                                                                case NORTH:
+                                                                    yaw = yaw + adjustYaw[0][Constants.COMPASS.valueOf(innerD).ordinal()];
+                                                                    break;
+                                                                case WEST:
+                                                                    yaw = yaw + adjustYaw[1][Constants.COMPASS.valueOf(innerD).ordinal()];
+                                                                    break;
+                                                                case SOUTH:
+                                                                    yaw = yaw + adjustYaw[2][Constants.COMPASS.valueOf(innerD).ordinal()];
+                                                                    break;
+                                                                case EAST:
+                                                                    yaw = yaw + adjustYaw[3][Constants.COMPASS.valueOf(innerD).ordinal()];
+                                                                    break;
+                                                            }
+                                                        }
                                                         tmp_loc.setYaw(yaw);
                                                         final Location tardis_loc = tmp_loc;
                                                         tt(player, tardis_loc, false, playerWorld, userQuotes);
