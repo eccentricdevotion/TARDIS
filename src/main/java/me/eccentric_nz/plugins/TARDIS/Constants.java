@@ -27,6 +27,7 @@ public class Constants {
     public static final String SCHEMATIC_WEST_BIGGER = "WESTBigger.schematic";
     public static final String SCHEMATIC_SOUTH_BIGGER = "SOUTHBigger.schematic";
     public static final String SCHEMATIC_EAST_BIGGER = "EASTBigger.schematic";
+    // Deluxe TARDIS schematic supplied by ewized http://dev.bukkit.org/profiles/ewized/
     public static final String SCHEMATIC_NORTH_DELUXE = "NORTHDeluxe.schematic";
     public static final String SCHEMATIC_WEST_DELUXE = "WESTDeluxe.schematic";
     public static final String SCHEMATIC_SOUTH_DELUXE = "SOUTHDeluxe.schematic";
