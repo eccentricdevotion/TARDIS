@@ -65,6 +65,7 @@ public class TARDISTimetravel {
             }
             i = i + 1;
         }
+        TARDISWorldGuardChecker wg = new TARDISWorldGuardChecker(plugin);
         while (danger == true) {
             count = 0;
             wherex = rand.nextInt(range);
@@ -116,7 +117,9 @@ public class TARDISTimetravel {
                     currentBlock = currentBlock.getRelative(BlockFace.DOWN);
                 }
                 Location chunk_loc = currentBlock.getLocation();
-
+                if (wg.cantBuild(p, chunk_loc)) {
+                    count = 1;
+                }
                 randworld.getChunkAt(chunk_loc).load();
                 randworld.getChunkAt(chunk_loc).load(true);
                 while (!randworld.getChunkAt(chunk_loc).isLoaded()) {

@@ -215,6 +215,11 @@ public class TARDISexecutor implements CommandExecutor {
                 if (args[0].equalsIgnoreCase("comehere")) {
                     if (player.hasPermission("TARDIS.timetravel")) {
                         final Location eyeLocation = player.getTargetBlock(null, 50).getLocation();
+                        TARDISWorldGuardChecker wg = new TARDISWorldGuardChecker(plugin);
+                        if (wg.cantBuild(player, eyeLocation)) {
+                            sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + "That location is protected by WorldGuard!");
+                            return false;
+                        }
                         Material m = player.getTargetBlock(null, 50).getType();
                         if (m != Material.SNOW) {
                             int yplusone = eyeLocation.getBlockY();
