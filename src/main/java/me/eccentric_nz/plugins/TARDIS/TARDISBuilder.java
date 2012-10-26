@@ -500,7 +500,7 @@ public class TARDISBuilder {
                                     statement.executeUpdate(queryRepeater);
                                     j++;
                                 }
-                                if (id == 71 && data != (byte) 8) { // iron door bottom
+                                if (id == 71 && data < (byte) 8) { // iron door bottom
                                     String doorloc = world.getName() + ":" + startx + ":" + starty + ":" + startz;
                                     String queryDoor = "INSERT INTO doors (tardis_id, door_type, door_location, door_direction) VALUES (" + dbID + ", 1, '" + doorloc + "', '" + d + "')";
                                     statement.executeUpdate(queryDoor);
