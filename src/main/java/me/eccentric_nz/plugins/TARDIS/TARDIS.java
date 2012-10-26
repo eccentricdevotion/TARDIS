@@ -21,46 +21,18 @@ public class TARDIS extends JavaPlugin implements Listener {
     public PluginDescriptionFile pdfFile;
     public FileConfiguration config = null;
     public File schematicfile = null;
-    public File budgetNschematicfile = null;
-    public File budgetWschematicfile = null;
-    public File budgetSschematicfile = null;
-    public File budgetEschematicfile = null;
-    public File biggerNschematicfile = null;
-    public File biggerWschematicfile = null;
-    public File biggerSschematicfile = null;
-    public File biggerEschematicfile = null;
-    public File deluxeNschematicfile = null;
-    public File deluxeWschematicfile = null;
-    public File deluxeSschematicfile = null;
-    public File deluxeEschematicfile = null;
-    public File budgetNschematiccsv = null;
-    public File budgetWschematiccsv = null;
-    public File budgetSschematiccsv = null;
-    public File budgetEschematiccsv = null;
-    public File biggerNschematiccsv = null;
-    public File biggerWschematiccsv = null;
-    public File biggerSschematiccsv = null;
-    public File biggerEschematiccsv = null;
-    public File deluxeNschematiccsv = null;
-    public File deluxeWschematiccsv = null;
-    public File deluxeSschematiccsv = null;
-    public File deluxeEschematiccsv = null;
+    public File budgetschematicfile = null;
+    public File biggerschematicfile = null;
+    public File deluxeschematicfile = null;
+    public File budgetschematiccsv = null;
+    public File biggerschematiccsv = null;
+    public File deluxeschematiccsv = null;
     public File myconfigfile = null;
-    public File timelordsfile = null;
     public File quotesfile = null;
     private TARDISexecutor tardisExecutor;
-    public String[][][] budgetschematic_NORTH;
-    public String[][][] budgetschematic_WEST;
-    public String[][][] budgetschematic_SOUTH;
-    public String[][][] budgetschematic_EAST;
-    public String[][][] biggerschematic_NORTH;
-    public String[][][] biggerschematic_WEST;
-    public String[][][] biggerschematic_SOUTH;
-    public String[][][] biggerschematic_EAST;
-    public String[][][] deluxeschematic_NORTH;
-    public String[][][] deluxeschematic_WEST;
-    public String[][][] deluxeschematic_SOUTH;
-    public String[][][] deluxeschematic_EAST;
+    public String[][][] budgetschematic;
+    public String[][][] biggerschematic;
+    public String[][][] deluxeschematic;
     public short[] budgetdimensions = new short[3];
     public short[] biggerdimensions = new short[3];
     public short[] deluxedimensions = new short[3];
@@ -106,78 +78,24 @@ public class TARDIS extends JavaPlugin implements Listener {
         }
 
         TARDISSchematicReader reader = new TARDISSchematicReader(plugin);
-        String budnstr = getDataFolder() + File.separator + Constants.SCHEMATIC_NORTH_BUDGET;
-        budgetNschematicfile = new File(budnstr);
-        if (!budgetNschematicfile.exists()) {
-            copy(getResource(Constants.SCHEMATIC_NORTH_BUDGET), budgetNschematicfile);
+        String budnstr = getDataFolder() + File.separator + Constants.SCHEMATIC_BUDGET;
+        budgetschematicfile = new File(budnstr);
+        if (!budgetschematicfile.exists()) {
+            copy(getResource(Constants.SCHEMATIC_BUDGET), budgetschematicfile);
         }
-        String budwstr = getDataFolder() + File.separator + Constants.SCHEMATIC_WEST_BUDGET;
-        budgetWschematicfile = new File(budwstr);
-        if (!budgetWschematicfile.exists()) {
-            copy(getResource(Constants.SCHEMATIC_WEST_BUDGET), budgetWschematicfile);
+        String bignstr = getDataFolder() + File.separator + Constants.SCHEMATIC_BIGGER;
+        biggerschematicfile = new File(bignstr);
+        if (!biggerschematicfile.exists()) {
+            copy(getResource(Constants.SCHEMATIC_BIGGER), biggerschematicfile);
         }
-        String budsstr = getDataFolder() + File.separator + Constants.SCHEMATIC_SOUTH_BUDGET;
-        budgetSschematicfile = new File(budsstr);
-        if (!budgetSschematicfile.exists()) {
-            copy(getResource(Constants.SCHEMATIC_SOUTH_BUDGET), budgetSschematicfile);
-        }
-        String budestr = getDataFolder() + File.separator + Constants.SCHEMATIC_EAST_BUDGET;
-        budgetEschematicfile = new File(budestr);
-        if (!budgetEschematicfile.exists()) {
-            copy(getResource(Constants.SCHEMATIC_EAST_BUDGET), budgetEschematicfile);
-        }
-        String bignstr = getDataFolder() + File.separator + Constants.SCHEMATIC_NORTH_BIGGER;
-        biggerNschematicfile = new File(bignstr);
-        if (!biggerNschematicfile.exists()) {
-            copy(getResource(Constants.SCHEMATIC_NORTH_BIGGER), biggerNschematicfile);
-        }
-        String bigwstr = getDataFolder() + File.separator + Constants.SCHEMATIC_WEST_BIGGER;
-        biggerWschematicfile = new File(bigwstr);
-        if (!biggerWschematicfile.exists()) {
-            copy(getResource(Constants.SCHEMATIC_WEST_BIGGER), biggerWschematicfile);
-        }
-        String bigsstr = getDataFolder() + File.separator + Constants.SCHEMATIC_SOUTH_BIGGER;
-        biggerSschematicfile = new File(bigsstr);
-        if (!biggerSschematicfile.exists()) {
-            copy(getResource(Constants.SCHEMATIC_SOUTH_BIGGER), biggerSschematicfile);
-        }
-        String bigestr = getDataFolder() + File.separator + Constants.SCHEMATIC_EAST_BIGGER;
-        biggerEschematicfile = new File(bigestr);
-        if (!biggerEschematicfile.exists()) {
-            copy(getResource(Constants.SCHEMATIC_EAST_BIGGER), biggerEschematicfile);
-        }
-        String delnstr = getDataFolder() + File.separator + Constants.SCHEMATIC_NORTH_DELUXE;
-        deluxeNschematicfile = new File(delnstr);
-        if (!deluxeNschematicfile.exists()) {
-            copy(getResource(Constants.SCHEMATIC_NORTH_DELUXE), deluxeNschematicfile);
-        }
-        String delwstr = getDataFolder() + File.separator + Constants.SCHEMATIC_WEST_DELUXE;
-        deluxeWschematicfile = new File(delwstr);
-        if (!deluxeWschematicfile.exists()) {
-            copy(getResource(Constants.SCHEMATIC_WEST_DELUXE), deluxeWschematicfile);
-        }
-        String delsstr = getDataFolder() + File.separator + Constants.SCHEMATIC_SOUTH_DELUXE;
-        deluxeSschematicfile = new File(delsstr);
-        if (!deluxeSschematicfile.exists()) {
-            copy(getResource(Constants.SCHEMATIC_SOUTH_DELUXE), deluxeSschematicfile);
-        }
-        String delestr = getDataFolder() + File.separator + Constants.SCHEMATIC_EAST_DELUXE;
-        deluxeEschematicfile = new File(delestr);
-        if (!deluxeEschematicfile.exists()) {
-            copy(getResource(Constants.SCHEMATIC_EAST_DELUXE), deluxeEschematicfile);
+        String delnstr = getDataFolder() + File.separator + Constants.SCHEMATIC_DELUXE;
+        deluxeschematicfile = new File(delnstr);
+        if (!deluxeschematicfile.exists()) {
+            copy(getResource(Constants.SCHEMATIC_DELUXE), deluxeschematicfile);
         }
         reader.main(budnstr, Constants.SCHEMATIC.BUDGET);
-        reader.main(budwstr, Constants.SCHEMATIC.BUDGET);
-        reader.main(budsstr, Constants.SCHEMATIC.BUDGET);
-        reader.main(budestr, Constants.SCHEMATIC.BUDGET);
         reader.main(bignstr, Constants.SCHEMATIC.BIGGER);
-        reader.main(bigwstr, Constants.SCHEMATIC.BIGGER);
-        reader.main(bigsstr, Constants.SCHEMATIC.BIGGER);
-        reader.main(bigestr, Constants.SCHEMATIC.BIGGER);
         reader.main(delnstr, Constants.SCHEMATIC.DELUXE);
-        reader.main(delwstr, Constants.SCHEMATIC.DELUXE);
-        reader.main(delsstr, Constants.SCHEMATIC.DELUXE);
-        reader.main(delestr, Constants.SCHEMATIC.DELUXE);
 
         if (config == null) {
             loadConfig();
@@ -218,34 +136,12 @@ public class TARDIS extends JavaPlugin implements Listener {
 
     public FileConfiguration loadConfig() {
         try {
-            schematicfile = new File(getDataFolder(), Constants.SCHEMATIC_FILE_NAME);
-            if (!schematicfile.exists()) {
-                copy(getResource(Constants.SCHEMATIC_FILE_NAME), schematicfile);
-            }
-            budgetNschematiccsv = new File(getDataFolder(), Constants.SCHEMATIC_NORTH_BUDGET + ".csv");
-            budgetWschematiccsv = new File(getDataFolder(), Constants.SCHEMATIC_WEST_BUDGET + ".csv");
-            budgetSschematiccsv = new File(getDataFolder(), Constants.SCHEMATIC_SOUTH_BUDGET + ".csv");
-            budgetEschematiccsv = new File(getDataFolder(), Constants.SCHEMATIC_EAST_BUDGET + ".csv");
-            biggerNschematiccsv = new File(getDataFolder(), Constants.SCHEMATIC_NORTH_BIGGER + ".csv");
-            biggerWschematiccsv = new File(getDataFolder(), Constants.SCHEMATIC_WEST_BIGGER + ".csv");
-            biggerSschematiccsv = new File(getDataFolder(), Constants.SCHEMATIC_SOUTH_BIGGER + ".csv");
-            biggerEschematiccsv = new File(getDataFolder(), Constants.SCHEMATIC_EAST_BIGGER + ".csv");
-            deluxeNschematiccsv = new File(getDataFolder(), Constants.SCHEMATIC_NORTH_DELUXE + ".csv");
-            deluxeWschematiccsv = new File(getDataFolder(), Constants.SCHEMATIC_WEST_DELUXE + ".csv");
-            deluxeSschematiccsv = new File(getDataFolder(), Constants.SCHEMATIC_SOUTH_DELUXE + ".csv");
-            deluxeEschematiccsv = new File(getDataFolder(), Constants.SCHEMATIC_EAST_DELUXE + ".csv");
-            budgetschematic_NORTH = Schematic.schematic(budgetNschematiccsv, budgetdimensions[0], budgetdimensions[1], budgetdimensions[2]);
-            budgetschematic_WEST = Schematic.schematic(budgetWschematiccsv, budgetdimensions[0], budgetdimensions[1], budgetdimensions[2]);
-            budgetschematic_SOUTH = Schematic.schematic(budgetSschematiccsv, budgetdimensions[0], budgetdimensions[1], budgetdimensions[2]);
-            budgetschematic_EAST = Schematic.schematic(budgetEschematiccsv, budgetdimensions[0], budgetdimensions[1], budgetdimensions[2]);
-            biggerschematic_NORTH = Schematic.schematic(biggerNschematiccsv, biggerdimensions[0], biggerdimensions[1], biggerdimensions[2]);
-            biggerschematic_WEST = Schematic.schematic(biggerWschematiccsv, biggerdimensions[0], biggerdimensions[1], biggerdimensions[2]);
-            biggerschematic_SOUTH = Schematic.schematic(biggerSschematiccsv, biggerdimensions[0], biggerdimensions[1], biggerdimensions[2]);
-            biggerschematic_EAST = Schematic.schematic(biggerEschematiccsv, biggerdimensions[0], biggerdimensions[1], biggerdimensions[2]);
-            deluxeschematic_NORTH = Schematic.schematic(deluxeNschematiccsv, deluxedimensions[0], deluxedimensions[1], deluxedimensions[2]);
-            deluxeschematic_WEST = Schematic.schematic(deluxeWschematiccsv, deluxedimensions[0], deluxedimensions[1], deluxedimensions[2]);
-            deluxeschematic_SOUTH = Schematic.schematic(deluxeSschematiccsv, deluxedimensions[0], deluxedimensions[1], deluxedimensions[2]);
-            deluxeschematic_EAST = Schematic.schematic(deluxeEschematiccsv, deluxedimensions[0], deluxedimensions[1], deluxedimensions[2]);
+            budgetschematiccsv = new File(getDataFolder(), Constants.SCHEMATIC_BUDGET + ".csv");
+            biggerschematiccsv = new File(getDataFolder(), Constants.SCHEMATIC_BIGGER + ".csv");
+            deluxeschematiccsv = new File(getDataFolder(), Constants.SCHEMATIC_DELUXE + ".csv");
+            budgetschematic = Schematic.schematic(budgetschematiccsv, budgetdimensions[0], budgetdimensions[1], budgetdimensions[2]);
+            biggerschematic = Schematic.schematic(biggerschematiccsv, biggerdimensions[0], biggerdimensions[1], biggerdimensions[2]);
+            deluxeschematic = Schematic.schematic(deluxeschematiccsv, deluxedimensions[0], deluxedimensions[1], deluxedimensions[2]);
 
             myconfigfile = new File(getDataFolder(), Constants.CONFIG_FILE_NAME);
             if (!myconfigfile.exists()) {
@@ -256,8 +152,6 @@ public class TARDIS extends JavaPlugin implements Listener {
             if (!quotesfile.exists()) {
                 copy(getResource(Constants.QUOTES_FILE_NAME), quotesfile);
             }
-
-            timelordsfile = new File(getDataFolder(), Constants.TIMELORDS_FILE_NAME);
         } catch (Exception e) {
             System.err.println(Constants.MY_PLUGIN_NAME + " failed to retrieve files from directory. Using defaults.");
         }

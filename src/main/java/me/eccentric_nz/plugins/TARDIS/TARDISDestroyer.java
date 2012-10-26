@@ -25,10 +25,10 @@ public class TARDISDestroyer {
         short h, width, l;
         switch (schm) {
             case BIGGER:
-            h = plugin.biggerdimensions[0];
-            width = plugin.biggerdimensions[1];
-            l = plugin.biggerdimensions[2];
-            break;
+                h = plugin.biggerdimensions[0];
+                width = plugin.biggerdimensions[1];
+                l = plugin.biggerdimensions[2];
+                break;
             case DELUXE:
                 h = plugin.deluxedimensions[0];
                 width = plugin.deluxedimensions[1];
@@ -41,7 +41,7 @@ public class TARDISDestroyer {
                 break;
         }
         // inner TARDIS
-        int level, row, col, x, y, z, startx, starty = (14+h), startz, resetx, resetz;
+        int level, row, col, x, y, z, startx, starty = (14 + h), startz, resetx, resetz;
         // calculate startx, starty, startz
         TARDISUtils utils = new TARDISUtils(plugin);
         int gsl[] = utils.getStartLocation(id, d);
@@ -71,40 +71,12 @@ public class TARDISDestroyer {
                     if (m != Material.CHEST) {
                         utils.setBlock(w, startx, starty, startz, i, (byte) 0);
                     }
-                    switch (d) {
-                        case NORTH:
-                        case SOUTH:
-                            startx += x;
-                            break;
-                        case EAST:
-                        case WEST:
-                            startz += z;
-                            break;
-                    }
+                    startx += x;
                 }
-                switch (d) {
-                    case NORTH:
-                    case SOUTH:
-                        startx = resetx;
-                        startz += z;
-                        break;
-                    case EAST:
-                    case WEST:
-                        startz = resetz;
-                        startx += x;
-                        break;
-                }
+                startx = resetx;
+                startz += z;
             }
-            switch (d) {
-                case NORTH:
-                case SOUTH:
-                    startz = resetz;
-                    break;
-                case EAST:
-                case WEST:
-                    startx = resetx;
-                    break;
-            }
+            startz = resetz;
             starty -= 1;
         }
     }

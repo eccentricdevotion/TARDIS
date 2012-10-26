@@ -318,63 +318,20 @@ public class TARDISBuilder {
         short h, w, l;
         switch (schm) {
             case BIGGER:
-                switch (d) {
-                    case NORTH:
-                        s = plugin.biggerschematic_NORTH;
-                        break;
-                    case WEST:
-                        s = plugin.biggerschematic_WEST;
-                        break;
-                    case SOUTH:
-                        s = plugin.biggerschematic_SOUTH;
-                        break;
-                    default:
-                        s = plugin.biggerschematic_EAST;
-                        break;
-                }
+                s = plugin.biggerschematic;
                 h = plugin.biggerdimensions[0];
                 w = plugin.biggerdimensions[1];
                 l = plugin.biggerdimensions[2];
                 break;
             // Deluxe TARDIS schematic supplied by ewized http://dev.bukkit.org/profiles/ewized/
             case DELUXE:
-                switch (d) {
-                    case NORTH:
-                        s = plugin.deluxeschematic_NORTH;
-                        break;
-                    case WEST:
-                        s = plugin.deluxeschematic_WEST;
-                        break;
-                    case SOUTH:
-                        s = plugin.deluxeschematic_SOUTH;
-                        break;
-                    default:
-                        s = plugin.deluxeschematic_EAST;
-                        break;
-                }
+                s = plugin.deluxeschematic;
                 h = plugin.deluxedimensions[0];
                 w = plugin.deluxedimensions[1];
                 l = plugin.deluxedimensions[2];
                 break;
             default:
-                switch (d) {
-                    case NORTH:
-                        s = plugin.budgetschematic_NORTH;
-                        System.out.println("North");
-                        break;
-                    case WEST:
-                        s = plugin.budgetschematic_WEST;
-                        System.out.println("West");
-                        break;
-                    case SOUTH:
-                        s = plugin.budgetschematic_SOUTH;
-                        System.out.println("South");
-                        break;
-                    default:
-                        s = plugin.budgetschematic_EAST;
-                        System.out.println("East");
-                        break;
-                }
+                s = plugin.budgetschematic;
                 h = plugin.budgetdimensions[0];
                 w = plugin.budgetdimensions[1];
                 l = plugin.budgetdimensions[2];
@@ -418,40 +375,12 @@ public class TARDISBuilder {
                         }
                     }
                     utils.setBlock(world, startx, starty, startz, 0, (byte) 0);
-                    switch (d) {
-                        case NORTH:
-                        case SOUTH:
-                            startx += x;
-                            break;
-                        case EAST:
-                        case WEST:
-                            startz += z;
-                            break;
-                    }
+                    startx += x;
                 }
-                switch (d) {
-                    case NORTH:
-                    case SOUTH:
-                        startx = resetx;
-                        startz += z;
-                        break;
-                    case EAST:
-                    case WEST:
-                        startz = resetz;
-                        startx += x;
-                        break;
-                }
+                startx = resetx;
+                startz += z;
             }
-            switch (d) {
-                case NORTH:
-                case SOUTH:
-                    startz = resetz;
-                    break;
-                case EAST:
-                case WEST:
-                    startx = resetx;
-                    break;
-            }
+            startz = resetz;
             starty += 1;
         }
         // update chunks list in DB
@@ -502,7 +431,7 @@ public class TARDISBuilder {
                                 }
                                 if (id == 71 && data < (byte) 8) { // iron door bottom
                                     String doorloc = world.getName() + ":" + startx + ":" + starty + ":" + startz;
-                                    String queryDoor = "INSERT INTO doors (tardis_id, door_type, door_location, door_direction) VALUES (" + dbID + ", 1, '" + doorloc + "', '" + d + "')";
+                                    String queryDoor = "INSERT INTO doors (tardis_id, door_type, door_location, door_direction) VALUES (" + dbID + ", 1, '" + doorloc + "', 'SOUTH')";
                                     statement.executeUpdate(queryDoor);
                                 }
                                 if (id == 68) { // chameleon circuit sign
@@ -526,40 +455,12 @@ public class TARDISBuilder {
                                 utils.setBlock(world, startx, starty, startz, id, data);
                             }
                         }
-                        switch (d) {
-                            case NORTH:
-                            case SOUTH:
-                                startx += x;
-                                break;
-                            case EAST:
-                            case WEST:
-                                startz += z;
-                                break;
-                        }
+                        startx += x;
                     }
-                    switch (d) {
-                        case NORTH:
-                        case SOUTH:
-                            startx = resetx;
-                            startz += z;
-                            break;
-                        case EAST:
-                        case WEST:
-                            startz = resetz;
-                            startx += x;
-                            break;
-                    }
+                    startx = resetx;
+                    startz += z;
                 }
-                switch (d) {
-                    case NORTH:
-                    case SOUTH:
-                        startz = resetz;
-                        break;
-                    case EAST:
-                    case WEST:
-                        startx = resetx;
-                        break;
-                }
+                startz = resetz;
                 starty += 1;
             }
         } catch (SQLException e) {

@@ -74,40 +74,12 @@ public class TARDISUtils {
             cx = parseNum(split[1]);
             cz = parseNum(split[2]);
             Chunk chunk = w.getChunkAt(cx, cz);
-//            switch (dir) {
-//                case NORTH:
-//                    startLoc[0] = chunk.getBlock(14, 15, 14).getX();
-//                    startLoc[1] = startLoc[0];
-//                    startLoc[2] = chunk.getBlock(14, 15, 14).getZ();
-//                    startLoc[3] = startLoc[2];
-//                    startLoc[4] = 1;
-//                    startLoc[5] = 1;
-//                    break;
-//                case EAST:
-//                    startLoc[0] = chunk.getBlock(1, 15, 14).getX();
-//                    startLoc[1] = startLoc[0];
-//                    startLoc[2] = chunk.getBlock(1, 15, 14).getZ();
-//                    startLoc[3] = startLoc[2];
-//                    startLoc[4] = 1;
-//                    startLoc[5] = 1;
-//                    break;
-//                case SOUTH:
             startLoc[0] = chunk.getBlock(0, 15, 0).getX();
             startLoc[1] = startLoc[0];
             startLoc[2] = chunk.getBlock(0, 15, 0).getZ();
             startLoc[3] = startLoc[2];
             startLoc[4] = 1;
             startLoc[5] = 1;
-//                    break;
-//                case WEST:
-//                    startLoc[0] = chunk.getBlock(14, 15, 1).getX();
-//                    startLoc[1] = startLoc[0];
-//                    startLoc[2] = chunk.getBlock(14, 15, 1).getZ();
-//                    startLoc[3] = startLoc[2];
-//                    startLoc[4] = 1;
-//                    startLoc[5] = 1;
-//                    break;
-//            }
             rs.close();
             statement.close();
         } catch (SQLException e) {
