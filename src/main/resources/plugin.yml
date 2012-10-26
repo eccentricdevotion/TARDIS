@@ -3,7 +3,7 @@ description: A plugin for all Doctor Who fans - create and use a TARDIS! Telepor
 main: me.eccentric_nz.plugins.TARDIS.TARDIS
 name: TARDIS
 startup: postworld
-softdepend: [Multiverse-Core]
+softdepend: [Multiverse-Core,WorldGuard]
 dev-url: http://de.bukkit.org/server-mods/TARDIS/
 url: http://www.thenosefairy.co.nz/
 version: '1.6-beta'
