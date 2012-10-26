@@ -54,7 +54,7 @@ public class Constants {
 
     public enum COMPASS {
 
-        NORTH, EAST, SOUTH, WEST;
+        NORTH, WEST, SOUTH, EAST;
     }
 
     public enum CMDS {
