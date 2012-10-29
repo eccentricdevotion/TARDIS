@@ -69,7 +69,7 @@ public class TARDISPlayerListener implements Listener {
                 int by = block_loc.getBlockY();
                 int bz = block_loc.getBlockZ();
                 byte blockData = block.getData();
-                if (blockData == 8 && blockType == Material.IRON_DOOR_BLOCK) {
+                if (blockData >= 8 && blockType == Material.IRON_DOOR_BLOCK) {
                     by = (by - 1);
                 }
                 String blockLocStr = bw + ":" + bx + ":" + by + ":" + bz;
@@ -529,7 +529,7 @@ public class TARDISPlayerListener implements Listener {
                             ResultSet rs = statement.executeQuery(queryTardis);
                             if (rs.next()) {
                                 int id = rs.getInt("tardis_id");
-                                String queryChameleon = "";
+                                String queryChameleon;
                                 Sign s = (Sign) block.getState();
                                 if (rs.getBoolean("chamele_on")) {
                                     queryChameleon = "UPDATE tardis SET chamele_on = 0 WHERE tardis_id = " + id;
@@ -571,11 +571,13 @@ public class TARDISPlayerListener implements Listener {
         world.refreshChunk(chunk.getX(), chunk.getZ());
 
         Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
+            @Override
             public void run() {
                 thePlayer.teleport(theLocation);
             }
         }, 10L);
         Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
+            @Override
             public void run() {
                 thePlayer.teleport(theLocation);
                 if (thePlayer.getGameMode() == GameMode.CREATIVE || (allowFlight && crossWorlds)) {
