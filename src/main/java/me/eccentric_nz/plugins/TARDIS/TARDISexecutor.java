@@ -509,6 +509,10 @@ public class TARDISexecutor implements CommandExecutor {
                             if (args.length < 2) {
                                 sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " Too few command arguments!");
                                 return false;
+                            }
+                            if (!args[1].matches("[A-Za-z0-9_]{2,16}")) {
+                                sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + "That doesn't appear to be a valid username");
+                                return false;
                             } else {
                                 String queryCompanions;
                                 if (comps != null && !comps.equals("") && !comps.equals("[Null]")) {
@@ -555,6 +559,10 @@ public class TARDISexecutor implements CommandExecutor {
                             }
                             if (args.length < 2) {
                                 sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " Too few command arguments!");
+                                return false;
+                            }
+                            if (!args[1].matches("[A-Za-z0-9_]{2,16}")) {
+                                sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + "That doesn't appear to be a valid username");
                                 return false;
                             } else {
                                 String[] split = comps.split(":");
