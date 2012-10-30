@@ -517,11 +517,11 @@ public class TARDISexecutor implements CommandExecutor {
                                 String queryCompanions;
                                 if (comps != null && !comps.equals("") && !comps.equals("[Null]")) {
                                     // add to the list
-                                    String newList = comps + ":" + args[1];
+                                    String newList = comps + ":" + args[1].toLowerCase();
                                     queryCompanions = "UPDATE tardis SET companions = '" + newList + "' WHERE tardis_id = " + id;
                                 } else {
                                     // make a list
-                                    queryCompanions = "UPDATE tardis SET companions = '" + args[1] + "' WHERE tardis_id = " + id;
+                                    queryCompanions = "UPDATE tardis SET companions = '" + args[1].toLowerCase() + "' WHERE tardis_id = " + id;
                                 }
                                 statement.executeUpdate(queryCompanions);
                                 player.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " You added " + ChatColor.GREEN + args[1] + ChatColor.RESET + " as a TARDIS companion.");
@@ -569,7 +569,7 @@ public class TARDISexecutor implements CommandExecutor {
                                 String newList = "";
                                 // recompile string without the specified player
                                 for (String c : split) {
-                                    if (!c.equals(args[1])) {
+                                    if (!c.equals(args[1].toLowerCase())) {
                                         // add to new string
                                         newList += c + ":";
                                     }
