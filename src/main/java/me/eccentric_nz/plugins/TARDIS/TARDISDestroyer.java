@@ -116,13 +116,13 @@ public class TARDISDestroyer {
                 if (!replacedData.equals("") && replacedData != null) {
                     String[] parts = replacedData.split(":");
                     World rw = plugin.getServer().getWorld(parts[0]);
-                    int rx = 0, ry = 0, rz = 0, rID = 0;
+                    int rx, ry, rz, rID;
                     byte rb = 0;
+                    rx = utils.parseNum(parts[1]);
+                    ry = utils.parseNum(parts[2]);
+                    rz = utils.parseNum(parts[3]);
+                    rID = utils.parseNum(parts[4]);
                     try {
-                        rx = Integer.valueOf(parts[1]);
-                        ry = Integer.valueOf(parts[2]);
-                        rz = Integer.valueOf(parts[3]);
-                        rID = Integer.valueOf(parts[4]);
                         rb = Byte.valueOf(parts[5]);
                     } catch (NumberFormatException nfe) {
                         System.err.println(Constants.MY_PLUGIN_NAME + "Could not convert to number!");
@@ -163,6 +163,25 @@ public class TARDISDestroyer {
                     statement.executeUpdate(queryEmptyP);
                 }
                 prs.close();
+            }
+            // check protected blocks if has block id and data stored then put the block back!
+            String queryGetBlocks = "SELECT * FROM blocks WHERE tardis_id = " + id;
+            ResultSet rsBlocks = statement.executeQuery(queryGetBlocks);
+            while (rsBlocks.next()) {
+                int bID = rsBlocks.getInt("block");
+                if (bID != 0) {
+                    byte data = rsBlocks.getByte("data");
+                    String locStr = rsBlocks.getString("location");
+                    String[] loc_data = locStr.split(",");
+                    // x, y, z - 1, 2, 3
+                    String[] xStr = loc_data[1].split("=");
+                    String[] yStr = loc_data[2].split("=");
+                    String[] zStr = loc_data[3].split("=");
+                    int rx = utils.parseNum(xStr[1].substring(0, (xStr[1].length() - 2)));
+                    int ry = utils.parseNum(yStr[1].substring(0, (yStr[1].length() - 2)));
+                    int rz = utils.parseNum(zStr[1].substring(0, (zStr[1].length() - 2)));
+                    utils.setBlock(w, rx, ry, rz, bID, data);
+                }
             }
             // remove protected blocks from the blocks table
             String queryRemoveBlocks = "DELETE FROM blocks WHERE tardis_id = " + id;
