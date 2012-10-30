@@ -130,7 +130,7 @@ public class TARDISBuilder {
         x = l.getBlockX();
         plusx = (l.getBlockX() + 1);
         minusx = (l.getBlockX() - 1);
-        final int y = (l.getBlockY());
+        final int y = l.getBlockY();
         final int plusy = (l.getBlockY() + 1), minusy = (l.getBlockY() - 1), down2y = (l.getBlockY() - 2), down3y = (l.getBlockY() - 3);
         z = (l.getBlockZ());
         plusz = (l.getBlockZ() + 1);
