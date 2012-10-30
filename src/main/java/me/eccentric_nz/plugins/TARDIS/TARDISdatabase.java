@@ -44,7 +44,7 @@ public class TARDISdatabase {
             statement.executeUpdate(queryDoors);
             String queryPlayers = "CREATE TABLE IF NOT EXISTS player_prefs (pp_id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, player TEXT COLLATE NOCASE, sfx_on INTEGER DEFAULT 0, platform_on INTEGER DEFAULT 0)";
             statement.executeUpdate(queryPlayers);
-            String queryProtectBlocks = "CREATE TABLE IF NOT EXISTS blocks (b_id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, tardis_id INTEGER, location TEXT COLLATE NOCASE DEFAULT '')";
+            String queryProtectBlocks = "CREATE TABLE IF NOT EXISTS blocks (b_id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, tardis_id INTEGER, location TEXT COLLATE NOCASE DEFAULT '', block INTEGER, data INTEGER)";
             statement.executeUpdate(queryProtectBlocks);
             // update tardis if there is no chameleon column
             String queryChameleon = "SELECT sql FROM sqlite_master WHERE tbl_name = 'tardis' AND sql LIKE '%chameleon TEXT%'";
@@ -110,6 +110,16 @@ public class TARDISdatabase {
                 System.out.println(Constants.MY_PLUGIN_NAME + " Adding new TARDIS size to DB!");
                 String queryAddSize = "UPDATE tardis SET size = 'BUDGET' WHERE size != 'BUDGET'";
                 statement.executeUpdate(queryAddSize);
+            }
+            // update blocks if there is no data column
+            String queryData = "SELECT sql FROM sqlite_master WHERE tbl_name = 'blocks' AND sql LIKE '%data INTEGER%'";
+            ResultSet rsData = statement.executeQuery(queryData);
+            if (!rsData.next()) {
+                String queryAlter7 = "ALTER TABLE blocks ADD block INTEGER";
+                String queryAlter8 = "ALTER TABLE blocks ADD data INTEGER";
+                statement.executeUpdate(queryAlter7);
+                statement.executeUpdate(queryAlter8);
+                System.out.println(Constants.MY_PLUGIN_NAME + " Adding block ID and data to blocks table!");
             }
             statement.close();
         } catch (SQLException e) {
