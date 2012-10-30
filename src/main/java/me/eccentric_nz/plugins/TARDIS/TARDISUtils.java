@@ -26,11 +26,19 @@ public class TARDISUtils {
 
     public void setBlockAndRemember(World w, int x, int y, int z, int m, byte d, int id) {
         Block b = w.getBlockAt(x, y, z);
+        // save the block location so that we can protect it from damage and restore it (if it wasn't air)!
+        int bid = b.getTypeId();
         String l = b.getLocation().toString();
+        String queryAddBlock;
+        if (bid != 0) {
+            byte data = b.getData();
+            queryAddBlock = "INSERT INTO blocks (tardis_id, location, block, data) VALUES (" + id + ",'" + l + "', " + bid + ", " + data + ")";
+        } else {
+            queryAddBlock = "INSERT INTO blocks (tardis_id, location) VALUES (" + id + ",'" + l + "')";
+        }
         try {
             Connection connection = service.getConnection();
             Statement statement = connection.createStatement();
-            String queryAddBlock = "INSERT INTo blocks (tardis_id, location) VALUES (" + id + ",'" + l + "')";
             statement.executeUpdate(queryAddBlock);
         } catch (SQLException e) {
             System.err.println(Constants.MY_PLUGIN_NAME + " Could not save block location to DB!");
