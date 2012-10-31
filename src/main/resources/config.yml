@@ -1,5 +1,5 @@
 # config file
-key: REDSTONE_TORCH_ON
+key: STICK
 bonus_chest: true
 tp_radius: 256
 max_distance: -1
