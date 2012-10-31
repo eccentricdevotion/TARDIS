@@ -49,13 +49,14 @@ public class Constants {
 
     public enum CMDS {
 
-        CREATE, DELETE, TIMETRAVEL, LIST, SAVE, FIND, ADD, ADMIN, UPDATE, TRAVEL, REBUILD, CHAMELEON, SFX, PLATFORM;
+        CREATE, DELETE, TIMETRAVEL, LIST, SAVE, FIND, ADD, ADMIN, UPDATE, TRAVEL, REBUILD, CHAMELEON, SFX, PLATFORM, SETDEST;
     }
     public static final String COMMAND_CREATE = ChatColor.AQUA + "Creating a TARDIS\n" + ChatColor.RESET + "You create a TARDIS by placing a " + ChatColor.GOLD + "specific pattern of blocks." + ChatColor.RESET + "\nYou will need to have an IRON BLOCK, a LAPIS BLOCK, and a redstone torch in your inventory.\nYou place the blocks where you want the TARDIS to be, in the following order:\nBottom - IRON BLOCK, middle - LAPIS BLOCK, top - REDSTONE TORCH\nThe TARDIS takes up a 3 x 3 x 4 area (w x d x h), so keep this in mind.\nTo enter the TARDIS, right-click the door with your TARDIS key (by default a redstone torch).";
     public static final String COMMAND_DELETE = ChatColor.AQUA + "Removing a TARDIS\n" + ChatColor.RESET + "To remove your TARDIS, " + ChatColor.GOLD + "break the 'POLICE BOX' wall sign" + ChatColor.RESET + " on the front of the TARDIS.\n" + ChatColor.RED + "WARNING:" + ChatColor.RESET + " You will lose any items you have stored in your TARDIS chest, and any saved time travel destinations.";
     public static final String COMMAND_TIMETRAVEL = ChatColor.AQUA + "Time travelling in the TARDIS\n" + ChatColor.RESET + "You can time travel in the TARDIS by changing the delay settings of the redstone repeaters on the TARDIS console.\nThe repeater closest to the door controls the saved time travel destinations - the 1-tick delay setting holds the 'Home' destination (where the TARDIS was first created), and the 2-4 tick delay settings are slots that you can save destinations to.\nTo travel to saved destinations all the other repeaters must be set to the 1-tick delay setting. You then select the saved slot as desired, then click the stone button at the rear of the TARDIS console.\nTo travel to a random destination, set any of the other repeaters to a 2-4 tick delay, then click the stone button at the rear of the TARDIS console.\nWhen exiting the TARDIS (right-click the door with your TARDIS key - by default a redstone torch) you will time travel to the destination of choice.";
     public static final String COMMAND_LIST = ChatColor.AQUA + "TARDIS Lists\n" + ChatColor.RESET + "Type " + ChatColor.GOLD + "/TARDIS list saves" + ChatColor.RESET + "\nto list the destinations saved in the TARDIS console.\nType " + ChatColor.GOLD + "/TARDIS list companions" + ChatColor.RESET + "\nto list players who you have added as TARDIS companions";
     public static final String COMMAND_SAVE = ChatColor.AQUA + "Saving time travel destinations\n" + ChatColor.RESET + "To save the current TARDIS destination, type\n" + ChatColor.GOLD + "/TARDIS save [slot number] [name]" + ChatColor.RESET + "\nWhere [slot number] is a number from 1 to 3 and [name] is a what you want to call the destination.\n" + ChatColor.RED + "WARNING:" + ChatColor.RESET + " Specifying a slot number that already has a saved destination will cause that destination to be overwritten with the new one.";
+    public static final String COMMAND_SETDEST = ChatColor.AQUA + "Setting destinations\n" + ChatColor.RESET + "To set and save a TARDIS destination to the block you are looking at, type\n" + ChatColor.GOLD + "/TARDIS setdest [name]" + ChatColor.RESET + "\nWhere [name] is a what you want to call the destination.\nUse the /TARDIS travel dest [name] command to travel to the specified destination.";
     public static final String COMMAND_FIND = ChatColor.AQUA + "Finding the TARDIS\n" + ChatColor.RESET + "Simply type " + ChatColor.GOLD + "/TARDIS find" + ChatColor.RESET + "\nTo display the world name and x, y, z co-ordinates of the last saved location of your TARDIS.";
     public static final String COMMAND_TRAVEL = ChatColor.AQUA + "Travel commands\n" + ChatColor.RESET + "You can set your next destination using the command: " + ChatColor.GOLD + "/TARDIS travel" + ChatColor.RESET + "\nTo travel to specfic co-ordinates, type: " + ChatColor.GOLD + "/TARDIS travel [world] [x] [y] [z]" + ChatColor.RESET + "\nTo travel to a players location, type: " + ChatColor.GOLD + "/TARDIS travel [player]" + ChatColor.RESET + "\nYou must run these commands from inside the TARDIS.";
     public static final String COMMAND_ADD = ChatColor.AQUA + "Adding companions\n" + ChatColor.RESET + "To allow other players to travel with you in the TARDIS you need to add them to your companions list\nTo do this type: " + ChatColor.GOLD + "/TARDIS add [player]" + ChatColor.RESET + "\nTo remove a companion from the list, type: " + ChatColor.GOLD + "/TARDIS remove [player]" + ChatColor.RESET;
@@ -112,7 +113,7 @@ public class Constants {
             ResultSet rs = statement.executeQuery(querySaves);
             if (rs != null && rs.next()) {
                 int id = rs.getInt("tardis_id");
-                // list console saves
+                // list TARDIS console saves
                 if (l.equalsIgnoreCase("saves")) {
                     // construct home string
                     String h = rs.getString("home");
@@ -140,7 +141,7 @@ public class Constants {
                     } else {
                         p.sendMessage(ChatColor.GREEN + "3. No destination saved");
                     }
-                    // list saved destinations
+                    // list other saved destinations
                     String queryDests = "SELECT * FROM destinations WHERE tardis_id = " + id;
                     ResultSet rsDests = statement.executeQuery(queryDests);
                     int i = 1;
