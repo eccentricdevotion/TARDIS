@@ -44,6 +44,10 @@ public class TARDIS extends JavaPlugin implements Listener {
     TARDISBlockDamageListener tardisDamageListener = new TARDISBlockDamageListener(this);
     PluginManager pm = Bukkit.getServer().getPluginManager();
     public HashMap<String, String> trackPlayers = new HashMap<String, String>();
+    public HashMap<String, String> trackName = new HashMap<String, String>();
+    public HashMap<String, String> trackGroup = new HashMap<String, String>();
+    public HashMap<String, String> trackFlag = new HashMap<String, String>();
+    public HashMap<String, String> trackBlock = new HashMap<String, String>();
     private static ArrayList<String> quotes = new ArrayList<String>();
     public ArrayList<String> quote;
     public int quotelen;
