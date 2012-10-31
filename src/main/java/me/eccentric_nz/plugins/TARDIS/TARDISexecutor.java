@@ -637,7 +637,55 @@ public class TARDISexecutor implements CommandExecutor {
                                 return true;
                             }
                         } catch (SQLException e) {
-                            System.err.println(Constants.MY_PLUGIN_NAME + " Companion Save Error: " + e);
+                            System.err.println(Constants.MY_PLUGIN_NAME + " Location Save Error: " + e);
+                        }
+                    } else {
+                        sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + Constants.NO_PERMS_MESSAGE);
+                        return false;
+                    }
+                }
+                if (args[0].equalsIgnoreCase("setdest")) {
+                    if (player.hasPermission("TARDIS.save")) {
+                        try {
+                            Connection connection = service.getConnection();
+                            Statement statement = connection.createStatement();
+                            String queryList = "SELECT * FROM tardis WHERE owner = '" + player.getName() + "'";
+                            ResultSet rs = statement.executeQuery(queryList);
+                            if (rs == null || !rs.next()) {
+                                sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " " + Constants.NO_TARDIS);
+                                return false;
+                            }
+                            if (args.length < 2) {
+                                sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " Too few command arguments!");
+                                return false;
+                            } else {
+                                String cur = rs.getString("current");
+                                String sav = rs.getString("save");
+                                int id = rs.getInt("tardis_id");
+                                int count = args.length;
+                                StringBuilder buf = new StringBuilder();
+                                for (int i = 1; i < count; i++) {
+                                    buf.append(args[i]).append(" ");
+                                }
+                                String tmp = buf.toString();
+                                String t = tmp.substring(0, tmp.length() - 1);
+                                // need to make there are no periods(.) in the text
+                                String nodots = StringUtils.replace(t, ".", "_");
+                                // get location player is looking at
+                                Block b = player.getTargetBlock(null, 50);
+                                Location l = b.getLocation();
+                                int dx = l.getBlockX();
+                                int dy = l.getBlockY() + 1;
+                                int dz = l.getBlockZ();
+                                String querySetDest = "INSERT INTO destinations (tardis_id, dest_name, world, x, y, z) VALUES (" + id + ", '" + nodots + "', " + dx + "', " + dy + "', " + dz + ")";
+                                statement.executeUpdate(querySetDest);
+                                rs.close();
+                                statement.close();
+                                sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " The destination '" + nodots + "' was saved successfully.");
+                                return true;
+                            }
+                        } catch (SQLException e) {
+                            System.err.println(Constants.MY_PLUGIN_NAME + " Destination Save Error: " + e);
                         }
                     } else {
                         sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + Constants.NO_PERMS_MESSAGE);
