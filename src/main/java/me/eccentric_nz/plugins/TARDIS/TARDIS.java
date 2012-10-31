@@ -4,6 +4,7 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Set;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.World;
@@ -168,6 +169,14 @@ public class TARDIS extends JavaPlugin implements Listener {
             if (w.getEnvironment() == Environment.NORMAL && !config.contains(worldname)) {
                 config.set(worldname, true);
                 System.out.println(Constants.MY_PLUGIN_NAME + " Added '" + w.getName() + "' to config. To exclude this world run: " + ChatColor.GREEN + "tardis admin exclude " + w.getName());
+            }
+        }
+        // now remove worlds that may have been deleted
+        Set<String> cWorlds = config.getConfigurationSection("worlds").getKeys(true);
+        for (String cw : cWorlds) {
+            if (getServer().getWorld(cw) == null) {
+                config.set("worlds." + cw, null);
+                System.out.println(Constants.MY_PLUGIN_NAME + " Removed '" + cw + " from config.yml");
             }
         }
 
