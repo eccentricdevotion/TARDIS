@@ -134,7 +134,7 @@ public class TARDISPlayerListener implements Listener {
                 } catch (SQLException e) {
                     System.err.println(Constants.MY_PLUGIN_NAME + " Create table error: " + e);
                 }
-            } else if (plugin.trackName.containsKey(playerNameStr)) {
+            } else if (plugin.trackName.containsKey(playerNameStr) && !plugin.trackBlock.containsKey(playerNameStr)) {
                 Location block_loc = block.getLocation();
                 String locStr = block_loc.getWorld().getName() + ":" + block_loc.getBlockX() + ":" + block_loc.getBlockZ();
                 plugin.trackBlock.put(playerNameStr, locStr);
@@ -172,11 +172,13 @@ public class TARDISPlayerListener implements Listener {
                     minz = block_loc.getBlockZ();
                     maxz = utils.parseNum(firstblock[2]);
                 }
+                String n = plugin.trackName.get(playerNameStr);
+                int f = utils.parseNum(plugin.trackFlag.get(playerNameStr));
                 String queryArea = "INSERT INTO areas (area_name, area_type, ";
                 if (plugin.trackGroup.containsKey(playerNameStr)) {
-                    queryArea += "area_group, world, minx, minz, maxx, maxz) VALUES ('" + plugin.trackName.get(playerNameStr) + "'," + plugin.trackFlag.get(playerNameStr) + ",'" + plugin.trackGroup.get(playerNameStr) + "'";
+                    queryArea += "area_group, world, minx, minz, maxx, maxz) VALUES ('" + n + "'," + f + ",'" + plugin.trackGroup.get(playerNameStr) + "'";
                 } else {
-                    queryArea += "world, minx, minz, maxx, maxz) VALUES ('" + plugin.trackName.get(playerNameStr) + "'," + plugin.trackFlag.get(playerNameStr);
+                    queryArea += "world, minx, minz, maxx, maxz) VALUES ('" + n + "'," + f;
                 }
                 queryArea += ",'" + firstblock[0] + "'," + minx + "," + minz + "," + maxx + "," + maxz + ")";
                 try {
