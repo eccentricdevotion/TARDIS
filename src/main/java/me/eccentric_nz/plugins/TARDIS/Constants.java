@@ -196,4 +196,8 @@ public class Constants {
         }
         return map;
     }
+
+    public enum areaChar {
+        N, G, F;
+    }
 }
