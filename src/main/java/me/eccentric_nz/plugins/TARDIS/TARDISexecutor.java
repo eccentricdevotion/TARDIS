@@ -323,21 +323,32 @@ public class TARDISexecutor implements CommandExecutor {
                                     return true;
                                 }
                             }
-                            if (args.length > 2 && args.length < 5) {
+                            if (args.length == 3 && args[2].equalsIgnoreCase("dest")) {
+                                // we're thinking this is a saved destination name
+                                String queryGetDest = "SELECT * FROM destinations WHERE tardis_id = " + id + " AND dest_name = '" + args[3] + "'";
+                                ResultSet rsDest = statement.executeQuery(queryGetDest);
+                                if (!rsDest.next()) {
+                                    sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " Could not find a destination with that name! try using " + ChatColor.GREEN + "/TARDIS list saves" + ChatColor.RESET + " first.");
+                                    return false;
+                                }
+                                String save_loc = rsDest.getString("world") + ":" + rsDest.getInt("x") + ":" + rsDest.getInt("y") + ":" + rsDest.getInt("z");
+                                String querySave = "UPDATE tardis SET save = '" + save_loc + "' WHERE tardis_id = " + id;
+                                statement.executeUpdate(querySave);
+                                sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " The specified location was set succesfully. Please exit the TARDIS!");
+                                return true;
+                            }
+                            if (args.length > 3 && args.length < 5) {
                                 sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " Too few command arguments for co-ordinates travel!");
                                 return false;
                             }
                             if (args.length == 5) {
                                 // must be a location then
+                                TARDISUtils utils = new TARDISUtils(plugin);
                                 int x = 0, y = 0, z = 0;
                                 World w = plugin.getServer().getWorld(args[1]);
-                                try {
-                                    x = Integer.valueOf(args[2]);
-                                    y = Integer.valueOf(args[3]);
-                                    z = Integer.valueOf(args[4]);
-                                } catch (NumberFormatException nfe) {
-                                    System.err.println(Constants.MY_PLUGIN_NAME + "Couldn't covert to number: " + nfe);
-                                }
+                                x = utils.parseNum(args[2]);
+                                y = utils.parseNum(args[3]);
+                                z = utils.parseNum(args[4]);
                                 Block block = w.getBlockAt(x, y, z);
                                 Location location = block.getLocation();
 
@@ -401,7 +412,7 @@ public class TARDISexecutor implements CommandExecutor {
                 if (args[0].equalsIgnoreCase("rebuild")) {
                     if (player.hasPermission("TARDIS.rebuild")) {
                         String save = "";
-                        World w = null;
+                        World w;
                         int x = 0, y = 0, z = 0, id = -1;
                         Constants.COMPASS d = Constants.COMPASS.EAST;
                         boolean cham = false;
@@ -658,30 +669,23 @@ public class TARDISexecutor implements CommandExecutor {
                             if (args.length < 2) {
                                 sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " Too few command arguments!");
                                 return false;
+                            }
+                            if (!args[1].matches("[A-Za-z0-9_]{2,16}")) {
+                                sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + "The destination name must be between 2 and 16 characters and have no spaces!");
+                                return false;
                             } else {
-                                String cur = rs.getString("current");
-                                String sav = rs.getString("save");
                                 int id = rs.getInt("tardis_id");
-                                int count = args.length;
-                                StringBuilder buf = new StringBuilder();
-                                for (int i = 1; i < count; i++) {
-                                    buf.append(args[i]).append(" ");
-                                }
-                                String tmp = buf.toString();
-                                String t = tmp.substring(0, tmp.length() - 1);
-                                // need to make there are no periods(.) in the text
-                                String nodots = StringUtils.replace(t, ".", "_");
                                 // get location player is looking at
                                 Block b = player.getTargetBlock(null, 50);
                                 Location l = b.getLocation();
                                 int dx = l.getBlockX();
                                 int dy = l.getBlockY() + 1;
                                 int dz = l.getBlockZ();
-                                String querySetDest = "INSERT INTO destinations (tardis_id, dest_name, world, x, y, z) VALUES (" + id + ", '" + nodots + "', " + dx + "', " + dy + "', " + dz + ")";
+                                String querySetDest = "INSERT INTO destinations (tardis_id, dest_name, world, x, y, z) VALUES (" + id + ", '" + args[1] + "', " + dx + "', " + dy + "', " + dz + ")";
                                 statement.executeUpdate(querySetDest);
                                 rs.close();
                                 statement.close();
-                                sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " The destination '" + nodots + "' was saved successfully.");
+                                sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " The destination '" + args[1] + "' was saved successfully.");
                                 return true;
                             }
                         } catch (SQLException e) {
@@ -950,6 +954,9 @@ public class TARDISexecutor implements CommandExecutor {
                                 break;
                             case PLATFORM:
                                 sender.sendMessage(Constants.COMMAND_PLATFORM.split("\n"));
+                                break;
+                            case SETDEST:
+                                sender.sendMessage(Constants.COMMAND_SETDEST.split("\n"));
                                 break;
                             case ADMIN:
                                 sender.sendMessage(Constants.COMMAND_ADMIN.split("\n"));
