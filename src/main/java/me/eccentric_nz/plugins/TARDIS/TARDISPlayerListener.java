@@ -55,7 +55,7 @@ public class TARDISPlayerListener implements Listener {
     public void onPlayerInteract(PlayerInteractEvent event) {
 
         final Player player = event.getPlayer();
-        String playerNameStr = player.getName();
+        final String playerNameStr = player.getName();
         int savedx = 0, savedy = 0, savedz = 0, cx = 0, cy = 0, cz = 0;
 
         Block block = event.getClickedBlock();
@@ -134,7 +134,65 @@ public class TARDISPlayerListener implements Listener {
                 } catch (SQLException e) {
                     System.err.println(Constants.MY_PLUGIN_NAME + " Create table error: " + e);
                 }
-
+            } else if (plugin.trackName.containsKey(playerNameStr)) {
+                Location block_loc = block.getLocation();
+                String locStr = block_loc.getWorld().getName() + ":" + block_loc.getBlockX() + ":" + block_loc.getBlockZ();
+                plugin.trackBlock.put(playerNameStr, locStr);
+                player.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " You have 60 seconds to select the area end block - use the " + ChatColor.GREEN + "/TARDIS admin area end" + ChatColor.RESET + " command.");
+                plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
+                    @Override
+                    public void run() {
+                        plugin.trackName.remove(playerNameStr);
+                        if (plugin.trackGroup.containsKey(playerNameStr)) {
+                            plugin.trackGroup.remove(playerNameStr);
+                        }
+                        plugin.trackFlag.remove(playerNameStr);
+                        plugin.trackBlock.remove(playerNameStr);
+                    }
+                }, 1200L);
+            } else if (plugin.trackBlock.containsKey(playerNameStr)) {
+                Location block_loc = block.getLocation();
+                String[] firstblock = plugin.trackBlock.get(playerNameStr).split(":");
+                if (!block_loc.getWorld().getName().equals(firstblock[0])) {
+                    player.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RED + " Area start and end blocks must be in the same world! Try again");
+                }
+                TARDISUtils utils = new TARDISUtils(plugin);
+                int minx, minz, maxx, maxz;
+                if (utils.parseNum(firstblock[1]) < block_loc.getBlockX()) {
+                    minx = utils.parseNum(firstblock[1]);
+                    maxx = block_loc.getBlockX();
+                } else {
+                    minx = block_loc.getBlockX();
+                    maxx = utils.parseNum(firstblock[1]);
+                }
+                if (utils.parseNum(firstblock[2]) < block_loc.getBlockZ()) {
+                    minz = utils.parseNum(firstblock[2]);
+                    maxz = block_loc.getBlockZ();
+                } else {
+                    minz = block_loc.getBlockZ();
+                    maxz = utils.parseNum(firstblock[2]);
+                }
+                String queryArea = "INSERT INTO areas (area_name, area_type, ";
+                if (plugin.trackGroup.containsKey(playerNameStr)) {
+                    queryArea += "area_group, world, minx, minz, maxx, maxz) VALUES ('" + plugin.trackName.get(playerNameStr) + "'," + plugin.trackFlag.get(playerNameStr) + ",'" + plugin.trackGroup.get(playerNameStr) + "'";
+                } else {
+                    queryArea += "world, minx, minz, maxx, maxz) VALUES ('" + plugin.trackName.get(playerNameStr) + "'," + plugin.trackFlag.get(playerNameStr);
+                }
+                queryArea += ",'" + firstblock[0] + "'," + minx + "," + minz + "," + maxx + "," + maxz + ")";
+                try {
+                    Connection connection = service.getConnection();
+                    Statement statement = connection.createStatement();
+                    statement.executeUpdate(queryArea);
+                    player.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " The area [" + plugin.trackName.get(playerNameStr) + "] was saved successfully");
+                    plugin.trackName.remove(playerNameStr);
+                    if (plugin.trackGroup.containsKey(playerNameStr)) {
+                        plugin.trackGroup.remove(playerNameStr);
+                    }
+                    plugin.trackFlag.remove(playerNameStr);
+                    plugin.trackBlock.remove(playerNameStr);
+                } catch (SQLException e) {
+                    System.err.println(Constants.MY_PLUGIN_NAME + " Create table error: " + e);
+                }
             } else {
                 Action action = event.getAction();
                 if (action == Action.RIGHT_CLICK_BLOCK) {

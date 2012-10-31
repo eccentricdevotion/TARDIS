@@ -41,7 +41,7 @@ public class TARDISexecutor implements CommandExecutor {
                 return true;
             }
             // the command list - first argument MUST appear here!
-            if (!args[0].equalsIgnoreCase("save") && !args[0].equalsIgnoreCase("list") && !args[0].equalsIgnoreCase("admin") && !args[0].equalsIgnoreCase("help") && !args[0].equalsIgnoreCase("find") && !args[0].equalsIgnoreCase("reload") && !args[0].equalsIgnoreCase("add") && !args[0].equalsIgnoreCase("remove") && !args[0].equalsIgnoreCase("update") && !args[0].equalsIgnoreCase("travel") && !args[0].equalsIgnoreCase("rebuild") && !args[0].equalsIgnoreCase("chameleon") && !args[0].equalsIgnoreCase("sfx") && !args[0].equalsIgnoreCase("platform") && !args[0].equalsIgnoreCase("quotes") && !args[0].equalsIgnoreCase("comehere") && !args[0].equalsIgnoreCase("direction")) {
+            if (!args[0].equalsIgnoreCase("save") && !args[0].equalsIgnoreCase("list") && !args[0].equalsIgnoreCase("admin") && !args[0].equalsIgnoreCase("help") && !args[0].equalsIgnoreCase("find") && !args[0].equalsIgnoreCase("reload") && !args[0].equalsIgnoreCase("add") && !args[0].equalsIgnoreCase("remove") && !args[0].equalsIgnoreCase("update") && !args[0].equalsIgnoreCase("travel") && !args[0].equalsIgnoreCase("rebuild") && !args[0].equalsIgnoreCase("chameleon") && !args[0].equalsIgnoreCase("sfx") && !args[0].equalsIgnoreCase("platform") && !args[0].equalsIgnoreCase("quotes") && !args[0].equalsIgnoreCase("comehere") && !args[0].equalsIgnoreCase("direction") && !args[0].equalsIgnoreCase("setdest")) {
                 sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " Do you want to list destinations, save a destination, travel, update the TARDIS, add/remove companions, turn the Chameleon Circuit or SFX on or off, do some admin stuff or find the TARDIS?");
                 return false;
             }
@@ -78,12 +78,13 @@ public class TARDISexecutor implements CommandExecutor {
                                     sender.sendMessage(ChatColor.AQUA + cname + ": " + ChatColor.RESET + value);
                                 }
                             }
+                            return true;
                         }
                     } else if (args.length < 3) {
                         sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " Too few command arguments!");
                         return false;
                     } else {
-                        if (!args[1].equalsIgnoreCase("bonus") && !args[1].equalsIgnoreCase("protect") && !args[1].equalsIgnoreCase("max_rad") && !args[1].equalsIgnoreCase("spout") && !args[1].equalsIgnoreCase("default") && !args[1].equalsIgnoreCase("name") && !args[1].equalsIgnoreCase("include") && !args[1].equalsIgnoreCase("key") && !args[1].equalsIgnoreCase("update") && !args[1].equalsIgnoreCase("exclude") && !args[1].equalsIgnoreCase("platform") && !args[1].equalsIgnoreCase("sfx") && !args[1].equalsIgnoreCase("config")) {
+                        if (!args[1].equalsIgnoreCase("bonus") && !args[1].equalsIgnoreCase("protect") && !args[1].equalsIgnoreCase("max_rad") && !args[1].equalsIgnoreCase("spout") && !args[1].equalsIgnoreCase("default") && !args[1].equalsIgnoreCase("name") && !args[1].equalsIgnoreCase("include") && !args[1].equalsIgnoreCase("key") && !args[1].equalsIgnoreCase("update") && !args[1].equalsIgnoreCase("exclude") && !args[1].equalsIgnoreCase("platform") && !args[1].equalsIgnoreCase("sfx") && !args[1].equalsIgnoreCase("config") && !args[1].equalsIgnoreCase("area") && !args[1].equalsIgnoreCase("addgroup") && !args[1].equalsIgnoreCase("setgroup")) {
                             sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " TARDIS does not recognise that command argument!");
                             return false;
                         }
@@ -196,11 +197,43 @@ public class TARDISexecutor implements CommandExecutor {
                             }
                             plugin.config.set("sfx", Boolean.valueOf(tf));
                         }
-                        try {
-                            plugin.config.save(plugin.myconfigfile);
-                            sender.sendMessage(Constants.MY_PLUGIN_NAME + " The config was updated!");
-                        } catch (IOException e) {
-                            sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " There was a problem saving the config file!");
+                        if (!args[1].equalsIgnoreCase("area")) {
+                            try {
+                                plugin.config.save(plugin.myconfigfile);
+                                sender.sendMessage(Constants.MY_PLUGIN_NAME + " The config was updated!");
+                            } catch (IOException e) {
+                                sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " There was a problem saving the config file!");
+                            }
+                        } else if (args[1].equalsIgnoreCase("area")) {
+                            if (args[2].equals("start")) {
+                                int count = args.length;
+                                for (int a = 3; a < count; a++) {
+                                    String[] data = args[a].split(":");
+                                    Constants.areaChar aid = Constants.areaChar.valueOf(data[0]);
+                                    switch (aid) {
+                                        case N:
+                                            plugin.trackName.put(player.getName(), data[1]);
+                                            break;
+                                        case G:
+                                            plugin.trackName.put(player.getName(), data[1]);
+                                            break;
+                                        case F:
+                                            String flag = (data[1].equals("deny")) ? "0" : "1";
+                                            plugin.trackName.put(player.getName(), flag);
+                                            break;
+                                    }
+                                    player.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " Click the area start block to save its position.");
+                                    return true;
+                                }
+                            }
+                            if (args[2].equals("end")) {
+                                if (!plugin.trackBlock.containsKey(player.getName())) {
+                                    player.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RED + " You haven't selected an area start block!");
+                                    return false;
+                                }
+                                player.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " Click the area end block to complete the area.");
+                                return true;
+                            }
                         }
                     }
                     return true;
