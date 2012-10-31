@@ -10,6 +10,7 @@ import java.util.Set;
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.*;
 import org.bukkit.block.Block;
+import org.bukkit.block.BlockFace;
 import org.bukkit.block.Sign;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -209,7 +210,7 @@ public class TARDISexecutor implements CommandExecutor {
                                 int count = args.length;
                                 for (int a = 3; a < count; a++) {
                                     String[] data = args[a].split(":");
-                                    Constants.areaChar aid = Constants.areaChar.valueOf(data[0]);
+                                    Constants.areaChar aid = Constants.areaChar.valueOf(data[0].toUpperCase());
                                     switch (aid) {
                                         case N:
                                             plugin.trackName.put(player.getName(), data[1]);
@@ -233,6 +234,81 @@ public class TARDISexecutor implements CommandExecutor {
                                 }
                                 player.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " Click the area end block to complete the area.");
                                 return true;
+                            }
+                            if (args[2].equals("remove")) {
+                                String queryRemove = "DELETE FROM areas WHERE area_name = '" + args[3] + "'";
+                                try {
+                                    Connection connection = service.getConnection();
+                                    Statement statement = connection.createStatement();
+                                    statement.executeUpdate(queryRemove);
+                                    player.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " Area [" + args[3] + "] deleted!");
+                                    return true;
+                                } catch (SQLException e) {
+                                    System.err.println(Constants.MY_PLUGIN_NAME + "Couldn't delete area: " + e);
+                                }
+                            }
+                            if (args[2].equals("show")) {
+                                String queryGetArea = "SELECT * FROM areas WHERE area_name = '" + args[3] + "'";
+                                try {
+                                    Connection connection = service.getConnection();
+                                    Statement statement = connection.createStatement();
+                                    ResultSet rsArea = statement.executeQuery(queryGetArea);
+                                    if (!rsArea.next()) {
+                                        player.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + "Could not find area [" + args[3] + "]! Did you type the name correctly?");
+                                        return false;
+                                    }
+                                    int mix = rsArea.getInt("minx");
+                                    int miz = rsArea.getInt("minz");
+                                    int max = rsArea.getInt("maxx");
+                                    int maz = rsArea.getInt("maxz");
+                                    World w = plugin.getServer().getWorld(rsArea.getString("world"));
+                                    final Block b1 = w.getHighestBlockAt(mix, miz);
+                                    b1.setTypeId(19);
+                                    final Block b2 = w.getHighestBlockAt(mix, maz);
+                                    b2.setTypeId(19);
+                                    final Block b3 = w.getHighestBlockAt(max, miz);
+                                    b3.setTypeId(19);
+                                    final Block b4 = w.getHighestBlockAt(max, maz);
+                                    b4.setTypeId(19);
+                                    plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            b1.setTypeId(0);
+                                            b2.setTypeId(0);
+                                            b3.setTypeId(0);
+                                            b4.setTypeId(0);
+                                        }
+                                    }, 300L);
+                                    return true;
+                                } catch (SQLException e) {
+                                    System.err.println(Constants.MY_PLUGIN_NAME + "Couldn't delete area: " + e);
+                                }
+                            }
+                            if (args[2].equals("list")) {
+                                String queryGetArea = "SELECT * FROM areas";
+                                try {
+                                    Connection connection = service.getConnection();
+                                    Statement statement = connection.createStatement();
+                                    ResultSet rsArea = statement.executeQuery(queryGetArea);
+                                    int a = 1;
+                                    if (!rsArea.isBeforeFirst()) {
+                                        player.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " No areas were found!");
+                                        return false;
+                                    }
+                                    while (rsArea.next()) {
+                                        String name = rsArea.getString("area_name");
+                                        String type = (rsArea.getInt("area_type") == 0) ? "deny" : "allow";
+                                        String world = rsArea.getString("world");
+                                        if (a == 1) {
+                                            player.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + "Areas");
+                                        }
+                                        player.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + a + ". [" + name + "] in world: " + world + ", flag: " + type);
+                                        a++;
+                                    }
+                                    return true;
+                                } catch (SQLException e) {
+                                    System.err.println(Constants.MY_PLUGIN_NAME + "Couldn't delete area: " + e);
+                                }
                             }
                         }
                     }
@@ -356,9 +432,9 @@ public class TARDISexecutor implements CommandExecutor {
                                     return true;
                                 }
                             }
-                            if (args.length == 3 && args[2].equalsIgnoreCase("dest")) {
+                            if (args.length == 3 && args[1].equalsIgnoreCase("dest")) {
                                 // we're thinking this is a saved destination name
-                                String queryGetDest = "SELECT * FROM destinations WHERE tardis_id = " + id + " AND dest_name = '" + args[3] + "'";
+                                String queryGetDest = "SELECT * FROM destinations WHERE tardis_id = " + id + " AND dest_name = '" + args[2] + "'";
                                 ResultSet rsDest = statement.executeQuery(queryGetDest);
                                 if (!rsDest.next()) {
                                     sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " Could not find a destination with that name! try using " + ChatColor.GREEN + "/TARDIS list saves" + ChatColor.RESET + " first.");
@@ -711,10 +787,11 @@ public class TARDISexecutor implements CommandExecutor {
                                 // get location player is looking at
                                 Block b = player.getTargetBlock(null, 50);
                                 Location l = b.getLocation();
+                                String dw = l.getWorld().getName();
                                 int dx = l.getBlockX();
                                 int dy = l.getBlockY() + 1;
                                 int dz = l.getBlockZ();
-                                String querySetDest = "INSERT INTO destinations (tardis_id, dest_name, world, x, y, z) VALUES (" + id + ", '" + args[1] + "', " + dx + "', " + dy + "', " + dz + ")";
+                                String querySetDest = "INSERT INTO destinations (tardis_id, dest_name, world, x, y, z) VALUES (" + id + ", '" + args[1] + "', '" + dw + "', " + dx + ", " + dy + ", " + dz + ")";
                                 statement.executeUpdate(querySetDest);
                                 rs.close();
                                 statement.close();
