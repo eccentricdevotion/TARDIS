@@ -136,6 +136,7 @@ public class TARDISPlayerListener implements Listener {
                 }
             } else if (plugin.trackName.containsKey(playerNameStr) && !plugin.trackBlock.containsKey(playerNameStr)) {
                 Location block_loc = block.getLocation();
+                // check if block is in an already defined area
                 String locStr = block_loc.getWorld().getName() + ":" + block_loc.getBlockX() + ":" + block_loc.getBlockZ();
                 plugin.trackBlock.put(playerNameStr, locStr);
                 player.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " You have 60 seconds to select the area end block - use the " + ChatColor.GREEN + "/TARDIS admin area end" + ChatColor.RESET + " command.");
@@ -143,14 +144,10 @@ public class TARDISPlayerListener implements Listener {
                     @Override
                     public void run() {
                         plugin.trackName.remove(playerNameStr);
-                        if (plugin.trackGroup.containsKey(playerNameStr)) {
-                            plugin.trackGroup.remove(playerNameStr);
-                        }
-                        plugin.trackFlag.remove(playerNameStr);
                         plugin.trackBlock.remove(playerNameStr);
                     }
                 }, 1200L);
-            } else if (plugin.trackBlock.containsKey(playerNameStr)) {
+            } else if (plugin.trackBlock.containsKey(playerNameStr) && plugin.trackEnd.containsKey(playerNameStr)) {
                 Location block_loc = block.getLocation();
                 String[] firstblock = plugin.trackBlock.get(playerNameStr).split(":");
                 if (!block_loc.getWorld().getName().equals(firstblock[0])) {
@@ -173,27 +170,17 @@ public class TARDISPlayerListener implements Listener {
                     maxz = utils.parseNum(firstblock[2]);
                 }
                 String n = plugin.trackName.get(playerNameStr);
-                int f = utils.parseNum(plugin.trackFlag.get(playerNameStr));
-                String queryArea = "INSERT INTO areas (area_name, area_type, ";
-                if (plugin.trackGroup.containsKey(playerNameStr)) {
-                    queryArea += "area_group, world, minx, minz, maxx, maxz) VALUES ('" + n + "'," + f + ",'" + plugin.trackGroup.get(playerNameStr) + "'";
-                } else {
-                    queryArea += "world, minx, minz, maxx, maxz) VALUES ('" + n + "'," + f;
-                }
-                queryArea += ",'" + firstblock[0] + "'," + minx + "," + minz + "," + maxx + "," + maxz + ")";
+                String queryArea = "INSERT INTO areas (area_name, world, minx, minz, maxx, maxz) VALUES ('" + n + "','" + firstblock[0] + "'," + minx + "," + minz + "," + maxx + "," + maxz + ")";
                 try {
                     Connection connection = service.getConnection();
                     Statement statement = connection.createStatement();
                     statement.executeUpdate(queryArea);
                     player.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " The area [" + plugin.trackName.get(playerNameStr) + "] was saved successfully");
                     plugin.trackName.remove(playerNameStr);
-                    if (plugin.trackGroup.containsKey(playerNameStr)) {
-                        plugin.trackGroup.remove(playerNameStr);
-                    }
-                    plugin.trackFlag.remove(playerNameStr);
                     plugin.trackBlock.remove(playerNameStr);
+                    plugin.trackEnd.remove(playerNameStr);
                 } catch (SQLException e) {
-                    System.err.println(Constants.MY_PLUGIN_NAME + " Create table error: " + e);
+                    System.err.println(Constants.MY_PLUGIN_NAME + " Area save error: " + e);
                 }
             } else {
                 Action action = event.getAction();

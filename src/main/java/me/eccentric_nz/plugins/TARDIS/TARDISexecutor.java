@@ -207,31 +207,35 @@ public class TARDISexecutor implements CommandExecutor {
                             }
                         } else if (args[1].equalsIgnoreCase("area")) {
                             if (args[2].equals("start")) {
-                                int count = args.length;
-                                for (int a = 3; a < count; a++) {
-                                    String[] data = args[a].split(":");
-                                    Constants.areaChar aid = Constants.areaChar.valueOf(data[0].toUpperCase());
-                                    switch (aid) {
-                                        case N:
-                                            plugin.trackName.put(player.getName(), data[1]);
-                                            break;
-                                        case G:
-                                            plugin.trackName.put(player.getName(), data[1]);
-                                            break;
-                                        case F:
-                                            String flag = (data[1].equals("deny")) ? "0" : "1";
-                                            plugin.trackName.put(player.getName(), flag);
-                                            break;
-                                    }
-                                    player.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " Click the area start block to save its position.");
-                                    return true;
+                                // check name is unique and acceptable
+                                if (!args[3].matches("[A-Za-z0-9_]{2,16}")) {
+                                    sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + "That doesn't appear to be a valid area name (it may be too long)");
+                                    return false;
                                 }
+                                String queryName = "SELECT area_name FROM areas";
+                                try {
+                                    Connection connection = service.getConnection();
+                                    Statement statement = connection.createStatement();
+                                    ResultSet rsName = statement.executeQuery(queryName);
+                                    while (rsName.next()) {
+                                        if (rsName.getString("area_name").equals(args[3])) {
+                                            sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " Area name already in use!");
+                                            return false;
+                                        }
+                                    }
+                                } catch (SQLException e) {
+                                    System.err.println(Constants.MY_PLUGIN_NAME + "Couldn't get area names: " + e);
+                                }
+                                plugin.trackName.put(player.getName(), args[3]);
+                                player.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " Click the area start block to save its position.");
+                                return true;
                             }
                             if (args[2].equals("end")) {
                                 if (!plugin.trackBlock.containsKey(player.getName())) {
                                     player.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RED + " You haven't selected an area start block!");
                                     return false;
                                 }
+                                plugin.trackEnd.put(player.getName(), "end");
                                 player.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " Click the area end block to complete the area.");
                                 return true;
                             }
