@@ -111,11 +111,13 @@ public class Constants {
 
             ResultSet rs = statement.executeQuery(querySaves);
             if (rs != null && rs.next()) {
-                // list saves
+                int id = rs.getInt("tardis_id");
+                // list console saves
                 if (l.equalsIgnoreCase("saves")) {
                     // construct home string
                     String h = rs.getString("home");
                     String[] h_data = h.split(":");
+                    p.sendMessage(ChatColor.GRAY + "Console saves");
                     p.sendMessage(ChatColor.GREEN + "HOME: " + h_data[0] + " at x:" + h_data[1] + " y:" + h_data[2] + " z:" + h_data[3]);
                     if (!rs.getString("save1").equals("") && !rs.getString("save1").equals("null") && rs.getString("save1") != null) {
                         String[] s1 = rs.getString("save1").split("~");
@@ -138,6 +140,19 @@ public class Constants {
                     } else {
                         p.sendMessage(ChatColor.GREEN + "3. No destination saved");
                     }
+                    // list saved destinations
+                    String queryDests = "SELECT * FROM destinations WHERE tardis_id = " + id;
+                    ResultSet rsDests = statement.executeQuery(queryDests);
+                    int i = 1;
+                    while (rsDests.next()) {
+                        if (i == 1) {
+                            p.sendMessage(ChatColor.GRAY + "----------------");
+                            p.sendMessage(ChatColor.GRAY + "Other saves");
+                        }
+                        p.sendMessage(ChatColor.GREEN + "" + i + ". [" + rsDests.getString("dest_name") + "]: " + rsDests.getString("world") + " at x:" + rsDests.getInt("x") + " y:" + rsDests.getInt("y") + " z:" + rsDests.getInt("z"));
+                        i++;
+                    }
+                    rsDests.close();
                 }
                 if (l.equalsIgnoreCase("companions")) {
                     // list companions
