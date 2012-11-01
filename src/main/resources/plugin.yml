@@ -28,6 +28,9 @@ permissions:
       TARDIS.update: true
       TARDIS.rebuild: true
     default: op
+  TARDIS.area.*:
+    description: Allow players to travel to a TARDIS area.
+    default: false
   TARDIS.create:
     description: Allow players to create a TARDIS.
     default: op
