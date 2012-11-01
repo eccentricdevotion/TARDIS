@@ -301,12 +301,11 @@ public class TARDISexecutor implements CommandExecutor {
                                     }
                                     while (rsArea.next()) {
                                         String name = rsArea.getString("area_name");
-                                        String type = (rsArea.getInt("area_type") == 0) ? "deny" : "allow";
                                         String world = rsArea.getString("world");
                                         if (a == 1) {
                                             player.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + "Areas");
                                         }
-                                        player.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + a + ". [" + name + "] in world: " + world + ", flag: " + type);
+                                        player.sendMessage(a + ". [" + name + "] in world: " + world);
                                         a++;
                                     }
                                     return true;
