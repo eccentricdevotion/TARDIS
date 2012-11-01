@@ -343,7 +343,7 @@ public class TARDISPlayerListener implements Listener {
                                                         TLOnline = true;
                                                     }
                                                 }
-                                                if (playerNameStr.equals(tl) || chkCompanion == true) {
+                                                if (playerNameStr.equals(tl) || chkCompanion == true || player.hasPermission("TARDIS.skeletonkey")) {
                                                     // get INNER TARDIS location
                                                     String queryInnerDoor = "SELECT * FROM doors WHERE door_type = 1 AND tardis_id = " + id;
                                                     ResultSet doorRS = statement.executeQuery(queryInnerDoor);
@@ -423,9 +423,7 @@ public class TARDISPlayerListener implements Listener {
                                                     }
                                                 }
                                             }
-                                        } //else {
-                                        //player.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " " + Constants.NO_TARDIS);
-                                        //}
+                                        }
                                     } catch (SQLException e) {
                                         System.err.println(Constants.MY_PLUGIN_NAME + " Get TARDIS from Door Error: " + e);
                                     }

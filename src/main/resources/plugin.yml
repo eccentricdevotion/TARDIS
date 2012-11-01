@@ -14,6 +14,9 @@ permissions:
   TARDIS.delete:
     description: Allow players to delete any TARDIS.
     default: false
+  TARDIS.skeletonkey:
+    description: Allow players to enter any TARDIS.
+    default: false
   TARDIS.*:
     description: Allow players to create & delete a TARDIS, and teleport to destinations.
     children:
