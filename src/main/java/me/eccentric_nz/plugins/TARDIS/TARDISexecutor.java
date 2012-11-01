@@ -474,7 +474,12 @@ public class TARDISexecutor implements CommandExecutor {
                                 z = utils.parseNum(args[4]);
                                 Block block = w.getBlockAt(x, y, z);
                                 Location location = block.getLocation();
-
+                                TARDISArea ta = new TARDISArea(plugin);
+                                if (ta.areaCheckLocPlayer(player, location)) {
+                                    sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + "You do not have permission [" + plugin.trackPerm.get(player.getName()) + "] to send the TARDIS to this location!");
+                                    plugin.trackPerm.remove(player.getName());
+                                    return false;
+                                }
                                 // check location
                                 int[] start_loc = tt.getStartLocation(location, d);
                                 int count = tt.safeLocation(start_loc[0], location.getBlockY(), start_loc[2], start_loc[1], start_loc[3], start_loc[4], start_loc[5], w, d);
