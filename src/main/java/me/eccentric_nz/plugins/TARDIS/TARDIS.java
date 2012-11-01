@@ -48,6 +48,7 @@ public class TARDIS extends JavaPlugin implements Listener {
     public HashMap<String, String> trackName = new HashMap<String, String>();
     public HashMap<String, String> trackBlock = new HashMap<String, String>();
     public HashMap<String, String> trackEnd = new HashMap<String, String>();
+    public HashMap<String, String> trackPerm = new HashMap<String, String>();
     private static ArrayList<String> quotes = new ArrayList<String>();
     public ArrayList<String> quote;
     public int quotelen;
