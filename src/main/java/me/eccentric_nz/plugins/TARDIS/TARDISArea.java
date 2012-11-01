@@ -17,12 +17,12 @@ public class TARDISArea {
     }
 
     public boolean areaCheckInExisting(Location l) {
-        boolean chk = false;
+        boolean chk = true;
         try {
             Connection connection = service.getConnection();
             Statement statement = connection.createStatement();
             String w = l.getWorld().getName();
-            String queryArea = "SELECT * FROM areas WHERW world = '" + w + "'";
+            String queryArea = "SELECT * FROM areas WHERE world = '" + w + "'";
             ResultSet rsArea = statement.executeQuery(queryArea);
             if (rsArea.isBeforeFirst()) {
                 while (rsArea.next()) {
@@ -32,7 +32,7 @@ public class TARDISArea {
                     int maxz = rsArea.getInt("maxz");
                     // is clicked block within a defined TARDIS area?
                     if (l.getX() <= maxx && l.getZ() <= maxz && l.getX() >= minx && l.getZ() >= minz) {
-                        chk = true;
+                        chk = false;
                         break;
                     }
                 }
@@ -44,13 +44,14 @@ public class TARDISArea {
     }
 
     public boolean areaCheckLocPlayer(Player p, Location l) {
-        boolean chk = true;
+        boolean chk = false;
         try {
             Connection connection = service.getConnection();
             Statement statement = connection.createStatement();
             String w = l.getWorld().getName();
-            String queryArea = "SELECT * FROM areas WHERW world = '" + w + "'";
+            String queryArea = "SELECT * FROM areas WHERE world = '" + w + "'";
             ResultSet rsArea = statement.executeQuery(queryArea);
+            int i = 1;
             if (rsArea.isBeforeFirst()) {
                 while (rsArea.next()) {
                     String n = rsArea.getString("area_name");
@@ -61,12 +62,13 @@ public class TARDISArea {
                     // is time travel destination within a defined TARDIS area?
                     if (l.getX() <= maxx && l.getZ() <= maxz && l.getX() >= minx && l.getZ() >= minz) {
                         // does the player have permmission to travel here
-                        if (!p.hasPermission("TARDIS.area." + n)) {
-                            plugin.trackPerm.put("TARDIS.area." + n, p.getName());
-                            chk = false;
+                        if (!p.hasPermission("TARDIS.area." + n) || !p.isPermissionSet("TARDIS.area." + n)) {
+                            plugin.trackPerm.put(p.getName(), "TARDIS.area." + n);
+                            chk = true;
                             break;
                         }
                     }
+                    i++;
                 }
             }
         } catch (SQLException e) {
