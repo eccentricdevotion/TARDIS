@@ -334,6 +334,12 @@ public class TARDISexecutor implements CommandExecutor {
                             sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + "That location is protected by WorldGuard!");
                             return false;
                         }
+                        TARDISArea ta = new TARDISArea(plugin);
+                        if (ta.areaCheckLocPlayer(player, eyeLocation)) {
+                            sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + "You do not have permission [" + plugin.trackPerm.get(player.getName()) + "] to bring the TARDIS to this location!");
+                            plugin.trackPerm.remove(player.getName());
+                            return false;
+                        }
                         Material m = player.getTargetBlock(null, 50).getType();
                         if (m != Material.SNOW) {
                             int yplusone = eyeLocation.getBlockY();
@@ -428,13 +434,18 @@ public class TARDISexecutor implements CommandExecutor {
                                 if (count > 0) {
                                     sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " The player's location would not be safe! Please tell the player to move!");
                                     return false;
-                                } else {
-                                    String save_loc = player_loc.getWorld().getName() + ":" + (player_loc.getBlockX() - 3) + ":" + player_loc.getBlockY() + ":" + player_loc.getBlockZ();
-                                    String querySave = "UPDATE tardis SET save = '" + save_loc + "' WHERE tardis_id = " + id;
-                                    statement.executeUpdate(querySave);
-                                    sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " The player location was saved succesfully. Please exit the TARDIS!");
-                                    return true;
                                 }
+                                TARDISArea ta = new TARDISArea(plugin);
+                                if (ta.areaCheckLocPlayer(player, player_loc)) {
+                                    sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + "You do not have permission [" + plugin.trackPerm.get(player.getName()) + "] to bring the TARDIS to this location!");
+                                    plugin.trackPerm.remove(player.getName());
+                                    return false;
+                                }
+                                String save_loc = player_loc.getWorld().getName() + ":" + (player_loc.getBlockX() - 3) + ":" + player_loc.getBlockY() + ":" + player_loc.getBlockZ();
+                                String querySave = "UPDATE tardis SET save = '" + save_loc + "' WHERE tardis_id = " + id;
+                                statement.executeUpdate(querySave);
+                                sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " The player location was saved succesfully. Please exit the TARDIS!");
+                                return true;
                             }
                             if (args.length == 3 && args[1].equalsIgnoreCase("dest")) {
                                 // we're thinking this is a saved destination name
@@ -791,6 +802,12 @@ public class TARDISexecutor implements CommandExecutor {
                                 // get location player is looking at
                                 Block b = player.getTargetBlock(null, 50);
                                 Location l = b.getLocation();
+                                TARDISArea ta = new TARDISArea(plugin);
+                                if (ta.areaCheckLocPlayer(player, l)) {
+                                    sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + "You do not have permission [" + plugin.trackPerm.get(player.getName()) + "] to set the TARDIS destination to this location!");
+                                    plugin.trackPerm.remove(player.getName());
+                                    return false;
+                                }
                                 String dw = l.getWorld().getName();
                                 int dx = l.getBlockX();
                                 int dy = l.getBlockY() + 1;
