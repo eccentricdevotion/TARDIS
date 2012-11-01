@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.util.Set;
-import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -23,13 +22,6 @@ public class TARDISTimetravel {
     }
 
     public Location randomDestination(Player p, World w, byte rx, byte rz, byte ry, String dir) {
-        System.out.println("[Boxfriend Debug] Start random location finding method");
-        System.out.println("[Boxfriend Debug] Random location arg['Player'] = " + p);
-        System.out.println("[Boxfriend Debug] Random location arg['World'] = " + w);
-        System.out.println("[Boxfriend Debug] Random location arg['Repeater 1 data'] = " + rx);
-        System.out.println("[Boxfriend Debug] Random location arg['Repeater 2 data'] = " + rz);
-        System.out.println("[Boxfriend Debug] Random location arg['Repeater 3 data'] = " + ry);
-        System.out.println("[Boxfriend Debug] Random location arg['Direction'] = " + dir);
         int level, row, col, x, y, z, startx, starty, startz, resetx, resetz, listlen, rw;
         World randworld = w;
         Boolean danger = true;
@@ -62,7 +54,6 @@ public class TARDISTimetravel {
                 }
             }
         }
-        System.out.println("[Boxfriend Debug] Got all time travel worlds");
         listlen = normalWorlds.size();
         // random world
         rw = rand.nextInt(listlen);
@@ -73,8 +64,8 @@ public class TARDISTimetravel {
             }
             i = i + 1;
         }
-        System.out.println("[Boxfriend Debug] Selected random world");
         TARDISWorldGuardChecker wg = new TARDISWorldGuardChecker(plugin);
+        TARDISArea ta = new TARDISArea(plugin);
         while (danger == true) {
             count = 0;
             wherex = rand.nextInt(range);
@@ -129,6 +120,10 @@ public class TARDISTimetravel {
                 if (wg.cantBuild(p, chunk_loc)) {
                     count = 1;
                 }
+                if (ta.areaCheckLocPlayer(p, chunk_loc)) {
+                    plugin.trackPerm.remove(p.getName());
+                    count = 1;
+                }
                 randworld.getChunkAt(chunk_loc).load();
                 randworld.getChunkAt(chunk_loc).load(true);
                 while (!randworld.getChunkAt(chunk_loc).isLoaded()) {
@@ -147,10 +142,9 @@ public class TARDISTimetravel {
             } else {
                 count = 1;
             }
-            System.out.println("[Boxfriend Debug] Finding safe location...");
+            //System.out.println("Finding safe location...");
             if (count == 0) {
                 danger = false;
-                System.out.println("[Boxfriend Debug] Found location!");
                 break;
             }
         }
