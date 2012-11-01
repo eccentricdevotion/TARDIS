@@ -137,50 +137,61 @@ public class TARDISPlayerListener implements Listener {
             } else if (plugin.trackName.containsKey(playerNameStr) && !plugin.trackBlock.containsKey(playerNameStr)) {
                 Location block_loc = block.getLocation();
                 // check if block is in an already defined area
-                String locStr = block_loc.getWorld().getName() + ":" + block_loc.getBlockX() + ":" + block_loc.getBlockZ();
-                plugin.trackBlock.put(playerNameStr, locStr);
-                player.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " You have 60 seconds to select the area end block - use the " + ChatColor.GREEN + "/TARDIS admin area end" + ChatColor.RESET + " command.");
-                plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
-                    @Override
-                    public void run() {
-                        plugin.trackName.remove(playerNameStr);
-                        plugin.trackBlock.remove(playerNameStr);
-                    }
-                }, 1200L);
+                TARDISArea ta = new TARDISArea(plugin);
+                if (ta.areaCheckInExisting(block_loc)) {
+                    String locStr = block_loc.getWorld().getName() + ":" + block_loc.getBlockX() + ":" + block_loc.getBlockZ();
+                    plugin.trackBlock.put(playerNameStr, locStr);
+                    player.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " You have 60 seconds to select the area end block - use the " + ChatColor.GREEN + "/TARDIS admin area end" + ChatColor.RESET + " command.");
+                    plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
+                        @Override
+                        public void run() {
+                            plugin.trackName.remove(playerNameStr);
+                            plugin.trackBlock.remove(playerNameStr);
+                        }
+                    }, 1200L);
+                } else {
+                    player.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " That block is inside an already defined area! Try somewhere else.");
+                }
             } else if (plugin.trackBlock.containsKey(playerNameStr) && plugin.trackEnd.containsKey(playerNameStr)) {
                 Location block_loc = block.getLocation();
-                String[] firstblock = plugin.trackBlock.get(playerNameStr).split(":");
-                if (!block_loc.getWorld().getName().equals(firstblock[0])) {
-                    player.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RED + " Area start and end blocks must be in the same world! Try again");
-                }
-                TARDISUtils utils = new TARDISUtils(plugin);
-                int minx, minz, maxx, maxz;
-                if (utils.parseNum(firstblock[1]) < block_loc.getBlockX()) {
-                    minx = utils.parseNum(firstblock[1]);
-                    maxx = block_loc.getBlockX();
+                // check if block is in an already defined area
+                TARDISArea ta = new TARDISArea(plugin);
+                if (ta.areaCheckInExisting(block_loc)) {
+                    String[] firstblock = plugin.trackBlock.get(playerNameStr).split(":");
+                    if (!block_loc.getWorld().getName().equals(firstblock[0])) {
+                        player.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RED + " Area start and end blocks must be in the same world! Try again");
+                    }
+                    TARDISUtils utils = new TARDISUtils(plugin);
+                    int minx, minz, maxx, maxz;
+                    if (utils.parseNum(firstblock[1]) < block_loc.getBlockX()) {
+                        minx = utils.parseNum(firstblock[1]);
+                        maxx = block_loc.getBlockX();
+                    } else {
+                        minx = block_loc.getBlockX();
+                        maxx = utils.parseNum(firstblock[1]);
+                    }
+                    if (utils.parseNum(firstblock[2]) < block_loc.getBlockZ()) {
+                        minz = utils.parseNum(firstblock[2]);
+                        maxz = block_loc.getBlockZ();
+                    } else {
+                        minz = block_loc.getBlockZ();
+                        maxz = utils.parseNum(firstblock[2]);
+                    }
+                    String n = plugin.trackName.get(playerNameStr);
+                    String queryArea = "INSERT INTO areas (area_name, world, minx, minz, maxx, maxz) VALUES ('" + n + "','" + firstblock[0] + "'," + minx + "," + minz + "," + maxx + "," + maxz + ")";
+                    try {
+                        Connection connection = service.getConnection();
+                        Statement statement = connection.createStatement();
+                        statement.executeUpdate(queryArea);
+                        player.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " The area [" + plugin.trackName.get(playerNameStr) + "] was saved successfully");
+                        plugin.trackName.remove(playerNameStr);
+                        plugin.trackBlock.remove(playerNameStr);
+                        plugin.trackEnd.remove(playerNameStr);
+                    } catch (SQLException e) {
+                        System.err.println(Constants.MY_PLUGIN_NAME + " Area save error: " + e);
+                    }
                 } else {
-                    minx = block_loc.getBlockX();
-                    maxx = utils.parseNum(firstblock[1]);
-                }
-                if (utils.parseNum(firstblock[2]) < block_loc.getBlockZ()) {
-                    minz = utils.parseNum(firstblock[2]);
-                    maxz = block_loc.getBlockZ();
-                } else {
-                    minz = block_loc.getBlockZ();
-                    maxz = utils.parseNum(firstblock[2]);
-                }
-                String n = plugin.trackName.get(playerNameStr);
-                String queryArea = "INSERT INTO areas (area_name, world, minx, minz, maxx, maxz) VALUES ('" + n + "','" + firstblock[0] + "'," + minx + "," + minz + "," + maxx + "," + maxz + ")";
-                try {
-                    Connection connection = service.getConnection();
-                    Statement statement = connection.createStatement();
-                    statement.executeUpdate(queryArea);
-                    player.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " The area [" + plugin.trackName.get(playerNameStr) + "] was saved successfully");
-                    plugin.trackName.remove(playerNameStr);
-                    plugin.trackBlock.remove(playerNameStr);
-                    plugin.trackEnd.remove(playerNameStr);
-                } catch (SQLException e) {
-                    System.err.println(Constants.MY_PLUGIN_NAME + " Area save error: " + e);
+                    player.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " That block is inside an already defined area! Try somewhere else.");
                 }
             } else {
                 Action action = event.getAction();
