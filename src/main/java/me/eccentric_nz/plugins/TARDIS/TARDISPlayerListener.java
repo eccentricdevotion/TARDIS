@@ -458,10 +458,6 @@ public class TARDISPlayerListener implements Listener {
                                 String s1_str = rs.getString("save1");
                                 String s2_str = rs.getString("save2");
                                 String s3_str = rs.getString("save3");
-//                                System.out.println("[Boxfriend Debug] Repeater 0 location is: " + r0_str);
-//                                System.out.println("[Boxfriend Debug] Repeater 1 location is: " + r1_str);
-//                                System.out.println("[Boxfriend Debug] Repeater 2 location is: " + r2_str);
-//                                System.out.println("[Boxfriend Debug] Repeater 3 location is: " + r3_str);
 
                                 // check if player is travelling
                                 String queryTraveller = "SELECT * FROM travellers WHERE tardis_id = " + id + " AND player = '" + tl + "'";
