@@ -86,7 +86,7 @@ public class TARDISexecutor implements CommandExecutor {
                         sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " Too few command arguments!");
                         return false;
                     } else {
-                        if (!args[1].equalsIgnoreCase("bonus") && !args[1].equalsIgnoreCase("protect") && !args[1].equalsIgnoreCase("max_rad") && !args[1].equalsIgnoreCase("spout") && !args[1].equalsIgnoreCase("default") && !args[1].equalsIgnoreCase("name") && !args[1].equalsIgnoreCase("include") && !args[1].equalsIgnoreCase("key") && !args[1].equalsIgnoreCase("update") && !args[1].equalsIgnoreCase("exclude") && !args[1].equalsIgnoreCase("platform") && !args[1].equalsIgnoreCase("sfx") && !args[1].equalsIgnoreCase("config") && !args[1].equalsIgnoreCase("area")) {
+                        if (!args[1].equalsIgnoreCase("bonus") && !args[1].equalsIgnoreCase("protect") && !args[1].equalsIgnoreCase("max_rad") && !args[1].equalsIgnoreCase("spout") && !args[1].equalsIgnoreCase("default") && !args[1].equalsIgnoreCase("name") && !args[1].equalsIgnoreCase("include") && !args[1].equalsIgnoreCase("key") && !args[1].equalsIgnoreCase("update") && !args[1].equalsIgnoreCase("exclude") && !args[1].equalsIgnoreCase("platform") && !args[1].equalsIgnoreCase("sfx") && !args[1].equalsIgnoreCase("config") && !args[1].equalsIgnoreCase("area") && !args[1].equalsIgnoreCase("givekey")) {
                             sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " TARDIS does not recognise that command argument!");
                             return false;
                         }
@@ -115,6 +115,14 @@ public class TARDISexecutor implements CommandExecutor {
                                 return false;
                             }
                             plugin.config.set("protect_blocks", Boolean.valueOf(tf));
+                        }
+                        if (args[1].equalsIgnoreCase("givekey")) {
+                            String tf = args[2].toLowerCase();
+                            if (!tf.equals("true") && !tf.equals("false")) {
+                                sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RED + "The last argument must be true or false!");
+                                return false;
+                            }
+                            plugin.config.set("give_key", Boolean.valueOf(tf));
                         }
                         if (args[1].equalsIgnoreCase("platform")) {
                             String tf = args[2].toLowerCase();

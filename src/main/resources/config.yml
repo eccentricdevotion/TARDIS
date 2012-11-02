@@ -2,8 +2,6 @@
 key: STICK
 bonus_chest: true
 tp_radius: 256
-max_distance: -1
-border: square
 protect_blocks: true
 require_spout: false
 default_world: false
@@ -12,3 +10,4 @@ include_default_world: false
 platform: false
 chameleon: true
 sfx: true
+give_key: false

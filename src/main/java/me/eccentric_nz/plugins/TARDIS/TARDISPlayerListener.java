@@ -21,6 +21,7 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.getspout.spoutapi.SpoutManager;
 
@@ -623,7 +624,7 @@ public class TARDISPlayerListener implements Listener {
     }
     Random r = new Random();
 
-    private void tt(Player p, Location l, boolean exit, final World from, boolean q) {
+    private void tt(Player p, Location l, final boolean exit, final World from, boolean q) {
 
         final int i = r.nextInt(plugin.quotelen);
         final Player thePlayer = p;
@@ -656,6 +657,16 @@ public class TARDISPlayerListener implements Listener {
                 }
                 if (quotes) {
                     thePlayer.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " " + plugin.quote.get(i));
+                }
+                if (exit == true){
+                    Inventory inv = thePlayer.getInventory();
+                    Material m = Material.valueOf(Constants.TARDIS_KEY);
+                    if (!inv.contains(m) && plugin.config.getBoolean("give_key") == true) {
+                        ItemStack is = new ItemStack(m,1);
+                        inv.addItem(is);
+                        thePlayer.updateInventory();
+                        thePlayer.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " Don't forget your key!");
+                    }
                 }
             }
         }, 5L);
