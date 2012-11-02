@@ -44,7 +44,7 @@ public class TARDISBlockBreakListener implements Listener {
             String queryCheck;
             Location sign_loc = block.getLocation();
             if (line1.equals("¤fPOLICE") && line2.equals("¤fBOX")) {
-                if (player.hasPermission("TARDIS.delete")) {
+                if (player.hasPermission("tardis.delete")) {
                     Block blockbehind = null;
                     byte data = block.getData();
                     if (data == 4) {
@@ -78,7 +78,7 @@ public class TARDISBlockBreakListener implements Listener {
                         Constants.COMPASS d = Constants.COMPASS.valueOf(rs.getString("direction"));
 
                         // need to check that a player is not currently in the TARDIS (if admin delete - maybe always?)
-                        if (player.hasPermission("TARDIS.delete")) {
+                        if (player.hasPermission("tardis.delete")) {
                             String queryOccupied = "SELECT player FROM travellers WHERE tardis_id = " + id;
                             ResultSet rsOcc = statement.executeQuery(queryOccupied);
                             if (rsOcc.next()) {

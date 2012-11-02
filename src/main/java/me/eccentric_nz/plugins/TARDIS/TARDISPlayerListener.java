@@ -205,7 +205,7 @@ public class TARDISPlayerListener implements Listener {
                     if (blockType == Material.IRON_DOOR_BLOCK) {
                         if (material == key) {
                             if (block != null) {
-                                if (player.hasPermission("TARDIS.enter")) {
+                                if (player.hasPermission("tardis.enter")) {
                                     Location block_loc = block.getLocation();
                                     String bw = block_loc.getWorld().getName();
                                     int bx = block_loc.getBlockX();
@@ -343,7 +343,7 @@ public class TARDISPlayerListener implements Listener {
                                                         TLOnline = true;
                                                     }
                                                 }
-                                                if (playerNameStr.equals(tl) || chkCompanion == true || player.hasPermission("TARDIS.skeletonkey")) {
+                                                if (playerNameStr.equals(tl) || chkCompanion == true || player.hasPermission("tardis.skeletonkey")) {
                                                     // get INNER TARDIS location
                                                     String queryInnerDoor = "SELECT * FROM doors WHERE door_type = 1 AND tardis_id = " + id;
                                                     ResultSet doorRS = statement.executeQuery(queryInnerDoor);
