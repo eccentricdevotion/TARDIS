@@ -308,6 +308,13 @@ public class TARDISexecutor implements CommandExecutor {
                             return false;
                         }
                         TARDISArea ta = new TARDISArea(plugin);
+                        if (player.hasPermission("tardis.exile")) {
+                            String areaPerm = ta.getExileArea(player);
+                            if (ta.areaCheckInExile(areaPerm, eyeLocation)) {
+                                sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + "You exile status does not allow you to bring the TARDIS to this location!");
+                                return false;
+                            }
+                        }
                         if (ta.areaCheckLocPlayer(player, eyeLocation)) {
                             sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + "You do not have permission [" + plugin.trackPerm.get(player.getName()) + "] to bring the TARDIS to this location!");
                             plugin.trackPerm.remove(player.getName());
@@ -467,6 +474,13 @@ public class TARDISexecutor implements CommandExecutor {
                                         sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + "That location is protected by WorldGuard!");
                                         return false;
                                     }
+                                    if (player.hasPermission("tardis.exile")) {
+                                        String areaPerm = ta.getExileArea(player);
+                                        if (ta.areaCheckInExile(areaPerm, player_loc)) {
+                                            sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + "You exile status does not allow you to go to this player's location!");
+                                            return false;
+                                        }
+                                    }
                                     if (ta.areaCheckLocPlayer(player, player_loc)) {
                                         sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + "You do not have permission [" + plugin.trackPerm.get(player.getName()) + "] to bring the TARDIS to this location!");
                                         plugin.trackPerm.remove(player.getName());
@@ -532,6 +546,13 @@ public class TARDISexecutor implements CommandExecutor {
                                     if (wg.cantBuild(player, location)) {
                                         sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + "That location is protected by WorldGuard!");
                                         return false;
+                                    }
+                                    if (player.hasPermission("tardis.exile")) {
+                                        String areaPerm = ta.getExileArea(player);
+                                        if (ta.areaCheckInExile(areaPerm, location)) {
+                                            sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + "You exile status does not allow you to bring the TARDIS to this location!");
+                                            return false;
+                                        }
                                     }
                                     if (ta.areaCheckLocPlayer(player, location)) {
                                         sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + "You do not have permission [" + plugin.trackPerm.get(player.getName()) + "] to send the TARDIS to this location!");
@@ -877,6 +898,13 @@ public class TARDISexecutor implements CommandExecutor {
                                     return false;
                                 }
                                 TARDISArea ta = new TARDISArea(plugin);
+                                if (player.hasPermission("tardis.exile")) {
+                                    String areaPerm = ta.getExileArea(player);
+                                    if (ta.areaCheckInExile(areaPerm, l)) {
+                                        sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + "You exile status does not allow you to save the TARDIS to this location!");
+                                        return false;
+                                    }
+                                }
                                 if (ta.areaCheckLocPlayer(player, l)) {
                                     sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + "You do not have permission [" + plugin.trackPerm.get(player.getName()) + "] to set the TARDIS destination to this location!");
                                     plugin.trackPerm.remove(player.getName());
