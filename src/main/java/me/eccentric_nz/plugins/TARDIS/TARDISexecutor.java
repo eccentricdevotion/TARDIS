@@ -10,7 +10,6 @@ import java.util.Set;
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.*;
 import org.bukkit.block.Block;
-import org.bukkit.block.BlockFace;
 import org.bukkit.block.Sign;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -33,6 +32,7 @@ public class TARDISexecutor implements CommandExecutor {
         // If the player typed /tardis then do the following...
         // check there is the right number of arguments
         if (cmd.getName().equalsIgnoreCase("tardis")) {
+            TARDISUtils utils = new TARDISUtils(plugin);
             Player player = null;
             if (sender instanceof Player) {
                 player = (Player) sender;
@@ -42,12 +42,12 @@ public class TARDISexecutor implements CommandExecutor {
                 return true;
             }
             // the command list - first argument MUST appear here!
-            if (!args[0].equalsIgnoreCase("save") && !args[0].equalsIgnoreCase("list") && !args[0].equalsIgnoreCase("admin") && !args[0].equalsIgnoreCase("help") && !args[0].equalsIgnoreCase("find") && !args[0].equalsIgnoreCase("reload") && !args[0].equalsIgnoreCase("add") && !args[0].equalsIgnoreCase("remove") && !args[0].equalsIgnoreCase("update") && !args[0].equalsIgnoreCase("travel") && !args[0].equalsIgnoreCase("rebuild") && !args[0].equalsIgnoreCase("chameleon") && !args[0].equalsIgnoreCase("sfx") && !args[0].equalsIgnoreCase("platform") && !args[0].equalsIgnoreCase("quotes") && !args[0].equalsIgnoreCase("comehere") && !args[0].equalsIgnoreCase("direction") && !args[0].equalsIgnoreCase("setdest")) {
-                sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " Do you want to list destinations, save a destination, travel, update the TARDIS, add/remove companions, turn the Chameleon Circuit or SFX on or off, do some admin stuff or find the TARDIS?");
+            if (!args[0].equalsIgnoreCase("save") && !args[0].equalsIgnoreCase("list") && !args[0].equalsIgnoreCase("admin") && !args[0].equalsIgnoreCase("help") && !args[0].equalsIgnoreCase("find") && !args[0].equalsIgnoreCase("reload") && !args[0].equalsIgnoreCase("add") && !args[0].equalsIgnoreCase("remove") && !args[0].equalsIgnoreCase("update") && !args[0].equalsIgnoreCase("travel") && !args[0].equalsIgnoreCase("rebuild") && !args[0].equalsIgnoreCase("chameleon") && !args[0].equalsIgnoreCase("sfx") && !args[0].equalsIgnoreCase("platform") && !args[0].equalsIgnoreCase("quotes") && !args[0].equalsIgnoreCase("comehere") && !args[0].equalsIgnoreCase("direction") && !args[0].equalsIgnoreCase("setdest") && !args[0].equalsIgnoreCase("hide") && !args[0].equalsIgnoreCase("home")) {
+                sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " That command wasn't recognised type " + ChatColor.GREEN + "/tardis help" + ChatColor.RESET + "to see the commands");
                 return false;
             }
             if (args[0].equalsIgnoreCase("reload")) {
-                if (sender instanceof ConsoleCommandSender || player.hasPermission("TARDIS.admin")) {
+                if (sender instanceof ConsoleCommandSender || player.hasPermission("tardis.admin")) {
                     plugin.loadConfig();
                     sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " TARDIS config reloaded.");
                 } else {
@@ -57,7 +57,7 @@ public class TARDISexecutor implements CommandExecutor {
                 return true;
             }
             if (args[0].equalsIgnoreCase("admin")) {
-                if (sender instanceof ConsoleCommandSender || player.hasPermission("TARDIS.admin")) {
+                if (sender instanceof ConsoleCommandSender || player.hasPermission("tardis.admin")) {
                     if (args.length == 1) {
                         sender.sendMessage(Constants.COMMAND_ADMIN.split("\n"));
                         return true;
@@ -85,7 +85,7 @@ public class TARDISexecutor implements CommandExecutor {
                         sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " Too few command arguments!");
                         return false;
                     } else {
-                        if (!args[1].equalsIgnoreCase("bonus") && !args[1].equalsIgnoreCase("protect") && !args[1].equalsIgnoreCase("max_rad") && !args[1].equalsIgnoreCase("spout") && !args[1].equalsIgnoreCase("default") && !args[1].equalsIgnoreCase("name") && !args[1].equalsIgnoreCase("include") && !args[1].equalsIgnoreCase("key") && !args[1].equalsIgnoreCase("update") && !args[1].equalsIgnoreCase("exclude") && !args[1].equalsIgnoreCase("platform") && !args[1].equalsIgnoreCase("sfx") && !args[1].equalsIgnoreCase("config") && !args[1].equalsIgnoreCase("area") && !args[1].equalsIgnoreCase("addgroup") && !args[1].equalsIgnoreCase("setgroup")) {
+                        if (!args[1].equalsIgnoreCase("bonus") && !args[1].equalsIgnoreCase("protect") && !args[1].equalsIgnoreCase("max_rad") && !args[1].equalsIgnoreCase("spout") && !args[1].equalsIgnoreCase("default") && !args[1].equalsIgnoreCase("name") && !args[1].equalsIgnoreCase("include") && !args[1].equalsIgnoreCase("key") && !args[1].equalsIgnoreCase("update") && !args[1].equalsIgnoreCase("exclude") && !args[1].equalsIgnoreCase("platform") && !args[1].equalsIgnoreCase("sfx") && !args[1].equalsIgnoreCase("config") && !args[1].equalsIgnoreCase("area")) {
                             sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " TARDIS does not recognise that command argument!");
                             return false;
                         }
@@ -124,11 +124,10 @@ public class TARDISexecutor implements CommandExecutor {
                             plugin.config.set("platform", Boolean.valueOf(tf));
                         }
                         if (args[1].equalsIgnoreCase("max_rad")) {
-                            TARDISUtils utils = new TARDISUtils(plugin);
                             String a = args[2];
                             int val;
                             try {
-                                val = utils.parseNum(a);
+                                val = Integer.parseInt(a);
                             } catch (NumberFormatException nfe) {
                                 // not a number
                                 sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RED + " The last argument must be a number!");
@@ -288,31 +287,6 @@ public class TARDISexecutor implements CommandExecutor {
                                     System.err.println(Constants.MY_PLUGIN_NAME + "Couldn't delete area: " + e);
                                 }
                             }
-                            if (args[2].equals("list")) {
-                                String queryGetArea = "SELECT * FROM areas";
-                                try {
-                                    Connection connection = service.getConnection();
-                                    Statement statement = connection.createStatement();
-                                    ResultSet rsArea = statement.executeQuery(queryGetArea);
-                                    int a = 1;
-                                    if (!rsArea.isBeforeFirst()) {
-                                        player.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " No areas were found!");
-                                        return false;
-                                    }
-                                    while (rsArea.next()) {
-                                        String name = rsArea.getString("area_name");
-                                        String world = rsArea.getString("world");
-                                        if (a == 1) {
-                                            player.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + "Areas");
-                                        }
-                                        player.sendMessage(a + ". [" + name + "] in world: " + world);
-                                        a++;
-                                    }
-                                    return true;
-                                } catch (SQLException e) {
-                                    System.err.println(Constants.MY_PLUGIN_NAME + "Couldn't delete area: " + e);
-                                }
-                            }
                         }
                     }
                     return true;
@@ -326,7 +300,7 @@ public class TARDISexecutor implements CommandExecutor {
                 return false;
             } else {
                 if (args[0].equalsIgnoreCase("comehere")) {
-                    if (player.hasPermission("TARDIS.timetravel")) {
+                    if (player.hasPermission("tardis.timetravel")) {
                         final Location eyeLocation = player.getTargetBlock(null, 50).getLocation();
                         TARDISWorldGuardChecker wg = new TARDISWorldGuardChecker(plugin);
                         if (wg.cantBuild(player, eyeLocation)) {
@@ -361,13 +335,9 @@ public class TARDISexecutor implements CommandExecutor {
                             String[] saveData = badsave.split(":");
                             World w = plugin.getServer().getWorld(saveData[0]);
                             int x = 0, y = 0, z = 0;
-                            try {
-                                x = Integer.valueOf(saveData[1]);
-                                y = Integer.valueOf(saveData[2]);
-                                z = Integer.valueOf(saveData[3]);
-                            } catch (NumberFormatException nfe) {
-                                System.err.println(Constants.MY_PLUGIN_NAME + "Couldn't covert to number: " + nfe);
-                            }
+                            x = utils.parseNum(saveData[1]);
+                            y = utils.parseNum(saveData[2]);
+                            z = utils.parseNum(saveData[3]);
                             final Location oldSave = w.getBlockAt(x, y, z).getLocation();
                             rs.close();
                             String comehere = eyeLocation.getWorld().getName() + ":" + eyeLocation.getBlockX() + ":" + eyeLocation.getBlockY() + ":" + eyeLocation.getBlockZ();
@@ -399,8 +369,52 @@ public class TARDISexecutor implements CommandExecutor {
                         return false;
                     }
                 }
+                if (args[0].equalsIgnoreCase("home")) {
+                    if (player.hasPermission("tardis.timetravel")) {
+                        Location eyeLocation = player.getTargetBlock(null, 50).getLocation();
+                        TARDISWorldGuardChecker wg = new TARDISWorldGuardChecker(plugin);
+                        if (wg.cantBuild(player, eyeLocation)) {
+                            sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + "That location is protected by WorldGuard!");
+                            return false;
+                        }
+                        TARDISArea ta = new TARDISArea(plugin);
+                        if (ta.areaCheckLocPlayer(player, eyeLocation)) {
+                            sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + "You do not have permission [" + plugin.trackPerm.get(player.getName()) + "] to set the TARDIS home to this location!");
+                            plugin.trackPerm.remove(player.getName());
+                            return false;
+                        }
+                        Material m = player.getTargetBlock(null, 50).getType();
+                        if (m != Material.SNOW) {
+                            int yplusone = eyeLocation.getBlockY();
+                            eyeLocation.setY(yplusone + 1);
+                        }
+                        // set save location
+                        try {
+                            Connection connection = service.getConnection();
+                            Statement statement = connection.createStatement();
+                            ResultSet rs = service.getTardis(player.getName(), "*");
+                            if (!rs.next()) {
+                                sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " You must be the Timelord of the TARDIS to use this command!");
+                                return false;
+                            }
+                            int id = rs.getInt("tardis_id");
+                            rs.close();
+                            String sethome = eyeLocation.getWorld().getName() + ":" + eyeLocation.getBlockX() + ":" + eyeLocation.getBlockY() + ":" + eyeLocation.getBlockZ();
+                            String querySave = "UPDATE tardis SET home = '" + sethome + "' WHERE tardis_id = " + id;
+                            statement.executeUpdate(querySave);
+                            statement.close();
+                            sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " The new TARDIS home was set!");
+                        } catch (SQLException e) {
+                            System.err.println(Constants.MY_PLUGIN_NAME + "Couldn't get TARDIS: " + e);
+                        }
+                        return true;
+                    } else {
+                        sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + Constants.NO_PERMS_MESSAGE);
+                        return false;
+                    }
+                }
                 if (args[0].equalsIgnoreCase("travel")) {
-                    if (player.hasPermission("TARDIS.timetravel")) {
+                    if (player.hasPermission("tardis.timetravel")) {
                         if (args.length < 2) {
                             sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " Too few command arguments!");
                             return false;
@@ -460,13 +474,36 @@ public class TARDISexecutor implements CommandExecutor {
                                 sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " The specified location was set succesfully. Please exit the TARDIS!");
                                 return true;
                             }
+                            if (args.length == 3 && args[1].equalsIgnoreCase("area")) {
+                                // we're thinking this is admin defined area name
+                                String queryGetArea = "SELECT area_name FROM areas WHERE area_name = '" + args[2] + "'";
+                                ResultSet rsArea = statement.executeQuery(queryGetArea);
+                                if (!rsArea.next()) {
+                                    sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " Could not find an area with that name! try using " + ChatColor.GREEN + "/TARDIS list areas" + ChatColor.RESET + " first.");
+                                    return false;
+                                }
+                                if (!player.hasPermission("tardis.area." + args[2]) || !player.isPermissionSet("tardis.area." + args[2])) {
+                                    sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + "You do not have permission [tardis.area." + args[2] + "] to send the TARDIS to this location!");
+                                    return false;
+                                }
+                                TARDISArea ta = new TARDISArea(plugin);
+                                Location l = ta.getNextSpot(rsArea.getString("area_name"));
+                                if (l == null) {
+                                    sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " All available parking spots are taken in this area!");
+                                    return false;
+                                }
+                                String save_loc = l.getWorld().getName() + ":" + l.getBlockX() + ":" + l.getBlockY() + ":" + l.getBlockZ();
+                                String querySave = "UPDATE tardis SET save = '" + save_loc + "' WHERE tardis_id = " + id;
+                                statement.executeUpdate(querySave);
+                                sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " Your TARDIS was approved for parking in [" + args[2] + "]!");
+                                return true;
+                            }
                             if (args.length > 3 && args.length < 5) {
                                 sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " Too few command arguments for co-ordinates travel!");
                                 return false;
                             }
                             if (args.length == 5) {
                                 // must be a location then
-                                TARDISUtils utils = new TARDISUtils(plugin);
                                 int x = 0, y = 0, z = 0;
                                 World w = plugin.getServer().getWorld(args[1]);
                                 x = utils.parseNum(args[2]);
@@ -505,7 +542,7 @@ public class TARDISexecutor implements CommandExecutor {
                     }
                 }
                 if (args[0].equalsIgnoreCase("update")) {
-                    if (player.hasPermission("TARDIS.update")) {
+                    if (player.hasPermission("tardis.update")) {
                         String[] validBlockNames = {"door", "button", "save-repeater", "x-repeater", "z-repeater", "y-repeater", "chameleon"};
                         if (args.length < 2) {
                             sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " Too few command arguments!");
@@ -537,14 +574,13 @@ public class TARDISexecutor implements CommandExecutor {
                         return false;
                     }
                 }
-                if (args[0].equalsIgnoreCase("rebuild")) {
-                    if (player.hasPermission("TARDIS.rebuild")) {
+                if (args[0].equalsIgnoreCase("rebuild") || args[0].equalsIgnoreCase("hide")) {
+                    if (player.hasPermission("tardis.rebuild")) {
                         String save = "";
                         World w;
                         int x = 0, y = 0, z = 0, id = -1;
                         Constants.COMPASS d = Constants.COMPASS.EAST;
                         boolean cham = false;
-                        TARDISBuilder builder = new TARDISBuilder(plugin);
                         try {
                             Connection connection = service.getConnection();
                             Statement statement = connection.createStatement();
@@ -562,24 +598,36 @@ public class TARDISexecutor implements CommandExecutor {
                         } catch (SQLException e) {
                             System.err.println(Constants.MY_PLUGIN_NAME + " Select TARDIS By Owner Error: " + e);
                         }
-                        TARDISUtils utils = new TARDISUtils(plugin);
                         String[] save_data = save.split(":");
                         w = plugin.getServer().getWorld(save_data[0]);
                         x = utils.parseNum(save_data[1]);
                         y = utils.parseNum(save_data[2]);
                         z = utils.parseNum(save_data[3]);
                         Location l = new Location(w, x, y, z);
-                        builder.buildOuterTARDIS(id, l, d, cham, player);
-                        sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " The TARDIS Police Box was rebuilt!");
-
-                        return true;
+                        if (args[0].equalsIgnoreCase("rebuild")) {
+                            TARDISBuilder builder = new TARDISBuilder(plugin);
+                            builder.buildOuterTARDIS(id, l, d, cham, player);
+                            sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " The TARDIS Police Box was rebuilt!");
+                            return true;
+                        }
+                        if (args[0].equalsIgnoreCase("hide")) {
+                            TARDISDestroyer destroyer = new TARDISDestroyer(plugin);
+                            // remove torch
+                            destroyer.destroyTorch(l);
+                            // remove sign
+                            destroyer.destroySign(l, d);
+                            // remove blue box
+                            destroyer.destroyBlueBox(l, d, id);
+                            sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " The TARDIS Police Box was hidden! Use " + ChatColor.GREEN + "/tardis rebuild" + ChatColor.RESET + " to show it again.");
+                            return true;
+                        }
                     } else {
                         sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + Constants.NO_PERMS_MESSAGE);
                         return false;
                     }
                 }
                 if (args[0].equalsIgnoreCase("list")) {
-                    if (player.hasPermission("TARDIS.list")) {
+                    if (player.hasPermission("tardis.list")) {
                         try {
                             Connection connection = service.getConnection();
                             Statement statement = connection.createStatement();
@@ -588,8 +636,8 @@ public class TARDISexecutor implements CommandExecutor {
                                 sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " " + Constants.NO_TARDIS);
                                 return false;
                             }
-                            if (args.length < 2 || (!args[1].equalsIgnoreCase("saves") && !args[1].equalsIgnoreCase("companions"))) {
-                                sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " You need to specify which TARDIS list you want to view! [saves|companions]");
+                            if (args.length < 2 || (!args[1].equalsIgnoreCase("saves") && !args[1].equalsIgnoreCase("companions") && !args[1].equalsIgnoreCase("areas"))) {
+                                sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " You need to specify which TARDIS list you want to view! [saves|companions|areas]");
                                 return false;
                             }
                             Constants.list(player, args[1]);
@@ -605,7 +653,7 @@ public class TARDISexecutor implements CommandExecutor {
                     }
                 }
                 if (args[0].equalsIgnoreCase("find")) {
-                    if (player.hasPermission("TARDIS.find")) {
+                    if (player.hasPermission("tardis.find")) {
                         try {
                             Connection connection = service.getConnection();
                             Statement statement = connection.createStatement();
@@ -629,7 +677,7 @@ public class TARDISexecutor implements CommandExecutor {
                     }
                 }
                 if (args[0].equalsIgnoreCase("add")) {
-                    if (player.hasPermission("TARDIS.add")) {
+                    if (player.hasPermission("tardis.add")) {
                         try {
                             Connection connection = service.getConnection();
                             Statement statement = connection.createStatement();
@@ -676,7 +724,7 @@ public class TARDISexecutor implements CommandExecutor {
                     }
                 }
                 if (args[0].equalsIgnoreCase("remove")) {
-                    if (player.hasPermission("TARDIS.add")) {
+                    if (player.hasPermission("tardis.add")) {
                         try {
                             Connection connection = service.getConnection();
                             Statement statement = connection.createStatement();
@@ -730,7 +778,7 @@ public class TARDISexecutor implements CommandExecutor {
                     }
                 }
                 if (args[0].equalsIgnoreCase("save")) {
-                    if (player.hasPermission("TARDIS.save")) {
+                    if (player.hasPermission("tardis.save")) {
                         try {
                             Connection connection = service.getConnection();
                             Statement statement = connection.createStatement();
@@ -743,36 +791,31 @@ public class TARDISexecutor implements CommandExecutor {
                             if (args.length < 3) {
                                 sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " Too few command arguments!");
                                 return false;
+                            }
+                            if (!args[2].matches("[A-Za-z0-9_]{2,16}")) {
+                                sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + "That doesn't appear to be a valid save name (it may be too long or contains spaces).");
+                                return false;
                             } else {
                                 String cur = rs.getString("current");
                                 String sav = rs.getString("save");
                                 int id = rs.getInt("tardis_id");
-                                int count = args.length;
-                                StringBuilder buf = new StringBuilder();
-                                for (int i = 2; i < count; i++) {
-                                    buf.append(args[i]).append(" ");
-                                }
-                                String tmp = buf.toString();
-                                String t = tmp.substring(0, tmp.length() - 1);
-                                // need to make there are no periods(.) in the text
-                                String nodots = StringUtils.replace(t, ".", "_");
                                 String curDest;
                                 // get current destination
                                 String queryTraveller = "SELECT * FROM travellers WHERE player = '" + player.getName() + "'";
                                 ResultSet rsTraveller = statement.executeQuery(queryTraveller);
                                 if (rsTraveller != null && rsTraveller.next()) {
                                     // inside TARDIS
-                                    curDest = nodots + "~" + cur;
+                                    curDest = args[2] + "~" + cur;
                                 } else {
                                     // outside TARDIS
-                                    curDest = nodots + "~" + sav;
+                                    curDest = args[2] + "~" + sav;
                                 }
                                 String querySave = "UPDATE tardis SET save" + args[1] + " = '" + curDest + "' WHERE tardis_id = " + id;
                                 statement.executeUpdate(querySave);
                                 rs.close();
                                 rsTraveller.close();
                                 statement.close();
-                                sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " The location '" + nodots + "' was saved successfully.");
+                                sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " The location '" + args[2] + "' was saved successfully.");
                                 return true;
                             }
                         } catch (SQLException e) {
@@ -784,7 +827,7 @@ public class TARDISexecutor implements CommandExecutor {
                     }
                 }
                 if (args[0].equalsIgnoreCase("setdest")) {
-                    if (player.hasPermission("TARDIS.save")) {
+                    if (player.hasPermission("tardis.save")) {
                         try {
                             Connection connection = service.getConnection();
                             Statement statement = connection.createStatement();
@@ -832,12 +875,11 @@ public class TARDISexecutor implements CommandExecutor {
                     }
                 }
                 if (args[0].equalsIgnoreCase("chameleon")) {
-                    if (player.hasPermission("TARDIS.timetravel")) {
+                    if (player.hasPermission("tardis.timetravel")) {
                         if (args.length < 2 || (!args[1].equalsIgnoreCase("on") && !args[1].equalsIgnoreCase("off") && !args[1].equalsIgnoreCase("add"))) {
                             sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " Too few command arguments!");
                             return false;
                         }
-                        TARDISUtils utils = new TARDISUtils(plugin);
                         // get the players TARDIS id
                         try {
                             Connection connection = service.getConnection();
@@ -888,7 +930,7 @@ public class TARDISexecutor implements CommandExecutor {
                     }
                 }
                 if (args[0].equalsIgnoreCase("sfx")) {
-                    if (player.hasPermission("TARDIS.timetravel")) {
+                    if (player.hasPermission("tardis.timetravel")) {
                         if (args.length < 2 || (!args[1].equalsIgnoreCase("on") && !args[1].equalsIgnoreCase("off"))) {
                             sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " You need to specify if sound effects should be on or off!");
                             return false;
@@ -925,7 +967,7 @@ public class TARDISexecutor implements CommandExecutor {
                     }
                 }
                 if (args[0].equalsIgnoreCase("platform")) {
-                    if (player.hasPermission("TARDIS.timetravel")) {
+                    if (player.hasPermission("tardis.timetravel")) {
                         if (args.length < 2 || (!args[1].equalsIgnoreCase("on") && !args[1].equalsIgnoreCase("off"))) {
                             sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " You need to specify if sound effects should be on or off!");
                             return false;
@@ -962,7 +1004,7 @@ public class TARDISexecutor implements CommandExecutor {
                     }
                 }
                 if (args[0].equalsIgnoreCase("quotes")) {
-                    if (player.hasPermission("TARDIS.timetravel")) {
+                    if (player.hasPermission("tardis.timetravel")) {
                         if (args.length < 2 || (!args[1].equalsIgnoreCase("on") && !args[1].equalsIgnoreCase("off"))) {
                             sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " You need to specify if Who quotes should be on or off!");
                             return false;
@@ -999,7 +1041,7 @@ public class TARDISexecutor implements CommandExecutor {
                     }
                 }
                 if (args[0].equalsIgnoreCase("direction")) {
-                    if (player.hasPermission("TARDIS.timetravel")) {
+                    if (player.hasPermission("tardis.timetravel")) {
                         if (args.length < 2 || (!args[1].equalsIgnoreCase("north") && !args[1].equalsIgnoreCase("west") && !args[1].equalsIgnoreCase("south") && !args[1].equalsIgnoreCase("east"))) {
                             sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " You need to specify the compass direction e.g. north, west, south or east!");
                             return false;
@@ -1012,7 +1054,6 @@ public class TARDISexecutor implements CommandExecutor {
                                 sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " " + Constants.NO_TARDIS);
                                 return false;
                             }
-                            TARDISUtils utils = new TARDISUtils(plugin);
                             String save = rs.getString("save");
                             String[] save_data = save.split(":");
                             int id = rs.getInt("tardis_id");
@@ -1092,6 +1133,12 @@ public class TARDISexecutor implements CommandExecutor {
                                 break;
                             case SETDEST:
                                 sender.sendMessage(Constants.COMMAND_SETDEST.split("\n"));
+                                break;
+                            case HOME:
+                                sender.sendMessage(Constants.COMMAND_HOME.split("\n"));
+                                break;
+                            case HIDE:
+                                sender.sendMessage(Constants.COMMAND_HIDE.split("\n"));
                                 break;
                             case ADMIN:
                                 sender.sendMessage(Constants.COMMAND_ADMIN.split("\n"));
