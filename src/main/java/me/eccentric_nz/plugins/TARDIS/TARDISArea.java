@@ -4,8 +4,12 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Set;
 import org.bukkit.Location;
+import org.bukkit.World;
+import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
+import org.bukkit.permissions.PermissionAttachmentInfo;
 
 public class TARDISArea {
 
@@ -37,8 +41,10 @@ public class TARDISArea {
                     }
                 }
             }
+            rsArea.close();
+            statement.close();
         } catch (SQLException e) {
-            System.err.println(Constants.MY_PLUGIN_NAME + " Area resultset check error: " + e);
+            System.err.println(Constants.MY_PLUGIN_NAME + " Area block check error: " + e);
         }
         return chk;
     }
@@ -62,8 +68,8 @@ public class TARDISArea {
                     // is time travel destination within a defined TARDIS area?
                     if (l.getX() <= maxx && l.getZ() <= maxz && l.getX() >= minx && l.getZ() >= minz) {
                         // does the player have permmission to travel here
-                        if (!p.hasPermission("TARDIS.area." + n) || !p.isPermissionSet("TARDIS.area." + n)) {
-                            plugin.trackPerm.put(p.getName(), "TARDIS.area." + n);
+                        if (!p.hasPermission("tardis.area." + n) || !p.isPermissionSet("tardis.area." + n)) {
+                            plugin.trackPerm.put(p.getName(), "tardis.area." + n);
                             chk = true;
                             break;
                         }
@@ -71,9 +77,69 @@ public class TARDISArea {
                     i++;
                 }
             }
+            rsArea.close();
+            statement.close();
         } catch (SQLException e) {
-            System.err.println(Constants.MY_PLUGIN_NAME + " Area resultset check error: " + e);
+            System.err.println(Constants.MY_PLUGIN_NAME + " Area player check error: " + e);
         }
         return chk;
+    }
+
+    public Location getNextSpot(String a) {
+        Location location = null;
+        // find the next available slot in this area
+        try {
+            Connection connection = service.getConnection();
+            Statement statement = connection.createStatement();
+            //String w = l.getWorld().getName();
+            String queryArea = "SELECT * FROM areas WHERE area_name = '" + a + "'";
+            ResultSet rsArea = statement.executeQuery(queryArea);
+            int minx = rsArea.getInt("minx");
+            int x = minx + 2;
+            int minz = rsArea.getInt("minz");
+            int z = minz + 2;
+            int maxx = rsArea.getInt("maxx");
+            int maxz = rsArea.getInt("maxz");
+            boolean chk = false;
+            while (chk == false) {
+                String queryLoc = "SELECT save FROM tardis WHERE save LIKE '" + rsArea.getString("world") + ":" + x + ":%:" + z + "'";
+                ResultSet rsLoc = statement.executeQuery(queryLoc);
+                if (rsLoc.next()) {
+                    if (x <= maxx) {
+                        x += 5;
+                    } else {
+                        x = minx + 2;
+                        if (z <= maxz) {
+                            z += 5;
+                        } else {
+                            z = minz + 2;
+                        }
+                    }
+                } else {
+                    chk = true;
+                    break;
+                }
+            }
+            if (chk == true) {
+                World w = plugin.getServer().getWorld(rsArea.getString("world"));
+                int y = w.getHighestBlockYAt(x, z);
+                location = w.getBlockAt(x, y, z).getLocation();
+            }
+        } catch (SQLException e) {
+            System.err.println(Constants.MY_PLUGIN_NAME + " Area parking error: " + e);
+        }
+        return location;
+    }
+
+    public String getExileArea(Player p) {
+        Set<PermissionAttachmentInfo> perms = p.getEffectivePermissions();
+        String area = "";
+        for (PermissionAttachmentInfo pai : perms) {
+            //System.out.println(pai.getPermission());
+            if (pai.getPermission().contains("tardis.area")) {
+                area = pai.getPermission();
+            }
+        }
+        return area;
     }
 }
