@@ -10,6 +10,7 @@ import java.util.Set;
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.*;
 import org.bukkit.block.Block;
+import org.bukkit.block.BlockFace;
 import org.bukkit.block.Sign;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -265,14 +266,14 @@ public class TARDISexecutor implements CommandExecutor {
                                     int max = rsArea.getInt("maxx");
                                     int maz = rsArea.getInt("maxz");
                                     World w = plugin.getServer().getWorld(rsArea.getString("world"));
-                                    final Block b1 = w.getHighestBlockAt(mix, miz);
-                                    b1.setTypeId(19);
-                                    final Block b2 = w.getHighestBlockAt(mix, maz);
-                                    b2.setTypeId(19);
-                                    final Block b3 = w.getHighestBlockAt(max, miz);
-                                    b3.setTypeId(19);
-                                    final Block b4 = w.getHighestBlockAt(max, maz);
-                                    b4.setTypeId(19);
+                                    final Block b1 = w.getHighestBlockAt(mix, miz).getRelative(BlockFace.UP);
+                                    b1.setTypeId(89);
+                                    final Block b2 = w.getHighestBlockAt(mix, maz).getRelative(BlockFace.UP);
+                                    b2.setTypeId(89);
+                                    final Block b3 = w.getHighestBlockAt(max, miz).getRelative(BlockFace.UP);
+                                    b3.setTypeId(89);
+                                    final Block b4 = w.getHighestBlockAt(max, maz).getRelative(BlockFace.UP);
+                                    b4.setTypeId(89);
                                     plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
                                         @Override
                                         public void run() {
