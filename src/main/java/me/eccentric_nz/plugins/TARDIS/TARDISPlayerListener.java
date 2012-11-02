@@ -665,7 +665,7 @@ public class TARDISPlayerListener implements Listener {
                         ItemStack is = new ItemStack(m,1);
                         inv.addItem(is);
                         thePlayer.updateInventory();
-                        thePlayer.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " Don't forget your key!");
+                        thePlayer.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " Don't forget your TARDIS key!");
                     }
                 }
             }
