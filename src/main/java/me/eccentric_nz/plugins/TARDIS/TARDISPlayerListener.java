@@ -472,93 +472,108 @@ public class TARDISPlayerListener implements Listener {
                                 String queryTraveller = "SELECT * FROM travellers WHERE tardis_id = " + id + " AND player = '" + tl + "'";
                                 ResultSet timelordIsIn = statement.executeQuery(queryTraveller);
                                 if (timelordIsIn.next()) {
-                                    // get repeater settings
-                                    Location r0_loc = Constants.getLocationFromDB(r0_str, 0, 0);
-                                    Block r0 = r0_loc.getBlock();
-                                    byte r0_data = r0.getData();
-                                    Location r1_loc = Constants.getLocationFromDB(r1_str, 0, 0);
-                                    Block r1 = r1_loc.getBlock();
-                                    byte r1_data = r1.getData();
-                                    Location r2_loc = Constants.getLocationFromDB(r2_str, 0, 0);
-                                    Block r2 = r2_loc.getBlock();
-                                    byte r2_data = r2.getData();
-                                    Location r3_loc = Constants.getLocationFromDB(r3_str, 0, 0);
-                                    Block r3 = r3_loc.getBlock();
-                                    byte r3_data = r3.getData();
-                                    boolean playSound = true;
-                                    if (r0_data <= 3 && r1_data <= 3 && r2_data <= 3 && r3_data <= 3) { // first position
-                                        player.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " Home destination selected!");
-                                        // always teleport to home location
-                                        String querySave = "UPDATE tardis SET save = home WHERE tardis_id = " + id;
+                                    if (player.hasPermission("tardis.exile")) {
+                                        // get the exile area
+                                        TARDISArea ta = new TARDISArea(plugin);
+                                        String permArea = ta.getExileArea(player);
+                                        player.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RED + " Notice:" + ChatColor.RESET + " Your travel has been restricted to the [" + permArea + "] area!");
+                                        Location l = ta.getNextSpot(permArea);
+                                        if (l == null) {
+                                            player.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " All available parking spots are taken in this area!");
+                                        }
+                                        String save_loc = l.getWorld().getName() + ":" + l.getBlockX() + ":" + l.getBlockY() + ":" + l.getBlockZ();
+                                        String querySave = "UPDATE tardis SET save = '" + save_loc + "' WHERE tardis_id = " + id;
                                         statement.executeUpdate(querySave);
-                                    }
-                                    if (r0_data >= 4 && r0_data <= 7 && r1_data <= 3 && r2_data <= 3 && r3_data <= 3) { // second position
-                                        if (!s1_str.equals("") && s1_str != null && !s1_str.equalsIgnoreCase("null")) {
-                                            String[] s1_data = s1_str.split("~");
-                                            String querySave = "UPDATE tardis SET save = '" + s1_data[1] + "' WHERE tardis_id = " + id;
+                                        player.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " Your TARDIS was approved for parking in [" + permArea + "]!");
+                                    } else {
+                                        // get repeater settings
+                                        Location r0_loc = Constants.getLocationFromDB(r0_str, 0, 0);
+                                        Block r0 = r0_loc.getBlock();
+                                        byte r0_data = r0.getData();
+                                        Location r1_loc = Constants.getLocationFromDB(r1_str, 0, 0);
+                                        Block r1 = r1_loc.getBlock();
+                                        byte r1_data = r1.getData();
+                                        Location r2_loc = Constants.getLocationFromDB(r2_str, 0, 0);
+                                        Block r2 = r2_loc.getBlock();
+                                        byte r2_data = r2.getData();
+                                        Location r3_loc = Constants.getLocationFromDB(r3_str, 0, 0);
+                                        Block r3 = r3_loc.getBlock();
+                                        byte r3_data = r3.getData();
+                                        boolean playSound = true;
+                                        if (r0_data <= 3 && r1_data <= 3 && r2_data <= 3 && r3_data <= 3) { // first position
+                                            player.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " Home destination selected!");
+                                            // always teleport to home location
+                                            String querySave = "UPDATE tardis SET save = home WHERE tardis_id = " + id;
                                             statement.executeUpdate(querySave);
-                                            player.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " Destination 1 [" + s1_data[0] + "] selected!");
-                                        } else {
-                                            player.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " There is no destination saved to slot 1!");
-                                            playSound = false;
                                         }
-                                    }
-                                    if (r0_data >= 8 && r0_data <= 11 && r1_data <= 3 && r2_data <= 3 && r3_data <= 3) { // third position
-                                        if (!s2_str.equals("") && s2_str != null && !s2_str.equalsIgnoreCase("null")) {
-                                            String[] s2_data = s2_str.split("~");
-                                            String querySave = "UPDATE tardis SET save = '" + s2_data[1] + "' WHERE tardis_id = " + id;
-                                            statement.executeUpdate(querySave);
-                                            player.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " Destination 2 [" + s2_data[0] + "] selected!");
-                                        } else {
-                                            player.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " There is no destination saved to slot 2!");
-                                            playSound = false;
+                                        if (r0_data >= 4 && r0_data <= 7 && r1_data <= 3 && r2_data <= 3 && r3_data <= 3) { // second position
+                                            if (!s1_str.equals("") && s1_str != null && !s1_str.equalsIgnoreCase("null")) {
+                                                String[] s1_data = s1_str.split("~");
+                                                String querySave = "UPDATE tardis SET save = '" + s1_data[1] + "' WHERE tardis_id = " + id;
+                                                statement.executeUpdate(querySave);
+                                                player.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " Destination 1 [" + s1_data[0] + "] selected!");
+                                            } else {
+                                                player.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " There is no destination saved to slot 1!");
+                                                playSound = false;
+                                            }
                                         }
-                                    }
-                                    if (r0_data >= 12 && r0_data <= 15 && r1_data <= 3 && r2_data <= 3 && r3_data <= 3) { // last position
-                                        if (!s3_str.equals("") && s3_str != null && !s3_str.equalsIgnoreCase("null")) {
-                                            String[] s3_data = s3_str.split("~");
-                                            String querySave = "UPDATE tardis SET save = '" + s3_data[1] + "' WHERE tardis_id = " + id;
-                                            statement.executeUpdate(querySave);
-                                            player.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " Destination 3 [" + s3_data[0] + "] selected!");
-                                        } else {
-                                            player.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " There is no destination saved to slot 3!");
-                                            playSound = false;
+                                        if (r0_data >= 8 && r0_data <= 11 && r1_data <= 3 && r2_data <= 3 && r3_data <= 3) { // third position
+                                            if (!s2_str.equals("") && s2_str != null && !s2_str.equalsIgnoreCase("null")) {
+                                                String[] s2_data = s2_str.split("~");
+                                                String querySave = "UPDATE tardis SET save = '" + s2_data[1] + "' WHERE tardis_id = " + id;
+                                                statement.executeUpdate(querySave);
+                                                player.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " Destination 2 [" + s2_data[0] + "] selected!");
+                                            } else {
+                                                player.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " There is no destination saved to slot 2!");
+                                                playSound = false;
+                                            }
                                         }
-                                    }
-                                    if (r1_data > 3 || r2_data > 3 || r3_data > 3) {
-                                        // create a random destination
-                                        TARDISTimetravel tt = new TARDISTimetravel(plugin);
-                                        Location rand = tt.randomDestination(player, player.getWorld(), r1_data, r2_data, r3_data, dir);
-                                        String d = rand.getWorld().getName() + ":" + rand.getBlockX() + ":" + rand.getBlockY() + ":" + rand.getBlockZ();
-                                        String queryCompanions = "SELECT owner, companions FROM tardis WHERE tardis_id = " + id;
-                                        ResultSet rsCom = statement.executeQuery(queryCompanions);
-                                        boolean isTL = true;
-                                        if (rsCom.next()) {
-                                            String comps = rsCom.getString("companions");
-                                            if (comps != null && !comps.equals("") && !comps.equals("[Null]")) {
-                                                String[] companions = comps.split(":");
-                                                for (String c : companions) {
-                                                    if (plugin.getServer().getPlayer(c) != null) {
-                                                        plugin.getServer().getPlayer(c).sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " Destination world: " + rand.getWorld().getName());
-                                                    }
-                                                    if (c.equalsIgnoreCase(player.getName())) {
-                                                        isTL = false;
+                                        if (r0_data >= 12 && r0_data <= 15 && r1_data <= 3 && r2_data <= 3 && r3_data <= 3) { // last position
+                                            if (!s3_str.equals("") && s3_str != null && !s3_str.equalsIgnoreCase("null")) {
+                                                String[] s3_data = s3_str.split("~");
+                                                String querySave = "UPDATE tardis SET save = '" + s3_data[1] + "' WHERE tardis_id = " + id;
+                                                statement.executeUpdate(querySave);
+                                                player.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " Destination 3 [" + s3_data[0] + "] selected!");
+                                            } else {
+                                                player.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " There is no destination saved to slot 3!");
+                                                playSound = false;
+                                            }
+                                        }
+                                        if (r1_data > 3 || r2_data > 3 || r3_data > 3) {
+                                            // create a random destination
+                                            TARDISTimetravel tt = new TARDISTimetravel(plugin);
+                                            Location rand = tt.randomDestination(player, player.getWorld(), r1_data, r2_data, r3_data, dir);
+                                            String d = rand.getWorld().getName() + ":" + rand.getBlockX() + ":" + rand.getBlockY() + ":" + rand.getBlockZ();
+                                            String queryCompanions = "SELECT owner, companions FROM tardis WHERE tardis_id = " + id;
+                                            ResultSet rsCom = statement.executeQuery(queryCompanions);
+                                            boolean isTL = true;
+                                            if (rsCom.next()) {
+                                                String comps = rsCom.getString("companions");
+                                                if (comps != null && !comps.equals("") && !comps.equals("[Null]")) {
+                                                    String[] companions = comps.split(":");
+                                                    for (String c : companions) {
+                                                        if (plugin.getServer().getPlayer(c) != null) {
+                                                            plugin.getServer().getPlayer(c).sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " Destination world: " + rand.getWorld().getName());
+                                                        }
+                                                        if (c.equalsIgnoreCase(player.getName())) {
+                                                            isTL = false;
+                                                        }
                                                     }
                                                 }
                                             }
-                                        }
-                                        if (isTL == true) {
-                                            player.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " Destination world: " + rand.getWorld().getName());
-                                        } else {
-                                            if (plugin.getServer().getPlayer(rs.getString("owner")) != null) {
-                                                plugin.getServer().getPlayer(rs.getString("owner")).sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " Destination world: " + rand.getWorld().getName());
+                                            if (isTL == true) {
+                                                player.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " Destination world: " + rand.getWorld().getName());
+                                            } else {
+                                                if (plugin.getServer().getPlayer(rs.getString("owner")) != null) {
+                                                    plugin.getServer().getPlayer(rs.getString("owner")).sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " Destination world: " + rand.getWorld().getName());
+                                                }
                                             }
+                                            String querySave = "UPDATE tardis SET save = '" + d + "' WHERE tardis_id = " + id;
+                                            statement.executeUpdate(querySave);
                                         }
-                                        String querySave = "UPDATE tardis SET save = '" + d + "' WHERE tardis_id = " + id;
-                                        statement.executeUpdate(querySave);
-                                    }
-                                    if (plugin.getServer().getPluginManager().getPlugin("Spout") != null && SpoutManager.getPlayer(player).isSpoutCraftEnabled() && playSound == true) {
-                                        SpoutManager.getSoundManager().playCustomSoundEffect(plugin, SpoutManager.getPlayer(player), "https://dl.dropbox.com/u/53758864/tardis_takeoff.mp3", false, b, 9, 75);
+                                        if (plugin.getServer().getPluginManager().getPlugin("Spout") != null && SpoutManager.getPlayer(player).isSpoutCraftEnabled() && playSound == true) {
+                                            SpoutManager.getSoundManager().playCustomSoundEffect(plugin, SpoutManager.getPlayer(player), "https://dl.dropbox.com/u/53758864/tardis_takeoff.mp3", false, b, 9, 75);
+                                        }
                                     }
                                 }
                                 timelordIsIn.close();
