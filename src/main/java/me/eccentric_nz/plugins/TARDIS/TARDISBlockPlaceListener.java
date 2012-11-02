@@ -50,7 +50,7 @@ public class TARDISBlockPlaceListener implements Listener {
                         break;
                 }
                 Player player = event.getPlayer();
-                if (player.hasPermission("TARDIS.create")) {
+                if (player.hasPermission("tardis.create")) {
                     String playerNameStr = player.getName();
                     // check to see if they already have a TARDIS
                     try {
