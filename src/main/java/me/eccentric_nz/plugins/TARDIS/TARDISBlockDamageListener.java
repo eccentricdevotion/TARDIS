@@ -26,11 +26,6 @@ public class TARDISBlockDamageListener implements Listener {
             return;
         }
         Player p = event.getPlayer();
-        TARDISArea ta = new TARDISArea(plugin);
-        String areaperm = ta.getExileArea(p);
-        if (areaperm != null) {
-            p.sendMessage(areaperm);
-        }
         Block b = event.getBlock();
         String l = b.getLocation().toString();
         try {
