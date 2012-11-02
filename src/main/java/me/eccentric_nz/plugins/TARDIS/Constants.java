@@ -40,7 +40,7 @@ public class Constants {
     public static List<Integer> CHAMELEON_BLOCKS_NEXT = Arrays.asList(new Integer[]{0, 27, 28, 30, 31, 32, 37, 38, 39, 40, 66});
     // messages
     public static final String INSTRUCTIONS = "Your TARDIS is ready!\nRight-click the TARDIS door with your TARDIS key (by default a redstone torch) to enter.\nTo time travel, adjust the repeaters on the console. For more help, type " + ChatColor.GOLD + "/TARDIS help timetravel" + ChatColor.RESET + " in chat to see more instructions.";
-    public static final String COMMANDS = ChatColor.AQUA + "TARDIS help\n" + ChatColor.RESET + "Type " + ChatColor.GOLD + "/TARDIS help <command>" + ChatColor.RESET + " to see more details about a command.\nType " + ChatColor.GOLD + "/TARDIS help create|delete|timetravel" + ChatColor.RESET + " for instructions on creating and removing a TARDIS and how to time travel.\nCommands\n" + ChatColor.GOLD + "/TARDIS list" + ChatColor.RESET + " - list saved time travel destinations or TARDIS companions.\nThere are 4 save slots, one of which is reserved for the 'home' destination.\n" + ChatColor.GOLD + "/TARDIS save [slot number] [name]" + ChatColor.RESET + " - save the co-ordinates of a destintation to the specified slot.\n" + ChatColor.GOLD + "/TARDIS find" + ChatColor.RESET + " - show the co-ordinates of a lost TARDIS.\n" + ChatColor.GOLD + "/TARDIS add" + ChatColor.RESET + " - add a TARDIS companion.\n" + ChatColor.GOLD + "/TARDIS remove" + ChatColor.RESET + " - remove a TARDIS companion.\n" + ChatColor.GOLD + "/TARDIS update" + ChatColor.RESET + " - update the special block positions in a modified TARDIS interior.\n" + ChatColor.GOLD + "/TARDIS travel" + ChatColor.RESET + " - set the time travel destination to co-ordinates or to a player's location.\n" + ChatColor.GOLD + "/TARDIS rebuild" + ChatColor.RESET + " - rebuild a busted TARDIS Police Box.\n" + ChatColor.GOLD + "/TARDIS chameleon" + ChatColor.RESET + " - turn the Chameleon Circuit on or off, or add one if you haven't got one.\n" + ChatColor.GOLD + "/TARDIS sfx" + ChatColor.RESET + " - turn TARDIS sound effects on or off.\n" + ChatColor.GOLD + "/TARDIS platform" + ChatColor.RESET + " - turn the TARDIS safety platform on or off.";
+    public static final String COMMANDS = ChatColor.AQUA + "TARDIS help\n" + ChatColor.RESET + "Type " + ChatColor.GOLD + "/TARDIS help <command>" + ChatColor.RESET + " to see more details about a command.\nType " + ChatColor.GOLD + "/TARDIS help create|delete|timetravel" + ChatColor.RESET + " for instructions on creating and removing a TARDIS and how to time travel.\nCommands\n" + ChatColor.GOLD + "/TARDIS list" + ChatColor.RESET + " - list saved time travel destinations, TARDIS companions or admin set areas.\nThere are 4 save slots, one of which is reserved for the 'home' destination.\n" + ChatColor.GOLD + "/TARDIS save [slot number] [name]" + ChatColor.RESET + " - save the co-ordinates of a destintation to the specified slot.\n" + ChatColor.GOLD + "/TARDIS find" + ChatColor.RESET + " - show the co-ordinates of a lost TARDIS.\n" + ChatColor.GOLD + "/TARDIS add" + ChatColor.RESET + " - add a TARDIS companion.\n" + ChatColor.GOLD + "/TARDIS remove" + ChatColor.RESET + " - remove a TARDIS companion.\n" + ChatColor.GOLD + "/TARDIS update" + ChatColor.RESET + " - update the special block positions in a modified TARDIS interior.\n" + ChatColor.GOLD + "/TARDIS travel" + ChatColor.RESET + " - set the time travel destination to co-ordinates, a player's location or to an admin set area.\n" + ChatColor.GOLD + "/TARDIS rebuild" + ChatColor.RESET + " - rebuild a busted TARDIS Police Box.\n" + ChatColor.GOLD + "/TARDIS chameleon" + ChatColor.RESET + " - turn the Chameleon Circuit on or off, or add one if you haven't got one.\n" + ChatColor.GOLD + "/TARDIS sfx" + ChatColor.RESET + " - turn TARDIS sound effects on or off.\n" + ChatColor.GOLD + "/TARDIS platform" + ChatColor.RESET + " - turn the TARDIS safety platform on or off.\n" + ChatColor.GOLD + "/TARDIS setdest" + ChatColor.RESET + " - save an extra destination.\n" + ChatColor.GOLD + "/TARDIS home" + ChatColor.RESET + " - change saved TARDIS home location to the block you are looking at.\n" + ChatColor.GOLD + "/TARDIS hide" + ChatColor.RESET + " - hide the TARDIS police box - use /tardis rebuild to bring it back.";
 
     public enum COMPASS {
 
@@ -49,7 +49,7 @@ public class Constants {
 
     public enum CMDS {
 
-        CREATE, DELETE, TIMETRAVEL, LIST, SAVE, FIND, ADD, ADMIN, UPDATE, TRAVEL, REBUILD, CHAMELEON, SFX, PLATFORM, SETDEST;
+        CREATE, DELETE, TIMETRAVEL, LIST, SAVE, FIND, ADD, ADMIN, UPDATE, TRAVEL, REBUILD, CHAMELEON, SFX, PLATFORM, SETDEST, HOME, HIDE;
     }
     public static final String COMMAND_CREATE = ChatColor.AQUA + "Creating a TARDIS\n" + ChatColor.RESET + "You create a TARDIS by placing a " + ChatColor.GOLD + "specific pattern of blocks." + ChatColor.RESET + "\nYou will need to have an IRON BLOCK, a LAPIS BLOCK, and a redstone torch in your inventory.\nYou place the blocks where you want the TARDIS to be, in the following order:\nBottom - IRON BLOCK, middle - LAPIS BLOCK, top - REDSTONE TORCH\nThe TARDIS takes up a 3 x 3 x 4 area (w x d x h), so keep this in mind.\nTo enter the TARDIS, right-click the door with your TARDIS key (by default a redstone torch).";
     public static final String COMMAND_DELETE = ChatColor.AQUA + "Removing a TARDIS\n" + ChatColor.RESET + "To remove your TARDIS, " + ChatColor.GOLD + "break the 'POLICE BOX' wall sign" + ChatColor.RESET + " on the front of the TARDIS.\n" + ChatColor.RED + "WARNING:" + ChatColor.RESET + " You will lose any items you have stored in your TARDIS chest, and any saved time travel destinations.";
@@ -65,6 +65,8 @@ public class Constants {
     public static final String COMMAND_CHAMELEON = ChatColor.AQUA + "The TARDIS Chameleon Circuit\n" + ChatColor.RESET + "You can make the TARDIS Police Box blend in with its surroundings by turning on the Chameleon Circuit.\nTo do this by command, type:\n" + ChatColor.GOLD + "/TARDIS chameleon [on|off]" + ChatColor.RESET + "\nOtherwise just right-click Chameleon Circuit sign to toggle it on or off\nIf you created your TARDIS using a previous verion of the plugin, you can also just place a sign anywhere, and use the " + ChatColor.GREEN + "/tardis update chameleon" + ChatColor.RESET + " command to add it to the TARDIS database.";
     public static final String COMMAND_SFX = ChatColor.AQUA + "TARDIS sound effects\n" + ChatColor.RESET + "By default, TARDIS sound effects are enabled and play while you are inside the TARDIS\nYou can toggle the sounds on or off by typing:\n" + ChatColor.GOLD + "/TARDIS sfx [on|off]\n" + ChatColor.RESET + "If the admin has disabled sound effects, this command will have no effect.";
     public static final String COMMAND_PLATFORM = ChatColor.AQUA + "The TARDIS safety platform\n" + ChatColor.RESET + "By default, TARDIS safety platforms are disabled. If the admin has enabled safety platforms, you can toggle the platform on or off by typing:\n" + ChatColor.GOLD + "/TARDIS platform [on|off]\n" + ChatColor.RESET + "The change will take effect next time you time travel.";
+    public static final String COMMAND_HOME = ChatColor.AQUA + "Change the TARDIS home location\n" + ChatColor.RESET + "To change the location the TARDIS calls home (position 1 on the save-repeater), look at a block and type:\n" + ChatColor.GOLD + "/TARDIS home";
+    public static final String COMMAND_HIDE = ChatColor.AQUA + "Hide the TARDIS\n" + ChatColor.RESET + "To temporarily hide the TARDIS type:\n" + ChatColor.GOLD + "/TARDIS hide\n" + ChatColor.RESET + "To bring it back, type /tardis rebuild";
     public static final String COMMAND_ADMIN = ChatColor.AQUA + "TARDIS admin commands\n" + ChatColor.RESET + "Arguments\n" + ChatColor.GOLD + "/TARDIS admin key [Material]" + ChatColor.RESET + " - set the Material used as the TARDIS key. Default: STICK.\n" + ChatColor.GOLD + "/TARDIS admin bonus [true|false]" + ChatColor.RESET + " - toggle whether the TARDIS chest is filled with items replaced during the TARDIS construction. Default: true.\n" + ChatColor.GOLD + "/TARDIS admin max_rad [x]" + ChatColor.RESET + " - set the maximum distance (in blocks) you can time travel in the TARDIS. Default: 256\n" + ChatColor.GOLD + "/TARDIS admin protect [true|false]" + ChatColor.RESET + " - set whether the TARDIS blocks will be unaffected by fire/lava. Default: true\n" + ChatColor.GOLD + "/TARDIS admin default [true|false]" + ChatColor.RESET + " - set whether the (inner) TARDIS is created in a specific world. Default: false\n" + ChatColor.GOLD + "/TARDIS admin name [world]" + ChatColor.RESET + " - set the default world the (inner) TARDIS is created in.\n" + ChatColor.GOLD + "/TARDIS admin include [true|false]" + ChatColor.RESET + " - set whether the default world is included in random time travel destinations. Default: false\n" + ChatColor.GOLD + "/TARDIS admin exclude [world]" + ChatColor.RESET + " - excludes the specified world from random time travel destinations.\n" + ChatColor.GOLD + "/TARDIS admin platform [true|false]" + ChatColor.RESET + " - set whether a platform is built outside the Police Box door (preventing the player falling). Default: false, but if true, a player can also set their own preference to false if they so wish.\n" + ChatColor.GOLD + "/TARDIS admin sfx [true|false]" + ChatColor.RESET + " - set whether a sound effects play inside the TARDIS. Default: true, but a player can also set their own preference if they wish.";
     public static final String NO_PERMS_MESSAGE = "You do not have permission to do that!";
     public static final String NOT_OWNER = "You are not the Timelord or Companion for this TARDIS!";
@@ -108,72 +110,93 @@ public class Constants {
         try {
             Connection connection = service.getConnection();
             Statement statement = connection.createStatement();
-            String querySaves = "SELECT * FROM tardis WHERE owner = '" + playerNameStr + "'";
-
-            ResultSet rs = statement.executeQuery(querySaves);
-            if (rs != null && rs.next()) {
-                int id = rs.getInt("tardis_id");
-                // list TARDIS console saves
-                if (l.equalsIgnoreCase("saves")) {
-                    // construct home string
-                    String h = rs.getString("home");
-                    String[] h_data = h.split(":");
-                    p.sendMessage(ChatColor.GRAY + "Console saves");
-                    p.sendMessage(ChatColor.GREEN + "HOME: " + h_data[0] + " at x:" + h_data[1] + " y:" + h_data[2] + " z:" + h_data[3]);
-                    if (!rs.getString("save1").equals("") && !rs.getString("save1").equals("null") && rs.getString("save1") != null) {
-                        String[] s1 = rs.getString("save1").split("~");
-                        String[] d1_data = s1[1].split(":");
-                        p.sendMessage(ChatColor.GREEN + "1. [" + s1[0] + "]: " + d1_data[0] + " at x:" + d1_data[1] + " y:" + d1_data[2] + " z:" + d1_data[3]);
-                    } else {
-                        p.sendMessage(ChatColor.GREEN + "1. No destination saved");
-                    }
-                    if (!rs.getString("save2").equals("") && !rs.getString("save2").equals("null") && rs.getString("save2") != null) {
-                        String[] s2 = rs.getString("save2").split("~");
-                        String[] d2_data = s2[1].split(":");
-                        p.sendMessage(ChatColor.GREEN + "2. [" + s2[0] + "]: " + d2_data[0] + " at x:" + d2_data[1] + " y:" + d2_data[2] + " z:" + d2_data[3]);
-                    } else {
-                        p.sendMessage(ChatColor.GREEN + "2. No destination saved");
-                    }
-                    if (!rs.getString("save3").equals("") && !rs.getString("save3").equals("null") && rs.getString("save3") != null) {
-                        String[] s3 = rs.getString("save3").split("~");
-                        String[] d3_data = s3[1].split(":");
-                        p.sendMessage(ChatColor.GREEN + "3. [" + s3[0] + "]: " + d3_data[0] + " at x:" + d3_data[1] + " y:" + d3_data[2] + " z:" + d3_data[3]);
-                    } else {
-                        p.sendMessage(ChatColor.GREEN + "3. No destination saved");
-                    }
-                    // list other saved destinations
-                    String queryDests = "SELECT * FROM destinations WHERE tardis_id = " + id;
-                    ResultSet rsDests = statement.executeQuery(queryDests);
-                    int i = 1;
-                    while (rsDests.next()) {
-                        if (i == 1) {
-                            p.sendMessage(ChatColor.GRAY + "----------------");
-                            p.sendMessage(ChatColor.GRAY + "Other saves");
-                        }
-                        p.sendMessage(ChatColor.GREEN + "" + i + ". [" + rsDests.getString("dest_name") + "]: " + rsDests.getString("world") + " at x:" + rsDests.getInt("x") + " y:" + rsDests.getInt("y") + " z:" + rsDests.getInt("z"));
-                        i++;
-                    }
-                    rsDests.close();
+            if (l.equals("areas")) {
+                String queryGetArea = "SELECT * FROM areas";
+                ResultSet rsArea = statement.executeQuery(queryGetArea);
+                int a = 1;
+                if (!rsArea.isBeforeFirst()) {
+                    p.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " No areas were found!");
                 }
-                if (l.equalsIgnoreCase("companions")) {
-                    // list companions
-                    String comps = rs.getString("companions");
-                    if (comps != null && !comps.equals("") && !comps.equals("[Null]")) {
-                        String[] companionData = comps.split(":");
-                        p.sendMessage(ChatColor.AQUA + "Your TARDIS companions are:");
-                        for (String c : companionData) {
-                            p.sendMessage(ChatColor.AQUA + c);
+                while (rsArea.next()) {
+                    String name = rsArea.getString("area_name");
+                    String world = rsArea.getString("world");
+                    if (a == 1) {
+                        p.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + "Areas");
+                    }
+                    p.sendMessage(a + ". [" + name + "] in world: " + world);
+                    a++;
+                }
+                rsArea.close();
+            } else {
+                String querySaves = "SELECT * FROM tardis WHERE owner = '" + playerNameStr + "'";
+                ResultSet rs = statement.executeQuery(querySaves);
+                if (rs != null && rs.next()) {
+                    int id = rs.getInt("tardis_id");
+                    // list TARDIS console saves
+                    if (l.equalsIgnoreCase("saves")) {
+                        // construct home string
+                        String h = rs.getString("home");
+                        String[] h_data = h.split(":");
+                        p.sendMessage(ChatColor.GRAY + "Console saves");
+                        p.sendMessage(ChatColor.GREEN + "HOME: " + h_data[0] + " at x:" + h_data[1] + " y:" + h_data[2] + " z:" + h_data[3]);
+                        if (!rs.getString("save1").equals("") && !rs.getString("save1").equals("null") && rs.getString("save1") != null) {
+                            String[] s1 = rs.getString("save1").split("~");
+                            String[] d1_data = s1[1].split(":");
+                            p.sendMessage(ChatColor.GREEN + "1. [" + s1[0] + "]: " + d1_data[0] + " at x:" + d1_data[1] + " y:" + d1_data[2] + " z:" + d1_data[3]);
+                        } else {
+                            p.sendMessage(ChatColor.GREEN + "1. No destination saved");
                         }
-                    } else {
-                        p.sendMessage(ChatColor.DARK_BLUE + "You don't have any TARDIS companions yet." + ChatColor.RESET + " Use " + ChatColor.GREEN + "/tardis add [player]" + ChatColor.RESET + " to add some");
+                        if (!rs.getString("save2").equals("") && !rs.getString("save2").equals("null") && rs.getString("save2") != null) {
+                            String[] s2 = rs.getString("save2").split("~");
+                            String[] d2_data = s2[1].split(":");
+                            p.sendMessage(ChatColor.GREEN + "2. [" + s2[0] + "]: " + d2_data[0] + " at x:" + d2_data[1] + " y:" + d2_data[2] + " z:" + d2_data[3]);
+                        } else {
+                            p.sendMessage(ChatColor.GREEN + "2. No destination saved");
+                        }
+                        if (!rs.getString("save3").equals("") && !rs.getString("save3").equals("null") && rs.getString("save3") != null) {
+                            String[] s3 = rs.getString("save3").split("~");
+                            String[] d3_data = s3[1].split(":");
+                            p.sendMessage(ChatColor.GREEN + "3. [" + s3[0] + "]: " + d3_data[0] + " at x:" + d3_data[1] + " y:" + d3_data[2] + " z:" + d3_data[3]);
+                        } else {
+                            p.sendMessage(ChatColor.GREEN + "3. No destination saved");
+                        }
+                        // list other saved destinations
+                        String queryDests = "SELECT * FROM destinations WHERE tardis_id = " + id;
+                        ResultSet rsDests = statement.executeQuery(queryDests);
+                        int i = 1;
+                        if (rsDests.isBeforeFirst()) {
+                            while (rsDests.next()) {
+                                if (i == 1) {
+                                    p.sendMessage(ChatColor.GRAY + "----------------");
+                                    p.sendMessage(ChatColor.GRAY + "Other saves");
+                                }
+                                p.sendMessage(ChatColor.GREEN + "" + i + ". [" + rsDests.getString("dest_name") + "]: " + rsDests.getString("world") + " at x:" + rsDests.getInt("x") + " y:" + rsDests.getInt("y") + " z:" + rsDests.getInt("z"));
+                                i++;
+                            }
+                        }
+                        rsDests.close();
+                    }
+                    if (l.equalsIgnoreCase("companions")) {
+                        // list companions
+                        String comps = rs.getString("companions");
+                        if (comps != null && !comps.equals("") && !comps.equals("[Null]")) {
+                            String[] companionData = comps.split(":");
+                            p.sendMessage(ChatColor.AQUA + "Your TARDIS companions are:");
+                            for (String c : companionData) {
+                                p.sendMessage(ChatColor.AQUA + c);
+                            }
+                        } else {
+                            p.sendMessage(ChatColor.DARK_BLUE + "You don't have any TARDIS companions yet." + ChatColor.RESET + " Use " + ChatColor.GREEN + "/tardis add [player]" + ChatColor.RESET + " to add some");
+                        }
                     }
                 }
+                rs.close();
+                statement.close();
             }
-            rs.close();
-            statement.close();
         } catch (SQLException e) {
-            System.err.println(Constants.MY_PLUGIN_NAME + " List Saves Error: " + e);
+            System.err.println(Constants.MY_PLUGIN_NAME + "Couldn't list areas: " + e);
         }
+
     }
 
     public static int swapId(int id) {
@@ -198,6 +221,7 @@ public class Constants {
     }
 
     public enum areaChar {
+
         N, G, F;
     }
 }
