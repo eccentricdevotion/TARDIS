@@ -8,66 +8,69 @@ dev-url: http://de.bukkit.org/server-mods/TARDIS/
 url: http://www.thenosefairy.co.nz/
 version: '1.7'
 permissions:
-  TARDIS.admin:
+  tardis.admin:
     description: Allow players access to the TARDIS admin commands.
     default: op
-  TARDIS.delete:
+  tardis.delete:
     description: Allow players to delete any TARDIS.
     default: false
-  TARDIS.skeletonkey:
+  tardis.skeletonkey:
     description: Allow players to enter any TARDIS.
     default: false
-  TARDIS.*:
+  tardis.*:
     description: Allow players to create & delete a TARDIS, and teleport to destinations.
     children:
-      TARDIS.create: true
-      TARDIS.timetravel: true
-      TARDIS.list: true
-      TARDIS.save: true
-      TARDIS.enter: true
-      TARDIS.find: true
-      TARDIS.add: true
-      TARDIS.help: true
-      TARDIS.update: true
-      TARDIS.rebuild: true
+      tardis.create: true
+      tardis.timetravel: true
+      tardis.list: true
+      tardis.save: true
+      tardis.enter: true
+      tardis.find: true
+      tardis.add: true
+      tardis.help: true
+      tardis.update: true
+      tardis.rebuild: true
     default: op
-  TARDIS.area.*:
+  tardis.area.*:
     description: Allow players to travel to a TARDIS area.
     default: false
-  TARDIS.create:
+  tardis.exile:
+    description: Disallow players from travelling anywhere but to areas they have a permission node for.
+    default: false
+  tardis.create:
     description: Allow players to create a TARDIS.
     default: op
-  TARDIS.delete:
+  tardis.delete:
     description: Allow players to delete a TARDIS.
     default: op
-  TARDIS.timetravel:
+  tardis.timetravel:
     TARDIS: Allow players to teleport to random locations and saved destinations.
     default: op
-  TARDIS.list:
+  tardis.list:
     TARDIS: Allow players to list saved time travel destinations.
     default: op
-  TARDIS.save:
+  tardis.save:
     TARDIS: Allow players to save time travel destinations.
     default: op
-  TARDIS.home:
+  tardis.home:
     TARDIS: Allow players to save a time travel destination as their home.
     default: op
-  TARDIS.enter:
+  tardis.enter:
     description: Allow players to enter a TARDIS.
     default: op
-  TARDIS.find:
+  tardis.find:
     description: Allow players to find their TARDIS.
     default: op
-  TARDIS.add:
+  tardis.add:
     description: Allow players to add/remove companions to their TARDIS.
     default: op
-  TARDIS.help:
+  tardis.help:
     description: Allow players to view TARDIS help pages.
     default: true
-  TARDIS.update:
+  tardis.update:
     description: Allow players to modify the TARDIS interior.
     default: true
-  TARDIS.rebuild:
+  tardis.rebuild:
     description: Allow players to rebuild the TARDIS.
     default: true
 commands:
@@ -76,70 +79,71 @@ commands:
     list:
       description: List saved time travel locations.
       usage: /<command> list
-      permission: TARDIS.list
+      permission: tardis.list
       permission-message: You don't have the permission <permission> to use this command
     save:
       description: Save a time travel location.
       usage: /<command> save [slot number] [name]
-      permission: TARDIS.save
+      permission: tardis.save
       permission-message: You don't have the permission <permission> to use this command
     home:
       description: Save a time travel location as home.
       usage: /<command> home
-      permission: TARDIS.home
+      permission: tardis.home
       permission-message: You don't have the permission <permission> to use this command
     find:
       description: Shows you the location of your TARDIS.
       usage: /<command> find
-      permission: TARDIS.find
+      permission: tardis.find
       permission-message: You don't have the permission <permission> to use this command
     add:
       description: Add a companion that can travel with you in your TARDIS.
       usage: /<command> add [player name]
-      permission: TARDIS.add
+      permission: tardis.add
       permission-message: You don't have the permission <permission> to use this command
     remove:
       description: Remove a companion from your TARDIS.
       usage: /<command> remove [player name]
-      permission: TARDIS.add
+      permission: tardis.add
       permission-message: You don't have the permission <permission> to use this command
     update:
       description: Modify the interior of the TARDIS.
       usage: /<command> update [door|button|save-repeater|x-repeater|z-repeater|y-repeater]
-      permission: TARDIS.update
+      permission: tardis.update
       permission-message: You don't have the permission <permission> to use this command
     rebuild:
       description: Rebuild the TARDIS.
       usage: /<command> rebuild
-      permission: TARDIS.rebuild
+      permission: tardis.rebuild
       permission-message: You don't have the permission <permission> to use this command
     chameleon:
       description: Toggle the TARDIS Chameleon Circuit on and off.
       usage: /<command> chameleon [on|off|add]
-      permission: TARDIS.timetravel
+      permission: tardis.timetravel
       permission-message: You don't have the permission <permission> to use this command
     sfx:
       description: Toggle the TARDIS sound effects on and off.
       usage: /<command> sfx [on|off]
-      permission: TARDIS.timetravel
+      permission: tardis.timetravel
       permission-message: You don't have the permission <permission> to use this command
     travel:
-      description: Modify the interior of the TARDIS.
+      description: TRavel to destinations in various ways.
       usage: |
-        /<command> travel [player] or /<command> travel world x y z
+        /<command> travel [player] or /<command> travel [world x y z] or /<command> travel area [name]
         Example: /<command> travel eccentric_nz - travel to a players location
         Example: /<command> travel New_new_earth -117 64 273 - travel to co-ordinates in a specific world
-      permission: TARDIS.timetravel
+        Example: /<command> travel New_new_earth -117 64 273 - travel to co-ordinates in a specific world
+      permission: tardis.timetravel
       permission-message: You don't have the permission <permission> to use this command
     admin:
       description: Set TARDIS configuration options.
       usage: /<command> admin [config option] [value]
-      permission: TARDIS.admin
+      permission: tardis.admin
       permission-message: You don't have the permission <permission> to use this command
     reload:
       description: Reloads the TARDIS configuration.
       usage: /<command> reload
-      permission: TARDIS.admin
+      permission: tardis.admin
       permission-message: You don't have the permission <permission> to use this command
     help:
       description: View TARDIS help pages.
