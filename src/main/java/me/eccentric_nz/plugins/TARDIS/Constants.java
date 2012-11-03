@@ -121,7 +121,7 @@ public class Constants {
                     String name = rsArea.getString("area_name");
                     String world = rsArea.getString("world");
                     if (a == 1) {
-                        p.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + "Areas");
+                        p.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " Areas");
                     }
                     p.sendMessage(a + ". [" + name + "] in world: " + world);
                     a++;
