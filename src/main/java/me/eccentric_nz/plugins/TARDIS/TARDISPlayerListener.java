@@ -624,6 +624,7 @@ public class TARDISPlayerListener implements Listener {
     }
     Random r = new Random();
 
+    @SuppressWarnings("deprecation")
     private void tt(Player p, Location l, final boolean exit, final World from, boolean q) {
 
         final int i = r.nextInt(plugin.quotelen);
@@ -658,11 +659,11 @@ public class TARDISPlayerListener implements Listener {
                 if (quotes) {
                     thePlayer.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " " + plugin.quote.get(i));
                 }
-                if (exit == true){
+                if (exit == true) {
                     Inventory inv = thePlayer.getInventory();
                     Material m = Material.valueOf(Constants.TARDIS_KEY);
                     if (!inv.contains(m) && plugin.config.getBoolean("give_key") == true) {
-                        ItemStack is = new ItemStack(m,1);
+                        ItemStack is = new ItemStack(m, 1);
                         inv.addItem(is);
                         thePlayer.updateInventory();
                         thePlayer.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " Don't forget your TARDIS key!");
