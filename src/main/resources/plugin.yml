@@ -31,9 +31,6 @@ permissions:
       tardis.update: true
       tardis.rebuild: true
     default: op
-  tardis.area.*:
-    description: Allow players to travel to a TARDIS area.
-    default: false
   tardis.exile:
     description: Disallow players from travelling anywhere but to areas they have a permission node for.
     default: false
