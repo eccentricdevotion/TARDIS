@@ -806,15 +806,19 @@ public class TARDISexecutor implements CommandExecutor {
                             } else {
                                 String[] split = comps.split(":");
                                 String newList = "";
-                                // recompile string without the specified player
-                                for (String c : split) {
-                                    if (!c.equals(args[1].toLowerCase())) {
-                                        // add to new string
-                                        newList += c + ":";
+                                if (split.length > 1) {
+                                    // recompile string without the specified player
+                                    for (String c : split) {
+                                        if (!c.equals(args[1].toLowerCase())) {
+                                            // add to new string
+                                            newList += c + ":";
+                                        }
                                     }
+                                    // remove trailing colon
+                                    newList = newList.substring(0, newList.length() - 1);
+                                } else {
+                                    newList = "";
                                 }
-                                // remove trailing colon
-                                newList = newList.substring(0, newList.length() - 1);
                                 String queryCompanions = "UPDATE tardis SET companions = '" + newList + "' WHERE tardis_id = " + id;
                                 statement.executeUpdate(queryCompanions);
                                 player.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " You removed " + ChatColor.GREEN + args[1] + ChatColor.RESET + " as a TARDIS companion.");
