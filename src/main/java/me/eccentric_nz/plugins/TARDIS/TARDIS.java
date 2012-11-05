@@ -168,7 +168,7 @@ public class TARDIS extends JavaPlugin implements Listener {
             String worldname = "worlds." + w.getName();
             if (w.getEnvironment() == Environment.NORMAL && !config.contains(worldname)) {
                 config.set(worldname, true);
-                System.out.println(Constants.MY_PLUGIN_NAME + " Added '" + w.getName() + "' to config. To exclude this world run: " + ChatColor.GREEN + "tardis admin exclude " + w.getName());
+                System.out.println(Constants.MY_PLUGIN_NAME + " Added '" + w.getName() + "' to config. To exclude this world run: /tardis admin exclude " + w.getName());
             }
         }
         // now remove worlds that may have been deleted
@@ -179,7 +179,7 @@ public class TARDIS extends JavaPlugin implements Listener {
                 System.out.println(Constants.MY_PLUGIN_NAME + " Removed '" + cw + " from config.yml");
             }
         }
-
+        saveCustomConfig();
         return config;
     }
 

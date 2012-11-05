@@ -34,7 +34,7 @@ public class TARDISTimetravel {
         int range = quarter + 1;
         int wherex = 0, highest = 256, wherez = 0;
         Constants.COMPASS d = Constants.COMPASS.valueOf(dir);
-
+        
         // get worlds
         Set<String> worldlist = plugin.config.getConfigurationSection("worlds").getKeys(false);
         List<World> normalWorlds = new ArrayList<World>();
