@@ -14,7 +14,6 @@ public class TARDISdatabase {
 
     private static TARDISdatabase instance = new TARDISdatabase();
     public Connection connection = null;
-    public int timeout = 30;
     public Statement statement;
     private static TARDIS plugin;
 
