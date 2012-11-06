@@ -43,7 +43,7 @@ public class TARDISexecutor implements CommandExecutor {
                 return true;
             }
             // the command list - first argument MUST appear here!
-            if (!args[0].equalsIgnoreCase("save") && !args[0].equalsIgnoreCase("list") && !args[0].equalsIgnoreCase("admin") && !args[0].equalsIgnoreCase("help") && !args[0].equalsIgnoreCase("find") && !args[0].equalsIgnoreCase("reload") && !args[0].equalsIgnoreCase("add") && !args[0].equalsIgnoreCase("remove") && !args[0].equalsIgnoreCase("update") && !args[0].equalsIgnoreCase("travel") && !args[0].equalsIgnoreCase("rebuild") && !args[0].equalsIgnoreCase("chameleon") && !args[0].equalsIgnoreCase("sfx") && !args[0].equalsIgnoreCase("platform") && !args[0].equalsIgnoreCase("quotes") && !args[0].equalsIgnoreCase("comehere") && !args[0].equalsIgnoreCase("direction") && !args[0].equalsIgnoreCase("setdest") && !args[0].equalsIgnoreCase("hide") && !args[0].equalsIgnoreCase("home")) {
+            if (!args[0].equalsIgnoreCase("save") && !args[0].equalsIgnoreCase("list") && !args[0].equalsIgnoreCase("admin") && !args[0].equalsIgnoreCase("help") && !args[0].equalsIgnoreCase("find") && !args[0].equalsIgnoreCase("reload") && !args[0].equalsIgnoreCase("add") && !args[0].equalsIgnoreCase("remove") && !args[0].equalsIgnoreCase("update") && !args[0].equalsIgnoreCase("travel") && !args[0].equalsIgnoreCase("rebuild") && !args[0].equalsIgnoreCase("chameleon") && !args[0].equalsIgnoreCase("sfx") && !args[0].equalsIgnoreCase("platform") && !args[0].equalsIgnoreCase("quotes") && !args[0].equalsIgnoreCase("comehere") && !args[0].equalsIgnoreCase("direction") && !args[0].equalsIgnoreCase("setdest") && !args[0].equalsIgnoreCase("hide") && !args[0].equalsIgnoreCase("home") && !args[0].equalsIgnoreCase("occupy")) {
                 sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " That command wasn't recognised type " + ChatColor.GREEN + "/tardis help" + ChatColor.RESET + "to see the commands");
                 return false;
             }
@@ -308,6 +308,37 @@ public class TARDISexecutor implements CommandExecutor {
                 sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RED + " This command can only be run by a player");
                 return false;
             } else {
+                if (args[0].equalsIgnoreCase("occupy")) {
+                    if (player.hasPermission("tardis.timetravel")) {
+                        try {
+                            Connection connection = service.getConnection();
+                            Statement statement = connection.createStatement();
+                            ResultSet rs = service.getTardis(player.getName(), "tardis_id");
+                            if (!rs.next()) {
+                                sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " You must be the Timelord of the TARDIS to use this command!");
+                                return false;
+                            }
+                            int id = rs.getInt("tardis_id");
+                            rs.close();
+                            String queryOccupied = "SELECT * FROM travellers WHERE tardis_id = " + id + " AND player = '" + player.getName() + "'";
+                            ResultSet rsOccupied = statement.executeQuery(queryOccupied);
+                            String queryOcc;
+                            String occupied;
+                            if (rsOccupied.next()) {
+                                queryOcc = "DELETE FROM travellers WHERE tardis_id = " + id + " AND player = '" + player.getName() + "'";
+                                occupied = ChatColor.RED + "UNOCCUPIED";
+                            } else {
+                                queryOcc = "INSERT INTO travellers (tardis_id,player) VALUES (" + id + ",'" + player.getName() + "')";
+                                occupied = ChatColor.GREEN + "OCCUPIED";
+                            }
+                            statement.executeUpdate(queryOcc);
+                            sender.sendMessage(Constants.MY_PLUGIN_NAME + " TARDIS occupation was set to: " + occupied);
+                            return true;
+                        } catch (SQLException e) {
+                            System.err.println(Constants.MY_PLUGIN_NAME + " Couldn't get TARDIS: " + e);
+                        }
+                    }
+                }
                 if (args[0].equalsIgnoreCase("comehere")) {
                     if (player.hasPermission("tardis.timetravel")) {
                         final Location eyeLocation = player.getTargetBlock(null, 50).getLocation();
