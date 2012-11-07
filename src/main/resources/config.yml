@@ -1,4 +1,5 @@
 # config file
+debug: false
 key: STICK
 bonus_chest: true
 tp_radius: 256

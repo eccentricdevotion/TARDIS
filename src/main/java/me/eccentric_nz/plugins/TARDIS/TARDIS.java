@@ -43,6 +43,7 @@ public class TARDIS extends JavaPlugin implements Listener {
     TARDISBlockProtectListener tardisProtectListener = new TARDISBlockProtectListener(this);
     TARDISBlockDamageListener tardisDamageListener = new TARDISBlockDamageListener(this);
     TARDISExplosionListener tardisExplosionListener = new TARDISExplosionListener(this);
+    TARDISWitherDragonListener tardisWDBlocker = new TARDISWitherDragonListener();
     PluginManager pm = Bukkit.getServer().getPluginManager();
     public HashMap<String, String> trackPlayers = new HashMap<String, String>();
     public HashMap<String, String> trackName = new HashMap<String, String>();
@@ -62,6 +63,7 @@ public class TARDIS extends JavaPlugin implements Listener {
         pm.registerEvents(tardisProtectListener, this);
         pm.registerEvents(tardisDamageListener, this);
         pm.registerEvents(tardisExplosionListener, this);
+        pm.registerEvents(tardisWDBlocker, this);
 
         pdfFile = getDescription();
         Constants.MY_PLUGIN_NAME = "[" + pdfFile.getName() + "]";
@@ -225,5 +227,11 @@ public class TARDIS extends JavaPlugin implements Listener {
             }
         }
         return quotes;
+    }
+
+    public void debug(String str) {
+        if (config.getBoolean("debug") == true) {
+            System.out.println(Constants.MY_PLUGIN_NAME + " " + str);
+        }
     }
 }

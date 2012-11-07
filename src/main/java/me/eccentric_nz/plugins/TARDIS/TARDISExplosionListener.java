@@ -31,7 +31,7 @@ public class TARDISExplosionListener implements Listener {
         try {
             Connection connection = service.getConnection();
             Statement statement = connection.createStatement();
-            String queryBlocks = "SELECT * FROM blocks";
+            String queryBlocks = "SELECT blocks.*, doors.door_location, doors.door_direction FROM blocks, doors WHERE blocks.tardis_id = doors.tardis_id and doors.door_type = 0";
             ResultSet rsBlocks = statement.executeQuery(queryBlocks);
             if (rsBlocks.isBeforeFirst()) {
                 while (rsBlocks.next()) {
@@ -53,31 +53,50 @@ public class TARDISExplosionListener implements Listener {
                         e.blockList().remove(block);
                     }
                     if (id != idchk) {
-                        String queryDoor = "SELECT door_location FROM doors WHERE tardis_id = " + id + " AND door_type = 0";
-                        ResultSet rsDoor = statement.executeQuery(queryDoor);
-                        if (rsDoor.next()) {
-                            String doorLoc[] = rsDoor.getString("door_location").split(":");
-                            int dx = utils.parseNum(doorLoc[1]);
-                            int dy = utils.parseNum(doorLoc[2]);
-                            int dz = utils.parseNum(doorLoc[3]);
-                            Block door_bottom = w.getBlockAt(dx, dy, dz);
-                            Block door_top = door_bottom.getRelative(BlockFace.UP);
-                            if (e.blockList().contains(door_bottom)) {
-                                e.blockList().remove(door_bottom);
-                            }
-                            if (e.blockList().contains(door_top)) {
-                                e.blockList().remove(door_top);
-                            }
+                        String doorLoc[] = rsBlocks.getString("door_location").split(":");
+                        Constants.COMPASS d = Constants.COMPASS.valueOf(rsBlocks.getString("door_direction"));
+                        int dx = utils.parseNum(doorLoc[1]);
+                        int dy = utils.parseNum(doorLoc[2]);
+                        int dz = utils.parseNum(doorLoc[3]);
+                        Block door_bottom = w.getBlockAt(dx, dy, dz);
+                        Block door_under = door_bottom.getRelative(BlockFace.DOWN);
+                        Block door_top = door_bottom.getRelative(BlockFace.UP);
+                        BlockFace bf;
+                        switch (d) {
+                            case NORTH:
+                                bf = BlockFace.WEST;
+                                break;
+                            case WEST:
+                                bf = BlockFace.SOUTH;
+                                break;
+                            case SOUTH:
+                                bf = BlockFace.EAST;
+                                break;
+                            default:
+                                bf = BlockFace.NORTH;
+                                break;
                         }
-                        idchk = id;
-                        rsDoor.close();
+                        Block sign = door_top.getRelative(BlockFace.UP).getRelative(bf);
+                        if (e.blockList().contains(sign)) {
+                            e.blockList().remove(sign);
+                        }
+                        if (e.blockList().contains(door_under)) {
+                            e.blockList().remove(door_under);
+                        }
+                        if (e.blockList().contains(door_bottom)) {
+                            e.blockList().remove(door_bottom);
+                        }
+                        if (e.blockList().contains(door_top)) {
+                            e.blockList().remove(door_top);
+                        }
                     }
+                    idchk = id;
                 }
             }
             rsBlocks.close();
             statement.close();
         } catch (SQLException err) {
-            System.err.println(Constants.MY_PLUGIN_NAME + " Create table error: " + err);
+            System.err.println(Constants.MY_PLUGIN_NAME + " Explosion Listener error: " + err);
         }
     }
 }

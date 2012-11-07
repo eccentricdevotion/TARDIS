@@ -399,6 +399,7 @@ public class TARDISexecutor implements CommandExecutor {
                             final TARDISDestroyer td = new TARDISDestroyer(plugin);
                             final TARDISBuilder tb = new TARDISBuilder(plugin);
                             Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
+                                @Override
                                 public void run() {
                                     td.destroySign(oldSave, d);
                                     td.destroyTorch(oldSave);
