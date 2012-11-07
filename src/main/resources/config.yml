@@ -12,3 +12,4 @@ platform: false
 chameleon: true
 sfx: true
 give_key: false
+the_end: false

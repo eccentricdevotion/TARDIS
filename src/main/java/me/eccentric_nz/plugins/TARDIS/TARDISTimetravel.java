@@ -34,12 +34,13 @@ public class TARDISTimetravel {
         int range = quarter + 1;
         int wherex = 0, highest = 256, wherez = 0;
         Constants.COMPASS d = Constants.COMPASS.valueOf(dir);
-        
+
         // get worlds
         Set<String> worldlist = plugin.config.getConfigurationSection("worlds").getKeys(false);
         List<World> normalWorlds = new ArrayList<World>();
         for (String o : worldlist) {
-            if (plugin.getServer().getWorld(o).getEnvironment() == Environment.NORMAL) {
+            Environment env = plugin.getServer().getWorld(o).getEnvironment();
+            if (env == Environment.NORMAL || (env == Environment.THE_END && plugin.config.getBoolean("the_end") == true)) {
                 if (plugin.config.getBoolean("include_default_world") == Boolean.valueOf("true")
                         || plugin.config.getBoolean("default_world") == Boolean.valueOf("false")) {
                     if (plugin.config.getBoolean("worlds." + o) == Boolean.valueOf("true")) {

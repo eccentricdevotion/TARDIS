@@ -109,6 +109,12 @@ public class TARDIS extends JavaPlugin implements Listener {
             loadConfig();
         }
         Constants.TARDIS_KEY = config.getString("key");
+        if (!config.contains("the_end")) {
+            config.set("the_end", false);
+        }
+        if (!config.contains("debug")) {
+            config.set("debug", false);
+        }
 
         tardisExecutor = new TARDISexecutor(this);
         getCommand("TARDIS").setExecutor(tardisExecutor);
@@ -169,7 +175,7 @@ public class TARDIS extends JavaPlugin implements Listener {
         List<World> worlds = this.getServer().getWorlds();
         for (World w : worlds) {
             String worldname = "worlds." + w.getName();
-            if (w.getEnvironment() == Environment.NORMAL && !config.contains(worldname)) {
+            if ((w.getEnvironment() == Environment.NORMAL || w.getEnvironment() == Environment.THE_END) && !config.contains(worldname)) {
                 config.set(worldname, true);
                 System.out.println(Constants.MY_PLUGIN_NAME + " Added '" + w.getName() + "' to config. To exclude this world run: /tardis admin exclude " + w.getName());
             }
