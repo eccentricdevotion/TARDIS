@@ -73,6 +73,7 @@ public class TARDISBlockBreakListener implements Listener {
                     if (rs.next()) {
                         String saveLoc = rs.getString("save");
                         String chunkLoc = rs.getString("chunk");
+                        String owner = rs.getString("owner");
                         Constants.SCHEMATIC schm = Constants.SCHEMATIC.valueOf(rs.getString("size"));
                         int id = rs.getInt("tardis_id");
                         Constants.COMPASS d = Constants.COMPASS.valueOf(rs.getString("direction"));
@@ -138,6 +139,11 @@ public class TARDISBlockBreakListener implements Listener {
                             String queryDeleteDoors = "DELETE FROM doors WHERE tardis_id = " + id;
                             statement.executeUpdate(queryDeleteDoors);
                             player.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " The TARDIS was removed from the world and database successfully.");
+                            // remove world guard region protection
+                            TARDISWorldGuardChecker wgchk = new TARDISWorldGuardChecker(plugin);
+                            if (wgchk.WorldGuardOnServer) {
+                                wgchk.removeRegion(cw,owner);
+                            }
                         } else {
                             // cancel the event because it's not the player's TARDIS
                             event.setCancelled(true);
@@ -151,6 +157,7 @@ public class TARDISBlockBreakListener implements Listener {
                     }
                     rs.close();
                     statement.close();
+
                 } catch (SQLException e) {
                     System.err.println(Constants.MY_PLUGIN_NAME + " Block Break Listener Error: " + e);
                 }

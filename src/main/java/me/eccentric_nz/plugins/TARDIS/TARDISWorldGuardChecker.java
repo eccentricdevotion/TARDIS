@@ -11,6 +11,7 @@ import com.sk89q.worldguard.protection.managers.RegionManager;
 import com.sk89q.worldguard.protection.regions.ProtectedCuboidRegion;
 import java.util.HashMap;
 import org.bukkit.Location;
+import org.bukkit.World;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 
@@ -37,7 +38,7 @@ public class TARDISWorldGuardChecker {
         RegionManager rm = wg.getRegionManager(one.getWorld());
         BlockVector b1 = makeBlockVector(one);
         BlockVector b2 = makeBlockVector(two);
-        ProtectedCuboidRegion region = new ProtectedCuboidRegion("TARDIS_" + p.getName(), b1, b2);
+        ProtectedCuboidRegion region = new ProtectedCuboidRegion("tardis_" + p.getName(), b1, b2);
         DefaultDomain dd = new DefaultDomain();
         dd.addPlayer(p.getName());
         region.setOwners(dd);
@@ -55,8 +56,13 @@ public class TARDISWorldGuardChecker {
         try {
             rm.save();
         } catch (ProtectionDatabaseException e) {
-           System.err.println(Constants.MY_PLUGIN_NAME + " could not create WorldGuard Protection! " + e);
+            System.err.println(Constants.MY_PLUGIN_NAME + " could not create WorldGuard Protection! " + e);
         }
+    }
+
+    public void removeRegion(World w, String p) {
+        RegionManager rm = wg.getRegionManager(w);
+        rm.removeRegion("tardis_" + p);
     }
 
     public BlockVector makeBlockVector(Location location) {
