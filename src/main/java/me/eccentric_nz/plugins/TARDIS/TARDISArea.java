@@ -144,7 +144,6 @@ public class TARDISArea {
                             }
                         }
                     } else {
-                        System.out.println("Found a spot");
                         chk = true;
                         rsLoc.close();
                         statement.close();

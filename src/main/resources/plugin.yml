@@ -6,7 +6,7 @@ startup: postworld
 softdepend: [Multiverse-Core,WorldGuard]
 dev-url: http://de.bukkit.org/server-mods/TARDIS/
 url: http://www.thenosefairy.co.nz/
-version: '1.7.4'
+version: '1.7.5'
 permissions:
   tardis.admin:
     description: Allow players access to the TARDIS admin commands.
