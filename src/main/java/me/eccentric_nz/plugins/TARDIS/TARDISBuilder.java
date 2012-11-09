@@ -384,7 +384,7 @@ public class TARDISBuilder {
             startz = resetz;
             starty += 1;
         }
-        Location wg2 = new Location(world, startx+w, starty, startz+l);
+        Location wg2 = new Location(world, startx+(w-1), starty, startz+(l-1));
         // update chunks list in DB
         try {
             for (Chunk c : chunkList) {
