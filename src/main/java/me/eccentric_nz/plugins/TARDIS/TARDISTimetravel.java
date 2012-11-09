@@ -11,14 +11,18 @@ import org.bukkit.World.Environment;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Player;
+import org.bukkit.plugin.Plugin;
 
 public class TARDISTimetravel {
 
     private static Location dest;
     private TARDIS plugin;
+    public boolean WorldGuardOnServer = false;
 
     public TARDISTimetravel(TARDIS plugin) {
         this.plugin = plugin;
+        Plugin wgp = plugin.getServer().getPluginManager().getPlugin("WorldGuard");
+        WorldGuardOnServer = (wgp != null);
     }
 
     public Location randomDestination(Player p, World w, byte rx, byte rz, byte ry, String dir) {
@@ -64,7 +68,10 @@ public class TARDISTimetravel {
             }
             i = i + 1;
         }
-        TARDISWorldGuardChecker wg = new TARDISWorldGuardChecker(plugin);
+        TARDISWorldGuardChecker wgchk = null;
+        if (WorldGuardOnServer) {
+            wgchk = new TARDISWorldGuardChecker(plugin);
+        }
         TARDISArea ta = new TARDISArea(plugin);
         if (randworld.getEnvironment().equals(Environment.THE_END)) {
             while (danger == true) {
@@ -78,7 +85,7 @@ public class TARDISTimetravel {
                 if (highest > 40) {
                     Block currentBlock = randworld.getBlockAt(wherex, highest, wherez);
                     Location chunk_loc = currentBlock.getLocation();
-                    if (wg.WorldGuardOnServer && wg.cantBuild(p, chunk_loc)) {
+                    if (WorldGuardOnServer && wgchk.cantBuild(p, chunk_loc)) {
                         count = 1;
                     }
                     if (ta.areaCheckLocPlayer(p, chunk_loc)) {
@@ -161,7 +168,7 @@ public class TARDISTimetravel {
                         currentBlock = currentBlock.getRelative(BlockFace.DOWN);
                     }
                     Location chunk_loc = currentBlock.getLocation();
-                    if (wg.WorldGuardOnServer && wg.cantBuild(p, chunk_loc)) {
+                    if (WorldGuardOnServer && wgchk.cantBuild(p, chunk_loc)) {
                         count = 1;
                     }
                     if (ta.areaCheckLocPlayer(p, chunk_loc)) {

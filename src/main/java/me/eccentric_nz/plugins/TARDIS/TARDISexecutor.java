@@ -18,15 +18,19 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.plugin.Plugin;
 import org.getspout.spoutapi.SpoutManager;
 
 public class TARDISexecutor implements CommandExecutor {
 
     private TARDIS plugin;
     TARDISdatabase service = TARDISdatabase.getInstance();
+    public boolean WorldGuardOnServer = false;
 
     public TARDISexecutor(TARDIS plugin) {
         this.plugin = plugin;
+        Plugin wgp = plugin.getServer().getPluginManager().getPlugin("WorldGuard");
+        WorldGuardOnServer = (wgp != null);
     }
 
     @Override
@@ -343,10 +347,12 @@ public class TARDISexecutor implements CommandExecutor {
                 if (args[0].equalsIgnoreCase("comehere")) {
                     if (player.hasPermission("tardis.timetravel")) {
                         final Location eyeLocation = player.getTargetBlock(null, 50).getLocation();
-                        TARDISWorldGuardChecker wg = new TARDISWorldGuardChecker(plugin);
-                        if (wg.cantBuild(player, eyeLocation)) {
-                            sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + "That location is protected by WorldGuard!");
-                            return false;
+                        if (WorldGuardOnServer) {
+                            TARDISWorldGuardChecker wg = new TARDISWorldGuardChecker(plugin);
+                            if (wg.cantBuild(player, eyeLocation)) {
+                                sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + "That location is protected by WorldGuard!");
+                                return false;
+                            }
                         }
                         TARDISArea ta = new TARDISArea(plugin);
                         if (player.hasPermission("tardis.exile")) {
@@ -421,10 +427,12 @@ public class TARDISexecutor implements CommandExecutor {
                 if (args[0].equalsIgnoreCase("home")) {
                     if (player.hasPermission("tardis.timetravel")) {
                         Location eyeLocation = player.getTargetBlock(null, 50).getLocation();
-                        TARDISWorldGuardChecker wg = new TARDISWorldGuardChecker(plugin);
-                        if (wg.cantBuild(player, eyeLocation)) {
-                            sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + "That location is protected by WorldGuard!");
-                            return false;
+                        if (WorldGuardOnServer) {
+                            TARDISWorldGuardChecker wg = new TARDISWorldGuardChecker(plugin);
+                            if (wg.cantBuild(player, eyeLocation)) {
+                                sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + "That location is protected by WorldGuard!");
+                                return false;
+                            }
                         }
                         TARDISArea ta = new TARDISArea(plugin);
                         if (ta.areaCheckLocPlayer(player, eyeLocation)) {
@@ -511,10 +519,12 @@ public class TARDISexecutor implements CommandExecutor {
                                         sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " The player's location would not be safe! Please tell the player to move!");
                                         return false;
                                     }
-                                    TARDISWorldGuardChecker wg = new TARDISWorldGuardChecker(plugin);
-                                    if (wg.cantBuild(player, player_loc)) {
-                                        sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + "That location is protected by WorldGuard!");
-                                        return false;
+                                    if (WorldGuardOnServer) {
+                                        TARDISWorldGuardChecker wg = new TARDISWorldGuardChecker(plugin);
+                                        if (wg.cantBuild(player, player_loc)) {
+                                            sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + "That location is protected by WorldGuard!");
+                                            return false;
+                                        }
                                     }
                                     if (player.hasPermission("tardis.exile")) {
                                         String areaPerm = ta.getExileArea(player);
@@ -584,10 +594,12 @@ public class TARDISexecutor implements CommandExecutor {
                                     z = utils.parseNum(args[4]);
                                     Block block = w.getBlockAt(x, y, z);
                                     Location location = block.getLocation();
-                                    TARDISWorldGuardChecker wg = new TARDISWorldGuardChecker(plugin);
-                                    if (wg.cantBuild(player, location)) {
-                                        sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + "That location is protected by WorldGuard!");
-                                        return false;
+                                    if (WorldGuardOnServer) {
+                                        TARDISWorldGuardChecker wg = new TARDISWorldGuardChecker(plugin);
+                                        if (wg.cantBuild(player, location)) {
+                                            sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + "That location is protected by WorldGuard!");
+                                            return false;
+                                        }
                                     }
                                     if (player.hasPermission("tardis.exile")) {
                                         String areaPerm = ta.getExileArea(player);
@@ -938,10 +950,12 @@ public class TARDISexecutor implements CommandExecutor {
                                 // get location player is looking at
                                 Block b = player.getTargetBlock(null, 50);
                                 Location l = b.getLocation();
-                                TARDISWorldGuardChecker wg = new TARDISWorldGuardChecker(plugin);
-                                if (wg.cantBuild(player, l)) {
-                                    sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + "That location is protected by WorldGuard!");
-                                    return false;
+                                if (WorldGuardOnServer) {
+                                    TARDISWorldGuardChecker wg = new TARDISWorldGuardChecker(plugin);
+                                    if (wg.cantBuild(player, l)) {
+                                        sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + "That location is protected by WorldGuard!");
+                                        return false;
+                                    }
                                 }
                                 TARDISArea ta = new TARDISArea(plugin);
                                 if (player.hasPermission("tardis.exile")) {

@@ -21,15 +21,19 @@ import org.bukkit.block.Sign;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.plugin.Plugin;
 
 public class TARDISBuilder {
 
     private final TARDIS plugin;
     TARDISdatabase service = TARDISdatabase.getInstance();
     Statement statement;
+    public boolean WorldGuardOnServer = false;
 
     public TARDISBuilder(TARDIS plugin) {
         this.plugin = plugin;
+        Plugin wgp = plugin.getServer().getPluginManager().getPlugin("WorldGuard");
+        WorldGuardOnServer = (wgp != null);
     }
 
     public void buildOuterTARDIS(int id, Location l, Constants.COMPASS d, boolean c, Player p) {
@@ -384,7 +388,7 @@ public class TARDISBuilder {
             startz = resetz;
             starty += 1;
         }
-        Location wg2 = new Location(world, startx+(w-1), starty, startz+(l-1));
+        Location wg2 = new Location(world, startx + (w - 1), starty, startz + (l - 1));
         // update chunks list in DB
         try {
             for (Chunk c : chunkList) {
@@ -550,8 +554,9 @@ public class TARDISBuilder {
                 System.err.println(Constants.MY_PLUGIN_NAME + " Could not get chest location from DB!" + e);
             }
         }
-        TARDISWorldGuardChecker wgchk = new TARDISWorldGuardChecker(plugin);
-        if (wgchk.WorldGuardOnServer) {
+        TARDISWorldGuardChecker wgchk;
+        if (WorldGuardOnServer) {
+            wgchk = new TARDISWorldGuardChecker(plugin);
             wgchk.addWGProtection(p, wg1, wg2);
         }
     }

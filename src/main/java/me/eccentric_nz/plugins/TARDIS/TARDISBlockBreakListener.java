@@ -17,14 +17,18 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
+import org.bukkit.plugin.Plugin;
 
 public class TARDISBlockBreakListener implements Listener {
 
     private TARDIS plugin;
     TARDISdatabase service = TARDISdatabase.getInstance();
+    public boolean WorldGuardOnServer = false;
 
     public TARDISBlockBreakListener(TARDIS plugin) {
         this.plugin = plugin;
+        Plugin wgp = plugin.getServer().getPluginManager().getPlugin("WorldGuard");
+        WorldGuardOnServer = (wgp != null);
     }
 
     @EventHandler(priority = EventPriority.LOW)
@@ -66,7 +70,8 @@ public class TARDISBlockBreakListener implements Listener {
                 } else {
                     queryCheck = "SELECT * FROM tardis WHERE owner = '" + playerNameStr + "'";
                 }
-                occupied: try {
+                occupied:
+                try {
                     Connection connection = service.getConnection();
                     Statement statement = connection.createStatement();
                     ResultSet rs = statement.executeQuery(queryCheck);
@@ -140,9 +145,9 @@ public class TARDISBlockBreakListener implements Listener {
                             statement.executeUpdate(queryDeleteDoors);
                             player.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " The TARDIS was removed from the world and database successfully.");
                             // remove world guard region protection
-                            TARDISWorldGuardChecker wgchk = new TARDISWorldGuardChecker(plugin);
-                            if (wgchk.WorldGuardOnServer) {
-                                wgchk.removeRegion(cw,owner);
+                            if (WorldGuardOnServer) {
+                                TARDISWorldGuardChecker wgchk = new TARDISWorldGuardChecker(plugin);
+                                wgchk.removeRegion(cw, owner);
                             }
                         } else {
                             // cancel the event because it's not the player's TARDIS
