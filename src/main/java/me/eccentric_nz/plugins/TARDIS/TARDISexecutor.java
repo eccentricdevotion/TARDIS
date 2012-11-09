@@ -216,8 +216,8 @@ public class TARDISexecutor implements CommandExecutor {
                         } else if (args[1].equalsIgnoreCase("area")) {
                             if (args[2].equals("start")) {
                                 // check name is unique and acceptable
-                                if (!args[3].matches("[A-Za-z0-9_]{2,16}")) {
-                                    sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + "That doesn't appear to be a valid area name (it may be too long)");
+                                if (args.length < 4 || !args[3].matches("[A-Za-z0-9_]{2,16}")) {
+                                    sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + "That doesn't appear to be a valid area name (it may be too long)" + ChatColor.GREEN + " /tardis admin area start [area_name_goes_here]");
                                     return false;
                                 }
                                 String queryName = "SELECT area_name FROM areas";
