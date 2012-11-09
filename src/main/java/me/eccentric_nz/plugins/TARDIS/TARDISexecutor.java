@@ -1163,6 +1163,8 @@ public class TARDISexecutor implements CommandExecutor {
 
                             String queryDirectionUpdate = "UPDATE tardis SET direction = '" + dir + "' WHERE tardis_id = " + id;
                             statement.executeUpdate(queryDirectionUpdate);
+                            String queryDoorDirectionUpdate = "UPDATE doors SET door_direction = '" + dir + "' WHERE door_type = 0 AND tardis_id = " + id;
+                            statement.executeUpdate(queryDoorDirectionUpdate);
                             World w = plugin.getServer().getWorld(save_data[0]);
                             int x = utils.parseNum(save_data[1]);
                             int y = utils.parseNum(save_data[2]);
