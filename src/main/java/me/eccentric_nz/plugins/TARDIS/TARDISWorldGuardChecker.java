@@ -1,6 +1,15 @@
 package me.eccentric_nz.plugins.TARDIS;
 
+import com.sk89q.worldedit.BlockVector;
 import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
+import com.sk89q.worldguard.domains.DefaultDomain;
+import com.sk89q.worldguard.protection.databases.ProtectionDatabaseException;
+import com.sk89q.worldguard.protection.flags.DefaultFlag;
+import com.sk89q.worldguard.protection.flags.Flag;
+import com.sk89q.worldguard.protection.flags.StateFlag.State;
+import com.sk89q.worldguard.protection.managers.RegionManager;
+import com.sk89q.worldguard.protection.regions.ProtectedCuboidRegion;
+import java.util.HashMap;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
@@ -9,7 +18,7 @@ public class TARDISWorldGuardChecker {
 
     private TARDIS plugin;
     private WorldGuardPlugin wg;
-    private boolean WorldGuardOnServer = false;
+    public boolean WorldGuardOnServer = false;
 
     public TARDISWorldGuardChecker(TARDIS plugin) {
         this.plugin = plugin;
@@ -22,5 +31,35 @@ public class TARDISWorldGuardChecker {
 
     public boolean cantBuild(Player p, Location l) {
         return (WorldGuardOnServer) && (!wg.canBuild(p, l));
+    }
+
+    public void addWGProtection(Player p, Location one, Location two) {
+        RegionManager rm = wg.getRegionManager(one.getWorld());
+        BlockVector b1 = makeBlockVector(one);
+        BlockVector b2 = makeBlockVector(two);
+        ProtectedCuboidRegion region = new ProtectedCuboidRegion("TARDIS_" + p.getName(), b1, b2);
+        DefaultDomain dd = new DefaultDomain();
+        dd.addPlayer(p.getName());
+        region.setOwners(dd);
+        HashMap<Flag<?>, Object> flags = new HashMap<Flag<?>, Object>();
+        flags.put(DefaultFlag.TNT, State.DENY);
+        flags.put(DefaultFlag.CREEPER_EXPLOSION, State.DENY);
+        flags.put(DefaultFlag.FIRE_SPREAD, State.DENY);
+        flags.put(DefaultFlag.LAVA_FIRE, State.DENY);
+        flags.put(DefaultFlag.LAVA_FLOW, State.DENY);
+        flags.put(DefaultFlag.LIGHTER, State.DENY);
+        flags.put(DefaultFlag.BUILD, State.DENY);
+        region.setFlags(flags);
+        rm.addRegion(region);
+
+        try {
+            rm.save();
+        } catch (ProtectionDatabaseException e) {
+           System.err.println(Constants.MY_PLUGIN_NAME + " could not create WorldGuard Protection! " + e);
+        }
+    }
+
+    public BlockVector makeBlockVector(Location location) {
+        return new BlockVector(location.getX(), location.getY(), location.getZ());
     }
 }

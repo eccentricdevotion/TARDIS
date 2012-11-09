@@ -313,7 +313,7 @@ public class TARDISBuilder {
         }
     }
 
-    public void buildInnerTARDIS(Constants.SCHEMATIC schm, World world, Constants.COMPASS d, int dbID) {
+    public void buildInnerTARDIS(Constants.SCHEMATIC schm, World world, Constants.COMPASS d, int dbID, Player p) {
         String[][][] s;
         short h, w, l;
         switch (schm) {
@@ -354,6 +354,7 @@ public class TARDISBuilder {
         x = gsl[4];
         z = gsl[5];
 
+        Location wg1 = new Location(world, startx, starty, startz);
         // need to set TARDIS space to air first otherwise torches may be placed askew
         // also getting and storing block ids for bonus chest if configured
         StringBuilder sb = new StringBuilder();
@@ -383,6 +384,7 @@ public class TARDISBuilder {
             startz = resetz;
             starty += 1;
         }
+        Location wg2 = new Location(world, startx, starty, startz);
         // update chunks list in DB
         try {
             for (Chunk c : chunkList) {
@@ -547,6 +549,10 @@ public class TARDISBuilder {
             } catch (SQLException e) {
                 System.err.println(Constants.MY_PLUGIN_NAME + " Could not get chest location from DB!" + e);
             }
+        }
+        TARDISWorldGuardChecker wgchk = new TARDISWorldGuardChecker(plugin);
+        if (wgchk.WorldGuardOnServer) {
+            wgchk.addWGProtection(p, wg1, wg2);
         }
     }
 }

@@ -115,7 +115,7 @@ public class TARDISBlockPlaceListener implements Listener {
                                 statement.close();
                                 // turn the block stack into a TARDIS
                                 builder.buildOuterTARDIS(lastInsertId, block_loc, Constants.COMPASS.valueOf(d), false, player);
-                                builder.buildInnerTARDIS(schm, chunkworld, Constants.COMPASS.valueOf(d), lastInsertId);
+                                builder.buildInnerTARDIS(schm, chunkworld, Constants.COMPASS.valueOf(d), lastInsertId, player);
                             } else {
                                 player.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " A TARDIS already exists at this location, please try another chunk!");
                             }
