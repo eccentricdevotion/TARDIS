@@ -123,6 +123,11 @@ commands:
       usage: /<command> sfx [on|off]
       permission: tardis.timetravel
       permission-message: You don't have the permission <permission> to use this command
+    namekey:
+      description: Rename the TARDIS key Item.
+      usage: Hold the key in your hand, then type /<command> namekey [new name]
+      permission: tardis.timetravel
+      permission-message: You don't have the permission <permission> to use this command
     travel:
       description: TRavel to destinations in various ways.
       usage: |
