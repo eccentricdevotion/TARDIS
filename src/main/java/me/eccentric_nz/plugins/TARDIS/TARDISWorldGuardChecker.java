@@ -63,6 +63,11 @@ public class TARDISWorldGuardChecker {
     public void removeRegion(World w, String p) {
         RegionManager rm = wg.getRegionManager(w);
         rm.removeRegion("tardis_" + p);
+        try {
+            rm.save();
+        } catch (ProtectionDatabaseException e) {
+            System.err.println(Constants.MY_PLUGIN_NAME + " could not remove WorldGuard Protection! " + e);
+        }
     }
 
     public BlockVector makeBlockVector(Location location) {
