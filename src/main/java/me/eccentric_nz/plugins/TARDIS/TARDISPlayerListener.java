@@ -664,6 +664,8 @@ public class TARDISPlayerListener implements Listener {
                     Material m = Material.valueOf(Constants.TARDIS_KEY);
                     if (!inv.contains(m) && plugin.config.getBoolean("give_key") == true) {
                         ItemStack is = new ItemStack(m, 1);
+                        TARDISItemRenamer ir = new TARDISItemRenamer(is);
+                        ir.setName("Sonic Screwdriver");
                         inv.addItem(is);
                         thePlayer.updateInventory();
                         thePlayer.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " Don't forget your TARDIS key!");
