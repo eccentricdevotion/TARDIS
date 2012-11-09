@@ -197,10 +197,21 @@ public class TARDISTimetravel {
     }
 
     public int safeLocation(int startx, int starty, int startz, int resetx, int resetz, int x, int z, World w, Constants.COMPASS d) {
-        int level, row, col, count = 0;
+        int level, row, col, rowcount, colcount, count = 0;
+        switch (d) {
+            case EAST:
+            case WEST:
+                rowcount = 5;
+                colcount = 3;
+                break;
+            default:
+                rowcount = 3;
+                colcount = 5;
+                break;
+        }
         for (level = 0; level < 4; level++) {
-            for (row = 0; row < 3; row++) {
-                for (col = 0; col < 5; col++) {
+            for (row = 0; row < rowcount; row++) {
+                for (col = 0; col < colcount; col++) {
                     int id = w.getBlockAt(startx, starty, startz).getTypeId();
                     if (isItSafe(id)) {
                         count++;
