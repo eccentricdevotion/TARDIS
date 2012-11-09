@@ -337,10 +337,10 @@ public class TARDISBuilder {
                 l = plugin.budgetdimensions[2];
                 break;
         }
-        int level, row, col, id, x, y, z, startx, starty = 15, startz, resetx, resetz, cx = 0, cy = 0, cz = 0, rid = 0, multiplier = 1, tx = 0, ty = 0, tz = 0, j = 0;
-        byte data = 0;
+        int level, row, col, id, x, y, z, startx, starty = 15, startz, resetx, resetz, cx, cy, cz, rid, multiplier = 1, tx = 0, ty = 0, tz = 0, j = 0;
+        byte data;
         short damage = 0;
-        String tmp, replacedBlocks = "";
+        String tmp, replacedBlocks;
         HashMap<Block, Byte> postDoorBlocks = new HashMap<Block, Byte>();
         HashMap<Block, Byte> postTorchBlocks = new HashMap<Block, Byte>();
         HashMap<Block, Byte> postSignBlocks = new HashMap<Block, Byte>();
@@ -384,7 +384,7 @@ public class TARDISBuilder {
             startz = resetz;
             starty += 1;
         }
-        Location wg2 = new Location(world, startx, starty, startz);
+        Location wg2 = new Location(world, startx+w, starty, startz+l);
         // update chunks list in DB
         try {
             for (Chunk c : chunkList) {
