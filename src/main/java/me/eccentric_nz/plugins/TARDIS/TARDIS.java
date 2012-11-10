@@ -128,6 +128,10 @@ public class TARDIS extends JavaPlugin implements Listener {
         }
 
         tardisCommand = new TARDISCommands(this);
+        tardisAdminCommand = new TARDISAdminCommands(this);
+        tardisPrefsCommand = new TARDISPrefsCommands(this);
+        tardisTravelCommand = new TARDISTravelCommands(this);
+        tardisAreaCommand = new TARDISAreaCommands(this);
         getCommand("tardis").setExecutor(tardisCommand);
         getCommand("tardisadmin").setExecutor(tardisAdminCommand);
         getCommand("tardisprefs").setExecutor(tardisPrefsCommand);
