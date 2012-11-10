@@ -72,7 +72,12 @@ permissions:
     default: true
 commands:
   tardis:
-    description: Manipulate TARDISs (TARDII?) with various arguments (list, save, find, help, admin). Type /TARDIS help - to see more.
+    description: Manipulate TARDISs (TARDII?) with various arguments (list, save, find, help, etc). Type /TARDIS help - to see more.
+    chameleon:
+      description: Toggle the TARDIS Chameleon Circuit on and off.
+      usage: /<command> chameleon [on|off]
+      permission: tardis.timetravel
+      permission-message: You don't have the permission <permission> to use this command
     list:
       description: List saved time travel locations.
       usage: /<command> list
@@ -113,34 +118,10 @@ commands:
       usage: /<command> rebuild
       permission: tardis.rebuild
       permission-message: You don't have the permission <permission> to use this command
-    chameleon:
-      description: Toggle the TARDIS Chameleon Circuit on and off.
-      usage: /<command> chameleon [on|off|add]
-      permission: tardis.timetravel
-      permission-message: You don't have the permission <permission> to use this command
-    sfx:
-      description: Toggle the TARDIS sound effects on and off.
-      usage: /<command> sfx [on|off]
-      permission: tardis.timetravel
-      permission-message: You don't have the permission <permission> to use this command
     namekey:
       description: Rename the TARDIS key Item.
       usage: Hold the key in your hand, then type /<command> namekey [new name]
       permission: tardis.timetravel
-      permission-message: You don't have the permission <permission> to use this command
-    travel:
-      description: TRavel to destinations in various ways.
-      usage: |
-        /<command> travel [player] or /<command> travel [world x y z] or /<command> travel area [name]
-        Example: /<command> travel eccentric_nz - travel to a players location
-        Example: /<command> travel New_new_earth -117 64 273 - travel to co-ordinates in a specific world
-        Example: /<command> travel New_new_earth -117 64 273 - travel to co-ordinates in a specific world
-      permission: tardis.timetravel
-      permission-message: You don't have the permission <permission> to use this command
-    admin:
-      description: Set TARDIS configuration options.
-      usage: /<command> admin [config option] [value]
-      permission: tardis.admin
       permission-message: You don't have the permission <permission> to use this command
     reload:
       description: Reloads the TARDIS configuration.
@@ -150,3 +131,55 @@ commands:
     help:
       description: View TARDIS help pages.
       usage: /<command> help [command]
+  tardistravel:
+      description: Travel to destinations in various ways.
+      usage: |
+        /<command> [player] or /<command> [world x y z] or /<command> dest [name] or /<command> area [name]
+        Example: /<command> eccentric_nz - travel to a players location
+        Example: /<command> New_new_earth -117 64 273 - travel to co-ordinates in a specific world
+        Example: /<command> dest mine - travel to saved destination called 'mine'
+        Example: /<command> area airport - travel to the TARDIS area called 'airport'
+      permission: tardis.timetravel
+      permission-message: You don't have the permission <permission> to use this command
+  tardisadmin:
+      description: Set TARDIS configuration options.
+      usage: /<command> admin [config option] [value]
+      permission: tardis.admin
+      permission-message: You don't have the permission <permission> to use this command
+  tardisprefs:
+    sfx:
+      description: Toggle the TARDIS sound effects on and off.
+      usage: /<command> sfx [on|off]
+      permission: tardis.timetravel
+      permission-message: You don't have the permission <permission> to use this command
+    quotes:
+      description: Toggle the TARDIS quotes on and off.
+      usage: /<command> quotes [on|off]
+      permission: tardis.timetravel
+      permission-message: You don't have the permission <permission> to use this command
+    platform:
+      description: Toggle the TARDIS platform on and off.
+      usage: /<command> platform [on|off]
+      permission: tardis.timetravel
+      permission-message: You don't have the permission <permission> to use this command
+  tardisarea:
+    start:
+      description: Start defining a TARDIS area.
+      usage: /<command> start [name]
+      permission: tardis.admin
+      permission-message: You don't have the permission <permission> to use this command
+    end:
+      description: Finish defining a TARDIS area.
+      usage: /<command> end
+      permission: tardis.admin
+      permission-message: You don't have the permission <permission> to use this command
+    show:
+      description: Show the corners of a TARDIS area.
+      usage: /<command> show [name]
+      permission: tardis.admin
+      permission-message: You don't have the permission <permission> to use this command
+    remove:
+      description: Remove a TARDIS area.
+      usage: /<command> remove [name]
+      permission: tardis.admin
+      permission-message: You don't have the permission <permission> to use this command
