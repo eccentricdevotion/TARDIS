@@ -29,7 +29,11 @@ public class TARDIS extends JavaPlugin implements Listener {
     public File deluxeschematiccsv = null;
     public File myconfigfile = null;
     public File quotesfile = null;
-    private TARDISexecutor tardisExecutor;
+    private TARDISCommands tardisCommand;
+    private TARDISAdminCommands tardisAdminCommand;
+    private TARDISPrefsCommands tardisPrefsCommand;
+    private TARDISTravelCommands tardisTravelCommand;
+    private TARDISAreaCommands tardisAreaCommand;
     public String[][][] budgetschematic;
     public String[][][] biggerschematic;
     public String[][][] deluxeschematic;
@@ -123,8 +127,12 @@ public class TARDIS extends JavaPlugin implements Listener {
             config.set("respect_worldguard", true);
         }
 
-        tardisExecutor = new TARDISexecutor(this);
-        getCommand("TARDIS").setExecutor(tardisExecutor);
+        tardisCommand = new TARDISCommands(this);
+        getCommand("tardis").setExecutor(tardisCommand);
+        getCommand("tardisadmin").setExecutor(tardisAdminCommand);
+        getCommand("tardisprefs").setExecutor(tardisPrefsCommand);
+        getCommand("tardistravel").setExecutor(tardisTravelCommand);
+        getCommand("tardisarea").setExecutor(tardisAreaCommand);
 
         try {
             MetricsLite metrics = new MetricsLite(this);
