@@ -13,7 +13,6 @@ import java.util.HashMap;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
-import org.bukkit.plugin.Plugin;
 
 public class TARDISWorldGuardChecker {
 
@@ -23,7 +22,7 @@ public class TARDISWorldGuardChecker {
     public TARDISWorldGuardChecker(TARDIS plugin) {
         this.plugin = plugin;
         if (plugin.WorldGuardOnServer) {
-        Plugin wg = (WorldGuardPlugin) plugin.getServer().getPluginManager().getPlugin("WorldGuard");
+        wg = (WorldGuardPlugin) plugin.getServer().getPluginManager().getPlugin("WorldGuard");
         }
     }
 
