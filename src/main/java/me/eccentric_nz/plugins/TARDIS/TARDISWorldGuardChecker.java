@@ -19,19 +19,16 @@ public class TARDISWorldGuardChecker {
 
     private TARDIS plugin;
     private WorldGuardPlugin wg;
-    public boolean WorldGuardOnServer = false;
 
     public TARDISWorldGuardChecker(TARDIS plugin) {
         this.plugin = plugin;
-        Plugin wgp = plugin.getServer().getPluginManager().getPlugin("WorldGuard");
-        WorldGuardOnServer = (wgp != null);
-        if (WorldGuardOnServer) {
-            wg = ((WorldGuardPlugin) wgp);
+        if (plugin.WorldGuardOnServer) {
+        Plugin wg = (WorldGuardPlugin) plugin.getServer().getPluginManager().getPlugin("WorldGuard");
         }
     }
 
     public boolean cantBuild(Player p, Location l) {
-        return (WorldGuardOnServer) && (!wg.canBuild(p, l));
+        return (plugin.WorldGuardOnServer) && (!wg.canBuild(p, l));
     }
 
     public void addWGProtection(Player p, Location one, Location two) {

@@ -17,18 +17,14 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
-import org.bukkit.plugin.Plugin;
 
 public class TARDISBlockBreakListener implements Listener {
 
     private TARDIS plugin;
     TARDISdatabase service = TARDISdatabase.getInstance();
-    public boolean WorldGuardOnServer = false;
 
     public TARDISBlockBreakListener(TARDIS plugin) {
         this.plugin = plugin;
-        Plugin wgp = plugin.getServer().getPluginManager().getPlugin("WorldGuard");
-        WorldGuardOnServer = (wgp != null);
     }
 
     @EventHandler(priority = EventPriority.LOW)
@@ -145,7 +141,7 @@ public class TARDISBlockBreakListener implements Listener {
                             statement.executeUpdate(queryDeleteDoors);
                             player.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " The TARDIS was removed from the world and database successfully.");
                             // remove world guard region protection
-                            if (WorldGuardOnServer) {
+                            if (plugin.WorldGuardOnServer && plugin.config.getBoolean("use_worldguard")) {
                                 TARDISWorldGuardChecker wgchk = new TARDISWorldGuardChecker(plugin);
                                 wgchk.removeRegion(cw, owner);
                             }

@@ -21,19 +21,15 @@ import org.bukkit.block.Sign;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.plugin.Plugin;
 
 public class TARDISBuilder {
 
     private final TARDIS plugin;
     TARDISdatabase service = TARDISdatabase.getInstance();
     Statement statement;
-    public boolean WorldGuardOnServer = false;
 
     public TARDISBuilder(TARDIS plugin) {
         this.plugin = plugin;
-        Plugin wgp = plugin.getServer().getPluginManager().getPlugin("WorldGuard");
-        WorldGuardOnServer = (wgp != null);
     }
 
     public void buildOuterTARDIS(int id, Location l, Constants.COMPASS d, boolean c, Player p) {
@@ -555,7 +551,7 @@ public class TARDISBuilder {
             }
         }
         TARDISWorldGuardChecker wgchk;
-        if (WorldGuardOnServer) {
+        if (plugin.WorldGuardOnServer && plugin.config.getBoolean("use_worldguard")) {
             wgchk = new TARDISWorldGuardChecker(plugin);
             wgchk.addWGProtection(p, wg1, wg2);
         }

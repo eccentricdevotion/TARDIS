@@ -53,6 +53,7 @@ public class TARDIS extends JavaPlugin implements Listener {
     private static ArrayList<String> quotes = new ArrayList<String>();
     public ArrayList<String> quote;
     public int quotelen;
+    public boolean WorldGuardOnServer = false;
 
     @Override
     public void onEnable() {
@@ -115,6 +116,12 @@ public class TARDIS extends JavaPlugin implements Listener {
         if (!config.contains("debug")) {
             config.set("debug", false);
         }
+        if (!config.contains("use_worldguard")) {
+            config.set("use_worldguard", true);
+        }
+        if (!config.contains("respect_worldguard")) {
+            config.set("respect_worldguard", true);
+        }
 
         tardisExecutor = new TARDISexecutor(this);
         getCommand("TARDIS").setExecutor(tardisExecutor);
@@ -135,6 +142,9 @@ public class TARDIS extends JavaPlugin implements Listener {
                     TARDISSounds.randomTARDISSound();
                 }
             }, 60L, 1200L);
+        }
+        if (getServer().getPluginManager().getPlugin("WorldGuard") != null) {
+            WorldGuardOnServer = true;
         }
     }
 
