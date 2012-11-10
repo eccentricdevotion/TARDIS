@@ -5,9 +5,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import org.bukkit.ChatColor;
-import org.bukkit.World;
-import org.bukkit.block.Block;
-import org.bukkit.block.Sign;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -30,66 +27,10 @@ public class TARDISPrefsCommands implements CommandExecutor {
         }
         // If the player typed /tardis then do the following...
         // check there is the right number of arguments
-        if (cmd.getName().equalsIgnoreCase("tardisplayer")) {
+        if (cmd.getName().equalsIgnoreCase("tardisprefs")) {
             if (player == null) {
                 sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RED + " This command can only be run by a player");
                 return false;
-            }
-            if (args[0].equalsIgnoreCase("chameleon")) {
-                if (player.hasPermission("tardis.timetravel")) {
-                    if (args.length < 2 || (!args[1].equalsIgnoreCase("on") && !args[1].equalsIgnoreCase("off") && !args[1].equalsIgnoreCase("add"))) {
-                        sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " Too few command arguments!");
-                        return false;
-                    }
-                    TARDISUtils utils = new TARDISUtils(plugin);
-                    // get the players TARDIS id
-                    try {
-                        Connection connection = service.getConnection();
-                        Statement statement = connection.createStatement();
-                        ResultSet rs = service.getTardis(player.getName(), "*");
-                        if (rs == null || !rs.next()) {
-                            sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " " + Constants.NO_TARDIS);
-                            return false;
-                        }
-                        int id = rs.getInt("tardis_id");
-                        String chamStr = rs.getString("chameleon");
-                        if (chamStr.equals("")) {
-                            sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " Could not find the Chameleon Circuit!");
-                            return false;
-                        } else {
-                            int x = 0, y = 0, z = 0;
-                            String[] chamData = chamStr.split(":");
-                            World w = plugin.getServer().getWorld(chamData[0]);
-                            Constants.COMPASS d = Constants.COMPASS.valueOf(rs.getString("direction"));
-                            x = utils.parseNum(chamData[1]);
-                            y = utils.parseNum(chamData[2]);
-                            z = utils.parseNum(chamData[3]);
-                            Block chamBlock = w.getBlockAt(x, y, z);
-                            Sign cs = (Sign) chamBlock.getState();
-                            if (args[1].equalsIgnoreCase("on")) {
-                                String queryChameleon = "UPDATE tardis SET chamele_on = 1 WHERE tardis_id = " + id;
-                                statement.executeUpdate(queryChameleon);
-                                sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " The Chameleon Circuit was turned ON!");
-                                cs.setLine(3, "¤aON");
-                            }
-                            if (args[1].equalsIgnoreCase("off")) {
-                                String queryChameleon = "UPDATE tardis SET chamele_on = 0 WHERE tardis_id = " + id;
-                                statement.executeUpdate(queryChameleon);
-                                sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " The Chameleon Circuit was turned OFF.");
-                                cs.setLine(3, "¤cOFF");
-                            }
-                            cs.update();
-                        }
-                        rs.close();
-                        statement.close();
-                        return true;
-                    } catch (SQLException e) {
-                        System.err.println(Constants.MY_PLUGIN_NAME + " Chameleon Circuit Save Error: " + e);
-                    }
-                } else {
-                    sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + Constants.NO_PERMS_MESSAGE);
-                    return false;
-                }
             }
             if (args[0].equalsIgnoreCase("sfx")) {
                 if (player.hasPermission("tardis.timetravel")) {
@@ -202,7 +143,6 @@ public class TARDISPrefsCommands implements CommandExecutor {
                     return false;
                 }
             }
-
         }
         return false;
     }

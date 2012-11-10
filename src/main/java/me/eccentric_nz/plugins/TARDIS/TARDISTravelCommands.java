@@ -36,7 +36,7 @@ public class TARDISTravelCommands implements CommandExecutor {
                 return false;
             }
             if (player.hasPermission("tardis.timetravel")) {
-                if (args.length < 2) {
+                if (args.length < 1) {
                     sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " Too few command arguments!");
                     return false;
                 }
@@ -69,13 +69,13 @@ public class TARDISTravelCommands implements CommandExecutor {
                         statement.executeUpdate(querySave);
                         player.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " Your TARDIS was approved for parking in [" + permArea + "]!");
                     } else {
-                        if (args.length == 2) {
+                        if (args.length == 1) {
                             // we're thinking this is a player's name
-                            if (plugin.getServer().getPlayer(args[1]) == null) {
+                            if (plugin.getServer().getPlayer(args[0]) == null) {
                                 sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " That player is not online!");
                                 return false;
                             }
-                            Player destPlayer = plugin.getServer().getPlayer(args[1]);
+                            Player destPlayer = plugin.getServer().getPlayer(args[0]);
                             Location player_loc = destPlayer.getLocation();
                             World w = player_loc.getWorld();
                             int[] start_loc = tt.getStartLocation(player_loc, d);
@@ -109,9 +109,9 @@ public class TARDISTravelCommands implements CommandExecutor {
                             sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " The player location was saved succesfully. Please exit the TARDIS!");
                             return true;
                         }
-                        if (args.length == 3 && args[1].equalsIgnoreCase("dest")) {
+                        if (args.length == 2 && args[0].equalsIgnoreCase("dest")) {
                             // we're thinking this is a saved destination name
-                            String queryGetDest = "SELECT * FROM destinations WHERE tardis_id = " + id + " AND dest_name = '" + args[2] + "'";
+                            String queryGetDest = "SELECT * FROM destinations WHERE tardis_id = " + id + " AND dest_name = '" + args[1] + "'";
                             ResultSet rsDest = statement.executeQuery(queryGetDest);
                             if (!rsDest.next()) {
                                 sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " Could not find a destination with that name! try using " + ChatColor.GREEN + "/TARDIS list saves" + ChatColor.RESET + " first.");
@@ -123,16 +123,16 @@ public class TARDISTravelCommands implements CommandExecutor {
                             sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " The specified location was set succesfully. Please exit the TARDIS!");
                             return true;
                         }
-                        if (args.length == 3 && args[1].equalsIgnoreCase("area")) {
+                        if (args.length == 2 && args[0].equalsIgnoreCase("area")) {
                             // we're thinking this is admin defined area name
-                            String queryGetArea = "SELECT area_name FROM areas WHERE area_name = '" + args[2] + "'";
+                            String queryGetArea = "SELECT area_name FROM areas WHERE area_name = '" + args[1] + "'";
                             ResultSet rsArea = statement.executeQuery(queryGetArea);
                             if (!rsArea.next()) {
                                 sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " Could not find an area with that name! try using " + ChatColor.GREEN + "/TARDIS list areas" + ChatColor.RESET + " first.");
                                 return false;
                             }
-                            if (!player.hasPermission("tardis.area." + args[2]) || !player.isPermissionSet("tardis.area." + args[2])) {
-                                sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + "You do not have permission [tardis.area." + args[2] + "] to send the TARDIS to this location!");
+                            if (!player.hasPermission("tardis.area." + args[1]) || !player.isPermissionSet("tardis.area." + args[1])) {
+                                sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + "You do not have permission [tardis.area." + args[1] + "] to send the TARDIS to this location!");
                                 return false;
                             }
                             Location l = ta.getNextSpot(rsArea.getString("area_name"));
@@ -143,20 +143,20 @@ public class TARDISTravelCommands implements CommandExecutor {
                             String save_loc = l.getWorld().getName() + ":" + l.getBlockX() + ":" + l.getBlockY() + ":" + l.getBlockZ();
                             String querySave = "UPDATE tardis SET save = '" + save_loc + "' WHERE tardis_id = " + id;
                             statement.executeUpdate(querySave);
-                            sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " Your TARDIS was approved for parking in [" + args[2] + "]!");
+                            sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " Your TARDIS was approved for parking in [" + args[1] + "]!");
                             return true;
                         }
-                        if (args.length > 3 && args.length < 5) {
+                        if (args.length > 2 && args.length < 4) {
                             sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " Too few command arguments for co-ordinates travel!");
                             return false;
                         }
-                        if (args.length == 5) {
+                        if (args.length == 4) {
                             // must be a location then
                             int x = 0, y = 0, z = 0;
-                            World w = plugin.getServer().getWorld(args[1]);
-                            x = utils.parseNum(args[2]);
-                            y = utils.parseNum(args[3]);
-                            z = utils.parseNum(args[4]);
+                            World w = plugin.getServer().getWorld(args[0]);
+                            x = utils.parseNum(args[1]);
+                            y = utils.parseNum(args[2]);
+                            z = utils.parseNum(args[3]);
                             Block block = w.getBlockAt(x, y, z);
                             Location location = block.getLocation();
                             if (plugin.WorldGuardOnServer && plugin.config.getBoolean("respect_worldguard")) {
