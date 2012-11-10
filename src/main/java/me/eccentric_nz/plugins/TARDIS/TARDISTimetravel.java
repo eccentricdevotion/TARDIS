@@ -100,9 +100,7 @@ public class TARDISTimetravel {
                     starty = chunk_loc.getBlockY() + 1;
                     startz = gsl[2];
                     resetz = gsl[3];
-                    x = gsl[4];
-                    z = gsl[5];
-                    count = safeLocation(startx, starty, startz, resetx, resetz, x, z, randworld, d);
+                    count = safeLocation(startx, starty, startz, resetx, resetz, randworld, d);
                 } else {
                     count = 1;
                 }
@@ -183,9 +181,7 @@ public class TARDISTimetravel {
                     starty = chunk_loc.getBlockY() + 1;
                     startz = gsl[2];
                     resetz = gsl[3];
-                    x = gsl[4];
-                    z = gsl[5];
-                    count = safeLocation(startx, starty, startz, resetx, resetz, x, z, randworld, d);
+                    count = safeLocation(startx, starty, startz, resetx, resetz, randworld, d);
                 } else {
                     count = 1;
                 }
@@ -199,60 +195,35 @@ public class TARDISTimetravel {
         return dest;
     }
 
-    public int safeLocation(int startx, int starty, int startz, int resetx, int resetz, int x, int z, World w, Constants.COMPASS d) {
+    public int safeLocation(int startx, int starty, int startz, int resetx, int resetz, World w, Constants.COMPASS d) {
         int level, row, col, rowcount, colcount, count = 0;
         switch (d) {
             case EAST:
             case WEST:
-                rowcount = 5;
-                colcount = 3;
+                rowcount = 3;
+                colcount = 4;
                 break;
             default:
-                rowcount = 3;
-                colcount = 5;
+                rowcount = 4;
+                colcount = 3;
                 break;
         }
+        plugin.debug("Starting check...");
         for (level = 0; level < 4; level++) {
             for (row = 0; row < rowcount; row++) {
                 for (col = 0; col < colcount; col++) {
                     int id = w.getBlockAt(startx, starty, startz).getTypeId();
+                    Location l = w.getBlockAt(startx, starty, startz).getLocation();
+                    plugin.debug("id: " + id + " ----- " + l);
                     if (isItSafe(id)) {
                         count++;
                     }
-                    switch (d) {
-                        case NORTH:
-                        case SOUTH:
-                            startx += x;
-                            break;
-                        case EAST:
-                        case WEST:
-                            startz += z;
-                            break;
-                    }
+                    startx += 1;
                 }
-                switch (d) {
-                    case NORTH:
-                    case SOUTH:
-                        startx = resetx;
-                        startz += z;
-                        break;
-                    case EAST:
-                    case WEST:
-                        startz = resetz;
-                        startx += x;
-                        break;
-                }
+                startx = resetx;
+                startz += 1;
             }
-            switch (d) {
-                case NORTH:
-                case SOUTH:
-                    startz = resetz;
-                    break;
-                case EAST:
-                case WEST:
-                    startx = resetx;
-                    break;
-            }
+            startz = resetz;
             starty += 1;
         }
         return count;
@@ -272,34 +243,21 @@ public class TARDISTimetravel {
             case EAST:
                 startLoc[0] = loc.getBlockX() - 3;
                 startLoc[1] = startLoc[0];
-                startLoc[2] = loc.getBlockZ() + 1;
+                startLoc[2] = loc.getBlockZ() - 1;
                 startLoc[3] = startLoc[2];
-                startLoc[4] = 1;
-                startLoc[5] = -1;
                 break;
             case SOUTH:
                 startLoc[0] = loc.getBlockX() - 1;
                 startLoc[1] = startLoc[0];
                 startLoc[2] = loc.getBlockZ() - 3;
                 startLoc[3] = startLoc[2];
-                startLoc[4] = 1;
-                startLoc[5] = 1;
                 break;
             case WEST:
-                startLoc[0] = loc.getBlockX() + 3;
+            case NORTH:
+                startLoc[0] = loc.getBlockX() - 1;
                 startLoc[1] = startLoc[0];
                 startLoc[2] = loc.getBlockZ() - 1;
                 startLoc[3] = startLoc[2];
-                startLoc[4] = -1;
-                startLoc[5] = 1;
-                break;
-            case NORTH:
-                startLoc[0] = loc.getBlockX() + 1;
-                startLoc[1] = startLoc[0];
-                startLoc[2] = loc.getBlockZ() + 3;
-                startLoc[3] = startLoc[2];
-                startLoc[4] = -1;
-                startLoc[5] = -1;
                 break;
         }
         return startLoc;
