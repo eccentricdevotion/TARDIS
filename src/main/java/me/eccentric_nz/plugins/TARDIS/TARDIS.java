@@ -197,7 +197,7 @@ public class TARDIS extends JavaPlugin implements Listener {
         List<World> worlds = this.getServer().getWorlds();
         for (World w : worlds) {
             String worldname = "worlds." + w.getName();
-            if ((w.getEnvironment() == Environment.NORMAL || w.getEnvironment() == Environment.THE_END) && !config.contains(worldname)) {
+            if (!config.contains(worldname)) {
                 config.set(worldname, true);
                 System.out.println(Constants.MY_PLUGIN_NAME + " Added '" + w.getName() + "' to config. To exclude this world run: /tardis admin exclude " + w.getName());
             }
@@ -257,9 +257,9 @@ public class TARDIS extends JavaPlugin implements Listener {
         return quotes;
     }
 
-    public void debug(String str) {
+    public void debug(Object o) {
         if (config.getBoolean("debug") == true) {
-            System.out.println(Constants.MY_PLUGIN_NAME + " " + str);
+            System.out.println(Constants.MY_PLUGIN_NAME + " " + o);
         }
     }
 }
