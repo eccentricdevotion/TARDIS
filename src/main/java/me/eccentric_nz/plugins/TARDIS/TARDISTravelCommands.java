@@ -70,44 +70,51 @@ public class TARDISTravelCommands implements CommandExecutor {
                         player.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " Your TARDIS was approved for parking in [" + permArea + "]!");
                     } else {
                         if (args.length == 1) {
-                            // we're thinking this is a player's name
-                            if (plugin.getServer().getPlayer(args[0]) == null) {
-                                sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " That player is not online!");
-                                return false;
-                            }
-                            Player destPlayer = plugin.getServer().getPlayer(args[0]);
-                            Location player_loc = destPlayer.getLocation();
-                            World w = player_loc.getWorld();
-                            int[] start_loc = tt.getStartLocation(player_loc, d);
-                            int count = tt.safeLocation(start_loc[0] - 3, player_loc.getBlockY(), start_loc[2], start_loc[1], start_loc[3], w, d);
-                            if (count > 0) {
-                                sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " The player's location would not be safe! Please tell the player to move!");
-                                return false;
-                            }
-                            if (plugin.WorldGuardOnServer && plugin.config.getBoolean("respect_worldguard")) {
-                                TARDISWorldGuardChecker wg = new TARDISWorldGuardChecker(plugin);
-                                if (wg.cantBuild(player, player_loc)) {
-                                    sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + "That location is protected by WorldGuard!");
+                            // we're thinking this is a player's name or home
+                            if (args[0].equalsIgnoreCase("home")) {
+                                String querySave = "UPDATE tardis SET save = home WHERE tardis_id = " + id;
+                                statement.executeUpdate(querySave);
+                                sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " Home location loaded succesfully. Please exit the TARDIS!");
+                                return true;
+                            } else {
+                                if (plugin.getServer().getPlayer(args[0]) == null) {
+                                    sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " That player is not online!");
                                     return false;
                                 }
-                            }
-                            if (player.hasPermission("tardis.exile")) {
-                                String areaPerm = ta.getExileArea(player);
-                                if (ta.areaCheckInExile(areaPerm, player_loc)) {
-                                    sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + "You exile status does not allow you to go to this player's location!");
+                                Player destPlayer = plugin.getServer().getPlayer(args[0]);
+                                Location player_loc = destPlayer.getLocation();
+                                World w = player_loc.getWorld();
+                                int[] start_loc = tt.getStartLocation(player_loc, d);
+                                int count = tt.safeLocation(start_loc[0] - 3, player_loc.getBlockY(), start_loc[2], start_loc[1], start_loc[3], w, d);
+                                if (count > 0) {
+                                    sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " The player's location would not be safe! Please tell the player to move!");
                                     return false;
                                 }
+                                if (plugin.WorldGuardOnServer && plugin.config.getBoolean("respect_worldguard")) {
+                                    TARDISWorldGuardChecker wg = new TARDISWorldGuardChecker(plugin);
+                                    if (wg.cantBuild(player, player_loc)) {
+                                        sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + "That location is protected by WorldGuard!");
+                                        return false;
+                                    }
+                                }
+                                if (player.hasPermission("tardis.exile")) {
+                                    String areaPerm = ta.getExileArea(player);
+                                    if (ta.areaCheckInExile(areaPerm, player_loc)) {
+                                        sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + "You exile status does not allow you to go to this player's location!");
+                                        return false;
+                                    }
+                                }
+                                if (ta.areaCheckLocPlayer(player, player_loc)) {
+                                    sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + "You do not have permission [" + plugin.trackPerm.get(player.getName()) + "] to bring the TARDIS to this location!");
+                                    plugin.trackPerm.remove(player.getName());
+                                    return false;
+                                }
+                                String save_loc = player_loc.getWorld().getName() + ":" + (player_loc.getBlockX() - 3) + ":" + player_loc.getBlockY() + ":" + player_loc.getBlockZ();
+                                String querySave = "UPDATE tardis SET save = '" + save_loc + "' WHERE tardis_id = " + id;
+                                statement.executeUpdate(querySave);
+                                sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " The player location was saved succesfully. Please exit the TARDIS!");
+                                return true;
                             }
-                            if (ta.areaCheckLocPlayer(player, player_loc)) {
-                                sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + "You do not have permission [" + plugin.trackPerm.get(player.getName()) + "] to bring the TARDIS to this location!");
-                                plugin.trackPerm.remove(player.getName());
-                                return false;
-                            }
-                            String save_loc = player_loc.getWorld().getName() + ":" + (player_loc.getBlockX() - 3) + ":" + player_loc.getBlockY() + ":" + player_loc.getBlockZ();
-                            String querySave = "UPDATE tardis SET save = '" + save_loc + "' WHERE tardis_id = " + id;
-                            statement.executeUpdate(querySave);
-                            sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " The player location was saved succesfully. Please exit the TARDIS!");
-                            return true;
                         }
                         if (args.length == 2 && args[0].equalsIgnoreCase("dest")) {
                             // we're thinking this is a saved destination name
