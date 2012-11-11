@@ -153,7 +153,7 @@ public class TARDISBuilder {
                 case SOUTH:
                     //if (yaw >= 315 || yaw < 45)
                     utils.setBlockCheck(world, x, down3y, minusz, 35, grey, id); // door is here if player facing south
-                    ps.setString(2, world.getBlockAt(x, down3y, minusz).getRelative(BlockFace.DOWN).getLocation().toString());
+                    ps.setString(2, world.getBlockAt(x, down3y, minusz).getLocation().toString());
                     doorloc = world.getName() + ":" + x + ":" + down2y + ":" + minusz;
                     sd = 2;
                     signx = x;
@@ -165,7 +165,7 @@ public class TARDISBuilder {
                 case EAST:
                     //if (yaw >= 225 && yaw < 315)
                     utils.setBlockCheck(world, minusx, down3y, z, 35, grey, id); // door is here if player facing east
-                    ps.setString(2, world.getBlockAt(minusx, down3y, z).getRelative(BlockFace.DOWN).getLocation().toString());
+                    ps.setString(2, world.getBlockAt(minusx, down3y, z).getLocation().toString());
                     doorloc = world.getName() + ":" + minusx + ":" + down2y + ":" + z;
                     sd = 4;
                     signx = (minusx - 1);
@@ -177,7 +177,7 @@ public class TARDISBuilder {
                 case NORTH:
                     //if (yaw >= 135 && yaw < 225)
                     utils.setBlockCheck(world, x, down3y, plusz, 35, grey, id); // door is here if player facing north
-                    ps.setString(2, world.getBlockAt(x, down3y, plusz).getRelative(BlockFace.DOWN).getLocation().toString());
+                    ps.setString(2, world.getBlockAt(x, down3y, plusz).getLocation().toString());
                     doorloc = world.getName() + ":" + x + ":" + down2y + ":" + plusz;
                     sd = 3;
                     signx = x;
@@ -189,7 +189,7 @@ public class TARDISBuilder {
                 case WEST:
                     //if (yaw >= 45 && yaw < 135)
                     utils.setBlockCheck(world, plusx, down3y, z, 35, grey, id); // door is here if player facing west
-                    ps.setString(2, world.getBlockAt(plusx, down3y, z).getRelative(BlockFace.DOWN).getLocation().toString());
+                    ps.setString(2, world.getBlockAt(plusx, down3y, z).getLocation().toString());
                     doorloc = world.getName() + ":" + plusx + ":" + down2y + ":" + z;
                     sd = 5;
                     signx = (plusx + 1);

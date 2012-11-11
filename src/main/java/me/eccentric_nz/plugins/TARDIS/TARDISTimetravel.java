@@ -208,13 +208,11 @@ public class TARDISTimetravel {
                 colcount = 3;
                 break;
         }
-        plugin.debug("Starting check...");
         for (level = 0; level < 4; level++) {
             for (row = 0; row < rowcount; row++) {
                 for (col = 0; col < colcount; col++) {
                     int id = w.getBlockAt(startx, starty, startz).getTypeId();
                     Location l = w.getBlockAt(startx, starty, startz).getLocation();
-                    plugin.debug("id: " + id + " ----- " + l);
                     if (isItSafe(id)) {
                         count++;
                     }
