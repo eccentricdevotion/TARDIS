@@ -6,7 +6,7 @@ startup: postworld
 softdepend: [Multiverse-Core,WorldGuard]
 dev-url: http://de.bukkit.org/server-mods/TARDIS/
 url: http://www.thenosefairy.co.nz/
-version: '1.7.7'
+version: '1.7.8'
 permissions:
   tardis.admin:
     description: Allow players access to the TARDIS admin commands.
@@ -132,21 +132,23 @@ commands:
       description: View TARDIS help pages.
       usage: /<command> help [command]
   tardistravel:
-      description: Travel to destinations in various ways.
-      usage: |
-        /<command> [player] or /<command> [world x y z] or /<command> dest [name] or /<command> area [name]
-        Example: /<command> eccentric_nz - travel to a players location
-        Example: /<command> New_new_earth -117 64 273 - travel to co-ordinates in a specific world
-        Example: /<command> dest mine - travel to saved destination called 'mine'
-        Example: /<command> area airport - travel to the TARDIS area called 'airport'
-      permission: tardis.timetravel
-      permission-message: You don't have the permission <permission> to use this command
+    description: Travel to destinations in various ways.
+    usage: |
+      /<command> [player] or /<command> [world x y z] or /<command> dest [name] or /<command> area [name]
+      Example: /<command> eccentric_nz - travel to a players location
+      Example: /<command> New_new_earth -117 64 273 - travel to co-ordinates in a specific world
+      Example: /<command> dest mine - travel to saved destination called 'mine'
+      Example: /<command> area airport - travel to the TARDIS area called 'airport'
+    permission: tardis.timetravel
+    permission-message: You don't have the permission <permission> to use this command
   tardisadmin:
-      description: Set TARDIS configuration options.
-      usage: /<command> admin [config option] [value]
-      permission: tardis.admin
-      permission-message: You don't have the permission <permission> to use this command
+    description: Set TARDIS configuration options.
+    usage: /<command> admin [config option] [value]
+    permission: tardis.admin
+    permission-message: You don't have the permission <permission> to use this command
   tardisprefs:
+    description: Set player preferences.
+    usage: /<command> [preference] [on|off]
     sfx:
       description: Toggle the TARDIS sound effects on and off.
       usage: /<command> sfx [on|off]
@@ -163,6 +165,8 @@ commands:
       permission: tardis.timetravel
       permission-message: You don't have the permission <permission> to use this command
   tardisarea:
+    description: Set up predefined TARDIS travel areas.
+    usage: /<command> [start|end|show|remove] [name]
     start:
       description: Start defining a TARDIS area.
       usage: /<command> start [name]
