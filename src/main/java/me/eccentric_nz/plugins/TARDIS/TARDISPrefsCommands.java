@@ -28,6 +28,9 @@ public class TARDISPrefsCommands implements CommandExecutor {
         // If the player typed /tardis then do the following...
         // check there is the right number of arguments
         if (cmd.getName().equalsIgnoreCase("tardisprefs")) {
+            if (args.length == 0) {
+                return false;
+            }
             if (player == null) {
                 sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RED + " This command can only be run by a player");
                 return false;
