@@ -13,3 +13,5 @@ chameleon: true
 sfx: true
 give_key: false
 the_end: false
+nether: false
+land_on_water: true
