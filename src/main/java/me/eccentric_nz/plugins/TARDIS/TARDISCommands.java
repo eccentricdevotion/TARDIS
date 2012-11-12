@@ -1,6 +1,7 @@
 package me.eccentric_nz.plugins.TARDIS;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -39,7 +40,7 @@ public class TARDISCommands implements CommandExecutor {
                 return true;
             }
             // the command list - first argument MUST appear here!
-            if (!args[0].equalsIgnoreCase("chameleon") && !args[0].equalsIgnoreCase("save") && !args[0].equalsIgnoreCase("list") && !args[0].equalsIgnoreCase("help") && !args[0].equalsIgnoreCase("find") && !args[0].equalsIgnoreCase("reload") && !args[0].equalsIgnoreCase("add") && !args[0].equalsIgnoreCase("remove") && !args[0].equalsIgnoreCase("update") && !args[0].equalsIgnoreCase("rebuild") && !args[0].equalsIgnoreCase("comehere") && !args[0].equalsIgnoreCase("direction") && !args[0].equalsIgnoreCase("setdest") && !args[0].equalsIgnoreCase("hide") && !args[0].equalsIgnoreCase("home") && !args[0].equalsIgnoreCase("occupy") && !args[0].equalsIgnoreCase("namekey")) {
+            if (!args[0].equalsIgnoreCase("chameleon") && !args[0].equalsIgnoreCase("save") && !args[0].equalsIgnoreCase("removesave") && !args[0].equalsIgnoreCase("list") && !args[0].equalsIgnoreCase("help") && !args[0].equalsIgnoreCase("find") && !args[0].equalsIgnoreCase("reload") && !args[0].equalsIgnoreCase("add") && !args[0].equalsIgnoreCase("remove") && !args[0].equalsIgnoreCase("update") && !args[0].equalsIgnoreCase("rebuild") && !args[0].equalsIgnoreCase("comehere") && !args[0].equalsIgnoreCase("direction") && !args[0].equalsIgnoreCase("setdest") && !args[0].equalsIgnoreCase("hide") && !args[0].equalsIgnoreCase("home") && !args[0].equalsIgnoreCase("occupy") && !args[0].equalsIgnoreCase("namekey")) {
                 sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " That command wasn't recognised type " + ChatColor.GREEN + "/tardis help" + ChatColor.RESET + "to see the commands");
                 return false;
             }
@@ -510,38 +511,79 @@ public class TARDISCommands implements CommandExecutor {
                                 sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " " + Constants.NO_TARDIS);
                                 return false;
                             }
-                            if (args.length < 3) {
+                            if (args.length < 2) {
                                 sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " Too few command arguments!");
                                 return false;
                             }
-                            if (!args[2].matches("[A-Za-z0-9_]{2,16}")) {
+                            if (!args[1].matches("[A-Za-z0-9_]{2,16}")) {
                                 sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + "That doesn't appear to be a valid save name (it may be too long or contains spaces).");
                                 return false;
                             } else {
                                 String cur = rs.getString("current");
                                 String sav = rs.getString("save");
                                 int id = rs.getInt("tardis_id");
-                                String curDest;
+                                String[] curDest;
                                 // get current destination
                                 String queryTraveller = "SELECT * FROM travellers WHERE player = '" + player.getName() + "'";
                                 ResultSet rsTraveller = statement.executeQuery(queryTraveller);
                                 if (rsTraveller != null && rsTraveller.next()) {
                                     // inside TARDIS
-                                    curDest = args[2] + "~" + cur;
+                                    curDest = cur.split(":");
                                 } else {
                                     // outside TARDIS
-                                    curDest = args[2] + "~" + sav;
+                                    curDest = sav.split(":");
                                 }
-                                String querySave = "UPDATE tardis SET save" + args[1] + " = '" + curDest + "' WHERE tardis_id = " + id;
-                                statement.executeUpdate(querySave);
+                                PreparedStatement psSave = connection.prepareStatement("INSERT INTO destinations (tardis_id,dest_name, world, x, y, z) VALUES (?,?,?,?,?,?)");
+                                psSave.setInt(1, id);
+                                psSave.setString(2, args[1]);
+                                psSave.setString(3, curDest[0]);
+                                psSave.setInt(4, utils.parseNum(curDest[1]));
+                                psSave.setInt(5, utils.parseNum(curDest[2]));
+                                psSave.setInt(6, utils.parseNum(curDest[3]));
+                                psSave.executeUpdate();
                                 rs.close();
                                 rsTraveller.close();
                                 statement.close();
-                                sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " The location '" + args[2] + "' was saved successfully.");
+                                sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " The location '" + args[1] + "' was saved successfully.");
                                 return true;
                             }
                         } catch (SQLException e) {
                             System.err.println(Constants.MY_PLUGIN_NAME + " Location Save Error: " + e);
+                        }
+                    } else {
+                        sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + Constants.NO_PERMS_MESSAGE);
+                        return false;
+                    }
+                }
+                if (args[0].equalsIgnoreCase("removesave")) {
+                    if (player.hasPermission("tardis.save")) {
+                        if (args.length < 2) {
+                            sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " Too few command arguments!");
+                            return false;
+                        }
+                        try {
+                            Connection connection = service.getConnection();
+                            Statement statement = connection.createStatement();
+                            String queryID = "SELECT tardis_id FROM tardis WHERE owner = '" + player.getName() + "'";
+                            ResultSet rs = statement.executeQuery(queryID);
+                            if (rs == null || !rs.next()) {
+                                sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " " + Constants.NO_TARDIS);
+                                return false;
+                            }
+                            int id = rs.getInt("tardis_id");
+                            String queryDest = "SELECT dest_id FROM destinations WHERE dest_name = '" + args[1] + "' AND tardis_id = " + id;
+                            ResultSet rsDest = statement.executeQuery(queryDest);
+                            if (!rsDest.next()) {
+                                sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " Could not find a saved destination with that name!");
+                                return false;
+                            }
+                            int destID = rsDest.getInt("dest_id");
+                            String queryDelete = "DELETE FROM destinations WHERE dest_id = " + destID;
+                            statement.executeUpdate(queryDelete);
+                            sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " Could not find a saved destination with that name!");
+                            return true;
+                        } catch (SQLException e) {
+                            System.err.println(Constants.MY_PLUGIN_NAME + " Destination Save Error: " + e);
                         }
                     } else {
                         sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + Constants.NO_PERMS_MESSAGE);
@@ -595,8 +637,14 @@ public class TARDISCommands implements CommandExecutor {
                                 int dx = l.getBlockX();
                                 int dy = l.getBlockY() + 1;
                                 int dz = l.getBlockZ();
-                                String querySetDest = "INSERT INTO destinations (tardis_id, dest_name, world, x, y, z) VALUES (" + id + ", '" + args[1] + "', '" + dw + "', " + dx + ", " + dy + ", " + dz + ")";
-                                statement.executeUpdate(querySetDest);
+                                PreparedStatement psSetDest = connection.prepareStatement("INSERT INTO destinations (tardis_id, dest_name, world, x, y, z) VALUES (?,?,?,?,?,?)");
+                                psSetDest.setInt(1, id);
+                                psSetDest.setString(2, args[1]);
+                                psSetDest.setString(3, dw);
+                                psSetDest.setInt(4, dx);
+                                psSetDest.setInt(5, dy);
+                                psSetDest.setInt(6, dz);
+                                psSetDest.executeUpdate();
                                 rs.close();
                                 statement.close();
                                 sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " The destination '" + args[1] + "' was saved successfully.");
