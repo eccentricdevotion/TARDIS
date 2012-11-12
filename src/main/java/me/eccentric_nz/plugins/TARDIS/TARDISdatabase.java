@@ -126,7 +126,7 @@ public class TARDISDatabase {
             }
             // update tardis if there is no size column
             String querySign = "SELECT sql FROM sqlite_master WHERE tbl_name = 'tardis' AND sql LIKE '%save_sign TEXT%'";
-            ResultSet rsSign = statement.executeQuery(querySize);
+            ResultSet rsSign = statement.executeQuery(querySign);
             if (!rsSign.next()) {
                 String queryAlter6 = "ALTER TABLE tardis ADD save_sign TEXT DEFAULT ''";
                 statement.executeUpdate(queryAlter6);
