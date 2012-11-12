@@ -501,77 +501,72 @@ public class TARDISPlayerListener implements Listener {
                                         Block r3 = r3_loc.getBlock();
                                         byte r3_data = r3.getData();
                                         boolean playSound = true;
-                                        if (r0_data <= 3 && r1_data <= 3 && r2_data <= 3 && r3_data <= 3) { // first position
-                                            player.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " Home destination selected!");
-                                            // always teleport to home location
-                                            String querySave = "UPDATE tardis SET save = home WHERE tardis_id = " + id;
-                                            statement.executeUpdate(querySave);
-                                        }
-                                        if (r0_data >= 4 && r0_data <= 7 && r1_data <= 3 && r2_data <= 3 && r3_data <= 3) { // second position
-                                            if (!s1_str.equals("") && s1_str != null && !s1_str.equalsIgnoreCase("null")) {
-                                                String[] s1_data = s1_str.split("~");
-                                                String querySave = "UPDATE tardis SET save = '" + s1_data[1] + "' WHERE tardis_id = " + id;
-                                                statement.executeUpdate(querySave);
-                                                player.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " Destination 1 [" + s1_data[0] + "] selected!");
+                                        String environment = "NORMAL";
+                                        if (r0_data <= 3) { // first position
+                                            if (plugin.config.getBoolean("nether") == false && plugin.config.getBoolean("the_end") == false) {
+                                                environment = "NORMAL";
+                                            } else if (plugin.config.getBoolean("nether") == false || plugin.config.getBoolean("the_end") == false) {
+                                                if (plugin.config.getBoolean("nether") == false) {
+                                                    environment = "NORMAL:THE_END";
+                                                }
+                                                if (plugin.config.getBoolean("the_end") == false) {
+                                                    environment = "NORMAL:NETHER";
+                                                }
                                             } else {
-                                                player.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " There is no destination saved to slot 1!");
-                                                playSound = false;
+                                                environment = "NORMAL:NETHER:THE_END";
                                             }
+                                            plugin.debug("Random position set");
                                         }
-                                        if (r0_data >= 8 && r0_data <= 11 && r1_data <= 3 && r2_data <= 3 && r3_data <= 3) { // third position
-                                            if (!s2_str.equals("") && s2_str != null && !s2_str.equalsIgnoreCase("null")) {
-                                                String[] s2_data = s2_str.split("~");
-                                                String querySave = "UPDATE tardis SET save = '" + s2_data[1] + "' WHERE tardis_id = " + id;
-                                                statement.executeUpdate(querySave);
-                                                player.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " Destination 2 [" + s2_data[0] + "] selected!");
+                                        if (r0_data >= 4 && r0_data <= 7) { // second position
+                                            environment = "NORMAL";
+                                            plugin.debug("Normal position set");
+                                        }
+                                        if (r0_data >= 8 && r0_data <= 11) { // third position
+                                            if (plugin.config.getBoolean("nether") == true) {
+                                                environment = "NETHER";
                                             } else {
-                                                player.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " There is no destination saved to slot 2!");
-                                                playSound = false;
+                                                player.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " The ancient, dusty senators of Gallifrey have disabled time travel to the Nether");
                                             }
+                                            plugin.debug("Nether position set");
                                         }
-                                        if (r0_data >= 12 && r0_data <= 15 && r1_data <= 3 && r2_data <= 3 && r3_data <= 3) { // last position
-                                            if (!s3_str.equals("") && s3_str != null && !s3_str.equalsIgnoreCase("null")) {
-                                                String[] s3_data = s3_str.split("~");
-                                                String querySave = "UPDATE tardis SET save = '" + s3_data[1] + "' WHERE tardis_id = " + id;
-                                                statement.executeUpdate(querySave);
-                                                player.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " Destination 3 [" + s3_data[0] + "] selected!");
+                                        if (r0_data >= 12 && r0_data <= 15) { // last position
+                                            if (plugin.config.getBoolean("the_end") == true) {
+                                                environment = "THE_END";
                                             } else {
-                                                player.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " There is no destination saved to slot 3!");
-                                                playSound = false;
+                                                player.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " The ancient, dusty senators of Gallifrey have disabled time travel to The End");
                                             }
+                                            plugin.debug("The End position set");
                                         }
-                                        if (r1_data > 3 || r2_data > 3 || r3_data > 3) {
-                                            // create a random destination
-                                            TARDISTimetravel tt = new TARDISTimetravel(plugin);
-                                            Location rand = tt.randomDestination(player, player.getWorld(), r1_data, r2_data, r3_data, dir);
-                                            String d = rand.getWorld().getName() + ":" + rand.getBlockX() + ":" + rand.getBlockY() + ":" + rand.getBlockZ();
-                                            String queryCompanions = "SELECT owner, companions FROM tardis WHERE tardis_id = " + id;
-                                            ResultSet rsCom = statement.executeQuery(queryCompanions);
-                                            boolean isTL = true;
-                                            if (rsCom.next()) {
-                                                String comps = rsCom.getString("companions");
-                                                if (comps != null && !comps.equals("") && !comps.equals("[Null]")) {
-                                                    String[] companions = comps.split(":");
-                                                    for (String c : companions) {
-                                                        if (plugin.getServer().getPlayer(c) != null) {
-                                                            plugin.getServer().getPlayer(c).sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " Destination world: " + rand.getWorld().getName());
-                                                        }
-                                                        if (c.equalsIgnoreCase(player.getName())) {
-                                                            isTL = false;
-                                                        }
+                                        // create a random destination
+                                        TARDISTimetravel tt = new TARDISTimetravel(plugin);
+                                        Location rand = tt.randomDestination(player, player.getWorld(), r1_data, r2_data, r3_data, dir, environment);
+                                        String d = rand.getWorld().getName() + ":" + rand.getBlockX() + ":" + rand.getBlockY() + ":" + rand.getBlockZ();
+                                        String queryCompanions = "SELECT owner, companions FROM tardis WHERE tardis_id = " + id;
+                                        ResultSet rsCom = statement.executeQuery(queryCompanions);
+                                        boolean isTL = true;
+                                        if (rsCom.next()) {
+                                            String comps = rsCom.getString("companions");
+                                            if (comps != null && !comps.equals("") && !comps.equals("[Null]")) {
+                                                String[] companions = comps.split(":");
+                                                for (String c : companions) {
+                                                    if (plugin.getServer().getPlayer(c) != null) {
+                                                        plugin.getServer().getPlayer(c).sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " Destination world: " + rand.getWorld().getName());
+                                                    }
+                                                    if (c.equalsIgnoreCase(player.getName())) {
+                                                        isTL = false;
                                                     }
                                                 }
                                             }
-                                            if (isTL == true) {
-                                                player.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " Destination world: " + rand.getWorld().getName());
-                                            } else {
-                                                if (plugin.getServer().getPlayer(rs.getString("owner")) != null) {
-                                                    plugin.getServer().getPlayer(rs.getString("owner")).sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " Destination world: " + rand.getWorld().getName());
-                                                }
-                                            }
-                                            String querySave = "UPDATE tardis SET save = '" + d + "' WHERE tardis_id = " + id;
-                                            statement.executeUpdate(querySave);
                                         }
+                                        if (isTL == true) {
+                                            player.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " Destination world: " + rand.getWorld().getName());
+                                        } else {
+                                            if (plugin.getServer().getPlayer(rs.getString("owner")) != null) {
+                                                plugin.getServer().getPlayer(rs.getString("owner")).sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " Destination world: " + rand.getWorld().getName());
+                                            }
+                                        }
+                                        String querySave = "UPDATE tardis SET save = '" + d + "' WHERE tardis_id = " + id;
+                                        statement.executeUpdate(querySave);
                                         if (plugin.getServer().getPluginManager().getPlugin("Spout") != null && SpoutManager.getPlayer(player).isSpoutCraftEnabled() && playSound == true) {
                                             SpoutManager.getSoundManager().playCustomSoundEffect(plugin, SpoutManager.getPlayer(player), "https://dl.dropbox.com/u/53758864/tardis_takeoff.mp3", false, b, 9, 75);
                                         }
