@@ -530,11 +530,9 @@ public class TARDISPlayerListener implements Listener {
                                             } else {
                                                 environment = "NORMAL:NETHER:THE_END";
                                             }
-                                            plugin.debug("Random position set");
                                         }
                                         if (r0_data >= 4 && r0_data <= 7) { // second position
                                             environment = "NORMAL";
-                                            plugin.debug("Normal position set");
                                         }
                                         if (r0_data >= 8 && r0_data <= 11) { // third position
                                             if (plugin.config.getBoolean("nether") == true) {
@@ -542,7 +540,6 @@ public class TARDISPlayerListener implements Listener {
                                             } else {
                                                 player.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " The ancient, dusty senators of Gallifrey have disabled time travel to the Nether");
                                             }
-                                            plugin.debug("Nether position set");
                                         }
                                         if (r0_data >= 12 && r0_data <= 15) { // last position
                                             if (plugin.config.getBoolean("the_end") == true) {
@@ -550,7 +547,6 @@ public class TARDISPlayerListener implements Listener {
                                             } else {
                                                 player.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " The ancient, dusty senators of Gallifrey have disabled time travel to The End");
                                             }
-                                            plugin.debug("The End position set");
                                         }
                                         // create a random destination
                                         TARDISTimetravel tt = new TARDISTimetravel(plugin);
@@ -642,8 +638,10 @@ public class TARDISPlayerListener implements Listener {
                                             queryDest = "UPDATE tardis SET save = '" + s.getLine(2) + ":" + coords[0] + ":" + coords[1] + ":" + coords[2] + "' WHERE tardis_id = " + id;
                                         }
                                         statement.executeUpdate(queryDest);
+                                        player.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " Exit location set");
                                     }
                                     if (event.getAction().equals(Action.RIGHT_CLICK_BLOCK)) {
+
                                         List<String> dests = new ArrayList<String>();
                                         String home = "";
                                         // cycle through saves
@@ -663,9 +661,9 @@ public class TARDISPlayerListener implements Listener {
                                             display = dests.get(dests.size() - 1).split(":");
                                             plugin.trackDest.put(player.getName(), dests.get(dests.size() - 1));
                                         }
-                                        s.setLine(1, display[1]);
-                                        s.setLine(2, display[2]);
-                                        s.setLine(3, display[3] + "," + display[4] + "," + display[5]);
+                                        s.setLine(1, display[0]);
+                                        s.setLine(2, display[1]);
+                                        s.setLine(3, display[2] + "," + display[3] + "," + display[4]);
                                         s.update();
                                     }
                                 }
