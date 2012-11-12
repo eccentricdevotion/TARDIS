@@ -148,7 +148,7 @@ public class TARDISPlayerListener implements Listener {
                         player.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RED + " There was a problem updating the position of the TARDIS " + blockName + "!");
                     }
                 } catch (SQLException e) {
-                    System.err.println(Constants.MY_PLUGIN_NAME + " Create table error: " + e);
+                    System.err.println(Constants.MY_PLUGIN_NAME + " Update TARDIS blocks error: " + e);
                 }
             } else if (plugin.trackName.containsKey(playerNameStr) && !plugin.trackBlock.containsKey(playerNameStr)) {
                 Location block_loc = block.getLocation();
@@ -609,7 +609,7 @@ public class TARDISPlayerListener implements Listener {
                         if (line1.equals("Chameleon")) {
                             queryTardis = "SELECT * FROM tardis WHERE chameleon = '" + signloc + "'";
                         } else {
-                            queryTardis = "SELECT * FROM tardis.home, destinations.* WHERE tardis.save_sign = '" + signloc + "' AND tardis.tardis_id = destinations.tardis_id";
+                            queryTardis = "SELECT tardis.home, destinations.* FROM tardis, destinations WHERE tardis.save_sign = '" + signloc + "' AND tardis.tardis_id = destinations.tardis_id";
                         }
                         // get tardis from saved button location
                         try {
