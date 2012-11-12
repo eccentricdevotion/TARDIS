@@ -117,6 +117,9 @@ public class TARDIS extends JavaPlugin implements Listener {
         if (!config.contains("the_end")) {
             config.set("the_end", false);
         }
+        if (!config.contains("nether")) {
+            config.set("nether", false);
+        }
         if (!config.contains("debug")) {
             config.set("debug", false);
         }
@@ -125,6 +128,9 @@ public class TARDIS extends JavaPlugin implements Listener {
         }
         if (!config.contains("respect_worldguard")) {
             config.set("respect_worldguard", true);
+        }
+        if (!config.contains("land_on_water")) {
+            config.set("land_on_water", false);
         }
 
         tardisCommand = new TARDISCommands(this);
