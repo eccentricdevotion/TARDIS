@@ -17,7 +17,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 public class TARDIS extends JavaPlugin implements Listener {
 
-    TARDISdatabase service = TARDISdatabase.getInstance();
+    TARDISDatabase service = TARDISDatabase.getInstance();
     public PluginDescriptionFile pdfFile;
     public FileConfiguration config = null;
     public File schematicfile = null;
@@ -54,6 +54,7 @@ public class TARDIS extends JavaPlugin implements Listener {
     public HashMap<String, String> trackBlock = new HashMap<String, String>();
     public HashMap<String, String> trackEnd = new HashMap<String, String>();
     public HashMap<String, String> trackPerm = new HashMap<String, String>();
+    public HashMap<String, String> trackDest = new HashMap<String, String>();
     private static ArrayList<String> quotes = new ArrayList<String>();
     public ArrayList<String> quote;
     public int quotelen;

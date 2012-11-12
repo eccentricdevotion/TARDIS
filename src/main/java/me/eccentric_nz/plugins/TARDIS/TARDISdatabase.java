@@ -10,14 +10,14 @@ import org.bukkit.Bukkit;
 import org.bukkit.Chunk;
 import org.bukkit.World;
 
-public class TARDISdatabase {
+public class TARDISDatabase {
 
-    private static TARDISdatabase instance = new TARDISdatabase();
+    private static TARDISDatabase instance = new TARDISDatabase();
     public Connection connection = null;
     public Statement statement;
     private static TARDIS plugin;
 
-    public static synchronized TARDISdatabase getInstance() {
+    public static synchronized TARDISDatabase getInstance() {
         return instance;
     }
 
@@ -33,7 +33,7 @@ public class TARDISdatabase {
     public void createTables() {
         try {
             statement = connection.createStatement();
-            String queryTARDIS = "CREATE TABLE IF NOT EXISTS tardis (tardis_id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, owner TEXT COLLATE NOCASE, chunk TEXT, direction TEXT, home TEXT, save TEXT, current TEXT, replaced TEXT DEFAULT '', chest TEXT, button TEXT, repeater0 TEXT, repeater1 TEXT, repeater2 TEXT, repeater3 TEXT, save1 TEXT DEFAULT '', save2 TEXT DEFAULT '', save3 TEXT DEFAULT '', companions TEXT, platform TEXT DEFAULT '', chameleon TEXT DEFAULT '', chamele_on INTEGER DEFAULT 0, size TEXT DEFAULT '')";
+            String queryTARDIS = "CREATE TABLE IF NOT EXISTS tardis (tardis_id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, owner TEXT COLLATE NOCASE, chunk TEXT, direction TEXT, home TEXT, save TEXT, current TEXT, replaced TEXT DEFAULT '', chest TEXT, button TEXT, repeater0 TEXT, repeater1 TEXT, repeater2 TEXT, repeater3 TEXT, save1 TEXT DEFAULT '', save2 TEXT DEFAULT '', save3 TEXT DEFAULT '', companions TEXT, platform TEXT DEFAULT '', chameleon TEXT DEFAULT '', chamele_on INTEGER DEFAULT 0, size TEXT DEFAULT '', save_sign TEXT DEFAULT '')";
             statement.executeUpdate(queryTARDIS);
             String queryTravellers = "CREATE TABLE IF NOT EXISTS travellers (traveller_id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, tardis_id INTEGER, player TEXT COLLATE NOCASE)";
             statement.executeUpdate(queryTravellers);
@@ -124,6 +124,15 @@ public class TARDISdatabase {
                 statement.executeUpdate(queryAlter8);
                 System.out.println(Constants.MY_PLUGIN_NAME + " Adding block ID and data to blocks table!");
             }
+            // update tardis if there is no size column
+            String querySign = "SELECT sql FROM sqlite_master WHERE tbl_name = 'tardis' AND sql LIKE '%save_sign TEXT%'";
+            ResultSet rsSign = statement.executeQuery(querySize);
+            if (!rsSign.next()) {
+                String queryAlter6 = "ALTER TABLE tardis ADD save_sign TEXT DEFAULT ''";
+                statement.executeUpdate(queryAlter6);
+                System.out.println(Constants.MY_PLUGIN_NAME + " Adding new TARDIS save_sign to DB!");
+            }
+
             statement.close();
         } catch (SQLException e) {
             System.err.println(Constants.MY_PLUGIN_NAME + " Create table error: " + e);
