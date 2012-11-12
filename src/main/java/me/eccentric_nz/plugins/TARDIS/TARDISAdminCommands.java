@@ -29,7 +29,7 @@ public class TARDISAdminCommands implements CommandExecutor {
                     sender.sendMessage(Constants.COMMAND_ADMIN.split("\n"));
                     return true;
                 }
-                if (!args[0].equalsIgnoreCase("reload") && !args[0].equalsIgnoreCase("config") && !args[0].equalsIgnoreCase("key") && !args[0].equalsIgnoreCase("bonus_chest") && !args[0].equalsIgnoreCase("protect_blocks") && !args[0].equalsIgnoreCase("give_key") && !args[0].equalsIgnoreCase("platform") && !args[0].equalsIgnoreCase("tp_radius") && !args[0].equalsIgnoreCase("require_spout") && !args[0].equalsIgnoreCase("default_world") && !args[0].equalsIgnoreCase("default_world_name") && !args[0].equalsIgnoreCase("include_default_world") && !args[0].equalsIgnoreCase("exclude") && !args[0].equalsIgnoreCase("sfx") && !args[0].equalsIgnoreCase("use_worldguard") && !args[0].equalsIgnoreCase("respect_worldguard")) {
+                if (!args[0].equalsIgnoreCase("reload") && !args[0].equalsIgnoreCase("config") && !args[0].equalsIgnoreCase("key") && !args[0].equalsIgnoreCase("bonus_chest") && !args[0].equalsIgnoreCase("protect_blocks") && !args[0].equalsIgnoreCase("give_key") && !args[0].equalsIgnoreCase("platform") && !args[0].equalsIgnoreCase("tp_radius") && !args[0].equalsIgnoreCase("require_spout") && !args[0].equalsIgnoreCase("default_world") && !args[0].equalsIgnoreCase("default_world_name") && !args[0].equalsIgnoreCase("include_default_world") && !args[0].equalsIgnoreCase("exclude") && !args[0].equalsIgnoreCase("sfx") && !args[0].equalsIgnoreCase("use_worldguard") && !args[0].equalsIgnoreCase("respect_worldguard") && !args[0].equalsIgnoreCase("nether") && !args[0].equalsIgnoreCase("the_end") && !args[0].equalsIgnoreCase("land_on_water")) {
                     sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " TARDIS does not recognise that command argument!");
                     return false;
                 }
@@ -195,6 +195,33 @@ public class TARDISAdminCommands implements CommandExecutor {
                             return false;
                         }
                         plugin.config.set("respect_worldguard", Boolean.valueOf(tf));
+                    }
+                    if (args[0].equalsIgnoreCase("nether")) {
+                        // check they typed true of false
+                        String tf = args[1].toLowerCase();
+                        if (!tf.equals("true") && !tf.equals("false")) {
+                            sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RED + "The last argument must be true or false!");
+                            return false;
+                        }
+                        plugin.config.set("nether", Boolean.valueOf(tf));
+                    }
+                    if (args[0].equalsIgnoreCase("the_end")) {
+                        // check they typed true of false
+                        String tf = args[1].toLowerCase();
+                        if (!tf.equals("true") && !tf.equals("false")) {
+                            sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RED + "The last argument must be true or false!");
+                            return false;
+                        }
+                        plugin.config.set("the_end", Boolean.valueOf(tf));
+                    }
+                    if (args[0].equalsIgnoreCase("land_on_water")) {
+                        // check they typed true of false
+                        String tf = args[1].toLowerCase();
+                        if (!tf.equals("true") && !tf.equals("false")) {
+                            sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RED + "The last argument must be true or false!");
+                            return false;
+                        }
+                        plugin.config.set("land_on_water", Boolean.valueOf(tf));
                     }
                     try {
                         plugin.config.save(plugin.myconfigfile);
