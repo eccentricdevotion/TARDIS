@@ -640,7 +640,7 @@ public class TARDISPlayerListener implements Listener {
                                         statement.executeUpdate(queryDest);
                                         player.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " Exit location set");
                                     }
-                                    if (event.getAction().equals(Action.RIGHT_CLICK_BLOCK)) {
+                                    if (event.getAction().equals(Action.RIGHT_CLICK_BLOCK) && !player.isSneaking()) {
 
                                         List<String> dests = new ArrayList<String>();
                                         String home = "";
