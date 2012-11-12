@@ -4,6 +4,8 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -29,7 +31,7 @@ public class TARDISPlayerListener implements Listener {
 
     private TARDIS plugin;
     float[][] adjustYaw = new float[4][4];
-    TARDISdatabase service = TARDISdatabase.getInstance();
+    TARDISDatabase service = TARDISDatabase.getInstance();
 
     public TARDISPlayerListener(TARDIS plugin) {
         this.plugin = plugin;
@@ -78,11 +80,13 @@ public class TARDISPlayerListener implements Listener {
                 try {
                     int id;
                     String queryBlockUpdate = "";
+                    String home = "";
                     Connection connection = service.getConnection();
                     Statement statement = connection.createStatement();
-                    ResultSet rs = service.getTardis(playerNameStr, "tardis_id");
+                    ResultSet rs = service.getTardis(playerNameStr, "tardis_id, home");
                     if (rs.next()) {
                         id = rs.getInt("tardis_id");
+                        home = rs.getString("home");
                         rs.close();
                         if (blockName.equalsIgnoreCase("door") && blockType == Material.IRON_DOOR_BLOCK) {
                             // get door data this should let us determine the direction
@@ -125,6 +129,17 @@ public class TARDISPlayerListener implements Listener {
                             s.setLine(0, "Chameleon");
                             s.setLine(1, "Circuit");
                             s.setLine(3, "¤cOFF");
+                            s.update();
+                        }
+                        if (blockName.equalsIgnoreCase("save-sign") && (blockType == Material.WALL_SIGN || blockType == Material.SIGN_POST)) {
+                            queryBlockUpdate = "UPDATE tardis SET save_sign = '" + blockLocStr + "' WHERE tardis_id = " + id;
+                            // add text to sign
+                            String[] coords = home.split(":");
+                            Sign s = (Sign) block.getState();
+                            s.setLine(0, "Saves");
+                            s.setLine(1, "Home");
+                            s.setLine(2, coords[0]);
+                            s.setLine(3, coords[1] + "," + coords[2] + "," + coords[3]);
                             s.update();
                         }
                         statement.executeUpdate(queryBlockUpdate);
@@ -583,32 +598,80 @@ public class TARDISPlayerListener implements Listener {
                     if (blockType == Material.WALL_SIGN || blockType == Material.SIGN_POST) {
                         // get clicked block location
                         Location b = block.getLocation();
+                        Sign s = (Sign) block.getState();
+                        String line1 = s.getLine(0);
+                        String queryTardis;
                         String bw = b.getWorld().getName();
                         int bx = b.getBlockX();
                         int by = b.getBlockY();
                         int bz = b.getBlockZ();
                         String signloc = bw + ":" + bx + ":" + by + ":" + bz;
+                        if (line1.equals("Chameleon")) {
+                            queryTardis = "SELECT * FROM tardis WHERE chameleon = '" + signloc + "'";
+                        } else {
+                            queryTardis = "SELECT * FROM tardis.home, destinations.* WHERE tardis.save_sign = '" + signloc + "' AND tardis.tardis_id = destinations.tardis_id";
+                        }
                         // get tardis from saved button location
                         try {
                             Connection connection = service.getConnection();
                             Statement statement = connection.createStatement();
-                            String queryTardis = "SELECT * FROM tardis WHERE chameleon = '" + signloc + "'";
                             ResultSet rs = statement.executeQuery(queryTardis);
-                            if (rs.next()) {
+                            if (rs.isBeforeFirst()) {
                                 int id = rs.getInt("tardis_id");
-                                String queryChameleon;
-                                Sign s = (Sign) block.getState();
-                                if (rs.getBoolean("chamele_on")) {
-                                    queryChameleon = "UPDATE tardis SET chamele_on = 0 WHERE tardis_id = " + id;
-                                    s.setLine(3, "¤cOFF");
-                                    s.update();
+                                if (line1.equals("Chameleon")) {
+                                    String queryChameleon;
+                                    if (rs.getBoolean("chamele_on")) {
+                                        queryChameleon = "UPDATE tardis SET chamele_on = 0 WHERE tardis_id = " + id;
+                                        s.setLine(3, "¤cOFF");
+                                        s.update();
+                                    } else {
+                                        queryChameleon = "UPDATE tardis SET chamele_on = 1 WHERE tardis_id = " + id;
+                                        s.setLine(3, "¤aON");
+                                        s.update();
+                                    }
+                                    statement.executeUpdate(queryChameleon);
                                 } else {
-                                    queryChameleon = "UPDATE tardis SET chamele_on = 1 WHERE tardis_id = " + id;
-                                    s.setLine(3, "¤aON");
-                                    s.update();
+                                    if (event.getAction().equals(Action.LEFT_CLICK_BLOCK)) {
+                                        // set destination to currently displayed save
+                                        String queryDest;
+                                        if (s.getLine(1).equals("Home")) {
+                                            queryDest = "UPDATE tardis SET save = home WHERE tardis_id = " + id;
+                                        } else {
+                                            // get location from sign
+                                            String[] coords = s.getLine(3).split(",");
+                                            queryDest = "UPDATE tardis SET save = '" + s.getLine(2) + ":" + coords[0] + ":" + coords[1] + ":" + coords[2] + "' WHERE tardis_id = " + id;
+                                        }
+                                        statement.executeUpdate(queryDest);
+                                    }
+                                    if (event.getAction().equals(Action.RIGHT_CLICK_BLOCK)) {
+                                        List<String> dests = new ArrayList<String>();
+                                        String home = "";
+                                        // cycle through saves
+                                        while (rs.next()) {
+                                            if (home == "") {
+                                                home = "Home:" + rs.getString("home");
+                                            }
+                                            dests.add(rs.getString("dest_name") + ":" + rs.getString("world") + ":" + rs.getString("x") + ":" + rs.getString("y") + ":" + rs.getString("z"));
+                                        }
+                                        dests.add(home);
+                                        String[] display;
+                                        if (plugin.trackDest.containsKey(player.getName())) {
+                                            reOrder(dests, plugin.trackDest.get(player.getName()));
+                                            plugin.trackDest.put(player.getName(), dests.get(1));
+                                            display = dests.get(1).split(":");
+                                        } else {
+                                            display = dests.get(dests.size() - 1).split(":");
+                                            plugin.trackDest.put(player.getName(), dests.get(dests.size() - 1));
+                                        }
+                                        s.setLine(1, display[1]);
+                                        s.setLine(2, display[2]);
+                                        s.setLine(3, display[3] + "," + display[4] + "," + display[5]);
+                                        s.update();
+                                    }
                                 }
-                                statement.executeUpdate(queryChameleon);
                             }
+                            rs.close();
+                            statement.close();
                         } catch (SQLException e) {
                             System.err.println(Constants.MY_PLUGIN_NAME + " Get TARDIS from Button Error: " + e);
                         }
@@ -668,5 +731,12 @@ public class TARDISPlayerListener implements Listener {
                 }
             }
         }, 5L);
+    }
+
+    public void reOrder(List<String> list, String current) {
+        int i = list.size();
+        while (i-- > 0 && !list.get(0).equals(current)) {
+            list.add(list.remove(0));
+        }
     }
 }
