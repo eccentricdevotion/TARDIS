@@ -11,7 +11,6 @@ import org.bukkit.block.Sign;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
-import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.getspout.spoutapi.SpoutManager;
@@ -19,7 +18,7 @@ import org.getspout.spoutapi.SpoutManager;
 public class TARDISCommands implements CommandExecutor {
 
     private TARDIS plugin;
-    TARDISdatabase service = TARDISdatabase.getInstance();
+    TARDISDatabase service = TARDISDatabase.getInstance();
 
     public TARDISCommands(TARDIS plugin) {
         this.plugin = plugin;
@@ -262,13 +261,13 @@ public class TARDISCommands implements CommandExecutor {
                 }
                 if (args[0].equalsIgnoreCase("update")) {
                     if (player.hasPermission("tardis.update")) {
-                        String[] validBlockNames = {"door", "button", "save-repeater", "x-repeater", "z-repeater", "y-repeater", "chameleon"};
+                        String[] validBlockNames = {"door", "button", "save-repeater", "x-repeater", "z-repeater", "y-repeater", "chameleon", "save-sign"};
                         if (args.length < 2) {
                             sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " Too few command arguments!");
                             return false;
                         }
                         if (!Arrays.asList(validBlockNames).contains(args[1].toLowerCase())) {
-                            player.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " That is not a valid TARDIS block name! Try one of : door|button|save-repeater|x-repeater|z-repeater|y-repeater");
+                            player.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " That is not a valid TARDIS block name! Try one of : door|button|save-repeater|x-repeater|z-repeater|y-repeater|chameleon|save-sign");
                             return false;
                         }
                         try {
