@@ -573,14 +573,14 @@ public class TARDISCommands implements CommandExecutor {
                             int id = rs.getInt("tardis_id");
                             String queryDest = "SELECT dest_id FROM destinations WHERE dest_name = '" + args[1] + "' AND tardis_id = " + id;
                             ResultSet rsDest = statement.executeQuery(queryDest);
-                            if (!rsDest.next()) {
+                            if (rsDest == null || !rsDest.next()) {
                                 sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " Could not find a saved destination with that name!");
                                 return false;
                             }
                             int destID = rsDest.getInt("dest_id");
                             String queryDelete = "DELETE FROM destinations WHERE dest_id = " + destID;
                             statement.executeUpdate(queryDelete);
-                            sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " Could not find a saved destination with that name!");
+                            sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " The destination "+args[1]+" was deleted!");
                             return true;
                         } catch (SQLException e) {
                             System.err.println(Constants.MY_PLUGIN_NAME + " Destination Save Error: " + e);
