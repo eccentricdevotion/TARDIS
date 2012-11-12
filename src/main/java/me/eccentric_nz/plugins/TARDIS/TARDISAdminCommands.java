@@ -13,7 +13,7 @@ import org.bukkit.command.ConsoleCommandSender;
 public class TARDISAdminCommands implements CommandExecutor {
 
     private TARDIS plugin;
-    TARDISdatabase service = TARDISdatabase.getInstance();
+    TARDISDatabase service = TARDISDatabase.getInstance();
 
     public TARDISAdminCommands(TARDIS plugin) {
         this.plugin = plugin;

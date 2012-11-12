@@ -14,7 +14,7 @@ import org.bukkit.event.block.BlockDamageEvent;
 public class TARDISBlockDamageListener implements Listener {
 
     private TARDIS plugin;
-    TARDISdatabase service = TARDISdatabase.getInstance();
+    TARDISDatabase service = TARDISDatabase.getInstance();
 
     public TARDISBlockDamageListener(TARDIS plugin) {
         this.plugin = plugin;

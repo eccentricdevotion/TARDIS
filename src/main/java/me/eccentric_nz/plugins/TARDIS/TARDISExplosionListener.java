@@ -16,7 +16,7 @@ import org.bukkit.event.entity.EntityExplodeEvent;
 public class TARDISExplosionListener implements Listener {
 
     private TARDIS plugin;
-    TARDISdatabase service = TARDISdatabase.getInstance();
+    TARDISDatabase service = TARDISDatabase.getInstance();
     TARDISUtils utils = new TARDISUtils(plugin);
 
     public TARDISExplosionListener(TARDIS plugin) {

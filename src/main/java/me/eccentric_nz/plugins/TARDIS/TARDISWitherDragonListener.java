@@ -14,7 +14,7 @@ import org.bukkit.event.entity.EntityChangeBlockEvent;
 public class TARDISWitherDragonListener implements Listener {
 
     private TARDIS plugin;
-    TARDISdatabase service = TARDISdatabase.getInstance();
+    TARDISDatabase service = TARDISDatabase.getInstance();
 
     @EventHandler(priority = EventPriority.LOW)
     public void WitherBlockBreak(EntityChangeBlockEvent event) {

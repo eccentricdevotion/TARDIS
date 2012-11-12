@@ -13,7 +13,7 @@ import org.bukkit.block.Block;
 public class TARDISUtils {
 
     private final TARDIS plugin;
-    TARDISdatabase service = TARDISdatabase.getInstance();
+    TARDISDatabase service = TARDISDatabase.getInstance();
 
     public TARDISUtils(TARDIS plugin) {
         this.plugin = plugin;

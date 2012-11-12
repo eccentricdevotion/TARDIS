@@ -13,7 +13,7 @@ import org.bukkit.entity.Player;
 public class TARDISPrefsCommands implements CommandExecutor {
 
     private TARDIS plugin;
-    TARDISdatabase service = TARDISdatabase.getInstance();
+    TARDISDatabase service = TARDISDatabase.getInstance();
 
     public TARDISPrefsCommands(TARDIS plugin) {
         this.plugin = plugin;

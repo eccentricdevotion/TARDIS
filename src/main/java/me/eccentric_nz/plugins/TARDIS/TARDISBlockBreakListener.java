@@ -21,7 +21,7 @@ import org.bukkit.event.block.BlockBreakEvent;
 public class TARDISBlockBreakListener implements Listener {
 
     private TARDIS plugin;
-    TARDISdatabase service = TARDISdatabase.getInstance();
+    TARDISDatabase service = TARDISDatabase.getInstance();
 
     public TARDISBlockBreakListener(TARDIS plugin) {
         this.plugin = plugin;

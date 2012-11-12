@@ -13,7 +13,7 @@ import org.bukkit.permissions.PermissionAttachmentInfo;
 public class TARDISArea {
 
     private TARDIS plugin;
-    TARDISdatabase service = TARDISdatabase.getInstance();
+    TARDISDatabase service = TARDISDatabase.getInstance();
 
     public TARDISArea(TARDIS plugin) {
         this.plugin = plugin;

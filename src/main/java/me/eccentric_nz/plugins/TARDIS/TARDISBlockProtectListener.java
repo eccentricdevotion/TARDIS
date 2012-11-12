@@ -17,7 +17,7 @@ import org.bukkit.event.block.BlockIgniteEvent;
 public class TARDISBlockProtectListener implements Listener {
 
     private TARDIS plugin;
-    TARDISdatabase service = TARDISdatabase.getInstance();
+    TARDISDatabase service = TARDISDatabase.getInstance();
     List<BlockFace> faces = new ArrayList<BlockFace>();
 
     public TARDISBlockProtectListener(TARDIS plugin) {

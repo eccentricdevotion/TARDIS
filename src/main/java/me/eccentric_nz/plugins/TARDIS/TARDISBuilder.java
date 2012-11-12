@@ -26,7 +26,7 @@ import org.bukkit.inventory.ItemStack;
 public class TARDISBuilder {
 
     private final TARDIS plugin;
-    TARDISdatabase service = TARDISdatabase.getInstance();
+    TARDISDatabase service = TARDISDatabase.getInstance();
     Statement statement;
 
     public TARDISBuilder(TARDIS plugin) {

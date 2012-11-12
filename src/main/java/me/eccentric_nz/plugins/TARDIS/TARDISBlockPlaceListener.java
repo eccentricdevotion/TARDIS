@@ -21,7 +21,7 @@ import org.bukkit.event.block.BlockPlaceEvent;
 public class TARDISBlockPlaceListener implements Listener {
 
     private TARDIS plugin;
-    TARDISdatabase service = TARDISdatabase.getInstance();
+    TARDISDatabase service = TARDISDatabase.getInstance();
 
     public TARDISBlockPlaceListener(TARDIS plugin) {
         this.plugin = plugin;

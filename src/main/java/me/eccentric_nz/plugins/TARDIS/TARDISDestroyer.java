@@ -15,7 +15,7 @@ import org.bukkit.inventory.Inventory;
 public class TARDISDestroyer {
 
     private final TARDIS plugin;
-    TARDISdatabase service = TARDISdatabase.getInstance();
+    TARDISDatabase service = TARDISDatabase.getInstance();
 
     public TARDISDestroyer(TARDIS plugin) {
         this.plugin = plugin;

@@ -16,7 +16,7 @@ import org.bukkit.entity.Player;
 public class TARDISTravelCommands implements CommandExecutor {
 
     private TARDIS plugin;
-    TARDISdatabase service = TARDISdatabase.getInstance();
+    TARDISDatabase service = TARDISDatabase.getInstance();
 
     public TARDISTravelCommands(TARDIS plugin) {
         this.plugin = plugin;

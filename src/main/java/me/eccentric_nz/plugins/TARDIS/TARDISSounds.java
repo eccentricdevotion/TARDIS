@@ -12,7 +12,7 @@ import org.getspout.spoutapi.SpoutManager;
 
 public class TARDISSounds {
 
-    static TARDISdatabase service = TARDISdatabase.getInstance();
+    static TARDISDatabase service = TARDISDatabase.getInstance();
     Statement statement;
     private static Random rand = new Random();
 
