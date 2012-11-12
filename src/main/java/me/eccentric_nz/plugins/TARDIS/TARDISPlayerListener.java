@@ -627,7 +627,7 @@ public class TARDISPlayerListener implements Listener {
                                     }
                                     statement.executeUpdate(queryChameleon);
                                 } else {
-                                    if (event.getAction().equals(Action.LEFT_CLICK_BLOCK)) {
+                                    if (event.getAction().equals(Action.RIGHT_CLICK_BLOCK) && player.isSneaking()) {
                                         // set destination to currently displayed save
                                         String queryDest;
                                         if (s.getLine(1).equals("Home")) {
