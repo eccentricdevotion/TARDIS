@@ -84,8 +84,8 @@ commands:
       permission: tardis.list
       permission-message: You don't have the permission <permission> to use this command
     save:
-      description: Save a time travel location.
-      usage: /<command> save [slot number] [name]
+      description: Save the current location of the TARDIS Police Box.
+      usage: /<command> save [name]
       permission: tardis.save
       permission-message: You don't have the permission <permission> to use this command
     home:
