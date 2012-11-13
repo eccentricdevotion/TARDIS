@@ -33,7 +33,7 @@ public class TARDISBuilder {
         this.plugin = plugin;
     }
 
-    public void buildOuterTARDIS(int id, Location l, Constants.COMPASS d, boolean c, Player p) {
+    public void buildOuterTARDIS(int id, Location l, Constants.COMPASS d, boolean c, Player p, boolean rebuild) {
         int plusx, minusx, x, plusz, minusz, z, wall_block = 35;
         byte sd = 0, norm = 0, grey = 8, blue = 11, chameleonData = 11;
         if (c) {
@@ -213,41 +213,41 @@ public class TARDISBuilder {
             statement.executeUpdate(queryDoor);
 
             // bottom layer corners
-            utils.setBlockAndRemember(world, plusx, down2y, plusz, wall_block, chameleonData, id);
-            utils.setBlockAndRemember(world, minusx, down2y, plusz, wall_block, chameleonData, id);
-            utils.setBlockAndRemember(world, minusx, down2y, minusz, wall_block, chameleonData, id);
-            utils.setBlockAndRemember(world, plusx, down2y, minusz, wall_block, chameleonData, id);
+            utils.setBlockAndRemember(world, plusx, down2y, plusz, wall_block, chameleonData, id, rebuild);
+            utils.setBlockAndRemember(world, minusx, down2y, plusz, wall_block, chameleonData, id, rebuild);
+            utils.setBlockAndRemember(world, minusx, down2y, minusz, wall_block, chameleonData, id, rebuild);
+            utils.setBlockAndRemember(world, plusx, down2y, minusz, wall_block, chameleonData, id, rebuild);
             // middle layer corners
-            utils.setBlockAndRemember(world, plusx, minusy, plusz, wall_block, chameleonData, id);
-            utils.setBlockAndRemember(world, minusx, minusy, plusz, wall_block, chameleonData, id);
-            utils.setBlockAndRemember(world, minusx, minusy, minusz, wall_block, chameleonData, id);
-            utils.setBlockAndRemember(world, plusx, minusy, minusz, wall_block, chameleonData, id);
+            utils.setBlockAndRemember(world, plusx, minusy, plusz, wall_block, chameleonData, id, rebuild);
+            utils.setBlockAndRemember(world, minusx, minusy, plusz, wall_block, chameleonData, id, rebuild);
+            utils.setBlockAndRemember(world, minusx, minusy, minusz, wall_block, chameleonData, id, rebuild);
+            utils.setBlockAndRemember(world, plusx, minusy, minusz, wall_block, chameleonData, id, rebuild);
             // top layer
             switch (wall_block) {
                 case 18:
-                    utils.setBlockAndRemember(world, x, y, z, 17, chameleonData, id);
+                    utils.setBlockAndRemember(world, x, y, z, 17, chameleonData, id, rebuild);
                     break;
                 case 46:
-                    utils.setBlockAndRemember(world, x, y, z, 35, (byte) 14, id);
+                    utils.setBlockAndRemember(world, x, y, z, 35, (byte) 14, id, rebuild);
                     break;
                 case 79:
-                    utils.setBlockAndRemember(world, x, y, z, 35, (byte) 3, id);
+                    utils.setBlockAndRemember(world, x, y, z, 35, (byte) 3, id, rebuild);
                     break;
                 case 89:
-                    utils.setBlockAndRemember(world, x, y, z, 35, (byte) 4, id);
+                    utils.setBlockAndRemember(world, x, y, z, 35, (byte) 4, id, rebuild);
                     break;
                 default:
-                    utils.setBlockAndRemember(world, x, y, z, wall_block, chameleonData, id);
+                    utils.setBlockAndRemember(world, x, y, z, wall_block, chameleonData, id, rebuild);
                     break;
             }
-            utils.setBlockAndRemember(world, plusx, y, z, wall_block, chameleonData, id); // east
-            utils.setBlockAndRemember(world, plusx, y, plusz, wall_block, chameleonData, id);
-            utils.setBlockAndRemember(world, x, y, plusz, wall_block, chameleonData, id); // south
-            utils.setBlockAndRemember(world, minusx, y, plusz, wall_block, chameleonData, id);
-            utils.setBlockAndRemember(world, minusx, y, z, wall_block, chameleonData, id); // west
-            utils.setBlockAndRemember(world, minusx, y, minusz, wall_block, chameleonData, id);
-            utils.setBlockAndRemember(world, x, y, minusz, wall_block, chameleonData, id); // north
-            utils.setBlockAndRemember(world, plusx, y, minusz, wall_block, chameleonData, id);
+            utils.setBlockAndRemember(world, plusx, y, z, wall_block, chameleonData, id, rebuild); // east
+            utils.setBlockAndRemember(world, plusx, y, plusz, wall_block, chameleonData, id, rebuild);
+            utils.setBlockAndRemember(world, x, y, plusz, wall_block, chameleonData, id, rebuild); // south
+            utils.setBlockAndRemember(world, minusx, y, plusz, wall_block, chameleonData, id, rebuild);
+            utils.setBlockAndRemember(world, minusx, y, z, wall_block, chameleonData, id, rebuild); // west
+            utils.setBlockAndRemember(world, minusx, y, minusz, wall_block, chameleonData, id, rebuild);
+            utils.setBlockAndRemember(world, x, y, minusz, wall_block, chameleonData, id, rebuild); // north
+            utils.setBlockAndRemember(world, plusx, y, minusz, wall_block, chameleonData, id, rebuild);
             // set sign
             utils.setBlock(world, signx, y, signz, 68, sd);
             Sign s = (Sign) world.getBlockAt(signx, y, signz).getState();
@@ -256,23 +256,23 @@ public class TARDISBuilder {
             s.update();
             // put torch on top
             if (wall_block == 79) {
-                utils.setBlockAndRemember(world, x, plusy, z, 76, (byte) 5, id);
+                utils.setBlockAndRemember(world, x, plusy, z, 76, (byte) 5, id, rebuild);
             } else {
-                utils.setBlockAndRemember(world, x, plusy, z, 50, (byte) 5, id);
+                utils.setBlockAndRemember(world, x, plusy, z, 50, (byte) 5, id, rebuild);
             }
             // remove the IRON & LAPIS blocks
             utils.setBlock(world, x, minusy, z, 0, norm);
             utils.setBlock(world, x, down2y, z, 0, norm);
             // bottom layer with door bottom
-            utils.setBlockAndRemember(world, plusx, down2y, z, west, bdw, id);
-            utils.setBlockAndRemember(world, x, down2y, plusz, north, bdn, id);
-            utils.setBlockAndRemember(world, minusx, down2y, z, east, bde, id);
-            utils.setBlockAndRemember(world, x, down2y, minusz, south, bds, id);
+            utils.setBlockAndRemember(world, plusx, down2y, z, west, bdw, id, rebuild);
+            utils.setBlockAndRemember(world, x, down2y, plusz, north, bdn, id, rebuild);
+            utils.setBlockAndRemember(world, minusx, down2y, z, east, bde, id, rebuild);
+            utils.setBlockAndRemember(world, x, down2y, minusz, south, bds, id, rebuild);
             // middle layer with door top
-            utils.setBlockAndRemember(world, plusx, minusy, z, west, mdw, id);
-            utils.setBlockAndRemember(world, x, minusy, plusz, north, mdn, id);
-            utils.setBlockAndRemember(world, minusx, minusy, z, east, mde, id);
-            utils.setBlockAndRemember(world, x, minusy, minusz, south, mds, id);
+            utils.setBlockAndRemember(world, plusx, minusy, z, west, mdw, id, rebuild);
+            utils.setBlockAndRemember(world, x, minusy, plusz, north, mdn, id, rebuild);
+            utils.setBlockAndRemember(world, minusx, minusy, z, east, mde, id, rebuild);
+            utils.setBlockAndRemember(world, x, minusy, minusz, south, mds, id, rebuild);
             // add platform if configured and necessary
             if (plugin.config.getBoolean("platform") == Boolean.valueOf("true")) {
                 // check if user has platform pref

@@ -119,7 +119,7 @@ public class TARDISBlockPlaceListener implements Listener {
                                 }
                                 statement.close();
                                 // turn the block stack into a TARDIS
-                                builder.buildOuterTARDIS(lastInsertId, block_loc, Constants.COMPASS.valueOf(d), false, player);
+                                builder.buildOuterTARDIS(lastInsertId, block_loc, Constants.COMPASS.valueOf(d), false, player, false);
                                 builder.buildInnerTARDIS(schm, chunkworld, Constants.COMPASS.valueOf(d), lastInsertId, player, middle_id, middle_data);
                             } else {
                                 player.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " A TARDIS already exists at this location, please try another chunk!");

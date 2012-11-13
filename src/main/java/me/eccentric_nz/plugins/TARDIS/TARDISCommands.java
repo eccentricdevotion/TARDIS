@@ -201,7 +201,7 @@ public class TARDISCommands implements CommandExecutor {
                                     td.destroySign(oldSave, d);
                                     td.destroyTorch(oldSave);
                                     td.destroyBlueBox(oldSave, d, id);
-                                    tb.buildOuterTARDIS(id, eyeLocation, d, cham, p);
+                                    tb.buildOuterTARDIS(id, eyeLocation, d, cham, p, false);
                                 }
                             }, delay);
                             statement.close();
@@ -325,7 +325,7 @@ public class TARDISCommands implements CommandExecutor {
                         Location l = new Location(w, x, y, z);
                         if (args[0].equalsIgnoreCase("rebuild")) {
                             TARDISBuilder builder = new TARDISBuilder(plugin);
-                            builder.buildOuterTARDIS(id, l, d, cham, player);
+                            builder.buildOuterTARDIS(id, l, d, cham, player, true);
                             sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " The TARDIS Police Box was rebuilt!");
                             return true;
                         }
@@ -692,8 +692,7 @@ public class TARDISCommands implements CommandExecutor {
                             TARDISDestroyer destroyer = new TARDISDestroyer(plugin);
                             destroyer.destroySign(l, old_d);
                             TARDISBuilder builder = new TARDISBuilder(plugin);
-                            builder.buildOuterTARDIS(id, l, d, cham, player);
-                            //sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " The TARDIS Police Box was rebuilt!");
+                            builder.buildOuterTARDIS(id, l, d, cham, player, true);
                             rs.close();
                             statement.close();
                             return true;

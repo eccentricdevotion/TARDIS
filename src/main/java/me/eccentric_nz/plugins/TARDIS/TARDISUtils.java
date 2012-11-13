@@ -24,24 +24,26 @@ public class TARDISUtils {
         b.setTypeIdAndData(m, d, true);
     }
 
-    public void setBlockAndRemember(World w, int x, int y, int z, int m, byte d, int id) {
+    public void setBlockAndRemember(World w, int x, int y, int z, int m, byte d, int id, boolean rebuild) {
         Block b = w.getBlockAt(x, y, z);
         // save the block location so that we can protect it from damage and restore it (if it wasn't air)!
         int bid = b.getTypeId();
         String l = b.getLocation().toString();
         String queryAddBlock;
-        if (bid != 0) {
-            byte data = b.getData();
-            queryAddBlock = "INSERT INTO blocks (tardis_id, location, block, data) VALUES (" + id + ",'" + l + "', " + bid + ", " + data + ")";
-        } else {
-            queryAddBlock = "INSERT INTO blocks (tardis_id, location) VALUES (" + id + ",'" + l + "')";
-        }
-        try {
-            Connection connection = service.getConnection();
-            Statement statement = connection.createStatement();
-            statement.executeUpdate(queryAddBlock);
-        } catch (SQLException e) {
-            System.err.println(Constants.MY_PLUGIN_NAME + " Could not save block location to DB!");
+        if (rebuild == false) {
+            if (bid != 0) {
+                byte data = b.getData();
+                queryAddBlock = "INSERT INTO blocks (tardis_id, location, block, data) VALUES (" + id + ",'" + l + "', " + bid + ", " + data + ")";
+            } else {
+                queryAddBlock = "INSERT INTO blocks (tardis_id, location) VALUES (" + id + ",'" + l + "')";
+            }
+            try {
+                Connection connection = service.getConnection();
+                Statement statement = connection.createStatement();
+                statement.executeUpdate(queryAddBlock);
+            } catch (SQLException e) {
+                System.err.println(Constants.MY_PLUGIN_NAME + " Could not save block location to DB!");
+            }
         }
         b.setTypeIdAndData(m, d, true);
     }

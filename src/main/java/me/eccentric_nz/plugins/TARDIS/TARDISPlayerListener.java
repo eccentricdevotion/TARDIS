@@ -323,7 +323,7 @@ public class TARDISPlayerListener implements Listener {
                                                 // rebuild blue box
                                                 TARDISBuilder builder = new TARDISBuilder(plugin);
                                                 if (newl != null) {
-                                                    builder.buildOuterTARDIS(id, newl, Constants.COMPASS.valueOf(d), cham, player);
+                                                    builder.buildOuterTARDIS(id, newl, Constants.COMPASS.valueOf(d), cham, player, false);
                                                 }
                                                 // exit TARDIS!
                                                 tt(player, exitTardis, true, playerWorld, userQuotes);
