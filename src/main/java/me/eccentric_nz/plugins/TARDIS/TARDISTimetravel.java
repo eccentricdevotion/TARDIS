@@ -39,7 +39,6 @@ public class TARDISTimetravel {
         Set<String> worldlist = plugin.config.getConfigurationSection("worlds").getKeys(false);
         List<World> allowedWorlds = new ArrayList<World>();
         if (e.equals("NORMAL:NETHER:THE_END")) {
-            plugin.debug("I got passed RANDOM");
             for (String o : worldlist) {
                 if (plugin.config.getBoolean("include_default_world") == Boolean.valueOf("true")
                         || plugin.config.getBoolean("default_world") == Boolean.valueOf("false")) {
@@ -56,7 +55,6 @@ public class TARDISTimetravel {
             }
         } else {
             List<String> envOptions = Arrays.asList(e.split(":"));
-            plugin.debug("I got passed " + e);
             for (String o : worldlist) {
                 String env = plugin.getServer().getWorld(o).getEnvironment().toString();
                 if (envOptions.contains(env)) {
