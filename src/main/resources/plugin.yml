@@ -88,6 +88,16 @@ commands:
       usage: /<command> save [name]
       permission: tardis.save
       permission-message: You don't have the permission <permission> to use this command
+    setdest:
+      description: Save a destination determined by the block you are looking at.
+      usage: /<command> setdest [name]
+      permission: tardis.save
+      permission-message: You don't have the permission <permission> to use this command
+    removesave:
+      description: Delete a saved destination.
+      usage: /<command> removesave [name]
+      permission: tardis.save
+      permission-message: You don't have the permission <permission> to use this command
     home:
       description: Save a time travel location as home.
       usage: /<command> home
