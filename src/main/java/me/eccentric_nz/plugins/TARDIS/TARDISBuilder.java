@@ -324,7 +324,7 @@ public class TARDISBuilder {
         }
     }
 
-    public void buildInnerTARDIS(Constants.SCHEMATIC schm, World world, Constants.COMPASS d, int dbID, Player p) {
+    public void buildInnerTARDIS(Constants.SCHEMATIC schm, World world, Constants.COMPASS d, int dbID, Player p, int middle_id, byte middle_data) {
         String[][][] s;
         short h, w, l;
         switch (schm) {
@@ -451,6 +451,15 @@ public class TARDISBuilder {
                                     String chameleonloc = world.getName() + ":" + startx + ":" + starty + ":" + startz;
                                     String queryChameleon = "UPDATE tardis SET chameleon = '" + chameleonloc + "', chamele_on = 0 WHERE tardis_id = " + dbID;
                                     statement.executeUpdate(queryChameleon);
+                                }
+                                if (id == 35 && data == 1) {
+                                    switch (middle_id) {
+                                        case 22:
+                                            break;
+                                        default:
+                                            id = middle_id;
+                                            data = middle_data;
+                                    }
                                 }
                             } else {
                                 id = utils.parseNum(tmp);

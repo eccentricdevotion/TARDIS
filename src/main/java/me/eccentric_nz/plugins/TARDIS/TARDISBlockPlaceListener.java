@@ -5,6 +5,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Arrays;
+import java.util.List;
 import org.bukkit.ChatColor;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
@@ -22,6 +24,7 @@ public class TARDISBlockPlaceListener implements Listener {
 
     private TARDIS plugin;
     TARDISDatabase service = TARDISDatabase.getInstance();
+    public static List<String> MIDDLE_BLOCKS = Arrays.asList(new String[]{"LAPIS_BLOCK","STONE","DIRT","WOOD","SANDSTONE","WOOL","BRICK","NETHERRACK","SOUL_SAND","SMOOTH_BRICK","HUGE_MUSHROOM_1","HUGE_MUSHROOM_2","ENDER_STONE"});
 
     public TARDISBlockPlaceListener(TARDIS plugin) {
         this.plugin = plugin;
@@ -34,9 +37,11 @@ public class TARDISBlockPlaceListener implements Listener {
         // only listen for redstone torches
         if (block.getType() == Material.REDSTONE_TORCH_ON) {
             Block blockBelow = block.getRelative(BlockFace.DOWN);
+            int middle_id = blockBelow.getTypeId();
+            byte middle_data = blockBelow.getData();
             Block blockBottom = blockBelow.getRelative(BlockFace.DOWN);
             // only continue if the redstone torch is placed on top of a LAPIS_BLOCK on top of an IRON_BLOCK
-            if (blockBelow.getType() == Material.LAPIS_BLOCK && (blockBottom.getType() == Material.IRON_BLOCK || blockBottom.getType() == Material.GOLD_BLOCK || blockBottom.getType() == Material.DIAMOND_BLOCK)) {
+            if (MIDDLE_BLOCKS.contains(blockBelow.getType().toString()) && (blockBottom.getType() == Material.IRON_BLOCK || blockBottom.getType() == Material.GOLD_BLOCK || blockBottom.getType() == Material.DIAMOND_BLOCK)) {
                 Constants.SCHEMATIC schm;
                 switch (blockBottom.getType()) {
                     case GOLD_BLOCK:
@@ -79,7 +84,7 @@ public class TARDISBlockPlaceListener implements Listener {
                             TARDISBuilder builder = new TARDISBuilder(plugin);
                             TARDISUtils utils = new TARDISUtils(plugin);
                             if (!utils.checkChunk(cw, cx, cz)) {
-                                //statement.executeUpdate("INSERT INTO chunks (world,x,z) VALUES ('" + cw + "'," + cx + "," + cz + ")");
+                                // get player direction
                                 float pyaw = player.getLocation().getYaw();
                                 if (pyaw >= 0) {
                                     pyaw = (pyaw % 360);
@@ -115,7 +120,7 @@ public class TARDISBlockPlaceListener implements Listener {
                                 statement.close();
                                 // turn the block stack into a TARDIS
                                 builder.buildOuterTARDIS(lastInsertId, block_loc, Constants.COMPASS.valueOf(d), false, player);
-                                builder.buildInnerTARDIS(schm, chunkworld, Constants.COMPASS.valueOf(d), lastInsertId, player);
+                                builder.buildInnerTARDIS(schm, chunkworld, Constants.COMPASS.valueOf(d), lastInsertId, player, middle_id, middle_data);
                             } else {
                                 player.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " A TARDIS already exists at this location, please try another chunk!");
                             }
