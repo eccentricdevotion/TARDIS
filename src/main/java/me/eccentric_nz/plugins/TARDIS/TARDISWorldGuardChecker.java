@@ -46,6 +46,8 @@ public class TARDISWorldGuardChecker {
         flags.put(DefaultFlag.LAVA_FLOW, State.DENY);
         flags.put(DefaultFlag.LIGHTER, State.DENY);
         flags.put(DefaultFlag.BUILD, State.DENY);
+        flags.put(DefaultFlag.MOB_SPAWNING, State.DENY);
+        flags.put(DefaultFlag.MOB_DAMAGE, State.DENY);
         region.setFlags(flags);
         rm.addRegion(region);
 
