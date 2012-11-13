@@ -8,6 +8,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
+import org.bukkit.World.Environment;
 import org.bukkit.WorldType;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
@@ -124,10 +125,22 @@ public class TARDISBlockBreakListener implements Listener {
                             // also remove the location of the chunk from chunks table
                             String[] chunkworld = chunkLoc.split(":");
                             World cw = plugin.getServer().getWorld(chunkworld[0]);
+                            Environment env = cw.getEnvironment();
+                            int restore;
+                            switch (env) {
+                                case NETHER:
+                                    restore = 87;
+                                    break;
+                                case THE_END:
+                                    restore = 121;
+                                    break;
+                                default:
+                                    restore = 1;
+                            }
                             //String queryDeleteChunk = "DELETE FROM chunks WHERE world = '" + chunkworld[0] + "' AND x = " + chunkworld[1] + " AND z = " + chunkworld[2];
                             String queryDeleteChunk = "DELETE FROM chunks WHERE tardis_id = " + id;
                             statement.executeUpdate(queryDeleteChunk);
-                            destroyer.destroyTARDIS(schm, id, cw, d, 1);
+                            destroyer.destroyTARDIS(schm, id, cw, d, restore);
                             if (cw.getWorldType() == WorldType.FLAT) {
                                 // replace stone blocks with AIR
                                 destroyer.destroyTARDIS(schm, id, cw, d, 0);
