@@ -21,7 +21,7 @@ public class TARDISDestroyer {
         this.plugin = plugin;
     }
 
-    public void destroyTARDIS(Constants.SCHEMATIC schm, int id, World w, Constants.COMPASS d, int i) {
+    public void destroyTARDIS(Constants.SCHEMATIC schm, int id, World w, Constants.COMPASS d, int i, String p) {
         short h, width, l;
         switch (schm) {
             case BIGGER:
@@ -77,6 +77,9 @@ public class TARDISDestroyer {
             }
             startz = resetz;
             starty -= 1;
+        }
+        if (plugin.WorldGuardOnServer) {
+            plugin.wgchk.removeRegion(w, p);
         }
     }
 
