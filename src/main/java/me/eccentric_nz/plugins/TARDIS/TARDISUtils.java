@@ -129,4 +129,22 @@ public class TARDISUtils {
     public static String colorSign(String txt) {
         return txt.replace('&', '¤');
     }
+
+    public void updateTravellerCount(int id) {
+        // how many travellers are in the TARDIS?
+        try {
+            Connection connection = service.getConnection();
+            Statement statement = connection.createStatement();
+            String queryCount = "SELECT COUNT (*) AS count FROM travellers WHERE tardis_id = " + id;
+            ResultSet rsCount = statement.executeQuery(queryCount);
+            if (rsCount.next()) {
+                int count = rsCount.getInt("count");
+                plugin.trackTravellers.put(id, count);
+            }
+            rsCount.close();
+            statement.close();
+        } catch (SQLException e) {
+            System.err.println(Constants.MY_PLUGIN_NAME + " /TARDIS travel to location Error: " + e);
+        }
+    }
 }
