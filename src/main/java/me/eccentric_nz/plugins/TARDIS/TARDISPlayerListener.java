@@ -344,22 +344,17 @@ public class TARDISPlayerListener implements Listener {
                                             } else {
                                                 boolean chkCompanion = false;
                                                 if (!playerNameStr.equals(tl)) {
-                                                    plugin.debug("Player is not the time lord of this TARDIS");
                                                     if (plugin.getServer().getPlayer(tl) != null) {
-                                                        plugin.debug("The time lord of this TARDIS is not online");
                                                         if (companions != null && !companions.equals("") && !companions.equals("[Null]")) {
-                                                            plugin.debug("Found some TARDIS companions");
                                                             // is the timelord in the TARDIS?
                                                             String queryTraveller = "SELECT * FROM travellers WHERE tardis_id = " + id + " AND player = '" + tl + "' LIMIT 1";
                                                             ResultSet timelordIsIn = statement.executeQuery(queryTraveller);
                                                             if (timelordIsIn != null && timelordIsIn.next()) {
-                                                                plugin.debug("The time lord of this TARDIS is inside the TARDIS");
                                                                 // is the player in the comapnion list
                                                                 String[] companionData = companions.split(":");
                                                                 for (String c : companionData) {
                                                                     //String lc_name = c.toLowerCase();
                                                                     if (c.equalsIgnoreCase(playerNameStr)) {
-                                                                        plugin.debug("Player is a companion of this TARDIS");
                                                                         chkCompanion = true;
                                                                         break;
                                                                     }
