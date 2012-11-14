@@ -364,7 +364,7 @@ public class TARDISBuilder {
         z = gsl[5];
         switch (world.getEnvironment()) {
             case NETHER:
-                envY = 129;
+                envY = 128;
                 break;
             default:
                 envY = 15;
