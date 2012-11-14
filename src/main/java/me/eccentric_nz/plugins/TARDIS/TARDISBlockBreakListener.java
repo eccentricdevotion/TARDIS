@@ -136,13 +136,12 @@ public class TARDISBlockBreakListener implements Listener {
                                 default:
                                     restore = 1;
                             }
-                            //String queryDeleteChunk = "DELETE FROM chunks WHERE world = '" + chunkworld[0] + "' AND x = " + chunkworld[1] + " AND z = " + chunkworld[2];
                             String queryDeleteChunk = "DELETE FROM chunks WHERE tardis_id = " + id;
                             statement.executeUpdate(queryDeleteChunk);
-                            plugin.destroyer.destroyTARDIS(schm, id, cw, d, restore);
+                            plugin.destroyer.destroyTARDIS(schm, id, cw, d, restore, playerNameStr);
                             if (cw.getWorldType() == WorldType.FLAT) {
                                 // replace stone blocks with AIR
-                                plugin.destroyer.destroyTARDIS(schm, id, cw, d, 0);
+                                plugin.destroyer.destroyTARDIS(schm, id, cw, d, 0, playerNameStr);
                             }
                             plugin.destroyer.destroyBlueBox(bb_loc, d, id);
                             // remove record from tardis table
