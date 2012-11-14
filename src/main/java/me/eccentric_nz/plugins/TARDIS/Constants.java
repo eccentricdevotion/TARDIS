@@ -128,8 +128,7 @@ public class Constants {
                 }
                 rsArea.close();
             } else {
-                String querySaves = "SELECT * FROM tardis WHERE owner = '" + playerNameStr + "'";
-                ResultSet rs = statement.executeQuery(querySaves);
+                ResultSet rs = service.getTardis(playerNameStr, "*");
                 if (rs != null && rs.next()) {
                     int id = rs.getInt("tardis_id");
                     // list TARDIS saves

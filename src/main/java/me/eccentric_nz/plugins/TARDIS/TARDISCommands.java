@@ -498,8 +498,7 @@ public class TARDISCommands implements CommandExecutor {
                         try {
                             Connection connection = service.getConnection();
                             Statement statement = connection.createStatement();
-                            String queryList = "SELECT * FROM tardis WHERE owner = '" + player.getName() + "'";
-                            ResultSet rs = statement.executeQuery(queryList);
+                            ResultSet rs = service.getTardis(player.getName(), "*");
                             if (rs == null || !rs.next()) {
                                 sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " " + Constants.NO_TARDIS);
                                 return false;
@@ -558,8 +557,7 @@ public class TARDISCommands implements CommandExecutor {
                         try {
                             Connection connection = service.getConnection();
                             Statement statement = connection.createStatement();
-                            String queryID = "SELECT tardis_id FROM tardis WHERE owner = '" + player.getName() + "'";
-                            ResultSet rs = statement.executeQuery(queryID);
+                            ResultSet rs = service.getTardis(player.getName(), "tardis_id");
                             if (rs == null || !rs.next()) {
                                 sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " " + Constants.NO_TARDIS);
                                 return false;
@@ -589,8 +587,7 @@ public class TARDISCommands implements CommandExecutor {
                         try {
                             Connection connection = service.getConnection();
                             Statement statement = connection.createStatement();
-                            String queryList = "SELECT * FROM tardis WHERE owner = '" + player.getName() + "'";
-                            ResultSet rs = statement.executeQuery(queryList);
+                            ResultSet rs = service.getTardis(player.getName(), "*");
                             if (rs == null || !rs.next()) {
                                 sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " " + Constants.NO_TARDIS);
                                 return false;
