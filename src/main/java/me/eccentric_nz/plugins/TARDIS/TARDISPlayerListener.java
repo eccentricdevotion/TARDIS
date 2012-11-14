@@ -309,7 +309,16 @@ public class TARDISPlayerListener implements Listener {
                                                 World exitWorld = exitTardis.getWorld();
                                                 // destroy current TARDIS location
                                                 Location newl = null;
-                                                if (!save.equals(cl)) {
+// need some sort of check here to sort out who has exited
+                                                // count number of travellers - if 1 less than number counted at start
+                                                // then build and remember else just exit?
+                                                int count = 1;
+                                                String queryCount = "SELECT COUNT (*) AS count FROM travellers WHERE tardis_id = " + id;
+                                                ResultSet rsCount = statement.executeQuery(queryCount);
+                                                if (rsCount.next()) {
+                                                    count = rsCount.getInt("count");
+                                                }
+                                                if (!save.equals(cl) && (count == plugin.trackTravellers.get(id)))  {
                                                     Location l = Constants.getLocationFromDB(cl, 0, 0);
                                                     newl = Constants.getLocationFromDB(save, 0, 0);
                                                     // remove torch
@@ -324,15 +333,6 @@ public class TARDISPlayerListener implements Listener {
                                                     exitWorld.getChunkAt(exitTardis).load();
                                                 }
                                                 // rebuild blue box
-                                                // need some sort of check here to sort out who has exited
-                                                // count number of travellers - if 1 less than number counted at start
-                                                // then build and remember else just exit?
-                                                int count = 1;
-                                                String queryCount = "SELECT COUNT (*) AS count FROM travellers WHERE tardis_id = " + id;
-                                                ResultSet rsCount = statement.executeQuery(queryCount);
-                                                if (rsCount.next()) {
-                                                    count = rsCount.getInt("count");
-                                                }
                                                 if (newl != null && (count == plugin.trackTravellers.get(id))) {
                                                     plugin.builder.buildOuterTARDIS(id, newl, Constants.COMPASS.valueOf(d), cham, player, false);
                                                 }
