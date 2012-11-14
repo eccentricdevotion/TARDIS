@@ -1,6 +1,10 @@
 package me.eccentric_nz.plugins.TARDIS;
 
 import java.io.IOException;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.Arrays;
 import java.util.Set;
 import org.apache.commons.lang.StringUtils;
@@ -55,6 +59,43 @@ public class TARDISAdminCommands implements CommandExecutor {
                                 sender.sendMessage(ChatColor.AQUA + cname + ": " + ChatColor.RESET + value);
                             }
                         }
+                        return true;
+                    }
+                    if (args[0].equalsIgnoreCase("updatesaves")) {
+                        try {
+                            Connection connection = service.getConnection();
+                            Statement statement = connection.createStatement();
+                            String queryList = "SELECT * FROM tardis";
+                            ResultSet rs = statement.executeQuery(queryList);
+                            while (rs.next()) {
+                                int id = rs.getInt("tardis_id");
+                                String[] saves = new String[3];
+                                saves[0] = rs.getString("save1");
+                                saves[1] = rs.getString("save2");
+                                saves[2] = rs.getString("save3");
+                                for (String str : saves) {
+                                    if (!str.equals("")) {
+                                        String[] namesplit = str.split("~");
+                                        String dn = namesplit[0];
+                                        String[] locsplit = namesplit[1].split(":");
+                                        String w = locsplit[0];
+                                        String x = locsplit[1];
+                                        String y = locsplit[2];
+                                        String z = locsplit[3];
+                                        String queryDest = "INSERT INTO destinations (tardis_id,dest_name,world,x,y,z) VALUES (" + id + ",'" + dn + "','" + w + "'," + x + "," + y + "," + z + ")";
+                                        statement.executeUpdate(queryDest);
+                                    }
+                                }
+                            }
+                            rs.close();
+                            // drop save columns from TARDIS table
+                            String queryDrop = "ALTER TABLE tardis DROP save1, DROP save2, DROP save3";
+                            statement.executeUpdate(queryDrop);
+                            statement.close();
+                        } catch (SQLException e) {
+                            System.err.println(Constants.MY_PLUGIN_NAME + " Console saves to destinations error: " + e);
+                        }
+                        sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + "TARDIS saves updated.");
                         return true;
                     }
                 }
