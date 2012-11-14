@@ -1,6 +1,7 @@
 package me.eccentric_nz.plugins.TARDIS;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -153,8 +154,7 @@ public class TARDISPlayerListener implements Listener {
             } else if (plugin.trackName.containsKey(playerNameStr) && !plugin.trackBlock.containsKey(playerNameStr)) {
                 Location block_loc = block.getLocation();
                 // check if block is in an already defined area
-                TARDISArea ta = new TARDISArea(plugin);
-                if (ta.areaCheckInExisting(block_loc)) {
+                if (plugin.ta.areaCheckInExisting(block_loc)) {
                     String locStr = block_loc.getWorld().getName() + ":" + block_loc.getBlockX() + ":" + block_loc.getBlockZ();
                     plugin.trackBlock.put(playerNameStr, locStr);
                     player.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " You have 60 seconds to select the area end block - use the " + ChatColor.GREEN + "/TARDIS admin area end" + ChatColor.RESET + " command.");
@@ -171,38 +171,42 @@ public class TARDISPlayerListener implements Listener {
             } else if (plugin.trackBlock.containsKey(playerNameStr) && plugin.trackEnd.containsKey(playerNameStr)) {
                 Location block_loc = block.getLocation();
                 // check if block is in an already defined area
-                TARDISArea ta = new TARDISArea(plugin);
-                if (ta.areaCheckInExisting(block_loc)) {
+                if (plugin.ta.areaCheckInExisting(block_loc)) {
                     String[] firstblock = plugin.trackBlock.get(playerNameStr).split(":");
                     if (!block_loc.getWorld().getName().equals(firstblock[0])) {
                         player.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RED + " Area start and end blocks must be in the same world! Try again");
                     }
-                    TARDISUtils utils = new TARDISUtils(plugin);
                     int minx, minz, maxx, maxz;
-                    if (utils.parseNum(firstblock[1]) < block_loc.getBlockX()) {
-                        minx = utils.parseNum(firstblock[1]);
+                    if (plugin.utils.parseNum(firstblock[1]) < block_loc.getBlockX()) {
+                        minx = plugin.utils.parseNum(firstblock[1]);
                         maxx = block_loc.getBlockX();
                     } else {
                         minx = block_loc.getBlockX();
-                        maxx = utils.parseNum(firstblock[1]);
+                        maxx = plugin.utils.parseNum(firstblock[1]);
                     }
-                    if (utils.parseNum(firstblock[2]) < block_loc.getBlockZ()) {
-                        minz = utils.parseNum(firstblock[2]);
+                    if (plugin.utils.parseNum(firstblock[2]) < block_loc.getBlockZ()) {
+                        minz = plugin.utils.parseNum(firstblock[2]);
                         maxz = block_loc.getBlockZ();
                     } else {
                         minz = block_loc.getBlockZ();
-                        maxz = utils.parseNum(firstblock[2]);
+                        maxz = plugin.utils.parseNum(firstblock[2]);
                     }
                     String n = plugin.trackName.get(playerNameStr);
-                    String queryArea = "INSERT INTO areas (area_name, world, minx, minz, maxx, maxz) VALUES ('" + n + "','" + firstblock[0] + "'," + minx + "," + minz + "," + maxx + "," + maxz + ")";
                     try {
                         Connection connection = service.getConnection();
-                        Statement statement = connection.createStatement();
-                        statement.executeUpdate(queryArea);
+                        PreparedStatement psArea = connection.prepareStatement("INSERT INTO areas (area_name, world, minx, minz, maxx, maxz) VALUES (?,?,?,?,?,?)");
+                        psArea.setString(1, n);
+                        psArea.setString(2, firstblock[0]);
+                        psArea.setInt(3, minx);
+                        psArea.setInt(4, minz);
+                        psArea.setInt(5, maxx);
+                        psArea.setInt(6, maxz);
+                        psArea.executeUpdate();
                         player.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " The area [" + plugin.trackName.get(playerNameStr) + "] was saved successfully");
                         plugin.trackName.remove(playerNameStr);
                         plugin.trackBlock.remove(playerNameStr);
                         plugin.trackEnd.remove(playerNameStr);
+                        psArea.close();
                     } catch (SQLException e) {
                         System.err.println(Constants.MY_PLUGIN_NAME + " Area save error: " + e);
                     }
@@ -305,25 +309,32 @@ public class TARDISPlayerListener implements Listener {
                                                 World exitWorld = exitTardis.getWorld();
                                                 // destroy current TARDIS location
                                                 Location newl = null;
-                                                TARDISDestroyer destroyer = new TARDISDestroyer(plugin);
                                                 if (!save.equals(cl)) {
                                                     Location l = Constants.getLocationFromDB(cl, 0, 0);
                                                     newl = Constants.getLocationFromDB(save, 0, 0);
                                                     // remove torch
-                                                    destroyer.destroyTorch(l);
+                                                    plugin.destroyer.destroyTorch(l);
                                                     // remove sign
-                                                    destroyer.destroySign(l, Constants.COMPASS.valueOf(d));
+                                                    plugin.destroyer.destroySign(l, Constants.COMPASS.valueOf(d));
                                                     // remove blue box
-                                                    destroyer.destroyBlueBox(l, Constants.COMPASS.valueOf(d), id);
+                                                    plugin.destroyer.destroyBlueBox(l, Constants.COMPASS.valueOf(d), id);
                                                 }
                                                 // try preloading destination chunk
                                                 while (!exitWorld.getChunkAt(exitTardis).isLoaded()) {
                                                     exitWorld.getChunkAt(exitTardis).load();
                                                 }
                                                 // rebuild blue box
-                                                TARDISBuilder builder = new TARDISBuilder(plugin);
-                                                if (newl != null) {
-                                                    builder.buildOuterTARDIS(id, newl, Constants.COMPASS.valueOf(d), cham, player, false);
+                                                // need some sort of check here to sort out who has exited
+                                                // count number of travellers - if 1 less than number counted at start
+                                                // then build and remember else just exit?
+                                                int count = 1;
+                                                String queryCount = "SELECT COUNT (*) AS count FROM travellers WHERE tardis_id = " + id;
+                                                ResultSet rsCount = statement.executeQuery(queryCount);
+                                                if (rsCount.next()) {
+                                                    count = rsCount.getInt("count");
+                                                }
+                                                if (newl != null && (count == plugin.trackTravellers.get(id))) {
+                                                    plugin.builder.buildOuterTARDIS(id, newl, Constants.COMPASS.valueOf(d), cham, player, false);
                                                 }
                                                 // exit TARDIS!
                                                 tt(player, exitTardis, true, playerWorld, userQuotes);
@@ -332,31 +343,33 @@ public class TARDISPlayerListener implements Listener {
                                                 statement.executeUpdate(queryTraveller);
                                             } else {
                                                 boolean chkCompanion = false;
-                                                boolean TLOnline = false;
                                                 if (!playerNameStr.equals(tl)) {
+                                                    plugin.debug("Player is not the time lord of this TARDIS");
                                                     if (plugin.getServer().getPlayer(tl) != null) {
+                                                        plugin.debug("The time lord of this TARDIS is not online");
                                                         if (companions != null && !companions.equals("") && !companions.equals("[Null]")) {
+                                                            plugin.debug("Found some TARDIS companions");
                                                             // is the timelord in the TARDIS?
                                                             String queryTraveller = "SELECT * FROM travellers WHERE tardis_id = " + id + " AND player = '" + tl + "' LIMIT 1";
                                                             ResultSet timelordIsIn = statement.executeQuery(queryTraveller);
                                                             if (timelordIsIn != null && timelordIsIn.next()) {
+                                                                plugin.debug("The time lord of this TARDIS is inside the TARDIS");
                                                                 // is the player in the comapnion list
                                                                 String[] companionData = companions.split(":");
                                                                 for (String c : companionData) {
                                                                     //String lc_name = c.toLowerCase();
                                                                     if (c.equalsIgnoreCase(playerNameStr)) {
+                                                                        plugin.debug("Player is a companion of this TARDIS");
                                                                         chkCompanion = true;
                                                                         break;
                                                                     }
                                                                 }
                                                             } else {
                                                                 player.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " " + Constants.TIMELORD_NOT_IN);
-                                                                TLOnline = true;
                                                             }
                                                         }
                                                     } else {
                                                         player.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " " + Constants.TIMELORD_OFFLINE);
-                                                        TLOnline = true;
                                                     }
                                                 }
                                                 if (playerNameStr.equals(tl) || chkCompanion == true || player.hasPermission("tardis.skeletonkey")) {
@@ -433,10 +446,6 @@ public class TARDISPlayerListener implements Listener {
                                                             SpoutManager.getSoundManager().playCustomSoundEffect(plugin, SpoutManager.getPlayer(player), "https://dl.dropbox.com/u/53758864/tardis_hum.mp3", false, tardis_loc, 9, 25);
                                                         }
                                                     }
-                                                } else {
-                                                    if (TLOnline == false) {
-                                                        player.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " " + Constants.NOT_OWNER);
-                                                    }
                                                 }
                                             }
                                         }
@@ -488,12 +497,13 @@ public class TARDISPlayerListener implements Listener {
                                 String queryTraveller = "SELECT * FROM travellers WHERE tardis_id = " + id + " AND player = '" + tl + "'";
                                 ResultSet timelordIsIn = statement.executeQuery(queryTraveller);
                                 if (timelordIsIn.next()) {
+                                    // how many travellers are in the TARDIS?
+                                    plugin.utils.updateTravellerCount(id);
                                     if (player.hasPermission("tardis.exile")) {
                                         // get the exile area
-                                        TARDISArea ta = new TARDISArea(plugin);
-                                        String permArea = ta.getExileArea(player);
+                                        String permArea = plugin.ta.getExileArea(player);
                                         player.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RED + " Notice:" + ChatColor.RESET + " Your travel has been restricted to the [" + permArea + "] area!");
-                                        Location l = ta.getNextSpot(permArea);
+                                        Location l = plugin.ta.getNextSpot(permArea);
                                         if (l == null) {
                                             player.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " All available parking spots are taken in this area!");
                                         }
@@ -560,6 +570,7 @@ public class TARDISPlayerListener implements Listener {
                                             if (comps != null && !comps.equals("") && !comps.equals("[Null]")) {
                                                 String[] companions = comps.split(":");
                                                 for (String c : companions) {
+                                                    // are they online - AND are they travelling - need check here for travelling!
                                                     if (plugin.getServer().getPlayer(c) != null) {
                                                         plugin.getServer().getPlayer(c).sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " Destination world: " + rand.getWorld().getName());
                                                     }
@@ -638,6 +649,7 @@ public class TARDISPlayerListener implements Listener {
                                             queryDest = "UPDATE tardis SET save = '" + s.getLine(2) + ":" + coords[0] + ":" + coords[1] + ":" + coords[2] + "' WHERE tardis_id = " + id;
                                         }
                                         statement.executeUpdate(queryDest);
+                                        plugin.utils.updateTravellerCount(id);
                                         player.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " Exit location set");
                                     }
                                     if (event.getAction().equals(Action.RIGHT_CLICK_BLOCK) && !player.isSneaking()) {
