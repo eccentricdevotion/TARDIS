@@ -6,6 +6,7 @@ import com.sk89q.worldguard.domains.DefaultDomain;
 import com.sk89q.worldguard.protection.databases.ProtectionDatabaseException;
 import com.sk89q.worldguard.protection.flags.DefaultFlag;
 import com.sk89q.worldguard.protection.flags.Flag;
+import com.sk89q.worldguard.protection.flags.RegionGroup;
 import com.sk89q.worldguard.protection.flags.StateFlag.State;
 import com.sk89q.worldguard.protection.managers.RegionManager;
 import com.sk89q.worldguard.protection.regions.ProtectedCuboidRegion;
@@ -48,9 +49,10 @@ public class TARDISWorldGuardChecker {
         flags.put(DefaultFlag.BUILD, State.DENY);
         flags.put(DefaultFlag.MOB_SPAWNING, State.DENY);
         flags.put(DefaultFlag.MOB_DAMAGE, State.DENY);
+        flags.put(DefaultFlag.CHEST_ACCESS, RegionGroup.OWNERS);
+        flags.put(DefaultFlag.BUILD, RegionGroup.OWNERS);
         region.setFlags(flags);
         rm.addRegion(region);
-
         try {
             rm.save();
         } catch (ProtectionDatabaseException e) {
