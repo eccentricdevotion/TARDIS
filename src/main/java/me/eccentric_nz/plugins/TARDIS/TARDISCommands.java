@@ -30,7 +30,6 @@ public class TARDISCommands implements CommandExecutor {
         // If the player typed /tardis then do the following...
         // check there is the right number of arguments
         if (cmd.getName().equalsIgnoreCase("tardis")) {
-            TARDISUtils utils = new TARDISUtils(plugin);
             Player player = null;
             if (sender instanceof Player) {
                 player = (Player) sender;
@@ -73,9 +72,9 @@ public class TARDISCommands implements CommandExecutor {
                                 String[] chamData = chamStr.split(":");
                                 World w = plugin.getServer().getWorld(chamData[0]);
                                 Constants.COMPASS d = Constants.COMPASS.valueOf(rs.getString("direction"));
-                                x = utils.parseNum(chamData[1]);
-                                y = utils.parseNum(chamData[2]);
-                                z = utils.parseNum(chamData[3]);
+                                x = plugin.utils.parseNum(chamData[1]);
+                                y = plugin.utils.parseNum(chamData[2]);
+                                z = plugin.utils.parseNum(chamData[3]);
                                 Block chamBlock = w.getBlockAt(x, y, z);
                                 Sign cs = (Sign) chamBlock.getState();
                                 if (args[1].equalsIgnoreCase("on")) {
@@ -138,21 +137,19 @@ public class TARDISCommands implements CommandExecutor {
                     if (player.hasPermission("tardis.timetravel")) {
                         final Location eyeLocation = player.getTargetBlock(null, 50).getLocation();
                         if (plugin.WorldGuardOnServer && plugin.config.getBoolean("respect_worldguard")) {
-                            TARDISWorldGuardChecker wg = new TARDISWorldGuardChecker(plugin);
-                            if (wg.cantBuild(player, eyeLocation)) {
+                            if (plugin.wgchk.cantBuild(player, eyeLocation)) {
                                 sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + "That location is protected by WorldGuard!");
                                 return false;
                             }
                         }
-                        TARDISArea ta = new TARDISArea(plugin);
                         if (player.hasPermission("tardis.exile")) {
-                            String areaPerm = ta.getExileArea(player);
-                            if (ta.areaCheckInExile(areaPerm, eyeLocation)) {
+                            String areaPerm = plugin.ta.getExileArea(player);
+                            if (plugin.ta.areaCheckInExile(areaPerm, eyeLocation)) {
                                 sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + "You exile status does not allow you to bring the TARDIS to this location!");
                                 return false;
                             }
                         }
-                        if (ta.areaCheckLocPlayer(player, eyeLocation)) {
+                        if (plugin.ta.areaCheckLocPlayer(player, eyeLocation)) {
                             sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + "You do not have permission [" + plugin.trackPerm.get(player.getName()) + "] to bring the TARDIS to this location!");
                             plugin.trackPerm.remove(player.getName());
                             return false;
@@ -179,29 +176,29 @@ public class TARDISCommands implements CommandExecutor {
                             String[] saveData = badsave.split(":");
                             World w = plugin.getServer().getWorld(saveData[0]);
                             int x = 0, y = 0, z = 0;
-                            x = utils.parseNum(saveData[1]);
-                            y = utils.parseNum(saveData[2]);
-                            z = utils.parseNum(saveData[3]);
+                            x = plugin.utils.parseNum(saveData[1]);
+                            y = plugin.utils.parseNum(saveData[2]);
+                            z = plugin.utils.parseNum(saveData[3]);
                             final Location oldSave = w.getBlockAt(x, y, z).getLocation();
                             rs.close();
                             String comehere = eyeLocation.getWorld().getName() + ":" + eyeLocation.getBlockX() + ":" + eyeLocation.getBlockY() + ":" + eyeLocation.getBlockZ();
                             String querySave = "UPDATE tardis SET save = '" + comehere + "', current = '" + comehere + "' WHERE tardis_id = " + id;
                             statement.executeUpdate(querySave);
+                            // how many travellers are in the TARDIS?
+                            plugin.utils.updateTravellerCount(id);
                             sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " The TARDIS is coming...");
                             long delay = 100L;
                             if (plugin.getServer().getPluginManager().getPlugin("Spout") != null && SpoutManager.getPlayer(player).isSpoutCraftEnabled()) {
                                 SpoutManager.getSoundManager().playCustomSoundEffect(plugin, SpoutManager.getPlayer(player), "https://dl.dropbox.com/u/53758864/tardis_land.mp3", false, eyeLocation, 9, 75);
                                 delay = 400L;
                             }
-                            final TARDISDestroyer td = new TARDISDestroyer(plugin);
-                            final TARDISBuilder tb = new TARDISBuilder(plugin);
                             Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
                                 @Override
                                 public void run() {
-                                    td.destroySign(oldSave, d);
-                                    td.destroyTorch(oldSave);
-                                    td.destroyBlueBox(oldSave, d, id);
-                                    tb.buildOuterTARDIS(id, eyeLocation, d, cham, p, false);
+                                    plugin.destroyer.destroySign(oldSave, d);
+                                    plugin.destroyer.destroyTorch(oldSave);
+                                    plugin.destroyer.destroyBlueBox(oldSave, d, id);
+                                    plugin.builder.buildOuterTARDIS(id, eyeLocation, d, cham, p, false);
                                 }
                             }, delay);
                             statement.close();
@@ -218,14 +215,12 @@ public class TARDISCommands implements CommandExecutor {
                     if (player.hasPermission("tardis.timetravel")) {
                         Location eyeLocation = player.getTargetBlock(null, 50).getLocation();
                         if (plugin.WorldGuardOnServer && plugin.config.getBoolean("respect_worldguard")) {
-                            TARDISWorldGuardChecker wg = new TARDISWorldGuardChecker(plugin);
-                            if (wg.cantBuild(player, eyeLocation)) {
+                            if (plugin.wgchk.cantBuild(player, eyeLocation)) {
                                 sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + "That location is protected by WorldGuard!");
                                 return false;
                             }
                         }
-                        TARDISArea ta = new TARDISArea(plugin);
-                        if (ta.areaCheckLocPlayer(player, eyeLocation)) {
+                        if (plugin.ta.areaCheckLocPlayer(player, eyeLocation)) {
                             sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + "You do not have permission [" + plugin.trackPerm.get(player.getName()) + "] to set the TARDIS home to this location!");
                             plugin.trackPerm.remove(player.getName());
                             return false;
@@ -319,24 +314,22 @@ public class TARDISCommands implements CommandExecutor {
                         }
                         String[] save_data = save.split(":");
                         w = plugin.getServer().getWorld(save_data[0]);
-                        x = utils.parseNum(save_data[1]);
-                        y = utils.parseNum(save_data[2]);
-                        z = utils.parseNum(save_data[3]);
+                        x = plugin.utils.parseNum(save_data[1]);
+                        y = plugin.utils.parseNum(save_data[2]);
+                        z = plugin.utils.parseNum(save_data[3]);
                         Location l = new Location(w, x, y, z);
                         if (args[0].equalsIgnoreCase("rebuild")) {
-                            TARDISBuilder builder = new TARDISBuilder(plugin);
-                            builder.buildOuterTARDIS(id, l, d, cham, player, true);
+                            plugin.builder.buildOuterTARDIS(id, l, d, cham, player, true);
                             sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " The TARDIS Police Box was rebuilt!");
                             return true;
                         }
                         if (args[0].equalsIgnoreCase("hide")) {
-                            TARDISDestroyer destroyer = new TARDISDestroyer(plugin);
                             // remove torch
-                            destroyer.destroyTorch(l);
+                            plugin.destroyer.destroyTorch(l);
                             // remove sign
-                            destroyer.destroySign(l, d);
+                            plugin.destroyer.destroySign(l, d);
                             // remove blue box
-                            destroyer.destroyBlueBox(l, d, id);
+                            plugin.destroyer.destroyBlueBox(l, d, id);
                             sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " The TARDIS Police Box was hidden! Use " + ChatColor.GREEN + "/tardis rebuild" + ChatColor.RESET + " to show it again.");
                             return true;
                         }
@@ -537,13 +530,14 @@ public class TARDISCommands implements CommandExecutor {
                                 psSave.setInt(1, id);
                                 psSave.setString(2, args[1]);
                                 psSave.setString(3, curDest[0]);
-                                psSave.setInt(4, utils.parseNum(curDest[1]));
-                                psSave.setInt(5, utils.parseNum(curDest[2]));
-                                psSave.setInt(6, utils.parseNum(curDest[3]));
+                                psSave.setInt(4, plugin.utils.parseNum(curDest[1]));
+                                psSave.setInt(5, plugin.utils.parseNum(curDest[2]));
+                                psSave.setInt(6, plugin.utils.parseNum(curDest[3]));
                                 psSave.executeUpdate();
                                 rs.close();
                                 rsTraveller.close();
                                 statement.close();
+                                psSave.close();
                                 sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " The location '" + args[1] + "' was saved successfully.");
                                 return true;
                             }
@@ -580,7 +574,7 @@ public class TARDISCommands implements CommandExecutor {
                             int destID = rsDest.getInt("dest_id");
                             String queryDelete = "DELETE FROM destinations WHERE dest_id = " + destID;
                             statement.executeUpdate(queryDelete);
-                            sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " The destination "+args[1]+" was deleted!");
+                            sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " The destination " + args[1] + " was deleted!");
                             return true;
                         } catch (SQLException e) {
                             System.err.println(Constants.MY_PLUGIN_NAME + " Destination Save Error: " + e);
@@ -614,21 +608,19 @@ public class TARDISCommands implements CommandExecutor {
                                 Block b = player.getTargetBlock(null, 50);
                                 Location l = b.getLocation();
                                 if (plugin.WorldGuardOnServer && plugin.config.getBoolean("respect_worldguard")) {
-                                    TARDISWorldGuardChecker wg = new TARDISWorldGuardChecker(plugin);
-                                    if (wg.cantBuild(player, l)) {
+                                    if (plugin.wgchk.cantBuild(player, l)) {
                                         sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + "That location is protected by WorldGuard!");
                                         return false;
                                     }
                                 }
-                                TARDISArea ta = new TARDISArea(plugin);
                                 if (player.hasPermission("tardis.exile")) {
-                                    String areaPerm = ta.getExileArea(player);
-                                    if (ta.areaCheckInExile(areaPerm, l)) {
+                                    String areaPerm = plugin.ta.getExileArea(player);
+                                    if (plugin.ta.areaCheckInExile(areaPerm, l)) {
                                         sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + "You exile status does not allow you to save the TARDIS to this location!");
                                         return false;
                                     }
                                 }
-                                if (ta.areaCheckLocPlayer(player, l)) {
+                                if (plugin.ta.areaCheckLocPlayer(player, l)) {
                                     sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + "You do not have permission [" + plugin.trackPerm.get(player.getName()) + "] to set the TARDIS destination to this location!");
                                     plugin.trackPerm.remove(player.getName());
                                     return false;
@@ -647,6 +639,7 @@ public class TARDISCommands implements CommandExecutor {
                                 psSetDest.executeUpdate();
                                 rs.close();
                                 statement.close();
+                                psSetDest.close();
                                 sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " The destination '" + args[1] + "' was saved successfully.");
                                 return true;
                             }
@@ -684,15 +677,13 @@ public class TARDISCommands implements CommandExecutor {
                             String queryDoorDirectionUpdate = "UPDATE doors SET door_direction = '" + dir + "' WHERE door_type = 0 AND tardis_id = " + id;
                             statement.executeUpdate(queryDoorDirectionUpdate);
                             World w = plugin.getServer().getWorld(save_data[0]);
-                            int x = utils.parseNum(save_data[1]);
-                            int y = utils.parseNum(save_data[2]);
-                            int z = utils.parseNum(save_data[3]);
+                            int x = plugin.utils.parseNum(save_data[1]);
+                            int y = plugin.utils.parseNum(save_data[2]);
+                            int z = plugin.utils.parseNum(save_data[3]);
                             Location l = new Location(w, x, y, z);
                             Constants.COMPASS d = Constants.COMPASS.valueOf(dir);
-                            TARDISDestroyer destroyer = new TARDISDestroyer(plugin);
-                            destroyer.destroySign(l, old_d);
-                            TARDISBuilder builder = new TARDISBuilder(plugin);
-                            builder.buildOuterTARDIS(id, l, d, cham, player, true);
+                            plugin.destroyer.destroySign(l, old_d);
+                            plugin.builder.buildOuterTARDIS(id, l, d, cham, player, true);
                             rs.close();
                             statement.close();
                             return true;
