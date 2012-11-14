@@ -140,7 +140,6 @@ public class TARDISBuilder {
         int south = wall_block, west = wall_block, north = wall_block, east = wall_block, signx = 0, signz = 0;
         String doorloc = "";
 
-        TARDISUtils utils = new TARDISUtils(plugin);
         try {
             Connection connection = service.getConnection();
             statement = connection.createStatement();
@@ -152,7 +151,7 @@ public class TARDISBuilder {
             switch (d) {
                 case SOUTH:
                     //if (yaw >= 315 || yaw < 45)
-                    utils.setBlockCheck(world, x, down3y, minusz, 35, grey, id); // door is here if player facing south
+                    plugin.utils.setBlockCheck(world, x, down3y, minusz, 35, grey, id); // door is here if player facing south
                     ps.setString(2, world.getBlockAt(x, down3y, minusz).getLocation().toString());
                     doorloc = world.getName() + ":" + x + ":" + down2y + ":" + minusz;
                     sd = 2;
@@ -164,7 +163,7 @@ public class TARDISBuilder {
                     break;
                 case EAST:
                     //if (yaw >= 225 && yaw < 315)
-                    utils.setBlockCheck(world, minusx, down3y, z, 35, grey, id); // door is here if player facing east
+                    plugin.utils.setBlockCheck(world, minusx, down3y, z, 35, grey, id); // door is here if player facing east
                     ps.setString(2, world.getBlockAt(minusx, down3y, z).getLocation().toString());
                     doorloc = world.getName() + ":" + minusx + ":" + down2y + ":" + z;
                     sd = 4;
@@ -176,7 +175,7 @@ public class TARDISBuilder {
                     break;
                 case NORTH:
                     //if (yaw >= 135 && yaw < 225)
-                    utils.setBlockCheck(world, x, down3y, plusz, 35, grey, id); // door is here if player facing north
+                    plugin.utils.setBlockCheck(world, x, down3y, plusz, 35, grey, id); // door is here if player facing north
                     ps.setString(2, world.getBlockAt(x, down3y, plusz).getLocation().toString());
                     doorloc = world.getName() + ":" + x + ":" + down2y + ":" + plusz;
                     sd = 3;
@@ -188,7 +187,7 @@ public class TARDISBuilder {
                     break;
                 case WEST:
                     //if (yaw >= 45 && yaw < 135)
-                    utils.setBlockCheck(world, plusx, down3y, z, 35, grey, id); // door is here if player facing west
+                    plugin.utils.setBlockCheck(world, plusx, down3y, z, 35, grey, id); // door is here if player facing west
                     ps.setString(2, world.getBlockAt(plusx, down3y, z).getLocation().toString());
                     doorloc = world.getName() + ":" + plusx + ":" + down2y + ":" + z;
                     sd = 5;
@@ -213,66 +212,66 @@ public class TARDISBuilder {
             statement.executeUpdate(queryDoor);
 
             // bottom layer corners
-            utils.setBlockAndRemember(world, plusx, down2y, plusz, wall_block, chameleonData, id, rebuild);
-            utils.setBlockAndRemember(world, minusx, down2y, plusz, wall_block, chameleonData, id, rebuild);
-            utils.setBlockAndRemember(world, minusx, down2y, minusz, wall_block, chameleonData, id, rebuild);
-            utils.setBlockAndRemember(world, plusx, down2y, minusz, wall_block, chameleonData, id, rebuild);
+            plugin.utils.setBlockAndRemember(world, plusx, down2y, plusz, wall_block, chameleonData, id, rebuild);
+            plugin.utils.setBlockAndRemember(world, minusx, down2y, plusz, wall_block, chameleonData, id, rebuild);
+            plugin.utils.setBlockAndRemember(world, minusx, down2y, minusz, wall_block, chameleonData, id, rebuild);
+            plugin.utils.setBlockAndRemember(world, plusx, down2y, minusz, wall_block, chameleonData, id, rebuild);
             // middle layer corners
-            utils.setBlockAndRemember(world, plusx, minusy, plusz, wall_block, chameleonData, id, rebuild);
-            utils.setBlockAndRemember(world, minusx, minusy, plusz, wall_block, chameleonData, id, rebuild);
-            utils.setBlockAndRemember(world, minusx, minusy, minusz, wall_block, chameleonData, id, rebuild);
-            utils.setBlockAndRemember(world, plusx, minusy, minusz, wall_block, chameleonData, id, rebuild);
+            plugin.utils.setBlockAndRemember(world, plusx, minusy, plusz, wall_block, chameleonData, id, rebuild);
+            plugin.utils.setBlockAndRemember(world, minusx, minusy, plusz, wall_block, chameleonData, id, rebuild);
+            plugin.utils.setBlockAndRemember(world, minusx, minusy, minusz, wall_block, chameleonData, id, rebuild);
+            plugin.utils.setBlockAndRemember(world, plusx, minusy, minusz, wall_block, chameleonData, id, rebuild);
             // top layer
             switch (wall_block) {
                 case 18:
-                    utils.setBlockAndRemember(world, x, y, z, 17, chameleonData, id, rebuild);
+                    plugin.utils.setBlockAndRemember(world, x, y, z, 17, chameleonData, id, rebuild);
                     break;
                 case 46:
-                    utils.setBlockAndRemember(world, x, y, z, 35, (byte) 14, id, rebuild);
+                    plugin.utils.setBlockAndRemember(world, x, y, z, 35, (byte) 14, id, rebuild);
                     break;
                 case 79:
-                    utils.setBlockAndRemember(world, x, y, z, 35, (byte) 3, id, rebuild);
+                    plugin.utils.setBlockAndRemember(world, x, y, z, 35, (byte) 3, id, rebuild);
                     break;
                 case 89:
-                    utils.setBlockAndRemember(world, x, y, z, 35, (byte) 4, id, rebuild);
+                    plugin.utils.setBlockAndRemember(world, x, y, z, 35, (byte) 4, id, rebuild);
                     break;
                 default:
-                    utils.setBlockAndRemember(world, x, y, z, wall_block, chameleonData, id, rebuild);
+                    plugin.utils.setBlockAndRemember(world, x, y, z, wall_block, chameleonData, id, rebuild);
                     break;
             }
-            utils.setBlockAndRemember(world, plusx, y, z, wall_block, chameleonData, id, rebuild); // east
-            utils.setBlockAndRemember(world, plusx, y, plusz, wall_block, chameleonData, id, rebuild);
-            utils.setBlockAndRemember(world, x, y, plusz, wall_block, chameleonData, id, rebuild); // south
-            utils.setBlockAndRemember(world, minusx, y, plusz, wall_block, chameleonData, id, rebuild);
-            utils.setBlockAndRemember(world, minusx, y, z, wall_block, chameleonData, id, rebuild); // west
-            utils.setBlockAndRemember(world, minusx, y, minusz, wall_block, chameleonData, id, rebuild);
-            utils.setBlockAndRemember(world, x, y, minusz, wall_block, chameleonData, id, rebuild); // north
-            utils.setBlockAndRemember(world, plusx, y, minusz, wall_block, chameleonData, id, rebuild);
+            plugin.utils.setBlockAndRemember(world, plusx, y, z, wall_block, chameleonData, id, rebuild); // east
+            plugin.utils.setBlockAndRemember(world, plusx, y, plusz, wall_block, chameleonData, id, rebuild);
+            plugin.utils.setBlockAndRemember(world, x, y, plusz, wall_block, chameleonData, id, rebuild); // south
+            plugin.utils.setBlockAndRemember(world, minusx, y, plusz, wall_block, chameleonData, id, rebuild);
+            plugin.utils.setBlockAndRemember(world, minusx, y, z, wall_block, chameleonData, id, rebuild); // west
+            plugin.utils.setBlockAndRemember(world, minusx, y, minusz, wall_block, chameleonData, id, rebuild);
+            plugin.utils.setBlockAndRemember(world, x, y, minusz, wall_block, chameleonData, id, rebuild); // north
+            plugin.utils.setBlockAndRemember(world, plusx, y, minusz, wall_block, chameleonData, id, rebuild);
             // set sign
-            utils.setBlock(world, signx, y, signz, 68, sd);
+            plugin.utils.setBlock(world, signx, y, signz, 68, sd);
             Sign s = (Sign) world.getBlockAt(signx, y, signz).getState();
             s.setLine(1, "¤fPOLICE");
             s.setLine(2, "¤fBOX");
             s.update();
             // put torch on top
             if (wall_block == 79) {
-                utils.setBlockAndRemember(world, x, plusy, z, 76, (byte) 5, id, rebuild);
+                plugin.utils.setBlockAndRemember(world, x, plusy, z, 76, (byte) 5, id, rebuild);
             } else {
-                utils.setBlockAndRemember(world, x, plusy, z, 50, (byte) 5, id, rebuild);
+                plugin.utils.setBlockAndRemember(world, x, plusy, z, 50, (byte) 5, id, rebuild);
             }
             // remove the IRON & LAPIS blocks
-            utils.setBlock(world, x, minusy, z, 0, norm);
-            utils.setBlock(world, x, down2y, z, 0, norm);
+            plugin.utils.setBlock(world, x, minusy, z, 0, norm);
+            plugin.utils.setBlock(world, x, down2y, z, 0, norm);
             // bottom layer with door bottom
-            utils.setBlockAndRemember(world, plusx, down2y, z, west, bdw, id, rebuild);
-            utils.setBlockAndRemember(world, x, down2y, plusz, north, bdn, id, rebuild);
-            utils.setBlockAndRemember(world, minusx, down2y, z, east, bde, id, rebuild);
-            utils.setBlockAndRemember(world, x, down2y, minusz, south, bds, id, rebuild);
+            plugin.utils.setBlockAndRemember(world, plusx, down2y, z, west, bdw, id, rebuild);
+            plugin.utils.setBlockAndRemember(world, x, down2y, plusz, north, bdn, id, rebuild);
+            plugin.utils.setBlockAndRemember(world, minusx, down2y, z, east, bde, id, rebuild);
+            plugin.utils.setBlockAndRemember(world, x, down2y, minusz, south, bds, id, rebuild);
             // middle layer with door top
-            utils.setBlockAndRemember(world, plusx, minusy, z, west, mdw, id, rebuild);
-            utils.setBlockAndRemember(world, x, minusy, plusz, north, mdn, id, rebuild);
-            utils.setBlockAndRemember(world, minusx, minusy, z, east, mde, id, rebuild);
-            utils.setBlockAndRemember(world, x, minusy, minusz, south, mds, id, rebuild);
+            plugin.utils.setBlockAndRemember(world, plusx, minusy, z, west, mdw, id, rebuild);
+            plugin.utils.setBlockAndRemember(world, x, minusy, plusz, north, mdn, id, rebuild);
+            plugin.utils.setBlockAndRemember(world, minusx, minusy, z, east, mde, id, rebuild);
+            plugin.utils.setBlockAndRemember(world, x, minusy, minusz, south, mds, id, rebuild);
             // add platform if configured and necessary
             if (plugin.config.getBoolean("platform") == Boolean.valueOf("true")) {
                 // check if user has platform pref
@@ -304,7 +303,7 @@ public class TARDISBuilder {
                     for (Block pb : platform_blocks) {
                         Material mat = pb.getType();
                         if (mat == Material.AIR || mat == Material.STATIONARY_WATER || mat == Material.WATER || mat == Material.VINE || mat == Material.RED_MUSHROOM || mat == Material.BROWN_MUSHROOM || mat == Material.LONG_GRASS || mat == Material.SAPLING || mat == Material.DEAD_BUSH || mat == Material.RED_ROSE || mat == Material.YELLOW_FLOWER) {
-                            utils.setBlock(world, pb.getX(), pb.getY(), pb.getZ(), 35, grey);
+                            plugin.utils.setBlock(world, pb.getX(), pb.getY(), pb.getZ(), 35, grey);
                             String p_tmp = world.getName() + ":" + pb.getX() + ":" + pb.getY() + ":" + pb.getZ() + ":" + mat.toString();
                             sb.append(p_tmp).append("~");
                         }
@@ -356,8 +355,7 @@ public class TARDISBuilder {
         HashMap<Block, Byte> postTorchBlocks = new HashMap<Block, Byte>();
         HashMap<Block, Byte> postSignBlocks = new HashMap<Block, Byte>();
         // calculate startx, starty, startz
-        TARDISUtils utils = new TARDISUtils(plugin);
-        int gsl[] = utils.getStartLocation(dbID, d);
+        int gsl[] = plugin.utils.getStartLocation(dbID, d);
         startx = gsl[0];
         resetx = gsl[1];
         startz = gsl[2];
@@ -386,7 +384,7 @@ public class TARDISBuilder {
                             sb.append(replacedMaterialId).append(":");
                         }
                     }
-                    utils.setBlock(world, startx, starty, startz, 0, (byte) 0);
+                    plugin.utils.setBlock(world, startx, starty, startz, 0, (byte) 0);
                     startx += x;
                 }
                 startx = resetx;
@@ -421,7 +419,7 @@ public class TARDISBuilder {
                         if (!tmp.equals("-")) {
                             if (tmp.contains(":")) {
                                 String[] iddata = tmp.split(":");
-                                id = utils.parseNum(iddata[0]);
+                                id = plugin.utils.parseNum(iddata[0]);
                                 data = Byte.parseByte(iddata[1]);
                                 if (id == 54) { // chest
                                     // remember the location of this chest
@@ -462,10 +460,10 @@ public class TARDISBuilder {
                                     }
                                 }
                             } else {
-                                id = utils.parseNum(tmp);
+                                id = plugin.utils.parseNum(tmp);
                                 data = 0;
                             }
-                            //utils.setBlock(World w, int x, int y, int z, int m, byte d)
+                            //plugin.utils.setBlock(World w, int x, int y, int z, int m, byte d)
                             // if its the door, don't set it just remember its block then do it at the end
                             if (id == 71) {
                                 postDoorBlocks.put(world.getBlockAt(startx, starty, startz), data);
@@ -474,7 +472,7 @@ public class TARDISBuilder {
                             } else if (id == 68) {
                                 postSignBlocks.put(world.getBlockAt(startx, starty, startz), data);
                             } else {
-                                utils.setBlock(world, startx, starty, startz, id, data);
+                                plugin.utils.setBlock(world, startx, starty, startz, id, data);
                             }
                         }
                         startx += x;
@@ -522,9 +520,9 @@ public class TARDISBuilder {
                     String saved_chestloc = chestRS.getString("chest");
                     String[] cdata = saved_chestloc.split(":");
                     World cw = plugin.getServer().getWorld(cdata[0]);
-                    cx = utils.parseNum(cdata[1]);
-                    cy = utils.parseNum(cdata[2]);
-                    cz = utils.parseNum(cdata[3]);
+                    cx = plugin.utils.parseNum(cdata[1]);
+                    cy = plugin.utils.parseNum(cdata[2]);
+                    cz = plugin.utils.parseNum(cdata[3]);
                     Location chest_loc = new Location(cw, cx, cy, cz);
                     Block bonus_chest = chest_loc.getBlock();
                     Chest chest = (Chest) bonus_chest.getState();
@@ -532,7 +530,7 @@ public class TARDISBuilder {
                     Inventory chestInv = chest.getInventory();
                     // convert non-smeltable ores to items
                     for (String i : replaceddata) {
-                        rid = utils.parseNum(i);
+                        rid = plugin.utils.parseNum(i);
                         switch (rid) {
                             case 1: // stone to cobblestone
                                 rid = 4;
@@ -572,8 +570,7 @@ public class TARDISBuilder {
         }
         TARDISWorldGuardChecker wgchk;
         if (plugin.WorldGuardOnServer && plugin.config.getBoolean("use_worldguard")) {
-            wgchk = new TARDISWorldGuardChecker(plugin);
-            wgchk.addWGProtection(p, wg1, wg2);
+            plugin.wgchk.addWGProtection(p, wg1, wg2);
         }
     }
 }

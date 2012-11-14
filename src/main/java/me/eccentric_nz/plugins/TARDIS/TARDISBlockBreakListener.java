@@ -118,10 +118,9 @@ public class TARDISBlockBreakListener implements Listener {
                             int cwx = 0, cwz = 0;
                             // don't drop the sign
                             //block.getDrops().clear();
-                            TARDISDestroyer destroyer = new TARDISDestroyer(plugin);
                             // clear the torch
-                            destroyer.destroyTorch(bb_loc);
-                            destroyer.destroySign(bb_loc, d);
+                            plugin.destroyer.destroyTorch(bb_loc);
+                            plugin.destroyer.destroySign(bb_loc, d);
                             // also remove the location of the chunk from chunks table
                             String[] chunkworld = chunkLoc.split(":");
                             World cw = plugin.getServer().getWorld(chunkworld[0]);
@@ -140,12 +139,12 @@ public class TARDISBlockBreakListener implements Listener {
                             //String queryDeleteChunk = "DELETE FROM chunks WHERE world = '" + chunkworld[0] + "' AND x = " + chunkworld[1] + " AND z = " + chunkworld[2];
                             String queryDeleteChunk = "DELETE FROM chunks WHERE tardis_id = " + id;
                             statement.executeUpdate(queryDeleteChunk);
-                            destroyer.destroyTARDIS(schm, id, cw, d, restore);
+                            plugin.destroyer.destroyTARDIS(schm, id, cw, d, restore);
                             if (cw.getWorldType() == WorldType.FLAT) {
                                 // replace stone blocks with AIR
-                                destroyer.destroyTARDIS(schm, id, cw, d, 0);
+                                plugin.destroyer.destroyTARDIS(schm, id, cw, d, 0);
                             }
-                            destroyer.destroyBlueBox(bb_loc, d, id);
+                            plugin.destroyer.destroyBlueBox(bb_loc, d, id);
                             // remove record from tardis table
                             String queryDeleteTardis = "DELETE FROM tardis WHERE tardis_id = " + id;
                             statement.executeUpdate(queryDeleteTardis);
@@ -155,8 +154,7 @@ public class TARDISBlockBreakListener implements Listener {
                             player.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " The TARDIS was removed from the world and database successfully.");
                             // remove world guard region protection
                             if (plugin.WorldGuardOnServer && plugin.config.getBoolean("use_worldguard")) {
-                                TARDISWorldGuardChecker wgchk = new TARDISWorldGuardChecker(plugin);
-                                wgchk.removeRegion(cw, owner);
+                                plugin.wgchk.removeRegion(cw, owner);
                             }
                         } else {
                             // cancel the event because it's not the player's TARDIS

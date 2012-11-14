@@ -17,7 +17,6 @@ public class TARDISExplosionListener implements Listener {
 
     private TARDIS plugin;
     TARDISDatabase service = TARDISDatabase.getInstance();
-    TARDISUtils utils = new TARDISUtils(plugin);
 
     public TARDISExplosionListener(TARDIS plugin) {
         this.plugin = plugin;
@@ -44,9 +43,9 @@ public class TARDISExplosionListener implements Listener {
                     String[] xStr = loc_tmp[1].split("=");
                     String[] yStr = loc_tmp[2].split("=");
                     String[] zStr = loc_tmp[3].split("=");
-                    int x = utils.parseNum(xStr[1].substring(0, (xStr[1].length() - 2)));
-                    int y = utils.parseNum(yStr[1].substring(0, (yStr[1].length() - 2)));
-                    int z = utils.parseNum(zStr[1].substring(0, (zStr[1].length() - 2)));
+                    int x = plugin.utils.parseNum(xStr[1].substring(0, (xStr[1].length() - 2)));
+                    int y = plugin.utils.parseNum(yStr[1].substring(0, (yStr[1].length() - 2)));
+                    int z = plugin.utils.parseNum(zStr[1].substring(0, (zStr[1].length() - 2)));
                     Block block = w.getBlockAt(x, y, z);
                     // if the block is a TARDIS block then remove it
                     if (e.blockList().contains(block)) {
@@ -62,9 +61,9 @@ public class TARDISExplosionListener implements Listener {
                             plugin.debug("Could not get COMPASS value from door_direction: " + dir);
                             d = Constants.COMPASS.EAST;
                         }
-                        int dx = utils.parseNum(doorLoc[1]);
-                        int dy = utils.parseNum(doorLoc[2]);
-                        int dz = utils.parseNum(doorLoc[3]);
+                        int dx = plugin.utils.parseNum(doorLoc[1]);
+                        int dy = plugin.utils.parseNum(doorLoc[2]);
+                        int dz = plugin.utils.parseNum(doorLoc[3]);
                         Block door_bottom = w.getBlockAt(dx, dy, dz);
                         Block door_under = door_bottom.getRelative(BlockFace.DOWN);
                         Block door_top = door_bottom.getRelative(BlockFace.UP);

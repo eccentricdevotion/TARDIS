@@ -83,11 +83,10 @@ public class TARDISTimetravel {
             }
             i = i + 1;
         }
-        TARDISWorldGuardChecker wgchk = null;
-        if (plugin.WorldGuardOnServer) {
-            wgchk = new TARDISWorldGuardChecker(plugin);
-        }
-        TARDISArea ta = new TARDISArea(plugin);
+//        TARDISWorldGuardChecker wgchk = null;
+//        if (plugin.WorldGuardOnServer) {
+//            wgchk = plugin.wgchk;
+//        }
         if (randworld.getEnvironment().equals(Environment.NETHER)) {
             while (danger == true) {
                 wherex = randomX(rand, range, quarter, rx, ry, max);
@@ -110,10 +109,10 @@ public class TARDISTimetravel {
                 if (highest > 40) {
                     Block currentBlock = randworld.getBlockAt(wherex, highest, wherez);
                     Location chunk_loc = currentBlock.getLocation();
-                    if (plugin.WorldGuardOnServer && wgchk.cantBuild(p, chunk_loc) && plugin.config.getBoolean("respect_worldguard")) {
+                    if (plugin.WorldGuardOnServer && plugin.wgchk.cantBuild(p, chunk_loc) && plugin.config.getBoolean("respect_worldguard")) {
                         count = 1;
                     }
-                    if (ta.areaCheckLocPlayer(p, chunk_loc)) {
+                    if (plugin.ta.areaCheckLocPlayer(p, chunk_loc)) {
                         plugin.trackPerm.remove(p.getName());
                         count = 1;
                     }
@@ -156,10 +155,10 @@ public class TARDISTimetravel {
                             currentBlock = currentBlock.getRelative(BlockFace.DOWN);
                         }
                         Location chunk_loc = currentBlock.getLocation();
-                        if (plugin.WorldGuardOnServer && wgchk.cantBuild(p, chunk_loc) && plugin.config.getBoolean("respect_worldguard")) {
+                        if (plugin.WorldGuardOnServer && plugin.wgchk.cantBuild(p, chunk_loc) && plugin.config.getBoolean("respect_worldguard")) {
                             count = 1;
                         }
-                        if (ta.areaCheckLocPlayer(p, chunk_loc)) {
+                        if (plugin.ta.areaCheckLocPlayer(p, chunk_loc)) {
                             plugin.trackPerm.remove(p.getName());
                             count = 1;
                         }

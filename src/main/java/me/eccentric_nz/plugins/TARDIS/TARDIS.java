@@ -7,7 +7,6 @@ import java.util.List;
 import java.util.Set;
 import org.bukkit.Bukkit;
 import org.bukkit.World;
-import org.bukkit.World.Environment;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.event.Listener;
@@ -41,6 +40,11 @@ public class TARDIS extends JavaPlugin implements Listener {
     public short[] biggerdimensions = new short[3];
     public short[] deluxedimensions = new short[3];
     protected static TARDIS plugin;
+    TARDISUtils utils = new TARDISUtils(this);
+    TARDISBuilder builder = new TARDISBuilder(this);
+    TARDISDestroyer destroyer = new TARDISDestroyer(this);
+    TARDISArea ta = new TARDISArea(this);
+    TARDISWorldGuardChecker wgchk;
     TARDISBlockPlaceListener tardisBlockPlaceListener = new TARDISBlockPlaceListener(this);
     TARDISBlockBreakListener tardisBlockBreakListener = new TARDISBlockBreakListener(this);
     TARDISPlayerListener tardisPlayerListener = new TARDISPlayerListener(this);
@@ -55,6 +59,7 @@ public class TARDIS extends JavaPlugin implements Listener {
     public HashMap<String, String> trackEnd = new HashMap<String, String>();
     public HashMap<String, String> trackPerm = new HashMap<String, String>();
     public HashMap<String, String> trackDest = new HashMap<String, String>();
+    public HashMap<Integer, Integer> trackTravellers = new HashMap<Integer, Integer>();
     private static ArrayList<String> quotes = new ArrayList<String>();
     public ArrayList<String> quote;
     public int quotelen;
@@ -164,6 +169,7 @@ public class TARDIS extends JavaPlugin implements Listener {
         }
         if (getServer().getPluginManager().getPlugin("WorldGuard") != null) {
             WorldGuardOnServer = true;
+            wgchk = new TARDISWorldGuardChecker(this);
         }
     }
 

@@ -40,8 +40,6 @@ public class TARDISTravelCommands implements CommandExecutor {
                     sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " Too few command arguments!");
                     return false;
                 }
-                TARDISUtils utils = new TARDISUtils(plugin);
-                TARDISArea ta = new TARDISArea(plugin);
                 TARDISTimetravel tt = new TARDISTimetravel(plugin);
                 // get tardis_id & direction
                 try {
@@ -58,9 +56,9 @@ public class TARDISTravelCommands implements CommandExecutor {
                     rs.close();
                     if (player.hasPermission("tardis.exile")) {
                         // get the exile area
-                        String permArea = ta.getExileArea(player);
+                        String permArea = plugin.ta.getExileArea(player);
                         player.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RED + " Notice:" + ChatColor.RESET + " Your travel has been restricted to the [" + permArea + "] area!");
-                        Location l = ta.getNextSpot(permArea);
+                        Location l = plugin.ta.getNextSpot(permArea);
                         if (l == null) {
                             player.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " All available parking spots are taken in this area!");
                         }
@@ -75,6 +73,7 @@ public class TARDISTravelCommands implements CommandExecutor {
                                 String querySave = "UPDATE tardis SET save = home WHERE tardis_id = " + id;
                                 statement.executeUpdate(querySave);
                                 sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " Home location loaded succesfully. Please exit the TARDIS!");
+                                plugin.utils.updateTravellerCount(id);
                                 return true;
                             } else {
                                 if (plugin.getServer().getPlayer(args[0]) == null) {
@@ -91,20 +90,19 @@ public class TARDISTravelCommands implements CommandExecutor {
                                     return false;
                                 }
                                 if (plugin.WorldGuardOnServer && plugin.config.getBoolean("respect_worldguard")) {
-                                    TARDISWorldGuardChecker wg = new TARDISWorldGuardChecker(plugin);
-                                    if (wg.cantBuild(player, player_loc)) {
+                                    if (plugin.wgchk.cantBuild(player, player_loc)) {
                                         sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + "That location is protected by WorldGuard!");
                                         return false;
                                     }
                                 }
                                 if (player.hasPermission("tardis.exile")) {
-                                    String areaPerm = ta.getExileArea(player);
-                                    if (ta.areaCheckInExile(areaPerm, player_loc)) {
+                                    String areaPerm = plugin.ta.getExileArea(player);
+                                    if (plugin.ta.areaCheckInExile(areaPerm, player_loc)) {
                                         sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + "You exile status does not allow you to go to this player's location!");
                                         return false;
                                     }
                                 }
-                                if (ta.areaCheckLocPlayer(player, player_loc)) {
+                                if (plugin.ta.areaCheckLocPlayer(player, player_loc)) {
                                     sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + "You do not have permission [" + plugin.trackPerm.get(player.getName()) + "] to bring the TARDIS to this location!");
                                     plugin.trackPerm.remove(player.getName());
                                     return false;
@@ -113,6 +111,7 @@ public class TARDISTravelCommands implements CommandExecutor {
                                 String querySave = "UPDATE tardis SET save = '" + save_loc + "' WHERE tardis_id = " + id;
                                 statement.executeUpdate(querySave);
                                 sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " The player location was saved succesfully. Please exit the TARDIS!");
+                                plugin.utils.updateTravellerCount(id);
                                 return true;
                             }
                         }
@@ -128,6 +127,7 @@ public class TARDISTravelCommands implements CommandExecutor {
                             String querySave = "UPDATE tardis SET save = '" + save_loc + "' WHERE tardis_id = " + id;
                             statement.executeUpdate(querySave);
                             sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " The specified location was set succesfully. Please exit the TARDIS!");
+                            plugin.utils.updateTravellerCount(id);
                             return true;
                         }
                         if (args.length == 2 && args[0].equalsIgnoreCase("area")) {
@@ -142,7 +142,7 @@ public class TARDISTravelCommands implements CommandExecutor {
                                 sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + "You do not have permission [tardis.area." + args[1] + "] to send the TARDIS to this location!");
                                 return false;
                             }
-                            Location l = ta.getNextSpot(rsArea.getString("area_name"));
+                            Location l = plugin.ta.getNextSpot(rsArea.getString("area_name"));
                             if (l == null) {
                                 sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " All available parking spots are taken in this area!");
                                 return false;
@@ -151,6 +151,7 @@ public class TARDISTravelCommands implements CommandExecutor {
                             String querySave = "UPDATE tardis SET save = '" + save_loc + "' WHERE tardis_id = " + id;
                             statement.executeUpdate(querySave);
                             sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " Your TARDIS was approved for parking in [" + args[1] + "]!");
+                            plugin.utils.updateTravellerCount(id);
                             return true;
                         }
                         if (args.length > 2 && args.length < 4) {
@@ -161,26 +162,25 @@ public class TARDISTravelCommands implements CommandExecutor {
                             // must be a location then
                             int x = 0, y = 0, z = 0;
                             World w = plugin.getServer().getWorld(args[0]);
-                            x = utils.parseNum(args[1]);
-                            y = utils.parseNum(args[2]);
-                            z = utils.parseNum(args[3]);
+                            x = plugin.utils.parseNum(args[1]);
+                            y = plugin.utils.parseNum(args[2]);
+                            z = plugin.utils.parseNum(args[3]);
                             Block block = w.getBlockAt(x, y, z);
                             Location location = block.getLocation();
                             if (plugin.WorldGuardOnServer && plugin.config.getBoolean("respect_worldguard")) {
-                                TARDISWorldGuardChecker wg = new TARDISWorldGuardChecker(plugin);
-                                if (wg.cantBuild(player, location)) {
+                                if (plugin.wgchk.cantBuild(player, location)) {
                                     sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + "That location is protected by WorldGuard!");
                                     return false;
                                 }
                             }
                             if (player.hasPermission("tardis.exile")) {
-                                String areaPerm = ta.getExileArea(player);
-                                if (ta.areaCheckInExile(areaPerm, location)) {
+                                String areaPerm = plugin.ta.getExileArea(player);
+                                if (plugin.ta.areaCheckInExile(areaPerm, location)) {
                                     sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + "You exile status does not allow you to bring the TARDIS to this location!");
                                     return false;
                                 }
                             }
-                            if (ta.areaCheckLocPlayer(player, location)) {
+                            if (plugin.ta.areaCheckLocPlayer(player, location)) {
                                 sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + "You do not have permission [" + plugin.trackPerm.get(player.getName()) + "] to send the TARDIS to this location!");
                                 plugin.trackPerm.remove(player.getName());
                                 return false;
@@ -196,6 +196,7 @@ public class TARDISTravelCommands implements CommandExecutor {
                                 String querySave = "UPDATE tardis SET save = '" + save_loc + "' WHERE tardis_id = " + id;
                                 statement.executeUpdate(querySave);
                                 sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " The specified location was saved succesfully. Please exit the TARDIS!");
+                                plugin.utils.updateTravellerCount(id);
                                 return true;
                             }
                         }

@@ -43,8 +43,7 @@ public class TARDISDestroyer {
         // inner TARDIS
         int level, row, col, x, y, z, startx, starty = (14 + h), startz, resetx, resetz;
         // calculate startx, starty, startz
-        TARDISUtils utils = new TARDISUtils(plugin);
-        int gsl[] = utils.getStartLocation(id, d);
+        int gsl[] = plugin.utils.getStartLocation(id, d);
         startx = gsl[0];
         resetx = gsl[1];
         startz = gsl[2];
@@ -69,7 +68,7 @@ public class TARDISDestroyer {
                         fur.getInventory().clear();
                     }
                     if (m != Material.CHEST) {
-                        utils.setBlock(w, startx, starty, startz, i, (byte) 0);
+                        plugin.utils.setBlock(w, startx, starty, startz, i, (byte) 0);
                     }
                     startx += x;
                 }
@@ -92,11 +91,10 @@ public class TARDISDestroyer {
         int rbz = sbz;
         int gbz = sbz;
         // remove blue wool and door
-        TARDISUtils utils = new TARDISUtils(plugin);
         for (int yy = 0; yy < 3; yy++) {
             for (int xx = 0; xx < 3; xx++) {
                 for (int zz = 0; zz < 3; zz++) {
-                    utils.setBlock(w, sbx, sby, sbz, 0, (byte) 0);
+                    plugin.utils.setBlock(w, sbx, sby, sbz, 0, (byte) 0);
                     sbx++;
                 }
                 sbx = rbx;
@@ -118,10 +116,10 @@ public class TARDISDestroyer {
                     World rw = plugin.getServer().getWorld(parts[0]);
                     int rx, ry, rz, rID;
                     byte rb = 0;
-                    rx = utils.parseNum(parts[1]);
-                    ry = utils.parseNum(parts[2]);
-                    rz = utils.parseNum(parts[3]);
-                    rID = utils.parseNum(parts[4]);
+                    rx = plugin.utils.parseNum(parts[1]);
+                    ry = plugin.utils.parseNum(parts[2]);
+                    rz = plugin.utils.parseNum(parts[3]);
+                    rID = plugin.utils.parseNum(parts[4]);
                     try {
                         rb = Byte.valueOf(parts[5]);
                     } catch (NumberFormatException nfe) {
@@ -177,10 +175,10 @@ public class TARDISDestroyer {
                     String[] xStr = loc_data[1].split("=");
                     String[] yStr = loc_data[2].split("=");
                     String[] zStr = loc_data[3].split("=");
-                    int rx = utils.parseNum(xStr[1].substring(0, (xStr[1].length() - 2)));
-                    int ry = utils.parseNum(yStr[1].substring(0, (yStr[1].length() - 2)));
-                    int rz = utils.parseNum(zStr[1].substring(0, (zStr[1].length() - 2)));
-                    utils.setBlock(w, rx, ry, rz, bID, data);
+                    int rx = plugin.utils.parseNum(xStr[1].substring(0, (xStr[1].length() - 2)));
+                    int ry = plugin.utils.parseNum(yStr[1].substring(0, (yStr[1].length() - 2)));
+                    int rz = plugin.utils.parseNum(zStr[1].substring(0, (zStr[1].length() - 2)));
+                    plugin.utils.setBlock(w, rx, ry, rz, bID, data);
                 }
             }
             // remove protected blocks from the blocks table
@@ -193,7 +191,6 @@ public class TARDISDestroyer {
     }
 
     public void destroySign(Location l, Constants.COMPASS d) {
-        TARDISUtils utils = new TARDISUtils(plugin);
         World w = l.getWorld();
         int signx = 0, signz = 0;
         switch (d) {
@@ -215,15 +212,14 @@ public class TARDISDestroyer {
                 break;
         }
         int signy = 2;
-        utils.setBlock(w, l.getBlockX() + signx, l.getBlockY() + signy, l.getBlockZ() + signz, 0, (byte) 0);
+        plugin.utils.setBlock(w, l.getBlockX() + signx, l.getBlockY() + signy, l.getBlockZ() + signz, 0, (byte) 0);
     }
 
     public void destroyTorch(Location l) {
-        TARDISUtils utils = new TARDISUtils(plugin);
         World w = l.getWorld();
         int tx = l.getBlockX();
         int ty = l.getBlockY() + 3;
         int tz = l.getBlockZ();
-        utils.setBlock(w, tx, ty, tz, 0, (byte) 0);
+        plugin.utils.setBlock(w, tx, ty, tz, 0, (byte) 0);
     }
 }
