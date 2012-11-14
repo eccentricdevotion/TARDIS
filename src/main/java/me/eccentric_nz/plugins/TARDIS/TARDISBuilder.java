@@ -347,7 +347,7 @@ public class TARDISBuilder {
                 l = plugin.budgetdimensions[2];
                 break;
         }
-        int level, row, col, id, x, y, z, envY, startx, starty, startz, resetx, resetz, cx, cy, cz, rid, multiplier = 1, tx = 0, ty = 0, tz = 0, j = 0;
+        int level, row, col, id, x, y, z, startx, starty = 15, startz, resetx, resetz, cx, cy, cz, rid, multiplier = 1, tx = 0, ty = 0, tz = 0, j = 0;
         byte data;
         short damage = 0;
         String tmp, replacedBlocks;
@@ -362,15 +362,6 @@ public class TARDISBuilder {
         resetz = gsl[3];
         x = gsl[4];
         z = gsl[5];
-        switch (world.getEnvironment()) {
-            case NETHER:
-                envY = 128;
-                break;
-            default:
-                envY = 15;
-                break;
-        }
-        starty = envY;
         Location wg1 = new Location(world, startx, starty, startz);
         // need to set TARDIS space to air first otherwise torches may be placed askew
         // also getting and storing block ids for bonus chest if configured
@@ -414,7 +405,7 @@ public class TARDISBuilder {
         }
         // reset start positions and do over
         startx = resetx;
-        starty = envY;
+        starty = 15;
         startz = resetz;
         try {
             Connection connection = service.getConnection();
