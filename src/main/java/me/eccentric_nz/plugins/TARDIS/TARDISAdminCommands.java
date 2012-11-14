@@ -33,7 +33,7 @@ public class TARDISAdminCommands implements CommandExecutor {
                     sender.sendMessage(Constants.COMMAND_ADMIN.split("\n"));
                     return true;
                 }
-                if (!args[0].equalsIgnoreCase("reload") && !args[0].equalsIgnoreCase("config") && !args[0].equalsIgnoreCase("key") && !args[0].equalsIgnoreCase("bonus_chest") && !args[0].equalsIgnoreCase("protect_blocks") && !args[0].equalsIgnoreCase("give_key") && !args[0].equalsIgnoreCase("platform") && !args[0].equalsIgnoreCase("tp_radius") && !args[0].equalsIgnoreCase("require_spout") && !args[0].equalsIgnoreCase("default_world") && !args[0].equalsIgnoreCase("default_world_name") && !args[0].equalsIgnoreCase("include_default_world") && !args[0].equalsIgnoreCase("exclude") && !args[0].equalsIgnoreCase("sfx") && !args[0].equalsIgnoreCase("use_worldguard") && !args[0].equalsIgnoreCase("respect_worldguard") && !args[0].equalsIgnoreCase("nether") && !args[0].equalsIgnoreCase("the_end") && !args[0].equalsIgnoreCase("land_on_water")) {
+                if (!args[0].equalsIgnoreCase("reload") && !args[0].equalsIgnoreCase("config") && !args[0].equalsIgnoreCase("key") && !args[0].equalsIgnoreCase("bonus_chest") && !args[0].equalsIgnoreCase("protect_blocks") && !args[0].equalsIgnoreCase("give_key") && !args[0].equalsIgnoreCase("platform") && !args[0].equalsIgnoreCase("tp_radius") && !args[0].equalsIgnoreCase("require_spout") && !args[0].equalsIgnoreCase("default_world") && !args[0].equalsIgnoreCase("default_world_name") && !args[0].equalsIgnoreCase("include_default_world") && !args[0].equalsIgnoreCase("exclude") && !args[0].equalsIgnoreCase("sfx") && !args[0].equalsIgnoreCase("use_worldguard") && !args[0].equalsIgnoreCase("respect_worldguard") && !args[0].equalsIgnoreCase("nether") && !args[0].equalsIgnoreCase("the_end") && !args[0].equalsIgnoreCase("land_on_water") && !args[0].equalsIgnoreCase("updatesaves")) {
                     sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " TARDIS does not recognise that command argument!");
                     return false;
                 }
@@ -88,9 +88,6 @@ public class TARDISAdminCommands implements CommandExecutor {
                                 }
                             }
                             rs.close();
-                            // drop save columns from TARDIS table
-                            String queryDrop = "ALTER TABLE tardis DROP save1, DROP save2, DROP save3";
-                            statement.executeUpdate(queryDrop);
                             statement.close();
                         } catch (SQLException e) {
                             System.err.println(Constants.MY_PLUGIN_NAME + " Console saves to destinations error: " + e);
