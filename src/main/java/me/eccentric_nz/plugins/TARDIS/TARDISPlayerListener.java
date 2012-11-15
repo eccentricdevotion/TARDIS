@@ -636,7 +636,7 @@ public class TARDISPlayerListener implements Listener {
                                     if (event.getAction().equals(Action.RIGHT_CLICK_BLOCK) && player.isSneaking()) {
                                         // set destination to currently displayed save
                                         String queryDest;
-                                        if (s.getLine(1).equals("Home")) {
+                                        if (s.getLine(0).equals("Home")) {
                                             queryDest = "UPDATE tardis SET save = home WHERE tardis_id = " + id;
                                         } else {
                                             // get location from sign
