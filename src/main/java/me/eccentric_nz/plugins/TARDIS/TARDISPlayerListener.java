@@ -484,9 +484,6 @@ public class TARDISPlayerListener implements Listener {
                                 String r2_str = rs.getString("repeater2");
                                 String r3_str = rs.getString("repeater3");
                                 String dir = rs.getString("direction");
-                                String s1_str = rs.getString("save1");
-                                String s2_str = rs.getString("save2");
-                                String s3_str = rs.getString("save3");
 
                                 // check if player is travelling
                                 String queryTraveller = "SELECT * FROM travellers WHERE tardis_id = " + id + " AND player = '" + tl + "'";
@@ -679,7 +676,7 @@ public class TARDISPlayerListener implements Listener {
                             rs.close();
                             statement.close();
                         } catch (SQLException e) {
-                            System.err.println(Constants.MY_PLUGIN_NAME + " Get TARDIS from Button Error: " + e);
+                            System.err.println(Constants.MY_PLUGIN_NAME + " Get TARDIS from Sign Error: " + e);
                         }
                     }
                 }
