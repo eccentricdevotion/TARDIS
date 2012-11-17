@@ -740,6 +740,9 @@ public class TARDISCommands implements CommandExecutor {
                             case SAVE:
                                 sender.sendMessage(Constants.COMMAND_SAVE.split("\n"));
                                 break;
+                            case REMOVESAVE:
+                                sender.sendMessage(Constants.COMMAND_REMOVESAVE.split("\n"));
+                                break;
                             case ADD:
                                 sender.sendMessage(Constants.COMMAND_ADD.split("\n"));
                                 break;
@@ -772,6 +775,9 @@ public class TARDISCommands implements CommandExecutor {
                                 break;
                             case ADMIN:
                                 sender.sendMessage(Constants.COMMAND_ADMIN.split("\n"));
+                                break;
+                            case AREA:
+                                sender.sendMessage(Constants.COMMAND_AREA.split("\n"));
                                 break;
                             default:
                                 sender.sendMessage(Constants.COMMANDS.split("\n"));
