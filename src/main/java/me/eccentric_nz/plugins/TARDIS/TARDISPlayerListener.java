@@ -18,6 +18,7 @@ import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.block.Sign;
+import org.bukkit.craftbukkit.inventory.CraftItemStack;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -318,7 +319,7 @@ public class TARDISPlayerListener implements Listener {
                                                 if (rsCount.next()) {
                                                     count = rsCount.getInt("count");
                                                 }
-                                                if (!save.equals(cl) && (count == plugin.trackTravellers.get(id)))  {
+                                                if (!save.equals(cl) && (count == plugin.trackTravellers.get(id))) {
                                                     Location l = Constants.getLocationFromDB(cl, 0, 0);
                                                     newl = Constants.getLocationFromDB(save, 0, 0);
                                                     // remove torch
@@ -337,7 +338,7 @@ public class TARDISPlayerListener implements Listener {
                                                     plugin.builder.buildOuterTARDIS(id, newl, Constants.COMPASS.valueOf(d), cham, player, false);
                                                 }
                                                 // exit TARDIS!
-                                                tt(player, exitTardis, true, playerWorld, userQuotes);
+                                                movePlayer(player, exitTardis, true, playerWorld, userQuotes);
                                                 // remove player from traveller table
                                                 String queryTraveller = "DELETE FROM travellers WHERE player = '" + playerNameStr + "'";
                                                 statement.executeUpdate(queryTraveller);
@@ -431,7 +432,7 @@ public class TARDISPlayerListener implements Listener {
                                                         }
                                                         tmp_loc.setYaw(yaw);
                                                         final Location tardis_loc = tmp_loc;
-                                                        tt(player, tardis_loc, false, playerWorld, userQuotes);
+                                                        movePlayer(player, tardis_loc, false, playerWorld, userQuotes);
                                                         String queryTravellerUpdate = "INSERT INTO travellers (tardis_id, player) VALUES (" + id + ", '" + playerNameStr + "')";
                                                         statement.executeUpdate(queryTravellerUpdate);
                                                         // update current TARDIS location
@@ -686,7 +687,7 @@ public class TARDISPlayerListener implements Listener {
     Random r = new Random();
 
     @SuppressWarnings("deprecation")
-    private void tt(Player p, Location l, final boolean exit, final World from, boolean q) {
+    private void movePlayer(Player p, Location l, final boolean exit, final World from, boolean q) {
 
         final int i = r.nextInt(plugin.quotelen);
         final Player thePlayer = p;
@@ -724,7 +725,7 @@ public class TARDISPlayerListener implements Listener {
                     Inventory inv = thePlayer.getInventory();
                     Material m = Material.valueOf(Constants.TARDIS_KEY);
                     if (!inv.contains(m) && plugin.config.getBoolean("give_key") == true) {
-                        ItemStack is = new ItemStack(m, 1);
+                        ItemStack is = new CraftItemStack(m, 1);
                         TARDISItemRenamer ir = new TARDISItemRenamer(is);
                         ir.setName("Sonic Screwdriver");
                         inv.addItem(is);
