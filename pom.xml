@@ -2,7 +2,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>me.eccentric_nz.plugins.TARDIS</groupId>
     <artifactId>TARDIS</artifactId>
-    <version>1.8.2</version>
+    <version>1.8.3</version>
     <name>TARDIS</name>
     <url>http://www.thenosefairy.co.nz/</url>
     <repositories>
@@ -32,7 +32,7 @@
         <dependency>
             <groupId>org.bukkit</groupId>
             <artifactId>craftbukkit</artifactId>
-            <version>1.4.4-R0.1-SNAPSHOT</version>
+            <version>1.4.5-R0.2-SNAPSHOT</version>
             <type>jar</type>
             <scope>compile</scope>
         </dependency>

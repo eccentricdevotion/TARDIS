@@ -25,7 +25,7 @@ public class TARDISTimetravel {
     public Location randomDestination(Player p, World w, byte rx, byte rz, byte ry, String dir, String e) {
         int level, row, col, x, y, z, startx, starty, startz, resetx, resetz, listlen, rw;
         World randworld = w;
-        Boolean danger = true;
+        boolean danger = true;
         int count;
         // there needs to be room for the TARDIS and the player!
         Random rand = new Random();
@@ -83,10 +83,6 @@ public class TARDISTimetravel {
             }
             i = i + 1;
         }
-//        TARDISWorldGuardChecker wgchk = null;
-//        if (plugin.WorldGuardOnServer) {
-//            wgchk = plugin.wgchk;
-//        }
         if (randworld.getEnvironment().equals(Environment.NETHER)) {
             while (danger == true) {
                 wherex = randomX(rand, range, quarter, rx, ry, max);
