@@ -710,7 +710,7 @@ public class TARDISPlayerListener implements Listener {
             public void run() {
                 thePlayer.teleport(theLocation);
             }
-        }, 10L);
+        }, 5L);
         Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
             @Override
             public void run() {
@@ -734,7 +734,7 @@ public class TARDISPlayerListener implements Listener {
                     }
                 }
             }
-        }, 5L);
+        }, 10L);
     }
 
     public void reOrder(List<String> list, String current) {
