@@ -175,7 +175,7 @@ public class TARDISCommands implements CommandExecutor {
                             final Constants.COMPASS d = Constants.COMPASS.valueOf(rs.getString("direction"));
                             String[] saveData = badsave.split(":");
                             World w = plugin.getServer().getWorld(saveData[0]);
-                            int x = 0, y = 0, z = 0;
+                            int x, y, z;
                             x = plugin.utils.parseNum(saveData[1]);
                             y = plugin.utils.parseNum(saveData[2]);
                             z = plugin.utils.parseNum(saveData[3]);

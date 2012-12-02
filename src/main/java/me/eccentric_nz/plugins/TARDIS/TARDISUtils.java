@@ -98,20 +98,40 @@ public class TARDISUtils {
         return startLoc;
     }
 
-    public boolean checkChunk(String w, int x, int z) {
+    public boolean checkChunk(String w, int x, int z, Constants.SCHEMATIC schm) {
         boolean chunkchk = false;
-        String queryCheck = "SELECT * FROM chunks WHERE world = '" + w + "' AND x =" + x + " AND z = " + z + " LIMIT 1";
-        try {
-            Connection connection = service.getConnection();
-            Statement statement = connection.createStatement();
-            ResultSet rs = statement.executeQuery(queryCheck);
-            if (rs.next()) {
-                chunkchk = true;
+        int cw, cl;
+        switch (schm) {
+            case BIGGER:
+                cw = (int) Math.ceil(plugin.biggerdimensions[1] / 16);
+                cl = (int) Math.ceil(plugin.biggerdimensions[2] / 16);
+                break;
+            case DELUXE:
+                cw = (int) Math.ceil(plugin.deluxedimensions[1] / 16);
+                cl = (int) Math.ceil(plugin.deluxedimensions[2] / 16);
+                break;
+            default:
+                cw = (int) Math.ceil(plugin.budgetdimensions[1] / 16);
+                cl = (int) Math.ceil(plugin.budgetdimensions[2] / 16);
+                break;
+        }
+        // check all the chunks that will be used by the schematic
+        for (int cx = 0; cx < cw; cx++) {
+            for (int cz = 0; cz < cl; cz++) {
+                String queryCheck = "SELECT * FROM chunks WHERE world = '" + w + "' AND x =" + (x + cx) + " AND z = " + (z + cl) + " LIMIT 1";
+                try {
+                    Connection connection = service.getConnection();
+                    Statement statement = connection.createStatement();
+                    ResultSet rs = statement.executeQuery(queryCheck);
+                    if (rs.next()) {
+                        chunkchk = true;
+                    }
+                    rs.close();
+                    statement.close();
+                } catch (SQLException e) {
+                    System.err.println(Constants.MY_PLUGIN_NAME + " Get All Chunks Error: " + e);
+                }
             }
-            rs.close();
-            statement.close();
-        } catch (SQLException e) {
-            System.err.println(Constants.MY_PLUGIN_NAME + " Get All Chunks Error: " + e);
         }
         return chunkchk;
     }

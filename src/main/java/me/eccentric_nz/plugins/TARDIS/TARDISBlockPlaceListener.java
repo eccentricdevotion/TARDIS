@@ -24,7 +24,7 @@ public class TARDISBlockPlaceListener implements Listener {
 
     private TARDIS plugin;
     TARDISDatabase service = TARDISDatabase.getInstance();
-    public static List<String> MIDDLE_BLOCKS = Arrays.asList(new String[]{"LAPIS_BLOCK","STONE","DIRT","WOOD","SANDSTONE","WOOL","BRICK","NETHERRACK","SOUL_SAND","SMOOTH_BRICK","HUGE_MUSHROOM_1","HUGE_MUSHROOM_2","ENDER_STONE"});
+    public static List<String> MIDDLE_BLOCKS = Arrays.asList(new String[]{"LAPIS_BLOCK", "STONE", "DIRT", "WOOD", "SANDSTONE", "WOOL", "BRICK", "NETHERRACK", "SOUL_SAND", "SMOOTH_BRICK", "HUGE_MUSHROOM_1", "HUGE_MUSHROOM_2", "ENDER_STONE"});
 
     public TARDISBlockPlaceListener(TARDIS plugin) {
         this.plugin = plugin;
@@ -81,7 +81,7 @@ public class TARDISBlockPlaceListener implements Listener {
                             }
                             int cx = chunk.getX();
                             int cz = chunk.getZ();
-                            if (!plugin.utils.checkChunk(cw, cx, cz)) {
+                            if (!plugin.utils.checkChunk(cw, cx, cz, schm)) {
                                 // get player direction
                                 float pyaw = player.getLocation().getYaw();
                                 if (pyaw >= 0) {
@@ -130,7 +130,7 @@ public class TARDISBlockPlaceListener implements Listener {
                         rs.close();
                         statement.close();
                     } catch (SQLException e) {
-                        System.err.println(Constants.MY_PLUGIN_NAME + " Block Place Listener Error: " + e);
+                        System.err.println(Constants.MY_PLUGIN_NAME + " Block Place Listener Error: " + e + ", " + e.getErrorCode() + ", " + e.getSQLState());
                     }
                 } else {
                     player.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " You don't have permission to build a TARDIS!");
