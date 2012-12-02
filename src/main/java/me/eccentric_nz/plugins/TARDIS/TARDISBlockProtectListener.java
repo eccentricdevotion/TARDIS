@@ -45,9 +45,11 @@ public class TARDISBlockProtectListener implements Listener {
                     event.setCancelled(true);
                     break;
                 }
+                rsBlockLoc.close();
+                statement.close();
             }
         } catch (SQLException e) {
-            System.err.println(Constants.MY_PLUGIN_NAME + " Could not get block locations from DB!");
+            System.err.println(Constants.MY_PLUGIN_NAME + " Could not get block ignite locations from DB!");
         }
         if (plugin.config.getBoolean("protect_blocks") == true) {
             String[] set = {"EAST", "SOUTH", "WEST", "NORTH", "UP", "DOWN"};
@@ -74,8 +76,10 @@ public class TARDISBlockProtectListener implements Listener {
             if (rsBlockLoc.next()) {
                 event.setCancelled(true);
             }
+            rsBlockLoc.close();
+            statement.close();
         } catch (SQLException e) {
-            System.err.println(Constants.MY_PLUGIN_NAME + " Could not get block locations from DB!");
+            System.err.println(Constants.MY_PLUGIN_NAME + " Could not get block burn locations from DB!");
         }
 
         if (plugin.config.getBoolean("protect_blocks") == true) {

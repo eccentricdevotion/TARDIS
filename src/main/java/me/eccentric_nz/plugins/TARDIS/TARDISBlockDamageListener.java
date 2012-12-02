@@ -37,8 +37,10 @@ public class TARDISBlockDamageListener implements Listener {
                 event.setCancelled(true);
                 p.sendMessage(Constants.MY_PLUGIN_NAME + " You cannot break the TARDIS blocks!");
             }
+            rsBlockLoc.close();
+            statement.close();
         } catch (SQLException e) {
-            System.err.println(Constants.MY_PLUGIN_NAME + " Could not get block locations from DB!");
+            System.err.println(Constants.MY_PLUGIN_NAME + " Could not get block damage locations from DB!");
         }
     }
 }
