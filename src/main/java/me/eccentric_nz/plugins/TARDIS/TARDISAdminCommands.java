@@ -176,7 +176,7 @@ public class TARDISAdminCommands implements CommandExecutor {
                         // get world name
                         int count = args.length;
                         StringBuilder buf = new StringBuilder();
-                        for (int i = 2; i < count; i++) {
+                        for (int i = 1; i < count; i++) {
                             buf.append(args[i]).append(" ");
                         }
                         String tmp = buf.toString();
