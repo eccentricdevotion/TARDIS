@@ -98,7 +98,7 @@ public class TARDISTravelCommands implements CommandExecutor {
                                 if (player.hasPermission("tardis.exile")) {
                                     String areaPerm = plugin.ta.getExileArea(player);
                                     if (plugin.ta.areaCheckInExile(areaPerm, player_loc)) {
-                                        sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + "You exile status does not allow you to go to this player's location!");
+                                        sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + "Your exile status does not allow you to go to this player's location!");
                                         return true;
                                     }
                                 }
@@ -176,7 +176,7 @@ public class TARDISTravelCommands implements CommandExecutor {
                             if (player.hasPermission("tardis.exile")) {
                                 String areaPerm = plugin.ta.getExileArea(player);
                                 if (plugin.ta.areaCheckInExile(areaPerm, location)) {
-                                    sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + "You exile status does not allow you to bring the TARDIS to this location!");
+                                    sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + "Your exile status does not allow you to bring the TARDIS to this location!");
                                     return true;
                                 }
                             }
