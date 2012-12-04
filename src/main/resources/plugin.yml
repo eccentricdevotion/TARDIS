@@ -6,7 +6,7 @@ startup: postworld
 softdepend: [Multiverse-Core,WorldGuard]
 dev-url: http://de.bukkit.org/server-mods/TARDIS/
 url: http://www.thenosefairy.co.nz/
-version: '1.8.3'
+version: '1.8.4'
 permissions:
   tardis.admin:
     description: Allow players access to the TARDIS admin commands.
@@ -17,7 +17,7 @@ permissions:
   tardis.skeletonkey:
     description: Allow players to enter any TARDIS.
     default: false
-  tardis.*:
+  tardis.use:
     description: Allow players to create & delete a TARDIS, and teleport to destinations.
     children:
       tardis.create: true
