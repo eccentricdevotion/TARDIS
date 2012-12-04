@@ -263,6 +263,9 @@ public class TARDIS extends JavaPlugin implements Listener {
                 while ((line = bufRdr.readLine()) != null) {
                     quotes.add(line);
                 }
+                if (quotes.size() < 1) {
+                    quotes.add("");
+                }
             } catch (IOException io) {
                 System.err.println(Constants.MY_PLUGIN_NAME + " Could not read quotes file");
             }
