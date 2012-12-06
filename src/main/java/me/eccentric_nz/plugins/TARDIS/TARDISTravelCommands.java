@@ -114,6 +114,9 @@ public class TARDISTravelCommands implements CommandExecutor {
                                     sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " The player location was saved succesfully. Please exit the TARDIS!");
                                     plugin.utils.updateTravellerCount(id);
                                     return true;
+                                } else {
+                                    sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " You do not have permission to time travel to a player!");
+                                    return true;
                                 }
                             }
                         }
