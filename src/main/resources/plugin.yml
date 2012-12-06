@@ -6,7 +6,7 @@ startup: postworld
 softdepend: [Multiverse-Core,WorldGuard]
 dev-url: http://de.bukkit.org/server-mods/TARDIS/
 url: http://www.thenosefairy.co.nz/
-version: '1.8.4'
+version: '1.8.5'
 permissions:
   tardis.admin:
     description: Allow players access to the TARDIS admin commands.
@@ -41,16 +41,22 @@ permissions:
     description: Allow players to delete a TARDIS.
     default: op
   tardis.timetravel:
-    TARDIS: Allow players to teleport to random locations and saved destinations.
+    description: Allow players to teleport to random locations and saved destinations.
+    default: op
+  tardis.timetravel.player:
+    description: Allow players to teleport to player locations.
+    default: op
+  tardis.timetravel.location:
+    description: Allow players to teleport to coordinates.
     default: op
   tardis.list:
-    TARDIS: Allow players to list saved time travel destinations.
+    description: Allow players to list saved time travel destinations.
     default: op
   tardis.save:
-    TARDIS: Allow players to save time travel destinations.
+    description: Allow players to save time travel destinations.
     default: op
   tardis.home:
-    TARDIS: Allow players to save a time travel destination as their home.
+    description: Allow players to save a time travel destination as their home.
     default: op
   tardis.enter:
     description: Allow players to enter a TARDIS.
