@@ -9,6 +9,10 @@ import java.util.Arrays;
 import java.util.Set;
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.ChatColor;
+import org.bukkit.Location;
+import org.bukkit.OfflinePlayer;
+import org.bukkit.World;
+import org.bukkit.WorldType;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -33,7 +37,7 @@ public class TARDISAdminCommands implements CommandExecutor {
                     sender.sendMessage(Constants.COMMAND_ADMIN.split("\n"));
                     return true;
                 }
-                if (!args[0].equalsIgnoreCase("reload") && !args[0].equalsIgnoreCase("config") && !args[0].equalsIgnoreCase("key") && !args[0].equalsIgnoreCase("bonus_chest") && !args[0].equalsIgnoreCase("protect_blocks") && !args[0].equalsIgnoreCase("give_key") && !args[0].equalsIgnoreCase("platform") && !args[0].equalsIgnoreCase("tp_radius") && !args[0].equalsIgnoreCase("require_spout") && !args[0].equalsIgnoreCase("default_world") && !args[0].equalsIgnoreCase("default_world_name") && !args[0].equalsIgnoreCase("include_default_world") && !args[0].equalsIgnoreCase("exclude") && !args[0].equalsIgnoreCase("sfx") && !args[0].equalsIgnoreCase("use_worldguard") && !args[0].equalsIgnoreCase("respect_worldguard") && !args[0].equalsIgnoreCase("nether") && !args[0].equalsIgnoreCase("the_end") && !args[0].equalsIgnoreCase("land_on_water") && !args[0].equalsIgnoreCase("updatesaves")) {
+                if (!args[0].equalsIgnoreCase("reload") && !args[0].equalsIgnoreCase("config") && !args[0].equalsIgnoreCase("key") && !args[0].equalsIgnoreCase("bonus_chest") && !args[0].equalsIgnoreCase("protect_blocks") && !args[0].equalsIgnoreCase("give_key") && !args[0].equalsIgnoreCase("platform") && !args[0].equalsIgnoreCase("tp_radius") && !args[0].equalsIgnoreCase("require_spout") && !args[0].equalsIgnoreCase("default_world") && !args[0].equalsIgnoreCase("default_world_name") && !args[0].equalsIgnoreCase("include_default_world") && !args[0].equalsIgnoreCase("exclude") && !args[0].equalsIgnoreCase("sfx") && !args[0].equalsIgnoreCase("use_worldguard") && !args[0].equalsIgnoreCase("respect_worldguard") && !args[0].equalsIgnoreCase("nether") && !args[0].equalsIgnoreCase("the_end") && !args[0].equalsIgnoreCase("land_on_water") && !args[0].equalsIgnoreCase("updatesaves") && !args[0].equalsIgnoreCase("delete") && !args[0].equalsIgnoreCase("find") && !args[0].equalsIgnoreCase("list")) {
                     sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " TARDIS does not recognise that command argument!");
                     return false;
                 }
@@ -96,10 +100,112 @@ public class TARDISAdminCommands implements CommandExecutor {
                         return true;
                     }
                 }
+                if (args[0].equalsIgnoreCase("list")) {
+                    // get all tardis positions - max 18
+                    int start = 0, end = 18;
+                    if (args.length > 1) {
+                        int tmp = Integer.parseInt(args[1]);
+                        start = (tmp * 18) - 18;
+                        end = tmp * 18;
+                    }
+                    try {
+                        Connection connection = service.getConnection();
+                        Statement statement = connection.createStatement();
+                        String queryList = "SELECT owner, current FROM tardis LIMIT " + start + ", " + end;
+                        ResultSet rsList = statement.executeQuery(queryList);
+                        if (rsList.isBeforeFirst()) {
+                            sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " TARDIS locations.");
+                            while (rsList.next()) {
+                                sender.sendMessage("Timelord: " + rsList.getString("Owner") + ", Location: " + rsList.getString("current"));
+                            }
+                            sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " To see more locations, type: /tardisadmin list 2,  /tardisadmin list 3 etc.");
+                        }
+                        statement.close();
+                    } catch (SQLException e) {
+                        System.err.println(Constants.MY_PLUGIN_NAME + " Console saves to destinations error: " + e);
+                    }
+                    return true;
+                }
                 if (args.length < 2) {
                     sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " Too few command arguments!");
                     return false;
                 } else {
+                    if (args[0].equalsIgnoreCase("delete")) {
+                        try {
+                            Connection connection = service.getConnection();
+                            Statement statement = connection.createStatement();
+                            // check the db contains the player name
+                            String queryGet = "SELECT tardis_id, chunk, direction, save, current, size FROM tardis WHERE owner = '" + args[1] + "'";
+                            System.out.print(queryGet);
+                            ResultSet rsGet = statement.executeQuery(queryGet);
+                            if (rsGet.next()) {
+                                int id = rsGet.getInt("tardis_id");
+                                String saveLoc = rsGet.getString("save");
+                                String currentLoc = rsGet.getString("current");
+                                Constants.SCHEMATIC schm = Constants.SCHEMATIC.valueOf(rsGet.getString("size"));
+                                Constants.COMPASS d = Constants.COMPASS.valueOf(rsGet.getString("direction"));
+                                String chunkLoc = rsGet.getString("chunk");
+                                String[] cdata = chunkLoc.split(":");
+                                World cw = plugin.getServer().getWorld(cdata[0]);
+                                World.Environment env = cw.getEnvironment();
+                                int restore;
+                                switch (env) {
+                                    case NETHER:
+                                        restore = 87;
+                                        break;
+                                    case THE_END:
+                                        restore = 121;
+                                        break;
+                                    default:
+                                        restore = 1;
+                                }
+                                // check if player is in the TARDIS
+                                String queryTravellers = "SELECT player FROM travellers WHERE tardis_id = " + id;
+                                ResultSet rsTravellers = statement.executeQuery(queryTravellers);
+                                boolean useCurrent = false;
+                                if (rsTravellers.isBeforeFirst()) {
+                                    useCurrent = true;
+                                    Location spawn = cw.getSpawnLocation();
+                                    while (rsTravellers.next()) {
+                                        ImprovedOfflinePlayer iop = new ImprovedOfflinePlayer(rsTravellers.getString("player"));
+                                        if (!iop.exists()) {
+                                            continue;
+                                        }
+                                        // teleport offline player to spawn
+                                        iop.setLocation(spawn);
+                                    }
+                                    String queryDelTravellers = "DELETE FROM travellers WHERE tardis_id = " + id;
+                                    statement.executeUpdate(queryDelTravellers);
+                                }
+                                // need to determine if we use the save location or the current location
+                                Location bb_loc = (useCurrent) ? Constants.getLocationFromDB(currentLoc, 0, 0) : Constants.getLocationFromDB(saveLoc, 0, 0);
+                                // destroy the TARDIS
+                                plugin.destroyer.destroyTorch(bb_loc);
+                                plugin.destroyer.destroySign(bb_loc, d);
+                                plugin.destroyer.destroyTARDIS(schm, id, cw, d, restore, args[1]);
+                                if (cw.getWorldType() == WorldType.FLAT) {
+                                    // replace stone blocks with AIR
+                                    plugin.destroyer.destroyTARDIS(schm, id, cw, d, 0, args[1]);
+                                }
+                                plugin.destroyer.destroyBlueBox(bb_loc, d, id);
+                                // delete the TARDIS from the db
+                                String queryDeleteChunk = "DELETE FROM chunks WHERE tardis_id = " + id;
+                                statement.executeUpdate(queryDeleteChunk);
+                                String queryDelTardis = "DELETE FROM tardis WHERE tardis_id = " + id;
+                                statement.executeUpdate(queryDelTardis);
+                                String queryDeleteDoors = "DELETE FROM doors WHERE tardis_id = " + id;
+                                statement.executeUpdate(queryDeleteDoors);
+                                sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " The TARDIS was removed from the world and database successfully.");
+                            } else {
+                                sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " Could not find player [" + args[1] + "] in the database!");
+                                return true;
+                            }
+                            statement.close();
+                        } catch (SQLException e) {
+                            System.err.println(Constants.MY_PLUGIN_NAME + " Admin delete TARDIS error: " + e);
+                        }
+                        return true;
+                    }
                     if (args[0].equalsIgnoreCase("key")) {
                         String setMaterial = args[1].toUpperCase();
                         if (!Arrays.asList(Materials.MATERIAL_LIST).contains(setMaterial)) {
