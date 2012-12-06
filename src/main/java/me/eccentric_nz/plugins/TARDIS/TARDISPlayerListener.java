@@ -247,7 +247,6 @@ public class TARDISPlayerListener implements Listener {
                                             int doortype = rs.getInt("door_type");
                                             String d = rs.getString("direction");
                                             String dd = rs.getString("door_direction");
-                                            String chunkstr = rs.getString("chunk");
                                             String tl = rs.getString("owner");
                                             String companions = rs.getString("companions");
                                             String save = rs.getString("save");
