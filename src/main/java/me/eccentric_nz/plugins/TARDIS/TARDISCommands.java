@@ -136,6 +136,10 @@ public class TARDISCommands implements CommandExecutor {
                 if (args[0].equalsIgnoreCase("comehere")) {
                     if (player.hasPermission("tardis.timetravel")) {
                         final Location eyeLocation = player.getTargetBlock(null, 50).getLocation();
+                        if (!plugin.config.getBoolean("include_default_world") && plugin.config.getBoolean("default_world") && eyeLocation.getWorld().getName().equals(plugin.config.getString("default_world_name"))) {
+                            sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " The server admin will not allow you to bring the TARDIS to this world!");
+                            return true;
+                        }
                         if (plugin.WorldGuardOnServer && plugin.config.getBoolean("respect_worldguard")) {
                             if (plugin.wgchk.cantBuild(player, eyeLocation)) {
                                 sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + "That location is protected by WorldGuard!");
@@ -214,6 +218,10 @@ public class TARDISCommands implements CommandExecutor {
                 if (args[0].equalsIgnoreCase("home")) {
                     if (player.hasPermission("tardis.timetravel")) {
                         Location eyeLocation = player.getTargetBlock(null, 50).getLocation();
+                        if (!plugin.config.getBoolean("include_default_world") && plugin.config.getBoolean("default_world") && eyeLocation.getWorld().getName().equals(plugin.config.getString("default_world_name"))) {
+                            sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " The server admin will not allow you to set the TARDIS home in this world!");
+                            return true;
+                        }
                         if (plugin.WorldGuardOnServer && plugin.config.getBoolean("respect_worldguard")) {
                             if (plugin.wgchk.cantBuild(player, eyeLocation)) {
                                 sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + "That location is protected by WorldGuard!");
@@ -604,6 +612,10 @@ public class TARDISCommands implements CommandExecutor {
                                 // get location player is looking at
                                 Block b = player.getTargetBlock(null, 50);
                                 Location l = b.getLocation();
+                                if (!plugin.config.getBoolean("include_default_world") && plugin.config.getBoolean("default_world") && l.getWorld().getName().equals(plugin.config.getString("default_world_name"))) {
+                            sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " The server admin will not allow you to set the TARDIS destination to this world!");
+                            return true;
+                        }
                                 if (plugin.WorldGuardOnServer && plugin.config.getBoolean("respect_worldguard")) {
                                     if (plugin.wgchk.cantBuild(player, l)) {
                                         sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + "That location is protected by WorldGuard!");
