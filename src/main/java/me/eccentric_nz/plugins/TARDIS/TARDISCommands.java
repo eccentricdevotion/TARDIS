@@ -28,6 +28,7 @@ public class TARDISCommands implements CommandExecutor {
         transparent.add((byte) Material.AIR.getId());
         transparent.add((byte) Material.SNOW.getId());
         transparent.add((byte) Material.LONG_GRASS.getId());
+        transparent.add((byte) Material.VINE.getId());
     }
 
     @Override
