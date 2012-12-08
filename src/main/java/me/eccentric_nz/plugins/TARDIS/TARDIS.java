@@ -138,6 +138,12 @@ public class TARDIS extends JavaPlugin implements Listener {
         if (!config.contains("land_on_water")) {
             config.set("land_on_water", false);
         }
+        if (!config.contains("timeout")) {
+            config.set("timeout", 5);
+        }
+        if (!config.contains("timeout_height")) {
+            config.set("timeout_height", 135);
+        }
 
         tardisCommand = new TARDISCommands(this);
         tardisAdminCommand = new TARDISAdminCommands(this);
