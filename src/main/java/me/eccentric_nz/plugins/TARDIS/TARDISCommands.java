@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Arrays;
+import java.util.HashSet;
 import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.block.Sign;
@@ -20,9 +21,13 @@ public class TARDISCommands implements CommandExecutor {
 
     private TARDIS plugin;
     TARDISDatabase service = TARDISDatabase.getInstance();
+    HashSet<Byte> transparent = new HashSet<Byte>();
 
     public TARDISCommands(TARDIS plugin) {
         this.plugin = plugin;
+        transparent.add((byte) Material.AIR.getId());
+        transparent.add((byte) Material.SNOW.getId());
+        transparent.add((byte) Material.LONG_GRASS.getId());
     }
 
     @Override
@@ -135,7 +140,7 @@ public class TARDISCommands implements CommandExecutor {
                 }
                 if (args[0].equalsIgnoreCase("comehere")) {
                     if (player.hasPermission("tardis.timetravel")) {
-                        final Location eyeLocation = player.getTargetBlock(null, 50).getLocation();
+                        final Location eyeLocation = player.getTargetBlock(transparent, 50).getLocation();
                         if (!plugin.config.getBoolean("include_default_world") && plugin.config.getBoolean("default_world") && eyeLocation.getWorld().getName().equals(plugin.config.getString("default_world_name"))) {
                             sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " The server admin will not allow you to bring the TARDIS to this world!");
                             return true;
@@ -158,7 +163,7 @@ public class TARDISCommands implements CommandExecutor {
                             plugin.trackPerm.remove(player.getName());
                             return false;
                         }
-                        Material m = player.getTargetBlock(null, 50).getType();
+                        Material m = player.getTargetBlock(transparent, 50).getType();
                         if (m != Material.SNOW) {
                             int yplusone = eyeLocation.getBlockY();
                             eyeLocation.setY(yplusone + 1);
@@ -217,7 +222,7 @@ public class TARDISCommands implements CommandExecutor {
                 }
                 if (args[0].equalsIgnoreCase("home")) {
                     if (player.hasPermission("tardis.timetravel")) {
-                        Location eyeLocation = player.getTargetBlock(null, 50).getLocation();
+                        Location eyeLocation = player.getTargetBlock(transparent, 50).getLocation();
                         if (!plugin.config.getBoolean("include_default_world") && plugin.config.getBoolean("default_world") && eyeLocation.getWorld().getName().equals(plugin.config.getString("default_world_name"))) {
                             sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " The server admin will not allow you to set the TARDIS home in this world!");
                             return true;
@@ -233,7 +238,7 @@ public class TARDISCommands implements CommandExecutor {
                             plugin.trackPerm.remove(player.getName());
                             return false;
                         }
-                        Material m = player.getTargetBlock(null, 50).getType();
+                        Material m = player.getTargetBlock(transparent, 50).getType();
                         if (m != Material.SNOW) {
                             int yplusone = eyeLocation.getBlockY();
                             eyeLocation.setY(yplusone + 1);
@@ -610,12 +615,12 @@ public class TARDISCommands implements CommandExecutor {
                             } else {
                                 int id = rs.getInt("tardis_id");
                                 // get location player is looking at
-                                Block b = player.getTargetBlock(null, 50);
+                                Block b = player.getTargetBlock(transparent, 50);
                                 Location l = b.getLocation();
                                 if (!plugin.config.getBoolean("include_default_world") && plugin.config.getBoolean("default_world") && l.getWorld().getName().equals(plugin.config.getString("default_world_name"))) {
-                            sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " The server admin will not allow you to set the TARDIS destination to this world!");
-                            return true;
-                        }
+                                    sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " The server admin will not allow you to set the TARDIS destination to this world!");
+                                    return true;
+                                }
                                 if (plugin.WorldGuardOnServer && plugin.config.getBoolean("respect_worldguard")) {
                                     if (plugin.wgchk.cantBuild(player, l)) {
                                         sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + "That location is protected by WorldGuard!");
