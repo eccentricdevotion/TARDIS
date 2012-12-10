@@ -326,7 +326,7 @@ public class TARDISPlayerListener implements Listener {
                                                     // remove sign
                                                     plugin.destroyer.destroySign(l, Constants.COMPASS.valueOf(d));
                                                     // remove blue box
-                                                    plugin.destroyer.destroyBlueBox(l, Constants.COMPASS.valueOf(d), id);
+                                                    plugin.destroyer.destroyBlueBox(l, Constants.COMPASS.valueOf(d), id, false);
                                                 }
                                                 // try preloading destination chunk
                                                 while (!exitWorld.getChunkAt(exitTardis).isLoaded()) {

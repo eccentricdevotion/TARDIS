@@ -143,7 +143,7 @@ public class TARDISBlockBreakListener implements Listener {
                                 // replace stone blocks with AIR
                                 plugin.destroyer.destroyTARDIS(schm, id, cw, d, 0, playerNameStr);
                             }
-                            plugin.destroyer.destroyBlueBox(bb_loc, d, id);
+                            plugin.destroyer.destroyBlueBox(bb_loc, d, id, false);
                             // remove record from tardis table
                             String queryDeleteTardis = "DELETE FROM tardis WHERE tardis_id = " + id;
                             statement.executeUpdate(queryDeleteTardis);

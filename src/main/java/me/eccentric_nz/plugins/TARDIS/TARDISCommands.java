@@ -207,7 +207,7 @@ public class TARDISCommands implements CommandExecutor {
                                 public void run() {
                                     plugin.destroyer.destroySign(oldSave, d);
                                     plugin.destroyer.destroyTorch(oldSave);
-                                    plugin.destroyer.destroyBlueBox(oldSave, d, id);
+                                    plugin.destroyer.destroyBlueBox(oldSave, d, id, false);
                                     plugin.builder.buildOuterTARDIS(id, eyeLocation, d, cham, p, false);
                                 }
                             }, delay);
@@ -343,7 +343,7 @@ public class TARDISCommands implements CommandExecutor {
                             // remove sign
                             plugin.destroyer.destroySign(l, d);
                             // remove blue box
-                            plugin.destroyer.destroyBlueBox(l, d, id);
+                            plugin.destroyer.destroyBlueBox(l, d, id, true);
                             sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " The TARDIS Police Box was hidden! Use " + ChatColor.GREEN + "/tardis rebuild" + ChatColor.RESET + " to show it again.");
                             return true;
                         }

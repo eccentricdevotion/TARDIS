@@ -186,7 +186,7 @@ public class TARDISAdminCommands implements CommandExecutor {
                                     // replace stone blocks with AIR
                                     plugin.destroyer.destroyTARDIS(schm, id, cw, d, 0, args[1]);
                                 }
-                                plugin.destroyer.destroyBlueBox(bb_loc, d, id);
+                                plugin.destroyer.destroyBlueBox(bb_loc, d, id, false);
                                 // delete the TARDIS from the db
                                 String queryDeleteChunk = "DELETE FROM chunks WHERE tardis_id = " + id;
                                 statement.executeUpdate(queryDeleteChunk);

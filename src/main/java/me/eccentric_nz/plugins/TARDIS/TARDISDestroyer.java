@@ -83,7 +83,7 @@ public class TARDISDestroyer {
         }
     }
 
-    public void destroyBlueBox(Location l, Constants.COMPASS d, int id) {
+    public void destroyBlueBox(Location l, Constants.COMPASS d, int id, boolean hide) {
         World w = l.getWorld();
         int sbx = l.getBlockX() - 1;
         int rbx = sbx;
@@ -185,8 +185,10 @@ public class TARDISDestroyer {
                 }
             }
             // remove protected blocks from the blocks table
-            String queryRemoveBlocks = "DELETE FROM blocks WHERE tardis_id = " + id;
-            statement.executeUpdate(queryRemoveBlocks);
+            if (hide == false) {
+                String queryRemoveBlocks = "DELETE FROM blocks WHERE tardis_id = " + id;
+                statement.executeUpdate(queryRemoveBlocks);
+            }
             statement.close();
         } catch (SQLException e) {
             System.err.println(Constants.MY_PLUGIN_NAME + " Save Replaced Block Error: " + e);
