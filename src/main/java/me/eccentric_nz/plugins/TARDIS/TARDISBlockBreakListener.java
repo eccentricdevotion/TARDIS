@@ -67,11 +67,13 @@ public class TARDISBlockBreakListener implements Listener {
                 } else {
                     queryCheck = "SELECT * FROM tardis WHERE owner = '" + playerNameStr + "'";
                 }
+                Statement statement = null;
+                ResultSet rs = null;
                 occupied:
                 try {
                     Connection connection = service.getConnection();
-                    Statement statement = connection.createStatement();
-                    ResultSet rs = statement.executeQuery(queryCheck);
+                    statement = connection.createStatement();
+                    rs = statement.executeQuery(queryCheck);
                     if (rs.next()) {
                         String saveLoc = rs.getString("save");
                         String chunkLoc = rs.getString("chunk");
@@ -90,6 +92,7 @@ public class TARDISBlockBreakListener implements Listener {
                                 sign.update();
                                 break occupied;
                             }
+                            rsOcc.close();
                         }
                         // check the sign location
                         Location bb_loc = Constants.getLocationFromDB(saveLoc, yaw, pitch);
@@ -152,7 +155,7 @@ public class TARDISBlockBreakListener implements Listener {
                             statement.executeUpdate(queryDeleteDoors);
                             player.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " The TARDIS was removed from the world and database successfully.");
                             // remove world guard region protection
-                            if (plugin.WorldGuardOnServer && plugin.config.getBoolean("use_worldguard")) {
+                            if (plugin.worldGuardOnServer && plugin.config.getBoolean("use_worldguard")) {
                                 plugin.wgchk.removeRegion(cw, owner);
                             }
                         } else {
@@ -166,11 +169,21 @@ public class TARDISBlockBreakListener implements Listener {
                         sign.update();
                         player.sendMessage("Don't grief the TARDIS!");
                     }
-                    rs.close();
-                    statement.close();
-
                 } catch (SQLException e) {
                     System.err.println(Constants.MY_PLUGIN_NAME + " Block Break Listener Error: " + e);
+                } finally {
+                    if (rs != null) {
+                        try {
+                            rs.close();
+                        } catch (Exception e) {
+                        }
+                    }
+                    if (statement != null) {
+                        try {
+                            statement.close();
+                        } catch (Exception e) {
+                        }
+                    }
                 }
             }
         }

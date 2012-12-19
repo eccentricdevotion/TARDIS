@@ -24,7 +24,7 @@ public class TARDISBlockPlaceListener implements Listener {
 
     private TARDIS plugin;
     TARDISDatabase service = TARDISDatabase.getInstance();
-    public static List<String> MIDDLE_BLOCKS = Arrays.asList(new String[]{"LAPIS_BLOCK", "STONE", "DIRT", "WOOD", "SANDSTONE", "WOOL", "BRICK", "NETHERRACK", "SOUL_SAND", "SMOOTH_BRICK", "HUGE_MUSHROOM_1", "HUGE_MUSHROOM_2", "ENDER_STONE"});
+    public static final List<String> MIDDLE_BLOCKS = Arrays.asList(new String[]{"LAPIS_BLOCK", "STONE", "DIRT", "WOOD", "SANDSTONE", "WOOL", "BRICK", "NETHERRACK", "SOUL_SAND", "SMOOTH_BRICK", "HUGE_MUSHROOM_1", "HUGE_MUSHROOM_2", "ENDER_STONE"});
 
     public TARDISBlockPlaceListener(TARDIS plugin) {
         this.plugin = plugin;
@@ -58,14 +58,17 @@ public class TARDISBlockPlaceListener implements Listener {
                 if (player.hasPermission("tardis.create")) {
                     String playerNameStr = player.getName();
                     // check to see if they already have a TARDIS
+                    Statement statement = null;
+                    PreparedStatement pstatement = null;
+                    ResultSet rs = null;
                     try {
                         Connection connection = service.getConnection();
-                        Statement statement = connection.createStatement();
+                        statement = connection.createStatement();
                         // check if the chunk already contains a TARDIS
                         String queryTardis = "SELECT * FROM tardis WHERE owner = ?";
-                        PreparedStatement pstatement = connection.prepareStatement(queryTardis);
+                        pstatement = connection.prepareStatement(queryTardis);
                         pstatement.setString(1, playerNameStr);
-                        ResultSet rs = pstatement.executeQuery();
+                        rs = pstatement.executeQuery();
                         if (!rs.next()) {
                             // get this chunk co-ords
                             Chunk chunk = blockBottom.getChunk();
@@ -115,7 +118,7 @@ public class TARDISBlockPlaceListener implements Listener {
                                 if (idRS.next()) {
                                     lastInsertId = idRS.getInt(1);
                                 }
-                                statement.close();
+                                idRS.close();
                                 // turn the block stack into a TARDIS
                                 plugin.builder.buildOuterTARDIS(lastInsertId, block_loc, Constants.COMPASS.valueOf(d), false, player, false);
                                 plugin.builder.buildInnerTARDIS(schm, chunkworld, Constants.COMPASS.valueOf(d), lastInsertId, player, middle_id, middle_data);
@@ -127,10 +130,27 @@ public class TARDISBlockPlaceListener implements Listener {
                             String[] leftData = leftLoc.split(":");
                             player.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " You already have a TARDIS, you left it in " + leftData[0] + " at x:" + leftData[1] + " y:" + leftData[2] + " z:" + leftData[3]);
                         }
-                        rs.close();
-                        statement.close();
                     } catch (SQLException e) {
                         System.err.println(Constants.MY_PLUGIN_NAME + " Block Place Listener Error: " + e + ", " + e.getErrorCode() + ", " + e.getSQLState());
+                    } finally {
+                        if (pstatement != null) {
+                            try {
+                                pstatement.close();
+                            } catch (Exception e) {
+                            }
+                        }
+                        if (rs != null) {
+                            try {
+                                rs.close();
+                            } catch (Exception e) {
+                            }
+                        }
+                        if (statement != null) {
+                            try {
+                                statement.close();
+                            } catch (Exception e) {
+                            }
+                        }
                     }
                 } else {
                     player.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " You don't have permission to build a TARDIS!");

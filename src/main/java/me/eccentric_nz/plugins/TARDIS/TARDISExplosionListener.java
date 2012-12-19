@@ -4,7 +4,6 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.List;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
@@ -27,14 +26,15 @@ public class TARDISExplosionListener implements Listener {
         if (e.isCancelled()) {
             return;
         }
-        List<Block> blocks = e.blockList();
         int idchk = 0;
         // get list of police box blocks from DB
+        Statement statement = null;
+        ResultSet rsBlocks = null;
         try {
             Connection connection = service.getConnection();
-            Statement statement = connection.createStatement();
+            statement = connection.createStatement();
             String queryBlocks = "SELECT blocks.*, doors.door_location, doors.door_direction FROM blocks, doors WHERE blocks.tardis_id = doors.tardis_id and doors.door_type = 0";
-            ResultSet rsBlocks = statement.executeQuery(queryBlocks);
+            rsBlocks = statement.executeQuery(queryBlocks);
             if (rsBlocks.isBeforeFirst()) {
                 while (rsBlocks.next()) {
                     String location = rsBlocks.getString("location");
@@ -102,10 +102,21 @@ public class TARDISExplosionListener implements Listener {
                     idchk = id;
                 }
             }
-            rsBlocks.close();
-            statement.close();
         } catch (SQLException err) {
             System.err.println(Constants.MY_PLUGIN_NAME + " Explosion Listener error: " + err);
+        } finally {
+            if (rsBlocks != null) {
+                try {
+                    rsBlocks.close();
+                } catch (Exception ex) {
+                }
+            }
+            if (statement != null) {
+                try {
+                    statement.close();
+                } catch (Exception ex) {
+                }
+            }
         }
     }
 }

@@ -21,12 +21,14 @@ public class TARDISArea {
 
     public boolean areaCheckInExisting(Location l) {
         boolean chk = true;
+        Statement statement = null;
+        ResultSet rsArea = null;
         try {
             Connection connection = service.getConnection();
-            Statement statement = connection.createStatement();
+            statement = connection.createStatement();
             String w = l.getWorld().getName();
             String queryArea = "SELECT * FROM areas WHERE world = '" + w + "'";
-            ResultSet rsArea = statement.executeQuery(queryArea);
+            rsArea = statement.executeQuery(queryArea);
             if (rsArea.isBeforeFirst()) {
                 while (rsArea.next()) {
                     int minx = rsArea.getInt("minx");
@@ -40,21 +42,34 @@ public class TARDISArea {
                     }
                 }
             }
-            rsArea.close();
-            statement.close();
         } catch (SQLException e) {
             System.err.println(Constants.MY_PLUGIN_NAME + " Area block check error: " + e);
+        } finally {
+            if (rsArea != null) {
+                try {
+                    rsArea.close();
+                } catch (Exception e) {
+                }
+            }
+            if (statement != null) {
+                try {
+                    statement.close();
+                } catch (Exception e) {
+                }
+            }
         }
         return chk;
     }
 
     public boolean areaCheckInExile(String a, Location l) {
         boolean chk = true;
+        Statement statement = null;
+        ResultSet rsArea = null;
         try {
             Connection connection = service.getConnection();
-            Statement statement = connection.createStatement();
+            statement = connection.createStatement();
             String queryArea = "SELECT * FROM areas WHERE area_name = '" + a + "'";
-            ResultSet rsArea = statement.executeQuery(queryArea);
+            rsArea = statement.executeQuery(queryArea);
             if (rsArea.next()) {
                 String w = rsArea.getString("world");
                 String lw = l.getWorld().getName();
@@ -71,18 +86,33 @@ public class TARDISArea {
             statement.close();
         } catch (SQLException e) {
             System.err.println(Constants.MY_PLUGIN_NAME + " Area block check error: " + e);
+        } finally {
+            if (rsArea != null) {
+                try {
+                    rsArea.close();
+                } catch (Exception e) {
+                }
+            }
+            if (statement != null) {
+                try {
+                    statement.close();
+                } catch (Exception e) {
+                }
+            }
         }
         return chk;
     }
 
     public boolean areaCheckLocPlayer(Player p, Location l) {
         boolean chk = false;
+        Statement statement = null;
+        ResultSet rsArea = null;
         try {
             Connection connection = service.getConnection();
-            Statement statement = connection.createStatement();
+            statement = connection.createStatement();
             String w = l.getWorld().getName();
             String queryArea = "SELECT * FROM areas WHERE world = '" + w + "'";
-            ResultSet rsArea = statement.executeQuery(queryArea);
+            rsArea = statement.executeQuery(queryArea);
             int i = 1;
             if (rsArea.isBeforeFirst()) {
                 while (rsArea.next()) {
@@ -107,6 +137,19 @@ public class TARDISArea {
             statement.close();
         } catch (SQLException e) {
             System.err.println(Constants.MY_PLUGIN_NAME + " Area player check error: " + e);
+        } finally {
+            if (rsArea != null) {
+                try {
+                    rsArea.close();
+                } catch (Exception e) {
+                }
+            }
+            if (statement != null) {
+                try {
+                    statement.close();
+                } catch (Exception e) {
+                }
+            }
         }
         return chk;
     }
@@ -114,11 +157,13 @@ public class TARDISArea {
     public Location getNextSpot(String a) {
         Location location = null;
         // find the next available slot in this area
+        Statement statement = null;
+        ResultSet rsArea = null;
         try {
             Connection connection = service.getConnection();
-            Statement statement = connection.createStatement();
+            statement = connection.createStatement();
             String queryArea = "SELECT * FROM areas WHERE area_name = '" + a + "'";
-            ResultSet rsArea = statement.executeQuery(queryArea);
+            rsArea = statement.executeQuery(queryArea);
             if (rsArea.next()) {
                 int minx = rsArea.getInt("minx");
                 int x = minx + 2;
@@ -158,6 +203,19 @@ public class TARDISArea {
             }
         } catch (SQLException e) {
             System.err.println(Constants.MY_PLUGIN_NAME + " Area parking error: " + e);
+        } finally {
+            if (rsArea != null) {
+                try {
+                    rsArea.close();
+                } catch (Exception e) {
+                }
+            }
+            if (statement != null) {
+                try {
+                    statement.close();
+                } catch (Exception e) {
+                }
+            }
         }
         return location;
     }

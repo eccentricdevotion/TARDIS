@@ -33,23 +33,36 @@ public class TARDISBlockProtectListener implements Listener {
     @EventHandler(priority = EventPriority.LOWEST)
     public void onBlockIgnite(BlockIgniteEvent event) {
         Block b = event.getBlock();
+        Statement statement = null;
+        ResultSet rsBlockLoc = null;
         try {
             Connection connection = service.getConnection();
-            Statement statement = connection.createStatement();
+            statement = connection.createStatement();
             for (BlockFace bf : faces) {
                 Block chkBlock = b.getRelative(bf);
                 String l = chkBlock.getLocation().toString();
                 String queryBlock = "SELECT location FROM blocks WHERE location = '" + l + "'";
-                ResultSet rsBlockLoc = statement.executeQuery(queryBlock);
+                rsBlockLoc = statement.executeQuery(queryBlock);
                 if (rsBlockLoc.next()) {
                     event.setCancelled(true);
                     break;
                 }
-                rsBlockLoc.close();
-                statement.close();
             }
         } catch (SQLException e) {
             System.err.println(Constants.MY_PLUGIN_NAME + " Could not get block ignite locations from DB!");
+        } finally {
+            if (rsBlockLoc != null) {
+                try {
+                    rsBlockLoc.close();
+                } catch (Exception e) {
+                }
+            }
+            if (statement != null) {
+                try {
+                    statement.close();
+                } catch (Exception e) {
+                }
+            }
         }
         if (plugin.config.getBoolean("protect_blocks") == true) {
             String[] set = {"EAST", "SOUTH", "WEST", "NORTH", "UP", "DOWN"};
@@ -68,11 +81,13 @@ public class TARDISBlockProtectListener implements Listener {
     public void onBlockBurn(BlockBurnEvent event) {
         Block b = event.getBlock();
         String l = b.getLocation().toString();
+        Statement statement = null;
+        ResultSet rsBlockLoc = null;
         try {
             Connection connection = service.getConnection();
-            Statement statement = connection.createStatement();
+            statement = connection.createStatement();
             String queryBlock = "SELECT location FROM blocks WHERE location = '" + l + "'";
-            ResultSet rsBlockLoc = statement.executeQuery(queryBlock);
+            rsBlockLoc = statement.executeQuery(queryBlock);
             if (rsBlockLoc.next()) {
                 event.setCancelled(true);
             }
@@ -80,6 +95,19 @@ public class TARDISBlockProtectListener implements Listener {
             statement.close();
         } catch (SQLException e) {
             System.err.println(Constants.MY_PLUGIN_NAME + " Could not get block burn locations from DB!");
+        } finally {
+            if (rsBlockLoc != null) {
+                try {
+                    rsBlockLoc.close();
+                } catch (Exception e) {
+                }
+            }
+            if (statement != null) {
+                try {
+                    statement.close();
+                } catch (Exception e) {
+                }
+            }
         }
 
         if (plugin.config.getBoolean("protect_blocks") == true) {

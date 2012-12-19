@@ -45,10 +45,12 @@ public class TARDISAreaCommands implements CommandExecutor {
                     return false;
                 }
                 String queryName = "SELECT area_name FROM areas";
+                Statement statement = null;
+                ResultSet rsName = null;
                 try {
                     Connection connection = service.getConnection();
-                    Statement statement = connection.createStatement();
-                    ResultSet rsName = statement.executeQuery(queryName);
+                    statement = connection.createStatement();
+                    rsName = statement.executeQuery(queryName);
                     while (rsName.next()) {
                         if (rsName.getString("area_name").equals(args[1])) {
                             sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " Area name already in use!");
@@ -57,6 +59,19 @@ public class TARDISAreaCommands implements CommandExecutor {
                     }
                 } catch (SQLException e) {
                     System.err.println(Constants.MY_PLUGIN_NAME + "Couldn't get area names: " + e);
+                } finally {
+                    if (rsName != null) {
+                        try {
+                            rsName.close();
+                        } catch (Exception e) {
+                        }
+                    }
+                    if (statement != null) {
+                        try {
+                            statement.close();
+                        } catch (Exception e) {
+                        }
+                    }
                 }
                 plugin.trackName.put(player.getName(), args[1]);
                 player.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " Click the area start block to save its position.");
@@ -73,21 +88,30 @@ public class TARDISAreaCommands implements CommandExecutor {
             }
             if (args[0].equals("remove")) {
                 String queryRemove = "DELETE FROM areas WHERE area_name = '" + args[1] + "'";
+                Statement statement = null;
                 try {
                     Connection connection = service.getConnection();
-                    Statement statement = connection.createStatement();
+                    statement = connection.createStatement();
                     statement.executeUpdate(queryRemove);
                     player.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " Area [" + args[1] + "] deleted!");
                     return true;
                 } catch (SQLException e) {
                     System.err.println(Constants.MY_PLUGIN_NAME + "Couldn't delete area: " + e);
+                } finally {
+                    if (statement != null) {
+                        try {
+                            statement.close();
+                        } catch (Exception e) {
+                        }
+                    }
                 }
             }
             if (args[0].equals("show")) {
                 String queryGetArea = "SELECT * FROM areas WHERE area_name = '" + args[1] + "'";
+                Statement statement = null;
                 try {
                     Connection connection = service.getConnection();
-                    Statement statement = connection.createStatement();
+                    statement = connection.createStatement();
                     ResultSet rsArea = statement.executeQuery(queryGetArea);
                     if (!rsArea.next()) {
                         player.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + "Could not find area [" + args[1] + "]! Did you type the name correctly?");
@@ -98,6 +122,7 @@ public class TARDISAreaCommands implements CommandExecutor {
                     int max = rsArea.getInt("maxx");
                     int maz = rsArea.getInt("maxz");
                     World w = plugin.getServer().getWorld(rsArea.getString("world"));
+                    rsArea.close();
                     final Block b1 = w.getHighestBlockAt(mix, miz).getRelative(BlockFace.UP);
                     b1.setTypeId(89);
                     final Block b2 = w.getHighestBlockAt(mix, maz).getRelative(BlockFace.UP);
@@ -118,6 +143,13 @@ public class TARDISAreaCommands implements CommandExecutor {
                     return true;
                 } catch (SQLException e) {
                     System.err.println(Constants.MY_PLUGIN_NAME + "Couldn't delete area: " + e);
+                } finally {
+                    if (statement != null) {
+                        try {
+                            statement.close();
+                        } catch (Exception e) {
+                        }
+                    }
                 }
             }
         }
