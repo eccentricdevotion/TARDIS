@@ -29,9 +29,11 @@ public class TARDISUtils {
         // save the block location so that we can protect it from damage and restore it (if it wasn't air)!
         int bid = b.getTypeId();
         String l = b.getLocation().toString();
+        Statement statement = null;
         String queryAddBlock;
         if (rebuild == false) {
             if (bid != 0) {
+                plugin.debug("Remembering block with ID: " + bid);
                 byte data = b.getData();
                 queryAddBlock = "INSERT INTO blocks (tardis_id, location, block, data) VALUES (" + id + ",'" + l + "', " + bid + ", " + data + ")";
             } else {
@@ -39,10 +41,18 @@ public class TARDISUtils {
             }
             try {
                 Connection connection = service.getConnection();
-                Statement statement = connection.createStatement();
+                statement = connection.createStatement();
                 statement.executeUpdate(queryAddBlock);
+                statement.close();
             } catch (SQLException e) {
                 System.err.println(Constants.MY_PLUGIN_NAME + " Could not save block location to DB!");
+            } finally {
+                if (statement != null) {
+                    try {
+                        statement.close();
+                    } catch (Exception e) {
+                    }
+                }
             }
         }
         b.setTypeIdAndData(m, d, true);
@@ -54,30 +64,40 @@ public class TARDISUtils {
         Block b = w.getBlockAt(x, y, z);
         Integer bId = Integer.valueOf(b.getTypeId());
         byte bData = b.getData();
+        Statement statement = null;
         if (ids.contains(bId)) {
             b.setTypeIdAndData(m, d, true);
             // remember replaced block location, TypeId and Data so we can restore it later
             try {
                 Connection connection = service.getConnection();
-                Statement statement = connection.createStatement();
+                statement = connection.createStatement();
                 String replaced = w.getName() + ":" + x + ":" + y + ":" + z + ":" + bId + ":" + bData;
                 String queryReplaced = "UPDATE tardis SET replaced = '" + replaced + "' WHERE tardis_id = " + id;
                 statement.executeUpdate(queryReplaced);
                 statement.close();
             } catch (SQLException e) {
                 System.err.println(Constants.MY_PLUGIN_NAME + "Set Replaced Block Error: " + e);
+            } finally {
+                if (statement != null) {
+                    try {
+                        statement.close();
+                    } catch (Exception e) {
+                    }
+                }
             }
         }
     }
     private static int[] startLoc = new int[6];
 
     public int[] getStartLocation(int id, Constants.COMPASS dir) {
-        int cx = 0, cz = 0;
+        int cx, cz;
+        Statement statement = null;
+        ResultSet rs = null;
         try {
             Connection connection = service.getConnection();
-            Statement statement = connection.createStatement();
+            statement = connection.createStatement();
             String queryChunk = "SELECT chunk FROM tardis WHERE tardis_id = " + id + " LIMIT 1";
-            ResultSet rs = statement.executeQuery(queryChunk);
+            rs = statement.executeQuery(queryChunk);
             String chunkstr = rs.getString("chunk");
             String[] split = chunkstr.split(":");
             World w = plugin.getServer().getWorld(split[0]);
@@ -94,6 +114,19 @@ public class TARDISUtils {
             statement.close();
         } catch (SQLException e) {
             System.err.println(Constants.MY_PLUGIN_NAME + " Get Chunk Error: " + e);
+        } finally {
+            if (rs != null) {
+                try {
+                    rs.close();
+                } catch (Exception e) {
+                }
+            }
+            if (statement != null) {
+                try {
+                    statement.close();
+                } catch (Exception e) {
+                }
+            }
         }
         return startLoc;
     }
@@ -101,28 +134,32 @@ public class TARDISUtils {
     public boolean checkChunk(String w, int x, int z, Constants.SCHEMATIC schm) {
         boolean chunkchk = false;
         int cw, cl;
+        Statement statement = null;
+        ResultSet rs = null;
         switch (schm) {
             case BIGGER:
-                cw = (int) Math.ceil(plugin.biggerdimensions[1] / 16);
-                cl = (int) Math.ceil(plugin.biggerdimensions[2] / 16);
+                cw = roundUp(plugin.biggerdimensions[1], 16);
+                cl = roundUp(plugin.biggerdimensions[2], 16);
                 break;
             case DELUXE:
-                cw = (int) Math.ceil(plugin.deluxedimensions[1] / 16);
-                cl = (int) Math.ceil(plugin.deluxedimensions[2] / 16);
+                cw = roundUp(plugin.deluxedimensions[1], 16);
+                cl = roundUp(plugin.deluxedimensions[2], 16);
                 break;
             default:
-                cw = (int) Math.ceil(plugin.budgetdimensions[1] / 16);
-                cl = (int) Math.ceil(plugin.budgetdimensions[2] / 16);
+                cw = roundUp(plugin.budgetdimensions[1], 16);
+                cl = roundUp(plugin.budgetdimensions[2], 16);
                 break;
         }
+        plugin.debug("Width in chunks: " + cw);
+        plugin.debug("Length in chunks: " + cl);
         // check all the chunks that will be used by the schematic
         for (int cx = 0; cx < cw; cx++) {
             for (int cz = 0; cz < cl; cz++) {
                 String queryCheck = "SELECT * FROM chunks WHERE world = '" + w + "' AND x =" + (x + cx) + " AND z = " + (z + cl) + " LIMIT 1";
                 try {
                     Connection connection = service.getConnection();
-                    Statement statement = connection.createStatement();
-                    ResultSet rs = statement.executeQuery(queryCheck);
+                    statement = connection.createStatement();
+                    rs = statement.executeQuery(queryCheck);
                     if (rs.next()) {
                         chunkchk = true;
                     }
@@ -130,10 +167,27 @@ public class TARDISUtils {
                     statement.close();
                 } catch (SQLException e) {
                     System.err.println(Constants.MY_PLUGIN_NAME + " Get All Chunks Error: " + e);
+                } finally {
+                    if (rs != null) {
+                        try {
+                            rs.close();
+                        } catch (Exception e) {
+                        }
+                    }
+                    if (statement != null) {
+                        try {
+                            statement.close();
+                        } catch (Exception e) {
+                        }
+                    }
                 }
             }
         }
         return chunkchk;
+    }
+
+    public static int roundUp(int num, int divisor) {
+        return (num + divisor - 1) / divisor;
     }
 
     public int parseNum(String i) {
@@ -152,11 +206,13 @@ public class TARDISUtils {
 
     public void updateTravellerCount(int id) {
         // how many travellers are in the TARDIS?
+        Statement statement = null;
+        ResultSet rsCount = null;
         try {
             Connection connection = service.getConnection();
-            Statement statement = connection.createStatement();
+            statement = connection.createStatement();
             String queryCount = "SELECT COUNT (*) AS count FROM travellers WHERE tardis_id = " + id;
-            ResultSet rsCount = statement.executeQuery(queryCount);
+            rsCount = statement.executeQuery(queryCount);
             if (rsCount.next()) {
                 int count = rsCount.getInt("count");
                 plugin.trackTravellers.put(id, count);
@@ -165,6 +221,19 @@ public class TARDISUtils {
             statement.close();
         } catch (SQLException e) {
             System.err.println(Constants.MY_PLUGIN_NAME + " /TARDIS travel to location Error: " + e);
+        } finally {
+            if (rsCount != null) {
+                try {
+                    rsCount.close();
+                } catch (Exception e) {
+                }
+            }
+            if (statement != null) {
+                try {
+                    statement.close();
+                } catch (Exception e) {
+                }
+            }
         }
     }
 }

@@ -29,9 +29,10 @@ public class TARDISSchematicReader {
 
     public void main(String fileStr, Constants.SCHEMATIC s) {
         System.out.println(Constants.MY_PLUGIN_NAME + " Loading schematic: " + fileStr);
+        FileInputStream fis = null;
         try {
             File f = new File(fileStr);
-            FileInputStream fis = new FileInputStream(f);
+            fis = new FileInputStream(f);
             NBTInputStream nbt = new NBTInputStream(fis);
             CompoundTag backuptag = (CompoundTag) nbt.readTag();
             Map<String, Tag> tagCollection = backuptag.getValue();
@@ -89,10 +90,11 @@ public class TARDISSchematicReader {
                 BufferedWriter bw = new BufferedWriter(new FileWriter(file, false));
                 for (String[][] l : layers) {
                     for (String[] lines : l) {
-                        String commas = "";
+                        StringBuilder buf = new StringBuilder();
                         for (String bd : lines) {
-                            commas += bd + ",";
+                            buf.append(bd).append(",");
                         }
+                        String commas = buf.toString();
                         String strCommas = commas.substring(0, (commas.length() - 1));
                         bw.write(strCommas);
                         bw.newLine();
@@ -102,8 +104,15 @@ public class TARDISSchematicReader {
             } catch (IOException io) {
                 System.err.println(Constants.MY_PLUGIN_NAME + " Could not save the time lords file!");
             }
-        } catch (Exception e) {
+        } catch (IOException e) {
             System.err.println(Constants.MY_PLUGIN_NAME + " Schematic read error: " + e);
+        } finally {
+            if (fis != null) {
+                try {
+                    fis.close();
+                } catch (Exception e) {
+                }
+            }
         }
     }
 

@@ -12,17 +12,18 @@ import org.getspout.spoutapi.SpoutManager;
 
 public class TARDISSounds {
 
-    static TARDISDatabase service = TARDISDatabase.getInstance();
-    Statement statement;
+    private static TARDISDatabase service = TARDISDatabase.getInstance();
     private static Random rand = new Random();
+    private static Statement statement;
+    private static ResultSet rs;
 
     public static void randomTARDISSound() {
         if (TARDIS.plugin.config.getBoolean("sfx") == true) {
             try {
                 String queryTravellers = "SELECT player FROM travellers";
                 Connection connection = service.getConnection();
-                Statement statement = connection.createStatement();
-                ResultSet rs = statement.executeQuery(queryTravellers);
+                statement = connection.createStatement();
+                rs = statement.executeQuery(queryTravellers);
                 while (rs.next()) {
                     String playerNameStr = rs.getString("player");
                     String querySFX = "SELECT sfx_on FROM player_prefs WHERE player = '" + playerNameStr + "'";
@@ -44,10 +45,21 @@ public class TARDISSounds {
                         }
                     }
                 }
-                rs.close();
-                statement.close();
             } catch (SQLException e) {
                 System.err.println(Constants.MY_PLUGIN_NAME + " SFX error: " + e);
+            } finally {
+                if (rs != null) {
+                    try {
+                        rs.close();
+                    } catch (Exception e) {
+                    }
+                }
+                if (statement != null) {
+                    try {
+                        statement.close();
+                    } catch (Exception e) {
+                    }
+                }
             }
         }
     }

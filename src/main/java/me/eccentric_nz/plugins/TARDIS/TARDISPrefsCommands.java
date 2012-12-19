@@ -12,12 +12,7 @@ import org.bukkit.entity.Player;
 
 public class TARDISPrefsCommands implements CommandExecutor {
 
-    private TARDIS plugin;
     TARDISDatabase service = TARDISDatabase.getInstance();
-
-    public TARDISPrefsCommands(TARDIS plugin) {
-        this.plugin = plugin;
-    }
 
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
@@ -42,11 +37,13 @@ public class TARDISPrefsCommands implements CommandExecutor {
                         return false;
                     }
                     // get the players sfx setting
+                    Statement statement = null;
+                    ResultSet rs = null;
                     try {
                         Connection connection = service.getConnection();
-                        Statement statement = connection.createStatement();
+                        statement = connection.createStatement();
                         String querySFX = "SELECT * FROM player_prefs WHERE player = '" + player.getName() + "'";
-                        ResultSet rs = statement.executeQuery(querySFX);
+                        rs = statement.executeQuery(querySFX);
                         if (rs == null || !rs.next()) {
                             String queryInsert = "INSERT INTO player_prefs (player) VALUES ('" + player.getName() + "')";
                             statement.executeUpdate(queryInsert);
@@ -61,11 +58,22 @@ public class TARDISPrefsCommands implements CommandExecutor {
                             statement.executeUpdate(queryUpdate);
                             sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " Sound effects were turned OFF.");
                         }
-                        rs.close();
-                        statement.close();
                         return true;
                     } catch (SQLException e) {
                         System.err.println(Constants.MY_PLUGIN_NAME + " SFX Preferences Save Error: " + e);
+                    } finally {
+                        if (rs != null) {
+                            try {
+                                rs.close();
+                            } catch (Exception e) {
+                            }
+                        }
+                        if (statement != null) {
+                            try {
+                                statement.close();
+                            } catch (Exception e) {
+                            }
+                        }
                     }
                 } else {
                     sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + Constants.NO_PERMS_MESSAGE);
@@ -79,11 +87,13 @@ public class TARDISPrefsCommands implements CommandExecutor {
                         return false;
                     }
                     // get the players platform setting
+                    Statement statement = null;
+                    ResultSet rs = null;
                     try {
                         Connection connection = service.getConnection();
-                        Statement statement = connection.createStatement();
+                        statement = connection.createStatement();
                         String queryPlatform = "SELECT * FROM player_prefs WHERE player = '" + player.getName() + "'";
-                        ResultSet rs = statement.executeQuery(queryPlatform);
+                        rs = statement.executeQuery(queryPlatform);
                         if (rs == null || !rs.next()) {
                             String queryInsert = "INSERT INTO player_prefs (player) VALUES ('" + player.getName() + "')";
                             statement.executeUpdate(queryInsert);
@@ -98,11 +108,22 @@ public class TARDISPrefsCommands implements CommandExecutor {
                             statement.executeUpdate(queryUpdate);
                             sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " safety platform was turned OFF.");
                         }
-                        rs.close();
-                        statement.close();
                         return true;
                     } catch (SQLException e) {
                         System.err.println(Constants.MY_PLUGIN_NAME + " Platform Preferences Save Error: " + e);
+                    } finally {
+                        if (rs != null) {
+                            try {
+                                rs.close();
+                            } catch (Exception e) {
+                            }
+                        }
+                        if (statement != null) {
+                            try {
+                                statement.close();
+                            } catch (Exception e) {
+                            }
+                        }
                     }
                 } else {
                     sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + Constants.NO_PERMS_MESSAGE);
@@ -116,11 +137,13 @@ public class TARDISPrefsCommands implements CommandExecutor {
                         return false;
                     }
                     // get the players quotes setting
+                    Statement statement = null;
+                    ResultSet rs = null;
                     try {
                         Connection connection = service.getConnection();
-                        Statement statement = connection.createStatement();
+                        statement = connection.createStatement();
                         String queryPlatform = "SELECT * FROM player_prefs WHERE player = '" + player.getName() + "'";
-                        ResultSet rs = statement.executeQuery(queryPlatform);
+                        rs = statement.executeQuery(queryPlatform);
                         if (rs == null || !rs.next()) {
                             String queryInsert = "INSERT INTO player_prefs (player) VALUES ('" + player.getName() + "')";
                             statement.executeUpdate(queryInsert);
@@ -135,11 +158,22 @@ public class TARDISPrefsCommands implements CommandExecutor {
                             statement.executeUpdate(queryUpdate);
                             sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " Quotes were turned OFF.");
                         }
-                        rs.close();
-                        statement.close();
                         return true;
                     } catch (SQLException e) {
                         System.err.println(Constants.MY_PLUGIN_NAME + " Quotes Preferences Save Error: " + e);
+                    } finally {
+                        if (rs != null) {
+                            try {
+                                rs.close();
+                            } catch (Exception e) {
+                            }
+                        }
+                        if (statement != null) {
+                            try {
+                                statement.close();
+                            } catch (Exception e) {
+                            }
+                        }
                     }
                 } else {
                     sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + Constants.NO_PERMS_MESSAGE);
