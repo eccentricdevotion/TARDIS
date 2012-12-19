@@ -2,20 +2,15 @@ package me.eccentric_nz.plugins.TARDIS;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import org.bukkit.Bukkit;
-import org.bukkit.Chunk;
-import org.bukkit.World;
 
 public class TARDISDatabase {
 
     private static TARDISDatabase instance = new TARDISDatabase();
     public Connection connection = null;
     public Statement statement;
-    private static TARDIS plugin;
 
     public static synchronized TARDISDatabase getInstance() {
         return instance;
@@ -148,7 +143,6 @@ public class TARDISDatabase {
         } catch (SQLException e) {
             System.err.println(Constants.MY_PLUGIN_NAME + " Timelords insert error: " + e);
         }
-
         return tardis;
     }
 
