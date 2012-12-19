@@ -90,7 +90,7 @@ public class TARDISTravelCommands implements CommandExecutor {
                                         sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " The player's location would not be safe! Please tell the player to move!");
                                         return true;
                                     }
-                                    if (plugin.WorldGuardOnServer && plugin.config.getBoolean("respect_worldguard")) {
+                                    if (plugin.worldGuardOnServer && plugin.config.getBoolean("respect_worldguard")) {
                                         if (plugin.wgchk.cantBuild(player, player_loc)) {
                                             sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + "That location is protected by WorldGuard!");
                                             return true;
@@ -165,7 +165,7 @@ public class TARDISTravelCommands implements CommandExecutor {
                         }
                         if (args.length == 4 && player.hasPermission("tardis.timetravel.location")) {
                             // must be a location then
-                            int x = 0, y = 0, z = 0;
+                            int x, y, z;
                             World w = plugin.getServer().getWorld(args[0]);
                             if (!plugin.config.getBoolean("include_default_world") && plugin.config.getBoolean("default_world") && args[0].equals(plugin.config.getString("default_world_name"))) {
                                 sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " The server admin does not allow time travel to this world!");
@@ -176,7 +176,7 @@ public class TARDISTravelCommands implements CommandExecutor {
                             z = plugin.utils.parseNum(args[3]);
                             Block block = w.getBlockAt(x, y, z);
                             Location location = block.getLocation();
-                            if (plugin.WorldGuardOnServer && plugin.config.getBoolean("respect_worldguard")) {
+                            if (plugin.worldGuardOnServer && plugin.config.getBoolean("respect_worldguard")) {
                                 if (plugin.wgchk.cantBuild(player, location)) {
                                     sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + "That location is protected by WorldGuard!");
                                     return true;

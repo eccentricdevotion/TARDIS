@@ -15,7 +15,7 @@ import org.bukkit.entity.Player;
 
 public class TARDISTimetravel {
 
-    private static Location dest;
+    private Location dest;
     private TARDIS plugin;
 
     public TARDISTimetravel(TARDIS plugin) {
@@ -105,7 +105,7 @@ public class TARDISTimetravel {
                 if (highest > 40) {
                     Block currentBlock = randworld.getBlockAt(wherex, highest, wherez);
                     Location chunk_loc = currentBlock.getLocation();
-                    if (plugin.WorldGuardOnServer && plugin.wgchk.cantBuild(p, chunk_loc) && plugin.config.getBoolean("respect_worldguard")) {
+                    if (plugin.worldGuardOnServer && plugin.wgchk.cantBuild(p, chunk_loc) && plugin.config.getBoolean("respect_worldguard")) {
                         count = 1;
                     }
                     if (plugin.ta.areaCheckLocPlayer(p, chunk_loc)) {
@@ -153,7 +153,7 @@ public class TARDISTimetravel {
                                 currentBlock = currentBlock.getRelative(BlockFace.DOWN);
                             }
                             Location chunk_loc = currentBlock.getLocation();
-                            if (plugin.WorldGuardOnServer && plugin.wgchk.cantBuild(p, chunk_loc) && plugin.config.getBoolean("respect_worldguard")) {
+                            if (plugin.worldGuardOnServer && plugin.wgchk.cantBuild(p, chunk_loc) && plugin.config.getBoolean("respect_worldguard")) {
                                 count = 1;
                             }
                             if (plugin.ta.areaCheckLocPlayer(p, chunk_loc)) {

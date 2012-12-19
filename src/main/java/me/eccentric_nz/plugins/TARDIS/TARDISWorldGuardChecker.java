@@ -22,13 +22,13 @@ public class TARDISWorldGuardChecker {
 
     public TARDISWorldGuardChecker(TARDIS plugin) {
         this.plugin = plugin;
-        if (plugin.WorldGuardOnServer) {
+        if (plugin.worldGuardOnServer) {
         wg = (WorldGuardPlugin) plugin.getServer().getPluginManager().getPlugin("WorldGuard");
         }
     }
 
     public boolean cantBuild(Player p, Location l) {
-        return (plugin.WorldGuardOnServer) && (!wg.canBuild(p, l));
+        return (plugin.worldGuardOnServer) && (!wg.canBuild(p, l));
     }
 
     public void addWGProtection(Player p, Location one, Location two) {

@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Arrays;
 import java.util.HashSet;
+import java.util.Locale;
 import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.block.Sign;
@@ -74,7 +75,7 @@ public class TARDISCommands implements CommandExecutor {
                                 sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " Could not find the Chameleon Circuit!");
                                 return false;
                             } else {
-                                int x = 0, y = 0, z = 0;
+                                int x, y, z;
                                 String[] chamData = chamStr.split(":");
                                 World w = plugin.getServer().getWorld(chamData[0]);
                                 Constants.COMPASS d = Constants.COMPASS.valueOf(rs.getString("direction"));
@@ -146,7 +147,7 @@ public class TARDISCommands implements CommandExecutor {
                             sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " The server admin will not allow you to bring the TARDIS to this world!");
                             return true;
                         }
-                        if (plugin.WorldGuardOnServer && plugin.config.getBoolean("respect_worldguard")) {
+                        if (plugin.worldGuardOnServer && plugin.config.getBoolean("respect_worldguard")) {
                             if (plugin.wgchk.cantBuild(player, eyeLocation)) {
                                 sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + "That location is protected by WorldGuard!");
                                 return false;
@@ -228,7 +229,7 @@ public class TARDISCommands implements CommandExecutor {
                             sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " The server admin will not allow you to set the TARDIS home in this world!");
                             return true;
                         }
-                        if (plugin.WorldGuardOnServer && plugin.config.getBoolean("respect_worldguard")) {
+                        if (plugin.worldGuardOnServer && plugin.config.getBoolean("respect_worldguard")) {
                             if (plugin.wgchk.cantBuild(player, eyeLocation)) {
                                 sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + "That location is protected by WorldGuard!");
                                 return false;
@@ -276,7 +277,7 @@ public class TARDISCommands implements CommandExecutor {
                             sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " Too few command arguments!");
                             return false;
                         }
-                        if (!Arrays.asList(validBlockNames).contains(args[1].toLowerCase())) {
+                        if (!Arrays.asList(validBlockNames).contains(args[1].toLowerCase(Locale.ENGLISH))) {
                             player.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " That is not a valid TARDIS block name! Try one of : door|button|save-repeater|x-repeater|z-repeater|y-repeater|chameleon|save-sign");
                             return false;
                         }
@@ -306,13 +307,13 @@ public class TARDISCommands implements CommandExecutor {
                     if (player.hasPermission("tardis.rebuild")) {
                         String save = "";
                         World w;
-                        int x = 0, y = 0, z = 0, id = -1;
+                        int x, y, z, id = -1;
                         Constants.COMPASS d = Constants.COMPASS.EAST;
                         boolean cham = false;
                         try {
                             Connection connection = service.getConnection();
                             Statement statement = connection.createStatement();
-                            ResultSet rs = service.getTardis(player.getName(), "*");;
+                            ResultSet rs = service.getTardis(player.getName(), "*");
                             if (!rs.next()) {
                                 sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " " + Constants.NO_TARDIS);
                                 return false;
@@ -464,11 +465,11 @@ public class TARDISCommands implements CommandExecutor {
                             } else {
                                 id = rs.getInt("tardis_id");
                                 comps = rs.getString("companions");
+                                if (rs.wasNull() || comps.equals("")) {
+                                    sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " You have not added any TARDIS companions yet!");
+                                    return true;
+                                }
                                 rs.close();
-                            }
-                            if (comps.equals("") || comps.equals("[Null]") || comps == null) {
-                                sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " You have not added any TARDIS companions yet!");
-                                return false;
                             }
                             if (args.length < 2) {
                                 sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " Too few command arguments!");
@@ -479,16 +480,18 @@ public class TARDISCommands implements CommandExecutor {
                                 return false;
                             } else {
                                 String[] split = comps.split(":");
+                                StringBuilder buf = new StringBuilder();
                                 String newList = "";
                                 if (split.length > 1) {
                                     // recompile string without the specified player
                                     for (String c : split) {
                                         if (!c.equals(args[1].toLowerCase())) {
                                             // add to new string
-                                            newList += c + ":";
+                                            buf.append(c).append(":");
                                         }
                                     }
                                     // remove trailing colon
+                                    newList = buf.toString();
                                     newList = newList.substring(0, newList.length() - 1);
                                 } else {
                                     newList = "";
@@ -622,7 +625,7 @@ public class TARDISCommands implements CommandExecutor {
                                     sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " The server admin will not allow you to set the TARDIS destination to this world!");
                                     return true;
                                 }
-                                if (plugin.WorldGuardOnServer && plugin.config.getBoolean("respect_worldguard")) {
+                                if (plugin.worldGuardOnServer && plugin.config.getBoolean("respect_worldguard")) {
                                     if (plugin.wgchk.cantBuild(player, l)) {
                                         sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + "That location is protected by WorldGuard!");
                                         return false;
