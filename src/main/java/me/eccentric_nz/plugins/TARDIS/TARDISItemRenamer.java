@@ -10,7 +10,7 @@ public class TARDISItemRenamer {
 
     public TARDISItemRenamer(ItemStack itemStack) {
         this.itemStack = itemStack;
-        CraftItemStack cis = ((CraftItemStack) this.itemStack);
+        CraftItemStack cis = (CraftItemStack) this.itemStack;
         NBTTagCompound tag = cis.getHandle().getTag();
         if (tag == null) {
             cis.getHandle().setTag(new NBTTagCompound());
@@ -30,7 +30,7 @@ public class TARDISItemRenamer {
     }
 
     public String getName() {
-        if (hasDisplay() == false) {
+        if (!hasDisplay()) {
             return null;
         }
         String name = getDisplay().getString("Name");
@@ -41,7 +41,7 @@ public class TARDISItemRenamer {
     }
 
     public void setName(String name) {
-        if (hasDisplay() == false) {
+        if (!hasDisplay()) {
             this.addDisplay();
         }
         NBTTagCompound display = this.getDisplay();
