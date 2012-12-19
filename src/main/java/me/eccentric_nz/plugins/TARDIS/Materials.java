@@ -2,7 +2,7 @@ package me.eccentric_nz.plugins.TARDIS;
 
 public class Materials {
 
-    public static String[] MATERIAL_LIST = {
+    protected static final String[] MATERIAL_LIST = {
         "AIR",
         "ANVIL",
         "APPLE",
