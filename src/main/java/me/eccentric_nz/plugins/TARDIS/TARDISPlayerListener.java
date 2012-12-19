@@ -82,7 +82,7 @@ public class TARDISPlayerListener implements Listener {
                 try {
                     int id;
                     String queryBlockUpdate = "";
-                    String home = "";
+                    String home;
                     Connection connection = service.getConnection();
                     Statement statement = connection.createStatement();
                     ResultSet rs = service.getTardis(playerNameStr, "tardis_id, home");
@@ -651,7 +651,7 @@ public class TARDISPlayerListener implements Listener {
                                         String home = "";
                                         // cycle through saves
                                         while (rs.next()) {
-                                            if (home == "") {
+                                            if (home.equals("")) {
                                                 home = "Home:" + rs.getString("home");
                                             }
                                             dests.add(rs.getString("dest_name") + ":" + rs.getString("world") + ":" + rs.getString("x") + ":" + rs.getString("y") + ":" + rs.getString("z"));
