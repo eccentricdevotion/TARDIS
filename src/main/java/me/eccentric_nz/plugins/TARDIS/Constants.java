@@ -7,6 +7,7 @@ import java.sql.Statement;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -15,9 +16,9 @@ import org.bukkit.entity.Player;
 
 public class Constants {
 
-    public static TARDISDatabase service = TARDISDatabase.getInstance();
-    public static String MY_PLUGIN_NAME;
-    public static String TARDIS_KEY;
+    public final static TARDISDatabase service = TARDISDatabase.getInstance();
+    protected static String TARDIS_KEY;
+    protected static String MY_PLUGIN_NAME;
     public static final String SCHEMATIC_BUDGET = "budget.schematic";
     public static final String SCHEMATIC_BIGGER = "bigger.schematic";
     // Deluxe TARDIS schematic supplied by ewized http://dev.bukkit.org/profiles/ewized/
@@ -31,13 +32,13 @@ public class Constants {
     public static final String TIMELORDS_FILE_NAME = "timelords.yml";
     public static final String QUOTES_FILE_NAME = "quotes.txt";
     // chameleon blocks
-    public static List<Integer> CHAMELEON_BLOCKS_VALID = Arrays.asList(new Integer[]{1, 3, 4, 5, 7, 14, 15, 16, 17, 18, 19, 20, 21, 22, 24, 25, 35, 41, 42, 43, 45, 46, 47, 48, 49, 56, 57, 58, 73, 74, 79, 80, 82, 84, 86, 87, 88, 89, 91, 98, 99, 100, 103, 110, 112, 121, 123, 124, 129, 133});
-    public static List<Integer> CHAMELEON_BLOCKS_BAD = Arrays.asList(new Integer[]{6, 8, 9, 10, 11, 23, 26, 29, 33, 34, 50, 51, 52, 54, 55, 59, 61, 62, 63, 64, 65, 68, 70, 71, 72, 75, 76, 77, 83, 85, 90, 92, 93, 94, 95, 101, 107, 111, 115, 116, 117, 118, 119, 122, 127, 130, 131, 132});
+    public static final List<Integer> CHAMELEON_BLOCKS_VALID = Arrays.asList(new Integer[]{1, 3, 4, 5, 7, 14, 15, 16, 17, 18, 19, 20, 21, 22, 24, 25, 35, 41, 42, 43, 45, 46, 47, 48, 49, 56, 57, 58, 73, 74, 79, 80, 82, 84, 86, 87, 88, 89, 91, 98, 99, 100, 103, 110, 112, 121, 123, 124, 129, 133});
+    public static final List<Integer> CHAMELEON_BLOCKS_BAD = Arrays.asList(new Integer[]{6, 8, 9, 10, 11, 23, 26, 29, 33, 34, 50, 51, 52, 54, 55, 59, 61, 62, 63, 64, 65, 68, 70, 71, 72, 75, 76, 77, 83, 85, 90, 92, 93, 94, 95, 101, 107, 111, 115, 116, 117, 118, 119, 122, 127, 130, 131, 132});
     private static final Integer[] CHAMELEON_BLOCKS_CHANGE_ARR = {2, 12, 13, 44, 53, 60, 67, 78, 81, 96, 97, 101, 104, 105, 106, 108, 109, 113, 114, 120, 125, 126, 128, 134, 135, 136};
     private static final Integer[] CHAMELEON_BLOCKS_CHANGE_TO_ARR = {3, 24, 1, 43, 5, 3, 4, 80, 24, 5, 1, 20, 103, 86, 18, 45, 1, 112, 112, 121, 5, 5, 24, 5, 5, 5};
-    public static List<Integer> CHAMELEON_BLOCKS_CHANGE = Arrays.asList(new Integer[]{2, 12, 13, 44, 53, 67, 78, 81, 96, 97, 101, 104, 105, 106, 108, 109, 113, 114, 120, 125, 126, 128, 134, 135, 136});
-    public static HashMap<Integer, Integer> CHAMELEON_BLOCKS_CHANGE_HASH = toMap(CHAMELEON_BLOCKS_CHANGE_ARR, CHAMELEON_BLOCKS_CHANGE_TO_ARR);
-    public static List<Integer> CHAMELEON_BLOCKS_NEXT = Arrays.asList(new Integer[]{0, 27, 28, 30, 31, 32, 37, 38, 39, 40, 66});
+    public static final List<Integer> CHAMELEON_BLOCKS_CHANGE = Arrays.asList(new Integer[]{2, 12, 13, 44, 53, 67, 78, 81, 96, 97, 101, 104, 105, 106, 108, 109, 113, 114, 120, 125, 126, 128, 134, 135, 136});
+    public static final HashMap<Integer, Integer> CHAMELEON_BLOCKS_CHANGE_HASH = toMap(CHAMELEON_BLOCKS_CHANGE_ARR, CHAMELEON_BLOCKS_CHANGE_TO_ARR);
+    public static final List<Integer> CHAMELEON_BLOCKS_NEXT = Arrays.asList(new Integer[]{0, 27, 28, 30, 31, 32, 37, 38, 39, 40, 66});
     // messages
     public static final String INSTRUCTIONS = "Your TARDIS is ready!\nRight-click the TARDIS door with your TARDIS key (by default a STICK) to enter.\nTo time travel, adjust the repeaters on the console. For more help, type " + ChatColor.GOLD + "/TARDIS help timetravel" + ChatColor.RESET + " in chat to see more instructions.";
     public static final String COMMANDS = ChatColor.AQUA + "TARDIS help\n" + ChatColor.RESET + "Type " + ChatColor.GOLD + "/TARDIS help <command>" + ChatColor.RESET + " to see more details about a command.\nType " + ChatColor.GOLD + "/TARDIS help create|delete|timetravel" + ChatColor.RESET + " for instructions on creating and removing a TARDIS and how to time travel.\nCommands\n" + ChatColor.GOLD + "/TARDIS list" + ChatColor.RESET + " - list saved time travel destinations, TARDIS companions or admin defined areas.\n" + ChatColor.GOLD + "/TARDIS save [name]" + ChatColor.RESET + " - save the current location of the Police Box.\n" + ChatColor.GOLD + "/TARDIS removesave [name]" + ChatColor.RESET + " - delete a saved destination.\n" + ChatColor.GOLD + "/TARDIS find" + ChatColor.RESET + " - show the co-ordinates of a lost TARDIS.\n" + ChatColor.GOLD + "/TARDIS add" + ChatColor.RESET + " - add a TARDIS companion.\n" + ChatColor.GOLD + "/TARDIS remove" + ChatColor.RESET + " - remove a TARDIS companion.\n" + ChatColor.GOLD + "/TARDIS update" + ChatColor.RESET + " - update the special block positions in a modified TARDIS interior.\n" + ChatColor.GOLD + "/tardistravel" + ChatColor.RESET + " - set the time travel destination to co-ordinates, a player's location, a saved destination, or to an admin defined area.\n" + ChatColor.GOLD + "/TARDIS rebuild" + ChatColor.RESET + " - rebuild a busted TARDIS Police Box.\n" + ChatColor.GOLD + "/TARDIS chameleon" + ChatColor.RESET + " - turn the Chameleon Circuit on or off.\n" + ChatColor.GOLD + "/tardisprefs sfx" + ChatColor.RESET + " - turn TARDIS sound effects on or off.\n" + ChatColor.GOLD + "/tardisprefs platform" + ChatColor.RESET + " - turn the TARDIS safety platform on or off.\n" + ChatColor.GOLD + "/tardisprefs quotes" + ChatColor.RESET + " - turn TARDIS quotes on or off.\n" + ChatColor.GOLD + "/TARDIS setdest" + ChatColor.RESET + " - save the block you are looking at as a destination.\n" + ChatColor.GOLD + "/TARDIS home" + ChatColor.RESET + " - change saved TARDIS home location to the block you are looking at.\n" + ChatColor.GOLD + "/TARDIS hide" + ChatColor.RESET + " - hide the TARDIS police box - use /tardis rebuild to bring it back.\n" + ChatColor.GOLD + "/TARDIS direction" + ChatColor.RESET + " - change the direction the TARDIS police box is facing.\n" + ChatColor.GOLD + "/TARDIS comehere" + ChatColor.RESET + " - Make the TARDIS come to the block you are looking at.\n" + ChatColor.GOLD + "/TARDIS namekey" + ChatColor.RESET + " - rename the TARDIS key.";
@@ -80,7 +81,7 @@ public class Constants {
     public static <T extends Enum<T>> T getEnumFromString(Class<T> c, String string) {
         if (c != null && string != null) {
             try {
-                return Enum.valueOf(c, string.trim().toUpperCase());
+                return Enum.valueOf(c, string.trim().toUpperCase(Locale.ENGLISH));
             } catch (IllegalArgumentException ex) {
             }
         }
@@ -101,7 +102,7 @@ public class Constants {
             savedy = Integer.parseInt(data[2]);
             savedz = Integer.parseInt(data[3]);
         } catch (NumberFormatException n) {
-            System.err.println(Constants.MY_PLUGIN_NAME + "Could not convert to number");
+            System.err.println(Constants.MY_PLUGIN_NAME + "Could not convert to number: " + n);
         }
         Location dest = new Location(savedw, savedx, savedy, savedz, yaw, pitch);
         return dest;
@@ -109,28 +110,29 @@ public class Constants {
 
     public static void list(Player p, String l) {
         String playerNameStr = p.getName();
+        Statement statement = null;
+        ResultSet rs = null;
         try {
             Connection connection = service.getConnection();
-            Statement statement = connection.createStatement();
+            statement = connection.createStatement();
             if (l.equals("areas")) {
                 String queryGetArea = "SELECT * FROM areas";
-                ResultSet rsArea = statement.executeQuery(queryGetArea);
+                rs = statement.executeQuery(queryGetArea);
                 int a = 1;
-                if (!rsArea.isBeforeFirst()) {
+                if (!rs.isBeforeFirst()) {
                     p.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " No areas were found!");
                 }
-                while (rsArea.next()) {
-                    String name = rsArea.getString("area_name");
-                    String world = rsArea.getString("world");
+                while (rs.next()) {
+                    String name = rs.getString("area_name");
+                    String world = rs.getString("world");
                     if (a == 1) {
                         p.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " Areas");
                     }
                     p.sendMessage(a + ". [" + name + "] in world: " + world);
                     a++;
                 }
-                rsArea.close();
             } else {
-                ResultSet rs = service.getTardis(playerNameStr, "*");
+                rs = service.getTardis(playerNameStr, "*");
                 if (rs != null && rs.next()) {
                     int id = rs.getInt("tardis_id");
                     // list TARDIS saves
@@ -169,13 +171,23 @@ public class Constants {
                         }
                     }
                 }
-                rs.close();
-                statement.close();
             }
         } catch (SQLException e) {
-            System.err.println(Constants.MY_PLUGIN_NAME + "Couldn't list " + l.toLowerCase() + ": " + e);
+            System.err.println(Constants.MY_PLUGIN_NAME + "Couldn't list " + l.toLowerCase(Locale.UK) + ": " + e);
+        } finally {
+            if (rs != null) {
+                try {
+                    rs.close();
+                } catch (Exception e) {
+                }
+            }
+            if (statement != null) {
+                try {
+                    statement.close();
+                } catch (Exception e) {
+                }
+            }
         }
-
     }
 
     public static int swapId(int id) {
@@ -197,10 +209,5 @@ public class Constants {
             map.put(keys[i], values[i]);
         }
         return map;
-    }
-
-    public enum areaChar {
-
-        N, G, F;
     }
 }
