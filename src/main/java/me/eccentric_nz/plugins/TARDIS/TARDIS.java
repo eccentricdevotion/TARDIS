@@ -9,12 +9,11 @@ import org.bukkit.Bukkit;
 import org.bukkit.World;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
-import org.bukkit.event.Listener;
 import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
-public class TARDIS extends JavaPlugin implements Listener {
+public class TARDIS extends JavaPlugin {
 
     TARDISDatabase service = TARDISDatabase.getInstance();
     public PluginDescriptionFile pdfFile;
@@ -49,7 +48,7 @@ public class TARDIS extends JavaPlugin implements Listener {
     TARDISBlockBreakListener tardisBlockBreakListener = new TARDISBlockBreakListener(this);
     TARDISPlayerListener tardisPlayerListener = new TARDISPlayerListener(this);
     TARDISBlockProtectListener tardisProtectListener = new TARDISBlockProtectListener(this);
-    TARDISBlockDamageListener tardisDamageListener = new TARDISBlockDamageListener(this);
+    TARDISBlockDamageListener tardisDamageListener = new TARDISBlockDamageListener();
     TARDISExplosionListener tardisExplosionListener = new TARDISExplosionListener(this);
     TARDISWitherDragonListener tardisWDBlocker = new TARDISWitherDragonListener();
     PluginManager pm = Bukkit.getServer().getPluginManager();
@@ -63,10 +62,12 @@ public class TARDIS extends JavaPlugin implements Listener {
     private static ArrayList<String> quotes = new ArrayList<String>();
     public ArrayList<String> quote;
     public int quotelen;
-    public boolean WorldGuardOnServer = false;
+    public boolean worldGuardOnServer = false;
 
     @Override
     public void onEnable() {
+        pdfFile = getDescription();
+        Constants.MY_PLUGIN_NAME = "[" + pdfFile.getName() + "]";
         plugin = this;
         pm.registerEvents(tardisBlockPlaceListener, this);
         pm.registerEvents(tardisBlockBreakListener, this);
@@ -75,9 +76,6 @@ public class TARDIS extends JavaPlugin implements Listener {
         pm.registerEvents(tardisDamageListener, this);
         pm.registerEvents(tardisExplosionListener, this);
         pm.registerEvents(tardisWDBlocker, this);
-
-        pdfFile = getDescription();
-        Constants.MY_PLUGIN_NAME = "[" + pdfFile.getName() + "]";
 
         if (!getDataFolder().exists()) {
             if (!getDataFolder().mkdir()) {
@@ -147,7 +145,7 @@ public class TARDIS extends JavaPlugin implements Listener {
 
         tardisCommand = new TARDISCommands(this);
         tardisAdminCommand = new TARDISAdminCommands(this);
-        tardisPrefsCommand = new TARDISPrefsCommands(this);
+        tardisPrefsCommand = new TARDISPrefsCommands();
         tardisTravelCommand = new TARDISTravelCommands(this);
         tardisAreaCommand = new TARDISAreaCommands(this);
         getCommand("tardis").setExecutor(tardisCommand);
@@ -174,7 +172,7 @@ public class TARDIS extends JavaPlugin implements Listener {
             }, 60L, 1200L);
         }
         if (getServer().getPluginManager().getPlugin("WorldGuard") != null) {
-            WorldGuardOnServer = true;
+            worldGuardOnServer = true;
             wgchk = new TARDISWorldGuardChecker(this);
         }
     }
@@ -234,17 +232,34 @@ public class TARDIS extends JavaPlugin implements Listener {
     }
 
     private void copy(InputStream in, File file) {
+        OutputStream out = null;
         try {
-            OutputStream out = new FileOutputStream(file, false);
+            out = new FileOutputStream(file, false);
             byte[] buf = new byte[1024];
             int len;
-            while ((len = in.read(buf)) > 0) {
-                out.write(buf, 0, len);
+            try {
+                while ((len = in.read(buf)) > 0) {
+                    out.write(buf, 0, len);
+                }
+            } catch (IOException io) {
+                System.err.println(Constants.MY_PLUGIN_NAME + " could not save the config file.");
+            } finally {
+                if (out != null) {
+                    try {
+                        out.close();
+                    } catch (Exception e) {
+                    }
+                }
             }
-            out.close();
-            in.close();
-        } catch (Exception e) {
-            System.err.println(Constants.MY_PLUGIN_NAME + " could not save the config file.");
+        } catch (FileNotFoundException e) {
+            System.err.println(Constants.MY_PLUGIN_NAME + " File not found.");
+        } finally {
+            if (in != null) {
+                try {
+                    in.close();
+                } catch (Exception e) {
+                }
+            }
         }
     }
 
@@ -262,8 +277,9 @@ public class TARDIS extends JavaPlugin implements Listener {
     public ArrayList<String> quotes() {
         // load quotes from txt file
         if (quotesfile != null) {
+            BufferedReader bufRdr = null;
             try {
-                BufferedReader bufRdr = new BufferedReader(new FileReader(quotesfile));
+                bufRdr = new BufferedReader(new FileReader(quotesfile));
                 String line;
                 //read each line of text file
                 while ((line = bufRdr.readLine()) != null) {
@@ -274,6 +290,13 @@ public class TARDIS extends JavaPlugin implements Listener {
                 }
             } catch (IOException io) {
                 System.err.println(Constants.MY_PLUGIN_NAME + " Could not read quotes file");
+            } finally {
+                if (bufRdr != null) {
+                    try {
+                        bufRdr.close();
+                    } catch (Exception e) {
+                    }
+                }
             }
         }
         return quotes;
