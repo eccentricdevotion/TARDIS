@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Arrays;
+import java.util.Locale;
 import java.util.Set;
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.ChatColor;
@@ -36,7 +37,7 @@ public class TARDISAdminCommands implements CommandExecutor {
                     sender.sendMessage(Constants.COMMAND_ADMIN.split("\n"));
                     return true;
                 }
-                if (!args[0].equalsIgnoreCase("reload") && !args[0].equalsIgnoreCase("config") && !args[0].equalsIgnoreCase("key") && !args[0].equalsIgnoreCase("bonus_chest") && !args[0].equalsIgnoreCase("protect_blocks") && !args[0].equalsIgnoreCase("give_key") && !args[0].equalsIgnoreCase("platform") && !args[0].equalsIgnoreCase("tp_radius") && !args[0].equalsIgnoreCase("require_spout") && !args[0].equalsIgnoreCase("default_world") && !args[0].equalsIgnoreCase("default_world_name") && !args[0].equalsIgnoreCase("include_default_world") && !args[0].equalsIgnoreCase("exclude") && !args[0].equalsIgnoreCase("sfx") && !args[0].equalsIgnoreCase("use_worldguard") && !args[0].equalsIgnoreCase("respect_worldguard") && !args[0].equalsIgnoreCase("nether") && !args[0].equalsIgnoreCase("the_end") && !args[0].equalsIgnoreCase("land_on_water") && !args[0].equalsIgnoreCase("updatesaves") && !args[0].equalsIgnoreCase("delete") && !args[0].equalsIgnoreCase("find") && !args[0].equalsIgnoreCase("list")) {
+                if (!args[0].equalsIgnoreCase("reload") && !args[0].equalsIgnoreCase("config") && !args[0].equalsIgnoreCase("key") && !args[0].equalsIgnoreCase("bonus_chest") && !args[0].equalsIgnoreCase("protect_blocks") && !args[0].equalsIgnoreCase("give_key") && !args[0].equalsIgnoreCase("platform") && !args[0].equalsIgnoreCase("tp_radius") && !args[0].equalsIgnoreCase("require_spout") && !args[0].equalsIgnoreCase("default_world") && !args[0].equalsIgnoreCase("default_world_name") && !args[0].equalsIgnoreCase("include_default_world") && !args[0].equalsIgnoreCase("exclude") && !args[0].equalsIgnoreCase("sfx") && !args[0].equalsIgnoreCase("use_worldguard") && !args[0].equalsIgnoreCase("respect_worldguard") && !args[0].equalsIgnoreCase("nether") && !args[0].equalsIgnoreCase("the_end") && !args[0].equalsIgnoreCase("land_on_water") && !args[0].equalsIgnoreCase("updatesaves") && !args[0].equalsIgnoreCase("delete") && !args[0].equalsIgnoreCase("find") && !args[0].equalsIgnoreCase("list") && !args[0].equalsIgnoreCase("debug")) {
                     sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " TARDIS does not recognise that command argument!");
                     return false;
                 }
@@ -206,7 +207,7 @@ public class TARDISAdminCommands implements CommandExecutor {
                         return true;
                     }
                     if (args[0].equalsIgnoreCase("key")) {
-                        String setMaterial = args[1].toUpperCase();
+                        String setMaterial = args[1].toUpperCase(Locale.ENGLISH);
                         if (!Arrays.asList(Materials.MATERIAL_LIST).contains(setMaterial)) {
                             sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RED + "That is not a valid Material! Try checking http://jd.bukkit.org/apidocs/org/bukkit/Material.html");
                             return false;
@@ -222,6 +223,14 @@ public class TARDISAdminCommands implements CommandExecutor {
                             return false;
                         }
                         plugin.config.set("bonus_chest", Boolean.valueOf(tf));
+                    }
+                    if (args[0].equalsIgnoreCase("debug")) {
+                        String tf = args[1].toLowerCase();
+                        if (!tf.equals("true") && !tf.equals("false")) {
+                            sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RED + "The last argument must be true or false!");
+                            return false;
+                        }
+                        plugin.config.set("debug", Boolean.valueOf(tf));
                     }
                     if (args[0].equalsIgnoreCase("protect_blocks")) {
                         String tf = args[1].toLowerCase();
@@ -310,6 +319,11 @@ public class TARDISAdminCommands implements CommandExecutor {
                         String t = tmp.substring(0, tmp.length() - 1);
                         // need to make there are no periods(.) in the text
                         String nodots = StringUtils.replace(t, ".", "_");
+                        // check the world actually exists!
+                        if (plugin.getServer().getWorld(nodots) == null) {
+                            sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RED + "World does not exist!");
+                            return false;
+                        }
                         plugin.config.set("worlds." + nodots, false);
                     }
                     if (args[0].equalsIgnoreCase("sfx")) {
