@@ -6,7 +6,7 @@ tp_radius: 256
 protect_blocks: true
 require_spout: false
 default_world: false
-default_world_name: world
+default_world_name: myridiculouslylongworldnameiscalledcuthbert
 include_default_world: false
 platform: false
 chameleon: true
