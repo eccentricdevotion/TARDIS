@@ -34,6 +34,7 @@ public class TARDISBuilder {
     }
 
     public void buildOuterTARDIS(int id, Location l, Constants.COMPASS d, boolean c, Player p, boolean rebuild) {
+        plugin.debug("Rebuild is: " + rebuild);
         int plusx, minusx, x, plusz, minusz, z, wall_block = 35;
         byte sd = 0, norm = 0, grey = 8, blue = 11, chameleonData = 11;
         if (c) {
@@ -209,6 +210,7 @@ public class TARDISBuilder {
             } else {
                 queryDoor = "INSERT INTO doors (tardis_id, door_type, door_location) VALUES (" + id + ", 0, '" + doorloc + "')";
             }
+            rs.close();
             statement.executeUpdate(queryDoor);
 
             // bottom layer corners
@@ -283,6 +285,7 @@ public class TARDISBuilder {
                 } else {
                     userPlatform = true;
                 }
+                rsPlatform.close();
                 if (userPlatform) {
                     List<Block> platform_blocks = null;
                     switch (d) {
@@ -568,7 +571,7 @@ public class TARDISBuilder {
             }
         }
         TARDISWorldGuardChecker wgchk;
-        if (plugin.WorldGuardOnServer && plugin.config.getBoolean("use_worldguard")) {
+        if (plugin.worldGuardOnServer && plugin.config.getBoolean("use_worldguard")) {
             plugin.wgchk.addWGProtection(p, wg1, wg2);
         }
     }
