@@ -18,7 +18,7 @@ import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.block.Sign;
-import org.bukkit.craftbukkit.inventory.CraftItemStack;
+import org.bukkit.craftbukkit.v1_4_5.inventory.CraftItemStack;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -729,9 +729,10 @@ public class TARDISPlayerListener implements Listener {
                     Inventory inv = thePlayer.getInventory();
                     Material m = Material.valueOf(Constants.TARDIS_KEY);
                     if (!inv.contains(m) && plugin.config.getBoolean("give_key") == true) {
-                        ItemStack is = new CraftItemStack(m, 1);
+                        ItemStack is = new ItemStack(m, 1);
+                        CraftItemStack cis = CraftItemStack.asCraftCopy(is);
                         TARDISItemRenamer ir = new TARDISItemRenamer(is);
-                        ir.setName("Sonic Screwdriver");
+                        ir.setName("Sonic Screwdriver",true);
                         inv.addItem(is);
                         thePlayer.updateInventory();
                         thePlayer.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " Don't forget your TARDIS key!");

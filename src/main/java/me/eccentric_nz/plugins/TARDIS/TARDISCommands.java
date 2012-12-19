@@ -731,7 +731,7 @@ public class TARDISCommands implements CommandExecutor {
                     String tmp = buf.toString();
                     if (is != null) {
                         TARDISItemRenamer ir = new TARDISItemRenamer(is);
-                        ir.setName(tmp);
+                        ir.setName(tmp,false);
                     }
                     sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + "TARDIS key renamed to '" + tmp + "'");
                     return true;

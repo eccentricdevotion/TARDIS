@@ -1,8 +1,8 @@
 package me.eccentric_nz.plugins.TARDIS;
 
-import net.minecraft.server.NBTTagCompound;
-import org.bukkit.craftbukkit.inventory.CraftItemStack;
+import java.util.ArrayList;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 
 public class TARDISItemRenamer {
 
@@ -10,44 +10,16 @@ public class TARDISItemRenamer {
 
     public TARDISItemRenamer(ItemStack itemStack) {
         this.itemStack = itemStack;
-        CraftItemStack cis = (CraftItemStack) this.itemStack;
-        NBTTagCompound tag = cis.getHandle().getTag();
-        if (tag == null) {
-            cis.getHandle().setTag(new NBTTagCompound());
-        }
     }
 
-    private boolean hasDisplay() {
-        return ((CraftItemStack) this.itemStack).getHandle().getTag().hasKey("display");
-    }
-
-    private NBTTagCompound getDisplay() {
-        return ((CraftItemStack) this.itemStack).getHandle().getTag().getCompound("display");
-    }
-
-    private void addDisplay() {
-        ((CraftItemStack) this.itemStack).getHandle().getTag().setCompound("display", new NBTTagCompound());
-    }
-
-    public String getName() {
-        if (!hasDisplay()) {
-            return null;
+    public void setName(String name, boolean setlore) {
+        ItemMeta im = this.itemStack.getItemMeta();
+        im.setDisplayName(name);
+        if (setlore) {
+            ArrayList<String> lore = new ArrayList<String>();
+            lore.add("Enter and exit your TARDIS");
+            im.setLore(lore);
         }
-        String name = getDisplay().getString("Name");
-        if (name.equals("")) {
-            return null;
-        }
-        return name;
-    }
-
-    public void setName(String name) {
-        if (!hasDisplay()) {
-            this.addDisplay();
-        }
-        NBTTagCompound display = this.getDisplay();
-        if (name == null) {
-            display.remove("Name");
-        }
-        display.setString("Name", name);
+        this.itemStack.setItemMeta(im);
     }
 }
