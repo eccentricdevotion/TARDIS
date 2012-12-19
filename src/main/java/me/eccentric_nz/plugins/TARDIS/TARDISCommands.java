@@ -416,9 +416,9 @@ public class TARDISCommands implements CommandExecutor {
                                 sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " " + Constants.NO_TARDIS);
                                 return false;
                             } else {
-                                comps = rs.getString("companions");
                                 id = rs.getInt("tardis_id");
                                 rs.close();
+                                comps = rs.getString("companions");
                             }
                             if (args.length < 2) {
                                 sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " Too few command arguments!");
@@ -429,7 +429,7 @@ public class TARDISCommands implements CommandExecutor {
                                 return false;
                             } else {
                                 String queryCompanions;
-                                if (comps != null && !comps.equals("") && !comps.equals("[Null]")) {
+                                if (rs.wasNull() && !comps.equals("")) {
                                     // add to the list
                                     String newList = comps + ":" + args[1].toLowerCase();
                                     queryCompanions = "UPDATE tardis SET companions = '" + newList + "' WHERE tardis_id = " + id;

@@ -160,7 +160,7 @@ public class Constants {
                     if (l.equalsIgnoreCase("companions")) {
                         // list companions
                         String comps = rs.getString("companions");
-                        if (comps != null && !comps.equals("") && !comps.equals("[Null]")) {
+                        if (!rs.wasNull() && !comps.equals("")) {
                             String[] companionData = comps.split(":");
                             p.sendMessage(ChatColor.AQUA + "Your TARDIS companions are:");
                             for (String c : companionData) {

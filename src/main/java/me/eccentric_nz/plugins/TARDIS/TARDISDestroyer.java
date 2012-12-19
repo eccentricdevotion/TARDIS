@@ -145,8 +145,9 @@ public class TARDISDestroyer {
                 plugin.debug("Destroying Police Box Platform...");
                 String queryPlatform = "SELECT platform FROM tardis WHERE tardis_id = " + id;
                 ResultSet prs = statement.executeQuery(queryPlatform);
+                String plat = prs.getString("platform");
                 if (prs.next()) {
-                    if (!prs.getString("platform").equals("[Null]") && !prs.getString("platform").equals("") && prs.getString("platform") != null) {
+                    if (!prs.wasNull() && !prs.getString("platform").equals("")) {
                         int px = 0, py = 0, pz = 0;
                         String[] str_blocks = prs.getString("platform").split("~");
                         for (String sb : str_blocks) {

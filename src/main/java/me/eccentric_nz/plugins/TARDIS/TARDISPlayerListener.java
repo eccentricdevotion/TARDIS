@@ -248,12 +248,17 @@ public class TARDISPlayerListener implements Listener {
                                             String d = rs.getString("direction");
                                             String dd = rs.getString("door_direction");
                                             String tl = rs.getString("owner");
-                                            String companions = rs.getString("companions");
                                             String save = rs.getString("save");
                                             String cl = rs.getString("current");
                                             boolean cham = rs.getBoolean("chamele_on");
                                             float yaw = player.getLocation().getYaw();
                                             float pitch = player.getLocation().getPitch();
+                                            String companions = rs.getString("companions");
+                                            boolean compswasnull = false;
+                                            if (rs.wasNull()) {
+                                                plugin.debug("Companions was [Null]");
+                                                compswasnull = true;
+                                            }
                                             // get quotes player prefs
                                             String queryQuotes = "SELECT quotes_on FROM player_prefs WHERE player = '" + playerNameStr + "'";
                                             ResultSet rsQuotes = statement.executeQuery(queryQuotes);
@@ -345,7 +350,7 @@ public class TARDISPlayerListener implements Listener {
                                                 boolean chkCompanion = false;
                                                 if (!playerNameStr.equals(tl)) {
                                                     if (plugin.getServer().getPlayer(tl) != null) {
-                                                        if (companions != null && !companions.equals("") && !companions.equals("[Null]")) {
+                                                        if (!compswasnull && !companions.equals("")) {
                                                             // is the timelord in the TARDIS?
                                                             String queryTraveller = "SELECT * FROM travellers WHERE tardis_id = " + id + " AND player = '" + tl + "' LIMIT 1";
                                                             ResultSet timelordIsIn = statement.executeQuery(queryTraveller);
