@@ -49,16 +49,16 @@ public class TARDISBlockBreakListener implements Listener {
                     Block blockbehind = null;
                     byte data = block.getData();
                     if (data == 4) {
-                        blockbehind = block.getRelative(BlockFace.SOUTH, 2);
-                    }
-                    if (data == 5) {
-                        blockbehind = block.getRelative(BlockFace.NORTH, 2);
-                    }
-                    if (data == 3) {
                         blockbehind = block.getRelative(BlockFace.EAST, 2);
                     }
-                    if (data == 2) {
+                    if (data == 5) {
                         blockbehind = block.getRelative(BlockFace.WEST, 2);
+                    }
+                    if (data == 3) {
+                        blockbehind = block.getRelative(BlockFace.NORTH, 2);
+                    }
+                    if (data == 2) {
+                        blockbehind = block.getRelative(BlockFace.SOUTH, 2);
                     }
                     Block blockDown = blockbehind.getRelative(BlockFace.DOWN, 2);
                     Location bd_loc = blockDown.getLocation();
