@@ -167,12 +167,9 @@ public class TARDISAdminCommands implements CommandExecutor {
                                     useCurrent = true;
                                     Location spawn = cw.getSpawnLocation();
                                     while (rsTravellers.next()) {
-                                        ImprovedOfflinePlayer iop = new ImprovedOfflinePlayer(rsTravellers.getString("player"));
-                                        if (!iop.exists()) {
-                                            continue;
-                                        }
+                                        String op = plugin.getServer().getOfflinePlayer(rsTravellers.getString("player")).getName();
                                         // teleport offline player to spawn
-                                        iop.setLocation(spawn);
+                                        plugin.iopHandler.setLocation(op, spawn);
                                     }
                                     String queryDelTravellers = "DELETE FROM travellers WHERE tardis_id = " + id;
                                     statement.executeUpdate(queryDelTravellers);

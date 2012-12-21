@@ -15,6 +15,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 public class TARDIS extends JavaPlugin {
 
+    public ImprovedOfflinePlayer_api iopHandler;
     TARDISDatabase service = TARDISDatabase.getInstance();
     public PluginDescriptionFile pdfFile;
     public FileConfiguration config = null;
@@ -66,6 +67,30 @@ public class TARDIS extends JavaPlugin {
 
     @Override
     public void onEnable() {
+        String packageName = this.getServer().getClass().getPackage().getName();
+        // Get full package string of CraftServer.
+        // org.bukkit.craftbukkit.versionstring (or for pre-refactor, just org.bukkit.craftbukkit
+        String version = packageName.substring(packageName.lastIndexOf('.') + 1);
+        // Get the last element of the package
+        if (version.equals("craftbukkit")) { // If the last element of the package was "craftbukkit" we are now pre-refactor
+            version = "pre";
+        }
+        System.out.println("me.eccentric_nz.plugins.TARDIS.ImprovedOfflinePlayer_" + version);
+        try {
+            final Class<?> clazz = Class.forName("me.eccentric_nz.plugins.TARDIS.ImprovedOfflinePlayer_" + version);
+            // Check if we have a NMSHandler class at that location.
+            if (ImprovedOfflinePlayer_api.class.isAssignableFrom(clazz)) { // Make sure it actually implements IOP
+                this.iopHandler = (ImprovedOfflinePlayer_api) clazz.getConstructor().newInstance(); // Set our handler
+            }
+        } catch (final Exception e) {
+            this.getLogger().severe("Could not find support for this CraftBukkit version.");
+            this.getLogger().info("Check for updates at http://dev.bukkit.org/server-mods/tardis/");
+            this.setEnabled(false);
+            return;
+        }
+        this.getLogger().info("Loading support for " +  version);
+
+
         pdfFile = getDescription();
         Constants.MY_PLUGIN_NAME = "[" + pdfFile.getName() + "]";
         plugin = this;
