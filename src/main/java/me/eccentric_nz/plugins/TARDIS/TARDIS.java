@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Set;
+import java.util.logging.Level;
 import org.bukkit.Bukkit;
 import org.bukkit.World;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -75,7 +76,6 @@ public class TARDIS extends JavaPlugin {
         if (version.equals("craftbukkit")) { // If the last element of the package was "craftbukkit" we are now pre-refactor
             version = "pre";
         }
-        System.out.println("me.eccentric_nz.plugins.TARDIS.ImprovedOfflinePlayer_" + version);
         try {
             final Class<?> clazz = Class.forName("me.eccentric_nz.plugins.TARDIS.ImprovedOfflinePlayer_" + version);
             // Check if we have a NMSHandler class at that location.
@@ -88,8 +88,7 @@ public class TARDIS extends JavaPlugin {
             this.setEnabled(false);
             return;
         }
-        this.getLogger().info("Loading support for " +  version);
-
+        this.getLogger().log(Level.INFO, "Loading support for CB {0}", version);
 
         pdfFile = getDescription();
         Constants.MY_PLUGIN_NAME = "[" + pdfFile.getName() + "]";
