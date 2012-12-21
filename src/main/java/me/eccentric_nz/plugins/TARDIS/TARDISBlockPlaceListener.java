@@ -119,6 +119,8 @@ public class TARDISBlockPlaceListener implements Listener {
                                     lastInsertId = idRS.getInt(1);
                                 }
                                 idRS.close();
+                                // remove redstone torch
+                                block.setTypeId(0);
                                 // turn the block stack into a TARDIS
                                 plugin.builder.buildOuterTARDIS(lastInsertId, block_loc, Constants.COMPASS.valueOf(d), false, player, false);
                                 plugin.builder.buildInnerTARDIS(schm, chunkworld, Constants.COMPASS.valueOf(d), lastInsertId, player, middle_id, middle_data);
