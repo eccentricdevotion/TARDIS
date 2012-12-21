@@ -34,7 +34,6 @@ public class TARDISBuilder {
     }
 
     public void buildOuterTARDIS(int id, Location l, Constants.COMPASS d, boolean c, Player p, boolean rebuild) {
-        plugin.debug("Rebuild is: " + rebuild);
         int plusx, minusx, x, plusz, minusz, z, wall_block = 35;
         byte sd = 0, norm = 0, grey = 8, blue = 11, chameleonData = 11;
         if (c) {

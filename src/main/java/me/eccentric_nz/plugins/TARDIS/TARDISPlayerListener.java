@@ -18,7 +18,6 @@ import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.block.Sign;
-import org.bukkit.craftbukkit.v1_4_5.inventory.CraftItemStack;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -256,7 +255,6 @@ public class TARDISPlayerListener implements Listener {
                                             String companions = rs.getString("companions");
                                             boolean compswasnull = false;
                                             if (rs.wasNull()) {
-                                                plugin.debug("Companions was [Null]");
                                                 compswasnull = true;
                                             }
                                             // get quotes player prefs
@@ -648,7 +646,6 @@ public class TARDISPlayerListener implements Listener {
                                         statement.executeUpdate(queryDest);
                                         plugin.utils.updateTravellerCount(id);
                                         player.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " Exit location set");
-                                        plugin.debug(s.getLine(1));
                                     }
                                     if (event.getAction().equals(Action.RIGHT_CLICK_BLOCK) && !player.isSneaking()) {
 
@@ -730,7 +727,6 @@ public class TARDISPlayerListener implements Listener {
                     Material m = Material.valueOf(Constants.TARDIS_KEY);
                     if (!inv.contains(m) && plugin.config.getBoolean("give_key") == true) {
                         ItemStack is = new ItemStack(m, 1);
-                        CraftItemStack cis = CraftItemStack.asCraftCopy(is);
                         TARDISItemRenamer ir = new TARDISItemRenamer(is);
                         ir.setName("Sonic Screwdriver",true);
                         inv.addItem(is);

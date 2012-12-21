@@ -33,7 +33,6 @@ public class TARDISUtils {
         String queryAddBlock;
         if (rebuild == false) {
             if (bid != 0) {
-                plugin.debug("Remembering block with ID: " + bid);
                 byte data = b.getData();
                 queryAddBlock = "INSERT INTO blocks (tardis_id, location, block, data) VALUES (" + id + ",'" + l + "', " + bid + ", " + data + ")";
             } else {
@@ -150,8 +149,6 @@ public class TARDISUtils {
                 cl = roundUp(plugin.budgetdimensions[2], 16);
                 break;
         }
-        plugin.debug("Width in chunks: " + cw);
-        plugin.debug("Length in chunks: " + cl);
         // check all the chunks that will be used by the schematic
         for (int cx = 0; cx < cw; cx++) {
             for (int cz = 0; cz < cl; cz++) {

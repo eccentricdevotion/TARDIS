@@ -84,7 +84,6 @@ public class TARDISDestroyer {
     }
 
     public void destroyBlueBox(Location l, Constants.COMPASS d, int id, boolean hide) {
-        plugin.debug("Start destroying Police Box...");
         World w = l.getWorld();
         int sbx = l.getBlockX() - 1;
         int rbx = sbx;
@@ -106,7 +105,6 @@ public class TARDISDestroyer {
             sbz = rbz;
             sby++;
         }
-        plugin.debug("Police Box walls/door destroyed!");
         // replace the block under the door if there is one
         Statement statement = null;
         ResultSet rs = null;
@@ -135,19 +133,17 @@ public class TARDISDestroyer {
                     b.setTypeIdAndData(rID, rb, true);
                 }
             }
-            plugin.debug("Police Box (under) door block destroyed!");
             // finally forget the replaced block
             String queryForget = "UPDATE tardis SET replaced = '' WHERE tardis_id = " + id;
             statement.executeUpdate(queryForget);
 
             // get rid of platform is there is one
             if (plugin.config.getBoolean("platform") == Boolean.valueOf("true")) {
-                plugin.debug("Destroying Police Box Platform...");
                 String queryPlatform = "SELECT platform FROM tardis WHERE tardis_id = " + id;
                 ResultSet prs = statement.executeQuery(queryPlatform);
-                String plat = prs.getString("platform");
                 if (prs.next()) {
-                    if (!prs.wasNull() && !prs.getString("platform").equals("")) {
+                    String plat = prs.getString("platform");
+                    if (!prs.wasNull() && !plat.equals("")) {
                         int px = 0, py = 0, pz = 0;
                         String[] str_blocks = prs.getString("platform").split("~");
                         for (String sb : str_blocks) {
@@ -165,14 +161,12 @@ public class TARDISDestroyer {
                             pb.setType(mat);
                         }
                     }
-                    plugin.debug("Police Box Platform destroyed!");
                     // forget the platform blocks
                     String queryEmptyP = "UPDATE tardis SET platform = '' WHERE tardis_id = " + id;
                     statement.executeUpdate(queryEmptyP);
                 }
                 prs.close();
             }
-            plugin.debug("Restoring replaced blocks...");
             // check protected blocks if has block id and data stored then put the block back!
             String queryGetBlocks = "SELECT * FROM blocks WHERE tardis_id = " + id;
             ResultSet rsBlocks = statement.executeQuery(queryGetBlocks);
@@ -193,7 +187,6 @@ public class TARDISDestroyer {
                 }
             }
             rsBlocks.close();
-            plugin.debug("Blocks replaced!");
             // remove protected blocks from the blocks table
             if (hide == false) {
                 String queryRemoveBlocks = "DELETE FROM blocks WHERE tardis_id = " + id;
@@ -218,7 +211,6 @@ public class TARDISDestroyer {
     }
 
     public void destroySign(Location l, Constants.COMPASS d) {
-        plugin.debug("Destroying Police Box Sign...");
         World w = l.getWorld();
         int signx = 0, signz = 0;
         switch (d) {
@@ -241,16 +233,13 @@ public class TARDISDestroyer {
         }
         int signy = 2;
         plugin.utils.setBlock(w, l.getBlockX() + signx, l.getBlockY() + signy, l.getBlockZ() + signz, 0, (byte) 0);
-        plugin.debug("Police Box Sign destroyed!");
     }
 
     public void destroyTorch(Location l) {
-        plugin.debug("Destroying Police Box Torch...");
         World w = l.getWorld();
         int tx = l.getBlockX();
         int ty = l.getBlockY() + 3;
         int tz = l.getBlockZ();
         plugin.utils.setBlock(w, tx, ty, tz, 0, (byte) 0);
-        plugin.debug("Police Box Torch destroyed!");
     }
 }
