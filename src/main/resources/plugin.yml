@@ -76,6 +76,18 @@ permissions:
   tardis.rebuild:
     description: Allow players to rebuild the TARDIS.
     default: true
+  tardis.bigger:
+    description: Allow players to build the 'bigger' TARDIS.
+    default: op
+  tardis.deluxe:
+    description: Allow players to build the 'deluxe' TARDIS.
+    default: op
+  tardis.end:
+    description: Allow players to time travel to the END.
+    default: op
+  tardis.nether:
+    description: Allow players to time travel to the NETHER.
+    default: op
 commands:
   tardis:
     description: Manipulate TARDISs (TARDII?) with various arguments (list, save, find, help, etc). Type /TARDIS help - to see more.
