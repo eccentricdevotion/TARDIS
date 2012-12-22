@@ -527,30 +527,40 @@ public class TARDISPlayerListener implements Listener {
                                                 environment = "NORMAL";
                                             } else if (plugin.config.getBoolean("nether") == false || plugin.config.getBoolean("the_end") == false) {
                                                 if (plugin.config.getBoolean("nether") == false) {
-                                                    environment = "NORMAL:THE_END";
+                                                    environment = (player.hasPermission("tardis.end")) ? "NORMAL:THE_END" : "NORMAL";
                                                 }
                                                 if (plugin.config.getBoolean("the_end") == false) {
-                                                    environment = "NORMAL:NETHER";
+                                                    environment = (player.hasPermission("tardis.nether")) ? "NORMAL:NETHER" : "NORMAL";
                                                 }
                                             } else {
-                                                environment = "NORMAL:NETHER:THE_END";
+                                                if (player.hasPermission("tardis.end") && player.hasPermission("tardis.nether")) {
+                                                    environment = "NORMAL:NETHER:THE_END";
+                                                }
+                                                if (!player.hasPermission("tardis.end") && player.hasPermission("tardis.nether")) {
+                                                    environment = "NORMAL:NETHER";
+                                                }
+                                                if (player.hasPermission("tardis.end") && !player.hasPermission("tardis.nether")) {
+                                                    environment = "NORMAL:THE_END";
+                                                }
                                             }
                                         }
                                         if (r0_data >= 4 && r0_data <= 7) { // second position
                                             environment = "NORMAL";
                                         }
                                         if (r0_data >= 8 && r0_data <= 11) { // third position
-                                            if (plugin.config.getBoolean("nether") == true) {
+                                            if (plugin.config.getBoolean("nether") == true && player.hasPermission("tardis.nether")) {
                                                 environment = "NETHER";
                                             } else {
-                                                player.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " The ancient, dusty senators of Gallifrey have disabled time travel to the Nether");
+                                                String message = (player.hasPermission("tardis.nether")) ? " The ancient, dusty senators of Gallifrey have disabled time travel to the Nether" : " You do not have permission to time travel to the Nether";
+                                                player.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + message);
                                             }
                                         }
                                         if (r0_data >= 12 && r0_data <= 15) { // last position
-                                            if (plugin.config.getBoolean("the_end") == true) {
+                                            if (plugin.config.getBoolean("the_end") == true && player.hasPermission("tardis.end")) {
                                                 environment = "THE_END";
                                             } else {
-                                                player.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " The ancient, dusty senators of Gallifrey have disabled time travel to The End");
+                                                String message = (player.hasPermission("tardis.end")) ? " The ancient, dusty senators of Gallifrey have disabled time travel to The End" : " You do not have permission to time travel to The End";
+                                                player.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + message);
                                             }
                                         }
                                         // create a random destination
@@ -728,7 +738,7 @@ public class TARDISPlayerListener implements Listener {
                     if (!inv.contains(m) && plugin.config.getBoolean("give_key") == true) {
                         ItemStack is = new ItemStack(m, 1);
                         TARDISItemRenamer ir = new TARDISItemRenamer(is);
-                        ir.setName("Sonic Screwdriver",true);
+                        ir.setName("Sonic Screwdriver", true);
                         inv.addItem(is);
                         thePlayer.updateInventory();
                         thePlayer.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " Don't forget your TARDIS key!");
