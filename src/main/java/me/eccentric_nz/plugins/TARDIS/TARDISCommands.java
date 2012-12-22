@@ -428,7 +428,7 @@ public class TARDISCommands implements CommandExecutor {
                                 return false;
                             } else {
                                 String queryCompanions;
-                                if (rs.wasNull() && !comps.equals("")) {
+                                if (!rs.wasNull() && !comps.equals("")) {
                                     // add to the list
                                     String newList = comps + ":" + args[1].toLowerCase();
                                     queryCompanions = "UPDATE tardis SET companions = '" + newList + "' WHERE tardis_id = " + id;
