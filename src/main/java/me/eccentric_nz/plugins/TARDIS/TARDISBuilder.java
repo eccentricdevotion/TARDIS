@@ -251,8 +251,11 @@ public class TARDISBuilder {
             // set sign
             plugin.utils.setBlock(world, signx, y, signz, 68, sd);
             Sign s = (Sign) world.getBlockAt(signx, y, signz).getState();
-            s.setLine(1, "¤fPOLICE");
-            s.setLine(2, "¤fBOX");
+            if (plugin.config.getBoolean("name_tardis") == Boolean.valueOf("true")) {
+                s.setLine(0, ChatColor.WHITE + "" + ChatColor.ITALIC + p.getName());
+            }
+            s.setLine(1, ChatColor.WHITE + "POLICE");
+            s.setLine(2, ChatColor.WHITE + "BOX");
             s.update();
             // put torch on top
             if (wall_block == 79) {
@@ -505,7 +508,7 @@ public class TARDISBuilder {
             Sign cs = (Sign) psb.getState();
             cs.setLine(0, "Chameleon");
             cs.setLine(1, "Circuit");
-            cs.setLine(3, "¤cOFF");
+            cs.setLine(3, ChatColor.RED + "OFF");
             cs.update();
         }
         if (plugin.config.getBoolean("bonus_chest") == Boolean.valueOf("true")) {
