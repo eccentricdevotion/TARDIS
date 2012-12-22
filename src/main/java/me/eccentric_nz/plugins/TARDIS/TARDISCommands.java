@@ -412,12 +412,11 @@ public class TARDISCommands implements CommandExecutor {
                             ResultSet rs = statement.executeQuery(queryList);
                             String comps;
                             int id;
-                            if (rs == null || !rs.next()) {
+                            if (!rs.next()) {
                                 sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " " + Constants.NO_TARDIS);
                                 return false;
                             } else {
                                 id = rs.getInt("tardis_id");
-                                rs.close();
                                 comps = rs.getString("companions");
                             }
                             if (args.length < 2) {
@@ -439,6 +438,7 @@ public class TARDISCommands implements CommandExecutor {
                                 }
                                 statement.executeUpdate(queryCompanions);
                                 player.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " You added " + ChatColor.GREEN + args[1] + ChatColor.RESET + " as a TARDIS companion.");
+                                rs.close();
                                 statement.close();
                                 return true;
                             }
