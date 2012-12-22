@@ -40,21 +40,31 @@ public class TARDISBlockPlaceListener implements Listener {
             int middle_id = blockBelow.getTypeId();
             byte middle_data = blockBelow.getData();
             Block blockBottom = blockBelow.getRelative(BlockFace.DOWN);
-            // only continue if the redstone torch is placed on top of a LAPIS_BLOCK on top of an IRON_BLOCK
+            // only continue if the redstone torch is placed on top of [JUST ABOUT ANY] BLOCK on top of an IRON/GOLD/DIAMOND_BLOCK
             if (MIDDLE_BLOCKS.contains(blockBelow.getType().toString()) && (blockBottom.getType() == Material.IRON_BLOCK || blockBottom.getType() == Material.GOLD_BLOCK || blockBottom.getType() == Material.DIAMOND_BLOCK)) {
                 Constants.SCHEMATIC schm;
+                Player player = event.getPlayer();
                 switch (blockBottom.getType()) {
                     case GOLD_BLOCK:
-                        schm = Constants.SCHEMATIC.BIGGER;
+                        if (player.hasPermission("tardis.bigger")) {
+                            schm = Constants.SCHEMATIC.BIGGER;
+                        } else {
+                            player.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " You don't have permission to create a 'bigger' TARDIS!");
+                            return;
+                        }
                         break;
                     case DIAMOND_BLOCK:
-                        schm = Constants.SCHEMATIC.DELUXE;
+                        if (player.hasPermission("tardis.deluxe")) {
+                            schm = Constants.SCHEMATIC.DELUXE;
+                        } else {
+                            player.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " You don't have permission to create a 'deluxe' TARDIS!");
+                            return;
+                        }
                         break;
                     default:
                         schm = Constants.SCHEMATIC.BUDGET;
                         break;
                 }
-                Player player = event.getPlayer();
                 if (player.hasPermission("tardis.create")) {
                     String playerNameStr = player.getName();
                     // check to see if they already have a TARDIS
