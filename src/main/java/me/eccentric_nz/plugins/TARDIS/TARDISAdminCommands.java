@@ -29,8 +29,7 @@ public class TARDISAdminCommands implements CommandExecutor {
 
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
-        // If the player typed /tardis then do the following...
-        // check there is the right number of arguments
+        // If the player typed /tardisadmin then do the following...
         if (cmd.getName().equalsIgnoreCase("tardisadmin")) {
             if (sender instanceof ConsoleCommandSender || sender.hasPermission("tardis.admin")) {
                 if (args.length == 0) {
