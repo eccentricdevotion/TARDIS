@@ -567,6 +567,7 @@ public class TARDISPlayerListener implements Listener {
                                         TARDISTimetravel tt = new TARDISTimetravel(plugin);
                                         Location rand = tt.randomDestination(player, player.getWorld(), r1_data, r2_data, r3_data, dir, environment);
                                         String d = rand.getWorld().getName() + ":" + rand.getBlockX() + ":" + rand.getBlockY() + ":" + rand.getBlockZ();
+                                        String dchat = rand.getWorld().getName() + " at x: " + rand.getBlockX() + " y: " + rand.getBlockY() + " z: " + rand.getBlockZ();
                                         String queryCompanions = "SELECT owner, companions FROM tardis WHERE tardis_id = " + id;
                                         ResultSet rsCom = statement.executeQuery(queryCompanions);
                                         boolean isTL = true;
@@ -577,7 +578,7 @@ public class TARDISPlayerListener implements Listener {
                                                 for (String c : companions) {
                                                     // are they online - AND are they travelling - need check here for travelling!
                                                     if (plugin.getServer().getPlayer(c) != null) {
-                                                        plugin.getServer().getPlayer(c).sendMessage(Constants.MY_PLUGIN_NAME + " Destination world: " + rand.getWorld().getName());
+                                                        plugin.getServer().getPlayer(c).sendMessage(Constants.MY_PLUGIN_NAME + " Destination: " + dchat);
                                                     }
                                                     if (c.equalsIgnoreCase(player.getName())) {
                                                         isTL = false;
@@ -586,10 +587,10 @@ public class TARDISPlayerListener implements Listener {
                                             }
                                         }
                                         if (isTL == true) {
-                                            player.sendMessage(Constants.MY_PLUGIN_NAME + " Destination world: " + rand.getWorld().getName());
+                                            player.sendMessage(Constants.MY_PLUGIN_NAME + " Destination: " + dchat);
                                         } else {
                                             if (plugin.getServer().getPlayer(rs.getString("owner")) != null) {
-                                                plugin.getServer().getPlayer(rs.getString("owner")).sendMessage(Constants.MY_PLUGIN_NAME + " Destination world: " + rand.getWorld().getName());
+                                                plugin.getServer().getPlayer(rs.getString("owner")).sendMessage(Constants.MY_PLUGIN_NAME + " Destination: " + dchat);
                                             }
                                         }
                                         String querySave = "UPDATE tardis SET save = '" + d + "' WHERE tardis_id = " + id;
