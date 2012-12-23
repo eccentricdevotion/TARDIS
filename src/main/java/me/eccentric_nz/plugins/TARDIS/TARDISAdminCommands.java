@@ -161,7 +161,7 @@ public class TARDISAdminCommands implements CommandExecutor {
                             Statement statement = connection.createStatement();
                             // check the db contains the player name
                             String queryGet = "SELECT tardis_id, chunk, direction, save, current, size FROM tardis WHERE owner = '" + args[1] + "'";
-                            System.out.print(queryGet);
+                            plugin.debug(queryGet);
                             ResultSet rsGet = statement.executeQuery(queryGet);
                             if (rsGet.next()) {
                                 int id = rsGet.getInt("tardis_id");
