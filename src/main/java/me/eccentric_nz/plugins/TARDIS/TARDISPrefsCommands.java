@@ -20,7 +20,7 @@ public class TARDISPrefsCommands implements CommandExecutor {
         if (sender instanceof Player) {
             player = (Player) sender;
         }
-        // If the player typed /tardis then do the following...
+        // If the player typed /tardisprefs then do the following...
         // check there is the right number of arguments
         if (cmd.getName().equalsIgnoreCase("tardisprefs")) {
             if (args.length == 0) {
