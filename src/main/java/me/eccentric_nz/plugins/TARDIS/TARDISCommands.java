@@ -391,7 +391,7 @@ public class TARDISCommands implements CommandExecutor {
                             }
                             String loc = rs.getString("save");
                             String[] findData = loc.split(":");
-                            sender.sendMessage(Constants.MY_PLUGIN_NAME + " You you left your TARDIS in " + findData[0] + " at x:" + findData[1] + " y:" + findData[2] + " z:" + findData[3]);
+                            sender.sendMessage(Constants.MY_PLUGIN_NAME + " TARDIS was left at " + findData[0] + " at x: " + findData[1] + " y: " + findData[2] + " z: " + findData[3]);
                             rs.close();
                             statement.close();
                             return true;
