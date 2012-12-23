@@ -51,7 +51,7 @@ public class TARDISBuilder {
                 chameleonData = chameleonBlock.getData();
             }
             if (Constants.CHAMELEON_BLOCKS_BAD.contains((Integer) chameleonType)) {
-                p.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " Bummer, the TARDIS could not engage the Chameleon Circuit!");
+                p.sendMessage(Constants.MY_PLUGIN_NAME + " Bummer, the TARDIS could not engage the Chameleon Circuit!");
             }
             if (Constants.CHAMELEON_BLOCKS_CHANGE.contains((Integer) chameleonType)) {
                 wall_block = Constants.swapId(chameleonType);

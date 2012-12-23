@@ -120,13 +120,13 @@ public class Constants {
                 rs = statement.executeQuery(queryGetArea);
                 int a = 1;
                 if (!rs.isBeforeFirst()) {
-                    p.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " No areas were found!");
+                    p.sendMessage(Constants.MY_PLUGIN_NAME + " No areas were found!");
                 }
                 while (rs.next()) {
                     String name = rs.getString("area_name");
                     String world = rs.getString("world");
                     if (a == 1) {
-                        p.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " Areas");
+                        p.sendMessage(Constants.MY_PLUGIN_NAME + " Areas");
                     }
                     p.sendMessage(a + ". [" + name + "] in world: " + world);
                     a++;

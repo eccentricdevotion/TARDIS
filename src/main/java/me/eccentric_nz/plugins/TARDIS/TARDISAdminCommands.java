@@ -38,18 +38,18 @@ public class TARDISAdminCommands implements CommandExecutor {
                     return true;
                 }
                 if (!args[0].equalsIgnoreCase("reload") && !args[0].equalsIgnoreCase("config") && !args[0].equalsIgnoreCase("key") && !args[0].equalsIgnoreCase("bonus_chest") && !args[0].equalsIgnoreCase("protect_blocks") && !args[0].equalsIgnoreCase("give_key") && !args[0].equalsIgnoreCase("platform") && !args[0].equalsIgnoreCase("tp_radius") && !args[0].equalsIgnoreCase("require_spout") && !args[0].equalsIgnoreCase("default_world") && !args[0].equalsIgnoreCase("default_world_name") && !args[0].equalsIgnoreCase("include_default_world") && !args[0].equalsIgnoreCase("exclude") && !args[0].equalsIgnoreCase("sfx") && !args[0].equalsIgnoreCase("use_worldguard") && !args[0].equalsIgnoreCase("respect_worldguard") && !args[0].equalsIgnoreCase("nether") && !args[0].equalsIgnoreCase("the_end") && !args[0].equalsIgnoreCase("land_on_water") && !args[0].equalsIgnoreCase("updatesaves") && !args[0].equalsIgnoreCase("delete") && !args[0].equalsIgnoreCase("find") && !args[0].equalsIgnoreCase("list") && !args[0].equalsIgnoreCase("debug")) {
-                    sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " TARDIS does not recognise that command argument!");
+                    sender.sendMessage(Constants.MY_PLUGIN_NAME + " TARDIS does not recognise that command argument!");
                     return false;
                 }
                 if (args.length == 1) {
                     if (args[0].equalsIgnoreCase("reload")) {
                         plugin.loadConfig();
-                        sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " TARDIS config reloaded.");
+                        sender.sendMessage(Constants.MY_PLUGIN_NAME + " TARDIS config reloaded.");
                         return true;
                     }
                     if (args[0].equalsIgnoreCase("config")) {
                         Set<String> configNames = plugin.config.getKeys(false);
-                        sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RED + " Here are the current plugin config options!");
+                        sender.sendMessage(Constants.MY_PLUGIN_NAME + ChatColor.RED + " Here are the current plugin config options!");
                         for (String cname : configNames) {
                             String value = plugin.config.getString(cname);
                             if (cname.equals("worlds")) {
@@ -96,7 +96,7 @@ public class TARDISAdminCommands implements CommandExecutor {
                         } catch (SQLException e) {
                             System.err.println(Constants.MY_PLUGIN_NAME + " Console saves to destinations error: " + e);
                         }
-                        sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + "TARDIS saves updated.");
+                        sender.sendMessage(Constants.MY_PLUGIN_NAME + "TARDIS saves updated.");
                         return true;
                     }
                 }
@@ -114,11 +114,11 @@ public class TARDISAdminCommands implements CommandExecutor {
                         String queryList = "SELECT owner, current FROM tardis LIMIT " + start + ", " + end;
                         ResultSet rsList = statement.executeQuery(queryList);
                         if (rsList.isBeforeFirst()) {
-                            sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " TARDIS locations.");
+                            sender.sendMessage(Constants.MY_PLUGIN_NAME + " TARDIS locations.");
                             while (rsList.next()) {
                                 sender.sendMessage("Timelord: " + rsList.getString("Owner") + ", Location: " + rsList.getString("current"));
                             }
-                            sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " To see more locations, type: /tardisadmin list 2,  /tardisadmin list 3 etc.");
+                            sender.sendMessage(Constants.MY_PLUGIN_NAME + " To see more locations, type: /tardisadmin list 2,  /tardisadmin list 3 etc.");
                         }
                         statement.close();
                     } catch (SQLException e) {
@@ -127,7 +127,7 @@ public class TARDISAdminCommands implements CommandExecutor {
                     return true;
                 }
                 if (args.length < 2) {
-                    sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " Too few command arguments!");
+                    sender.sendMessage(Constants.MY_PLUGIN_NAME + " Too few command arguments!");
                     return false;
                 } else {
                     if (args[0].equalsIgnoreCase("delete")) {
@@ -192,9 +192,9 @@ public class TARDISAdminCommands implements CommandExecutor {
                                 statement.executeUpdate(queryDelTardis);
                                 String queryDeleteDoors = "DELETE FROM doors WHERE tardis_id = " + id;
                                 statement.executeUpdate(queryDeleteDoors);
-                                sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " The TARDIS was removed from the world and database successfully.");
+                                sender.sendMessage(Constants.MY_PLUGIN_NAME + " The TARDIS was removed from the world and database successfully.");
                             } else {
-                                sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " Could not find player [" + args[1] + "] in the database!");
+                                sender.sendMessage(Constants.MY_PLUGIN_NAME + " Could not find player [" + args[1] + "] in the database!");
                                 return true;
                             }
                             statement.close();
@@ -206,7 +206,7 @@ public class TARDISAdminCommands implements CommandExecutor {
                     if (args[0].equalsIgnoreCase("key")) {
                         String setMaterial = args[1].toUpperCase(Locale.ENGLISH);
                         if (!Arrays.asList(Materials.MATERIAL_LIST).contains(setMaterial)) {
-                            sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RED + "That is not a valid Material! Try checking http://jd.bukkit.org/apidocs/org/bukkit/Material.html");
+                            sender.sendMessage(Constants.MY_PLUGIN_NAME + ChatColor.RED + "That is not a valid Material! Try checking http://jd.bukkit.org/apidocs/org/bukkit/Material.html");
                             return false;
                         } else {
                             plugin.config.set("key", setMaterial);
@@ -216,7 +216,7 @@ public class TARDISAdminCommands implements CommandExecutor {
                     if (args[0].equalsIgnoreCase("bonus_chest")) {
                         String tf = args[1].toLowerCase();
                         if (!tf.equals("true") && !tf.equals("false")) {
-                            sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RED + "The last argument must be true or false!");
+                            sender.sendMessage(Constants.MY_PLUGIN_NAME + ChatColor.RED + "The last argument must be true or false!");
                             return false;
                         }
                         plugin.config.set("bonus_chest", Boolean.valueOf(tf));
@@ -224,7 +224,7 @@ public class TARDISAdminCommands implements CommandExecutor {
                     if (args[0].equalsIgnoreCase("debug")) {
                         String tf = args[1].toLowerCase();
                         if (!tf.equals("true") && !tf.equals("false")) {
-                            sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RED + "The last argument must be true or false!");
+                            sender.sendMessage(Constants.MY_PLUGIN_NAME + ChatColor.RED + "The last argument must be true or false!");
                             return false;
                         }
                         plugin.config.set("debug", Boolean.valueOf(tf));
@@ -232,7 +232,7 @@ public class TARDISAdminCommands implements CommandExecutor {
                     if (args[0].equalsIgnoreCase("protect_blocks")) {
                         String tf = args[1].toLowerCase();
                         if (!tf.equals("true") && !tf.equals("false")) {
-                            sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RED + "The last argument must be true or false!");
+                            sender.sendMessage(Constants.MY_PLUGIN_NAME + ChatColor.RED + "The last argument must be true or false!");
                             return false;
                         }
                         plugin.config.set("protect_blocks", Boolean.valueOf(tf));
@@ -240,7 +240,7 @@ public class TARDISAdminCommands implements CommandExecutor {
                     if (args[0].equalsIgnoreCase("give_key")) {
                         String tf = args[1].toLowerCase();
                         if (!tf.equals("true") && !tf.equals("false")) {
-                            sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RED + "The last argument must be true or false!");
+                            sender.sendMessage(Constants.MY_PLUGIN_NAME + ChatColor.RED + "The last argument must be true or false!");
                             return false;
                         }
                         plugin.config.set("give_key", Boolean.valueOf(tf));
@@ -248,7 +248,7 @@ public class TARDISAdminCommands implements CommandExecutor {
                     if (args[0].equalsIgnoreCase("platform")) {
                         String tf = args[1].toLowerCase();
                         if (!tf.equals("true") && !tf.equals("false")) {
-                            sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RED + "The last argument must be true or false!");
+                            sender.sendMessage(Constants.MY_PLUGIN_NAME + ChatColor.RED + "The last argument must be true or false!");
                             return false;
                         }
                         plugin.config.set("platform", Boolean.valueOf(tf));
@@ -260,7 +260,7 @@ public class TARDISAdminCommands implements CommandExecutor {
                             val = Integer.parseInt(a);
                         } catch (NumberFormatException nfe) {
                             // not a number
-                            sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RED + " The last argument must be a number!");
+                            sender.sendMessage(Constants.MY_PLUGIN_NAME + ChatColor.RED + " The last argument must be a number!");
                             return false;
                         }
                         plugin.config.set("tp_radius", val);
@@ -269,7 +269,7 @@ public class TARDISAdminCommands implements CommandExecutor {
                         // check they typed true of false
                         String tf = args[1].toLowerCase();
                         if (!tf.equals("true") && !tf.equals("false")) {
-                            sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RED + "The last argument must be true or false!");
+                            sender.sendMessage(Constants.MY_PLUGIN_NAME + ChatColor.RED + "The last argument must be true or false!");
                             return false;
                         }
                         plugin.config.set("require_spout", Boolean.valueOf(tf));
@@ -278,7 +278,7 @@ public class TARDISAdminCommands implements CommandExecutor {
                         // check they typed true of false
                         String tf = args[1].toLowerCase();
                         if (!tf.equals("true") && !tf.equals("false")) {
-                            sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RED + "The last argument must be true or false!");
+                            sender.sendMessage(Constants.MY_PLUGIN_NAME + ChatColor.RED + "The last argument must be true or false!");
                             return false;
                         }
                         plugin.config.set("default_world", Boolean.valueOf(tf));
@@ -300,7 +300,7 @@ public class TARDISAdminCommands implements CommandExecutor {
                         // check they typed true of false
                         String tf = args[1].toLowerCase();
                         if (!tf.equals("true") && !tf.equals("false")) {
-                            sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RED + "The last argument must be true or false!");
+                            sender.sendMessage(Constants.MY_PLUGIN_NAME + ChatColor.RED + "The last argument must be true or false!");
                             return false;
                         }
                         plugin.config.set("include_default_world", Boolean.valueOf(tf));
@@ -318,7 +318,7 @@ public class TARDISAdminCommands implements CommandExecutor {
                         String nodots = StringUtils.replace(t, ".", "_");
                         // check the world actually exists!
                         if (plugin.getServer().getWorld(nodots) == null) {
-                            sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RED + "World does not exist!");
+                            sender.sendMessage(Constants.MY_PLUGIN_NAME + ChatColor.RED + "World does not exist!");
                             return false;
                         }
                         plugin.config.set("worlds." + nodots, false);
@@ -327,7 +327,7 @@ public class TARDISAdminCommands implements CommandExecutor {
                         // check they typed true of false
                         String tf = args[1].toLowerCase();
                         if (!tf.equals("true") && !tf.equals("false")) {
-                            sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RED + "The last argument must be true or false!");
+                            sender.sendMessage(Constants.MY_PLUGIN_NAME + ChatColor.RED + "The last argument must be true or false!");
                             return false;
                         }
                         plugin.config.set("sfx", Boolean.valueOf(tf));
@@ -336,7 +336,7 @@ public class TARDISAdminCommands implements CommandExecutor {
                         // check they typed true of false
                         String tf = args[1].toLowerCase();
                         if (!tf.equals("true") && !tf.equals("false")) {
-                            sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RED + "The last argument must be true or false!");
+                            sender.sendMessage(Constants.MY_PLUGIN_NAME + ChatColor.RED + "The last argument must be true or false!");
                             return false;
                         }
                         plugin.config.set("use_worldguard", Boolean.valueOf(tf));
@@ -345,7 +345,7 @@ public class TARDISAdminCommands implements CommandExecutor {
                         // check they typed true of false
                         String tf = args[1].toLowerCase();
                         if (!tf.equals("true") && !tf.equals("false")) {
-                            sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RED + "The last argument must be true or false!");
+                            sender.sendMessage(Constants.MY_PLUGIN_NAME + ChatColor.RED + "The last argument must be true or false!");
                             return false;
                         }
                         plugin.config.set("respect_worldguard", Boolean.valueOf(tf));
@@ -354,7 +354,7 @@ public class TARDISAdminCommands implements CommandExecutor {
                         // check they typed true of false
                         String tf = args[1].toLowerCase();
                         if (!tf.equals("true") && !tf.equals("false")) {
-                            sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RED + "The last argument must be true or false!");
+                            sender.sendMessage(Constants.MY_PLUGIN_NAME + ChatColor.RED + "The last argument must be true or false!");
                             return false;
                         }
                         plugin.config.set("nether", Boolean.valueOf(tf));
@@ -363,7 +363,7 @@ public class TARDISAdminCommands implements CommandExecutor {
                         // check they typed true of false
                         String tf = args[1].toLowerCase();
                         if (!tf.equals("true") && !tf.equals("false")) {
-                            sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RED + "The last argument must be true or false!");
+                            sender.sendMessage(Constants.MY_PLUGIN_NAME + ChatColor.RED + "The last argument must be true or false!");
                             return false;
                         }
                         plugin.config.set("the_end", Boolean.valueOf(tf));
@@ -372,7 +372,7 @@ public class TARDISAdminCommands implements CommandExecutor {
                         // check they typed true of false
                         String tf = args[1].toLowerCase();
                         if (!tf.equals("true") && !tf.equals("false")) {
-                            sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RED + "The last argument must be true or false!");
+                            sender.sendMessage(Constants.MY_PLUGIN_NAME + ChatColor.RED + "The last argument must be true or false!");
                             return false;
                         }
                         plugin.config.set("land_on_water", Boolean.valueOf(tf));
@@ -381,12 +381,12 @@ public class TARDISAdminCommands implements CommandExecutor {
                         plugin.config.save(plugin.myconfigfile);
                         sender.sendMessage(Constants.MY_PLUGIN_NAME + " The config was updated!");
                     } catch (IOException e) {
-                        sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " There was a problem saving the config file!");
+                        sender.sendMessage(Constants.MY_PLUGIN_NAME + " There was a problem saving the config file!");
                     }
                 }
                 return true;
             } else {
-                sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RED + " You must be an Admin to run this command.");
+                sender.sendMessage(Constants.MY_PLUGIN_NAME + ChatColor.RED + " You must be an Admin to run this command.");
                 return false;
             }
         }

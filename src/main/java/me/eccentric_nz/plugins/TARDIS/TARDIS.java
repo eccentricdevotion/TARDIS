@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.logging.Level;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.World;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -91,7 +92,7 @@ public class TARDIS extends JavaPlugin {
         this.getLogger().log(Level.INFO, "Loading support for CB {0}", version);
 
         pdfFile = getDescription();
-        Constants.MY_PLUGIN_NAME = "[" + pdfFile.getName() + "]";
+        Constants.MY_PLUGIN_NAME = ChatColor.GRAY + "[" + pdfFile.getName() + "]" + ChatColor.RESET;
         plugin = this;
         pm.registerEvents(tardisBlockPlaceListener, this);
         pm.registerEvents(tardisBlockBreakListener, this);

@@ -49,7 +49,7 @@ public class TARDISBlockPlaceListener implements Listener {
                         if (player.hasPermission("tardis.bigger")) {
                             schm = Constants.SCHEMATIC.BIGGER;
                         } else {
-                            player.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " You don't have permission to create a 'bigger' TARDIS!");
+                            player.sendMessage(Constants.MY_PLUGIN_NAME + " You don't have permission to create a 'bigger' TARDIS!");
                             return;
                         }
                         break;
@@ -57,7 +57,7 @@ public class TARDISBlockPlaceListener implements Listener {
                         if (player.hasPermission("tardis.deluxe")) {
                             schm = Constants.SCHEMATIC.DELUXE;
                         } else {
-                            player.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " You don't have permission to create a 'deluxe' TARDIS!");
+                            player.sendMessage(Constants.MY_PLUGIN_NAME + " You don't have permission to create a 'deluxe' TARDIS!");
                             return;
                         }
                         break;
@@ -135,12 +135,12 @@ public class TARDISBlockPlaceListener implements Listener {
                                 plugin.builder.buildOuterTARDIS(lastInsertId, block_loc, Constants.COMPASS.valueOf(d), false, player, false);
                                 plugin.builder.buildInnerTARDIS(schm, chunkworld, Constants.COMPASS.valueOf(d), lastInsertId, player, middle_id, middle_data);
                             } else {
-                                player.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " A TARDIS already exists at this location, please try another chunk!");
+                                player.sendMessage(Constants.MY_PLUGIN_NAME + " A TARDIS already exists at this location, please try another chunk!");
                             }
                         } else {
                             String leftLoc = rs.getString("save");
                             String[] leftData = leftLoc.split(":");
-                            player.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " You already have a TARDIS, you left it in " + leftData[0] + " at x:" + leftData[1] + " y:" + leftData[2] + " z:" + leftData[3]);
+                            player.sendMessage(Constants.MY_PLUGIN_NAME + " You already have a TARDIS, you left it in " + leftData[0] + " at x:" + leftData[1] + " y:" + leftData[2] + " z:" + leftData[3]);
                         }
                     } catch (SQLException e) {
                         System.err.println(Constants.MY_PLUGIN_NAME + " Block Place Listener Error: " + e + ", " + e.getErrorCode() + ", " + e.getSQLState());
@@ -165,7 +165,7 @@ public class TARDISBlockPlaceListener implements Listener {
                         }
                     }
                 } else {
-                    player.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " You don't have permission to build a TARDIS!");
+                    player.sendMessage(Constants.MY_PLUGIN_NAME + " You don't have permission to build a TARDIS!");
                 }
             }
         }
