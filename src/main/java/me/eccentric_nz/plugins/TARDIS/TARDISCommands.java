@@ -1,5 +1,6 @@
 package me.eccentric_nz.plugins.TARDIS;
 
+import java.io.File;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -16,6 +17,8 @@ import org.bukkit.block.Sign;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.getspout.spoutapi.SpoutManager;
@@ -53,6 +56,7 @@ public class TARDISCommands implements CommandExecutor {
         firstArgs.add("home");
         firstArgs.add("occupy");
         firstArgs.add("namekey");
+        firstArgs.add("version");
     }
 
     @Override
@@ -72,6 +76,13 @@ public class TARDISCommands implements CommandExecutor {
             if (!firstArgs.contains(args[0].toLowerCase())) {
                 sender.sendMessage(Constants.MY_PLUGIN_NAME + " That command wasn't recognised type " + ChatColor.GREEN + "/tardis help" + ChatColor.RESET + " to see the commands");
                 return false;
+            }
+            if (args[0].equalsIgnoreCase("version")) {
+                FileConfiguration pluginYml = YamlConfiguration.loadConfiguration(plugin.pm.getPlugin("TARDIS").getResource("plugin.yml"));
+                String version = pluginYml.getString("version");
+                String cb = Bukkit.getVersion();
+                sender.sendMessage(Constants.MY_PLUGIN_NAME + " You are running TARDIS version: " + ChatColor.AQUA + version + ChatColor.RESET + " with CraftBukkit " + cb);
+                return true;
             }
             if (player == null) {
                 sender.sendMessage(Constants.MY_PLUGIN_NAME + ChatColor.RED + " This command can only be run by a player");
