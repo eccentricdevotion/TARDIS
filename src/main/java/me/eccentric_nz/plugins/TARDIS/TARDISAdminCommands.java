@@ -37,7 +37,33 @@ public class TARDISAdminCommands implements CommandExecutor {
                     sender.sendMessage(Constants.COMMAND_ADMIN.split("\n"));
                     return true;
                 }
-                if (!args[0].equalsIgnoreCase("reload") && !args[0].equalsIgnoreCase("config") && !args[0].equalsIgnoreCase("key") && !args[0].equalsIgnoreCase("bonus_chest") && !args[0].equalsIgnoreCase("protect_blocks") && !args[0].equalsIgnoreCase("give_key") && !args[0].equalsIgnoreCase("platform") && !args[0].equalsIgnoreCase("tp_radius") && !args[0].equalsIgnoreCase("require_spout") && !args[0].equalsIgnoreCase("default_world") && !args[0].equalsIgnoreCase("default_world_name") && !args[0].equalsIgnoreCase("include_default_world") && !args[0].equalsIgnoreCase("exclude") && !args[0].equalsIgnoreCase("sfx") && !args[0].equalsIgnoreCase("use_worldguard") && !args[0].equalsIgnoreCase("respect_worldguard") && !args[0].equalsIgnoreCase("nether") && !args[0].equalsIgnoreCase("the_end") && !args[0].equalsIgnoreCase("land_on_water") && !args[0].equalsIgnoreCase("updatesaves") && !args[0].equalsIgnoreCase("delete") && !args[0].equalsIgnoreCase("find") && !args[0].equalsIgnoreCase("list") && !args[0].equalsIgnoreCase("debug")) {
+                if (!args[0].equalsIgnoreCase("timeout") &&
+                    !args[0].equalsIgnoreCase("timeout_height") &&
+                	!args[0].equalsIgnoreCase("name_tardis") &&
+                	!args[0].equalsIgnoreCase("reload") &&
+                	!args[0].equalsIgnoreCase("config") &&
+                	!args[0].equalsIgnoreCase("key") &&
+                	!args[0].equalsIgnoreCase("bonus_chest") &&
+                	!args[0].equalsIgnoreCase("protect_blocks") &&
+                	!args[0].equalsIgnoreCase("give_key") &&
+                	!args[0].equalsIgnoreCase("platform") &&
+                	!args[0].equalsIgnoreCase("tp_radius") &&
+                	!args[0].equalsIgnoreCase("require_spout") &&
+                	!args[0].equalsIgnoreCase("default_world") &&
+                	!args[0].equalsIgnoreCase("default_world_name") &&
+                	!args[0].equalsIgnoreCase("include_default_world") &&
+                	!args[0].equalsIgnoreCase("exclude") &&
+                	!args[0].equalsIgnoreCase("sfx") &&
+                	!args[0].equalsIgnoreCase("use_worldguard") &&
+                	!args[0].equalsIgnoreCase("respect_worldguard") &&
+                	!args[0].equalsIgnoreCase("nether") &&
+                	!args[0].equalsIgnoreCase("the_end") &&
+                	!args[0].equalsIgnoreCase("land_on_water") &&
+                	!args[0].equalsIgnoreCase("updatesaves") &&
+                	!args[0].equalsIgnoreCase("delete") &&
+                	!args[0].equalsIgnoreCase("find") &&
+                	!args[0].equalsIgnoreCase("list") &&
+                	!args[0].equalsIgnoreCase("debug")) {
                     sender.sendMessage(Constants.MY_PLUGIN_NAME + " TARDIS does not recognise that command argument!");
                     return false;
                 }
@@ -213,76 +239,6 @@ public class TARDISAdminCommands implements CommandExecutor {
                             Constants.TARDIS_KEY = setMaterial;
                         }
                     }
-                    if (args[0].equalsIgnoreCase("bonus_chest")) {
-                        String tf = args[1].toLowerCase();
-                        if (!tf.equals("true") && !tf.equals("false")) {
-                            sender.sendMessage(Constants.MY_PLUGIN_NAME + ChatColor.RED + "The last argument must be true or false!");
-                            return false;
-                        }
-                        plugin.config.set("bonus_chest", Boolean.valueOf(tf));
-                    }
-                    if (args[0].equalsIgnoreCase("debug")) {
-                        String tf = args[1].toLowerCase();
-                        if (!tf.equals("true") && !tf.equals("false")) {
-                            sender.sendMessage(Constants.MY_PLUGIN_NAME + ChatColor.RED + "The last argument must be true or false!");
-                            return false;
-                        }
-                        plugin.config.set("debug", Boolean.valueOf(tf));
-                    }
-                    if (args[0].equalsIgnoreCase("protect_blocks")) {
-                        String tf = args[1].toLowerCase();
-                        if (!tf.equals("true") && !tf.equals("false")) {
-                            sender.sendMessage(Constants.MY_PLUGIN_NAME + ChatColor.RED + "The last argument must be true or false!");
-                            return false;
-                        }
-                        plugin.config.set("protect_blocks", Boolean.valueOf(tf));
-                    }
-                    if (args[0].equalsIgnoreCase("give_key")) {
-                        String tf = args[1].toLowerCase();
-                        if (!tf.equals("true") && !tf.equals("false")) {
-                            sender.sendMessage(Constants.MY_PLUGIN_NAME + ChatColor.RED + "The last argument must be true or false!");
-                            return false;
-                        }
-                        plugin.config.set("give_key", Boolean.valueOf(tf));
-                    }
-                    if (args[0].equalsIgnoreCase("platform")) {
-                        String tf = args[1].toLowerCase();
-                        if (!tf.equals("true") && !tf.equals("false")) {
-                            sender.sendMessage(Constants.MY_PLUGIN_NAME + ChatColor.RED + "The last argument must be true or false!");
-                            return false;
-                        }
-                        plugin.config.set("platform", Boolean.valueOf(tf));
-                    }
-                    if (args[0].equalsIgnoreCase("tp_radius")) {
-                        String a = args[1];
-                        int val;
-                        try {
-                            val = Integer.parseInt(a);
-                        } catch (NumberFormatException nfe) {
-                            // not a number
-                            sender.sendMessage(Constants.MY_PLUGIN_NAME + ChatColor.RED + " The last argument must be a number!");
-                            return false;
-                        }
-                        plugin.config.set("tp_radius", val);
-                    }
-                    if (args[0].equalsIgnoreCase("require_spout")) {
-                        // check they typed true of false
-                        String tf = args[1].toLowerCase();
-                        if (!tf.equals("true") && !tf.equals("false")) {
-                            sender.sendMessage(Constants.MY_PLUGIN_NAME + ChatColor.RED + "The last argument must be true or false!");
-                            return false;
-                        }
-                        plugin.config.set("require_spout", Boolean.valueOf(tf));
-                    }
-                    if (args[0].equalsIgnoreCase("default_world")) {
-                        // check they typed true of false
-                        String tf = args[1].toLowerCase();
-                        if (!tf.equals("true") && !tf.equals("false")) {
-                            sender.sendMessage(Constants.MY_PLUGIN_NAME + ChatColor.RED + "The last argument must be true or false!");
-                            return false;
-                        }
-                        plugin.config.set("default_world", Boolean.valueOf(tf));
-                    }
                     if (args[0].equalsIgnoreCase("default_world_name")) {
                         // get world name
                         int count = args.length;
@@ -295,15 +251,6 @@ public class TARDISAdminCommands implements CommandExecutor {
                         // need to make there are no periods(.) in the text
                         String nodots = StringUtils.replace(t, ".", "_");
                         plugin.config.set("default_world_name", nodots);
-                    }
-                    if (args[0].equalsIgnoreCase("include")) {
-                        // check they typed true of false
-                        String tf = args[1].toLowerCase();
-                        if (!tf.equals("true") && !tf.equals("false")) {
-                            sender.sendMessage(Constants.MY_PLUGIN_NAME + ChatColor.RED + "The last argument must be true or false!");
-                            return false;
-                        }
-                        plugin.config.set("include_default_world", Boolean.valueOf(tf));
                     }
                     if (args[0].equalsIgnoreCase("exclude")) {
                         // get world name
@@ -323,59 +270,46 @@ public class TARDISAdminCommands implements CommandExecutor {
                         }
                         plugin.config.set("worlds." + nodots, false);
                     }
-                    if (args[0].equalsIgnoreCase("sfx")) {
+                  //checks if its a boolean config option
+                    if (args[0].equalsIgnoreCase("name_tardis") ||
+                    	args[0].equalsIgnoreCase("land_on_water") ||
+                    	args[0].equalsIgnoreCase("the_end") ||
+                    	args[0].equalsIgnoreCase("nether") ||
+                    	args[0].equalsIgnoreCase("use_worldguard") ||
+                    	args[0].equalsIgnoreCase("respect_worldguard") ||
+                    	args[0].equalsIgnoreCase("sfx") ||
+                    	args[0].equalsIgnoreCase("include") ||
+                    	args[0].equalsIgnoreCase("default_world") ||
+                    	args[0].equalsIgnoreCase("require_spout") ||
+                    	args[0].equalsIgnoreCase("platform") ||
+                    	args[0].equalsIgnoreCase("give_key") ||
+                    	args[0].equalsIgnoreCase("protect_blocks") ||
+                    	args[0].equalsIgnoreCase("debug") ||
+                    	args[0].equalsIgnoreCase("bonus_chest") ||
+                    	args[0].equalsIgnoreCase("include") ||
+                    	args[0].equalsIgnoreCase("include")){
                         // check they typed true of false
                         String tf = args[1].toLowerCase();
                         if (!tf.equals("true") && !tf.equals("false")) {
                             sender.sendMessage(Constants.MY_PLUGIN_NAME + ChatColor.RED + "The last argument must be true or false!");
                             return false;
                         }
-                        plugin.config.set("sfx", Boolean.valueOf(tf));
+                        plugin.config.set(args[0], Boolean.valueOf(tf));
                     }
-                    if (args[0].equalsIgnoreCase("use_worldguard")) {
-                        // check they typed true of false
-                        String tf = args[1].toLowerCase();
-                        if (!tf.equals("true") && !tf.equals("false")) {
-                            sender.sendMessage(Constants.MY_PLUGIN_NAME + ChatColor.RED + "The last argument must be true or false!");
+                    //checks if its a number config option
+                    if (args[0].equalsIgnoreCase("timeout") ||
+                    	args[0].equalsIgnoreCase("timeout_height") ||
+                    	args[0].equalsIgnoreCase("tp_radius")) {
+                        String a = args[1];
+                        int val;
+                        try {
+                            val = Integer.parseInt(a);
+                        } catch (NumberFormatException nfe) {
+                            // not a number
+                            sender.sendMessage(Constants.MY_PLUGIN_NAME + ChatColor.RED + " The last argument must be a number!");
                             return false;
                         }
-                        plugin.config.set("use_worldguard", Boolean.valueOf(tf));
-                    }
-                    if (args[0].equalsIgnoreCase("respect_worldguard")) {
-                        // check they typed true of false
-                        String tf = args[1].toLowerCase();
-                        if (!tf.equals("true") && !tf.equals("false")) {
-                            sender.sendMessage(Constants.MY_PLUGIN_NAME + ChatColor.RED + "The last argument must be true or false!");
-                            return false;
-                        }
-                        plugin.config.set("respect_worldguard", Boolean.valueOf(tf));
-                    }
-                    if (args[0].equalsIgnoreCase("nether")) {
-                        // check they typed true of false
-                        String tf = args[1].toLowerCase();
-                        if (!tf.equals("true") && !tf.equals("false")) {
-                            sender.sendMessage(Constants.MY_PLUGIN_NAME + ChatColor.RED + "The last argument must be true or false!");
-                            return false;
-                        }
-                        plugin.config.set("nether", Boolean.valueOf(tf));
-                    }
-                    if (args[0].equalsIgnoreCase("the_end")) {
-                        // check they typed true of false
-                        String tf = args[1].toLowerCase();
-                        if (!tf.equals("true") && !tf.equals("false")) {
-                            sender.sendMessage(Constants.MY_PLUGIN_NAME + ChatColor.RED + "The last argument must be true or false!");
-                            return false;
-                        }
-                        plugin.config.set("the_end", Boolean.valueOf(tf));
-                    }
-                    if (args[0].equalsIgnoreCase("land_on_water")) {
-                        // check they typed true of false
-                        String tf = args[1].toLowerCase();
-                        if (!tf.equals("true") && !tf.equals("false")) {
-                            sender.sendMessage(Constants.MY_PLUGIN_NAME + ChatColor.RED + "The last argument must be true or false!");
-                            return false;
-                        }
-                        plugin.config.set("land_on_water", Boolean.valueOf(tf));
+                        plugin.config.set(args[0], val);
                     }
                     try {
                         plugin.config.save(plugin.myconfigfile);
