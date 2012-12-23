@@ -88,13 +88,13 @@ public class TARDISCommands implements CommandExecutor {
                                     String queryChameleon = "UPDATE tardis SET chamele_on = 1 WHERE tardis_id = " + id;
                                     statement.executeUpdate(queryChameleon);
                                     sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " The Chameleon Circuit was turned ON!");
-                                    cs.setLine(3, "¤aON");
+                                    cs.setLine(3, ChatColor.GREEN + "ON");
                                 }
                                 if (args[1].equalsIgnoreCase("off")) {
                                     String queryChameleon = "UPDATE tardis SET chamele_on = 0 WHERE tardis_id = " + id;
                                     statement.executeUpdate(queryChameleon);
                                     sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + " The Chameleon Circuit was turned OFF.");
-                                    cs.setLine(3, "¤cOFF");
+                                    cs.setLine(3, ChatColor.RED + "OFF");
                                 }
                                 cs.update();
                             }
@@ -731,7 +731,7 @@ public class TARDISCommands implements CommandExecutor {
                     String tmp = buf.toString();
                     if (is != null) {
                         TARDISItemRenamer ir = new TARDISItemRenamer(is);
-                        ir.setName(tmp,false);
+                        ir.setName(tmp, false);
                     }
                     sender.sendMessage(ChatColor.GRAY + Constants.MY_PLUGIN_NAME + ChatColor.RESET + "TARDIS key renamed to '" + tmp + "'");
                     return true;
