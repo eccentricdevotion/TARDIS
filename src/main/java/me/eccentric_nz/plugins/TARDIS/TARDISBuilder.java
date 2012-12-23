@@ -252,7 +252,7 @@ public class TARDISBuilder {
             plugin.utils.setBlock(world, signx, y, signz, 68, sd);
             Sign s = (Sign) world.getBlockAt(signx, y, signz).getState();
             if (plugin.config.getBoolean("name_tardis")) {
-                if(p.getName().length() >= 15){
+                if(p.getName().length() >= 14){
             		s.setLine(0, p.getName().substring(0, 13) + "'s");
             	} else{
             		s.setLine(0, p.getName() + "'s");
