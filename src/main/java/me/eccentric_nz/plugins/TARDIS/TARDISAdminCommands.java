@@ -285,16 +285,14 @@ public class TARDISAdminCommands implements CommandExecutor {
                     	args[0].equalsIgnoreCase("give_key") ||
                     	args[0].equalsIgnoreCase("protect_blocks") ||
                     	args[0].equalsIgnoreCase("debug") ||
-                    	args[0].equalsIgnoreCase("bonus_chest") ||
-                    	args[0].equalsIgnoreCase("include") ||
-                    	args[0].equalsIgnoreCase("include")){
+                    	args[0].equalsIgnoreCase("bonus_chest")){
                         // check they typed true of false
                         String tf = args[1].toLowerCase();
                         if (!tf.equals("true") && !tf.equals("false")) {
                             sender.sendMessage(Constants.MY_PLUGIN_NAME + ChatColor.RED + "The last argument must be true or false!");
                             return false;
                         }
-                        plugin.config.set(args[0], Boolean.valueOf(tf));
+                        plugin.config.set(args[0].toLowerCase(), Boolean.valueOf(tf));
                     }
                     //checks if its a number config option
                     if (args[0].equalsIgnoreCase("timeout") ||
@@ -309,7 +307,7 @@ public class TARDISAdminCommands implements CommandExecutor {
                             sender.sendMessage(Constants.MY_PLUGIN_NAME + ChatColor.RED + " The last argument must be a number!");
                             return false;
                         }
-                        plugin.config.set(args[0], val);
+                        plugin.config.set(args[0].toLowerCase(), val);
                     }
                     try {
                         plugin.config.save(plugin.myconfigfile);
