@@ -252,10 +252,13 @@ public class TARDISBuilder {
             plugin.utils.setBlock(world, signx, y, signz, 68, sd);
             Sign s = (Sign) world.getBlockAt(signx, y, signz).getState();
             if (plugin.config.getBoolean("name_tardis")) {
-                if(p.getName().length() >= 14){
-            		s.setLine(0, p.getName().substring(0, 13) + "'s");
+                String queryGetOwner = "SELECT owner FROM tardis WHERE tardis_id = '" + id + "'";
+                ResultSet rsOwner = statement.executeQuery(queryGetOwner);
+                String owner = rsOwner.getString("owner");
+            	if(owner.length() >= 15){
+            		s.setLine(0, owner.substring(0, 13) + "'s");
             	} else{
-            		s.setLine(0, p.getName() + "'s");
+            		s.setLine(0, owner + "'s");
             	}
             }
             s.setLine(1, ChatColor.WHITE + "POLICE");
