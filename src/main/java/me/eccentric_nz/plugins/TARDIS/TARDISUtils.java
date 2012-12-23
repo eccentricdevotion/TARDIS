@@ -197,10 +197,6 @@ public class TARDISUtils {
         return num;
     }
 
-    public static String colorSign(String txt) {
-        return txt.replace('&', '¤');
-    }
-
     public void updateTravellerCount(int id) {
         // how many travellers are in the TARDIS?
         Statement statement = null;
