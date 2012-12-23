@@ -251,6 +251,13 @@ public class TARDISBuilder {
             // set sign
             plugin.utils.setBlock(world, signx, y, signz, 68, sd);
             Sign s = (Sign) world.getBlockAt(signx, y, signz).getState();
+            if (plugin.config.getBoolean("name_tardis") == Boolean.valueOf("true")) {
+                if(p.getName().length() >= 15){
+            		s.setLine(0, p.getName().substring(0, 13) + "'s");
+            	} else{
+            		s.setLine(0, p.getName() + "'s");
+            	}
+            }
             s.setLine(1, ChatColor.WHITE + "POLICE");
             s.setLine(2, ChatColor.WHITE + "BOX");
             s.update();
