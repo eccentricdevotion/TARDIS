@@ -251,7 +251,7 @@ public class TARDISBuilder {
             // set sign
             plugin.utils.setBlock(world, signx, y, signz, 68, sd);
             Sign s = (Sign) world.getBlockAt(signx, y, signz).getState();
-            if (plugin.config.getBoolean("name_tardis") == Boolean.valueOf("true")) {
+            if (plugin.config.getBoolean("name_tardis")) {
                 if(p.getName().length() >= 15){
             		s.setLine(0, p.getName().substring(0, 13) + "'s");
             	} else{
@@ -281,7 +281,7 @@ public class TARDISBuilder {
             plugin.utils.setBlockAndRemember(world, minusx, minusy, z, east, mde, id, rebuild);
             plugin.utils.setBlockAndRemember(world, x, minusy, minusz, south, mds, id, rebuild);
             // add platform if configured and necessary
-            if (plugin.config.getBoolean("platform") == Boolean.valueOf("true")) {
+            if (plugin.config.getBoolean("platform")) {
                 // check if user has platform pref
                 String queryGetPlatform = "SELECT platform_on FROM player_prefs WHERE player = '" + p.getName() + "'";
                 ResultSet rsPlatform = statement.executeQuery(queryGetPlatform);
@@ -385,7 +385,7 @@ public class TARDISBuilder {
                     if (!chunkList.contains(thisChunk)) {
                         chunkList.add(thisChunk);
                     }
-                    if (plugin.config.getBoolean("bonus_chest") == Boolean.valueOf("true")) {
+                    if (plugin.config.getBoolean("bonus_chest")) {
                         // get block at location
                         int replacedMaterialId = replaceLoc.getBlock().getTypeId();
                         if (replacedMaterialId != 8 && replacedMaterialId != 9 && replacedMaterialId != 10 && replacedMaterialId != 11) {
@@ -515,7 +515,7 @@ public class TARDISBuilder {
             cs.setLine(3, ChatColor.RED + "OFF");
             cs.update();
         }
-        if (plugin.config.getBoolean("bonus_chest") == Boolean.valueOf("true")) {
+        if (plugin.config.getBoolean("bonus_chest")) {
             // get rid of last ":" and assign ids to an array
             String rb = sb.toString();
             replacedBlocks = rb.substring(0, rb.length() - 1);

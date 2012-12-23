@@ -85,7 +85,7 @@ public class TARDISBlockPlaceListener implements Listener {
                             String cw;
                             World chunkworld;
                             // check config to see whether we are using a default world to store TARDII
-                            if (plugin.config.getBoolean("default_world") == Boolean.valueOf("true")) {
+                            if (plugin.config.getBoolean("default_world")) {
                                 cw = plugin.config.getString("default_world_name");
                                 chunkworld = plugin.getServer().getWorld(cw);
                             } else {

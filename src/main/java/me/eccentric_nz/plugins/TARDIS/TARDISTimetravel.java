@@ -40,14 +40,13 @@ public class TARDISTimetravel {
         List<World> allowedWorlds = new ArrayList<World>();
         if (e.equals("NORMAL:NETHER:THE_END")) {
             for (String o : worldlist) {
-                if (plugin.config.getBoolean("include_default_world") == Boolean.valueOf("true")
-                        || plugin.config.getBoolean("default_world") == Boolean.valueOf("false")) {
-                    if (plugin.config.getBoolean("worlds." + o) == Boolean.valueOf("true")) {
+                if (plugin.config.getBoolean("include_default_world") || !plugin.config.getBoolean("default_world")) {
+                    if (plugin.config.getBoolean("worlds." + o)) {
                         allowedWorlds.add(plugin.getServer().getWorld(o));
                     }
                 } else {
                     if (!o.equals(plugin.config.getString("default_world_name"))) {
-                        if (plugin.config.getBoolean("worlds." + o) == Boolean.valueOf("true")) {
+                        if (plugin.config.getBoolean("worlds." + o)) {
                             allowedWorlds.add(plugin.getServer().getWorld(o));
                         }
                     }
@@ -58,14 +57,13 @@ public class TARDISTimetravel {
             for (String o : worldlist) {
                 String env = plugin.getServer().getWorld(o).getEnvironment().toString();
                 if (envOptions.contains(env)) {
-                    if (plugin.config.getBoolean("include_default_world") == Boolean.valueOf("true")
-                            || plugin.config.getBoolean("default_world") == Boolean.valueOf("false")) {
-                        if (plugin.config.getBoolean("worlds." + o) == Boolean.valueOf("true")) {
+                    if (plugin.config.getBoolean("include_default_world") || !plugin.config.getBoolean("default_world")) {
+                        if (plugin.config.getBoolean("worlds." + o)) {
                             allowedWorlds.add(plugin.getServer().getWorld(o));
                         }
                     } else {
                         if (!o.equals(plugin.config.getString("default_world_name"))) {
-                            if (plugin.config.getBoolean("worlds." + o) == Boolean.valueOf("true")) {
+                            if (plugin.config.getBoolean("worlds." + o)) {
                                 allowedWorlds.add(plugin.getServer().getWorld(o));
                             }
                         }

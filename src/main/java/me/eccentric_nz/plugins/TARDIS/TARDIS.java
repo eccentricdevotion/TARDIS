@@ -190,7 +190,7 @@ public class TARDIS extends JavaPlugin {
         quote = quotes();
         quotelen = quote.size();
 
-        if (plugin.getServer().getPluginManager().getPlugin("Spout") != null && config.getBoolean("sfx") == Boolean.valueOf("true")) {
+        if (plugin.getServer().getPluginManager().getPlugin("Spout") != null && config.getBoolean("sfx")) {
             this.getServer().getScheduler().scheduleSyncRepeatingTask(this, new Runnable() {
                 @Override
                 public void run() {

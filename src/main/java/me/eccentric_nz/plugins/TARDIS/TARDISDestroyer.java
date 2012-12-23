@@ -138,7 +138,7 @@ public class TARDISDestroyer {
             statement.executeUpdate(queryForget);
 
             // get rid of platform is there is one
-            if (plugin.config.getBoolean("platform") == Boolean.valueOf("true")) {
+            if (plugin.config.getBoolean("platform")) {
                 String queryPlatform = "SELECT platform FROM tardis WHERE tardis_id = " + id;
                 ResultSet prs = statement.executeQuery(queryPlatform);
                 if (prs.next()) {
