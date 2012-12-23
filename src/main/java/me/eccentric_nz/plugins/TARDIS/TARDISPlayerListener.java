@@ -129,7 +129,7 @@ public class TARDISPlayerListener implements Listener {
                             Sign s = (Sign) block.getState();
                             s.setLine(0, "Chameleon");
                             s.setLine(1, "Circuit");
-                            s.setLine(3, "¤cOFF");
+                            s.setLine(3, ChatColor.RED + "OFF");
                             s.update();
                         }
                         if (blockName.equalsIgnoreCase("save-sign") && (blockType == Material.WALL_SIGN || blockType == Material.SIGN_POST)) {
@@ -634,11 +634,11 @@ public class TARDISPlayerListener implements Listener {
                                     String queryChameleon;
                                     if (rs.getBoolean("chamele_on")) {
                                         queryChameleon = "UPDATE tardis SET chamele_on = 0 WHERE tardis_id = " + id;
-                                        s.setLine(3, "¤cOFF");
+                                        s.setLine(3, ChatColor.RED + "OFF");
                                         s.update();
                                     } else {
                                         queryChameleon = "UPDATE tardis SET chamele_on = 1 WHERE tardis_id = " + id;
-                                        s.setLine(3, "¤aON");
+                                        s.setLine(3, ChatColor.GREEN + "ON");
                                         s.update();
                                     }
                                     statement.executeUpdate(queryChameleon);
