@@ -166,6 +166,9 @@ public class TARDIS extends JavaPlugin {
         if (!config.contains("timeout_height")) {
             config.set("timeout_height", 135);
         }
+        if (!config.contains("name_tardis")) {
+            config.set("name_tardis", false);
+        }
 
         tardisCommand = new TARDISCommands(this);
         tardisAdminCommand = new TARDISAdminCommands(this);
