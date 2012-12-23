@@ -44,7 +44,7 @@ public class TARDISBlockBreakListener implements Listener {
             String line2 = sign.getLine(2);
             String queryCheck;
             Location sign_loc = block.getLocation();
-            if (line1.equals("¤fPOLICE") && line2.equals("¤fBOX")) {
+             if (line1.equals(ChatColor.WHITE + "POLICE") && line2.equals(ChatColor.WHITE + "BOX")) {
                 if (player.hasPermission("tardis.delete")) {
                     Block blockbehind = null;
                     byte data = block.getData();
