@@ -171,7 +171,7 @@ commands:
     permission-message: You don't have the permission <permission> to use this command
   tardisadmin:
     description: Set TARDIS configuration options.
-    usage: /<command> admin [config option] [value]
+    usage: /<command> [config option] [value]
     permission: tardis.admin
     permission-message: You don't have the permission <permission> to use this command
   tardisprefs:
