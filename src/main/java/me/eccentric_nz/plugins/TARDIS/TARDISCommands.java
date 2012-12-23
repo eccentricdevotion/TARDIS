@@ -5,8 +5,10 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Locale;
 import org.bukkit.*;
 import org.bukkit.block.Block;
@@ -23,13 +25,34 @@ public class TARDISCommands implements CommandExecutor {
     private TARDIS plugin;
     TARDISDatabase service = TARDISDatabase.getInstance();
     HashSet<Byte> transparent = new HashSet<Byte>();
+    private List<String> firstArgs = new ArrayList<String>();
 
     public TARDISCommands(TARDIS plugin) {
         this.plugin = plugin;
+        // add transparent blocks
         transparent.add((byte) Material.AIR.getId());
         transparent.add((byte) Material.SNOW.getId());
         transparent.add((byte) Material.LONG_GRASS.getId());
         transparent.add((byte) Material.VINE.getId());
+        // add first arguments
+        firstArgs.add("chameleon");
+        firstArgs.add("save");
+        firstArgs.add("removesave");
+        firstArgs.add("list");
+        firstArgs.add("help");
+        firstArgs.add("find");
+        firstArgs.add("reload");
+        firstArgs.add("add");
+        firstArgs.add("remove");
+        firstArgs.add("update");
+        firstArgs.add("rebuild");
+        firstArgs.add("comehere");
+        firstArgs.add("direction");
+        firstArgs.add("setdest");
+        firstArgs.add("hide");
+        firstArgs.add("home");
+        firstArgs.add("occupy");
+        firstArgs.add("namekey");
     }
 
     @Override
@@ -46,7 +69,7 @@ public class TARDISCommands implements CommandExecutor {
                 return true;
             }
             // the command list - first argument MUST appear here!
-            if (!args[0].equalsIgnoreCase("chameleon") && !args[0].equalsIgnoreCase("save") && !args[0].equalsIgnoreCase("removesave") && !args[0].equalsIgnoreCase("list") && !args[0].equalsIgnoreCase("help") && !args[0].equalsIgnoreCase("find") && !args[0].equalsIgnoreCase("reload") && !args[0].equalsIgnoreCase("add") && !args[0].equalsIgnoreCase("remove") && !args[0].equalsIgnoreCase("update") && !args[0].equalsIgnoreCase("rebuild") && !args[0].equalsIgnoreCase("comehere") && !args[0].equalsIgnoreCase("direction") && !args[0].equalsIgnoreCase("setdest") && !args[0].equalsIgnoreCase("hide") && !args[0].equalsIgnoreCase("home") && !args[0].equalsIgnoreCase("occupy") && !args[0].equalsIgnoreCase("namekey")) {
+            if (!firstArgs.contains(args[0].toLowerCase())) {
                 sender.sendMessage(Constants.MY_PLUGIN_NAME + " That command wasn't recognised type " + ChatColor.GREEN + "/tardis help" + ChatColor.RESET + " to see the commands");
                 return false;
             }
@@ -56,7 +79,7 @@ public class TARDISCommands implements CommandExecutor {
             } else {
                 if (args[0].equalsIgnoreCase("chameleon")) {
                     if (player.hasPermission("tardis.timetravel")) {
-                        if (args.length < 2 || (!args[1].equalsIgnoreCase("on") && !args[1].equalsIgnoreCase("off") && !args[1].equalsIgnoreCase("add"))) {
+                        if (args.length < 2 || (!args[1].equalsIgnoreCase("on") && !args[1].equalsIgnoreCase("off"))) {
                             sender.sendMessage(Constants.MY_PLUGIN_NAME + " Too few command arguments!");
                             return false;
                         }
