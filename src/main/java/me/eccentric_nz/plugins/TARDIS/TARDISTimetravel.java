@@ -30,23 +30,23 @@ public class TARDISTimetravel {
         // there needs to be room for the TARDIS and the player!
         Random rand = new Random();
         // get max_radius from config
-        int max = plugin.config.getInt("tp_radius");
+        int max = plugin.getConfig().getInt("tp_radius");
         int quarter = (max + 4 - 1) / 4;
         int range = quarter + 1;
         int wherex = 0, highest = 252, wherez = 0;
-        Constants.COMPASS d = Constants.COMPASS.valueOf(dir);
+        TARDISConstants.COMPASS d = TARDISConstants.COMPASS.valueOf(dir);
         // get worlds
-        Set<String> worldlist = plugin.config.getConfigurationSection("worlds").getKeys(false);
+        Set<String> worldlist = plugin.getConfig().getConfigurationSection("worlds").getKeys(false);
         List<World> allowedWorlds = new ArrayList<World>();
         if (e.equals("NORMAL:NETHER:THE_END")) {
             for (String o : worldlist) {
-                if (plugin.config.getBoolean("include_default_world") || !plugin.config.getBoolean("default_world")) {
-                    if (plugin.config.getBoolean("worlds." + o)) {
+                if (plugin.getConfig().getBoolean("include_default_world") || !plugin.getConfig().getBoolean("default_world")) {
+                    if (plugin.getConfig().getBoolean("worlds." + o)) {
                         allowedWorlds.add(plugin.getServer().getWorld(o));
                     }
                 } else {
-                    if (!o.equals(plugin.config.getString("default_world_name"))) {
-                        if (plugin.config.getBoolean("worlds." + o)) {
+                    if (!o.equals(plugin.getConfig().getString("default_world_name"))) {
+                        if (plugin.getConfig().getBoolean("worlds." + o)) {
                             allowedWorlds.add(plugin.getServer().getWorld(o));
                         }
                     }
@@ -57,13 +57,13 @@ public class TARDISTimetravel {
             for (String o : worldlist) {
                 String env = plugin.getServer().getWorld(o).getEnvironment().toString();
                 if (envOptions.contains(env)) {
-                    if (plugin.config.getBoolean("include_default_world") || !plugin.config.getBoolean("default_world")) {
-                        if (plugin.config.getBoolean("worlds." + o)) {
+                    if (plugin.getConfig().getBoolean("include_default_world") || !plugin.getConfig().getBoolean("default_world")) {
+                        if (plugin.getConfig().getBoolean("worlds." + o)) {
                             allowedWorlds.add(plugin.getServer().getWorld(o));
                         }
                     } else {
-                        if (!o.equals(plugin.config.getString("default_world_name"))) {
-                            if (plugin.config.getBoolean("worlds." + o)) {
+                        if (!o.equals(plugin.getConfig().getString("default_world_name"))) {
+                            if (plugin.getConfig().getBoolean("worlds." + o)) {
                                 allowedWorlds.add(plugin.getServer().getWorld(o));
                             }
                         }
@@ -103,7 +103,7 @@ public class TARDISTimetravel {
                 if (highest > 40) {
                     Block currentBlock = randworld.getBlockAt(wherex, highest, wherez);
                     Location chunk_loc = currentBlock.getLocation();
-                    if (plugin.worldGuardOnServer && plugin.wgchk.cantBuild(p, chunk_loc) && plugin.config.getBoolean("respect_worldguard")) {
+                    if (plugin.worldGuardOnServer && plugin.wgchk.cantBuild(p, chunk_loc) && plugin.getConfig().getBoolean("respect_worldguard")) {
                         count = 1;
                     }
                     if (plugin.ta.areaCheckLocPlayer(p, chunk_loc)) {
@@ -134,7 +134,7 @@ public class TARDISTimetravel {
             dest = new Location(randworld, wherex, highest, wherez);
         }
         if (randworld.getEnvironment().equals(Environment.NORMAL)) {
-            long timeout = System.currentTimeMillis() + (plugin.config.getLong("timeout")*1000);
+            long timeout = System.currentTimeMillis() + (plugin.getConfig().getLong("timeout")*1000);
             while (danger == true) {
                 if (System.currentTimeMillis() < timeout) {
                     count = 0;
@@ -144,14 +144,14 @@ public class TARDISTimetravel {
                     highest = randworld.getHighestBlockYAt(wherex, wherez);
                     if (highest > 3) {
                         Block currentBlock = randworld.getBlockAt(wherex, highest, wherez);
-                        if ((currentBlock.getTypeId() == 8 || currentBlock.getTypeId() == 9) && plugin.config.getBoolean("land_on_water") == false) {
+                        if ((currentBlock.getTypeId() == 8 || currentBlock.getTypeId() == 9) && plugin.getConfig().getBoolean("land_on_water") == false) {
                             count = 1;
                         } else {
                             if (currentBlock.getType() == Material.AIR || currentBlock.getType() == Material.SNOW || currentBlock.getType() == Material.LONG_GRASS || currentBlock.getType() == Material.RED_ROSE || currentBlock.getType() == Material.YELLOW_FLOWER || currentBlock.getType() == Material.BROWN_MUSHROOM || currentBlock.getType() == Material.RED_MUSHROOM || currentBlock.getType() == Material.SAPLING || currentBlock.getType() == Material.SNOW) {
                                 currentBlock = currentBlock.getRelative(BlockFace.DOWN);
                             }
                             Location chunk_loc = currentBlock.getLocation();
-                            if (plugin.worldGuardOnServer && plugin.wgchk.cantBuild(p, chunk_loc) && plugin.config.getBoolean("respect_worldguard")) {
+                            if (plugin.worldGuardOnServer && plugin.wgchk.cantBuild(p, chunk_loc) && plugin.getConfig().getBoolean("respect_worldguard")) {
                                 count = 1;
                             }
                             if (plugin.ta.areaCheckLocPlayer(p, chunk_loc)) {
@@ -180,7 +180,7 @@ public class TARDISTimetravel {
                         break;
                     }
                 } else {
-                    highest = plugin.config.getInt("timeout_height");
+                    highest = plugin.getConfig().getInt("timeout_height");
                     danger = false;
                     break;
                 }
@@ -190,7 +190,7 @@ public class TARDISTimetravel {
         return dest;
     }
 
-    public int safeLocation(int startx, int starty, int startz, int resetx, int resetz, World w, Constants.COMPASS d) {
+    public int safeLocation(int startx, int starty, int startz, int resetx, int resetz, World w, TARDISConstants.COMPASS d) {
         int level, row, col, rowcount, colcount, count = 0;
         switch (d) {
             case EAST:
@@ -231,7 +231,7 @@ public class TARDISTimetravel {
     }
     private static int[] startLoc = new int[6];
 
-    public int[] getStartLocation(Location loc, Constants.COMPASS dir) {
+    public int[] getStartLocation(Location loc, TARDISConstants.COMPASS dir) {
         switch (dir) {
             case EAST:
                 startLoc[0] = loc.getBlockX() - 3;
@@ -256,7 +256,7 @@ public class TARDISTimetravel {
         return startLoc;
     }
 
-    private boolean safeNether(World nether, int wherex, int wherez, Constants.COMPASS d) {
+    private boolean safeNether(World nether, int wherex, int wherez, TARDISConstants.COMPASS d) {
         boolean safe = false;
         int startx, starty, startz, resetx, resetz, count;
         Random rand = new Random();

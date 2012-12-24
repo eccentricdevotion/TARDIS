@@ -18,7 +18,7 @@ public class TARDISSounds {
     private static ResultSet rs;
 
     public static void randomTARDISSound() {
-        if (TARDIS.plugin.config.getBoolean("sfx") == true) {
+        if (TARDIS.plugin.getConfig().getBoolean("sfx") == true) {
             try {
                 String queryTravellers = "SELECT player FROM travellers";
                 Connection connection = service.getConnection();
@@ -46,7 +46,7 @@ public class TARDISSounds {
                     }
                 }
             } catch (SQLException e) {
-                TARDIS.plugin.console.sendMessage(Constants.MY_PLUGIN_NAME + " SFX error: " + e);
+                TARDIS.plugin.console.sendMessage(TARDIS.plugin.pluginName + " SFX error: " + e);
             } finally {
                 if (rs != null) {
                     try {

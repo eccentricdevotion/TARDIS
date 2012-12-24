@@ -49,7 +49,7 @@ public class TARDISBlockProtectListener implements Listener {
                 }
             }
         } catch (SQLException e) {
-            plugin.console.sendMessage(Constants.MY_PLUGIN_NAME + " Could not get block ignite locations from DB!");
+            plugin.console.sendMessage(plugin.pluginName + " Could not get block ignite locations from DB!");
         } finally {
             try {
                 rsBlockLoc.close();
@@ -60,7 +60,7 @@ public class TARDISBlockProtectListener implements Listener {
             } catch (Exception e) {
             }
         }
-        if (plugin.config.getBoolean("protect_blocks") == true) {
+        if (plugin.getConfig().getBoolean("protect_blocks") == true) {
             String[] set = {"EAST", "SOUTH", "WEST", "NORTH", "UP", "DOWN"};
             for (String f : set) {
                 int id = b.getRelative(BlockFace.valueOf(f)).getTypeId();
@@ -90,7 +90,7 @@ public class TARDISBlockProtectListener implements Listener {
             rsBlockLoc.close();
             statement.close();
         } catch (SQLException e) {
-            plugin.console.sendMessage(Constants.MY_PLUGIN_NAME + " Could not get block burn locations from DB!");
+            plugin.console.sendMessage(plugin.pluginName + " Could not get block burn locations from DB!");
         } finally {
             try {
                 rsBlockLoc.close();
@@ -102,7 +102,7 @@ public class TARDISBlockProtectListener implements Listener {
             }
         }
 
-        if (plugin.config.getBoolean("protect_blocks") == true) {
+        if (plugin.getConfig().getBoolean("protect_blocks") == true) {
             for (BlockFace bf : faces) {
                 int id = b.getRelative(bf).getTypeId();
                 byte d = b.getRelative(bf).getData();

@@ -21,7 +21,7 @@ public class TARDISDestroyer {
         this.plugin = plugin;
     }
 
-    public final void destroyTARDIS(Constants.SCHEMATIC schm, int id, World w, Constants.COMPASS d, int i, String p) {
+    public final void destroyTARDIS(TARDISConstants.SCHEMATIC schm, int id, World w, TARDISConstants.COMPASS d, int i, String p) {
         short h, width, l;
         switch (schm) {
             case BIGGER:
@@ -83,7 +83,7 @@ public class TARDISDestroyer {
         }
     }
 
-    public void destroyBlueBox(Location l, Constants.COMPASS d, int id, boolean hide) {
+    public void destroyBlueBox(Location l, TARDISConstants.COMPASS d, int id, boolean hide) {
         World w = l.getWorld();
         int sbx = l.getBlockX() - 1;
         int rbx = sbx;
@@ -127,7 +127,7 @@ public class TARDISDestroyer {
                     try {
                         rb = Byte.valueOf(parts[5]);
                     } catch (NumberFormatException nfe) {
-                        plugin.console.sendMessage(Constants.MY_PLUGIN_NAME + "Could not convert to number!");
+                        plugin.console.sendMessage(plugin.pluginName + "Could not convert to number!");
                     }
                     Block b = rw.getBlockAt(rx, ry, rz);
                     b.setTypeIdAndData(rID, rb, true);
@@ -138,7 +138,7 @@ public class TARDISDestroyer {
             statement.executeUpdate(queryForget);
 
             // get rid of platform is there is one
-            if (plugin.config.getBoolean("platform")) {
+            if (plugin.getConfig().getBoolean("platform")) {
                 String queryPlatform = "SELECT platform FROM tardis WHERE tardis_id = " + id;
                 ResultSet prs = statement.executeQuery(queryPlatform);
                 if (prs.next()) {
@@ -155,7 +155,7 @@ public class TARDISDestroyer {
                                 py = Integer.valueOf(p_data[2]);
                                 pz = Integer.valueOf(p_data[3]);
                             } catch (NumberFormatException nfe) {
-                                plugin.console.sendMessage(Constants.MY_PLUGIN_NAME + "Could not convert to number!");
+                                plugin.console.sendMessage(plugin.pluginName + "Could not convert to number!");
                             }
                             Block pb = pw.getBlockAt(px, py, pz);
                             pb.setType(mat);
@@ -193,7 +193,7 @@ public class TARDISDestroyer {
                 statement.executeUpdate(queryRemoveBlocks);
             }
         } catch (SQLException e) {
-            plugin.console.sendMessage(Constants.MY_PLUGIN_NAME + " Save Replaced Block Error: " + e);
+            plugin.console.sendMessage(plugin.pluginName + " Save Replaced Block Error: " + e);
         } finally {
             try {
                 rs.close();
@@ -206,7 +206,7 @@ public class TARDISDestroyer {
         }
     }
 
-    public void destroySign(Location l, Constants.COMPASS d) {
+    public void destroySign(Location l, TARDISConstants.COMPASS d) {
         World w = l.getWorld();
         int signx = 0, signz = 0;
         switch (d) {

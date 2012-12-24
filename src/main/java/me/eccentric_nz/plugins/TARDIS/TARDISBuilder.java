@@ -33,7 +33,7 @@ public class TARDISBuilder {
         this.plugin = plugin;
     }
 
-    public void buildOuterTARDIS(int id, Location l, Constants.COMPASS d, boolean c, Player p, boolean rebuild) {
+    public void buildOuterTARDIS(int id, Location l, TARDISConstants.COMPASS d, boolean c, Player p, boolean rebuild) {
         int plusx, minusx, x, plusz, minusz, z, wall_block = 35;
         byte sd = 0, norm = 0, grey = 8, blue = 11, chameleonData = 11;
         if (c) {
@@ -46,15 +46,15 @@ public class TARDISBuilder {
             }
             int chameleonType = chameleonBlock.getTypeId();
             // determine wall_block
-            if (Constants.CHAMELEON_BLOCKS_VALID.contains((Integer) chameleonType)) {
+            if (TARDISConstants.CHAMELEON_BLOCKS_VALID.contains((Integer) chameleonType)) {
                 wall_block = chameleonType;
                 chameleonData = chameleonBlock.getData();
             }
-            if (Constants.CHAMELEON_BLOCKS_BAD.contains((Integer) chameleonType)) {
-                p.sendMessage(Constants.MY_PLUGIN_NAME + " Bummer, the TARDIS could not engage the Chameleon Circuit!");
+            if (TARDISConstants.CHAMELEON_BLOCKS_BAD.contains((Integer) chameleonType)) {
+                p.sendMessage(plugin.pluginName + " Bummer, the TARDIS could not engage the Chameleon Circuit!");
             }
-            if (Constants.CHAMELEON_BLOCKS_CHANGE.contains((Integer) chameleonType)) {
-                wall_block = Constants.swapId(chameleonType);
+            if (TARDISConstants.CHAMELEON_BLOCKS_CHANGE.contains((Integer) chameleonType)) {
+                wall_block = TARDISConstants.swapId(chameleonType);
                 switch (chameleonType) {
                     case 22:
                         chameleonData = 11;
@@ -86,19 +86,19 @@ public class TARDISBuilder {
                 }
             }
 
-            if (Constants.CHAMELEON_BLOCKS_NEXT.contains((Integer) chameleonType)) {
+            if (TARDISConstants.CHAMELEON_BLOCKS_NEXT.contains((Integer) chameleonType)) {
                 List<BlockFace> surrounding = Arrays.asList(new BlockFace[]{BlockFace.EAST, BlockFace.SOUTH, BlockFace.WEST, BlockFace.NORTH, BlockFace.NORTH_EAST, BlockFace.NORTH_WEST, BlockFace.SOUTH_EAST, BlockFace.SOUTH_WEST});
                 // try the surrounding blocks
                 for (BlockFace bf : surrounding) {
                     Block surroundblock = chameleonBlock.getRelative(bf);
                     int eid = surroundblock.getTypeId();
-                    if (Constants.CHAMELEON_BLOCKS_VALID.contains((Integer) eid)) {
+                    if (TARDISConstants.CHAMELEON_BLOCKS_VALID.contains((Integer) eid)) {
                         wall_block = eid;
                         chameleonData = surroundblock.getData();
                         break;
                     }
-                    if (Constants.CHAMELEON_BLOCKS_CHANGE.contains((Integer) eid)) {
-                        wall_block = Constants.swapId(eid);
+                    if (TARDISConstants.CHAMELEON_BLOCKS_CHANGE.contains((Integer) eid)) {
+                        wall_block = TARDISConstants.swapId(eid);
                         switch (eid) {
                             case 134:
                                 chameleonData = 1;
@@ -251,7 +251,7 @@ public class TARDISBuilder {
             // set sign
             plugin.utils.setBlock(world, signx, y, signz, 68, sd);
             Sign s = (Sign) world.getBlockAt(signx, y, signz).getState();
-            if (plugin.config.getBoolean("name_tardis")) {
+            if (plugin.getConfig().getBoolean("name_tardis")) {
                 String queryGetOwner = "SELECT owner FROM tardis WHERE tardis_id = '" + id + "'";
                 ResultSet rsOwner = statement.executeQuery(queryGetOwner);
                 String owner = rsOwner.getString("owner");
@@ -284,7 +284,7 @@ public class TARDISBuilder {
             plugin.utils.setBlockAndRemember(world, minusx, minusy, z, east, mde, id, rebuild);
             plugin.utils.setBlockAndRemember(world, x, minusy, minusz, south, mds, id, rebuild);
             // add platform if configured and necessary
-            if (plugin.config.getBoolean("platform")) {
+            if (plugin.getConfig().getBoolean("platform")) {
                 // check if user has platform pref
                 String queryGetPlatform = "SELECT platform_on FROM player_prefs WHERE player = '" + p.getName() + "'";
                 ResultSet rsPlatform = statement.executeQuery(queryGetPlatform);
@@ -331,11 +331,11 @@ public class TARDISBuilder {
             }
             statement.close();
         } catch (SQLException e) {
-            plugin.console.sendMessage(Constants.MY_PLUGIN_NAME + " Door Insert Error: " + e);
+            plugin.console.sendMessage(plugin.pluginName + " Door Insert Error: " + e);
         }
     }
 
-    public void buildInnerTARDIS(Constants.SCHEMATIC schm, World world, Constants.COMPASS d, int dbID, Player p, int middle_id, byte middle_data) {
+    public void buildInnerTARDIS(TARDISConstants.SCHEMATIC schm, World world, TARDISConstants.COMPASS d, int dbID, Player p, int middle_id, byte middle_data) {
         String[][][] s;
         short h, w, l;
         switch (schm) {
@@ -388,7 +388,7 @@ public class TARDISBuilder {
                     if (!chunkList.contains(thisChunk)) {
                         chunkList.add(thisChunk);
                     }
-                    if (plugin.config.getBoolean("bonus_chest")) {
+                    if (plugin.getConfig().getBoolean("bonus_chest")) {
                         // get block at location
                         int replacedMaterialId = replaceLoc.getBlock().getTypeId();
                         if (replacedMaterialId != 8 && replacedMaterialId != 9 && replacedMaterialId != 10 && replacedMaterialId != 11) {
@@ -413,7 +413,7 @@ public class TARDISBuilder {
                 statement.executeUpdate("INSERT INTO chunks (tardis_id,world,x,z) VALUES (" + dbID + ", '" + world.getName() + "'," + chunkx + "," + chunkz + ")");
             }
         } catch (SQLException e) {
-            plugin.console.sendMessage(Constants.MY_PLUGIN_NAME + " Could not insert reserved chunks into DB!");
+            plugin.console.sendMessage(plugin.pluginName + " Could not insert reserved chunks into DB!");
         }
         // reset start positions and do over
         startx = resetx;
@@ -495,7 +495,7 @@ public class TARDISBuilder {
                 starty += 1;
             }
         } catch (SQLException e) {
-            plugin.console.sendMessage(Constants.MY_PLUGIN_NAME + " Save Block Locations Error: " + e);
+            plugin.console.sendMessage(plugin.pluginName + " Save Block Locations Error: " + e);
         }
         // put on the door and the redstone torches
         for (Map.Entry<Block, Byte> entry : postDoorBlocks.entrySet()) {
@@ -518,7 +518,7 @@ public class TARDISBuilder {
             cs.setLine(3, ChatColor.RED + "OFF");
             cs.update();
         }
-        if (plugin.config.getBoolean("bonus_chest")) {
+        if (plugin.getConfig().getBoolean("bonus_chest")) {
             // get rid of last ":" and assign ids to an array
             String rb = sb.toString();
             replacedBlocks = rb.substring(0, rb.length() - 1);
@@ -571,16 +571,16 @@ public class TARDISBuilder {
                         damage = 0; // reset damage
                     }
                 } else {
-                    System.err.append(Constants.MY_PLUGIN_NAME + " Could not find chest location in DB!");
+                    System.err.append(plugin.pluginName + " Could not find chest location in DB!");
                 }
                 chestRS.close();
                 statement.close();
             } catch (SQLException e) {
-                plugin.console.sendMessage(Constants.MY_PLUGIN_NAME + " Could not get chest location from DB!" + e);
+                plugin.console.sendMessage(plugin.pluginName + " Could not get chest location from DB!" + e);
             }
         }
         TARDISWorldGuardChecker wgchk;
-        if (plugin.worldGuardOnServer && plugin.config.getBoolean("use_worldguard")) {
+        if (plugin.worldGuardOnServer && plugin.getConfig().getBoolean("use_worldguard")) {
             plugin.wgchk.addWGProtection(p, wg1, wg2);
         }
     }
