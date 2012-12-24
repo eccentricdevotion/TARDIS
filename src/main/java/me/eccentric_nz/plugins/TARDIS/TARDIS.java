@@ -4,14 +4,11 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Set;
 import java.util.logging.Level;
+import javax.persistence.PersistenceException;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
-import org.bukkit.World;
 import org.bukkit.command.ConsoleCommandSender;
-import org.bukkit.configuration.file.FileConfiguration;
-import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -19,9 +16,9 @@ import org.bukkit.plugin.java.JavaPlugin;
 public class TARDIS extends JavaPlugin {
 
     public ImprovedOfflinePlayer_api iopHandler;
-    TARDISDatabase service = TARDISDatabase.getInstance();
+//    TARDISDatabase service = TARDISDatabase.getInstance();
     public PluginDescriptionFile pdfFile;
-    public FileConfiguration config = null;
+//    public FileConfiguration config = null;
     public File schematicfile = null;
     public File budgetschematicfile = null;
     public File biggerschematicfile = null;
@@ -43,6 +40,7 @@ public class TARDIS extends JavaPlugin {
     public short[] biggerdimensions = new short[3];
     public short[] deluxedimensions = new short[3];
     protected static TARDIS plugin;
+    public String MY_PLUGIN_NAME;
     TARDISUtils utils = new TARDISUtils(this);
     TARDISBuilder builder = new TARDISBuilder(this);
     TARDISDestroyer destroyer = new TARDISDestroyer(this);
@@ -52,9 +50,9 @@ public class TARDIS extends JavaPlugin {
     TARDISBlockBreakListener tardisBlockBreakListener = new TARDISBlockBreakListener(this);
     TARDISPlayerListener tardisPlayerListener = new TARDISPlayerListener(this);
     TARDISBlockProtectListener tardisProtectListener = new TARDISBlockProtectListener(this);
-    TARDISBlockDamageListener tardisDamageListener = new TARDISBlockDamageListener();
+    TARDISBlockDamageListener tardisDamageListener = new TARDISBlockDamageListener(this);
     TARDISExplosionListener tardisExplosionListener = new TARDISExplosionListener(this);
-    TARDISWitherDragonListener tardisWDBlocker = new TARDISWitherDragonListener();
+    TARDISWitherDragonListener tardisWDBlocker = new TARDISWitherDragonListener(this);
     PluginManager pm = Bukkit.getServer().getPluginManager();
     public HashMap<String, String> trackPlayers = new HashMap<String, String>();
     public HashMap<String, String> trackName = new HashMap<String, String>();
@@ -71,7 +69,44 @@ public class TARDIS extends JavaPlugin {
 
     @Override
     public void onEnable() {
+        loadNMSClasses();
+        saveDefaultConfig();
+
+        plugin = this;
         console = getServer().getConsoleSender();
+        pdfFile = getDescription();
+        MY_PLUGIN_NAME = ChatColor.GRAY + "[" + pdfFile.getName() + "]" + ChatColor.RESET;
+
+        setupDatabase();
+        registerEvents();
+        loadFiles();
+        loadCommands();
+        TARDISConfiguration tc = new TARDISConfiguration(this);
+        tc.checkConfig();
+        loadMetrics();
+
+        Constants.TARDIS_KEY = getConfig().getString("key");
+
+        if (plugin.getServer().getPluginManager().getPlugin("Spout") != null && getConfig().getBoolean("sfx")) {
+            this.getServer().getScheduler().scheduleSyncRepeatingTask(this, new Runnable() {
+                @Override
+                public void run() {
+                    TARDISSounds.randomTARDISSound();
+                }
+            }, 60L, 1200L);
+        }
+        if (getServer().getPluginManager().getPlugin("WorldGuard") != null) {
+            worldGuardOnServer = true;
+            wgchk = new TARDISWorldGuardChecker(this);
+        }
+    }
+
+    @Override
+    public void onDisable() {
+        saveConfig();
+    }
+
+    private void loadNMSClasses() {
         String packageName = this.getServer().getClass().getPackage().getName();
         // Get full package string of CraftServer.
         // org.bukkit.craftbukkit.versionstring (or for pre-refactor, just org.bukkit.craftbukkit
@@ -93,10 +128,18 @@ public class TARDIS extends JavaPlugin {
             return;
         }
         this.getLogger().log(Level.INFO, "Loading support for CB {0}", version);
+    }
 
-        pdfFile = getDescription();
-        Constants.MY_PLUGIN_NAME = ChatColor.GRAY + "[" + pdfFile.getName() + "]" + ChatColor.RESET;
-        plugin = this;
+    private void setupDatabase() {
+        try {
+            getDatabase().find(eBeanTardis.class).findRowCount();
+        } catch (PersistenceException ex) {
+            System.out.println("Installing database for " + getDescription().getName() + " due to first time usage");
+            installDDL();
+        }
+    }
+
+    private void registerEvents() {
         pm.registerEvents(tardisBlockPlaceListener, this);
         pm.registerEvents(tardisBlockBreakListener, this);
         pm.registerEvents(tardisPlayerListener, this);
@@ -104,79 +147,12 @@ public class TARDIS extends JavaPlugin {
         pm.registerEvents(tardisDamageListener, this);
         pm.registerEvents(tardisExplosionListener, this);
         pm.registerEvents(tardisWDBlocker, this);
+    }
 
-        if (!getDataFolder().exists()) {
-            if (!getDataFolder().mkdir()) {
-                console.sendMessage(Constants.MY_PLUGIN_NAME + " could not create directory!");
-                console.sendMessage(Constants.MY_PLUGIN_NAME + " requires you to manually make the TARDIS/ directory!");
-            }
-            getDataFolder().setWritable(true);
-            getDataFolder().setExecutable(true);
-        }
-
-        try {
-            String path = getDataFolder() + File.separator + "TARDIS.db";
-            service.setConnection(path);
-            service.createTables();
-        } catch (Exception e) {
-            console.sendMessage(Constants.MY_PLUGIN_NAME + " Connection and Tables Error: " + e);
-        }
-
-        TARDISSchematicReader reader = new TARDISSchematicReader(plugin);
-        String budnstr = getDataFolder() + File.separator + Constants.SCHEMATIC_BUDGET;
-        budgetschematicfile = new File(budnstr);
-        if (!budgetschematicfile.exists()) {
-            copy(getResource(Constants.SCHEMATIC_BUDGET), budgetschematicfile);
-        }
-        String bignstr = getDataFolder() + File.separator + Constants.SCHEMATIC_BIGGER;
-        biggerschematicfile = new File(bignstr);
-        if (!biggerschematicfile.exists()) {
-            copy(getResource(Constants.SCHEMATIC_BIGGER), biggerschematicfile);
-        }
-        String delnstr = getDataFolder() + File.separator + Constants.SCHEMATIC_DELUXE;
-        deluxeschematicfile = new File(delnstr);
-        if (!deluxeschematicfile.exists()) {
-            copy(getResource(Constants.SCHEMATIC_DELUXE), deluxeschematicfile);
-        }
-        reader.main(budnstr, Constants.SCHEMATIC.BUDGET);
-        reader.main(bignstr, Constants.SCHEMATIC.BIGGER);
-        reader.main(delnstr, Constants.SCHEMATIC.DELUXE);
-
-        if (config == null) {
-            loadConfig();
-        }
-        Constants.TARDIS_KEY = config.getString("key");
-        if (!config.contains("the_end")) {
-            config.set("the_end", false);
-        }
-        if (!config.contains("nether")) {
-            config.set("nether", false);
-        }
-        if (!config.contains("debug")) {
-            config.set("debug", false);
-        }
-        if (!config.contains("use_worldguard")) {
-            config.set("use_worldguard", true);
-        }
-        if (!config.contains("respect_worldguard")) {
-            config.set("respect_worldguard", true);
-        }
-        if (!config.contains("land_on_water")) {
-            config.set("land_on_water", false);
-        }
-        if (!config.contains("timeout")) {
-            config.set("timeout", 5);
-        }
-        if (!config.contains("timeout_height")) {
-            config.set("timeout_height", 135);
-        }
-        if (!config.contains("name_tardis")) {
-            config.set("name_tardis", false);
-        }
-
+    private void loadCommands() {
         tardisCommand = new TARDISCommands(this);
         tardisAdminCommand = new TARDISAdminCommands(this);
-        tardisPrefsCommand = new TARDISPrefsCommands();
+        tardisPrefsCommand = new TARDISPrefsCommands(this);
         tardisTravelCommand = new TARDISTravelCommands(this);
         tardisAreaCommand = new TARDISAreaCommands(this);
         getCommand("tardis").setExecutor(tardisCommand);
@@ -184,82 +160,66 @@ public class TARDIS extends JavaPlugin {
         getCommand("tardisprefs").setExecutor(tardisPrefsCommand);
         getCommand("tardistravel").setExecutor(tardisTravelCommand);
         getCommand("tardisarea").setExecutor(tardisAreaCommand);
+    }
 
+    public void loadFiles() {
+        try {
+            budgetschematiccsv = createFile(Constants.SCHEMATIC_BUDGET + ".csv");
+            biggerschematiccsv = createFile(Constants.SCHEMATIC_BIGGER + ".csv");
+            deluxeschematiccsv = createFile(Constants.SCHEMATIC_DELUXE + ".csv");
+            String budnstr = getDataFolder() + File.separator + Constants.SCHEMATIC_BUDGET;
+            budgetschematicfile = new File(budnstr);
+            if (!budgetschematicfile.exists()) {
+                copy(getResource(Constants.SCHEMATIC_BUDGET), budgetschematicfile);
+            }
+            String bignstr = getDataFolder() + File.separator + Constants.SCHEMATIC_BIGGER;
+            biggerschematicfile = new File(bignstr);
+            if (!biggerschematicfile.exists()) {
+                copy(getResource(Constants.SCHEMATIC_BIGGER), biggerschematicfile);
+            }
+            String delnstr = getDataFolder() + File.separator + Constants.SCHEMATIC_DELUXE;
+            deluxeschematicfile = new File(delnstr);
+            if (!deluxeschematicfile.exists()) {
+                copy(getResource(Constants.SCHEMATIC_DELUXE), deluxeschematicfile);
+            }
+            budgetschematic = Schematic.schematic(budgetschematiccsv, budgetdimensions[0], budgetdimensions[1], budgetdimensions[2]);
+            biggerschematic = Schematic.schematic(biggerschematiccsv, biggerdimensions[0], biggerdimensions[1], biggerdimensions[2]);
+            deluxeschematic = Schematic.schematic(deluxeschematiccsv, deluxedimensions[0], deluxedimensions[1], deluxedimensions[2]);
+            TARDISSchematicReader reader = new TARDISSchematicReader(plugin);
+            reader.main(budnstr, Constants.SCHEMATIC.BUDGET);
+            reader.main(bignstr, Constants.SCHEMATIC.BIGGER);
+            reader.main(delnstr, Constants.SCHEMATIC.DELUXE);
+
+            quotesfile = new File(getDataFolder(), Constants.QUOTES_FILE_NAME);
+            if (!quotesfile.exists()) {
+                copy(getResource(Constants.QUOTES_FILE_NAME), quotesfile);
+            }
+            quote = quotes();
+            quotelen = quote.size();
+        } catch (Exception e) {
+            console.sendMessage(MY_PLUGIN_NAME + " failed to retrieve files from directory. Using defaults.");
+        }
+    }
+
+    private void loadMetrics() {
         try {
             MetricsLite metrics = new MetricsLite(this);
             metrics.start();
         } catch (IOException e) {
             // Failed to submit the stats :-(
         }
-        quote = quotes();
-        quotelen = quote.size();
-
-        if (plugin.getServer().getPluginManager().getPlugin("Spout") != null && config.getBoolean("sfx")) {
-            this.getServer().getScheduler().scheduleSyncRepeatingTask(this, new Runnable() {
-                @Override
-                public void run() {
-                    TARDISSounds.randomTARDISSound();
-                }
-            }, 60L, 1200L);
-        }
-        if (getServer().getPluginManager().getPlugin("WorldGuard") != null) {
-            worldGuardOnServer = true;
-            wgchk = new TARDISWorldGuardChecker(this);
-        }
     }
 
-    @Override
-    public void onDisable() {
-        saveCustomConfig();
-        try {
-            service.connection.close();
-        } catch (Exception e) {
-            console.sendMessage(Constants.MY_PLUGIN_NAME + " Could not close database connection: " + e);
-        }
-    }
-
-    public FileConfiguration loadConfig() {
-        try {
-            budgetschematiccsv = new File(getDataFolder(), Constants.SCHEMATIC_BUDGET + ".csv");
-            biggerschematiccsv = new File(getDataFolder(), Constants.SCHEMATIC_BIGGER + ".csv");
-            deluxeschematiccsv = new File(getDataFolder(), Constants.SCHEMATIC_DELUXE + ".csv");
-            budgetschematic = Schematic.schematic(budgetschematiccsv, budgetdimensions[0], budgetdimensions[1], budgetdimensions[2]);
-            biggerschematic = Schematic.schematic(biggerschematiccsv, biggerdimensions[0], biggerdimensions[1], biggerdimensions[2]);
-            deluxeschematic = Schematic.schematic(deluxeschematiccsv, deluxedimensions[0], deluxedimensions[1], deluxedimensions[2]);
-
-            myconfigfile = new File(getDataFolder(), Constants.CONFIG_FILE_NAME);
-            if (!myconfigfile.exists()) {
-                // load the default values into file
-                copy(getResource(Constants.CONFIG_FILE_NAME), myconfigfile);
-            }
-            quotesfile = new File(getDataFolder(), Constants.QUOTES_FILE_NAME);
-            if (!quotesfile.exists()) {
-                copy(getResource(Constants.QUOTES_FILE_NAME), quotesfile);
-            }
-        } catch (Exception e) {
-            console.sendMessage(Constants.MY_PLUGIN_NAME + " failed to retrieve files from directory. Using defaults.");
-        }
-        config = YamlConfiguration.loadConfiguration(myconfigfile);
-
-        // add worlds
-        List<World> worlds = this.getServer().getWorlds();
-        for (World w : worlds) {
-            String worldname = "worlds." + w.getName();
-            if (!config.contains(worldname)) {
-                config.set(worldname, true);
-                console.sendMessage(Constants.MY_PLUGIN_NAME + " Added '" + w.getName() + "' to config. To exclude this world run: /tardis admin exclude " + w.getName());
+    public File createFile(String filename) {
+        File file = new File(getDataFolder(), filename);
+        if (!file.exists()) {
+            try {
+                file.createNewFile();
+            } catch (IOException io) {
+                console.sendMessage(MY_PLUGIN_NAME + "Error creating file! " + io.getMessage());
             }
         }
-        // now remove worlds that may have been deleted
-        Set<String> cWorlds = config.getConfigurationSection("worlds").getKeys(true);
-        for (String cw : cWorlds) {
-            if (getServer().getWorld(cw) == null) {
-                config.set("worlds." + cw, null);
-                console.sendMessage(Constants.MY_PLUGIN_NAME + " Removed '" + cw + " from config.yml");
-            }
-        }
-        saveCustomConfig();
-        return config;
+        return file;
     }
 
     private void copy(InputStream in, File file) {
@@ -273,7 +233,7 @@ public class TARDIS extends JavaPlugin {
                     out.write(buf, 0, len);
                 }
             } catch (IOException io) {
-                console.sendMessage(Constants.MY_PLUGIN_NAME + " could not save the config file.");
+                console.sendMessage(MY_PLUGIN_NAME + " could not save the defaults to file.");
             } finally {
                 if (out != null) {
                     try {
@@ -283,7 +243,7 @@ public class TARDIS extends JavaPlugin {
                 }
             }
         } catch (FileNotFoundException e) {
-            console.sendMessage(Constants.MY_PLUGIN_NAME + " File not found.");
+            console.sendMessage(MY_PLUGIN_NAME + " File not found.");
         } finally {
             if (in != null) {
                 try {
@@ -291,17 +251,6 @@ public class TARDIS extends JavaPlugin {
                 } catch (Exception e) {
                 }
             }
-        }
-    }
-
-    public void saveCustomConfig() {
-        if (config == null || myconfigfile == null) {
-            return;
-        }
-        try {
-            config.save(myconfigfile);
-        } catch (IOException ex) {
-            console.sendMessage(Constants.MY_PLUGIN_NAME + "Could not save config to " + myconfigfile);
         }
     }
 
@@ -320,7 +269,7 @@ public class TARDIS extends JavaPlugin {
                     quotes.add("");
                 }
             } catch (IOException io) {
-                console.sendMessage(Constants.MY_PLUGIN_NAME + " Could not read quotes file");
+                console.sendMessage(MY_PLUGIN_NAME + " Could not read quotes file");
             } finally {
                 if (bufRdr != null) {
                     try {
@@ -334,8 +283,15 @@ public class TARDIS extends JavaPlugin {
     }
 
     public void debug(Object o) {
-        if (config.getBoolean("debug") == true) {
-            console.sendMessage(Constants.MY_PLUGIN_NAME + " " + o);
+        if (getConfig().getBoolean("debug") == true) {
+            console.sendMessage(MY_PLUGIN_NAME + " " + o);
         }
+    }
+
+    @Override
+    public List<Class<?>> getDatabaseClasses() {
+        List<Class<?>> list = new ArrayList<Class<?>>();
+        list.add(eBeanTardis.class);
+        return list;
     }
 }
