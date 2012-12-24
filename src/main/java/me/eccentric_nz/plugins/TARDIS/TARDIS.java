@@ -66,14 +66,15 @@ public class TARDIS extends JavaPlugin {
 
     @Override
     public void onEnable() {
-        loadClasses();
-        saveDefaultConfig();
-
-        plugin = this;
-        console = getServer().getConsoleSender();
         pdfFile = getDescription();
         pluginName = ChatColor.GOLD + "[" + pdfFile.getName() + "]" + ChatColor.RESET;
+        plugin = this;
+        console = getServer().getConsoleSender();
 
+        loadClasses();
+        saveDefaultConfig();
+        TARDISConfiguration tc = new TARDISConfiguration(this);
+        tc.checkConfig();
         loadDatabase();
         loadFiles();
         registerListeners();
@@ -90,11 +91,7 @@ public class TARDIS extends JavaPlugin {
     @Override
     public void onDisable() {
         saveConfig();
-        try {
-            service.connection.close();
-        } catch (Exception e) {
-            console.sendMessage(pluginName + " Could not close database connection: " + e);
-        }
+        closeDatabase();
     }
 
     private void loadClasses() {
@@ -118,7 +115,7 @@ public class TARDIS extends JavaPlugin {
             this.setEnabled(false);
             return;
         }
-        this.getLogger().log(Level.INFO, "Loading support for CB {0}", version);
+        console.sendMessage(pluginName + "Loading support for CB " + version);
     }
 
     private void loadDatabase() {
@@ -128,6 +125,14 @@ public class TARDIS extends JavaPlugin {
             service.createTables();
         } catch (Exception e) {
             console.sendMessage(pluginName + " Connection and Tables Error: " + e);
+        }
+    }
+
+    private void closeDatabase() {
+        try {
+            service.connection.close();
+        } catch (Exception e) {
+            console.sendMessage(pluginName + " Could not close database connection: " + e);
         }
     }
 
@@ -154,25 +159,14 @@ public class TARDIS extends JavaPlugin {
         getCommand("tardisarea").setExecutor(tardisAreaCommand);
     }
 
-    public void loadFiles() {
+    private void loadFiles() {
         try {
+            // load csv files - create them if they don't exist
             budgetschematiccsv = createFile(TARDISConstants.SCHEMATIC_BUDGET + ".csv");
             biggerschematiccsv = createFile(TARDISConstants.SCHEMATIC_BIGGER + ".csv");
             deluxeschematiccsv = createFile(TARDISConstants.SCHEMATIC_DELUXE + ".csv");
-            budgetschematic = TARDISSchematic.schematic(budgetschematiccsv, budgetdimensions[0], budgetdimensions[1], budgetdimensions[2]);
-            biggerschematic = TARDISSchematic.schematic(biggerschematiccsv, biggerdimensions[0], biggerdimensions[1], biggerdimensions[2]);
-            deluxeschematic = TARDISSchematic.schematic(deluxeschematiccsv, deluxedimensions[0], deluxedimensions[1], deluxedimensions[2]);
-
-            myconfigfile = new File(getDataFolder(), TARDISConstants.CONFIG_FILE_NAME);
-            if (!myconfigfile.exists()) {
-                // load the default values into file
-                copy(getResource(TARDISConstants.CONFIG_FILE_NAME), myconfigfile);
-            }
-            quotesfile = new File(getDataFolder(), TARDISConstants.QUOTES_FILE_NAME);
-            if (!quotesfile.exists()) {
-                copy(getResource(TARDISConstants.QUOTES_FILE_NAME), quotesfile);
-            }
             TARDISSchematicReader reader = new TARDISSchematicReader(plugin);
+            // load schematic files - copy the defaults if they don't exist
             String budnstr = getDataFolder() + File.separator + TARDISConstants.SCHEMATIC_BUDGET;
             budgetschematicfile = new File(budnstr);
             if (!budgetschematicfile.exists()) {
@@ -188,9 +182,19 @@ public class TARDIS extends JavaPlugin {
             if (!deluxeschematicfile.exists()) {
                 copy(getResource(TARDISConstants.SCHEMATIC_DELUXE), deluxeschematicfile);
             }
+            // read the schematics
             reader.main(budnstr, TARDISConstants.SCHEMATIC.BUDGET);
             reader.main(bignstr, TARDISConstants.SCHEMATIC.BIGGER);
             reader.main(delnstr, TARDISConstants.SCHEMATIC.DELUXE);
+            // load the schematic data into the csv files
+            budgetschematic = TARDISSchematic.schematic(budgetschematiccsv, budgetdimensions[0], budgetdimensions[1], budgetdimensions[2]);
+            biggerschematic = TARDISSchematic.schematic(biggerschematiccsv, biggerdimensions[0], biggerdimensions[1], biggerdimensions[2]);
+            deluxeschematic = TARDISSchematic.schematic(deluxeschematiccsv, deluxedimensions[0], deluxedimensions[1], deluxedimensions[2]);
+
+            quotesfile = new File(getDataFolder(), TARDISConstants.QUOTES_FILE_NAME);
+            if (!quotesfile.exists()) {
+                copy(getResource(TARDISConstants.QUOTES_FILE_NAME), quotesfile);
+            }
         } catch (Exception e) {
             console.sendMessage(pluginName + " failed to retrieve files from directory. Using defaults.");
         }
