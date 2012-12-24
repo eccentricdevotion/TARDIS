@@ -21,7 +21,7 @@ public class TARDISConfiguration {
 
     public TARDISConfiguration(TARDIS plugin) {
         this.plugin = plugin;
-        this.configFile = new File(plugin.getDataFolder(), Constants.CONFIG_FILE_NAME);
+        this.configFile = new File(plugin.getDataFolder(), TARDISConstants.CONFIG_FILE_NAME);
         this.config = YamlConfiguration.loadConfiguration(configFile);
         // boolean
         boolOptions.put("debug", false);
