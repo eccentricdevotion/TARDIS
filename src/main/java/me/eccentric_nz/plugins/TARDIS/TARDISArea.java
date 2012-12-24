@@ -43,7 +43,7 @@ public class TARDISArea {
                 }
             }
         } catch (SQLException e) {
-            plugin.console.sendMessage(Constants.MY_PLUGIN_NAME + " Area block check error: " + e);
+            plugin.console.sendMessage(plugin.pluginName + " Area block check error: " + e);
         } finally {
             try {
                 rsArea.close();
@@ -81,7 +81,7 @@ public class TARDISArea {
             rsArea.close();
             statement.close();
         } catch (SQLException e) {
-            plugin.console.sendMessage(Constants.MY_PLUGIN_NAME + " Area block check error: " + e);
+            plugin.console.sendMessage(plugin.pluginName + " Area block check error: " + e);
         } finally {
             try {
                 rsArea.close();
@@ -128,7 +128,7 @@ public class TARDISArea {
             rsArea.close();
             statement.close();
         } catch (SQLException e) {
-            plugin.console.sendMessage(Constants.MY_PLUGIN_NAME + " Area player check error: " + e);
+            plugin.console.sendMessage(plugin.pluginName + " Area player check error: " + e);
         } finally {
             try {
                 rsArea.close();
@@ -190,7 +190,7 @@ public class TARDISArea {
                 }
             }
         } catch (SQLException e) {
-            plugin.console.sendMessage(Constants.MY_PLUGIN_NAME + " Area parking error: " + e);
+            plugin.console.sendMessage(plugin.pluginName + " Area parking error: " + e);
         } finally {
             try {
                 rsArea.close();

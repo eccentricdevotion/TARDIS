@@ -57,12 +57,12 @@ public class TARDISExplosionListener implements Listener {
                     if (id != idchk) {
                         String doorLoc[] = rsBlocks.getString("door_location").split(":");
                         String dir = rsBlocks.getString("door_direction");
-                        Constants.COMPASS d;
+                        TARDISConstants.COMPASS d;
                         try {
-                            d = Constants.COMPASS.valueOf(dir);
+                            d = TARDISConstants.COMPASS.valueOf(dir);
                         } catch (NullPointerException npe) {
                             plugin.debug("Could not get COMPASS value from door_direction: " + dir);
-                            d = Constants.COMPASS.EAST;
+                            d = TARDISConstants.COMPASS.EAST;
                         }
                         int dx = plugin.utils.parseNum(doorLoc[1]);
                         int dy = plugin.utils.parseNum(doorLoc[2]);
@@ -103,7 +103,7 @@ public class TARDISExplosionListener implements Listener {
                 }
             }
         } catch (SQLException err) {
-            plugin.console.sendMessage(Constants.MY_PLUGIN_NAME + " Explosion Listener error: " + err);
+            plugin.console.sendMessage(plugin.pluginName + " Explosion Listener error: " + err);
         } finally {
             try {
                 rsBlocks.close();

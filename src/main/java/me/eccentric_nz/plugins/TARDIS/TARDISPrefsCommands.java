@@ -12,7 +12,12 @@ import org.bukkit.entity.Player;
 
 public class TARDISPrefsCommands implements CommandExecutor {
 
+    private TARDIS plugin;
     TARDISDatabase service = TARDISDatabase.getInstance();
+
+    public TARDISPrefsCommands(TARDIS plugin) {
+        this.plugin = plugin;
+    }
 
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
@@ -27,13 +32,13 @@ public class TARDISPrefsCommands implements CommandExecutor {
                 return false;
             }
             if (player == null) {
-                sender.sendMessage(Constants.MY_PLUGIN_NAME + ChatColor.RED + " This command can only be run by a player");
+                sender.sendMessage(plugin.pluginName + ChatColor.RED + " This command can only be run by a player");
                 return false;
             }
             if (args[0].equalsIgnoreCase("sfx")) {
                 if (player.hasPermission("tardis.timetravel")) {
                     if (args.length < 2 || (!args[1].equalsIgnoreCase("on") && !args[1].equalsIgnoreCase("off"))) {
-                        sender.sendMessage(Constants.MY_PLUGIN_NAME + " You need to specify if sound effects should be on or off!");
+                        sender.sendMessage(plugin.pluginName + " You need to specify if sound effects should be on or off!");
                         return false;
                     }
                     // get the players sfx setting
@@ -51,16 +56,16 @@ public class TARDISPrefsCommands implements CommandExecutor {
                         if (args[1].equalsIgnoreCase("on")) {
                             String queryUpdate = "UPDATE player_prefs SET sfx_on = 1 WHERE player = '" + player.getName() + "'";
                             statement.executeUpdate(queryUpdate);
-                            sender.sendMessage(Constants.MY_PLUGIN_NAME + " Sound effects were turned ON!");
+                            sender.sendMessage(plugin.pluginName + " Sound effects were turned ON!");
                         }
                         if (args[1].equalsIgnoreCase("off")) {
                             String queryUpdate = "UPDATE player_prefs SET sfx_on = 0 WHERE player = '" + player.getName() + "'";
                             statement.executeUpdate(queryUpdate);
-                            sender.sendMessage(Constants.MY_PLUGIN_NAME + " Sound effects were turned OFF.");
+                            sender.sendMessage(plugin.pluginName + " Sound effects were turned OFF.");
                         }
                         return true;
                     } catch (SQLException e) {
-                        TARDIS.plugin.console.sendMessage(Constants.MY_PLUGIN_NAME + " SFX Preferences Save Error: " + e);
+                        TARDIS.plugin.console.sendMessage(plugin.pluginName + " SFX Preferences Save Error: " + e);
                     } finally {
                         if (rs != null) {
                             try {
@@ -74,14 +79,14 @@ public class TARDISPrefsCommands implements CommandExecutor {
                         }
                     }
                 } else {
-                    sender.sendMessage(Constants.MY_PLUGIN_NAME + Constants.NO_PERMS_MESSAGE);
+                    sender.sendMessage(plugin.pluginName + TARDISConstants.NO_PERMS_MESSAGE);
                     return false;
                 }
             }
             if (args[0].equalsIgnoreCase("platform")) {
                 if (player.hasPermission("tardis.timetravel")) {
                     if (args.length < 2 || (!args[1].equalsIgnoreCase("on") && !args[1].equalsIgnoreCase("off"))) {
-                        sender.sendMessage(Constants.MY_PLUGIN_NAME + " You need to specify if sound effects should be on or off!");
+                        sender.sendMessage(plugin.pluginName + " You need to specify if sound effects should be on or off!");
                         return false;
                     }
                     // get the players platform setting
@@ -99,16 +104,16 @@ public class TARDISPrefsCommands implements CommandExecutor {
                         if (args[1].equalsIgnoreCase("on")) {
                             String queryUpdate = "UPDATE player_prefs SET platform_on = 1 WHERE player = '" + player.getName() + "'";
                             statement.executeUpdate(queryUpdate);
-                            sender.sendMessage(Constants.MY_PLUGIN_NAME + " The safety platform was turned ON!");
+                            sender.sendMessage(plugin.pluginName + " The safety platform was turned ON!");
                         }
                         if (args[1].equalsIgnoreCase("off")) {
                             String queryUpdate = "UPDATE player_prefs SET platform_on = 0 WHERE player = '" + player.getName() + "'";
                             statement.executeUpdate(queryUpdate);
-                            sender.sendMessage(Constants.MY_PLUGIN_NAME + " safety platform was turned OFF.");
+                            sender.sendMessage(plugin.pluginName + " safety platform was turned OFF.");
                         }
                         return true;
                     } catch (SQLException e) {
-                        TARDIS.plugin.console.sendMessage(Constants.MY_PLUGIN_NAME + " Platform Preferences Save Error: " + e);
+                        TARDIS.plugin.console.sendMessage(plugin.pluginName + " Platform Preferences Save Error: " + e);
                     } finally {
                         if (rs != null) {
                             try {
@@ -122,14 +127,14 @@ public class TARDISPrefsCommands implements CommandExecutor {
                         }
                     }
                 } else {
-                    sender.sendMessage(Constants.MY_PLUGIN_NAME + Constants.NO_PERMS_MESSAGE);
+                    sender.sendMessage(plugin.pluginName + TARDISConstants.NO_PERMS_MESSAGE);
                     return false;
                 }
             }
             if (args[0].equalsIgnoreCase("quotes")) {
                 if (player.hasPermission("tardis.timetravel")) {
                     if (args.length < 2 || (!args[1].equalsIgnoreCase("on") && !args[1].equalsIgnoreCase("off"))) {
-                        sender.sendMessage(Constants.MY_PLUGIN_NAME + " You need to specify if Who quotes should be on or off!");
+                        sender.sendMessage(plugin.pluginName + " You need to specify if Who quotes should be on or off!");
                         return false;
                     }
                     // get the players quotes setting
@@ -147,16 +152,16 @@ public class TARDISPrefsCommands implements CommandExecutor {
                         if (args[1].equalsIgnoreCase("on")) {
                             String queryUpdate = "UPDATE player_prefs SET quotes_on = 1 WHERE player = '" + player.getName() + "'";
                             statement.executeUpdate(queryUpdate);
-                            sender.sendMessage(Constants.MY_PLUGIN_NAME + " Quotes were turned ON!");
+                            sender.sendMessage(plugin.pluginName + " Quotes were turned ON!");
                         }
                         if (args[1].equalsIgnoreCase("off")) {
                             String queryUpdate = "UPDATE player_prefs SET quotes_on = 0 WHERE player = '" + player.getName() + "'";
                             statement.executeUpdate(queryUpdate);
-                            sender.sendMessage(Constants.MY_PLUGIN_NAME + " Quotes were turned OFF.");
+                            sender.sendMessage(plugin.pluginName + " Quotes were turned OFF.");
                         }
                         return true;
                     } catch (SQLException e) {
-                        TARDIS.plugin.console.sendMessage(Constants.MY_PLUGIN_NAME + " Quotes Preferences Save Error: " + e);
+                        TARDIS.plugin.console.sendMessage(plugin.pluginName + " Quotes Preferences Save Error: " + e);
                     } finally {
                         if (rs != null) {
                             try {
@@ -170,7 +175,7 @@ public class TARDISPrefsCommands implements CommandExecutor {
                         }
                     }
                 } else {
-                    sender.sendMessage(Constants.MY_PLUGIN_NAME + Constants.NO_PERMS_MESSAGE);
+                    sender.sendMessage(plugin.pluginName + TARDISConstants.NO_PERMS_MESSAGE);
                     return false;
                 }
             }

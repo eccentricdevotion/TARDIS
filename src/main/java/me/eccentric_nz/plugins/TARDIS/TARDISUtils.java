@@ -44,7 +44,7 @@ public class TARDISUtils {
                 statement.executeUpdate(queryAddBlock);
                 statement.close();
             } catch (SQLException e) {
-                plugin.console.sendMessage(Constants.MY_PLUGIN_NAME + " Could not save block location to DB!");
+                plugin.console.sendMessage(plugin.pluginName + " Could not save block location to DB!");
             } finally {
                 try {
                     statement.close();
@@ -73,7 +73,7 @@ public class TARDISUtils {
                 statement.executeUpdate(queryReplaced);
                 statement.close();
             } catch (SQLException e) {
-                plugin.console.sendMessage(Constants.MY_PLUGIN_NAME + "Set Replaced Block Error: " + e);
+                plugin.console.sendMessage(plugin.pluginName + "Set Replaced Block Error: " + e);
             } finally {
                 try {
                     statement.close();
@@ -84,7 +84,7 @@ public class TARDISUtils {
     }
     private static int[] startLoc = new int[6];
 
-    public int[] getStartLocation(int id, Constants.COMPASS dir) {
+    public int[] getStartLocation(int id, TARDISConstants.COMPASS dir) {
         int cx, cz;
         Statement statement = null;
         ResultSet rs = null;
@@ -108,7 +108,7 @@ public class TARDISUtils {
             rs.close();
             statement.close();
         } catch (SQLException e) {
-            plugin.console.sendMessage(Constants.MY_PLUGIN_NAME + " Get Chunk Error: " + e);
+            plugin.console.sendMessage(plugin.pluginName + " Get Chunk Error: " + e);
         } finally {
             try {
                 rs.close();
@@ -122,7 +122,7 @@ public class TARDISUtils {
         return startLoc;
     }
 
-    public boolean checkChunk(String w, int x, int z, Constants.SCHEMATIC schm) {
+    public boolean checkChunk(String w, int x, int z, TARDISConstants.SCHEMATIC schm) {
         boolean chunkchk = false;
         int cw, cl;
         Statement statement = null;
@@ -155,7 +155,7 @@ public class TARDISUtils {
                     rs.close();
                     statement.close();
                 } catch (SQLException e) {
-                    plugin.console.sendMessage(Constants.MY_PLUGIN_NAME + " Get All Chunks Error: " + e);
+                    plugin.console.sendMessage(plugin.pluginName + " Get All Chunks Error: " + e);
                 } finally {
                     try {
                         rs.close();
@@ -201,7 +201,7 @@ public class TARDISUtils {
             rsCount.close();
             statement.close();
         } catch (SQLException e) {
-            plugin.console.sendMessage(Constants.MY_PLUGIN_NAME + " /TARDIS travel to location Error: " + e);
+            plugin.console.sendMessage(plugin.pluginName + " /TARDIS travel to location Error: " + e);
         } finally {
             try {
                 rsCount.close();

@@ -35,13 +35,13 @@ public class TARDISAreaCommands implements CommandExecutor {
                 return false;
             }
             if (player == null) {
-                sender.sendMessage(Constants.MY_PLUGIN_NAME + ChatColor.RED + " This command can only be run by a player");
+                sender.sendMessage(plugin.pluginName + ChatColor.RED + " This command can only be run by a player");
                 return false;
             }
             if (args[0].equals("start")) {
                 // check name is unique and acceptable
                 if (args.length < 2 || !args[1].matches("[A-Za-z0-9_]{2,16}")) {
-                    sender.sendMessage(Constants.MY_PLUGIN_NAME + "That doesn't appear to be a valid area name (it may be too long)" + ChatColor.GREEN + " /tardis admin area start [area_name_goes_here]");
+                    sender.sendMessage(plugin.pluginName + "That doesn't appear to be a valid area name (it may be too long)" + ChatColor.GREEN + " /tardis admin area start [area_name_goes_here]");
                     return false;
                 }
                 String queryName = "SELECT area_name FROM areas";
@@ -53,12 +53,12 @@ public class TARDISAreaCommands implements CommandExecutor {
                     rsName = statement.executeQuery(queryName);
                     while (rsName.next()) {
                         if (rsName.getString("area_name").equals(args[1])) {
-                            sender.sendMessage(Constants.MY_PLUGIN_NAME + " Area name already in use!");
+                            sender.sendMessage(plugin.pluginName + " Area name already in use!");
                             return false;
                         }
                     }
                 } catch (SQLException e) {
-                    plugin.console.sendMessage(Constants.MY_PLUGIN_NAME + "Couldn't get area names: " + e);
+                    plugin.console.sendMessage(plugin.pluginName + "Couldn't get area names: " + e);
                 } finally {
                     if (rsName != null) {
                         try {
@@ -72,16 +72,16 @@ public class TARDISAreaCommands implements CommandExecutor {
                     }
                 }
                 plugin.trackName.put(player.getName(), args[1]);
-                player.sendMessage(Constants.MY_PLUGIN_NAME + " Click the area start block to save its position.");
+                player.sendMessage(plugin.pluginName + " Click the area start block to save its position.");
                 return true;
             }
             if (args[0].equals("end")) {
                 if (!plugin.trackBlock.containsKey(player.getName())) {
-                    player.sendMessage(Constants.MY_PLUGIN_NAME + ChatColor.RED + " You haven't selected an area start block!");
+                    player.sendMessage(plugin.pluginName + ChatColor.RED + " You haven't selected an area start block!");
                     return false;
                 }
                 plugin.trackEnd.put(player.getName(), "end");
-                player.sendMessage(Constants.MY_PLUGIN_NAME + " Click the area end block to complete the area.");
+                player.sendMessage(plugin.pluginName + " Click the area end block to complete the area.");
                 return true;
             }
             if (args[0].equals("remove")) {
@@ -91,10 +91,10 @@ public class TARDISAreaCommands implements CommandExecutor {
                     Connection connection = service.getConnection();
                     statement = connection.createStatement();
                     statement.executeUpdate(queryRemove);
-                    player.sendMessage(Constants.MY_PLUGIN_NAME + " Area [" + args[1] + "] deleted!");
+                    player.sendMessage(plugin.pluginName + " Area [" + args[1] + "] deleted!");
                     return true;
                 } catch (SQLException e) {
-                    plugin.console.sendMessage(Constants.MY_PLUGIN_NAME + "Couldn't delete area: " + e);
+                    plugin.console.sendMessage(plugin.pluginName + "Couldn't delete area: " + e);
                 } finally {
                     try {
                         statement.close();
@@ -110,7 +110,7 @@ public class TARDISAreaCommands implements CommandExecutor {
                     statement = connection.createStatement();
                     ResultSet rsArea = statement.executeQuery(queryGetArea);
                     if (!rsArea.next()) {
-                        player.sendMessage(Constants.MY_PLUGIN_NAME + "Could not find area [" + args[1] + "]! Did you type the name correctly?");
+                        player.sendMessage(plugin.pluginName + "Could not find area [" + args[1] + "]! Did you type the name correctly?");
                         return false;
                     }
                     int mix = rsArea.getInt("minx");
@@ -138,7 +138,7 @@ public class TARDISAreaCommands implements CommandExecutor {
                     }, 300L);
                     return true;
                 } catch (SQLException e) {
-                    plugin.console.sendMessage(Constants.MY_PLUGIN_NAME + "Couldn't delete area: " + e);
+                    plugin.console.sendMessage(plugin.pluginName + "Couldn't delete area: " + e);
                 } finally {
                     if (statement != null) {
                         try {

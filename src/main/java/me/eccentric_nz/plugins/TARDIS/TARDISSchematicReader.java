@@ -27,8 +27,8 @@ public class TARDISSchematicReader {
         return tag;
     }
 
-    public void main(String fileStr, Constants.SCHEMATIC s) {
-        plugin.console.sendMessage(Constants.MY_PLUGIN_NAME + " Loading schematic: " + fileStr);
+    public void main(String fileStr, TARDISConstants.SCHEMATIC s) {
+        plugin.console.sendMessage(plugin.pluginName + " Loading schematic: " + fileStr);
         FileInputStream fis = null;
         try {
             File f = new File(fileStr);
@@ -102,10 +102,10 @@ public class TARDISSchematicReader {
                 }
                 bw.close();
             } catch (IOException io) {
-                plugin.console.sendMessage(Constants.MY_PLUGIN_NAME + " Could not save the time lords file!");
+                plugin.console.sendMessage(plugin.pluginName + " Could not save the time lords file!");
             }
         } catch (IOException e) {
-            plugin.console.sendMessage(Constants.MY_PLUGIN_NAME + " Schematic read error: " + e);
+            plugin.console.sendMessage(plugin.pluginName + " Schematic read error: " + e);
         } finally {
             if (fis != null) {
                 try {

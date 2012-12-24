@@ -78,16 +78,16 @@ public class TARDISBlockBreakListener implements Listener {
                         String saveLoc = rs.getString("save");
                         String chunkLoc = rs.getString("chunk");
                         String owner = rs.getString("owner");
-                        Constants.SCHEMATIC schm = Constants.SCHEMATIC.valueOf(rs.getString("size"));
+                        TARDISConstants.SCHEMATIC schm = TARDISConstants.SCHEMATIC.valueOf(rs.getString("size"));
                         int id = rs.getInt("tardis_id");
-                        Constants.COMPASS d = Constants.COMPASS.valueOf(rs.getString("direction"));
+                        TARDISConstants.COMPASS d = TARDISConstants.COMPASS.valueOf(rs.getString("direction"));
 
                         // need to check that a player is not currently in the TARDIS (if admin delete - maybe always?)
                         if (player.hasPermission("tardis.delete")) {
                             String queryOccupied = "SELECT player FROM travellers WHERE tardis_id = " + id;
                             ResultSet rsOcc = statement.executeQuery(queryOccupied);
                             if (rsOcc.next()) {
-                                player.sendMessage(Constants.MY_PLUGIN_NAME + ChatColor.RED + " You cannot delete this TARDIS as it is occupied!");
+                                player.sendMessage(plugin.pluginName + ChatColor.RED + " You cannot delete this TARDIS as it is occupied!");
                                 event.setCancelled(true);
                                 sign.update();
                                 break occupied;
@@ -95,7 +95,7 @@ public class TARDISBlockBreakListener implements Listener {
                             rsOcc.close();
                         }
                         // check the sign location
-                        Location bb_loc = Constants.getLocationFromDB(saveLoc, yaw, pitch);
+                        Location bb_loc = TARDISConstants.getLocationFromDB(saveLoc, yaw, pitch);
                         // get TARDIS direction
                         switch (d) {
                             case EAST:
@@ -153,16 +153,16 @@ public class TARDISBlockBreakListener implements Listener {
                             // remove doors from doors table
                             String queryDeleteDoors = "DELETE FROM doors WHERE tardis_id = " + id;
                             statement.executeUpdate(queryDeleteDoors);
-                            player.sendMessage(Constants.MY_PLUGIN_NAME + " The TARDIS was removed from the world and database successfully.");
+                            player.sendMessage(plugin.pluginName + " The TARDIS was removed from the world and database successfully.");
                             // remove world guard region protection
-                            if (plugin.worldGuardOnServer && plugin.config.getBoolean("use_worldguard")) {
+                            if (plugin.worldGuardOnServer && plugin.getConfig().getBoolean("use_worldguard")) {
                                 plugin.wgchk.removeRegion(cw, owner);
                             }
                         } else {
                             // cancel the event because it's not the player's TARDIS
                             event.setCancelled(true);
                             sign.update();
-                            player.sendMessage(Constants.NOT_OWNER);
+                            player.sendMessage(TARDISConstants.NOT_OWNER);
                         }
                     } else {
                         event.setCancelled(true);
@@ -170,7 +170,7 @@ public class TARDISBlockBreakListener implements Listener {
                         player.sendMessage("Don't grief the TARDIS!");
                     }
                 } catch (SQLException e) {
-                    plugin.console.sendMessage(Constants.MY_PLUGIN_NAME + " Block Break Listener Error: " + e);
+                    plugin.console.sendMessage(plugin.pluginName + " Block Break Listener Error: " + e);
                 } finally {
                     try {
                         rs.close();
