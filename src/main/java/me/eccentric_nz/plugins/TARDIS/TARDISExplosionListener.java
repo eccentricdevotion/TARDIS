@@ -103,7 +103,7 @@ public class TARDISExplosionListener implements Listener {
                 }
             }
         } catch (SQLException err) {
-            plugin.console.sendMessage(Constants.MY_PLUGIN_NAME + " Explosion Listener error: " + err);
+            plugin.console.sendMessage(plugin.MY_PLUGIN_NAME + " Explosion Listener error: " + err);
         } finally {
             try {
                 rsBlocks.close();

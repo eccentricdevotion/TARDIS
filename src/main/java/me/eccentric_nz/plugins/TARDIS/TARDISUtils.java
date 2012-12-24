@@ -44,7 +44,7 @@ public class TARDISUtils {
                 statement.executeUpdate(queryAddBlock);
                 statement.close();
             } catch (SQLException e) {
-                plugin.console.sendMessage(Constants.MY_PLUGIN_NAME + " Could not save block location to DB!");
+                plugin.console.sendMessage(plugin.MY_PLUGIN_NAME + " Could not save block location to DB!");
             } finally {
                 try {
                     statement.close();
@@ -73,7 +73,7 @@ public class TARDISUtils {
                 statement.executeUpdate(queryReplaced);
                 statement.close();
             } catch (SQLException e) {
-                plugin.console.sendMessage(Constants.MY_PLUGIN_NAME + "Set Replaced Block Error: " + e);
+                plugin.console.sendMessage(plugin.MY_PLUGIN_NAME + "Set Replaced Block Error: " + e);
             } finally {
                 try {
                     statement.close();
@@ -108,7 +108,7 @@ public class TARDISUtils {
             rs.close();
             statement.close();
         } catch (SQLException e) {
-            plugin.console.sendMessage(Constants.MY_PLUGIN_NAME + " Get Chunk Error: " + e);
+            plugin.console.sendMessage(plugin.MY_PLUGIN_NAME + " Get Chunk Error: " + e);
         } finally {
             try {
                 rs.close();
@@ -155,7 +155,7 @@ public class TARDISUtils {
                     rs.close();
                     statement.close();
                 } catch (SQLException e) {
-                    plugin.console.sendMessage(Constants.MY_PLUGIN_NAME + " Get All Chunks Error: " + e);
+                    plugin.console.sendMessage(plugin.MY_PLUGIN_NAME + " Get All Chunks Error: " + e);
                 } finally {
                     try {
                         rs.close();
@@ -201,7 +201,7 @@ public class TARDISUtils {
             rsCount.close();
             statement.close();
         } catch (SQLException e) {
-            plugin.console.sendMessage(Constants.MY_PLUGIN_NAME + " /TARDIS travel to location Error: " + e);
+            plugin.console.sendMessage(plugin.MY_PLUGIN_NAME + " /TARDIS travel to location Error: " + e);
         } finally {
             try {
                 rsCount.close();

@@ -13,7 +13,12 @@ import org.bukkit.event.entity.EntityChangeBlockEvent;
 
 public class TARDISWitherDragonListener implements Listener {
 
+    private final TARDIS plugin;
     TARDISDatabase service = TARDISDatabase.getInstance();
+
+    public TARDISWitherDragonListener(TARDIS plugin) {
+        this.plugin = plugin;
+    }
 
     @EventHandler(priority = EventPriority.LOW)
     public void witherBlockBreak(EntityChangeBlockEvent event) {
@@ -37,7 +42,7 @@ public class TARDISWitherDragonListener implements Listener {
                     event.setCancelled(true);
                 }
             } catch (SQLException e) {
-                TARDIS.plugin.console.sendMessage(Constants.MY_PLUGIN_NAME + " Could not get block locations from DB!");
+                plugin.console.sendMessage(plugin.MY_PLUGIN_NAME + " Could not get block locations from DB!");
             } finally {
                 try {
                     rsBlockLoc.close();

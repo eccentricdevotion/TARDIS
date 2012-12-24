@@ -13,7 +13,12 @@ import org.bukkit.event.block.BlockDamageEvent;
 
 public class TARDISBlockDamageListener implements Listener {
 
+    private final TARDIS plugin;
     TARDISDatabase service = TARDISDatabase.getInstance();
+
+    public TARDISBlockDamageListener(TARDIS plugin) {
+        this.plugin = plugin;
+    }
 
     @EventHandler(priority = EventPriority.LOW)
     public void onBlockDamage(BlockDamageEvent event) {
@@ -32,10 +37,10 @@ public class TARDISBlockDamageListener implements Listener {
             rsBlockLoc = statement.executeQuery(queryBlock);
             if (rsBlockLoc.next()) {
                 event.setCancelled(true);
-                p.sendMessage(Constants.MY_PLUGIN_NAME + " You cannot break the TARDIS blocks!");
+                p.sendMessage(plugin.MY_PLUGIN_NAME + " You cannot break the TARDIS blocks!");
             }
         } catch (SQLException e) {
-            TARDIS.plugin.console.sendMessage(Constants.MY_PLUGIN_NAME + " Could not get block damage locations from DB!");
+            plugin.console.sendMessage(plugin.MY_PLUGIN_NAME + " Could not get block damage locations from DB!");
         } finally {
             try {
                 rsBlockLoc.close();

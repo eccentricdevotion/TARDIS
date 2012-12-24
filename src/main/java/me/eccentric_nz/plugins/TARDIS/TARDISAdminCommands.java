@@ -63,25 +63,25 @@ public class TARDISAdminCommands implements CommandExecutor {
                 	!args[0].equalsIgnoreCase("find") &&
                 	!args[0].equalsIgnoreCase("list") &&
                 	!args[0].equalsIgnoreCase("debug")) {
-                    sender.sendMessage(Constants.MY_PLUGIN_NAME + " TARDIS does not recognise that command argument!");
+                    sender.sendMessage(plugin.MY_PLUGIN_NAME + " TARDIS does not recognise that command argument!");
                     return false;
                 }
                 if (args.length == 1) {
                     if (args[0].equalsIgnoreCase("reload")) {
-                        plugin.loadConfig();
-                        sender.sendMessage(Constants.MY_PLUGIN_NAME + " TARDIS config reloaded.");
+                        plugin.reloadConfig();
+                        sender.sendMessage(plugin.MY_PLUGIN_NAME + " TARDIS config reloaded.");
                         return true;
                     }
                     if (args[0].equalsIgnoreCase("config")) {
-                        Set<String> configNames = plugin.config.getKeys(false);
-                        sender.sendMessage(Constants.MY_PLUGIN_NAME + ChatColor.RED + " Here are the current plugin config options!");
+                        Set<String> configNames = plugin.getConfig().getKeys(false);
+                        sender.sendMessage(plugin.MY_PLUGIN_NAME + ChatColor.RED + " Here are the current plugin config options!");
                         for (String cname : configNames) {
-                            String value = plugin.config.getString(cname);
+                            String value = plugin.getConfig().getString(cname);
                             if (cname.equals("worlds")) {
                                 sender.sendMessage(ChatColor.AQUA + cname + ":" + ChatColor.RESET);
-                                Set<String> worldNames = plugin.config.getConfigurationSection("worlds").getKeys(false);
+                                Set<String> worldNames = plugin.getConfig().getConfigurationSection("worlds").getKeys(false);
                                 for (String wname : worldNames) {
-                                    String enabled = plugin.config.getString("worlds." + wname);
+                                    String enabled = plugin.getConfig().getString("worlds." + wname);
                                     sender.sendMessage("      " + ChatColor.GREEN + wname + ": " + ChatColor.RESET + enabled);
                                 }
                             } else {
@@ -119,9 +119,9 @@ public class TARDISAdminCommands implements CommandExecutor {
                             rs.close();
                             statement.close();
                         } catch (SQLException e) {
-                            plugin.console.sendMessage(Constants.MY_PLUGIN_NAME + " Console saves to destinations error: " + e);
+                            plugin.console.sendMessage(plugin.MY_PLUGIN_NAME + " Console saves to destinations error: " + e);
                         }
-                        sender.sendMessage(Constants.MY_PLUGIN_NAME + "TARDIS saves updated.");
+                        sender.sendMessage(plugin.MY_PLUGIN_NAME + "TARDIS saves updated.");
                         return true;
                     }
                 }
@@ -139,20 +139,20 @@ public class TARDISAdminCommands implements CommandExecutor {
                         String queryList = "SELECT owner, current FROM tardis LIMIT " + start + ", " + end;
                         ResultSet rsList = statement.executeQuery(queryList);
                         if (rsList.isBeforeFirst()) {
-                            sender.sendMessage(Constants.MY_PLUGIN_NAME + " TARDIS locations.");
+                            sender.sendMessage(plugin.MY_PLUGIN_NAME + " TARDIS locations.");
                             while (rsList.next()) {
                                 sender.sendMessage("Timelord: " + rsList.getString("Owner") + ", Location: " + rsList.getString("current"));
                             }
-                            sender.sendMessage(Constants.MY_PLUGIN_NAME + " To see more locations, type: /tardisadmin list 2,  /tardisadmin list 3 etc.");
+                            sender.sendMessage(plugin.MY_PLUGIN_NAME + " To see more locations, type: /tardisadmin list 2,  /tardisadmin list 3 etc.");
                         }
                         statement.close();
                     } catch (SQLException e) {
-                        plugin.console.sendMessage(Constants.MY_PLUGIN_NAME + " Console saves to destinations error: " + e);
+                        plugin.console.sendMessage(plugin.MY_PLUGIN_NAME + " Console saves to destinations error: " + e);
                     }
                     return true;
                 }
                 if (args.length < 2) {
-                    sender.sendMessage(Constants.MY_PLUGIN_NAME + " Too few command arguments!");
+                    sender.sendMessage(plugin.MY_PLUGIN_NAME + " Too few command arguments!");
                     return false;
                 } else {
                     if (args[0].equalsIgnoreCase("delete")) {
@@ -217,24 +217,24 @@ public class TARDISAdminCommands implements CommandExecutor {
                                 statement.executeUpdate(queryDelTardis);
                                 String queryDeleteDoors = "DELETE FROM doors WHERE tardis_id = " + id;
                                 statement.executeUpdate(queryDeleteDoors);
-                                sender.sendMessage(Constants.MY_PLUGIN_NAME + " The TARDIS was removed from the world and database successfully.");
+                                sender.sendMessage(plugin.MY_PLUGIN_NAME + " The TARDIS was removed from the world and database successfully.");
                             } else {
-                                sender.sendMessage(Constants.MY_PLUGIN_NAME + " Could not find player [" + args[1] + "] in the database!");
+                                sender.sendMessage(plugin.MY_PLUGIN_NAME + " Could not find player [" + args[1] + "] in the database!");
                                 return true;
                             }
                             statement.close();
                         } catch (SQLException e) {
-                            plugin.console.sendMessage(Constants.MY_PLUGIN_NAME + " Admin delete TARDIS error: " + e);
+                            plugin.console.sendMessage(plugin.MY_PLUGIN_NAME + " Admin delete TARDIS error: " + e);
                         }
                         return true;
                     }
                     if (args[0].equalsIgnoreCase("key")) {
                         String setMaterial = args[1].toUpperCase(Locale.ENGLISH);
                         if (!Arrays.asList(Materials.MATERIAL_LIST).contains(setMaterial)) {
-                            sender.sendMessage(Constants.MY_PLUGIN_NAME + ChatColor.RED + "That is not a valid Material! Try checking http://jd.bukkit.org/apidocs/org/bukkit/Material.html");
+                            sender.sendMessage(plugin.MY_PLUGIN_NAME + ChatColor.RED + "That is not a valid Material! Try checking http://jd.bukkit.org/apidocs/org/bukkit/Material.html");
                             return false;
                         } else {
-                            plugin.config.set("key", setMaterial);
+                            plugin.getConfig().set("key", setMaterial);
                             Constants.TARDIS_KEY = setMaterial;
                         }
                     }
@@ -249,7 +249,7 @@ public class TARDISAdminCommands implements CommandExecutor {
                         String t = tmp.substring(0, tmp.length() - 1);
                         // need to make there are no periods(.) in the text
                         String nodots = StringUtils.replace(t, ".", "_");
-                        plugin.config.set("default_world_name", nodots);
+                        plugin.getConfig().set("default_world_name", nodots);
                     }
                     if (args[0].equalsIgnoreCase("exclude")) {
                         // get world name
@@ -264,10 +264,10 @@ public class TARDISAdminCommands implements CommandExecutor {
                         String nodots = StringUtils.replace(t, ".", "_");
                         // check the world actually exists!
                         if (plugin.getServer().getWorld(nodots) == null) {
-                            sender.sendMessage(Constants.MY_PLUGIN_NAME + ChatColor.RED + "World does not exist!");
+                            sender.sendMessage(plugin.MY_PLUGIN_NAME + ChatColor.RED + "World does not exist!");
                             return false;
                         }
-                        plugin.config.set("worlds." + nodots, false);
+                        plugin.getConfig().set("worlds." + nodots, false);
                     }
                   //checks if its a boolean config option
                     if (args[0].equalsIgnoreCase("name_tardis") ||
@@ -288,10 +288,10 @@ public class TARDISAdminCommands implements CommandExecutor {
                         // check they typed true of false
                         String tf = args[1].toLowerCase();
                         if (!tf.equals("true") && !tf.equals("false")) {
-                            sender.sendMessage(Constants.MY_PLUGIN_NAME + ChatColor.RED + "The last argument must be true or false!");
+                            sender.sendMessage(plugin.MY_PLUGIN_NAME + ChatColor.RED + "The last argument must be true or false!");
                             return false;
                         }
-                        plugin.config.set(args[0].toLowerCase(), Boolean.valueOf(tf));
+                        plugin.getConfig().set(args[0].toLowerCase(), Boolean.valueOf(tf));
                     }
                     //checks if its a number config option
                     if (args[0].equalsIgnoreCase("timeout") ||
@@ -303,21 +303,21 @@ public class TARDISAdminCommands implements CommandExecutor {
                             val = Integer.parseInt(a);
                         } catch (NumberFormatException nfe) {
                             // not a number
-                            sender.sendMessage(Constants.MY_PLUGIN_NAME + ChatColor.RED + " The last argument must be a number!");
+                            sender.sendMessage(plugin.MY_PLUGIN_NAME + ChatColor.RED + " The last argument must be a number!");
                             return false;
                         }
-                        plugin.config.set(args[0].toLowerCase(), val);
+                        plugin.getConfig().set(args[0].toLowerCase(), val);
                     }
                     try {
-                        plugin.config.save(plugin.myconfigfile);
-                        sender.sendMessage(Constants.MY_PLUGIN_NAME + " The config was updated!");
+                        plugin.getConfig().save(plugin.myconfigfile);
+                        sender.sendMessage(plugin.MY_PLUGIN_NAME + " The config was updated!");
                     } catch (IOException e) {
-                        sender.sendMessage(Constants.MY_PLUGIN_NAME + " There was a problem saving the config file!");
+                        sender.sendMessage(plugin.MY_PLUGIN_NAME + " There was a problem saving the config file!");
                     }
                 }
                 return true;
             } else {
-                sender.sendMessage(Constants.MY_PLUGIN_NAME + ChatColor.RED + " You must be an Admin to run this command.");
+                sender.sendMessage(plugin.MY_PLUGIN_NAME + ChatColor.RED + " You must be an Admin to run this command.");
                 return false;
             }
         }

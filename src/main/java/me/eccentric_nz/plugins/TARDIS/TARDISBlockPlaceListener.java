@@ -48,7 +48,7 @@ public class TARDISBlockPlaceListener implements Listener {
                         if (player.hasPermission("tardis.bigger")) {
                             schm = Constants.SCHEMATIC.BIGGER;
                         } else {
-                            player.sendMessage(Constants.MY_PLUGIN_NAME + " You don't have permission to create a 'bigger' TARDIS!");
+                            player.sendMessage(plugin.MY_PLUGIN_NAME + " You don't have permission to create a 'bigger' TARDIS!");
                             return;
                         }
                         break;
@@ -56,7 +56,7 @@ public class TARDISBlockPlaceListener implements Listener {
                         if (player.hasPermission("tardis.deluxe")) {
                             schm = Constants.SCHEMATIC.DELUXE;
                         } else {
-                            player.sendMessage(Constants.MY_PLUGIN_NAME + " You don't have permission to create a 'deluxe' TARDIS!");
+                            player.sendMessage(plugin.MY_PLUGIN_NAME + " You don't have permission to create a 'deluxe' TARDIS!");
                             return;
                         }
                         break;
@@ -84,8 +84,8 @@ public class TARDISBlockPlaceListener implements Listener {
                             String cw;
                             World chunkworld;
                             // check config to see whether we are using a default world to store TARDII
-                            if (plugin.config.getBoolean("default_world")) {
-                                cw = plugin.config.getString("default_world_name");
+                            if (plugin.getConfig().getBoolean("default_world")) {
+                                cw = plugin.getConfig().getString("default_world_name");
                                 chunkworld = plugin.getServer().getWorld(cw);
                             } else {
                                 chunkworld = chunk.getWorld();
@@ -134,15 +134,15 @@ public class TARDISBlockPlaceListener implements Listener {
                                 plugin.builder.buildOuterTARDIS(lastInsertId, block_loc, Constants.COMPASS.valueOf(d), false, player, false);
                                 plugin.builder.buildInnerTARDIS(schm, chunkworld, Constants.COMPASS.valueOf(d), lastInsertId, player, middle_id, middle_data);
                             } else {
-                                player.sendMessage(Constants.MY_PLUGIN_NAME + " A TARDIS already exists at this location, please try another chunk!");
+                                player.sendMessage(plugin.MY_PLUGIN_NAME + " A TARDIS already exists at this location, please try another chunk!");
                             }
                         } else {
                             String leftLoc = rs.getString("save");
                             String[] leftData = leftLoc.split(":");
-                            player.sendMessage(Constants.MY_PLUGIN_NAME + " You already have a TARDIS, you left it in " + leftData[0] + " at x:" + leftData[1] + " y:" + leftData[2] + " z:" + leftData[3]);
+                            player.sendMessage(plugin.MY_PLUGIN_NAME + " You already have a TARDIS, you left it in " + leftData[0] + " at x:" + leftData[1] + " y:" + leftData[2] + " z:" + leftData[3]);
                         }
                     } catch (SQLException e) {
-                        plugin.console.sendMessage(Constants.MY_PLUGIN_NAME + " Block Place Listener Error: " + e + ", " + e.getErrorCode() + ", " + e.getSQLState());
+                        plugin.console.sendMessage(plugin.MY_PLUGIN_NAME + " Block Place Listener Error: " + e + ", " + e.getErrorCode() + ", " + e.getSQLState());
                     } finally {
                         try {
                             pstatement.close();
@@ -160,7 +160,7 @@ public class TARDISBlockPlaceListener implements Listener {
                         }
                     }
                 } else {
-                    player.sendMessage(Constants.MY_PLUGIN_NAME + " You don't have permission to build a TARDIS!");
+                    player.sendMessage(plugin.MY_PLUGIN_NAME + " You don't have permission to build a TARDIS!");
                 }
             }
         }

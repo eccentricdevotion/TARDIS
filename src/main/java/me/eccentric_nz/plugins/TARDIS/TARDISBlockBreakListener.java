@@ -87,7 +87,7 @@ public class TARDISBlockBreakListener implements Listener {
                             String queryOccupied = "SELECT player FROM travellers WHERE tardis_id = " + id;
                             ResultSet rsOcc = statement.executeQuery(queryOccupied);
                             if (rsOcc.next()) {
-                                player.sendMessage(Constants.MY_PLUGIN_NAME + ChatColor.RED + " You cannot delete this TARDIS as it is occupied!");
+                                player.sendMessage(plugin.MY_PLUGIN_NAME + ChatColor.RED + " You cannot delete this TARDIS as it is occupied!");
                                 event.setCancelled(true);
                                 sign.update();
                                 break occupied;
@@ -153,9 +153,9 @@ public class TARDISBlockBreakListener implements Listener {
                             // remove doors from doors table
                             String queryDeleteDoors = "DELETE FROM doors WHERE tardis_id = " + id;
                             statement.executeUpdate(queryDeleteDoors);
-                            player.sendMessage(Constants.MY_PLUGIN_NAME + " The TARDIS was removed from the world and database successfully.");
+                            player.sendMessage(plugin.MY_PLUGIN_NAME + " The TARDIS was removed from the world and database successfully.");
                             // remove world guard region protection
-                            if (plugin.worldGuardOnServer && plugin.config.getBoolean("use_worldguard")) {
+                            if (plugin.worldGuardOnServer && plugin.getConfig().getBoolean("use_worldguard")) {
                                 plugin.wgchk.removeRegion(cw, owner);
                             }
                         } else {
@@ -170,7 +170,7 @@ public class TARDISBlockBreakListener implements Listener {
                         player.sendMessage("Don't grief the TARDIS!");
                     }
                 } catch (SQLException e) {
-                    plugin.console.sendMessage(Constants.MY_PLUGIN_NAME + " Block Break Listener Error: " + e);
+                    plugin.console.sendMessage(plugin.MY_PLUGIN_NAME + " Block Break Listener Error: " + e);
                 } finally {
                     try {
                         rs.close();
