@@ -215,7 +215,7 @@ public class TARDISTravelCommands implements CommandExecutor {
                     }
                     statement.close();
                 } catch (SQLException e) {
-                    System.err.println(Constants.MY_PLUGIN_NAME + " /TARDIS travel to location Error: " + e);
+                    plugin.console.sendMessage(Constants.MY_PLUGIN_NAME + " /TARDIS travel to location Error: " + e);
                 }
                 return true;
             } else {

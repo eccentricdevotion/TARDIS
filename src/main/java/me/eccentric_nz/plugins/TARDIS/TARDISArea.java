@@ -43,19 +43,15 @@ public class TARDISArea {
                 }
             }
         } catch (SQLException e) {
-            System.err.println(Constants.MY_PLUGIN_NAME + " Area block check error: " + e);
+            plugin.console.sendMessage(Constants.MY_PLUGIN_NAME + " Area block check error: " + e);
         } finally {
-            if (rsArea != null) {
-                try {
-                    rsArea.close();
-                } catch (Exception e) {
-                }
+            try {
+                rsArea.close();
+            } catch (Exception e) {
             }
-            if (statement != null) {
-                try {
-                    statement.close();
-                } catch (Exception e) {
-                }
+            try {
+                statement.close();
+            } catch (Exception e) {
             }
         }
         return chk;
@@ -85,19 +81,15 @@ public class TARDISArea {
             rsArea.close();
             statement.close();
         } catch (SQLException e) {
-            System.err.println(Constants.MY_PLUGIN_NAME + " Area block check error: " + e);
+            plugin.console.sendMessage(Constants.MY_PLUGIN_NAME + " Area block check error: " + e);
         } finally {
-            if (rsArea != null) {
-                try {
-                    rsArea.close();
-                } catch (Exception e) {
-                }
+            try {
+                rsArea.close();
+            } catch (Exception e) {
             }
-            if (statement != null) {
-                try {
-                    statement.close();
-                } catch (Exception e) {
-                }
+            try {
+                statement.close();
+            } catch (Exception e) {
             }
         }
         return chk;
@@ -136,19 +128,15 @@ public class TARDISArea {
             rsArea.close();
             statement.close();
         } catch (SQLException e) {
-            System.err.println(Constants.MY_PLUGIN_NAME + " Area player check error: " + e);
+            plugin.console.sendMessage(Constants.MY_PLUGIN_NAME + " Area player check error: " + e);
         } finally {
-            if (rsArea != null) {
-                try {
-                    rsArea.close();
-                } catch (Exception e) {
-                }
+            try {
+                rsArea.close();
+            } catch (Exception e) {
             }
-            if (statement != null) {
-                try {
-                    statement.close();
-                } catch (Exception e) {
-                }
+            try {
+                statement.close();
+            } catch (Exception e) {
             }
         }
         return chk;
@@ -202,19 +190,15 @@ public class TARDISArea {
                 }
             }
         } catch (SQLException e) {
-            System.err.println(Constants.MY_PLUGIN_NAME + " Area parking error: " + e);
+            plugin.console.sendMessage(Constants.MY_PLUGIN_NAME + " Area parking error: " + e);
         } finally {
-            if (rsArea != null) {
-                try {
-                    rsArea.close();
-                } catch (Exception e) {
-                }
+            try {
+                rsArea.close();
+            } catch (Exception e) {
             }
-            if (statement != null) {
-                try {
-                    statement.close();
-                } catch (Exception e) {
-                }
+            try {
+                statement.close();
+            } catch (Exception e) {
             }
         }
         return location;

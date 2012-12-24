@@ -58,7 +58,7 @@ public class TARDISAreaCommands implements CommandExecutor {
                         }
                     }
                 } catch (SQLException e) {
-                    System.err.println(Constants.MY_PLUGIN_NAME + "Couldn't get area names: " + e);
+                    plugin.console.sendMessage(Constants.MY_PLUGIN_NAME + "Couldn't get area names: " + e);
                 } finally {
                     if (rsName != null) {
                         try {
@@ -66,11 +66,9 @@ public class TARDISAreaCommands implements CommandExecutor {
                         } catch (Exception e) {
                         }
                     }
-                    if (statement != null) {
-                        try {
-                            statement.close();
-                        } catch (Exception e) {
-                        }
+                    try {
+                        statement.close();
+                    } catch (Exception e) {
                     }
                 }
                 plugin.trackName.put(player.getName(), args[1]);
@@ -96,13 +94,11 @@ public class TARDISAreaCommands implements CommandExecutor {
                     player.sendMessage(Constants.MY_PLUGIN_NAME + " Area [" + args[1] + "] deleted!");
                     return true;
                 } catch (SQLException e) {
-                    System.err.println(Constants.MY_PLUGIN_NAME + "Couldn't delete area: " + e);
+                    plugin.console.sendMessage(Constants.MY_PLUGIN_NAME + "Couldn't delete area: " + e);
                 } finally {
-                    if (statement != null) {
-                        try {
-                            statement.close();
-                        } catch (Exception e) {
-                        }
+                    try {
+                        statement.close();
+                    } catch (Exception e) {
                     }
                 }
             }
@@ -142,7 +138,7 @@ public class TARDISAreaCommands implements CommandExecutor {
                     }, 300L);
                     return true;
                 } catch (SQLException e) {
-                    System.err.println(Constants.MY_PLUGIN_NAME + "Couldn't delete area: " + e);
+                    plugin.console.sendMessage(Constants.MY_PLUGIN_NAME + "Couldn't delete area: " + e);
                 } finally {
                     if (statement != null) {
                         try {

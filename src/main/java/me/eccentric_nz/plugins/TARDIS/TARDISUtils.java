@@ -44,13 +44,11 @@ public class TARDISUtils {
                 statement.executeUpdate(queryAddBlock);
                 statement.close();
             } catch (SQLException e) {
-                System.err.println(Constants.MY_PLUGIN_NAME + " Could not save block location to DB!");
+                plugin.console.sendMessage(Constants.MY_PLUGIN_NAME + " Could not save block location to DB!");
             } finally {
-                if (statement != null) {
-                    try {
-                        statement.close();
-                    } catch (Exception e) {
-                    }
+                try {
+                    statement.close();
+                } catch (Exception e) {
                 }
             }
         }
@@ -75,13 +73,11 @@ public class TARDISUtils {
                 statement.executeUpdate(queryReplaced);
                 statement.close();
             } catch (SQLException e) {
-                System.err.println(Constants.MY_PLUGIN_NAME + "Set Replaced Block Error: " + e);
+                plugin.console.sendMessage(Constants.MY_PLUGIN_NAME + "Set Replaced Block Error: " + e);
             } finally {
-                if (statement != null) {
-                    try {
-                        statement.close();
-                    } catch (Exception e) {
-                    }
+                try {
+                    statement.close();
+                } catch (Exception e) {
                 }
             }
         }
@@ -112,19 +108,15 @@ public class TARDISUtils {
             rs.close();
             statement.close();
         } catch (SQLException e) {
-            System.err.println(Constants.MY_PLUGIN_NAME + " Get Chunk Error: " + e);
+            plugin.console.sendMessage(Constants.MY_PLUGIN_NAME + " Get Chunk Error: " + e);
         } finally {
-            if (rs != null) {
-                try {
-                    rs.close();
-                } catch (Exception e) {
-                }
+            try {
+                rs.close();
+            } catch (Exception e) {
             }
-            if (statement != null) {
-                try {
-                    statement.close();
-                } catch (Exception e) {
-                }
+            try {
+                statement.close();
+            } catch (Exception e) {
             }
         }
         return startLoc;
@@ -163,19 +155,15 @@ public class TARDISUtils {
                     rs.close();
                     statement.close();
                 } catch (SQLException e) {
-                    System.err.println(Constants.MY_PLUGIN_NAME + " Get All Chunks Error: " + e);
+                    plugin.console.sendMessage(Constants.MY_PLUGIN_NAME + " Get All Chunks Error: " + e);
                 } finally {
-                    if (rs != null) {
-                        try {
-                            rs.close();
-                        } catch (Exception e) {
-                        }
+                    try {
+                        rs.close();
+                    } catch (Exception e) {
                     }
-                    if (statement != null) {
-                        try {
-                            statement.close();
-                        } catch (Exception e) {
-                        }
+                    try {
+                        statement.close();
+                    } catch (Exception e) {
                     }
                 }
             }
@@ -192,7 +180,7 @@ public class TARDISUtils {
         try {
             num = Integer.parseInt(i);
         } catch (NumberFormatException n) {
-            System.err.println("Could not convert to number");
+            plugin.console.sendMessage("Could not convert to number");
         }
         return num;
     }
@@ -213,19 +201,15 @@ public class TARDISUtils {
             rsCount.close();
             statement.close();
         } catch (SQLException e) {
-            System.err.println(Constants.MY_PLUGIN_NAME + " /TARDIS travel to location Error: " + e);
+            plugin.console.sendMessage(Constants.MY_PLUGIN_NAME + " /TARDIS travel to location Error: " + e);
         } finally {
-            if (rsCount != null) {
-                try {
-                    rsCount.close();
-                } catch (Exception e) {
-                }
+            try {
+                rsCount.close();
+            } catch (Exception e) {
             }
-            if (statement != null) {
-                try {
-                    statement.close();
-                } catch (Exception e) {
-                }
+            try {
+                statement.close();
+            } catch (Exception e) {
             }
         }
     }

@@ -331,7 +331,7 @@ public class TARDISBuilder {
             }
             statement.close();
         } catch (SQLException e) {
-            System.err.println(Constants.MY_PLUGIN_NAME + " Door Insert Error: " + e);
+            plugin.console.sendMessage(Constants.MY_PLUGIN_NAME + " Door Insert Error: " + e);
         }
     }
 
@@ -413,7 +413,7 @@ public class TARDISBuilder {
                 statement.executeUpdate("INSERT INTO chunks (tardis_id,world,x,z) VALUES (" + dbID + ", '" + world.getName() + "'," + chunkx + "," + chunkz + ")");
             }
         } catch (SQLException e) {
-            System.err.println(Constants.MY_PLUGIN_NAME + " Could not insert reserved chunks into DB!");
+            plugin.console.sendMessage(Constants.MY_PLUGIN_NAME + " Could not insert reserved chunks into DB!");
         }
         // reset start positions and do over
         startx = resetx;
@@ -495,7 +495,7 @@ public class TARDISBuilder {
                 starty += 1;
             }
         } catch (SQLException e) {
-            System.err.println(Constants.MY_PLUGIN_NAME + " Save Block Locations Error: " + e);
+            plugin.console.sendMessage(Constants.MY_PLUGIN_NAME + " Save Block Locations Error: " + e);
         }
         // put on the door and the redstone torches
         for (Map.Entry<Block, Byte> entry : postDoorBlocks.entrySet()) {
@@ -576,7 +576,7 @@ public class TARDISBuilder {
                 chestRS.close();
                 statement.close();
             } catch (SQLException e) {
-                System.err.println(Constants.MY_PLUGIN_NAME + " Could not get chest location from DB!" + e);
+                plugin.console.sendMessage(Constants.MY_PLUGIN_NAME + " Could not get chest location from DB!" + e);
             }
         }
         TARDISWorldGuardChecker wgchk;

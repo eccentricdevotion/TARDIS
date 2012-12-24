@@ -149,7 +149,7 @@ public class TARDISPlayerListener implements Listener {
                         player.sendMessage(Constants.MY_PLUGIN_NAME + ChatColor.RED + " There was a problem updating the position of the TARDIS " + blockName + "!");
                     }
                 } catch (SQLException e) {
-                    System.err.println(Constants.MY_PLUGIN_NAME + " Update TARDIS blocks error: " + e);
+                    plugin.console.sendMessage(Constants.MY_PLUGIN_NAME + " Update TARDIS blocks error: " + e);
                 }
             } else if (plugin.trackName.containsKey(playerNameStr) && !plugin.trackBlock.containsKey(playerNameStr)) {
                 Location block_loc = block.getLocation();
@@ -208,7 +208,7 @@ public class TARDISPlayerListener implements Listener {
                         plugin.trackEnd.remove(playerNameStr);
                         psArea.close();
                     } catch (SQLException e) {
-                        System.err.println(Constants.MY_PLUGIN_NAME + " Area save error: " + e);
+                        plugin.console.sendMessage(Constants.MY_PLUGIN_NAME + " Area save error: " + e);
                     }
                 } else {
                     player.sendMessage(Constants.MY_PLUGIN_NAME + " That block is inside an already defined area! Try somewhere else.");
@@ -384,7 +384,7 @@ public class TARDISPlayerListener implements Listener {
                                                             cy = Integer.parseInt(split[2]);
                                                             cz = Integer.parseInt(split[3]);
                                                         } catch (NumberFormatException nfe) {
-                                                            System.err.println(Constants.MY_PLUGIN_NAME + " Could not convert to number!");
+                                                            plugin.console.sendMessage(Constants.MY_PLUGIN_NAME + " Could not convert to number!");
                                                         }
                                                         Location tmp_loc = cw.getBlockAt(cx, cy, cz).getLocation();
                                                         int getx = tmp_loc.getBlockX();
@@ -448,13 +448,13 @@ public class TARDISPlayerListener implements Listener {
                                             }
                                         }
                                     } catch (SQLException e) {
-                                        System.err.println(Constants.MY_PLUGIN_NAME + " Get TARDIS from Door Error: " + e);
+                                        plugin.console.sendMessage(Constants.MY_PLUGIN_NAME + " Get TARDIS from Door Error: " + e);
                                     }
                                 } else {
                                     player.sendMessage(Constants.MY_PLUGIN_NAME + " " + Constants.NO_PERMS_MESSAGE);
                                 }
                             } else {
-                                System.err.println(Constants.MY_PLUGIN_NAME + " Could not get block");
+                                plugin.console.sendMessage(Constants.MY_PLUGIN_NAME + " Could not get block");
                             }
                         } else {
                             Block blockAbove = block.getRelative(BlockFace.UP);
@@ -605,7 +605,7 @@ public class TARDISPlayerListener implements Listener {
                             rs.close();
                             statement.close();
                         } catch (SQLException e) {
-                            System.err.println(Constants.MY_PLUGIN_NAME + " Get TARDIS from Button Error: " + e);
+                            plugin.console.sendMessage(Constants.MY_PLUGIN_NAME + " Get TARDIS from Button Error: " + e);
                         }
                     }
                     if (blockType == Material.WALL_SIGN || blockType == Material.SIGN_POST) {
@@ -689,7 +689,7 @@ public class TARDISPlayerListener implements Listener {
                             rs.close();
                             statement.close();
                         } catch (SQLException e) {
-                            System.err.println(Constants.MY_PLUGIN_NAME + " Get TARDIS from Sign Error: " + e);
+                            plugin.console.sendMessage(Constants.MY_PLUGIN_NAME + " Get TARDIS from Sign Error: " + e);
                         }
                     }
                 }

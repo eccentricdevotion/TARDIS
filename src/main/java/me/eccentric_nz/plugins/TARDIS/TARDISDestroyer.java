@@ -127,7 +127,7 @@ public class TARDISDestroyer {
                     try {
                         rb = Byte.valueOf(parts[5]);
                     } catch (NumberFormatException nfe) {
-                        System.err.println(Constants.MY_PLUGIN_NAME + "Could not convert to number!");
+                        plugin.console.sendMessage(Constants.MY_PLUGIN_NAME + "Could not convert to number!");
                     }
                     Block b = rw.getBlockAt(rx, ry, rz);
                     b.setTypeIdAndData(rID, rb, true);
@@ -155,7 +155,7 @@ public class TARDISDestroyer {
                                 py = Integer.valueOf(p_data[2]);
                                 pz = Integer.valueOf(p_data[3]);
                             } catch (NumberFormatException nfe) {
-                                System.err.println(Constants.MY_PLUGIN_NAME + "Could not convert to number!");
+                                plugin.console.sendMessage(Constants.MY_PLUGIN_NAME + "Could not convert to number!");
                             }
                             Block pb = pw.getBlockAt(px, py, pz);
                             pb.setType(mat);
@@ -193,19 +193,15 @@ public class TARDISDestroyer {
                 statement.executeUpdate(queryRemoveBlocks);
             }
         } catch (SQLException e) {
-            System.err.println(Constants.MY_PLUGIN_NAME + " Save Replaced Block Error: " + e);
+            plugin.console.sendMessage(Constants.MY_PLUGIN_NAME + " Save Replaced Block Error: " + e);
         } finally {
-            if (rs != null) {
-                try {
-                    rs.close();
-                } catch (Exception e) {
-                }
+            try {
+                rs.close();
+            } catch (Exception e) {
             }
-            if (statement != null) {
-                try {
-                    statement.close();
-                } catch (Exception e) {
-                }
+            try {
+                statement.close();
+            } catch (Exception e) {
             }
         }
     }

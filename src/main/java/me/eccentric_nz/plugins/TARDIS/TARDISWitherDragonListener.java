@@ -37,19 +37,15 @@ public class TARDISWitherDragonListener implements Listener {
                     event.setCancelled(true);
                 }
             } catch (SQLException e) {
-                System.err.println(Constants.MY_PLUGIN_NAME + " Could not get block locations from DB!");
+                TARDIS.plugin.console.sendMessage(Constants.MY_PLUGIN_NAME + " Could not get block locations from DB!");
             } finally {
-                if (rsBlockLoc != null) {
-                    try {
-                        rsBlockLoc.close();
-                    } catch (Exception e) {
-                    }
+                try {
+                    rsBlockLoc.close();
+                } catch (Exception e) {
                 }
-                if (statement != null) {
-                    try {
-                        statement.close();
-                    } catch (Exception e) {
-                    }
+                try {
+                    statement.close();
+                } catch (Exception e) {
                 }
             }
         }

@@ -46,7 +46,7 @@ public class TARDISSounds {
                     }
                 }
             } catch (SQLException e) {
-                System.err.println(Constants.MY_PLUGIN_NAME + " SFX error: " + e);
+                TARDIS.plugin.console.sendMessage(Constants.MY_PLUGIN_NAME + " SFX error: " + e);
             } finally {
                 if (rs != null) {
                     try {
@@ -54,11 +54,9 @@ public class TARDISSounds {
                     } catch (Exception e) {
                     }
                 }
-                if (statement != null) {
-                    try {
-                        statement.close();
-                    } catch (Exception e) {
-                    }
+                try {
+                    statement.close();
+                } catch (Exception e) {
                 }
             }
         }

@@ -49,19 +49,15 @@ public class TARDISBlockProtectListener implements Listener {
                 }
             }
         } catch (SQLException e) {
-            System.err.println(Constants.MY_PLUGIN_NAME + " Could not get block ignite locations from DB!");
+            plugin.console.sendMessage(Constants.MY_PLUGIN_NAME + " Could not get block ignite locations from DB!");
         } finally {
-            if (rsBlockLoc != null) {
-                try {
-                    rsBlockLoc.close();
-                } catch (Exception e) {
-                }
+            try {
+                rsBlockLoc.close();
+            } catch (Exception e) {
             }
-            if (statement != null) {
-                try {
-                    statement.close();
-                } catch (Exception e) {
-                }
+            try {
+                statement.close();
+            } catch (Exception e) {
             }
         }
         if (plugin.config.getBoolean("protect_blocks") == true) {
@@ -94,19 +90,15 @@ public class TARDISBlockProtectListener implements Listener {
             rsBlockLoc.close();
             statement.close();
         } catch (SQLException e) {
-            System.err.println(Constants.MY_PLUGIN_NAME + " Could not get block burn locations from DB!");
+            plugin.console.sendMessage(Constants.MY_PLUGIN_NAME + " Could not get block burn locations from DB!");
         } finally {
-            if (rsBlockLoc != null) {
-                try {
-                    rsBlockLoc.close();
-                } catch (Exception e) {
-                }
+            try {
+                rsBlockLoc.close();
+            } catch (Exception e) {
             }
-            if (statement != null) {
-                try {
-                    statement.close();
-                } catch (Exception e) {
-                }
+            try {
+                statement.close();
+            } catch (Exception e) {
             }
         }
 

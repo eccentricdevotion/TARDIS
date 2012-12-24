@@ -119,7 +119,7 @@ public class TARDISAdminCommands implements CommandExecutor {
                             rs.close();
                             statement.close();
                         } catch (SQLException e) {
-                            System.err.println(Constants.MY_PLUGIN_NAME + " Console saves to destinations error: " + e);
+                            plugin.console.sendMessage(Constants.MY_PLUGIN_NAME + " Console saves to destinations error: " + e);
                         }
                         sender.sendMessage(Constants.MY_PLUGIN_NAME + "TARDIS saves updated.");
                         return true;
@@ -147,7 +147,7 @@ public class TARDISAdminCommands implements CommandExecutor {
                         }
                         statement.close();
                     } catch (SQLException e) {
-                        System.err.println(Constants.MY_PLUGIN_NAME + " Console saves to destinations error: " + e);
+                        plugin.console.sendMessage(Constants.MY_PLUGIN_NAME + " Console saves to destinations error: " + e);
                     }
                     return true;
                 }
@@ -224,7 +224,7 @@ public class TARDISAdminCommands implements CommandExecutor {
                             }
                             statement.close();
                         } catch (SQLException e) {
-                            System.err.println(Constants.MY_PLUGIN_NAME + " Admin delete TARDIS error: " + e);
+                            plugin.console.sendMessage(Constants.MY_PLUGIN_NAME + " Admin delete TARDIS error: " + e);
                         }
                         return true;
                     }

@@ -102,7 +102,7 @@ public class Constants {
             savedy = Integer.parseInt(data[2]);
             savedz = Integer.parseInt(data[3]);
         } catch (NumberFormatException n) {
-            System.err.println(Constants.MY_PLUGIN_NAME + "Could not convert to number: " + n);
+            TARDIS.plugin.console.sendMessage(Constants.MY_PLUGIN_NAME + "Could not convert to number: " + n);
         }
         Location dest = new Location(savedw, savedx, savedy, savedz, yaw, pitch);
         return dest;
@@ -173,7 +173,7 @@ public class Constants {
                 }
             }
         } catch (SQLException e) {
-            System.err.println(Constants.MY_PLUGIN_NAME + "Couldn't list " + l.toLowerCase(Locale.UK) + ": " + e);
+            TARDIS.plugin.console.sendMessage(Constants.MY_PLUGIN_NAME + "Couldn't list " + l.toLowerCase(Locale.UK) + ": " + e);
         } finally {
             if (rs != null) {
                 try {

@@ -44,7 +44,7 @@ public class TARDISBlockBreakListener implements Listener {
             String line2 = sign.getLine(2);
             String queryCheck;
             Location sign_loc = block.getLocation();
-             if (line1.equals(ChatColor.WHITE + "POLICE") && line2.equals(ChatColor.WHITE + "BOX")) {
+            if (line1.equals(ChatColor.WHITE + "POLICE") && line2.equals(ChatColor.WHITE + "BOX")) {
                 if (player.hasPermission("tardis.delete")) {
                     Block blockbehind = null;
                     byte data = block.getData();
@@ -170,19 +170,15 @@ public class TARDISBlockBreakListener implements Listener {
                         player.sendMessage("Don't grief the TARDIS!");
                     }
                 } catch (SQLException e) {
-                    System.err.println(Constants.MY_PLUGIN_NAME + " Block Break Listener Error: " + e);
+                    plugin.console.sendMessage(Constants.MY_PLUGIN_NAME + " Block Break Listener Error: " + e);
                 } finally {
-                    if (rs != null) {
-                        try {
-                            rs.close();
-                        } catch (Exception e) {
-                        }
+                    try {
+                        rs.close();
+                    } catch (Exception e) {
                     }
-                    if (statement != null) {
-                        try {
-                            statement.close();
-                        } catch (Exception e) {
-                        }
+                    try {
+                        statement.close();
+                    } catch (Exception e) {
                     }
                 }
             }

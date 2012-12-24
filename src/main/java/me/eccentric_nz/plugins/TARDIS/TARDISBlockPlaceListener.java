@@ -7,7 +7,6 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Arrays;
 import java.util.List;
-import org.bukkit.ChatColor;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -143,19 +142,15 @@ public class TARDISBlockPlaceListener implements Listener {
                             player.sendMessage(Constants.MY_PLUGIN_NAME + " You already have a TARDIS, you left it in " + leftData[0] + " at x:" + leftData[1] + " y:" + leftData[2] + " z:" + leftData[3]);
                         }
                     } catch (SQLException e) {
-                        System.err.println(Constants.MY_PLUGIN_NAME + " Block Place Listener Error: " + e + ", " + e.getErrorCode() + ", " + e.getSQLState());
+                        plugin.console.sendMessage(Constants.MY_PLUGIN_NAME + " Block Place Listener Error: " + e + ", " + e.getErrorCode() + ", " + e.getSQLState());
                     } finally {
-                        if (pstatement != null) {
-                            try {
-                                pstatement.close();
-                            } catch (Exception e) {
-                            }
+                        try {
+                            pstatement.close();
+                        } catch (Exception e) {
                         }
-                        if (rs != null) {
-                            try {
-                                rs.close();
-                            } catch (Exception e) {
-                            }
+                        try {
+                            rs.close();
+                        } catch (Exception e) {
                         }
                         if (statement != null) {
                             try {

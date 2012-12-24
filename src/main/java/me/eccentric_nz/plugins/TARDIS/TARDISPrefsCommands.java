@@ -60,7 +60,7 @@ public class TARDISPrefsCommands implements CommandExecutor {
                         }
                         return true;
                     } catch (SQLException e) {
-                        System.err.println(Constants.MY_PLUGIN_NAME + " SFX Preferences Save Error: " + e);
+                        TARDIS.plugin.console.sendMessage(Constants.MY_PLUGIN_NAME + " SFX Preferences Save Error: " + e);
                     } finally {
                         if (rs != null) {
                             try {
@@ -68,11 +68,9 @@ public class TARDISPrefsCommands implements CommandExecutor {
                             } catch (Exception e) {
                             }
                         }
-                        if (statement != null) {
-                            try {
-                                statement.close();
-                            } catch (Exception e) {
-                            }
+                        try {
+                            statement.close();
+                        } catch (Exception e) {
                         }
                     }
                 } else {
@@ -110,7 +108,7 @@ public class TARDISPrefsCommands implements CommandExecutor {
                         }
                         return true;
                     } catch (SQLException e) {
-                        System.err.println(Constants.MY_PLUGIN_NAME + " Platform Preferences Save Error: " + e);
+                        TARDIS.plugin.console.sendMessage(Constants.MY_PLUGIN_NAME + " Platform Preferences Save Error: " + e);
                     } finally {
                         if (rs != null) {
                             try {
@@ -118,11 +116,9 @@ public class TARDISPrefsCommands implements CommandExecutor {
                             } catch (Exception e) {
                             }
                         }
-                        if (statement != null) {
-                            try {
-                                statement.close();
-                            } catch (Exception e) {
-                            }
+                        try {
+                            statement.close();
+                        } catch (Exception e) {
                         }
                     }
                 } else {
@@ -160,7 +156,7 @@ public class TARDISPrefsCommands implements CommandExecutor {
                         }
                         return true;
                     } catch (SQLException e) {
-                        System.err.println(Constants.MY_PLUGIN_NAME + " Quotes Preferences Save Error: " + e);
+                        TARDIS.plugin.console.sendMessage(Constants.MY_PLUGIN_NAME + " Quotes Preferences Save Error: " + e);
                     } finally {
                         if (rs != null) {
                             try {
@@ -168,11 +164,9 @@ public class TARDISPrefsCommands implements CommandExecutor {
                             } catch (Exception e) {
                             }
                         }
-                        if (statement != null) {
-                            try {
-                                statement.close();
-                            } catch (Exception e) {
-                            }
+                        try {
+                            statement.close();
+                        } catch (Exception e) {
                         }
                     }
                 } else {

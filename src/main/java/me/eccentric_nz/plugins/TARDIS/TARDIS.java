@@ -9,6 +9,7 @@ import java.util.logging.Level;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.World;
+import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.PluginDescriptionFile;
@@ -66,9 +67,11 @@ public class TARDIS extends JavaPlugin {
     public ArrayList<String> quote;
     public int quotelen;
     public boolean worldGuardOnServer = false;
+    public ConsoleCommandSender console;
 
     @Override
     public void onEnable() {
+        console = getServer().getConsoleSender();
         String packageName = this.getServer().getClass().getPackage().getName();
         // Get full package string of CraftServer.
         // org.bukkit.craftbukkit.versionstring (or for pre-refactor, just org.bukkit.craftbukkit
@@ -104,8 +107,8 @@ public class TARDIS extends JavaPlugin {
 
         if (!getDataFolder().exists()) {
             if (!getDataFolder().mkdir()) {
-                System.err.println(Constants.MY_PLUGIN_NAME + " could not create directory!");
-                System.out.println(Constants.MY_PLUGIN_NAME + " requires you to manually make the TARDIS/ directory!");
+                console.sendMessage(Constants.MY_PLUGIN_NAME + " could not create directory!");
+                console.sendMessage(Constants.MY_PLUGIN_NAME + " requires you to manually make the TARDIS/ directory!");
             }
             getDataFolder().setWritable(true);
             getDataFolder().setExecutable(true);
@@ -116,7 +119,7 @@ public class TARDIS extends JavaPlugin {
             service.setConnection(path);
             service.createTables();
         } catch (Exception e) {
-            System.err.println(Constants.MY_PLUGIN_NAME + " Connection and Tables Error: " + e);
+            console.sendMessage(Constants.MY_PLUGIN_NAME + " Connection and Tables Error: " + e);
         }
 
         TARDISSchematicReader reader = new TARDISSchematicReader(plugin);
@@ -211,7 +214,7 @@ public class TARDIS extends JavaPlugin {
         try {
             service.connection.close();
         } catch (Exception e) {
-            System.err.println(Constants.MY_PLUGIN_NAME + " Could not close database connection: " + e);
+            console.sendMessage(Constants.MY_PLUGIN_NAME + " Could not close database connection: " + e);
         }
     }
 
@@ -234,7 +237,7 @@ public class TARDIS extends JavaPlugin {
                 copy(getResource(Constants.QUOTES_FILE_NAME), quotesfile);
             }
         } catch (Exception e) {
-            System.err.println(Constants.MY_PLUGIN_NAME + " failed to retrieve files from directory. Using defaults.");
+            console.sendMessage(Constants.MY_PLUGIN_NAME + " failed to retrieve files from directory. Using defaults.");
         }
         config = YamlConfiguration.loadConfiguration(myconfigfile);
 
@@ -244,7 +247,7 @@ public class TARDIS extends JavaPlugin {
             String worldname = "worlds." + w.getName();
             if (!config.contains(worldname)) {
                 config.set(worldname, true);
-                System.out.println(Constants.MY_PLUGIN_NAME + " Added '" + w.getName() + "' to config. To exclude this world run: /tardis admin exclude " + w.getName());
+                console.sendMessage(Constants.MY_PLUGIN_NAME + " Added '" + w.getName() + "' to config. To exclude this world run: /tardis admin exclude " + w.getName());
             }
         }
         // now remove worlds that may have been deleted
@@ -252,7 +255,7 @@ public class TARDIS extends JavaPlugin {
         for (String cw : cWorlds) {
             if (getServer().getWorld(cw) == null) {
                 config.set("worlds." + cw, null);
-                System.out.println(Constants.MY_PLUGIN_NAME + " Removed '" + cw + " from config.yml");
+                console.sendMessage(Constants.MY_PLUGIN_NAME + " Removed '" + cw + " from config.yml");
             }
         }
         saveCustomConfig();
@@ -270,7 +273,7 @@ public class TARDIS extends JavaPlugin {
                     out.write(buf, 0, len);
                 }
             } catch (IOException io) {
-                System.err.println(Constants.MY_PLUGIN_NAME + " could not save the config file.");
+                console.sendMessage(Constants.MY_PLUGIN_NAME + " could not save the config file.");
             } finally {
                 if (out != null) {
                     try {
@@ -280,7 +283,7 @@ public class TARDIS extends JavaPlugin {
                 }
             }
         } catch (FileNotFoundException e) {
-            System.err.println(Constants.MY_PLUGIN_NAME + " File not found.");
+            console.sendMessage(Constants.MY_PLUGIN_NAME + " File not found.");
         } finally {
             if (in != null) {
                 try {
@@ -298,7 +301,7 @@ public class TARDIS extends JavaPlugin {
         try {
             config.save(myconfigfile);
         } catch (IOException ex) {
-            System.err.println(Constants.MY_PLUGIN_NAME + "Could not save config to " + myconfigfile);
+            console.sendMessage(Constants.MY_PLUGIN_NAME + "Could not save config to " + myconfigfile);
         }
     }
 
@@ -317,7 +320,7 @@ public class TARDIS extends JavaPlugin {
                     quotes.add("");
                 }
             } catch (IOException io) {
-                System.err.println(Constants.MY_PLUGIN_NAME + " Could not read quotes file");
+                console.sendMessage(Constants.MY_PLUGIN_NAME + " Could not read quotes file");
             } finally {
                 if (bufRdr != null) {
                     try {
@@ -332,7 +335,7 @@ public class TARDIS extends JavaPlugin {
 
     public void debug(Object o) {
         if (config.getBoolean("debug") == true) {
-            System.out.println(Constants.MY_PLUGIN_NAME + " " + o);
+            console.sendMessage(Constants.MY_PLUGIN_NAME + " " + o);
         }
     }
 }

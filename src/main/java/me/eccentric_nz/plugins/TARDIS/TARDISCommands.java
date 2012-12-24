@@ -1,6 +1,5 @@
 package me.eccentric_nz.plugins.TARDIS;
 
-import java.io.File;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -136,7 +135,7 @@ public class TARDISCommands implements CommandExecutor {
                             statement.close();
                             return true;
                         } catch (SQLException e) {
-                            System.err.println(Constants.MY_PLUGIN_NAME + " Chameleon Circuit Save Error: " + e);
+                            plugin.console.sendMessage(Constants.MY_PLUGIN_NAME + " Chameleon Circuit Save Error: " + e);
                         }
                     } else {
                         sender.sendMessage(Constants.MY_PLUGIN_NAME + Constants.NO_PERMS_MESSAGE);
@@ -170,7 +169,7 @@ public class TARDISCommands implements CommandExecutor {
                             sender.sendMessage(Constants.MY_PLUGIN_NAME + " TARDIS occupation was set to: " + occupied);
                             return true;
                         } catch (SQLException e) {
-                            System.err.println(Constants.MY_PLUGIN_NAME + " Couldn't get TARDIS: " + e);
+                            plugin.console.sendMessage(Constants.MY_PLUGIN_NAME + " Couldn't get TARDIS: " + e);
                         }
                     }
                 }
@@ -248,7 +247,7 @@ public class TARDISCommands implements CommandExecutor {
                             }, delay);
                             statement.close();
                         } catch (SQLException e) {
-                            System.err.println(Constants.MY_PLUGIN_NAME + "Couldn't get TARDIS: " + e);
+                            plugin.console.sendMessage(Constants.MY_PLUGIN_NAME + "Couldn't get TARDIS: " + e);
                         }
                         return true;
                     } else {
@@ -296,7 +295,7 @@ public class TARDISCommands implements CommandExecutor {
                             statement.close();
                             sender.sendMessage(Constants.MY_PLUGIN_NAME + " The new TARDIS home was set!");
                         } catch (SQLException e) {
-                            System.err.println(Constants.MY_PLUGIN_NAME + "Couldn't get TARDIS: " + e);
+                            plugin.console.sendMessage(Constants.MY_PLUGIN_NAME + "Couldn't get TARDIS: " + e);
                         }
                         return true;
                     } else {
@@ -327,7 +326,7 @@ public class TARDISCommands implements CommandExecutor {
                             rs.close();
                             statement.close();
                         } catch (SQLException e) {
-                            System.err.println(Constants.MY_PLUGIN_NAME + " Update TARDIS Blocks Error: " + e);
+                            plugin.console.sendMessage(Constants.MY_PLUGIN_NAME + " Update TARDIS Blocks Error: " + e);
                         }
                         plugin.trackPlayers.put(player.getName(), args[1].toLowerCase());
                         player.sendMessage(Constants.MY_PLUGIN_NAME + " Click the TARDIS " + args[1].toLowerCase() + " to update its position.");
@@ -359,7 +358,7 @@ public class TARDISCommands implements CommandExecutor {
                             rs.close();
                             statement.close();
                         } catch (SQLException e) {
-                            System.err.println(Constants.MY_PLUGIN_NAME + " Select TARDIS By Owner Error: " + e);
+                            plugin.console.sendMessage(Constants.MY_PLUGIN_NAME + " Select TARDIS By Owner Error: " + e);
                         }
                         String[] save_data = save.split(":");
                         w = plugin.getServer().getWorld(save_data[0]);
@@ -406,7 +405,7 @@ public class TARDISCommands implements CommandExecutor {
                             statement.close();
                             return true;
                         } catch (SQLException e) {
-                            System.err.println(Constants.MY_PLUGIN_NAME + " List Companions Error: " + e);
+                            plugin.console.sendMessage(Constants.MY_PLUGIN_NAME + " List Companions Error: " + e);
                         }
                     } else {
                         sender.sendMessage(Constants.MY_PLUGIN_NAME + Constants.NO_PERMS_MESSAGE);
@@ -430,7 +429,7 @@ public class TARDISCommands implements CommandExecutor {
                             statement.close();
                             return true;
                         } catch (SQLException e) {
-                            System.err.println(Constants.MY_PLUGIN_NAME + " Find TARDIS Error: " + e);
+                            plugin.console.sendMessage(Constants.MY_PLUGIN_NAME + " Find TARDIS Error: " + e);
                         }
                     } else {
                         sender.sendMessage(Constants.MY_PLUGIN_NAME + Constants.NO_PERMS_MESSAGE);
@@ -477,7 +476,7 @@ public class TARDISCommands implements CommandExecutor {
                                 return true;
                             }
                         } catch (SQLException e) {
-                            System.err.println(Constants.MY_PLUGIN_NAME + " Companion Save Error: " + e);
+                            plugin.console.sendMessage(Constants.MY_PLUGIN_NAME + " Companion Save Error: " + e);
                         }
                     } else {
                         sender.sendMessage(Constants.MY_PLUGIN_NAME + Constants.NO_PERMS_MESSAGE);
@@ -537,7 +536,7 @@ public class TARDISCommands implements CommandExecutor {
                                 return true;
                             }
                         } catch (SQLException e) {
-                            System.err.println(Constants.MY_PLUGIN_NAME + " Companion Save Error: " + e);
+                            plugin.console.sendMessage(Constants.MY_PLUGIN_NAME + " Companion Save Error: " + e);
                         }
                     } else {
                         sender.sendMessage(Constants.MY_PLUGIN_NAME + Constants.NO_PERMS_MESSAGE);
@@ -592,7 +591,7 @@ public class TARDISCommands implements CommandExecutor {
                                 return true;
                             }
                         } catch (SQLException e) {
-                            System.err.println(Constants.MY_PLUGIN_NAME + " Location Save Error: " + e);
+                            plugin.console.sendMessage(Constants.MY_PLUGIN_NAME + " Location Save Error: " + e);
                         }
                     } else {
                         sender.sendMessage(Constants.MY_PLUGIN_NAME + Constants.NO_PERMS_MESSAGE);
@@ -626,7 +625,7 @@ public class TARDISCommands implements CommandExecutor {
                             sender.sendMessage(Constants.MY_PLUGIN_NAME + " The destination " + args[1] + " was deleted!");
                             return true;
                         } catch (SQLException e) {
-                            System.err.println(Constants.MY_PLUGIN_NAME + " Destination Save Error: " + e);
+                            plugin.console.sendMessage(Constants.MY_PLUGIN_NAME + " Destination Save Error: " + e);
                         }
                     } else {
                         sender.sendMessage(Constants.MY_PLUGIN_NAME + Constants.NO_PERMS_MESSAGE);
@@ -696,7 +695,7 @@ public class TARDISCommands implements CommandExecutor {
                                 return true;
                             }
                         } catch (SQLException e) {
-                            System.err.println(Constants.MY_PLUGIN_NAME + " Destination Save Error: " + e);
+                            plugin.console.sendMessage(Constants.MY_PLUGIN_NAME + " Destination Save Error: " + e);
                         }
                     } else {
                         sender.sendMessage(Constants.MY_PLUGIN_NAME + Constants.NO_PERMS_MESSAGE);
@@ -740,7 +739,7 @@ public class TARDISCommands implements CommandExecutor {
                             statement.close();
                             return true;
                         } catch (SQLException e) {
-                            System.err.println(Constants.MY_PLUGIN_NAME + " Quotes Preferences Save Error: " + e);
+                            plugin.console.sendMessage(Constants.MY_PLUGIN_NAME + " Quotes Preferences Save Error: " + e);
                         }
                     } else {
                         sender.sendMessage(Constants.MY_PLUGIN_NAME + Constants.NO_PERMS_MESSAGE);
