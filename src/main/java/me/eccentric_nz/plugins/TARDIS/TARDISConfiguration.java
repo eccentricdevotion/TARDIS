@@ -72,7 +72,7 @@ public class TARDISConfiguration {
             }
         }
         if (i > 0) {
-            plugin.console.sendMessage(plugin.pluginName + " Added '" + ChatColor.AQUA + i + ChatColor.RESET + "' new items to config");
+            plugin.console.sendMessage(plugin.pluginName + " Added " + ChatColor.AQUA + i + ChatColor.RESET + " new items to config");
         }
         // add worlds
         List<World> worlds = this.plugin.getServer().getWorlds();
