@@ -104,8 +104,8 @@ public class TARDIS extends JavaPlugin {
 
         if (!getDataFolder().exists()) {
             if (!getDataFolder().mkdir()) {
-                System.err.println("[TARDIS] could not create directory!");
-                System.out.println("[TARDIS] requires you to manually make the TARDIS/ directory!");
+                System.err.println(Constants.MY_PLUGIN_NAME + " could not create directory!");
+                System.out.println(Constants.MY_PLUGIN_NAME + " requires you to manually make the TARDIS/ directory!");
             }
             getDataFolder().setWritable(true);
             getDataFolder().setExecutable(true);
@@ -244,7 +244,7 @@ public class TARDIS extends JavaPlugin {
             String worldname = "worlds." + w.getName();
             if (!config.contains(worldname)) {
                 config.set(worldname, true);
-                System.out.println("[TARDIS] Added '" + w.getName() + "' to config. To exclude this world run: /tardis admin exclude " + w.getName());
+                System.out.println(Constants.MY_PLUGIN_NAME + " Added '" + w.getName() + "' to config. To exclude this world run: /tardis admin exclude " + w.getName());
             }
         }
         // now remove worlds that may have been deleted
@@ -252,7 +252,7 @@ public class TARDIS extends JavaPlugin {
         for (String cw : cWorlds) {
             if (getServer().getWorld(cw) == null) {
                 config.set("worlds." + cw, null);
-                System.out.println("[TARDIS] Removed '" + cw + " from config.yml");
+                System.out.println(Constants.MY_PLUGIN_NAME + " Removed '" + cw + " from config.yml");
             }
         }
         saveCustomConfig();
@@ -332,7 +332,7 @@ public class TARDIS extends JavaPlugin {
 
     public void debug(Object o) {
         if (config.getBoolean("debug") == true) {
-            System.out.println("[TARDIS Debug] " + o);
+            System.out.println(Constants.MY_PLUGIN_NAME + " " + o);
         }
     }
 }

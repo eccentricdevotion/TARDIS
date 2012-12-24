@@ -28,7 +28,7 @@ public class TARDISSchematicReader {
     }
 
     public void main(String fileStr, Constants.SCHEMATIC s) {
-        System.out.println("[TARDIS] Loading schematic: " + fileStr);
+        System.out.println(Constants.MY_PLUGIN_NAME + " Loading schematic: " + fileStr);
         FileInputStream fis = null;
         try {
             File f = new File(fileStr);

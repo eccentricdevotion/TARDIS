@@ -52,7 +52,7 @@ public class TARDISDatabase {
                 String queryAlter2 = "ALTER TABLE tardis ADD chamele_on INTEGER DEFAULT 0";
                 statement.executeUpdate(queryAlter1);
                 statement.executeUpdate(queryAlter2);
-                System.out.println("[TARDIS] Adding new chameleon circuit!");
+                System.out.println(Constants.MY_PLUGIN_NAME + " Adding new chameleon circuit!");
             }
             // update player_prefs if there is no quotes_on column
             String queryQuotes = "SELECT sql FROM sqlite_master WHERE tbl_name = 'player_prefs' AND sql LIKE '%quotes_on INTEGER%'";
@@ -60,7 +60,7 @@ public class TARDISDatabase {
             if (!rsQuotes.next()) {
                 String queryAlter3 = "ALTER TABLE player_prefs ADD quotes_on INTEGER DEFAULT 1";
                 statement.executeUpdate(queryAlter3);
-                System.out.println("[TARDIS] Adding new quotes to player prefs!");
+                System.out.println(Constants.MY_PLUGIN_NAME + " Adding new quotes to player prefs!");
             }
             // update doors if there is no door_direction
             String queryDoorDirection = "SELECT sql FROM sqlite_master WHERE tbl_name = 'doors' AND sql LIKE '%door_direction TEXT%'";
@@ -77,7 +77,7 @@ public class TARDISDatabase {
                     String queryAddDoor = "UPDATE doors SET door_direction = '" + dir + "' WHERE tardis_id = " + tid;
                     statement.executeUpdate(queryAddDoor);
                 }
-                System.out.println("[TARDIS] Adding door directions to doors table!");
+                System.out.println(Constants.MY_PLUGIN_NAME + " Adding door directions to doors table!");
             }
             // update chunks if there is no tardis_id column
             String queryUpChunks = "SELECT sql FROM sqlite_master WHERE tbl_name = 'chunks' AND sql LIKE '%tardis_id INTEGER%'";
@@ -96,7 +96,7 @@ public class TARDISDatabase {
                     rsTID.next();
                     String queryUpdateChunks = "UPDATE chunks SET tardis_id = " + rsTID.getInt("tardis_id") + " WHERE chunk_id = " + chunkID + "";
                     statement.executeUpdate(queryUpdateChunks);
-                    System.out.println("[TARDIS] Adding tardis_ids to chunks table.");
+                    System.out.println(Constants.MY_PLUGIN_NAME + " Adding tardis_ids to chunks table.");
                 }
             }
             // update tardis if there is no size column
@@ -105,7 +105,7 @@ public class TARDISDatabase {
             if (!rsSize.next()) {
                 String queryAlter6 = "ALTER TABLE tardis ADD size TEXT DEFAULT ''";
                 statement.executeUpdate(queryAlter6);
-                System.out.println("[TARDIS] Adding new TARDIS size to DB!");
+                System.out.println(Constants.MY_PLUGIN_NAME + " Adding new TARDIS size to DB!");
                 String queryAddSize = "UPDATE tardis SET size = 'BUDGET' WHERE size != 'BUDGET'";
                 statement.executeUpdate(queryAddSize);
             }
@@ -117,7 +117,7 @@ public class TARDISDatabase {
                 String queryAlter8 = "ALTER TABLE blocks ADD data INTEGER";
                 statement.executeUpdate(queryAlter7);
                 statement.executeUpdate(queryAlter8);
-                System.out.println("[TARDIS] Adding block ID and data to blocks table!");
+                System.out.println(Constants.MY_PLUGIN_NAME + " Adding block ID and data to blocks table!");
             }
             // update tardis if there is no size column
             String querySign = "SELECT sql FROM sqlite_master WHERE tbl_name = 'tardis' AND sql LIKE '%save_sign TEXT%'";
@@ -125,7 +125,7 @@ public class TARDISDatabase {
             if (!rsSign.next()) {
                 String queryAlter6 = "ALTER TABLE tardis ADD save_sign TEXT DEFAULT ''";
                 statement.executeUpdate(queryAlter6);
-                System.out.println("[TARDIS] Adding new TARDIS save_sign to DB!");
+                System.out.println(Constants.MY_PLUGIN_NAME + " Adding new TARDIS save_sign to DB!");
             }
 
             statement.close();
