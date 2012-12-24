@@ -32,7 +32,7 @@
     <dependencies>
         <dependency>
             <groupId>org.bukkit</groupId>
-            <artifactId>craftbukkit</artifactId>
+            <artifactId>craftbukkit.v1_4_5</artifactId>
             <version>1.4.5-R1.0</version>
             <type>jar</type>
             <scope>compile</scope>
@@ -40,7 +40,7 @@
         </dependency>
         <dependency>
             <groupId>org.bukkit</groupId>
-            <artifactId>craftbukkit.v1_4_6</artifactId>
+            <artifactId>craftbukkit</artifactId>
             <version>1.4.6-R0.2-SNAPSHOT</version>
             <type>jar</type>
             <scope>compile</scope>
