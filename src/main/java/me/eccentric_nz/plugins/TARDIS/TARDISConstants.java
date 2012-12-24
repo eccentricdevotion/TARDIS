@@ -14,11 +14,10 @@ import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
 
-public class Constants {
+public class TARDISConstants {
 
     public final static TARDISDatabase service = TARDISDatabase.getInstance();
     protected static String TARDIS_KEY;
-    protected static String MY_PLUGIN_NAME;
     public static final String SCHEMATIC_BUDGET = "budget.schematic";
     public static final String SCHEMATIC_BIGGER = "bigger.schematic";
     // Deluxe TARDIS schematic supplied by ewized http://dev.bukkit.org/profiles/ewized/
@@ -29,7 +28,6 @@ public class Constants {
         BUDGET, BIGGER, DELUXE;
     }
     public static final String CONFIG_FILE_NAME = "config.yml";
-    public static final String TIMELORDS_FILE_NAME = "timelords.yml";
     public static final String QUOTES_FILE_NAME = "quotes.txt";
     // chameleon blocks
     public static final List<Integer> CHAMELEON_BLOCKS_VALID = Arrays.asList(new Integer[]{1, 3, 4, 5, 7, 14, 15, 16, 17, 18, 19, 20, 21, 22, 24, 25, 35, 41, 42, 43, 45, 46, 47, 48, 49, 56, 57, 58, 73, 74, 79, 80, 82, 84, 86, 87, 88, 89, 91, 98, 99, 100, 103, 110, 112, 121, 123, 124, 129, 133});
@@ -102,7 +100,7 @@ public class Constants {
             savedy = Integer.parseInt(data[2]);
             savedz = Integer.parseInt(data[3]);
         } catch (NumberFormatException n) {
-            TARDIS.plugin.console.sendMessage(Constants.MY_PLUGIN_NAME + "Could not convert to number: " + n);
+            TARDIS.plugin.console.sendMessage(TARDIS.plugin.pluginName + "Could not convert to number: " + n);
         }
         Location dest = new Location(savedw, savedx, savedy, savedz, yaw, pitch);
         return dest;
@@ -120,13 +118,13 @@ public class Constants {
                 rs = statement.executeQuery(queryGetArea);
                 int a = 1;
                 if (!rs.isBeforeFirst()) {
-                    p.sendMessage(Constants.MY_PLUGIN_NAME + " No areas were found!");
+                    p.sendMessage(TARDIS.plugin.pluginName + " No areas were found!");
                 }
                 while (rs.next()) {
                     String name = rs.getString("area_name");
                     String world = rs.getString("world");
                     if (a == 1) {
-                        p.sendMessage(Constants.MY_PLUGIN_NAME + " Areas");
+                        p.sendMessage(TARDIS.plugin.pluginName + " Areas");
                     }
                     p.sendMessage(a + ". [" + name + "] in world: " + world);
                     a++;
@@ -173,7 +171,7 @@ public class Constants {
                 }
             }
         } catch (SQLException e) {
-            TARDIS.plugin.console.sendMessage(Constants.MY_PLUGIN_NAME + "Couldn't list " + l.toLowerCase(Locale.UK) + ": " + e);
+            TARDIS.plugin.console.sendMessage(TARDIS.plugin.pluginName + "Couldn't list " + l.toLowerCase(Locale.UK) + ": " + e);
         } finally {
             if (rs != null) {
                 try {
