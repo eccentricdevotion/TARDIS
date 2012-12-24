@@ -36,33 +36,33 @@ public class TARDISAdminCommands implements CommandExecutor {
                     sender.sendMessage(TARDISConstants.COMMAND_ADMIN.split("\n"));
                     return true;
                 }
-                if (!args[0].equalsIgnoreCase("timeout") &&
-                    !args[0].equalsIgnoreCase("timeout_height") &&
-                	!args[0].equalsIgnoreCase("name_tardis") &&
-                	!args[0].equalsIgnoreCase("reload") &&
-                	!args[0].equalsIgnoreCase("config") &&
-                	!args[0].equalsIgnoreCase("key") &&
-                	!args[0].equalsIgnoreCase("bonus_chest") &&
-                	!args[0].equalsIgnoreCase("protect_blocks") &&
-                	!args[0].equalsIgnoreCase("give_key") &&
-                	!args[0].equalsIgnoreCase("platform") &&
-                	!args[0].equalsIgnoreCase("tp_radius") &&
-                	!args[0].equalsIgnoreCase("require_spout") &&
-                	!args[0].equalsIgnoreCase("default_world") &&
-                	!args[0].equalsIgnoreCase("default_world_name") &&
-                	!args[0].equalsIgnoreCase("include_default_world") &&
-                	!args[0].equalsIgnoreCase("exclude") &&
-                	!args[0].equalsIgnoreCase("sfx") &&
-                	!args[0].equalsIgnoreCase("use_worldguard") &&
-                	!args[0].equalsIgnoreCase("respect_worldguard") &&
-                	!args[0].equalsIgnoreCase("nether") &&
-                	!args[0].equalsIgnoreCase("the_end") &&
-                	!args[0].equalsIgnoreCase("land_on_water") &&
-                	!args[0].equalsIgnoreCase("updatesaves") &&
-                	!args[0].equalsIgnoreCase("delete") &&
-                	!args[0].equalsIgnoreCase("find") &&
-                	!args[0].equalsIgnoreCase("list") &&
-                	!args[0].equalsIgnoreCase("debug")) {
+                if (!args[0].equalsIgnoreCase("timeout")
+                        && !args[0].equalsIgnoreCase("timeout_height")
+                        && !args[0].equalsIgnoreCase("name_tardis")
+                        && !args[0].equalsIgnoreCase("reload")
+                        && !args[0].equalsIgnoreCase("config")
+                        && !args[0].equalsIgnoreCase("key")
+                        && !args[0].equalsIgnoreCase("bonus_chest")
+                        && !args[0].equalsIgnoreCase("protect_blocks")
+                        && !args[0].equalsIgnoreCase("give_key")
+                        && !args[0].equalsIgnoreCase("platform")
+                        && !args[0].equalsIgnoreCase("tp_radius")
+                        && !args[0].equalsIgnoreCase("require_spout")
+                        && !args[0].equalsIgnoreCase("default_world")
+                        && !args[0].equalsIgnoreCase("default_world_name")
+                        && !args[0].equalsIgnoreCase("include_default_world")
+                        && !args[0].equalsIgnoreCase("exclude")
+                        && !args[0].equalsIgnoreCase("sfx")
+                        && !args[0].equalsIgnoreCase("use_worldguard")
+                        && !args[0].equalsIgnoreCase("respect_worldguard")
+                        && !args[0].equalsIgnoreCase("nether")
+                        && !args[0].equalsIgnoreCase("the_end")
+                        && !args[0].equalsIgnoreCase("land_on_water")
+                        && !args[0].equalsIgnoreCase("updatesaves")
+                        && !args[0].equalsIgnoreCase("delete")
+                        && !args[0].equalsIgnoreCase("find")
+                        && !args[0].equalsIgnoreCase("list")
+                        && !args[0].equalsIgnoreCase("debug")) {
                     sender.sendMessage(plugin.pluginName + " TARDIS does not recognise that command argument!");
                     return false;
                 }
@@ -269,22 +269,22 @@ public class TARDISAdminCommands implements CommandExecutor {
                         }
                         plugin.getConfig().set("worlds." + nodots, false);
                     }
-                  //checks if its a boolean config option
-                    if (args[0].equalsIgnoreCase("name_tardis") ||
-                    	args[0].equalsIgnoreCase("land_on_water") ||
-                    	args[0].equalsIgnoreCase("the_end") ||
-                    	args[0].equalsIgnoreCase("nether") ||
-                    	args[0].equalsIgnoreCase("use_worldguard") ||
-                    	args[0].equalsIgnoreCase("respect_worldguard") ||
-                    	args[0].equalsIgnoreCase("sfx") ||
-                    	args[0].equalsIgnoreCase("include") ||
-                    	args[0].equalsIgnoreCase("default_world") ||
-                    	args[0].equalsIgnoreCase("require_spout") ||
-                    	args[0].equalsIgnoreCase("platform") ||
-                    	args[0].equalsIgnoreCase("give_key") ||
-                    	args[0].equalsIgnoreCase("protect_blocks") ||
-                    	args[0].equalsIgnoreCase("debug") ||
-                    	args[0].equalsIgnoreCase("bonus_chest")){
+                    //checks if its a boolean config option
+                    if (args[0].equalsIgnoreCase("name_tardis")
+                            || args[0].equalsIgnoreCase("land_on_water")
+                            || args[0].equalsIgnoreCase("the_end")
+                            || args[0].equalsIgnoreCase("nether")
+                            || args[0].equalsIgnoreCase("use_worldguard")
+                            || args[0].equalsIgnoreCase("respect_worldguard")
+                            || args[0].equalsIgnoreCase("sfx")
+                            || args[0].equalsIgnoreCase("include")
+                            || args[0].equalsIgnoreCase("default_world")
+                            || args[0].equalsIgnoreCase("require_spout")
+                            || args[0].equalsIgnoreCase("platform")
+                            || args[0].equalsIgnoreCase("give_key")
+                            || args[0].equalsIgnoreCase("protect_blocks")
+                            || args[0].equalsIgnoreCase("debug")
+                            || args[0].equalsIgnoreCase("bonus_chest")) {
                         // check they typed true of false
                         String tf = args[1].toLowerCase();
                         if (!tf.equals("true") && !tf.equals("false")) {
@@ -294,9 +294,9 @@ public class TARDISAdminCommands implements CommandExecutor {
                         plugin.getConfig().set(args[0].toLowerCase(), Boolean.valueOf(tf));
                     }
                     //checks if its a number config option
-                    if (args[0].equalsIgnoreCase("timeout") ||
-                    	args[0].equalsIgnoreCase("timeout_height") ||
-                    	args[0].equalsIgnoreCase("tp_radius")) {
+                    if (args[0].equalsIgnoreCase("timeout")
+                            || args[0].equalsIgnoreCase("timeout_height")
+                            || args[0].equalsIgnoreCase("tp_radius")) {
                         String a = args[1];
                         int val;
                         try {
@@ -308,12 +308,8 @@ public class TARDISAdminCommands implements CommandExecutor {
                         }
                         plugin.getConfig().set(args[0].toLowerCase(), val);
                     }
-                    try {
-                        plugin.getConfig().save(plugin.myconfigfile);
-                        sender.sendMessage(plugin.pluginName + " The config was updated!");
-                    } catch (IOException e) {
-                        sender.sendMessage(plugin.pluginName + " There was a problem saving the config file!");
-                    }
+                    plugin.saveConfig();
+                    sender.sendMessage(plugin.pluginName + " The config was updated!");
                 }
                 return true;
             } else {
