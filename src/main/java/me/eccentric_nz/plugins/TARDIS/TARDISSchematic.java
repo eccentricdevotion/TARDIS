@@ -5,12 +5,12 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 
-public class Schematic {
+public class TARDISSchematic {
 
     private final TARDIS plugin;
     private static String[][][] blocks;
 
-    public Schematic(TARDIS plugin) {
+    public TARDISSchematic(TARDIS plugin) {
         this.plugin = plugin;
     }
 
@@ -34,7 +34,7 @@ public class Schematic {
                 }
             }
         } catch (IOException io) {
-            TARDIS.plugin.console.sendMessage(Constants.MY_PLUGIN_NAME + " Could not read csv file");
+            TARDIS.plugin.console.sendMessage(TARDIS.plugin.pluginName + " Could not read csv file");
         } finally {
             try {
                 if (bufRdr != null) {

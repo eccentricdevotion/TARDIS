@@ -1,6 +1,6 @@
 package me.eccentric_nz.plugins.TARDIS;
 
-public class Materials {
+public class TARDISMaterials {
 
     protected static final String[] MATERIAL_LIST = {
         "AIR",
