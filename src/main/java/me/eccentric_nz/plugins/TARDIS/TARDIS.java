@@ -3,7 +3,6 @@ package me.eccentric_nz.plugins.TARDIS;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.logging.Level;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.ConsoleCommandSender;
