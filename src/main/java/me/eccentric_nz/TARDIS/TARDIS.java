@@ -14,20 +14,25 @@ import me.eccentric_nz.TARDIS.commands.TARDISCommands;
 import me.eccentric_nz.TARDIS.commands.TARDISAreaCommands;
 import me.eccentric_nz.TARDIS.commands.TARDISTravelCommands;
 import me.eccentric_nz.TARDIS.commands.TARDISAdminCommands;
-import me.eccentric_nz.TARDIS.destroyers.TARDISDestroyer;
+import me.eccentric_nz.TARDIS.destroyers.TARDISDestroyerInner;
+import me.eccentric_nz.TARDIS.destroyers.TARDISDestroyerPoliceBox;
 import me.eccentric_nz.TARDIS.builders.TARDISBuilderInner;
-import me.eccentric_nz.TARDIS.builders.TARDISBuilderOuter;
-import me.eccentric_nz.TARDIS.listeners.TARDISBlockProtectListener;
+import me.eccentric_nz.TARDIS.builders.TARDISBuilderPoliceBox;
+import me.eccentric_nz.TARDIS.listeners.TARDISFireListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISExplosionListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISBlockPlaceListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISWitherDragonListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISBlockBreakListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISBlockDamageListener;
-import me.eccentric_nz.TARDIS.listeners.TARDISPlayerListener;
+import me.eccentric_nz.TARDIS.listeners.TARDISDoorListener;
 import me.eccentric_nz.TARDIS.database.TARDISDatabase;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.HashMap;
+import me.eccentric_nz.TARDIS.listeners.TARDISAreaListener;
+import me.eccentric_nz.TARDIS.listeners.TARDISButtonListener;
+import me.eccentric_nz.TARDIS.listeners.TARDISSignListener;
+import me.eccentric_nz.TARDIS.listeners.TARDISUpdateListener;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.ConsoleCommandSender;
@@ -62,18 +67,23 @@ public class TARDIS extends JavaPlugin {
     public short[] deluxedimensions = new short[3];
     public static TARDIS plugin;
     public TARDISUtils utils = new TARDISUtils(this);
-    public TARDISBuilderInner inner = new TARDISBuilderInner(this);
-    public TARDISBuilderOuter outer = new TARDISBuilderOuter(this);
-    public TARDISDestroyer destroyer = new TARDISDestroyer(this);
+    public TARDISBuilderInner buildI = new TARDISBuilderInner(this);
+    public TARDISBuilderPoliceBox buildPB = new TARDISBuilderPoliceBox(this);
+    public TARDISDestroyerInner destroyI = new TARDISDestroyerInner(this);
+    public TARDISDestroyerPoliceBox destroyPB = new TARDISDestroyerPoliceBox(this);
     public TARDISArea ta = new TARDISArea(this);
     public TARDISWorldGuardChecker wgchk;
-    TARDISBlockPlaceListener tardisBlockPlaceListener = new TARDISBlockPlaceListener(this);
-    TARDISBlockBreakListener tardisBlockBreakListener = new TARDISBlockBreakListener(this);
-    TARDISPlayerListener tardisPlayerListener = new TARDISPlayerListener(this);
-    TARDISBlockProtectListener tardisProtectListener = new TARDISBlockProtectListener(this);
-    TARDISBlockDamageListener tardisDamageListener = new TARDISBlockDamageListener(this);
-    TARDISExplosionListener tardisExplosionListener = new TARDISExplosionListener(this);
-    TARDISWitherDragonListener tardisWDBlocker = new TARDISWitherDragonListener(this);
+    TARDISBlockPlaceListener blockPlaceListener = new TARDISBlockPlaceListener(this);
+    TARDISBlockBreakListener blockBreakListener = new TARDISBlockBreakListener(this);
+    TARDISDoorListener doorListener = new TARDISDoorListener(this);
+    TARDISButtonListener buttonListener = new TARDISButtonListener(this);
+    TARDISSignListener signListener = new TARDISSignListener(this);
+    TARDISAreaListener areaListener = new TARDISAreaListener(this);
+    TARDISUpdateListener updateListener = new TARDISUpdateListener(this);
+    TARDISFireListener protectListener = new TARDISFireListener(this);
+    TARDISBlockDamageListener damageListener = new TARDISBlockDamageListener(this);
+    TARDISExplosionListener explosionListener = new TARDISExplosionListener(this);
+    TARDISWitherDragonListener dragonListener = new TARDISWitherDragonListener(this);
     public PluginManager pm = Bukkit.getServer().getPluginManager();
     public HashMap<String, String> trackPlayers = new HashMap<String, String>();
     public HashMap<String, String> trackName = new HashMap<String, String>();
@@ -163,13 +173,17 @@ public class TARDIS extends JavaPlugin {
     }
 
     private void registerListeners() {
-        pm.registerEvents(tardisBlockPlaceListener, this);
-        pm.registerEvents(tardisBlockBreakListener, this);
-        pm.registerEvents(tardisPlayerListener, this);
-        pm.registerEvents(tardisProtectListener, this);
-        pm.registerEvents(tardisDamageListener, this);
-        pm.registerEvents(tardisExplosionListener, this);
-        pm.registerEvents(tardisWDBlocker, this);
+        pm.registerEvents(blockPlaceListener, this);
+        pm.registerEvents(blockBreakListener, this);
+        pm.registerEvents(doorListener, this);
+        pm.registerEvents(buttonListener, this);
+        pm.registerEvents(signListener, this);
+        pm.registerEvents(updateListener, this);
+        pm.registerEvents(areaListener, this);
+        pm.registerEvents(protectListener, this);
+        pm.registerEvents(damageListener, this);
+        pm.registerEvents(explosionListener, this);
+        pm.registerEvents(dragonListener, this);
     }
 
     private void loadCommands() {
@@ -327,7 +341,7 @@ public class TARDIS extends JavaPlugin {
 
     public void debug(Object o) {
         if (getConfig().getBoolean("debug") == true) {
-            console.sendMessage(pluginName + " " + o);
+            console.sendMessage(pluginName + " Debug: " + o);
         }
     }
 }

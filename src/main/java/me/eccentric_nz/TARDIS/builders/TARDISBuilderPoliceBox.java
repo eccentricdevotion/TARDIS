@@ -19,17 +19,17 @@ import org.bukkit.block.BlockFace;
 import org.bukkit.block.Sign;
 import org.bukkit.entity.Player;
 
-public class TARDISBuilderOuter {
+public class TARDISBuilderPoliceBox {
 
     private final TARDIS plugin;
     TARDISDatabase service = TARDISDatabase.getInstance();
     Statement statement;
 
-    public TARDISBuilderOuter(TARDIS plugin) {
+    public TARDISBuilderPoliceBox(TARDIS plugin) {
         this.plugin = plugin;
     }
 
-    public void buildOuter(int id, Location l, TARDISConstants.COMPASS d, boolean c, Player p, boolean rebuild) {
+    public void buildPoliceBox(int id, Location l, TARDISConstants.COMPASS d, boolean c, Player p, boolean rebuild) {
         int plusx, minusx, x, plusz, minusz, z, wall_block = 35;
         byte sd = 0, norm = 0, grey = 8, blue = 11, chameleonData = 11;
         if (c) {

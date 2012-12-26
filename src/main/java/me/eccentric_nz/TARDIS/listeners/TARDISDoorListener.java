@@ -1,0 +1,372 @@
+package me.eccentric_nz.TARDIS.listeners;
+
+import me.eccentric_nz.TARDIS.database.TARDISDatabase;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.Random;
+import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.TARDISConstants;
+import me.eccentric_nz.TARDIS.utility.TARDISItemRenamer;
+import org.bukkit.Bukkit;
+import org.bukkit.Chunk;
+import org.bukkit.GameMode;
+import org.bukkit.Location;
+import org.bukkit.Material;
+import org.bukkit.World;
+import org.bukkit.block.Block;
+import org.bukkit.block.BlockFace;
+import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
+import org.bukkit.event.Listener;
+import org.bukkit.event.block.Action;
+import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.ItemStack;
+import org.getspout.spoutapi.SpoutManager;
+
+public class TARDISDoorListener implements Listener {
+
+    private TARDIS plugin;
+    float[][] adjustYaw = new float[4][4];
+    TARDISDatabase service = TARDISDatabase.getInstance();
+
+    public TARDISDoorListener(TARDIS plugin) {
+        this.plugin = plugin;
+        // yaw adjustments if inner and outer door directions are different
+        adjustYaw[0][0] = 0;
+        adjustYaw[0][1] = -90;
+        adjustYaw[0][2] = 180;
+        adjustYaw[0][3] = 90;
+        adjustYaw[1][0] = 90;
+        adjustYaw[1][1] = 0;
+        adjustYaw[1][2] = -90;
+        adjustYaw[1][3] = 180;
+        adjustYaw[2][0] = 180;
+        adjustYaw[2][1] = 90;
+        adjustYaw[2][2] = 0;
+        adjustYaw[2][3] = -90;
+        adjustYaw[3][0] = -90;
+        adjustYaw[3][1] = 180;
+        adjustYaw[3][2] = 90;
+        adjustYaw[3][3] = 0;
+    }
+
+    @EventHandler(priority = EventPriority.MONITOR)
+    public void onDoorInteract(PlayerInteractEvent event) {
+
+        final Player player = event.getPlayer();
+        final String playerNameStr = player.getName();
+        int cx = 0, cy = 0, cz = 0;
+        Block block = event.getClickedBlock();
+        if (block != null) {
+            Material blockType = block.getType();
+            Action action = event.getAction();
+            if (action == Action.RIGHT_CLICK_BLOCK) {
+                World playerWorld = player.getLocation().getWorld();
+                ItemStack stack = player.getItemInHand();
+                Material material = stack.getType();
+                // get key material from config
+                Material key = Material.getMaterial(plugin.getConfig().getString("key"));
+                // only proceed if they are clicking an iron door with a TARDIS key!
+                if (blockType == Material.IRON_DOOR_BLOCK) {
+                    if (material == key) {
+                        if (block != null) {
+                            if (player.hasPermission("tardis.enter")) {
+                                Location block_loc = block.getLocation();
+                                String bw = block_loc.getWorld().getName();
+                                int bx = block_loc.getBlockX();
+                                int by = block_loc.getBlockY();
+                                int bz = block_loc.getBlockZ();
+                                byte doorData = block.getData();
+                                if (doorData >= 8) {
+                                    by = (by - 1);
+                                }
+                                String doorloc = bw + ":" + bx + ":" + by + ":" + bz;
+                                try {
+                                    Connection connection = service.getConnection();
+                                    Statement statement = connection.createStatement();
+                                    String queryTardis = "SELECT tardis.*, doors.door_type, doors.door_direction FROM tardis, doors WHERE doors.door_location = '" + doorloc + "' AND doors.tardis_id = tardis.tardis_id";
+                                    ResultSet rs = statement.executeQuery(queryTardis);
+                                    if ((rs != null && rs.next())) {
+                                        int id = rs.getInt("tardis_id");
+                                        int doortype = rs.getInt("door_type");
+                                        String d = rs.getString("direction");
+                                        String dd = rs.getString("door_direction");
+                                        String tl = rs.getString("owner");
+                                        String save = rs.getString("save");
+                                        String cl = rs.getString("current");
+                                        boolean cham = rs.getBoolean("chamele_on");
+                                        float yaw = player.getLocation().getYaw();
+                                        float pitch = player.getLocation().getPitch();
+                                        String companions = rs.getString("companions");
+                                        boolean compswasnull = false;
+                                        if (rs.wasNull()) {
+                                            compswasnull = true;
+                                        }
+                                        // get quotes player prefs
+                                        String queryQuotes = "SELECT quotes_on FROM player_prefs WHERE player = '" + playerNameStr + "'";
+                                        ResultSet rsQuotes = statement.executeQuery(queryQuotes);
+                                        boolean userQuotes;
+                                        if (rsQuotes.next()) {
+                                            userQuotes = rsQuotes.getBoolean("quotes_on");
+                                        } else {
+                                            userQuotes = true;
+                                        }
+                                        if (doortype == 1) {
+                                            // player is in the TARDIS
+                                            // change the yaw if the door directions are different
+                                            if (!dd.equals(d)) {
+                                                switch (TARDISConstants.COMPASS.valueOf(dd)) {
+                                                    case NORTH:
+                                                        yaw = yaw + adjustYaw[0][TARDISConstants.COMPASS.valueOf(d).ordinal()];
+                                                        break;
+                                                    case WEST:
+                                                        yaw = yaw + adjustYaw[1][TARDISConstants.COMPASS.valueOf(d).ordinal()];
+                                                        break;
+                                                    case SOUTH:
+                                                        yaw = yaw + adjustYaw[2][TARDISConstants.COMPASS.valueOf(d).ordinal()];
+                                                        break;
+                                                    case EAST:
+                                                        yaw = yaw + adjustYaw[3][TARDISConstants.COMPASS.valueOf(d).ordinal()];
+                                                        break;
+                                                }
+                                            }
+                                            // get location from database
+                                            final Location exitTardis = TARDISConstants.getLocationFromDB(save, yaw, pitch);
+                                            // make location safe ie. outside of the bluebox
+                                            double ex = exitTardis.getX();
+                                            double ez = exitTardis.getZ();
+                                            double ey = exitTardis.getY();
+                                            switch (TARDISConstants.COMPASS.valueOf(d)) {
+                                                case NORTH:
+                                                    exitTardis.setX(ex + 0.5);
+                                                    exitTardis.setZ(ez + 2.5);
+                                                    break;
+                                                case EAST:
+                                                    exitTardis.setX(ex - 1.5);
+                                                    exitTardis.setZ(ez + 0.5);
+                                                    break;
+                                                case SOUTH:
+                                                    exitTardis.setX(ex + 0.5);
+                                                    exitTardis.setZ(ez - 1.5);
+                                                    break;
+                                                case WEST:
+                                                    exitTardis.setX(ex + 2.5);
+                                                    exitTardis.setZ(ez + 0.5);
+                                                    break;
+                                            }
+                                            World exitWorld = exitTardis.getWorld();
+                                            // destroy current TARDIS location
+                                            Location newl = null;
+// need some sort of check here to sort out who has exited
+                                            // count number of travellers - if 1 less than number counted at start
+                                            // then build and remember else just exit?
+                                            int count = 1;
+                                            String queryCount = "SELECT COUNT (*) AS count FROM travellers WHERE tardis_id = " + id;
+                                            ResultSet rsCount = statement.executeQuery(queryCount);
+                                            if (rsCount.next()) {
+                                                count = rsCount.getInt("count");
+                                            }
+                                            if (!save.equals(cl) && (count == plugin.trackTravellers.get(id))) {
+                                                Location l = TARDISConstants.getLocationFromDB(cl, 0, 0);
+                                                newl = TARDISConstants.getLocationFromDB(save, 0, 0);
+                                                // remove torch
+                                                plugin.destroyPB.destroyTorch(l);
+                                                // remove sign
+                                                plugin.destroyPB.destroySign(l, TARDISConstants.COMPASS.valueOf(d));
+                                                // remove blue box
+                                                plugin.destroyPB.destroyPoliceBox(l, TARDISConstants.COMPASS.valueOf(d), id, false);
+                                            }
+                                            // try preloading destination chunk
+                                            while (!exitWorld.getChunkAt(exitTardis).isLoaded()) {
+                                                exitWorld.getChunkAt(exitTardis).load();
+                                            }
+                                            // rebuild blue box
+                                            if (newl != null && (count == plugin.trackTravellers.get(id))) {
+                                                plugin.buildPB.buildPoliceBox(id, newl, TARDISConstants.COMPASS.valueOf(d), cham, player, false);
+                                            }
+                                            // exit TARDIS!
+                                            movePlayer(player, exitTardis, true, playerWorld, userQuotes);
+                                            // remove player from traveller table
+                                            String queryTraveller = "DELETE FROM travellers WHERE player = '" + playerNameStr + "'";
+                                            statement.executeUpdate(queryTraveller);
+                                        } else {
+                                            boolean chkCompanion = false;
+                                            if (!playerNameStr.equals(tl)) {
+                                                if (plugin.getServer().getPlayer(tl) != null) {
+                                                    if (!compswasnull && !companions.equals("")) {
+                                                        // is the timelord in the TARDIS?
+                                                        String queryTraveller = "SELECT * FROM travellers WHERE tardis_id = " + id + " AND player = '" + tl + "' LIMIT 1";
+                                                        ResultSet timelordIsIn = statement.executeQuery(queryTraveller);
+                                                        if (timelordIsIn != null && timelordIsIn.next()) {
+                                                            // is the player in the comapnion list
+                                                            String[] companionData = companions.split(":");
+                                                            for (String c : companionData) {
+                                                                //String lc_name = c.toLowerCase();
+                                                                if (c.equalsIgnoreCase(playerNameStr)) {
+                                                                    chkCompanion = true;
+                                                                    break;
+                                                                }
+                                                            }
+                                                        } else {
+                                                            player.sendMessage(plugin.pluginName + " " + TARDISConstants.TIMELORD_NOT_IN);
+                                                        }
+                                                    }
+                                                } else {
+                                                    player.sendMessage(plugin.pluginName + " " + TARDISConstants.TIMELORD_OFFLINE);
+                                                }
+                                            }
+                                            if (playerNameStr.equals(tl) || chkCompanion == true || player.hasPermission("tardis.skeletonkey")) {
+                                                // get INNER TARDIS location
+                                                String queryInnerDoor = "SELECT * FROM doors WHERE door_type = 1 AND tardis_id = " + id;
+                                                ResultSet doorRS = statement.executeQuery(queryInnerDoor);
+                                                if (doorRS.next()) {
+                                                    String innerD = doorRS.getString("door_direction");
+                                                    String doorLocStr = doorRS.getString("door_location");
+                                                    String[] split = doorLocStr.split(":");
+                                                    World cw = plugin.getServer().getWorld(split[0]);
+                                                    try {
+                                                        cx = Integer.parseInt(split[1]);
+                                                        cy = Integer.parseInt(split[2]);
+                                                        cz = Integer.parseInt(split[3]);
+                                                    } catch (NumberFormatException nfe) {
+                                                        plugin.console.sendMessage(plugin.pluginName + " Could not convert to number!");
+                                                    }
+                                                    Location tmp_loc = cw.getBlockAt(cx, cy, cz).getLocation();
+                                                    int getx = tmp_loc.getBlockX();
+                                                    int getz = tmp_loc.getBlockZ();
+                                                    String doorDirStr = doorRS.getString("door_direction");
+                                                    switch (TARDISConstants.COMPASS.valueOf(doorDirStr)) {
+                                                        case NORTH:
+                                                            // z -ve
+                                                            tmp_loc.setX(getx + 0.5);
+                                                            tmp_loc.setZ(getz - 0.5);
+                                                            break;
+                                                        case EAST:
+                                                            // x +ve
+                                                            tmp_loc.setX(getx + 1.5);
+                                                            tmp_loc.setZ(getz + 0.5);
+                                                            break;
+                                                        case SOUTH:
+                                                            // z +ve
+                                                            tmp_loc.setX(getx + 0.5);
+                                                            tmp_loc.setZ(getz + 1.5);
+                                                            break;
+                                                        case WEST:
+                                                            // x -ve
+                                                            tmp_loc.setX(getx - 0.5);
+                                                            tmp_loc.setZ(getz + 0.5);
+                                                            break;
+                                                    }
+                                                    // enter TARDIS!
+                                                    cw.getChunkAt(tmp_loc).load();
+                                                    tmp_loc.setPitch(pitch);
+                                                    // get buildI door direction so we can adjust yaw if necessary
+                                                    if (!innerD.equals(d)) {
+                                                        switch (TARDISConstants.COMPASS.valueOf(d)) {
+                                                            case NORTH:
+                                                                yaw = yaw + adjustYaw[0][TARDISConstants.COMPASS.valueOf(innerD).ordinal()];
+                                                                break;
+                                                            case WEST:
+                                                                yaw = yaw + adjustYaw[1][TARDISConstants.COMPASS.valueOf(innerD).ordinal()];
+                                                                break;
+                                                            case SOUTH:
+                                                                yaw = yaw + adjustYaw[2][TARDISConstants.COMPASS.valueOf(innerD).ordinal()];
+                                                                break;
+                                                            case EAST:
+                                                                yaw = yaw + adjustYaw[3][TARDISConstants.COMPASS.valueOf(innerD).ordinal()];
+                                                                break;
+                                                        }
+                                                    }
+                                                    tmp_loc.setYaw(yaw);
+                                                    final Location tardis_loc = tmp_loc;
+                                                    movePlayer(player, tardis_loc, false, playerWorld, userQuotes);
+                                                    String queryTravellerUpdate = "INSERT INTO travellers (tardis_id, player) VALUES (" + id + ", '" + playerNameStr + "')";
+                                                    statement.executeUpdate(queryTravellerUpdate);
+                                                    // update current TARDIS location
+                                                    String queryLocUpdate = "UPDATE tardis SET current = '" + save + "' WHERE tardis_id = " + id;
+                                                    statement.executeUpdate(queryLocUpdate);
+                                                    if (plugin.getServer().getPluginManager().getPlugin("Spout") != null && SpoutManager.getPlayer(player).isSpoutCraftEnabled()) {
+                                                        SpoutManager.getSoundManager().playCustomSoundEffect(plugin, SpoutManager.getPlayer(player), "https://dl.dropbox.com/u/53758864/tardis_hum.mp3", false, tardis_loc, 9, 25);
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                } catch (SQLException e) {
+                                    plugin.console.sendMessage(plugin.pluginName + " Get TARDIS from Door Error: " + e);
+                                }
+                            } else {
+                                player.sendMessage(plugin.pluginName + " " + TARDISConstants.NO_PERMS_MESSAGE);
+                            }
+                        } else {
+                            plugin.console.sendMessage(plugin.pluginName + " Could not get block");
+                        }
+                    } else {
+                        Block blockAbove = block.getRelative(BlockFace.UP);
+                        Material baType = blockAbove.getType();
+                        byte baData = blockAbove.getData();
+                        if (baType == Material.WOOL && (baData == 1 || baData == 11)) {
+                            player.sendMessage(plugin.pluginName + " " + TARDISConstants.WRONG_MATERIAL + plugin.TARDIS_KEY + ". You have a " + material + " in your hand!");
+                        }
+                    }
+                }
+            }
+        }
+    }
+    Random r = new Random();
+
+    private void movePlayer(Player p, Location l, final boolean exit, final World from, boolean q) {
+
+        final int i = r.nextInt(plugin.quotelen);
+        final Player thePlayer = p;
+        final Location theLocation = l;
+        final World to = theLocation.getWorld();
+        final boolean allowFlight = thePlayer.getAllowFlight();
+        final boolean crossWorlds = from != to;
+        final boolean quotes = q;
+
+        // try loading chunk
+        World world = l.getWorld();
+        Chunk chunk = world.getChunkAt(l);
+        if (!world.isChunkLoaded(chunk)) {
+            world.loadChunk(chunk);
+        }
+        world.refreshChunk(chunk.getX(), chunk.getZ());
+
+        Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
+            @Override
+            public void run() {
+                thePlayer.teleport(theLocation);
+            }
+        }, 5L);
+        Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
+            @Override
+            @SuppressWarnings("deprecation")
+            public void run() {
+                thePlayer.teleport(theLocation);
+                if (thePlayer.getGameMode() == GameMode.CREATIVE || (allowFlight && crossWorlds)) {
+                    thePlayer.setAllowFlight(true);
+                }
+                if (quotes) {
+                    thePlayer.sendMessage(plugin.pluginName + " " + plugin.quote.get(i));
+                }
+                if (exit == true) {
+                    Inventory inv = thePlayer.getInventory();
+                    Material m = Material.valueOf(plugin.TARDIS_KEY);
+                    if (!inv.contains(m) && plugin.getConfig().getBoolean("give_key") == true) {
+                        ItemStack is = new ItemStack(m, 1);
+                        TARDISItemRenamer ir = new TARDISItemRenamer(is);
+                        ir.setName("Sonic Screwdriver", true);
+                        inv.addItem(is);
+                        thePlayer.updateInventory();
+                        thePlayer.sendMessage(plugin.pluginName + " Don't forget your TARDIS key!");
+                    }
+                }
+            }
+        }, 10L);
+    }
+}

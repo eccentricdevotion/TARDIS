@@ -137,8 +137,8 @@ public class TARDISBlockPlaceListener implements Listener {
                                 // remove redstone torch
                                 block.setTypeId(0);
                                 // turn the block stack into a TARDIS
-                                plugin.outer.buildOuter(lastInsertId, block_loc, TARDISConstants.COMPASS.valueOf(d), false, player, false);
-                                plugin.inner.buildInner(schm, chunkworld, TARDISConstants.COMPASS.valueOf(d), lastInsertId, player, middle_id, middle_data);
+                                plugin.buildPB.buildPoliceBox(lastInsertId, block_loc, TARDISConstants.COMPASS.valueOf(d), false, player, false);
+                                plugin.buildI.buildInner(schm, chunkworld, TARDISConstants.COMPASS.valueOf(d), lastInsertId, player, middle_id, middle_data);
                             } else {
                                 player.sendMessage(plugin.pluginName + " A TARDIS already exists at this location, please try another chunk!");
                             }

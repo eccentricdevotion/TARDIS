@@ -1,6 +1,6 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <groupId>me.eccentric_nz.plugins.TARDIS</groupId>
+    <groupId>me.eccentric_nz.TARDIS</groupId>
     <artifactId>TARDIS</artifactId>
     <version>2.0-SNAPSHOT</version>
     <name>TARDIS</name>
@@ -32,7 +32,7 @@
     <dependencies>
         <dependency>
             <groupId>org.bukkit</groupId>
-            <artifactId>craftbukkit</artifactId>
+            <artifactId>craftbukkit.v1_4_5</artifactId>
             <version>1.4.5-R1.0</version>
             <type>jar</type>
             <scope>compile</scope>
@@ -40,7 +40,7 @@
         </dependency>
         <dependency>
             <groupId>org.bukkit</groupId>
-            <artifactId>craftbukkit.v1_4_6</artifactId>
+            <artifactId>craftbukkit</artifactId>
             <version>1.4.6-R0.2-SNAPSHOT</version>
             <type>jar</type>
             <scope>compile</scope>
@@ -59,4 +59,10 @@
             <optional>true</optional>
         </dependency>
     </dependencies>
+    <properties>
+        <netbeans.hint.license>gpl30</netbeans.hint.license>
+        <netbeans.hint.oranisation>The Nose Fairy</netbeans.hint.oranisation>
+        <netbeans.hint.company>The Nose Fairy</netbeans.hint.company>
+        <netbeans.hint.user>eccentric_nz</netbeans.hint.user>
+    </properties>
 </project>

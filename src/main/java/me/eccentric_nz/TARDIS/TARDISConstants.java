@@ -1,10 +1,6 @@
 package me.eccentric_nz.TARDIS;
 
 import me.eccentric_nz.TARDIS.database.TARDISDatabase;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -13,7 +9,6 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.World;
-import org.bukkit.entity.Player;
 
 public class TARDISConstants {
 
@@ -105,88 +100,6 @@ public class TARDISConstants {
         }
         Location dest = new Location(savedw, savedx, savedy, savedz, yaw, pitch);
         return dest;
-    }
-
-    public static void list(Player p, String l) {
-        String playerNameStr = p.getName();
-        Statement statement = null;
-        ResultSet rs = null;
-        try {
-            Connection connection = service.getConnection();
-            statement = connection.createStatement();
-            if (l.equals("areas")) {
-                String queryGetArea = "SELECT * FROM areas";
-                rs = statement.executeQuery(queryGetArea);
-                int a = 1;
-                if (!rs.isBeforeFirst()) {
-                    p.sendMessage(TARDIS.plugin.pluginName + " No areas were found!");
-                }
-                while (rs.next()) {
-                    String name = rs.getString("area_name");
-                    String world = rs.getString("world");
-                    if (a == 1) {
-                        p.sendMessage(TARDIS.plugin.pluginName + " Areas");
-                    }
-                    p.sendMessage(a + ". [" + name + "] in world: " + world);
-                    a++;
-                }
-            } else {
-                rs = service.getTardis(playerNameStr, "*");
-                if (rs != null && rs.next()) {
-                    int id = rs.getInt("tardis_id");
-                    // list TARDIS saves
-                    if (l.equalsIgnoreCase("saves")) {
-                        // construct home string
-                        String h = rs.getString("home");
-                        String[] h_data = h.split(":");
-                        p.sendMessage(ChatColor.GRAY + "Saves");
-                        p.sendMessage(ChatColor.GREEN + "HOME: " + h_data[0] + " at x:" + h_data[1] + " y:" + h_data[2] + " z:" + h_data[3]);
-                        // list other saved destinations
-                        String queryDests = "SELECT * FROM destinations WHERE tardis_id = " + id;
-                        ResultSet rsDests = statement.executeQuery(queryDests);
-                        int i = 1;
-                        if (rsDests.isBeforeFirst()) {
-                            while (rsDests.next()) {
-                                if (i == 1) {
-                                    p.sendMessage(ChatColor.GRAY + "----------------");
-                                }
-                                p.sendMessage(ChatColor.GREEN + "" + i + ". [" + rsDests.getString("dest_name") + "]: " + rsDests.getString("world") + " at x:" + rsDests.getInt("x") + " y:" + rsDests.getInt("y") + " z:" + rsDests.getInt("z"));
-                                i++;
-                            }
-                        }
-                        rsDests.close();
-                    }
-                    if (l.equalsIgnoreCase("companions")) {
-                        // list companions
-                        String comps = rs.getString("companions");
-                        if (!rs.wasNull() && !comps.equals("")) {
-                            String[] companionData = comps.split(":");
-                            p.sendMessage(ChatColor.AQUA + "Your TARDIS companions are:");
-                            for (String c : companionData) {
-                                p.sendMessage(ChatColor.AQUA + c);
-                            }
-                        } else {
-                            p.sendMessage(ChatColor.DARK_BLUE + "You don't have any TARDIS companions yet." + ChatColor.RESET + " Use " + ChatColor.GREEN + "/tardis add [player]" + ChatColor.RESET + " to add some");
-                        }
-                    }
-                }
-            }
-        } catch (SQLException e) {
-            TARDIS.plugin.console.sendMessage(TARDIS.plugin.pluginName + "Couldn't list " + l.toLowerCase(Locale.UK) + ": " + e);
-        } finally {
-            if (rs != null) {
-                try {
-                    rs.close();
-                } catch (Exception e) {
-                }
-            }
-            if (statement != null) {
-                try {
-                    statement.close();
-                } catch (Exception e) {
-                }
-            }
-        }
     }
 
     public static int swapId(int id) {

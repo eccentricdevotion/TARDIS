@@ -32,7 +32,7 @@ public class TARDISBlockBreakListener implements Listener {
     }
 
     @EventHandler(priority = EventPriority.LOW)
-    public void onBlockBreak(BlockBreakEvent event) {
+    public void onSignBreak(BlockBreakEvent event) {
         int signx = 0, signz = 0;
         Player player = event.getPlayer();
         String playerNameStr = player.getName();
@@ -125,8 +125,8 @@ public class TARDISBlockBreakListener implements Listener {
                             // don't drop the sign
                             //block.getDrops().clear();
                             // clear the torch
-                            plugin.destroyer.destroyTorch(bb_loc);
-                            plugin.destroyer.destroySign(bb_loc, d);
+                            plugin.destroyPB.destroyTorch(bb_loc);
+                            plugin.destroyPB.destroySign(bb_loc, d);
                             // also remove the location of the chunk from chunks table
                             String[] chunkworld = chunkLoc.split(":");
                             World cw = plugin.getServer().getWorld(chunkworld[0]);
@@ -144,12 +144,12 @@ public class TARDISBlockBreakListener implements Listener {
                             }
                             String queryDeleteChunk = "DELETE FROM chunks WHERE tardis_id = " + id;
                             statement.executeUpdate(queryDeleteChunk);
-                            plugin.destroyer.destroyTARDIS(schm, id, cw, d, restore, playerNameStr);
+                            plugin.destroyI.destroyInner(schm, id, cw, d, restore, playerNameStr);
                             if (cw.getWorldType() == WorldType.FLAT) {
                                 // replace stone blocks with AIR
-                                plugin.destroyer.destroyTARDIS(schm, id, cw, d, 0, playerNameStr);
+                                plugin.destroyI.destroyInner(schm, id, cw, d, 0, playerNameStr);
                             }
-                            plugin.destroyer.destroyBlueBox(bb_loc, d, id, false);
+                            plugin.destroyPB.destroyPoliceBox(bb_loc, d, id, false);
                             // remove record from tardis table
                             String queryDeleteTardis = "DELETE FROM tardis WHERE tardis_id = " + id;
                             statement.executeUpdate(queryDeleteTardis);

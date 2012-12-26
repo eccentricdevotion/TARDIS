@@ -23,7 +23,7 @@ public class TARDISWitherDragonListener implements Listener {
     }
 
     @EventHandler(priority = EventPriority.LOW)
-    public void witherBlockBreak(EntityChangeBlockEvent event) {
+    public void bossBlockBreak(EntityChangeBlockEvent event) {
         Block b = event.getBlock();
         String l = b.getLocation().toString();
         EntityType eType;

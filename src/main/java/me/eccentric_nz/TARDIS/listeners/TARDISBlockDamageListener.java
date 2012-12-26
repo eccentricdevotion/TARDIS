@@ -23,7 +23,7 @@ public class TARDISBlockDamageListener implements Listener {
     }
 
     @EventHandler(priority = EventPriority.LOW)
-    public void onBlockDamage(BlockDamageEvent event) {
+    public void onPoliceBoxDamage(BlockDamageEvent event) {
         if (event.isCancelled()) {
             return;
         }

@@ -16,13 +16,13 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBurnEvent;
 import org.bukkit.event.block.BlockIgniteEvent;
 
-public class TARDISBlockProtectListener implements Listener {
+public class TARDISFireListener implements Listener {
 
     private TARDIS plugin;
     TARDISDatabase service = TARDISDatabase.getInstance();
     List<BlockFace> faces = new ArrayList<BlockFace>();
 
-    public TARDISBlockProtectListener(TARDIS plugin) {
+    public TARDISFireListener(TARDIS plugin) {
         this.plugin = plugin;
         faces.add(BlockFace.UP);
         faces.add(BlockFace.DOWN);

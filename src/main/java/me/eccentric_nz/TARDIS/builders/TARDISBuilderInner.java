@@ -24,7 +24,7 @@ import org.bukkit.inventory.ItemStack;
 
 /**
  *
- * @author rob
+ * @author eccentric_nz
  */
 public class TARDISBuilderInner {
 
