@@ -1,11 +1,12 @@
 package me.eccentric_nz.plugins.TARDIS;
 
-import java.io.IOException;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Locale;
 import java.util.Set;
 import org.apache.commons.lang.StringUtils;
@@ -22,9 +23,42 @@ public class TARDISAdminCommands implements CommandExecutor {
 
     private TARDIS plugin;
     TARDISDatabase service = TARDISDatabase.getInstance();
+    private List<String> firstArgsStr = new ArrayList<String>();
+    private List<String> firstArgsBool = new ArrayList<String>();
+    private List<String> firstArgsInt = new ArrayList<String>();
 
     public TARDISAdminCommands(TARDIS plugin) {
         this.plugin = plugin;
+        // add first arguments
+        firstArgsStr.add("key");
+        firstArgsStr.add("reload");
+        firstArgsStr.add("config");
+        firstArgsStr.add("default_world_name");
+        firstArgsStr.add("exclude");
+        firstArgsStr.add("delete");
+        firstArgsStr.add("find");
+        firstArgsStr.add("list");
+        // boolean
+        firstArgsBool.add("debug");
+        firstArgsBool.add("bonus_chest");
+        firstArgsBool.add("chameleon");
+        firstArgsBool.add("default_world");
+        firstArgsBool.add("give_key");
+        firstArgsBool.add("include_default_world");
+        firstArgsBool.add("land_on_water");
+        firstArgsBool.add("name_tardis");
+        firstArgsBool.add("nether");
+        firstArgsBool.add("platform");
+        firstArgsBool.add("protect_blocks");
+        firstArgsBool.add("sfx");
+        firstArgsBool.add("the_end");
+        firstArgsBool.add("name_tardis");
+        firstArgsBool.add("use_worldguard");
+        firstArgsBool.add("respect_worldguard");
+        // integer
+        firstArgsInt.add("timeout_height");
+        firstArgsInt.add("timeout");
+        firstArgsInt.add("tp_radius");
     }
 
     @Override
@@ -36,43 +70,18 @@ public class TARDISAdminCommands implements CommandExecutor {
                     sender.sendMessage(TARDISConstants.COMMAND_ADMIN.split("\n"));
                     return true;
                 }
-                if (!args[0].equalsIgnoreCase("timeout")
-                        && !args[0].equalsIgnoreCase("timeout_height")
-                        && !args[0].equalsIgnoreCase("name_tardis")
-                        && !args[0].equalsIgnoreCase("reload")
-                        && !args[0].equalsIgnoreCase("config")
-                        && !args[0].equalsIgnoreCase("key")
-                        && !args[0].equalsIgnoreCase("bonus_chest")
-                        && !args[0].equalsIgnoreCase("protect_blocks")
-                        && !args[0].equalsIgnoreCase("give_key")
-                        && !args[0].equalsIgnoreCase("platform")
-                        && !args[0].equalsIgnoreCase("tp_radius")
-                        && !args[0].equalsIgnoreCase("require_spout")
-                        && !args[0].equalsIgnoreCase("default_world")
-                        && !args[0].equalsIgnoreCase("default_world_name")
-                        && !args[0].equalsIgnoreCase("include_default_world")
-                        && !args[0].equalsIgnoreCase("exclude")
-                        && !args[0].equalsIgnoreCase("sfx")
-                        && !args[0].equalsIgnoreCase("use_worldguard")
-                        && !args[0].equalsIgnoreCase("respect_worldguard")
-                        && !args[0].equalsIgnoreCase("nether")
-                        && !args[0].equalsIgnoreCase("the_end")
-                        && !args[0].equalsIgnoreCase("land_on_water")
-                        && !args[0].equalsIgnoreCase("updatesaves")
-                        && !args[0].equalsIgnoreCase("delete")
-                        && !args[0].equalsIgnoreCase("find")
-                        && !args[0].equalsIgnoreCase("list")
-                        && !args[0].equalsIgnoreCase("debug")) {
+                String first = args[0].toLowerCase();
+                if (!firstArgsStr.contains(first) && !firstArgsBool.contains(first) && !firstArgsInt.contains(first)) {
                     sender.sendMessage(plugin.pluginName + " TARDIS does not recognise that command argument!");
                     return false;
                 }
                 if (args.length == 1) {
-                    if (args[0].equalsIgnoreCase("reload")) {
+                    if (first.equals("reload")) {
                         plugin.reloadConfig();
                         sender.sendMessage(plugin.pluginName + " TARDIS config reloaded.");
                         return true;
                     }
-                    if (args[0].equalsIgnoreCase("config")) {
+                    if (first.equals("config")) {
                         Set<String> configNames = plugin.getConfig().getKeys(false);
                         sender.sendMessage(plugin.pluginName + ChatColor.RED + " Here are the current plugin config options!");
                         for (String cname : configNames) {
@@ -90,7 +99,7 @@ public class TARDISAdminCommands implements CommandExecutor {
                         }
                         return true;
                     }
-                    if (args[0].equalsIgnoreCase("updatesaves")) {
+                    if (first.equals("updatesaves")) {
                         try {
                             Connection connection = service.getConnection();
                             Statement statement = connection.createStatement();
@@ -125,7 +134,7 @@ public class TARDISAdminCommands implements CommandExecutor {
                         return true;
                     }
                 }
-                if (args[0].equalsIgnoreCase("list")) {
+                if (first.equals("list")) {
                     // get all tardis positions - max 18
                     int start = 0, end = 18;
                     if (args.length > 1) {
@@ -155,7 +164,7 @@ public class TARDISAdminCommands implements CommandExecutor {
                     sender.sendMessage(plugin.pluginName + " Too few command arguments!");
                     return false;
                 } else {
-                    if (args[0].equalsIgnoreCase("delete")) {
+                    if (first.equals("delete")) {
                         try {
                             Connection connection = service.getConnection();
                             Statement statement = connection.createStatement();
@@ -228,7 +237,7 @@ public class TARDISAdminCommands implements CommandExecutor {
                         }
                         return true;
                     }
-                    if (args[0].equalsIgnoreCase("key")) {
+                    if (first.equals("key")) {
                         String setMaterial = args[1].toUpperCase(Locale.ENGLISH);
                         if (!Arrays.asList(TARDISMaterials.MATERIAL_LIST).contains(setMaterial)) {
                             sender.sendMessage(plugin.pluginName + ChatColor.RED + "That is not a valid Material! Try checking http://jd.bukkit.org/apidocs/org/bukkit/Material.html");
@@ -238,7 +247,7 @@ public class TARDISAdminCommands implements CommandExecutor {
                             TARDISConstants.TARDIS_KEY = setMaterial;
                         }
                     }
-                    if (args[0].equalsIgnoreCase("default_world_name")) {
+                    if (first.equals("default_world_name")) {
                         // get world name
                         int count = args.length;
                         StringBuilder buf = new StringBuilder();
@@ -251,7 +260,7 @@ public class TARDISAdminCommands implements CommandExecutor {
                         String nodots = StringUtils.replace(t, ".", "_");
                         plugin.getConfig().set("default_world_name", nodots);
                     }
-                    if (args[0].equalsIgnoreCase("exclude")) {
+                    if (first.equals("exclude")) {
                         // get world name
                         int count = args.length;
                         StringBuilder buf = new StringBuilder();
@@ -270,32 +279,17 @@ public class TARDISAdminCommands implements CommandExecutor {
                         plugin.getConfig().set("worlds." + nodots, false);
                     }
                     //checks if its a boolean config option
-                    if (args[0].equalsIgnoreCase("name_tardis")
-                            || args[0].equalsIgnoreCase("land_on_water")
-                            || args[0].equalsIgnoreCase("the_end")
-                            || args[0].equalsIgnoreCase("nether")
-                            || args[0].equalsIgnoreCase("use_worldguard")
-                            || args[0].equalsIgnoreCase("respect_worldguard")
-                            || args[0].equalsIgnoreCase("sfx")
-                            || args[0].equalsIgnoreCase("include_default_world")
-                            || args[0].equalsIgnoreCase("require_spout")
-                            || args[0].equalsIgnoreCase("platform")
-                            || args[0].equalsIgnoreCase("give_key")
-                            || args[0].equalsIgnoreCase("protect_blocks")
-                            || args[0].equalsIgnoreCase("debug")
-                            || args[0].equalsIgnoreCase("bonus_chest")) {
+                    if (firstArgsBool.contains(first)) {
                         // check they typed true of false
                         String tf = args[1].toLowerCase();
                         if (!tf.equals("true") && !tf.equals("false")) {
                             sender.sendMessage(plugin.pluginName + ChatColor.RED + "The last argument must be true or false!");
                             return false;
                         }
-                        plugin.getConfig().set(args[0].toLowerCase(), Boolean.valueOf(tf));
+                        plugin.getConfig().set(first, Boolean.valueOf(tf));
                     }
                     //checks if its a number config option
-                    if (args[0].equalsIgnoreCase("timeout")
-                            || args[0].equalsIgnoreCase("timeout_height")
-                            || args[0].equalsIgnoreCase("tp_radius")) {
+                    if (firstArgsInt.contains(first)) {
                         String a = args[1];
                         int val;
                         try {
@@ -305,7 +299,7 @@ public class TARDISAdminCommands implements CommandExecutor {
                             sender.sendMessage(plugin.pluginName + ChatColor.RED + " The last argument must be a number!");
                             return false;
                         }
-                        plugin.getConfig().set(args[0].toLowerCase(), val);
+                        plugin.getConfig().set(first, val);
                     }
                     plugin.saveConfig();
                     sender.sendMessage(plugin.pluginName + " The config was updated!");
