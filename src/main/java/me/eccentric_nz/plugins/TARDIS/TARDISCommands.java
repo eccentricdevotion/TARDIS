@@ -53,7 +53,6 @@ public class TARDISCommands implements CommandExecutor {
         firstArgs.add("setdest");
         firstArgs.add("hide");
         firstArgs.add("home");
-        firstArgs.add("occupy");
         firstArgs.add("namekey");
         firstArgs.add("version");
     }
@@ -140,37 +139,6 @@ public class TARDISCommands implements CommandExecutor {
                     } else {
                         sender.sendMessage(plugin.pluginName + TARDISConstants.NO_PERMS_MESSAGE);
                         return false;
-                    }
-                }
-                if (args[0].equalsIgnoreCase("occupy")) {
-                    if (player.hasPermission("tardis.timetravel")) {
-                        try {
-                            Connection connection = service.getConnection();
-                            Statement statement = connection.createStatement();
-                            ResultSet rs = service.getTardis(player.getName(), "tardis_id");
-                            if (!rs.next()) {
-                                sender.sendMessage(plugin.pluginName + " You must be the Timelord of the TARDIS to use this command!");
-                                return false;
-                            }
-                            int id = rs.getInt("tardis_id");
-                            rs.close();
-                            String queryOccupied = "SELECT * FROM travellers WHERE tardis_id = " + id + " AND player = '" + player.getName() + "'";
-                            ResultSet rsOccupied = statement.executeQuery(queryOccupied);
-                            String queryOcc;
-                            String occupied;
-                            if (rsOccupied.next()) {
-                                queryOcc = "DELETE FROM travellers WHERE tardis_id = " + id + " AND player = '" + player.getName() + "'";
-                                occupied = ChatColor.RED + "UNOCCUPIED";
-                            } else {
-                                queryOcc = "INSERT INTO travellers (tardis_id,player) VALUES (" + id + ",'" + player.getName() + "')";
-                                occupied = ChatColor.GREEN + "OCCUPIED";
-                            }
-                            statement.executeUpdate(queryOcc);
-                            sender.sendMessage(plugin.pluginName + " TARDIS occupation was set to: " + occupied);
-                            return true;
-                        } catch (SQLException e) {
-                            plugin.console.sendMessage(plugin.pluginName + " Couldn't get TARDIS: " + e);
-                        }
                     }
                 }
                 if (args[0].equalsIgnoreCase("comehere")) {
