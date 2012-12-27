@@ -141,7 +141,10 @@ public class TARDISDestroyerPoliceBox {
         if (rsb.resultSet()) {
             ArrayList<HashMap<String, String>> data = rsb.getData();
             for (HashMap<String, String> map : data) {
-                int bID = plugin.utils.parseNum(map.get("block"));
+                int bID = 0;
+                if (map.get("block") != null) {
+                    bID = plugin.utils.parseNum(map.get("block"));
+                }
                 if (bID != 0) {
                     byte bd = Byte.parseByte(map.get("data"));
                     String locStr = map.get("location");
