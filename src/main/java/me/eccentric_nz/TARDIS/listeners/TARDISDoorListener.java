@@ -118,215 +118,217 @@ public class TARDISDoorListener implements Listener {
                                 ResultSetDoors rsd = new ResultSetDoors(plugin, where, false);
                                 if ((rsd.resultSet())) {
                                     int id = rsd.getTardis_id();
+                                    int doortype = rsd.getDoor_type();
                                     HashMap<String, Object> tid = new HashMap<String, Object>();
                                     tid.put("tardis_id", id);
                                     ResultSetTardis rs = new ResultSetTardis(plugin, tid, "", false);
-                                    int doortype = rsd.getDoor_type();
                                     TARDISConstants.COMPASS d = rs.getDirection();
                                     TARDISConstants.COMPASS dd = rsd.getDoor_direction();
-                                    String tl = rs.getOwner();
-                                    String save = rs.getSave();
-                                    String cl = rs.getCurrent();
-                                    boolean cham = rs.getChameleon_on();
-                                    float yaw = player.getLocation().getYaw();
-                                    float pitch = player.getLocation().getPitch();
-                                    String companions = rs.getCompanions();
-                                    // get quotes player prefs
-                                    HashMap<String, Object> whereq = new HashMap<String, Object>();
-                                    whereq.put("tardis_id", id);
-                                    ResultSetPlayerPrefs rsq = new ResultSetPlayerPrefs(plugin, whereq);
-                                    boolean userQuotes;
-                                    if (rsq.resultSet()) {
-                                        userQuotes = rsq.getQuotes_on();
-                                    } else {
-                                        userQuotes = true;
-                                    }
-                                    if (doortype == 1) {
-                                        // player is in the TARDIS
-                                        // change the yaw if the door directions are different
-                                        if (!dd.equals(d)) {
-                                            switch (dd) {
-                                                case NORTH:
-                                                    yaw = yaw + adjustYaw[0][d.ordinal()];
-                                                    break;
-                                                case WEST:
-                                                    yaw = yaw + adjustYaw[1][d.ordinal()];
-                                                    break;
-                                                case SOUTH:
-                                                    yaw = yaw + adjustYaw[2][d.ordinal()];
-                                                    break;
-                                                case EAST:
-                                                    yaw = yaw + adjustYaw[3][d.ordinal()];
-                                                    break;
-                                            }
+                                    if (rs.resultSet()) {
+                                        String tl = rs.getOwner();
+                                        String save = rs.getSave();
+                                        String cl = rs.getCurrent();
+                                        boolean cham = rs.getChameleon_on();
+                                        float yaw = player.getLocation().getYaw();
+                                        float pitch = player.getLocation().getPitch();
+                                        String companions = rs.getCompanions();
+                                        // get quotes player prefs
+                                        HashMap<String, Object> whereq = new HashMap<String, Object>();
+                                        whereq.put("player", playerNameStr);
+                                        ResultSetPlayerPrefs rsq = new ResultSetPlayerPrefs(plugin, whereq);
+                                        boolean userQuotes;
+                                        if (rsq.resultSet()) {
+                                            userQuotes = rsq.getQuotes_on();
+                                        } else {
+                                            userQuotes = true;
                                         }
-                                        // get location from database
-                                        final Location exitTardis = plugin.utils.getLocationFromDB(save, yaw, pitch);
-                                        // make location safe ie. outside of the bluebox
-                                        double ex = exitTardis.getX();
-                                        double ez = exitTardis.getZ();
-                                        double ey = exitTardis.getY();
-                                        switch (d) {
-                                            case NORTH:
-                                                exitTardis.setX(ex + 0.5);
-                                                exitTardis.setZ(ez + 2.5);
-                                                break;
-                                            case EAST:
-                                                exitTardis.setX(ex - 1.5);
-                                                exitTardis.setZ(ez + 0.5);
-                                                break;
-                                            case SOUTH:
-                                                exitTardis.setX(ex + 0.5);
-                                                exitTardis.setZ(ez - 1.5);
-                                                break;
-                                            case WEST:
-                                                exitTardis.setX(ex + 2.5);
-                                                exitTardis.setZ(ez + 0.5);
-                                                break;
-                                        }
-                                        World exitWorld = exitTardis.getWorld();
-                                        // destroy current TARDIS location
-                                        Location newl = null;
-                                        // need some sort of check here to sort out who has exited
-                                        // count number of travellers - if 1 less than number counted at start
-                                        // then build and remember else just exit?
-                                        int count = 1;
-                                        HashMap<String, Object> whert = new HashMap<String, Object>();
-                                        whert.put("tardis_id", id);
-                                        ResultSetTravellers rst = new ResultSetTravellers(plugin, whert, true);
-                                        if (rst.resultSet()) {
-                                            count = rst.getData().size();
-                                        }
-                                        if (!save.equals(cl) && (count == plugin.trackTravellers.get(id))) {
-                                            Location l = plugin.utils.getLocationFromDB(cl, 0, 0);
-                                            newl = plugin.utils.getLocationFromDB(save, 0, 0);
-                                            // remove torch
-                                            plugin.destroyPB.destroyTorch(l);
-                                            // remove sign
-                                            plugin.destroyPB.destroySign(l, d);
-                                            // remove blue box
-                                            plugin.destroyPB.destroyPoliceBox(l, d, id, false);
-                                        }
-                                        // try preloading destination chunk
-                                        while (!exitWorld.getChunkAt(exitTardis).isLoaded()) {
-                                            exitWorld.getChunkAt(exitTardis).load();
-                                        }
-                                        // rebuild blue box
-                                        if (newl != null && (count == plugin.trackTravellers.get(id))) {
-                                            plugin.buildPB.buildPoliceBox(id, newl, d, cham, player, false);
-                                        }
-                                        // exit TARDIS!
-                                        movePlayer(player, exitTardis, true, playerWorld, userQuotes);
-                                        // remove player from traveller table
-                                        HashMap<String, Object> wherd = new HashMap<String, Object>();
-                                        wherd.put("player", playerNameStr);
-                                        qf.doDelete("tarvellers", wherd);
-                                    } else {
-                                        boolean chkCompanion = false;
-                                        if (!playerNameStr.equals(tl)) {
-                                            if (plugin.getServer().getPlayer(tl) != null) {
-                                                if (!companions.equals("")) {
-                                                    // is the timelord in the TARDIS?
-                                                    HashMap<String, Object> whert = new HashMap<String, Object>();
-                                                    whert.put("tardis_id", id);
-                                                    ResultSetTravellers rst = new ResultSetTravellers(plugin, whert, true);
-                                                    if (rst.resultSet()) {
-                                                        // is the player in the comapnion list
-                                                        String[] companionData = companions.split(":");
-                                                        for (String c : companionData) {
-                                                            //String lc_name = c.toLowerCase();
-                                                            if (c.equalsIgnoreCase(playerNameStr)) {
-                                                                chkCompanion = true;
-                                                                break;
-                                                            }
-                                                        }
-                                                    } else {
-                                                        player.sendMessage(plugin.pluginName + " " + TARDISConstants.TIMELORD_NOT_IN);
-                                                    }
-                                                }
-                                            } else {
-                                                player.sendMessage(plugin.pluginName + " " + TARDISConstants.TIMELORD_OFFLINE);
-                                            }
-                                        }
-                                        if (playerNameStr.equals(tl) || chkCompanion == true || player.hasPermission("tardis.skeletonkey")) {
-                                            // get INNER TARDIS location
-                                            HashMap<String, Object> wherei = new HashMap<String, Object>();
-                                            wherei.put("door_type", 1);
-                                            wherei.put("tardis_id", id);
-                                            ResultSetDoors rsi = new ResultSetDoors(plugin, wherei, false);
-                                            if (rsi.resultSet()) {
-                                                TARDISConstants.COMPASS innerD = rsi.getDoor_direction();
-                                                String doorLocStr = rsi.getDoor_location();
-                                                String[] split = doorLocStr.split(":");
-                                                World cw = plugin.getServer().getWorld(split[0]);
-                                                try {
-                                                    cx = Integer.parseInt(split[1]);
-                                                    cy = Integer.parseInt(split[2]);
-                                                    cz = Integer.parseInt(split[3]);
-                                                } catch (NumberFormatException nfe) {
-                                                    plugin.console.sendMessage(plugin.pluginName + " Could not convert to number!");
-                                                }
-                                                Location tmp_loc = cw.getBlockAt(cx, cy, cz).getLocation();
-                                                int getx = tmp_loc.getBlockX();
-                                                int getz = tmp_loc.getBlockZ();
-                                                switch (innerD) {
+                                        if (doortype == 1) {
+                                            // player is in the TARDIS
+                                            // change the yaw if the door directions are different
+                                            if (!dd.equals(d)) {
+                                                switch (dd) {
                                                     case NORTH:
-                                                        // z -ve
-                                                        tmp_loc.setX(getx + 0.5);
-                                                        tmp_loc.setZ(getz - 0.5);
-                                                        break;
-                                                    case EAST:
-                                                        // x +ve
-                                                        tmp_loc.setX(getx + 1.5);
-                                                        tmp_loc.setZ(getz + 0.5);
-                                                        break;
-                                                    case SOUTH:
-                                                        // z +ve
-                                                        tmp_loc.setX(getx + 0.5);
-                                                        tmp_loc.setZ(getz + 1.5);
+                                                        yaw = yaw + adjustYaw[0][d.ordinal()];
                                                         break;
                                                     case WEST:
-                                                        // x -ve
-                                                        tmp_loc.setX(getx - 0.5);
-                                                        tmp_loc.setZ(getz + 0.5);
+                                                        yaw = yaw + adjustYaw[1][d.ordinal()];
+                                                        break;
+                                                    case SOUTH:
+                                                        yaw = yaw + adjustYaw[2][d.ordinal()];
+                                                        break;
+                                                    case EAST:
+                                                        yaw = yaw + adjustYaw[3][d.ordinal()];
                                                         break;
                                                 }
-                                                // enter TARDIS!
-                                                cw.getChunkAt(tmp_loc).load();
-                                                tmp_loc.setPitch(pitch);
-                                                // get inner door direction so we can adjust yaw if necessary
-                                                if (!innerD.equals(d)) {
-                                                    switch (d) {
+                                            }
+                                            // get location from database
+                                            final Location exitTardis = plugin.utils.getLocationFromDB(save, yaw, pitch);
+                                            // make location safe ie. outside of the bluebox
+                                            double ex = exitTardis.getX();
+                                            double ez = exitTardis.getZ();
+                                            double ey = exitTardis.getY();
+                                            switch (d) {
+                                                case NORTH:
+                                                    exitTardis.setX(ex + 0.5);
+                                                    exitTardis.setZ(ez + 2.5);
+                                                    break;
+                                                case EAST:
+                                                    exitTardis.setX(ex - 1.5);
+                                                    exitTardis.setZ(ez + 0.5);
+                                                    break;
+                                                case SOUTH:
+                                                    exitTardis.setX(ex + 0.5);
+                                                    exitTardis.setZ(ez - 1.5);
+                                                    break;
+                                                case WEST:
+                                                    exitTardis.setX(ex + 2.5);
+                                                    exitTardis.setZ(ez + 0.5);
+                                                    break;
+                                            }
+                                            World exitWorld = exitTardis.getWorld();
+                                            // destroy current TARDIS location
+                                            Location newl = null;
+                                            // need some sort of check here to sort out who has exited
+                                            // count number of travellers - if 1 less than number counted at start
+                                            // then build and remember else just exit?
+                                            int count = 1;
+                                            HashMap<String, Object> whert = new HashMap<String, Object>();
+                                            whert.put("tardis_id", id);
+                                            ResultSetTravellers rst = new ResultSetTravellers(plugin, whert, true);
+                                            if (rst.resultSet()) {
+                                                count = rst.getData().size();
+                                            }
+                                            if (!save.equals(cl) && (count == plugin.trackTravellers.get(id))) {
+                                                Location l = plugin.utils.getLocationFromDB(cl, 0, 0);
+                                                newl = plugin.utils.getLocationFromDB(save, 0, 0);
+                                                // remove torch
+                                                plugin.destroyPB.destroyTorch(l);
+                                                // remove sign
+                                                plugin.destroyPB.destroySign(l, d);
+                                                // remove blue box
+                                                plugin.destroyPB.destroyPoliceBox(l, d, id, false);
+                                            }
+                                            // try preloading destination chunk
+                                            while (!exitWorld.getChunkAt(exitTardis).isLoaded()) {
+                                                exitWorld.getChunkAt(exitTardis).load();
+                                            }
+                                            // rebuild blue box
+                                            if (newl != null && (count == plugin.trackTravellers.get(id))) {
+                                                plugin.buildPB.buildPoliceBox(id, newl, d, cham, player, false);
+                                            }
+                                            // exit TARDIS!
+                                            movePlayer(player, exitTardis, true, playerWorld, userQuotes);
+                                            // remove player from traveller table
+                                            HashMap<String, Object> wherd = new HashMap<String, Object>();
+                                            wherd.put("player", playerNameStr);
+                                            qf.doDelete("tarvellers", wherd);
+                                        } else {
+                                            boolean chkCompanion = false;
+                                            if (!playerNameStr.equals(tl)) {
+                                                if (plugin.getServer().getPlayer(tl) != null) {
+                                                    if (!companions.equals("")) {
+                                                        // is the timelord in the TARDIS?
+                                                        HashMap<String, Object> whert = new HashMap<String, Object>();
+                                                        whert.put("tardis_id", id);
+                                                        ResultSetTravellers rst = new ResultSetTravellers(plugin, whert, true);
+                                                        if (rst.resultSet()) {
+                                                            // is the player in the comapnion list
+                                                            String[] companionData = companions.split(":");
+                                                            for (String c : companionData) {
+                                                                //String lc_name = c.toLowerCase();
+                                                                if (c.equalsIgnoreCase(playerNameStr)) {
+                                                                    chkCompanion = true;
+                                                                    break;
+                                                                }
+                                                            }
+                                                        } else {
+                                                            player.sendMessage(plugin.pluginName + " " + TARDISConstants.TIMELORD_NOT_IN);
+                                                        }
+                                                    }
+                                                } else {
+                                                    player.sendMessage(plugin.pluginName + " " + TARDISConstants.TIMELORD_OFFLINE);
+                                                }
+                                            }
+                                            if (playerNameStr.equals(tl) || chkCompanion == true || player.hasPermission("tardis.skeletonkey")) {
+                                                // get INNER TARDIS location
+                                                HashMap<String, Object> wherei = new HashMap<String, Object>();
+                                                wherei.put("door_type", 1);
+                                                wherei.put("tardis_id", id);
+                                                ResultSetDoors rsi = new ResultSetDoors(plugin, wherei, false);
+                                                if (rsi.resultSet()) {
+                                                    TARDISConstants.COMPASS innerD = rsi.getDoor_direction();
+                                                    String doorLocStr = rsi.getDoor_location();
+                                                    String[] split = doorLocStr.split(":");
+                                                    World cw = plugin.getServer().getWorld(split[0]);
+                                                    try {
+                                                        cx = Integer.parseInt(split[1]);
+                                                        cy = Integer.parseInt(split[2]);
+                                                        cz = Integer.parseInt(split[3]);
+                                                    } catch (NumberFormatException nfe) {
+                                                        plugin.console.sendMessage(plugin.pluginName + " Could not convert to number!");
+                                                    }
+                                                    Location tmp_loc = cw.getBlockAt(cx, cy, cz).getLocation();
+                                                    int getx = tmp_loc.getBlockX();
+                                                    int getz = tmp_loc.getBlockZ();
+                                                    switch (innerD) {
                                                         case NORTH:
-                                                            yaw = yaw + adjustYaw[0][innerD.ordinal()];
-                                                            break;
-                                                        case WEST:
-                                                            yaw = yaw + adjustYaw[1][innerD.ordinal()];
-                                                            break;
-                                                        case SOUTH:
-                                                            yaw = yaw + adjustYaw[2][innerD.ordinal()];
+                                                            // z -ve
+                                                            tmp_loc.setX(getx + 0.5);
+                                                            tmp_loc.setZ(getz - 0.5);
                                                             break;
                                                         case EAST:
-                                                            yaw = yaw + adjustYaw[3][innerD.ordinal()];
+                                                            // x +ve
+                                                            tmp_loc.setX(getx + 1.5);
+                                                            tmp_loc.setZ(getz + 0.5);
+                                                            break;
+                                                        case SOUTH:
+                                                            // z +ve
+                                                            tmp_loc.setX(getx + 0.5);
+                                                            tmp_loc.setZ(getz + 1.5);
+                                                            break;
+                                                        case WEST:
+                                                            // x -ve
+                                                            tmp_loc.setX(getx - 0.5);
+                                                            tmp_loc.setZ(getz + 0.5);
                                                             break;
                                                     }
-                                                }
-                                                tmp_loc.setYaw(yaw);
-                                                final Location tardis_loc = tmp_loc;
-                                                movePlayer(player, tardis_loc, false, playerWorld, userQuotes);
-                                                // put player into travellers table
-                                                HashMap<String, Object> set = new HashMap<String, Object>();
-                                                set.put("tardis_id", id);
-                                                set.put("player", playerNameStr);
-                                                qf.doInsert("travellers", set);
-                                                // update current TARDIS location
-                                                HashMap<String, Object> setc = new HashMap<String, Object>();
-                                                setc.put("current", save);
-                                                HashMap<String, Object> wherec = new HashMap<String, Object>();
-                                                wherec.put("tardis_id", id);
-                                                qf.doUpdate("tardis", setc, wherec);
-                                                if (plugin.getServer().getPluginManager().getPlugin("Spout") != null && SpoutManager.getPlayer(player).isSpoutCraftEnabled()) {
-                                                    SpoutManager.getSoundManager().playCustomSoundEffect(plugin, SpoutManager.getPlayer(player), "https://dl.dropbox.com/u/53758864/tardis_hum.mp3", false, tardis_loc, 9, 25);
+                                                    // enter TARDIS!
+                                                    cw.getChunkAt(tmp_loc).load();
+                                                    tmp_loc.setPitch(pitch);
+                                                    // get inner door direction so we can adjust yaw if necessary
+                                                    if (!innerD.equals(d)) {
+                                                        switch (d) {
+                                                            case NORTH:
+                                                                yaw = yaw + adjustYaw[0][innerD.ordinal()];
+                                                                break;
+                                                            case WEST:
+                                                                yaw = yaw + adjustYaw[1][innerD.ordinal()];
+                                                                break;
+                                                            case SOUTH:
+                                                                yaw = yaw + adjustYaw[2][innerD.ordinal()];
+                                                                break;
+                                                            case EAST:
+                                                                yaw = yaw + adjustYaw[3][innerD.ordinal()];
+                                                                break;
+                                                        }
+                                                    }
+                                                    tmp_loc.setYaw(yaw);
+                                                    final Location tardis_loc = tmp_loc;
+                                                    movePlayer(player, tardis_loc, false, playerWorld, userQuotes);
+                                                    // put player into travellers table
+                                                    HashMap<String, Object> set = new HashMap<String, Object>();
+                                                    set.put("tardis_id", id);
+                                                    set.put("player", playerNameStr);
+                                                    qf.doInsert("travellers", set);
+                                                    // update current TARDIS location
+                                                    HashMap<String, Object> setc = new HashMap<String, Object>();
+                                                    setc.put("current", save);
+                                                    HashMap<String, Object> wherec = new HashMap<String, Object>();
+                                                    wherec.put("tardis_id", id);
+                                                    qf.doUpdate("tardis", setc, wherec);
+                                                    if (plugin.getServer().getPluginManager().getPlugin("Spout") != null && SpoutManager.getPlayer(player).isSpoutCraftEnabled()) {
+                                                        SpoutManager.getSoundManager().playCustomSoundEffect(plugin, SpoutManager.getPlayer(player), "https://dl.dropbox.com/u/53758864/tardis_hum.mp3", false, tardis_loc, 9, 25);
+                                                    }
                                                 }
                                             }
                                         }
