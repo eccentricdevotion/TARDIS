@@ -221,7 +221,7 @@ public class TARDISDoorListener implements Listener {
                                             // remove player from traveller table
                                             HashMap<String, Object> wherd = new HashMap<String, Object>();
                                             wherd.put("player", playerNameStr);
-                                            qf.doDelete("tarvellers", wherd);
+                                            qf.doDelete("travellers", wherd);
                                         } else {
                                             boolean chkCompanion = false;
                                             if (!playerNameStr.equals(tl)) {
