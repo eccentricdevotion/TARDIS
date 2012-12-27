@@ -33,7 +33,6 @@ import net.minecraft.server.v1_4_6.NBTTagFloat;
 import net.minecraft.server.v1_4_6.NBTTagList;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
-import org.bukkit.OfflinePlayer;
 import org.bukkit.World;
 
 /**
@@ -56,7 +55,6 @@ public class ImprovedOfflinePlayer_v1_4_6 implements ImprovedOfflinePlayer_api {
 //    public ImprovedOfflinePlayer_v1_4_6(OfflinePlayer offlineplayer) {
 //        this.exists = loadPlayerData(offlineplayer.getName());
 //    }
-
     private boolean loadPlayerData(String name) {
         try {
             this.player = name;

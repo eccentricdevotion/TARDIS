@@ -33,7 +33,6 @@ import net.minecraft.server.v1_4_5.NBTTagFloat;
 import net.minecraft.server.v1_4_5.NBTTagList;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
-import org.bukkit.OfflinePlayer;
 import org.bukkit.World;
 
 /**
