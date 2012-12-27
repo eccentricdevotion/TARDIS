@@ -27,23 +27,22 @@ import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
 /**
- *
  * @author eccentric_nz
  */
 public class TARDISLister {
 
     private static TARDISDatabase service = TARDISDatabase.getInstance();
 
+    /**
+     * Retrieves various lists from the database.
+     *
+     * @param p an instance of a player.
+     * @param l is the String name of the list type to retrieve. Possible values
+     * are areas, saves and companions.
+     */
     public static void list(Player p, String l) {
         String playerNameStr = p.getName();
-//        Statement statement = null;
-//        ResultSet rs = null;
-//        try {
-//            Connection connection = service.getConnection();
-//            statement = connection.createStatement();
         if (l.equals("areas")) {
-//                String queryGetArea = "SELECT * FROM areas";
-//                rs = statement.executeQuery(queryGetArea);
             ResultSetAreas rsa = new ResultSetAreas(TARDIS.plugin, null, true);
             int a = 1;
             if (!rsa.resultSet()) {
@@ -62,7 +61,7 @@ public class TARDISLister {
         } else {
             HashMap<String, Object> where = new HashMap<String, Object>();
             where.put("owner", playerNameStr);
-            ResultSetTardis rst = new ResultSetTardis(TARDIS.plugin, where);
+            ResultSetTardis rst = new ResultSetTardis(TARDIS.plugin, where, "", false);
             if (rst.resultSet()) {
                 int id = rst.getTardis_id();
                 // list TARDIS saves
@@ -73,8 +72,6 @@ public class TARDISLister {
                     p.sendMessage(ChatColor.GRAY + "Saves");
                     p.sendMessage(ChatColor.GREEN + "HOME: " + h_data[0] + " at x:" + h_data[1] + " y:" + h_data[2] + " z:" + h_data[3]);
                     // list other saved destinations
-//                        String queryDests = "SELECT * FROM destinations WHERE tardis_id = " + id;
-//                        ResultSet rsDests = statement.executeQuery(queryDests);
                     HashMap<String, Object> whered = new HashMap<String, Object>();
                     whered.put("tardis_id", id);
                     ResultSetDestinations rsd = new ResultSetDestinations(TARDIS.plugin, where, true);
@@ -89,7 +86,6 @@ public class TARDISLister {
                             i++;
                         }
                     }
-//                        rsDests.close();
                 }
                 if (l.equalsIgnoreCase("companions")) {
                     // list companions
@@ -106,21 +102,5 @@ public class TARDISLister {
                 }
             }
         }
-//        } catch (SQLException e) {
-//            TARDIS.plugin.console.sendMessage(TARDIS.plugin.pluginName + "Couldn't list " + l.toLowerCase(Locale.UK) + ": " + e);
-//        } finally {
-//            if (rs != null) {
-//                try {
-//                    rs.close();
-//                } catch (Exception e) {
-//                }
-//            }
-//            if (statement != null) {
-//                try {
-//                    statement.close();
-//                } catch (Exception e) {
-//                }
-//            }
-//        }
     }
 }

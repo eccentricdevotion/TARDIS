@@ -1,3 +1,19 @@
+/*
+ * Copyright (C) 2012 eccentric_nz
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
+ */
 package me.eccentric_nz.TARDIS.listeners;
 
 import me.eccentric_nz.TARDIS.database.TARDISDatabase;
@@ -17,6 +33,13 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractEvent;
 
+/**
+ * Listens for player interaction with the TARDIS console and other specific
+ * items. If the block is clicked and players name is contained in the
+ * appropriate HashMap, then the blocks position is recorded in the database.
+ *
+ * @author eccentric_nz
+ */
 public class TARDISUpdateListener implements Listener {
 
     private TARDIS plugin;
@@ -28,7 +51,9 @@ public class TARDISUpdateListener implements Listener {
 
     @EventHandler(priority = EventPriority.MONITOR)
     public void onUpdateInteract(PlayerInteractEvent event) {
-
+        if (event.isCancelled()) {
+            return;
+        }
         final Player player = event.getPlayer();
         final String playerNameStr = player.getName();
 
@@ -48,26 +73,15 @@ public class TARDISUpdateListener implements Listener {
                 }
                 String blockLocStr = bw + ":" + bx + ":" + by + ":" + bz;
                 plugin.trackPlayers.remove(playerNameStr);
-//                try {
-                int id;
-//                String queryBlockUpdate = "";
-                String home;
-//                    Connection connection = service.getConnection();
-//                    Statement statement = connection.createStatement();
-//                    ResultSet rs = service.getTardis(playerNameStr, "tardis_id, home");
                 HashMap<String, Object> where = new HashMap<String, Object>();
                 where.put("owner", player.getName());
-                ResultSetTardis rs = new ResultSetTardis(plugin, where);
+                ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
                 if (!rs.resultSet()) {
                     player.sendMessage(plugin.pluginName + " " + TARDISConstants.NO_TARDIS);
                     return;
                 }
-                id = rs.getTardis_id();
-                home = rs.getHome();
-//                    if (rs.next()) {
-//                        id = rs.getInt("tardis_id");
-//                        home = rs.getString("home");
-//                        rs.close();
+                int id = rs.getTardis_id();
+                String home = rs.getHome();
                 QueryFactory qf = new QueryFactory(plugin);
                 HashMap<String, Object> tid = new HashMap<String, Object>();
                 HashMap<String, Object> set = new HashMap<String, Object>();
@@ -94,32 +108,25 @@ public class TARDISUpdateListener implements Listener {
                     set.put("door_location", blockLocStr);
                     set.put("door_direction", d);
                     tid.put("door_type", 1);
-                    //queryBlockUpdate = "UPDATE doors SET door_location = '" + blockLocStr + "', door_direction = '" + d + "' WHERE door_type = 1 AND tardis_id = " + id;
                 }
                 if (blockName.equalsIgnoreCase("button") && blockType == Material.STONE_BUTTON) {
                     set.put("button", blockLocStr);
-//                    queryBlockUpdate = "UPDATE tardis SET button = '" + blockLocStr + "' WHERE tardis_id = " + id;
                 }
                 if (blockName.equalsIgnoreCase("world-repeater") && (blockType == Material.DIODE_BLOCK_OFF || blockType == Material.DIODE_BLOCK_ON)) {
                     set.put("repeater0", blockLocStr);
-//                    queryBlockUpdate = "UPDATE tardis SET repeater0 = '" + blockLocStr + "' WHERE tardis_id = " + id;
                 }
                 if (blockName.equalsIgnoreCase("x-repeater") && (blockType == Material.DIODE_BLOCK_OFF || blockType == Material.DIODE_BLOCK_ON)) {
                     set.put("repeater1", blockLocStr);
-//                    queryBlockUpdate = "UPDATE tardis SET repeater1 = '" + blockLocStr + "' WHERE tardis_id = " + id;
                 }
                 if (blockName.equalsIgnoreCase("z-repeater") && (blockType == Material.DIODE_BLOCK_OFF || blockType == Material.DIODE_BLOCK_ON)) {
                     set.put("repeater2", blockLocStr);
-//                    queryBlockUpdate = "UPDATE tardis SET repeater2 = '" + blockLocStr + "' WHERE tardis_id = " + id;
                 }
                 if (blockName.equalsIgnoreCase("y-repeater") && (blockType == Material.DIODE_BLOCK_OFF || blockType == Material.DIODE_BLOCK_ON)) {
                     set.put("repeater3", blockLocStr);
-//                    queryBlockUpdate = "UPDATE tardis SET repeater3 = '" + blockLocStr + "' WHERE tardis_id = " + id;
                 }
                 if (blockName.equalsIgnoreCase("chameleon") && (blockType == Material.WALL_SIGN || blockType == Material.SIGN_POST)) {
                     set.put("chameleon", blockLocStr);
                     set.put("chamele_on", 0);
-                    //queryBlockUpdate = "UPDATE tardis SET chameleon = '" + blockLocStr + "', chamele_on = 0 WHERE tardis_id = " + id;
                     // add text to sign
                     Sign s = (Sign) block.getState();
                     s.setLine(0, "Chameleon");
@@ -129,7 +136,6 @@ public class TARDISUpdateListener implements Listener {
                 }
                 if (blockName.equalsIgnoreCase("save-sign") && (blockType == Material.WALL_SIGN || blockType == Material.SIGN_POST)) {
                     set.put("save_sign", blockLocStr);
-                    //queryBlockUpdate = "UPDATE tardis SET save_sign = '" + blockLocStr + "' WHERE tardis_id = " + id;
                     // add text to sign
                     String[] coords = home.split(":");
                     Sign s = (Sign) block.getState();
@@ -139,14 +145,8 @@ public class TARDISUpdateListener implements Listener {
                     s.setLine(3, coords[1] + "," + coords[2] + "," + coords[3]);
                     s.update();
                 }
-                qf.doUpdate(table,set,tid);
+                qf.doUpdate(table, set, tid);
                 player.sendMessage(plugin.pluginName + " The position of the TARDIS " + blockName + " was updated successfully.");
-//                    } else {
-//                        player.sendMessage(plugin.pluginName + ChatColor.RED + " There was a problem updating the position of the TARDIS " + blockName + "!");
-//                    }
-//                } catch (SQLException e) {
-//                    plugin.console.sendMessage(plugin.pluginName + " Update TARDIS blocks error: " + e);
-//                }
             }
         }
     }
