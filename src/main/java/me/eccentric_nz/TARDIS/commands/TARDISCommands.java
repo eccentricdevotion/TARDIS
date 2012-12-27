@@ -353,7 +353,7 @@ public class TARDISCommands implements CommandExecutor {
                         HashMap<String, Object> where = new HashMap<String, Object>();
                         where.put("owner", player.getName());
                         ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
-                        if (rs.resultSet()) {
+                        if (!rs.resultSet()) {
                             sender.sendMessage(plugin.pluginName + " " + TARDISConstants.NO_TARDIS);
                             return false;
                         }
@@ -373,7 +373,7 @@ public class TARDISCommands implements CommandExecutor {
                         HashMap<String, Object> where = new HashMap<String, Object>();
                         where.put("owner", player.getName());
                         ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
-                        if (rs.resultSet()) {
+                        if (!rs.resultSet()) {
                             sender.sendMessage(plugin.pluginName + " " + TARDISConstants.NO_TARDIS);
                             return false;
                         }
@@ -436,7 +436,7 @@ public class TARDISCommands implements CommandExecutor {
                         ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
                         String comps;
                         int id;
-                        if (rs.resultSet()) {
+                        if (!rs.resultSet()) {
                             sender.sendMessage(plugin.pluginName + " " + TARDISConstants.NO_TARDIS);
                             return false;
                         } else {
@@ -490,7 +490,7 @@ public class TARDISCommands implements CommandExecutor {
                         HashMap<String, Object> where = new HashMap<String, Object>();
                         where.put("owner", player.getName());
                         ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
-                        if (rs.resultSet()) {
+                        if (!rs.resultSet()) {
                             sender.sendMessage(plugin.pluginName + " " + TARDISConstants.NO_TARDIS);
                             return false;
                         }
