@@ -8,11 +8,11 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 package me.eccentric_nz.TARDIS.database;
 
@@ -22,11 +22,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import me.eccentric_nz.TARDIS.TARDIS;
 
 /**
+ * Do basic SQL INSERT, UPDATE and DELETE queries.
  *
  * @author eccentric_nz
  */
@@ -41,56 +41,6 @@ public class QueryFactory {
     }
 
     /**
-     * Retrieves an SQL ResultSet from an SQLite database. This method builds an
-     * SQL query string from the parameters supplied and then executes the
-     * query.
-     *
-     * @param table the database table name to query.
-     * @param data a List<string> of table fields to retrieve.
-     * @param where a HashMap<String, Object> of table fields and values to
-     * refine the search.
-     */
-    public ResultSet getResults(String table, List<String> data, HashMap<String, Object> where) {
-        Statement statement = null;
-        ResultSet rs = null;
-        String fields;
-        String wheres;
-        StringBuilder sbf = new StringBuilder();
-        for (String f : data) {
-            sbf.append(f).append(",");
-        }
-        StringBuilder sbw = new StringBuilder();
-        for (Map.Entry<String, Object> entry : where.entrySet()) {
-            sbw.append(entry.getKey()).append(" = ");
-            if (entry.getValue().getClass().equals(String.class)) {
-                sbw.append("'").append(entry.getValue()).append("',");
-            } else {
-                sbw.append(entry.getValue()).append(",");
-            }
-        }
-        data.clear();
-        where.clear();
-        fields = sbf.toString().substring(0, sbf.length() - 1);
-        wheres = sbw.toString().substring(0, sbw.length() - 1);
-        String query = "SELECT " + fields + " FROM " + table + " WHERE " + wheres + "";
-        plugin.debug(query);
-        try {
-            statement = connection.createStatement();
-            rs = statement.executeQuery(query);
-        } catch (SQLException e) {
-            plugin.debug("ResultSet error for " + table + "! " + e.getMessage());
-        } finally {
-            try {
-                rs.close();
-                statement.close();
-            } catch (Exception e) {
-                plugin.debug("Error closing " + table + "! " + e.getMessage());
-            }
-        }
-        return rs;
-    }
-
-    /**
      * Inserts data into an SQLite database table. This method builds an SQL
      * query string from the parameters supplied and then executes the insert.
      *
@@ -98,8 +48,9 @@ public class QueryFactory {
      * @param data a HashMap<String, Object> of table fields and values to
      * insert.
      */
-    public boolean doInsert(String table, HashMap<String, Object> data) {
+    public int doInsert(String table, HashMap<String, Object> data) {
         Statement statement = null;
+        ResultSet idRS = null;
         String fields;
         String values;
         StringBuilder sbf = new StringBuilder();
@@ -119,12 +70,15 @@ public class QueryFactory {
         plugin.debug(query);
         try {
             statement = connection.createStatement();
-            return (statement.executeUpdate(query) > 0);
+            statement.executeUpdate(query);
+            idRS = statement.getGeneratedKeys();
+            return (idRS.next()) ? idRS.getInt(1) : -1;
         } catch (SQLException e) {
             plugin.debug("Insert error for " + table + "! " + e.getMessage());
-            return false;
+            return -1;
         } finally {
             try {
+                idRS.close();
                 statement.close();
             } catch (Exception e) {
                 plugin.debug("Error closing " + table + "! " + e.getMessage());
@@ -134,8 +88,8 @@ public class QueryFactory {
 
     /**
      * Inserts data into an SQLite database table. This method builds a prepared
-     * SQL statement from the parameters supplied and then executes the
-     * insert. You will need to supply data for all table fields.
+     * SQL statement from the parameters supplied and then executes the insert.
+     * You will need to supply data for all table fields.
      *
      * @param table the database table name to insert the data into.
      * @param data a HashMap<String, Object> of table fields and values to
