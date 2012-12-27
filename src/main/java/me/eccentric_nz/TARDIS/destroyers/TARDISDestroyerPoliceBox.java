@@ -103,8 +103,6 @@ public class TARDISDestroyerPoliceBox {
         HashMap<String, Object> set = new HashMap<String, Object>();
         HashMap<String, Object> wherer = new HashMap<String, Object>();
         wherer.put("tardis_id", id);
-        HashMap<String, Object> wherep = wherer;
-        HashMap<String, Object> whereb = wherer;
         set.put("replaced", "");
         qf.doUpdate("tardis", set, wherer);
 
@@ -132,6 +130,8 @@ public class TARDISDestroyerPoliceBox {
             // forget the platform blocks
             HashMap<String, Object> setp = new HashMap<String, Object>();
             setp.put("platform", "");
+            HashMap<String, Object> wherep = new HashMap<String, Object>();
+            wherep.put("tardis_id", id);
             qf.doUpdate("tardis", setp, wherep);
         }
         // check protected blocks if has block id and data stored then put the block back!
@@ -158,6 +158,8 @@ public class TARDISDestroyerPoliceBox {
             }
         }
         if (hide == false) {
+            HashMap<String, Object> whereb = new HashMap<String, Object>();
+            whereb.put("tardis_id", id);
             qf.doDelete("blocks", whereb);
         }
     }
