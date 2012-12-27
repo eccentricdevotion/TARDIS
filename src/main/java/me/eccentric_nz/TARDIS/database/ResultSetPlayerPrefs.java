@@ -90,14 +90,14 @@ public class ResultSetPlayerPrefs {
                 return false;
             }
         } catch (SQLException e) {
-            plugin.debug("ResultSet error for tardis table! " + e.getMessage());
+            plugin.debug("ResultSet error for player_prefs table! " + e.getMessage());
             return false;
         } finally {
             try {
                 rs.close();
                 statement.close();
             } catch (Exception e) {
-                plugin.debug("Error closing tardis table! " + e.getMessage());
+                plugin.debug("Error closing player_prefs table! " + e.getMessage());
             }
         }
         return true;

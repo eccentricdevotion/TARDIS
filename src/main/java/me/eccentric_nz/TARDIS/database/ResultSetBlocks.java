@@ -108,14 +108,14 @@ public class ResultSetBlocks {
                 return false;
             }
         } catch (SQLException e) {
-            plugin.debug("ResultSet error for destinations table! " + e.getMessage());
+            plugin.debug("ResultSet error for blocks table! " + e.getMessage());
             return false;
         } finally {
             try {
                 rs.close();
                 statement.close();
             } catch (Exception e) {
-                plugin.debug("Error closing destinations table! " + e.getMessage());
+                plugin.debug("Error closing blocks table! " + e.getMessage());
             }
         }
         return true;

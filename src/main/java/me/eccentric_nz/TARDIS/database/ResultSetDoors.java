@@ -107,14 +107,14 @@ public class ResultSetDoors {
                 return false;
             }
         } catch (SQLException e) {
-            plugin.debug("ResultSet error for tardis table! " + e.getMessage());
+            plugin.debug("ResultSet error for doors table! " + e.getMessage());
             return false;
         } finally {
             try {
                 rs.close();
                 statement.close();
             } catch (Exception e) {
-                plugin.debug("Error closing tardis table! " + e.getMessage());
+                plugin.debug("Error closing doors table! " + e.getMessage());
             }
         }
         return true;

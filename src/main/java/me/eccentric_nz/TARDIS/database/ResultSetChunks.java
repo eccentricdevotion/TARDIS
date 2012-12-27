@@ -88,14 +88,14 @@ public class ResultSetChunks {
                 return false;
             }
         } catch (SQLException e) {
-            plugin.debug("ResultSet error for destinations table! " + e.getMessage());
+            plugin.debug("ResultSet error for chunks table! " + e.getMessage());
             return false;
         } finally {
             try {
                 rs.close();
                 statement.close();
             } catch (Exception e) {
-                plugin.debug("Error closing destinations table! " + e.getMessage());
+                plugin.debug("Error closing chunks table! " + e.getMessage());
             }
         }
         return true;

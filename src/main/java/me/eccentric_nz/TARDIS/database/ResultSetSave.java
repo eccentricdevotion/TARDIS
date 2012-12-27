@@ -63,14 +63,14 @@ public class ResultSetSave {
                 return false;
             }
         } catch (SQLException e) {
-            plugin.debug("ResultSet error for tardis table! " + e.getMessage());
+            plugin.debug("ResultSet error for (save) tardis table! " + e.getMessage());
             return false;
         } finally {
             try {
                 rs.close();
                 statement.close();
             } catch (Exception e) {
-                plugin.debug("Error closing tardis table! " + e.getMessage());
+                plugin.debug("Error closing (save) tardis table! " + e.getMessage());
             }
         }
     }
