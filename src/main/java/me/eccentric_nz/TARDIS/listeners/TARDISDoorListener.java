@@ -119,12 +119,12 @@ public class TARDISDoorListener implements Listener {
                                 if ((rsd.resultSet())) {
                                     int id = rsd.getTardis_id();
                                     int doortype = rsd.getDoor_type();
+                                    TARDISConstants.COMPASS dd = rsd.getDoor_direction();
                                     HashMap<String, Object> tid = new HashMap<String, Object>();
                                     tid.put("tardis_id", id);
                                     ResultSetTardis rs = new ResultSetTardis(plugin, tid, "", false);
-                                    TARDISConstants.COMPASS d = rs.getDirection();
-                                    TARDISConstants.COMPASS dd = rsd.getDoor_direction();
                                     if (rs.resultSet()) {
+                                        TARDISConstants.COMPASS d = rs.getDirection();
                                         String tl = rs.getOwner();
                                         String save = rs.getSave();
                                         String cl = rs.getCurrent();
