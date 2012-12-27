@@ -1,8 +1,5 @@
 package me.eccentric_nz.TARDIS.builders;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -10,6 +7,8 @@ import java.util.List;
 import java.util.Map;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
+import me.eccentric_nz.TARDIS.database.QueryFactory;
+import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.TARDISDatabase;
 import org.bukkit.ChatColor;
 import org.bukkit.Chunk;
@@ -36,7 +35,20 @@ public class TARDISBuilderInner {
         this.plugin = plugin;
     }
 
-    public void buildInner(TARDISConstants.SCHEMATIC schm, World world, TARDISConstants.COMPASS d, int dbID, Player p, int middle_id, byte middle_data) {
+    /**
+     * Builds the inside of the TARDIS.
+     *
+     * @param schm the name of the schematic file to use can be DEFAULT, BIGGER
+     * or DELUXE.
+     * @param world the world where the TARDIS is to be built.
+     * @param dbID the unique key of the record for this TARDIS in the database.
+     * @param p an instance of the player who owns the TARDIS.
+     * @param middle_id the material type ID determined from the middle block in
+     * the TARDIS creation stack, this material determines the makeup of the
+     * TARDIS walls.
+     * @param middle_data the data bit associated with the middle_id parameter.
+     */
+    public void buildInner(TARDISConstants.SCHEMATIC schm, World world, int dbID, Player p, int middle_id, byte middle_data) {
         String[][][] s;
         short h, w, l;
         switch (schm) {
@@ -68,7 +80,7 @@ public class TARDISBuilderInner {
         HashMap<Block, Byte> postTorchBlocks = new HashMap<Block, Byte>();
         HashMap<Block, Byte> postSignBlocks = new HashMap<Block, Byte>();
         // calculate startx, starty, startz
-        int gsl[] = plugin.utils.getStartLocation(dbID, d);
+        int gsl[] = plugin.utils.getStartLocation(dbID);
         startx = gsl[0];
         resetx = gsl[1];
         startz = gsl[2];
@@ -107,96 +119,106 @@ public class TARDISBuilderInner {
         }
         Location wg2 = new Location(world, startx + (w - 1), starty, startz + (l - 1));
         // update chunks list in DB
-        try {
-            for (Chunk c : chunkList) {
-                int chunkx = c.getX();
-                int chunkz = c.getZ();
-                statement.executeUpdate("INSERT INTO chunks (tardis_id,world,x,z) VALUES (" + dbID + ", '" + world.getName() + "'," + chunkx + "," + chunkz + ")");
-            }
-        } catch (SQLException e) {
-            plugin.console.sendMessage(plugin.pluginName + " Could not insert reserved chunks into DB!");
+        QueryFactory qf = new QueryFactory(plugin);
+        for (Chunk c : chunkList) {
+            HashMap<String, Object> set = new HashMap<String, Object>();
+            set.put("tardis_id", dbID);
+            set.put("world", world.getName());
+            set.put("x", c.getX());
+            set.put("z", c.getZ());
+            qf.doInsert("chunks", set);
         }
         // reset start positions and do over
         startx = resetx;
         starty = 15;
         startz = resetz;
-        try {
-            Connection connection = service.getConnection();
-            statement = connection.createStatement();
 
-            for (level = 0; level < h; level++) {
-                for (row = 0; row < w; row++) {
-                    for (col = 0; col < l; col++) {
-                        tmp = s[level][row][col];
-                        if (!tmp.equals("-")) {
-                            if (tmp.contains(":")) {
-                                String[] iddata = tmp.split(":");
-                                id = plugin.utils.parseNum(iddata[0]);
-                                data = Byte.parseByte(iddata[1]);
-                                if (id == 54) { // chest
-                                    // remember the location of this chest
-                                    String chest = world.getName() + ":" + startx + ":" + starty + ":" + startz;
-                                    String queryChest = "UPDATE tardis SET chest = '" + chest + "' WHERE tardis_id = " + dbID;
-                                    statement.executeUpdate(queryChest);
-                                }
-                                if (id == 77) { // stone button
-                                    // remember the location of this button
-                                    String button = world.getName() + ":" + startx + ":" + starty + ":" + startz;
-                                    String queryButton = "UPDATE tardis SET button = '" + button + "' WHERE tardis_id = " + dbID;
-                                    statement.executeUpdate(queryButton);
-                                }
-                                if (id == 93) { // remember the location of this redstone repeater
-                                    // save repeater location
-                                    String repeater = world.getName() + ":" + startx + ":" + starty + ":" + startz;
-                                    String queryRepeater = "UPDATE tardis SET repeater" + j + " = '" + repeater + "' WHERE tardis_id = " + dbID;
-                                    statement.executeUpdate(queryRepeater);
-                                    j++;
-                                }
-                                if (id == 71 && data < (byte) 8) { // iron door bottom
-                                    String doorloc = world.getName() + ":" + startx + ":" + starty + ":" + startz;
-                                    String queryDoor = "INSERT INTO doors (tardis_id, door_type, door_location, door_direction) VALUES (" + dbID + ", 1, '" + doorloc + "', 'SOUTH')";
-                                    statement.executeUpdate(queryDoor);
-                                }
-                                if (id == 68) { // chameleon circuit sign
-                                    String chameleonloc = world.getName() + ":" + startx + ":" + starty + ":" + startz;
-                                    String queryChameleon = "UPDATE tardis SET chameleon = '" + chameleonloc + "', chamele_on = 0 WHERE tardis_id = " + dbID;
-                                    statement.executeUpdate(queryChameleon);
-                                }
-                                if (id == 35 && data == 1) {
-                                    switch (middle_id) {
-                                        case 22:
-                                            break;
-                                        default:
-                                            id = middle_id;
-                                            data = middle_data;
-                                    }
-                                }
-                            } else {
-                                id = plugin.utils.parseNum(tmp);
-                                data = 0;
+        for (level = 0; level < h; level++) {
+            for (row = 0; row < w; row++) {
+                for (col = 0; col < l; col++) {
+                    tmp = s[level][row][col];
+                    if (!tmp.equals("-")) {
+                        if (tmp.contains(":")) {
+                            String[] iddata = tmp.split(":");
+                            id = plugin.utils.parseNum(iddata[0]);
+                            data = Byte.parseByte(iddata[1]);
+                            if (id == 54) { // chest
+                                // remember the location of this chest
+                                HashMap<String, Object> setc = new HashMap<String, Object>();
+                                HashMap<String, Object> wherec = new HashMap<String, Object>();
+                                String chest = world.getName() + ":" + startx + ":" + starty + ":" + startz;
+                                setc.put("chest", chest);
+                                wherec.put("tardis_id", dbID);
+                                qf.doUpdate("tardis", setc, wherec);
                             }
-                            //plugin.utils.setBlock(World w, int x, int y, int z, int m, byte d)
-                            // if its the door, don't set it just remember its block then do it at the end
-                            if (id == 71) {
-                                postDoorBlocks.put(world.getBlockAt(startx, starty, startz), data);
-                            } else if (id == 76) {
-                                postTorchBlocks.put(world.getBlockAt(startx, starty, startz), data);
-                            } else if (id == 68) {
-                                postSignBlocks.put(world.getBlockAt(startx, starty, startz), data);
-                            } else {
-                                plugin.utils.setBlock(world, startx, starty, startz, id, data);
+                            if (id == 77) { // stone button
+                                // remember the location of this button
+                                HashMap<String, Object> setb = new HashMap<String, Object>();
+                                HashMap<String, Object> whereb = new HashMap<String, Object>();
+                                String button = world.getName() + ":" + startx + ":" + starty + ":" + startz;
+                                setb.put("button", button);
+                                whereb.put("tardis_id", dbID);
+                                qf.doUpdate("tardis", setb, whereb);
                             }
+                            if (id == 93) { // remember the location of this redstone repeater
+                                // save repeater location
+                                HashMap<String, Object> setr = new HashMap<String, Object>();
+                                HashMap<String, Object> wherer = new HashMap<String, Object>();
+                                String repeater = world.getName() + ":" + startx + ":" + starty + ":" + startz;
+                                setr.put("button" + j, repeater);
+                                wherer.put("tardis_id", dbID);
+                                qf.doUpdate("tardis", setr, wherer);
+                                j++;
+                            }
+                            if (id == 71 && data < (byte) 8) { // iron door bottom
+                                HashMap<String, Object> setd = new HashMap<String, Object>();
+                                String doorloc = world.getName() + ":" + startx + ":" + starty + ":" + startz;
+                                setd.put("tardis_id", dbID);
+                                setd.put("door_type", 1);
+                                setd.put("door_location", doorloc);
+                                setd.put("door_direction", "SOUTH");
+                                qf.doInsert("doors", setd);
+                            }
+                            if (id == 68) { // chameleon circuit sign
+                                HashMap<String, Object> setc = new HashMap<String, Object>();
+                                HashMap<String, Object> wherec = new HashMap<String, Object>();
+                                String chameleonloc = world.getName() + ":" + startx + ":" + starty + ":" + startz;
+                                setc.put("chameleon", chameleonloc);
+                                setc.put("chamele_on", 0);
+                                wherec.put("tardis_id", dbID);
+                                qf.doUpdate("tardis", setc, wherec);
+                            }
+                            if (id == 35 && data == 1) {
+                                switch (middle_id) {
+                                    case 22:
+                                        break;
+                                    default:
+                                        id = middle_id;
+                                        data = middle_data;
+                                }
+                            }
+                        } else {
+                            id = plugin.utils.parseNum(tmp);
+                            data = 0;
                         }
-                        startx += x;
+                        // if its the door, don't set it just remember its block then do it at the end
+                        if (id == 71) {
+                            postDoorBlocks.put(world.getBlockAt(startx, starty, startz), data);
+                        } else if (id == 76) {
+                            postTorchBlocks.put(world.getBlockAt(startx, starty, startz), data);
+                        } else if (id == 68) {
+                            postSignBlocks.put(world.getBlockAt(startx, starty, startz), data);
+                        } else {
+                            plugin.utils.setBlock(world, startx, starty, startz, id, data);
+                        }
                     }
-                    startx = resetx;
-                    startz += z;
+                    startx += x;
                 }
-                startz = resetz;
-                starty += 1;
+                startx = resetx;
+                startz += z;
             }
-        } catch (SQLException e) {
-            plugin.console.sendMessage(plugin.pluginName + " Save Block Locations Error: " + e);
+            startz = resetz;
+            starty += 1;
         }
         // put on the door and the redstone torches
         for (Map.Entry<Block, Byte> entry : postDoorBlocks.entrySet()) {
@@ -225,59 +247,54 @@ public class TARDISBuilderInner {
             replacedBlocks = rb.substring(0, rb.length() - 1);
             String[] replaceddata = replacedBlocks.split(":");
             // get saved chest location
-            try {
-                String queryGetChest = "SELECT chest FROM tardis WHERE tardis_id = " + dbID;
-                ResultSet chestRS = statement.executeQuery(queryGetChest);
-                if (chestRS.next()) {
-                    String saved_chestloc = chestRS.getString("chest");
-                    String[] cdata = saved_chestloc.split(":");
-                    World cw = plugin.getServer().getWorld(cdata[0]);
-                    cx = plugin.utils.parseNum(cdata[1]);
-                    cy = plugin.utils.parseNum(cdata[2]);
-                    cz = plugin.utils.parseNum(cdata[3]);
-                    Location chest_loc = new Location(cw, cx, cy, cz);
-                    Block bonus_chest = chest_loc.getBlock();
-                    Chest chest = (Chest) bonus_chest.getState();
-                    // get chest inventory
-                    Inventory chestInv = chest.getInventory();
-                    // convert non-smeltable ores to items
-                    for (String i : replaceddata) {
-                        rid = plugin.utils.parseNum(i);
-                        switch (rid) {
-                            case 1: // stone to cobblestone
-                                rid = 4;
-                                break;
-                            case 16: // coal ore to coal
-                                rid = 263;
-                                break;
-                            case 21: // lapis ore to lapis dye
-                                rid = 351;
-                                multiplier = 4;
-                                damage = 4;
-                                break;
-                            case 56: // diamond ore to diamonds
-                                rid = 264;
-                                break;
-                            case 73: // redstone ore to redstone dust
-                                rid = 331;
-                                multiplier = 4;
-                                break;
-                            case 129: // emerald ore to emerald
-                                rid = 388;
-                                break;
-                        }
-                        // add items to chest
-                        chestInv.addItem(new ItemStack(rid, multiplier, damage));
-                        multiplier = 1; // reset multiplier
-                        damage = 0; // reset damage
+            HashMap<String, Object> where = new HashMap<String, Object>();
+            where.put("tardis_id", dbID);
+            ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
+            if (rs.resultSet()) {
+                String saved_chestloc = rs.getChest();
+                String[] cdata = saved_chestloc.split(":");
+                World cw = plugin.getServer().getWorld(cdata[0]);
+                cx = plugin.utils.parseNum(cdata[1]);
+                cy = plugin.utils.parseNum(cdata[2]);
+                cz = plugin.utils.parseNum(cdata[3]);
+                Location chest_loc = new Location(cw, cx, cy, cz);
+                Block bonus_chest = chest_loc.getBlock();
+                Chest chest = (Chest) bonus_chest.getState();
+                // get chest inventory
+                Inventory chestInv = chest.getInventory();
+                // convert non-smeltable ores to items
+                for (String i : replaceddata) {
+                    rid = plugin.utils.parseNum(i);
+                    switch (rid) {
+                        case 1: // stone to cobblestone
+                            rid = 4;
+                            break;
+                        case 16: // coal ore to coal
+                            rid = 263;
+                            break;
+                        case 21: // lapis ore to lapis dye
+                            rid = 351;
+                            multiplier = 4;
+                            damage = 4;
+                            break;
+                        case 56: // diamond ore to diamonds
+                            rid = 264;
+                            break;
+                        case 73: // redstone ore to redstone dust
+                            rid = 331;
+                            multiplier = 4;
+                            break;
+                        case 129: // emerald ore to emerald
+                            rid = 388;
+                            break;
                     }
-                } else {
-                    System.err.append(plugin.pluginName + " Could not find chest location in DB!");
+                    // add items to chest
+                    chestInv.addItem(new ItemStack(rid, multiplier, damage));
+                    multiplier = 1; // reset multiplier
+                    damage = 0; // reset damage
                 }
-                chestRS.close();
-                statement.close();
-            } catch (SQLException e) {
-                plugin.console.sendMessage(plugin.pluginName + " Could not get chest location from DB!" + e);
+            } else {
+                plugin.console.sendMessage(plugin.pluginName + " Could not find chest location in DB!");
             }
         }
         if (plugin.worldGuardOnServer && plugin.getConfig().getBoolean("use_worldguard")) {

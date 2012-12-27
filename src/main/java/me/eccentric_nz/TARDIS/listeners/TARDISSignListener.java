@@ -1,13 +1,29 @@
+/*
+ * Copyright (C) 2012 eccentric_nz
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
+ */
 package me.eccentric_nz.TARDIS.listeners;
 
 import me.eccentric_nz.TARDIS.database.TARDISDatabase;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.database.QueryFactory;
+import me.eccentric_nz.TARDIS.database.ResultSetDestinations;
+import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -21,6 +37,13 @@ import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 
+/**
+ * Listens for player interaction with the TARDIS chameleon or save-sign Signs.
+ * If the signs are clicked, they trigger the appropriate actions, for example
+ * turning the Chameleon Circuit on and off.
+ *
+ * @author eccentric_nz
+ */
 public class TARDISSignListener implements Listener {
 
     private TARDIS plugin;
@@ -32,11 +55,10 @@ public class TARDISSignListener implements Listener {
 
     @EventHandler(priority = EventPriority.MONITOR)
     public void onSignInteract(PlayerInteractEvent event) {
-
+        if (event.isCancelled()) {
+            return;
+        }
         final Player player = event.getPlayer();
-        final String playerNameStr = player.getName();
-        int cx = 0, cy = 0, cz = 0;
-
         Block block = event.getClickedBlock();
         if (block != null) {
             Material blockType = block.getType();
@@ -50,61 +72,66 @@ public class TARDISSignListener implements Listener {
                     Location b = block.getLocation();
                     Sign s = (Sign) block.getState();
                     String line1 = s.getLine(0);
-                    String queryTardis;
                     String bw = b.getWorld().getName();
                     int bx = b.getBlockX();
                     int by = b.getBlockY();
                     int bz = b.getBlockZ();
                     String signloc = bw + ":" + bx + ":" + by + ":" + bz;
+                    HashMap<String, Object> where = new HashMap<String, Object>();
                     if (line1.equals("Chameleon")) {
-                        queryTardis = "SELECT * FROM tardis WHERE chameleon = '" + signloc + "'";
+                        where.put("chameleon", signloc);
                     } else {
-                        queryTardis = "SELECT tardis.home, destinations.* FROM tardis, destinations WHERE tardis.save_sign = '" + signloc + "' AND tardis.tardis_id = destinations.tardis_id";
+                        where.put("save_sign", signloc);
                     }
                     // get tardis from saved button location
-                    try {
-                        Connection connection = service.getConnection();
-                        Statement statement = connection.createStatement();
-                        ResultSet rs = statement.executeQuery(queryTardis);
-                        if (rs.isBeforeFirst()) {
-                            int id = rs.getInt("tardis_id");
-                            if (line1.equals("Chameleon")) {
-                                String queryChameleon;
-                                if (rs.getBoolean("chamele_on")) {
-                                    queryChameleon = "UPDATE tardis SET chamele_on = 0 WHERE tardis_id = " + id;
-                                    s.setLine(3, ChatColor.RED + "OFF");
-                                    s.update();
-                                } else {
-                                    queryChameleon = "UPDATE tardis SET chamele_on = 1 WHERE tardis_id = " + id;
-                                    s.setLine(3, ChatColor.GREEN + "ON");
-                                    s.update();
-                                }
-                                statement.executeUpdate(queryChameleon);
+                    ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
+                    if (rs.resultSet()) {
+                        QueryFactory qf = new QueryFactory(plugin);
+                        int id = rs.getTardis_id();
+                        HashMap<String, Object> tid = new HashMap<String, Object>();
+                        tid.put("tardis_id", id);
+                        HashMap<String, Object> sid = tid;
+                        HashMap<String, Object> did = tid;
+                        if (line1.equals("Chameleon")) {
+                            HashMap<String, Object> set = new HashMap<String, Object>();
+                            if (rs.getChameleon_on()) {
+                                set.put("chamele_on", 0);
+                                s.setLine(3, ChatColor.RED + "OFF");
+                                s.update();
                             } else {
-                                if (event.getAction().equals(Action.RIGHT_CLICK_BLOCK) && player.isSneaking()) {
-                                    // set destination to currently displayed save
-                                    String queryDest;
-                                    if (s.getLine(1).equals("Home")) {
-                                        queryDest = "UPDATE tardis SET save = home WHERE tardis_id = " + id;
-                                    } else {
-                                        // get location from sign
-                                        String[] coords = s.getLine(3).split(",");
-                                        queryDest = "UPDATE tardis SET save = '" + s.getLine(2) + ":" + coords[0] + ":" + coords[1] + ":" + coords[2] + "' WHERE tardis_id = " + id;
-                                    }
-                                    statement.executeUpdate(queryDest);
-                                    plugin.utils.updateTravellerCount(id);
-                                    player.sendMessage(plugin.pluginName + " Exit location set");
+                                set.put("chamele_on", 1);
+                                s.setLine(3, ChatColor.GREEN + "ON");
+                                s.update();
+                            }
+                            qf.doUpdate("tardis", set, tid);
+                        } else {
+                            if (event.getAction().equals(Action.RIGHT_CLICK_BLOCK) && player.isSneaking()) {
+                                // set destination to currently displayed save
+                                HashMap<String, Object> sets = new HashMap<String, Object>();
+                                if (s.getLine(1).equals("Home")) {
+                                    sets.put("save", rs.getHome());
+                                } else {
+                                    // get location from sign
+                                    String[] coords = s.getLine(3).split(",");
+                                    String loc = s.getLine(2) + ":" + coords[0] + ":" + coords[1] + ":" + coords[2];
+                                    sets.put("save", loc);
                                 }
-                                if (event.getAction().equals(Action.RIGHT_CLICK_BLOCK) && !player.isSneaking()) {
-
-                                    List<String> dests = new ArrayList<String>();
+                                qf.doUpdate("tardis", sets, sid);
+                                plugin.utils.updateTravellerCount(id);
+                                player.sendMessage(plugin.pluginName + " Exit location set");
+                            }
+                            if (event.getAction().equals(Action.RIGHT_CLICK_BLOCK) && !player.isSneaking()) {
+                                List<String> dests = new ArrayList<String>();
+                                ResultSetDestinations rsd = new ResultSetDestinations(plugin, did, true);
+                                if (rsd.resultSet()) {
+                                    ArrayList<HashMap<String, String>> data = rsd.getData();
                                     String home = "";
                                     // cycle through saves
-                                    while (rs.next()) {
+                                    for (HashMap<String, String> map : data) {
                                         if (home.equals("")) {
-                                            home = "Home:" + rs.getString("home");
+                                            home = "Home:" + map.get("home");
                                         }
-                                        dests.add(rs.getString("dest_name") + ":" + rs.getString("world") + ":" + rs.getString("x") + ":" + rs.getString("y") + ":" + rs.getString("z"));
+                                        dests.add(map.get("dest_name") + ":" + map.get("world") + ":" + map.get("x") + ":" + map.get("y") + ":" + map.get("z"));
                                     }
                                     dests.add(home);
                                     String[] display;
@@ -123,10 +150,6 @@ public class TARDISSignListener implements Listener {
                                 }
                             }
                         }
-                        rs.close();
-                        statement.close();
-                    } catch (SQLException e) {
-                        plugin.console.sendMessage(plugin.pluginName + " Get TARDIS from Sign Error: " + e);
                     }
                 }
             }

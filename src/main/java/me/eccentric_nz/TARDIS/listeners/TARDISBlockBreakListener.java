@@ -1,12 +1,28 @@
+/*
+ * Copyright (C) 2012 eccentric_nz
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
+ */
 package me.eccentric_nz.TARDIS.listeners;
 
 import me.eccentric_nz.TARDIS.database.TARDISDatabase;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
+import me.eccentric_nz.TARDIS.database.QueryFactory;
+import me.eccentric_nz.TARDIS.database.ResultSetTardis;
+import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -22,6 +38,12 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 
+/**
+ * Listens for the TARDIS Police Box sign being broken. If the sign is broken,
+ * then the TARDIS is destroyed and the database records removed.
+ *
+ * @author eccentric_nz
+ */
 public class TARDISBlockBreakListener implements Listener {
 
     private TARDIS plugin;
@@ -33,6 +55,9 @@ public class TARDISBlockBreakListener implements Listener {
 
     @EventHandler(priority = EventPriority.LOW)
     public void onSignBreak(BlockBreakEvent event) {
+        if (event.isCancelled()) {
+            return;
+        }
         int signx = 0, signz = 0;
         Player player = event.getPlayer();
         String playerNameStr = player.getName();
@@ -45,9 +70,9 @@ public class TARDISBlockBreakListener implements Listener {
             Sign sign = (Sign) block.getState();
             String line1 = sign.getLine(1);
             String line2 = sign.getLine(2);
-            String queryCheck;
             Location sign_loc = block.getLocation();
             if (line1.equals(ChatColor.WHITE + "POLICE") && line2.equals(ChatColor.WHITE + "BOX")) {
+                HashMap<String, Object> where = new HashMap<String, Object>();
                 if (player.hasPermission("tardis.delete")) {
                     Block blockbehind = null;
                     byte data = block.getData();
@@ -66,39 +91,34 @@ public class TARDISBlockBreakListener implements Listener {
                     Block blockDown = blockbehind.getRelative(BlockFace.DOWN, 2);
                     Location bd_loc = blockDown.getLocation();
                     String bd_str = bd_loc.getWorld().getName() + ":" + bd_loc.getBlockX() + ":" + bd_loc.getBlockY() + ":" + bd_loc.getBlockZ();
-                    queryCheck = "SELECT * FROM tardis WHERE save = '" + bd_str + "'";
+                    where.put("save", bd_str);
                 } else {
-                    queryCheck = "SELECT * FROM tardis WHERE owner = '" + playerNameStr + "'";
+                    where.put("owner", playerNameStr);
                 }
-                Statement statement = null;
-                ResultSet rs = null;
+                ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
                 occupied:
                 try {
-                    Connection connection = service.getConnection();
-                    statement = connection.createStatement();
-                    rs = statement.executeQuery(queryCheck);
-                    if (rs.next()) {
-                        String saveLoc = rs.getString("save");
-                        String chunkLoc = rs.getString("chunk");
-                        String owner = rs.getString("owner");
-                        TARDISConstants.SCHEMATIC schm = TARDISConstants.SCHEMATIC.valueOf(rs.getString("size"));
-                        int id = rs.getInt("tardis_id");
-                        TARDISConstants.COMPASS d = TARDISConstants.COMPASS.valueOf(rs.getString("direction"));
-
+                    if (rs.resultSet()) {
+                        String saveLoc = rs.getSave();
+                        String chunkLoc = rs.getChunk();
+                        String owner = rs.getOwner();
+                        TARDISConstants.SCHEMATIC schm = rs.getSchematic();
+                        int id = rs.getTardis_id();
+                        TARDISConstants.COMPASS d = rs.getDirection();
                         // need to check that a player is not currently in the TARDIS (if admin delete - maybe always?)
                         if (player.hasPermission("tardis.delete")) {
-                            String queryOccupied = "SELECT player FROM travellers WHERE tardis_id = " + id;
-                            ResultSet rsOcc = statement.executeQuery(queryOccupied);
-                            if (rsOcc.next()) {
+                            HashMap<String, Object> tid = new HashMap<String, Object>();
+                            tid.put("tardis_id", id);
+                            ResultSetTravellers rst = new ResultSetTravellers(plugin, tid, false);
+                            if (rst.resultSet()) {
                                 player.sendMessage(plugin.pluginName + ChatColor.RED + " You cannot delete this TARDIS as it is occupied!");
                                 event.setCancelled(true);
                                 sign.update();
                                 break occupied;
                             }
-                            rsOcc.close();
                         }
                         // check the sign location
-                        Location bb_loc = TARDISConstants.getLocationFromDB(saveLoc, yaw, pitch);
+                        Location bb_loc = plugin.utils.getLocationFromDB(saveLoc, yaw, pitch);
                         // get TARDIS direction
                         switch (d) {
                             case EAST:
@@ -122,8 +142,6 @@ public class TARDISBlockBreakListener implements Listener {
                         // if the sign was on the TARDIS destroy the TARDIS!
                         if (sign_loc.getBlockX() == bb_loc.getBlockX() + signx && sign_loc.getBlockY() + signy == bb_loc.getBlockY() && sign_loc.getBlockZ() == bb_loc.getBlockZ() + signz) {
                             int cwx = 0, cwz = 0;
-                            // don't drop the sign
-                            //block.getDrops().clear();
                             // clear the torch
                             plugin.destroyPB.destroyTorch(bb_loc);
                             plugin.destroyPB.destroySign(bb_loc, d);
@@ -142,20 +160,22 @@ public class TARDISBlockBreakListener implements Listener {
                                 default:
                                     restore = 1;
                             }
-                            String queryDeleteChunk = "DELETE FROM chunks WHERE tardis_id = " + id;
-                            statement.executeUpdate(queryDeleteChunk);
-                            plugin.destroyI.destroyInner(schm, id, cw, d, restore, playerNameStr);
+                            QueryFactory qf = new QueryFactory(plugin);
+                            HashMap<String, Object> cid = new HashMap<String, Object>();
+                            cid.put("tardis_id", id);
+                            HashMap<String, Object> tid = cid;
+                            HashMap<String, Object> did = cid;
+                            qf.doDelete("chunks", cid);
+                            plugin.destroyI.destroyInner(schm, id, cw, restore, playerNameStr);
                             if (cw.getWorldType() == WorldType.FLAT) {
                                 // replace stone blocks with AIR
-                                plugin.destroyI.destroyInner(schm, id, cw, d, 0, playerNameStr);
+                                plugin.destroyI.destroyInner(schm, id, cw, 0, playerNameStr);
                             }
                             plugin.destroyPB.destroyPoliceBox(bb_loc, d, id, false);
                             // remove record from tardis table
-                            String queryDeleteTardis = "DELETE FROM tardis WHERE tardis_id = " + id;
-                            statement.executeUpdate(queryDeleteTardis);
+                            qf.doDelete("tardis", tid);
                             // remove doors from doors table
-                            String queryDeleteDoors = "DELETE FROM doors WHERE tardis_id = " + id;
-                            statement.executeUpdate(queryDeleteDoors);
+                            qf.doDelete("doors", did);
                             player.sendMessage(plugin.pluginName + " The TARDIS was removed from the world and database successfully.");
                             // remove world guard region protection
                             if (plugin.worldGuardOnServer && plugin.getConfig().getBoolean("use_worldguard")) {
@@ -172,17 +192,8 @@ public class TARDISBlockBreakListener implements Listener {
                         sign.update();
                         player.sendMessage("Don't grief the TARDIS!");
                     }
-                } catch (SQLException e) {
+                } catch (Exception e) {
                     plugin.console.sendMessage(plugin.pluginName + " Block Break Listener Error: " + e);
-                } finally {
-                    try {
-                        rs.close();
-                    } catch (Exception e) {
-                    }
-                    try {
-                        statement.close();
-                    } catch (Exception e) {
-                    }
                 }
             }
         }

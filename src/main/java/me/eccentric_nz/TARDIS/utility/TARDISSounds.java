@@ -1,42 +1,59 @@
+/*
+ * Copyright (C) 2012 eccentric_nz
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
+ */
 package me.eccentric_nz.TARDIS.utility;
 
-import me.eccentric_nz.TARDIS.database.TARDISDatabase;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Random;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
+import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.getspout.spoutapi.SpoutManager;
 
+/**
+ * @author eccentric_nz
+ */
 public class TARDISSounds {
 
-    private static TARDISDatabase service = TARDISDatabase.getInstance();
     private static Random rand = new Random();
-    private static Statement statement;
-    private static ResultSet rs;
 
+    /**
+     * Plays a random TARDIS sound to players who are inside the TARDIS and
+     * don't have SFX set to false.
+     */
     public static void randomTARDISSound() {
         if (TARDIS.plugin.getConfig().getBoolean("sfx") == true) {
-            try {
-                String queryTravellers = "SELECT player FROM travellers";
-                Connection connection = service.getConnection();
-                statement = connection.createStatement();
-                rs = statement.executeQuery(queryTravellers);
-                while (rs.next()) {
-                    String playerNameStr = rs.getString("player");
-                    String querySFX = "SELECT sfx_on FROM player_prefs WHERE player = '" + playerNameStr + "'";
-                    ResultSet rsSFX = statement.executeQuery(querySFX);
+            ResultSetTravellers rs = new ResultSetTravellers(TARDIS.plugin, null, true);
+            if (rs.resultSet()) {
+                ArrayList<HashMap<String, String>> data = rs.getData();
+                for (HashMap<String, String> map : data) {
+                    String playerNameStr = map.get("player");
+                    HashMap<String, Object> where = new HashMap<String, Object>();
+                    where.put("player", playerNameStr);
+                    ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(TARDIS.plugin, where);
                     boolean userSFX;
-                    if (rsSFX.next()) {
-                        userSFX = rsSFX.getBoolean("sfx_on");
+                    if (rsp.resultSet()) {
+                        userSFX = rsp.getSfx_on();
                     } else {
                         userSFX = true;
                     }
-                    rsSFX.close();
                     final Player player = Bukkit.getServer().getPlayer(playerNameStr);
                     if (player != null) {
                         if (SpoutManager.getPlayer(player).isSpoutCraftEnabled() && userSFX) {
@@ -46,19 +63,6 @@ public class TARDISSounds {
                             SpoutManager.getSoundManager().playCustomSoundEffect(TARDIS.plugin, SpoutManager.getPlayer(player), sfx, false, location, 9, 75);
                         }
                     }
-                }
-            } catch (SQLException e) {
-                TARDIS.plugin.console.sendMessage(TARDIS.plugin.pluginName + " SFX error: " + e);
-            } finally {
-                if (rs != null) {
-                    try {
-                        rs.close();
-                    } catch (Exception e) {
-                    }
-                }
-                try {
-                    statement.close();
-                } catch (Exception e) {
                 }
             }
         }

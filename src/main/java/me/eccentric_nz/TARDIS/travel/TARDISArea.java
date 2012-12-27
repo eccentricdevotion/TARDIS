@@ -1,17 +1,37 @@
+/*
+ * Copyright (C) 2012 eccentric_nz
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
+ */
 package me.eccentric_nz.TARDIS.travel;
 
 import me.eccentric_nz.TARDIS.database.TARDISDatabase;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Set;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.database.ResultSetAreas;
+import me.eccentric_nz.TARDIS.database.ResultSetSave;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
 import org.bukkit.permissions.PermissionAttachmentInfo;
 
+/**
+ *
+ * @author eccentric_nz
+ */
 public class TARDISArea {
 
     private TARDIS plugin;
@@ -21,191 +41,149 @@ public class TARDISArea {
         this.plugin = plugin;
     }
 
+    /**
+     * Checks if a location is contained within a any TARDIS area.
+     *
+     * @param l a location object to check.
+     */
     public boolean areaCheckInExisting(Location l) {
         boolean chk = true;
-        Statement statement = null;
-        ResultSet rsArea = null;
-        try {
-            Connection connection = service.getConnection();
-            statement = connection.createStatement();
-            String w = l.getWorld().getName();
-            String queryArea = "SELECT * FROM areas WHERE world = '" + w + "'";
-            rsArea = statement.executeQuery(queryArea);
-            if (rsArea.isBeforeFirst()) {
-                while (rsArea.next()) {
-                    int minx = rsArea.getInt("minx");
-                    int minz = rsArea.getInt("minz");
-                    int maxx = rsArea.getInt("maxx");
-                    int maxz = rsArea.getInt("maxz");
-                    // is clicked block within a defined TARDIS area?
-                    if (l.getX() <= maxx && l.getZ() <= maxz && l.getX() >= minx && l.getZ() >= minz) {
-                        chk = false;
+        String w = l.getWorld().getName();
+        HashMap<String, Object> where = new HashMap<String, Object>();
+        where.put("world", w);
+        ResultSetAreas rsa = new ResultSetAreas(plugin, where, true);
+        if (rsa.resultSet()) {
+            ArrayList<HashMap<String, String>> data = rsa.getData();
+            for (HashMap<String, String> map : data) {
+                int minx = plugin.utils.parseNum(map.get("minx"));
+                int minz = plugin.utils.parseNum(map.get("minz"));
+                int maxx = plugin.utils.parseNum(map.get("maxx"));
+                int maxz = plugin.utils.parseNum(map.get("maxz"));
+                // is clicked block within a defined TARDIS area?
+                if (l.getX() <= maxx && l.getZ() <= maxz && l.getX() >= minx && l.getZ() >= minz) {
+                    chk = false;
+                    break;
+                }
+            }
+        }
+        return chk;
+    }
+
+    /**
+     * Checks if a location is contained within a specific TARDIS area.
+     *
+     * @param a the TARDIS area to check in.
+     * @param l a location object to check.
+     */
+    public boolean areaCheckInExile(String a, Location l) {
+        boolean chk = true;
+        HashMap<String, Object> where = new HashMap<String, Object>();
+        where.put("area_name", a);
+        ResultSetAreas rsa = new ResultSetAreas(plugin, where, false);
+        if (rsa.resultSet()) {
+            String w = rsa.getWorld();
+            String lw = l.getWorld().getName();
+            int minx = rsa.getMinx();
+            int minz = rsa.getMinz();
+            int maxx = rsa.getMaxx();
+            int maxz = rsa.getMaxz();
+            // is clicked block within a defined TARDIS area?
+            if (w.equals(lw) && (l.getX() <= maxx && l.getZ() <= maxz && l.getX() >= minx && l.getZ() >= minz)) {
+                chk = false;
+            }
+        }
+        return chk;
+    }
+
+    /**
+     * Checks if a player has permission to travel to a TARDIS area.
+     *
+     * @param p a player to check.
+     * @param l a location object to check.
+     */
+    public boolean areaCheckLocPlayer(Player p, Location l) {
+        boolean chk = false;
+        String w = l.getWorld().getName();
+        HashMap<String, Object> where = new HashMap<String, Object>();
+        where.put("world", w);
+        ResultSetAreas rsa = new ResultSetAreas(plugin, where, true);
+        int i = 1;
+        if (rsa.resultSet()) {
+            ArrayList<HashMap<String, String>> data = rsa.getData();
+            for (HashMap<String, String> map : data) {
+                String n = map.get("area_name");
+                int minx = plugin.utils.parseNum(map.get("minx"));
+                int minz = plugin.utils.parseNum(map.get("minz"));
+                int maxx = plugin.utils.parseNum(map.get("maxx"));
+                int maxz = plugin.utils.parseNum(map.get("maxz"));
+                // is time travel destination within a defined TARDIS area?
+                if (l.getX() <= maxx && l.getZ() <= maxz && l.getX() >= minx && l.getZ() >= minz) {
+                    // does the player have permmission to travel here
+                    if (!p.hasPermission("tardis.area." + n) || !p.isPermissionSet("tardis.area." + n)) {
+                        plugin.trackPerm.put(p.getName(), "tardis.area." + n);
+                        chk = true;
                         break;
                     }
                 }
-            }
-        } catch (SQLException e) {
-            plugin.console.sendMessage(plugin.pluginName + " Area block check error: " + e);
-        } finally {
-            try {
-                rsArea.close();
-            } catch (Exception e) {
-            }
-            try {
-                statement.close();
-            } catch (Exception e) {
+                i++;
             }
         }
         return chk;
     }
 
-    public boolean areaCheckInExile(String a, Location l) {
-        boolean chk = true;
-        Statement statement = null;
-        ResultSet rsArea = null;
-        try {
-            Connection connection = service.getConnection();
-            statement = connection.createStatement();
-            String queryArea = "SELECT * FROM areas WHERE area_name = '" + a + "'";
-            rsArea = statement.executeQuery(queryArea);
-            if (rsArea.next()) {
-                String w = rsArea.getString("world");
-                String lw = l.getWorld().getName();
-                int minx = rsArea.getInt("minx");
-                int minz = rsArea.getInt("minz");
-                int maxx = rsArea.getInt("maxx");
-                int maxz = rsArea.getInt("maxz");
-                // is clicked block within a defined TARDIS area?
-                if (w.equals(lw) && (l.getX() <= maxx && l.getZ() <= maxz && l.getX() >= minx && l.getZ() >= minz)) {
-                    chk = false;
-                }
-            }
-            rsArea.close();
-            statement.close();
-        } catch (SQLException e) {
-            plugin.console.sendMessage(plugin.pluginName + " Area block check error: " + e);
-        } finally {
-            try {
-                rsArea.close();
-            } catch (Exception e) {
-            }
-            try {
-                statement.close();
-            } catch (Exception e) {
-            }
-        }
-        return chk;
-    }
-
-    public boolean areaCheckLocPlayer(Player p, Location l) {
-        boolean chk = false;
-        Statement statement = null;
-        ResultSet rsArea = null;
-        try {
-            Connection connection = service.getConnection();
-            statement = connection.createStatement();
-            String w = l.getWorld().getName();
-            String queryArea = "SELECT * FROM areas WHERE world = '" + w + "'";
-            rsArea = statement.executeQuery(queryArea);
-            int i = 1;
-            if (rsArea.isBeforeFirst()) {
-                while (rsArea.next()) {
-                    String n = rsArea.getString("area_name");
-                    int minx = rsArea.getInt("minx");
-                    int minz = rsArea.getInt("minz");
-                    int maxx = rsArea.getInt("maxx");
-                    int maxz = rsArea.getInt("maxz");
-                    // is time travel destination within a defined TARDIS area?
-                    if (l.getX() <= maxx && l.getZ() <= maxz && l.getX() >= minx && l.getZ() >= minz) {
-                        // does the player have permmission to travel here
-                        if (!p.hasPermission("tardis.area." + n) || !p.isPermissionSet("tardis.area." + n)) {
-                            plugin.trackPerm.put(p.getName(), "tardis.area." + n);
-                            chk = true;
-                            break;
-                        }
-                    }
-                    i++;
-                }
-            }
-            rsArea.close();
-            statement.close();
-        } catch (SQLException e) {
-            plugin.console.sendMessage(plugin.pluginName + " Area player check error: " + e);
-        } finally {
-            try {
-                rsArea.close();
-            } catch (Exception e) {
-            }
-            try {
-                statement.close();
-            } catch (Exception e) {
-            }
-        }
-        return chk;
-    }
-
+    /**
+     * Gets the next available parking spot in a specified TARDIS area.
+     *
+     * @param a the TARDIS area to look in.
+     */
     public Location getNextSpot(String a) {
         Location location = null;
         // find the next available slot in this area
-        Statement statement = null;
-        ResultSet rsArea = null;
-        try {
-            Connection connection = service.getConnection();
-            statement = connection.createStatement();
-            String queryArea = "SELECT * FROM areas WHERE area_name = '" + a + "'";
-            rsArea = statement.executeQuery(queryArea);
-            if (rsArea.next()) {
-                int minx = rsArea.getInt("minx");
-                int x = minx + 2;
-                int minz = rsArea.getInt("minz");
-                int z = minz + 2;
-                int maxx = rsArea.getInt("maxx");
-                int maxz = rsArea.getInt("maxz");
-                String wStr = rsArea.getString("world");
-                rsArea.close();
-                boolean chk = false;
-                while (chk == false) {
-                    String queryLoc = "SELECT save FROM tardis WHERE save LIKE '" + wStr + ":" + x + ":%:" + z + "'";
-                    ResultSet rsLoc = statement.executeQuery(queryLoc);
-                    if (rsLoc.next()) {
-                        if (x <= maxx) {
-                            x += 5;
-                        } else {
-                            x = minx + 2;
-                            if (z <= maxz) {
-                                z += 5;
-                            } else {
-                                z = minz + 2;
-                            }
-                        }
+        HashMap<String, Object> where = new HashMap<String, Object>();
+        where.put("area_name", a);
+        ResultSetAreas rsa = new ResultSetAreas(plugin, where, false);
+        if (rsa.resultSet()) {
+            int minx = rsa.getMinx();
+            int x = minx + 2;
+            int minz = rsa.getMinz();
+            int z = minz + 2;
+            int maxx = rsa.getMaxx();
+            int maxz = rsa.getMaxz();
+            String wStr = rsa.getWorld();
+            boolean chk = false;
+            while (chk == false) {
+                String queryLoc = wStr + ":" + x + ":%:" + z;
+                ResultSetSave rs = new ResultSetSave(plugin, queryLoc);
+                if (rs.resultSet()) {
+                    if (x <= maxx) {
+                        x += 5;
                     } else {
-                        chk = true;
-                        rsLoc.close();
-                        statement.close();
-                        break;
+                        x = minx + 2;
+                        if (z <= maxz) {
+                            z += 5;
+                        } else {
+                            z = minz + 2;
+                        }
                     }
-                }
-                if (chk == true) {
-                    World w = plugin.getServer().getWorld(wStr);
-                    int y = w.getHighestBlockYAt(x, z);
-                    location = w.getBlockAt(x, y, z).getLocation();
+                } else {
+                    chk = true;
+                    break;
                 }
             }
-        } catch (SQLException e) {
-            plugin.console.sendMessage(plugin.pluginName + " Area parking error: " + e);
-        } finally {
-            try {
-                rsArea.close();
-            } catch (Exception e) {
-            }
-            try {
-                statement.close();
-            } catch (Exception e) {
+            if (chk == true) {
+                World w = plugin.getServer().getWorld(wStr);
+                int y = w.getHighestBlockYAt(x, z);
+                location = w.getBlockAt(x, y, z).getLocation();
             }
         }
         return location;
     }
 
+    /**
+     * Gets the TARDIS area a player is exiled to.
+     *
+     * @param p a player to check.
+     */
     public String getExileArea(Player p) {
         Set<PermissionAttachmentInfo> perms = p.getEffectivePermissions();
         String area = "";

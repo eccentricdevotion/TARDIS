@@ -1,11 +1,11 @@
 package me.eccentric_nz.TARDIS.commands;
 
 import me.eccentric_nz.TARDIS.database.TARDISDatabase;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.database.QueryFactory;
+import me.eccentric_nz.TARDIS.database.ResultSetAreas;
 import org.bukkit.ChatColor;
 import org.bukkit.World;
 import org.bukkit.block.Block;
@@ -47,30 +47,15 @@ public class TARDISAreaCommands implements CommandExecutor {
                     return false;
                 }
                 String queryName = "SELECT area_name FROM areas";
-                Statement statement = null;
-                ResultSet rsName = null;
-                try {
-                    Connection connection = service.getConnection();
-                    statement = connection.createStatement();
-                    rsName = statement.executeQuery(queryName);
-                    while (rsName.next()) {
-                        if (rsName.getString("area_name").equals(args[1])) {
+                HashMap<String, Object> where = new HashMap<String, Object>();
+                ResultSetAreas rsa = new ResultSetAreas(plugin, where, true);
+                if (rsa.resultSet()) {
+                    ArrayList<HashMap<String, String>> data = rsa.getData();
+                    for (HashMap<String, String> map : data) {
+                        if (map.get("area_name").equals(args[1])) {
                             sender.sendMessage(plugin.pluginName + " Area name already in use!");
                             return false;
                         }
-                    }
-                } catch (SQLException e) {
-                    plugin.console.sendMessage(plugin.pluginName + "Couldn't get area names: " + e);
-                } finally {
-                    if (rsName != null) {
-                        try {
-                            rsName.close();
-                        } catch (Exception e) {
-                        }
-                    }
-                    try {
-                        statement.close();
-                    } catch (Exception e) {
                     }
                 }
                 plugin.trackName.put(player.getName(), args[1]);
@@ -87,68 +72,44 @@ public class TARDISAreaCommands implements CommandExecutor {
                 return true;
             }
             if (args[0].equals("remove")) {
-                String queryRemove = "DELETE FROM areas WHERE area_name = '" + args[1] + "'";
-                Statement statement = null;
-                try {
-                    Connection connection = service.getConnection();
-                    statement = connection.createStatement();
-                    statement.executeUpdate(queryRemove);
-                    player.sendMessage(plugin.pluginName + " Area [" + args[1] + "] deleted!");
-                    return true;
-                } catch (SQLException e) {
-                    plugin.console.sendMessage(plugin.pluginName + "Couldn't delete area: " + e);
-                } finally {
-                    try {
-                        statement.close();
-                    } catch (Exception e) {
-                    }
-                }
+                HashMap<String, Object> where = new HashMap<String, Object>();
+                where.put("area_name", args[1]);
+                QueryFactory qf = new QueryFactory(plugin);
+                qf.doDelete("areas", where);
+                player.sendMessage(plugin.pluginName + " Area [" + args[1] + "] deleted!");
+                return true;
             }
             if (args[0].equals("show")) {
-                String queryGetArea = "SELECT * FROM areas WHERE area_name = '" + args[1] + "'";
-                Statement statement = null;
-                try {
-                    Connection connection = service.getConnection();
-                    statement = connection.createStatement();
-                    ResultSet rsArea = statement.executeQuery(queryGetArea);
-                    if (!rsArea.next()) {
-                        player.sendMessage(plugin.pluginName + "Could not find area [" + args[1] + "]! Did you type the name correctly?");
-                        return false;
-                    }
-                    int mix = rsArea.getInt("minx");
-                    int miz = rsArea.getInt("minz");
-                    int max = rsArea.getInt("maxx");
-                    int maz = rsArea.getInt("maxz");
-                    World w = plugin.getServer().getWorld(rsArea.getString("world"));
-                    rsArea.close();
-                    final Block b1 = w.getHighestBlockAt(mix, miz).getRelative(BlockFace.UP);
-                    b1.setTypeId(89);
-                    final Block b2 = w.getHighestBlockAt(mix, maz).getRelative(BlockFace.UP);
-                    b2.setTypeId(89);
-                    final Block b3 = w.getHighestBlockAt(max, miz).getRelative(BlockFace.UP);
-                    b3.setTypeId(89);
-                    final Block b4 = w.getHighestBlockAt(max, maz).getRelative(BlockFace.UP);
-                    b4.setTypeId(89);
-                    plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
-                        @Override
-                        public void run() {
-                            b1.setTypeId(0);
-                            b2.setTypeId(0);
-                            b3.setTypeId(0);
-                            b4.setTypeId(0);
-                        }
-                    }, 300L);
-                    return true;
-                } catch (SQLException e) {
-                    plugin.console.sendMessage(plugin.pluginName + "Couldn't delete area: " + e);
-                } finally {
-                    if (statement != null) {
-                        try {
-                            statement.close();
-                        } catch (Exception e) {
-                        }
-                    }
+                HashMap<String, Object> where = new HashMap<String, Object>();
+                where.put("area_name", args[1]);
+                ResultSetAreas rsa = new ResultSetAreas(plugin, where, false);
+                if (!rsa.resultSet()) {
+                    player.sendMessage(plugin.pluginName + "Could not find area [" + args[1] + "]! Did you type the name correctly?");
+                    return false;
                 }
+                int mix = rsa.getMinx();
+                int miz = rsa.getMinz();
+                int max = rsa.getMaxx();
+                int maz = rsa.getMaxz();
+                World w = plugin.getServer().getWorld(rsa.getWorld());
+                final Block b1 = w.getHighestBlockAt(mix, miz).getRelative(BlockFace.UP);
+                b1.setTypeId(89);
+                final Block b2 = w.getHighestBlockAt(mix, maz).getRelative(BlockFace.UP);
+                b2.setTypeId(89);
+                final Block b3 = w.getHighestBlockAt(max, miz).getRelative(BlockFace.UP);
+                b3.setTypeId(89);
+                final Block b4 = w.getHighestBlockAt(max, maz).getRelative(BlockFace.UP);
+                b4.setTypeId(89);
+                plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
+                    @Override
+                    public void run() {
+                        b1.setTypeId(0);
+                        b2.setTypeId(0);
+                        b3.setTypeId(0);
+                        b4.setTypeId(0);
+                    }
+                }, 300L);
+                return true;
             }
         }
         return false;

@@ -1,12 +1,28 @@
+/*
+ * Copyright (C) 2012 eccentric_nz
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
+ */
 package me.eccentric_nz.TARDIS.listeners;
 
 import me.eccentric_nz.TARDIS.database.TARDISDatabase;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
+import me.eccentric_nz.TARDIS.database.ResultSetBlocks;
+import me.eccentric_nz.TARDIS.database.ResultSetDoors;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
@@ -15,6 +31,13 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityExplodeEvent;
 
+/**
+ * Listens for explosions around the TARDIS Police Box. If the explosion affects
+ * any of the Police Box blocks, then those blocks are removed from the effect
+ * of the explosion, there by protecting the Police box from damage.
+ *
+ * @author eccentric_nz
+ */
 public class TARDISExplosionListener implements Listener {
 
     private TARDIS plugin;
@@ -31,42 +54,34 @@ public class TARDISExplosionListener implements Listener {
         }
         int idchk = 0;
         // get list of police box blocks from DB
-        Statement statement = null;
-        ResultSet rsBlocks = null;
-        try {
-            Connection connection = service.getConnection();
-            statement = connection.createStatement();
-            String queryBlocks = "SELECT blocks.*, doors.door_location, doors.door_direction FROM blocks, doors WHERE blocks.tardis_id = doors.tardis_id and doors.door_type = 0";
-            rsBlocks = statement.executeQuery(queryBlocks);
-            if (rsBlocks.isBeforeFirst()) {
-                while (rsBlocks.next()) {
-                    String location = rsBlocks.getString("location");
-                    int id = rsBlocks.getInt("tardis_id");
-                    String[] loc_tmp = location.split(",");
-                    String[] wStr = loc_tmp[0].split("=");
-                    String world = wStr[2].substring(0, wStr[2].length() - 1);
-                    World w = plugin.getServer().getWorld(world);
-                    String[] xStr = loc_tmp[1].split("=");
-                    String[] yStr = loc_tmp[2].split("=");
-                    String[] zStr = loc_tmp[3].split("=");
-                    int x = plugin.utils.parseNum(xStr[1].substring(0, (xStr[1].length() - 2)));
-                    int y = plugin.utils.parseNum(yStr[1].substring(0, (yStr[1].length() - 2)));
-                    int z = plugin.utils.parseNum(zStr[1].substring(0, (zStr[1].length() - 2)));
-                    Block block = w.getBlockAt(x, y, z);
-                    // if the block is a TARDIS block then remove it
-                    if (e.blockList().contains(block)) {
-                        e.blockList().remove(block);
-                    }
-                    if (id != idchk) {
-                        String doorLoc[] = rsBlocks.getString("door_location").split(":");
-                        String dir = rsBlocks.getString("door_direction");
-                        TARDISConstants.COMPASS d;
-                        try {
-                            d = TARDISConstants.COMPASS.valueOf(dir);
-                        } catch (NullPointerException npe) {
-                            plugin.debug("Could not get COMPASS value from door_direction: " + dir);
-                            d = TARDISConstants.COMPASS.EAST;
-                        }
+        ResultSetBlocks rs = new ResultSetBlocks(plugin, null, true);
+        if (rs.resultSet()) {
+            ArrayList<HashMap<String, String>> data = rs.getData();
+            for (HashMap<String, String> map : data) {
+                String location = map.get("location");
+                int id = plugin.utils.parseNum(map.get("tardis_id"));
+                String[] loc_tmp = location.split(",");
+                String[] wStr = loc_tmp[0].split("=");
+                String world = wStr[2].substring(0, wStr[2].length() - 1);
+                World w = plugin.getServer().getWorld(world);
+                String[] xStr = loc_tmp[1].split("=");
+                String[] yStr = loc_tmp[2].split("=");
+                String[] zStr = loc_tmp[3].split("=");
+                int x = plugin.utils.parseNum(xStr[1].substring(0, (xStr[1].length() - 2)));
+                int y = plugin.utils.parseNum(yStr[1].substring(0, (yStr[1].length() - 2)));
+                int z = plugin.utils.parseNum(zStr[1].substring(0, (zStr[1].length() - 2)));
+                Block block = w.getBlockAt(x, y, z);
+                // if the block is a TARDIS block then remove it
+                if (e.blockList().contains(block)) {
+                    e.blockList().remove(block);
+                }
+                if (id != idchk) {
+                    HashMap<String, Object> where = new HashMap<String, Object>();
+                    where.put("tardis_id", id);
+                    ResultSetDoors rsd = new ResultSetDoors(plugin, where, true);
+                    if (rsd.resultSet()) {
+                        String doorLoc[] = rsd.getDoor_location().split(":");
+                        TARDISConstants.COMPASS d = rsd.getDoor_direction();
                         int dx = plugin.utils.parseNum(doorLoc[1]);
                         int dy = plugin.utils.parseNum(doorLoc[2]);
                         int dz = plugin.utils.parseNum(doorLoc[3]);
@@ -104,17 +119,6 @@ public class TARDISExplosionListener implements Listener {
                     }
                     idchk = id;
                 }
-            }
-        } catch (SQLException err) {
-            plugin.console.sendMessage(plugin.pluginName + " Explosion Listener error: " + err);
-        } finally {
-            try {
-                rsBlocks.close();
-            } catch (Exception ex) {
-            }
-            try {
-                statement.close();
-            } catch (Exception ex) {
             }
         }
     }

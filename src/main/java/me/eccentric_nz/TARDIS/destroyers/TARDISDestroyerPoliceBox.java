@@ -16,19 +16,21 @@
  */
 package me.eccentric_nz.TARDIS.destroyers;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.HashMap;
 import me.eccentric_nz.TARDIS.database.TARDISDatabase;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
+import me.eccentric_nz.TARDIS.database.QueryFactory;
+import me.eccentric_nz.TARDIS.database.ResultSetBlocks;
+import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 
 /**
+ * Destroy the TRDIS Police Box.
  *
  * @author eccentric_nz
  */
@@ -41,6 +43,15 @@ public class TARDISDestroyerPoliceBox {
         this.plugin = plugin;
     }
 
+    /**
+     * Destroys the TARDIS Police Box.
+     *
+     * @param l the location of the TARDIS Police Box.
+     * @param d the direction the Police Box is facing.
+     * @param id the unique key of the record for this TARDIS in the database.
+     * @param hide boolean determining whether to forget the protected Police
+     * Box blocks.
+     */
     public void destroyPoliceBox(Location l, TARDISConstants.COMPASS d, int id, boolean hide) {
         World w = l.getWorld();
         int sbx = l.getBlockX() - 1;
@@ -64,75 +75,76 @@ public class TARDISDestroyerPoliceBox {
             sby++;
         }
         // replace the block under the door if there is one
-        Statement statement = null;
-        ResultSet rs = null;
-        try {
-            Connection connection = service.getConnection();
-            statement = connection.createStatement();
-            String queryReplaced = "SELECT replaced FROM tardis WHERE tardis_id = '" + id + "' LIMIT 1";
-            rs = statement.executeQuery(queryReplaced);
-            if (rs.next()) {
-                String replacedData = rs.getString("replaced");
-                if (!replacedData.equals("")) {
-                    String[] parts = replacedData.split(":");
-                    World rw = plugin.getServer().getWorld(parts[0]);
-                    int rx, ry, rz, rID;
-                    byte rb = 0;
-                    rx = plugin.utils.parseNum(parts[1]);
-                    ry = plugin.utils.parseNum(parts[2]);
-                    rz = plugin.utils.parseNum(parts[3]);
-                    rID = plugin.utils.parseNum(parts[4]);
+        HashMap<String, Object> where = new HashMap<String, Object>();
+        where.put("tardis_id", id);
+        ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
+        QueryFactory qf = new QueryFactory(plugin);
+        if (rs.resultSet()) {
+            String replacedData = rs.getReplaced();
+            if (!replacedData.equals("")) {
+                String[] parts = replacedData.split(":");
+                World rw = plugin.getServer().getWorld(parts[0]);
+                int rx, ry, rz, rID;
+                byte rb = 0;
+                rx = plugin.utils.parseNum(parts[1]);
+                ry = plugin.utils.parseNum(parts[2]);
+                rz = plugin.utils.parseNum(parts[3]);
+                rID = plugin.utils.parseNum(parts[4]);
+                try {
+                    rb = Byte.valueOf(parts[5]);
+                } catch (NumberFormatException nfe) {
+                    plugin.console.sendMessage(plugin.pluginName + "Could not convert to number!");
+                }
+                Block b = rw.getBlockAt(rx, ry, rz);
+                b.setTypeIdAndData(rID, rb, true);
+            }
+        }
+        // finally forget the replaced block
+        HashMap<String, Object> set = new HashMap<String, Object>();
+        HashMap<String, Object> wherer = new HashMap<String, Object>();
+        wherer.put("tardis_id", id);
+        HashMap<String, Object> wherep = wherer;
+        HashMap<String, Object> whereb = wherer;
+        set.put("replaced", "");
+        qf.doUpdate("tardis", set, wherer);
+
+        // get rid of platform is there is one
+        if (plugin.getConfig().getBoolean("platform")) {
+            String plat = rs.getPlatform();
+            if (!plat.equals("")) {
+                int px = 0, py = 0, pz = 0;
+                String[] str_blocks = plat.split("~");
+                for (String sb : str_blocks) {
+                    String[] p_data = sb.split(":");
+                    World pw = plugin.getServer().getWorld(p_data[0]);
+                    Material mat = Material.valueOf(p_data[4]);
                     try {
-                        rb = Byte.valueOf(parts[5]);
+                        px = Integer.valueOf(p_data[1]);
+                        py = Integer.valueOf(p_data[2]);
+                        pz = Integer.valueOf(p_data[3]);
                     } catch (NumberFormatException nfe) {
                         plugin.console.sendMessage(plugin.pluginName + "Could not convert to number!");
                     }
-                    Block b = rw.getBlockAt(rx, ry, rz);
-                    b.setTypeIdAndData(rID, rb, true);
+                    Block pb = pw.getBlockAt(px, py, pz);
+                    pb.setType(mat);
                 }
             }
-            // finally forget the replaced block
-            String queryForget = "UPDATE tardis SET replaced = '' WHERE tardis_id = " + id;
-            statement.executeUpdate(queryForget);
-
-            // get rid of platform is there is one
-            if (plugin.getConfig().getBoolean("platform")) {
-                String queryPlatform = "SELECT platform FROM tardis WHERE tardis_id = " + id;
-                ResultSet prs = statement.executeQuery(queryPlatform);
-                if (prs.next()) {
-                    String plat = prs.getString("platform");
-                    if (!prs.wasNull() && !plat.equals("")) {
-                        int px = 0, py = 0, pz = 0;
-                        String[] str_blocks = prs.getString("platform").split("~");
-                        for (String sb : str_blocks) {
-                            String[] p_data = sb.split(":");
-                            World pw = plugin.getServer().getWorld(p_data[0]);
-                            Material mat = Material.valueOf(p_data[4]);
-                            try {
-                                px = Integer.valueOf(p_data[1]);
-                                py = Integer.valueOf(p_data[2]);
-                                pz = Integer.valueOf(p_data[3]);
-                            } catch (NumberFormatException nfe) {
-                                plugin.console.sendMessage(plugin.pluginName + "Could not convert to number!");
-                            }
-                            Block pb = pw.getBlockAt(px, py, pz);
-                            pb.setType(mat);
-                        }
-                    }
-                    // forget the platform blocks
-                    String queryEmptyP = "UPDATE tardis SET platform = '' WHERE tardis_id = " + id;
-                    statement.executeUpdate(queryEmptyP);
-                }
-                prs.close();
-            }
-            // check protected blocks if has block id and data stored then put the block back!
-            String queryGetBlocks = "SELECT * FROM blocks WHERE tardis_id = " + id;
-            ResultSet rsBlocks = statement.executeQuery(queryGetBlocks);
-            while (rsBlocks.next()) {
-                int bID = rsBlocks.getInt("block");
+            // forget the platform blocks
+            HashMap<String, Object> setp = new HashMap<String, Object>();
+            setp.put("platform", "");
+            qf.doUpdate("tardis", setp, wherep);
+        }
+        // check protected blocks if has block id and data stored then put the block back!
+        HashMap<String, Object> tid = new HashMap<String, Object>();
+        tid.put("tardis_id", id);
+        ResultSetBlocks rsb = new ResultSetBlocks(plugin, tid, true);
+        if (rsb.resultSet()) {
+            ArrayList<HashMap<String, String>> data = rsb.getData();
+            for (HashMap<String, String> map : data) {
+                int bID = plugin.utils.parseNum(map.get("block"));
                 if (bID != 0) {
-                    byte data = rsBlocks.getByte("data");
-                    String locStr = rsBlocks.getString("location");
+                    byte bd = Byte.parseByte(map.get("data"));
+                    String locStr = map.get("location");
                     String[] loc_data = locStr.split(",");
                     // x, y, z - 1, 2, 3
                     String[] xStr = loc_data[1].split("=");
@@ -141,26 +153,12 @@ public class TARDISDestroyerPoliceBox {
                     int rx = plugin.utils.parseNum(xStr[1].substring(0, (xStr[1].length() - 2)));
                     int ry = plugin.utils.parseNum(yStr[1].substring(0, (yStr[1].length() - 2)));
                     int rz = plugin.utils.parseNum(zStr[1].substring(0, (zStr[1].length() - 2)));
-                    plugin.utils.setBlock(w, rx, ry, rz, bID, data);
+                    plugin.utils.setBlock(w, rx, ry, rz, bID, bd);
                 }
             }
-            rsBlocks.close();
-            // remove protected blocks from the blocks table
-            if (hide == false) {
-                String queryRemoveBlocks = "DELETE FROM blocks WHERE tardis_id = " + id;
-                statement.executeUpdate(queryRemoveBlocks);
-            }
-        } catch (SQLException e) {
-            plugin.console.sendMessage(plugin.pluginName + " Save Replaced Block Error: " + e);
-        } finally {
-            try {
-                rs.close();
-            } catch (Exception e) {
-            }
-            try {
-                statement.close();
-            } catch (Exception e) {
-            }
+        }
+        if (hide == false) {
+            qf.doDelete("blocks", whereb);
         }
     }
 

@@ -1,13 +1,27 @@
+/*
+ * Copyright (C) 2012 eccentric_nz
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
+ */
 package me.eccentric_nz.TARDIS.listeners;
 
 import me.eccentric_nz.TARDIS.database.TARDISDatabase;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.database.ResultSetBlocks;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.event.EventHandler;
@@ -16,6 +30,13 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBurnEvent;
 import org.bukkit.event.block.BlockIgniteEvent;
 
+/**
+ * Listens for block burn and ignite events around the TARDIS. If the affected
+ * block is part of the TARDIS, then the event is canceled there by providing
+ * protection for the TARDIS blocks
+ *
+ * @author eccentric_nz
+ */
 public class TARDISFireListener implements Listener {
 
     private TARDIS plugin;
@@ -34,32 +55,19 @@ public class TARDISFireListener implements Listener {
 
     @EventHandler(priority = EventPriority.LOWEST)
     public void onBlockIgnite(BlockIgniteEvent event) {
+        if (event.isCancelled()) {
+            return;
+        }
         Block b = event.getBlock();
-        Statement statement = null;
-        ResultSet rsBlockLoc = null;
-        try {
-            Connection connection = service.getConnection();
-            statement = connection.createStatement();
-            for (BlockFace bf : faces) {
-                Block chkBlock = b.getRelative(bf);
-                String l = chkBlock.getLocation().toString();
-                String queryBlock = "SELECT location FROM blocks WHERE location = '" + l + "'";
-                rsBlockLoc = statement.executeQuery(queryBlock);
-                if (rsBlockLoc.next()) {
-                    event.setCancelled(true);
-                    break;
-                }
-            }
-        } catch (SQLException e) {
-            plugin.console.sendMessage(plugin.pluginName + " Could not get block ignite locations from DB!");
-        } finally {
-            try {
-                rsBlockLoc.close();
-            } catch (Exception e) {
-            }
-            try {
-                statement.close();
-            } catch (Exception e) {
+        for (BlockFace bf : faces) {
+            Block chkBlock = b.getRelative(bf);
+            String l = chkBlock.getLocation().toString();
+            HashMap<String, Object> where = new HashMap<String, Object>();
+            where.put("location", l);
+            ResultSetBlocks rs = new ResultSetBlocks(plugin, where, false);
+            if (rs.resultSet()) {
+                event.setCancelled(true);
+                break;
             }
         }
         if (plugin.getConfig().getBoolean("protect_blocks") == true) {
@@ -79,31 +87,12 @@ public class TARDISFireListener implements Listener {
     public void onBlockBurn(BlockBurnEvent event) {
         Block b = event.getBlock();
         String l = b.getLocation().toString();
-        Statement statement = null;
-        ResultSet rsBlockLoc = null;
-        try {
-            Connection connection = service.getConnection();
-            statement = connection.createStatement();
-            String queryBlock = "SELECT location FROM blocks WHERE location = '" + l + "'";
-            rsBlockLoc = statement.executeQuery(queryBlock);
-            if (rsBlockLoc.next()) {
-                event.setCancelled(true);
-            }
-            rsBlockLoc.close();
-            statement.close();
-        } catch (SQLException e) {
-            plugin.console.sendMessage(plugin.pluginName + " Could not get block burn locations from DB!");
-        } finally {
-            try {
-                rsBlockLoc.close();
-            } catch (Exception e) {
-            }
-            try {
-                statement.close();
-            } catch (Exception e) {
-            }
+        HashMap<String, Object> where = new HashMap<String, Object>();
+        where.put("location", l);
+        ResultSetBlocks rs = new ResultSetBlocks(plugin, where, false);
+        if (rs.resultSet()) {
+            event.setCancelled(true);
         }
-
         if (plugin.getConfig().getBoolean("protect_blocks") == true) {
             for (BlockFace bf : faces) {
                 int id = b.getRelative(bf).getTypeId();

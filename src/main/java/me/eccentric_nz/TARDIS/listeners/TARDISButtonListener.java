@@ -1,12 +1,28 @@
+/*
+ * Copyright (C) 2012 eccentric_nz
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
+ */
 package me.eccentric_nz.TARDIS.listeners;
 
 import me.eccentric_nz.TARDIS.database.TARDISDatabase;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
+import me.eccentric_nz.TARDIS.database.QueryFactory;
+import me.eccentric_nz.TARDIS.database.ResultSetTardis;
+import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.travel.TARDISTimetravel;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -21,6 +37,13 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import org.getspout.spoutapi.SpoutManager;
 
+/**
+ * Listens for player interaction with the TARDIS console button. If the button
+ * is clicked it will return a random destination based on the settings of the
+ * four TARDIS console repeaters.
+ *
+ * @author eccentric_nz
+ */
 public class TARDISButtonListener implements Listener {
 
     private TARDIS plugin;
@@ -32,7 +55,9 @@ public class TARDISButtonListener implements Listener {
 
     @EventHandler(priority = EventPriority.MONITOR)
     public void onButtonInteract(PlayerInteractEvent event) {
-
+        if (event.isCancelled()) {
+            return;
+        }
         final Player player = event.getPlayer();
         Block block = event.getClickedBlock();
         if (block != null) {
@@ -51,138 +76,135 @@ public class TARDISButtonListener implements Listener {
                     int bz = b.getBlockZ();
                     String buttonloc = bw + ":" + bx + ":" + by + ":" + bz;
                     // get tardis from saved button location
-                    try {
-                        Connection connection = service.getConnection();
-                        Statement statement = connection.createStatement();
-                        String queryTardis = "SELECT * FROM tardis WHERE button = '" + buttonloc + "'";
-                        ResultSet rs = statement.executeQuery(queryTardis);
-                        if (rs.next()) {
-                            int id = rs.getInt("tardis_id");
-                            String tl = rs.getString("owner");
-                            String r0_str = rs.getString("repeater0");
-                            String r1_str = rs.getString("repeater1");
-                            String r2_str = rs.getString("repeater2");
-                            String r3_str = rs.getString("repeater3");
-                            String dir = rs.getString("direction");
+                    HashMap<String, Object> where = new HashMap<String, Object>();
+                    where.put("button", buttonloc);
+                    ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
+                    if (rs.resultSet()) {
+                        int id = rs.getTardis_id();
+                        String tl = rs.getOwner();
+                        String r0_str = rs.getRepeater0();
+                        String r1_str = rs.getRepeater1();
+                        String r2_str = rs.getRepeater2();
+                        String r3_str = rs.getRepeater3();
+                        TARDISConstants.COMPASS dir = rs.getDirection();
 
-                            // check if player is travelling
-                            String queryTraveller = "SELECT * FROM travellers WHERE tardis_id = " + id + " AND player = '" + tl + "'";
-                            ResultSet timelordIsIn = statement.executeQuery(queryTraveller);
-                            if (timelordIsIn.next()) {
-                                // how many travellers are in the TARDIS?
-                                plugin.utils.updateTravellerCount(id);
-                                if (player.hasPermission("tardis.exile")) {
-                                    // get the exile area
-                                    String permArea = plugin.ta.getExileArea(player);
-                                    player.sendMessage(plugin.pluginName + ChatColor.RED + " Notice:" + ChatColor.RESET + " Your travel has been restricted to the [" + permArea + "] area!");
-                                    Location l = plugin.ta.getNextSpot(permArea);
-                                    if (l == null) {
-                                        player.sendMessage(plugin.pluginName + " All available parking spots are taken in this area!");
-                                    }
-                                    String save_loc = l.getWorld().getName() + ":" + l.getBlockX() + ":" + l.getBlockY() + ":" + l.getBlockZ();
-                                    String querySave = "UPDATE tardis SET save = '" + save_loc + "' WHERE tardis_id = " + id;
-                                    statement.executeUpdate(querySave);
-                                    player.sendMessage(plugin.pluginName + " Your TARDIS was approved for parking in [" + permArea + "]!");
-                                } else {
-                                    // get repeater settings
-                                    Location r0_loc = TARDISConstants.getLocationFromDB(r0_str, 0, 0);
-                                    Block r0 = r0_loc.getBlock();
-                                    byte r0_data = r0.getData();
-                                    Location r1_loc = TARDISConstants.getLocationFromDB(r1_str, 0, 0);
-                                    Block r1 = r1_loc.getBlock();
-                                    byte r1_data = r1.getData();
-                                    Location r2_loc = TARDISConstants.getLocationFromDB(r2_str, 0, 0);
-                                    Block r2 = r2_loc.getBlock();
-                                    byte r2_data = r2.getData();
-                                    Location r3_loc = TARDISConstants.getLocationFromDB(r3_str, 0, 0);
-                                    Block r3 = r3_loc.getBlock();
-                                    byte r3_data = r3.getData();
-                                    boolean playSound = true;
-                                    String environment = "NORMAL";
-                                    if (r0_data <= 3) { // first position
-                                        if (plugin.getConfig().getBoolean("nether") == false && plugin.getConfig().getBoolean("the_end") == false) {
-                                            environment = "NORMAL";
-                                        } else if (plugin.getConfig().getBoolean("nether") == false || plugin.getConfig().getBoolean("the_end") == false) {
-                                            if (plugin.getConfig().getBoolean("nether") == false) {
-                                                environment = (player.hasPermission("tardis.end")) ? "NORMAL:THE_END" : "NORMAL";
-                                            }
-                                            if (plugin.getConfig().getBoolean("the_end") == false) {
-                                                environment = (player.hasPermission("tardis.nether")) ? "NORMAL:NETHER" : "NORMAL";
-                                            }
-                                        } else {
-                                            if (player.hasPermission("tardis.end") && player.hasPermission("tardis.nether")) {
-                                                environment = "NORMAL:NETHER:THE_END";
-                                            }
-                                            if (!player.hasPermission("tardis.end") && player.hasPermission("tardis.nether")) {
-                                                environment = "NORMAL:NETHER";
-                                            }
-                                            if (player.hasPermission("tardis.end") && !player.hasPermission("tardis.nether")) {
-                                                environment = "NORMAL:THE_END";
-                                            }
-                                        }
-                                    }
-                                    if (r0_data >= 4 && r0_data <= 7) { // second position
+                        // check if player is travelling
+                        HashMap<String, Object> wheret = new HashMap<String, Object>();
+                        wheret.put("tardis_id", id);
+                        wheret.put("player", tl);
+                        ResultSetTravellers rst = new ResultSetTravellers(plugin, wheret, false);
+                        if (rst.resultSet()) {
+                            QueryFactory qf = new QueryFactory(plugin);
+                            // how many travellers are in the TARDIS?
+                            plugin.utils.updateTravellerCount(id);
+                            if (player.hasPermission("tardis.exile")) {
+                                // get the exile area
+                                String permArea = plugin.ta.getExileArea(player);
+                                player.sendMessage(plugin.pluginName + ChatColor.RED + " Notice:" + ChatColor.RESET + " Your travel has been restricted to the [" + permArea + "] area!");
+                                Location l = plugin.ta.getNextSpot(permArea);
+                                if (l == null) {
+                                    player.sendMessage(plugin.pluginName + " All available parking spots are taken in this area!");
+                                }
+                                String save_loc = l.getWorld().getName() + ":" + l.getBlockX() + ":" + l.getBlockY() + ":" + l.getBlockZ();
+                                HashMap<String, Object> set = new HashMap<String, Object>();
+                                set.put("save", save_loc);
+                                HashMap<String, Object> wherel = new HashMap<String, Object>();
+                                wherel.put("tardis_id", id);
+                                qf.doUpdate("tardis", set, wherel);
+                                player.sendMessage(plugin.pluginName + " Your TARDIS was approved for parking in [" + permArea + "]!");
+                            } else {
+                                // get repeater settings
+                                Location r0_loc = plugin.utils.getLocationFromDB(r0_str, 0, 0);
+                                Block r0 = r0_loc.getBlock();
+                                byte r0_data = r0.getData();
+                                Location r1_loc = plugin.utils.getLocationFromDB(r1_str, 0, 0);
+                                Block r1 = r1_loc.getBlock();
+                                byte r1_data = r1.getData();
+                                Location r2_loc = plugin.utils.getLocationFromDB(r2_str, 0, 0);
+                                Block r2 = r2_loc.getBlock();
+                                byte r2_data = r2.getData();
+                                Location r3_loc = plugin.utils.getLocationFromDB(r3_str, 0, 0);
+                                Block r3 = r3_loc.getBlock();
+                                byte r3_data = r3.getData();
+                                boolean playSound = true;
+                                String environment = "NORMAL";
+                                if (r0_data <= 3) { // first position
+                                    if (plugin.getConfig().getBoolean("nether") == false && plugin.getConfig().getBoolean("the_end") == false) {
                                         environment = "NORMAL";
-                                    }
-                                    if (r0_data >= 8 && r0_data <= 11) { // third position
-                                        if (plugin.getConfig().getBoolean("nether") == true && player.hasPermission("tardis.nether")) {
-                                            environment = "NETHER";
-                                        } else {
-                                            String message = (player.hasPermission("tardis.nether")) ? " The ancient, dusty senators of Gallifrey have disabled time travel to the Nether" : " You do not have permission to time travel to the Nether";
-                                            player.sendMessage(plugin.pluginName + message);
+                                    } else if (plugin.getConfig().getBoolean("nether") == false || plugin.getConfig().getBoolean("the_end") == false) {
+                                        if (plugin.getConfig().getBoolean("nether") == false) {
+                                            environment = (player.hasPermission("tardis.end")) ? "NORMAL:THE_END" : "NORMAL";
                                         }
-                                    }
-                                    if (r0_data >= 12 && r0_data <= 15) { // last position
-                                        if (plugin.getConfig().getBoolean("the_end") == true && player.hasPermission("tardis.end")) {
-                                            environment = "THE_END";
-                                        } else {
-                                            String message = (player.hasPermission("tardis.end")) ? " The ancient, dusty senators of Gallifrey have disabled time travel to The End" : " You do not have permission to time travel to The End";
-                                            player.sendMessage(plugin.pluginName + message);
+                                        if (plugin.getConfig().getBoolean("the_end") == false) {
+                                            environment = (player.hasPermission("tardis.nether")) ? "NORMAL:NETHER" : "NORMAL";
                                         }
-                                    }
-                                    // create a random destination
-                                    TARDISTimetravel tt = new TARDISTimetravel(plugin);
-                                    Location rand = tt.randomDestination(player, player.getWorld(), r1_data, r2_data, r3_data, dir, environment);
-                                    String d = rand.getWorld().getName() + ":" + rand.getBlockX() + ":" + rand.getBlockY() + ":" + rand.getBlockZ();
-                                    String dchat = rand.getWorld().getName() + " at x: " + rand.getBlockX() + " y: " + rand.getBlockY() + " z: " + rand.getBlockZ();
-                                    String queryCompanions = "SELECT owner, companions FROM tardis WHERE tardis_id = " + id;
-                                    ResultSet rsCom = statement.executeQuery(queryCompanions);
-                                    boolean isTL = true;
-                                    if (rsCom.next()) {
-                                        String comps = rsCom.getString("companions");
-                                        if (comps != null && !comps.equals("") && !comps.equals("[Null]")) {
-                                            String[] companions = comps.split(":");
-                                            for (String c : companions) {
-                                                // are they online - AND are they travelling - need check here for travelling!
-                                                if (plugin.getServer().getPlayer(c) != null) {
-                                                    plugin.getServer().getPlayer(c).sendMessage(plugin.pluginName + " Destination: " + dchat);
-                                                }
-                                                if (c.equalsIgnoreCase(player.getName())) {
-                                                    isTL = false;
-                                                }
-                                            }
-                                        }
-                                    }
-                                    if (isTL == true) {
-                                        player.sendMessage(plugin.pluginName + " Destination: " + dchat);
                                     } else {
-                                        if (plugin.getServer().getPlayer(rs.getString("owner")) != null) {
-                                            plugin.getServer().getPlayer(rs.getString("owner")).sendMessage(plugin.pluginName + " Destination: " + dchat);
+                                        if (player.hasPermission("tardis.end") && player.hasPermission("tardis.nether")) {
+                                            environment = "NORMAL:NETHER:THE_END";
                                         }
-                                    }
-                                    String querySave = "UPDATE tardis SET save = '" + d + "' WHERE tardis_id = " + id;
-                                    statement.executeUpdate(querySave);
-                                    if (plugin.getServer().getPluginManager().getPlugin("Spout") != null && SpoutManager.getPlayer(player).isSpoutCraftEnabled() && playSound == true) {
-                                        SpoutManager.getSoundManager().playCustomSoundEffect(plugin, SpoutManager.getPlayer(player), "https://dl.dropbox.com/u/53758864/tardis_takeoff.mp3", false, b, 9, 75);
+                                        if (!player.hasPermission("tardis.end") && player.hasPermission("tardis.nether")) {
+                                            environment = "NORMAL:NETHER";
+                                        }
+                                        if (player.hasPermission("tardis.end") && !player.hasPermission("tardis.nether")) {
+                                            environment = "NORMAL:THE_END";
+                                        }
                                     }
                                 }
+                                if (r0_data >= 4 && r0_data <= 7) { // second position
+                                    environment = "NORMAL";
+                                }
+                                if (r0_data >= 8 && r0_data <= 11) { // third position
+                                    if (plugin.getConfig().getBoolean("nether") == true && player.hasPermission("tardis.nether")) {
+                                        environment = "NETHER";
+                                    } else {
+                                        String message = (player.hasPermission("tardis.nether")) ? " The ancient, dusty senators of Gallifrey have disabled time travel to the Nether" : " You do not have permission to time travel to the Nether";
+                                        player.sendMessage(plugin.pluginName + message);
+                                    }
+                                }
+                                if (r0_data >= 12 && r0_data <= 15) { // last position
+                                    if (plugin.getConfig().getBoolean("the_end") == true && player.hasPermission("tardis.end")) {
+                                        environment = "THE_END";
+                                    } else {
+                                        String message = (player.hasPermission("tardis.end")) ? " The ancient, dusty senators of Gallifrey have disabled time travel to The End" : " You do not have permission to time travel to The End";
+                                        player.sendMessage(plugin.pluginName + message);
+                                    }
+                                }
+                                // create a random destination
+                                TARDISTimetravel tt = new TARDISTimetravel(plugin);
+                                Location rand = tt.randomDestination(player, r1_data, r2_data, r3_data, dir, environment);
+                                String d = rand.getWorld().getName() + ":" + rand.getBlockX() + ":" + rand.getBlockY() + ":" + rand.getBlockZ();
+                                String dchat = rand.getWorld().getName() + " at x: " + rand.getBlockX() + " y: " + rand.getBlockY() + " z: " + rand.getBlockZ();
+                                boolean isTL = true;
+                                String comps = rs.getCompanions();
+                                if (!comps.equals("")) {
+                                    String[] companions = comps.split(":");
+                                    for (String c : companions) {
+                                        // are they online - AND are they travelling - need check here for travelling!
+                                        if (plugin.getServer().getPlayer(c) != null) {
+                                            plugin.getServer().getPlayer(c).sendMessage(plugin.pluginName + " Destination: " + dchat);
+                                        }
+                                        if (c.equalsIgnoreCase(player.getName())) {
+                                            isTL = false;
+                                        }
+                                    }
+                                }
+                                if (isTL == true) {
+                                    player.sendMessage(plugin.pluginName + " Destination: " + dchat);
+                                } else {
+                                    if (plugin.getServer().getPlayer(rs.getOwner()) != null) {
+                                        plugin.getServer().getPlayer(rs.getOwner()).sendMessage(plugin.pluginName + " Destination: " + dchat);
+                                    }
+                                }
+                                HashMap<String, Object> set = new HashMap<String, Object>();
+                                set.put("save", d);
+                                HashMap<String, Object> wherel = new HashMap<String, Object>();
+                                wherel.put("tardis_id", id);
+                                qf.doUpdate("tardis", set, wherel);
+                                if (plugin.getServer().getPluginManager().getPlugin("Spout") != null && SpoutManager.getPlayer(player).isSpoutCraftEnabled() && playSound == true) {
+                                    SpoutManager.getSoundManager().playCustomSoundEffect(plugin, SpoutManager.getPlayer(player), "https://dl.dropbox.com/u/53758864/tardis_takeoff.mp3", false, b, 9, 75);
+                                }
                             }
-                            timelordIsIn.close();
                         }
-                        rs.close();
-                        statement.close();
-                    } catch (SQLException e) {
-                        plugin.console.sendMessage(plugin.pluginName + " Get TARDIS from Button Error: " + e);
                     }
                 }
             }

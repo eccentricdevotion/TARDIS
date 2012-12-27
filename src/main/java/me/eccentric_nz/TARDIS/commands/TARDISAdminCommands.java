@@ -1,17 +1,16 @@
 package me.eccentric_nz.TARDIS.commands;
 
 import me.eccentric_nz.TARDIS.database.TARDISDatabase;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
-import java.util.Locale;
 import java.util.Set;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
+import me.eccentric_nz.TARDIS.database.QueryFactory;
+import me.eccentric_nz.TARDIS.database.ResultSetTardis;
+import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.utility.TARDISMaterials;
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.ChatColor;
@@ -110,21 +109,16 @@ public class TARDISAdminCommands implements CommandExecutor {
                             start = (tmp * 18) - 18;
                             end = tmp * 18;
                         }
-                        try {
-                            Connection connection = service.getConnection();
-                            Statement statement = connection.createStatement();
-                            String queryList = "SELECT owner, current FROM tardis LIMIT " + start + ", " + end;
-                            ResultSet rsList = statement.executeQuery(queryList);
-                            if (rsList.isBeforeFirst()) {
-                                sender.sendMessage(plugin.pluginName + " TARDIS locations.");
-                                while (rsList.next()) {
-                                    sender.sendMessage("Timelord: " + rsList.getString("Owner") + ", Location: " + rsList.getString("current"));
-                                }
-                                sender.sendMessage(plugin.pluginName + " To see more locations, type: /tardisadmin list 2,  /tardisadmin list 3 etc.");
+                        String limit = start + ", " + end;
+                        HashMap<String, Object> where = new HashMap<String, Object>();
+                        ResultSetTardis rsl = new ResultSetTardis(plugin, where, limit, true);
+                        if (rsl.resultSet()) {
+                            sender.sendMessage(plugin.pluginName + " TARDIS locations.");
+                            ArrayList<HashMap<String, String>> data = rsl.getData();
+                            for (HashMap<String, String> map : data) {
+                                sender.sendMessage("Timelord: " + map.get("Owner") + ", Location: " + map.get("current"));
                             }
-                            statement.close();
-                        } catch (SQLException e) {
-                            plugin.console.sendMessage(plugin.pluginName + " Console saves to destinations error: " + e);
+                            sender.sendMessage(plugin.pluginName + " To see more locations, type: /tardisadmin list 2,  /tardisadmin list 3 etc.");
                         }
                         return true;
                     }
@@ -134,75 +128,71 @@ public class TARDISAdminCommands implements CommandExecutor {
                     return false;
                 } else {
                     if (args[0].equalsIgnoreCase("delete")) {
-                        try {
-                            Connection connection = service.getConnection();
-                            Statement statement = connection.createStatement();
-                            // check the db contains the player name
-                            String queryGet = "SELECT tardis_id, chunk, direction, save, current, size FROM tardis WHERE owner = '" + args[1] + "'";
-                            System.out.print(queryGet);
-                            ResultSet rsGet = statement.executeQuery(queryGet);
-                            if (rsGet.next()) {
-                                int id = rsGet.getInt("tardis_id");
-                                String saveLoc = rsGet.getString("save");
-                                String currentLoc = rsGet.getString("current");
-                                TARDISConstants.SCHEMATIC schm = TARDISConstants.SCHEMATIC.valueOf(rsGet.getString("size"));
-                                TARDISConstants.COMPASS d = TARDISConstants.COMPASS.valueOf(rsGet.getString("direction"));
-                                String chunkLoc = rsGet.getString("chunk");
-                                String[] cdata = chunkLoc.split(":");
-                                World cw = plugin.getServer().getWorld(cdata[0]);
-                                World.Environment env = cw.getEnvironment();
-                                int restore;
-                                switch (env) {
-                                    case NETHER:
-                                        restore = 87;
-                                        break;
-                                    case THE_END:
-                                        restore = 121;
-                                        break;
-                                    default:
-                                        restore = 1;
-                                }
-                                // check if player is in the TARDIS
-                                String queryTravellers = "SELECT player FROM travellers WHERE tardis_id = " + id;
-                                ResultSet rsTravellers = statement.executeQuery(queryTravellers);
-                                boolean useCurrent = false;
-                                if (rsTravellers.isBeforeFirst()) {
-                                    useCurrent = true;
-                                    Location spawn = cw.getSpawnLocation();
-                                    while (rsTravellers.next()) {
-                                        String op = plugin.getServer().getOfflinePlayer(rsTravellers.getString("player")).getName();
-                                        // teleport offline player to spawn
-                                        plugin.iopHandler.setLocation(op, spawn);
-                                    }
-                                    String queryDelTravellers = "DELETE FROM travellers WHERE tardis_id = " + id;
-                                    statement.executeUpdate(queryDelTravellers);
-                                }
-                                // need to determine if we use the save location or the current location
-                                Location bb_loc = (useCurrent) ? TARDISConstants.getLocationFromDB(currentLoc, 0, 0) : TARDISConstants.getLocationFromDB(saveLoc, 0, 0);
-                                // destroy the TARDIS
-                                plugin.destroyPB.destroyTorch(bb_loc);
-                                plugin.destroyPB.destroySign(bb_loc, d);
-                                plugin.destroyI.destroyInner(schm, id, cw, d, restore, args[1]);
-                                if (cw.getWorldType() == WorldType.FLAT) {
-                                    // replace stone blocks with AIR
-                                    plugin.destroyI.destroyInner(schm, id, cw, d, 0, args[1]);
-                                }
-                                plugin.destroyPB.destroyPoliceBox(bb_loc, d, id, false);
-                                // delete the TARDIS from the db
-                                String queryDeleteChunk = "DELETE FROM chunks WHERE tardis_id = " + id;
-                                statement.executeUpdate(queryDeleteChunk);
-                                String queryDelTardis = "DELETE FROM tardis WHERE tardis_id = " + id;
-                                statement.executeUpdate(queryDelTardis);
-                                String queryDeleteDoors = "DELETE FROM doors WHERE tardis_id = " + id;
-                                statement.executeUpdate(queryDeleteDoors);
-                                sender.sendMessage(plugin.pluginName + " The TARDIS was removed from the world and database successfully.");
-                            } else {
-                                sender.sendMessage(plugin.pluginName + " Could not find player [" + args[1] + "] in the database!");
-                                return true;
+                        HashMap<String, Object> where = new HashMap<String, Object>();
+                        where.put("owner", args[1]);
+                        ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
+                        if (rs.resultSet()) {
+                            int id = rs.getTardis_id();
+                            String saveLoc = rs.getSave();
+                            String currentLoc = rs.getCurrent();
+                            TARDISConstants.SCHEMATIC schm = rs.getSchematic();
+                            TARDISConstants.COMPASS d = rs.getDirection();
+                            String chunkLoc = rs.getChunk();
+                            String[] cdata = chunkLoc.split(":");
+                            World cw = plugin.getServer().getWorld(cdata[0]);
+                            World.Environment env = cw.getEnvironment();
+                            int restore;
+                            switch (env) {
+                                case NETHER:
+                                    restore = 87;
+                                    break;
+                                case THE_END:
+                                    restore = 121;
+                                    break;
+                                default:
+                                    restore = 1;
                             }
-                            statement.close();
-                        } catch (SQLException e) {
-                            plugin.console.sendMessage(plugin.pluginName + " Admin delete TARDIS error: " + e);
+                            // check if player is in the TARDIS
+                            HashMap<String, Object> wheret = new HashMap<String, Object>();
+                            where.put("tardis_id", id);
+                            ResultSetTravellers rst = new ResultSetTravellers(plugin, wheret, true);
+                            boolean useCurrent = false;
+                            QueryFactory qf = new QueryFactory(plugin);
+                            HashMap<String, Object> whered = new HashMap<String, Object>();
+                            whered.put("tardis_id", id);
+                            HashMap<String, Object> wherec = whered;
+                            HashMap<String, Object> wherea = whered;
+                            HashMap<String, Object> whereo = whered;
+                            if (rst.resultSet()) {
+                                useCurrent = true;
+                                Location spawn = cw.getSpawnLocation();
+                                ArrayList<HashMap<String, String>> data = rst.getData();
+                                for (HashMap<String, String> map : data) {
+                                    String op = plugin.getServer().getOfflinePlayer(map.get("player")).getName();
+                                    // teleport offline player to spawn
+                                    plugin.iopHandler.setLocation(op, spawn);
+                                }
+                                qf.doDelete("travellers", whered);
+                            }
+                            // need to determine if we use the save location or the current location
+                            Location bb_loc = (useCurrent) ? plugin.utils.getLocationFromDB(currentLoc, 0, 0) : plugin.utils.getLocationFromDB(saveLoc, 0, 0);
+                            // destroy the TARDIS
+                            plugin.destroyPB.destroyTorch(bb_loc);
+                            plugin.destroyPB.destroySign(bb_loc, d);
+                            plugin.destroyI.destroyInner(schm, id, cw, restore, args[1]);
+                            if (cw.getWorldType() == WorldType.FLAT) {
+                                // replace stone blocks with AIR
+                                plugin.destroyI.destroyInner(schm, id, cw, 0, args[1]);
+                            }
+                            plugin.destroyPB.destroyPoliceBox(bb_loc, d, id, false);
+                            // delete the TARDIS from the db
+                            qf.doDelete("chunks", wherec);
+                            qf.doDelete("tardis", wherea);
+                            qf.doDelete("doors", whereo);
+                            sender.sendMessage(plugin.pluginName + " The TARDIS was removed from the world and database successfully.");
+                        } else {
+                            sender.sendMessage(plugin.pluginName + " Could not find player [" + args[1] + "] in the database!");
+                            return true;
                         }
                         return true;
                     }
