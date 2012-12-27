@@ -66,8 +66,8 @@ public class TARDISButtonListener implements Listener {
             Action action = event.getAction();
             if (action == Action.RIGHT_CLICK_BLOCK) {
                 ItemStack stack = player.getItemInHand();
-                // only proceed if they are clicking a stone button!
-                if (blockType == Material.STONE_BUTTON) {
+                // only proceed if they are clicking a type of a button or a lever!
+                if (blockType == Material.STONE_BUTTON || blockType == Material.WOOD_BUTTON || blockType == Material.LEVER) {
                     // get clicked block location
                     Location b = block.getLocation();
                     String bw = b.getWorld().getName();
