@@ -98,7 +98,7 @@ public class ResultSetBlocks {
                         }
                         data.add(row);
                     }
-                    this.id = rs.getInt("block_id");
+                    this.id = rs.getInt("b_id");
                     this.tardis_id = rs.getInt("tardis_id");
                     this.location = rs.getString("location");
                     this.blockId = rs.getInt("block");
