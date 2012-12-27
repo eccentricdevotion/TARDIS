@@ -80,7 +80,7 @@ public class ResultSetDestinations {
                         }
                         data.add(row);
                     }
-                    this.dest_id = rs.getInt("traveller_id");
+                    this.dest_id = rs.getInt("dest_id");
                     this.tardis_id = rs.getInt("tardis_id");
                     this.dest_name = rs.getString("dest_name");
                     this.world = rs.getString("world");
