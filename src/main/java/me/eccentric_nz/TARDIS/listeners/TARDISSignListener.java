@@ -90,8 +90,6 @@ public class TARDISSignListener implements Listener {
                         int id = rs.getTardis_id();
                         HashMap<String, Object> tid = new HashMap<String, Object>();
                         tid.put("tardis_id", id);
-                        HashMap<String, Object> sid = tid;
-                        HashMap<String, Object> did = tid;
                         if (line1.equals("Chameleon")) {
                             HashMap<String, Object> set = new HashMap<String, Object>();
                             if (rs.getChameleon_on()) {
@@ -116,12 +114,16 @@ public class TARDISSignListener implements Listener {
                                     String loc = s.getLine(2) + ":" + coords[0] + ":" + coords[1] + ":" + coords[2];
                                     sets.put("save", loc);
                                 }
+                                HashMap<String, Object> sid = new HashMap<String, Object>();
+                                sid.put("tardis_id", id);
                                 qf.doUpdate("tardis", sets, sid);
                                 plugin.utils.updateTravellerCount(id);
                                 player.sendMessage(plugin.pluginName + " Exit location set");
                             }
                             if (event.getAction().equals(Action.RIGHT_CLICK_BLOCK) && !player.isSneaking()) {
                                 List<String> dests = new ArrayList<String>();
+                                HashMap<String, Object> did = new HashMap<String, Object>();
+                                did.put("tardis_id", id);
                                 ResultSetDestinations rsd = new ResultSetDestinations(plugin, did, true);
                                 if (rsd.resultSet()) {
                                     ArrayList<HashMap<String, String>> data = rsd.getData();

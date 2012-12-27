@@ -160,9 +160,6 @@ public class TARDISAdminCommands implements CommandExecutor {
                             QueryFactory qf = new QueryFactory(plugin);
                             HashMap<String, Object> whered = new HashMap<String, Object>();
                             whered.put("tardis_id", id);
-                            HashMap<String, Object> wherec = whered;
-                            HashMap<String, Object> wherea = whered;
-                            HashMap<String, Object> whereo = whered;
                             if (rst.resultSet()) {
                                 useCurrent = true;
                                 Location spawn = cw.getSpawnLocation();
@@ -186,8 +183,14 @@ public class TARDISAdminCommands implements CommandExecutor {
                             }
                             plugin.destroyPB.destroyPoliceBox(bb_loc, d, id, false);
                             // delete the TARDIS from the db
+                            HashMap<String, Object> wherec = new HashMap<String, Object>();
+                            wherec.put("tardis_id", id);
                             qf.doDelete("chunks", wherec);
+                            HashMap<String, Object> wherea = new HashMap<String, Object>();
+                            wherea.put("tardis_id", id);
                             qf.doDelete("tardis", wherea);
+                            HashMap<String, Object> whereo = new HashMap<String, Object>();
+                            whereo.put("tardis_id", id);
                             qf.doDelete("doors", whereo);
                             sender.sendMessage(plugin.pluginName + " The TARDIS was removed from the world and database successfully.");
                         } else {

@@ -163,8 +163,6 @@ public class TARDISBlockBreakListener implements Listener {
                             QueryFactory qf = new QueryFactory(plugin);
                             HashMap<String, Object> cid = new HashMap<String, Object>();
                             cid.put("tardis_id", id);
-                            HashMap<String, Object> tid = cid;
-                            HashMap<String, Object> did = cid;
                             qf.doDelete("chunks", cid);
                             plugin.destroyI.destroyInner(schm, id, cw, restore, playerNameStr);
                             if (cw.getWorldType() == WorldType.FLAT) {
@@ -173,8 +171,12 @@ public class TARDISBlockBreakListener implements Listener {
                             }
                             plugin.destroyPB.destroyPoliceBox(bb_loc, d, id, false);
                             // remove record from tardis table
+                            HashMap<String, Object> tid = new HashMap<String, Object>();
+                            tid.put("tardis_id", id);
                             qf.doDelete("tardis", tid);
                             // remove doors from doors table
+                            HashMap<String, Object> did = new HashMap<String, Object>();
+                            did.put("tardis_id", id);
                             qf.doDelete("doors", did);
                             player.sendMessage(plugin.pluginName + " The TARDIS was removed from the world and database successfully.");
                             // remove world guard region protection
