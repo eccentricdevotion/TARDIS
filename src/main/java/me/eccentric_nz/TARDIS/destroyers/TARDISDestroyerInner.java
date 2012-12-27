@@ -22,11 +22,12 @@ import me.eccentric_nz.TARDIS.database.TARDISDatabase;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
+import org.bukkit.block.BlockFace;
 import org.bukkit.block.Chest;
 import org.bukkit.block.Furnace;
-import org.bukkit.inventory.Inventory;
 
 /**
+ * Destroys the inner TARDIS.
  *
  * @author eccentric_nz
  */
@@ -39,8 +40,20 @@ public class TARDISDestroyerInner {
         this.plugin = plugin;
     }
 
-    public final void destroyInner(TARDISConstants.SCHEMATIC schm, int id, World w, TARDISConstants.COMPASS d, int i, String p) {
+    /**
+     * Destroys the inside of the TARDIS.
+     *
+     * @param schm the name of the schematic file to use can be DEFAULT, BIGGER
+     * or DELUXE.
+     * @param id the unique key of the record for this TARDIS in the database.
+     * @param w the world where the TARDIS is to be built.
+     * @param i the Material type id of the replacement block, this will either
+     * be 0 (AIR) or 1 (STONE).
+     * @param p an instance of the player who owns the TARDIS.
+     */
+    public final void destroyInner(TARDISConstants.SCHEMATIC schm, int id, World w, int i, String p) {
         short h, width, l;
+        // get dimensions
         switch (schm) {
             case BIGGER:
                 h = plugin.biggerdimensions[0];
@@ -58,10 +71,10 @@ public class TARDISDestroyerInner {
                 l = plugin.budgetdimensions[2];
                 break;
         }
-        // buildI TARDIS
+        // destroy TARDIS
         int level, row, col, x, y, z, startx, starty = (14 + h), startz, resetx, resetz;
         // calculate startx, starty, startz
-        int gsl[] = plugin.utils.getStartLocation(id, d);
+        int gsl[] = plugin.utils.getStartLocation(id);
         startx = gsl[0];
         resetx = gsl[1];
         startz = gsl[2];
@@ -75,10 +88,18 @@ public class TARDISDestroyerInner {
                     Block b = w.getBlockAt(startx, starty, startz);
                     Material m = b.getType();
                     // if it's a chest clear the inventory first
-                    if (m == Material.CHEST) {
-                        Chest che = (Chest) b.getState();
-                        Inventory inv = che.getBlockInventory();
-                        inv.clear();
+                    if (b.getType().compareTo(Material.CHEST) == 0) {
+                        Chest container = (Chest) b.getState();
+                        container.getInventory().clear();
+                        //Is it a chest, and if so, is it a double chest?
+                        if (b.getTypeId() == Material.CHEST.getId()) {
+                            Chest chest = getDoubleChest(b);
+                            if (chest != null) {
+                                container = (Chest) chest;
+                                container.getInventory().clear();
+                                chest.getBlock().setTypeId(i);
+                            }
+                        }
                     }
                     // if it's a furnace clear the inventory first
                     if (m == Material.FURNACE) {
@@ -99,5 +120,24 @@ public class TARDISDestroyerInner {
         if (plugin.worldGuardOnServer) {
             plugin.wgchk.removeRegion(w, p);
         }
+    }
+    //Originally stolen from Babarix. Thank you :)
+
+    public Chest getDoubleChest(Block block) {
+        Chest chest = null;
+        if (block.getRelative(BlockFace.NORTH).getTypeId() == 54) {
+            chest = (Chest) block.getRelative(BlockFace.NORTH).getState();
+            return chest;
+        } else if (block.getRelative(BlockFace.EAST).getTypeId() == 54) {
+            chest = (Chest) block.getRelative(BlockFace.EAST).getState();
+            return chest;
+        } else if (block.getRelative(BlockFace.SOUTH).getTypeId() == 54) {
+            chest = (Chest) block.getRelative(BlockFace.SOUTH).getState();
+            return chest;
+        } else if (block.getRelative(BlockFace.WEST).getTypeId() == 54) {
+            chest = (Chest) block.getRelative(BlockFace.WEST).getState();
+            return chest;
+        }
+        return chest;
     }
 }
