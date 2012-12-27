@@ -83,11 +83,11 @@ public class ResultSetBlocks {
             where.clear();
         }
         String query = "SELECT * FROM blocks" + wheres;
-        plugin.debug(query);
         try {
             statement = connection.createStatement();
             rs = statement.executeQuery(query);
             if (rs.isBeforeFirst()) {
+                plugin.debug(query);
                 while (rs.next()) {
                     if (multiple) {
                         HashMap<String, String> row = new HashMap<String, String>();
