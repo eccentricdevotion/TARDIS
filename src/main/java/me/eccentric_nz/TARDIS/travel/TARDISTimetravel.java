@@ -1,3 +1,19 @@
+/*
+ * Copyright (C) 2012 eccentric_nz
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
+ */
 package me.eccentric_nz.TARDIS.travel;
 
 import java.util.ArrayList;
@@ -15,6 +31,11 @@ import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Player;
 
+/**
+ * All things related to time travel.
+ *
+ * @author eccentric_nz
+ */
 public class TARDISTimetravel {
 
     private Location dest;
@@ -24,9 +45,23 @@ public class TARDISTimetravel {
         this.plugin = plugin;
     }
 
-    public Location randomDestination(Player p, World w, byte rx, byte rz, byte ry, String dir, String e) {
-        int level, row, col, x, y, z, startx, starty, startz, resetx, resetz, listlen, rw;
-        World randworld = w;
+    /**
+     * Checks if a location is contained within a defined TARDIS area.
+     *
+     * @param p a player object used to check permissions against.
+     * @param rx the data bit setting of the x-repeater, this determines the
+     * distance in the x direction.
+     * @param rz the data bit setting of the z-repeater, this determines the
+     * distance in the z direction.
+     * @param ry the data bit setting of the Y-repeater, this determines the
+     * multiplier for both the x and z directions.
+     * @param d the direction the TARDIS Police Box faces.
+     * @param e the environment(s) the player has chosen (or is allowed) to
+     * travel to.
+     */
+    public Location randomDestination(Player p, byte rx, byte rz, byte ry, TARDISConstants.COMPASS d, String e) {
+        int startx, starty, startz, resetx, resetz, listlen, rw;
+        World randworld = null;
         boolean danger = true;
         int count;
         // there needs to be room for the TARDIS and the player!
@@ -36,7 +71,6 @@ public class TARDISTimetravel {
         int quarter = (max + 4 - 1) / 4;
         int range = quarter + 1;
         int wherex = 0, highest = 252, wherez = 0;
-        TARDISConstants.COMPASS d = TARDISConstants.COMPASS.valueOf(dir);
         // get worlds
         Set<String> worldlist = plugin.getConfig().getConfigurationSection("worlds").getKeys(false);
         List<World> allowedWorlds = new ArrayList<World>();
@@ -136,7 +170,7 @@ public class TARDISTimetravel {
             dest = new Location(randworld, wherex, highest, wherez);
         }
         if (randworld.getEnvironment().equals(Environment.NORMAL)) {
-            long timeout = System.currentTimeMillis() + (plugin.getConfig().getLong("timeout")*1000);
+            long timeout = System.currentTimeMillis() + (plugin.getConfig().getLong("timeout") * 1000);
             while (danger == true) {
                 if (System.currentTimeMillis() < timeout) {
                     count = 0;
@@ -192,6 +226,18 @@ public class TARDISTimetravel {
         return dest;
     }
 
+    /**
+     * Checks if a random location is safe for the TARDIS Police Box to land at.
+     * The Police Box requires a clear 4 x 3 x 4 (d x w x h) area.
+     *
+     * @param startx a starting position in the x direction.
+     * @param starty a starting position in the y direction.
+     * @param startz a starting position in the z direction.
+     * @param resetx a copy of the starting x position to return to.
+     * @param resetz a copy of the starting z position to return to.
+     * @param w the world the location check will take place in.
+     * @param d the direction the Police Box is facing.
+     */
     public int safeLocation(int startx, int starty, int startz, int resetx, int resetz, World w, TARDISConstants.COMPASS d) {
         int level, row, col, rowcount, colcount, count = 0;
         switch (d) {
@@ -224,6 +270,12 @@ public class TARDISTimetravel {
         return count;
     }
 
+    /**
+     * Checks if a block to see whether it is clear. Blocks include AIR,
+     * LONG_GRASS, MUSHROOMS, SNOW etc.
+     *
+     * @param id the block typeId to check.
+     */
     private boolean isItSafe(int id) {
         boolean safe = true;
         if (id == 0 || id == 6 || id == 31 || id == 32 || id == 37 || id == 38 || id == 39 || id == 40 || id == 78 || id == 115) {
@@ -233,8 +285,14 @@ public class TARDISTimetravel {
     }
     private static int[] startLoc = new int[6];
 
-    public int[] getStartLocation(Location loc, TARDISConstants.COMPASS dir) {
-        switch (dir) {
+    /**
+     * Gets the starting location for safe location checking.
+     *
+     * @param loc a location object to check.
+     * @param d the direction the Police Box is facing.
+     */
+    public int[] getStartLocation(Location loc, TARDISConstants.COMPASS d) {
+        switch (d) {
             case EAST:
                 startLoc[0] = loc.getBlockX() - 3;
                 startLoc[1] = startLoc[0];
@@ -258,6 +316,14 @@ public class TARDISTimetravel {
         return startLoc;
     }
 
+    /**
+     * Checks whether a NETHER location is safe to land at.
+     *
+     * @param nether a Nether world to search in.
+     * @param wherex an x co-ordinate.
+     * @param wherez a z co-ordinate.
+     * @param d the direction the Police Box is facing.
+     */
     private boolean safeNether(World nether, int wherex, int wherez, TARDISConstants.COMPASS d) {
         boolean safe = false;
         int startx, starty, startz, resetx, resetz, count;
@@ -293,6 +359,16 @@ public class TARDISTimetravel {
         return safe;
     }
 
+    /**
+     * Returns a random positive or negative x integer.
+     *
+     * @param rand an object of type Random.
+     * @param range the maximum the random number can be.
+     * @param quarter one fourth of the max_distance config option.
+     * @param rx the data bit of the x-repeater setting.
+     * @param ry the data bit of the y-repeater setting.
+     * @param max the max_distance config option.
+     */
     private int randomX(Random rand, int range, int quarter, byte rx, byte ry, int max) {
         int wherex;
         wherex = rand.nextInt(range);
@@ -314,7 +390,7 @@ public class TARDISTimetravel {
         wherex = wherex * 2;
         wherex = wherex - max;
 
-        // use multiplier based on position of third repeater
+        // use multiplier based on position of third (y) repeater
         if (ry >= 4 && ry <= 7) {
             wherex = wherex * 2;
         }
@@ -327,6 +403,16 @@ public class TARDISTimetravel {
         return wherex;
     }
 
+    /**
+     * Returns a random positive or negative z integer.
+     *
+     * @param rand an object of type Random.
+     * @param range the maximum the random number can be.
+     * @param quarter one fourth of the max_distance config option.
+     * @param rz the data bit of the x-repeater setting.
+     * @param ry the data bit of the y-repeater setting.
+     * @param max the max_distance config option.
+     */
     private int randomZ(Random rand, int range, int quarter, byte rz, byte ry, int max) {
         int wherez;
         wherez = rand.nextInt(range);
@@ -348,7 +434,7 @@ public class TARDISTimetravel {
         wherez = wherez * 2;
         wherez = wherez - max;
 
-        // use multiplier based on position of third repeater
+        // use multiplier based on position of third (y) repeater
         if (ry >= 4 && ry <= 7) {
             wherez = wherez * 2;
         }
