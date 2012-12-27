@@ -100,7 +100,7 @@ public class TARDISCommands implements CommandExecutor {
                         // get the players TARDIS id
                         HashMap<String, Object> where = new HashMap<String, Object>();
                         where.put("owner", player.getName());
-                        ResultSetTardis rs = new ResultSetTardis(plugin, where);
+                        ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
                         if (!rs.resultSet()) {
                             sender.sendMessage(plugin.pluginName + " " + TARDISConstants.NO_TARDIS);
                             return false;
@@ -114,7 +114,7 @@ public class TARDISCommands implements CommandExecutor {
                             int x, y, z;
                             String[] chamData = chamStr.split(":");
                             World w = plugin.getServer().getWorld(chamData[0]);
-                            TARDISConstants.COMPASS d = TARDISConstants.COMPASS.valueOf(rs.getDirection());
+                            TARDISConstants.COMPASS d = rs.getDirection();
                             x = plugin.utils.parseNum(chamData[1]);
                             y = plugin.utils.parseNum(chamData[2]);
                             z = plugin.utils.parseNum(chamData[3]);
@@ -177,7 +177,7 @@ public class TARDISCommands implements CommandExecutor {
                         // set save location
                         HashMap<String, Object> where = new HashMap<String, Object>();
                         where.put("owner", player.getName());
-                        ResultSetTardis rs = new ResultSetTardis(plugin, where);
+                        ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
                         if (!rs.resultSet()) {
                             sender.sendMessage(plugin.pluginName + " You must be the Timelord of the TARDIS to use this command!");
                             return false;
@@ -186,7 +186,7 @@ public class TARDISCommands implements CommandExecutor {
                         final int id = rs.getTardis_id();
                         String badsave = rs.getSave();
                         final boolean cham = rs.getChameleon_on();
-                        final TARDISConstants.COMPASS d = TARDISConstants.COMPASS.valueOf(rs.getDirection());
+                        final TARDISConstants.COMPASS d = rs.getDirection();
                         String[] saveData = badsave.split(":");
                         World w = plugin.getServer().getWorld(saveData[0]);
                         int x, y, z;
@@ -251,7 +251,7 @@ public class TARDISCommands implements CommandExecutor {
                         }
                         HashMap<String, Object> where = new HashMap<String, Object>();
                         where.put("owner", player.getName());
-                        ResultSetTardis rs = new ResultSetTardis(plugin, where);
+                        ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
                         if (!rs.resultSet()) {
                             sender.sendMessage(plugin.pluginName + " You must be the Timelord of the TARDIS to use this command!");
                             return false;
@@ -284,14 +284,14 @@ public class TARDISCommands implements CommandExecutor {
                         }
                         HashMap<String, Object> where = new HashMap<String, Object>();
                         where.put("owner", player.getName());
-                        ResultSetTardis rs = new ResultSetTardis(plugin, where);
+                        ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
                         if (!rs.resultSet()) {
                             sender.sendMessage(plugin.pluginName + " You are not a Timelord. You need to create a TARDIS first before using this command!");
                             return false;
                         }
                         HashMap<String, Object> wheret = new HashMap<String, Object>();
                         wheret.put("player", player.getName());
-                        ResultSetTravellers rst = new ResultSetTravellers(plugin, where);
+                        ResultSetTravellers rst = new ResultSetTravellers(plugin, where, false);
                         if (!rst.resultSet()) {
                             sender.sendMessage(plugin.pluginName + " You are not inside your TARDIS. You need to be to run this command!");
                             return false;
@@ -313,7 +313,7 @@ public class TARDISCommands implements CommandExecutor {
                         boolean cham;
                         HashMap<String, Object> where = new HashMap<String, Object>();
                         where.put("owner", player.getName());
-                        ResultSetTardis rs = new ResultSetTardis(plugin, where);
+                        ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
                         if (!rs.resultSet()) {
                             sender.sendMessage(plugin.pluginName + " " + TARDISConstants.NO_TARDIS);
                             return false;
@@ -321,7 +321,7 @@ public class TARDISCommands implements CommandExecutor {
                         save = rs.getSave();
                         id = rs.getTardis_id();
                         cham = rs.getChameleon_on();
-                        d = TARDISConstants.COMPASS.valueOf(rs.getDirection());
+                        d = rs.getDirection();
                         String[] save_data = save.split(":");
                         w = plugin.getServer().getWorld(save_data[0]);
                         x = plugin.utils.parseNum(save_data[1]);
@@ -352,7 +352,7 @@ public class TARDISCommands implements CommandExecutor {
                     if (player.hasPermission("tardis.list")) {
                         HashMap<String, Object> where = new HashMap<String, Object>();
                         where.put("owner", player.getName());
-                        ResultSetTardis rs = new ResultSetTardis(plugin, where);
+                        ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
                         if (rs.resultSet()) {
                             sender.sendMessage(plugin.pluginName + " " + TARDISConstants.NO_TARDIS);
                             return false;
@@ -372,7 +372,7 @@ public class TARDISCommands implements CommandExecutor {
                     if (player.hasPermission("tardis.find")) {
                         HashMap<String, Object> where = new HashMap<String, Object>();
                         where.put("owner", player.getName());
-                        ResultSetTardis rs = new ResultSetTardis(plugin, where);
+                        ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
                         if (rs.resultSet()) {
                             sender.sendMessage(plugin.pluginName + " " + TARDISConstants.NO_TARDIS);
                             return false;
@@ -390,7 +390,7 @@ public class TARDISCommands implements CommandExecutor {
                     if (player.hasPermission("tardis.add")) {
                         HashMap<String, Object> where = new HashMap<String, Object>();
                         where.put("owner", player.getName());
-                        ResultSetTardis rs = new ResultSetTardis(plugin, where);
+                        ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
                         String comps;
                         int id;
                         if (!rs.resultSet()) {
@@ -433,7 +433,7 @@ public class TARDISCommands implements CommandExecutor {
                     if (player.hasPermission("tardis.add")) {
                         HashMap<String, Object> where = new HashMap<String, Object>();
                         where.put("owner", player.getName());
-                        ResultSetTardis rs = new ResultSetTardis(plugin, where);
+                        ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
                         String comps;
                         int id;
                         if (rs.resultSet()) {
@@ -489,7 +489,7 @@ public class TARDISCommands implements CommandExecutor {
                     if (player.hasPermission("tardis.save")) {
                         HashMap<String, Object> where = new HashMap<String, Object>();
                         where.put("owner", player.getName());
-                        ResultSetTardis rs = new ResultSetTardis(plugin, where);
+                        ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
                         if (rs.resultSet()) {
                             sender.sendMessage(plugin.pluginName + " " + TARDISConstants.NO_TARDIS);
                             return false;
@@ -509,7 +509,7 @@ public class TARDISCommands implements CommandExecutor {
                             // get current destination
                             HashMap<String, Object> wheret = new HashMap<String, Object>();
                             where.put("player", player.getName());
-                            ResultSetTravellers rst = new ResultSetTravellers(plugin, where);
+                            ResultSetTravellers rst = new ResultSetTravellers(plugin, where, false);
                             if (rst.resultSet()) {
                                 // inside TARDIS
                                 curDest = cur.split(":");
@@ -545,7 +545,7 @@ public class TARDISCommands implements CommandExecutor {
                         }
                         HashMap<String, Object> where = new HashMap<String, Object>();
                         where.put("owner", player.getName());
-                        ResultSetTardis rs = new ResultSetTardis(plugin, where);
+                        ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
                         if (!rs.resultSet()) {
                             sender.sendMessage(plugin.pluginName + " " + TARDISConstants.NO_TARDIS);
                             return false;
@@ -575,7 +575,7 @@ public class TARDISCommands implements CommandExecutor {
                     if (player.hasPermission("tardis.save")) {
                         HashMap<String, Object> where = new HashMap<String, Object>();
                         where.put("owner", player.getName());
-                        ResultSetTardis rs = new ResultSetTardis(plugin, where);
+                        ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
                         if (!rs.resultSet()) {
                             sender.sendMessage(plugin.pluginName + " " + TARDISConstants.NO_TARDIS);
                             return false;
@@ -646,7 +646,7 @@ public class TARDISCommands implements CommandExecutor {
                         }
                         HashMap<String, Object> where = new HashMap<String, Object>();
                         where.put("owner", player.getName());
-                        ResultSetTardis rs = new ResultSetTardis(plugin, where);
+                        ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
                         if (!rs.resultSet()) {
                             sender.sendMessage(plugin.pluginName + " " + TARDISConstants.NO_TARDIS);
                             return false;
@@ -656,7 +656,7 @@ public class TARDISCommands implements CommandExecutor {
                         int id = rs.getTardis_id();
                         boolean cham = rs.getChameleon_on();
                         String dir = args[1].toUpperCase();
-                        TARDISConstants.COMPASS old_d = TARDISConstants.COMPASS.valueOf(rs.getDirection());
+                        TARDISConstants.COMPASS old_d = rs.getDirection();
                         QueryFactory qf = new QueryFactory(plugin);
                         HashMap<String, Object> tid = new HashMap<String, Object>();
                         HashMap<String, Object> set = new HashMap<String, Object>();
