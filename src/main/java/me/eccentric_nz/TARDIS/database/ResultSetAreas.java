@@ -27,16 +27,9 @@ public class ResultSetAreas {
     private int maxz;
     private ArrayList<HashMap<String, String>> data = new ArrayList<HashMap<String, String>>();
 
-    public ResultSetAreas(TARDIS plugin, HashMap<String, Object> where, boolean multiple) {
-        this.plugin = plugin;
-        this.where = where;
-        this.multiple = multiple;
-    }
-
     /**
-     * Retrieves an SQL ResultSet from the destinations table. This method
-     * builds an SQL query string from the parameters supplied and then executes
-     * the query. Use the getters to retrieve the results.
+     * Creates a class instance that can be used to retrieve an SQL ResultSet
+     * from the areas table.
      *
      * @param plugin an instance of the main class.
      * @param where a HashMap<String, Object> of table fields and values to
@@ -44,22 +37,35 @@ public class ResultSetAreas {
      * @param multiple a boolean indicating whether multiple rows should be
      * fetched
      */
+    public ResultSetAreas(TARDIS plugin, HashMap<String, Object> where, boolean multiple) {
+        this.plugin = plugin;
+        this.where = where;
+        this.multiple = multiple;
+    }
+
+    /**
+     * Retrieves an SQL ResultSet from the areas table. This method builds an
+     * SQL query string from the parameters supplied and then executes the
+     * query. Use the getters to retrieve the results.
+     */
     public boolean resultSet() {
         Statement statement = null;
         ResultSet rs = null;
-        String wheres;
-        StringBuilder sbw = new StringBuilder();
-        for (Map.Entry<String, Object> entry : where.entrySet()) {
-            sbw.append(entry.getKey()).append(" = ");
-            if (entry.getValue().getClass().equals(String.class)) {
-                sbw.append("'").append(entry.getValue()).append("',");
-            } else {
-                sbw.append(entry.getValue()).append(",");
+        String wheres = "";
+        if (where != null) {
+            StringBuilder sbw = new StringBuilder();
+            for (Map.Entry<String, Object> entry : where.entrySet()) {
+                sbw.append(entry.getKey()).append(" = ");
+                if (entry.getValue().getClass().equals(String.class)) {
+                    sbw.append("'").append(entry.getValue()).append("',");
+                } else {
+                    sbw.append(entry.getValue()).append(",");
+                }
             }
+            wheres = " WHERE " + sbw.toString().substring(0, sbw.length() - 1);
+            where.clear();
         }
-        wheres = sbw.toString().substring(0, sbw.length() - 1);
-        where.clear();
-        String query = "SELECT * FROM destinations WHERE " + wheres;
+        String query = "SELECT * FROM areas" + wheres;
         plugin.debug(query);
         try {
             statement = connection.createStatement();

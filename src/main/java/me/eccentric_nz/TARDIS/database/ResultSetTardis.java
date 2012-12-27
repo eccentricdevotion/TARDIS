@@ -18,11 +18,14 @@ package me.eccentric_nz.TARDIS.database;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.TARDISConstants;
 
 /**
  *
@@ -30,11 +33,17 @@ import me.eccentric_nz.TARDIS.TARDIS;
  */
 public class ResultSetTardis {
 
+    private TARDISDatabase service = TARDISDatabase.getInstance();
+    private Connection connection = service.getConnection();
+    private TARDIS plugin;
+    private HashMap<String, Object> where;
+    private String limit;
+    private boolean multiple;
     private int tardis_id;
     private String owner;
     private String chunk;
-    private String direction;
-    private String schematic;
+    private TARDISConstants.COMPASS direction;
+    private TARDISConstants.SCHEMATIC schematic;
     private String home;
     private String save;
     private String current;
@@ -50,66 +59,88 @@ public class ResultSetTardis {
     private String save_sign;
     private String chameleon;
     private boolean chameleon_on;
-    private TARDISDatabase service = TARDISDatabase.getInstance();
-    private Connection connection = service.getConnection();
-    private TARDIS plugin;
-    private HashMap<String, Object> where;
+    private ArrayList<HashMap<String, String>> data = new ArrayList<HashMap<String, String>>();
 
-    public ResultSetTardis(TARDIS plugin, HashMap<String, Object> where) {
+    /**
+     * Creates a class instance that can be used to retrieve an SQL ResultSet
+     * from the tardis table.
+     *
+     * @param plugin an instance of the main class.
+     * @param where a HashMap<String, Object> of table fields and values to
+     * refine the search.
+     * @param multiple a boolean indicating whether multiple rows should be
+     * fetched
+     */
+    public ResultSetTardis(TARDIS plugin, HashMap<String, Object> where, String limit, boolean multiple) {
         this.plugin = plugin;
         this.where = where;
+        this.limit = limit;
+        this.multiple = multiple;
     }
 
     /**
      * Retrieves an SQL ResultSet from the tardis table. This method builds an
      * SQL query string from the parameters supplied and then executes the
      * query. Use the getters to retrieve the results.
-     *
-     * @param plugin an instance of the main class.
-     * @param where a HashMap<String, Object> of table fields and values to
-     * refine the search.
      */
     public boolean resultSet() {
         Statement statement = null;
         ResultSet rs = null;
-        String wheres;
-        StringBuilder sbw = new StringBuilder();
-        for (Map.Entry<String, Object> entry : where.entrySet()) {
-            sbw.append(entry.getKey()).append(" = ");
-            if (entry.getValue().getClass().equals(String.class)) {
-                sbw.append("'").append(entry.getValue()).append("',");
-            } else {
-                sbw.append(entry.getValue()).append(",");
+        String wheres = "";
+        String thelimit = "";
+        if (where != null) {
+            StringBuilder sbw = new StringBuilder();
+            for (Map.Entry<String, Object> entry : where.entrySet()) {
+                sbw.append(entry.getKey()).append(" = ");
+                if (entry.getValue().getClass().equals(String.class)) {
+                    sbw.append("'").append(entry.getValue()).append("',");
+                } else {
+                    sbw.append(entry.getValue()).append(",");
+                }
             }
+            wheres = " WHERE " + sbw.toString().substring(0, sbw.length() - 1);
+            where.clear();
         }
-        wheres = sbw.toString().substring(0, sbw.length() - 1);
-        where.clear();
-        String query = "SELECT * FROM tardis WHERE " + wheres;
+        if (!limit.equals("")) {
+            thelimit = " LIMIT " + limit;
+        }
+        String query = "SELECT * FROM tardis" + wheres + thelimit;
         plugin.debug(query);
         try {
             statement = connection.createStatement();
             rs = statement.executeQuery(query);
-            if (rs.next()) {
-                this.tardis_id = rs.getInt("tardis_id");
-                this.owner = rs.getString("owner");
-                this.chunk = rs.getString("chunk");
-                this.direction = rs.getString("direction");
-                this.schematic = rs.getString("size");
-                this.home = rs.getString("home");
-                this.save = rs.getString("save");
-                this.current = rs.getString("current");
-                this.replaced = rs.getString("replaced");
-                this.chest = rs.getString("chest");
-                this.button = rs.getString("button");
-                this.repeater0 = rs.getString("repeater0");
-                this.repeater1 = rs.getString("repeater1");
-                this.repeater2 = rs.getString("repeater2");
-                this.repeater3 = rs.getString("repeater3");
-                this.companions = rs.getString("companions");
-                this.platform = rs.getString("platform");
-                this.save_sign = rs.getString("save_sign");
-                this.chameleon = rs.getString("chameleon");
-                this.chameleon_on = rs.getBoolean("chamele_on");
+            if (rs.isBeforeFirst()) {
+                while (rs.next()) {
+                    if (multiple) {
+                        HashMap<String, String> row = new HashMap<String, String>();
+                        ResultSetMetaData rsmd = rs.getMetaData();
+                        int columns = rsmd.getColumnCount();
+                        for (int i = 1; i < columns + 1; i++) {
+                            row.put(rsmd.getColumnName(i).toLowerCase(), rs.getString(i));
+                        }
+                        data.add(row);
+                    }
+                    this.tardis_id = rs.getInt("tardis_id");
+                    this.owner = rs.getString("owner");
+                    this.chunk = rs.getString("chunk");
+                    this.direction = TARDISConstants.COMPASS.valueOf(rs.getString("direction"));
+                    this.schematic = TARDISConstants.SCHEMATIC.valueOf(rs.getString("size"));
+                    this.home = rs.getString("home");
+                    this.save = rs.getString("save");
+                    this.current = rs.getString("current");
+                    this.replaced = rs.getString("replaced");
+                    this.chest = rs.getString("chest");
+                    this.button = rs.getString("button");
+                    this.repeater0 = rs.getString("repeater0");
+                    this.repeater1 = rs.getString("repeater1");
+                    this.repeater2 = rs.getString("repeater2");
+                    this.repeater3 = rs.getString("repeater3");
+                    this.companions = rs.getString("companions");
+                    this.platform = rs.getString("platform");
+                    this.save_sign = rs.getString("save_sign");
+                    this.chameleon = rs.getString("chameleon");
+                    this.chameleon_on = rs.getBoolean("chamele_on");
+                }
             } else {
                 return false;
             }
@@ -139,11 +170,11 @@ public class ResultSetTardis {
         return chunk;
     }
 
-    public String getDirection() {
+    public TARDISConstants.COMPASS getDirection() {
         return direction;
     }
 
-    public String getSchematic() {
+    public TARDISConstants.SCHEMATIC getSchematic() {
         return schematic;
     }
 
@@ -205,5 +236,9 @@ public class ResultSetTardis {
 
     public boolean getChameleon_on() {
         return chameleon_on;
+    }
+
+    public ArrayList<HashMap<String, String>> getData() {
+        return data;
     }
 }
