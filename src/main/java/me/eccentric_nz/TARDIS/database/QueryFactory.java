@@ -158,15 +158,15 @@ public class QueryFactory {
         for (Map.Entry<String, Object> entry : where.entrySet()) {
             sbw.append(entry.getKey()).append(" = ");
             if (entry.getValue().getClass().equals(String.class)) {
-                sbw.append("'").append(entry.getValue()).append("',");
+                sbw.append("'").append(entry.getValue()).append("' AND ");
             } else {
-                sbw.append(entry.getValue()).append(",");
+                sbw.append(entry.getValue()).append(" AND ");
             }
         }
         data.clear();
         where.clear();
         updates = sbu.toString().substring(0, sbu.length() - 1);
-        wheres = sbw.toString().substring(0, sbw.length() - 1);
+        wheres = sbw.toString().substring(0, sbw.length() - 5);
         String query = "UPDATE " + table + " SET " + updates + " WHERE " + wheres;
         plugin.debug(query);
         try {
@@ -199,13 +199,13 @@ public class QueryFactory {
         for (Map.Entry<String, Object> entry : where.entrySet()) {
             sbw.append(entry.getKey()).append(" = ");
             if (entry.getValue().getClass().equals(String.class)) {
-                sbw.append("'").append(entry.getValue()).append("',");
+                sbw.append("'").append(entry.getValue()).append("' AND ");
             } else {
-                sbw.append(entry.getValue()).append(",");
+                sbw.append(entry.getValue()).append(" AND ");
             }
         }
         where.clear();
-        values = sbw.toString().substring(0, sbw.length() - 1);
+        values = sbw.toString().substring(0, sbw.length() - 5);
         String query = "DELETE FROM " + table + " WHERE " + values;
         plugin.debug(query);
         try {

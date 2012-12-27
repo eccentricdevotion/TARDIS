@@ -54,12 +54,12 @@ public class ResultSetChunks {
             for (Map.Entry<String, Object> entry : where.entrySet()) {
                 sbw.append(entry.getKey()).append(" = ");
                 if (entry.getValue().getClass().equals(String.class)) {
-                    sbw.append("'").append(entry.getValue()).append("',");
+                    sbw.append("'").append(entry.getValue()).append("' AND ");
                 } else {
-                    sbw.append(entry.getValue()).append(",");
+                    sbw.append(entry.getValue()).append(" AND ");
                 }
             }
-            wheres = " WHERE " + sbw.toString().substring(0, sbw.length() - 1);
+            wheres = " WHERE " + sbw.toString().substring(0, sbw.length() - 5);
             where.clear();
         }
         String query = "SELECT * FROM chunks" + wheres;
