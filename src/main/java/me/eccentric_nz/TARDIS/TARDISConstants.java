@@ -5,10 +5,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
-import org.bukkit.Location;
-import org.bukkit.World;
 
 public class TARDISConstants {
 
@@ -77,6 +74,7 @@ public class TARDISConstants {
             try {
                 return Enum.valueOf(c, string.trim().toUpperCase(Locale.ENGLISH));
             } catch (IllegalArgumentException ex) {
+                TARDIS.plugin.debug(ex.getMessage());
             }
         }
         return null;
@@ -84,27 +82,6 @@ public class TARDISConstants {
 
     public static CMDS fromString(String name) {
         return getEnumFromString(CMDS.class, name);
-    }
-
-    public static Location getLocationFromDB(String s, float yaw, float pitch) {
-        int savedx = 0, savedy = 0, savedz = 0;
-        // compile location from string
-        String[] data = s.split(":");
-        World savedw = Bukkit.getServer().getWorld(data[0]);
-        try {
-            savedx = Integer.parseInt(data[1]);
-            savedy = Integer.parseInt(data[2]);
-            savedz = Integer.parseInt(data[3]);
-        } catch (NumberFormatException n) {
-            TARDIS.plugin.console.sendMessage(TARDIS.plugin.pluginName + "Could not convert to number: " + n);
-        }
-        Location dest = new Location(savedw, savedx, savedy, savedz, yaw, pitch);
-        return dest;
-    }
-
-    public static int swapId(int id) {
-        int swappedId = CHAMELEON_BLOCKS_CHANGE_HASH.get(id);
-        return swappedId;
     }
 
     public static HashMap toMap(Object[] keys, Object[] values) {
