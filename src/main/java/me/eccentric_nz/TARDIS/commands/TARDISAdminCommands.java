@@ -126,147 +126,146 @@ public class TARDISAdminCommands implements CommandExecutor {
                 if (args.length < 2) {
                     sender.sendMessage(plugin.pluginName + " Too few command arguments!");
                     return false;
-                } else {
-                    if (args[0].equalsIgnoreCase("delete")) {
-                        HashMap<String, Object> where = new HashMap<String, Object>();
-                        where.put("owner", args[1]);
-                        ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
-                        if (rs.resultSet()) {
-                            int id = rs.getTardis_id();
-                            String saveLoc = rs.getSave();
-                            String currentLoc = rs.getCurrent();
-                            TARDISConstants.SCHEMATIC schm = rs.getSchematic();
-                            TARDISConstants.COMPASS d = rs.getDirection();
-                            String chunkLoc = rs.getChunk();
-                            String[] cdata = chunkLoc.split(":");
-                            World cw = plugin.getServer().getWorld(cdata[0]);
-                            World.Environment env = cw.getEnvironment();
-                            int restore;
-                            switch (env) {
-                                case NETHER:
-                                    restore = 87;
-                                    break;
-                                case THE_END:
-                                    restore = 121;
-                                    break;
-                                default:
-                                    restore = 1;
-                            }
-                            // check if player is in the TARDIS
-                            HashMap<String, Object> wheret = new HashMap<String, Object>();
-                            where.put("tardis_id", id);
-                            ResultSetTravellers rst = new ResultSetTravellers(plugin, wheret, true);
-                            boolean useCurrent = false;
-                            QueryFactory qf = new QueryFactory(plugin);
-                            HashMap<String, Object> whered = new HashMap<String, Object>();
-                            whered.put("tardis_id", id);
-                            if (rst.resultSet()) {
-                                useCurrent = true;
-                                Location spawn = cw.getSpawnLocation();
-                                ArrayList<HashMap<String, String>> data = rst.getData();
-                                for (HashMap<String, String> map : data) {
-                                    String op = plugin.getServer().getOfflinePlayer(map.get("player")).getName();
-                                    // teleport offline player to spawn
-                                    plugin.iopHandler.setLocation(op, spawn);
-                                }
-                                qf.doDelete("travellers", whered);
-                            }
-                            // need to determine if we use the save location or the current location
-                            Location bb_loc = (useCurrent) ? plugin.utils.getLocationFromDB(currentLoc, 0, 0) : plugin.utils.getLocationFromDB(saveLoc, 0, 0);
-                            // destroy the TARDIS
-                            plugin.destroyPB.destroyTorch(bb_loc);
-                            plugin.destroyPB.destroySign(bb_loc, d);
-                            plugin.destroyI.destroyInner(schm, id, cw, restore, args[1]);
-                            if (cw.getWorldType() == WorldType.FLAT) {
-                                // replace stone blocks with AIR
-                                plugin.destroyI.destroyInner(schm, id, cw, 0, args[1]);
-                            }
-                            plugin.destroyPB.destroyPoliceBox(bb_loc, d, id, false);
-                            // delete the TARDIS from the db
-                            HashMap<String, Object> wherec = new HashMap<String, Object>();
-                            wherec.put("tardis_id", id);
-                            qf.doDelete("chunks", wherec);
-                            HashMap<String, Object> wherea = new HashMap<String, Object>();
-                            wherea.put("tardis_id", id);
-                            qf.doDelete("tardis", wherea);
-                            HashMap<String, Object> whereo = new HashMap<String, Object>();
-                            whereo.put("tardis_id", id);
-                            qf.doDelete("doors", whereo);
-                            sender.sendMessage(plugin.pluginName + " The TARDIS was removed from the world and database successfully.");
-                        } else {
-                            sender.sendMessage(plugin.pluginName + " Could not find player [" + args[1] + "] in the database!");
-                            return true;
+                }
+                if (args[0].equalsIgnoreCase("delete")) {
+                    HashMap<String, Object> where = new HashMap<String, Object>();
+                    where.put("owner", args[1]);
+                    ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
+                    if (rs.resultSet()) {
+                        int id = rs.getTardis_id();
+                        String saveLoc = rs.getSave();
+                        String currentLoc = rs.getCurrent();
+                        TARDISConstants.SCHEMATIC schm = rs.getSchematic();
+                        TARDISConstants.COMPASS d = rs.getDirection();
+                        String chunkLoc = rs.getChunk();
+                        String[] cdata = chunkLoc.split(":");
+                        World cw = plugin.getServer().getWorld(cdata[0]);
+                        World.Environment env = cw.getEnvironment();
+                        int restore;
+                        switch (env) {
+                            case NETHER:
+                                restore = 87;
+                                break;
+                            case THE_END:
+                                restore = 121;
+                                break;
+                            default:
+                                restore = 1;
                         }
+                        // check if player is in the TARDIS
+                        HashMap<String, Object> wheret = new HashMap<String, Object>();
+                        where.put("tardis_id", id);
+                        ResultSetTravellers rst = new ResultSetTravellers(plugin, wheret, true);
+                        boolean useCurrent = false;
+                        QueryFactory qf = new QueryFactory(plugin);
+                        HashMap<String, Object> whered = new HashMap<String, Object>();
+                        whered.put("tardis_id", id);
+                        if (rst.resultSet()) {
+                            useCurrent = true;
+                            Location spawn = cw.getSpawnLocation();
+                            ArrayList<HashMap<String, String>> data = rst.getData();
+                            for (HashMap<String, String> map : data) {
+                                String op = plugin.getServer().getOfflinePlayer(map.get("player")).getName();
+                                // teleport offline player to spawn
+                                plugin.iopHandler.setLocation(op, spawn);
+                            }
+                            qf.doDelete("travellers", whered);
+                        }
+                        // need to determine if we use the save location or the current location
+                        Location bb_loc = (useCurrent) ? plugin.utils.getLocationFromDB(currentLoc, 0, 0) : plugin.utils.getLocationFromDB(saveLoc, 0, 0);
+                        // destroy the TARDIS
+                        plugin.destroyPB.destroyTorch(bb_loc);
+                        plugin.destroyPB.destroySign(bb_loc, d);
+                        plugin.destroyI.destroyInner(schm, id, cw, restore, args[1]);
+                        if (cw.getWorldType() == WorldType.FLAT) {
+                            // replace stone blocks with AIR
+                            plugin.destroyI.destroyInner(schm, id, cw, 0, args[1]);
+                        }
+                        plugin.destroyPB.destroyPoliceBox(bb_loc, d, id, false);
+                        // delete the TARDIS from the db
+                        HashMap<String, Object> wherec = new HashMap<String, Object>();
+                        wherec.put("tardis_id", id);
+                        qf.doDelete("chunks", wherec);
+                        HashMap<String, Object> wherea = new HashMap<String, Object>();
+                        wherea.put("tardis_id", id);
+                        qf.doDelete("tardis", wherea);
+                        HashMap<String, Object> whereo = new HashMap<String, Object>();
+                        whereo.put("tardis_id", id);
+                        qf.doDelete("doors", whereo);
+                        sender.sendMessage(plugin.pluginName + " The TARDIS was removed from the world and database successfully.");
+                    } else {
+                        sender.sendMessage(plugin.pluginName + " Could not find player [" + args[1] + "] in the database!");
                         return true;
                     }
-                    if (args[0].equalsIgnoreCase("key")) {
-                        String setMaterial = args[1].toUpperCase();
-                        if (!Arrays.asList(TARDISMaterials.MATERIAL_LIST).contains(setMaterial)) {
-                            sender.sendMessage(plugin.pluginName + ChatColor.RED + "That is not a valid Material! Try checking http://jd.bukkit.org/apidocs/org/bukkit/Material.html");
-                            return false;
-                        } else {
-                            plugin.getConfig().set("key", setMaterial);
-                            plugin.TARDIS_KEY = setMaterial;
-                        }
-                    }
-                    if (args[0].equalsIgnoreCase("default_world_name")) {
-                        // get world name
-                        int count = args.length;
-                        StringBuilder buf = new StringBuilder();
-                        for (int i = 1; i < count; i++) {
-                            buf.append(args[i]).append(" ");
-                        }
-                        String tmp = buf.toString();
-                        String t = tmp.substring(0, tmp.length() - 1);
-                        // need to make there are no periods(.) in the text
-                        String nodots = StringUtils.replace(t, ".", "_");
-                        plugin.getConfig().set("default_world_name", nodots);
-                    }
-                    if (args[0].equalsIgnoreCase("exclude")) {
-                        // get world name
-                        int count = args.length;
-                        StringBuilder buf = new StringBuilder();
-                        for (int i = 1; i < count; i++) {
-                            buf.append(args[i]).append(" ");
-                        }
-                        String tmp = buf.toString();
-                        String t = tmp.substring(0, tmp.length() - 1);
-                        // need to make there are no periods(.) in the text
-                        String nodots = StringUtils.replace(t, ".", "_");
-                        // check the world actually exists!
-                        if (plugin.getServer().getWorld(nodots) == null) {
-                            sender.sendMessage(plugin.pluginName + ChatColor.RED + "World does not exist!");
-                            return false;
-                        }
-                        plugin.getConfig().set("worlds." + nodots, false);
-                    }
-                    //checks if its a boolean config option
-                    String firstArg = args[0].toUpperCase();
-                    if (firstArgsBool.contains(firstArg)) {
-                        // check they typed true of false
-                        String tf = args[1].toLowerCase();
-                        if (!tf.equals("true") && !tf.equals("false")) {
-                            sender.sendMessage(plugin.pluginName + ChatColor.RED + "The last argument must be true or false!");
-                            return false;
-                        }
-                        plugin.getConfig().set(firstArg, Boolean.valueOf(tf));
-                    }
-                    //checks if its a number config option
-                    if (firstArgsInt.contains(firstArg)) {
-                        String a = args[1];
-                        int val;
-                        try {
-                            val = Integer.parseInt(a);
-                        } catch (NumberFormatException nfe) {
-                            // not a number
-                            sender.sendMessage(plugin.pluginName + ChatColor.RED + " The last argument must be a number!");
-                            return false;
-                        }
-                        plugin.getConfig().set(firstArg, val);
-                    }
-                    plugin.saveConfig();
-                    sender.sendMessage(plugin.pluginName + " The config was updated!");
+                    return true;
                 }
+                if (args[0].equalsIgnoreCase("key")) {
+                    String setMaterial = args[1].toUpperCase();
+                    if (!Arrays.asList(TARDISMaterials.MATERIAL_LIST).contains(setMaterial)) {
+                        sender.sendMessage(plugin.pluginName + ChatColor.RED + "That is not a valid Material! Try checking http://jd.bukkit.org/apidocs/org/bukkit/Material.html");
+                        return false;
+                    } else {
+                        plugin.getConfig().set("key", setMaterial);
+                        plugin.TARDIS_KEY = setMaterial;
+                    }
+                }
+                if (args[0].equalsIgnoreCase("default_world_name")) {
+                    // get world name
+                    int count = args.length;
+                    StringBuilder buf = new StringBuilder();
+                    for (int i = 1; i < count; i++) {
+                        buf.append(args[i]).append(" ");
+                    }
+                    String tmp = buf.toString();
+                    String t = tmp.substring(0, tmp.length() - 1);
+                    // need to make there are no periods(.) in the text
+                    String nodots = StringUtils.replace(t, ".", "_");
+                    plugin.getConfig().set("default_world_name", nodots);
+                }
+                if (args[0].equalsIgnoreCase("exclude")) {
+                    // get world name
+                    int count = args.length;
+                    StringBuilder buf = new StringBuilder();
+                    for (int i = 1; i < count; i++) {
+                        buf.append(args[i]).append(" ");
+                    }
+                    String tmp = buf.toString();
+                    String t = tmp.substring(0, tmp.length() - 1);
+                    // need to make there are no periods(.) in the text
+                    String nodots = StringUtils.replace(t, ".", "_");
+                    // check the world actually exists!
+                    if (plugin.getServer().getWorld(nodots) == null) {
+                        sender.sendMessage(plugin.pluginName + ChatColor.RED + "World does not exist!");
+                        return false;
+                    }
+                    plugin.getConfig().set("worlds." + nodots, false);
+                }
+                //checks if its a boolean config option
+                String firstArg = args[0].toLowerCase();
+                if (firstArgsBool.contains(firstArg)) {
+                    // check they typed true of false
+                    String tf = args[1].toLowerCase();
+                    if (!tf.equals("true") && !tf.equals("false")) {
+                        sender.sendMessage(plugin.pluginName + ChatColor.RED + "The last argument must be true or false!");
+                        return false;
+                    }
+                    plugin.getConfig().set(firstArg, Boolean.valueOf(tf));
+                }
+                //checks if its a number config option
+                if (firstArgsInt.contains(firstArg)) {
+                    String a = args[1];
+                    int val;
+                    try {
+                        val = Integer.parseInt(a);
+                    } catch (NumberFormatException nfe) {
+                        // not a number
+                        sender.sendMessage(plugin.pluginName + ChatColor.RED + " The last argument must be a number!");
+                        return false;
+                    }
+                    plugin.getConfig().set(firstArg, val);
+                }
+                plugin.saveConfig();
+                sender.sendMessage(plugin.pluginName + " The config was updated!");
                 return true;
             } else {
                 sender.sendMessage(plugin.pluginName + ChatColor.RED + " You must be an Admin to run this command.");
