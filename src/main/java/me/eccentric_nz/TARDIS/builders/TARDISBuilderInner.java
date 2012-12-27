@@ -165,7 +165,7 @@ public class TARDISBuilderInner {
                                 HashMap<String, Object> setr = new HashMap<String, Object>();
                                 HashMap<String, Object> wherer = new HashMap<String, Object>();
                                 String repeater = world.getName() + ":" + startx + ":" + starty + ":" + startz;
-                                setr.put("button" + j, repeater);
+                                setr.put("repeater" + j, repeater);
                                 wherer.put("tardis_id", dbID);
                                 qf.doUpdate("tardis", setr, wherer);
                                 j++;
