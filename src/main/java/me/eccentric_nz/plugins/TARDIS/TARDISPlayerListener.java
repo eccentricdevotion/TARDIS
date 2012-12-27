@@ -108,7 +108,7 @@ public class TARDISPlayerListener implements Listener {
                             }
                             queryBlockUpdate = "UPDATE doors SET door_location = '" + blockLocStr + "', door_direction = '" + d + "' WHERE door_type = 1 AND tardis_id = " + id;
                         }
-                        if (blockName.equalsIgnoreCase("button") && blockType == Material.STONE_BUTTON) {
+                        if (blockName.equalsIgnoreCase("button") && blockType == Material.STONE_BUTTON || blockType == Material.WOOD_BUTTON || blockType == Material.LEVER) {
                             queryBlockUpdate = "UPDATE tardis SET button = '" + blockLocStr + "' WHERE tardis_id = " + id;
                         }
                         if (blockName.equalsIgnoreCase("save-repeater") && (blockType == Material.DIODE_BLOCK_OFF || blockType == Material.DIODE_BLOCK_ON)) {
@@ -465,7 +465,7 @@ public class TARDISPlayerListener implements Listener {
                             }
                         }
                     }
-                    if (blockType == Material.STONE_BUTTON) {
+                    if (blockType == Material.STONE_BUTTON  || blockType == Material.WOOD_BUTTON || blockType == Material.LEVER) {
                         // get clicked block location
                         Location b = block.getLocation();
                         String bw = b.getWorld().getName();
