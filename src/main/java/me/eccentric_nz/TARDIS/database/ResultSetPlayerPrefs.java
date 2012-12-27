@@ -75,7 +75,7 @@ public class ResultSetPlayerPrefs {
             wheres = " WHERE " + sbw.toString().substring(0, sbw.length() - 1);
             where.clear();
         }
-        String query = "SELECT * FROM doors" + wheres;
+        String query = "SELECT * FROM player_prefs" + wheres;
         plugin.debug(query);
         try {
             statement = connection.createStatement();
