@@ -465,7 +465,7 @@ public class TARDISPlayerListener implements Listener {
                             }
                         }
                     }
-                    if (blockType == Material.STONE_BUTTON  || blockType == Material.WOOD_BUTTON || blockType == Material.LEVER) {
+                    if (blockType == Material.STONE_BUTTON || blockType == Material.WOOD_BUTTON || blockType == Material.LEVER) {
                         // get clicked block location
                         Location b = block.getLocation();
                         String bw = b.getWorld().getName();
