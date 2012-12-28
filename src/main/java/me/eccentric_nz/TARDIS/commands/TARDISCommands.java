@@ -762,6 +762,9 @@ public class TARDISCommands implements CommandExecutor {
                             case HIDE:
                                 sender.sendMessage(TARDISConstants.COMMAND_HIDE.split("\n"));
                                 break;
+                            case VERSION:
+                                sender.sendMessage(TARDISConstants.COMMAND_HIDE.split("\n"));
+                                break;
                             case ADMIN:
                                 sender.sendMessage(TARDISConstants.COMMAND_ADMIN.split("\n"));
                                 break;
