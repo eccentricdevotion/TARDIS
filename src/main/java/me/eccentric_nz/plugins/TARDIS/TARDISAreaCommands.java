@@ -41,7 +41,7 @@ public class TARDISAreaCommands implements CommandExecutor {
             if (args[0].equals("start")) {
                 // check name is unique and acceptable
                 if (args.length < 2 || !args[1].matches("[A-Za-z0-9_]{2,16}")) {
-                    sender.sendMessage(plugin.pluginName + "That doesn't appear to be a valid area name (it may be too long)" + ChatColor.GREEN + " /tardis admin area start [area_name_goes_here]");
+                    sender.sendMessage(plugin.pluginName + "That doesn't appear to be a valid area name (it may be too long)" + ChatColor.GREEN + " /tardisarea start [area_name_goes_here]");
                     return false;
                 }
                 String queryName = "SELECT area_name FROM areas";
