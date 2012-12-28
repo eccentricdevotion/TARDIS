@@ -109,7 +109,7 @@ public class TARDISUpdateListener implements Listener {
                     set.put("door_direction", d);
                     tid.put("door_type", 1);
                 }
-                if (blockName.equalsIgnoreCase("button") && blockType == Material.STONE_BUTTON) {
+                if (blockName.equalsIgnoreCase("button") && blockType == Material.STONE_BUTTON || blockType == Material.WOOD_BUTTON || blockType == Material.LEVER) {
                     set.put("button", blockLocStr);
                 }
                 if (blockName.equalsIgnoreCase("world-repeater") && (blockType == Material.DIODE_BLOCK_OFF || blockType == Material.DIODE_BLOCK_ON)) {
