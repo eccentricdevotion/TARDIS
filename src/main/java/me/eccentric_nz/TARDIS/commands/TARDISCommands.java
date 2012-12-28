@@ -554,7 +554,7 @@ public class TARDISCommands implements CommandExecutor {
                         HashMap<String, Object> whered = new HashMap<String, Object>();
                         whered.put("dest_name", args[1]);
                         whered.put("tardis_id", id);
-                        ResultSetDestinations rsd = new ResultSetDestinations(plugin, where, false);
+                        ResultSetDestinations rsd = new ResultSetDestinations(plugin, whered, false);
                         if (!rsd.resultSet()) {
                             sender.sendMessage(plugin.pluginName + " Could not find a saved destination with that name!");
                             return false;
