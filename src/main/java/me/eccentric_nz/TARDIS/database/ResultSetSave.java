@@ -52,7 +52,7 @@ public class ResultSetSave {
     public boolean resultSet() {
         Statement statement = null;
         ResultSet rs = null;
-        String query = "SELECT save FROM tardis WHERE save LIKE " + where;
+        String query = "SELECT save FROM tardis WHERE save LIKE '" + where + "'";
         plugin.debug(query);
         try {
             statement = connection.createStatement();
