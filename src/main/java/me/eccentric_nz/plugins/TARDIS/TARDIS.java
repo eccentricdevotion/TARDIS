@@ -114,7 +114,7 @@ public class TARDIS extends JavaPlugin {
             this.setEnabled(false);
             return;
         }
-        console.sendMessage(pluginName + "Loading support for CB " + version);
+        console.sendMessage(pluginName + " Loading support for CB " + version);
     }
 
     private void loadDatabase() {
