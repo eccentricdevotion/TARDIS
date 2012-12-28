@@ -62,7 +62,7 @@ public class TARDISAreaListener implements Listener {
                 if (plugin.ta.areaCheckInExisting(block_loc)) {
                     String locStr = block_loc.getWorld().getName() + ":" + block_loc.getBlockX() + ":" + block_loc.getBlockZ();
                     plugin.trackBlock.put(playerNameStr, locStr);
-                    player.sendMessage(plugin.pluginName + " You have 60 seconds to select the area end block - use the " + ChatColor.GREEN + "/TARDIS admin area end" + ChatColor.RESET + " command.");
+                    player.sendMessage(plugin.pluginName + " You have 60 seconds to select the area end block - use the " + ChatColor.GREEN + "/tardisarea end" + ChatColor.RESET + " command.");
                     plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
                         @Override
                         public void run() {
