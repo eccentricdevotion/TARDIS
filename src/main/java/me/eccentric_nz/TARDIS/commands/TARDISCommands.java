@@ -442,7 +442,7 @@ public class TARDISCommands implements CommandExecutor {
                         } else {
                             id = rs.getTardis_id();
                             comps = rs.getCompanions();
-                            if (comps == null && comps.equals("")) {
+                            if (comps == null || comps.equals("")) {
                                 sender.sendMessage(plugin.pluginName + " You have not added any TARDIS companions yet!");
                                 return true;
                             }
@@ -467,8 +467,7 @@ public class TARDISCommands implements CommandExecutor {
                                     }
                                 }
                                 // remove trailing colon
-                                newList = buf.toString();
-                                newList = newList.substring(0, newList.length() - 1);
+                                newList = buf.toString().substring(0, buf.length() - 1);
                             } else {
                                 newList = "";
                             }
@@ -477,6 +476,7 @@ public class TARDISCommands implements CommandExecutor {
                             HashMap<String, Object> set = new HashMap<String, Object>();
                             tid.put("tardis_id", id);
                             set.put("companions", newList);
+                            qf.doUpdate("tardis", set, tid);
                             player.sendMessage(plugin.pluginName + " You removed " + ChatColor.GREEN + args[1] + ChatColor.RESET + " as a TARDIS companion.");
                             return true;
                         }
