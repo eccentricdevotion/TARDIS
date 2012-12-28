@@ -74,13 +74,13 @@ public class TARDISAdminCommands implements CommandExecutor {
                     return true;
                 }
                 if (!firstArgsStr.contains(args[0]) && !firstArgsBool.contains(args[0]) && !firstArgsInt.contains(args[0])) {
-                    sender.sendMessage(plugin.pluginName + " TARDIS does not recognise that command argument!");
+                    sender.sendMessage(plugin.pluginName + "TARDIS does not recognise that command argument!");
                     return false;
                 }
                 if (args.length == 1) {
                     if (args[0].equalsIgnoreCase("reload")) {
                         plugin.reloadConfig();
-                        sender.sendMessage(plugin.pluginName + " TARDIS config reloaded.");
+                        sender.sendMessage(plugin.pluginName + "TARDIS config reloaded.");
                         return true;
                     }
                     if (args[0].equalsIgnoreCase("config")) {
@@ -113,18 +113,18 @@ public class TARDISAdminCommands implements CommandExecutor {
                         HashMap<String, Object> where = new HashMap<String, Object>();
                         ResultSetTardis rsl = new ResultSetTardis(plugin, where, limit, true);
                         if (rsl.resultSet()) {
-                            sender.sendMessage(plugin.pluginName + " TARDIS locations.");
+                            sender.sendMessage(plugin.pluginName + "TARDIS locations.");
                             ArrayList<HashMap<String, String>> data = rsl.getData();
                             for (HashMap<String, String> map : data) {
                                 sender.sendMessage("Timelord: " + map.get("Owner") + ", Location: " + map.get("current"));
                             }
-                            sender.sendMessage(plugin.pluginName + " To see more locations, type: /tardisadmin list 2,  /tardisadmin list 3 etc.");
+                            sender.sendMessage(plugin.pluginName + "To see more locations, type: /tardisadmin list 2,  /tardisadmin list 3 etc.");
                         }
                         return true;
                     }
                 }
                 if (args.length < 2) {
-                    sender.sendMessage(plugin.pluginName + " Too few command arguments!");
+                    sender.sendMessage(plugin.pluginName + "Too few command arguments!");
                     return false;
                 }
                 if (args[0].equalsIgnoreCase("delete")) {
@@ -192,9 +192,9 @@ public class TARDISAdminCommands implements CommandExecutor {
                         HashMap<String, Object> whereo = new HashMap<String, Object>();
                         whereo.put("tardis_id", id);
                         qf.doDelete("doors", whereo);
-                        sender.sendMessage(plugin.pluginName + " The TARDIS was removed from the world and database successfully.");
+                        sender.sendMessage(plugin.pluginName + "The TARDIS was removed from the world and database successfully.");
                     } else {
-                        sender.sendMessage(plugin.pluginName + " Could not find player [" + args[1] + "] in the database!");
+                        sender.sendMessage(plugin.pluginName + "Could not find player [" + args[1] + "] in the database!");
                         return true;
                     }
                     return true;
@@ -265,7 +265,7 @@ public class TARDISAdminCommands implements CommandExecutor {
                     plugin.getConfig().set(firstArg, val);
                 }
                 plugin.saveConfig();
-                sender.sendMessage(plugin.pluginName + " The config was updated!");
+                sender.sendMessage(plugin.pluginName + "The config was updated!");
                 return true;
             } else {
                 sender.sendMessage(plugin.pluginName + ChatColor.RED + " You must be an Admin to run this command.");

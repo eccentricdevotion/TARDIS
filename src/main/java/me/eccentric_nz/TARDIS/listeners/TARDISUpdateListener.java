@@ -77,7 +77,7 @@ public class TARDISUpdateListener implements Listener {
                 where.put("owner", player.getName());
                 ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
                 if (!rs.resultSet()) {
-                    player.sendMessage(plugin.pluginName + " " + TARDISConstants.NO_TARDIS);
+                    player.sendMessage(plugin.pluginName + TARDISConstants.NO_TARDIS);
                     return;
                 }
                 int id = rs.getTardis_id();
@@ -146,7 +146,7 @@ public class TARDISUpdateListener implements Listener {
                     s.update();
                 }
                 qf.doUpdate(table, set, tid);
-                player.sendMessage(plugin.pluginName + " The position of the TARDIS " + blockName + " was updated successfully.");
+                player.sendMessage(plugin.pluginName + "The position of the TARDIS " + blockName + " was updated successfully.");
             }
         }
     }

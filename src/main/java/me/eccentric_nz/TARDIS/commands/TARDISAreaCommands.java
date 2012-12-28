@@ -51,13 +51,13 @@ public class TARDISAreaCommands implements CommandExecutor {
                     ArrayList<HashMap<String, String>> data = rsa.getData();
                     for (HashMap<String, String> map : data) {
                         if (map.get("area_name").equals(args[1])) {
-                            sender.sendMessage(plugin.pluginName + " Area name already in use!");
+                            sender.sendMessage(plugin.pluginName + "Area name already in use!");
                             return false;
                         }
                     }
                 }
                 plugin.trackName.put(player.getName(), args[1]);
-                player.sendMessage(plugin.pluginName + " Click the area start block to save its position.");
+                player.sendMessage(plugin.pluginName + "Click the area start block to save its position.");
                 return true;
             }
             if (args[0].equals("end")) {
@@ -66,7 +66,7 @@ public class TARDISAreaCommands implements CommandExecutor {
                     return false;
                 }
                 plugin.trackEnd.put(player.getName(), "end");
-                player.sendMessage(plugin.pluginName + " Click the area end block to complete the area.");
+                player.sendMessage(plugin.pluginName + "Click the area end block to complete the area.");
                 return true;
             }
             if (args[0].equals("remove")) {
@@ -74,7 +74,7 @@ public class TARDISAreaCommands implements CommandExecutor {
                 where.put("area_name", args[1]);
                 QueryFactory qf = new QueryFactory(plugin);
                 qf.doDelete("areas", where);
-                player.sendMessage(plugin.pluginName + " Area [" + args[1] + "] deleted!");
+                player.sendMessage(plugin.pluginName + "Area [" + args[1] + "] deleted!");
                 return true;
             }
             if (args[0].equals("show")) {

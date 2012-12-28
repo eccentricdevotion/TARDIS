@@ -74,7 +74,7 @@ public class TARDISConfiguration {
             }
         }
         if (i > 0) {
-            plugin.console.sendMessage(plugin.pluginName + " Added '" + ChatColor.AQUA + i + ChatColor.RESET + "' new items to config");
+            plugin.console.sendMessage(plugin.pluginName + "Added '" + ChatColor.AQUA + i + ChatColor.RESET + "' new items to config");
         }
         // add worlds
         List<World> worlds = this.plugin.getServer().getWorlds();
@@ -82,7 +82,7 @@ public class TARDISConfiguration {
             String worldname = "worlds." + w.getName();
             if (!config.contains(worldname)) {
                 plugin.getConfig().set(worldname, true);
-                plugin.console.sendMessage(plugin.pluginName + " Added '" + w.getName() + "' to config. To exclude this world run: /tardis admin exclude " + w.getName());
+                plugin.console.sendMessage(plugin.pluginName + "Added '" + w.getName() + "' to config. To exclude this world run: /tardis admin exclude " + w.getName());
             }
         }
         plugin.saveConfig();
@@ -91,7 +91,7 @@ public class TARDISConfiguration {
         for (String cw : cWorlds) {
             if (plugin.getServer().getWorld(cw) == null) {
                 plugin.getConfig().set("worlds." + cw, null);
-                plugin.console.sendMessage(plugin.pluginName + " Removed '" + cw + " from config.yml");
+                plugin.console.sendMessage(plugin.pluginName + "Removed '" + cw + " from config.yml");
             }
         }
         plugin.saveConfig();

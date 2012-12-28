@@ -62,7 +62,7 @@ public class TARDISAreaListener implements Listener {
                 if (plugin.ta.areaCheckInExisting(block_loc)) {
                     String locStr = block_loc.getWorld().getName() + ":" + block_loc.getBlockX() + ":" + block_loc.getBlockZ();
                     plugin.trackBlock.put(playerNameStr, locStr);
-                    player.sendMessage(plugin.pluginName + " You have 60 seconds to select the area end block - use the " + ChatColor.GREEN + "/tardisarea end" + ChatColor.RESET + " command.");
+                    player.sendMessage(plugin.pluginName + "You have 60 seconds to select the area end block - use the " + ChatColor.GREEN + "/tardisarea end" + ChatColor.RESET + " command.");
                     plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
                         @Override
                         public void run() {
@@ -71,7 +71,7 @@ public class TARDISAreaListener implements Listener {
                         }
                     }, 1200L);
                 } else {
-                    player.sendMessage(plugin.pluginName + " That block is inside an already defined area! Try somewhere else.");
+                    player.sendMessage(plugin.pluginName + "That block is inside an already defined area! Try somewhere else.");
                 }
             } else if (plugin.trackBlock.containsKey(playerNameStr) && plugin.trackEnd.containsKey(playerNameStr)) {
                 Location block_loc = block.getLocation();
@@ -106,12 +106,12 @@ public class TARDISAreaListener implements Listener {
                     set.put("maxx", maxx);
                     set.put("maxz", maxz);
                     qf.doPreparedInsert("areas", set);
-                    player.sendMessage(plugin.pluginName + " The area [" + plugin.trackName.get(playerNameStr) + "] was saved successfully");
+                    player.sendMessage(plugin.pluginName + "The area [" + plugin.trackName.get(playerNameStr) + "] was saved successfully");
                     plugin.trackName.remove(playerNameStr);
                     plugin.trackBlock.remove(playerNameStr);
                     plugin.trackEnd.remove(playerNameStr);
                 } else {
-                    player.sendMessage(plugin.pluginName + " That block is inside an already defined area! Try somewhere else.");
+                    player.sendMessage(plugin.pluginName + "That block is inside an already defined area! Try somewhere else.");
                 }
             }
         }

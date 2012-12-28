@@ -118,7 +118,7 @@ public class TARDISSignListener implements Listener {
                                 sid.put("tardis_id", id);
                                 qf.doUpdate("tardis", sets, sid);
                                 plugin.utils.updateTravellerCount(id);
-                                player.sendMessage(plugin.pluginName + " Exit location set");
+                                player.sendMessage(plugin.pluginName + "Exit location set");
                             }
                             if (event.getAction().equals(Action.RIGHT_CLICK_BLOCK) && !player.isSneaking()) {
                                 List<String> dests = new ArrayList<String>();

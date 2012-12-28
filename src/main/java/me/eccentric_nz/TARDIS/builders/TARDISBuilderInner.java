@@ -294,7 +294,7 @@ public class TARDISBuilderInner {
                     damage = 0; // reset damage
                 }
             } else {
-                plugin.console.sendMessage(plugin.pluginName + " Could not find chest location in DB!");
+                plugin.console.sendMessage(plugin.pluginName + "Could not find chest location in DB!");
             }
         }
         if (plugin.worldGuardOnServer && plugin.getConfig().getBoolean("use_worldguard")) {

@@ -59,7 +59,7 @@ public class TARDISBuilderPoliceBox {
                 chameleonData = chameleonBlock.getData();
             }
             if (TARDISConstants.CHAMELEON_BLOCKS_BAD.contains((Integer) chameleonType)) {
-                p.sendMessage(plugin.pluginName + " Bummer, the TARDIS could not engage the Chameleon Circuit!");
+                p.sendMessage(plugin.pluginName + "Bummer, the TARDIS could not engage the Chameleon Circuit!");
             }
             if (TARDISConstants.CHAMELEON_BLOCKS_CHANGE.contains((Integer) chameleonType)) {
                 wall_block = swapId(chameleonType);

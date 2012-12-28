@@ -47,7 +47,7 @@ public class TARDISPrefsCommands implements CommandExecutor {
             if (firstArgs.contains(pref)) {
                 if (player.hasPermission("tardis.timetravel")) {
                     if (args.length < 2 || (!args[1].equalsIgnoreCase("on") && !args[1].equalsIgnoreCase("off"))) {
-                        sender.sendMessage(plugin.pluginName + " You need to specify if " + pref + " should be on or off!");
+                        sender.sendMessage(plugin.pluginName + "You need to specify if " + pref + " should be on or off!");
                         return false;
                     }
                     // get the players preferences
@@ -65,11 +65,11 @@ public class TARDISPrefsCommands implements CommandExecutor {
                     wherep.put("player", player.getName());
                     if (args[1].equalsIgnoreCase("on")) {
                         setp.put(pref + "_on", 1);
-                        sender.sendMessage(plugin.pluginName + " " + pref + " were turned ON!");
+                        sender.sendMessage(plugin.pluginName + pref + " were turned ON!");
                     }
                     if (args[1].equalsIgnoreCase("off")) {
                         setp.put(pref + "_on", 0);
-                        sender.sendMessage(plugin.pluginName + " " + pref + " were turned OFF.");
+                        sender.sendMessage(plugin.pluginName + pref + " were turned OFF.");
                     }
                     qf.doUpdate("player_prefs", setp, wherep);
                     return true;

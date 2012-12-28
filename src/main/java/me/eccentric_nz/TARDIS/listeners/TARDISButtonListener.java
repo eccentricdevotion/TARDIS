@@ -103,7 +103,7 @@ public class TARDISButtonListener implements Listener {
                                 player.sendMessage(plugin.pluginName + ChatColor.RED + " Notice:" + ChatColor.RESET + " Your travel has been restricted to the [" + permArea + "] area!");
                                 Location l = plugin.ta.getNextSpot(permArea);
                                 if (l == null) {
-                                    player.sendMessage(plugin.pluginName + " All available parking spots are taken in this area!");
+                                    player.sendMessage(plugin.pluginName + "All available parking spots are taken in this area!");
                                 }
                                 String save_loc = l.getWorld().getName() + ":" + l.getBlockX() + ":" + l.getBlockY() + ":" + l.getBlockZ();
                                 HashMap<String, Object> set = new HashMap<String, Object>();
@@ -111,7 +111,7 @@ public class TARDISButtonListener implements Listener {
                                 HashMap<String, Object> wherel = new HashMap<String, Object>();
                                 wherel.put("tardis_id", id);
                                 qf.doUpdate("tardis", set, wherel);
-                                player.sendMessage(plugin.pluginName + " Your TARDIS was approved for parking in [" + permArea + "]!");
+                                player.sendMessage(plugin.pluginName + "Your TARDIS was approved for parking in [" + permArea + "]!");
                             } else {
                                 // get repeater settings
                                 Location r0_loc = plugin.utils.getLocationFromDB(r0_str, 0, 0);
@@ -181,7 +181,7 @@ public class TARDISButtonListener implements Listener {
                                     for (String c : companions) {
                                         // are they online - AND are they travelling - need check here for travelling!
                                         if (plugin.getServer().getPlayer(c) != null) {
-                                            plugin.getServer().getPlayer(c).sendMessage(plugin.pluginName + " Destination: " + dchat);
+                                            plugin.getServer().getPlayer(c).sendMessage(plugin.pluginName + "Destination: " + dchat);
                                         }
                                         if (c.equalsIgnoreCase(player.getName())) {
                                             isTL = false;
@@ -189,10 +189,10 @@ public class TARDISButtonListener implements Listener {
                                     }
                                 }
                                 if (isTL == true) {
-                                    player.sendMessage(plugin.pluginName + " Destination: " + dchat);
+                                    player.sendMessage(plugin.pluginName + "Destination: " + dchat);
                                 } else {
                                     if (plugin.getServer().getPlayer(rs.getOwner()) != null) {
-                                        plugin.getServer().getPlayer(rs.getOwner()).sendMessage(plugin.pluginName + " Destination: " + dchat);
+                                        plugin.getServer().getPlayer(rs.getOwner()).sendMessage(plugin.pluginName + "Destination: " + dchat);
                                     }
                                 }
                                 HashMap<String, Object> set = new HashMap<String, Object>();

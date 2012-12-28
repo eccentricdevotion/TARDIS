@@ -178,7 +178,7 @@ public class TARDISBlockBreakListener implements Listener {
                             HashMap<String, Object> did = new HashMap<String, Object>();
                             did.put("tardis_id", id);
                             qf.doDelete("doors", did);
-                            player.sendMessage(plugin.pluginName + " The TARDIS was removed from the world and database successfully.");
+                            player.sendMessage(plugin.pluginName + "The TARDIS was removed from the world and database successfully.");
                             // remove world guard region protection
                             if (plugin.worldGuardOnServer && plugin.getConfig().getBoolean("use_worldguard")) {
                                 plugin.wgchk.removeRegion(cw, owner);
@@ -195,7 +195,7 @@ public class TARDISBlockBreakListener implements Listener {
                         player.sendMessage("Don't grief the TARDIS!");
                     }
                 } catch (Exception e) {
-                    plugin.console.sendMessage(plugin.pluginName + " Block Break Listener Error: " + e);
+                    plugin.console.sendMessage(plugin.pluginName + "Block Break Listener Error: " + e);
                 }
             }
         }

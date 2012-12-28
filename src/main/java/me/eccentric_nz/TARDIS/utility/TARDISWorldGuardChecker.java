@@ -56,7 +56,7 @@ public class TARDISWorldGuardChecker {
         try {
             rm.save();
         } catch (ProtectionDatabaseException e) {
-            plugin.console.sendMessage(plugin.pluginName + " could not create WorldGuard Protection! " + e);
+            plugin.console.sendMessage(plugin.pluginName + "could not create WorldGuard Protection! " + e);
         }
     }
 
@@ -66,7 +66,7 @@ public class TARDISWorldGuardChecker {
         try {
             rm.save();
         } catch (ProtectionDatabaseException e) {
-            plugin.console.sendMessage(plugin.pluginName + " could not remove WorldGuard Protection! " + e);
+            plugin.console.sendMessage(plugin.pluginName + "could not remove WorldGuard Protection! " + e);
         }
     }
 

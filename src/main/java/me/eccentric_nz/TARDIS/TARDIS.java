@@ -103,7 +103,7 @@ public class TARDIS extends JavaPlugin {
     @Override
     public void onEnable() {
         pdfFile = getDescription();
-        pluginName = ChatColor.GOLD + "[" + pdfFile.getName() + "]" + ChatColor.RESET;
+        pluginName = ChatColor.GOLD + "[" + pdfFile.getName() + "]" + ChatColor.RESET + " ";
         plugin = this;
         console = getServer().getConsoleSender();
 
@@ -151,7 +151,7 @@ public class TARDIS extends JavaPlugin {
             this.setEnabled(false);
             return;
         }
-        console.sendMessage(pluginName + " Loading support for CB " + version);
+        console.sendMessage(pluginName + "Loading support for CB " + version);
     }
 
     private void loadDatabase() {
@@ -160,7 +160,7 @@ public class TARDIS extends JavaPlugin {
             service.setConnection(path);
             service.createTables();
         } catch (Exception e) {
-            console.sendMessage(pluginName + " Connection and Tables Error: " + e);
+            console.sendMessage(pluginName + "Connection and Tables Error: " + e);
         }
     }
 
@@ -168,7 +168,7 @@ public class TARDIS extends JavaPlugin {
         try {
             service.connection.close();
         } catch (Exception e) {
-            console.sendMessage(pluginName + " Could not close database connection: " + e);
+            console.sendMessage(pluginName + "Could not close database connection: " + e);
         }
     }
 
@@ -236,7 +236,7 @@ public class TARDIS extends JavaPlugin {
                 copy(getResource(TARDISConstants.QUOTES_FILE_NAME), quotesfile);
             }
         } catch (Exception e) {
-            console.sendMessage(pluginName + " failed to retrieve files from directory. Using defaults.");
+            console.sendMessage(pluginName + "failed to retrieve files from directory. Using defaults.");
         }
     }
 
@@ -273,7 +273,7 @@ public class TARDIS extends JavaPlugin {
             try {
                 file.createNewFile();
             } catch (IOException io) {
-                console.sendMessage(pluginName + " " + filename + " could not be created! " + io.getMessage());
+                console.sendMessage(pluginName + filename + " could not be created! " + io.getMessage());
             }
         }
         return file;
@@ -290,7 +290,7 @@ public class TARDIS extends JavaPlugin {
                     out.write(buf, 0, len);
                 }
             } catch (IOException io) {
-                console.sendMessage(pluginName + " could not save the config file.");
+                console.sendMessage(pluginName + "Could not save the file (" + file.toString() + ").");
             } finally {
                 if (out != null) {
                     try {
@@ -300,7 +300,7 @@ public class TARDIS extends JavaPlugin {
                 }
             }
         } catch (FileNotFoundException e) {
-            console.sendMessage(pluginName + " File not found.");
+            console.sendMessage(pluginName + "File not found.");
         } finally {
             if (in != null) {
                 try {
@@ -326,12 +326,13 @@ public class TARDIS extends JavaPlugin {
                     quotes.add("");
                 }
             } catch (IOException io) {
-                console.sendMessage(pluginName + " Could not read quotes file");
+                console.sendMessage(pluginName + "Could not read quotes file");
             } finally {
                 if (bufRdr != null) {
                     try {
                         bufRdr.close();
                     } catch (Exception e) {
+                        plugin.debug("Error closing quotes reader! " + e.getMessage());
                     }
                 }
             }
@@ -341,7 +342,7 @@ public class TARDIS extends JavaPlugin {
 
     public void debug(Object o) {
         if (getConfig().getBoolean("debug") == true) {
-            console.sendMessage(pluginName + " Debug: " + o);
+            console.sendMessage(pluginName + "Debug: " + o);
         }
     }
 }

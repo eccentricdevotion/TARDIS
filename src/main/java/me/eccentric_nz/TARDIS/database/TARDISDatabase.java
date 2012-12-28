@@ -45,7 +45,7 @@ public class TARDISDatabase {
             String queryPresets = "CREATE TABLE IF NOT EXISTS areas (area_id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, area_name TEXT COLLATE NOCASE DEFAULT '', world TEXT COLLATE NOCASE DEFAULT '', minx INTEGER, minz INTEGER, maxx INTEGER, maxz INTEGER)";
             statement.executeUpdate(queryPresets);
         } catch (SQLException e) {
-            TARDIS.plugin.console.sendMessage(TARDIS.plugin.pluginName + " Create table error: " + e);
+            TARDIS.plugin.console.sendMessage(TARDIS.plugin.pluginName + "Create table error: " + e);
         } finally {
             try {
                 statement.close();

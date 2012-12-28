@@ -242,11 +242,11 @@ public class TARDISDoorListener implements Listener {
                                                                 }
                                                             }
                                                         } else {
-                                                            player.sendMessage(plugin.pluginName + " " + TARDISConstants.TIMELORD_NOT_IN);
+                                                            player.sendMessage(plugin.pluginName + TARDISConstants.TIMELORD_NOT_IN);
                                                         }
                                                     }
                                                 } else {
-                                                    player.sendMessage(plugin.pluginName + " " + TARDISConstants.TIMELORD_OFFLINE);
+                                                    player.sendMessage(plugin.pluginName + TARDISConstants.TIMELORD_OFFLINE);
                                                 }
                                             }
                                             if (playerNameStr.equals(tl) || chkCompanion == true || player.hasPermission("tardis.skeletonkey")) {
@@ -265,7 +265,7 @@ public class TARDISDoorListener implements Listener {
                                                         cy = Integer.parseInt(split[2]);
                                                         cz = Integer.parseInt(split[3]);
                                                     } catch (NumberFormatException nfe) {
-                                                        plugin.console.sendMessage(plugin.pluginName + " Could not convert to number!");
+                                                        plugin.console.sendMessage(plugin.pluginName + "Could not convert to number!");
                                                     }
                                                     Location tmp_loc = cw.getBlockAt(cx, cy, cz).getLocation();
                                                     int getx = tmp_loc.getBlockX();
@@ -335,17 +335,17 @@ public class TARDISDoorListener implements Listener {
                                     }
                                 }
                             } else {
-                                player.sendMessage(plugin.pluginName + " " + TARDISConstants.NO_PERMS_MESSAGE);
+                                player.sendMessage(plugin.pluginName + TARDISConstants.NO_PERMS_MESSAGE);
                             }
                         } else {
-                            plugin.console.sendMessage(plugin.pluginName + " Could not get block");
+                            plugin.console.sendMessage(plugin.pluginName + "Could not get block");
                         }
                     } else {
                         Block blockAbove = block.getRelative(BlockFace.UP);
                         Material baType = blockAbove.getType();
                         byte baData = blockAbove.getData();
                         if (baType == Material.WOOL && (baData == 1 || baData == 11)) {
-                            player.sendMessage(plugin.pluginName + " " + TARDISConstants.WRONG_MATERIAL + plugin.TARDIS_KEY + ". You have a " + material + " in your hand!");
+                            player.sendMessage(plugin.pluginName + TARDISConstants.WRONG_MATERIAL + plugin.TARDIS_KEY + ". You have a " + material + " in your hand!");
                         }
                     }
                 }
@@ -387,7 +387,7 @@ public class TARDISDoorListener implements Listener {
                     thePlayer.setAllowFlight(true);
                 }
                 if (quotes) {
-                    thePlayer.sendMessage(plugin.pluginName + " " + plugin.quote.get(i));
+                    thePlayer.sendMessage(plugin.pluginName + plugin.quote.get(i));
                 }
                 if (exit == true) {
                     Inventory inv = thePlayer.getInventory();
@@ -398,7 +398,7 @@ public class TARDISDoorListener implements Listener {
                         ir.setName("Sonic Screwdriver", true);
                         inv.addItem(is);
                         thePlayer.updateInventory();
-                        thePlayer.sendMessage(plugin.pluginName + " Don't forget your TARDIS key!");
+                        thePlayer.sendMessage(plugin.pluginName + "Don't forget your TARDIS key!");
                     }
                 }
             }

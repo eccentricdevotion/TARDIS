@@ -46,14 +46,14 @@ public class TARDISLister {
             ResultSetAreas rsa = new ResultSetAreas(TARDIS.plugin, null, true);
             int a = 1;
             if (!rsa.resultSet()) {
-                p.sendMessage(TARDIS.plugin.pluginName + " No areas were found!");
+                p.sendMessage(TARDIS.plugin.pluginName + "No areas were found!");
             }
             ArrayList<HashMap<String, String>> data = rsa.getData();
             for (HashMap<String, String> map : data) {
                 String name = map.get("area_name");
                 String world = map.get("world");
                 if (a == 1) {
-                    p.sendMessage(TARDIS.plugin.pluginName + " Areas");
+                    p.sendMessage(TARDIS.plugin.pluginName + "Areas");
                 }
                 p.sendMessage(a + ". [" + name + "] in world: " + world);
                 a++;
