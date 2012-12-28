@@ -8,9 +8,9 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
+import org.bukkit.block.BlockFace;
 import org.bukkit.block.Chest;
 import org.bukkit.block.Furnace;
-import org.bukkit.inventory.Inventory;
 
 public class TARDISDestroyer {
 
@@ -57,10 +57,21 @@ public class TARDISDestroyer {
                     Block b = w.getBlockAt(startx, starty, startz);
                     Material m = b.getType();
                     // if it's a chest clear the inventory first
-                    if (m == Material.CHEST) {
-                        Chest che = (Chest) b.getState();
-                        Inventory inv = che.getBlockInventory();
-                        inv.clear();
+                    if (m.equals(Material.CHEST)) {
+                        Chest container = (Chest) b.getState();
+                        //Is it a double chest?
+                        Chest chest = getDoubleChest(b);
+                        if (chest != null) {
+                            chest.getInventory().clear();
+                            if (chest.getBlock().setTypeId(i) && container.getBlock().setTypeId(i)) {
+                                plugin.debug("Deleted both halves of the double chest");
+                            }
+                        } else if (container != null) {
+                            container.getInventory().clear();
+                            if (container.getBlock().setTypeId(i)) {
+                                plugin.debug("Deleted the single chest");
+                            }
+                        }
                     }
                     // if it's a furnace clear the inventory first
                     if (m == Material.FURNACE) {
@@ -237,5 +248,24 @@ public class TARDISDestroyer {
         int ty = l.getBlockY() + 3;
         int tz = l.getBlockZ();
         plugin.utils.setBlock(w, tx, ty, tz, 0, (byte) 0);
+    }
+    //Originally stolen from Babarix. Thank you :)
+
+    public Chest getDoubleChest(Block block) {
+        Chest chest = null;
+        if (block.getRelative(BlockFace.NORTH).getTypeId() == 54) {
+            chest = (Chest) block.getRelative(BlockFace.NORTH).getState();
+            return chest;
+        } else if (block.getRelative(BlockFace.EAST).getTypeId() == 54) {
+            chest = (Chest) block.getRelative(BlockFace.EAST).getState();
+            return chest;
+        } else if (block.getRelative(BlockFace.SOUTH).getTypeId() == 54) {
+            chest = (Chest) block.getRelative(BlockFace.SOUTH).getState();
+            return chest;
+        } else if (block.getRelative(BlockFace.WEST).getTypeId() == 54) {
+            chest = (Chest) block.getRelative(BlockFace.WEST).getState();
+            return chest;
+        }
+        return chest;
     }
 }
