@@ -74,7 +74,7 @@ public class TARDISLister {
                     // list other saved destinations
                     HashMap<String, Object> whered = new HashMap<String, Object>();
                     whered.put("tardis_id", id);
-                    ResultSetDestinations rsd = new ResultSetDestinations(TARDIS.plugin, where, true);
+                    ResultSetDestinations rsd = new ResultSetDestinations(TARDIS.plugin, whered, true);
                     int i = 1;
                     if (rsd.resultSet()) {
                         ArrayList<HashMap<String, String>> data = rsd.getData();
