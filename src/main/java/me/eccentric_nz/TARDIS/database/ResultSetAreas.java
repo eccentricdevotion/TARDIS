@@ -81,8 +81,8 @@ public class ResultSetAreas {
                         }
                         data.add(row);
                     }
-                    this.area_id = rs.getInt("traveller_id");
-                    this.area_name = rs.getString("dest_name");
+                    this.area_id = rs.getInt("area_id");
+                    this.area_name = rs.getString("area_name");
                     this.world = rs.getString("world");
                     this.minx = rs.getInt("minx");
                     this.minz = rs.getInt("minz");
