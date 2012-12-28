@@ -226,7 +226,7 @@ public class TARDISDoorListener implements Listener {
                                             boolean chkCompanion = false;
                                             if (!playerNameStr.equals(tl)) {
                                                 if (plugin.getServer().getPlayer(tl) != null) {
-                                                    if (!companions.equals("")) {
+                                                    if (companions != null && !companions.equals("")) {
                                                         // is the timelord in the TARDIS?
                                                         HashMap<String, Object> whert = new HashMap<String, Object>();
                                                         whert.put("tardis_id", id);

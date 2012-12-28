@@ -176,7 +176,7 @@ public class TARDISButtonListener implements Listener {
                                 String dchat = rand.getWorld().getName() + " at x: " + rand.getBlockX() + " y: " + rand.getBlockY() + " z: " + rand.getBlockZ();
                                 boolean isTL = true;
                                 String comps = rs.getCompanions();
-                                if (!comps.equals("")) {
+                                if (comps != null && !comps.equals("")) {
                                     String[] companions = comps.split(":");
                                     for (String c : companions) {
                                         // are they online - AND are they travelling - need check here for travelling!

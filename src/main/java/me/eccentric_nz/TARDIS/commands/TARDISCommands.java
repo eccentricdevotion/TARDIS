@@ -412,7 +412,7 @@ public class TARDISCommands implements CommandExecutor {
                             HashMap<String, Object> tid = new HashMap<String, Object>();
                             HashMap<String, Object> set = new HashMap<String, Object>();
                             tid.put("tardis_id", id);
-                            if (!comps.equals("")) {
+                            if (comps != null && !comps.equals("")) {
                                 // add to the list
                                 String newList = comps + ":" + args[1].toLowerCase();
                                 set.put("companions", newList);
@@ -442,7 +442,7 @@ public class TARDISCommands implements CommandExecutor {
                         } else {
                             id = rs.getTardis_id();
                             comps = rs.getCompanions();
-                            if (comps.equals("")) {
+                            if (comps == null && comps.equals("")) {
                                 sender.sendMessage(plugin.pluginName + " You have not added any TARDIS companions yet!");
                                 return true;
                             }

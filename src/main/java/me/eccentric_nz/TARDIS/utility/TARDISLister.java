@@ -90,7 +90,7 @@ public class TARDISLister {
                 if (l.equalsIgnoreCase("companions")) {
                     // list companions
                     String comps = rst.getCompanions();
-                    if (!comps.equals("")) {
+                    if (comps != null && !comps.equals("")) {
                         String[] companionData = comps.split(":");
                         p.sendMessage(ChatColor.AQUA + "Your TARDIS companions are:");
                         for (String c : companionData) {
