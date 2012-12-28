@@ -88,25 +88,28 @@ public class TARDISDestroyerInner {
                     Block b = w.getBlockAt(startx, starty, startz);
                     Material m = b.getType();
                     // if it's a chest clear the inventory first
-                    if (b.getType().compareTo(Material.CHEST) == 0) {
+                    if (m.equals(Material.CHEST)) {
                         Chest container = (Chest) b.getState();
-                        container.getInventory().clear();
-                        //Is it a chest, and if so, is it a double chest?
-                        if (b.getTypeId() == Material.CHEST.getId()) {
-                            Chest chest = getDoubleChest(b);
-                            if (chest != null) {
-                                container = (Chest) chest;
-                                container.getInventory().clear();
-                                chest.getBlock().setTypeId(i);
+                        //Is it a double chest?
+                        Chest chest = getDoubleChest(b);
+                        if (chest != null) {
+                            chest.getInventory().clear();
+                            if (chest.getBlock().setTypeId(i) && container.getBlock().setTypeId(i)) {
+                                plugin.debug("Deleted both halves of the double chest");
+                            }
+                        } else if (container != null) {
+                            container.getInventory().clear();
+                            if (container.getBlock().setTypeId(i)) {
+                                plugin.debug("Deleted the single chest");
                             }
                         }
                     }
                     // if it's a furnace clear the inventory first
-                    if (m == Material.FURNACE) {
+                    if (m.equals(Material.FURNACE)) {
                         Furnace fur = (Furnace) b.getState();
                         fur.getInventory().clear();
                     }
-                    if (m != Material.CHEST) {
+                    if (!m.equals(Material.CHEST)) {
                         plugin.utils.setBlock(w, startx, starty, startz, i, (byte) 0);
                     }
                     startx += x;
