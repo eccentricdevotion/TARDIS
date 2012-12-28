@@ -291,7 +291,7 @@ public class TARDISCommands implements CommandExecutor {
                         }
                         HashMap<String, Object> wheret = new HashMap<String, Object>();
                         wheret.put("player", player.getName());
-                        ResultSetTravellers rst = new ResultSetTravellers(plugin, where, false);
+                        ResultSetTravellers rst = new ResultSetTravellers(plugin, wheret, false);
                         if (!rst.resultSet()) {
                             sender.sendMessage(plugin.pluginName + " You are not inside your TARDIS. You need to be to run this command!");
                             return false;
