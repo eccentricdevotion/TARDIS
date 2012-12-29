@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry excluding="src/main/java/" kind="src" path=""/>
+	<classpathentry kind="src" path="src/main/java"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="lib" path="C:/Users/Tech/Documents/WorldGuard.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Tech/Documents/WorldEdit.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Tech/Documents/SpoutPlugin.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Tech/Documents/craftbukkit-1.4.6-R0.1.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Tech/Documents/craftbukkit-1.4.5-R1.0.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Tech/Documents/bukkit-1.4.6-R0.1.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Tech/Documents/bukkit-1.4.5-R1.0.jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>
