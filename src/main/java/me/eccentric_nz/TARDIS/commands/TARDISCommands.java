@@ -54,6 +54,7 @@ public class TARDISCommands implements CommandExecutor {
         firstArgs.add("update");
         firstArgs.add("rebuild");
         firstArgs.add("comehere");
+        firstArgs.add("occupy");
         firstArgs.add("direction");
         firstArgs.add("setdest");
         firstArgs.add("hide");
@@ -142,6 +143,39 @@ public class TARDISCommands implements CommandExecutor {
                     } else {
                         sender.sendMessage(plugin.pluginName + TARDISConstants.NO_PERMS_MESSAGE);
                         return false;
+                    }
+                }
+                if (args[0].equalsIgnoreCase("occupy")) {
+                    if (player.hasPermission("tardis.timetravel")) {
+                        HashMap<String, Object> where = new HashMap<String, Object>();
+                        where.put("owner", player.getName());
+                        ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
+                        if (!rs.resultSet()) {
+                            sender.sendMessage(plugin.pluginName + " You must be the Timelord of the TARDIS to use this command!");
+                            return false;
+                        }
+                        int id = rs.getTardis_id();
+                        HashMap<String, Object> wheret = new HashMap<String, Object>();
+                        wheret.put("tardis_id", id);
+                        wheret.put("player", player.getName());
+                        ResultSetTravellers rst = new ResultSetTravellers(plugin, wheret, false);
+                        String occupied;
+                        QueryFactory qf = new QueryFactory(plugin);
+                        if (rst.resultSet()) {
+                            HashMap<String, Object> whered = new HashMap<String, Object>();
+                            whered.put("tardis_id", id);
+                            whered.put("player", player.getName());
+                            qf.doDelete("travellers", whered);
+                            occupied = ChatColor.RED + "UNOCCUPIED";
+                        } else {
+                            HashMap<String, Object> wherei = new HashMap<String, Object>();
+                            wherei.put("tardis_id", id);
+                            wherei.put("player", player.getName());
+                            qf.doInsert("travellers", wherei);
+                            occupied = ChatColor.GREEN + "OCCUPIED";
+                        }
+                        sender.sendMessage(plugin.pluginName + " TARDIS occupation was set to: " + occupied);
+                        return true;
                     }
                 }
                 if (args[0].equalsIgnoreCase("comehere")) {
