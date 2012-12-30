@@ -60,6 +60,7 @@ public class TARDISAdminCommands implements CommandExecutor {
         firstArgsBool.add("respect_worldguard");
         firstArgsBool.add("respect_towny");
         firstArgsBool.add("respect_worldborder");
+        firstArgsBool.add("create_worlds");
         // integer
         firstArgsInt.add("timeout_height");
         firstArgsInt.add("timeout");

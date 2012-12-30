@@ -24,3 +24,4 @@ timeout: 5
 timeout_height: 135
 name_tardis: false
 border_radius: 256
+create_worlds: true
