@@ -167,7 +167,7 @@ public class TARDISBlockBreakListener implements Listener {
                             cid.put("tardis_id", id);
                             qf.doDelete("chunks", cid);
                             if (cw.getWorldType() == WorldType.FLAT || cw.getName().contains("TARDIS_WORLD_")) {
-                                 restore = 0;
+                                restore = 0;
                             }
                             plugin.destroyI.destroyInner(schm, id, cw, restore, playerNameStr);
                             plugin.destroyPB.destroyPoliceBox(bb_loc, d, id, false);
@@ -193,6 +193,10 @@ public class TARDISBlockBreakListener implements Listener {
                                 }
                                 if (plugin.pm.isPluginEnabled("Multiverse-Core")) {
                                     plugin.getServer().dispatchCommand(plugin.console, "mv remove " + name);
+                                }
+                                if (plugin.pm.isPluginEnabled("WorldBorder")) {
+                                    // wb <world> clear
+                                    plugin.getServer().dispatchCommand(plugin.console, "wb " + name + " clear");
                                 }
                                 plugin.getServer().unloadWorld(cw, true);
                                 File world_folder = new File(plugin.getServer().getWorldContainer() + File.separator + name + File.separator);
