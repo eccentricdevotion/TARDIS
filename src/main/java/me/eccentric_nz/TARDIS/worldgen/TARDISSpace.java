@@ -47,8 +47,8 @@ public class TARDISSpace {
                 plugin.getServer().dispatchCommand(plugin.console, "mv import " + name + " the_end -g TARDIS");
             }
             if (plugin.pm.isPluginEnabled("WorldBorder")) {
-                plugin.getServer().dispatchCommand(plugin.console, "/wb shape square");
-                plugin.getServer().dispatchCommand(plugin.console, "/wb " + name + " set " + plugin.getConfig().getInt("border_radius") + " 0 0");
+                // wb <world> set <radius> <x> <z>
+                plugin.getServer().dispatchCommand(plugin.console, "wb " + name + " set " + plugin.getConfig().getInt("border_radius") + " 0 0");
             }
         }
         return tardisWorld;
