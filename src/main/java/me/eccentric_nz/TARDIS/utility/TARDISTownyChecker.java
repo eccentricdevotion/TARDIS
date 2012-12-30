@@ -18,6 +18,7 @@ package me.eccentric_nz.TARDIS.utility;
 
 import com.palmergames.bukkit.towny.Towny;
 import com.palmergames.bukkit.towny.object.Coord;
+import com.palmergames.bukkit.towny.object.TownyWorld;
 import com.palmergames.bukkit.towny.object.WorldCoord;
 import me.eccentric_nz.TARDIS.TARDIS;
 import org.bukkit.Location;
@@ -48,11 +49,14 @@ public class TARDISTownyChecker {
         boolean bool = true;
         if (towny != null) {
             try {
-                //could be block Coord.parseCoord(Block block);
-                Coord cord = Coord.parseCoord(l.getBlockX(), l.getBlockZ());
-                WorldCoord wcoord = new WorldCoord(l.getWorld().getName(), cord);
-                if (wcoord.getTownBlock().hasResident() && (!wcoord.getTownBlock().getResident().getPermissions().outsiderBuild && !wcoord.getTownBlock().getResident().getPermissions().allyBuild && !wcoord.getTownBlock().getResident().getPermissions().residentBuild)) {
-                    bool = false;
+                String name = l.getWorld().getName();
+                TownyWorld w = new TownyWorld(name);
+                if (w.hasTowns()) {
+                    Coord cord = Coord.parseCoord(l.getBlockX(), l.getBlockZ());
+                    WorldCoord wcoord = new WorldCoord(name, cord);
+                    if (wcoord.getTownBlock().hasResident() && (!wcoord.getTownBlock().getResident().getPermissions().outsiderBuild && !wcoord.getTownBlock().getResident().getPermissions().allyBuild && !wcoord.getTownBlock().getResident().getPermissions().residentBuild)) {
+                        bool = false;
+                    }
                 }
             } catch (Exception e) {
                 plugin.debug("Towny checker error " + e.getMessage());
