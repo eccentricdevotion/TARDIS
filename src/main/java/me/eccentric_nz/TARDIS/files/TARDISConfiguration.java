@@ -44,6 +44,7 @@ public class TARDISConfiguration {
         intOptions.put("timeout_height", 135);
         intOptions.put("timeout", 5);
         intOptions.put("tp_radius", 256);
+        intOptions.put("border_radius", 256);
         // string
         strOptions.put("default_world_name", "myridiculouslylongworldnameiscalledcuthbert");
         strOptions.put("key", "STICK");
