@@ -1,6 +1,5 @@
 package me.eccentric_nz.TARDIS.builders;
 
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -29,7 +28,6 @@ public class TARDISBuilderInner {
 
     private final TARDIS plugin;
     TARDISDatabase service = TARDISDatabase.getInstance();
-    Statement statement;
 
     public TARDISBuilderInner(TARDIS plugin) {
         this.plugin = plugin;
