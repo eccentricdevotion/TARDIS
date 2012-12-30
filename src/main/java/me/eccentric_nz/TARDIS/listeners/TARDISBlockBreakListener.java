@@ -166,11 +166,10 @@ public class TARDISBlockBreakListener implements Listener {
                             HashMap<String, Object> cid = new HashMap<String, Object>();
                             cid.put("tardis_id", id);
                             qf.doDelete("chunks", cid);
-                            plugin.destroyI.destroyInner(schm, id, cw, restore, playerNameStr);
-                            if (cw.getWorldType() == WorldType.FLAT) {
-                                // replace stone blocks with AIR
-                                plugin.destroyI.destroyInner(schm, id, cw, 0, playerNameStr);
+                            if (cw.getWorldType() == WorldType.FLAT || cw.getName().contains("TARDIS_WORLD_")) {
+                                 restore = 0;
                             }
+                            plugin.destroyI.destroyInner(schm, id, cw, restore, playerNameStr);
                             plugin.destroyPB.destroyPoliceBox(bb_loc, d, id, false);
                             // remove record from tardis table
                             HashMap<String, Object> tid = new HashMap<String, Object>();
