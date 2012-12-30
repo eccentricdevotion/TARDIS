@@ -9,6 +9,7 @@ import me.eccentric_nz.TARDIS.database.ResultSetAreas;
 import me.eccentric_nz.TARDIS.database.ResultSetDestinations;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
+import me.eccentric_nz.TARDIS.travel.TARDISPluginRespect;
 import me.eccentric_nz.TARDIS.travel.TARDISTimetravel;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -23,6 +24,7 @@ public class TARDISTravelCommands implements CommandExecutor {
 
     private TARDIS plugin;
     TARDISDatabase service = TARDISDatabase.getInstance();
+    private TARDISPluginRespect respect = new TARDISPluginRespect(plugin);
 
     public TARDISTravelCommands(TARDIS plugin) {
         this.plugin = plugin;
@@ -76,6 +78,7 @@ public class TARDISTravelCommands implements CommandExecutor {
                     Location l = plugin.ta.getNextSpot(permArea);
                     if (l == null) {
                         player.sendMessage(plugin.pluginName + "All available parking spots are taken in this area!");
+                        return true;
                     }
                     String save_loc = l.getWorld().getName() + ":" + l.getBlockX() + ":" + l.getBlockY() + ":" + l.getBlockZ();
                     set.put("save", save_loc);
@@ -106,22 +109,7 @@ public class TARDISTravelCommands implements CommandExecutor {
                                     sender.sendMessage(plugin.pluginName + "The player's location would not be safe! Please tell the player to move!");
                                     return true;
                                 }
-                                if (plugin.worldGuardOnServer && plugin.getConfig().getBoolean("respect_worldguard")) {
-                                    if (plugin.wgchk.cantBuild(player, player_loc)) {
-                                        sender.sendMessage(plugin.pluginName + "That location is protected by WorldGuard!");
-                                        return true;
-                                    }
-                                }
-                                if (player.hasPermission("tardis.exile")) {
-                                    String areaPerm = plugin.ta.getExileArea(player);
-                                    if (plugin.ta.areaCheckInExile(areaPerm, player_loc)) {
-                                        sender.sendMessage(plugin.pluginName + "Your exile status does not allow you to go to this player's location!");
-                                        return true;
-                                    }
-                                }
-                                if (plugin.ta.areaCheckLocPlayer(player, player_loc)) {
-                                    sender.sendMessage(plugin.pluginName + "You do not have permission [" + plugin.trackPerm.get(player.getName()) + "] to bring the TARDIS to this location!");
-                                    plugin.trackPerm.remove(player.getName());
+                                if (respect.getRespect(player, player_loc, true)) {
                                     return true;
                                 }
                                 String save_loc = player_loc.getWorld().getName() + ":" + (player_loc.getBlockX() - 3) + ":" + player_loc.getBlockY() + ":" + player_loc.getBlockZ();
@@ -194,22 +182,7 @@ public class TARDISTravelCommands implements CommandExecutor {
                         z = plugin.utils.parseNum(args[3]);
                         Block block = w.getBlockAt(x, y, z);
                         Location location = block.getLocation();
-                        if (plugin.worldGuardOnServer && plugin.getConfig().getBoolean("respect_worldguard")) {
-                            if (plugin.wgchk.cantBuild(player, location)) {
-                                sender.sendMessage(plugin.pluginName + "That location is protected by WorldGuard!");
-                                return true;
-                            }
-                        }
-                        if (player.hasPermission("tardis.exile")) {
-                            String areaPerm = plugin.ta.getExileArea(player);
-                            if (plugin.ta.areaCheckInExile(areaPerm, location)) {
-                                sender.sendMessage(plugin.pluginName + "Your exile status does not allow you to bring the TARDIS to this location!");
-                                return true;
-                            }
-                        }
-                        if (plugin.ta.areaCheckLocPlayer(player, location)) {
-                            sender.sendMessage(plugin.pluginName + "You do not have permission [" + plugin.trackPerm.get(player.getName()) + "] to send the TARDIS to this location!");
-                            plugin.trackPerm.remove(player.getName());
+                        if (respect.getRespect(player, location, true)) {
                             return true;
                         }
                         // check location
