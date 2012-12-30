@@ -40,9 +40,21 @@ public class TARDISTimetravel {
 
     private Location dest;
     private TARDIS plugin;
+    private List<Material> goodMaterials = new ArrayList<Material>();
+    private TARDISPluginRespect respect = new TARDISPluginRespect(plugin);
 
     public TARDISTimetravel(TARDIS plugin) {
         this.plugin = plugin;
+        // add good materials
+        goodMaterials.add(Material.AIR);
+        goodMaterials.add(Material.SNOW);
+        goodMaterials.add(Material.LONG_GRASS);
+        goodMaterials.add(Material.RED_ROSE);
+        goodMaterials.add(Material.YELLOW_FLOWER);
+        goodMaterials.add(Material.BROWN_MUSHROOM);
+        goodMaterials.add(Material.RED_MUSHROOM);
+        goodMaterials.add(Material.SAPLING);
+        goodMaterials.add(Material.SNOW);
     }
 
     /**
@@ -121,7 +133,7 @@ public class TARDISTimetravel {
             while (danger == true) {
                 wherex = randomX(rand, range, quarter, rx, ry, max);
                 wherez = randomZ(rand, range, quarter, rz, ry, max);
-                if (safeNether(randworld, wherex, wherez, d)) {
+                if (safeNether(randworld, wherex, wherez, d, p)) {
                     danger = false;
                     break;
                 }
@@ -139,26 +151,23 @@ public class TARDISTimetravel {
                 if (highest > 40) {
                     Block currentBlock = randworld.getBlockAt(wherex, highest, wherez);
                     Location chunk_loc = currentBlock.getLocation();
-                    if (plugin.worldGuardOnServer && plugin.wgchk.cantBuild(p, chunk_loc) && plugin.getConfig().getBoolean("respect_worldguard")) {
-                        count = 1;
-                    }
-                    if (plugin.ta.areaCheckLocPlayer(p, chunk_loc)) {
-                        plugin.trackPerm.remove(p.getName());
-                        count = 1;
-                    }
-                    randworld.getChunkAt(chunk_loc).load();
-                    randworld.getChunkAt(chunk_loc).load(true);
-                    while (!randworld.getChunkAt(chunk_loc).isLoaded()) {
+                    if (respect.getRespect(p, chunk_loc, false)) {
                         randworld.getChunkAt(chunk_loc).load();
+                        randworld.getChunkAt(chunk_loc).load(true);
+                        while (!randworld.getChunkAt(chunk_loc).isLoaded()) {
+                            randworld.getChunkAt(chunk_loc).load();
+                        }
+                        // get start location for checking there is enough space
+                        int gsl[] = getStartLocation(chunk_loc, d);
+                        startx = gsl[0];
+                        resetx = gsl[1];
+                        starty = chunk_loc.getBlockY() + 1;
+                        startz = gsl[2];
+                        resetz = gsl[3];
+                        count = safeLocation(startx, starty, startz, resetx, resetz, randworld, d);
+                    } else {
+                        count = 1;
                     }
-                    // get start location for checking there is enough space
-                    int gsl[] = getStartLocation(chunk_loc, d);
-                    startx = gsl[0];
-                    resetx = gsl[1];
-                    starty = chunk_loc.getBlockY() + 1;
-                    startz = gsl[2];
-                    resetz = gsl[3];
-                    count = safeLocation(startx, starty, startz, resetx, resetz, randworld, d);
                 } else {
                     count = 1;
                 }
@@ -173,6 +182,7 @@ public class TARDISTimetravel {
             long timeout = System.currentTimeMillis() + (plugin.getConfig().getLong("timeout") * 1000);
             while (danger == true) {
                 if (System.currentTimeMillis() < timeout) {
+                    // reset count
                     count = 0;
                     // randomX(Random rand, int range, int quarter, byte rx, byte ry, int max)
                     wherex = randomX(rand, range, quarter, rx, ry, max);
@@ -183,41 +193,36 @@ public class TARDISTimetravel {
                         if ((currentBlock.getTypeId() == 8 || currentBlock.getTypeId() == 9) && plugin.getConfig().getBoolean("land_on_water") == false) {
                             count = 1;
                         } else {
-                            if (currentBlock.getType() == Material.AIR || currentBlock.getType() == Material.SNOW || currentBlock.getType() == Material.LONG_GRASS || currentBlock.getType() == Material.RED_ROSE || currentBlock.getType() == Material.YELLOW_FLOWER || currentBlock.getType() == Material.BROWN_MUSHROOM || currentBlock.getType() == Material.RED_MUSHROOM || currentBlock.getType() == Material.SAPLING || currentBlock.getType() == Material.SNOW) {
+                            if (goodMaterials.contains(currentBlock.getType())) {
                                 currentBlock = currentBlock.getRelative(BlockFace.DOWN);
                             }
                             Location chunk_loc = currentBlock.getLocation();
-                            if (plugin.worldGuardOnServer && plugin.wgchk.cantBuild(p, chunk_loc) && plugin.getConfig().getBoolean("respect_worldguard")) {
-                                count = 1;
-                            }
-                            if (plugin.ta.areaCheckLocPlayer(p, chunk_loc)) {
-                                plugin.trackPerm.remove(p.getName());
-                                count = 1;
-                            }
-                            randworld.getChunkAt(chunk_loc).load();
-                            randworld.getChunkAt(chunk_loc).load(true);
-                            while (!randworld.getChunkAt(chunk_loc).isLoaded()) {
+                            if (respect.getRespect(p, chunk_loc, false)) {
                                 randworld.getChunkAt(chunk_loc).load();
+                                randworld.getChunkAt(chunk_loc).load(true);
+                                while (!randworld.getChunkAt(chunk_loc).isLoaded()) {
+                                    randworld.getChunkAt(chunk_loc).load();
+                                }
+                                // get start location for checking there is enough space
+                                int gsl[] = getStartLocation(chunk_loc, d);
+                                startx = gsl[0];
+                                resetx = gsl[1];
+                                starty = chunk_loc.getBlockY() + 1;
+                                startz = gsl[2];
+                                resetz = gsl[3];
+                                count = safeLocation(startx, starty, startz, resetx, resetz, randworld, d);
+                            } else {
+                                count = 1;
                             }
-                            // get start location for checking there is enough space
-                            int gsl[] = getStartLocation(chunk_loc, d);
-                            startx = gsl[0];
-                            resetx = gsl[1];
-                            starty = chunk_loc.getBlockY() + 1;
-                            startz = gsl[2];
-                            resetz = gsl[3];
-                            count = safeLocation(startx, starty, startz, resetx, resetz, randworld, d);
                         }
                     } else {
                         count = 1;
                     }
                     if (count == 0) {
-                        danger = false;
                         break;
                     }
                 } else {
                     highest = plugin.getConfig().getInt("timeout_height");
-                    danger = false;
                     break;
                 }
             }
@@ -256,7 +261,7 @@ public class TARDISTimetravel {
                 for (col = 0; col < colcount; col++) {
                     int id = w.getBlockAt(startx, starty, startz).getTypeId();
                     Location l = w.getBlockAt(startx, starty, startz).getLocation();
-                    if (isItSafe(id)) {
+                    if (!isItSafe(id)) {
                         count++;
                     }
                     startx += 1;
@@ -277,9 +282,9 @@ public class TARDISTimetravel {
      * @param id the block typeId to check.
      */
     private boolean isItSafe(int id) {
-        boolean safe = true;
+        boolean safe = false;
         if (id == 0 || id == 6 || id == 31 || id == 32 || id == 37 || id == 38 || id == 39 || id == 40 || id == 78 || id == 115) {
-            safe = false;
+            safe = true;
         }
         return safe;
     }
@@ -324,10 +329,9 @@ public class TARDISTimetravel {
      * @param wherez a z co-ordinate.
      * @param d the direction the Police Box is facing.
      */
-    private boolean safeNether(World nether, int wherex, int wherez, TARDISConstants.COMPASS d) {
+    private boolean safeNether(World nether, int wherex, int wherez, TARDISConstants.COMPASS d, Player p) {
         boolean safe = false;
         int startx, starty, startz, resetx, resetz, count;
-        Random rand = new Random();
         int wherey = 100;
         Block startBlock = nether.getBlockAt(wherex, wherey, wherez);
         while (startBlock.getTypeId() != 0) {
@@ -343,14 +347,18 @@ public class TARDISTimetravel {
             Location netherLocation = startBlock.getLocation();
             int netherLocY = netherLocation.getBlockY();
             netherLocation.setY(netherLocY + 1);
-            // get start location for checking there is enough space
-            int gsl[] = getStartLocation(netherLocation, d);
-            startx = gsl[0];
-            resetx = gsl[1];
-            starty = netherLocation.getBlockY();
-            startz = gsl[2];
-            resetz = gsl[3];
-            count = safeLocation(startx, starty, startz, resetx, resetz, nether, d);
+            if (respect.getRespect(p, netherLocation, false)) {
+                // get start location for checking there is enough space
+                int gsl[] = getStartLocation(netherLocation, d);
+                startx = gsl[0];
+                resetx = gsl[1];
+                starty = netherLocation.getBlockY();
+                startz = gsl[2];
+                resetz = gsl[3];
+                count = safeLocation(startx, starty, startz, resetx, resetz, nether, d);
+            } else {
+                count = 1;
+            }
             if (count == 0) {
                 safe = true;
                 dest = netherLocation;
