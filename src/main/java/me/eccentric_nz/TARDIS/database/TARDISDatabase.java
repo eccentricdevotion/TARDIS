@@ -2,6 +2,7 @@ package me.eccentric_nz.TARDIS.database;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import me.eccentric_nz.TARDIS.TARDIS;
@@ -44,6 +45,16 @@ public class TARDISDatabase {
             statement.executeUpdate(queryDestinations);
             String queryPresets = "CREATE TABLE IF NOT EXISTS areas (area_id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, area_name TEXT COLLATE NOCASE DEFAULT '', world TEXT COLLATE NOCASE DEFAULT '', minx INTEGER, minz INTEGER, maxx INTEGER, maxz INTEGER)";
             statement.executeUpdate(queryPresets);
+
+            // just when I thought I'd got rid of them all... another check to add a column
+            String queryAddArton = "SELECT sql FROM sqlite_master WHERE tbl_name = 'player_prefs' AND sql LIKE '%arton_level INTEGER%'";
+            ResultSet rsArton = statement.executeQuery(queryAddArton);
+            if (!rsArton.next()) {
+                String queryAlter = "ALTER TABLE player_prefs ADD arton_level INTEGER DEFAULT 0";
+                statement.executeUpdate(queryAlter);
+                TARDIS.plugin.console.sendMessage(TARDIS.plugin.pluginName + " Adding new quotes to player prefs!");
+            }
+
         } catch (SQLException e) {
             TARDIS.plugin.console.sendMessage(TARDIS.plugin.pluginName + "Create table error: " + e);
         } finally {
