@@ -35,7 +35,6 @@ public class TARDISConfiguration {
         boolOptions.put("nether", false);
         boolOptions.put("platform", false);
         boolOptions.put("protect_blocks", true);
-        boolOptions.put("require_spout", false);
         boolOptions.put("sfx", true);
         boolOptions.put("the_end", false);
         boolOptions.put("use_worldguard", true);
