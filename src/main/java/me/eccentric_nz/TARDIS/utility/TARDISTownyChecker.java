@@ -21,6 +21,7 @@ import com.palmergames.bukkit.towny.object.Coord;
 import com.palmergames.bukkit.towny.object.WorldCoord;
 import me.eccentric_nz.TARDIS.TARDIS;
 import org.bukkit.Location;
+import org.bukkit.entity.Player;
 
 /**
  *
@@ -43,14 +44,14 @@ public class TARDISTownyChecker {
      *
      * @param l the location instance to check.
      */
-    public boolean isWilderness(Location l) {
+    public boolean isWilderness(Player p, Location l) {
         boolean bool = true;
         if (towny != null) {
             try {
                 //could be block Coord.parseCoord(Block block);
                 Coord cord = Coord.parseCoord(l.getBlockX(), l.getBlockZ());
                 WorldCoord wcoord = new WorldCoord(l.getWorld().getName(), cord);
-                if (wcoord.getTownBlock().hasTown()) {
+                if (wcoord.getTownBlock().hasResident() && (!wcoord.getTownBlock().getResident().getPermissions().outsiderBuild && !wcoord.getTownBlock().getResident().getPermissions().allyBuild && !wcoord.getTownBlock().getResident().getPermissions().residentBuild)) {
                     bool = false;
                 }
             } catch (Exception e) {
