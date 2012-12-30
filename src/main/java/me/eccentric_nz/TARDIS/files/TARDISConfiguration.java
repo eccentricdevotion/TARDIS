@@ -50,6 +50,13 @@ public class TARDISConfiguration {
         intOptions.put("timeout", 5);
         intOptions.put("tp_radius", 256);
         intOptions.put("border_radius", 64);
+        intOptions.put("rooms.PASSAGE", 32);
+        intOptions.put("rooms.ARBORETUM", 64);
+        intOptions.put("rooms.BEDROOM", 64);
+        intOptions.put("rooms.KITCHEN", 64);
+        intOptions.put("rooms.LIBRARY", 64);
+        intOptions.put("rooms.POOL", 64);
+        intOptions.put("rooms.VAULT", 64);
         // string
         strOptions.put("default_world_name", "myridiculouslylongworldnameiscalledcuthbert");
         strOptions.put("key", "STICK");

@@ -26,46 +26,55 @@ public class TARDISAdminCommands implements CommandExecutor {
 
     private TARDIS plugin;
     TARDISDatabase service = TARDISDatabase.getInstance();
-    private List<String> firstArgsStr = new ArrayList<String>();
-    private List<String> firstArgsBool = new ArrayList<String>();
-    private List<String> firstArgsInt = new ArrayList<String>();
+    private List<String> firstsStr = new ArrayList<String>();
+    private List<String> firstsBool = new ArrayList<String>();
+    private List<String> firstsInt = new ArrayList<String>();
+    private List<String> firstsRoom = new ArrayList<String>();
 
     public TARDISAdminCommands(TARDIS plugin) {
         this.plugin = plugin;
         // add first arguments
-        firstArgsStr.add("key");
-        firstArgsStr.add("reload");
-        firstArgsStr.add("config");
-        firstArgsStr.add("default_world_name");
-        firstArgsStr.add("exclude");
-        firstArgsStr.add("delete");
-        firstArgsStr.add("find");
-        firstArgsStr.add("list");
+        firstsStr.add("key");
+        firstsStr.add("reload");
+        firstsStr.add("config");
+        firstsStr.add("default_world_name");
+        firstsStr.add("exclude");
+        firstsStr.add("delete");
+        firstsStr.add("find");
+        firstsStr.add("list");
         // boolean
-        firstArgsBool.add("debug");
-        firstArgsBool.add("bonus_chest");
-        firstArgsBool.add("chameleon");
-        firstArgsBool.add("default_world");
-        firstArgsBool.add("give_key");
-        firstArgsBool.add("include_default_world");
-        firstArgsBool.add("land_on_water");
-        firstArgsBool.add("name_tardis");
-        firstArgsBool.add("nether");
-        firstArgsBool.add("platform");
-        firstArgsBool.add("protect_blocks");
-        firstArgsBool.add("sfx");
-        firstArgsBool.add("the_end");
-        firstArgsBool.add("name_tardis");
-        firstArgsBool.add("use_worldguard");
-        firstArgsBool.add("respect_worldguard");
-        firstArgsBool.add("respect_towny");
-        firstArgsBool.add("respect_worldborder");
-        firstArgsBool.add("create_worlds");
+        firstsBool.add("debug");
+        firstsBool.add("bonus_chest");
+        firstsBool.add("chameleon");
+        firstsBool.add("default_world");
+        firstsBool.add("give_key");
+        firstsBool.add("include_default_world");
+        firstsBool.add("land_on_water");
+        firstsBool.add("name_tardis");
+        firstsBool.add("nether");
+        firstsBool.add("platform");
+        firstsBool.add("protect_blocks");
+        firstsBool.add("sfx");
+        firstsBool.add("the_end");
+        firstsBool.add("name_tardis");
+        firstsBool.add("use_worldguard");
+        firstsBool.add("respect_worldguard");
+        firstsBool.add("respect_towny");
+        firstsBool.add("respect_worldborder");
+        firstsBool.add("create_worlds");
         // integer
-        firstArgsInt.add("timeout_height");
-        firstArgsInt.add("timeout");
-        firstArgsInt.add("tp_radius");
-        firstArgsInt.add("border_radius");
+        firstsInt.add("timeout_height");
+        firstsInt.add("timeout");
+        firstsInt.add("tp_radius");
+        firstsInt.add("border_radius");
+        // rooms
+        firstsRoom.add("passage");
+        firstsRoom.add("arboretum");
+        firstsRoom.add("bedroom");
+        firstsRoom.add("kitchen");
+        firstsRoom.add("library");
+        firstsRoom.add("pool");
+        firstsRoom.add("vault");
     }
 
     @Override
@@ -77,17 +86,18 @@ public class TARDISAdminCommands implements CommandExecutor {
                     sender.sendMessage(TARDISConstants.COMMAND_ADMIN.split("\n"));
                     return true;
                 }
-                if (!firstArgsStr.contains(args[0]) && !firstArgsBool.contains(args[0]) && !firstArgsInt.contains(args[0])) {
+                String first = args[0].toLowerCase();
+                if (!firstsStr.contains(first) && !firstsBool.contains(first) && !firstsInt.contains(first) && !firstsRoom.contains(first)) {
                     sender.sendMessage(plugin.pluginName + "TARDIS does not recognise that command argument!");
                     return false;
                 }
                 if (args.length == 1) {
-                    if (args[0].equalsIgnoreCase("reload")) {
+                    if (first.equals("reload")) {
                         plugin.reloadConfig();
                         sender.sendMessage(plugin.pluginName + "TARDIS config reloaded.");
                         return true;
                     }
-                    if (args[0].equalsIgnoreCase("config")) {
+                    if (first.equals("config")) {
                         Set<String> configNames = plugin.getConfig().getKeys(false);
                         sender.sendMessage(plugin.pluginName + ChatColor.RED + " Here are the current plugin config options!");
                         for (String cname : configNames) {
@@ -105,7 +115,7 @@ public class TARDISAdminCommands implements CommandExecutor {
                         }
                         return true;
                     }
-                    if (args[0].equalsIgnoreCase("list")) {
+                    if (first.equals("list")) {
                         // get all tardis positions - max 18
                         int start = 0, end = 18;
                         if (args.length > 1) {
@@ -131,7 +141,7 @@ public class TARDISAdminCommands implements CommandExecutor {
                     sender.sendMessage(plugin.pluginName + "Too few command arguments!");
                     return false;
                 }
-                if (args[0].equalsIgnoreCase("delete")) {
+                if (first.equals("delete")) {
                     HashMap<String, Object> where = new HashMap<String, Object>();
                     where.put("owner", args[1]);
                     ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
@@ -203,7 +213,7 @@ public class TARDISAdminCommands implements CommandExecutor {
                     }
                     return true;
                 }
-                if (args[0].equalsIgnoreCase("key")) {
+                if (first.equals("key")) {
                     String setMaterial = args[1].toUpperCase();
                     if (!Arrays.asList(TARDISMaterials.MATERIAL_LIST).contains(setMaterial)) {
                         sender.sendMessage(plugin.pluginName + ChatColor.RED + "That is not a valid Material! Try checking http://jd.bukkit.org/apidocs/org/bukkit/Material.html");
@@ -213,7 +223,7 @@ public class TARDISAdminCommands implements CommandExecutor {
                         plugin.TARDIS_KEY = setMaterial;
                     }
                 }
-                if (args[0].equalsIgnoreCase("default_world_name")) {
+                if (first.equals("default_world_name")) {
                     // get world name
                     int count = args.length;
                     StringBuilder buf = new StringBuilder();
@@ -226,7 +236,7 @@ public class TARDISAdminCommands implements CommandExecutor {
                     String nodots = StringUtils.replace(t, ".", "_");
                     plugin.getConfig().set("default_world_name", nodots);
                 }
-                if (args[0].equalsIgnoreCase("exclude")) {
+                if (first.equals("exclude")) {
                     // get world name
                     int count = args.length;
                     StringBuilder buf = new StringBuilder();
@@ -245,18 +255,17 @@ public class TARDISAdminCommands implements CommandExecutor {
                     plugin.getConfig().set("worlds." + nodots, false);
                 }
                 //checks if its a boolean config option
-                String firstArg = args[0].toLowerCase();
-                if (firstArgsBool.contains(firstArg)) {
+                if (firstsBool.contains(first)) {
                     // check they typed true of false
                     String tf = args[1].toLowerCase();
                     if (!tf.equals("true") && !tf.equals("false")) {
                         sender.sendMessage(plugin.pluginName + ChatColor.RED + "The last argument must be true or false!");
                         return false;
                     }
-                    plugin.getConfig().set(firstArg, Boolean.valueOf(tf));
+                    plugin.getConfig().set(first, Boolean.valueOf(tf));
                 }
                 //checks if its a number config option
-                if (firstArgsInt.contains(firstArg)) {
+                if (firstsInt.contains(first) || firstsRoom.contains(first)) {
                     String a = args[1];
                     int val;
                     try {
@@ -266,7 +275,8 @@ public class TARDISAdminCommands implements CommandExecutor {
                         sender.sendMessage(plugin.pluginName + ChatColor.RED + " The last argument must be a number!");
                         return false;
                     }
-                    plugin.getConfig().set(firstArg, val);
+                    String option = (firstsRoom.contains(first)) ? "rooms." + first.toUpperCase() : first;
+                    plugin.getConfig().set(option, val);
                 }
                 plugin.saveConfig();
                 sender.sendMessage(plugin.pluginName + "The config was updated!");
