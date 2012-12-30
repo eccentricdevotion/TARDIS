@@ -18,3 +18,4 @@ land_on_water: true
 timeout: 5
 timeout_height: 135
 name_tardis: false
+border_radius: 256
