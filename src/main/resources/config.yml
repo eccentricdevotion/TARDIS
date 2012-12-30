@@ -19,7 +19,6 @@ use_worldguard: true
 respect_worldguard: true
 respect_towny: true
 respect_worldborder: true
-land_on_water: true
 timeout: 5
 timeout_height: 135
 name_tardis: false
