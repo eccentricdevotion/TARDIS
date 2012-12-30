@@ -38,6 +38,8 @@ public class TARDISConfiguration {
         boolOptions.put("require_spout", false);
         boolOptions.put("sfx", true);
         boolOptions.put("the_end", false);
+        boolOptions.put("use_worldguard", true);
+        boolOptions.put("respect_worldguard", true);
         // integer
         intOptions.put("timeout_height", 135);
         intOptions.put("timeout", 5);
