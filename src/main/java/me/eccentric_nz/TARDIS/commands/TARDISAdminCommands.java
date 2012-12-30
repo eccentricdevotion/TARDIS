@@ -65,6 +65,7 @@ public class TARDISAdminCommands implements CommandExecutor {
         firstArgsInt.add("timeout_height");
         firstArgsInt.add("timeout");
         firstArgsInt.add("tp_radius");
+        firstArgsInt.add("border_radius");
     }
 
     @Override
