@@ -14,10 +14,12 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 package me.eccentric_nz.TARDIS.rooms;
 
+import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.TARDISConstants.ROOM;
+import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.TARDISDatabase;
 
 /**
@@ -33,4 +35,37 @@ public class TARDISRoomBuilder {
         this.plugin = plugin;
     }
 
+    public boolean buildRoom(ROOM r, String player) {
+        HashMap<String, Object> where = new HashMap<String, Object>();
+        where.put("player", player);
+        ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, where);
+        if (rsp.resultSet()) {
+            if (rsp.getArton_level() < plugin.getConfig().getLong("rooms." + r.toString())) {
+                switch (r) {
+                    case POOL:
+
+                        break;
+                    case LIBRARY:
+
+                        break;
+                    case KITCHEN:
+
+                        break;
+                    case VAULT:
+
+                        break;
+                    case ARBORETUM:
+
+                        break;
+                    case BEDROOM:
+
+                        break;
+                    default:
+                        // PASSAGE
+                        break;
+                }
+            }
+        }
+        return true;
+    }
 }
