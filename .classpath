@@ -10,7 +10,5 @@
 	<classpathentry kind="lib" path="C:/Users/Tech/Documents/craftbukkit-1.4.5-R1.0.jar"/>
 	<classpathentry kind="lib" path="C:/Users/Tech/Documents/bukkit-1.4.6-R0.1.jar"/>
 	<classpathentry kind="lib" path="C:/Users/Tech/Documents/bukkit-1.4.5-R1.0.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Tech/Documents/Towny.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Tech/Documents/WorldBorder.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
