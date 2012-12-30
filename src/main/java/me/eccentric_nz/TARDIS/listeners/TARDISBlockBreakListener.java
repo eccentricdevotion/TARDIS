@@ -16,8 +16,10 @@
  */
 package me.eccentric_nz.TARDIS.listeners;
 
+import java.io.File;
 import me.eccentric_nz.TARDIS.database.TARDISDatabase;
 import java.util.HashMap;
+import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
@@ -183,6 +185,22 @@ public class TARDISBlockBreakListener implements Listener {
                             if (plugin.worldGuardOnServer && plugin.getConfig().getBoolean("use_worldguard")) {
                                 plugin.wgchk.removeRegion(cw, owner);
                             }
+                            // unload and remove the world if it's a TARDIS_WORLD_ world
+                            if (cw.getName().contains("TARDIS_WORLD_")) {
+                                String name = cw.getName();
+                                List<Player> players = cw.getPlayers();
+                                for (Player p : players) {
+                                    p.kickPlayer("World scheduled for deletion!");
+                                }
+                                if (plugin.pm.isPluginEnabled("Multiverse-Core")) {
+                                    plugin.getServer().dispatchCommand(plugin.console, "mv remove " + name);
+                                }
+                                plugin.getServer().unloadWorld(cw, true);
+                                File world_folder = new File(plugin.getServer().getWorldContainer() + File.separator + name + File.separator);
+                                if (!deleteFolder(world_folder)) {
+                                    plugin.debug("Could not delete world <" + name + ">");
+                                }
+                            }
                         } else {
                             // cancel the event because it's not the player's TARDIS
                             event.setCancelled(true);
@@ -199,5 +217,20 @@ public class TARDISBlockBreakListener implements Listener {
                 }
             }
         }
+    }
+
+    public static boolean deleteFolder(File folder) {
+        File[] files = folder.listFiles();
+        if (files != null) { //some JVMs return null for empty dirs
+            for (File f : files) {
+                if (f.isDirectory()) {
+                    deleteFolder(f);
+                } else {
+                    f.delete();
+                }
+            }
+        }
+        folder.delete();
+        return true;
     }
 }
