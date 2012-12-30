@@ -33,9 +33,13 @@ import me.eccentric_nz.TARDIS.listeners.TARDISAreaListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISButtonListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISSignListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISUpdateListener;
+import me.eccentric_nz.TARDIS.utility.TARDISTownyChecker;
+import me.eccentric_nz.TARDIS.utility.TARDISWorldBorderChecker;
+import me.eccentric_nz.TARDIS.worldgen.TARDISChunkGenerator;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.ConsoleCommandSender;
+import org.bukkit.generator.ChunkGenerator;
 import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -73,6 +77,8 @@ public class TARDIS extends JavaPlugin {
     public TARDISDestroyerPoliceBox destroyPB = new TARDISDestroyerPoliceBox(this);
     public TARDISArea ta = new TARDISArea(this);
     public TARDISWorldGuardChecker wgchk;
+    public TARDISTownyChecker tychk;
+    public TARDISWorldBorderChecker borderchk;
     TARDISBlockPlaceListener blockPlaceListener = new TARDISBlockPlaceListener(this);
     TARDISBlockBreakListener blockBreakListener = new TARDISBlockBreakListener(this);
     TARDISDoorListener doorListener = new TARDISDoorListener(this);
@@ -96,6 +102,8 @@ public class TARDIS extends JavaPlugin {
     public ArrayList<String> quote;
     public int quotelen;
     public boolean worldGuardOnServer = false;
+    public boolean townyOnServer = false;
+    public boolean borderOnServer = false;
     public ConsoleCommandSender console;
     public String pluginName;
     public String TARDIS_KEY;
@@ -118,6 +126,8 @@ public class TARDIS extends JavaPlugin {
         loadMetrics();
         startSound();
         loadWorldGuard();
+        loadTowny();
+        loadWorldBorder();
 
         TARDIS_KEY = getConfig().getString("key");
         quote = quotes();
@@ -267,6 +277,20 @@ public class TARDIS extends JavaPlugin {
         }
     }
 
+    private void loadTowny() {
+        if (getServer().getPluginManager().getPlugin("Towny") != null) {
+            townyOnServer = true;
+            tychk = new TARDISTownyChecker(this);
+        }
+    }
+
+    private void loadWorldBorder() {
+        if (getServer().getPluginManager().getPlugin("WorldBorder") != null) {
+            borderOnServer = true;
+            borderchk = new TARDISWorldBorderChecker(this);
+        }
+    }
+
     private File createFile(String filename) {
         File file = new File(getDataFolder(), filename);
         if (!file.exists()) {
@@ -338,6 +362,11 @@ public class TARDIS extends JavaPlugin {
             }
         }
         return quotes;
+    }
+
+    @Override
+    public ChunkGenerator getDefaultWorldGenerator(String worldName, String id) {
+        return new TARDISChunkGenerator();
     }
 
     public void debug(Object o) {
