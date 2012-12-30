@@ -53,7 +53,7 @@ public class ResultSetSave {
         Statement statement = null;
         ResultSet rs = null;
         String query = "SELECT save FROM tardis WHERE save LIKE '" + where + "'";
-        plugin.debug(query);
+        //plugin.debug(query);
         try {
             statement = connection.createStatement();
             rs = statement.executeQuery(query);

@@ -82,7 +82,7 @@ public class ResultSetDoors {
             where.clear();
         }
         String query = "SELECT * FROM doors" + wheres;
-        plugin.debug(query);
+        //plugin.debug(query);
         try {
             statement = connection.createStatement();
             rs = statement.executeQuery(query);

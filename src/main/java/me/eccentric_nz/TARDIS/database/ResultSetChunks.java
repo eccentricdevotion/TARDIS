@@ -63,7 +63,7 @@ public class ResultSetChunks {
             where.clear();
         }
         String query = "SELECT * FROM chunks" + wheres;
-        plugin.debug(query);
+        //plugin.debug(query);
         try {
             statement = connection.createStatement();
             rs = statement.executeQuery(query);

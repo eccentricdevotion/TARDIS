@@ -105,7 +105,7 @@ public class ResultSetTardis {
             thelimit = " LIMIT " + limit;
         }
         String query = "SELECT * FROM tardis" + wheres + thelimit;
-        plugin.debug(query);
+        //plugin.debug(query);
         try {
             statement = connection.createStatement();
             rs = statement.executeQuery(query);

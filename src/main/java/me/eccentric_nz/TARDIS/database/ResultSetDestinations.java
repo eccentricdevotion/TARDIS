@@ -65,7 +65,7 @@ public class ResultSetDestinations {
             where.clear();
         }
         String query = "SELECT * FROM destinations" + wheres;
-        plugin.debug(query);
+        //plugin.debug(query);
         try {
             statement = connection.createStatement();
             rs = statement.executeQuery(query);

@@ -87,7 +87,7 @@ public class ResultSetBlocks {
             statement = connection.createStatement();
             rs = statement.executeQuery(query);
             if (rs.isBeforeFirst()) {
-                plugin.debug(query);
+                //plugin.debug(query);
                 while (rs.next()) {
                     if (multiple) {
                         HashMap<String, String> row = new HashMap<String, String>();

@@ -59,7 +59,7 @@ public class ResultSetTravellers {
             where.clear();
         }
         String query = "SELECT * FROM travellers" + wheres;
-        plugin.debug(query);
+        //plugin.debug(query);
         try {
             statement = connection.createStatement();
             rs = statement.executeQuery(query);

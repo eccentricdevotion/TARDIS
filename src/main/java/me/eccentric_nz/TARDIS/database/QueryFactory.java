@@ -67,7 +67,7 @@ public class QueryFactory {
         fields = sbf.toString().substring(0, sbf.length() - 1);
         values = sbv.toString().substring(0, sbv.length() - 1);
         String query = "INSERT INTO " + table + " (" + fields + ") VALUES (" + values + ")";
-        plugin.debug(query);
+        //plugin.debug(query);
         try {
             statement = connection.createStatement();
             statement.executeUpdate(query);
@@ -168,7 +168,7 @@ public class QueryFactory {
         updates = sbu.toString().substring(0, sbu.length() - 1);
         wheres = sbw.toString().substring(0, sbw.length() - 5);
         String query = "UPDATE " + table + " SET " + updates + " WHERE " + wheres;
-        plugin.debug(query);
+        //plugin.debug(query);
         try {
             statement = connection.createStatement();
             return (statement.executeUpdate(query) > 0);
@@ -207,7 +207,7 @@ public class QueryFactory {
         where.clear();
         values = sbw.toString().substring(0, sbw.length() - 5);
         String query = "DELETE FROM " + table + " WHERE " + values;
-        plugin.debug(query);
+        //plugin.debug(query);
         try {
             statement = connection.createStatement();
             return (statement.executeUpdate(query) > 0);

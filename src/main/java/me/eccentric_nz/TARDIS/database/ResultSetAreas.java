@@ -66,7 +66,7 @@ public class ResultSetAreas {
             where.clear();
         }
         String query = "SELECT * FROM areas" + wheres;
-        plugin.debug(query);
+        //plugin.debug(query);
         try {
             statement = connection.createStatement();
             rs = statement.executeQuery(query);

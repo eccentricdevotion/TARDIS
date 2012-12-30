@@ -39,6 +39,7 @@ public class ResultSetPlayerPrefs {
     private boolean sfx_on;
     private boolean platform_on;
     private boolean quotes_on;
+    private long arton_level;
 
     /**
      * Creates a class instance that can be used to retrieve an SQL ResultSet
@@ -76,7 +77,7 @@ public class ResultSetPlayerPrefs {
             where.clear();
         }
         String query = "SELECT * FROM player_prefs" + wheres;
-        plugin.debug(query);
+        //plugin.debug(query);
         try {
             statement = connection.createStatement();
             rs = statement.executeQuery(query);
@@ -86,6 +87,7 @@ public class ResultSetPlayerPrefs {
                 this.sfx_on = rs.getBoolean("sfx_on");
                 this.platform_on = rs.getBoolean("platform_on");
                 this.quotes_on = rs.getBoolean("quotes_on");
+                this.arton_level = rs.getLong("arton_level");
             } else {
                 return false;
             }
@@ -121,5 +123,9 @@ public class ResultSetPlayerPrefs {
 
     public boolean getQuotes_on() {
         return quotes_on;
+    }
+
+    public long getArton_level() {
+        return arton_level;
     }
 }
