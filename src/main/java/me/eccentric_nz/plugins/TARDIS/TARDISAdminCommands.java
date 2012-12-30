@@ -52,7 +52,6 @@ public class TARDISAdminCommands implements CommandExecutor {
         firstArgsBool.add("protect_blocks");
         firstArgsBool.add("sfx");
         firstArgsBool.add("the_end");
-        firstArgsBool.add("name_tardis");
         firstArgsBool.add("use_worldguard");
         firstArgsBool.add("respect_worldguard");
         // integer
