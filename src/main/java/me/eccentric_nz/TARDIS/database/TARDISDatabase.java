@@ -37,7 +37,7 @@ public class TARDISDatabase {
             statement.executeUpdate(queryChunks);
             String queryDoors = "CREATE TABLE IF NOT EXISTS doors (door_id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, tardis_id INTEGER, door_type INTEGER, door_location TEXT, door_direction TEXT DEFAULT 'SOUTH')";
             statement.executeUpdate(queryDoors);
-            String queryPlayers = "CREATE TABLE IF NOT EXISTS player_prefs (pp_id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, player TEXT COLLATE NOCASE, sfx_on INTEGER DEFAULT 0, platform_on INTEGER DEFAULT 0, quotes_on INTEGER DEFAULT 0, arton_level INTEGER DEFAULT 0)";
+            String queryPlayers = "CREATE TABLE IF NOT EXISTS player_prefs (pp_id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, player TEXT COLLATE NOCASE, sfx_on INTEGER DEFAULT 0, platform_on INTEGER DEFAULT 0, quotes_on INTEGER DEFAULT 0, artron_level INTEGER DEFAULT 0)";
             statement.executeUpdate(queryPlayers);
             String queryProtectBlocks = "CREATE TABLE IF NOT EXISTS blocks (b_id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, tardis_id INTEGER, location TEXT COLLATE NOCASE DEFAULT '', block INTEGER DEFAULT 0, data INTEGER DEFAULT 0)";
             statement.executeUpdate(queryProtectBlocks);
@@ -47,10 +47,10 @@ public class TARDISDatabase {
             statement.executeUpdate(queryPresets);
 
             // just when I thought I'd got rid of them all... another check to add a column
-            String queryAddArton = "SELECT sql FROM sqlite_master WHERE tbl_name = 'player_prefs' AND sql LIKE '%arton_level INTEGER%'";
-            ResultSet rsArton = statement.executeQuery(queryAddArton);
-            if (!rsArton.next()) {
-                String queryAlter = "ALTER TABLE player_prefs ADD arton_level INTEGER DEFAULT 0";
+            String queryAddArtron = "SELECT sql FROM sqlite_master WHERE tbl_name = 'player_prefs' AND sql LIKE '%artron_level INTEGER%'";
+            ResultSet rsArtron = statement.executeQuery(queryAddArtron);
+            if (!rsArtron.next()) {
+                String queryAlter = "ALTER TABLE player_prefs ADD artron_level INTEGER DEFAULT 0";
                 statement.executeUpdate(queryAlter);
                 TARDIS.plugin.console.sendMessage(TARDIS.plugin.pluginName + " Adding new quotes to player prefs!");
             }

@@ -15,6 +15,20 @@ give_key: false
 the_end: false
 nether: false
 land_on_water: true
+use_worldguard: true
+respect_worldguard: true
+respect_towny: true
+respect_worldborder: true
 timeout: 5
 timeout_height: 135
 name_tardis: false
+border_radius: 64
+create_worlds: true
+rooms:
+  PASSAGE: 32
+  ARBORETUM: 64
+  BEDROOM: 64
+  KITCHEN: 64
+  LIBRARY: 64
+  POOL: 64
+  VAULT: 64

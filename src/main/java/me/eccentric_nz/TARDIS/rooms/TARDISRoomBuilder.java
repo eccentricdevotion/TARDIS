@@ -40,7 +40,7 @@ public class TARDISRoomBuilder {
         where.put("player", player);
         ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, where);
         if (rsp.resultSet()) {
-            if (rsp.getArton_level() < plugin.getConfig().getLong("rooms." + r.toString())) {
+            if (rsp.getArtron_level() < plugin.getConfig().getLong("rooms." + r.toString())) {
                 switch (r) {
                     case POOL:
 
