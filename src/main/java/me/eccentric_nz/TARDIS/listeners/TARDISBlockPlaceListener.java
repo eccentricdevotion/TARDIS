@@ -25,6 +25,7 @@ import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.utility.TARDISUtils;
+import me.eccentric_nz.TARDIS.worldgen.TARDISSpace;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -100,65 +101,76 @@ public class TARDISBlockPlaceListener implements Listener {
                     where.put("owner", playerNameStr);
                     ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
                     if (!rs.resultSet()) {
-                        // get this chunk co-ords
                         Chunk chunk = blockBottom.getChunk();
+                        // get this chunk co-ords
+                        int cx;
+                        int cz;
                         String cw;
                         World chunkworld;
-                        // check config to see whether we are using a default world to store TARDII
-                        if (plugin.getConfig().getBoolean("default_world")) {
-                            cw = plugin.getConfig().getString("default_world_name");
-                            chunkworld = plugin.getServer().getWorld(cw);
+                        if (plugin.getConfig().getBoolean("create_worlds")) {
+                            // create a new world to store this TARDIS
+                            cw = "TARDIS_WORLD_" + playerNameStr;
+                            TARDISSpace space = new TARDISSpace(plugin);
+                            chunkworld = space.getTardisWorld(cw);
+                            cx = 0;
+                            cz = 0;
                         } else {
-                            chunkworld = chunk.getWorld();
-                            cw = chunkworld.getName();
-                        }
-                        int cx = chunk.getX();
-                        int cz = chunk.getZ();
-                        if (!utils.checkChunk(cw, cx, cz, schm)) {
-                            // get player direction
-                            float pyaw = player.getLocation().getYaw();
-                            if (pyaw >= 0) {
-                                pyaw = (pyaw % 360);
+                            // check config to see whether we are using a default world to store TARDISs
+                            if (plugin.getConfig().getBoolean("default_world")) {
+                                cw = plugin.getConfig().getString("default_world_name");
+                                chunkworld = plugin.getServer().getWorld(cw);
                             } else {
-                                pyaw = (360 + (pyaw % 360));
+                                chunkworld = chunk.getWorld();
+                                cw = chunkworld.getName();
                             }
-                            Location block_loc = blockBottom.getLocation();
-                            // determine direction player is facing
-                            String d = "";
-                            if (pyaw >= 315 || pyaw < 45) {
-                                d = "SOUTH";
+                            cx = chunk.getX();
+                            cz = chunk.getZ();
+                            if (utils.checkChunk(cw, cx, cz, schm)) {
+                                player.sendMessage(plugin.pluginName + "A TARDIS already exists at this location, please try another chunk!");
+                                return;
                             }
-                            if (pyaw >= 225 && pyaw < 315) {
-                                d = "EAST";
-                            }
-                            if (pyaw >= 135 && pyaw < 225) {
-                                d = "NORTH";
-                            }
-                            if (pyaw >= 45 && pyaw < 135) {
-                                d = "WEST";
-                            }
-                            // save data to database (tardis table)
-                            String chun = cw + ":" + cx + ":" + cz;
-                            String home = block_loc.getWorld().getName() + ":" + block_loc.getBlockX() + ":" + block_loc.getBlockY() + ":" + block_loc.getBlockZ();
-                            String save = block_loc.getWorld().getName() + ":" + block_loc.getBlockX() + ":" + block_loc.getBlockY() + ":" + block_loc.getBlockZ();
-                            QueryFactory qf = new QueryFactory(plugin);
-                            HashMap<String, Object> set = new HashMap<String, Object>();
-                            set.put("owner", playerNameStr);
-                            set.put("chunk", chun);
-                            set.put("direction", d);
-                            set.put("home", home);
-                            set.put("save", save);
-                            set.put("size", schm.name());
-                            int lastInsertId = qf.doInsert("tardis", set);
-
-                            // remove redstone torch
-                            block.setTypeId(0);
-                            // turn the block stack into a TARDIS
-                            plugin.buildPB.buildPoliceBox(lastInsertId, block_loc, TARDISConstants.COMPASS.valueOf(d), false, player, false);
-                            plugin.buildI.buildInner(schm, chunkworld, lastInsertId, player, middle_id, middle_data);
-                        } else {
-                            player.sendMessage(plugin.pluginName + "A TARDIS already exists at this location, please try another chunk!");
                         }
+                        // get player direction
+                        float pyaw = player.getLocation().getYaw();
+                        if (pyaw >= 0) {
+                            pyaw = (pyaw % 360);
+                        } else {
+                            pyaw = (360 + (pyaw % 360));
+                        }
+                        Location block_loc = blockBottom.getLocation();
+                        // determine direction player is facing
+                        String d = "";
+                        if (pyaw >= 315 || pyaw < 45) {
+                            d = "SOUTH";
+                        }
+                        if (pyaw >= 225 && pyaw < 315) {
+                            d = "EAST";
+                        }
+                        if (pyaw >= 135 && pyaw < 225) {
+                            d = "NORTH";
+                        }
+                        if (pyaw >= 45 && pyaw < 135) {
+                            d = "WEST";
+                        }
+                        // save data to database (tardis table)
+                        String chun = cw + ":" + cx + ":" + cz;
+                        String home = block_loc.getWorld().getName() + ":" + block_loc.getBlockX() + ":" + block_loc.getBlockY() + ":" + block_loc.getBlockZ();
+                        String save = block_loc.getWorld().getName() + ":" + block_loc.getBlockX() + ":" + block_loc.getBlockY() + ":" + block_loc.getBlockZ();
+                        QueryFactory qf = new QueryFactory(plugin);
+                        HashMap<String, Object> set = new HashMap<String, Object>();
+                        set.put("owner", playerNameStr);
+                        set.put("chunk", chun);
+                        set.put("direction", d);
+                        set.put("home", home);
+                        set.put("save", save);
+                        set.put("size", schm.name());
+                        int lastInsertId = qf.doInsert("tardis", set);
+
+                        // remove redstone torch
+                        block.setTypeId(0);
+                        // turn the block stack into a TARDIS
+                        plugin.buildPB.buildPoliceBox(lastInsertId, block_loc, TARDISConstants.COMPASS.valueOf(d), false, player, false);
+                        plugin.buildI.buildInner(schm, chunkworld, lastInsertId, player, middle_id, middle_data);
                     } else {
                         String leftLoc = rs.getSave();
                         String[] leftData = leftLoc.split(":");
