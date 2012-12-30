@@ -41,7 +41,7 @@ public class TARDISTimetravel {
     private Location dest;
     private TARDIS plugin;
     private List<Material> goodMaterials = new ArrayList<Material>();
-    private TARDISPluginRespect respect = new TARDISPluginRespect(plugin);
+    private TARDISPluginRespect respect;
 
     public TARDISTimetravel(TARDIS plugin) {
         this.plugin = plugin;
@@ -55,6 +55,7 @@ public class TARDISTimetravel {
         goodMaterials.add(Material.RED_MUSHROOM);
         goodMaterials.add(Material.SAPLING);
         goodMaterials.add(Material.SNOW);
+        respect = new TARDISPluginRespect(plugin);
     }
 
     /**
