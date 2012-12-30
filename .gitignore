@@ -22,3 +22,6 @@ CVS
 /psd/
 /nbproject/
 /bin/
+
+# other stuff
+.classpath

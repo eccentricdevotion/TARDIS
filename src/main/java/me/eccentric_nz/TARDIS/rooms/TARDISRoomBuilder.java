@@ -21,6 +21,7 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants.ROOM;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.TARDISDatabase;
+import org.bukkit.entity.Player;
 
 /**
  *
@@ -35,35 +36,37 @@ public class TARDISRoomBuilder {
         this.plugin = plugin;
     }
 
-    public boolean buildRoom(ROOM r, String player) {
+    public boolean buildRoom(ROOM r, Player player) {
         HashMap<String, Object> where = new HashMap<String, Object>();
-        where.put("player", player);
+        where.put("player", player.getName());
         ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, where);
         if (rsp.resultSet()) {
             if (rsp.getArtron_level() < plugin.getConfig().getLong("rooms." + r.toString())) {
-                switch (r) {
-                    case POOL:
+                player.sendMessage(plugin.pluginName + "You do not have sufficient Artron levels to build a " + r.toString().toLowerCase());
+                return false;
+            }
+            switch (r) {
+                case POOL:
 
-                        break;
-                    case LIBRARY:
+                    break;
+                case LIBRARY:
 
-                        break;
-                    case KITCHEN:
+                    break;
+                case KITCHEN:
 
-                        break;
-                    case VAULT:
+                    break;
+                case VAULT:
 
-                        break;
-                    case ARBORETUM:
+                    break;
+                case ARBORETUM:
 
-                        break;
-                    case BEDROOM:
+                    break;
+                case BEDROOM:
 
-                        break;
-                    default:
-                        // PASSAGE
-                        break;
-                }
+                    break;
+                default:
+                    // PASSAGE
+                    break;
             }
         }
         return true;

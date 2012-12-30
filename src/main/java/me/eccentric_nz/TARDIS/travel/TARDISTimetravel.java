@@ -191,7 +191,7 @@ public class TARDISTimetravel {
                     highest = randworld.getHighestBlockYAt(wherex, wherez);
                     if (highest > 3) {
                         Block currentBlock = randworld.getBlockAt(wherex, highest, wherez);
-                        if ((currentBlock.getTypeId() == 8 || currentBlock.getTypeId() == 9) && plugin.getConfig().getBoolean("land_on_water") == false) {
+                        if ((currentBlock.getRelative(BlockFace.DOWN).getTypeId() == 8 || currentBlock.getRelative(BlockFace.DOWN).getTypeId() == 9) && plugin.getConfig().getBoolean("land_on_water") == false) {
                             count = 1;
                         } else {
                             if (goodMaterials.contains(currentBlock.getType())) {
