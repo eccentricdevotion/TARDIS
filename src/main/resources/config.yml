@@ -25,13 +25,19 @@ name_tardis: false
 border_radius: 64
 create_worlds: true
 rooms:
-  PASSAGE: 32
-  ARBORETUM: 64
-  BEDROOM: 64
-  KITCHEN: 64
-  LIBRARY: 64
-  POOL: 64
-  VAULT: 64
+  PASSAGE: 250
+  ARBORETUM: 500
+  BEDROOM: 500
+  KITCHEN: 500
+  LIBRARY: 500
+  POOL: 500
+  VAULT: 500
+#artron energy
+player: 2
+random: 25
+travel: 50
+comehere: 200
+hide: 400
 recharge_distance: 10
 lightning_recharge: 100
 creeper_recharge: 50

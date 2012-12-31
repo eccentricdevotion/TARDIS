@@ -71,6 +71,11 @@ public class TARDISAdminCommands implements CommandExecutor {
         firstsInt.add("timeout");
         firstsInt.add("tp_radius");
         firstsInt.add("border_radius");
+        firstsInt.add("player");
+        firstsInt.add("random");
+        firstsInt.add("travel");
+        firstsInt.add("comehere");
+        firstsInt.add("hide");
         firstsInt.add("recharge_distance");
         firstsInt.add("lightning_recharge");
         firstsInt.add("creeper_recharge");
