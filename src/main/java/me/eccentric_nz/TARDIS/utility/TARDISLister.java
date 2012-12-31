@@ -23,7 +23,6 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.ResultSetAreas;
 import me.eccentric_nz.TARDIS.database.ResultSetDestinations;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
-import me.eccentric_nz.TARDIS.database.TARDISDatabase;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
@@ -31,8 +30,6 @@ import org.bukkit.entity.Player;
  * @author eccentric_nz
  */
 public class TARDISLister {
-
-    private static TARDISDatabase service = TARDISDatabase.getInstance();
 
     /**
      * Retrieves various lists from the database.
