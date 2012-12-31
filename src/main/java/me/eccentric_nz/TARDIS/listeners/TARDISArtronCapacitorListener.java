@@ -112,7 +112,7 @@ public class TARDISArtronCapacitorListener implements Listener {
                             player.sendMessage(plugin.pluginName + "Artron Energy Levels at maximum!");
                         } else if (item.equals(Material.valueOf(plugin.getConfig().getString("key")))) {
                             // kickstart the TARDIS Artron Energy Capacitor
-                            Location l = block.getRelative(BlockFace.NORTH).getLocation();
+                            Location l = block.getRelative(BlockFace.NORTH).getRelative(BlockFace.UP).getLocation();
                             myspawn = true;
                             Entity e = b.getWorld().spawnEntity(l, EntityType.CREEPER);
                             // if there is a creeper there already get rid of it!
