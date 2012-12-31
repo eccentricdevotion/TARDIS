@@ -256,4 +256,10 @@ public class TARDISUtils {
             plugin.trackTravellers.put(id, count);
         }
     }
+
+    public boolean compareLocations(Location a, Location b) {
+        double rd = plugin.getConfig().getDouble("recharge_distance");
+        double squared = rd * rd;
+        return (a.distanceSquared(b) <= squared);
+    }
 }

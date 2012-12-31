@@ -42,10 +42,9 @@ public class TARDISArtronRunnable implements Runnable {
     boolean running;
     QueryFactory qf;
 
-    public TARDISArtronRunnable(TARDIS plugin, int id, int task, Player p) {
+    public TARDISArtronRunnable(TARDIS plugin, int id, Player p) {
         this.plugin = plugin;
         this.id = id;
-        this.task = task;
         this.rechargers = getRechargers();
         this.qf = new QueryFactory(plugin);
     }
@@ -56,6 +55,7 @@ public class TARDISArtronRunnable implements Runnable {
         if (!isNearCharger(id) || level > 999) {
             plugin.getServer().getScheduler().cancelTask(task);
             task = 0;
+            plugin.trackRecharge.remove(id);
         }
         // update TARDIS artron_level
         HashMap<String, Object> where = new HashMap<String, Object>();
@@ -82,7 +82,10 @@ public class TARDISArtronRunnable implements Runnable {
         Location pb_loc = new Location(w, x, y, z);
         // check location is within 10 blocks of a recharger
         for (Location l : rechargers) {
-            if (compareLocations(pb_loc, l)) {
+            if (plugin.utils.compareLocations(pb_loc, l)) {
+                // strike lightning to the Police Box torch location
+                pb_loc.setY(pb_loc.getY() + 3);
+                w.strikeLightningEffect(pb_loc);
                 return true;
             }
         }
@@ -103,17 +106,15 @@ public class TARDISArtronRunnable implements Runnable {
         return list;
     }
 
-    private boolean compareLocations(Location a, Location b) {
-        double rd = plugin.getConfig().getDouble("recharge_distance");
-        double squared = rd * rd;
-        return (a.distanceSquared(b) <= squared);
-    }
-
     private int isFull(int id) {
         HashMap<String, Object> where = new HashMap<String, Object>();
         where.put("tardis_id", id);
         ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
         rs.resultSet();
         return rs.getArtron_level();
+    }
+
+    public void setTask(int task) {
+        this.task = task;
     }
 }
