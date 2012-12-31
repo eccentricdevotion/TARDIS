@@ -62,14 +62,7 @@ public class TARDISDatabase {
                 statement.executeUpdate(queryAlter2);
                 TARDIS.plugin.console.sendMessage(TARDIS.plugin.pluginName + " Adding new Artron Levels to player prefs!");
             }
-            // add is_recharger to areas table as well
-            String queryAddRecharger = "SELECT sql FROM sqlite_master WHERE tbl_name = 'areas' AND sql LIKE '%is_recharger INTEGER%'";
-            ResultSet rsRecharger = statement.executeQuery(queryAddRecharger);
-            if (!rsRecharger.next()) {
-                String queryAlter3 = "ALTER TABLE tardis ADD is_recharger INTEGER DEFAULT 0";
-                statement.executeUpdate(queryAlter3);
-                TARDIS.plugin.console.sendMessage(TARDIS.plugin.pluginName + " Adding new Recharger status to areas!");
-            }
+            // and update existing TARDISs with 500 Artron Energy?
 
         } catch (SQLException e) {
             TARDIS.plugin.console.sendMessage(TARDIS.plugin.pluginName + "Create table error: " + e);
