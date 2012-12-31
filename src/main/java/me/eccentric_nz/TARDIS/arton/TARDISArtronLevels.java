@@ -14,11 +14,13 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 package me.eccentric_nz.TARDIS.arton;
 
+import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.TARDISDatabase;
+import org.bukkit.entity.Player;
 
 /**
  *
@@ -34,4 +36,34 @@ public class TARDISArtronLevels {
         this.plugin = plugin;
     }
 
+    public void recharge(int id, Player p) {
+        plugin.trackRecharge.add(id);
+        TARDISArtronRunnable runnable = new TARDISArtronRunnable(plugin, id, p);
+        int taskID = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, runnable, 480L, 480L);
+        runnable.setTask(taskID);
+    }
+
+    public boolean checkLevel(int id, int required, Player p) {
+        HashMap<String, Object> where = new HashMap<String, Object>();
+        where.put("tardis_id", id);
+        ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
+        if (!rs.resultSet()) {
+            return false;
+        }
+        int level = rs.getArtron_level();
+        if (required - level <= 100) {
+            p.sendMessage(plugin.pluginName + "The Artron Levels are critically low. You should recharge soon!");
+        }
+        return (level > required);
+    }
+
+    // TODO
+    /*
+     * Check when TARDIS lands if it is near a recharging beacon if (true) recharge();
+     *
+     * NetherStar refuelling && a way to transfer player levels to TARDIS (only if TARDIS levels < 100)
+     *
+     * Player Artron levels +2 per travel
+     *
+     */
 }
