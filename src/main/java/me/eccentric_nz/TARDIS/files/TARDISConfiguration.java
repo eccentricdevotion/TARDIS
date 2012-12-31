@@ -57,6 +57,9 @@ public class TARDISConfiguration {
         intOptions.put("rooms.LIBRARY", 64);
         intOptions.put("rooms.POOL", 64);
         intOptions.put("rooms.VAULT", 64);
+        intOptions.put("recharge_distance", 10);
+        intOptions.put("lightning_recharge", 100);
+        intOptions.put("creeper_recharge", 50);
         // string
         strOptions.put("default_world_name", "myridiculouslylongworldnameiscalledcuthbert");
         strOptions.put("key", "STICK");

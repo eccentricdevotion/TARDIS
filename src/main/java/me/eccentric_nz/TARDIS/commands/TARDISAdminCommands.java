@@ -15,12 +15,15 @@ import me.eccentric_nz.TARDIS.utility.TARDISMaterials;
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.WorldType;
+import org.bukkit.block.Block;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
+import org.bukkit.entity.Player;
 
 public class TARDISAdminCommands implements CommandExecutor {
 
@@ -42,6 +45,7 @@ public class TARDISAdminCommands implements CommandExecutor {
         firstsStr.add("delete");
         firstsStr.add("find");
         firstsStr.add("list");
+        firstsStr.add("recharger");
         // boolean
         firstsBool.add("debug");
         firstsBool.add("bonus_chest");
@@ -67,6 +71,9 @@ public class TARDISAdminCommands implements CommandExecutor {
         firstsInt.add("timeout");
         firstsInt.add("tp_radius");
         firstsInt.add("border_radius");
+        firstsInt.add("recharge_distance");
+        firstsInt.add("lightning_recharge");
+        firstsInt.add("creeper_recharge");
         // rooms
         firstsRoom.add("passage");
         firstsRoom.add("arboretum");
@@ -140,6 +147,26 @@ public class TARDISAdminCommands implements CommandExecutor {
                 if (args.length < 2) {
                     sender.sendMessage(plugin.pluginName + "Too few command arguments!");
                     return false;
+                }
+                if (first.equals("recharger")) {
+                    Player player = null;
+                    if (sender instanceof Player) {
+                        player = (Player) sender;
+                    }
+                    if (player == null) {
+                        sender.sendMessage(plugin.pluginName + "You can't set a recharger location from the console!");
+                        return true;
+                    }
+                    Block b = player.getTargetBlock(null, 50);
+                    if (!b.getType().equals(Material.BEACON)) {
+                        player.sendMessage(plugin.pluginName + "You must be targeting a beacon block!");
+                        return true;
+                    }
+                    Location l = b.getLocation();
+                    plugin.getConfig().set("rechargers." + args[1] + ".world", l.getWorld().getName());
+                    plugin.getConfig().set("rechargers." + args[1] + ".x", l.getBlockX());
+                    plugin.getConfig().set("rechargers." + args[1] + ".y", l.getBlockY());
+                    plugin.getConfig().set("rechargers." + args[1] + ".z", l.getBlockZ());
                 }
                 if (first.equals("delete")) {
                     HashMap<String, Object> where = new HashMap<String, Object>();

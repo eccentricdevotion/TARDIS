@@ -32,3 +32,6 @@ rooms:
   LIBRARY: 64
   POOL: 64
   VAULT: 64
+recharge_distance: 10
+lightning_recharge: 100
+creeper_recharge: 50
