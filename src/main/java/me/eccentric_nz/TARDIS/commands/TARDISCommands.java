@@ -312,7 +312,7 @@ public class TARDISCommands implements CommandExecutor {
                             sender.sendMessage(plugin.pluginName + "Too few command arguments!");
                             return false;
                         }
-                        if (!Arrays.asList(validBlockNames).contains(args[1].toLowerCase(Locale.ENGLISH))) {
+                        if (!Arrays.asList(validBlockNames).contains(args[1].toLowerCase())) {
                             player.sendMessage(plugin.pluginName + "That is not a valid TARDIS block name! Try one of : door|button|save-repeater|x-repeater|z-repeater|y-repeater|chameleon|save-sign|artron");
                             return false;
                         }
