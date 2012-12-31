@@ -29,7 +29,7 @@ public class TARDISDatabase {
     public void createTables() {
         try {
             statement = connection.createStatement();
-            String queryTARDIS = "CREATE TABLE IF NOT EXISTS tardis (tardis_id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, owner TEXT COLLATE NOCASE, chunk TEXT, direction TEXT, home TEXT, save TEXT, current TEXT, replaced TEXT DEFAULT '', chest TEXT, button TEXT, repeater0 TEXT, repeater1 TEXT, repeater2 TEXT, repeater3 TEXT, companions TEXT, platform TEXT DEFAULT '', chameleon TEXT DEFAULT '', chamele_on INTEGER DEFAULT 0, size TEXT DEFAULT '', save_sign TEXT DEFAULT '', artron_level INTEGER DEFAULT 500)";
+            String queryTARDIS = "CREATE TABLE IF NOT EXISTS tardis (tardis_id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, owner TEXT COLLATE NOCASE, chunk TEXT, direction TEXT, home TEXT, save TEXT, current TEXT, replaced TEXT DEFAULT '', chest TEXT, button TEXT, repeater0 TEXT, repeater1 TEXT, repeater2 TEXT, repeater3 TEXT, companions TEXT, platform TEXT DEFAULT '', chameleon TEXT DEFAULT '', chamele_on INTEGER DEFAULT 0, size TEXT DEFAULT '', save_sign TEXT DEFAULT '', artron_button TEXT DEFAULT '', artron_level INTEGER DEFAULT 500)";
             statement.executeUpdate(queryTARDIS);
             String queryTravellers = "CREATE TABLE IF NOT EXISTS travellers (traveller_id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, tardis_id INTEGER, player TEXT COLLATE NOCASE)";
             statement.executeUpdate(queryTravellers);
@@ -52,15 +52,17 @@ public class TARDISDatabase {
             if (!rsArtron.next()) {
                 String queryAlter = "ALTER TABLE player_prefs ADD artron_level INTEGER DEFAULT 0";
                 statement.executeUpdate(queryAlter);
-                TARDIS.plugin.console.sendMessage(TARDIS.plugin.pluginName + " Adding new Artron Levels to player prefs!");
+                TARDIS.plugin.console.sendMessage(TARDIS.plugin.pluginName + "Adding new Artron Levels to player prefs!");
             }
             // add artron levels to tardis table as well
-            String queryAddTardis = "SELECT sql FROM sqlite_master WHERE tbl_name = 'tardis' AND sql LIKE '%artron_level INTEGER%'";
+            String queryAddTardis = "SELECT sql FROM sqlite_master WHERE tbl_name = 'tardis' AND sql LIKE '%artron_button TEXT%'";
             ResultSet rsTardis = statement.executeQuery(queryAddTardis);
             if (!rsTardis.next()) {
-                String queryAlter2 = "ALTER TABLE tardis ADD artron_level INTEGER DEFAULT 500";
+                String queryAlter2 = "ALTER TABLE tardis ADD artron_button TEXT DEFAULT ''";
                 statement.executeUpdate(queryAlter2);
-                TARDIS.plugin.console.sendMessage(TARDIS.plugin.pluginName + " Adding new Artron Levels to player prefs!");
+                String queryAlter3 = "ALTER TABLE tardis ADD artron_level INTEGER DEFAULT 0";
+                statement.executeUpdate(queryAlter3);
+                TARDIS.plugin.console.sendMessage(TARDIS.plugin.pluginName + "Adding new Artron fields to tardis!");
             }
             // and update existing TARDISs with 500 Artron Energy?
 
