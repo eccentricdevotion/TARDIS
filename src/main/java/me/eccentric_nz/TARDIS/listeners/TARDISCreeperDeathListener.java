@@ -1,0 +1,81 @@
+/*
+ * Copyright (C) 2012 eccentric_nz
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+package me.eccentric_nz.TARDIS.listeners;
+
+import java.util.HashMap;
+import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.database.QueryFactory;
+import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
+import me.eccentric_nz.TARDIS.database.ResultSetTardis;
+import me.eccentric_nz.TARDIS.database.TARDISDatabase;
+import org.bukkit.entity.Creeper;
+import org.bukkit.entity.LivingEntity;
+import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
+import org.bukkit.event.Listener;
+import org.bukkit.event.entity.EntityDeathEvent;
+
+/**
+ *
+ * @author eccentric_nz
+ */
+public class TARDISCreeperDeathListener implements Listener {
+
+    private final TARDIS plugin;
+    TARDISDatabase service = TARDISDatabase.getInstance();
+
+    public TARDISCreeperDeathListener(TARDIS plugin) {
+        this.plugin = plugin;
+    }
+
+    @EventHandler(priority = EventPriority.LOW)
+    public void onCreeperDeath(EntityDeathEvent e) {
+        LivingEntity ent = e.getEntity();
+        if (ent instanceof Creeper) {
+            Creeper c = (Creeper) ent;
+            if (c.isPowered()) {
+                Player p = c.getKiller();
+                String killer = p.getName();
+                // is the killer a timelord?
+                HashMap<String, Object> where = new HashMap<String, Object>();
+                where.put("owner", killer);
+                ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
+                if (rs.resultSet()) {
+                    HashMap<String, Object> wherep = new HashMap<String, Object>();
+                    wherep.put("player", killer);
+                    ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, wherep);
+                    QueryFactory qf = new QueryFactory(plugin);
+                    HashMap<String, Object> set = new HashMap<String, Object>();
+                    int amount = plugin.getConfig().getInt("creeper_recharge");
+                    if (!rsp.resultSet()) {
+                        set.put("player", killer);
+                        set.put("artron_level", amount);
+                        qf.doInsert("player_prefs", set);
+                    } else {
+                        int level = rsp.getArtron_level() + amount;
+                        HashMap<String, Object> wherea = new HashMap<String, Object>();
+                        wherea.put("player", killer);
+                        set.put("artron_level", level);
+                        qf.doUpdate("player_prefs", set, wherea);
+                    }
+                    p.sendMessage(plugin.pluginName + "You received " + amount + " Artron Energy for killing a charged creeper!");
+                }
+            }
+        }
+    }
+}

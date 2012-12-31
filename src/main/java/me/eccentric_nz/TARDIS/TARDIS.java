@@ -31,6 +31,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import me.eccentric_nz.TARDIS.listeners.TARDISAreaListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISButtonListener;
+import me.eccentric_nz.TARDIS.listeners.TARDISCreeperDeathListener;
+import me.eccentric_nz.TARDIS.listeners.TARDISLightningListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISSignListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISUpdateListener;
 import me.eccentric_nz.TARDIS.utility.TARDISTownyChecker;
@@ -90,6 +92,8 @@ public class TARDIS extends JavaPlugin {
     TARDISBlockDamageListener damageListener = new TARDISBlockDamageListener(this);
     TARDISExplosionListener explosionListener = new TARDISExplosionListener(this);
     TARDISWitherDragonListener dragonListener = new TARDISWitherDragonListener(this);
+    TARDISLightningListener lightningListener = new TARDISLightningListener(this);
+    TARDISCreeperDeathListener creeperListener = new TARDISCreeperDeathListener(this);
     public PluginManager pm = Bukkit.getServer().getPluginManager();
     public HashMap<String, String> trackPlayers = new HashMap<String, String>();
     public HashMap<String, String> trackName = new HashMap<String, String>();
@@ -98,6 +102,7 @@ public class TARDIS extends JavaPlugin {
     public HashMap<String, String> trackPerm = new HashMap<String, String>();
     public HashMap<String, String> trackDest = new HashMap<String, String>();
     public HashMap<Integer, Integer> trackTravellers = new HashMap<Integer, Integer>();
+    public ArrayList<Integer> trackRecharge = new ArrayList<Integer>();
     private static ArrayList<String> quotes = new ArrayList<String>();
     public ArrayList<String> quote;
     public int quotelen;
@@ -194,6 +199,8 @@ public class TARDIS extends JavaPlugin {
         pm.registerEvents(damageListener, this);
         pm.registerEvents(explosionListener, this);
         pm.registerEvents(dragonListener, this);
+        pm.registerEvents(lightningListener, this);
+        pm.registerEvents(creeperListener, this);
     }
 
     private void loadCommands() {
