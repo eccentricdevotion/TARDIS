@@ -30,6 +30,7 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import me.eccentric_nz.TARDIS.listeners.TARDISAreaListener;
+import me.eccentric_nz.TARDIS.listeners.TARDISArtronCapacitorListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISButtonListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISCreeperDeathListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISLightningListener;
@@ -94,6 +95,7 @@ public class TARDIS extends JavaPlugin {
     TARDISWitherDragonListener dragonListener = new TARDISWitherDragonListener(this);
     TARDISLightningListener lightningListener = new TARDISLightningListener(this);
     TARDISCreeperDeathListener creeperListener = new TARDISCreeperDeathListener(this);
+    TARDISArtronCapacitorListener energyListener = new TARDISArtronCapacitorListener(this);
     public PluginManager pm = Bukkit.getServer().getPluginManager();
     public HashMap<String, String> trackPlayers = new HashMap<String, String>();
     public HashMap<String, String> trackName = new HashMap<String, String>();
@@ -201,6 +203,7 @@ public class TARDIS extends JavaPlugin {
         pm.registerEvents(dragonListener, this);
         pm.registerEvents(lightningListener, this);
         pm.registerEvents(creeperListener, this);
+        pm.registerEvents(energyListener, this);
     }
 
     private void loadCommands() {
