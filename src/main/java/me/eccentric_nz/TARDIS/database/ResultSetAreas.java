@@ -25,7 +25,6 @@ public class ResultSetAreas {
     private int minz;
     private int maxx;
     private int maxz;
-    private boolean is_recharger;
     private ArrayList<HashMap<String, String>> data = new ArrayList<HashMap<String, String>>();
 
     /**
@@ -89,7 +88,6 @@ public class ResultSetAreas {
                     this.minz = rs.getInt("minz");
                     this.maxx = rs.getInt("maxx");
                     this.maxz = rs.getInt("maxz");
-                    this.is_recharger = rs.getBoolean("is_recharger");
                 }
             } else {
                 return false;
@@ -138,10 +136,6 @@ public class ResultSetAreas {
 
     public int getMaxz() {
         return maxz;
-    }
-
-    public boolean isIs_recharger() {
-        return is_recharger;
     }
 
     public ArrayList<HashMap<String, String>> getData() {
