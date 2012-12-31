@@ -109,7 +109,7 @@ public class TARDISUpdateListener implements Listener {
                     set.put("door_direction", d);
                     tid.put("door_type", 1);
                 }
-                if (blockName.equalsIgnoreCase("button") && blockType == Material.STONE_BUTTON || blockType == Material.WOOD_BUTTON || blockType == Material.LEVER) {
+                if (blockName.equalsIgnoreCase("button") && (blockType == Material.STONE_BUTTON || blockType == Material.WOOD_BUTTON || blockType == Material.LEVER)) {
                     set.put("button", blockLocStr);
                 }
                 if (blockName.equalsIgnoreCase("world-repeater") && (blockType == Material.DIODE_BLOCK_OFF || blockType == Material.DIODE_BLOCK_ON)) {
@@ -123,6 +123,9 @@ public class TARDISUpdateListener implements Listener {
                 }
                 if (blockName.equalsIgnoreCase("y-repeater") && (blockType == Material.DIODE_BLOCK_OFF || blockType == Material.DIODE_BLOCK_ON)) {
                     set.put("repeater3", blockLocStr);
+                }
+                if (blockName.equalsIgnoreCase("artron") && (blockType == Material.STONE_BUTTON || blockType == Material.WOOD_BUTTON)) {
+                    set.put("artron_button", blockLocStr);
                 }
                 if (blockName.equalsIgnoreCase("chameleon") && (blockType == Material.WALL_SIGN || blockType == Material.SIGN_POST)) {
                     set.put("chameleon", blockLocStr);
