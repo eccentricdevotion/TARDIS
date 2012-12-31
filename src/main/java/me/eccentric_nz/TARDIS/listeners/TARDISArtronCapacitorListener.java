@@ -136,6 +136,10 @@ public class TARDISArtronCapacitorListener implements Listener {
                             }
                         } else if (player.isSneaking()) {
                             // transfer player artron energy into the capacitor
+                            if (current_level > 99) {
+                                player.sendMessage(plugin.pluginName + "You can only transfer Timelord Artron Energy when the capacitor is below 10%");
+                                return;
+                            }
                             HashMap<String, Object> wherep = new HashMap<String, Object>();
                             wherep.put("player", player.getName());
                             ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, wherep);
