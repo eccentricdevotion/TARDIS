@@ -36,6 +36,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.inventory.ItemStack;
 
 /**
  *
@@ -100,6 +101,14 @@ public class TARDISArtronCapacitorListener implements Listener {
                             HashMap<String, Object> set = new HashMap<String, Object>();
                             set.put("artron_level", 1000);
                             qf.doUpdate("tardis", set, wheret);
+                            // remove the NETHER_STAR!
+                            int a = player.getInventory().getItemInHand().getAmount();
+                            int a2 = new Integer(a - 1);
+                            if (a2 > 0) {
+                                player.getInventory().getItemInHand().setAmount(a2);
+                            } else {
+                                player.getInventory().removeItem(new ItemStack(Material.NETHER_STAR, 1));
+                            }
                             player.sendMessage(plugin.pluginName + "Artron Energy Levels at maximum!");
                         } else if (item.equals(Material.valueOf(plugin.getConfig().getString("key")))) {
                             // kickstart the TARDIS Artron Energy Capacitor
