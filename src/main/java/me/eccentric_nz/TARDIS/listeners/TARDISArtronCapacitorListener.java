@@ -16,12 +16,11 @@
  */
 package me.eccentric_nz.TARDIS.listeners;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
-import me.eccentric_nz.TARDIS.database.ResultSetEntities;
+import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
+import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.TARDISDatabase;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -35,7 +34,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
-import org.bukkit.event.entity.ExplosionPrimeEvent;
+import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 
 /**
@@ -46,11 +45,25 @@ public class TARDISArtronCapacitorListener implements Listener {
 
     private final TARDIS plugin;
     TARDISDatabase service = TARDISDatabase.getInstance();
+    private boolean myspawn;
 
     public TARDISArtronCapacitorListener(TARDIS plugin) {
         this.plugin = plugin;
     }
 
+    /**
+     * Listens for player interaction with the button on the Artron Energy
+     * Capacitor. If the button is right-clicked, then the Artron levels are
+     * updated. Clicking with a Nether Star puts the capacitor to maximum,
+     * clicking with the TARDIS key initialises the capacitor by spawning a
+     * charged creeper inside it and sets the level to 50%. Clicking while
+     * sneaking transfers player artron energy into the capacitor.
+     *
+     * If the button is just right-clicked, it displays the current capacitor
+     * level as percentage of full.
+     *
+     * @author eccentric_nz
+     */
     @EventHandler(priority = EventPriority.MONITOR)
     public void onCapacitorInteract(PlayerInteractEvent event) {
         if (event.isCancelled()) {
@@ -61,53 +74,105 @@ public class TARDISArtronCapacitorListener implements Listener {
         if (block != null) {
             Material blockType = block.getType();
             Action action = event.getAction();
-            if (action == Action.RIGHT_CLICK_BLOCK && player.isSneaking()) {
-                plugin.debug("Right-clicked while sneaking");
-                // only proceed if they are clicking a glass block!
-                if (blockType == Material.OBSIDIAN) {
-                    plugin.debug("The material was obsidian");
-                    Material item = player.getItemInHand().getType();
-                    if (item.equals(Material.NETHER_STAR)) {
-                        // give TARDIS full charge
-                    }
-                    if (item.equals(Material.valueOf(plugin.getConfig().getString("key")))) {
-                        plugin.debug("Item in hand was TARDIS key");
-                        // kickstart the TARDIS Artron Energy Capacitor
-                        Location l = block.getRelative(BlockFace.DOWN, 2).getLocation();
-                        Entity e = l.getWorld().spawnEntity(l, EntityType.CREEPER);
-                        String uuid = e.getUniqueId().toString();
-                        HashMap<String, Object> set = new HashMap<String, Object>();
-                        set.put("uuid", uuid);
+            if (action == Action.RIGHT_CLICK_BLOCK) {
+                // only proceed if they are clicking a button!
+                if (blockType == Material.WOOD_BUTTON || blockType == Material.STONE_BUTTON) {
+                    // get clicked block location
+                    Location b = block.getLocation();
+                    String bw = b.getWorld().getName();
+                    int bx = b.getBlockX();
+                    int by = b.getBlockY();
+                    int bz = b.getBlockZ();
+                    String buttonloc = bw + ":" + bx + ":" + by + ":" + bz;
+                    // get tardis from saved button location
+                    HashMap<String, Object> where = new HashMap<String, Object>();
+                    where.put("artron_button", buttonloc);
+                    ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
+                    if (rs.resultSet()) {
                         QueryFactory qf = new QueryFactory(plugin);
-                        qf.doInsert("entities", set);
-                        Creeper c = (Creeper) e;
-                        c.setPowered(true);
-                    } else {
-                        // transfer player artron energy into
+                        int current_level = rs.getArtron_level();
+                        HashMap<String, Object> wheret = new HashMap<String, Object>();
+                        wheret.put("tardis_id", rs.getTardis_id());
+                        // we need to get this block's location and then get the tardis_id from it
+                        Material item = player.getItemInHand().getType();
+                        if (item.equals(Material.NETHER_STAR)) {
+                            // give TARDIS full charge
+                            HashMap<String, Object> set = new HashMap<String, Object>();
+                            set.put("artron_level", 1000);
+                            qf.doUpdate("tardis", set, wheret);
+                            player.sendMessage(plugin.pluginName + "Artron Energy Levels at maximum!");
+                        } else if (item.equals(Material.valueOf(plugin.getConfig().getString("key")))) {
+                            // kickstart the TARDIS Artron Energy Capacitor
+                            Location l = block.getRelative(BlockFace.NORTH).getLocation();
+                            myspawn = true;
+                            Entity e = b.getWorld().spawnEntity(l, EntityType.CREEPER);
+                            // if there is a creeper there already get rid of it!
+                            boolean first_time = true;
+                            for (Entity k : e.getNearbyEntities(1d, 1d, 1d)) {
+                                if (k.getType().equals(EntityType.CREEPER)) {
+                                    e.remove();
+                                    first_time = false;
+                                }
+                            }
+                            Creeper c = (Creeper) e;
+                            c.setPowered(true);
+                            // set the capacitor to 50% charge
+                            if (first_time && current_level == 0) {
+                                HashMap<String, Object> set = new HashMap<String, Object>();
+                                set.put("artron_level", 500);
+                                qf.doUpdate("tardis", set, wheret);
+                                player.sendMessage(plugin.pluginName + "Artron Energy Capacitor activated! Levels at 50%");
+                            } else {
+                                player.sendMessage(plugin.pluginName + "You can only kick-start the Artron Energy Capacitor once!");
+                            }
+                        } else if (player.isSneaking()) {
+                            // transfer player artron energy into the capacitor
+                            HashMap<String, Object> wherep = new HashMap<String, Object>();
+                            wherep.put("player", player.getName());
+                            ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, wherep);
+                            if (rsp.resultSet()) {
+                                int level = rsp.getArtron_level();
+                                if (level > 1) {
+                                    player.sendMessage(plugin.pluginName + "You don't have any Artron Energy to give the TARDIS");
+                                    return;
+                                }
+                                int new_level = current_level + level;
+                                // set player level to 0
+                                HashMap<String, Object> set = new HashMap<String, Object>();
+                                set.put("artron_level", 0);
+                                HashMap<String, Object> wherel = new HashMap<String, Object>();
+                                wherel.put("player", player.getName());
+                                qf.doUpdate("player_prefs", set, wherel);
+                                // add player level to TARDIS level
+                                HashMap<String, Object> sett = new HashMap<String, Object>();
+                                sett.put("artron_level", new_level);
+                                qf.doUpdate("tardis", sett, wheret);
+                                int percent = Math.round((new_level / 1000) * 100);
+                                player.sendMessage(plugin.pluginName + "You charged the Artron Energy Capacitor to " + percent + "%");
+                            } else {
+                                player.sendMessage(plugin.pluginName + "You don't have any Artron Energy to give the TARDIS");
+                            }
+                        } else {
+                            // just tell us how much energy we have
+                            int percent = Math.round((current_level / 1000) * 100);
+                            player.sendMessage(plugin.pluginName + "The Artron Energy Capacitor is at " + percent + "%");
+                        }
                     }
                 }
             }
         }
     }
 
-    @EventHandler
-    public void onReadySteadyExplode(ExplosionPrimeEvent e) {
-        Entity ent = e.getEntity();
-        List<String> ids = getUUIDs();
-        if (ids.contains(ent.getUniqueId().toString())) {
-            e.setCancelled(true);
+    /**
+     * Listens for entity spawn events. If WorldGuard is enabled it blocks
+     * mob-spawning inside the TARDIS, so this checks to see if we are doing the
+     * spawning and un-cancels WorldGuards setCancelled(true).
+     */
+    @EventHandler(priority = EventPriority.HIGHEST)
+    public void onEntitySpawn(CreatureSpawnEvent event) {
+        if (myspawn) {
+            event.setCancelled(false);
+            myspawn = false;
         }
-    }
-
-    private List<String> getUUIDs() {
-        List<String> list = new ArrayList<String>();
-        ResultSetEntities rs = new ResultSetEntities(plugin, true);
-        if (rs.resultSet()) {
-            ArrayList<HashMap<String, String>> data = rs.getData();
-            for (HashMap<String, String> map : data) {
-                list.add(map.get("uuid"));
-            }
-        }
-        return list;
     }
 }
