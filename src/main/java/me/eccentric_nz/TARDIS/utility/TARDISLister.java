@@ -18,6 +18,7 @@ package me.eccentric_nz.TARDIS.utility;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Set;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.ResultSetAreas;
 import me.eccentric_nz.TARDIS.database.ResultSetDestinations;
@@ -38,9 +39,28 @@ public class TARDISLister {
      *
      * @param p an instance of a player.
      * @param l is the String name of the list type to retrieve. Possible values
-     * are areas, saves and companions.
+     * are areas, saves, rechargers and companions.
      */
     public static void list(Player p, String l) {
+        if (l.equals("rechargers")) {
+            Set<String> therechargers = TARDIS.plugin.getConfig().getConfigurationSection("rechargers").getKeys(false);
+            if (therechargers.size() < 1) {
+                p.sendMessage(TARDIS.plugin.pluginName + "No rechargers were found!");
+            }
+            int a = 1;
+
+            for (String s : therechargers) {
+                if (a == 1) {
+                    p.sendMessage(TARDIS.plugin.pluginName + "Artron Energy Rechargers");
+                }
+                String w = TARDIS.plugin.getConfig().getString("rechargers." + s + ".world");
+                int x = TARDIS.plugin.getConfig().getInt("rechargers." + s + ".x");
+                int y = TARDIS.plugin.getConfig().getInt("rechargers." + s + ".y");
+                int z = TARDIS.plugin.getConfig().getInt("rechargers." + s + ".z");
+                p.sendMessage(a + ". [" + s + "] in world: " + w + ", at " + x + ":" + y + ":" + z);
+                a++;
+            }
+        }
         String playerNameStr = p.getName();
         if (l.equals("areas")) {
             ResultSetAreas rsa = new ResultSetAreas(TARDIS.plugin, null, true);

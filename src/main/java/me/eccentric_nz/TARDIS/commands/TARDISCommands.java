@@ -392,7 +392,7 @@ public class TARDISCommands implements CommandExecutor {
                             return false;
                         }
                         if (args.length < 2 || (!args[1].equalsIgnoreCase("saves") && !args[1].equalsIgnoreCase("companions") && !args[1].equalsIgnoreCase("areas"))) {
-                            sender.sendMessage(plugin.pluginName + "You need to specify which TARDIS list you want to view! [saves|companions|areas]");
+                            sender.sendMessage(plugin.pluginName + "You need to specify which TARDIS list you want to view! [saves|companions|areas|rechargers]");
                             return false;
                         }
                         TARDISLister.list(player, args[1]);
