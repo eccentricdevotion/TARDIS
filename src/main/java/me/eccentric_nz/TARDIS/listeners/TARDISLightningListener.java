@@ -56,25 +56,29 @@ public class TARDISLightningListener implements Listener {
         }
         LightningStrike strike = e.getLightning();
         Location l = strike.getLocation();
+        World strikeworld = l.getWorld();
         ResultSetTardis rs = new ResultSetTardis(plugin, null, "", true);
         if (rs.resultSet()) {
             ArrayList<HashMap<String, String>> data = rs.getData();
             for (HashMap<String, String> map : data) {
                 String[] loc = map.get("save").split(":");
-                int id = plugin.utils.parseNum(map.get("tardis_id"));
                 World w = plugin.getServer().getWorld(loc[0]);
-                int x = plugin.utils.parseNum(loc[1]);
-                int y = plugin.utils.parseNum(loc[2]);
-                int z = plugin.utils.parseNum(loc[3]);
-                Location t = new Location(w, x, y, z);
-                // only recharge if the TARDIS is within range and is not at a beacon recharger
-                if (plugin.utils.compareLocations(t, l) && !plugin.trackRecharge.contains(id)) {
-                    int level = plugin.utils.parseNum(map.get("artron_level") + plugin.getConfig().getInt("recharge_lightning"));
-                    HashMap<String, Object> set = new HashMap<String, Object>();
-                    set.put("artron_level", level);
-                    HashMap<String, Object> where = new HashMap<String, Object>();
-                    where.put("tardis_id", id);
-                    qf.doUpdate("tardis", set, where);
+                // only if the tardis is in the same world as the lightning strike!
+                if (strikeworld.equals(w)) {
+                    int id = plugin.utils.parseNum(map.get("tardis_id"));
+                    int x = plugin.utils.parseNum(loc[1]);
+                    int y = plugin.utils.parseNum(loc[2]);
+                    int z = plugin.utils.parseNum(loc[3]);
+                    Location t = new Location(w, x, y, z);
+                    // only recharge if the TARDIS is within range and is not at a beacon recharger
+                    if (plugin.utils.compareLocations(t, l) && !plugin.trackRecharge.contains(id)) {
+                        int level = plugin.utils.parseNum(map.get("artron_level") + plugin.getConfig().getInt("recharge_lightning"));
+                        HashMap<String, Object> set = new HashMap<String, Object>();
+                        set.put("artron_level", level);
+                        HashMap<String, Object> where = new HashMap<String, Object>();
+                        where.put("tardis_id", id);
+                        qf.doUpdate("tardis", set, where);
+                    }
                 }
             }
         }
