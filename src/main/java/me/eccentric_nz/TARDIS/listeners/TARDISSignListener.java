@@ -35,7 +35,6 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
-import org.bukkit.inventory.ItemStack;
 
 /**
  * Listens for player interaction with the TARDIS chameleon or save-sign Signs.
@@ -65,7 +64,6 @@ public class TARDISSignListener implements Listener {
 
             Action action = event.getAction();
             if (action == Action.RIGHT_CLICK_BLOCK) {
-                ItemStack stack = player.getItemInHand();
                 // only proceed if they are clicking a sign!
                 if (blockType == Material.WALL_SIGN || blockType == Material.SIGN_POST) {
                     // get clicked block location

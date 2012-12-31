@@ -34,7 +34,6 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
-import org.bukkit.inventory.ItemStack;
 import org.getspout.spoutapi.SpoutManager;
 
 /**
@@ -62,10 +61,8 @@ public class TARDISButtonListener implements Listener {
         Block block = event.getClickedBlock();
         if (block != null) {
             Material blockType = block.getType();
-
             Action action = event.getAction();
             if (action == Action.RIGHT_CLICK_BLOCK) {
-                ItemStack stack = player.getItemInHand();
                 // only proceed if they are clicking a type of a button or a lever!
                 if (blockType == Material.STONE_BUTTON || blockType == Material.WOOD_BUTTON || blockType == Material.LEVER) {
                     // get clicked block location
