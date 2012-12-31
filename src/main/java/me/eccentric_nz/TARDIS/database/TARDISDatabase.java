@@ -29,7 +29,7 @@ public class TARDISDatabase {
     public void createTables() {
         try {
             statement = connection.createStatement();
-            String queryTARDIS = "CREATE TABLE IF NOT EXISTS tardis (tardis_id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, owner TEXT COLLATE NOCASE, chunk TEXT, direction TEXT, home TEXT, save TEXT, current TEXT, replaced TEXT DEFAULT '', chest TEXT, button TEXT, repeater0 TEXT, repeater1 TEXT, repeater2 TEXT, repeater3 TEXT, companions TEXT, platform TEXT DEFAULT '', chameleon TEXT DEFAULT '', chamele_on INTEGER DEFAULT 0, size TEXT DEFAULT '', save_sign TEXT DEFAULT '')";
+            String queryTARDIS = "CREATE TABLE IF NOT EXISTS tardis (tardis_id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, owner TEXT COLLATE NOCASE, chunk TEXT, direction TEXT, home TEXT, save TEXT, current TEXT, replaced TEXT DEFAULT '', chest TEXT, button TEXT, repeater0 TEXT, repeater1 TEXT, repeater2 TEXT, repeater3 TEXT, companions TEXT, platform TEXT DEFAULT '', chameleon TEXT DEFAULT '', chamele_on INTEGER DEFAULT 0, size TEXT DEFAULT '', save_sign TEXT DEFAULT '', artron_level INTEGER DEFAULT 500)";
             statement.executeUpdate(queryTARDIS);
             String queryTravellers = "CREATE TABLE IF NOT EXISTS travellers (traveller_id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, tardis_id INTEGER, player TEXT COLLATE NOCASE)";
             statement.executeUpdate(queryTravellers);
@@ -43,7 +43,7 @@ public class TARDISDatabase {
             statement.executeUpdate(queryProtectBlocks);
             String queryDestinations = "CREATE TABLE IF NOT EXISTS destinations (dest_id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, tardis_id INTEGER, dest_name TEXT COLLATE NOCASE DEFAULT '', world TEXT COLLATE NOCASE DEFAULT '', x INTEGER, y INTEGER, z INTEGER)";
             statement.executeUpdate(queryDestinations);
-            String queryPresets = "CREATE TABLE IF NOT EXISTS areas (area_id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, area_name TEXT COLLATE NOCASE DEFAULT '', world TEXT COLLATE NOCASE DEFAULT '', minx INTEGER, minz INTEGER, maxx INTEGER, maxz INTEGER)";
+            String queryPresets = "CREATE TABLE IF NOT EXISTS areas (area_id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, area_name TEXT COLLATE NOCASE DEFAULT '', world TEXT COLLATE NOCASE DEFAULT '', minx INTEGER, minz INTEGER, maxx INTEGER, maxz INTEGER, is_recharger INTEGER DEFAULT 0)";
             statement.executeUpdate(queryPresets);
 
             // just when I thought I'd got rid of them all... another check to add a column
@@ -53,6 +53,22 @@ public class TARDISDatabase {
                 String queryAlter = "ALTER TABLE player_prefs ADD artron_level INTEGER DEFAULT 0";
                 statement.executeUpdate(queryAlter);
                 TARDIS.plugin.console.sendMessage(TARDIS.plugin.pluginName + " Adding new Artron Levels to player prefs!");
+            }
+            // add artron levels to tardis table as well
+            String queryAddTardis = "SELECT sql FROM sqlite_master WHERE tbl_name = 'tardis' AND sql LIKE '%artron_level INTEGER%'";
+            ResultSet rsTardis = statement.executeQuery(queryAddTardis);
+            if (!rsTardis.next()) {
+                String queryAlter2 = "ALTER TABLE tardis ADD artron_level INTEGER DEFAULT 500";
+                statement.executeUpdate(queryAlter2);
+                TARDIS.plugin.console.sendMessage(TARDIS.plugin.pluginName + " Adding new Artron Levels to player prefs!");
+            }
+            // add is_recharger to areas table as well
+            String queryAddRecharger = "SELECT sql FROM sqlite_master WHERE tbl_name = 'areas' AND sql LIKE '%is_recharger INTEGER%'";
+            ResultSet rsRecharger = statement.executeQuery(queryAddRecharger);
+            if (!rsRecharger.next()) {
+                String queryAlter3 = "ALTER TABLE tardis ADD is_recharger INTEGER DEFAULT 0";
+                statement.executeUpdate(queryAlter3);
+                TARDIS.plugin.console.sendMessage(TARDIS.plugin.pluginName + " Adding new Recharger status to areas!");
             }
 
         } catch (SQLException e) {

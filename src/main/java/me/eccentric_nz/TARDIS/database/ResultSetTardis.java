@@ -59,6 +59,7 @@ public class ResultSetTardis {
     private String save_sign;
     private String chameleon;
     private boolean chameleon_on;
+    private int artron_level;
     private ArrayList<HashMap<String, String>> data = new ArrayList<HashMap<String, String>>();
 
     /**
@@ -140,6 +141,7 @@ public class ResultSetTardis {
                     this.save_sign = rs.getString("save_sign");
                     this.chameleon = rs.getString("chameleon");
                     this.chameleon_on = rs.getBoolean("chamele_on");
+                    this.artron_level = rs.getInt("artron_level");
                 }
             } else {
                 return false;
@@ -236,6 +238,10 @@ public class ResultSetTardis {
 
     public boolean getChameleon_on() {
         return chameleon_on;
+    }
+
+    public int getArtron_level() {
+        return artron_level;
     }
 
     public ArrayList<HashMap<String, String>> getData() {
