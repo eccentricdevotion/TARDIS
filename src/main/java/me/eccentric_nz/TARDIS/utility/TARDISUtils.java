@@ -258,8 +258,11 @@ public class TARDISUtils {
     }
 
     public boolean compareLocations(Location a, Location b) {
-        double rd = plugin.getConfig().getDouble("recharge_distance");
-        double squared = rd * rd;
-        return (a.distanceSquared(b) <= squared);
+        if (a.getWorld().equals(b.getWorld())) {
+            double rd = plugin.getConfig().getDouble("recharge_distance");
+            double squared = rd * rd;
+            return (a.distanceSquared(b) <= squared);
+        }
+        return false;
     }
 }
