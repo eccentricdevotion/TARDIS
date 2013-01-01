@@ -66,6 +66,12 @@ public class TARDISTravelCommands implements CommandExecutor {
                     return true;
                 }
                 int id = rs.getTardis_id();
+                int level = rs.getArtron_level();
+                int travel = plugin.getConfig().getInt("travel");
+                if (level < travel) {
+                    player.sendMessage(plugin.pluginName + ChatColor.RED + "The TARDIS does not have enough Artron Energy to make this trip!");
+                    return true;
+                }
                 TARDISConstants.COMPASS d = rs.getDirection();
                 String home = rs.getHome();
                 HashMap<String, Object> tid = new HashMap<String, Object>();
@@ -84,6 +90,7 @@ public class TARDISTravelCommands implements CommandExecutor {
                     set.put("save", save_loc);
                     qf.doUpdate("tardis", set, tid);
                     player.sendMessage(plugin.pluginName + "Your TARDIS was approved for parking in [" + permArea + "]!");
+                    plugin.tardisHasTravelled.put(player.getName(), travel);
                     return true;
                 } else {
                     if (args.length == 1) {
@@ -93,6 +100,7 @@ public class TARDISTravelCommands implements CommandExecutor {
                             qf.doUpdate("tardis", set, tid);
                             sender.sendMessage(plugin.pluginName + "Home location loaded succesfully. Please exit the TARDIS!");
                             plugin.utils.updateTravellerCount(id);
+                            plugin.tardisHasTravelled.put(player.getName(), travel);
                             return true;
                         } else {
                             if (player.hasPermission("tardis.timetravel.player")) {
@@ -117,6 +125,7 @@ public class TARDISTravelCommands implements CommandExecutor {
                                 qf.doUpdate("tardis", set, tid);
                                 sender.sendMessage(plugin.pluginName + "The player location was saved succesfully. Please exit the TARDIS!");
                                 plugin.utils.updateTravellerCount(id);
+                                plugin.tardisHasTravelled.put(player.getName(), travel);
                                 return true;
                             } else {
                                 sender.sendMessage(plugin.pluginName + "You do not have permission to time travel to a player!");
@@ -138,6 +147,7 @@ public class TARDISTravelCommands implements CommandExecutor {
                         qf.doUpdate("tardis", set, tid);
                         sender.sendMessage(plugin.pluginName + "The specified location was set succesfully. Please exit the TARDIS!");
                         plugin.utils.updateTravellerCount(id);
+                        plugin.tardisHasTravelled.put(player.getName(), travel);
                         return true;
                     }
                     if (args.length == 2 && args[0].equalsIgnoreCase("area")) {
@@ -163,6 +173,7 @@ public class TARDISTravelCommands implements CommandExecutor {
                         qf.doUpdate("tardis", set, tid);
                         sender.sendMessage(plugin.pluginName + "Your TARDIS was approved for parking in [" + args[1] + "]!");
                         plugin.utils.updateTravellerCount(id);
+                        plugin.tardisHasTravelled.put(player.getName(), travel);
                         return true;
                     }
                     if (args.length > 2 && args.length < 4) {
@@ -197,6 +208,7 @@ public class TARDISTravelCommands implements CommandExecutor {
                             qf.doUpdate("tardis", set, tid);
                             sender.sendMessage(plugin.pluginName + "The specified location was saved succesfully. Please exit the TARDIS!");
                             plugin.utils.updateTravellerCount(id);
+                            plugin.tardisHasTravelled.put(player.getName(), travel);
                             return true;
                         }
                     } else {

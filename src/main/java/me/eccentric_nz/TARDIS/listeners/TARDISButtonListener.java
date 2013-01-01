@@ -78,6 +78,10 @@ public class TARDISButtonListener implements Listener {
                     ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
                     if (rs.resultSet()) {
                         int id = rs.getTardis_id();
+                        if (rs.getArtron_level() < plugin.getConfig().getInt("random")) {
+                            player.sendMessage(plugin.pluginName + ChatColor.RED + "The TARDIS does not have enough Artron Energy to make this trip!");
+                            return;
+                        }
                         String tl = rs.getOwner();
                         String r0_str = rs.getRepeater0();
                         String r1_str = rs.getRepeater1();
@@ -197,6 +201,7 @@ public class TARDISButtonListener implements Listener {
                                 HashMap<String, Object> wherel = new HashMap<String, Object>();
                                 wherel.put("tardis_id", id);
                                 qf.doUpdate("tardis", set, wherel);
+                                plugin.tardisHasTravelled.put(player.getName(), plugin.getConfig().getInt("random"));
                                 if (plugin.getServer().getPluginManager().getPlugin("Spout") != null && SpoutManager.getPlayer(player).isSpoutCraftEnabled() && playSound == true) {
                                     SpoutManager.getSoundManager().playCustomSoundEffect(plugin, SpoutManager.getPlayer(player), "https://dl.dropbox.com/u/53758864/tardis_takeoff.mp3", false, b, 9, 75);
                                 }

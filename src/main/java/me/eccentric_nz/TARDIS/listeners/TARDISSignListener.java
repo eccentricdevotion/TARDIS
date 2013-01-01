@@ -102,6 +102,12 @@ public class TARDISSignListener implements Listener {
                             qf.doUpdate("tardis", set, tid);
                         } else {
                             if (event.getAction().equals(Action.RIGHT_CLICK_BLOCK) && player.isSneaking()) {
+                                // check they have enough artron energy to travel
+                                int level = rs.getArtron_level();
+                                if (level < plugin.getConfig().getInt("travel")) {
+                                    player.sendMessage(plugin.pluginName + ChatColor.RED + "The TARDIS does not have enough Artron Energy to make this trip!");
+                                    return;
+                                }
                                 // set destination to currently displayed save
                                 HashMap<String, Object> sets = new HashMap<String, Object>();
                                 if (s.getLine(1).equals("Home")) {
@@ -116,6 +122,7 @@ public class TARDISSignListener implements Listener {
                                 sid.put("tardis_id", id);
                                 qf.doUpdate("tardis", sets, sid);
                                 plugin.utils.updateTravellerCount(id);
+                                plugin.tardisHasTravelled.put(player.getName(), plugin.getConfig().getInt("travel"));
                                 player.sendMessage(plugin.pluginName + "Exit location set");
                             }
                             if (event.getAction().equals(Action.RIGHT_CLICK_BLOCK) && !player.isSneaking()) {
