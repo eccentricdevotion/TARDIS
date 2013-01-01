@@ -56,14 +56,4 @@ public class TARDISArtronLevels {
         }
         return (level > required);
     }
-
-    // TODO
-    /*
-     * Check when TARDIS lands if it is near a recharging beacon if (true) recharge();
-     *
-     * NetherStar refuelling && a way to transfer player levels to TARDIS (only if TARDIS levels < 100)
-     *
-     * Player Artron levels +2 per travel
-     *
-     */
 }
