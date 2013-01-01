@@ -24,6 +24,7 @@ import java.sql.Statement;
 import java.util.HashMap;
 import java.util.Map;
 import me.eccentric_nz.TARDIS.TARDIS;
+import org.bukkit.entity.Player;
 
 /**
  * Do basic SQL INSERT, UPDATE and DELETE queries.
@@ -219,6 +220,51 @@ public class QueryFactory {
                 statement.close();
             } catch (Exception e) {
                 plugin.debug("Error closing " + table + "! " + e.getMessage());
+            }
+        }
+    }
+
+    /**
+     * Adds or removes Artron Energy from an SQLite database table. This method
+     * builds an SQL query string from the parameters supplied and then executes
+     * the query.
+     *
+     * @param table the database table name to insert the data into.
+     * @param amount the amount of energy to add or remove (use a negative
+     * value)
+     * @param where a HashMap<String, Object> of table fields and values to
+     * select the records to alter.
+     */
+    public boolean alterEnergyLevel(String table, int amount, HashMap<String, Object> where, Player p) {
+        Statement statement = null;
+        String wheres;
+        StringBuilder sbw = new StringBuilder();
+        for (Map.Entry<String, Object> entry : where.entrySet()) {
+            sbw.append(entry.getKey()).append(" = ");
+            if (entry.getValue().getClass().equals(String.class)) {
+                sbw.append("'").append(entry.getValue()).append("' AND ");
+            } else {
+                sbw.append(entry.getValue()).append(" AND ");
+            }
+        }
+        where.clear();
+        wheres = sbw.toString().substring(0, sbw.length() - 5);
+        String query = "UPDATE " + table + " SET artron_level = artron_level + " + amount + " WHERE " + wheres;
+        //plugin.debug(query);
+        if (amount < 0) {
+            p.sendMessage(plugin.pluginName + "You used " + Math.abs(amount) + " Artron Energy.");
+        }
+        try {
+            statement = connection.createStatement();
+            return (statement.executeUpdate(query) > 0);
+        } catch (SQLException e) {
+            plugin.debug("Artron Energy update error for " + table + "! " + e.getMessage());
+            return false;
+        } finally {
+            try {
+                statement.close();
+            } catch (Exception e) {
+                plugin.debug("Artron Energy error closing " + table + "! " + e.getMessage());
             }
         }
     }
