@@ -31,6 +31,7 @@ import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.block.Block;
+import org.bukkit.entity.Player;
 
 /**
  * Various utility methods.
@@ -264,5 +265,30 @@ public class TARDISUtils {
             return (a.distanceSquared(b) <= squared);
         }
         return false;
+    }
+
+    public String getPlayersDirection(Player p) {
+        // get player direction
+        float pyaw = p.getLocation().getYaw();
+        if (pyaw >= 0) {
+            pyaw = (pyaw % 360);
+        } else {
+            pyaw = (360 + (pyaw % 360));
+        }
+        // determine direction player is facing
+        String d = "";
+        if (pyaw >= 315 || pyaw < 45) {
+            d = "SOUTH";
+        }
+        if (pyaw >= 225 && pyaw < 315) {
+            d = "EAST";
+        }
+        if (pyaw >= 135 && pyaw < 225) {
+            d = "NORTH";
+        }
+        if (pyaw >= 45 && pyaw < 135) {
+            d = "WEST";
+        }
+        return d;
     }
 }

@@ -131,28 +131,9 @@ public class TARDISBlockPlaceListener implements Listener {
                             }
                         }
                         // get player direction
-                        float pyaw = player.getLocation().getYaw();
-                        if (pyaw >= 0) {
-                            pyaw = (pyaw % 360);
-                        } else {
-                            pyaw = (360 + (pyaw % 360));
-                        }
-                        Location block_loc = blockBottom.getLocation();
-                        // determine direction player is facing
-                        String d = "";
-                        if (pyaw >= 315 || pyaw < 45) {
-                            d = "SOUTH";
-                        }
-                        if (pyaw >= 225 && pyaw < 315) {
-                            d = "EAST";
-                        }
-                        if (pyaw >= 135 && pyaw < 225) {
-                            d = "NORTH";
-                        }
-                        if (pyaw >= 45 && pyaw < 135) {
-                            d = "WEST";
-                        }
+                        String d = plugin.utils.getPlayersDirection(player);
                         // save data to database (tardis table)
+                        Location block_loc = blockBottom.getLocation();
                         String chun = cw + ":" + cx + ":" + cz;
                         String home = block_loc.getWorld().getName() + ":" + block_loc.getBlockX() + ":" + block_loc.getBlockY() + ":" + block_loc.getBlockZ();
                         String save = block_loc.getWorld().getName() + ":" + block_loc.getBlockX() + ":" + block_loc.getBlockY() + ":" + block_loc.getBlockZ();
@@ -165,7 +146,6 @@ public class TARDISBlockPlaceListener implements Listener {
                         set.put("save", save);
                         set.put("size", schm.name());
                         int lastInsertId = qf.doInsert("tardis", set);
-
                         // remove redstone torch
                         block.setTypeId(0);
                         // turn the block stack into a TARDIS
