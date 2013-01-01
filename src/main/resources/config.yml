@@ -24,14 +24,29 @@ timeout_height: 135
 name_tardis: false
 border_radius: 64
 create_worlds: true
+#rooms
 rooms:
-  PASSAGE: 250
-  ARBORETUM: 500
-  BEDROOM: 500
-  KITCHEN: 500
-  LIBRARY: 500
-  POOL: 500
-  VAULT: 500
+  PASSAGE:
+    cost: 250
+    seed: CLAY
+  ARBORETUM:
+    cost: 500
+    seed: LEAVES
+  BEDROOM:
+    cost: 500
+    seed: GLOWSTONE
+  KITCHEN:
+    cost: 500
+    seed: PUMPKIN
+  LIBRARY:
+    cost: 500
+    seed: BOOKSHELF
+  POOL:
+    cost: 500
+    seed: SNOW_BLOCK
+  VAULT:
+    cost: 500
+    seed: DISPENSER
 #artron energy
 player: 2
 random: 25
