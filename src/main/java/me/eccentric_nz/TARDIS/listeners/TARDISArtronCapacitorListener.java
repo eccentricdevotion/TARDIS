@@ -160,14 +160,14 @@ public class TARDISArtronCapacitorListener implements Listener {
                                 HashMap<String, Object> sett = new HashMap<String, Object>();
                                 sett.put("artron_level", new_level);
                                 qf.doUpdate("tardis", sett, wheret);
-                                int percent = Math.round((new_level / 1000) * 100);
+                                int percent = Math.round((new_level * 100F) / 1000);
                                 player.sendMessage(plugin.pluginName + "You charged the Artron Energy Capacitor to " + percent + "%");
                             } else {
                                 player.sendMessage(plugin.pluginName + "You don't have any Artron Energy to give the TARDIS");
                             }
                         } else {
                             // just tell us how much energy we have
-                            int percent = Math.round((current_level / 1000) * 100);
+                            int percent = Math.round((current_level * 100F) / 1000);
                             player.sendMessage(plugin.pluginName + "The Artron Energy Capacitor is at " + percent + "%");
                         }
                     }
