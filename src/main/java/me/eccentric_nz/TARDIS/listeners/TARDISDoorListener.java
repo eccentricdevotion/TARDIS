@@ -21,6 +21,7 @@ import java.util.HashMap;
 import java.util.Random;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
+import me.eccentric_nz.TARDIS.artron.TARDISArtronLevels;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetDoors;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
@@ -217,7 +218,7 @@ public class TARDISDoorListener implements Listener {
                                                 plugin.buildPB.buildPoliceBox(id, newl, d, cham, player, false);
                                             }
                                             // exit TARDIS!
-                                            movePlayer(player, exitTardis, true, playerWorld, userQuotes);
+                                            movePlayer(player, exitTardis, true, playerWorld, userQuotes, id);
                                             // remove player from traveller table
                                             HashMap<String, Object> wherd = new HashMap<String, Object>();
                                             wherd.put("player", playerNameStr);
@@ -314,7 +315,7 @@ public class TARDISDoorListener implements Listener {
                                                     }
                                                     tmp_loc.setYaw(yaw);
                                                     final Location tardis_loc = tmp_loc;
-                                                    movePlayer(player, tardis_loc, false, playerWorld, userQuotes);
+                                                    movePlayer(player, tardis_loc, false, playerWorld, userQuotes, id);
                                                     // put player into travellers table
                                                     HashMap<String, Object> set = new HashMap<String, Object>();
                                                     set.put("tardis_id", id);
@@ -354,13 +355,12 @@ public class TARDISDoorListener implements Listener {
     }
     Random r = new Random();
 
-    private void movePlayer(Player p, Location l, final boolean exit, final World from, boolean q) {
+    private void movePlayer(final Player p, Location l, final boolean exit, final World from, boolean q, final int id) {
 
         final int i = r.nextInt(plugin.quotelen);
-        final Player thePlayer = p;
         final Location theLocation = l;
         final World to = theLocation.getWorld();
-        final boolean allowFlight = thePlayer.getAllowFlight();
+        final boolean allowFlight = p.getAllowFlight();
         final boolean crossWorlds = from != to;
         final boolean quotes = q;
 
@@ -375,30 +375,49 @@ public class TARDISDoorListener implements Listener {
         Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
             @Override
             public void run() {
-                thePlayer.teleport(theLocation);
+                p.teleport(theLocation);
             }
         }, 5L);
         Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
             @Override
             @SuppressWarnings("deprecation")
             public void run() {
-                thePlayer.teleport(theLocation);
-                if (thePlayer.getGameMode() == GameMode.CREATIVE || (allowFlight && crossWorlds)) {
-                    thePlayer.setAllowFlight(true);
+                p.teleport(theLocation);
+                if (p.getGameMode() == GameMode.CREATIVE || (allowFlight && crossWorlds)) {
+                    p.setAllowFlight(true);
                 }
                 if (quotes) {
-                    thePlayer.sendMessage(plugin.pluginName + plugin.quote.get(i));
+                    p.sendMessage(plugin.pluginName + plugin.quote.get(i));
                 }
                 if (exit == true) {
-                    Inventory inv = thePlayer.getInventory();
+                    // check if at a recharge point
+                    TARDISArtronLevels tal = new TARDISArtronLevels(plugin);
+                    tal.recharge(id, p);
+                    // give some artron energy
+                    String name = p.getName();
+                    if (plugin.tardisHasTravelled.containsKey(name)) {
+                        QueryFactory qf = new QueryFactory(plugin);
+                        // add energy to player
+                        HashMap<String, Object> where = new HashMap<String, Object>();
+                        where.put("player", name);
+                        qf.alterEnergyLevel("player_prefs", 2, where, p);
+                        // remove energy from TARDIS
+                        HashMap<String, Object> wheret = new HashMap<String, Object>();
+                        wheret.put("tardis_id", id);
+                        int amount = 0 - plugin.tardisHasTravelled.get(name);
+                        qf.alterEnergyLevel("tardis", amount, wheret, p);
+                        plugin.tardisHasTravelled.remove(name);
+                    }
+                    // give a key
+                    Inventory inv = p.getInventory();
                     Material m = Material.valueOf(plugin.TARDIS_KEY);
                     if (!inv.contains(m) && plugin.getConfig().getBoolean("give_key") == true) {
                         ItemStack is = new ItemStack(m, 1);
                         TARDISItemRenamer ir = new TARDISItemRenamer(is);
                         ir.setName("Sonic Screwdriver", true);
                         inv.addItem(is);
-                        thePlayer.updateInventory();
-                        thePlayer.sendMessage(plugin.pluginName + "Don't forget your TARDIS key!");
+                        p.updateInventory();
+                        p.sendMessage(plugin.pluginName + "Don't forget your TARDIS key!");
                     }
                 }
             }
