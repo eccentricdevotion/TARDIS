@@ -36,6 +36,7 @@ public class TARDISArtronRunnable implements Runnable {
 
     private final TARDIS plugin;
     private int id;
+    private Player p;
     private int task;
     TARDISDatabase service = TARDISDatabase.getInstance();
     List<Location> rechargers;
@@ -45,6 +46,7 @@ public class TARDISArtronRunnable implements Runnable {
     public TARDISArtronRunnable(TARDIS plugin, int id, Player p) {
         this.plugin = plugin;
         this.id = id;
+        this.p = p;
         this.rechargers = getRechargers();
         this.qf = new QueryFactory(plugin);
     }
@@ -55,14 +57,12 @@ public class TARDISArtronRunnable implements Runnable {
         if (!isNearCharger(id) || level > 999) {
             plugin.getServer().getScheduler().cancelTask(task);
             task = 0;
-            plugin.trackRecharge.remove(id);
+            plugin.trackRecharge.remove(Integer.valueOf(id));
         }
         // update TARDIS artron_level
         HashMap<String, Object> where = new HashMap<String, Object>();
         where.put("tardis_id", id);
-        HashMap<String, Object> set = new HashMap<String, Object>();
-        set.put("artron_level", level + 10);
-        qf.doUpdate("tardis", set, where);
+        qf.alterEnergyLevel("tardis", 10, where, p);
     }
 
     private boolean isNearCharger(int id) {
