@@ -6,7 +6,6 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Locale;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
@@ -214,7 +213,13 @@ public class TARDISCommands implements CommandExecutor {
                         ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
                         if (!rs.resultSet()) {
                             sender.sendMessage(plugin.pluginName + "You must be the Timelord of the TARDIS to use this command!");
-                            return false;
+                            return true;
+                        }
+                        int level = rs.getArtron_level();
+                        int ch = plugin.getConfig().getInt("comehere");
+                        if (level < ch) {
+                            player.sendMessage(plugin.pluginName + ChatColor.RED + "The TARDIS does not have enough Artron Energy to make this trip!");
+                            return true;
                         }
                         final Player p = player;
                         final int id = rs.getTardis_id();
@@ -254,6 +259,12 @@ public class TARDISCommands implements CommandExecutor {
                                 plugin.buildPB.buildPoliceBox(id, eyeLocation, d, cham, p, false);
                             }
                         }, delay);
+                        // remove energy from TARDIS
+                        HashMap<String, Object> wheret = new HashMap<String, Object>();
+                        wheret.put("tardis_id", id);
+                        int amount = 0 - ch;
+                        qf.alterEnergyLevel("tardis", amount, wheret, player);
+                        plugin.tardisHasTravelled.remove(p.getName());
                         return true;
                     } else {
                         sender.sendMessage(plugin.pluginName + TARDISConstants.NO_PERMS_MESSAGE);
@@ -368,6 +379,12 @@ public class TARDISCommands implements CommandExecutor {
                             return true;
                         }
                         if (args[0].equalsIgnoreCase("hide")) {
+                            int level = rs.getArtron_level();
+                            int hide = plugin.getConfig().getInt("hide");
+                            if (level < hide) {
+                                player.sendMessage(plugin.pluginName + ChatColor.RED + "The TARDIS does not have enough Artron Energy to hide!");
+                                return false;
+                            }
                             // remove torch
                             plugin.destroyPB.destroyTorch(l);
                             // remove sign
@@ -375,6 +392,11 @@ public class TARDISCommands implements CommandExecutor {
                             // remove blue box
                             plugin.destroyPB.destroyPoliceBox(l, d, id, true);
                             sender.sendMessage(plugin.pluginName + "The TARDIS Police Box was hidden! Use " + ChatColor.GREEN + "/tardis rebuild" + ChatColor.RESET + " to show it again.");
+                            HashMap<String, Object> wheret = new HashMap<String, Object>();
+                            wheret.put("tardis_id", id);
+                            int amount = 0 - hide;
+                            QueryFactory qf = new QueryFactory(plugin);
+                            qf.alterEnergyLevel("tardis", amount, wheret, player);
                             return true;
                         }
                     } else {
