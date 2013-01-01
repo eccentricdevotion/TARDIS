@@ -4,6 +4,7 @@ main: me.eccentric_nz.TARDIS.TARDIS
 name: TARDIS
 startup: postworld
 softdepend: [Multiverse-Core,WorldGuard,WorldBorder,Towny]
+website: http://dev.bukkit.org/server-mods/TARDIS/
 dev-url: http://de.bukkit.org/server-mods/TARDIS/
 url: http://www.thenosefairy.co.nz/
 version: '2.0-SNAPSHOT'
