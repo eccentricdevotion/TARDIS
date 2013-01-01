@@ -1,4 +1,5 @@
 author: eccentric_nz
+authors: [eccentric_nz, ewized]
 description: A plugin for all Doctor Who fans - create and use a TARDIS! Teleport to random destinations, fight randomly spawning monsters, bonus chests - it's bigger on the inside!
 main: me.eccentric_nz.TARDIS.TARDIS
 name: TARDIS
