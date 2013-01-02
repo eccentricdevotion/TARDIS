@@ -9,7 +9,6 @@ import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.TARDISConstants.ROOM;
-import me.eccentric_nz.TARDIS.artron.TARDISArtronLevels;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetDestinations;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
@@ -148,7 +147,7 @@ public class TARDISCommands implements CommandExecutor {
                     }
                 }
                 if (args[0].equalsIgnoreCase("room")) {
-                    if (player.hasPermission("tardis.timetravel")) {
+                    if (player.hasPermission("tardis.room")) {
                         String room = args[1].toUpperCase();
                         if (args.length < 2) {
                             player.sendMessage(plugin.pluginName + "Too few command arguments!");
