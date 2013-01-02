@@ -8,6 +8,8 @@ import java.util.HashSet;
 import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
+import me.eccentric_nz.TARDIS.TARDISConstants.ROOM;
+import me.eccentric_nz.TARDIS.artron.TARDISArtronLevels;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetDestinations;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
@@ -60,6 +62,7 @@ public class TARDISCommands implements CommandExecutor {
         firstArgs.add("home");
         firstArgs.add("namekey");
         firstArgs.add("version");
+        firstArgs.add("room");
     }
 
     @Override
@@ -142,6 +145,45 @@ public class TARDISCommands implements CommandExecutor {
                     } else {
                         sender.sendMessage(plugin.pluginName + TARDISConstants.NO_PERMS_MESSAGE);
                         return false;
+                    }
+                }
+                if (args[0].equalsIgnoreCase("room")) {
+                    if (player.hasPermission("tardis.timetravel")) {
+                        String room = args[1].toUpperCase();
+                        if (args.length < 2) {
+                            player.sendMessage(plugin.pluginName + "Too few command arguments!");
+                            return false;
+                        }
+                        if (!Arrays.asList(ROOM.values()).contains(ROOM.valueOf(room))) {
+                            player.sendMessage(plugin.pluginName + "That is not a valid room type! Try one of : passage|arboretum|pool|vault|kitchen|bedroom|library");
+                            return true;
+                        }
+                        HashMap<String, Object> where = new HashMap<String, Object>();
+                        where.put("owner", player.getName());
+                        ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
+                        if (!rs.resultSet()) {
+                            player.sendMessage(plugin.pluginName + "You are not a Timelord. You need to create a TARDIS first before using this command!");
+                            return true;
+                        }
+                        int id = rs.getTardis_id();
+                        int level = rs.getArtron_level();
+                        // check they are in the tardis
+                        HashMap<String, Object> wheret = new HashMap<String, Object>();
+                        wheret.put("player", player.getName());
+                        wheret.put("tardis_id", id);
+                        ResultSetTravellers rst = new ResultSetTravellers(plugin, wheret, false);
+                        if (!rst.resultSet()) {
+                            player.sendMessage(plugin.pluginName + "You are not inside your TARDIS. You need to be to run this command!");
+                            return true;
+                        }
+                        // check they have enough artron energy
+                        if (level < plugin.getConfig().getInt("rooms." + room + ".cost")) {
+                            player.sendMessage(plugin.pluginName + "The TARDIS does not have enough Artron Energy to grow this room!");
+                            return true;
+                        }
+                        plugin.trackRoomSeed.put(player.getName(), room);
+                        player.sendMessage(plugin.pluginName + "Place the " + room + " seed block (" + plugin.getConfig().getString("rooms." + room + ".seed") + ") where the door should be, then hit it with the TARDIS key to start growing your room!");
+                        return true;
                     }
                 }
                 if (args[0].equalsIgnoreCase("occupy")) {
