@@ -265,7 +265,7 @@ public class TARDISBuilderPoliceBox {
             if (rst.resultSet()) {
                 String owner = rst.getOwner();
                 if (owner.length() > 14) {
-                    s.setLine(0, owner.substring(0, 13) + "'s");
+                    s.setLine(0, owner.substring(0, 12) + "'s");
                 } else {
                     s.setLine(0, owner + "'s");
                 }
