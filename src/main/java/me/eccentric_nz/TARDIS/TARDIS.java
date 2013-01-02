@@ -62,6 +62,7 @@ public class TARDIS extends JavaPlugin {
     public File passageSchematicFile = null;
     public File poolSchematicFile = null;
     public File vaultSchematicFile = null;
+    public File emptySchematicFile = null;
     public File budgetSchematicCSV = null;
     public File biggerSchematicCSV = null;
     public File deluxeSchematicCSV = null;
@@ -72,6 +73,7 @@ public class TARDIS extends JavaPlugin {
     public File passageSchematicCSV = null;
     public File poolSchematicCSV = null;
     public File vaultSchematicCSV = null;
+    public File emptySchematicCSV = null;
     public File quotesfile = null;
     private TARDISCommands tardisCommand;
     private TARDISAdminCommands tardisAdminCommand;
@@ -88,6 +90,7 @@ public class TARDIS extends JavaPlugin {
     public String[][][] passageschematic;
     public String[][][] poolschematic;
     public String[][][] vaultschematic;
+    public String[][][] emptyschematic;
     public short[] budgetdimensions = new short[3];
     public short[] biggerdimensions = new short[3];
     public short[] deluxedimensions = new short[3];
@@ -255,6 +258,7 @@ public class TARDIS extends JavaPlugin {
             passageSchematicCSV = createFile("passage.csv");
             poolSchematicCSV = createFile("pool.csv");
             vaultSchematicCSV = createFile("vault.csv");
+            emptySchematicCSV = createFile("empty.csv");
             TARDISSchematicReader reader = new TARDISSchematicReader(plugin);
             // load schematic files - copy the defaults if they don't exist
             String budnstr = getDataFolder() + File.separator + TARDISConstants.SCHEMATIC_BUDGET;
@@ -308,6 +312,11 @@ public class TARDIS extends JavaPlugin {
             if (!vaultSchematicFile.exists()) {
                 copy(getResource("vault.schematic"), vaultSchematicFile);
             }
+            String empnstr = getDataFolder() + File.separator + "empty.schematic";
+            emptySchematicFile = new File(empnstr);
+            if (!emptySchematicFile.exists()) {
+                copy(getResource("empty.schematic"), emptySchematicFile);
+            }
             // read the schematics
             reader.main(budnstr, TARDISConstants.SCHEMATIC.BUDGET);
             reader.main(bignstr, TARDISConstants.SCHEMATIC.BIGGER);
@@ -319,6 +328,7 @@ public class TARDIS extends JavaPlugin {
             reader.main(passnstr, TARDISConstants.SCHEMATIC.PASSAGE);
             reader.main(poolnstr, TARDISConstants.SCHEMATIC.POOL);
             reader.main(vaunstr, TARDISConstants.SCHEMATIC.VAULT);
+            reader.main(empnstr, TARDISConstants.SCHEMATIC.EMPTY);
             // load the schematic data into the csv files
             budgetschematic = TARDISSchematic.schematic(budgetSchematicCSV, budgetdimensions[0], budgetdimensions[1], budgetdimensions[2]);
             biggerschematic = TARDISSchematic.schematic(biggerSchematicCSV, biggerdimensions[0], biggerdimensions[1], biggerdimensions[2]);
@@ -330,6 +340,7 @@ public class TARDIS extends JavaPlugin {
             passageschematic = TARDISSchematic.schematic(passageSchematicCSV, passagedimensions[0], passagedimensions[1], passagedimensions[2]);
             poolschematic = TARDISSchematic.schematic(poolSchematicCSV, roomdimensions[0], roomdimensions[1], roomdimensions[2]);
             vaultschematic = TARDISSchematic.schematic(vaultSchematicCSV, roomdimensions[0], roomdimensions[1], roomdimensions[2]);
+            emptyschematic = TARDISSchematic.schematic(emptySchematicCSV, roomdimensions[0], roomdimensions[1], roomdimensions[2]);
 
             quotesfile = new File(getDataFolder(), TARDISConstants.QUOTES_FILE_NAME);
             if (!quotesfile.exists()) {
