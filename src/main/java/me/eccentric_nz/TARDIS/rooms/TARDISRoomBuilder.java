@@ -50,7 +50,7 @@ public class TARDISRoomBuilder {
 
     public boolean build() {
         HashMap<String, Object> where = new HashMap<String, Object>();
-        where.put("player", p.getName());
+        where.put("owner", p.getName());
         ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
         if (rs.resultSet()) {
             int id = rs.getTardis_id();
