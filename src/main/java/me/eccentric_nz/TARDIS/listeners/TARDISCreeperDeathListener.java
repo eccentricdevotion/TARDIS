@@ -50,30 +50,32 @@ public class TARDISCreeperDeathListener implements Listener {
             Creeper c = (Creeper) ent;
             if (c.isPowered()) {
                 Player p = c.getKiller();
-                String killer = p.getName();
-                // is the killer a timelord?
-                HashMap<String, Object> where = new HashMap<String, Object>();
-                where.put("owner", killer);
-                ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
-                if (rs.resultSet()) {
-                    HashMap<String, Object> wherep = new HashMap<String, Object>();
-                    wherep.put("player", killer);
-                    ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, wherep);
-                    QueryFactory qf = new QueryFactory(plugin);
-                    HashMap<String, Object> set = new HashMap<String, Object>();
-                    int amount = plugin.getConfig().getInt("creeper_recharge");
-                    if (!rsp.resultSet()) {
-                        set.put("player", killer);
-                        set.put("artron_level", amount);
-                        qf.doInsert("player_prefs", set);
-                    } else {
-                        int level = rsp.getArtron_level() + amount;
-                        HashMap<String, Object> wherea = new HashMap<String, Object>();
-                        wherea.put("player", killer);
-                        set.put("artron_level", level);
-                        qf.doUpdate("player_prefs", set, wherea);
+                if (p != null) {
+                    String killer = p.getName();
+                    // is the killer a timelord?
+                    HashMap<String, Object> where = new HashMap<String, Object>();
+                    where.put("owner", killer);
+                    ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
+                    if (rs.resultSet()) {
+                        HashMap<String, Object> wherep = new HashMap<String, Object>();
+                        wherep.put("player", killer);
+                        ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, wherep);
+                        QueryFactory qf = new QueryFactory(plugin);
+                        HashMap<String, Object> set = new HashMap<String, Object>();
+                        int amount = plugin.getConfig().getInt("creeper_recharge");
+                        if (!rsp.resultSet()) {
+                            set.put("player", killer);
+                            set.put("artron_level", amount);
+                            qf.doInsert("player_prefs", set);
+                        } else {
+                            int level = rsp.getArtron_level() + amount;
+                            HashMap<String, Object> wherea = new HashMap<String, Object>();
+                            wherea.put("player", killer);
+                            set.put("artron_level", level);
+                            qf.doUpdate("player_prefs", set, wherea);
+                        }
+                        p.sendMessage(plugin.pluginName + "You received " + amount + " Artron Energy for killing a charged creeper!");
                     }
-                    p.sendMessage(plugin.pluginName + "You received " + amount + " Artron Energy for killing a charged creeper!");
                 }
             }
         }
