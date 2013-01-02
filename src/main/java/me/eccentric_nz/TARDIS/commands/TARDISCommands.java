@@ -266,7 +266,7 @@ public class TARDISCommands implements CommandExecutor {
                         final Player p = player;
                         final int id = rs.getTardis_id();
                         String badsave = rs.getSave();
-                        final boolean cham = rs.getChameleon_on();
+                        final boolean cham = rs.getChamele_on();
                         final TARDISConstants.COMPASS d = rs.getDirection();
                         String[] saveData = badsave.split(":");
                         World w = plugin.getServer().getWorld(saveData[0]);
@@ -407,7 +407,7 @@ public class TARDISCommands implements CommandExecutor {
                         }
                         save = rs.getSave();
                         id = rs.getTardis_id();
-                        cham = rs.getChameleon_on();
+                        cham = rs.getChamele_on();
                         d = rs.getDirection();
                         String[] save_data = save.split(":");
                         w = plugin.getServer().getWorld(save_data[0]);
@@ -752,7 +752,7 @@ public class TARDISCommands implements CommandExecutor {
                         String save = rs.getSave();
                         String[] save_data = save.split(":");
                         int id = rs.getTardis_id();
-                        boolean cham = rs.getChameleon_on();
+                        boolean cham = rs.getChamele_on();
                         String dir = args[1].toUpperCase();
                         TARDISConstants.COMPASS old_d = rs.getDirection();
                         QueryFactory qf = new QueryFactory(plugin);
