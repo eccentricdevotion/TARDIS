@@ -53,9 +53,15 @@ public class TARDISRoomBuilder {
         ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
         if (rs.resultSet()) {
             int id = rs.getTardis_id();
+            plugin.debug(rs.getMiddle_id());
+            // get middle data, default to orange wool if not set
+            int middle_id = (rs.getMiddle_id() != 0) ? rs.getMiddle_id() : 35;
+            byte middle_data = (rs.getMiddle_data() != 0) ? rs.getMiddle_data() : 1;
             switch (r) {
                 case PASSAGE:
                     // todo
+                    TARDISPassage newPassage = new TARDISPassage(plugin, l, middle_id, middle_data);
+                    newPassage.passage();
                     break;
                 default:
                     // ROOM
