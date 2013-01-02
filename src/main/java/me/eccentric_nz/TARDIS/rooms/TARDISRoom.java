@@ -14,11 +14,15 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 package me.eccentric_nz.TARDIS.rooms;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.TARDISConstants.COMPASS;
+import me.eccentric_nz.TARDIS.TARDISConstants.ROOM;
 import me.eccentric_nz.TARDIS.database.TARDISDatabase;
+import org.bukkit.Location;
+import org.bukkit.block.Block;
+import org.bukkit.block.BlockFace;
 
 /**
  *
@@ -27,10 +31,98 @@ import me.eccentric_nz.TARDIS.database.TARDISDatabase;
 public class TARDISRoom {
 
     private final TARDIS plugin;
+    private Location l;
+    Block b;
+    private ROOM r;
+    private COMPASS d;
+    private int middle_id;
+    private byte middle_data;
     TARDISDatabase service = TARDISDatabase.getInstance();
 
-    public TARDISRoom(TARDIS plugin) {
+    public TARDISRoom(TARDIS plugin, ROOM r, Location l, Block b, int middle_id, byte middle_data, COMPASS d) {
         this.plugin = plugin;
+        this.l = l;
+        this.b = b;
+        this.r = r;
+        this.d = d;
+        this.middle_id = middle_id;
+        this.middle_data = middle_data;
     }
 
+    public void room() {
+        String[][][] s;
+        short h, w, c;
+        switch (r) {
+            case ARBORETUM:
+                s = plugin.arboretumschematic;
+                break;
+            case BEDROOM:
+                s = plugin.bedroomschematic;
+                break;
+            case KITCHEN:
+                s = plugin.kitchenschematic;
+                break;
+            case LIBRARY:
+                s = plugin.libraryschematic;
+                break;
+            case POOL:
+                s = plugin.poolschematic;
+                break;
+            case VAULT:
+                s = plugin.vaultschematic;
+                break;
+            default:
+                s = plugin.emptyschematic;
+                break;
+        }
+        h = plugin.roomdimensions[0];
+        w = plugin.roomdimensions[1];
+        c = plugin.roomdimensions[2];
+        int level, row, col, id, startx = l.getBlockX(), starty = l.getBlockY(), startz = l.getBlockZ(), resetx, resetz;
+        resetx = startx;
+        resetz = startz;
+        String tmp;
+        byte data;
+        for (level = 0; level < h; level++) {
+            for (row = 0; row < w; row++) {
+                for (col = 0; col < c; col++) {
+                    tmp = s[level][row][col];
+                    // if the current entry is not AIR then change it, otherwise move on to the next
+                    if (!tmp.equals("0:0")) {
+                        String[] iddata = tmp.split(":");
+                        id = plugin.utils.parseNum(iddata[0]);
+                        data = Byte.parseByte(iddata[1]);
+                        if (id == 35 && data == 1) {
+                            id = middle_id;
+                            data = middle_data;
+                        }
+                        plugin.utils.setBlock(l.getWorld(), startx, starty, startz, id, data);
+                    }
+                    startx += 1;
+                }
+                startx = resetx;
+                startz += 1;
+            }
+            startz = resetz;
+            starty += 1;
+        }
+        //put the door in
+        byte door_data;
+        switch (d) {
+            case NORTH:
+                door_data = 1;
+                break;
+            case WEST:
+                door_data = 0;
+                break;
+            case SOUTH:
+                door_data = 3;
+                break;
+            default:
+                door_data = 2;
+                break;
+        }
+        b.setTypeIdAndData(71, door_data, true);
+        b.getRelative(BlockFace.UP).setTypeIdAndData(71, (byte) 8, true);
+    }
 }
