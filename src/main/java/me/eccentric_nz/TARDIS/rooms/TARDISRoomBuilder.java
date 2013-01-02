@@ -24,6 +24,7 @@ import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.TARDISDatabase;
 import org.bukkit.Location;
+import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 
 /**
@@ -34,12 +35,12 @@ public class TARDISRoomBuilder {
 
     private final TARDIS plugin;
     TARDISDatabase service = TARDISDatabase.getInstance();
-    private ROOM r;
+    private String r;
     private Location l;
     private COMPASS d;
     private Player p;
 
-    public TARDISRoomBuilder(TARDIS plugin, ROOM r, Location l, COMPASS d, Player p) {
+    public TARDISRoomBuilder(TARDIS plugin, String r, Location l, COMPASS d, Player p) {
         this.plugin = plugin;
         this.r = r;
         this.l = l;
@@ -57,14 +58,51 @@ public class TARDISRoomBuilder {
             // get middle data, default to orange wool if not set
             int middle_id = (rs.getMiddle_id() != 0) ? rs.getMiddle_id() : 35;
             byte middle_data = (rs.getMiddle_data() != 0) ? rs.getMiddle_data() : 1;
-            switch (r) {
+            // get start locations
+            Block b = l.getBlock();
+            switch (d) {
+                case NORTH:
+                    if (r.equalsIgnoreCase("PASSAGE")) {
+                        l.setX(l.getX() - 4);
+                    } else {
+                        l.setX(l.getX() - 6);
+                        l.setZ(l.getZ() - 12);
+                    }
+                    break;
+                case WEST:
+                    if (r.equalsIgnoreCase("PASSAGE")) {
+                        l.setZ(l.getZ() + 4);
+                    } else {
+                        l.setX(l.getX() - 12);
+                        l.setZ(l.getZ() - 6);
+                    }
+                    break;
+                case SOUTH:
+                    if (r.equalsIgnoreCase("PASSAGE")) {
+                        l.setX(l.getX() + 4);
+                    } else {
+                        l.setX(l.getX() - 6);
+                    }
+                    break;
+                default:
+                    if (r.equalsIgnoreCase("PASSAGE")) {
+                        l.setZ(l.getZ() - 4);
+                    } else {
+                        l.setZ(l.getZ() - 6);
+                    }
+                    break;
+            }
+            l.setY(l.getY() - 4);
+            ROOM room = ROOM.valueOf(r);
+            switch (room) {
                 case PASSAGE:
-                    // todo
                     TARDISPassage newPassage = new TARDISPassage(plugin, l, middle_id, middle_data);
                     newPassage.passage();
                     break;
                 default:
                     // ROOM
+                    TARDISRoom newRoom = new TARDISRoom(plugin, room, l, b, middle_id, middle_data, d);
+                    newRoom.room();
                     break;
             }
             QueryFactory qf = new QueryFactory(plugin);

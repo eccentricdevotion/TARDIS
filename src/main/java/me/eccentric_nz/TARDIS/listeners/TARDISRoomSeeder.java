@@ -20,7 +20,6 @@ import java.util.HashMap;
 import java.util.Set;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants.COMPASS;
-import me.eccentric_nz.TARDIS.TARDISConstants.ROOM;
 import me.eccentric_nz.TARDIS.database.TARDISDatabase;
 import me.eccentric_nz.TARDIS.rooms.TARDISRoomBuilder;
 import org.bukkit.Location;
@@ -85,41 +84,7 @@ public class TARDISRoomSeeder {
                 Location b = block.getLocation();
                 // get player's direction
                 COMPASS d = COMPASS.valueOf(plugin.utils.getPlayersDirection(player));
-                // get start locations
-                switch (d) {
-                    case NORTH:
-                        if (r.equalsIgnoreCase("PASSAGE")) {
-                            b.setX(b.getX() - 4);
-                        } else {
-                            b.setX(b.getX() - 6);
-                            b.setZ(b.getZ() - 12);
-                        }
-                        break;
-                    case WEST:
-                        if (r.equalsIgnoreCase("PASSAGE")) {
-                            b.setZ(b.getZ() + 4);
-                        } else {
-                            b.setX(b.getX() - 12);
-                            b.setZ(b.getZ() - 6);
-                        }
-                        break;
-                    case SOUTH:
-                        if (r.equalsIgnoreCase("PASSAGE")) {
-                            b.setX(b.getX() + 4);
-                        } else {
-                            b.setX(b.getX() - 6);
-                        }
-                        break;
-                    default:
-                        if (r.equalsIgnoreCase("PASSAGE")) {
-                            b.setZ(b.getZ() - 4);
-                        } else {
-                            b.setZ(b.getZ() - 6);
-                        }
-                        break;
-                }
-                b.setY(b.getY() - 4);
-                TARDISRoomBuilder builder = new TARDISRoomBuilder(plugin, ROOM.valueOf(r), b, d, player);
+                TARDISRoomBuilder builder = new TARDISRoomBuilder(plugin, r, b, d, player);
                 builder.build();
             }
         }
