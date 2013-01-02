@@ -20,7 +20,9 @@ import java.util.HashMap;
 import java.util.Set;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants.COMPASS;
+import me.eccentric_nz.TARDIS.TARDISConstants.ROOM;
 import me.eccentric_nz.TARDIS.database.TARDISDatabase;
+import me.eccentric_nz.TARDIS.rooms.TARDISRoomBuilder;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -28,6 +30,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.inventory.ItemStack;
 
 /**
  *
@@ -55,37 +58,69 @@ public class TARDISRoomSeeder {
      * @author eccentric_nz
      */
     @EventHandler(priority = EventPriority.MONITOR)
-    public void onCapacitorInteract(PlayerInteractEvent event) {
+    public void onSeedBlockInteract(PlayerInteractEvent event) {
         if (event.isCancelled()) {
             return;
         }
         final Player player = event.getPlayer();
+        String playerNameStr = player.getName();
         Block block = event.getClickedBlock();
         if (block != null) {
             Material blockType = block.getType();
-            // only proceed if they are clicking a button!
-            if (seeds.containsKey(blockType)) {
+            ItemStack inhand = player.getItemInHand();
+            // only proceed if they are clicking a seed block with the TARDIS key!
+            if (seeds.containsKey(blockType) && inhand.getType().equals(Material.valueOf(plugin.getConfig().getString("key")))) {
+                // check that player is in TARDIS
+                if (!plugin.trackRoomSeed.containsKey(playerNameStr)) {
+                    return;
+                }
+                // get schematic
+                String r = seeds.get(blockType);
+                // check that the blockType is the same as the one they ran the /tardis room [type] command for
+                if (!plugin.trackRoomSeed.get(playerNameStr).equals(r)) {
+                    player.sendMessage(plugin.pluginName + "That is not the correct seed block to grow a " + r + " room!");
+                    return;
+                }
                 // get clicked block location
                 Location b = block.getLocation();
                 // get player's direction
                 COMPASS d = COMPASS.valueOf(plugin.utils.getPlayersDirection(player));
-                // get schematic
-                String r = seeds.get(blockType);
                 // get start locations
                 switch (d) {
                     case NORTH:
-
-                        break;
-                    case SOUTH:
-
+                        if (r.equalsIgnoreCase("PASSAGE")) {
+                            b.setX(b.getX() - 4);
+                        } else {
+                            b.setX(b.getX() - 6);
+                            b.setZ(b.getZ() - 12);
+                        }
                         break;
                     case WEST:
-
+                        if (r.equalsIgnoreCase("PASSAGE")) {
+                            b.setZ(b.getZ() + 4);
+                        } else {
+                            b.setX(b.getX() - 12);
+                            b.setZ(b.getZ() - 6);
+                        }
+                        break;
+                    case SOUTH:
+                        if (r.equalsIgnoreCase("PASSAGE")) {
+                            b.setX(b.getX() + 4);
+                        } else {
+                            b.setX(b.getX() - 6);
+                        }
                         break;
                     default:
-
+                        if (r.equalsIgnoreCase("PASSAGE")) {
+                            b.setZ(b.getZ() - 4);
+                        } else {
+                            b.setZ(b.getZ() - 6);
+                        }
                         break;
                 }
+                b.setY(b.getY() - 4);
+                TARDISRoomBuilder builder = new TARDISRoomBuilder(plugin, ROOM.valueOf(r), b, d, player);
+                builder.build();
             }
         }
     }
