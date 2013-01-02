@@ -251,11 +251,6 @@ public class TARDISBuilderInner {
             byte ptdata = Byte.valueOf(entry.getValue());
             ptb.setTypeIdAndData(138, ptdata, true);
         }
-        for (Map.Entry<Block, Byte> entry : postBeaconBlocks.entrySet()) {
-            Block ptb = entry.getKey();
-            byte ptdata = Byte.valueOf(entry.getValue());
-            ptb.setTypeIdAndData(138, ptdata, true);
-        }
         for (Map.Entry<Block, Byte> entry : postSignBlocks.entrySet()) {
             Block psb = entry.getKey();
             byte psdata = Byte.valueOf(entry.getValue());
