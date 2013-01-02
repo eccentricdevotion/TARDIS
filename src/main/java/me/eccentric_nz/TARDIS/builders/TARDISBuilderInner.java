@@ -135,65 +135,69 @@ public class TARDISBuilderInner {
             for (row = 0; row < w; row++) {
                 for (col = 0; col < l; col++) {
                     tmp = s[level][row][col];
-                    // if the current entry is not AIR then change it, otherwise move on to the next
-                    if (!tmp.equals("0:0")) {
-                        String[] iddata = tmp.split(":");
-                        id = plugin.utils.parseNum(iddata[0]);
-                        data = Byte.parseByte(iddata[1]);
-                        if (id == 54) { // chest
-                            // remember the location of this chest
-                            HashMap<String, Object> setc = new HashMap<String, Object>();
-                            HashMap<String, Object> wherec = new HashMap<String, Object>();
-                            String chest = world.getName() + ":" + startx + ":" + starty + ":" + startz;
-                            setc.put("chest", chest);
-                            wherec.put("tardis_id", dbID);
-                            qf.doUpdate("tardis", setc, wherec);
-                        }
-                        if (id == 77) { // stone button
-                            // remember the location of this button
-                            HashMap<String, Object> setb = new HashMap<String, Object>();
-                            HashMap<String, Object> whereb = new HashMap<String, Object>();
-                            String button = world.getName() + ":" + startx + ":" + starty + ":" + startz;
-                            setb.put("button", button);
-                            whereb.put("tardis_id", dbID);
-                            qf.doUpdate("tardis", setb, whereb);
-                        }
-                        if (id == 93) { // remember the location of this redstone repeater
-                            // save repeater location
-                            HashMap<String, Object> setr = new HashMap<String, Object>();
-                            HashMap<String, Object> wherer = new HashMap<String, Object>();
-                            String repeater = world.getName() + ":" + startx + ":" + starty + ":" + startz;
-                            setr.put("repeater" + j, repeater);
-                            wherer.put("tardis_id", dbID);
-                            qf.doUpdate("tardis", setr, wherer);
-                            j++;
-                        }
-                        if (id == 71 && data < (byte) 8) { // iron door bottom
-                            HashMap<String, Object> setd = new HashMap<String, Object>();
-                            String doorloc = world.getName() + ":" + startx + ":" + starty + ":" + startz;
-                            setd.put("tardis_id", dbID);
-                            setd.put("door_type", 1);
-                            setd.put("door_location", doorloc);
-                            setd.put("door_direction", "SOUTH");
-                            qf.doInsert("doors", setd);
-                        }
-                        if (id == 68) { // chameleon circuit sign
-                            HashMap<String, Object> setc = new HashMap<String, Object>();
-                            HashMap<String, Object> wherec = new HashMap<String, Object>();
-                            String chameleonloc = world.getName() + ":" + startx + ":" + starty + ":" + startz;
-                            setc.put("chameleon", chameleonloc);
-                            setc.put("chamele_on", 0);
-                            wherec.put("tardis_id", dbID);
-                            qf.doUpdate("tardis", setc, wherec);
-                        }
-                        if (id == 35 && data == 1) {
-                            switch (middle_id) {
-                                case 22:
-                                    break;
-                                default:
-                                    id = middle_id;
-                                    data = middle_data;
+                    if (!tmp.equals("-")) {
+                        if (tmp.contains(":")) {
+                            String[] iddata = tmp.split(":");
+                            id = plugin.utils.parseNum(iddata[0]);
+                            data = Byte.parseByte(iddata[1]);
+                            if (id == 54) { // chest
+                                // remember the location of this chest
+                                HashMap<String, Object> setc = new HashMap<String, Object>();
+                                HashMap<String, Object> wherec = new HashMap<String, Object>();
+                                String chest = world.getName() + ":" + startx + ":" + starty + ":" + startz;
+                                setc.put("chest", chest);
+                                wherec.put("tardis_id", dbID);
+                                qf.doUpdate("tardis", setc, wherec);
                             }
+                            if (id == 77) { // stone button
+                                // remember the location of this button
+                                HashMap<String, Object> setb = new HashMap<String, Object>();
+                                HashMap<String, Object> whereb = new HashMap<String, Object>();
+                                String button = world.getName() + ":" + startx + ":" + starty + ":" + startz;
+                                setb.put("button", button);
+                                whereb.put("tardis_id", dbID);
+                                qf.doUpdate("tardis", setb, whereb);
+                            }
+                            if (id == 93) { // remember the location of this redstone repeater
+                                // save repeater location
+                                HashMap<String, Object> setr = new HashMap<String, Object>();
+                                HashMap<String, Object> wherer = new HashMap<String, Object>();
+                                String repeater = world.getName() + ":" + startx + ":" + starty + ":" + startz;
+                                setr.put("repeater" + j, repeater);
+                                wherer.put("tardis_id", dbID);
+                                qf.doUpdate("tardis", setr, wherer);
+                                j++;
+                            }
+                            if (id == 71 && data < (byte) 8) { // iron door bottom
+                                HashMap<String, Object> setd = new HashMap<String, Object>();
+                                String doorloc = world.getName() + ":" + startx + ":" + starty + ":" + startz;
+                                setd.put("tardis_id", dbID);
+                                setd.put("door_type", 1);
+                                setd.put("door_location", doorloc);
+                                setd.put("door_direction", "SOUTH");
+                                qf.doInsert("doors", setd);
+                            }
+                            if (id == 68) { // chameleon circuit sign
+                                HashMap<String, Object> setc = new HashMap<String, Object>();
+                                HashMap<String, Object> wherec = new HashMap<String, Object>();
+                                String chameleonloc = world.getName() + ":" + startx + ":" + starty + ":" + startz;
+                                setc.put("chameleon", chameleonloc);
+                                setc.put("chamele_on", 0);
+                                wherec.put("tardis_id", dbID);
+                                qf.doUpdate("tardis", setc, wherec);
+                            }
+                            if (id == 35 && data == 1) {
+                                switch (middle_id) {
+                                    case 22:
+                                        break;
+                                    default:
+                                        id = middle_id;
+                                        data = middle_data;
+                                }
+                            }
+                        } else {
+                            id = plugin.utils.parseNum(tmp);
+                            data = 0;
                         }
                         // if its the door, don't set it just remember its block then do it at the end
                         if (id == 71) {
