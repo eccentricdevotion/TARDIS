@@ -56,9 +56,9 @@ public class TARDISWorldGuardChecker {
         flags.put(DefaultFlag.CHEST_ACCESS, State.ALLOW);
         region.setFlags(flags);
         if (plugin.getConfig().getBoolean("create_worlds")) {
-        	rm.addRegion(region);
-        } else{
         	grm.create(one.getWorld());
+        } else{
+        	rm.addRegion(region);
         }
         try {
             rm.save();
