@@ -46,7 +46,7 @@ public class TARDISDatabase {
             String queryPresets = "CREATE TABLE IF NOT EXISTS areas (area_id INTEGER PRIMARY KEY NOT NULL, area_name TEXT COLLATE NOCASE DEFAULT '', world TEXT COLLATE NOCASE DEFAULT '', minx INTEGER, minz INTEGER, maxx INTEGER, maxz INTEGER)";
             statement.executeUpdate(queryPresets);
             // going to need to store room start locations, so we can jettison them easily
-            String queryRooms = "CREATE TABLE IF NOT EXISTS rooms (room_id INTEGER PRIMARY KEY NOT NULL, tardis_id INTEGER, world TEXT COLLATE NOCASE DEFAULT '', x INTEGER, y INTEGER, z INTEGER, room_type TEXT, room_direction TEXT DEFAULT 'SOUTH'";
+            String queryRooms = "CREATE TABLE IF NOT EXISTS rooms (room_id INTEGER PRIMARY KEY NOT NULL, tardis_id INTEGER, world TEXT COLLATE NOCASE DEFAULT '', startx INTEGER, starty INTEGER, startz INTEGER, endx INTEGER, endy INTEGER, endz INTEGER, room_type TEXT, room_direction TEXT DEFAULT 'SOUTH'";
             statement.executeUpdate(queryRooms);
 
             // just when I thought I'd got rid of them all... another check to add a column

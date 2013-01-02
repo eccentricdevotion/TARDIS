@@ -42,9 +42,12 @@ public class ResultSetRooms {
     private int room_id;
     private int tardis_id;
     private String world;
-    private int x;
-    private int y;
-    private int z;
+    private int startx;
+    private int starty;
+    private int startz;
+    private int endx;
+    private int endy;
+    private int endz;
     private ROOM room_type;
     private COMPASS room_direction;
     private ArrayList<HashMap<String, String>> data = new ArrayList<HashMap<String, String>>();
@@ -104,9 +107,12 @@ public class ResultSetRooms {
                     this.room_id = rs.getInt("room_id");
                     this.tardis_id = rs.getInt("tardis_id");
                     this.world = rs.getString("world");
-                    this.x = rs.getInt("x");
-                    this.y = rs.getInt("y");
-                    this.z = rs.getInt("z");
+                    this.startx = rs.getInt("startx");
+                    this.starty = rs.getInt("starty");
+                    this.startz = rs.getInt("startz");
+                    this.endx = rs.getInt("endx");
+                    this.endy = rs.getInt("endy");
+                    this.endz = rs.getInt("endz");
                     this.room_type = ROOM.valueOf(rs.getString("room_type"));
                     this.room_direction = COMPASS.valueOf(rs.getString("room_direction"));
                 }
@@ -139,16 +145,28 @@ public class ResultSetRooms {
         return world;
     }
 
-    public int getX() {
-        return x;
+    public int getStartx() {
+        return startx;
     }
 
-    public int getY() {
-        return y;
+    public int getStarty() {
+        return starty;
     }
 
-    public int getZ() {
-        return z;
+    public int getStartz() {
+        return startz;
+    }
+
+    public int getEndx() {
+        return endx;
+    }
+
+    public int getEndy() {
+        return endy;
+    }
+
+    public int getEndz() {
+        return endz;
     }
 
     public ROOM getRoom_type() {
