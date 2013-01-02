@@ -29,11 +29,13 @@ import me.eccentric_nz.TARDIS.database.TARDISDatabase;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Set;
 import me.eccentric_nz.TARDIS.listeners.TARDISAreaListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISArtronCapacitorListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISButtonListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISCreeperDeathListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISLightningListener;
+import me.eccentric_nz.TARDIS.listeners.TARDISRoomSeeder;
 import me.eccentric_nz.TARDIS.listeners.TARDISSignListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISUpdateListener;
 import me.eccentric_nz.TARDIS.utility.TARDISTownyChecker;
@@ -41,6 +43,7 @@ import me.eccentric_nz.TARDIS.utility.TARDISWorldBorderChecker;
 import me.eccentric_nz.TARDIS.worldgen.TARDISChunkGenerator;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.Material;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.generator.ChunkGenerator;
 import org.bukkit.plugin.PluginDescriptionFile;
@@ -120,6 +123,7 @@ public class TARDIS extends JavaPlugin {
     TARDISLightningListener lightningListener = new TARDISLightningListener(this);
     TARDISCreeperDeathListener creeperListener = new TARDISCreeperDeathListener(this);
     TARDISArtronCapacitorListener energyListener = new TARDISArtronCapacitorListener(this);
+    TARDISRoomSeeder seedListener = new TARDISRoomSeeder(this);
     public PluginManager pm = Bukkit.getServer().getPluginManager();
     public HashMap<String, String> trackPlayers = new HashMap<String, String>();
     public HashMap<String, String> trackName = new HashMap<String, String>();
@@ -133,6 +137,7 @@ public class TARDIS extends JavaPlugin {
     public ArrayList<Integer> trackRecharge = new ArrayList<Integer>();
     private static ArrayList<String> quotes = new ArrayList<String>();
     public ArrayList<String> quote;
+    public HashMap<Material, String> seeds;
     public int quotelen;
     public boolean worldGuardOnServer = false;
     public boolean townyOnServer = false;
@@ -154,6 +159,7 @@ public class TARDIS extends JavaPlugin {
         tc.checkConfig();
         loadDatabase();
         loadFiles();
+        seeds = getSeeds();
         registerListeners();
         loadCommands();
         loadMetrics();
@@ -230,6 +236,7 @@ public class TARDIS extends JavaPlugin {
         pm.registerEvents(lightningListener, this);
         pm.registerEvents(creeperListener, this);
         pm.registerEvents(energyListener, this);
+        pm.registerEvents(seedListener, this);
     }
 
     private void loadCommands() {
@@ -247,76 +254,52 @@ public class TARDIS extends JavaPlugin {
 
     private void loadFiles() {
         try {
+            File schematicDir = new File(plugin.getDataFolder() + File.separator + "schematics");
+            if (!schematicDir.exists()) {
+                boolean result = schematicDir.mkdir();
+                if (result) {
+                    schematicDir.setWritable(true);
+                    schematicDir.setExecutable(true);
+                    plugin.console.sendMessage(plugin.pluginName + "Created schematics directory.");
+                }
+            }
             // load csv files - create them if they don't exist
             budgetSchematicCSV = createFile(TARDISConstants.SCHEMATIC_BUDGET + ".csv");
             biggerSchematicCSV = createFile(TARDISConstants.SCHEMATIC_BIGGER + ".csv");
             deluxeSchematicCSV = createFile(TARDISConstants.SCHEMATIC_DELUXE + ".csv");
-            arboretumSchematicCSV = createFile("arboretum.csv");
-            bedroomSchematicCSV = createFile("bedroom.csv");
-            kitchenSchematicCSV = createFile("kitchen.csv");
-            librarySchematicCSV = createFile("library.csv");
-            passageSchematicCSV = createFile("passage.csv");
-            poolSchematicCSV = createFile("pool.csv");
-            vaultSchematicCSV = createFile("vault.csv");
-            emptySchematicCSV = createFile("empty.csv");
+            arboretumSchematicCSV = createFile(TARDISConstants.SCHEMATIC_ARBORETUM + ".csv");
+            bedroomSchematicCSV = createFile(TARDISConstants.SCHEMATIC_BEDROOM + ".csv");
+            kitchenSchematicCSV = createFile(TARDISConstants.SCHEMATIC_KITCHEN + ".csv");
+            librarySchematicCSV = createFile(TARDISConstants.SCHEMATIC_LIBRARY + ".csv");
+            passageSchematicCSV = createFile(TARDISConstants.SCHEMATIC_PASSAGE + ".csv");
+            poolSchematicCSV = createFile(TARDISConstants.SCHEMATIC_POOL + ".csv");
+            vaultSchematicCSV = createFile(TARDISConstants.SCHEMATIC_VAULT + ".csv");
+            emptySchematicCSV = createFile(TARDISConstants.SCHEMATIC_EMPTY + ".csv");
             TARDISSchematicReader reader = new TARDISSchematicReader(plugin);
             // load schematic files - copy the defaults if they don't exist
-            String budnstr = getDataFolder() + File.separator + TARDISConstants.SCHEMATIC_BUDGET;
-            budgetSchematicFile = new File(budnstr);
-            if (!budgetSchematicFile.exists()) {
-                copy(getResource(TARDISConstants.SCHEMATIC_BUDGET), budgetSchematicFile);
-            }
-            String bignstr = getDataFolder() + File.separator + TARDISConstants.SCHEMATIC_BIGGER;
-            biggerSchematicFile = new File(bignstr);
-            if (!biggerSchematicFile.exists()) {
-                copy(getResource(TARDISConstants.SCHEMATIC_BIGGER), biggerSchematicFile);
-            }
-            String delnstr = getDataFolder() + File.separator + TARDISConstants.SCHEMATIC_DELUXE;
-            deluxeSchematicFile = new File(delnstr);
-            if (!deluxeSchematicFile.exists()) {
-                copy(getResource(TARDISConstants.SCHEMATIC_DELUXE), deluxeSchematicFile);
-            }
-            //--------------------
-            String arbornstr = getDataFolder() + File.separator + "arboretum.schematic";
-            arboretumSchematicFile = new File(arbornstr);
-            if (!arboretumSchematicFile.exists()) {
-                copy(getResource("arboretum.schematic"), arboretumSchematicFile);
-            }
-            String bednstr = getDataFolder() + File.separator + "bedroom.schematic";
-            bedroomSchematicFile = new File(bednstr);
-            if (!bedroomSchematicFile.exists()) {
-                copy(getResource("bedroom.schematic"), bedroomSchematicFile);
-            }
-            String kitnstr = getDataFolder() + File.separator + "kitchen.schematic";
-            kitchenSchematicFile = new File(kitnstr);
-            if (!kitchenSchematicFile.exists()) {
-                copy(getResource("kitchen.schematic"), kitchenSchematicFile);
-            }
-            String libnstr = getDataFolder() + File.separator + "library.schematic";
-            librarySchematicFile = new File(libnstr);
-            if (!librarySchematicFile.exists()) {
-                copy(getResource("library.schematic"), librarySchematicFile);
-            }
-            String passnstr = getDataFolder() + File.separator + "passage.schematic";
-            passageSchematicFile = new File(passnstr);
-            if (!passageSchematicFile.exists()) {
-                copy(getResource("passage.schematic"), passageSchematicFile);
-            }
-            String poolnstr = getDataFolder() + File.separator + "pool.schematic";
-            poolSchematicFile = new File(poolnstr);
-            if (!poolSchematicFile.exists()) {
-                copy(getResource("pool.schematic"), poolSchematicFile);
-            }
-            String vaunstr = getDataFolder() + File.separator + "vault.schematic";
-            vaultSchematicFile = new File(vaunstr);
-            if (!vaultSchematicFile.exists()) {
-                copy(getResource("vault.schematic"), vaultSchematicFile);
-            }
-            String empnstr = getDataFolder() + File.separator + "empty.schematic";
-            emptySchematicFile = new File(empnstr);
-            if (!emptySchematicFile.exists()) {
-                copy(getResource("empty.schematic"), emptySchematicFile);
-            }
+            String basepath = getDataFolder() + File.separator + "schematics" + File.separator;
+            String budnstr = basepath + TARDISConstants.SCHEMATIC_BUDGET;
+            budgetSchematicFile = copy(budnstr, getResource(TARDISConstants.SCHEMATIC_BUDGET));
+            String bignstr = basepath + TARDISConstants.SCHEMATIC_BIGGER;
+            biggerSchematicFile = copy(bignstr, getResource(TARDISConstants.SCHEMATIC_BIGGER));
+            String delnstr = basepath + TARDISConstants.SCHEMATIC_DELUXE;
+            deluxeSchematicFile = copy(delnstr, getResource(TARDISConstants.SCHEMATIC_DELUXE));
+            String arbornstr = basepath + TARDISConstants.SCHEMATIC_ARBORETUM;
+            arboretumSchematicFile = copy(arbornstr, getResource(TARDISConstants.SCHEMATIC_ARBORETUM));
+            String bednstr = basepath + TARDISConstants.SCHEMATIC_BEDROOM;
+            bedroomSchematicFile = copy(bednstr, getResource(TARDISConstants.SCHEMATIC_BEDROOM));
+            String kitnstr = basepath + TARDISConstants.SCHEMATIC_KITCHEN;
+            kitchenSchematicFile = copy(kitnstr, getResource(TARDISConstants.SCHEMATIC_KITCHEN));
+            String libnstr = basepath + TARDISConstants.SCHEMATIC_LIBRARY;
+            librarySchematicFile = copy(libnstr, getResource(TARDISConstants.SCHEMATIC_LIBRARY));
+            String passnstr = basepath + TARDISConstants.SCHEMATIC_PASSAGE;
+            passageSchematicFile = copy(passnstr, getResource(TARDISConstants.SCHEMATIC_PASSAGE));
+            String poolnstr = basepath + TARDISConstants.SCHEMATIC_POOL;
+            poolSchematicFile = copy(poolnstr, getResource(TARDISConstants.SCHEMATIC_POOL));
+            String vaunstr = basepath + TARDISConstants.SCHEMATIC_VAULT;
+            vaultSchematicFile = copy(vaunstr, getResource(TARDISConstants.SCHEMATIC_VAULT));
+            String empnstr = basepath + TARDISConstants.SCHEMATIC_EMPTY;
+            emptySchematicFile = copy(empnstr, getResource(TARDISConstants.SCHEMATIC_EMPTY));
             // read the schematics
             reader.main(budnstr, TARDISConstants.SCHEMATIC.BUDGET);
             reader.main(bignstr, TARDISConstants.SCHEMATIC.BIGGER);
@@ -342,10 +325,7 @@ public class TARDIS extends JavaPlugin {
             vaultschematic = TARDISSchematic.schematic(vaultSchematicCSV, roomdimensions[0], roomdimensions[1], roomdimensions[2]);
             emptyschematic = TARDISSchematic.schematic(emptySchematicCSV, roomdimensions[0], roomdimensions[1], roomdimensions[2]);
 
-            quotesfile = new File(getDataFolder(), TARDISConstants.QUOTES_FILE_NAME);
-            if (!quotesfile.exists()) {
-                copy(getResource(TARDISConstants.QUOTES_FILE_NAME), quotesfile);
-            }
+            quotesfile = copy(getDataFolder() + File.separator + TARDISConstants.QUOTES_FILE_NAME, getResource(TARDISConstants.QUOTES_FILE_NAME));
         } catch (Exception e) {
             console.sendMessage(pluginName + "failed to retrieve files from directory. Using defaults.");
         }
@@ -393,7 +373,7 @@ public class TARDIS extends JavaPlugin {
     }
 
     private File createFile(String filename) {
-        File file = new File(getDataFolder(), filename);
+        File file = new File(plugin.getDataFolder() + File.separator + "schematics" + File.separator, filename);
         if (!file.exists()) {
             try {
                 file.createNewFile();
@@ -404,36 +384,40 @@ public class TARDIS extends JavaPlugin {
         return file;
     }
 
-    private void copy(InputStream in, File file) {
-        OutputStream out = null;
-        try {
-            out = new FileOutputStream(file, false);
-            byte[] buf = new byte[1024];
-            int len;
+    private File copy(String filepath, InputStream in) {
+        File file = new File(filepath);
+        if (!file.exists()) {
+            OutputStream out = null;
             try {
-                while ((len = in.read(buf)) > 0) {
-                    out.write(buf, 0, len);
+                out = new FileOutputStream(file, false);
+                byte[] buf = new byte[1024];
+                int len;
+                try {
+                    while ((len = in.read(buf)) > 0) {
+                        out.write(buf, 0, len);
+                    }
+                } catch (IOException io) {
+                    plugin.console.sendMessage(plugin.pluginName + "Could not save the file (" + file.toString() + ").");
+                } finally {
+                    if (out != null) {
+                        try {
+                            out.close();
+                        } catch (Exception e) {
+                        }
+                    }
                 }
-            } catch (IOException io) {
-                console.sendMessage(pluginName + "Could not save the file (" + file.toString() + ").");
+            } catch (FileNotFoundException e) {
+                plugin.console.sendMessage(plugin.pluginName + "File not found.");
             } finally {
-                if (out != null) {
+                if (in != null) {
                     try {
-                        out.close();
+                        in.close();
                     } catch (Exception e) {
                     }
                 }
             }
-        } catch (FileNotFoundException e) {
-            console.sendMessage(pluginName + "File not found.");
-        } finally {
-            if (in != null) {
-                try {
-                    in.close();
-                } catch (Exception e) {
-                }
-            }
         }
+        return file;
     }
 
     public ArrayList<String> quotes() {
@@ -463,6 +447,16 @@ public class TARDIS extends JavaPlugin {
             }
         }
         return quotes;
+    }
+
+    private HashMap<Material, String> getSeeds() {
+        HashMap<Material, String> map = new HashMap<Material, String>();
+        Set<String> rooms = getConfig().getConfigurationSection("rooms").getKeys(false);
+        for (String s : rooms) {
+            Material m = Material.valueOf(getConfig().getString("rooms." + s + ".seed"));
+            map.put(m, s);
+        }
+        return map;
     }
 
     @Override
