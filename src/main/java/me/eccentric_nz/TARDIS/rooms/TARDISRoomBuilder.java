@@ -18,9 +18,12 @@ package me.eccentric_nz.TARDIS.rooms;
 
 import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.TARDISConstants.COMPASS;
 import me.eccentric_nz.TARDIS.TARDISConstants.ROOM;
-import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
+import me.eccentric_nz.TARDIS.database.QueryFactory;
+import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.TARDISDatabase;
+import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
 /**
@@ -31,43 +34,46 @@ public class TARDISRoomBuilder {
 
     private final TARDIS plugin;
     TARDISDatabase service = TARDISDatabase.getInstance();
+    private ROOM r;
+    private Location l;
+    private COMPASS d;
+    private Player p;
 
-    public TARDISRoomBuilder(TARDIS plugin) {
+    public TARDISRoomBuilder(TARDIS plugin, ROOM r, Location l, COMPASS d, Player p) {
         this.plugin = plugin;
+        this.r = r;
+        this.l = l;
+        this.d = d;
+        this.p = p;
     }
 
-    public boolean buildRoom(ROOM r, Player player) {
+    public boolean build() {
         HashMap<String, Object> where = new HashMap<String, Object>();
-        where.put("player", player.getName());
-        ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, where);
-        if (rsp.resultSet()) {
-            if (rsp.getArtron_level() < plugin.getConfig().getLong("rooms." + r.toString())) {
-                player.sendMessage(plugin.pluginName + "You do not have sufficient Artron levels to build a " + r.toString().toLowerCase());
-                return false;
-            }
+        where.put("player", p.getName());
+        ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
+        if (rs.resultSet()) {
+            int id = rs.getTardis_id();
             switch (r) {
-                case POOL:
-
-                    break;
-                case LIBRARY:
-
-                    break;
-                case KITCHEN:
-
-                    break;
-                case VAULT:
-
-                    break;
-                case ARBORETUM:
-
-                    break;
-                case BEDROOM:
-
+                case PASSAGE:
+                    // todo
                     break;
                 default:
-                    // PASSAGE
+                    // ROOM
                     break;
             }
+            QueryFactory qf = new QueryFactory(plugin);
+            HashMap<String, Object> set = new HashMap<String, Object>();
+            set.put("tardis_id", id);
+            set.put("world", l.getWorld().getName());
+            set.put("startx", l.getBlockX());
+            set.put("starty", l.getBlockY());
+            set.put("startz", l.getBlockZ());
+            set.put("endx", l.getBlockX());
+            set.put("endy", l.getBlockY());
+            set.put("endz", l.getBlockZ());
+            set.put("room_type", r.toString());
+            set.put("room_direction", d.toString());
+            qf.doInsert("rooms", set);
         }
         return true;
     }
