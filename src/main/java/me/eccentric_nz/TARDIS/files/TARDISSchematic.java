@@ -8,12 +8,7 @@ import me.eccentric_nz.TARDIS.TARDIS;
 
 public class TARDISSchematic {
 
-    private final TARDIS plugin;
     private static String[][][] blocks;
-
-    public TARDISSchematic(TARDIS plugin) {
-        this.plugin = plugin;
-    }
 
     public static String[][][] schematic(File file, short h, short w, short l) {
 
