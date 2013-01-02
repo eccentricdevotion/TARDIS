@@ -67,6 +67,16 @@ public class TARDISDatabase {
                 statement.executeUpdate(queryAlter3);
                 TARDIS.plugin.console.sendMessage(TARDIS.plugin.pluginName + "Adding new Artron fields to tardis!");
             }
+            // combine this with  above for release - these fields will record the middle block used to create the TARDIS so that rooms will use the same block
+            String queryAddMiddle = "SELECT sql FROM sqlite_master WHERE tbl_name = 'tardis' AND sql LIKE '%middle_id INTEGER%'";
+            ResultSet rsMiddle = statement.executeQuery(queryAddMiddle);
+            if (!rsMiddle.next()) {
+                String queryAlter4 = "ALTER TABLE tardis ADD middle_id INTEGER";
+                statement.executeUpdate(queryAlter4);
+                String queryAlter5 = "ALTER TABLE tardis ADD middle_data INTEGER";
+                statement.executeUpdate(queryAlter5);
+                TARDIS.plugin.console.sendMessage(TARDIS.plugin.pluginName + "Adding new middle block fields to tardis!");
+            }
             // and update existing TARDISs with 500 Artron Energy?
 
         } catch (SQLException e) {
