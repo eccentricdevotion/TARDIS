@@ -1,12 +1,12 @@
 author: eccentric_nz
 authors: [eccentric_nz, ewized]
-description: A plugin for all Doctor Who fans - create and use a TARDIS! Teleport to random destinations, fight randomly spawning monsters, bonus chests - it's bigger on the inside!
+description: A plugin for all Doctor Who fans - create and use a TARDIS! Teleport to random destinations - it's bigger on the inside!
 main: me.eccentric_nz.TARDIS.TARDIS
 name: TARDIS
 startup: postworld
 softdepend: [Multiverse-Core,WorldGuard,WorldBorder,Towny]
 website: http://dev.bukkit.org/server-mods/TARDIS/
-dev-url: http://de.bukkit.org/server-mods/TARDIS/
+dev-url: http://dev.bukkit.org/server-mods/TARDIS/
 url: http://www.thenosefairy.co.nz/
 version: '2.0-SNAPSHOT'
 permissions:
@@ -89,6 +89,9 @@ permissions:
     default: op
   tardis.nether:
     description: Allow players to time travel to the NETHER.
+    default: op
+  tardis.room:
+    description: Allow players to grow extra rooms.
     default: op
 commands:
   tardis:
