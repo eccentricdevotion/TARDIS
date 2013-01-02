@@ -50,13 +50,14 @@ public class TARDISConfiguration {
         intOptions.put("timeout", 5);
         intOptions.put("tp_radius", 256);
         intOptions.put("border_radius", 64);
-        intOptions.put("rooms.PASSAGE", 250);
-        intOptions.put("rooms.ARBORETUM", 500);
-        intOptions.put("rooms.BEDROOM", 500);
-        intOptions.put("rooms.KITCHEN", 500);
-        intOptions.put("rooms.LIBRARY", 500);
-        intOptions.put("rooms.POOL", 500);
-        intOptions.put("rooms.VAULT", 500);
+        intOptions.put("rooms.PASSAGE.cost", 250);
+        intOptions.put("rooms.ARBORETUM.cost", 500);
+        intOptions.put("rooms.BEDROOM.cost", 500);
+        intOptions.put("rooms.KITCHEN.cost", 500);
+        intOptions.put("rooms.LIBRARY.cost", 500);
+        intOptions.put("rooms.POOL.cost", 500);
+        intOptions.put("rooms.VAULT.cost", 500);
+        intOptions.put("rooms.EMPTY.cost", 250);
         intOptions.put("player", 2);
         intOptions.put("random", 25);
         intOptions.put("travel", 50);
@@ -68,6 +69,14 @@ public class TARDISConfiguration {
         // string
         strOptions.put("default_world_name", "myridiculouslylongworldnameiscalledcuthbert");
         strOptions.put("key", "STICK");
+        strOptions.put("rooms.PASSAGE.seed", "CLAY");
+        strOptions.put("rooms.ARBORETUM.seed", "LEAVES");
+        strOptions.put("rooms.BEDROOM.seed", "GLOWSTONE");
+        strOptions.put("rooms.KITCHEN.seed", "PUMPKIN");
+        strOptions.put("rooms.LIBRARY.seed", "BOOKSHELF");
+        strOptions.put("rooms.POOL.seed", "SNOW_BLOCK");
+        strOptions.put("rooms.VAULT.seed", "DISPENSER");
+        strOptions.put("rooms.EMPTY.seed", "GLASS");
     }
 
     public void checkConfig() {
