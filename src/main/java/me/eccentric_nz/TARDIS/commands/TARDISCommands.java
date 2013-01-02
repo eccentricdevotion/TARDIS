@@ -165,6 +165,12 @@ public class TARDISCommands implements CommandExecutor {
                             player.sendMessage(plugin.pluginName + "You are not a Timelord. You need to create a TARDIS first before using this command!");
                             return true;
                         }
+                        String chunk = rs.getChunk();
+                        String[] data = chunk.split(":");
+                        if (!data[0].contains("TARDIS_WORLD_")) {
+                            player.sendMessage(plugin.pluginName + "You can not grow rooms unless your TARDIS was created in its own world!");
+                            return true;
+                        }
                         int id = rs.getTardis_id();
                         int level = rs.getArtron_level();
                         // check they are in the tardis
