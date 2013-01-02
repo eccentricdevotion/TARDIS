@@ -16,7 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.rooms;
 
-import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.TARDISDatabase;
 import org.bukkit.Location;
@@ -42,42 +41,35 @@ public class TARDISPassage {
 
     public void passage() {
         String[][][] s;
-        short h, w, l;
+        short h, w, c;
         s = plugin.passageschematic;
         h = plugin.passagedimensions[0];
         w = plugin.passagedimensions[1];
-        l = plugin.passagedimensions[2];
-        int level, row, col, id, x, y, z, startx, starty = 15, startz, resetx, resetz;
+        c = plugin.passagedimensions[2];
+        int level, row, col, id, startx = l.getBlockX(), starty = l.getBlockY(), startz = l.getBlockZ(), resetx, resetz;
+        resetx = startx;
+        resetz = startz;
         String tmp;
         byte data;
         for (level = 0; level < h; level++) {
             for (row = 0; row < w; row++) {
-                for (col = 0; col < l; col++) {
+                for (col = 0; col < c; col++) {
                     tmp = s[level][row][col];
+                    // if the current entry is not AIR then change it, otherwise move on to the next
                     if (!tmp.equals("0:0")) {
-                        if (tmp.contains(":")) {
-                            String[] iddata = tmp.split(":");
-                            id = plugin.utils.parseNum(iddata[0]);
-                            data = Byte.parseByte(iddata[1]);
-                            if (id == 35 && data == 1) {
-                                switch (middle_id) {
-                                    case 22:
-                                        break;
-                                    default:
-                                        id = middle_id;
-                                        data = middle_data;
-                                }
-                            }
-                        } else {
-                            id = plugin.utils.parseNum(tmp);
-                            data = 0;
+                        String[] iddata = tmp.split(":");
+                        id = plugin.utils.parseNum(iddata[0]);
+                        data = Byte.parseByte(iddata[1]);
+                        if (id == 35 && data == 1) {
+                            id = middle_id;
+                            data = middle_data;
                         }
-
+                        plugin.utils.setBlock(l.getWorld(), startx, starty, startz, id, data);
                     }
-                    startx += x;
+                    startx += 1;
                 }
                 startx = resetx;
-                startz += z;
+                startz += 1;
             }
             startz = resetz;
             starty += 1;
