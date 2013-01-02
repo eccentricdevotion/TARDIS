@@ -3,6 +3,7 @@ package me.eccentric_nz.TARDIS.utility;
 import com.sk89q.worldedit.BlockVector;
 import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
 import com.sk89q.worldguard.domains.DefaultDomain;
+import com.sk89q.worldguard.protection.GlobalRegionManager;
 import com.sk89q.worldguard.protection.databases.ProtectionDatabaseException;
 import com.sk89q.worldguard.protection.flags.DefaultFlag;
 import com.sk89q.worldguard.protection.flags.Flag;
@@ -34,6 +35,8 @@ public class TARDISWorldGuardChecker {
 
     public void addWGProtection(Player p, Location one, Location two) {
         RegionManager rm = wg.getRegionManager(one.getWorld());
+    	GlobalRegionManager grm = wg.getGlobalRegionManager();
+
         BlockVector b1 = makeBlockVector(one);
         BlockVector b2 = makeBlockVector(two);
         ProtectedCuboidRegion region = new ProtectedCuboidRegion("tardis_" + p.getName(), b1, b2);
@@ -52,7 +55,11 @@ public class TARDISWorldGuardChecker {
         flags.put(DefaultFlag.CONSTRUCT, RegionGroup.OWNERS);
         flags.put(DefaultFlag.CHEST_ACCESS, State.ALLOW);
         region.setFlags(flags);
-        rm.addRegion(region);
+        if (plugin.getConfig().getBoolean("create_worlds")) {
+        	rm.addRegion(region);
+        } else{
+        	grm.create(one.getWorld());
+        }
         try {
             rm.save();
         } catch (ProtectionDatabaseException e) {
