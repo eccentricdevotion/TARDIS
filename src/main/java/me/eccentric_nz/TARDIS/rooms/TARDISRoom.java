@@ -51,7 +51,6 @@ public class TARDISRoom {
 
     public void room() {
         String[][][] s;
-        short h, w, c;
         switch (r) {
             case ARBORETUM:
                 s = plugin.arboretumschematic;
@@ -75,9 +74,10 @@ public class TARDISRoom {
                 s = plugin.emptyschematic;
                 break;
         }
-        h = plugin.roomdimensions[0];
-        w = plugin.roomdimensions[1];
-        c = plugin.roomdimensions[2];
+        short[] dimensions = plugin.roomdimensions;
+        short h = dimensions[0];
+        short w = dimensions[1];
+        short c = dimensions[2];
         int level, row, col, id, startx = l.getBlockX(), starty = l.getBlockY(), startz = l.getBlockZ(), resetx, resetz;
         resetx = startx;
         resetz = startz;

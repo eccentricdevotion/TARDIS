@@ -9,11 +9,11 @@ import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.TARDISDatabase;
-import net.minecraft.server.v1_4_5.WorldType;
 import org.bukkit.ChatColor;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.World;
+import org.bukkit.WorldType;
 import org.bukkit.block.Block;
 import org.bukkit.block.Chest;
 import org.bukkit.block.Sign;
@@ -49,28 +49,25 @@ public class TARDISBuilderInner {
      */
     public void buildInner(TARDISConstants.SCHEMATIC schm, World world, int dbID, Player p, int middle_id, byte middle_data) {
         String[][][] s;
-        short h, w, l;
+        short[] d;
         switch (schm) {
             case BIGGER:
                 s = plugin.biggerschematic;
-                h = plugin.biggerdimensions[0];
-                w = plugin.biggerdimensions[1];
-                l = plugin.biggerdimensions[2];
+                d = plugin.biggerdimensions;
                 break;
             // Deluxe TARDIS schematic supplied by ewized http://dev.bukkit.org/profiles/ewized/
             case DELUXE:
                 s = plugin.deluxeschematic;
-                h = plugin.deluxedimensions[0];
-                w = plugin.deluxedimensions[1];
-                l = plugin.deluxedimensions[2];
+                d = plugin.deluxedimensions;
                 break;
             default:
                 s = plugin.budgetschematic;
-                h = plugin.budgetdimensions[0];
-                w = plugin.budgetdimensions[1];
-                l = plugin.budgetdimensions[2];
+                d = plugin.budgetdimensions;
                 break;
         }
+        short h = d[0];
+        short w = d[1];
+        short l = d[2];
         int level, row, col, id, x, y, z, startx, starty = 15, startz, resetx, resetz, cx, cy, cz, rid, multiplier = 1, tx = 0, ty = 0, tz = 0, j = 0;
         byte data;
         short damage = 0;

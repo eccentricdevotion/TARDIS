@@ -40,12 +40,12 @@ public class TARDISPassage {
     }
 
     public void passage() {
-        String[][][] s;
-        short h, w, c;
-        s = plugin.passageschematic;
-        h = plugin.passagedimensions[0];
-        w = plugin.passagedimensions[1];
-        c = plugin.passagedimensions[2];
+        plugin.debug("Start building passage...");
+        String[][][] s = plugin.passageschematic;
+        short[] d = plugin.passagedimensions;
+        short h = d[0];
+        short w = d[1];
+        short c = d[2];
         int level, row, col, id, startx = l.getBlockX(), starty = l.getBlockY(), startz = l.getBlockZ(), resetx, resetz;
         resetx = startx;
         resetz = startz;

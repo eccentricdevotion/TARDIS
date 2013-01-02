@@ -52,25 +52,22 @@ public class TARDISDestroyerInner {
      * @param p an instance of the player who owns the TARDIS.
      */
     public final void destroyInner(TARDISConstants.SCHEMATIC schm, int id, World w, int i, String p) {
-        short h, width, l;
         // get dimensions
+        short[] d;
         switch (schm) {
             case BIGGER:
-                h = plugin.biggerdimensions[0];
-                width = plugin.biggerdimensions[1];
-                l = plugin.biggerdimensions[2];
+                d = plugin.biggerdimensions;
                 break;
             case DELUXE:
-                h = plugin.deluxedimensions[0];
-                width = plugin.deluxedimensions[1];
-                l = plugin.deluxedimensions[2];
+                d = plugin.deluxedimensions;
                 break;
             default:
-                h = plugin.budgetdimensions[0];
-                width = plugin.budgetdimensions[1];
-                l = plugin.budgetdimensions[2];
+                d = plugin.budgetdimensions;
                 break;
         }
+        short h = d[0];
+        short width = d[1];
+        short l = d[2];
         // destroy TARDIS
         int level, row, col, x, y, z, startx, starty = (14 + h), startz, resetx, resetz;
         // calculate startx, starty, startz

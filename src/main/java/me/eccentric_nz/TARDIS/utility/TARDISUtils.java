@@ -185,21 +185,20 @@ public class TARDISUtils {
      */
     public boolean checkChunk(String w, int x, int z, TARDISConstants.SCHEMATIC schm) {
         boolean chunkchk = false;
-        int cw, cl;
+        short[] d;
         switch (schm) {
             case BIGGER:
-                cw = roundUp(plugin.biggerdimensions[1], 16);
-                cl = roundUp(plugin.biggerdimensions[2], 16);
+                d = plugin.biggerdimensions;
                 break;
             case DELUXE:
-                cw = roundUp(plugin.deluxedimensions[1], 16);
-                cl = roundUp(plugin.deluxedimensions[2], 16);
+                d = plugin.deluxedimensions;
                 break;
             default:
-                cw = roundUp(plugin.budgetdimensions[1], 16);
-                cl = roundUp(plugin.budgetdimensions[2], 16);
+                d = plugin.budgetdimensions;
                 break;
         }
+        int cw = roundUp(d[1], 16);
+        int cl = roundUp(d[2], 16);
         // check all the chunks that will be used by the schematic
         for (int cx = 0; cx < cw; cx++) {
             for (int cz = 0; cz < cl; cz++) {
