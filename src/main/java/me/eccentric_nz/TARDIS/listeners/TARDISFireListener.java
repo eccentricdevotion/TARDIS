@@ -70,17 +70,17 @@ public class TARDISFireListener implements Listener {
                 break;
             }
         }
-        if (plugin.getConfig().getBoolean("protect_blocks") == true) {
-            String[] set = {"EAST", "SOUTH", "WEST", "NORTH", "UP", "DOWN"};
-            for (String f : set) {
-                int id = b.getRelative(BlockFace.valueOf(f)).getTypeId();
-                byte d = b.getRelative(BlockFace.valueOf(f)).getData();
-                if (id == 35 && (d == 1 || d == 7 || d == 8)) {
-                    event.setCancelled(true);
-                    break;
-                }
-            }
-        }
+//        if (plugin.getConfig().getBoolean("protect_blocks") == true) {
+//            String[] set = {"EAST", "SOUTH", "WEST", "NORTH", "UP", "DOWN"};
+//            for (String f : set) {
+//                int id = b.getRelative(BlockFace.valueOf(f)).getTypeId();
+//                byte d = b.getRelative(BlockFace.valueOf(f)).getData();
+//                if (id == 35 && (d == 1 || d == 7 || d == 8)) {
+//                    event.setCancelled(true);
+//                    break;
+//                }
+//            }
+//        }
     }
 
     @EventHandler(priority = EventPriority.LOWEST)
@@ -93,15 +93,15 @@ public class TARDISFireListener implements Listener {
         if (rs.resultSet()) {
             event.setCancelled(true);
         }
-        if (plugin.getConfig().getBoolean("protect_blocks") == true) {
-            for (BlockFace bf : faces) {
-                int id = b.getRelative(bf).getTypeId();
-                byte d = b.getRelative(bf).getData();
-                if (id == 35 && (d == 1 || d == 7 || d == 8)) {
-                    event.setCancelled(true);
-                    break;
-                }
-            }
-        }
+//        if (plugin.getConfig().getBoolean("protect_blocks") == true) {
+//            for (BlockFace bf : faces) {
+//                int id = b.getRelative(bf).getTypeId();
+//                byte d = b.getRelative(bf).getData();
+//                if (id == 35 && (d == 1 || d == 7 || d == 8)) {
+//                    event.setCancelled(true);
+//                    break;
+//                }
+//            }
+//        }
     }
 }
