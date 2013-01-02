@@ -18,7 +18,7 @@ public class TARDISConstants {
 
     public enum SCHEMATIC {
 
-        BUDGET, BIGGER, DELUXE;
+        BUDGET, BIGGER, DELUXE, ARBORETUM, BEDROOM, KITCHEN, LIBRARY, PASSAGE, POOL, VAULT;
     }
     public static final String CONFIG_FILE_NAME = "config.yml";
     public static final String QUOTES_FILE_NAME = "quotes.txt";
@@ -41,7 +41,7 @@ public class TARDISConstants {
 
     public enum ROOM {
 
-        POOL, LIBRARY, KITCHEN, VAULT, ARBORETUM, BEDROOM, PASSAGE;
+        ARBORETUM, BEDROOM, KITCHEN, LIBRARY, PASSAGE, POOL, VAULT;
     }
 
     public enum CMDS {

@@ -52,14 +52,26 @@ public class TARDIS extends JavaPlugin {
     public ImprovedOfflinePlayer_api iopHandler;
     TARDISDatabase service = TARDISDatabase.getInstance();
     public PluginDescriptionFile pdfFile;
-    public File schematicfile = null;
-    public File budgetschematicfile = null;
-    public File biggerschematicfile = null;
-    public File deluxeschematicfile = null;
-    public File budgetschematiccsv = null;
-    public File biggerschematiccsv = null;
-    public File deluxeschematiccsv = null;
-    public File myconfigfile = null;
+    public File budgetSchematicFile = null;
+    public File biggerSchematicFile = null;
+    public File deluxeSchematicFile = null;
+    public File arboretumSchematicFile = null;
+    public File bedroomSchematicFile = null;
+    public File kitchenSchematicFile = null;
+    public File librarySchematicFile = null;
+    public File passageSchematicFile = null;
+    public File poolSchematicFile = null;
+    public File vaultSchematicFile = null;
+    public File budgetSchematicCSV = null;
+    public File biggerSchematicCSV = null;
+    public File deluxeSchematicCSV = null;
+    public File arboretumSchematicCSV = null;
+    public File bedroomSchematicCSV = null;
+    public File kitchenSchematicCSV = null;
+    public File librarySchematicCSV = null;
+    public File passageSchematicCSV = null;
+    public File poolSchematicCSV = null;
+    public File vaultSchematicCSV = null;
     public File quotesfile = null;
     private TARDISCommands tardisCommand;
     private TARDISAdminCommands tardisAdminCommand;
@@ -69,9 +81,18 @@ public class TARDIS extends JavaPlugin {
     public String[][][] budgetschematic;
     public String[][][] biggerschematic;
     public String[][][] deluxeschematic;
+    public String[][][] arboretumschematic;
+    public String[][][] bedroomschematic;
+    public String[][][] kitchenschematic;
+    public String[][][] libraryschematic;
+    public String[][][] passageschematic;
+    public String[][][] poolschematic;
+    public String[][][] vaultschematic;
     public short[] budgetdimensions = new short[3];
     public short[] biggerdimensions = new short[3];
     public short[] deluxedimensions = new short[3];
+    public short[] passagedimensions = new short[3];
+    public short[] roomdimensions = new short[3];
     public static TARDIS plugin;
     public TARDISUtils utils = new TARDISUtils(this);
     public TARDISBuilderInner buildI = new TARDISBuilderInner(this);
@@ -103,6 +124,7 @@ public class TARDIS extends JavaPlugin {
     public HashMap<String, String> trackEnd = new HashMap<String, String>();
     public HashMap<String, String> trackPerm = new HashMap<String, String>();
     public HashMap<String, String> trackDest = new HashMap<String, String>();
+    public HashMap<String, String> trackRoomSeed = new HashMap<String, String>();
     public HashMap<Integer, Integer> trackTravellers = new HashMap<Integer, Integer>();
     public HashMap<String, Integer> tardisHasTravelled = new HashMap<String, Integer>();
     public ArrayList<Integer> trackRecharge = new ArrayList<Integer>();
@@ -223,34 +245,91 @@ public class TARDIS extends JavaPlugin {
     private void loadFiles() {
         try {
             // load csv files - create them if they don't exist
-            budgetschematiccsv = createFile(TARDISConstants.SCHEMATIC_BUDGET + ".csv");
-            biggerschematiccsv = createFile(TARDISConstants.SCHEMATIC_BIGGER + ".csv");
-            deluxeschematiccsv = createFile(TARDISConstants.SCHEMATIC_DELUXE + ".csv");
+            budgetSchematicCSV = createFile(TARDISConstants.SCHEMATIC_BUDGET + ".csv");
+            biggerSchematicCSV = createFile(TARDISConstants.SCHEMATIC_BIGGER + ".csv");
+            deluxeSchematicCSV = createFile(TARDISConstants.SCHEMATIC_DELUXE + ".csv");
+            arboretumSchematicCSV = createFile("arboretum.csv");
+            bedroomSchematicCSV = createFile("bedroom.csv");
+            kitchenSchematicCSV = createFile("kitchen.csv");
+            librarySchematicCSV = createFile("library.csv");
+            passageSchematicCSV = createFile("passage.csv");
+            poolSchematicCSV = createFile("pool.csv");
+            vaultSchematicCSV = createFile("vault.csv");
             TARDISSchematicReader reader = new TARDISSchematicReader(plugin);
             // load schematic files - copy the defaults if they don't exist
             String budnstr = getDataFolder() + File.separator + TARDISConstants.SCHEMATIC_BUDGET;
-            budgetschematicfile = new File(budnstr);
-            if (!budgetschematicfile.exists()) {
-                copy(getResource(TARDISConstants.SCHEMATIC_BUDGET), budgetschematicfile);
+            budgetSchematicFile = new File(budnstr);
+            if (!budgetSchematicFile.exists()) {
+                copy(getResource(TARDISConstants.SCHEMATIC_BUDGET), budgetSchematicFile);
             }
             String bignstr = getDataFolder() + File.separator + TARDISConstants.SCHEMATIC_BIGGER;
-            biggerschematicfile = new File(bignstr);
-            if (!biggerschematicfile.exists()) {
-                copy(getResource(TARDISConstants.SCHEMATIC_BIGGER), biggerschematicfile);
+            biggerSchematicFile = new File(bignstr);
+            if (!biggerSchematicFile.exists()) {
+                copy(getResource(TARDISConstants.SCHEMATIC_BIGGER), biggerSchematicFile);
             }
             String delnstr = getDataFolder() + File.separator + TARDISConstants.SCHEMATIC_DELUXE;
-            deluxeschematicfile = new File(delnstr);
-            if (!deluxeschematicfile.exists()) {
-                copy(getResource(TARDISConstants.SCHEMATIC_DELUXE), deluxeschematicfile);
+            deluxeSchematicFile = new File(delnstr);
+            if (!deluxeSchematicFile.exists()) {
+                copy(getResource(TARDISConstants.SCHEMATIC_DELUXE), deluxeSchematicFile);
+            }
+            //--------------------
+            String arbornstr = getDataFolder() + File.separator + "arboretum.schematic";
+            arboretumSchematicFile = new File(arbornstr);
+            if (!arboretumSchematicFile.exists()) {
+                copy(getResource("arboretum.schematic"), arboretumSchematicFile);
+            }
+            String bednstr = getDataFolder() + File.separator + "bedroom.schematic";
+            bedroomSchematicFile = new File(bednstr);
+            if (!bedroomSchematicFile.exists()) {
+                copy(getResource("bedroom.schematic"), bedroomSchematicFile);
+            }
+            String kitnstr = getDataFolder() + File.separator + "kitchen.schematic";
+            kitchenSchematicFile = new File(kitnstr);
+            if (!kitchenSchematicFile.exists()) {
+                copy(getResource("kitchen.schematic"), kitchenSchematicFile);
+            }
+            String libnstr = getDataFolder() + File.separator + "library.schematic";
+            librarySchematicFile = new File(libnstr);
+            if (!librarySchematicFile.exists()) {
+                copy(getResource("library.schematic"), librarySchematicFile);
+            }
+            String passnstr = getDataFolder() + File.separator + "passage.schematic";
+            passageSchematicFile = new File(passnstr);
+            if (!passageSchematicFile.exists()) {
+                copy(getResource("passage.schematic"), passageSchematicFile);
+            }
+            String poolnstr = getDataFolder() + File.separator + "pool.schematic";
+            poolSchematicFile = new File(poolnstr);
+            if (!poolSchematicFile.exists()) {
+                copy(getResource("pool.schematic"), poolSchematicFile);
+            }
+            String vaunstr = getDataFolder() + File.separator + "vault.schematic";
+            vaultSchematicFile = new File(vaunstr);
+            if (!vaultSchematicFile.exists()) {
+                copy(getResource("vault.schematic"), vaultSchematicFile);
             }
             // read the schematics
             reader.main(budnstr, TARDISConstants.SCHEMATIC.BUDGET);
             reader.main(bignstr, TARDISConstants.SCHEMATIC.BIGGER);
             reader.main(delnstr, TARDISConstants.SCHEMATIC.DELUXE);
+            reader.main(arbornstr, TARDISConstants.SCHEMATIC.ARBORETUM);
+            reader.main(bednstr, TARDISConstants.SCHEMATIC.BEDROOM);
+            reader.main(kitnstr, TARDISConstants.SCHEMATIC.KITCHEN);
+            reader.main(libnstr, TARDISConstants.SCHEMATIC.LIBRARY);
+            reader.main(passnstr, TARDISConstants.SCHEMATIC.PASSAGE);
+            reader.main(poolnstr, TARDISConstants.SCHEMATIC.POOL);
+            reader.main(vaunstr, TARDISConstants.SCHEMATIC.VAULT);
             // load the schematic data into the csv files
-            budgetschematic = TARDISSchematic.schematic(budgetschematiccsv, budgetdimensions[0], budgetdimensions[1], budgetdimensions[2]);
-            biggerschematic = TARDISSchematic.schematic(biggerschematiccsv, biggerdimensions[0], biggerdimensions[1], biggerdimensions[2]);
-            deluxeschematic = TARDISSchematic.schematic(deluxeschematiccsv, deluxedimensions[0], deluxedimensions[1], deluxedimensions[2]);
+            budgetschematic = TARDISSchematic.schematic(budgetSchematicCSV, budgetdimensions[0], budgetdimensions[1], budgetdimensions[2]);
+            biggerschematic = TARDISSchematic.schematic(biggerSchematicCSV, biggerdimensions[0], biggerdimensions[1], biggerdimensions[2]);
+            deluxeschematic = TARDISSchematic.schematic(deluxeSchematicCSV, deluxedimensions[0], deluxedimensions[1], deluxedimensions[2]);
+            arboretumschematic = TARDISSchematic.schematic(arboretumSchematicCSV, roomdimensions[0], roomdimensions[1], roomdimensions[2]);
+            bedroomschematic = TARDISSchematic.schematic(bedroomSchematicCSV, roomdimensions[0], roomdimensions[1], roomdimensions[2]);
+            kitchenschematic = TARDISSchematic.schematic(kitchenSchematicCSV, roomdimensions[0], roomdimensions[1], roomdimensions[2]);
+            libraryschematic = TARDISSchematic.schematic(librarySchematicCSV, roomdimensions[0], roomdimensions[1], roomdimensions[2]);
+            passageschematic = TARDISSchematic.schematic(passageSchematicCSV, passagedimensions[0], passagedimensions[1], passagedimensions[2]);
+            poolschematic = TARDISSchematic.schematic(poolSchematicCSV, roomdimensions[0], roomdimensions[1], roomdimensions[2]);
+            vaultschematic = TARDISSchematic.schematic(vaultSchematicCSV, roomdimensions[0], roomdimensions[1], roomdimensions[2]);
 
             quotesfile = new File(getDataFolder(), TARDISConstants.QUOTES_FILE_NAME);
             if (!quotesfile.exists()) {

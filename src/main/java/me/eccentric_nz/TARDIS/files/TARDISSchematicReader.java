@@ -58,6 +58,17 @@ public class TARDISSchematicReader {
                     plugin.deluxedimensions[1] = width;
                     plugin.deluxedimensions[2] = length;
                     break;
+                case PASSAGE:
+                    plugin.passagedimensions[0] = height;
+                    plugin.passagedimensions[1] = width;
+                    plugin.passagedimensions[2] = length;
+                    break;
+                default:
+                    plugin.roomdimensions[0] = height;
+                    plugin.roomdimensions[1] = width;
+                    plugin.roomdimensions[2] = length;
+                    break;
+
             }
 
             byte[] blocks = (byte[]) getChildTag(tagCollection, "Blocks", ByteArrayTag.class).getValue();
@@ -80,9 +91,6 @@ public class TARDISSchematicReader {
                         strarr[w][l] = blockdata[j];
                         j++;
                     }
-                }
-                if (fileStr.toLowerCase().contains("east") || fileStr.toLowerCase().contains("west")) {
-                    strarr = rotateCW(strarr);
                 }
                 layers.add(strarr);
             }
@@ -116,17 +124,5 @@ public class TARDISSchematicReader {
                 }
             }
         }
-    }
-
-    static String[][] rotateCW(String[][] mat) {
-        final int M = mat.length;
-        final int N = mat[0].length;
-        String[][] ret = new String[N][M];
-        for (int r = 0; r < M; r++) {
-            for (int c = 0; c < N; c++) {
-                ret[c][M - 1 - r] = mat[r][c];
-            }
-        }
-        return ret;
     }
 }
