@@ -154,7 +154,7 @@ public class TARDISCommands implements CommandExecutor {
                             return false;
                         }
                         if (!Arrays.asList(ROOM.values()).contains(ROOM.valueOf(room))) {
-                            player.sendMessage(plugin.pluginName + "That is not a valid room type! Try one of : passage|arboretum|pool|vault|kitchen|bedroom|library");
+                            player.sendMessage(plugin.pluginName + "That is not a valid room type! Try one of : passage|arboretum|pool|vault|kitchen|bedroom|library|empty");
                             return true;
                         }
                         HashMap<String, Object> where = new HashMap<String, Object>();
@@ -873,6 +873,9 @@ public class TARDISCommands implements CommandExecutor {
                                 break;
                             case AREA:
                                 sender.sendMessage(TARDISConstants.COMMAND_AREA.split("\n"));
+                                break;
+                            case ROOM:
+                                sender.sendMessage(TARDISConstants.COMMAND_ROOM.split("\n"));
                                 break;
                             default:
                                 sender.sendMessage(TARDISConstants.COMMANDS.split("\n"));
