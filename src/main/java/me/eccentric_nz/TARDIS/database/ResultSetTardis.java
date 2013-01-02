@@ -58,8 +58,11 @@ public class ResultSetTardis {
     private String platform;
     private String save_sign;
     private String chameleon;
-    private boolean chameleon_on;
+    private boolean chamele_on;
     private int artron_level;
+    private String artron_button;
+    private int middle_id;
+    private byte middle_data;
     private ArrayList<HashMap<String, String>> data = new ArrayList<HashMap<String, String>>();
 
     /**
@@ -140,8 +143,11 @@ public class ResultSetTardis {
                     this.platform = rs.getString("platform");
                     this.save_sign = rs.getString("save_sign");
                     this.chameleon = rs.getString("chameleon");
-                    this.chameleon_on = rs.getBoolean("chamele_on");
+                    this.chamele_on = rs.getBoolean("chamele_on");
                     this.artron_level = rs.getInt("artron_level");
+                    this.artron_button = rs.getString("artron_button");
+                    this.middle_id = rs.getInt("middle_id");
+                    this.middle_data = rs.getByte("middle_data");
                 }
             } else {
                 return false;
@@ -236,12 +242,24 @@ public class ResultSetTardis {
         return chameleon;
     }
 
-    public boolean getChameleon_on() {
-        return chameleon_on;
+    public boolean getChamele_on() {
+        return chamele_on;
     }
 
     public int getArtron_level() {
         return artron_level;
+    }
+
+    public String getArtron_button() {
+        return artron_button;
+    }
+
+    public int getMiddle_id() {
+        return middle_id;
+    }
+
+    public byte getMiddle_data() {
+        return middle_data;
     }
 
     public ArrayList<HashMap<String, String>> getData() {
