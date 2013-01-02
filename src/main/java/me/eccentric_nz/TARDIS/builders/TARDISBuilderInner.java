@@ -9,6 +9,7 @@ import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.TARDISDatabase;
+import net.minecraft.server.v1_4_5.WorldType;
 import org.bukkit.ChatColor;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
@@ -239,10 +240,10 @@ public class TARDISBuilderInner {
             Block ptb = entry.getKey();
             byte ptdata = Byte.valueOf(entry.getValue());
             int i;
-            if(world.getWorldType().equals("flat")){
+            if (world.getWorldType().equals(WorldType.FLAT)) {
                 i = 1;
-            } else{
-            	i = 0;
+            } else {
+                i = 0;
             }
             ptb.setTypeIdAndData(i, ptdata, true);
         }
