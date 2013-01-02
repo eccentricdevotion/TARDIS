@@ -47,6 +47,9 @@ rooms:
   VAULT:
     cost: 500
     seed: DISPENSER
+  EMPTY:
+    cost: 250
+    seed: GLASS
 #artron energy
 player: 2
 random: 25
