@@ -35,10 +35,18 @@ public class TARDISWorldGuardChecker {
 
     public void addWGProtection(Player p, Location one, Location two) {
         RegionManager rm = wg.getRegionManager(one.getWorld());
-    	GlobalRegionManager grm = wg.getGlobalRegionManager();
-
-        BlockVector b1 = makeBlockVector(one);
-        BlockVector b2 = makeBlockVector(two);
+        BlockVector b1;
+        BlockVector b2;
+        int cube = plugin.getConfig().getInt("border_radius") * 16;
+        if (plugin.getConfig().getBoolean("create_worlds")) {
+            // make a big cuboid region
+            b1 = new BlockVector(cube, 256, cube);
+            b2 = new BlockVector(-cube, 0, -cube);
+        } else {
+            // just get the TARDIS size
+            b1 = makeBlockVector(one);
+            b2 = makeBlockVector(two);
+        }
         ProtectedCuboidRegion region = new ProtectedCuboidRegion("tardis_" + p.getName(), b1, b2);
         DefaultDomain dd = new DefaultDomain();
         dd.addPlayer(p.getName());
@@ -55,11 +63,7 @@ public class TARDISWorldGuardChecker {
         flags.put(DefaultFlag.CONSTRUCT, RegionGroup.OWNERS);
         flags.put(DefaultFlag.CHEST_ACCESS, State.ALLOW);
         region.setFlags(flags);
-        if (plugin.getConfig().getBoolean("create_worlds")) {
-        	grm.create(one.getWorld());
-        } else{
-        	rm.addRegion(region);
-        }
+        rm.addRegion(region);
         try {
             rm.save();
         } catch (ProtectionDatabaseException e) {
