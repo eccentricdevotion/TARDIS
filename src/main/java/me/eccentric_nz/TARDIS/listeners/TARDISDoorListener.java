@@ -404,7 +404,7 @@ public class TARDISDoorListener implements Listener {
                         // remove energy from TARDIS
                         HashMap<String, Object> wheret = new HashMap<String, Object>();
                         wheret.put("tardis_id", id);
-                        int amount = 0 - plugin.tardisHasTravelled.get(name);
+                        int amount = plugin.tardisHasTravelled.get(name) * -1;
                         qf.alterEnergyLevel("tardis", amount, wheret, p);
                         plugin.tardisHasTravelled.remove(name);
                     }

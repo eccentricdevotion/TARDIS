@@ -17,9 +17,9 @@
 package me.eccentric_nz.TARDIS.listeners;
 
 import java.util.HashMap;
-import java.util.Set;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants.COMPASS;
+import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.TARDISDatabase;
 import me.eccentric_nz.TARDIS.rooms.TARDISRoomBuilder;
 import org.bukkit.Location;
@@ -85,6 +85,12 @@ public class TARDISRoomSeeder implements Listener {
                 COMPASS d = COMPASS.valueOf(plugin.utils.getPlayersDirection(player));
                 TARDISRoomBuilder builder = new TARDISRoomBuilder(plugin, r, b, d, player);
                 builder.build();
+                // ok they clicked it, so take their energy!
+                int amount = plugin.getConfig().getInt("rooms." + r + ".cost");
+                QueryFactory qf = new QueryFactory(plugin);
+                HashMap<String, Object> set = new HashMap<String, Object>();
+                set.put("owner", playerNameStr);
+                qf.alterEnergyLevel("tardis", -amount, set, player);
             }
         }
     }

@@ -312,8 +312,7 @@ public class TARDISCommands implements CommandExecutor {
                         // remove energy from TARDIS
                         HashMap<String, Object> wheret = new HashMap<String, Object>();
                         wheret.put("tardis_id", id);
-                        int amount = 0 - ch;
-                        qf.alterEnergyLevel("tardis", amount, wheret, player);
+                        qf.alterEnergyLevel("tardis", -ch, wheret, player);
                         plugin.tardisHasTravelled.remove(p.getName());
                         return true;
                     } else {
@@ -444,9 +443,8 @@ public class TARDISCommands implements CommandExecutor {
                             sender.sendMessage(plugin.pluginName + "The TARDIS Police Box was hidden! Use " + ChatColor.GREEN + "/tardis rebuild" + ChatColor.RESET + " to show it again.");
                             HashMap<String, Object> wheret = new HashMap<String, Object>();
                             wheret.put("tardis_id", id);
-                            int amount = 0 - hide;
                             QueryFactory qf = new QueryFactory(plugin);
-                            qf.alterEnergyLevel("tardis", amount, wheret, player);
+                            qf.alterEnergyLevel("tardis", -hide, wheret, player);
                             return true;
                         }
                     } else {
