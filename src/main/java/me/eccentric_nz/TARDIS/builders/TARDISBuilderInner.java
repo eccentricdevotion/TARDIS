@@ -217,7 +217,6 @@ public class TARDISBuilderInner {
                             postFillBlocks.put(world.getBlockAt(startx, starty, startz), data);
                         } else {
                             plugin.utils.setBlock(world, startx, starty, startz, id, data);
-                            plugin.debug(world.getName() + ":" + startx + ":" + starty + ":" + startz + ":" + id + ":" + data);
                         }
                     }
                     startx += x;
@@ -319,7 +318,6 @@ public class TARDISBuilderInner {
                         chestInv.addItem(new ItemStack(rid, multiplier, damage));
                         multiplier = 1; // reset multiplier
                         damage = 0; // reset damage
-
                     }
                 }
             } else {
