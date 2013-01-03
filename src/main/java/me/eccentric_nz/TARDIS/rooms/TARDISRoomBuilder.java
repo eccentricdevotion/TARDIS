@@ -20,11 +20,11 @@ import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants.COMPASS;
 import me.eccentric_nz.TARDIS.TARDISConstants.ROOM;
-import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.TARDISDatabase;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
+import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Player;
 
 /**
@@ -53,33 +53,37 @@ public class TARDISRoomBuilder {
         where.put("owner", p.getName());
         ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
         if (rs.resultSet()) {
-            int id = rs.getTardis_id();
-            plugin.debug(rs.getMiddle_id());
+            TARDISRoomData roomData = new TARDISRoomData();
+            roomData.setTardis_id(rs.getTardis_id());
             // get middle data, default to orange wool if not set
             int middle_id = (rs.getMiddle_id() != 0) ? rs.getMiddle_id() : 35;
+            roomData.setMiddle_id(middle_id);
             byte middle_data = (rs.getMiddle_data() != 0) ? rs.getMiddle_data() : 1;
+            roomData.setMiddle_data(middle_data);
+            plugin.debug(middle_id + ":" + middle_data);
             // get start locations
             Block b = l.getBlock();
+            roomData.setBlock(b);
+            roomData.setDirection(d);
+            roomData.setLocation(l);
             switch (d) {
                 case NORTH:
                     if (r.equalsIgnoreCase("PASSAGE")) {
-                        l.setX(l.getX() - 4);
+                        l.setX(l.getX() + 4);
                     } else {
-                        l.setX(l.getX() - 6);
-                        l.setZ(l.getZ() - 12);
+                        l.setX(l.getX() + 6);
                     }
                     break;
                 case WEST:
                     if (r.equalsIgnoreCase("PASSAGE")) {
                         l.setZ(l.getZ() + 4);
                     } else {
-                        l.setX(l.getX() - 12);
-                        l.setZ(l.getZ() - 6);
+                        l.setZ(l.getZ() + 6);
                     }
                     break;
                 case SOUTH:
                     if (r.equalsIgnoreCase("PASSAGE")) {
-                        l.setX(l.getX() + 4);
+                        l.setX(l.getX() - 4);
                     } else {
                         l.setX(l.getX() - 6);
                     }
@@ -92,32 +96,67 @@ public class TARDISRoomBuilder {
                     }
                     break;
             }
-            l.setY(l.getY() - 4);
+            if (r.equalsIgnoreCase("PASSAGE")) {
+                l.setY(l.getY() - 2);
+            } else {
+                l.setY(l.getY() - 4);
+            }
+            if (d.equals(COMPASS.EAST) || d.equals(COMPASS.SOUTH)) {
+                roomData.setX(1);
+                roomData.setZ(1);
+            } else {
+                roomData.setX(-1);
+                roomData.setZ(-1);
+            }
+            String[][][] s;
+            short[] dimensions;
             ROOM room = ROOM.valueOf(r);
+            roomData.setRoom(room);
             switch (room) {
-                case PASSAGE:
-                    TARDISPassage newPassage = new TARDISPassage(plugin, l, middle_id, middle_data);
-                    newPassage.passage();
+                case ARBORETUM:
+                    s = plugin.arboretumschematic;
+                    dimensions = plugin.roomdimensions;
+                    break;
+                case BEDROOM:
+                    s = plugin.bedroomschematic;
+                    dimensions = plugin.roomdimensions;
+                    break;
+                case KITCHEN:
+                    s = plugin.kitchenschematic;
+                    dimensions = plugin.roomdimensions;
+                    break;
+                case LIBRARY:
+                    s = plugin.libraryschematic;
+                    dimensions = plugin.roomdimensions;
+                    break;
+                case POOL:
+                    s = plugin.poolschematic;
+                    dimensions = plugin.roomdimensions;
+                    break;
+                case VAULT:
+                    s = plugin.vaultschematic;
+                    dimensions = plugin.roomdimensions;
+                    break;
+                case EMPTY:
+                    s = plugin.emptyschematic;
+                    dimensions = plugin.roomdimensions;
                     break;
                 default:
-                    // ROOM
-                    TARDISRoom newRoom = new TARDISRoom(plugin, room, l, b, middle_id, middle_data, d);
-                    newRoom.room();
+                    // PASSAGE
+                    s = plugin.passageschematic;
+                    dimensions = plugin.passagedimensions;
                     break;
             }
-            QueryFactory qf = new QueryFactory(plugin);
-            HashMap<String, Object> set = new HashMap<String, Object>();
-            set.put("tardis_id", id);
-            set.put("world", l.getWorld().getName());
-            set.put("startx", l.getBlockX());
-            set.put("starty", l.getBlockY());
-            set.put("startz", l.getBlockZ());
-            set.put("endx", l.getBlockX());
-            set.put("endy", l.getBlockY());
-            set.put("endz", l.getBlockZ());
-            set.put("room_type", r.toString());
-            set.put("room_direction", d.toString());
-            qf.doInsert("rooms", set);
+            roomData.setSchematic(s);
+            roomData.setDimensions(dimensions);
+
+            // set door space to air
+            b.setTypeId(0);
+            b.getRelative(BlockFace.UP).setTypeId(0);
+
+            TARDISRoomRunnable runnable = new TARDISRoomRunnable(plugin, roomData);
+            int taskID = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, runnable, 5L, 5L);
+            runnable.setTask(taskID);
         }
         return true;
     }
