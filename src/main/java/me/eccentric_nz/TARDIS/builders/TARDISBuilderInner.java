@@ -12,6 +12,7 @@ import me.eccentric_nz.TARDIS.database.TARDISDatabase;
 import org.bukkit.ChatColor;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.WorldType;
 import org.bukkit.block.Block;
@@ -90,6 +91,8 @@ public class TARDISBuilderInner {
         // also getting and storing block ids for bonus chest if configured
         StringBuilder sb = new StringBuilder();
         List<Chunk> chunkList = new ArrayList<Chunk>();
+        boolean own_world = plugin.getConfig().getBoolean("create_worlds");
+        boolean bonus_chest = plugin.getConfig().getBoolean("bonus_chest");
         for (level = 0; level < h; level++) {
             for (row = 0; row < w; row++) {
                 for (col = 0; col < l; col++) {
@@ -99,14 +102,16 @@ public class TARDISBuilderInner {
                     if (!chunkList.contains(thisChunk)) {
                         chunkList.add(thisChunk);
                     }
-                    if (plugin.getConfig().getBoolean("bonus_chest")) {
+                    if (bonus_chest && !own_world) {
                         // get block at location
                         int replacedMaterialId = replaceLoc.getBlock().getTypeId();
                         if (replacedMaterialId != 8 && replacedMaterialId != 9 && replacedMaterialId != 10 && replacedMaterialId != 11) {
                             sb.append(replacedMaterialId).append(":");
                         }
                     }
-                    plugin.utils.setBlock(world, startx, starty, startz, 0, (byte) 0);
+                    if (!own_world) {
+                        plugin.utils.setBlock(world, startx, starty, startz, 0, (byte) 0);
+                    }
                     startx += x;
                 }
                 startx = resetx;
@@ -212,6 +217,7 @@ public class TARDISBuilderInner {
                             postFillBlocks.put(world.getBlockAt(startx, starty, startz), data);
                         } else {
                             plugin.utils.setBlock(world, startx, starty, startz, id, data);
+                            plugin.debug(world.getName() + ":" + startx + ":" + starty + ":" + startz + ":" + id + ":" + data);
                         }
                     }
                     startx += x;
@@ -250,16 +256,18 @@ public class TARDISBuilderInner {
             ptb.setTypeIdAndData(138, ptdata, true);
         }
         for (Map.Entry<Block, Byte> entry : postSignBlocks.entrySet()) {
-            Block psb = entry.getKey();
+            final Block psb = entry.getKey();
             byte psdata = Byte.valueOf(entry.getValue());
             psb.setTypeIdAndData(68, psdata, true);
-            Sign cs = (Sign) psb.getState();
-            cs.setLine(0, "Chameleon");
-            cs.setLine(1, "Circuit");
-            cs.setLine(3, ChatColor.RED + "OFF");
-            cs.update();
+            if (psb.getType().equals(Material.WALL_SIGN)) {
+                Sign cs = (Sign) psb.getState();
+                cs.setLine(0, "Chameleon");
+                cs.setLine(1, "Circuit");
+                cs.setLine(3, ChatColor.RED + "OFF");
+                cs.update();
+            }
         }
-        if (plugin.getConfig().getBoolean("bonus_chest")) {
+        if (bonus_chest && !own_world) {
             // get rid of last ":" and assign ids to an array
             String rb = sb.toString();
             replacedBlocks = rb.substring(0, rb.length() - 1);
@@ -276,40 +284,43 @@ public class TARDISBuilderInner {
                 cy = plugin.utils.parseNum(cdata[2]);
                 cz = plugin.utils.parseNum(cdata[3]);
                 Location chest_loc = new Location(cw, cx, cy, cz);
-                Block bonus_chest = chest_loc.getBlock();
-                Chest chest = (Chest) bonus_chest.getState();
-                // get chest inventory
-                Inventory chestInv = chest.getInventory();
-                // convert non-smeltable ores to items
-                for (String i : replaceddata) {
-                    rid = plugin.utils.parseNum(i);
-                    switch (rid) {
-                        case 1: // stone to cobblestone
-                            rid = 4;
-                            break;
-                        case 16: // coal ore to coal
-                            rid = 263;
-                            break;
-                        case 21: // lapis ore to lapis dye
-                            rid = 351;
-                            multiplier = 4;
-                            damage = 4;
-                            break;
-                        case 56: // diamond ore to diamonds
-                            rid = 264;
-                            break;
-                        case 73: // redstone ore to redstone dust
-                            rid = 331;
-                            multiplier = 4;
-                            break;
-                        case 129: // emerald ore to emerald
-                            rid = 388;
-                            break;
+                Block the_chest = chest_loc.getBlock();
+                if (the_chest.getType() == Material.CHEST) {
+                    Chest chest = (Chest) the_chest.getState();
+                    // get chest inventory
+                    Inventory chestInv = chest.getInventory();
+                    // convert non-smeltable ores to items
+                    for (String i : replaceddata) {
+                        rid = plugin.utils.parseNum(i);
+                        switch (rid) {
+                            case 1: // stone to cobblestone
+                                rid = 4;
+                                break;
+                            case 16: // coal ore to coal
+                                rid = 263;
+                                break;
+                            case 21: // lapis ore to lapis dye
+                                rid = 351;
+                                multiplier = 4;
+                                damage = 4;
+                                break;
+                            case 56: // diamond ore to diamonds
+                                rid = 264;
+                                break;
+                            case 73: // redstone ore to redstone dust
+                                rid = 331;
+                                multiplier = 4;
+                                break;
+                            case 129: // emerald ore to emerald
+                                rid = 388;
+                                break;
+                        }
+                        // add items to chest
+                        chestInv.addItem(new ItemStack(rid, multiplier, damage));
+                        multiplier = 1; // reset multiplier
+                        damage = 0; // reset damage
+
                     }
-                    // add items to chest
-                    chestInv.addItem(new ItemStack(rid, multiplier, damage));
-                    multiplier = 1; // reset multiplier
-                    damage = 0; // reset damage
                 }
             } else {
                 plugin.console.sendMessage(plugin.pluginName + "Could not find chest location in DB!");
