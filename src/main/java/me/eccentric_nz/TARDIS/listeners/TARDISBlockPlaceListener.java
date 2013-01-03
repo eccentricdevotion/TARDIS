@@ -26,12 +26,14 @@ import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.utility.TARDISUtils;
 import me.eccentric_nz.TARDIS.worldgen.TARDISSpace;
+import org.bukkit.ChatColor;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
+import org.bukkit.block.Sign;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -66,13 +68,13 @@ public class TARDISBlockPlaceListener implements Listener {
         // only listen for redstone torches
         if (block.getType() == Material.REDSTONE_TORCH_ON) {
             Block blockBelow = block.getRelative(BlockFace.DOWN);
-            int middle_id = blockBelow.getTypeId();
-            byte middle_data = blockBelow.getData();
+            final int middle_id = blockBelow.getTypeId();
+            final byte middle_data = blockBelow.getData();
             Block blockBottom = blockBelow.getRelative(BlockFace.DOWN);
             // only continue if the redstone torch is placed on top of [JUST ABOUT ANY] BLOCK on top of an IRON/GOLD/DIAMOND_BLOCK
             if (MIDDLE_BLOCKS.contains(blockBelow.getType().toString()) && (blockBottom.getType() == Material.IRON_BLOCK || blockBottom.getType() == Material.GOLD_BLOCK || blockBottom.getType() == Material.DIAMOND_BLOCK)) {
-                TARDISConstants.SCHEMATIC schm;
-                Player player = event.getPlayer();
+                final TARDISConstants.SCHEMATIC schm;
+                final Player player = event.getPlayer();
                 switch (blockBottom.getType()) {
                     case GOLD_BLOCK:
                         if (player.hasPermission("tardis.bigger")) {
@@ -106,7 +108,7 @@ public class TARDISBlockPlaceListener implements Listener {
                         int cx;
                         int cz;
                         String cw;
-                        World chunkworld;
+                        final World chunkworld;
                         if (plugin.getConfig().getBoolean("create_worlds")) {
                             // create a new world to store this TARDIS
                             cw = "TARDIS_WORLD_" + playerNameStr;
@@ -131,9 +133,9 @@ public class TARDISBlockPlaceListener implements Listener {
                             }
                         }
                         // get player direction
-                        String d = plugin.utils.getPlayersDirection(player);
+                        final String d = plugin.utils.getPlayersDirection(player);
                         // save data to database (tardis table)
-                        Location block_loc = blockBottom.getLocation();
+                        final Location block_loc = blockBottom.getLocation();
                         String chun = cw + ":" + cx + ":" + cz;
                         String home = block_loc.getWorld().getName() + ":" + block_loc.getBlockX() + ":" + block_loc.getBlockY() + ":" + block_loc.getBlockZ();
                         String save = block_loc.getWorld().getName() + ":" + block_loc.getBlockX() + ":" + block_loc.getBlockY() + ":" + block_loc.getBlockZ();
@@ -145,12 +147,19 @@ public class TARDISBlockPlaceListener implements Listener {
                         set.put("home", home);
                         set.put("save", save);
                         set.put("size", schm.name());
-                        int lastInsertId = qf.doInsert("tardis", set);
+                        set.put("middle_id", middle_id);
+                        set.put("middle_data", middle_data);
+                        final int lastInsertId = qf.doInsert("tardis", set);
                         // remove redstone torch
                         block.setTypeId(0);
                         // turn the block stack into a TARDIS
-                        plugin.buildPB.buildPoliceBox(lastInsertId, block_loc, TARDISConstants.COMPASS.valueOf(d), false, player, false);
-                        plugin.buildI.buildInner(schm, chunkworld, lastInsertId, player, middle_id, middle_data);
+                        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
+                            @Override
+                            public void run() {
+                                plugin.buildPB.buildPoliceBox(lastInsertId, block_loc, TARDISConstants.COMPASS.valueOf(d), false, player, false);
+                                plugin.buildI.buildInner(schm, chunkworld, lastInsertId, player, middle_id, middle_data);
+                            }
+                        }, 40L);
                     } else {
                         String leftLoc = rs.getSave();
                         String[] leftData = leftLoc.split(":");
