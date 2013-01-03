@@ -234,6 +234,7 @@ public class QueryFactory {
      * value)
      * @param where a HashMap<String, Object> of table fields and values to
      * select the records to alter.
+     * @param p the player who receives the success message.
      */
     public boolean alterEnergyLevel(String table, int amount, HashMap<String, Object> where, Player p) {
         Statement statement = null;
