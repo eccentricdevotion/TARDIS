@@ -147,19 +147,19 @@ public class TARDISBlockPlaceListener implements Listener {
                         set.put("home", home);
                         set.put("save", save);
                         set.put("size", schm.name());
-                        set.put("middle_id", middle_id);
-                        set.put("middle_data", middle_data);
+                        if (middle_id == 22) {
+                            set.put("middle_id", 35);
+                            set.put("middle_data", 1);
+                        } else {
+                            set.put("middle_id", middle_id);
+                            set.put("middle_data", middle_data);
+                        }
                         final int lastInsertId = qf.doInsert("tardis", set);
                         // remove redstone torch
                         block.setTypeId(0);
                         // turn the block stack into a TARDIS
-                        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
-                            @Override
-                            public void run() {
-                                plugin.buildPB.buildPoliceBox(lastInsertId, block_loc, TARDISConstants.COMPASS.valueOf(d), false, player, false);
-                                plugin.buildI.buildInner(schm, chunkworld, lastInsertId, player, middle_id, middle_data);
-                            }
-                        }, 40L);
+                        plugin.buildPB.buildPoliceBox(lastInsertId, block_loc, TARDISConstants.COMPASS.valueOf(d), false, player, false);
+                        plugin.buildI.buildInner(schm, chunkworld, lastInsertId, player, middle_id, middle_data);
                     } else {
                         String leftLoc = rs.getSave();
                         String[] leftData = leftLoc.split(":");
