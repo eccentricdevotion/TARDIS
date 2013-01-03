@@ -200,7 +200,7 @@ public class TARDISAdminCommands implements CommandExecutor {
                         }
                         // check if player is in the TARDIS
                         HashMap<String, Object> wheret = new HashMap<String, Object>();
-                        where.put("tardis_id", id);
+                        wheret.put("tardis_id", id);
                         ResultSetTravellers rst = new ResultSetTravellers(plugin, wheret, true);
                         boolean useCurrent = false;
                         QueryFactory qf = new QueryFactory(plugin);
