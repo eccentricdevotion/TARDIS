@@ -29,7 +29,7 @@ public class TARDISSchematicReader {
         return tag;
     }
 
-    public void main(String fileStr, TARDISConstants.SCHEMATIC s) {
+    public void readAndMakeCSV(String fileStr, TARDISConstants.SCHEMATIC s) {
         plugin.console.sendMessage(plugin.pluginName + "Loading schematic: " + fileStr);
         FileInputStream fis = null;
         try {
@@ -68,7 +68,6 @@ public class TARDISSchematicReader {
                     plugin.roomdimensions[1] = width;
                     plugin.roomdimensions[2] = length;
                     break;
-
             }
 
             byte[] blocks = (byte[]) getChildTag(tagCollection, "Blocks", ByteArrayTag.class).getValue();
@@ -95,6 +94,7 @@ public class TARDISSchematicReader {
                 layers.add(strarr);
             }
             try {
+
                 String csvFile = fileStr + ".csv";
                 File file = new File(csvFile);
                 BufferedWriter bw = new BufferedWriter(new FileWriter(file, false));
