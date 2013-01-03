@@ -121,24 +121,27 @@ public class TARDISCommands implements CommandExecutor {
                             y = plugin.utils.parseNum(chamData[2]);
                             z = plugin.utils.parseNum(chamData[3]);
                             Block chamBlock = w.getBlockAt(x, y, z);
-                            Sign cs = (Sign) chamBlock.getState();
-                            QueryFactory qf = new QueryFactory(plugin);
-                            HashMap<String, Object> tid = new HashMap<String, Object>();
-                            HashMap<String, Object> set = new HashMap<String, Object>();
-                            tid.put("tardis_id", id);
-                            if (args[1].equalsIgnoreCase("on")) {
-                                set.put("chamele_on", 1);
-                                qf.doUpdate("tardis", set, tid);
-                                sender.sendMessage(plugin.pluginName + "The Chameleon Circuit was turned ON!");
-                                cs.setLine(3, ChatColor.GREEN + "ON");
+                            Material chamType = chamBlock.getType();
+                            if (chamType == Material.WALL_SIGN || chamType == Material.SIGN_POST) {
+                                Sign cs = (Sign) chamBlock.getState();
+                                QueryFactory qf = new QueryFactory(plugin);
+                                HashMap<String, Object> tid = new HashMap<String, Object>();
+                                HashMap<String, Object> set = new HashMap<String, Object>();
+                                tid.put("tardis_id", id);
+                                if (args[1].equalsIgnoreCase("on")) {
+                                    set.put("chamele_on", 1);
+                                    qf.doUpdate("tardis", set, tid);
+                                    sender.sendMessage(plugin.pluginName + "The Chameleon Circuit was turned ON!");
+                                    cs.setLine(3, ChatColor.GREEN + "ON");
+                                }
+                                if (args[1].equalsIgnoreCase("off")) {
+                                    set.put("chamele_on", 0);
+                                    qf.doUpdate("tardis", set, tid);
+                                    sender.sendMessage(plugin.pluginName + "The Chameleon Circuit was turned OFF.");
+                                    cs.setLine(3, ChatColor.RED + "OFF");
+                                }
+                                cs.update();
                             }
-                            if (args[1].equalsIgnoreCase("off")) {
-                                set.put("chamele_on", 0);
-                                qf.doUpdate("tardis", set, tid);
-                                sender.sendMessage(plugin.pluginName + "The Chameleon Circuit was turned OFF.");
-                                cs.setLine(3, ChatColor.RED + "OFF");
-                            }
-                            cs.update();
                         }
                         return true;
                     } else {

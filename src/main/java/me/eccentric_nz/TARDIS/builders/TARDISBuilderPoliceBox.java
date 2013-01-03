@@ -257,25 +257,28 @@ public class TARDISBuilderPoliceBox {
         plugin.utils.setBlockAndRemember(world, plusx, y, minusz, wall_block, chameleonData, id, rebuild);
         // set sign
         plugin.utils.setBlock(world, signx, y, signz, 68, sd);
-        Sign s = (Sign) world.getBlockAt(signx, y, signz).getState();
-        if (plugin.getConfig().getBoolean("name_tardis")) {
-            HashMap<String, Object> wheret = new HashMap<String, Object>();
-            wheret.put("tardis_id", id);
-            ResultSetTardis rst = new ResultSetTardis(plugin, wheret, "", false);
-            if (rst.resultSet()) {
-                String owner = rst.getOwner();
-                if (owner.length() > 14) {
-                    s.setLine(0, owner.substring(0, 12) + "'s");
+        Block sign = world.getBlockAt(signx, y, signz);
+        if (sign.getType().equals(Material.WALL_SIGN)) {
+            Sign s = (Sign) sign.getState();
+            if (plugin.getConfig().getBoolean("name_tardis")) {
+                HashMap<String, Object> wheret = new HashMap<String, Object>();
+                wheret.put("tardis_id", id);
+                ResultSetTardis rst = new ResultSetTardis(plugin, wheret, "", false);
+                if (rst.resultSet()) {
+                    String owner = rst.getOwner();
+                    if (owner.length() > 14) {
+                        s.setLine(0, owner.substring(0, 12) + "'s");
+                    } else {
+                        s.setLine(0, owner + "'s");
+                    }
                 } else {
-                    s.setLine(0, owner + "'s");
+                    plugin.debug("Couldn't find owner in database!");
                 }
-            } else {
-                plugin.debug("Couldn't find owner in database!");
             }
+            s.setLine(1, ChatColor.WHITE + "POLICE");
+            s.setLine(2, ChatColor.WHITE + "BOX");
+            s.update();
         }
-        s.setLine(1, ChatColor.WHITE + "POLICE");
-        s.setLine(2, ChatColor.WHITE + "BOX");
-        s.update();
         // put torch on top
         if (wall_block == 79) {
             plugin.utils.setBlockAndRemember(world, x, plusy, z, 76, (byte) 5, id, rebuild);
