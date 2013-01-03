@@ -17,6 +17,7 @@
 package me.eccentric_nz.TARDIS.worldgen;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.tardischunkgenerator.TARDISChunkGenerator;
 import org.bukkit.World;
 import org.bukkit.WorldCreator;
 import org.bukkit.WorldType;
@@ -44,7 +45,7 @@ public class TARDISSpace {
         if (tardisWorld == null) {
             tardisWorld = WorldCreator.name(name).type(WorldType.LARGE_BIOMES).environment(World.Environment.THE_END).generator(new TARDISChunkGenerator()).createWorld();
             if (plugin.pm.isPluginEnabled("Multiverse-Core")) {
-                plugin.getServer().dispatchCommand(plugin.console, "mv import " + name + " the_end -g TARDIS");
+                plugin.getServer().dispatchCommand(plugin.console, "mv import " + name + " the_end -g TARDISChunkGenerator");
             }
             if (plugin.pm.isPluginEnabled("WorldBorder")) {
                 // wb <world> set <radius> <x> <z>
