@@ -23,7 +23,6 @@ import java.util.Set;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
-import me.eccentric_nz.TARDIS.database.TARDISDatabase;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
@@ -38,9 +37,7 @@ public class TARDISArtronRunnable implements Runnable {
     private int id;
     private Player p;
     private int task;
-    TARDISDatabase service = TARDISDatabase.getInstance();
     List<Location> rechargers;
-    boolean running;
     QueryFactory qf;
 
     public TARDISArtronRunnable(TARDIS plugin, int id, Player p) {

@@ -68,7 +68,7 @@ public class TARDISBuilderInner {
         short h = d[0];
         short w = d[1];
         short l = d[2];
-        int level, row, col, id, x, y, z, startx, starty = 15, startz, resetx, resetz, cx, cy, cz, rid, multiplier = 1, tx = 0, ty = 0, tz = 0, j = 0;
+        int level, row, col, id, x, z, startx, starty = 15, startz, resetx, resetz, cx, cy, cz, rid, multiplier = 1, j = 0;
         byte data;
         short damage = 0;
         String tmp, replacedBlocks;
