@@ -96,10 +96,19 @@ public class TARDISRoomBuilder {
                     }
                     break;
             }
-            if (r.equalsIgnoreCase("PASSAGE")) {
-                l.setY(l.getY() - 2);
-            } else {
-                l.setY(l.getY() - 4);
+            switch (ROOM.valueOf(r)) {
+                case PASSAGE:
+                    l.setY(l.getY() - 2);
+                    break;
+                case POOL:
+                    l.setY(l.getY() - 3);
+                    break;
+                case ARBORETUM:
+                    l.setY(l.getY() - 4);
+                    break;
+                default:
+                    l.setY(l.getY() - 1);
+                    break;
             }
             if (d.equals(COMPASS.EAST) || d.equals(COMPASS.SOUTH)) {
                 roomData.setX(1);

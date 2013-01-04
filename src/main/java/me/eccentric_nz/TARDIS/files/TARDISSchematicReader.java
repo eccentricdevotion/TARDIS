@@ -63,6 +63,16 @@ public class TARDISSchematicReader {
                     plugin.passagedimensions[1] = width;
                     plugin.passagedimensions[2] = length;
                     break;
+                case ARBORETUM:
+                    plugin.arboretumdimensions[0] = height;
+                    plugin.arboretumdimensions[1] = width;
+                    plugin.arboretumdimensions[2] = length;
+                    break;
+                case POOL:
+                    plugin.pooldimensions[0] = height;
+                    plugin.pooldimensions[1] = width;
+                    plugin.pooldimensions[2] = length;
+                    break;
                 default:
                     plugin.roomdimensions[0] = height;
                     plugin.roomdimensions[1] = width;
