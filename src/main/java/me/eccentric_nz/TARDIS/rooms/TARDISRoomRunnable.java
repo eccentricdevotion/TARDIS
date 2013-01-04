@@ -126,6 +126,11 @@ public class TARDISRoomRunnable implements Runnable {
             id = middle_id;
             data = middle_data;
         }
+        // remove sponge
+        if (id == 19) {
+            id = 0;
+            data = (byte) 0;
+        }
         Block existing = l.getWorld().getBlockAt(startx, starty, startz);
         if (existing.getTypeId() != 0) {
             id = existing.getTypeId();
