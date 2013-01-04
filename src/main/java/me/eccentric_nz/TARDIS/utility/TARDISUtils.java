@@ -59,8 +59,7 @@ public class TARDISUtils {
      */
     public void setBlock(World w, int x, int y, int z, int m, byte d) {
         Block b = w.getBlockAt(x, y, z);
-        boolean set = b.setTypeIdAndData(m, d, true);
-        plugin.debug(m + ":" + d + " - " + set);
+        b.setTypeIdAndData(m, d, true);
     }
 
     /**
