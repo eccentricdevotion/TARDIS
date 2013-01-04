@@ -102,7 +102,7 @@ public class TARDISSchematicReader {
                     }
                 }
                 if (rotate) {
-                    strarr = rotateCCW(strarr);
+                    strarr = rotateSquareCCW(strarr);
                 }
                 layers.add(strarr);
             }
@@ -139,27 +139,25 @@ public class TARDISSchematicReader {
         }
     }
 
-    private static String[][] rotateCW(String[][] mat) {
-        final int M = mat.length;
-        final int N = mat[0].length;
-        String[][] ret = new String[N][M];
-        for (int r = 0; r < M; r++) {
-            for (int c = 0; c < N; c++) {
-                ret[c][M - 1 - r] = mat[r][c];
+    private static String[][] rotateSquareCW(String[][] mat) {
+        final int size = mat.length;
+        String[][] out = new String[size][size];
+        for (int r = 0; r < size; r++) {
+            for (int c = 0; c < size; c++) {
+                out[c][size - 1 - r] = mat[r][c];
             }
         }
-        return ret;
+        return out;
     }
 
-    private static String[][] rotateCCW(String[][] mat) {
-        final int M = mat.length;
-        final int N = mat[0].length;
-        String[][] ret = new String[M][N];
-        for (int r = 0; r < N; r++) {
-            for (int c = 0; c < (M / 2); c++) {
-                ret[c][r] = mat[N - c - 1][r];
+    private String[][] rotateSquareCCW(String[][] mat) {
+        int size = mat.length;
+        String[][] out = new String[size][size];
+        for (int r = 0; r < size; r++) {
+            for (int c = 0; c < size; c++) {
+                out[r][c] = mat[c][size - r - 1];
             }
         }
-        return ret;
+        return out;
     }
 }
