@@ -42,9 +42,13 @@ public class TARDISUtils {
 
     private final TARDIS plugin;
     TARDISDatabase service = TARDISDatabase.getInstance();
+    private HashMap<Integer,Integer> weirdBytes = new HashMap<Integer,Integer>();
 
     public TARDISUtils(TARDIS plugin) {
         this.plugin = plugin;
+        weirdBytes.put(-114, 142);
+        weirdBytes.put(-115, 141);
+        weirdBytes.put(-116, 140);
     }
 
     /**
@@ -59,6 +63,9 @@ public class TARDISUtils {
      */
     public void setBlock(World w, int x, int y, int z, int m, byte d) {
         Block b = w.getBlockAt(x, y, z);
+        if (weirdBytes.containsKey(m)) {
+            m = weirdBytes.get(m);
+        }
         b.setTypeIdAndData(m, d, true);
     }
 
