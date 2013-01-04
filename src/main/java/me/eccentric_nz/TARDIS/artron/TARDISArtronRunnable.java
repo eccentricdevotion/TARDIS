@@ -91,8 +91,8 @@ public class TARDISArtronRunnable implements Runnable {
 
     private List<Location> getRechargers() {
         List<Location> list = new ArrayList<Location>();
-        Set<String> therechargers = plugin.getConfig().getConfigurationSection("rechargers").getKeys(false);
-        if (therechargers != null) {
+        if (plugin.getConfig().isConfigurationSection("rechargers")) {
+            Set<String> therechargers = plugin.getConfig().getConfigurationSection("rechargers").getKeys(false);
             for (String s : therechargers) {
                 World w = plugin.getServer().getWorld(plugin.getConfig().getString("rechargers." + s + ".world"));
                 int x = plugin.getConfig().getInt("rechargers." + s + ".x");
