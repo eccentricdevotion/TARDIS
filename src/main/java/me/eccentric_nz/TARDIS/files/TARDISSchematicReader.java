@@ -29,7 +29,7 @@ public class TARDISSchematicReader {
         return tag;
     }
 
-    public void readAndMakeCSV(String fileStr, TARDISConstants.SCHEMATIC s) {
+    public void readAndMakeCSV(String fileStr, TARDISConstants.SCHEMATIC s, boolean rotate) {
         plugin.console.sendMessage(plugin.pluginName + "Loading schematic: " + fileStr);
         FileInputStream fis = null;
         try {
@@ -101,11 +101,14 @@ public class TARDISSchematicReader {
                         j++;
                     }
                 }
+                if (rotate) {
+                    strarr = rotateCCW(strarr);
+                }
                 layers.add(strarr);
             }
             try {
 
-                String csvFile = fileStr + ".csv";
+                String csvFile = (rotate) ? fileStr + "_EW.csv" : fileStr + ".csv";
                 File file = new File(csvFile);
                 BufferedWriter bw = new BufferedWriter(new FileWriter(file, false));
                 for (String[][] l : layers) {
@@ -134,5 +137,29 @@ public class TARDISSchematicReader {
                 }
             }
         }
+    }
+
+    private static String[][] rotateCW(String[][] mat) {
+        final int M = mat.length;
+        final int N = mat[0].length;
+        String[][] ret = new String[N][M];
+        for (int r = 0; r < M; r++) {
+            for (int c = 0; c < N; c++) {
+                ret[c][M - 1 - r] = mat[r][c];
+            }
+        }
+        return ret;
+    }
+
+    private static String[][] rotateCCW(String[][] mat) {
+        final int M = mat.length;
+        final int N = mat[0].length;
+        String[][] ret = new String[M][N];
+        for (int r = 0; r < N; r++) {
+            for (int c = 0; c < (M / 2); c++) {
+                ret[c][r] = mat[N - c - 1][r];
+            }
+        }
+        return ret;
     }
 }

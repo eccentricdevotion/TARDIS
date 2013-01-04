@@ -58,6 +58,7 @@ public class TARDISMakeCSV {
             plugin.kitchenSchematicCSV = createFile(TARDISConstants.SCHEMATIC_KITCHEN + ".csv");
             plugin.librarySchematicCSV = createFile(TARDISConstants.SCHEMATIC_LIBRARY + ".csv");
             plugin.passageSchematicCSV = createFile(TARDISConstants.SCHEMATIC_PASSAGE + ".csv");
+            plugin.passageSchematicCSV_EW = createFile(TARDISConstants.SCHEMATIC_PASSAGE + "_EW.csv");
             plugin.poolSchematicCSV = createFile(TARDISConstants.SCHEMATIC_POOL + ".csv");
             plugin.vaultSchematicCSV = createFile(TARDISConstants.SCHEMATIC_VAULT + ".csv");
             plugin.emptySchematicCSV = createFile(TARDISConstants.SCHEMATIC_EMPTY + ".csv");
@@ -87,17 +88,18 @@ public class TARDISMakeCSV {
             String empnstr = basepath + TARDISConstants.SCHEMATIC_EMPTY;
             plugin.emptySchematicFile = copy(empnstr, plugin.getResource(TARDISConstants.SCHEMATIC_EMPTY));
             // read the schematics
-            reader.readAndMakeCSV(budnstr, TARDISConstants.SCHEMATIC.BUDGET);
-            reader.readAndMakeCSV(bignstr, TARDISConstants.SCHEMATIC.BIGGER);
-            reader.readAndMakeCSV(delnstr, TARDISConstants.SCHEMATIC.DELUXE);
-            reader.readAndMakeCSV(arbornstr, TARDISConstants.SCHEMATIC.ARBORETUM);
-            reader.readAndMakeCSV(bednstr, TARDISConstants.SCHEMATIC.BEDROOM);
-            reader.readAndMakeCSV(kitnstr, TARDISConstants.SCHEMATIC.KITCHEN);
-            reader.readAndMakeCSV(libnstr, TARDISConstants.SCHEMATIC.LIBRARY);
-            reader.readAndMakeCSV(passnstr, TARDISConstants.SCHEMATIC.PASSAGE);
-            reader.readAndMakeCSV(poolnstr, TARDISConstants.SCHEMATIC.POOL);
-            reader.readAndMakeCSV(vaunstr, TARDISConstants.SCHEMATIC.VAULT);
-            reader.readAndMakeCSV(empnstr, TARDISConstants.SCHEMATIC.EMPTY);
+            reader.readAndMakeCSV(budnstr, TARDISConstants.SCHEMATIC.BUDGET, false);
+            reader.readAndMakeCSV(bignstr, TARDISConstants.SCHEMATIC.BIGGER, false);
+            reader.readAndMakeCSV(delnstr, TARDISConstants.SCHEMATIC.DELUXE, false);
+            reader.readAndMakeCSV(arbornstr, TARDISConstants.SCHEMATIC.ARBORETUM, false);
+            reader.readAndMakeCSV(bednstr, TARDISConstants.SCHEMATIC.BEDROOM, false);
+            reader.readAndMakeCSV(kitnstr, TARDISConstants.SCHEMATIC.KITCHEN, false);
+            reader.readAndMakeCSV(libnstr, TARDISConstants.SCHEMATIC.LIBRARY, false);
+            reader.readAndMakeCSV(passnstr, TARDISConstants.SCHEMATIC.PASSAGE, false);
+            reader.readAndMakeCSV(passnstr, TARDISConstants.SCHEMATIC.PASSAGE, true);
+            reader.readAndMakeCSV(poolnstr, TARDISConstants.SCHEMATIC.POOL, false);
+            reader.readAndMakeCSV(vaunstr, TARDISConstants.SCHEMATIC.VAULT, false);
+            reader.readAndMakeCSV(empnstr, TARDISConstants.SCHEMATIC.EMPTY, false);
             // load the schematic data into the csv files
             plugin.budgetschematic = TARDISSchematic.schematic(plugin.budgetSchematicCSV, plugin.budgetdimensions[0], plugin.budgetdimensions[1], plugin.budgetdimensions[2]);
             plugin.biggerschematic = TARDISSchematic.schematic(plugin.biggerSchematicCSV, plugin.biggerdimensions[0], plugin.biggerdimensions[1], plugin.biggerdimensions[2]);
@@ -107,6 +109,7 @@ public class TARDISMakeCSV {
             plugin.kitchenschematic = TARDISSchematic.schematic(plugin.kitchenSchematicCSV, plugin.roomdimensions[0], plugin.roomdimensions[1], plugin.roomdimensions[2]);
             plugin.libraryschematic = TARDISSchematic.schematic(plugin.librarySchematicCSV, plugin.roomdimensions[0], plugin.roomdimensions[1], plugin.roomdimensions[2]);
             plugin.passageschematic = TARDISSchematic.schematic(plugin.passageSchematicCSV, plugin.passagedimensions[0], plugin.passagedimensions[1], plugin.passagedimensions[2]);
+            plugin.passageschematic_EW = TARDISSchematic.schematic(plugin.passageSchematicCSV_EW, plugin.passagedimensions[0], plugin.passagedimensions[1], plugin.passagedimensions[2]);
             plugin.poolschematic = TARDISSchematic.schematic(plugin.poolSchematicCSV, plugin.pooldimensions[0], plugin.pooldimensions[1], plugin.pooldimensions[2]);
             plugin.vaultschematic = TARDISSchematic.schematic(plugin.vaultSchematicCSV, plugin.roomdimensions[0], plugin.roomdimensions[1], plugin.roomdimensions[2]);
             plugin.emptyschematic = TARDISSchematic.schematic(plugin.emptySchematicCSV, plugin.roomdimensions[0], plugin.roomdimensions[1], plugin.roomdimensions[2]);

@@ -152,7 +152,7 @@ public class TARDISRoomBuilder {
                     break;
                 default:
                     // PASSAGE
-                    s = plugin.passageschematic;
+                    s = (d.equals(COMPASS.EAST) || d.equals(COMPASS.WEST)) ? plugin.passageschematic_EW : plugin.passageschematic;
                     dimensions = plugin.passagedimensions;
                     break;
             }

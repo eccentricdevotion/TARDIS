@@ -72,6 +72,7 @@ public class TARDIS extends JavaPlugin {
     public File kitchenSchematicCSV = null;
     public File librarySchematicCSV = null;
     public File passageSchematicCSV = null;
+    public File passageSchematicCSV_EW = null;
     public File poolSchematicCSV = null;
     public File vaultSchematicCSV = null;
     public File emptySchematicCSV = null;
@@ -84,6 +85,7 @@ public class TARDIS extends JavaPlugin {
     public String[][][] kitchenschematic;
     public String[][][] libraryschematic;
     public String[][][] passageschematic;
+    public String[][][] passageschematic_EW;
     public String[][][] poolschematic;
     public String[][][] vaultschematic;
     public String[][][] emptyschematic;
