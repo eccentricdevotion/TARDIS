@@ -124,7 +124,7 @@ public class TARDISRoomBuilder {
             switch (room) {
                 case ARBORETUM:
                     s = plugin.arboretumschematic;
-                    dimensions = plugin.roomdimensions;
+                    dimensions = plugin.arboretumdimensions;
                     break;
                 case BEDROOM:
                     s = plugin.bedroomschematic;
@@ -140,7 +140,7 @@ public class TARDISRoomBuilder {
                     break;
                 case POOL:
                     s = plugin.poolschematic;
-                    dimensions = plugin.roomdimensions;
+                    dimensions = plugin.pooldimensions;
                     break;
                 case VAULT:
                     s = plugin.vaultschematic;
