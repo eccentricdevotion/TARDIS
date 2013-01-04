@@ -87,8 +87,23 @@ public class TARDISSchematicReader {
             fis.close();
             int i = 0;
             String[] blockdata = new String[width * height * length];
+            byte thebyte;
             for (byte b : blocks) {
-                blockdata[i] = b + ":" + data[i];
+                switch (b) {
+                    case -114:
+                        thebyte = (byte) 142;
+                        break;
+                    case -115:
+                        thebyte = (byte) 141;
+                        break;
+                    case -116:
+                        thebyte = (byte) 140;
+                        break;
+                    default:
+                        thebyte = b;
+                        break;
+                }
+                blockdata[i] = thebyte + ":" + data[i];
                 i++;
             }
             int j = 0;
