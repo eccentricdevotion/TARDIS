@@ -60,7 +60,6 @@ public class TARDISRoomBuilder {
             roomData.setMiddle_id(middle_id);
             byte middle_data = (rs.getMiddle_data() != 0) ? rs.getMiddle_data() : 1;
             roomData.setMiddle_data(middle_data);
-            plugin.debug(middle_id + ":" + middle_data);
             // get start locations
             Block b = l.getBlock();
             roomData.setBlock(b);
