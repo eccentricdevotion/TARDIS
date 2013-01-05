@@ -26,7 +26,6 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
-import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Creeper;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
@@ -47,7 +46,6 @@ public class TARDISArtronCapacitorListener implements Listener {
 
     private final TARDIS plugin;
     TARDISDatabase service = TARDISDatabase.getInstance();
-    private boolean myspawn;
 
     public TARDISArtronCapacitorListener(TARDIS plugin) {
         this.plugin = plugin;
@@ -125,7 +123,7 @@ public class TARDISArtronCapacitorListener implements Listener {
                                 plugin.debug("Couldn't convert to a float! " + nfe.getMessage());
                             }
                             Location l = new Location(w, cx, cy, cz);
-                            myspawn = true;
+                            plugin.myspawn = true;
                             Entity e = w.spawnEntity(l, EntityType.CREEPER);
                             // if there is a creeper there already get rid of it!
                             boolean first_time = true;
@@ -195,9 +193,9 @@ public class TARDISArtronCapacitorListener implements Listener {
      */
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onEntitySpawn(CreatureSpawnEvent event) {
-        if (myspawn) {
+        if (plugin.myspawn) {
             event.setCancelled(false);
-            myspawn = false;
+            plugin.myspawn = false;
         }
     }
 }

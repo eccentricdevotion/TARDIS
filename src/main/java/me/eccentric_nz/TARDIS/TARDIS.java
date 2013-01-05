@@ -37,6 +37,7 @@ import me.eccentric_nz.TARDIS.listeners.TARDISLightningListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISRoomSeeder;
 import me.eccentric_nz.TARDIS.listeners.TARDISSignListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISUpdateListener;
+import me.eccentric_nz.TARDIS.utility.TARDISCreeperChecker;
 import me.eccentric_nz.TARDIS.utility.TARDISTownyChecker;
 import me.eccentric_nz.TARDIS.utility.TARDISWorldBorderChecker;
 import org.bukkit.Bukkit;
@@ -147,6 +148,7 @@ public class TARDIS extends JavaPlugin {
     public ConsoleCommandSender console;
     public String pluginName;
     public String TARDIS_KEY;
+    public boolean myspawn = false;
 
     @Override
     public void onEnable() {
@@ -173,6 +175,8 @@ public class TARDIS extends JavaPlugin {
         TARDIS_KEY = getConfig().getString("key");
         quote = quotes();
         quotelen = quote.size();
+        TARDISCreeperChecker cc = new TARDISCreeperChecker(this);
+        cc.startCreeperCheck();
     }
 
     @Override

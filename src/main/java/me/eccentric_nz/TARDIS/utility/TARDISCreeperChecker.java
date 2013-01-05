@@ -1,0 +1,83 @@
+/*
+ * Copyright (C) 2013 eccentric_nz
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+package me.eccentric_nz.TARDIS.utility;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.database.ResultSetTardis;
+import me.eccentric_nz.TARDIS.database.TARDISDatabase;
+import org.bukkit.Location;
+import org.bukkit.World;
+import org.bukkit.entity.Creeper;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.EntityType;
+
+/**
+ *
+ * @author eccentric_nz
+ */
+public class TARDISCreeperChecker {
+
+    private final TARDIS plugin;
+    TARDISDatabase service = TARDISDatabase.getInstance();
+
+    public TARDISCreeperChecker(TARDIS plugin) {
+        this.plugin = plugin;
+    }
+
+    public void startCreeperCheck() {
+        plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new Runnable() {
+            @Override
+            public void run() {
+                checkCreepers();
+            }
+        }, 600L, 12000L);
+    }
+
+    private void checkCreepers() {
+        plugin.debug("Starting creeper check");
+        ResultSetTardis rs = new ResultSetTardis(plugin, null, "", true);
+        if (rs.resultSet()) {
+            ArrayList<HashMap<String, String>> data = rs.getData();
+            for (HashMap<String, String> map : data) {
+                String[] creeperData = map.get("creeper").split(":");
+                World w = plugin.getServer().getWorld(creeperData[0]);
+                float cx = 0, cy = 0, cz = 0;
+                try {
+                    cx = Float.parseFloat(creeperData[1]);
+                    cy = Float.parseFloat(creeperData[2]);
+                    cz = Float.parseFloat(creeperData[3]);
+                } catch (NumberFormatException nfe) {
+                    plugin.debug("Couldn't convert to a float! " + nfe.getMessage());
+                }
+                Location l = new Location(w, cx, cy, cz);
+                plugin.myspawn = true;
+                Entity e = w.spawnEntity(l, EntityType.CREEPER);
+                // if there is a creeper there already get rid of it!
+                for (Entity k : e.getNearbyEntities(1d, 1d, 1d)) {
+                    if (k.getType().equals(EntityType.CREEPER)) {
+                        e.remove();
+                        break;
+                    }
+                }
+                Creeper c = (Creeper) e;
+                c.setPowered(true);
+            }
+        }
+    }
+}
