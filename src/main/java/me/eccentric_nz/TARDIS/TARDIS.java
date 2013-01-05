@@ -33,6 +33,7 @@ import me.eccentric_nz.TARDIS.listeners.TARDISAreaListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISArtronCapacitorListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISButtonListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISCreeperDeathListener;
+import me.eccentric_nz.TARDIS.listeners.TARDISJettisonSeeder;
 import me.eccentric_nz.TARDIS.listeners.TARDISLightningListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISRoomSeeder;
 import me.eccentric_nz.TARDIS.listeners.TARDISSignListener;
@@ -127,6 +128,7 @@ public class TARDIS extends JavaPlugin {
     TARDISCreeperDeathListener creeperListener = new TARDISCreeperDeathListener(this);
     TARDISArtronCapacitorListener energyListener = new TARDISArtronCapacitorListener(this);
     TARDISRoomSeeder seedListener = new TARDISRoomSeeder(this);
+    TARDISJettisonSeeder jettisonListener = new TARDISJettisonSeeder(this);
     public PluginManager pm = Bukkit.getServer().getPluginManager();
     public HashMap<String, String> trackPlayers = new HashMap<String, String>();
     public HashMap<String, String> trackName = new HashMap<String, String>();
@@ -244,6 +246,7 @@ public class TARDIS extends JavaPlugin {
         pm.registerEvents(creeperListener, this);
         pm.registerEvents(energyListener, this);
         pm.registerEvents(seedListener, this);
+        pm.registerEvents(jettisonListener, this);
     }
 
     private void loadCommands() {
