@@ -63,6 +63,7 @@ public class ResultSetTardis {
     private String artron_button;
     private int middle_id;
     private byte middle_data;
+    private String creeper;
     private ArrayList<HashMap<String, String>> data = new ArrayList<HashMap<String, String>>();
 
     /**
@@ -148,6 +149,7 @@ public class ResultSetTardis {
                     this.artron_button = rs.getString("artron_button");
                     this.middle_id = rs.getInt("middle_id");
                     this.middle_data = rs.getByte("middle_data");
+                    this.creeper = rs.getString("creeper");
                 }
             } else {
                 return false;
@@ -260,6 +262,10 @@ public class ResultSetTardis {
 
     public byte getMiddle_data() {
         return middle_data;
+    }
+
+    public String getCreeper() {
+        return creeper;
     }
 
     public ArrayList<HashMap<String, String>> getData() {

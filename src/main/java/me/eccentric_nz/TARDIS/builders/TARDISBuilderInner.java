@@ -190,6 +190,18 @@ public class TARDISBuilderInner {
                                 wherec.put("tardis_id", dbID);
                                 qf.doUpdate("tardis", setc, wherec);
                             }
+                            if (id == -119) {
+                                /*
+                                 * command block will be coverted to the correct id by
+                                 * setBlock(), but remember it to spawn the creeper on.
+                                 */
+                                HashMap<String, Object> setcreep = new HashMap<String, Object>();
+                                HashMap<String, Object> wherecreep = new HashMap<String, Object>();
+                                String creeploc = world.getName() + ":" + (startx + 0.5) + ":" + starty + ":" + (startz + 0.5);
+                                setcreep.put("creeper", creeploc);
+                                wherecreep.put("tardis_id", dbID);
+                                qf.doUpdate("tardis", setcreep, wherecreep);
+                            }
                             if (id == 35 && data == 1) {
                                 switch (middle_id) {
                                     case 22:

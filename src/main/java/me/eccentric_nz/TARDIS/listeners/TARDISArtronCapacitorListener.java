@@ -24,6 +24,7 @@ import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.TARDISDatabase;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Creeper;
@@ -112,9 +113,20 @@ public class TARDISArtronCapacitorListener implements Listener {
                             player.sendMessage(plugin.pluginName + "Artron Energy Levels at maximum!");
                         } else if (item.equals(Material.valueOf(plugin.getConfig().getString("key")))) {
                             // kickstart the TARDIS Artron Energy Capacitor
-                            Location l = block.getRelative(BlockFace.NORTH).getRelative(BlockFace.UP).getLocation();
+                            // get location from database
+                            String[] creeperData = rs.getCreeper().split(":");
+                            World w = b.getWorld();
+                            float cx = 0, cy = 0, cz = 0;
+                            try {
+                                cx = Float.parseFloat(creeperData[1]);
+                                cy = Float.parseFloat(creeperData[2]);
+                                cz = Float.parseFloat(creeperData[3]);
+                            } catch (NumberFormatException nfe) {
+                                plugin.debug("Couldn't convert to a float! " + nfe.getMessage());
+                            }
+                            Location l = new Location(w, cx, cy, cz);
                             myspawn = true;
-                            Entity e = b.getWorld().spawnEntity(l, EntityType.CREEPER);
+                            Entity e = w.spawnEntity(l, EntityType.CREEPER);
                             // if there is a creeper there already get rid of it!
                             boolean first_time = true;
                             for (Entity k : e.getNearbyEntities(1d, 1d, 1d)) {

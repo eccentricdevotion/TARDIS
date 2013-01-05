@@ -29,7 +29,7 @@ public class TARDISDatabase {
     public void createTables() {
         try {
             statement = connection.createStatement();
-            String queryTARDIS = "CREATE TABLE IF NOT EXISTS tardis (tardis_id INTEGER PRIMARY KEY NOT NULL, owner TEXT COLLATE NOCASE, chunk TEXT, direction TEXT, home TEXT, save TEXT, current TEXT, replaced TEXT DEFAULT '', chest TEXT, button TEXT, repeater0 TEXT, repeater1 TEXT, repeater2 TEXT, repeater3 TEXT, companions TEXT, platform TEXT DEFAULT '', chameleon TEXT DEFAULT '', chamele_on INTEGER DEFAULT 0, size TEXT DEFAULT '', save_sign TEXT DEFAULT '', artron_button TEXT DEFAULT '', artron_level INTEGER DEFAULT 500)";
+            String queryTARDIS = "CREATE TABLE IF NOT EXISTS tardis (tardis_id INTEGER PRIMARY KEY NOT NULL, owner TEXT COLLATE NOCASE, chunk TEXT, direction TEXT, home TEXT, save TEXT, current TEXT, replaced TEXT DEFAULT '', chest TEXT, button TEXT, repeater0 TEXT, repeater1 TEXT, repeater2 TEXT, repeater3 TEXT, companions TEXT, platform TEXT DEFAULT '', chameleon TEXT DEFAULT '', chamele_on INTEGER DEFAULT 0, size TEXT DEFAULT '', save_sign TEXT DEFAULT '', artron_button TEXT DEFAULT '', artron_level INTEGER DEFAULT 0, creeper TEXT DEFAULT '')";
             statement.executeUpdate(queryTARDIS);
             String queryTravellers = "CREATE TABLE IF NOT EXISTS travellers (traveller_id INTEGER PRIMARY KEY NOT NULL, tardis_id INTEGER, player TEXT COLLATE NOCASE)";
             statement.executeUpdate(queryTravellers);
@@ -66,19 +66,19 @@ public class TARDISDatabase {
                 String queryAlter3 = "ALTER TABLE tardis ADD artron_level INTEGER DEFAULT 0";
                 statement.executeUpdate(queryAlter3);
                 TARDIS.plugin.console.sendMessage(TARDIS.plugin.pluginName + "Adding new Artron fields to tardis!");
-            }
-            // combine this with  above for release - these fields will record the middle block used to create the TARDIS so that rooms will use the same block
-            String queryAddMiddle = "SELECT sql FROM sqlite_master WHERE tbl_name = 'tardis' AND sql LIKE '%middle_id INTEGER%'";
-            ResultSet rsMiddle = statement.executeQuery(queryAddMiddle);
-            if (!rsMiddle.next()) {
                 String queryAlter4 = "ALTER TABLE tardis ADD middle_id INTEGER";
                 statement.executeUpdate(queryAlter4);
                 String queryAlter5 = "ALTER TABLE tardis ADD middle_data INTEGER";
                 statement.executeUpdate(queryAlter5);
                 TARDIS.plugin.console.sendMessage(TARDIS.plugin.pluginName + "Adding new middle block fields to tardis!");
             }
-            // and update existing TARDISs with 500 Artron Energy?
-
+            // combine this with above for release
+            String queryAddCreeper = "SELECT sql FROM sqlite_master WHERE tbl_name = 'tardis' AND sql LIKE '%creeper TEXT%'";
+            ResultSet rsCreeper = statement.executeQuery(queryAddCreeper);
+            if (!rsCreeper.next()) {
+                String queryAlter6 = "ALTER TABLE tardis ADD creeper TEXT DEFAULT ''";
+                statement.executeUpdate(queryAlter6);
+            }
         } catch (SQLException e) {
             TARDIS.plugin.console.sendMessage(TARDIS.plugin.pluginName + "Create table error: " + e);
         } finally {
