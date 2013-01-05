@@ -135,6 +135,7 @@ public class TARDIS extends JavaPlugin {
     public HashMap<String, String> trackPerm = new HashMap<String, String>();
     public HashMap<String, String> trackDest = new HashMap<String, String>();
     public HashMap<String, String> trackRoomSeed = new HashMap<String, String>();
+    public HashMap<String, String> trackJettison = new HashMap<String, String>();
     public HashMap<Integer, Integer> trackTravellers = new HashMap<Integer, Integer>();
     public HashMap<String, Integer> tardisHasTravelled = new HashMap<String, Integer>();
     public ArrayList<Integer> trackRecharge = new ArrayList<Integer>();

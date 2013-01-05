@@ -197,6 +197,34 @@ public class TARDISCommands implements CommandExecutor {
                 if (args[0].equalsIgnoreCase("jettison")) {
                     if (player.hasPermission("tardis.room")) {
                         // how do we know which room they want to jettison?
+                        String room = args[1].toUpperCase();
+                        if (args.length < 2) {
+                            player.sendMessage(plugin.pluginName + "Too few command arguments!");
+                            return false;
+                        }
+                        if (!Arrays.asList(ROOM.values()).contains(ROOM.valueOf(room))) {
+                            player.sendMessage(plugin.pluginName + "That is not a valid room type! Try one of : passage|arboretum|pool|vault|kitchen|bedroom|library|empty");
+                            return true;
+                        }
+                        HashMap<String, Object> where = new HashMap<String, Object>();
+                        where.put("owner", player.getName());
+                        ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
+                        if (!rs.resultSet()) {
+                            player.sendMessage(plugin.pluginName + "You are not a Timelord. You need to create a TARDIS first before using this command!");
+                            return true;
+                        }
+                        int id = rs.getTardis_id();
+                        // check they are in the tardis
+                        HashMap<String, Object> wheret = new HashMap<String, Object>();
+                        wheret.put("player", player.getName());
+                        wheret.put("tardis_id", id);
+                        ResultSetTravellers rst = new ResultSetTravellers(plugin, wheret, false);
+                        if (!rst.resultSet()) {
+                            player.sendMessage(plugin.pluginName + "You are not inside your TARDIS. You need to be to run this command!");
+                            return true;
+                        }
+                        plugin.trackJettison.put(player.getName(), room);
+                        player.sendMessage(plugin.pluginName + "Stand in the doorway of the room you want to jettison and place a TNT block on the block directly in front of the door. Hit the TNT with the TARDIS key to jettison the room!");
                         return true;
                     }
                 }
