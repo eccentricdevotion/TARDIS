@@ -76,7 +76,6 @@ public class TARDISBuilderInner {
         HashMap<Block, Byte> postDoorBlocks = new HashMap<Block, Byte>();
         HashMap<Block, Byte> postTorchBlocks = new HashMap<Block, Byte>();
         HashMap<Block, Byte> postSignBlocks = new HashMap<Block, Byte>();
-        HashMap<Block, Byte> postBeaconBlocks = new HashMap<Block, Byte>();
         HashMap<Block, Byte> postFillBlocks = new HashMap<Block, Byte>();
         // calculate startx, starty, startz
         int gsl[] = plugin.utils.getStartLocation(dbID);
@@ -211,8 +210,6 @@ public class TARDISBuilderInner {
                             postTorchBlocks.put(world.getBlockAt(startx, starty, startz), data);
                         } else if (id == 68) {
                             postSignBlocks.put(world.getBlockAt(startx, starty, startz), data);
-                        } else if (id == 34) {
-                            postBeaconBlocks.put(world.getBlockAt(startx, starty, startz), data);
                         } else if (id == 19) {
                             postFillBlocks.put(world.getBlockAt(startx, starty, startz), data);
                         } else {
@@ -248,11 +245,6 @@ public class TARDISBuilderInner {
                 i = 0;
             }
             ptb.setTypeIdAndData(i, ptdata, true);
-        }
-        for (Map.Entry<Block, Byte> entry : postBeaconBlocks.entrySet()) {
-            Block ptb = entry.getKey();
-            byte ptdata = Byte.valueOf(entry.getValue());
-            ptb.setTypeIdAndData(138, ptdata, true);
         }
         for (Map.Entry<Block, Byte> entry : postSignBlocks.entrySet()) {
             final Block psb = entry.getKey();
