@@ -103,16 +103,6 @@ public class TARDISRoomRunnable implements Runnable {
             // put door on
             b.setTypeIdAndData(64, door_data, true);
             b.getRelative(BlockFace.UP).setTypeIdAndData(64, (byte) 8, true);
-            // save the room data
-
-            set.put("tardis_id", tardis_id);
-            set.put("world", l.getWorld().getName());
-            set.put("endx", startx);
-            set.put("endy", starty);
-            set.put("endz", startz);
-            set.put("room_type", room);
-            set.put("room_direction", d.toString());
-            qf.doInsert("rooms", set);
             plugin.debug("Finished building");
             plugin.getServer().getScheduler().cancelTask(task);
             task = 0;
