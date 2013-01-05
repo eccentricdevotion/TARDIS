@@ -194,6 +194,12 @@ public class TARDISCommands implements CommandExecutor {
                         return true;
                     }
                 }
+                if (args[0].equalsIgnoreCase("jettison")) {
+                    if (player.hasPermission("tardis.room")) {
+                        // how do we know which room they want to jettison?
+                        return true;
+                    }
+                }
                 if (args[0].equalsIgnoreCase("occupy")) {
                     if (player.hasPermission("tardis.timetravel")) {
                         HashMap<String, Object> where = new HashMap<String, Object>();
