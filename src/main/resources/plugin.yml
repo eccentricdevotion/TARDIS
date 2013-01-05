@@ -2,7 +2,8 @@ authors: [eccentric_nz, ewized]
 description: A plugin for all Doctor Who fans - create and use a TARDIS! Teleport to random destinations - it's bigger on the inside!
 main: me.eccentric_nz.TARDIS.TARDIS
 name: TARDIS
-startup: postworld
+load: startup
+loadbefore: [Multiverse-Core]
 softdepend: [Multiverse-Core,WorldGuard,WorldBorder,Towny]
 website: http://dev.bukkit.org/server-mods/TARDIS/
 dev-url: http://dev.bukkit.org/server-mods/TARDIS/
