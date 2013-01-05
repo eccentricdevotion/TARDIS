@@ -267,9 +267,9 @@ public class TARDISBuilderInner {
             byte ptdata = Byte.valueOf(entry.getValue());
             int i;
             if (world.getWorldType().equals(WorldType.FLAT)) {
-                i = 1;
-            } else {
                 i = 0;
+            } else {
+                i = 1;
             }
             ptb.setTypeIdAndData(i, ptdata, true);
         }
