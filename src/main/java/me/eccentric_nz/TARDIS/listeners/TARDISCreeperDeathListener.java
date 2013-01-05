@@ -31,7 +31,6 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDeathEvent;
 
 /**
- *
  * @author eccentric_nz
  */
 public class TARDISCreeperDeathListener implements Listener {
@@ -43,6 +42,11 @@ public class TARDISCreeperDeathListener implements Listener {
         this.plugin = plugin;
     }
 
+    /**
+     * Listens for Creeper deaths. If the creeper is killed by a player and the
+     * creeper is a charged creeper, then the player receives the configured
+     * amount of Artron Energy.
+     */
     @EventHandler(priority = EventPriority.LOW)
     public void onCreeperDeath(EntityDeathEvent e) {
         LivingEntity ent = e.getEntity();

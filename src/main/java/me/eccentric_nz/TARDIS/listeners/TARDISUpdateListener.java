@@ -34,10 +34,6 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractEvent;
 
 /**
- * Listens for player interaction with the TARDIS console and other specific
- * items. If the block is clicked and players name is contained in the
- * appropriate HashMap, then the blocks position is recorded in the database.
- *
  * @author eccentric_nz
  */
 public class TARDISUpdateListener implements Listener {
@@ -49,6 +45,12 @@ public class TARDISUpdateListener implements Listener {
         this.plugin = plugin;
     }
 
+    /**
+     * Listens for player interaction with the TARDIS console and other specific
+     * items. If the block is clicked and players name is contained in the
+     * appropriate HashMap, then the blocks position is recorded in the
+     * database.
+     */
     @EventHandler(priority = EventPriority.MONITOR)
     public void onUpdateInteract(PlayerInteractEvent event) {
         if (event.isCancelled()) {

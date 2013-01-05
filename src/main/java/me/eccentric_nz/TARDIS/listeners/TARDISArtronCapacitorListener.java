@@ -39,7 +39,6 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 
 /**
- *
  * @author eccentric_nz
  */
 public class TARDISArtronCapacitorListener implements Listener {
@@ -57,12 +56,10 @@ public class TARDISArtronCapacitorListener implements Listener {
      * updated. Clicking with a Nether Star puts the capacitor to maximum,
      * clicking with the TARDIS key initialises the capacitor by spawning a
      * charged creeper inside it and sets the level to 50%. Clicking while
-     * sneaking transfers player artron energy into the capacitor.
+     * sneaking transfers player Artron Energy into the capacitor.
      *
      * If the button is just right-clicked, it displays the current capacitor
      * level as percentage of full.
-     *
-     * @author eccentric_nz
      */
     @EventHandler(priority = EventPriority.MONITOR)
     public void onCapacitorInteract(PlayerInteractEvent event) {

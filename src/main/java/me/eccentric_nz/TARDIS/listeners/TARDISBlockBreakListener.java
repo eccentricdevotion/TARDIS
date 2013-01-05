@@ -41,9 +41,6 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 
 /**
- * Listens for the TARDIS Police Box sign being broken. If the sign is broken,
- * then the TARDIS is destroyed and the database records removed.
- *
  * @author eccentric_nz
  */
 public class TARDISBlockBreakListener implements Listener {
@@ -55,6 +52,10 @@ public class TARDISBlockBreakListener implements Listener {
         this.plugin = plugin;
     }
 
+    /**
+     * Listens for the TARDIS Police Box sign being broken. If the sign is
+     * broken, then the TARDIS is destroyed and the database records removed.
+     */
     @EventHandler(priority = EventPriority.LOW)
     public void onSignBreak(BlockBreakEvent event) {
         if (event.isCancelled()) {

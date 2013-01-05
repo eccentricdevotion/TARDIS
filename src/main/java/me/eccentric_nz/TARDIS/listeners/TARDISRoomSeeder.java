@@ -33,7 +33,6 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 
 /**
- *
  * @author eccentric_nz
  */
 public class TARDISRoomSeeder implements Listener {
@@ -52,8 +51,6 @@ public class TARDISRoomSeeder implements Listener {
      * a passageway and the room type specified.
      *
      * Requires the TARDIS to have sufficient Artron Energy to grow the room.
-     *
-     * @author eccentric_nz
      */
     @EventHandler(priority = EventPriority.MONITOR)
     public void onSeedBlockInteract(PlayerInteractEvent event) {

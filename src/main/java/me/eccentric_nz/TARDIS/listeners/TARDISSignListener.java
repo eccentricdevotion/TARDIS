@@ -37,10 +37,6 @@ import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 
 /**
- * Listens for player interaction with the TARDIS chameleon or save-sign Signs.
- * If the signs are clicked, they trigger the appropriate actions, for example
- * turning the Chameleon Circuit on and off.
- *
  * @author eccentric_nz
  */
 public class TARDISSignListener implements Listener {
@@ -52,6 +48,11 @@ public class TARDISSignListener implements Listener {
         this.plugin = plugin;
     }
 
+    /**
+     * Listens for player interaction with the TARDIS chameleon or save-sign
+     * Signs. If the signs are clicked, they trigger the appropriate actions,
+     * for example turning the Chameleon Circuit on and off.
+     */
     @EventHandler(priority = EventPriority.MONITOR)
     public void onSignInteract(PlayerInteractEvent event) {
         if (event.isCancelled()) {
@@ -163,6 +164,9 @@ public class TARDISSignListener implements Listener {
         }
     }
 
+    /**
+     * Reorders a list so the the first item is moved to the end.
+     */
     public void reOrder(List<String> list, String current) {
         int i = list.size();
         while (i-- > 0 && !list.get(0).equals(current)) {

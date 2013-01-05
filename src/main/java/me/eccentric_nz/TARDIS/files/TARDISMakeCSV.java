@@ -38,6 +38,13 @@ public class TARDISMakeCSV {
         this.plugin = plugin;
     }
 
+    /**
+     * Loads CSV data into a 3D array for use by the TARDIS and room builder
+     * classes. If the required files are not present in the TARDIS plugin
+     * folder, then they are created. The WorldEdit schematics are first read
+     * and converted to CSV format, then the CSV data is loaded into an array.
+     * This allows server administrators to use their own schematic files.
+     */
     public void loadCSV() {
         try {
             File schematicDir = new File(plugin.getDataFolder() + File.separator + "schematics");
@@ -118,6 +125,10 @@ public class TARDISMakeCSV {
         }
     }
 
+    /**
+     * Tries to find the specified CSV file. If it doesn't exist, an empty file
+     * is created.
+     */
     public File createFile(String filename) {
         File file = new File(plugin.getDataFolder() + File.separator + "schematics" + File.separator, filename);
         if (!file.exists()) {
@@ -130,6 +141,10 @@ public class TARDISMakeCSV {
         return file;
     }
 
+    /**
+     * Copies the schematic file to the TARDIS plugin directory if it is not
+     * present.
+     */
     public File copy(String filepath, InputStream in) {
         File file = new File(filepath);
         if (!file.exists()) {

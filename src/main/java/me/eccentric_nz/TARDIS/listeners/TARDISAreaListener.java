@@ -30,10 +30,6 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractEvent;
 
 /**
- * Listens for player clicking blocks. If the player's name is contained in
- * various tracking HashMaps then we know that they are trying to create a
- * TARDIS area.
- *
  * @author eccentric_nz
  */
 public class TARDISAreaListener implements Listener {
@@ -45,6 +41,11 @@ public class TARDISAreaListener implements Listener {
         this.plugin = plugin;
     }
 
+    /**
+     * Listens for player clicking blocks. If the player's name is contained in
+     * various tracking HashMaps then we know that they are trying to create a
+     * TARDIS area.
+     */
     @EventHandler(priority = EventPriority.MONITOR)
     public void onAreaInteract(PlayerInteractEvent event) {
         if (event.isCancelled()) {

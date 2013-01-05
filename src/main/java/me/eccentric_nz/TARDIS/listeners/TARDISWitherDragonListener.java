@@ -28,9 +28,6 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityChangeBlockEvent;
 
 /**
- * Listens for Wither and Dragon entity interaction with the TARDIS blocks. If
- * the block is a TARDIS block, then the block change event is canceled.
- *
  * @author eccentric_nz
  */
 public class TARDISWitherDragonListener implements Listener {
@@ -42,6 +39,10 @@ public class TARDISWitherDragonListener implements Listener {
         this.plugin = plugin;
     }
 
+    /**
+     * Listens for Wither and Dragon entity interaction with the TARDIS blocks.
+     * If the block is a TARDIS block, then the block change event is canceled.
+     */
     @EventHandler(priority = EventPriority.LOW)
     public void bossBlockBreak(EntityChangeBlockEvent event) {
         if (event.isCancelled()) {

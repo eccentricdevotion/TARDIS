@@ -29,7 +29,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.permissions.PermissionAttachmentInfo;
 
 /**
- *
  * @author eccentric_nz
  */
 public class TARDISArea {

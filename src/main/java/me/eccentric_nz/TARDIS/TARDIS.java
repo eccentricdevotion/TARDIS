@@ -1,3 +1,19 @@
+/*
+ * Copyright (C) 2012 eccentric_nz
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package me.eccentric_nz.TARDIS;
 
 import me.eccentric_nz.TARDIS.utility.TARDISSounds;
@@ -49,6 +65,11 @@ import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
+/**
+ * The main class where everything is enabled and disabled.
+ *
+ * @author eccentric_nz
+ */
 public class TARDIS extends JavaPlugin {
 
     public ImprovedOfflinePlayer_api iopHandler;
@@ -188,6 +209,10 @@ public class TARDIS extends JavaPlugin {
         closeDatabase();
     }
 
+    /**
+     * Used to load net.minecraft.server methods for various versions of
+     * CraftBukkit.
+     */
     private void loadClasses() {
         String packageName = this.getServer().getClass().getPackage().getName();
         // Get full package string of CraftServer.
@@ -212,6 +237,9 @@ public class TARDIS extends JavaPlugin {
         console.sendMessage(pluginName + "Loading support for CB " + version);
     }
 
+    /**
+     * Sets up the database.
+     */
     private void loadDatabase() {
         try {
             String path = getDataFolder() + File.separator + "TARDIS.db";
@@ -222,6 +250,9 @@ public class TARDIS extends JavaPlugin {
         }
     }
 
+    /**
+     * Closes the database.
+     */
     private void closeDatabase() {
         try {
             service.connection.close();
@@ -230,6 +261,10 @@ public class TARDIS extends JavaPlugin {
         }
     }
 
+    /**
+     * Registers all the listeners for the various events required to use the
+     * TARDIS.
+     */
     private void registerListeners() {
         pm.registerEvents(blockPlaceListener, this);
         pm.registerEvents(blockBreakListener, this);
@@ -249,6 +284,9 @@ public class TARDIS extends JavaPlugin {
         pm.registerEvents(jettisonListener, this);
     }
 
+    /**
+     * Loads all the commands that the TARDIS uses.
+     */
     private void loadCommands() {
         tardisCommand = new TARDISCommands(this);
         tardisAdminCommand = new TARDISAdminCommands(this);
@@ -262,11 +300,18 @@ public class TARDIS extends JavaPlugin {
         getCommand("tardisarea").setExecutor(tardisAreaCommand);
     }
 
+    /**
+     * Builds the schematics used to create TARDISs and rooms. Also loads the
+     * quotes from the quotes file.
+     */
     private void loadFiles() {
         csv.loadCSV();
         quotesfile = csv.copy(getDataFolder() + File.separator + TARDISConstants.QUOTES_FILE_NAME, getResource(TARDISConstants.QUOTES_FILE_NAME));
     }
 
+    /**
+     * Starts the sending of plugin statistics.
+     */
     private void loadMetrics() {
         try {
             MetricsLite metrics = new MetricsLite(this);
@@ -276,6 +321,11 @@ public class TARDIS extends JavaPlugin {
         }
     }
 
+    /**
+     * Starts a repeating tasks that plays TARDIS sound effects to players while
+     * they are inside the TARDIS. Requires the Spout plugin to be installed on
+     * the server.
+     */
     private void startSound() {
         if (plugin.getServer().getPluginManager().getPlugin("Spout") != null && getConfig().getBoolean("sfx")) {
             this.getServer().getScheduler().scheduleSyncRepeatingTask(this, new Runnable() {
@@ -287,6 +337,9 @@ public class TARDIS extends JavaPlugin {
         }
     }
 
+    /**
+     * Checks if the WorldGuard plugin is available, and loads support if it is.
+     */
     private void loadWorldGuard() {
         if (getServer().getPluginManager().getPlugin("WorldGuard") != null) {
             worldGuardOnServer = true;
@@ -294,6 +347,9 @@ public class TARDIS extends JavaPlugin {
         }
     }
 
+    /**
+     * Checks if the Towny plugin is available, and loads support if it is.
+     */
     private void loadTowny() {
         if (getServer().getPluginManager().getPlugin("Towny") != null) {
             townyOnServer = true;
@@ -301,6 +357,10 @@ public class TARDIS extends JavaPlugin {
         }
     }
 
+    /**
+     * Checks if the WorldBorder plugin is available, and loads support if it
+     * is.
+     */
     private void loadWorldBorder() {
         if (getServer().getPluginManager().getPlugin("WorldBorder") != null) {
             borderOnServer = true;
@@ -308,8 +368,10 @@ public class TARDIS extends JavaPlugin {
         }
     }
 
+    /**
+     * Loads the quotes from a text file.
+     */
     public ArrayList<String> quotes() {
-        // load quotes from txt file
         if (quotesfile != null) {
             BufferedReader bufRdr = null;
             try {
@@ -337,6 +399,10 @@ public class TARDIS extends JavaPlugin {
         return quotes;
     }
 
+    /**
+     * Reads the config file and places the configured seed material for each
+     * room type into a HashMap.
+     */
     private HashMap<Material, String> getSeeds() {
         HashMap<Material, String> map = new HashMap<Material, String>();
         Set<String> rooms = getConfig().getConfigurationSection("rooms").getKeys(false);
@@ -347,6 +413,9 @@ public class TARDIS extends JavaPlugin {
         return map;
     }
 
+    /**
+     * Outputs a message to the console. Requires debug: true in the config.
+     */
     public void debug(Object o) {
         if (getConfig().getBoolean("debug") == true) {
             console.sendMessage(pluginName + "Debug: " + o);

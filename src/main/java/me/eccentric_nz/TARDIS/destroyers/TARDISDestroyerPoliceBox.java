@@ -30,7 +30,7 @@ import org.bukkit.World;
 import org.bukkit.block.Block;
 
 /**
- * Destroy the TRDIS Police Box.
+ * Destroy the TARDIS Police Box.
  *
  * @author eccentric_nz
  */

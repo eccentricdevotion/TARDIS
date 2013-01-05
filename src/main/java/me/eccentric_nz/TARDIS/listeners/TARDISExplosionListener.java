@@ -32,10 +32,6 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityExplodeEvent;
 
 /**
- * Listens for explosions around the TARDIS Police Box. If the explosion affects
- * any of the Police Box blocks, then those blocks are removed from the effect
- * of the explosion, there by protecting the Police box from damage.
- *
  * @author eccentric_nz
  */
 public class TARDISExplosionListener implements Listener {
@@ -47,6 +43,12 @@ public class TARDISExplosionListener implements Listener {
         this.plugin = plugin;
     }
 
+    /**
+     * Listens for explosions around the TARDIS Police Box. If the explosion
+     * affects any of the Police Box blocks, then those blocks are removed from
+     * the effect of the explosion, there by protecting the Police box from
+     * damage.
+     */
     @EventHandler(priority = EventPriority.LOW)
     public void onEntityExplode(EntityExplodeEvent e) {
         if (e.isCancelled()) {

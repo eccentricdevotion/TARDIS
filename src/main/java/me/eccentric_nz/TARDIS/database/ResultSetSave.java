@@ -23,7 +23,6 @@ import java.sql.Statement;
 import me.eccentric_nz.TARDIS.TARDIS;
 
 /**
- *
  * @author eccentric_nz
  */
 public class ResultSetSave {

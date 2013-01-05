@@ -37,10 +37,6 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.getspout.spoutapi.SpoutManager;
 
 /**
- * Listens for player interaction with the TARDIS console button. If the button
- * is clicked it will return a random destination based on the settings of the
- * four TARDIS console repeaters.
- *
  * @author eccentric_nz
  */
 public class TARDISButtonListener implements Listener {
@@ -52,6 +48,11 @@ public class TARDISButtonListener implements Listener {
         this.plugin = plugin;
     }
 
+    /**
+     * Listens for player interaction with the TARDIS console button. If the
+     * button is clicked it will return a random destination based on the
+     * settings of the four TARDIS console repeaters.
+     */
     @EventHandler(priority = EventPriority.MONITOR)
     public void onButtonInteract(PlayerInteractEvent event) {
         if (event.isCancelled()) {

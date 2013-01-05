@@ -28,7 +28,6 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 
 /**
- *
  * @author eccentric_nz
  */
 public class TARDISCreeperChecker {
@@ -40,6 +39,10 @@ public class TARDISCreeperChecker {
         this.plugin = plugin;
     }
 
+    /**
+     * A repeating task that checks if the charged creeper in the TARDIS Artron
+     * Energy Capacitor is still there.
+     */
     public void startCreeperCheck() {
         plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new Runnable() {
             @Override
@@ -49,6 +52,9 @@ public class TARDISCreeperChecker {
         }, 600L, 12000L);
     }
 
+    /**
+     * Checks the creeper is there and spawns in a new one if not.
+     */
     private void checkCreepers() {
         plugin.debug("Starting creeper check");
         ResultSetTardis rs = new ResultSetTardis(plugin, null, "", true);

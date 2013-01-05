@@ -28,9 +28,6 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockDamageEvent;
 
 /**
- * Listens for block damage to the TARDIS Police Box. If the block is a Police
- * Box block then the event is canceled, and the player warned.
- *
  * @author eccentric_nz
  */
 public class TARDISBlockDamageListener implements Listener {
@@ -42,6 +39,10 @@ public class TARDISBlockDamageListener implements Listener {
         this.plugin = plugin;
     }
 
+    /**
+     * Listens for block damage to the TARDIS Police Box. If the block is a
+     * Police Box block then the event is canceled, and the player warned.
+     */
     @EventHandler(priority = EventPriority.LOW)
     public void onPoliceBoxDamage(BlockDamageEvent event) {
         if (event.isCancelled()) {

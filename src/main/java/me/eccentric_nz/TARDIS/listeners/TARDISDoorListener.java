@@ -47,10 +47,6 @@ import org.bukkit.inventory.ItemStack;
 import org.getspout.spoutapi.SpoutManager;
 
 /**
- * Listens for player interaction with TARDIS doors. If the door is
- * right-clicked with the TARDIS key (configurable) it will teleport the player
- * either into or out of the TARDIS.
- *
  * @author eccentric_nz
  */
 public class TARDISDoorListener implements Listener {
@@ -80,6 +76,11 @@ public class TARDISDoorListener implements Listener {
         adjustYaw[3][3] = 0;
     }
 
+    /**
+     * Listens for player interaction with TARDIS doors. If the door is
+     * right-clicked with the TARDIS key (configurable) it will teleport the
+     * player either into or out of the TARDIS.
+     */
     @EventHandler(priority = EventPriority.MONITOR)
     public void onDoorInteract(PlayerInteractEvent event) {
         if (event.isCancelled()) {

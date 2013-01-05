@@ -23,7 +23,6 @@ import org.bukkit.WorldCreator;
 import org.bukkit.WorldType;
 
 /**
- *
  * @author eccentric_nz
  */
 public class TARDISSpace {

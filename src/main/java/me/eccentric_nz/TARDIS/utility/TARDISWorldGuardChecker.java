@@ -1,9 +1,24 @@
+/*
+ * Copyright (C) 2012 eccentric_nz
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package me.eccentric_nz.TARDIS.utility;
 
 import com.sk89q.worldedit.BlockVector;
 import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
 import com.sk89q.worldguard.domains.DefaultDomain;
-import com.sk89q.worldguard.protection.GlobalRegionManager;
 import com.sk89q.worldguard.protection.databases.ProtectionDatabaseException;
 import com.sk89q.worldguard.protection.flags.DefaultFlag;
 import com.sk89q.worldguard.protection.flags.Flag;
@@ -17,6 +32,9 @@ import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
 
+/**
+ * @author eccentric_nz
+ */
 public class TARDISWorldGuardChecker {
 
     private TARDIS plugin;
@@ -29,10 +47,20 @@ public class TARDISWorldGuardChecker {
         }
     }
 
+    /**
+     * Checks if a player can build (a Police Box) at this location.
+     *
+     * @param p the player to check
+     * @param l the location to check
+     */
     public boolean cantBuild(Player p, Location l) {
         return (plugin.worldGuardOnServer) && (!wg.canBuild(p, l));
     }
 
+    /**
+     * Adds a WorldGuard protected region to the inner TARDIS location. this
+     * stops other players and mobs from griefing the TARDIS :)
+     */
     public void addWGProtection(Player p, Location one, Location two) {
         RegionManager rm = wg.getRegionManager(one.getWorld());
         BlockVector b1;
@@ -59,7 +87,6 @@ public class TARDISWorldGuardChecker {
         flags.put(DefaultFlag.LAVA_FLOW, State.DENY);
         flags.put(DefaultFlag.LIGHTER, State.DENY);
         flags.put(DefaultFlag.MOB_SPAWNING, State.DENY);
-        //flags.put(DefaultFlag.MOB_DAMAGE, State.DENY);
         flags.put(DefaultFlag.CONSTRUCT, RegionGroup.OWNERS);
         flags.put(DefaultFlag.CHEST_ACCESS, State.ALLOW);
         region.setFlags(flags);
@@ -71,6 +98,9 @@ public class TARDISWorldGuardChecker {
         }
     }
 
+    /**
+     * Removes the WorldGuard region when the TARDIS is deleted.
+     */
     public void removeRegion(World w, String p) {
         RegionManager rm = wg.getRegionManager(w);
         rm.removeRegion("tardis_" + p);
@@ -81,6 +111,9 @@ public class TARDISWorldGuardChecker {
         }
     }
 
+    /**
+     * Turns a location object into a vector.
+     */
     public BlockVector makeBlockVector(Location location) {
         return new BlockVector(location.getX(), location.getY(), location.getZ());
     }

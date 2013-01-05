@@ -48,13 +48,6 @@ public class ImprovedOfflinePlayer_v1_4_6 implements ImprovedOfflinePlayer_api {
     private boolean exists = false;
     private boolean autosave = true;
 
-//    public ImprovedOfflinePlayer_v1_4_6(String playername) {
-//        this.exists = loadPlayerData(playername);
-//    }
-//
-//    public ImprovedOfflinePlayer_v1_4_6(OfflinePlayer offlineplayer) {
-//        this.exists = loadPlayerData(offlineplayer.getName());
-//    }
     private boolean loadPlayerData(String name) {
         try {
             this.player = name;

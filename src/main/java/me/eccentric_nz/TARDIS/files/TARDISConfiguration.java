@@ -1,3 +1,19 @@
+/*
+ * Copyright (C) 2012 eccentric_nz
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package me.eccentric_nz.TARDIS.files;
 
 import java.io.File;
@@ -12,6 +28,9 @@ import org.bukkit.World;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 
+/**
+ * @author eccentric_nz
+ */
 public class TARDISConfiguration {
 
     private final TARDIS plugin;
@@ -79,8 +98,13 @@ public class TARDISConfiguration {
         strOptions.put("rooms.EMPTY.seed", "GLASS");
     }
 
+    /**
+     * Checks that the config file contains all the required entries. If entries
+     * are missing, then they are added with default values. Also checks that
+     * all current server worlds are added to the config, and any deleted worlds
+     * are removed.
+     */
     public void checkConfig() {
-
         int i = 0;
         // boolean values
         for (Map.Entry<String, Boolean> entry : boolOptions.entrySet()) {

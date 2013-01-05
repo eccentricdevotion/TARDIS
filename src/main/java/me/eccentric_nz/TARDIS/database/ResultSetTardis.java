@@ -28,7 +28,6 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 
 /**
- *
  * @author eccentric_nz
  */
 public class ResultSetTardis {

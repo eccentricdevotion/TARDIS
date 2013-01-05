@@ -25,7 +25,6 @@ import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 
 /**
- *
  * @author eccentric_nz
  */
 public class TARDISRoomRunnable implements Runnable {
@@ -60,6 +59,9 @@ public class TARDISRoomRunnable implements Runnable {
         this.running = false;
     }
 
+    /**
+     * A runnable task that builds TARDIS rooms block by block.
+     */
     @Override
     public void run() {
         // initialise
@@ -84,7 +86,7 @@ public class TARDISRoomRunnable implements Runnable {
         }
         String tmp;
         if (level == h && row == w && col == (c - 1)) {
-            //put the door in
+            // the entire schematic has been read :)
             byte door_data;
             switch (d) {
                 case NORTH:
@@ -104,6 +106,7 @@ public class TARDISRoomRunnable implements Runnable {
             b.setTypeIdAndData(64, door_data, true);
             b.getRelative(BlockFace.UP).setTypeIdAndData(64, (byte) 8, true);
             plugin.debug("Finished building");
+            // cancel the task
             plugin.getServer().getScheduler().cancelTask(task);
             task = 0;
         }

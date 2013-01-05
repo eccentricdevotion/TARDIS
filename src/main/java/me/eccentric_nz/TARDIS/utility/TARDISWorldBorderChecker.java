@@ -22,7 +22,6 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import org.bukkit.Location;
 
 /**
- *
  * @author eccentric_nz
  */
 public class TARDISWorldBorderChecker {
@@ -37,7 +36,12 @@ public class TARDISWorldBorderChecker {
         }
     }
 
-    //public boolean isInBorder(World w, int x, int z) {
+    /**
+     * Checks to see whether the specified location is within a WorldBorder
+     * border.
+     *
+     * @param l the location to check.
+     */
     public boolean isInBorder(Location l) {
         boolean bool = true;
         if (border != null) {

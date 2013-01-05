@@ -28,7 +28,6 @@ import org.bukkit.World;
 import org.bukkit.entity.Player;
 
 /**
- *
  * @author eccentric_nz
  */
 public class TARDISArtronRunnable implements Runnable {
@@ -48,6 +47,9 @@ public class TARDISArtronRunnable implements Runnable {
         this.qf = new QueryFactory(plugin);
     }
 
+    /**
+     * A runnable task that recharges the TARDIS.
+     */
     @Override
     public void run() {
         int level = isFull(id);
@@ -62,6 +64,9 @@ public class TARDISArtronRunnable implements Runnable {
         qf.alterEnergyLevel("tardis", 10, where, p);
     }
 
+    /**
+     * Checks whether the TARDIS is near a recharge location.
+     */
     private boolean isNearCharger(int id) {
         HashMap<String, Object> where = new HashMap<String, Object>();
         where.put("tardis_id", id);
@@ -89,6 +94,9 @@ public class TARDISArtronRunnable implements Runnable {
         return false;
     }
 
+    /**
+     * Retrieves a list of recharge locations from the config.
+     */
     private List<Location> getRechargers() {
         List<Location> list = new ArrayList<Location>();
         if (plugin.getConfig().isConfigurationSection("rechargers")) {
@@ -105,6 +113,9 @@ public class TARDISArtronRunnable implements Runnable {
         return list;
     }
 
+    /**
+     * Gets the current Artron Energy Level for the specified TARDIS.
+     */
     private int isFull(int id) {
         HashMap<String, Object> where = new HashMap<String, Object>();
         where.put("tardis_id", id);

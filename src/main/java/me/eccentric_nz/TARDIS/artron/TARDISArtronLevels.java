@@ -23,9 +23,7 @@ import me.eccentric_nz.TARDIS.database.TARDISDatabase;
 import org.bukkit.entity.Player;
 
 /**
- *
  * @author eccentric_nz
- * @author ewized
  */
 public class TARDISArtronLevels {
 
@@ -36,6 +34,11 @@ public class TARDISArtronLevels {
         this.plugin = plugin;
     }
 
+    /**
+     * Starts a repeating task to recharge the TARDIS. The task is started each
+     * time the player exits the TARDSI after travelling. If the TARDIS moves
+     * away from the recharge location the task is cancelled.
+     */
     public void recharge(int id, Player p) {
         plugin.trackRecharge.add(id);
         TARDISArtronRunnable runnable = new TARDISArtronRunnable(plugin, id, p);
@@ -43,6 +46,10 @@ public class TARDISArtronLevels {
         runnable.setTask(taskID);
     }
 
+    /**
+     * Checks whether the TARDIS has sufficient Artron Energy levels. If the
+     * energy level will drop below 100, then the player is warned.
+     */
     public boolean checkLevel(int id, int required, Player p) {
         HashMap<String, Object> where = new HashMap<String, Object>();
         where.put("tardis_id", id);
@@ -51,7 +58,7 @@ public class TARDISArtronLevels {
             return false;
         }
         int level = rs.getArtron_level();
-        if (required - level <= 100) {
+        if (level - required <= 100) {
             p.sendMessage(plugin.pluginName + "The Artron Levels are critically low. You should recharge soon!");
         }
         return (level > required);

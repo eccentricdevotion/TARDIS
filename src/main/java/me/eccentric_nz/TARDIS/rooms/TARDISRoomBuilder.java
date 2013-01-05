@@ -28,7 +28,6 @@ import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Player;
 
 /**
- *
  * @author eccentric_nz
  */
 public class TARDISRoomBuilder {
@@ -48,6 +47,13 @@ public class TARDISRoomBuilder {
         this.p = p;
     }
 
+    /**
+     * Gets the required data to build a TARDIS room, then starts a repeating
+     * task to build it.
+     *
+     * This needs to be set up to use the actual dimensions from the schematic
+     * files, if user supplied room schematics are allowed to be used.
+     */
     public boolean build() {
         HashMap<String, Object> where = new HashMap<String, Object>();
         where.put("owner", p.getName());

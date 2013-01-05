@@ -31,11 +31,6 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.weather.LightningStrikeEvent;
 
 /**
- * Listens for lightning strikes around the TARDIS Police Box. If the strike is
- * within (recharge_distance in config.yml) blocks, then the TARDIS Artron
- * Levels will be increased by the configured amount (lightning_recharge in
- * config.yml).
- *
  * @author eccentric_nz
  */
 public class TARDISLightningListener implements Listener {
@@ -49,6 +44,12 @@ public class TARDISLightningListener implements Listener {
         this.qf = new QueryFactory(plugin);
     }
 
+    /**
+     * Listens for lightning strikes around the TARDIS Police Box. If the strike
+     * is within (recharge_distance in config.yml) blocks, then the TARDIS
+     * Artron Levels will be increased by the configured amount
+     * (lightning_recharge in config.yml).
+     */
     @EventHandler(priority = EventPriority.LOW)
     public void onLightningStrike(LightningStrikeEvent e) {
         if (e.isCancelled()) {

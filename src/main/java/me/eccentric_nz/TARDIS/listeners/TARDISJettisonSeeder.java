@@ -22,7 +22,6 @@ import me.eccentric_nz.TARDIS.TARDISConstants.COMPASS;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.TARDISDatabase;
 import me.eccentric_nz.TARDIS.rooms.TARDISRoomRemover;
-import org.bukkit.Effect;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -34,7 +33,6 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 
 /**
- *
  * @author eccentric_nz
  */
 public class TARDISJettisonSeeder implements Listener {
@@ -46,6 +44,13 @@ public class TARDISJettisonSeeder implements Listener {
         this.plugin = plugin;
     }
 
+    /**
+     * Listens for player interaction with a TNT block. If the block is clicked
+     * with the TARDIS key after running the command /tardis jettison [room
+     * type], the TNT block's location and the room type are used to determine a
+     * cuboid region that is set to AIR. The room walls are left in place as
+     * they maybe attached to other rooms/passage ways.
+     */
     @EventHandler(priority = EventPriority.MONITOR)
     public void onSeedBlockInteract(PlayerInteractEvent event) {
         if (event.isCancelled()) {

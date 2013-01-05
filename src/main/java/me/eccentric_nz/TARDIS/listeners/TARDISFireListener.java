@@ -31,10 +31,6 @@ import org.bukkit.event.block.BlockBurnEvent;
 import org.bukkit.event.block.BlockIgniteEvent;
 
 /**
- * Listens for block burn and ignite events around the TARDIS. If the affected
- * block is part of the TARDIS, then the event is canceled there by providing
- * protection for the TARDIS blocks
- *
  * @author eccentric_nz
  */
 public class TARDISFireListener implements Listener {
@@ -53,6 +49,11 @@ public class TARDISFireListener implements Listener {
         faces.add(BlockFace.WEST);
     }
 
+    /**
+     * Listens for block burn and ignite events around the TARDIS. If the
+     * affected block is part of the TARDIS, then the event is canceled there by
+     * providing protection for the TARDIS blocks
+     */
     @EventHandler(priority = EventPriority.LOWEST)
     public void onBlockIgnite(BlockIgniteEvent event) {
         if (event.isCancelled()) {

@@ -1,3 +1,19 @@
+/*
+ * Copyright (C) 2012 eccentric_nz
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package me.eccentric_nz.TARDIS.files;
 
 import java.io.BufferedWriter;
@@ -16,6 +32,9 @@ import org.jnbt.NBTInputStream;
 import org.jnbt.ShortTag;
 import org.jnbt.Tag;
 
+/**
+ * @author eccentric_nz
+ */
 public class TARDISSchematicReader {
 
     private TARDIS plugin;
@@ -29,6 +48,11 @@ public class TARDISSchematicReader {
         return tag;
     }
 
+    /**
+     * Reads a WorldEdit schematic file and writes the data to a CSV file. The
+     * dimensions of the schematics are also stored for use by the TARDIS and
+     * room builders.
+     */
     public void readAndMakeCSV(String fileStr, TARDISConstants.SCHEMATIC s, boolean rotate) {
         plugin.console.sendMessage(plugin.pluginName + "Loading schematic: " + fileStr);
         FileInputStream fis = null;
@@ -138,6 +162,9 @@ public class TARDISSchematicReader {
         }
     }
 
+    /**
+     * Rotates a square 2D array 90 degrees clockwise.
+     */
     private static String[][] rotateSquareCW(String[][] mat) {
         final int size = mat.length;
         String[][] out = new String[size][size];
@@ -149,6 +176,11 @@ public class TARDISSchematicReader {
         return out;
     }
 
+    /**
+     * Rotates a square 2D array 90 degrees counterclockwise. This is used for
+     * the (non-symmetrical) TARDIS passage ways so that they are built
+     * correctly in the EAST and WEST directions.
+     */
     private String[][] rotateSquareCCW(String[][] mat) {
         int size = mat.length;
         String[][] out = new String[size][size];
