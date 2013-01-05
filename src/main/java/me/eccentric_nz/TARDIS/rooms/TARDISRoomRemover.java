@@ -40,6 +40,11 @@ public class TARDISRoomRemover {
         this.d = d;
     }
 
+    /**
+     * Jettison a TARDIS room, leaving just the walls behind. We will probably
+     * need to get the dimensions of the room from the schematic, if custom room
+     * schematics will be allowed.
+     */
     public boolean remove() {
         // get start locations
         int sx, sy, sz, ex, ey, ez, downy, upy;
