@@ -2,7 +2,8 @@ author: eccentric_nz
 description: A plugin for all Doctor Who fans - create and use a TARDIS! Teleport to random destinations, fight randomly spawning monsters, bonus chests - it's bigger on the inside!
 main: me.eccentric_nz.plugins.TARDIS.TARDIS
 name: TARDIS
-startup: postworld
+load: startup
+loadbefore: [Multiverse-Core]
 softdepend: [Multiverse-Core,WorldGuard]
 dev-url: http://de.bukkit.org/server-mods/TARDIS/
 url: http://www.thenosefairy.co.nz/
