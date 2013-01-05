@@ -84,13 +84,14 @@ public class TARDISRoomSeeder implements Listener {
                 // get player's direction
                 COMPASS d = COMPASS.valueOf(plugin.utils.getPlayersDirection(player));
                 TARDISRoomBuilder builder = new TARDISRoomBuilder(plugin, r, b, d, player);
-                builder.build();
-                // ok they clicked it, so take their energy!
-                int amount = plugin.getConfig().getInt("rooms." + r + ".cost");
-                QueryFactory qf = new QueryFactory(plugin);
-                HashMap<String, Object> set = new HashMap<String, Object>();
-                set.put("owner", playerNameStr);
-                qf.alterEnergyLevel("tardis", -amount, set, player);
+                if (builder.build()) {
+                    // ok they clicked it, so take their energy!
+                    int amount = plugin.getConfig().getInt("rooms." + r + ".cost");
+                    QueryFactory qf = new QueryFactory(plugin);
+                    HashMap<String, Object> set = new HashMap<String, Object>();
+                    set.put("owner", playerNameStr);
+                    qf.alterEnergyLevel("tardis", -amount, set, player);
+                }
             }
         }
     }
