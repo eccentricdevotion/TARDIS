@@ -62,6 +62,7 @@ public class TARDISCommands implements CommandExecutor {
         firstArgs.add("namekey");
         firstArgs.add("version");
         firstArgs.add("room");
+        firstArgs.add("jettison");
     }
 
     @Override
@@ -83,6 +84,7 @@ public class TARDISCommands implements CommandExecutor {
                 return false;
             }
             if (args[0].equalsIgnoreCase("version")) {
+                // perhaps also check if there is an update?
                 FileConfiguration pluginYml = YamlConfiguration.loadConfiguration(plugin.pm.getPlugin("TARDIS").getResource("plugin.yml"));
                 String version = pluginYml.getString("version");
                 String cb = Bukkit.getVersion();
@@ -151,11 +153,11 @@ public class TARDISCommands implements CommandExecutor {
                 }
                 if (args[0].equalsIgnoreCase("room")) {
                     if (player.hasPermission("tardis.room")) {
-                        String room = args[1].toUpperCase();
                         if (args.length < 2) {
                             player.sendMessage(plugin.pluginName + "Too few command arguments!");
                             return false;
                         }
+                        String room = args[1].toUpperCase();
                         if (!Arrays.asList(ROOM.values()).contains(ROOM.valueOf(room))) {
                             player.sendMessage(plugin.pluginName + "That is not a valid room type! Try one of : passage|arboretum|pool|vault|kitchen|bedroom|library|empty");
                             return true;
@@ -196,12 +198,11 @@ public class TARDISCommands implements CommandExecutor {
                 }
                 if (args[0].equalsIgnoreCase("jettison")) {
                     if (player.hasPermission("tardis.room")) {
-                        // how do we know which room they want to jettison?
-                        String room = args[1].toUpperCase();
                         if (args.length < 2) {
                             player.sendMessage(plugin.pluginName + "Too few command arguments!");
                             return false;
                         }
+                        String room = args[1].toUpperCase();
                         if (!Arrays.asList(ROOM.values()).contains(ROOM.valueOf(room))) {
                             player.sendMessage(plugin.pluginName + "That is not a valid room type! Try one of : passage|arboretum|pool|vault|kitchen|bedroom|library|empty");
                             return true;
@@ -224,7 +225,7 @@ public class TARDISCommands implements CommandExecutor {
                             return true;
                         }
                         plugin.trackJettison.put(player.getName(), room);
-                        player.sendMessage(plugin.pluginName + "Stand in the doorway of the room you want to jettison and place a TNT block on the block directly in front of the door. Hit the TNT with the TARDIS key to jettison the room!");
+                        player.sendMessage(plugin.pluginName + "Stand in the doorway of the room you want to jettison and place a TNT block directly in front of the door. Hit the TNT with the TARDIS key to jettison the room!");
                         return true;
                     }
                 }
