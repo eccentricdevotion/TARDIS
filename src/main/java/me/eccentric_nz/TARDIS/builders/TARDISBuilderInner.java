@@ -243,7 +243,13 @@ public class TARDISBuilderInner {
                         } else if (id == 68) {
                             postSignBlocks.put(world.getBlockAt(startx, starty, startz), data);
                         } else if (id == 19) {
-                            postFillBlocks.put(world.getBlockAt(startx, starty, startz), data);
+                            int swap;
+                            if (world.getWorldType().equals(WorldType.FLAT) || plugin.getConfig().getBoolean("create_worlds")) {
+                                swap = 0;
+                            } else {
+                                swap = 1;
+                            }
+                            plugin.utils.setBlock(world, startx, starty, startz, swap, data);
                         } else {
                             plugin.utils.setBlock(world, startx, starty, startz, id, data);
                         }
@@ -266,17 +272,6 @@ public class TARDISBuilderInner {
             Block ptb = entry.getKey();
             byte ptdata = Byte.valueOf(entry.getValue());
             ptb.setTypeIdAndData(76, ptdata, true);
-        }
-        for (Map.Entry<Block, Byte> entry : postFillBlocks.entrySet()) {
-            Block ptb = entry.getKey();
-            byte ptdata = Byte.valueOf(entry.getValue());
-            int i;
-            if (world.getWorldType().equals(WorldType.FLAT)) {
-                i = 0;
-            } else {
-                i = 1;
-            }
-            ptb.setTypeIdAndData(i, ptdata, true);
         }
         for (Map.Entry<Block, Byte> entry : postSignBlocks.entrySet()) {
             final Block psb = entry.getKey();
