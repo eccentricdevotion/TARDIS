@@ -39,6 +39,12 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockPlaceEvent;
 
 /**
+ * TARDISes are bioships that are grown from a species of coral presumably
+ * indigenous to Gallifrey.
+ *
+ * The TARDIS had a drawing room, which the Doctor claimed to be his "private
+ * study". Inside it were momentos of his many incarnations' travels.
+ *
  * @author eccentric_nz
  */
 public class TARDISBlockPlaceListener implements Listener {
@@ -53,11 +59,11 @@ public class TARDISBlockPlaceListener implements Listener {
         this.utils = new TARDISUtils(plugin);
     }
 
-/**
- * Listens for player block placing. If the player place a stack of blocks in a
- * certain pattern for example (but not limited to): IRON_BLOCK, LAPIS_BLOCK,
- * RESTONE_TORCH the pattern of blocks is turned into a TARDIS.
- */
+    /**
+     * Listens for player block placing. If the player place a stack of blocks
+     * in a certain pattern for example (but not limited to): IRON_BLOCK,
+     * LAPIS_BLOCK, RESTONE_TORCH the pattern of blocks is turned into a TARDIS.
+     */
     @EventHandler(priority = EventPriority.MONITOR)
     public void onPlayerBlockPlace(BlockPlaceEvent event) {
         if (event.isCancelled()) {
@@ -116,7 +122,7 @@ public class TARDISBlockPlaceListener implements Listener {
                             cx = 0;
                             cz = 0;
                         } else {
-                            // check config to see whether we are using a default world to store TARDISs
+                            // check config to see whether we are using a default world to store TARDISes
                             if (plugin.getConfig().getBoolean("default_world")) {
                                 cw = plugin.getConfig().getString("default_world_name");
                                 chunkworld = plugin.getServer().getWorld(cw);

@@ -27,6 +27,9 @@ import java.util.Map;
 import me.eccentric_nz.TARDIS.TARDIS;
 
 /**
+ * Many facts, figures, and formulas are contained within the Matrix,
+ * including... a list of locations the TARDIS can travel to.
+ *
  * @author eccentric_nz
  */
 public class ResultSetDestinations {

@@ -33,6 +33,10 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 
 /**
+ * The Doctor kept some of the clothes from his previous regenerations, as well
+ * as clothing for other people in the TARDIS wardrobe. At least some of the
+ * clothes had pockets that were bigger on the inside.
+ *
  * @author eccentric_nz
  */
 public class TARDISRoomSeeder implements Listener {

@@ -27,6 +27,9 @@ import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
 /**
+ * The Zygons are a race of metamorphic humanoids. They originated from the
+ * planet Zygor, but often tried to migrate away from it.
+ *
  * @author eccentric_nz
  */
 public class TARDISLister {

@@ -28,6 +28,12 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityChangeBlockEvent;
 
 /**
+ * The Weeping Angels are a species of quantum-locked humanoids from the early
+ * universe. They are known for being murderous psychopaths, eradicating their
+ * victims "mercifully" by dropping them into the past and letting them live out
+ * their full lives, just in a different time period. This, in turn, allows them
+ * to live off the remaining time energy of the victim's life.
+ *
  * @author eccentric_nz
  */
 public class TARDISWitherDragonListener implements Listener {

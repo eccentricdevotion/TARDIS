@@ -39,6 +39,9 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 
 /**
+ * The Ninth Doctor used the Cardiff rift to "re-charge" his TARDIS. The process
+ * took 2 days.
+ *
  * @author eccentric_nz
  */
 public class TARDISArtronCapacitorListener implements Listener {

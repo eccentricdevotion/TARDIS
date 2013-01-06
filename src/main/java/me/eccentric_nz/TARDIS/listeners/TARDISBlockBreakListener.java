@@ -41,6 +41,10 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 
 /**
+ * The Silurians, also known as Earth Reptiles, Eocenes, Homo reptilia and
+ * Psionosauropodomorpha, are a species of Earth reptile. Technologically
+ * advanced, they live alongside their aquatic cousins, the Sea Devils.
+ *
  * @author eccentric_nz
  */
 public class TARDISBlockBreakListener implements Listener {

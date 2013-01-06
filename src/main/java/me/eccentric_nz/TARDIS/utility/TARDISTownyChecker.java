@@ -25,6 +25,11 @@ import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
 /**
+ * Due to the age of the TARDIS, it is inclined to break down. The Doctor is
+ * often seen with his head stuck in a panel carrying out maintenance of some
+ * kind or another, and he occasionally has to give it "percussive maintenance"
+ * (a good thump on the console) to get it to start working properly.
+ *
  * @author eccentric_nz
  */
 public class TARDISTownyChecker {

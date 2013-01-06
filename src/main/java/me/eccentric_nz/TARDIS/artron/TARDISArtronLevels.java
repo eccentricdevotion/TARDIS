@@ -23,6 +23,11 @@ import me.eccentric_nz.TARDIS.database.TARDISDatabase;
 import org.bukkit.entity.Player;
 
 /**
+ * Artron energy is used as a source of energy in the TARDIS. Visually, artron
+ * energy resembles a sort of blue electricity. Within the TARDIS' generator
+ * room is an Artron Energy Capacitor. Artron energy can be absorbed by
+ * travelling through time, such as by travellers in a TARDIS.
+ *
  * @author eccentric_nz
  */
 public class TARDISArtronLevels {
@@ -36,7 +41,7 @@ public class TARDISArtronLevels {
 
     /**
      * Starts a repeating task to recharge the TARDIS. The task is started each
-     * time the player exits the TARDSI after travelling. If the TARDIS moves
+     * time the player exits the TARDIS after travelling. If the TARDIS moves
      * away from the recharge location the task is cancelled.
      */
     public void recharge(int id, Player p) {

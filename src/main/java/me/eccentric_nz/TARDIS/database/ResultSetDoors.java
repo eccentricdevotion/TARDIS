@@ -28,6 +28,8 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 
 /**
+ * Many facts, figures, and formulas are contained within the Matrix,
+ * including... the location of the TARDIS doors in their different dimensions.
  *
  * @author eccentric_nz
  */

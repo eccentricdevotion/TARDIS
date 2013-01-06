@@ -33,6 +33,10 @@ import org.jnbt.ShortTag;
 import org.jnbt.Tag;
 
 /**
+ * The Ood are a humanoid species with coleoid tentacles on the lower portions
+ * of their faces. They have no vocal cords and instead communicate by
+ * telepathy.
+ *
  * @author eccentric_nz
  */
 public class TARDISSchematicReader {

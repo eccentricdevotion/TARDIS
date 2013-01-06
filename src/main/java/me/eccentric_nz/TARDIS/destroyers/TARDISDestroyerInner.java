@@ -29,6 +29,10 @@ import org.bukkit.block.Furnace;
 /**
  * Destroys the inner TARDIS.
  *
+ * If a TARDIS landed in the same space and time as another TARDIS, a time ram
+ * could occur, destroying both TARDISes, their occupants and even cause a black
+ * hole that would tear a hole in the universe
+ *
  * @author eccentric_nz
  */
 public class TARDISDestroyerInner {

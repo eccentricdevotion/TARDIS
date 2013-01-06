@@ -37,6 +37,9 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 /**
+ * Time travel is the process of travelling through time, even in a non-linear
+ * direction.
+ *
  * @author eccentric_nz
  */
 public class TARDISTravelCommands implements CommandExecutor {

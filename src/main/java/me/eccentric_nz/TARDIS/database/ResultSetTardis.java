@@ -28,6 +28,9 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 
 /**
+ * Many facts, figures, and formulas are contained within the Matrix,
+ * including... everything about the construction of the TARDIS itself.
+ *
  * @author eccentric_nz
  */
 public class ResultSetTardis {

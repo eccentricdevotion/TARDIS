@@ -28,6 +28,9 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockDamageEvent;
 
 /**
+ * The Judoon are a race of rhinocerid humanoids frequently employed as a
+ * mercenary police force.
+ *
  * @author eccentric_nz
  */
 public class TARDISBlockDamageListener implements Listener {

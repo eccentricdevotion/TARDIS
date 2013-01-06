@@ -21,6 +21,10 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 /**
+ * Soon after taking Amy Pond on board for the first time, the TARDIS console
+ * provided the Doctor with a new sonic screwdriver, as the previous one had
+ * been destroyed.
+ *
  * @author eccentric_nz
  */
 public class TARDISItemRenamer {

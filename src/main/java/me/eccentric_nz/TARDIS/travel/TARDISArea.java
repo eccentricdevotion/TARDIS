@@ -29,6 +29,10 @@ import org.bukkit.entity.Player;
 import org.bukkit.permissions.PermissionAttachmentInfo;
 
 /**
+ * The control or console room of the Doctor's TARDIS is the space in which the
+ * operation of the craft is usually effected. It is dominated by a large,
+ * hexagonal console, typically in or near the middle of the room.
+ *
  * @author eccentric_nz
  */
 public class TARDISArea {

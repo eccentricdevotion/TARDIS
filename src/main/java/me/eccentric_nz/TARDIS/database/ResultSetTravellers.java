@@ -27,6 +27,13 @@ import java.util.Map;
 import me.eccentric_nz.TARDIS.TARDIS;
 
 /**
+ * Many facts, figures, and formulas are contained within the Matrix,
+ * including... the companions who travel in the TARDIS.
+ *
+ * Companions are the Doctor's closest friends. Such people knew the Doctor's
+ * "secret": that he was someone non-human who travelled in space and time in a
+ * police box-shaped craft called the TARDIS.
+ *
  * @author eccentric_nz
  */
 public class ResultSetTravellers {

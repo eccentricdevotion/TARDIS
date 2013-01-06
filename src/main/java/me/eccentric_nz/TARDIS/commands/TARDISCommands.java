@@ -44,6 +44,9 @@ import org.bukkit.inventory.ItemStack;
 import org.getspout.spoutapi.SpoutManager;
 
 /**
+ * A TARDIS console room or control room is the area which houses the TARDIS'
+ * control console, by which the TARDIS was operated.
+ *
  * @author eccentric_nz
  */
 public class TARDISCommands implements CommandExecutor {

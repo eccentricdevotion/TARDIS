@@ -31,6 +31,10 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.weather.LightningStrikeEvent;
 
 /**
+ * Artron energy is vital in the running of a TARDIS; it can run low and when
+ * down to 10% it means even backup power is unavailable, as this requires
+ * artron energy as well.
+ *
  * @author eccentric_nz
  */
 public class TARDISLightningListener implements Listener {

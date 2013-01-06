@@ -31,6 +31,9 @@ import org.bukkit.event.block.BlockBurnEvent;
 import org.bukkit.event.block.BlockIgniteEvent;
 
 /**
+ * The Tenth Doctor once commented that fire was "so fun to look at! But bad for
+ * the skin!"
+ *
  * @author eccentric_nz
  */
 public class TARDISFireListener implements Listener {

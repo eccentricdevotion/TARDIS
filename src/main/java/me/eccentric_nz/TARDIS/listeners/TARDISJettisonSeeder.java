@@ -33,6 +33,9 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 
 /**
+ * Artron energy is to normal energy what movements within the deeps of the sea
+ * are to the waves on the surface.
+ *
  * @author eccentric_nz
  */
 public class TARDISJettisonSeeder implements Listener {

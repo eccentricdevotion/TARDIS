@@ -25,6 +25,11 @@ import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 
 /**
+ * The TARDIS had a swimming pool. After the TARDIS' crash following the
+ * Doctor's tenth regeneration, the pool's water - or perhaps the pool itself -
+ * fell into the library. After the TARDIS had fixed itself, the swimming pool
+ * was restored but the Doctor did not know where it was.
+ *
  * @author eccentric_nz
  */
 public class TARDISRoomRunnable implements Runnable {

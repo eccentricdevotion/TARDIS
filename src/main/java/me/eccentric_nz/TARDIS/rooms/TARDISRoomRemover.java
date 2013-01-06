@@ -24,6 +24,10 @@ import org.bukkit.World;
 import org.bukkit.block.Block;
 
 /**
+ * When the Eleventh Doctor was trying to get out of his universe, he said he
+ * was deleting the scullery room and squash court seven to give the TARDIS an
+ * extra boost.
+ *
  * @author eccentric_nz
  */
 public class TARDISRoomRemover {

@@ -68,6 +68,11 @@ import org.bukkit.plugin.java.JavaPlugin;
 /**
  * The main class where everything is enabled and disabled.
  *
+ * "TARDIS" is an acronym meaning "Time And Relative Dimension In Space".
+ * TARDISes move through time and space by "disappearing there and reappearing
+ * here", a process known as "de- and re-materialisation". TARDISes are used for
+ * the observation of various places and times.
+ *
  * @author eccentric_nz
  */
 public class TARDIS extends JavaPlugin {
@@ -301,7 +306,7 @@ public class TARDIS extends JavaPlugin {
     }
 
     /**
-     * Builds the schematics used to create TARDISs and rooms. Also loads the
+     * Builds the schematics used to create TARDISes and rooms. Also loads the
      * quotes from the quotes file.
      */
     private void loadFiles() {

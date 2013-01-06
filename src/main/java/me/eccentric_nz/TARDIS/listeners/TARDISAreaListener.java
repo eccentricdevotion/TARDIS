@@ -30,6 +30,11 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractEvent;
 
 /**
+ * Within the first nanosecond of landing in a new location, the TARDIS
+ * chameleon circuit analyses the surrounding area, calculates a
+ * twelve-dimensional data map of all objects within a thousand-mile radius and
+ * then determines which outer shell would best blend in with the environment.
+ *
  * @author eccentric_nz
  */
 public class TARDISAreaListener implements Listener {

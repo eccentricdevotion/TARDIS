@@ -34,6 +34,10 @@ import org.bukkit.entity.Player;
 /**
  * All things related to time travel.
  *
+ * All TARDISes built after a certain point, including the Type 40 the Doctor
+ * uses, have a mathematically modelled duplicate of the Eye of harmony with all
+ * its attendant features.
+ *
  * @author eccentric_nz
  */
 public class TARDISTimetravel {

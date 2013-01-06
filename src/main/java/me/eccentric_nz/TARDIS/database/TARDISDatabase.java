@@ -26,6 +26,10 @@ import me.eccentric_nz.TARDIS.TARDIS;
 /**
  * Singleton class to get the database connection.
  *
+ * Many facts, figures, and formulas are contained within the Matrix - a
+ * supercomputer and micro-universe used by the High Council of the Time Lords
+ * as a storehouse of knowledge to predict future events.
+ *
  * @author eccentric_nz
  */
 public class TARDISDatabase {

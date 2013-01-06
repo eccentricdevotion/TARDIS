@@ -23,6 +23,10 @@ import java.util.List;
 import org.bukkit.ChatColor;
 
 /**
+ * One of the key features of a TARDIS is that the interior exists in a
+ * dimension different from the exterior. The main application of this concept
+ * is that they are bigger on the inside than the outside.
+ *
  * @author eccentric_nz
  */
 public class TARDISConstants {

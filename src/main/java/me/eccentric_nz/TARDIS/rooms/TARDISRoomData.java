@@ -26,6 +26,8 @@ import org.bukkit.block.Block;
  * pass this around to the various methods instead of a whole bunch of
  * parameters.
  *
+ * The TARDIS had a full kitchen which included a refrigerator.
+ *
  * @author eccentric_nz
  */
 public class TARDISRoomData {

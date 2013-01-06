@@ -34,6 +34,12 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractEvent;
 
 /**
+ * The TARDIS interior goes through occasional metamorphoses, sometimes by
+ * choice, sometimes for other reasons, such as the Doctor's own regeneration.
+ * Some of these changes were physical in nature (involving secondary control
+ * rooms, etc.), but it was also possible to re-arrange the interior design of
+ * the TARDIS with ease, using the Architectural Configuration system.
+ *
  * @author eccentric_nz
  */
 public class TARDISUpdateListener implements Listener {

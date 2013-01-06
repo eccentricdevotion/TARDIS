@@ -36,13 +36,16 @@ import org.bukkit.entity.Player;
 /**
  * Various utility methods.
  *
+ * The TARDIS can be programmed to execute automatic functions based on certain
+ * conditions. It also automatically repairs after too much damage.
+ *
  * @author eccentric_nz
  */
 public class TARDISUtils {
 
     private final TARDIS plugin;
     TARDISDatabase service = TARDISDatabase.getInstance();
-    private HashMap<Integer,Integer> weirdBytes = new HashMap<Integer,Integer>();
+    private HashMap<Integer, Integer> weirdBytes = new HashMap<Integer, Integer>();
 
     public TARDISUtils(TARDIS plugin) {
         this.plugin = plugin;

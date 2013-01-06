@@ -32,6 +32,9 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityExplodeEvent;
 
 /**
+ * Distronic explosives are powerful but unstable weapons, used on many worlds
+ * as components of explosive warheads attached to missiles.
+ *
  * @author eccentric_nz
  */
 public class TARDISExplosionListener implements Listener {

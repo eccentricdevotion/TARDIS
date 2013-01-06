@@ -26,6 +26,8 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 
 /**
+ * Cybermen are a "race" of cybernetically augmented humanoid. They vary greatly
+ * in design, with different factions throughout time and space.
  *
  * @author eccentric_nz
  */

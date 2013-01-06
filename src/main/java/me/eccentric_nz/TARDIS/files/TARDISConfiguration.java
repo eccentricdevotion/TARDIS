@@ -29,6 +29,10 @@ import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 
 /**
+ * The Alpha Centauran Table Tennis Club is a club established by the Alpha
+ * Centaurans for the play of table tennis. The species is naturally gifted at
+ * the game, since they possess six arms. The Doctor is a member of the Club.
+ *
  * @author eccentric_nz
  */
 public class TARDISConfiguration {

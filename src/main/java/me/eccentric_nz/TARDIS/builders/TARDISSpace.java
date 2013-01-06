@@ -23,6 +23,10 @@ import org.bukkit.WorldCreator;
 import org.bukkit.WorldType;
 
 /**
+ * The Time Vortex is the dimension through which all time travellers pass. The
+ * Vortex was built by the Time Lords as a transdimensional spiral that
+ * connected all points in space and time.
+ *
  * @author eccentric_nz
  */
 public class TARDISSpace {

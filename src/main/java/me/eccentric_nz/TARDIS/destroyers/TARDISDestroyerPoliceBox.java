@@ -32,6 +32,9 @@ import org.bukkit.block.Block;
 /**
  * Destroy the TARDIS Police Box.
  *
+ * The chameleon circuit is the component of a TARDIS which changes its outer
+ * plasmic shell to assume a shape which blends in with its surroundings.
+ *
  * @author eccentric_nz
  */
 public class TARDISDestroyerPoliceBox {

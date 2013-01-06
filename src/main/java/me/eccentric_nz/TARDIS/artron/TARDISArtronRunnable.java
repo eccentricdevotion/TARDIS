@@ -28,6 +28,9 @@ import org.bukkit.World;
 import org.bukkit.entity.Player;
 
 /**
+ * Within the TARDIS' generator room is an Artron Energy Capacitor. The Eighth
+ * Doctor had a habit of using artron energy to make toast.
+ *
  * @author eccentric_nz
  */
 public class TARDISArtronRunnable implements Runnable {

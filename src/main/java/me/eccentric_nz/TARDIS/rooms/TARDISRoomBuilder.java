@@ -28,6 +28,11 @@ import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Player;
 
 /**
+ * There were at least fourteen bathrooms in the TARDIS, one of which had had a
+ * leaky tap for three centuries. Because he had misplaced his washers, the
+ * Doctor kept it from flooding the TARDIS by sealing it in a time loop that
+ * made the same drop of water leak out over and over again.
+ *
  * @author eccentric_nz
  */
 public class TARDISRoomBuilder {

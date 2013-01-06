@@ -27,6 +27,8 @@ import java.util.Map;
 import me.eccentric_nz.TARDIS.TARDIS;
 
 /**
+ * Many facts, figures, and formulas are contained within the Matrix,
+ * including... the location of the TARDIS Police Box blocks.
  *
  * @author eccentric_nz
  */

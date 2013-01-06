@@ -31,6 +31,11 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 /**
+ * Children begin instruction at the Time Lord Academy, at the age of 8, in a
+ * special ceremony. The Gallifreyans are forced to look into the Untempered
+ * Schism, which shows the entirety of the Time Vortex and the power that the
+ * Time Lords have.
+ *
  * @author eccentric_nz
  */
 public class TARDISPrefsCommands implements CommandExecutor {

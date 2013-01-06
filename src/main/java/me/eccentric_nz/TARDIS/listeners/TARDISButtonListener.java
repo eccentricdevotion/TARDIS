@@ -37,6 +37,11 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.getspout.spoutapi.SpoutManager;
 
 /**
+ * The various systems of the console room are fairly well-understood. According
+ * to one account, each of the six panels controls a discrete function. The
+ * navigation panel contains a time and space forward/back control, directional
+ * pointer, atom accelerator and the spatial location input.
+ *
  * @author eccentric_nz
  */
 public class TARDISButtonListener implements Listener {

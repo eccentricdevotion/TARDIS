@@ -28,6 +28,9 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 
 /**
+ * The Doctor?s favorite food - jelly babies have been considered a delicacy by
+ * the Doctor ever since his second incarnation.
+ *
  * @author eccentric_nz
  */
 public class TARDISCreeperChecker {

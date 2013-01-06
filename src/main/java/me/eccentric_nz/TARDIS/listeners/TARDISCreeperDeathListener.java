@@ -31,6 +31,10 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDeathEvent;
 
 /**
+ * The Sontarans are a race of belligerent and militaristic clones from the
+ * planet Sontar. They wage eternal war throughout Mutter's Spiral against the
+ * Rutan Host.
+ *
  * @author eccentric_nz
  */
 public class TARDISCreeperDeathListener implements Listener {

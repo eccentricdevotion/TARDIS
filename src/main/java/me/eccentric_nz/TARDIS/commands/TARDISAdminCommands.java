@@ -42,6 +42,14 @@ import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
 
 /**
+ * Command /tardisadmin [arguments].
+ *
+ * The Lord President was the most powerful member of the Time Lord Council and
+ * had near absolute authority, and used a link to the Matrix, a vast computer
+ * network containing the knowledge and experiences of all past generations of
+ * Time Lords, to set Time Lord policy and remain alert to potential threats
+ * from lesser civilisations.
+ *
  * @author eccentric_nz
  */
 public class TARDISAdminCommands implements CommandExecutor {

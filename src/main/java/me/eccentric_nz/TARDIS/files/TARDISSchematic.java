@@ -23,6 +23,11 @@ import java.io.IOException;
 import me.eccentric_nz.TARDIS.TARDIS;
 
 /**
+ * Daleks are the mutated descendants of the Kaleds of the planet Skaro. They
+ * fought the Time Lords in the Last Great Time War, ending in the near-total
+ * destruction of both races. Regarded by the Doctor as his greatest enemy, the
+ * Daleks are hated and feared throughout time and space.
+ *
  * @author eccentric_nz
  */
 public class TARDISSchematic {

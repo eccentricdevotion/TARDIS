@@ -32,6 +32,10 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 /**
+ * A dimension is a property of space, extending in a given direction, which,
+ * when combined with other dimensions of width and height and time, make up the
+ * Universe.
+ *
  * @author eccentric_nz
  */
 public class TARDISAreaCommands implements CommandExecutor {

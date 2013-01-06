@@ -33,6 +33,10 @@ import org.bukkit.World;
 import org.bukkit.entity.Player;
 
 /**
+ * Before a TARDIS becomes fully functional, it must be primed with the
+ * biological imprint of a Time Lord, normally done by simply having a Time Lord
+ * operate the TARDIS for the first time.
+ *
  * @author eccentric_nz
  */
 public class TARDISWorldGuardChecker {

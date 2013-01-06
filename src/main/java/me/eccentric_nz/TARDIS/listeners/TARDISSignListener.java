@@ -37,6 +37,10 @@ import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 
 /**
+ * A TARDIS with a functioning chameleon circuit can appear as almost anything
+ * desired. The owner can program the circuit to make it assume a specific
+ * shape.
+ *
  * @author eccentric_nz
  */
 public class TARDISSignListener implements Listener {

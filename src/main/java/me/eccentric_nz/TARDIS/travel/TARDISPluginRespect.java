@@ -21,6 +21,9 @@ import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
 /**
+ * The telepathic password to the TARDIS was "the colour crimson, the number
+ * eleven, the feeling of delight, and the smell of dust after rain".
+ *
  * @author eccentric_nz
  */
 public class TARDISPluginRespect {

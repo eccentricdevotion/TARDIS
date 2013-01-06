@@ -39,6 +39,11 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
 /**
+ * The TARDIS was prone to a number of technical faults, ranging from depleted
+ * resources to malfunctioning controls to a simple inability to arrive at the
+ * proper time or location. While the Doctor did not build the TARDIS from
+ * scratch, he has substantially modified/rebuilt it.
+ *
  * @author eccentric_nz
  */
 public class TARDISBuilderInner {

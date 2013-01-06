@@ -47,6 +47,11 @@ import org.bukkit.inventory.ItemStack;
 import org.getspout.spoutapi.SpoutManager;
 
 /**
+ * During TARDIS operation, a distinctive grinding and whirring sound is usually
+ * heard. River Song once demonstrated a TARDIS was capable of materialising
+ * silently, teasing the Doctor that the noise was actually caused by him
+ * leaving the brakes on.
+ *
  * @author eccentric_nz
  */
 public class TARDISDoorListener implements Listener {
