@@ -17,9 +17,9 @@
 package me.eccentric_nz.TARDIS.utility;
 
 /**
- * Whilst companions come and go, the Sonic Screwdriver remains the Doctor?s
- * most faithful of partners. Doesn?t kill, doesn?t wound, doesn?t maim, it also
- * doesn?t work on wood which is a bit of an oversight on the Doctor?s part.
+ * Whilst companions come and go, the Sonic Screwdriver remains the Doctor's
+ * most faithful of partners. Doesn't kill, doesn't wound, doesn't maim, it also
+ * doesn't work on wood which is a bit of an oversight on the Doctor's part.
  *
  * @author eccentric_nz
  */
