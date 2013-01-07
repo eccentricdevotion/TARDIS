@@ -23,7 +23,7 @@ public class TARDISTimetravel {
     }
 
     public Location randomDestination(Player p, World w, byte rx, byte rz, byte ry, String dir, String e) {
-        int level, row, col, x, y, z, startx, starty, startz, resetx, resetz, listlen, rw;
+        int startx, starty, startz, resetx, resetz, listlen, rw;
         World randworld = w;
         boolean danger = true;
         int count;
@@ -134,7 +134,7 @@ public class TARDISTimetravel {
             dest = new Location(randworld, wherex, highest, wherez);
         }
         if (randworld.getEnvironment().equals(Environment.NORMAL)) {
-            long timeout = System.currentTimeMillis() + (plugin.getConfig().getLong("timeout")*1000);
+            long timeout = System.currentTimeMillis() + (plugin.getConfig().getLong("timeout") * 1000);
             while (danger == true) {
                 if (System.currentTimeMillis() < timeout) {
                     count = 0;
