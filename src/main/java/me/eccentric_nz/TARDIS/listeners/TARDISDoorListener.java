@@ -16,6 +16,8 @@
  */
 package me.eccentric_nz.TARDIS.listeners;
 
+import com.onarandombox.MultiverseCore.MultiverseCore;
+import com.onarandombox.MultiverseCore.api.MultiverseWorld;
 import me.eccentric_nz.TARDIS.database.TARDISDatabase;
 import java.util.HashMap;
 import java.util.Random;
@@ -28,6 +30,10 @@ import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.utility.TARDISItemRenamer;
+import multiworld.MultiWorldPlugin;
+import multiworld.api.MultiWorldAPI;
+import multiworld.api.MultiWorldWorldData;
+import multiworld.api.flag.FlagName;
 import org.bukkit.Bukkit;
 import org.bukkit.Chunk;
 import org.bukkit.GameMode;
@@ -369,9 +375,9 @@ public class TARDISDoorListener implements Listener {
         final boolean allowFlight = p.getAllowFlight();
         final boolean crossWorlds = from != to;
         final boolean quotes = q;
-
         // try loading chunk
         World world = l.getWorld();
+        final boolean isSurvival = checkSurvival(world);
         Chunk chunk = world.getChunkAt(l);
         if (!world.isChunkLoaded(chunk)) {
             world.loadChunk(chunk);
@@ -389,7 +395,7 @@ public class TARDISDoorListener implements Listener {
             @SuppressWarnings("deprecation")
             public void run() {
                 p.teleport(theLocation);
-                if (p.getGameMode() == GameMode.CREATIVE || (allowFlight && crossWorlds)) {
+                if (p.getGameMode() == GameMode.CREATIVE || (allowFlight && crossWorlds && !isSurvival)) {
                     p.setAllowFlight(true);
                 }
                 if (quotes) {
@@ -428,5 +434,25 @@ public class TARDISDoorListener implements Listener {
                 }
             }
         }, 10L);
+    }
+
+    private boolean checkSurvival(World w) {
+        boolean bool = false;
+        if (plugin.pm.isPluginEnabled("Multiverse-Core")) {
+            MultiverseCore mv = (MultiverseCore) plugin.pm.getPlugin("Multiverse-Core");
+            MultiverseWorld mvw = mv.getCore().getMVWorldManager().getMVWorld(w);
+            GameMode gm = mvw.getGameMode();
+            if (gm.equals(GameMode.SURVIVAL)) {
+                bool = true;
+            }
+        }
+        if (plugin.pm.isPluginEnabled("MultiWorld")) {
+            MultiWorldAPI mw = ((MultiWorldPlugin) plugin.pm.getPlugin("MultiWorld")).getApi();
+            MultiWorldWorldData mww = mw.getWorld(w.getName());
+            if (!mww.isOptionSet(FlagName.CREATIVEWORLD)) {
+                bool = true;
+            }
+        }
+        return bool;
     }
 }
