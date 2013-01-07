@@ -68,6 +68,7 @@ public class TARDISConfiguration {
         boolOptions.put("respect_towny", true);
         boolOptions.put("respect_worldborder", true);
         boolOptions.put("create_worlds", true);
+        boolOptions.put("check_for_updates", true);
         // integer
         intOptions.put("timeout_height", 135);
         intOptions.put("timeout", 5);

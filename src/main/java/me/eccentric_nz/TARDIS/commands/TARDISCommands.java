@@ -29,6 +29,7 @@ import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetDestinations;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
+import me.eccentric_nz.TARDIS.files.TARDISUpdateChecker;
 import me.eccentric_nz.TARDIS.utility.TARDISItemRenamer;
 import me.eccentric_nz.TARDIS.utility.TARDISLister;
 import org.bukkit.*;
@@ -106,11 +107,15 @@ public class TARDISCommands implements CommandExecutor {
                 return false;
             }
             if (args[0].equalsIgnoreCase("version")) {
-                // perhaps also check if there is an update?
                 FileConfiguration pluginYml = YamlConfiguration.loadConfiguration(plugin.pm.getPlugin("TARDIS").getResource("plugin.yml"));
                 String version = pluginYml.getString("version");
                 String cb = Bukkit.getVersion();
                 sender.sendMessage(plugin.pluginName + "You are running TARDIS version: " + ChatColor.AQUA + version + ChatColor.RESET + " with CraftBukkit " + cb);
+                // also check if there is an update
+                if (plugin.getConfig().getBoolean("check_for_updates")) {
+                    TARDISUpdateChecker update = new TARDISUpdateChecker(plugin);
+                    update.checkVersion(player);
+                }
                 return true;
             }
             if (player == null) {

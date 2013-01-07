@@ -45,6 +45,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Set;
 import me.eccentric_nz.TARDIS.files.TARDISMakeCSV;
+import me.eccentric_nz.TARDIS.files.TARDISUpdateChecker;
 import me.eccentric_nz.TARDIS.listeners.TARDISAreaListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISArtronCapacitorListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISButtonListener;
@@ -204,6 +205,11 @@ public class TARDIS extends JavaPlugin {
         TARDIS_KEY = getConfig().getString("key");
         quote = quotes();
         quotelen = quote.size();
+        if (plugin.getConfig().getBoolean("check_for_updates")) {
+            TARDISUpdateChecker update = new TARDISUpdateChecker(this);
+            update.checkVersion(null);
+        }
+
         TARDISCreeperChecker cc = new TARDISCreeperChecker(this);
         cc.startCreeperCheck();
     }
