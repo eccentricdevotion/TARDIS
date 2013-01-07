@@ -10,6 +10,10 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import multiworld.MultiWorldPlugin;
+import multiworld.api.MultiWorldAPI;
+import multiworld.api.MultiWorldWorldData;
+import multiworld.api.flag.FlagName;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Chunk;
@@ -767,6 +771,13 @@ public class TARDISPlayerListener implements Listener {
             MultiverseWorld mvw = mv.getCore().getMVWorldManager().getMVWorld(w);
             GameMode gm = mvw.getGameMode();
             if (gm.equals(GameMode.SURVIVAL)) {
+                bool = true;
+            }
+        }
+        if (plugin.pm.isPluginEnabled("MultiWorld")) {
+            MultiWorldAPI mw = ((MultiWorldPlugin) plugin.pm.getPlugin("MultiWorld")).getApi();
+            MultiWorldWorldData mww = mw.getWorld(w.getName());
+            if (!mww.isOptionSet(FlagName.CREATIVEWORLD)) {
                 bool = true;
             }
         }
