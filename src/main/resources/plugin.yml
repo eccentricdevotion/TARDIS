@@ -7,7 +7,7 @@ loadbefore: [Multiverse-Core]
 softdepend: [Multiverse-Core,WorldGuard]
 dev-url: http://de.bukkit.org/server-mods/TARDIS/
 url: http://www.thenosefairy.co.nz/
-version: '1.9.3'
+version: '1.9.3-SNAPSHOT'
 permissions:
   tardis.admin:
     description: Allow players access to the TARDIS admin commands.

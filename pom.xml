@@ -2,7 +2,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>me.eccentric_nz.plugins.TARDIS</groupId>
     <artifactId>TARDIS</artifactId>
-    <version>1.9.3</version>
+    <version>1.9.3-SNAPSHOT</version>
     <name>TARDIS</name>
     <url>http://www.thenosefairy.co.nz/</url>
     <repositories>
@@ -56,6 +56,12 @@
             <groupId>com.sk89q</groupId>
             <artifactId>worldguard</artifactId>
             <version>5.6-SNAPSHOT</version>
+            <optional>true</optional>
+        </dependency>
+        <dependency>
+            <groupId>com.onarandombox.ci</groupId>
+            <artifactId>multiverse-core</artifactId>
+            <version>2.5</version>
             <optional>true</optional>
         </dependency>
     </dependencies>

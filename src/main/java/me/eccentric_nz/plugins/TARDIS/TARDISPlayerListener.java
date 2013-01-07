@@ -1,5 +1,7 @@
 package me.eccentric_nz.plugins.TARDIS;
 
+import com.onarandombox.MultiverseCore.MultiverseCore;
+import com.onarandombox.MultiverseCore.api.MultiverseWorld;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -26,6 +28,7 @@ import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.plugin.Plugin;
 import org.getspout.spoutapi.SpoutManager;
 
 public class TARDISPlayerListener implements Listener {
@@ -708,9 +711,10 @@ public class TARDISPlayerListener implements Listener {
         final boolean allowFlight = thePlayer.getAllowFlight();
         final boolean crossWorlds = from != to;
         final boolean quotes = q;
-
         // try loading chunk
         World world = l.getWorld();
+        final boolean isSurvival = checkSurvival(world);
+        plugin.debug("[To] world is SURVIVAL: " + isSurvival);
         Chunk chunk = world.getChunkAt(l);
         if (!world.isChunkLoaded(chunk)) {
             world.loadChunk(chunk);
@@ -727,7 +731,7 @@ public class TARDISPlayerListener implements Listener {
             @Override
             public void run() {
                 thePlayer.teleport(theLocation);
-                if (thePlayer.getGameMode() == GameMode.CREATIVE || (allowFlight && crossWorlds)) {
+                if (thePlayer.getGameMode() == GameMode.CREATIVE || (allowFlight && crossWorlds && !isSurvival)) {
                     thePlayer.setAllowFlight(true);
                 }
                 if (quotes) {
@@ -754,5 +758,18 @@ public class TARDISPlayerListener implements Listener {
         while (i-- > 0 && !list.get(0).equals(current)) {
             list.add(list.remove(0));
         }
+    }
+
+    private boolean checkSurvival(World w) {
+        boolean bool = false;
+        if (plugin.pm.isPluginEnabled("Multiverse-Core")) {
+            MultiverseCore mv = (MultiverseCore) plugin.pm.getPlugin("Multiverse-Core");
+            MultiverseWorld mvw = mv.getCore().getMVWorldManager().getMVWorld(w);
+            GameMode gm = mvw.getGameMode();
+            if (gm.equals(GameMode.SURVIVAL)) {
+                bool = true;
+            }
+        }
+        return bool;
     }
 }
