@@ -28,7 +28,7 @@ import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 
 /**
- * Checks BukkitDev for a newer version of the plugin.
+ * Checks thenosefairy.co.nz for a newer version of the plugin.
  *
  * @author eccentric_nz
  */
@@ -48,6 +48,9 @@ public class TARDISUpdateChecker {
 
     /**
      * Checks for the latest version.
+     *
+     * @param p the player to send the message to, if null then send to the
+     * console.
      */
     public void checkVersion(Player p) {
         if (exists(tardisURL)) {
@@ -84,7 +87,7 @@ public class TARDISUpdateChecker {
     }
 
     /**
-     * Checks whether a a url is valid.
+     * Checks whether a url is valid.
      *
      * @param url the URL to check.
      */
@@ -99,12 +102,11 @@ public class TARDISUpdateChecker {
     }
 
     /**
-     * Reads the latest version strings from thenosefairy.co.nz website. Returns
-     * an array where [0] is the current stable version number and [1] is the
-     * latest dev version number.
+     * Reads the latest version string from thenosefairy.co.nz website. Returns
+     * the current stable version number.
      *
      * @param url the URL to read from. This will always be
-     * http://thenosefairy.co.nz/tardis.php
+     * http://thenosefairy.co.nz/tardis.txt
      */
     public String URLReader(URL url) {
         String version = "";

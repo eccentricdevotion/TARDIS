@@ -17,6 +17,7 @@
 package me.eccentric_nz.TARDIS.thirdparty;
 
 /**
+ * Class to compare version strings. Borrowed from StackOverflow.
  *
  * @author alex http://stackoverflow.com/users/1445568/alex
  */
