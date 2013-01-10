@@ -95,14 +95,11 @@ public class TARDISDestroyerInner {
                         Chest chest = getDoubleChest(b);
                         if (chest != null) {
                             chest.getInventory().clear();
-                            if (chest.getBlock().setTypeId(i) && container.getBlock().setTypeId(i)) {
-                                plugin.debug("Deleted both halves of the double chest");
-                            }
+                            chest.getBlock().setTypeId(i);
+                            container.getBlock().setTypeId(i);
                         } else if (container != null) {
                             container.getInventory().clear();
-                            if (container.getBlock().setTypeId(i)) {
-                                plugin.debug("Deleted the single chest");
-                            }
+                            container.getBlock().setTypeId(i);
                         }
                     }
                     // if it's a furnace clear the inventory first

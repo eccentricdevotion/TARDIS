@@ -72,7 +72,6 @@ public class TARDISRoomRunnable implements Runnable {
         // initialise
         if (!running) {
             set = new HashMap<String, Object>();
-            plugin.debug("Initialising variables...");
             level = 0;
             row = 0;
             col = 0;
@@ -110,7 +109,6 @@ public class TARDISRoomRunnable implements Runnable {
             // put door on
             b.setTypeIdAndData(64, door_data, true);
             b.getRelative(BlockFace.UP).setTypeIdAndData(64, (byte) 8, true);
-            plugin.debug("Finished building");
             // cancel the task
             plugin.getServer().getScheduler().cancelTask(task);
             task = 0;

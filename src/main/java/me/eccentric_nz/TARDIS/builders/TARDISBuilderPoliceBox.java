@@ -296,8 +296,6 @@ public class TARDISBuilderPoliceBox {
                     } else {
                         s.setLine(0, owner + "'s");
                     }
-                } else {
-                    plugin.debug("Couldn't find owner in database!");
                 }
             }
             s.setLine(1, ChatColor.WHITE + "POLICE");
