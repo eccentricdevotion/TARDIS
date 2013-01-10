@@ -82,7 +82,7 @@ public class TARDISDatabase {
                 statement.executeUpdate(queryAlter);
                 TARDIS.plugin.console.sendMessage(TARDIS.plugin.pluginName + "Adding new Artron Levels to player prefs!");
             }
-            // add artron levels to tardis table as well
+            // add other fields to tardis table as well
             String queryAddTardis = "SELECT sql FROM sqlite_master WHERE tbl_name = 'tardis' AND sql LIKE '%artron_button TEXT%'";
             ResultSet rsTardis = statement.executeQuery(queryAddTardis);
             if (!rsTardis.next()) {
@@ -90,19 +90,13 @@ public class TARDISDatabase {
                 statement.executeUpdate(queryAlter2);
                 String queryAlter3 = "ALTER TABLE tardis ADD artron_level INTEGER DEFAULT 0";
                 statement.executeUpdate(queryAlter3);
-                TARDIS.plugin.console.sendMessage(TARDIS.plugin.pluginName + "Adding new Artron fields to tardis!");
                 String queryAlter4 = "ALTER TABLE tardis ADD middle_id INTEGER";
                 statement.executeUpdate(queryAlter4);
                 String queryAlter5 = "ALTER TABLE tardis ADD middle_data INTEGER";
                 statement.executeUpdate(queryAlter5);
-                TARDIS.plugin.console.sendMessage(TARDIS.plugin.pluginName + "Adding new middle block fields to tardis!");
-            }
-            // combine this with above for release
-            String queryAddCreeper = "SELECT sql FROM sqlite_master WHERE tbl_name = 'tardis' AND sql LIKE '%creeper TEXT%'";
-            ResultSet rsCreeper = statement.executeQuery(queryAddCreeper);
-            if (!rsCreeper.next()) {
                 String queryAlter6 = "ALTER TABLE tardis ADD creeper TEXT DEFAULT ''";
                 statement.executeUpdate(queryAlter6);
+                TARDIS.plugin.console.sendMessage(TARDIS.plugin.pluginName + "Adding new database fields to tardis!");
             }
         } catch (SQLException e) {
             TARDIS.plugin.console.sendMessage(TARDIS.plugin.pluginName + "Create table error: " + e);
