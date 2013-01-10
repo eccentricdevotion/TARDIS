@@ -55,6 +55,7 @@ public class TARDISUtils {
         weirdBytes.put(-117, 139); //cobblestone fence
         weirdBytes.put(-118, 138); //beacon
         weirdBytes.put(-119, 137); //command block
+        weirdBytes.put(-123, 133); //emerald block
     }
 
     /**
