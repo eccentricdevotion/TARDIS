@@ -205,7 +205,7 @@ public class TARDIS extends JavaPlugin {
         TARDIS_KEY = getConfig().getString("key");
         quote = quotes();
         quotelen = quote.size();
-        if (plugin.getConfig().getBoolean("check_for_updates")) {
+        if (getConfig().getBoolean("check_for_updates")) {
             TARDISUpdateChecker update = new TARDISUpdateChecker(this);
             update.checkVersion(null);
         }
@@ -321,7 +321,8 @@ public class TARDIS extends JavaPlugin {
     }
 
     /**
-     * Starts the sending of plugin statistics.
+     * Starts the sending of plugin statistics. To stop TARDIS sending metrics
+     * data, edit plugins/PluginMetrics/config.yml and set opt-out to true.
      */
     private void loadMetrics() {
         try {
