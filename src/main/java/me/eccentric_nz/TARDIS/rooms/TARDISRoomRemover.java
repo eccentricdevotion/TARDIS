@@ -53,19 +53,19 @@ public class TARDISRoomRemover {
         int sx, sy, sz, ex, ey, ez, downy, upy;
         switch (ROOM.valueOf(r)) {
             case PASSAGE:
-                downy = -2;
+                downy = 2;
                 upy = 4;
                 break;
             case POOL:
-                downy = -3;
+                downy = 3;
                 upy = 7;
                 break;
             case ARBORETUM:
-                downy = -4;
+                downy = 4;
                 upy = 7;
                 break;
             default:
-                downy = -1;
+                downy = 1;
                 upy = 7;
                 break;
         }
