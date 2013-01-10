@@ -60,3 +60,4 @@ hide: 400
 recharge_distance: 10
 lightning_recharge: 100
 creeper_recharge: 50
+jettison: 75

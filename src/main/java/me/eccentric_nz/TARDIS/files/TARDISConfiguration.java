@@ -90,6 +90,7 @@ public class TARDISConfiguration {
         intOptions.put("recharge_distance", 10);
         intOptions.put("lightning_recharge", 100);
         intOptions.put("creeper_recharge", 50);
+        intOptions.put("jettison", 75);
         // string
         strOptions.put("default_world_name", "myridiculouslylongworldnameiscalledcuthbert");
         strOptions.put("key", "STICK");
