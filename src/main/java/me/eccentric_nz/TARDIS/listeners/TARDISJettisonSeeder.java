@@ -68,19 +68,21 @@ public class TARDISJettisonSeeder implements Listener {
             // only proceed if they are clicking a seed block with the TARDIS key!
             if (blockType.equals(Material.TNT) && inhand.getType().equals(Material.valueOf(plugin.getConfig().getString("key")))) {
                 // check that player is in TARDIS
-                if (!plugin.trackRoomSeed.containsKey(playerNameStr)) {
+                if (!plugin.trackJettison.containsKey(playerNameStr)) {
                     return;
                 }
-                String r = plugin.seeds.get(blockType);
+                String r = plugin.trackJettison.get(playerNameStr);
                 // get clicked block location
                 Location b = block.getLocation();
                 // get player's direction
                 COMPASS d = COMPASS.valueOf(plugin.utils.getPlayersDirection(player));
                 TARDISRoomRemover remover = new TARDISRoomRemover(r, b, d);
                 if (remover.remove()) {
+                    plugin.trackJettison.remove(playerNameStr);
+                    block.setTypeIdAndData(0, (byte) 0, true);
                     b.getWorld().createExplosion(b.getBlockX(), b.getBlockY(), b.getBlockZ(), 4F, false, false);
                     // ok they clicked it, so take their energy!
-                    int amount = Math.round(plugin.getConfig().getInt("rooms." + r + ".cost") * 100F) / plugin.getConfig().getInt("jettison");
+                    int amount = Math.round((plugin.getConfig().getInt("jettison") / 100F) * plugin.getConfig().getInt("rooms." + r + ".cost"));
                     QueryFactory qf = new QueryFactory(plugin);
                     HashMap<String, Object> set = new HashMap<String, Object>();
                     set.put("owner", playerNameStr);
