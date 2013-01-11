@@ -180,43 +180,52 @@ public class TARDISCommands implements CommandExecutor {
                             sender.sendMessage(plugin.pluginName + " The server admin will not allow you to bring the TARDIS to this world!");
                             return true;
                         }
-                        if (plugin.worldGuardOnServer && plugin.getConfig().getBoolean("respect_worldguard")) {
-                            if (plugin.wgchk.cantBuild(player, eyeLocation)) {
-                                sender.sendMessage(plugin.pluginName + "That location is protected by WorldGuard!");
-                                return false;
-                            }
-                        }
-                        if (player.hasPermission("tardis.exile")) {
-                            String areaPerm = plugin.ta.getExileArea(player);
-                            if (plugin.ta.areaCheckInExile(areaPerm, eyeLocation)) {
-                                sender.sendMessage(plugin.pluginName + "You exile status does not allow you to bring the TARDIS to this location!");
-                                return false;
-                            }
-                        }
-                        if (plugin.ta.areaCheckLocPlayer(player, eyeLocation)) {
-                            sender.sendMessage(plugin.pluginName + "You do not have permission [" + plugin.trackPerm.get(player.getName()) + "] to bring the TARDIS to this location!");
-                            plugin.trackPerm.remove(player.getName());
-                            return false;
-                        }
-                        Material m = player.getTargetBlock(transparent, 50).getType();
-                        if (m != Material.SNOW) {
-                            int yplusone = eyeLocation.getBlockY();
-                            eyeLocation.setY(yplusone + 1);
-                        }
-                        // set save location
+                        Statement statement = null;
+                        ResultSet rs = null;
                         try {
                             Connection connection = service.getConnection();
-                            Statement statement = connection.createStatement();
-                            ResultSet rs = service.getTardis(player.getName(), "*");
+                            statement = connection.createStatement();
+                            rs = service.getTardis(player.getName(), "*");
                             if (!rs.next()) {
                                 sender.sendMessage(plugin.pluginName + " You must be the Timelord of the TARDIS to use this command!");
                                 return false;
                             }
+                            final TARDISConstants.COMPASS d = TARDISConstants.COMPASS.valueOf(rs.getString("direction"));
+                            TARDISTimetravel tt = new TARDISTimetravel(plugin);
+                            int[] start_loc = tt.getStartLocation(eyeLocation, d);
+                            int count = tt.safeLocation(start_loc[0] - 3, eyeLocation.getBlockY() + 1, start_loc[2], start_loc[1], start_loc[3], eyeLocation.getWorld(), d);
+                            if (count > 0) {
+                                sender.sendMessage(plugin.pluginName + " That location would grief existing blocks! Try somewhere else!");
+                                return true;
+                            }
+                            if (plugin.worldGuardOnServer && plugin.getConfig().getBoolean("respect_worldguard")) {
+                                if (plugin.wgchk.cantBuild(player, eyeLocation)) {
+                                    sender.sendMessage(plugin.pluginName + "That location is protected by WorldGuard!");
+                                    return false;
+                                }
+                            }
+                            if (player.hasPermission("tardis.exile")) {
+                                String areaPerm = plugin.ta.getExileArea(player);
+                                if (plugin.ta.areaCheckInExile(areaPerm, eyeLocation)) {
+                                    sender.sendMessage(plugin.pluginName + "You exile status does not allow you to bring the TARDIS to this location!");
+                                    return false;
+                                }
+                            }
+                            if (plugin.ta.areaCheckLocPlayer(player, eyeLocation)) {
+                                sender.sendMessage(plugin.pluginName + "You do not have permission [" + plugin.trackPerm.get(player.getName()) + "] to bring the TARDIS to this location!");
+                                plugin.trackPerm.remove(player.getName());
+                                return false;
+                            }
+                            Material m = player.getTargetBlock(transparent, 50).getType();
+                            if (m != Material.SNOW) {
+                                int yplusone = eyeLocation.getBlockY();
+                                eyeLocation.setY(yplusone + 1);
+                            }
+                            // set save location
                             final Player p = player;
                             final int id = rs.getInt("tardis_id");
                             String badsave = rs.getString("save");
                             final boolean cham = rs.getBoolean("chamele_on");
-                            final TARDISConstants.COMPASS d = TARDISConstants.COMPASS.valueOf(rs.getString("direction"));
                             String[] saveData = badsave.split(":");
                             World w = plugin.getServer().getWorld(saveData[0]);
                             int x, y, z;
@@ -224,7 +233,6 @@ public class TARDISCommands implements CommandExecutor {
                             y = plugin.utils.parseNum(saveData[2]);
                             z = plugin.utils.parseNum(saveData[3]);
                             final Location oldSave = w.getBlockAt(x, y, z).getLocation();
-                            rs.close();
                             String comehere = eyeLocation.getWorld().getName() + ":" + eyeLocation.getBlockX() + ":" + eyeLocation.getBlockY() + ":" + eyeLocation.getBlockZ();
                             String querySave = "UPDATE tardis SET save = '" + comehere + "', current = '" + comehere + "' WHERE tardis_id = " + id;
                             statement.executeUpdate(querySave);
@@ -245,9 +253,19 @@ public class TARDISCommands implements CommandExecutor {
                                     plugin.builder.buildOuterTARDIS(id, eyeLocation, d, cham, p, false);
                                 }
                             }, delay);
-                            statement.close();
+
                         } catch (SQLException e) {
                             plugin.console.sendMessage(plugin.pluginName + "Couldn't get TARDIS: " + e);
+                        } finally {
+                            try {
+                                if (rs != null) {
+                                    rs.close();
+                                }
+                                if (statement != null) {
+                                    statement.close();
+                                }
+                            } catch (Exception e) {
+                            }
                         }
                         return true;
                     } else {
