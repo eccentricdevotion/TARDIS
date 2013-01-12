@@ -30,6 +30,7 @@ import me.eccentric_nz.TARDIS.database.ResultSetDestinations;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.files.TARDISUpdateChecker;
+import me.eccentric_nz.TARDIS.travel.TARDISTimetravel;
 import me.eccentric_nz.TARDIS.utility.TARDISItemRenamer;
 import me.eccentric_nz.TARDIS.utility.TARDISLister;
 import org.bukkit.*;
@@ -327,6 +328,14 @@ public class TARDISCommands implements CommandExecutor {
                             sender.sendMessage(plugin.pluginName + "You must be the Timelord of the TARDIS to use this command!");
                             return true;
                         }
+                        final TARDISConstants.COMPASS d = rs.getDirection();
+                        TARDISTimetravel tt = new TARDISTimetravel(plugin);
+                        int[] start_loc = tt.getStartLocation(eyeLocation, d);
+                        int count = tt.safeLocation(start_loc[0] - 3, eyeLocation.getBlockY() + 1, start_loc[2], start_loc[1], start_loc[3], eyeLocation.getWorld(), d);
+                        if (count > 0) {
+                            sender.sendMessage(plugin.pluginName + "That location would grief existing blocks! Try somewhere else!");
+                            return true;
+                        }
                         int level = rs.getArtron_level();
                         int ch = plugin.getConfig().getInt("comehere");
                         if (level < ch) {
@@ -337,7 +346,6 @@ public class TARDISCommands implements CommandExecutor {
                         final int id = rs.getTardis_id();
                         String badsave = rs.getSave();
                         final boolean cham = rs.getChamele_on();
-                        final TARDISConstants.COMPASS d = rs.getDirection();
                         String[] saveData = badsave.split(":");
                         World w = plugin.getServer().getWorld(saveData[0]);
                         int x, y, z;
