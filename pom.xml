@@ -54,7 +54,7 @@
         <dependency>
             <groupId>org.getspout</groupId>
             <artifactId>spoutplugin</artifactId>
-            <version>1.3.2-R1.0-SNAPSHOT</version>
+            <version>1.4.6-R0.2-b1412</version>
             <type>jar</type>
             <scope>compile</scope>
         </dependency>
