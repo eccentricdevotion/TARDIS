@@ -20,11 +20,11 @@ public class TARDISBlockDamageListener implements Listener {
         this.plugin = plugin;
     }
 
-    @EventHandler(priority = EventPriority.LOW)
+    @EventHandler(priority = EventPriority.NORMAL)
     public void onBlockDamage(BlockDamageEvent event) {
-        if (event.isCancelled()) {
-            return;
-        }
+//        if (event.isCancelled()) {
+//            return;
+//        }
         Player p = event.getPlayer();
         Block b = event.getBlock();
         String l = b.getLocation().toString();
