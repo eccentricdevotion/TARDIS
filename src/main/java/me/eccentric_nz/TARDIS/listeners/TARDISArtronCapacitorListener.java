@@ -114,7 +114,7 @@ public class TARDISArtronCapacitorListener implements Listener {
                             float cx = 0, cy = 0, cz = 0;
                             try {
                                 cx = Float.parseFloat(creeperData[1]);
-                                cy = Float.parseFloat(creeperData[2]);
+                                cy = Float.parseFloat(creeperData[2]) + 1;
                                 cz = Float.parseFloat(creeperData[3]);
                             } catch (NumberFormatException nfe) {
                                 plugin.debug("Couldn't convert to a float! " + nfe.getMessage());
