@@ -56,7 +56,7 @@ public class TARDISCommands implements CommandExecutor {
 
     private TARDIS plugin;
     TARDISDatabase service = TARDISDatabase.getInstance();
-    private TARDISPluginRespect respect = new TARDISPluginRespect(plugin);
+    private TARDISPluginRespect respect;
     HashSet<Byte> transparent = new HashSet<Byte>();
     private List<String> firstArgs = new ArrayList<String>();
 
@@ -303,8 +303,9 @@ public class TARDISCommands implements CommandExecutor {
                             sender.sendMessage(plugin.pluginName + "The server admin will not allow you to bring the TARDIS to this world!");
                             return true;
                         }
-                        if (respect.getRespect(player, eyeLocation, true)) {
-                            return true;
+                        respect = new TARDISPluginRespect(plugin);
+                        if (!respect.getRespect(player, eyeLocation, true)) {
+                            return false;
                         }
                         if (player.hasPermission("tardis.exile")) {
                             String areaPerm = plugin.ta.getExileArea(player);
@@ -399,6 +400,7 @@ public class TARDISCommands implements CommandExecutor {
                             sender.sendMessage(plugin.pluginName + "The server admin will not allow you to set the TARDIS home in this world!");
                             return true;
                         }
+                        respect = new TARDISPluginRespect(plugin);
                         if (respect.getRespect(player, eyeLocation, true)) {
                             return true;
                         }
@@ -766,6 +768,7 @@ public class TARDISCommands implements CommandExecutor {
                                 sender.sendMessage(plugin.pluginName + "The server admin will not allow you to set the TARDIS destination to this world!");
                                 return true;
                             }
+                            respect = new TARDISPluginRespect(plugin);
                             if (respect.getRespect(player, l, true)) {
                                 return true;
                             }

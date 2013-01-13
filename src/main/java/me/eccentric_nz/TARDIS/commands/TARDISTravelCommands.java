@@ -46,7 +46,7 @@ public class TARDISTravelCommands implements CommandExecutor {
 
     private TARDIS plugin;
     TARDISDatabase service = TARDISDatabase.getInstance();
-    private TARDISPluginRespect respect = new TARDISPluginRespect(plugin);
+    private TARDISPluginRespect respect;
 
     public TARDISTravelCommands(TARDIS plugin) {
         this.plugin = plugin;
@@ -139,6 +139,7 @@ public class TARDISTravelCommands implements CommandExecutor {
                                     sender.sendMessage(plugin.pluginName + "The player's location would not be safe! Please tell the player to move!");
                                     return true;
                                 }
+                                respect = new TARDISPluginRespect(plugin);
                                 if (respect.getRespect(player, player_loc, true)) {
                                     return true;
                                 }
@@ -215,6 +216,7 @@ public class TARDISTravelCommands implements CommandExecutor {
                         z = plugin.utils.parseNum(args[3]);
                         Block block = w.getBlockAt(x, y, z);
                         Location location = block.getLocation();
+                        respect = new TARDISPluginRespect(plugin);
                         if (respect.getRespect(player, location, true)) {
                             return true;
                         }
