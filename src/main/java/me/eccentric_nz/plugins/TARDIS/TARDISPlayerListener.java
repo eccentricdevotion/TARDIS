@@ -256,7 +256,12 @@ public class TARDISPlayerListener implements Listener {
                                             String tl = rs.getString("owner");
                                             String save = rs.getString("save");
                                             String cl = rs.getString("current");
-                                            boolean cham = rs.getBoolean("chamele_on");
+                                            boolean cham;
+                                            if (!plugin.getConfig().getBoolean("chameleon")) {
+                                                cham = false;
+                                            } else {
+                                                cham = rs.getBoolean("chamele_on");
+                                            }
                                             float yaw = player.getLocation().getYaw();
                                             float pitch = player.getLocation().getPitch();
                                             String companions = rs.getString("companions");

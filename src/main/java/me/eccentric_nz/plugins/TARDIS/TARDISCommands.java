@@ -88,6 +88,10 @@ public class TARDISCommands implements CommandExecutor {
                 return false;
             } else {
                 if (args[0].equalsIgnoreCase("chameleon")) {
+                    if (!plugin.getConfig().getBoolean("chameleon")) {
+                        sender.sendMessage(plugin.pluginName + " This server does not allow the use of the chameleon circuit!");
+                        return false;
+                    }
                     if (player.hasPermission("tardis.timetravel")) {
                         if (args.length < 2 || (!args[1].equalsIgnoreCase("on") && !args[1].equalsIgnoreCase("off"))) {
                             sender.sendMessage(plugin.pluginName + " Too few command arguments!");
@@ -225,7 +229,13 @@ public class TARDISCommands implements CommandExecutor {
                             final Player p = player;
                             final int id = rs.getInt("tardis_id");
                             String badsave = rs.getString("save");
-                            final boolean cham = rs.getBoolean("chamele_on");
+                            boolean chamtmp;
+                            if (!plugin.getConfig().getBoolean("chameleon")) {
+                                chamtmp = false;
+                            } else {
+                                chamtmp = rs.getBoolean("chamele_on");
+                            }
+                            final boolean cham = chamtmp;
                             String[] saveData = badsave.split(":");
                             World w = plugin.getServer().getWorld(saveData[0]);
                             int x, y, z;
@@ -371,7 +381,11 @@ public class TARDISCommands implements CommandExecutor {
                             }
                             save = rs.getString("save");
                             id = rs.getInt("tardis_id");
-                            cham = rs.getBoolean("chamele_on");
+                            if (!plugin.getConfig().getBoolean("chameleon")) {
+                                cham = false;
+                            } else {
+                                cham = rs.getBoolean("chamele_on");
+                            }
                             d = TARDISConstants.COMPASS.valueOf(rs.getString("direction"));
                             rs.close();
                             statement.close();
@@ -737,7 +751,12 @@ public class TARDISCommands implements CommandExecutor {
                             String save = rs.getString("save");
                             String[] save_data = save.split(":");
                             int id = rs.getInt("tardis_id");
-                            boolean cham = rs.getBoolean("chamele_on");
+                            boolean cham;
+                            if (!plugin.getConfig().getBoolean("chameleon")) {
+                                cham = false;
+                            } else {
+                                cham = rs.getBoolean("chamele_on");
+                            }
                             String dir = args[1].toUpperCase();
                             TARDISConstants.COMPASS old_d = TARDISConstants.COMPASS.valueOf(rs.getString("direction"));
 
