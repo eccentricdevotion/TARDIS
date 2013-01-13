@@ -141,7 +141,10 @@ public class TARDISDoorListener implements Listener {
                                         String tl = rs.getOwner();
                                         String save = rs.getSave();
                                         String cl = rs.getCurrent();
-                                        boolean cham = rs.getChamele_on();
+                                        boolean cham = false;
+                                        if (plugin.getConfig().getBoolean("chameleon")) {
+                                            cham = rs.getChamele_on();
+                                        }
                                         float yaw = player.getLocation().getYaw();
                                         float pitch = player.getLocation().getPitch();
                                         String companions = rs.getCompanions();
