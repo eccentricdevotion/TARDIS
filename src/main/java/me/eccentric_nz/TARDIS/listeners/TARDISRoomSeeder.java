@@ -83,6 +83,7 @@ public class TARDISRoomSeeder implements Listener {
                 COMPASS d = COMPASS.valueOf(plugin.utils.getPlayersDirection(player));
                 TARDISRoomBuilder builder = new TARDISRoomBuilder(plugin, r, b, d, player);
                 if (builder.build()) {
+                    plugin.trackRoomSeed.remove(playerNameStr);
                     // ok they clicked it, so take their energy!
                     int amount = plugin.getConfig().getInt("rooms." + r + ".cost");
                     QueryFactory qf = new QueryFactory(plugin);
