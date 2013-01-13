@@ -17,9 +17,7 @@
 package me.eccentric_nz.TARDIS.utility;
 
 import com.palmergames.bukkit.towny.Towny;
-import com.palmergames.bukkit.towny.object.Coord;
-import com.palmergames.bukkit.towny.object.TownyWorld;
-import com.palmergames.bukkit.towny.object.WorldCoord;
+import com.palmergames.bukkit.towny.object.TownyUniverse;
 import me.eccentric_nz.TARDIS.TARDIS;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
@@ -52,18 +50,8 @@ public class TARDISTownyChecker {
     public boolean isWilderness(Player p, Location l) {
         boolean bool = true;
         if (towny != null) {
-            try {
-                String name = l.getWorld().getName();
-                TownyWorld w = new TownyWorld(name);
-                if (w.hasTowns()) {
-                    Coord cord = Coord.parseCoord(l.getBlockX(), l.getBlockZ());
-                    WorldCoord wcoord = new WorldCoord(name, cord);
-                    if (wcoord.getTownBlock().hasResident() && (!wcoord.getTownBlock().getResident().getPermissions().outsiderBuild && !wcoord.getTownBlock().getResident().getPermissions().allyBuild && !wcoord.getTownBlock().getResident().getPermissions().residentBuild)) {
-                        bool = false;
-                    }
-                }
-            } catch (Exception e) {
-                plugin.debug("Towny checker error " + e.getMessage());
+            if (!TownyUniverse.isWilderness(l.getBlock())) {
+                bool = false;
             }
         }
         return bool;
