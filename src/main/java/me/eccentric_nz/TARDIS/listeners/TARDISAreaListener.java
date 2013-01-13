@@ -53,13 +53,8 @@ public class TARDISAreaListener implements Listener {
      */
     @EventHandler(priority = EventPriority.MONITOR)
     public void onAreaInteract(PlayerInteractEvent event) {
-        if (event.isCancelled()) {
-            return;
-        }
-
         final Player player = event.getPlayer();
         final String playerNameStr = player.getName();
-
         Block block = event.getClickedBlock();
         if (block != null) {
             if (plugin.trackName.containsKey(playerNameStr) && !plugin.trackBlock.containsKey(playerNameStr)) {

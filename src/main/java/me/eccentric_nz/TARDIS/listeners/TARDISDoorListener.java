@@ -94,9 +94,6 @@ public class TARDISDoorListener implements Listener {
      */
     @EventHandler(priority = EventPriority.MONITOR)
     public void onDoorInteract(PlayerInteractEvent event) {
-        if (event.isCancelled()) {
-            return;
-        }
         QueryFactory qf = new QueryFactory(plugin);
         final Player player = event.getPlayer();
         final String playerNameStr = player.getName();

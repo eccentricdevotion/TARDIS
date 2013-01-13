@@ -51,9 +51,6 @@ public class TARDISWitherDragonListener implements Listener {
      */
     @EventHandler(priority = EventPriority.LOW)
     public void bossBlockBreak(EntityChangeBlockEvent event) {
-        if (event.isCancelled()) {
-            return;
-        }
         Block b = event.getBlock();
         String l = b.getLocation().toString();
         EntityType eType;

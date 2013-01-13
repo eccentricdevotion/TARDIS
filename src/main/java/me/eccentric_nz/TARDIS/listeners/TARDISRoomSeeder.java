@@ -58,9 +58,6 @@ public class TARDISRoomSeeder implements Listener {
      */
     @EventHandler(priority = EventPriority.MONITOR)
     public void onSeedBlockInteract(PlayerInteractEvent event) {
-        if (event.isCancelled()) {
-            return;
-        }
         final Player player = event.getPlayer();
         String playerNameStr = player.getName();
         Block block = event.getClickedBlock();

@@ -59,9 +59,6 @@ public class TARDISSignListener implements Listener {
      */
     @EventHandler(priority = EventPriority.MONITOR)
     public void onSignInteract(PlayerInteractEvent event) {
-        if (event.isCancelled()) {
-            return;
-        }
         final Player player = event.getPlayer();
         Block block = event.getClickedBlock();
         if (block != null) {

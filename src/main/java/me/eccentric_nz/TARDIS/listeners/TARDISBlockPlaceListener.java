@@ -66,9 +66,6 @@ public class TARDISBlockPlaceListener implements Listener {
      */
     @EventHandler(priority = EventPriority.MONITOR)
     public void onPlayerBlockPlace(BlockPlaceEvent event) {
-        if (event.isCancelled()) {
-            return;
-        }
         Block block = event.getBlockPlaced();
         // only listen for redstone torches
         if (block.getType() == Material.REDSTONE_TORCH_ON) {

@@ -62,9 +62,6 @@ public class TARDISBlockBreakListener implements Listener {
      */
     @EventHandler(priority = EventPriority.LOW)
     public void onSignBreak(BlockBreakEvent event) {
-        if (event.isCancelled()) {
-            return;
-        }
         int signx = 0, signz = 0;
         Player player = event.getPlayer();
         String playerNameStr = player.getName();

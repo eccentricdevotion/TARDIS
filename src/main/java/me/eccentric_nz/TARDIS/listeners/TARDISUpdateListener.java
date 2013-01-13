@@ -59,9 +59,6 @@ public class TARDISUpdateListener implements Listener {
      */
     @EventHandler(priority = EventPriority.MONITOR)
     public void onUpdateInteract(PlayerInteractEvent event) {
-        if (event.isCancelled()) {
-            return;
-        }
         final Player player = event.getPlayer();
         final String playerNameStr = player.getName();
 

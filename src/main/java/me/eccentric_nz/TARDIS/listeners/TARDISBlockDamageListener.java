@@ -46,11 +46,8 @@ public class TARDISBlockDamageListener implements Listener {
      * Listens for block damage to the TARDIS Police Box. If the block is a
      * Police Box block then the event is canceled, and the player warned.
      */
-    @EventHandler(priority = EventPriority.LOW)
+    @EventHandler(priority = EventPriority.NORMAL)
     public void onPoliceBoxDamage(BlockDamageEvent event) {
-        if (event.isCancelled()) {
-            return;
-        }
         Player p = event.getPlayer();
         Block b = event.getBlock();
         String l = b.getLocation().toString();

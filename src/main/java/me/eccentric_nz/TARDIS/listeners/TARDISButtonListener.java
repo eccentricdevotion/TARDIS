@@ -60,9 +60,6 @@ public class TARDISButtonListener implements Listener {
      */
     @EventHandler(priority = EventPriority.MONITOR)
     public void onButtonInteract(PlayerInteractEvent event) {
-        if (event.isCancelled()) {
-            return;
-        }
         final Player player = event.getPlayer();
         Block block = event.getClickedBlock();
         if (block != null) {

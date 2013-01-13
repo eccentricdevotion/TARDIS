@@ -66,9 +66,6 @@ public class TARDISArtronCapacitorListener implements Listener {
      */
     @EventHandler(priority = EventPriority.MONITOR)
     public void onCapacitorInteract(PlayerInteractEvent event) {
-        if (event.isCancelled()) {
-            return;
-        }
         final Player player = event.getPlayer();
         Block block = event.getClickedBlock();
         if (block != null) {
