@@ -66,6 +66,7 @@ public class ResultSetTardis {
     private int middle_id;
     private byte middle_data;
     private String creeper;
+    private boolean tardis_init;
     private ArrayList<HashMap<String, String>> data = new ArrayList<HashMap<String, String>>();
 
     /**
@@ -152,6 +153,7 @@ public class ResultSetTardis {
                     this.middle_id = rs.getInt("middle_id");
                     this.middle_data = rs.getByte("middle_data");
                     this.creeper = rs.getString("creeper");
+                    this.tardis_init = rs.getBoolean("tardis_init");
                 }
             } else {
                 return false;
@@ -246,7 +248,7 @@ public class ResultSetTardis {
         return chameleon;
     }
 
-    public boolean getChamele_on() {
+    public boolean isChamele_on() {
         return chamele_on;
     }
 
@@ -268,6 +270,10 @@ public class ResultSetTardis {
 
     public String getCreeper() {
         return creeper;
+    }
+
+    public boolean isTardis_init() {
+        return tardis_init;
     }
 
     public ArrayList<HashMap<String, String>> getData() {

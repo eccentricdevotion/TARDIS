@@ -63,29 +63,33 @@ public class TARDISCreeperChecker {
         if (rs.resultSet()) {
             ArrayList<HashMap<String, String>> data = rs.getData();
             for (HashMap<String, String> map : data) {
+                // only if there is a saved creeper location
                 if (!map.get("creeper").equals("")) {
-                    String[] creeperData = map.get("creeper").split(":");
-                    World w = plugin.getServer().getWorld(creeperData[0]);
-                    float cx = 0, cy = 0, cz = 0;
-                    try {
-                        cx = Float.parseFloat(creeperData[1]);
-                        cy = Float.parseFloat(creeperData[2]);
-                        cz = Float.parseFloat(creeperData[3]);
-                    } catch (NumberFormatException nfe) {
-                        plugin.debug("Couldn't convert to a float! " + nfe.getMessage());
-                    }
-                    Location l = new Location(w, cx, cy, cz);
-                    plugin.myspawn = true;
-                    Entity e = w.spawnEntity(l, EntityType.CREEPER);
-                    // if there is a creeper there already get rid of it!
-                    for (Entity k : e.getNearbyEntities(1d, 1d, 1d)) {
-                        if (k.getType().equals(EntityType.CREEPER)) {
-                            e.remove();
-                            break;
+                    // only if the TARDIS has been initialised
+                    if (map.get("tardis_init").equals("1")) {
+                        String[] creeperData = map.get("creeper").split(":");
+                        World w = plugin.getServer().getWorld(creeperData[0]);
+                        float cx = 0, cy = 0, cz = 0;
+                        try {
+                            cx = Float.parseFloat(creeperData[1]);
+                            cy = Float.parseFloat(creeperData[2]) + 1;
+                            cz = Float.parseFloat(creeperData[3]);
+                        } catch (NumberFormatException nfe) {
+                            plugin.debug("Couldn't convert to a float! " + nfe.getMessage());
                         }
+                        Location l = new Location(w, cx, cy, cz);
+                        plugin.myspawn = true;
+                        Entity e = w.spawnEntity(l, EntityType.CREEPER);
+                        // if there is a creeper there already get rid of it!
+                        for (Entity k : e.getNearbyEntities(1d, 1d, 1d)) {
+                            if (k.getType().equals(EntityType.CREEPER)) {
+                                e.remove();
+                                break;
+                            }
+                        }
+                        Creeper c = (Creeper) e;
+                        c.setPowered(true);
                     }
-                    Creeper c = (Creeper) e;
-                    c.setPowered(true);
                 }
             }
         }
