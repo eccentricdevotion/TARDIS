@@ -14,6 +14,10 @@
             <id>spout-repo</id>
             <url>http://repo.spout.org</url>
         </repository>
+        <repository>
+            <id>sk89q-repo</id>
+            <url>http://maven.sk89q.com</url>
+        </repository>
     </repositories>
     <build>
         <finalName>TARDIS-2.0-SNAPSHOT</finalName>
@@ -61,7 +65,14 @@
         <dependency>
             <groupId>com.sk89q</groupId>
             <artifactId>worldguard</artifactId>
-            <version>5.6-SNAPSHOT</version>
+            <version>5.7-SNAPSHOT</version>
+            <type>jar</type>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.sk89q</groupId>
+            <artifactId>worldedit</artifactId>
+            <version>5.5-SNAPSHOT</version>
             <type>jar</type>
             <scope>compile</scope>
         </dependency>
