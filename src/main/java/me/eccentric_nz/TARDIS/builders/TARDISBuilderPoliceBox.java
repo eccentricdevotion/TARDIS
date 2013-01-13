@@ -329,7 +329,7 @@ public class TARDISBuilderPoliceBox {
             ResultSetPlayerPrefs pp = new ResultSetPlayerPrefs(plugin, wherep);
             boolean userPlatform;
             if (pp.resultSet()) {
-                userPlatform = pp.getPlatform_on();
+                userPlatform = pp.isPlatform_on();
             } else {
                 userPlatform = true;
             }

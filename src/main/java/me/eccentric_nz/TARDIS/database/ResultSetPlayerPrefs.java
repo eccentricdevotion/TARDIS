@@ -115,15 +115,15 @@ public class ResultSetPlayerPrefs {
         return player;
     }
 
-    public boolean getSfx_on() {
+    public boolean isSFX_on() {
         return sfx_on;
     }
 
-    public boolean getPlatform_on() {
+    public boolean isPlatform_on() {
         return platform_on;
     }
 
-    public boolean getQuotes_on() {
+    public boolean isQuotes_on() {
         return quotes_on;
     }
 

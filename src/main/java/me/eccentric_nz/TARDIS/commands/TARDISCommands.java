@@ -346,7 +346,7 @@ public class TARDISCommands implements CommandExecutor {
                         String badsave = rs.getSave();
                         boolean chamtmp = false;
                         if (plugin.getConfig().getBoolean("chameleon")) {
-                            chamtmp = rs.getChamele_on();
+                            chamtmp = rs.isChamele_on();
                         }
                         final boolean cham = chamtmp;
                         String[] saveData = badsave.split(":");
@@ -481,7 +481,7 @@ public class TARDISCommands implements CommandExecutor {
                         save = rs.getSave();
                         id = rs.getTardis_id();
                         if (plugin.getConfig().getBoolean("chameleon")) {
-                            cham = rs.getChamele_on();
+                            cham = rs.isChamele_on();
                         }
                         d = rs.getDirection();
                         String[] save_data = save.split(":");
@@ -821,7 +821,7 @@ public class TARDISCommands implements CommandExecutor {
                         int id = rs.getTardis_id();
                         boolean cham = false;
                         if (plugin.getConfig().getBoolean("chameleon")) {
-                            cham = rs.getChamele_on();
+                            cham = rs.isChamele_on();
                         }
                         String dir = args[1].toUpperCase();
                         TARDISConstants.COMPASS old_d = rs.getDirection();

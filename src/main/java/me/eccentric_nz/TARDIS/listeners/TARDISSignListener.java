@@ -92,7 +92,7 @@ public class TARDISSignListener implements Listener {
                         tid.put("tardis_id", id);
                         if (line1.equals("Chameleon")) {
                             HashMap<String, Object> set = new HashMap<String, Object>();
-                            if (rs.getChamele_on()) {
+                            if (rs.isChamele_on()) {
                                 set.put("chamele_on", 0);
                                 s.setLine(3, ChatColor.RED + "OFF");
                                 s.update();

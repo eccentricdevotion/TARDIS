@@ -56,7 +56,7 @@ public class TARDISSounds {
                     ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(TARDIS.plugin, where);
                     boolean userSFX;
                     if (rsp.resultSet()) {
-                        userSFX = rsp.getSfx_on();
+                        userSFX = rsp.isSFX_on();
                     } else {
                         userSFX = true;
                     }

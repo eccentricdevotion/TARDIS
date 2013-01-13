@@ -140,7 +140,7 @@ public class TARDISDoorListener implements Listener {
                                         String cl = rs.getCurrent();
                                         boolean cham = false;
                                         if (plugin.getConfig().getBoolean("chameleon")) {
-                                            cham = rs.getChamele_on();
+                                            cham = rs.isChamele_on();
                                         }
                                         float yaw = player.getLocation().getYaw();
                                         float pitch = player.getLocation().getPitch();
@@ -151,7 +151,7 @@ public class TARDISDoorListener implements Listener {
                                         ResultSetPlayerPrefs rsq = new ResultSetPlayerPrefs(plugin, whereq);
                                         boolean userQuotes;
                                         if (rsq.resultSet()) {
-                                            userQuotes = rsq.getQuotes_on();
+                                            userQuotes = rsq.isQuotes_on();
                                         } else {
                                             userQuotes = true;
                                         }
