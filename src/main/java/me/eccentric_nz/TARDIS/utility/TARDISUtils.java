@@ -49,6 +49,7 @@ public class TARDISUtils {
 
     public TARDISUtils(TARDIS plugin) {
         this.plugin = plugin;
+        weirdBytes.put(-113, 143); //wood button
         weirdBytes.put(-114, 142); //potatoes
         weirdBytes.put(-115, 141); //carrots
         weirdBytes.put(-116, 140); //flowerpot
