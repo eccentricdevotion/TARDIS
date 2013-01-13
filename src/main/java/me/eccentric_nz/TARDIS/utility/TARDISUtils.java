@@ -45,18 +45,9 @@ public class TARDISUtils {
 
     private final TARDIS plugin;
     TARDISDatabase service = TARDISDatabase.getInstance();
-    private HashMap<Integer, Integer> weirdBytes = new HashMap<Integer, Integer>();
 
     public TARDISUtils(TARDIS plugin) {
         this.plugin = plugin;
-        weirdBytes.put(-113, 143); //wood button
-        weirdBytes.put(-114, 142); //potatoes
-        weirdBytes.put(-115, 141); //carrots
-        weirdBytes.put(-116, 140); //flowerpot
-        weirdBytes.put(-117, 139); //cobblestone fence
-        weirdBytes.put(-118, 138); //beacon
-        weirdBytes.put(-119, 137); //command block
-        weirdBytes.put(-123, 133); //emerald block
     }
 
     /**
@@ -71,8 +62,8 @@ public class TARDISUtils {
      */
     public void setBlock(World w, int x, int y, int z, int m, byte d) {
         Block b = w.getBlockAt(x, y, z);
-        if (weirdBytes.containsKey(m)) {
-            m = weirdBytes.get(m);
+        if (m < 0) {
+            m = m + 256;
         }
         b.setTypeIdAndData(m, d, true);
     }
