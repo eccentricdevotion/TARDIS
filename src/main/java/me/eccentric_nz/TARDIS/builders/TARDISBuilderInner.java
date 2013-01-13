@@ -96,7 +96,6 @@ public class TARDISBuilderInner {
         HashMap<Block, Byte> postDoorBlocks = new HashMap<Block, Byte>();
         HashMap<Block, Byte> postTorchBlocks = new HashMap<Block, Byte>();
         HashMap<Block, Byte> postSignBlocks = new HashMap<Block, Byte>();
-        HashMap<Block, Byte> postFillBlocks = new HashMap<Block, Byte>();
         // calculate startx, starty, startz
         int gsl[] = plugin.utils.getStartLocation(dbID);
         startx = gsl[0];
@@ -112,6 +111,7 @@ public class TARDISBuilderInner {
         List<Chunk> chunkList = new ArrayList<Chunk>();
         boolean own_world = plugin.getConfig().getBoolean("create_worlds");
         boolean bonus_chest = plugin.getConfig().getBoolean("bonus_chest");
+        boolean schematicHasChest = false;
         for (level = 0; level < h; level++) {
             for (row = 0; row < w; row++) {
                 for (col = 0; col < l; col++) {
@@ -165,6 +165,7 @@ public class TARDISBuilderInner {
                             id = plugin.utils.parseNum(iddata[0]);
                             data = Byte.parseByte(iddata[1]);
                             if (id == 54) { // chest
+                                schematicHasChest = true;
                                 // remember the location of this chest
                                 HashMap<String, Object> setc = new HashMap<String, Object>();
                                 HashMap<String, Object> wherec = new HashMap<String, Object>();
@@ -210,7 +211,7 @@ public class TARDISBuilderInner {
                                 wherec.put("tardis_id", dbID);
                                 qf.doUpdate("tardis", setc, wherec);
                             }
-                            if (id == -119) {
+                            if (id == 137 || id == -119) {
                                 /*
                                  * command block will be coverted to the correct id by
                                  * setBlock(), but remember it to spawn the creeper on.
@@ -221,6 +222,18 @@ public class TARDISBuilderInner {
                                 setcreep.put("creeper", creeploc);
                                 wherecreep.put("tardis_id", dbID);
                                 qf.doUpdate("tardis", setcreep, wherecreep);
+                            }
+                            if (id == 143 || id == -113) {
+                                /*
+                                 * wood button will be coverted to the correct id by
+                                 * setBlock(), but remember it for the Artron Energy Capacitor.
+                                 */
+                                HashMap<String, Object> setwb = new HashMap<String, Object>();
+                                HashMap<String, Object> wherewb = new HashMap<String, Object>();
+                                String woodbuttonloc = world.getName() + ":" + startx + ":" + starty + ":" + startz;
+                                setwb.put("artron_button", woodbuttonloc);
+                                wherewb.put("tardis_id", dbID);
+                                qf.doUpdate("tardis", setwb, wherewb);
                             }
                             if (id == 35 && data == 1) {
                                 switch (middle_id) {
@@ -285,7 +298,7 @@ public class TARDISBuilderInner {
                 cs.update();
             }
         }
-        if (bonus_chest && !own_world) {
+        if (schematicHasChest && bonus_chest && !own_world) {
             // get rid of last ":" and assign ids to an array
             String rb = sb.toString();
             replacedBlocks = rb.substring(0, rb.length() - 1);
