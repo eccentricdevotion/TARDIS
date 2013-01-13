@@ -48,7 +48,7 @@ public class TARDISSpace {
         if (tardisWorld == null) {
             tardisWorld = WorldCreator.name(name).type(WorldType.LARGE_BIOMES).environment(World.Environment.THE_END).generator(new TARDISChunkGenerator()).createWorld();
             if (plugin.pm.isPluginEnabled("Multiverse-Core")) {
-                plugin.getServer().dispatchCommand(plugin.console, "mv import " + name + " the_end -g TARDISChunkGenerator");
+                plugin.getServer().dispatchCommand(plugin.console, "mv import " + name + " the_end TARDISChunkGenerator");
             }
             if (plugin.pm.isPluginEnabled("WorldBorder")) {
                 // wb <world> set <radius> <x> <z>
