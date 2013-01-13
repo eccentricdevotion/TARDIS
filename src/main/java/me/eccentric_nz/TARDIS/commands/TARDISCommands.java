@@ -30,6 +30,7 @@ import me.eccentric_nz.TARDIS.database.ResultSetDestinations;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.files.TARDISUpdateChecker;
+import me.eccentric_nz.TARDIS.travel.TARDISPluginRespect;
 import me.eccentric_nz.TARDIS.travel.TARDISTimetravel;
 import me.eccentric_nz.TARDIS.utility.TARDISItemRenamer;
 import me.eccentric_nz.TARDIS.utility.TARDISLister;
@@ -55,6 +56,7 @@ public class TARDISCommands implements CommandExecutor {
 
     private TARDIS plugin;
     TARDISDatabase service = TARDISDatabase.getInstance();
+    private TARDISPluginRespect respect = new TARDISPluginRespect(plugin);
     HashSet<Byte> transparent = new HashSet<Byte>();
     private List<String> firstArgs = new ArrayList<String>();
 
@@ -301,11 +303,8 @@ public class TARDISCommands implements CommandExecutor {
                             sender.sendMessage(plugin.pluginName + "The server admin will not allow you to bring the TARDIS to this world!");
                             return true;
                         }
-                        if (plugin.worldGuardOnServer && plugin.getConfig().getBoolean("respect_worldguard")) {
-                            if (plugin.wgchk.cantBuild(player, eyeLocation)) {
-                                sender.sendMessage(plugin.pluginName + "That location is protected by WorldGuard!");
-                                return false;
-                            }
+                        if (respect.getRespect(player, eyeLocation, true)) {
+                            return true;
                         }
                         if (player.hasPermission("tardis.exile")) {
                             String areaPerm = plugin.ta.getExileArea(player);
@@ -313,11 +312,6 @@ public class TARDISCommands implements CommandExecutor {
                                 sender.sendMessage(plugin.pluginName + "You exile status does not allow you to bring the TARDIS to this location!");
                                 return false;
                             }
-                        }
-                        if (plugin.ta.areaCheckLocPlayer(player, eyeLocation)) {
-                            sender.sendMessage(plugin.pluginName + "You do not have permission [" + plugin.trackPerm.get(player.getName()) + "] to bring the TARDIS to this location!");
-                            plugin.trackPerm.remove(player.getName());
-                            return false;
                         }
                         Material m = player.getTargetBlock(transparent, 50).getType();
                         if (m != Material.SNOW) {
@@ -405,16 +399,8 @@ public class TARDISCommands implements CommandExecutor {
                             sender.sendMessage(plugin.pluginName + "The server admin will not allow you to set the TARDIS home in this world!");
                             return true;
                         }
-                        if (plugin.worldGuardOnServer && plugin.getConfig().getBoolean("respect_worldguard")) {
-                            if (plugin.wgchk.cantBuild(player, eyeLocation)) {
-                                sender.sendMessage(plugin.pluginName + "That location is protected by WorldGuard!");
-                                return false;
-                            }
-                        }
-                        if (plugin.ta.areaCheckLocPlayer(player, eyeLocation)) {
-                            sender.sendMessage(plugin.pluginName + "You do not have permission [" + plugin.trackPerm.get(player.getName()) + "] to set the TARDIS home to this location!");
-                            plugin.trackPerm.remove(player.getName());
-                            return false;
+                        if (respect.getRespect(player, eyeLocation, true)) {
+                            return true;
                         }
                         Material m = player.getTargetBlock(transparent, 50).getType();
                         if (m != Material.SNOW) {
@@ -780,11 +766,8 @@ public class TARDISCommands implements CommandExecutor {
                                 sender.sendMessage(plugin.pluginName + "The server admin will not allow you to set the TARDIS destination to this world!");
                                 return true;
                             }
-                            if (plugin.worldGuardOnServer && plugin.getConfig().getBoolean("respect_worldguard")) {
-                                if (plugin.wgchk.cantBuild(player, l)) {
-                                    sender.sendMessage(plugin.pluginName + "That location is protected by WorldGuard!");
-                                    return false;
-                                }
+                            if (respect.getRespect(player, l, true)) {
+                                return true;
                             }
                             if (player.hasPermission("tardis.exile")) {
                                 String areaPerm = plugin.ta.getExileArea(player);
@@ -792,11 +775,6 @@ public class TARDISCommands implements CommandExecutor {
                                     sender.sendMessage(plugin.pluginName + "You exile status does not allow you to save the TARDIS to this location!");
                                     return false;
                                 }
-                            }
-                            if (plugin.ta.areaCheckLocPlayer(player, l)) {
-                                sender.sendMessage(plugin.pluginName + "You do not have permission [" + plugin.trackPerm.get(player.getName()) + "] to set the TARDIS destination to this location!");
-                                plugin.trackPerm.remove(player.getName());
-                                return false;
                             }
                             String dw = l.getWorld().getName();
                             int dx = l.getBlockX();
