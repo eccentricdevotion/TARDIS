@@ -22,6 +22,7 @@ import me.eccentric_nz.TARDIS.TARDISConstants.COMPASS;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.TARDISDatabase;
 import me.eccentric_nz.TARDIS.rooms.TARDISRoomRemover;
+import org.bukkit.Effect;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -77,7 +78,7 @@ public class TARDISJettisonSeeder implements Listener {
                 if (remover.remove()) {
                     plugin.trackJettison.remove(playerNameStr);
                     block.setTypeIdAndData(0, (byte) 0, true);
-                    b.getWorld().createExplosion(b.getBlockX(), b.getBlockY(), b.getBlockZ(), 4F, false, false);
+                    b.getWorld().playEffect(b, Effect.POTION_BREAK, 9);
                     // ok they clicked it, so take their energy!
                     int amount = Math.round((plugin.getConfig().getInt("jettison") / 100F) * plugin.getConfig().getInt("rooms." + r + ".cost"));
                     QueryFactory qf = new QueryFactory(plugin);
@@ -85,6 +86,8 @@ public class TARDISJettisonSeeder implements Listener {
                     set.put("owner", playerNameStr);
                     qf.alterEnergyLevel("tardis", amount, set, player);
                     player.sendMessage(plugin.pluginName + "You added " + amount + " to the Artron Energy Capacitor");
+                } else {
+                    player.sendMessage(plugin.pluginName + "The room has already been jettisoned!");
                 }
             }
         }

@@ -20,6 +20,7 @@ import me.eccentric_nz.TARDIS.TARDISConstants.COMPASS;
 import me.eccentric_nz.TARDIS.TARDISConstants.ROOM;
 import me.eccentric_nz.TARDIS.database.TARDISDatabase;
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 
@@ -126,6 +127,9 @@ public class TARDISRoomRemover {
         sy = l.getBlockY() - downy;
         ey = l.getBlockY() + upy;
         World w = l.getWorld();
+        if (w.getBlockAt(sx + 2, l.getBlockY(), sz + 2).getType().equals(Material.AIR)) {
+            return false;
+        }
         // loop throgh blocks and set them to air
         for (int y = sy; y <= ey; y++) {
             for (int x = sx; x <= ex; x++) {
