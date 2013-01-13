@@ -878,6 +878,15 @@ public class TARDISCommands implements CommandExecutor {
                         return true;
                     }
                     if (args.length == 2) {
+                        List<String> cmds = new ArrayList<String>();
+                        for (TARDISConstants.CMDS c : TARDISConstants.CMDS.values()) {
+                            cmds.add(c.toString());
+                        }
+                        // check that the second arument is valid
+                        if (!cmds.contains(args[1].toUpperCase())) {
+                            sender.sendMessage(plugin.pluginName + "That is not a valid help topic!");
+                            return true;
+                        }
                         switch (TARDISConstants.fromString(args[1])) {
                             case CREATE:
                                 sender.sendMessage(TARDISConstants.COMMAND_CREATE.split("\n"));
@@ -941,6 +950,9 @@ public class TARDISCommands implements CommandExecutor {
                                 break;
                             case ROOM:
                                 sender.sendMessage(TARDISConstants.COMMAND_ROOM.split("\n"));
+                                break;
+                            case ARTRON:
+                                sender.sendMessage(TARDISConstants.COMMAND_ARTRON.split("\n"));
                                 break;
                             default:
                                 sender.sendMessage(TARDISConstants.COMMANDS.split("\n"));
