@@ -191,6 +191,7 @@ public class TARDIS extends JavaPlugin {
         saveDefaultConfig();
         TARDISConfiguration tc = new TARDISConfiguration(this);
         tc.checkConfig();
+        checkTCG();
         loadDatabase();
         loadFiles();
         seeds = getSeeds();
@@ -423,6 +424,16 @@ public class TARDIS extends JavaPlugin {
             map.put(m, s);
         }
         return map;
+    }
+
+    private void checkTCG() {
+        if (getConfig().getBoolean("create_worlds")) {
+            if (getServer().getPluginManager().getPlugin("TARDISChunkGenerator") == null) {
+                getConfig().set("create_worlds", false);
+                saveConfig();
+                console.sendMessage(pluginName + "Create Worlds was disabled as the TARDISChunkGenerator plugin was not found!");
+            }
+        }
     }
 
     /**
