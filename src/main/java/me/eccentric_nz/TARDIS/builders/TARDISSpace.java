@@ -49,6 +49,7 @@ public class TARDISSpace {
             tardisWorld = WorldCreator.name(name).type(WorldType.LARGE_BIOMES).environment(World.Environment.THE_END).generator(new TARDISChunkGenerator()).createWorld();
             // add world to config, but disabled by default
             plugin.getConfig().set("worlds:" + name, false);
+            plugin.saveConfig();
             if (plugin.pm.isPluginEnabled("Multiverse-Core")) {
                 plugin.getServer().dispatchCommand(plugin.console, "mv import " + name + " the_end TARDISChunkGenerator");
             }
