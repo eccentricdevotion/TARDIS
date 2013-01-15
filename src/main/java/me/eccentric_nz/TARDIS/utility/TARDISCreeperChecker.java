@@ -59,6 +59,7 @@ public class TARDISCreeperChecker {
      * Checks the creeper is there and spawns in a new one if not.
      */
     private void checkCreepers() {
+        plugin.debug("Starting creeper check...");
         ResultSetTardis rs = new ResultSetTardis(plugin, null, "", true);
         if (rs.resultSet()) {
             ArrayList<HashMap<String, String>> data = rs.getData();
