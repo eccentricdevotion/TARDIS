@@ -107,6 +107,10 @@ public class TARDISAdminCommands implements CommandExecutor {
         firstsInt.add("recharge_distance");
         firstsInt.add("lightning_recharge");
         firstsInt.add("creeper_recharge");
+        firstsInt.add("jettison");
+        firstsInt.add("nether_star");
+        firstsInt.add("nether_min");
+        firstsInt.add("the_end_min");
         // rooms
         firstsRoom.add("passage");
         firstsRoom.add("arboretum");
@@ -115,6 +119,7 @@ public class TARDISAdminCommands implements CommandExecutor {
         firstsRoom.add("library");
         firstsRoom.add("pool");
         firstsRoom.add("vault");
+        firstsRoom.add("empty");
     }
 
     @Override
@@ -193,6 +198,14 @@ public class TARDISAdminCommands implements CommandExecutor {
                     Block b = player.getTargetBlock(null, 50);
                     if (!b.getType().equals(Material.BEACON)) {
                         player.sendMessage(plugin.pluginName + "You must be targeting a beacon block!");
+                        return true;
+                    }
+                    // make sure they're not targeting their inner TARDIS beacon
+                    HashMap<String, Object> where = new HashMap<String, Object>();
+                    where.put("player", player.getName());
+                    ResultSetTravellers rst = new ResultSetTravellers(plugin, where, false);
+                    if (rst.resultSet()) {
+                        player.sendMessage(plugin.pluginName + "You cannot use the TARDIS beacon to recharge!");
                         return true;
                     }
                     Location l = b.getLocation();
