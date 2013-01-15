@@ -81,7 +81,8 @@ public class TARDISButtonListener implements Listener {
                     ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
                     if (rs.resultSet()) {
                         int id = rs.getTardis_id();
-                        if (rs.getArtron_level() < plugin.getConfig().getInt("random")) {
+                        int level = rs.getArtron_level();
+                        if (level < plugin.getConfig().getInt("random")) {
                             player.sendMessage(plugin.pluginName + ChatColor.RED + "The TARDIS does not have enough Artron Energy to make this trip!");
                             return;
                         }
@@ -132,25 +133,36 @@ public class TARDISButtonListener implements Listener {
                                 byte r3_data = r3.getData();
                                 boolean playSound = true;
                                 String environment = "NORMAL";
+                                int nether_min = plugin.getConfig().getInt("nether_min");
+                                int the_end_min = plugin.getConfig().getInt("the_end_min");
                                 if (r0_data <= 3) { // first position
-                                    if (plugin.getConfig().getBoolean("nether") == false && plugin.getConfig().getBoolean("the_end") == false) {
+                                    if (!plugin.getConfig().getBoolean("nether") && !plugin.getConfig().getBoolean("the_end")) {
                                         environment = "NORMAL";
-                                    } else if (plugin.getConfig().getBoolean("nether") == false || plugin.getConfig().getBoolean("the_end") == false) {
-                                        if (plugin.getConfig().getBoolean("nether") == false) {
-                                            environment = (player.hasPermission("tardis.end")) ? "NORMAL:THE_END" : "NORMAL";
+                                    } else if (!plugin.getConfig().getBoolean("nether") || !plugin.getConfig().getBoolean("the_end")) {
+                                        if (plugin.getConfig().getBoolean("the_end") && player.hasPermission("tardis.end")) {
+                                            environment = (level >= the_end_min) ? "NORMAL:THE_END" : "NORMAL";
                                         }
-                                        if (plugin.getConfig().getBoolean("the_end") == false) {
-                                            environment = (player.hasPermission("tardis.nether")) ? "NORMAL:NETHER" : "NORMAL";
+                                        if (plugin.getConfig().getBoolean("nether") && player.hasPermission("tardis.nether")) {
+                                            environment = (level >= nether_min) ? "NORMAL:NETHER" : "NORMAL";
                                         }
                                     } else {
                                         if (player.hasPermission("tardis.end") && player.hasPermission("tardis.nether")) {
-                                            environment = "NORMAL:NETHER:THE_END";
+                                            // check they have enough artron energy to travel to the NETHER or THE_END
+                                            if (level < nether_min) {
+                                                environment = "NORMAL";
+                                            } else if (level >= nether_min && level < the_end_min) {
+                                                environment = "NORMAL:NETHER";
+                                            } else {
+                                                environment = "NORMAL:NETHER:THE_END";
+                                            }
                                         }
                                         if (!player.hasPermission("tardis.end") && player.hasPermission("tardis.nether")) {
-                                            environment = "NORMAL:NETHER";
+                                            // check they have enough artron energy to travel to the NETHER
+                                            environment = (level >= nether_min) ? "NORMAL:NETHER" : "NORMAL";
                                         }
                                         if (player.hasPermission("tardis.end") && !player.hasPermission("tardis.nether")) {
-                                            environment = "NORMAL:THE_END";
+                                            // check they have enough artron energy to travel to THE_END
+                                            environment = (level >= the_end_min) ? "NORMAL:THE_END" : "NORMAL";
                                         }
                                     }
                                 }
@@ -158,18 +170,30 @@ public class TARDISButtonListener implements Listener {
                                     environment = "NORMAL";
                                 }
                                 if (r0_data >= 8 && r0_data <= 11) { // third position
-                                    if (plugin.getConfig().getBoolean("nether") == true && player.hasPermission("tardis.nether")) {
-                                        environment = "NETHER";
+                                    if (plugin.getConfig().getBoolean("nether") && player.hasPermission("tardis.nether")) {
+                                        // check they have enough artron energy to travel to the NETHER
+                                        if (level < nether_min) {
+                                            environment = "NORMAL";
+                                            player.sendMessage(plugin.pluginName + "You need at least " + nether_min + " Artron Energy to travel to the Nether! Overworld selected.");
+                                        } else {
+                                            environment = "NETHER";
+                                        }
                                     } else {
-                                        String message = (player.hasPermission("tardis.nether")) ? " The ancient, dusty senators of Gallifrey have disabled time travel to the Nether" : " You do not have permission to time travel to the Nether";
+                                        String message = (player.hasPermission("tardis.nether")) ? "The ancient, dusty senators of Gallifrey have disabled time travel to the Nether" : "You do not have permission to time travel to the Nether";
                                         player.sendMessage(plugin.pluginName + message);
                                     }
                                 }
                                 if (r0_data >= 12 && r0_data <= 15) { // last position
-                                    if (plugin.getConfig().getBoolean("the_end") == true && player.hasPermission("tardis.end")) {
-                                        environment = "THE_END";
+                                    if (plugin.getConfig().getBoolean("the_end") && player.hasPermission("tardis.end")) {
+                                        // check they have enough artron energy to travel to THE_END
+                                        if (level < the_end_min) {
+                                            environment = "NORMAL";
+                                            player.sendMessage(plugin.pluginName + "You need at least " + the_end_min + " Artron Energy to travel to The End! Overworld selected.");
+                                        } else {
+                                            environment = "THE_END";
+                                        }
                                     } else {
-                                        String message = (player.hasPermission("tardis.end")) ? " The ancient, dusty senators of Gallifrey have disabled time travel to The End" : " You do not have permission to time travel to The End";
+                                        String message = (player.hasPermission("tardis.end")) ? "The ancient, dusty senators of Gallifrey have disabled time travel to The End" : "You do not have permission to time travel to The End";
                                         player.sendMessage(plugin.pluginName + message);
                                     }
                                 }
