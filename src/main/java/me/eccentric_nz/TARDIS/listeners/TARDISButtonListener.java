@@ -109,14 +109,15 @@ public class TARDISButtonListener implements Listener {
                                 Location l = plugin.ta.getNextSpot(permArea);
                                 if (l == null) {
                                     player.sendMessage(plugin.pluginName + "All available parking spots are taken in this area!");
+                                } else {
+                                    String save_loc = l.getWorld().getName() + ":" + l.getBlockX() + ":" + l.getBlockY() + ":" + l.getBlockZ();
+                                    HashMap<String, Object> set = new HashMap<String, Object>();
+                                    set.put("save", save_loc);
+                                    HashMap<String, Object> wherel = new HashMap<String, Object>();
+                                    wherel.put("tardis_id", id);
+                                    qf.doUpdate("tardis", set, wherel);
+                                    player.sendMessage(plugin.pluginName + "Your TARDIS was approved for parking in [" + permArea + "]!");
                                 }
-                                String save_loc = l.getWorld().getName() + ":" + l.getBlockX() + ":" + l.getBlockY() + ":" + l.getBlockZ();
-                                HashMap<String, Object> set = new HashMap<String, Object>();
-                                set.put("save", save_loc);
-                                HashMap<String, Object> wherel = new HashMap<String, Object>();
-                                wherel.put("tardis_id", id);
-                                qf.doUpdate("tardis", set, wherel);
-                                player.sendMessage(plugin.pluginName + "Your TARDIS was approved for parking in [" + permArea + "]!");
                             } else {
                                 // get repeater settings
                                 Location r0_loc = plugin.utils.getLocationFromDB(r0_str, 0, 0);
