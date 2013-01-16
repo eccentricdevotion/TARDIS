@@ -76,10 +76,10 @@ public class TARDISBindListener implements Listener {
             String l = b.getLocation().toString();
             HashMap<String, Object> where = new HashMap<String, Object>();
             if (plugin.trackBinder.containsKey(playerNameStr)) {
+                where.put("dest_id", plugin.trackBinder.get(playerNameStr));
                 plugin.trackBinder.remove(playerNameStr);
                 HashMap<String, Object> set = new HashMap<String, Object>();
                 set.put("bind", l);
-                where.put("dest_id", plugin.trackBinder.get(playerNameStr));
                 QueryFactory qf = new QueryFactory(plugin);
                 qf.doUpdate("destinations", set, where);
                 player.sendMessage(plugin.pluginName + "Save successfully bound to " + m.toString());
@@ -112,6 +112,7 @@ public class TARDISBindListener implements Listener {
                             wheres.put("tardis_id", id);
                             QueryFactory qf = new QueryFactory(plugin);
                             qf.doUpdate("tardis", set, wheres);
+                            plugin.tardisHasTravelled.put(playerNameStr, plugin.getConfig().getInt("travel"));
                             player.sendMessage(plugin.pluginName + "Exit location set to " + rsd.getDest_name());
                         }
                     }
