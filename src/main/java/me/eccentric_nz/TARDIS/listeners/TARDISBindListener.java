@@ -93,25 +93,27 @@ public class TARDISBindListener implements Listener {
                     HashMap<String, Object> wheret = new HashMap<String, Object>();
                     wheret.put("tardis_id", id);
                     ResultSetTardis rs = new ResultSetTardis(plugin, wheret, "", false);
-                    int level = rs.getArtron_level();
-                    if (level < plugin.getConfig().getInt("travel")) {
-                        player.sendMessage(plugin.pluginName + ChatColor.RED + "The TARDIS does not have enough Artron Energy to make this trip!");
-                        return;
-                    }
-                    HashMap<String, Object> whereb = new HashMap<String, Object>();
-                    whereb.put("tardis_id", id);
-                    whereb.put("bind", l);
-                    ResultSetDestinations rsd = new ResultSetDestinations(plugin, whereb, false);
-                    if (rsd.resultSet()) {
-                        // get travel location
-                        String save = rsd.getWorld() + ":" + rsd.getX() + ":" + rsd.getY() + ":" + rsd.getZ();
-                        HashMap<String, Object> set = new HashMap<String, Object>();
-                        set.put("save", save);
-                        HashMap<String, Object> wheres = new HashMap<String, Object>();
-                        wheres.put("tardis_id", id);
-                        QueryFactory qf = new QueryFactory(plugin);
-                        qf.doUpdate("tardis", set, wheres);
-                        player.sendMessage(plugin.pluginName + "Exit location set to " + rsd.getDest_name());
+                    if (rs.resultSet()) {
+                        int level = rs.getArtron_level();
+                        if (level < plugin.getConfig().getInt("travel")) {
+                            player.sendMessage(plugin.pluginName + ChatColor.RED + "The TARDIS does not have enough Artron Energy to make this trip!");
+                            return;
+                        }
+                        HashMap<String, Object> whereb = new HashMap<String, Object>();
+                        whereb.put("tardis_id", id);
+                        whereb.put("bind", l);
+                        ResultSetDestinations rsd = new ResultSetDestinations(plugin, whereb, false);
+                        if (rsd.resultSet()) {
+                            // get travel location
+                            String save = rsd.getWorld() + ":" + rsd.getX() + ":" + rsd.getY() + ":" + rsd.getZ();
+                            HashMap<String, Object> set = new HashMap<String, Object>();
+                            set.put("save", save);
+                            HashMap<String, Object> wheres = new HashMap<String, Object>();
+                            wheres.put("tardis_id", id);
+                            QueryFactory qf = new QueryFactory(plugin);
+                            qf.doUpdate("tardis", set, wheres);
+                            player.sendMessage(plugin.pluginName + "Exit location set to " + rsd.getDest_name());
+                        }
                     }
                 }
             }
