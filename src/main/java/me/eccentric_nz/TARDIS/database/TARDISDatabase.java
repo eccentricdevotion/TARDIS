@@ -69,7 +69,7 @@ public class TARDISDatabase {
             statement.executeUpdate(queryPlayers);
             String queryProtectBlocks = "CREATE TABLE IF NOT EXISTS blocks (b_id INTEGER PRIMARY KEY NOT NULL, tardis_id INTEGER, location TEXT COLLATE NOCASE DEFAULT '', block INTEGER DEFAULT 0, data INTEGER DEFAULT 0)";
             statement.executeUpdate(queryProtectBlocks);
-            String queryDestinations = "CREATE TABLE IF NOT EXISTS destinations (dest_id INTEGER PRIMARY KEY NOT NULL, tardis_id INTEGER, dest_name TEXT COLLATE NOCASE DEFAULT '', world TEXT COLLATE NOCASE DEFAULT '', x INTEGER, y INTEGER, z INTEGER)";
+            String queryDestinations = "CREATE TABLE IF NOT EXISTS destinations (dest_id INTEGER PRIMARY KEY NOT NULL, tardis_id INTEGER, dest_name TEXT COLLATE NOCASE DEFAULT '', world TEXT COLLATE NOCASE DEFAULT '', x INTEGER, y INTEGER, z INTEGER, bind TEXT DEFAULT '')";
             statement.executeUpdate(queryDestinations);
             String queryPresets = "CREATE TABLE IF NOT EXISTS areas (area_id INTEGER PRIMARY KEY NOT NULL, area_name TEXT COLLATE NOCASE DEFAULT '', world TEXT COLLATE NOCASE DEFAULT '', minx INTEGER, minz INTEGER, maxx INTEGER, maxz INTEGER)";
             statement.executeUpdate(queryPresets);
@@ -99,6 +99,14 @@ public class TARDISDatabase {
                 String queryAlter7 = "ALTER TABLE tardis ADD tardis_init INTEGER DEFAULT 0";
                 statement.executeUpdate(queryAlter7);
                 TARDIS.plugin.console.sendMessage(TARDIS.plugin.pluginName + "Adding new database fields to tardis!");
+            }
+            // add bind to destinations
+            String queryAddBind = "SELECT sql FROM sqlite_master WHERE tbl_name = 'destinations' AND sql LIKE '%bind TEXT%'";
+            ResultSet rsBind = statement.executeQuery(queryAddBind);
+            if (!rsBind.next()) {
+                String queryAlter8 = "ALTER TABLE destinations ADD bind TEXT DEFAULT ''";
+                statement.executeUpdate(queryAlter8);
+                TARDIS.plugin.console.sendMessage(TARDIS.plugin.pluginName + "Adding new bind field to destinations!");
             }
         } catch (SQLException e) {
             TARDIS.plugin.console.sendMessage(TARDIS.plugin.pluginName + "Create table error: " + e);

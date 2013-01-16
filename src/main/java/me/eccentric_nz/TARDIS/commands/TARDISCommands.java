@@ -89,6 +89,7 @@ public class TARDISCommands implements CommandExecutor {
         firstArgs.add("version");
         firstArgs.add("room");
         firstArgs.add("jettison");
+        firstArgs.add("bind");
     }
 
     @Override
@@ -458,6 +459,43 @@ public class TARDISCommands implements CommandExecutor {
                         }
                         plugin.trackPlayers.put(player.getName(), args[1].toLowerCase());
                         player.sendMessage(plugin.pluginName + "Click the TARDIS " + args[1].toLowerCase() + " to update its position.");
+                        return true;
+                    } else {
+                        sender.sendMessage(plugin.pluginName + TARDISConstants.NO_PERMS_MESSAGE);
+                        return false;
+                    }
+                }
+                if (args[0].equalsIgnoreCase("bind")) {
+                    if (player.hasPermission("tardis.update")) {
+                        if (args.length < 2) {
+                            sender.sendMessage(plugin.pluginName + "Too few command arguments!");
+                            return false;
+                        }
+                        HashMap<String, Object> where = new HashMap<String, Object>();
+                        where.put("owner", player.getName());
+                        ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
+                        if (!rs.resultSet()) {
+                            sender.sendMessage(plugin.pluginName + "You are not a Timelord. You need to create a TARDIS first before using this command!");
+                            return false;
+                        }
+                        int id = rs.getTardis_id();
+                        HashMap<String, Object> wheret = new HashMap<String, Object>();
+                        wheret.put("player", player.getName());
+                        ResultSetTravellers rst = new ResultSetTravellers(plugin, wheret, false);
+                        if (!rst.resultSet()) {
+                            sender.sendMessage(plugin.pluginName + "You are not inside your TARDIS. You need to be to run this command!");
+                            return false;
+                        }
+                        HashMap<String, Object> whered = new HashMap<String, Object>();
+                        whered.put("tardis_id", id);
+                        whered.put("dest_name", args[1]);
+                        ResultSetDestinations rsd = new ResultSetDestinations(plugin, whered, false);
+                        if (!rsd.resultSet()) {
+                            sender.sendMessage(plugin.pluginName + "Could not find a save with that name! Try using " + ChatColor.AQUA + "/tardis list saves" + ChatColor.RESET + " first.");
+                            return true;
+                        }
+                        plugin.trackBinder.put(player.getName(), rsd.getDest_id());
+                        player.sendMessage(plugin.pluginName + "Click the block you want to bind to this save location.");
                         return true;
                     } else {
                         sender.sendMessage(plugin.pluginName + TARDISConstants.NO_PERMS_MESSAGE);

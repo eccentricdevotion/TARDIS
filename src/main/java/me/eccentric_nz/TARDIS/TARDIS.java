@@ -158,6 +158,7 @@ public class TARDIS extends JavaPlugin {
     TARDISJettisonSeeder jettisonListener = new TARDISJettisonSeeder(this);
     public PluginManager pm = Bukkit.getServer().getPluginManager();
     public HashMap<String, String> trackPlayers = new HashMap<String, String>();
+    public HashMap<String, Integer> trackBinder = new HashMap<String, Integer>();
     public HashMap<String, String> trackName = new HashMap<String, String>();
     public HashMap<String, String> trackBlock = new HashMap<String, String>();
     public HashMap<String, String> trackEnd = new HashMap<String, String>();
