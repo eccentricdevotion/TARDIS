@@ -83,7 +83,7 @@ public class TARDISSignListener implements Listener {
                     } else {
                         where.put("save_sign", signloc);
                     }
-                    // get tardis from saved button location
+                    // get tardis from saved sign location
                     ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
                     if (rs.resultSet()) {
                         QueryFactory qf = new QueryFactory(plugin);
