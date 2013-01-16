@@ -90,7 +90,6 @@ public class QueryFactory {
     /**
      * Inserts data into an SQLite database table. This method builds a prepared
      * SQL statement from the parameters supplied and then executes the insert.
-     * You will need to supply data for all table fields.
      *
      * @param table the database table name to insert the data into.
      * @param data a HashMap<String, Object> of table fields and values to
