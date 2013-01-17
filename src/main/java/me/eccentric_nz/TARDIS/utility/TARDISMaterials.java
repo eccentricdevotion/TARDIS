@@ -331,6 +331,7 @@ public class TARDISMaterials {
         "WOOL",
         "WORKBENCH",
         "WRITTEN_BOOK",
-        "YELLOW_FLOWER"
+        "YELLOW_FLOWER",
+        "SONIC_SCREWDRIVER" // Tekkit
     };
 }
