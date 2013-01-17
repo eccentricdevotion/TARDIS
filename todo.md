@@ -9,4 +9,5 @@
    - or remove anything that would make it incompatible
 4. Update help
    - add bind command
-6. Do a whole bunch of tutorial videos
+5. Do a whole bunch of tutorial videos
+6. TEST, TEST, TEST
