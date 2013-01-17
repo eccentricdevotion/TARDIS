@@ -496,7 +496,7 @@ public class TARDISCommands implements CommandExecutor {
                         whered.put("dest_name", args[1]);
                         ResultSetDestinations rsd = new ResultSetDestinations(plugin, whered, false);
                         if (!rsd.resultSet()) {
-                            if (args[1].equalsIgnoreCase("hide") || args[1].equalsIgnoreCase("rebuild")) {
+                            if (args[1].equalsIgnoreCase("hide") || args[1].equalsIgnoreCase("rebuild") || args[1].equalsIgnoreCase("home")) {
                                 HashMap<String, Object> set = new HashMap<String, Object>();
                                 set.put("tardis_id", id);
                                 set.put("dest_name", args[1].toLowerCase());
@@ -730,7 +730,7 @@ public class TARDISCommands implements CommandExecutor {
                         if (!args[1].matches("[A-Za-z0-9_]{2,16}")) {
                             sender.sendMessage(plugin.pluginName + "That doesn't appear to be a valid save name (it may be too long or contains spaces).");
                             return false;
-                        } else if (args[1].equalsIgnoreCase("hide") || args[1].equalsIgnoreCase("rebuild")) {
+                        } else if (args[1].equalsIgnoreCase("hide") || args[1].equalsIgnoreCase("rebuild") || args[1].equalsIgnoreCase("home")) {
                             sender.sendMessage(plugin.pluginName + "That is a reserved destination name!");
                             return false;
                         } else {
@@ -740,8 +740,8 @@ public class TARDISCommands implements CommandExecutor {
                             String[] curDest;
                             // get current destination
                             HashMap<String, Object> wheret = new HashMap<String, Object>();
-                            where.put("player", player.getName());
-                            ResultSetTravellers rst = new ResultSetTravellers(plugin, where, false);
+                            wheret.put("player", player.getName());
+                            ResultSetTravellers rst = new ResultSetTravellers(plugin, wheret, false);
                             if (rst.resultSet()) {
                                 // inside TARDIS
                                 curDest = cur.split(":");
@@ -819,7 +819,7 @@ public class TARDISCommands implements CommandExecutor {
                         if (!args[1].matches("[A-Za-z0-9_]{2,16}")) {
                             sender.sendMessage(plugin.pluginName + "The destination name must be between 2 and 16 characters and have no spaces!");
                             return false;
-                        } else if (args[1].equalsIgnoreCase("hide") || args[1].equalsIgnoreCase("rebuild")) {
+                        } else if (args[1].equalsIgnoreCase("hide") || args[1].equalsIgnoreCase("rebuild") || args[1].equalsIgnoreCase("home")) {
                             sender.sendMessage(plugin.pluginName + "That is a reserved destination name!");
                             return false;
                         } else {

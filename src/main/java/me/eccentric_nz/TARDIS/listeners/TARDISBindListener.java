@@ -111,6 +111,8 @@ public class TARDISBindListener implements Listener {
                                     player.performCommand("tardis rebuild");
                                 } else if (dest_name.equals("hide")) {
                                     player.performCommand("tardis hide");
+                                } else if (dest_name.equals("home")) {
+                                    player.performCommand("tardistravel home");
                                 } else {
                                     // get travel location
                                     String save = rsd.getWorld() + ":" + rsd.getX() + ":" + rsd.getY() + ":" + rsd.getZ();

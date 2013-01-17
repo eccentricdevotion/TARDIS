@@ -155,6 +155,11 @@ commands:
       usage: Hold the key in your hand, then type /<command> namekey [new name]
       permission: tardis.timetravel
       permission-message: You don't have the permission <permission> to use this command
+    bind:
+      description: Bind a saved location or the 'home', 'hide' and 'rebuild' commands to a button.
+      usage: /<command> bind [save name|home|hide|rebuild]
+      permission: tardis.update
+      permission-message: You don't have the permission <permission> to use this command
     reload:
       description: Reloads the TARDIS configuration.
       usage: /<command> reload
