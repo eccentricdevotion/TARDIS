@@ -730,6 +730,9 @@ public class TARDISCommands implements CommandExecutor {
                         if (!args[1].matches("[A-Za-z0-9_]{2,16}")) {
                             sender.sendMessage(plugin.pluginName + "That doesn't appear to be a valid save name (it may be too long or contains spaces).");
                             return false;
+                        } else if (args[1].equalsIgnoreCase("hide") || args[1].equalsIgnoreCase("rebuild")) {
+                            sender.sendMessage(plugin.pluginName + "That is a reserved destination name!");
+                            return false;
                         } else {
                             String cur = rs.getCurrent();
                             String sav = rs.getSave();
@@ -815,6 +818,9 @@ public class TARDISCommands implements CommandExecutor {
                         }
                         if (!args[1].matches("[A-Za-z0-9_]{2,16}")) {
                             sender.sendMessage(plugin.pluginName + "The destination name must be between 2 and 16 characters and have no spaces!");
+                            return false;
+                        } else if (args[1].equalsIgnoreCase("hide") || args[1].equalsIgnoreCase("rebuild")) {
+                            sender.sendMessage(plugin.pluginName + "That is a reserved destination name!");
                             return false;
                         } else {
                             int id = rs.getTardis_id();
