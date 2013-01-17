@@ -328,6 +328,11 @@ public class TARDISCommands implements CommandExecutor {
                             sender.sendMessage(plugin.pluginName + "You must be the Timelord of the TARDIS to use this command!");
                             return true;
                         }
+                        final int id = rs.getTardis_id();
+                        if (plugin.tardisMaterilising.contains(id)) {
+                            sender.sendMessage(plugin.pluginName + "You cannot do that while the TARDIS is materialising!");
+                            return true;
+                        }
                         final TARDISConstants.COMPASS d = rs.getDirection();
                         TARDISTimetravel tt = new TARDISTimetravel(plugin);
                         int[] start_loc = tt.getStartLocation(eyeLocation, d);
@@ -343,7 +348,6 @@ public class TARDISCommands implements CommandExecutor {
                             return true;
                         }
                         final Player p = player;
-                        final int id = rs.getTardis_id();
                         String badsave = rs.getSave();
                         boolean chamtmp = false;
                         if (plugin.getConfig().getBoolean("chameleon")) {
@@ -486,15 +490,26 @@ public class TARDISCommands implements CommandExecutor {
                             sender.sendMessage(plugin.pluginName + "You are not inside your TARDIS. You need to be to run this command!");
                             return false;
                         }
+                        int did;
                         HashMap<String, Object> whered = new HashMap<String, Object>();
                         whered.put("tardis_id", id);
                         whered.put("dest_name", args[1]);
                         ResultSetDestinations rsd = new ResultSetDestinations(plugin, whered, false);
                         if (!rsd.resultSet()) {
-                            sender.sendMessage(plugin.pluginName + "Could not find a save with that name! Try using " + ChatColor.AQUA + "/tardis list saves" + ChatColor.RESET + " first.");
-                            return true;
+                            if (args[1].equalsIgnoreCase("hide") || args[1].equalsIgnoreCase("rebuild")) {
+                                HashMap<String, Object> set = new HashMap<String, Object>();
+                                set.put("tardis_id", id);
+                                set.put("dest_name", args[1].toLowerCase());
+                                QueryFactory qf = new QueryFactory(plugin);
+                                did = qf.doInsert("destinations", set);
+                            } else {
+                                sender.sendMessage(plugin.pluginName + "Could not find a save with that name! Try using " + ChatColor.AQUA + "/tardis list saves" + ChatColor.RESET + " first.");
+                                return true;
+                            }
+                        } else {
+                            did = rsd.getDest_id();
                         }
-                        plugin.trackBinder.put(player.getName(), rsd.getDest_id());
+                        plugin.trackBinder.put(player.getName(), did);
                         player.sendMessage(plugin.pluginName + "Click the block you want to bind to this save location.");
                         return true;
                     } else {
@@ -518,6 +533,10 @@ public class TARDISCommands implements CommandExecutor {
                         }
                         save = rs.getSave();
                         id = rs.getTardis_id();
+                        if (plugin.tardisMaterilising.contains(id)) {
+                            sender.sendMessage(plugin.pluginName + "You cannot do that while the TARDIS is materialising!");
+                            return true;
+                        }
                         if (plugin.getConfig().getBoolean("chameleon")) {
                             cham = rs.isChamele_on();
                         }
@@ -857,6 +876,10 @@ public class TARDISCommands implements CommandExecutor {
                         String save = rs.getSave();
                         String[] save_data = save.split(":");
                         int id = rs.getTardis_id();
+                        if (plugin.tardisMaterilising.contains(id)) {
+                            sender.sendMessage(plugin.pluginName + "You cannot do that while the TARDIS is materialising!");
+                            return true;
+                        }
                         boolean cham = false;
                         if (plugin.getConfig().getBoolean("chameleon")) {
                             cham = rs.isChamele_on();
