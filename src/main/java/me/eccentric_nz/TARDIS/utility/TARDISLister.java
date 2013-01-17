@@ -102,8 +102,11 @@ public class TARDISLister {
                             if (i == 1) {
                                 p.sendMessage(ChatColor.GRAY + "----------------");
                             }
-                            p.sendMessage(ChatColor.GREEN + "" + i + ". [" + map.get("dest_name") + "]: " + map.get("world") + " at x:" + map.get("x") + " y:" + map.get("y") + " z:" + map.get("z"));
-                            i++;
+                            String dn = map.get("dest_name");
+                            if (!dn.equals("hide") && !dn.equals("rebuild")) {
+                                p.sendMessage(ChatColor.GREEN + "" + i + ". [" + dn + "]: " + map.get("world") + " at x:" + map.get("x") + " y:" + map.get("y") + " z:" + map.get("z"));
+                                i++;
+                            }
                         }
                     }
                 }
