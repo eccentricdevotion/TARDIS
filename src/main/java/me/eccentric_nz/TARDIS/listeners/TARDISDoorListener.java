@@ -236,6 +236,11 @@ public class TARDISDoorListener implements Listener {
                                             wherd.put("player", playerNameStr);
                                             qf.doDelete("travellers", wherd);
                                         } else {
+                                            // is the TARDIS materialising?
+                                            if (plugin.tardisMaterilising.contains(id)) {
+                                                player.sendMessage(plugin.pluginName + "The TARDIS still travelling... don't get lost in the time vortex!");
+                                                return;
+                                            }
                                             boolean chkCompanion = false;
                                             if (!playerNameStr.equals(tl)) {
                                                 if (plugin.getServer().getPlayer(tl) != null) {
@@ -375,6 +380,14 @@ public class TARDISDoorListener implements Listener {
         final boolean allowFlight = p.getAllowFlight();
         final boolean crossWorlds = from != to;
         final boolean quotes = q;
+        final String name = p.getName();
+        final boolean hasTravelled = plugin.tardisHasTravelled.containsKey(name);
+        // if new destination and exiting wait for the tardis to materialise
+        long firstdelay = (hasTravelled || plugin.tardisMaterilising.contains(id)) ? 305L : 5L;
+        long seconddelay = (hasTravelled || plugin.tardisMaterilising.contains(id)) ? 310L : 10L;
+        if (hasTravelled || plugin.tardisMaterilising.contains(id)) {
+            p.sendMessage(plugin.pluginName + "Please wait while the TARDIS navigates the time vortex...");
+        }
         // try loading chunk
         World world = l.getWorld();
         final boolean isSurvival = checkSurvival(world);
@@ -389,7 +402,7 @@ public class TARDISDoorListener implements Listener {
             public void run() {
                 p.teleport(theLocation);
             }
-        }, 5L);
+        }, firstdelay);
         Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
             @Override
             @SuppressWarnings("deprecation")
@@ -401,13 +414,12 @@ public class TARDISDoorListener implements Listener {
                 if (quotes) {
                     p.sendMessage(plugin.pluginName + plugin.quote.get(i));
                 }
-                if (exit == true) {
+                if (exit) {
                     // check if at a recharge point
                     TARDISArtronLevels tal = new TARDISArtronLevels(plugin);
                     tal.recharge(id, p);
                     // give some artron energy
-                    String name = p.getName();
-                    if (plugin.tardisHasTravelled.containsKey(name)) {
+                    if (hasTravelled) {
                         QueryFactory qf = new QueryFactory(plugin);
                         // add energy to player
                         HashMap<String, Object> where = new HashMap<String, Object>();
@@ -433,7 +445,7 @@ public class TARDISDoorListener implements Listener {
                     }
                 }
             }
-        }, 10L);
+        }, seconddelay);
     }
 
     private boolean checkSurvival(World w) {
