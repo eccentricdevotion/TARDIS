@@ -69,51 +69,61 @@ public class TARDISBindListener implements Listener {
     @EventHandler(priority = EventPriority.MONITOR)
     public void onInteract(PlayerInteractEvent event) {
         Block b = event.getClickedBlock();
-        Material m = b.getType();
-        if (validBlocks.contains(m)) {
-            final Player player = event.getPlayer();
-            String playerNameStr = player.getName();
-            String l = b.getLocation().toString();
-            HashMap<String, Object> where = new HashMap<String, Object>();
-            if (plugin.trackBinder.containsKey(playerNameStr)) {
-                where.put("dest_id", plugin.trackBinder.get(playerNameStr));
-                plugin.trackBinder.remove(playerNameStr);
-                HashMap<String, Object> set = new HashMap<String, Object>();
-                set.put("bind", l);
-                QueryFactory qf = new QueryFactory(plugin);
-                qf.doUpdate("destinations", set, where);
-                player.sendMessage(plugin.pluginName + "Save successfully bound to " + m.toString());
-            } else {
-                // is player travelling in TARDIS
-                where.put("player", playerNameStr);
-                ResultSetTravellers rst = new ResultSetTravellers(plugin, where, false);
-                if (rst.resultSet()) {
-                    int id = rst.getTardis_id();
-                    // check they have enough artron energy to travel
-                    HashMap<String, Object> wheret = new HashMap<String, Object>();
-                    wheret.put("tardis_id", id);
-                    ResultSetTardis rs = new ResultSetTardis(plugin, wheret, "", false);
-                    if (rs.resultSet()) {
-                        int level = rs.getArtron_level();
-                        if (level < plugin.getConfig().getInt("travel")) {
-                            player.sendMessage(plugin.pluginName + ChatColor.RED + "The TARDIS does not have enough Artron Energy to make this trip!");
-                            return;
-                        }
-                        HashMap<String, Object> whereb = new HashMap<String, Object>();
-                        whereb.put("tardis_id", id);
-                        whereb.put("bind", l);
-                        ResultSetDestinations rsd = new ResultSetDestinations(plugin, whereb, false);
-                        if (rsd.resultSet()) {
-                            // get travel location
-                            String save = rsd.getWorld() + ":" + rsd.getX() + ":" + rsd.getY() + ":" + rsd.getZ();
-                            HashMap<String, Object> set = new HashMap<String, Object>();
-                            set.put("save", save);
-                            HashMap<String, Object> wheres = new HashMap<String, Object>();
-                            wheres.put("tardis_id", id);
-                            QueryFactory qf = new QueryFactory(plugin);
-                            qf.doUpdate("tardis", set, wheres);
-                            plugin.tardisHasTravelled.put(playerNameStr, plugin.getConfig().getInt("travel"));
-                            player.sendMessage(plugin.pluginName + "Exit location set to " + rsd.getDest_name());
+        if (b != null) {
+            Material m = b.getType();
+            if (validBlocks.contains(m)) {
+                final Player player = event.getPlayer();
+                String playerNameStr = player.getName();
+                String l = b.getLocation().toString();
+                HashMap<String, Object> where = new HashMap<String, Object>();
+                if (plugin.trackBinder.containsKey(playerNameStr)) {
+                    where.put("dest_id", plugin.trackBinder.get(playerNameStr));
+                    plugin.trackBinder.remove(playerNameStr);
+                    HashMap<String, Object> set = new HashMap<String, Object>();
+                    set.put("bind", l);
+                    QueryFactory qf = new QueryFactory(plugin);
+                    qf.doUpdate("destinations", set, where);
+                    player.sendMessage(plugin.pluginName + "Save successfully bound to " + m.toString());
+                } else {
+                    // is player travelling in TARDIS
+                    where.put("player", playerNameStr);
+                    ResultSetTravellers rst = new ResultSetTravellers(plugin, where, false);
+                    if (rst.resultSet()) {
+                        int id = rst.getTardis_id();
+                        // check they have enough artron energy to travel
+                        HashMap<String, Object> wheret = new HashMap<String, Object>();
+                        wheret.put("tardis_id", id);
+                        ResultSetTardis rs = new ResultSetTardis(plugin, wheret, "", false);
+                        if (rs.resultSet()) {
+                            int level = rs.getArtron_level();
+                            if (level < plugin.getConfig().getInt("travel")) {
+                                player.sendMessage(plugin.pluginName + ChatColor.RED + "The TARDIS does not have enough Artron Energy to make this trip!");
+                                return;
+                            }
+                            HashMap<String, Object> whereb = new HashMap<String, Object>();
+                            whereb.put("tardis_id", id);
+                            whereb.put("bind", l);
+                            ResultSetDestinations rsd = new ResultSetDestinations(plugin, whereb, false);
+                            if (rsd.resultSet()) {
+                                // is this a save button or command button?
+                                String dest_name = rsd.getDest_name();
+                                if (dest_name.equals("rebuild")) {
+                                    player.performCommand("tardis rebuild");
+                                } else if (dest_name.equals("hide")) {
+                                    player.performCommand("tardis hide");
+                                } else {
+                                    // get travel location
+                                    String save = rsd.getWorld() + ":" + rsd.getX() + ":" + rsd.getY() + ":" + rsd.getZ();
+                                    HashMap<String, Object> set = new HashMap<String, Object>();
+                                    set.put("save", save);
+                                    HashMap<String, Object> wheres = new HashMap<String, Object>();
+                                    wheres.put("tardis_id", id);
+                                    QueryFactory qf = new QueryFactory(plugin);
+                                    qf.doUpdate("tardis", set, wheres);
+                                    plugin.tardisHasTravelled.put(playerNameStr, plugin.getConfig().getInt("travel"));
+                                    player.sendMessage(plugin.pluginName + "Exit location set to " + dest_name);
+                                }
+                            }
                         }
                     }
                 }
