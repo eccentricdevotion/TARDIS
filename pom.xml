@@ -43,15 +43,22 @@
         </dependency>
         <dependency>
             <groupId>org.bukkit</groupId>
-            <artifactId>craftbukkit.v1_4_5</artifactId>
-            <version>1.4.5-R1.0</version>
+            <artifactId>craftbukkit-1.4.5</artifactId>
+            <version>R1.0</version>
+            <type>jar</type>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.bukkit</groupId>
+            <artifactId>craftbukkit-1.4.6</artifactId>
+            <version>R0.4</version>
             <type>jar</type>
             <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>org.bukkit</groupId>
             <artifactId>craftbukkit</artifactId>
-            <version>1.4.6-R0.4-SNAPSHOT</version>
+            <version>1.4.7-R0.2-SNAPSHOT</version>
             <type>jar</type>
             <scope>compile</scope>
         </dependency>
