@@ -16,14 +16,18 @@
  */
 package me.eccentric_nz.TARDIS.listeners;
 
+import java.util.ArrayList;
 import me.eccentric_nz.TARDIS.database.TARDISDatabase;
 import java.util.HashMap;
+import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
+import me.eccentric_nz.TARDIS.thirdparty.Version;
 import me.eccentric_nz.TARDIS.travel.TARDISTimetravel;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -48,9 +52,19 @@ public class TARDISButtonListener implements Listener {
 
     private TARDIS plugin;
     TARDISDatabase service = TARDISDatabase.getInstance();
+    List<Material> validBlocks = new ArrayList<Material>();
+    Version bukkitversion;
+    Version prewoodbuttonversion = new Version("1.4.2");
 
     public TARDISButtonListener(TARDIS plugin) {
         this.plugin = plugin;
+        String[] v = Bukkit.getServer().getBukkitVersion().split("-");
+        bukkitversion = new Version(v[0]);
+        if (bukkitversion.compareTo(prewoodbuttonversion) >= 0) {
+            validBlocks.add(Material.WOOD_BUTTON);
+        }
+        validBlocks.add(Material.STONE_BUTTON);
+        validBlocks.add(Material.LEVER);
     }
 
     /**
@@ -67,7 +81,7 @@ public class TARDISButtonListener implements Listener {
             Action action = event.getAction();
             if (action == Action.RIGHT_CLICK_BLOCK) {
                 // only proceed if they are clicking a type of a button or a lever!
-                if (blockType == Material.STONE_BUTTON || blockType == Material.WOOD_BUTTON || blockType == Material.LEVER) {
+                if (validBlocks.contains(blockType)) {
                     // get clicked block location
                     Location b = block.getLocation();
                     String bw = b.getWorld().getName();

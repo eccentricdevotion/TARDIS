@@ -16,12 +16,16 @@
  */
 package me.eccentric_nz.TARDIS.listeners;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.TARDISDatabase;
+import me.eccentric_nz.TARDIS.thirdparty.Version;
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -48,9 +52,20 @@ public class TARDISArtronCapacitorListener implements Listener {
 
     private final TARDIS plugin;
     TARDISDatabase service = TARDISDatabase.getInstance();
+    List<Material> validBlocks = new ArrayList<Material>();
+    Version bukkitversion;
+    Version prewoodbuttonversion = new Version("1.4.2");
+    Material full = Material.EYE_OF_ENDER;
 
     public TARDISArtronCapacitorListener(TARDIS plugin) {
         this.plugin = plugin;
+        String[] v = Bukkit.getServer().getBukkitVersion().split("-");
+        bukkitversion = new Version(v[0]);
+        if (bukkitversion.compareTo(prewoodbuttonversion) >= 0) {
+            validBlocks.add(Material.WOOD_BUTTON);
+            full = Material.NETHER_STAR;
+        }
+        validBlocks.add(Material.STONE_BUTTON);
     }
 
     /**
@@ -73,7 +88,7 @@ public class TARDISArtronCapacitorListener implements Listener {
             Action action = event.getAction();
             if (action == Action.RIGHT_CLICK_BLOCK) {
                 // only proceed if they are clicking a button!
-                if (blockType == Material.WOOD_BUTTON || blockType == Material.STONE_BUTTON) {
+                if (validBlocks.contains(blockType)) {
                     // get clicked block location
                     Location b = block.getLocation();
                     String bw = b.getWorld().getName();
@@ -92,7 +107,7 @@ public class TARDISArtronCapacitorListener implements Listener {
                         wheret.put("tardis_id", rs.getTardis_id());
                         // we need to get this block's location and then get the tardis_id from it
                         Material item = player.getItemInHand().getType();
-                        if (item.equals(Material.NETHER_STAR)) {
+                        if (item.equals(full)) {
                             // give TARDIS full charge
                             HashMap<String, Object> set = new HashMap<String, Object>();
                             set.put("artron_level", 1000);
@@ -103,7 +118,7 @@ public class TARDISArtronCapacitorListener implements Listener {
                             if (a2 > 0) {
                                 player.getInventory().getItemInHand().setAmount(a2);
                             } else {
-                                player.getInventory().removeItem(new ItemStack(Material.NETHER_STAR, 1));
+                                player.getInventory().removeItem(new ItemStack(full, 1));
                             }
                             player.sendMessage(plugin.pluginName + "Artron Energy Levels at maximum!");
                         } else if (item.equals(Material.valueOf(plugin.getConfig().getString("key")))) {

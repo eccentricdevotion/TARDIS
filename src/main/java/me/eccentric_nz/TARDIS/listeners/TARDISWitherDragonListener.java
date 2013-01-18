@@ -16,10 +16,14 @@
  */
 package me.eccentric_nz.TARDIS.listeners;
 
+import java.util.ArrayList;
 import me.eccentric_nz.TARDIS.database.TARDISDatabase;
 import java.util.HashMap;
+import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.ResultSetBlocks;
+import me.eccentric_nz.TARDIS.thirdparty.Version;
+import org.bukkit.Bukkit;
 import org.bukkit.block.Block;
 import org.bukkit.entity.EntityType;
 import org.bukkit.event.EventHandler;
@@ -40,9 +44,18 @@ public class TARDISWitherDragonListener implements Listener {
 
     private final TARDIS plugin;
     TARDISDatabase service = TARDISDatabase.getInstance();
+    List<EntityType> ents = new ArrayList<EntityType>();
+    Version bukkitversion;
+    Version prewitherversion = new Version("1.4.2");
 
     public TARDISWitherDragonListener(TARDIS plugin) {
         this.plugin = plugin;
+        String[] v = Bukkit.getServer().getBukkitVersion().split("-");
+        bukkitversion = new Version(v[0]);
+        ents.add(EntityType.ENDER_DRAGON);
+        if (bukkitversion.compareTo(prewitherversion) >= 0) {
+            ents.add(EntityType.WITHER);
+        }
     }
 
     /**
@@ -59,7 +72,7 @@ public class TARDISWitherDragonListener implements Listener {
         } catch (Exception e) {
             eType = null;
         }
-        if ((eType != null) && (eType == EntityType.WITHER || eType == EntityType.ENDER_DRAGON)) {
+        if (eType != null && ents.contains(eType)) {
             HashMap<String, Object> where = new HashMap<String, Object>();
             where.put("location", l);
             ResultSetBlocks rs = new ResultSetBlocks(plugin, where, false);

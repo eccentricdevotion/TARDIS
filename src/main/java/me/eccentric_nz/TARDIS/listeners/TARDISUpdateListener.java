@@ -16,12 +16,16 @@
  */
 package me.eccentric_nz.TARDIS.listeners;
 
+import java.util.ArrayList;
 import me.eccentric_nz.TARDIS.database.TARDISDatabase;
 import java.util.HashMap;
+import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
+import me.eccentric_nz.TARDIS.thirdparty.Version;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -46,9 +50,19 @@ public class TARDISUpdateListener implements Listener {
 
     private TARDIS plugin;
     TARDISDatabase service = TARDISDatabase.getInstance();
+    List<Material> validBlocks = new ArrayList<Material>();
+    Version bukkitversion;
+    Version prewoodbuttonversion = new Version("1.4.2");
 
     public TARDISUpdateListener(TARDIS plugin) {
         this.plugin = plugin;
+        String[] v = Bukkit.getServer().getBukkitVersion().split("-");
+        bukkitversion = new Version(v[0]);
+        if (bukkitversion.compareTo(prewoodbuttonversion) >= 0) {
+            validBlocks.add(Material.WOOD_BUTTON);
+        }
+        validBlocks.add(Material.STONE_BUTTON);
+
     }
 
     /**
@@ -114,7 +128,7 @@ public class TARDISUpdateListener implements Listener {
                     set.put("door_direction", d);
                     tid.put("door_type", 1);
                 }
-                if (blockName.equalsIgnoreCase("button") && (blockType == Material.STONE_BUTTON || blockType == Material.WOOD_BUTTON || blockType == Material.LEVER)) {
+                if (blockName.equalsIgnoreCase("button") && (validBlocks.contains(blockType) || blockType == Material.LEVER)) {
                     set.put("button", blockLocStr);
                 }
                 if (blockName.equalsIgnoreCase("world-repeater") && (blockType == Material.DIODE_BLOCK_OFF || blockType == Material.DIODE_BLOCK_ON)) {
@@ -129,7 +143,7 @@ public class TARDISUpdateListener implements Listener {
                 if (blockName.equalsIgnoreCase("y-repeater") && (blockType == Material.DIODE_BLOCK_OFF || blockType == Material.DIODE_BLOCK_ON)) {
                     set.put("repeater3", blockLocStr);
                 }
-                if (blockName.equalsIgnoreCase("artron") && (blockType == Material.STONE_BUTTON || blockType == Material.WOOD_BUTTON)) {
+                if (blockName.equalsIgnoreCase("artron") && validBlocks.contains(blockType)) {
                     set.put("artron_button", blockLocStr);
                 }
                 if (blockName.equalsIgnoreCase("chameleon") && (blockType == Material.WALL_SIGN || blockType == Material.SIGN_POST)) {

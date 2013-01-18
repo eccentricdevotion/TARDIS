@@ -25,6 +25,8 @@ import me.eccentric_nz.TARDIS.database.ResultSetDestinations;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.database.TARDISDatabase;
+import me.eccentric_nz.TARDIS.thirdparty.Version;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -46,12 +48,19 @@ public class TARDISBindListener implements Listener {
     private final TARDIS plugin;
     TARDISDatabase service = TARDISDatabase.getInstance();
     List<Material> validBlocks = new ArrayList<Material>();
+    Version bukkitversion;
+    Version prewoodbuttonversion = new Version("1.4.2");
 
     public TARDISBindListener(TARDIS plugin) {
         this.plugin = plugin;
+        String[] v = Bukkit.getServer().getBukkitVersion().split("-");
+        bukkitversion = new Version(v[0]);
+
         validBlocks.add(Material.WALL_SIGN);
         validBlocks.add(Material.SIGN_POST);
-        validBlocks.add(Material.WOOD_BUTTON);
+        if (bukkitversion.compareTo(prewoodbuttonversion) >= 0) {
+            validBlocks.add(Material.WOOD_BUTTON);
+        }
         validBlocks.add(Material.STONE_BUTTON);
         validBlocks.add(Material.LEVER);
     }
@@ -95,11 +104,6 @@ public class TARDISBindListener implements Listener {
                         wheret.put("tardis_id", id);
                         ResultSetTardis rs = new ResultSetTardis(plugin, wheret, "", false);
                         if (rs.resultSet()) {
-                            int level = rs.getArtron_level();
-                            if (level < plugin.getConfig().getInt("travel")) {
-                                player.sendMessage(plugin.pluginName + ChatColor.RED + "The TARDIS does not have enough Artron Energy to make this trip!");
-                                return;
-                            }
                             HashMap<String, Object> whereb = new HashMap<String, Object>();
                             whereb.put("tardis_id", id);
                             whereb.put("bind", l);
@@ -114,6 +118,11 @@ public class TARDISBindListener implements Listener {
                                 } else if (dest_name.equals("home")) {
                                     player.performCommand("tardistravel home");
                                 } else {
+                                    int level = rs.getArtron_level();
+                                    if (level < plugin.getConfig().getInt("travel")) {
+                                        player.sendMessage(plugin.pluginName + ChatColor.RED + "The TARDIS does not have enough Artron Energy to make this trip!");
+                                        return;
+                                    }
                                     // get travel location
                                     String save = rsd.getWorld() + ":" + rsd.getX() + ":" + rsd.getY() + ":" + rsd.getZ();
                                     HashMap<String, Object> set = new HashMap<String, Object>();
