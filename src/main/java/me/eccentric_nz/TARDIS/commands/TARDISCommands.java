@@ -1034,6 +1034,9 @@ public class TARDISCommands implements CommandExecutor {
                             case ARTRON:
                                 sender.sendMessage(TARDISConstants.COMMAND_ARTRON.split("\n"));
                                 break;
+                            case BIND:
+                                sender.sendMessage(TARDISConstants.COMMAND_BIND.split("\n"));
+                                break;
                             default:
                                 sender.sendMessage(TARDISConstants.COMMANDS.split("\n"));
                         }
