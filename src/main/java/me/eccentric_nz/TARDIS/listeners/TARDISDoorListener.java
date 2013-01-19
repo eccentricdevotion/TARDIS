@@ -238,7 +238,7 @@ public class TARDISDoorListener implements Listener {
                                                 plugin.buildPB.buildPoliceBox(id, newl, d, cham, player, false);
                                             }
                                             // exit TARDIS!
-                                            movePlayer(player, exitTardis, true, playerWorld, userQuotes, id);
+                                            movePlayer(player, exitTardis, true, playerWorld, userQuotes, id, 0, tl);
                                             // remove player from traveller table
                                             HashMap<String, Object> wherd = new HashMap<String, Object>();
                                             wherd.put("player", playerNameStr);
@@ -250,7 +250,9 @@ public class TARDISDoorListener implements Listener {
                                                 return;
                                             }
                                             boolean chkCompanion = false;
+                                            int isTL = 1;
                                             if (!playerNameStr.equals(tl)) {
+                                                isTL = -1;
                                                 if (plugin.getServer().getPlayer(tl) != null) {
                                                     if (companions != null && !companions.equals("")) {
                                                         // is the timelord in the TARDIS?
@@ -340,7 +342,7 @@ public class TARDISDoorListener implements Listener {
                                                     }
                                                     tmp_loc.setYaw(yaw);
                                                     final Location tardis_loc = tmp_loc;
-                                                    movePlayer(player, tardis_loc, false, playerWorld, userQuotes, id);
+                                                    movePlayer(player, tardis_loc, false, playerWorld, userQuotes, id, isTL, tl);
                                                     // put player into travellers table
                                                     HashMap<String, Object> set = new HashMap<String, Object>();
                                                     set.put("tardis_id", id);
@@ -380,7 +382,7 @@ public class TARDISDoorListener implements Listener {
     }
     Random r = new Random();
 
-    private void movePlayer(final Player p, Location l, final boolean exit, final World from, boolean q, final int id) {
+    private void movePlayer(final Player p, Location l, final boolean exit, final World from, boolean q, final int id, final int isTL, final String tl) {
 
         final int i = r.nextInt(plugin.quotelen);
         final Location theLocation = l;
@@ -441,6 +443,10 @@ public class TARDISDoorListener implements Listener {
                         wheret.put("tardis_id", id);
                         int amount = plugin.tardisHasTravelled.get(id) * -1;
                         qf.alterEnergyLevel("tardis", amount, wheret, p);
+                        if (isTL < 0) {
+                            Player ptl = plugin.getServer().getPlayer(tl);
+                            ptl.sendMessage(plugin.pluginName + "You used " + Math.abs(amount) + " Artron Energy.");
+                        }
                         plugin.tardisHasTravelled.remove(id);
                     }
                     // give a key
