@@ -56,8 +56,9 @@ public class TARDISUpdateChecker {
         if (exists(tardisURL)) {
             FileConfiguration pluginYml = YamlConfiguration.loadConfiguration(plugin.pm.getPlugin("TARDIS").getResource("plugin.yml"));
             String verStr = pluginYml.getString("version");
-            if (verStr.contains("SNAPSHOT")) {
-                verStr = verStr.substring(0, verStr.length() - 9);
+            if (verStr.contains("-")) {
+                String[] tmp = verStr.split("-");
+                verStr = tmp[0];
             }
             String latest = URLReader(tardisURL);
             Version thisversion = new Version(verStr);
