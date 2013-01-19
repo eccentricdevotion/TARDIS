@@ -160,7 +160,11 @@ public class TARDISBuilderPoliceBox {
         x = l.getBlockX();
         plusx = (l.getBlockX() + 1);
         minusx = (l.getBlockX() - 1);
-        y = (l.getBlockY() - 1);
+        if (plugin.getConfig().getBoolean("materialise") && rebuild == false) {
+            y = (l.getBlockY() - 1);
+        } else {
+            y = (l.getBlockY() - 3);
+        }
         z = (l.getBlockZ());
         plusz = (l.getBlockZ() + 1);
         minusz = (l.getBlockZ() - 1);
