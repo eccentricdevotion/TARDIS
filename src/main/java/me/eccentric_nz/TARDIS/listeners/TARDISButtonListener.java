@@ -222,9 +222,16 @@ public class TARDISButtonListener implements Listener {
                                 if (comps != null && !comps.equals("")) {
                                     String[] companions = comps.split(":");
                                     for (String c : companions) {
-                                        // are they online - AND are they travelling - need check here for travelling!
+                                        // are they online - AND are they travelling
                                         if (plugin.getServer().getPlayer(c) != null) {
-                                            plugin.getServer().getPlayer(c).sendMessage(plugin.pluginName + "Destination: " + dchat);
+                                            // are they travelling
+                                            HashMap<String, Object> wherec = new HashMap<String, Object>();
+                                            wherec.put("tardis_id", id);
+                                            wherec.put("player", c);
+                                            ResultSetTravellers rsc = new ResultSetTravellers(plugin, wherec, false);
+                                            if (rsc.resultSet()) {
+                                                plugin.getServer().getPlayer(c).sendMessage(plugin.pluginName + "Destination: " + dchat);
+                                            }
                                         }
                                         if (c.equalsIgnoreCase(player.getName())) {
                                             isTL = false;
