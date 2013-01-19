@@ -171,7 +171,6 @@ public class TARDISMaterialisationRunnable implements Runnable {
                     setd.put("door_type", 0);
                     qf.doInsert("doors", setd);
                 }
-
                 // bottom layer corners
                 plugin.utils.setBlockAndRemember(world, plusx, down2y, plusz, id, b, tid, rebuild);
                 plugin.utils.setBlockAndRemember(world, minusx, down2y, plusz, id, b, tid, rebuild);

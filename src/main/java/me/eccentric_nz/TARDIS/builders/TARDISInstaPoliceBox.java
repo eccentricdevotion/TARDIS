@@ -222,9 +222,6 @@ public class TARDISInstaPoliceBox {
         } else {
             plugin.utils.setBlockAndRemember(world, x, plusy, z, 50, (byte) 5, tid, rebuild);
         }
-        // remove the IRON & LAPIS blocks
-        plugin.utils.setBlock(world, x, minusy, z, 0, norm);
-        plugin.utils.setBlock(world, x, down2y, z, 0, norm);
         // bottom layer with door bottom
         plugin.utils.setBlockAndRemember(world, plusx, down2y, z, west, bdw, tid, rebuild);
         plugin.utils.setBlockAndRemember(world, x, down2y, plusz, north, bdn, tid, rebuild);

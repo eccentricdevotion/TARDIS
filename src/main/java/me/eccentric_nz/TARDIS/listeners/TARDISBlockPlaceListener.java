@@ -157,8 +157,10 @@ public class TARDISBlockPlaceListener implements Listener {
                             set.put("middle_data", middle_data);
                         }
                         final int lastInsertId = qf.doInsert("tardis", set);
-                        // remove redstone torch
+                        // remove redstone torch/lapis and iron blocks
                         block.setTypeId(0);
+                        blockBelow.setTypeId(0);
+                        blockBottom.setTypeId(0);
                         // turn the block stack into a TARDIS
                         plugin.buildPB.buildPoliceBox(lastInsertId, block_loc, TARDISConstants.COMPASS.valueOf(d), false, player, false);
                         plugin.buildI.buildInner(schm, chunkworld, lastInsertId, player, middle_id, middle_data);
