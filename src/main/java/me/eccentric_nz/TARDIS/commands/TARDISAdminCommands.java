@@ -27,8 +27,10 @@ import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
+import me.eccentric_nz.TARDIS.thirdparty.Version;
 import me.eccentric_nz.TARDIS.utility.TARDISMaterials;
 import org.apache.commons.lang.StringUtils;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -60,6 +62,9 @@ public class TARDISAdminCommands implements CommandExecutor {
     private List<String> firstsBool = new ArrayList<String>();
     private List<String> firstsInt = new ArrayList<String>();
     private List<String> firstsRoom = new ArrayList<String>();
+    private Material charger = Material.REDSTONE_LAMP_ON;
+    Version bukkitversion;
+    Version prebeaconversion = new Version("1.4.2");
 
     public TARDISAdminCommands(TARDIS plugin) {
         this.plugin = plugin;
@@ -120,6 +125,12 @@ public class TARDISAdminCommands implements CommandExecutor {
         firstsRoom.add("pool");
         firstsRoom.add("vault");
         firstsRoom.add("empty");
+
+        String[] v = Bukkit.getServer().getBukkitVersion().split("-");
+        bukkitversion = new Version(v[0]);
+        if (bukkitversion.compareTo(prebeaconversion) >= 0) {
+            charger = Material.BEACON;
+        }
     }
 
     @Override
@@ -196,8 +207,8 @@ public class TARDISAdminCommands implements CommandExecutor {
                         return true;
                     }
                     Block b = player.getTargetBlock(null, 50);
-                    if (!b.getType().equals(Material.BEACON)) {
-                        player.sendMessage(plugin.pluginName + "You must be targeting a beacon block!");
+                    if (!b.getType().equals(charger)) {
+                        player.sendMessage(plugin.pluginName + "You must be targeting a " + charger.toString() + " block!");
                         return true;
                     }
                     // make sure they're not targeting their inner TARDIS beacon
@@ -205,7 +216,7 @@ public class TARDISAdminCommands implements CommandExecutor {
                     where.put("player", player.getName());
                     ResultSetTravellers rst = new ResultSetTravellers(plugin, where, false);
                     if (rst.resultSet()) {
-                        player.sendMessage(plugin.pluginName + "You cannot use the TARDIS beacon to recharge!");
+                        player.sendMessage(plugin.pluginName + "You cannot use the TARDIS " + charger.toString() + " to recharge!");
                         return true;
                     }
                     Location l = b.getLocation();
