@@ -51,6 +51,8 @@ public class TARDISUtils {
 
     public TARDISUtils(TARDIS plugin) {
         this.plugin = plugin;
+        String[] v = Bukkit.getServer().getBukkitVersion().split("-");
+        bukkitversion = new Version(v[0]);
     }
 
     /**
