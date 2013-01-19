@@ -26,6 +26,7 @@ import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetChunks;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
+import me.eccentric_nz.TARDIS.thirdparty.Version;
 import org.bukkit.Bukkit;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
@@ -45,6 +46,8 @@ public class TARDISUtils {
 
     private final TARDIS plugin;
     TARDISDatabase service = TARDISDatabase.getInstance();
+    Version bukkitversion;
+    Version prewoodbuttonversion = new Version("1.4.2");
 
     public TARDISUtils(TARDIS plugin) {
         this.plugin = plugin;
@@ -63,7 +66,11 @@ public class TARDISUtils {
     public void setBlock(World w, int x, int y, int z, int m, byte d) {
         Block b = w.getBlockAt(x, y, z);
         if (m < 0) {
-            m = m + 256;
+            if (bukkitversion.compareTo(prewoodbuttonversion) < 0 && (m == 143 || m == -113)) {
+                m = 77;
+            } else {
+                m = m + 256;
+            }
         }
         b.setTypeIdAndData(m, d, true);
     }
