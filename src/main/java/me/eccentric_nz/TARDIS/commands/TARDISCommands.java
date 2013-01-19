@@ -30,6 +30,7 @@ import me.eccentric_nz.TARDIS.database.ResultSetDestinations;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.files.TARDISUpdateChecker;
+import me.eccentric_nz.TARDIS.thirdparty.Version;
 import me.eccentric_nz.TARDIS.travel.TARDISPluginRespect;
 import me.eccentric_nz.TARDIS.travel.TARDISTimetravel;
 import me.eccentric_nz.TARDIS.utility.TARDISItemRenamer;
@@ -59,6 +60,10 @@ public class TARDISCommands implements CommandExecutor {
     private TARDISPluginRespect respect;
     HashSet<Byte> transparent = new HashSet<Byte>();
     private List<String> firstArgs = new ArrayList<String>();
+    Version bukkitversion;
+    Version preIMversion = new Version("1.4.5");
+    Version SUBversion;
+    Version preSUBversion = new Version("1.0");
 
     public TARDISCommands(TARDIS plugin) {
         this.plugin = plugin;
@@ -90,6 +95,10 @@ public class TARDISCommands implements CommandExecutor {
         firstArgs.add("room");
         firstArgs.add("jettison");
         firstArgs.add("bind");
+
+        String[] v = Bukkit.getServer().getBukkitVersion().split("-");
+        bukkitversion = new Version(v[0]);
+        SUBversion = new Version(v[1].substring(1, v[1].length()));
     }
 
     @Override
@@ -919,11 +928,15 @@ public class TARDISCommands implements CommandExecutor {
                     }
                 }
                 if (args[0].equalsIgnoreCase("namekey")) {
+                    if (bukkitversion.compareTo(preIMversion) < 0 || (bukkitversion.compareTo(preIMversion) == 0 && SUBversion.compareTo(preSUBversion) < 0)) {
+                        sender.sendMessage(plugin.pluginName + "You cannot rename the TARDIS key with this version of Bukkit!");
+                        return true;
+                    }
                     Material m = Material.getMaterial(plugin.getConfig().getString("key"));
                     ItemStack is = player.getItemInHand();
                     if (!is.getType().equals(m)) {
                         sender.sendMessage(plugin.pluginName + "You can only rename the TARDIS key!");
-                        return false;
+                        return true;
                     }
                     int count = args.length;
                     if (count < 2) {

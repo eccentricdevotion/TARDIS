@@ -29,6 +29,7 @@ import me.eccentric_nz.TARDIS.database.ResultSetDoors;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
+import me.eccentric_nz.TARDIS.thirdparty.Version;
 import me.eccentric_nz.TARDIS.utility.TARDISItemRenamer;
 import multiworld.MultiWorldPlugin;
 import multiworld.api.MultiWorldAPI;
@@ -65,6 +66,10 @@ public class TARDISDoorListener implements Listener {
     private TARDIS plugin;
     float[][] adjustYaw = new float[4][4];
     TARDISDatabase service = TARDISDatabase.getInstance();
+    Version bukkitversion;
+    Version preIMversion = new Version("1.4.5");
+    Version SUBversion;
+    Version preSUBversion = new Version("1.0");
 
     public TARDISDoorListener(TARDIS plugin) {
         this.plugin = plugin;
@@ -85,6 +90,10 @@ public class TARDISDoorListener implements Listener {
         adjustYaw[3][1] = 180;
         adjustYaw[3][2] = 90;
         adjustYaw[3][3] = 0;
+
+        String[] v = Bukkit.getServer().getBukkitVersion().split("-");
+        bukkitversion = new Version(v[0]);
+        SUBversion = new Version(v[1].substring(1, v[1].length()));
     }
 
     /**
@@ -433,15 +442,17 @@ public class TARDISDoorListener implements Listener {
                         plugin.tardisHasTravelled.remove(name);
                     }
                     // give a key
-                    Inventory inv = p.getInventory();
-                    Material m = Material.valueOf(plugin.TARDIS_KEY);
-                    if (!inv.contains(m) && plugin.getConfig().getBoolean("give_key") == true) {
-                        ItemStack is = new ItemStack(m, 1);
-                        TARDISItemRenamer ir = new TARDISItemRenamer(is);
-                        ir.setName("Sonic Screwdriver", true);
-                        inv.addItem(is);
-                        p.updateInventory();
-                        p.sendMessage(plugin.pluginName + "Don't forget your TARDIS key!");
+                    if (bukkitversion.compareTo(preIMversion) > 0 || (bukkitversion.compareTo(preIMversion) == 0 && SUBversion.compareTo(preSUBversion) >= 0)) {
+                        Inventory inv = p.getInventory();
+                        Material m = Material.valueOf(plugin.TARDIS_KEY);
+                        if (!inv.contains(m) && plugin.getConfig().getBoolean("give_key") == true) {
+                            ItemStack is = new ItemStack(m, 1);
+                            TARDISItemRenamer ir = new TARDISItemRenamer(is);
+                            ir.setName("Sonic Screwdriver", true);
+                            inv.addItem(is);
+                            p.updateInventory();
+                            p.sendMessage(plugin.pluginName + "Don't forget your TARDIS key!");
+                        }
                     }
                 }
             }
