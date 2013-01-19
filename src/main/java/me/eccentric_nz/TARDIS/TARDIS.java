@@ -123,8 +123,8 @@ public class TARDIS extends JavaPlugin {
     public short[] biggerdimensions = new short[3];
     public short[] deluxedimensions = new short[3];
     public short[] passagedimensions = new short[3];
-    public short[] pooldimensions = new short[3];
     public short[] arboretumdimensions = new short[3];
+    public short[] pooldimensions = new short[3];
     public short[] roomdimensions = new short[3];
     public static TARDIS plugin;
     public TARDISUtils utils = new TARDISUtils(this);
