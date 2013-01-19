@@ -400,7 +400,7 @@ public class TARDISCommands implements CommandExecutor {
                         HashMap<String, Object> wheret = new HashMap<String, Object>();
                         wheret.put("tardis_id", id);
                         qf.alterEnergyLevel("tardis", -ch, wheret, player);
-                        plugin.tardisHasTravelled.remove(p.getName());
+                        plugin.tardisHasTravelled.remove(id);
                         return true;
                     } else {
                         sender.sendMessage(plugin.pluginName + TARDISConstants.NO_PERMS_MESSAGE);

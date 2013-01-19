@@ -208,7 +208,6 @@ public class TARDISDoorListener implements Listener {
                                                     break;
                                             }
                                             World exitWorld = exitTardis.getWorld();
-                                            // destroy current TARDIS location
                                             Location newl = null;
                                             // need some sort of check here to sort out who has exited
                                             // count number of travellers - if 1 less than number counted at start
@@ -390,7 +389,7 @@ public class TARDISDoorListener implements Listener {
         final boolean crossWorlds = from != to;
         final boolean quotes = q;
         final String name = p.getName();
-        final boolean hasTravelled = plugin.tardisHasTravelled.containsKey(name);
+        final boolean hasTravelled = plugin.tardisHasTravelled.containsKey(id);
         // if new destination and exiting wait for the tardis to materialise
         long firstdelay = (hasTravelled || plugin.tardisMaterilising.contains(id)) ? 305L : 5L;
         long seconddelay = (hasTravelled || plugin.tardisMaterilising.contains(id)) ? 310L : 10L;
@@ -440,9 +439,9 @@ public class TARDISDoorListener implements Listener {
                         // remove energy from TARDIS
                         HashMap<String, Object> wheret = new HashMap<String, Object>();
                         wheret.put("tardis_id", id);
-                        int amount = plugin.tardisHasTravelled.get(name) * -1;
+                        int amount = plugin.tardisHasTravelled.get(id) * -1;
                         qf.alterEnergyLevel("tardis", amount, wheret, p);
-                        plugin.tardisHasTravelled.remove(name);
+                        plugin.tardisHasTravelled.remove(id);
                     }
                     // give a key
                     if (bukkitversion.compareTo(preIMversion) > 0 || (bukkitversion.compareTo(preIMversion) == 0 && SUBversion.compareTo(preSUBversion) >= 0)) {
