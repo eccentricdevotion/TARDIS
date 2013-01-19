@@ -113,27 +113,31 @@ public class TARDISBindListener implements Listener {
                                 String dest_name = rsd.getDest_name();
                                 if (dest_name.equals("rebuild")) {
                                     player.performCommand("tardis rebuild");
-                                } else if (dest_name.equals("hide")) {
-                                    player.performCommand("tardis hide");
-                                } else if (dest_name.equals("home")) {
-                                    player.performCommand("tardistravel home");
-                                } else {
-                                    int level = rs.getArtron_level();
-                                    if (level < plugin.getConfig().getInt("travel")) {
-                                        player.sendMessage(plugin.pluginName + ChatColor.RED + "The TARDIS does not have enough Artron Energy to make this trip!");
-                                        return;
-                                    }
-                                    // get travel location
-                                    String save = rsd.getWorld() + ":" + rsd.getX() + ":" + rsd.getY() + ":" + rsd.getZ();
-                                    HashMap<String, Object> set = new HashMap<String, Object>();
-                                    set.put("save", save);
-                                    HashMap<String, Object> wheres = new HashMap<String, Object>();
-                                    wheres.put("tardis_id", id);
-                                    QueryFactory qf = new QueryFactory(plugin);
-                                    qf.doUpdate("tardis", set, wheres);
-                                    plugin.tardisHasTravelled.put(playerNameStr, plugin.getConfig().getInt("travel"));
-                                    player.sendMessage(plugin.pluginName + "Exit location set to " + dest_name);
+                                    return;
                                 }
+                                if (dest_name.equals("hide")) {
+                                    player.performCommand("tardis hide");
+                                    return;
+                                }
+                                if (dest_name.equals("home")) {
+                                    player.performCommand("tardistravel home");
+                                    return;
+                                }
+                                int level = rs.getArtron_level();
+                                if (level < plugin.getConfig().getInt("travel")) {
+                                    player.sendMessage(plugin.pluginName + ChatColor.RED + "The TARDIS does not have enough Artron Energy to make this trip!");
+                                    return;
+                                }
+                                // get travel location
+                                String save = rsd.getWorld() + ":" + rsd.getX() + ":" + rsd.getY() + ":" + rsd.getZ();
+                                HashMap<String, Object> set = new HashMap<String, Object>();
+                                set.put("save", save);
+                                HashMap<String, Object> wheres = new HashMap<String, Object>();
+                                wheres.put("tardis_id", id);
+                                QueryFactory qf = new QueryFactory(plugin);
+                                qf.doUpdate("tardis", set, wheres);
+                                plugin.tardisHasTravelled.put(playerNameStr, plugin.getConfig().getInt("travel"));
+                                player.sendMessage(plugin.pluginName + "Exit location set to " + dest_name);
                             }
                         }
                     }
