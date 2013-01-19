@@ -99,6 +99,7 @@ public class TARDISBindListener implements Listener {
                     ResultSetTravellers rst = new ResultSetTravellers(plugin, where, false);
                     if (rst.resultSet()) {
                         int id = rst.getTardis_id();
+                        plugin.utils.updateTravellerCount(id);
                         // check they have enough artron energy to travel
                         HashMap<String, Object> wheret = new HashMap<String, Object>();
                         wheret.put("tardis_id", id);
