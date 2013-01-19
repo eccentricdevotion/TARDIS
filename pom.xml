@@ -20,7 +20,7 @@
         </repository>
     </repositories>
     <build>
-        <finalName>TARDIS-2.0-SNAPSHOT</finalName>
+        <finalName>TARDIS</finalName>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>

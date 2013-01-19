@@ -1,10 +1,7 @@
 # TODO
 
 3. Decrease materialsation time?
-4. Don't materialise when rebuilding?
 5. Check what happens when companions use the TARDIS with regards to:
-   - Artron Energy
-   - Materialising
    - Recharging
 6. Update schematic dimensions so all rooms have their own dimensions
    - Still undecided whether we should allow/can actually let players use their own room schematics
