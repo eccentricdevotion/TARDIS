@@ -145,10 +145,15 @@ public class TARDISBuilderPoliceBox {
                 }
             }
         }
-        TARDISMaterialisationRunnable runnable = new TARDISMaterialisationRunnable(plugin, l, wall_block, chameleonData, id, d, rebuild);
-        int taskID = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, runnable, 10L, 20L);
-        runnable.setTask(taskID);
-        plugin.tardisMaterilising.add(id);
+        if (plugin.getConfig().getBoolean("materialise")) { // && rebuild == false?
+            TARDISMaterialisationRunnable runnable = new TARDISMaterialisationRunnable(plugin, l, wall_block, chameleonData, id, d, rebuild);
+            int taskID = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, runnable, 10L, 20L);
+            runnable.setTask(taskID);
+            plugin.tardisMaterilising.add(id);
+        } else {
+            TARDISInstaPoliceBox insta = new TARDISInstaPoliceBox(plugin, l, wall_block, chameleonData, id, d, rebuild);
+            insta.buildPoliceBox();
+        }
 
         // add platform if configured and necessary
         World world = l.getWorld();
