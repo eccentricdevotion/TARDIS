@@ -99,7 +99,6 @@ public class TARDISConfiguration {
         strOptions.put("default_world_name", "myridiculouslylongworldnameiscalledcuthbert");
         strOptions.put("key", "STICK");
         strOptions.put("full_charge_item", "NETHER_STAR");
-        strOptions.put("pre_142_charge_item", "EYE_OF_ENDER");
         strOptions.put("rooms.PASSAGE.seed", "CLAY");
         strOptions.put("rooms.ARBORETUM.seed", "LEAVES");
         strOptions.put("rooms.BEDROOM.seed", "GLOWSTONE");

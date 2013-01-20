@@ -55,7 +55,6 @@ public class TARDISArtronCapacitorListener implements Listener {
     List<Material> validBlocks = new ArrayList<Material>();
     Version bukkitversion;
     Version prewoodbuttonversion = new Version("1.4.2");
-    Material full;
 
     public TARDISArtronCapacitorListener(TARDIS plugin) {
         this.plugin = plugin;
@@ -63,9 +62,6 @@ public class TARDISArtronCapacitorListener implements Listener {
         bukkitversion = new Version(v[0]);
         if (bukkitversion.compareTo(prewoodbuttonversion) >= 0) {
             validBlocks.add(Material.WOOD_BUTTON);
-            full = Material.valueOf(plugin.getConfig().getString("full_charge_item"));
-        } else {
-            full = Material.valueOf(plugin.getConfig().getString("pre_142_charge_item"));
         }
         validBlocks.add(Material.STONE_BUTTON);
     }
@@ -109,6 +105,7 @@ public class TARDISArtronCapacitorListener implements Listener {
                         wheret.put("tardis_id", rs.getTardis_id());
                         // we need to get this block's location and then get the tardis_id from it
                         Material item = player.getItemInHand().getType();
+                        Material full = Material.valueOf(plugin.getConfig().getString("full_charge_item"));
                         if (item.equals(full)) {
                             // give TARDIS full charge
                             HashMap<String, Object> set = new HashMap<String, Object>();

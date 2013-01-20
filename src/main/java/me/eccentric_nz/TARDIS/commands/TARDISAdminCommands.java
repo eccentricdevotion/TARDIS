@@ -78,6 +78,7 @@ public class TARDISAdminCommands implements CommandExecutor {
         firstsStr.add("find");
         firstsStr.add("list");
         firstsStr.add("recharger");
+        firstsStr.add("full_charge_item");
         // boolean
         firstsBool.add("debug");
         firstsBool.add("bonus_chest");
@@ -298,14 +299,16 @@ public class TARDISAdminCommands implements CommandExecutor {
                     }
                     return true;
                 }
-                if (first.equals("key")) {
+                if (first.equals("key") || first.equals("full_charge_item")) {
                     String setMaterial = args[1].toUpperCase();
                     if (!Arrays.asList(TARDISMaterials.MATERIAL_LIST).contains(setMaterial)) {
                         sender.sendMessage(plugin.pluginName + ChatColor.RED + "That is not a valid Material! Try checking http://jd.bukkit.org/apidocs/org/bukkit/Material.html");
                         return false;
                     } else {
-                        plugin.getConfig().set("key", setMaterial);
-                        plugin.TARDIS_KEY = setMaterial;
+                        plugin.getConfig().set(first, setMaterial);
+                        if (first.equals("key")) {
+                            plugin.TARDIS_KEY = setMaterial;
+                        }
                     }
                 }
                 if (first.equals("default_world_name")) {

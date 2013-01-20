@@ -65,6 +65,5 @@ lightning_recharge: 100
 creeper_recharge: 50
 full_charge: 1000
 full_charge_item: NETHER_STAR
-pre_142_charge_item: EYE_OF_ENDER
 # jettison is a percentage of orginal room cost
 jettison: 75
