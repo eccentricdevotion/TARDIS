@@ -2,7 +2,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>me.eccentric_nz.plugins.TARDIS</groupId>
     <artifactId>TARDIS</artifactId>
-    <version>1.9.3</version>
+    <version>1.9.4</version>
     <name>TARDIS</name>
     <url>http://www.thenosefairy.co.nz/</url>
     <repositories>
@@ -32,8 +32,24 @@
     <dependencies>
         <dependency>
             <groupId>org.bukkit</groupId>
-            <artifactId>craftbukkit.v1_4_5</artifactId>
-            <version>1.4.5-R1.0</version>
+            <artifactId>bukkit</artifactId>
+            <version>1.4.7-R0.2-SNAPSHOT</version>
+            <type>jar</type>
+            <scope>compile</scope>
+            <optional>true</optional>
+        </dependency>
+        <dependency>
+            <groupId>org.bukkit</groupId>
+            <artifactId>craftbukkit-1.4.5</artifactId>
+            <version>R1.0</version>
+            <type>jar</type>
+            <scope>compile</scope>
+            <optional>true</optional>
+        </dependency>
+        <dependency>
+            <groupId>org.bukkit</groupId>
+            <artifactId>craftbukkit-1.4.6</artifactId>
+            <version>R0.4</version>
             <type>jar</type>
             <scope>compile</scope>
             <optional>true</optional>
@@ -41,7 +57,7 @@
         <dependency>
             <groupId>org.bukkit</groupId>
             <artifactId>craftbukkit</artifactId>
-            <version>1.4.6-R0.4-SNAPSHOT</version>
+            <version>1.4.7-R0.2-SNAPSHOT</version>
             <type>jar</type>
             <scope>compile</scope>
             <optional>true</optional>

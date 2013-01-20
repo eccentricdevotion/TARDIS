@@ -26,11 +26,11 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.util.UUID;
-import net.minecraft.server.v1_4_6.NBTCompressedStreamTools;
-import net.minecraft.server.v1_4_6.NBTTagCompound;
-import net.minecraft.server.v1_4_6.NBTTagDouble;
-import net.minecraft.server.v1_4_6.NBTTagFloat;
-import net.minecraft.server.v1_4_6.NBTTagList;
+import net.minecraft.server.v1_4_R1.NBTCompressedStreamTools;
+import net.minecraft.server.v1_4_R1.NBTTagCompound;
+import net.minecraft.server.v1_4_R1.NBTTagDouble;
+import net.minecraft.server.v1_4_R1.NBTTagFloat;
+import net.minecraft.server.v1_4_R1.NBTTagList;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
@@ -40,7 +40,7 @@ import org.bukkit.World;
  * @version 1.5.0
  * @author one4me
  */
-public class ImprovedOfflinePlayer_v1_4_6 implements ImprovedOfflinePlayer_api {
+public class ImprovedOfflinePlayer_v1_4_R1 implements ImprovedOfflinePlayer_api {
 
     private String player;
     private File file;
