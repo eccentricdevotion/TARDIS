@@ -1,5 +1,5 @@
 # TODO
-
+1. If creating rooms is disabled allow some other way to get higher then 1000 artrom for nether and end traveling.
 3. Decrease materialsation time?
 5. Check what happens when companions use the TARDIS with regards to:
    - Recharging
