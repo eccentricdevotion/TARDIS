@@ -1,5 +1,5 @@
 # TODO
-1. If creating rooms is disabled allow some other way to get higher then 1000 artrom for nether and end traveling.
+1. If WorldGuard is installed, automatically protect the 3x3 region around a recharging beacon.
 3. Decrease materialsation time?
 5. Check what happens when companions use the TARDIS with regards to:
    - Recharging
