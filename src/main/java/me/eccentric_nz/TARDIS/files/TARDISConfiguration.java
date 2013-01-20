@@ -88,7 +88,7 @@ public class TARDISConfiguration {
         intOptions.put("travel", 50);
         intOptions.put("comehere", 200);
         intOptions.put("hide", 400);
-        intOptions.put("recharge_distance", 10);
+        intOptions.put("recharge_distance", 16);
         intOptions.put("lightning_recharge", 100);
         intOptions.put("creeper_recharge", 50);
         intOptions.put("jettison", 75);

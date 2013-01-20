@@ -62,7 +62,7 @@ public class TARDISWorldGuardChecker {
     }
 
     /**
-     * Adds a WorldGuard protected region to the inner TARDIS location. this
+     * Adds a WorldGuard protected region to the inner TARDIS location. This
      * stops other players and mobs from griefing the TARDIS :)
      */
     public void addWGProtection(Player p, Location one, Location two) {
@@ -98,7 +98,38 @@ public class TARDISWorldGuardChecker {
         try {
             rm.save();
         } catch (ProtectionDatabaseException e) {
-            plugin.console.sendMessage(plugin.pluginName + "could not create WorldGuard Protection! " + e);
+            plugin.console.sendMessage(plugin.pluginName + "could not create WorldGuard Protection for TARDIS! " + e);
+        }
+    }
+
+    /**
+     * Adds a WorldGuard protected region to recharger location. A 3x3 block
+     * area is protected.
+     */
+    public void addRechargerProtection(Player p, String name, Location one, Location two) {
+        RegionManager rm = wg.getRegionManager(one.getWorld());
+        BlockVector b1;
+        BlockVector b2;
+        b1 = makeBlockVector(one);
+        b2 = makeBlockVector(two);
+        ProtectedCuboidRegion region = new ProtectedCuboidRegion("tardis_recharger_" + name, b1, b2);
+        DefaultDomain dd = new DefaultDomain();
+        dd.addPlayer(p.getName());
+        region.setOwners(dd);
+        HashMap<Flag<?>, Object> flags = new HashMap<Flag<?>, Object>();
+        flags.put(DefaultFlag.TNT, State.DENY);
+        flags.put(DefaultFlag.CREEPER_EXPLOSION, State.DENY);
+        flags.put(DefaultFlag.FIRE_SPREAD, State.DENY);
+        flags.put(DefaultFlag.LAVA_FIRE, State.DENY);
+        flags.put(DefaultFlag.LAVA_FLOW, State.DENY);
+        flags.put(DefaultFlag.LIGHTER, State.DENY);
+        flags.put(DefaultFlag.CONSTRUCT, RegionGroup.OWNERS);
+        region.setFlags(flags);
+        rm.addRegion(region);
+        try {
+            rm.save();
+        } catch (ProtectionDatabaseException e) {
+            plugin.console.sendMessage(plugin.pluginName + "could not create WorldGuard Protection for recharger! " + e);
         }
     }
 

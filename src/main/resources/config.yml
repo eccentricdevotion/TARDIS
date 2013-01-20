@@ -60,7 +60,7 @@ comehere: 200
 hide: 400
 nether_energy: 1250
 the_end_energy: 1500
-recharge_distance: 10
+recharge_distance: 16
 lightning_recharge: 100
 creeper_recharge: 50
 full_charge: 1000
