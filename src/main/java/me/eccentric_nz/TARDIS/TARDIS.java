@@ -44,6 +44,7 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Set;
+import me.eccentric_nz.TARDIS.builders.TARDISSpace;
 import me.eccentric_nz.TARDIS.files.TARDISMakeCSV;
 import me.eccentric_nz.TARDIS.files.TARDISUpdateChecker;
 import me.eccentric_nz.TARDIS.listeners.TARDISAreaListener;
@@ -220,6 +221,8 @@ public class TARDIS extends JavaPlugin {
         utc.getTravellers();
         TARDISCreeperChecker cc = new TARDISCreeperChecker(this);
         cc.startCreeperCheck();
+        TARDISSpace alwaysNight = new TARDISSpace(this);
+        alwaysNight.keepNight();
     }
 
     @Override

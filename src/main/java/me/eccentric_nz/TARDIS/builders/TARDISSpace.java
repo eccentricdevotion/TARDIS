@@ -16,6 +16,7 @@
  */
 package me.eccentric_nz.TARDIS.builders;
 
+import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.tardischunkgenerator.TARDISChunkGenerator;
 import org.bukkit.World;
@@ -46,7 +47,9 @@ public class TARDISSpace {
      */
     public World getTardisWorld(String name) {
         if (tardisWorld == null) {
-            tardisWorld = WorldCreator.name(name).type(WorldType.LARGE_BIOMES).environment(World.Environment.THE_END).generator(new TARDISChunkGenerator()).createWorld();
+            tardisWorld = WorldCreator.name(name).type(WorldType.LARGE_BIOMES).environment(World.Environment.NORMAL).generator(new TARDISChunkGenerator()).createWorld();
+            // set the time to night
+            tardisWorld.setTime(14000L);
             // add world to config, but disabled by default
             plugin.getConfig().set("worlds:" + name, false);
             plugin.saveConfig();
@@ -59,5 +62,28 @@ public class TARDISSpace {
             }
         }
         return tardisWorld;
+    }
+
+    public void keepNight() {
+        plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new Runnable() {
+            public void run() {
+                timechk();
+            }
+        }, 60L, 1200L);
+    }
+
+    private void timechk() {
+        List<World> serverWorlds = plugin.getServer().getWorlds();
+        for (World w : serverWorlds) {
+            if (w.getName().contains("TARDIS_WORLD_")) {
+                Long now = w.getTime();
+                Long dawn = 14000L;
+                Long dusk = 21000L;
+                if (now < dawn || now > dusk) {
+                    // set the time to dawn
+                    w.setTime(dawn);
+                }
+            }
+        }
     }
 }
