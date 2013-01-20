@@ -92,12 +92,14 @@ public class TARDISConfiguration {
         intOptions.put("lightning_recharge", 100);
         intOptions.put("creeper_recharge", 50);
         intOptions.put("jettison", 75);
-        intOptions.put("nether_star", 1000);
-        intOptions.put("nether_min", 1000);
+        intOptions.put("full_charge", 1000);
+        intOptions.put("nether_min", 1250);
         intOptions.put("the_end_min", 1500);
         // string
         strOptions.put("default_world_name", "myridiculouslylongworldnameiscalledcuthbert");
         strOptions.put("key", "STICK");
+        strOptions.put("full_charge_item", "NETHER_STAR");
+        strOptions.put("pre_142_charge_item", "EYE_OF_ENDER");
         strOptions.put("rooms.PASSAGE.seed", "CLAY");
         strOptions.put("rooms.ARBORETUM.seed", "LEAVES");
         strOptions.put("rooms.BEDROOM.seed", "GLOWSTONE");

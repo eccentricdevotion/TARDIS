@@ -114,7 +114,7 @@ public class TARDISAdminCommands implements CommandExecutor {
         firstsInt.add("lightning_recharge");
         firstsInt.add("creeper_recharge");
         firstsInt.add("jettison");
-        firstsInt.add("nether_star");
+        firstsInt.add("full_charge");
         firstsInt.add("nether_min");
         firstsInt.add("the_end_min");
         // rooms
