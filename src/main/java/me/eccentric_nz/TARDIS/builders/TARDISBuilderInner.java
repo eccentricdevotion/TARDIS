@@ -248,7 +248,14 @@ public class TARDISBuilderInner {
                             id = plugin.utils.parseNum(tmp);
                             data = 0;
                         }
-                        // if its the door, don't set it just remember its block then do it at the end
+                        // if it's a iron/gold/diamond/emerald block put it in the blocks table
+                        if (id == 41 || id == 42 || id == 57 || id == 133 || id == -123) {
+                            HashMap<String, Object> setpb = new HashMap<String, Object>();
+                            setpb.put("tardis_id", dbID);
+                            setpb.put("location", new Location(world, startx, starty, startz).toString());
+                            qf.doInsert("blocks", setpb);
+                        }
+                        // if it's the door, don't set it just remember its block then do it at the end
                         if (id == 71) {
                             postDoorBlocks.put(world.getBlockAt(startx, starty, startz), data);
                         } else if (id == 76) {
