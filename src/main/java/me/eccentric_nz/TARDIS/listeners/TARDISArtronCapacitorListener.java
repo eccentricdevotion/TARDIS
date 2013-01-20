@@ -154,6 +154,7 @@ public class TARDISArtronCapacitorListener implements Listener {
                                 player.sendMessage(plugin.pluginName + "Artron Energy Capacitor activated! Levels at 50%");
                             } else {
                                 player.sendMessage(plugin.pluginName + "You can only kick-start the Artron Energy Capacitor once!");
+                                return;
                             }
                         } else if (player.isSneaking()) {
                             // transfer player artron energy into the capacitor
