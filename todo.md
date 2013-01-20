@@ -11,5 +11,6 @@
 #Minecraft API when available
 1. Create custom blocks for the tardis box and console.
 2. If using the lapis block have the walls a special tardis wall block.
-3. GUI if allowed
-4. Sounds if allowed
+3. A tardis key that is a Sonic Screwdriver, also a crafting for that item.
+4. GUI if allowed
+5. Sounds if allowed
