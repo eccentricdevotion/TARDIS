@@ -20,6 +20,7 @@ import me.eccentric_nz.TARDIS.database.TARDISDatabase;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import me.eccentric_nz.TARDIS.TARDIS;
@@ -62,6 +63,7 @@ public class TARDISAdminCommands implements CommandExecutor {
     private List<String> firstsBool = new ArrayList<String>();
     private List<String> firstsInt = new ArrayList<String>();
     private List<String> firstsRoom = new ArrayList<String>();
+    HashSet<Byte> transparent = new HashSet<Byte>();
     private Material charger = Material.REDSTONE_LAMP_ON;
     Version bukkitversion;
     Version prebeaconversion = new Version("1.4.2");
@@ -133,6 +135,12 @@ public class TARDISAdminCommands implements CommandExecutor {
         if (bukkitversion.compareTo(prebeaconversion) >= 0) {
             charger = Material.BEACON;
         }
+        // add transparent blocks
+        transparent.add((byte) Material.AIR.getId());
+        transparent.add((byte) Material.SNOW.getId());
+        transparent.add((byte) Material.LONG_GRASS.getId());
+        transparent.add((byte) Material.VINE.getId());
+        transparent.add((byte) Material.IRON_FENCE.getId());
     }
 
     @Override
@@ -208,7 +216,7 @@ public class TARDISAdminCommands implements CommandExecutor {
                         sender.sendMessage(plugin.pluginName + "You can't set a recharger location from the console!");
                         return true;
                     }
-                    Block b = player.getTargetBlock(null, 50);
+                    Block b = player.getTargetBlock(transparent, 50);
                     if (!b.getType().equals(charger)) {
                         player.sendMessage(plugin.pluginName + "You must be targeting a " + charger.toString() + " block!");
                         return true;
