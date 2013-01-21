@@ -167,7 +167,7 @@ public class TARDISArtronCapacitorListener implements Listener {
                             ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, wherep);
                             if (rsp.resultSet()) {
                                 int level = rsp.getArtron_level();
-                                if (level > 1) {
+                                if (level < 1) {
                                     player.sendMessage(plugin.pluginName + "You don't have any Artron Energy to give the TARDIS");
                                     return;
                                 }
