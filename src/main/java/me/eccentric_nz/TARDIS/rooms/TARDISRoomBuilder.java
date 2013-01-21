@@ -173,7 +173,7 @@ public class TARDISRoomBuilder {
             b.setTypeId(0);
             b.getRelative(BlockFace.UP).setTypeId(0);
 
-            TARDISRoomRunnable runnable = new TARDISRoomRunnable(plugin, roomData);
+            TARDISRoomRunnable runnable = new TARDISRoomRunnable(plugin, roomData, p);
             int taskID = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, runnable, 5L, 5L);
             runnable.setTask(taskID);
         }

@@ -23,6 +23,7 @@ import me.eccentric_nz.TARDIS.database.QueryFactory;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
+import org.bukkit.entity.Player;
 
 /**
  * The TARDIS had a swimming pool. After the TARDIS' crash following the
@@ -46,8 +47,9 @@ public class TARDISRoomRunnable implements Runnable {
     QueryFactory qf;
     private boolean running;
     HashMap<String, Object> set;
+    Player p;
 
-    public TARDISRoomRunnable(TARDIS plugin, TARDISRoomData roomData) {
+    public TARDISRoomRunnable(TARDIS plugin, TARDISRoomData roomData, Player p) {
         this.plugin = plugin;
         this.l = roomData.getLocation();
         this.s = roomData.getSchematic();
@@ -62,6 +64,7 @@ public class TARDISRoomRunnable implements Runnable {
         this.tardis_id = roomData.getTardis_id();
         this.qf = new QueryFactory(plugin);
         this.running = false;
+        this.p = p;
     }
 
     /**
@@ -87,6 +90,7 @@ public class TARDISRoomRunnable implements Runnable {
             set.put("starty", starty);
             set.put("startz", startz);
             running = true;
+            p.sendMessage(plugin.pluginName + "Started growing a " + room + "...");
         }
         String tmp;
         if (level == h && row == w && col == (c - 1)) {
@@ -112,6 +116,7 @@ public class TARDISRoomRunnable implements Runnable {
             // cancel the task
             plugin.getServer().getScheduler().cancelTask(task);
             task = 0;
+            p.sendMessage(plugin.pluginName + "Finished growing the " + room + "!");
         }
         // place one block
         tmp = s[level][row][col];
