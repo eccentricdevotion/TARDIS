@@ -238,6 +238,9 @@ public class TARDISCommands implements CommandExecutor {
                         plugin.trackRoomSeed.put(player.getName(), room);
                         player.sendMessage(plugin.pluginName + "Place the " + room + " seed block (" + plugin.getConfig().getString("rooms." + room + ".seed") + ") where the door should be, then hit it with the TARDIS key to start growing your room!");
                         return true;
+                    } else {
+                        sender.sendMessage(plugin.pluginName + TARDISConstants.NO_PERMS_MESSAGE);
+                        return false;
                     }
                 }
                 if (args[0].equalsIgnoreCase("jettison")) {
@@ -271,6 +274,9 @@ public class TARDISCommands implements CommandExecutor {
                         plugin.trackJettison.put(player.getName(), room);
                         player.sendMessage(plugin.pluginName + "Stand in the doorway of the room you want to jettison and place a TNT block directly in front of the door. Hit the TNT with the TARDIS key to jettison the room!");
                         return true;
+                    } else {
+                        sender.sendMessage(plugin.pluginName + TARDISConstants.NO_PERMS_MESSAGE);
+                        return false;
                     }
                 }
                 if (args[0].equalsIgnoreCase("occupy")) {
@@ -304,6 +310,9 @@ public class TARDISCommands implements CommandExecutor {
                         }
                         sender.sendMessage(plugin.pluginName + " TARDIS occupation was set to: " + occupied);
                         return true;
+                    } else {
+                        sender.sendMessage(plugin.pluginName + TARDISConstants.NO_PERMS_MESSAGE);
+                        return false;
                     }
                 }
                 if (args[0].equalsIgnoreCase("comehere")) {
