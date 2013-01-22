@@ -122,39 +122,35 @@ public class TARDISArtronCapacitorListener implements Listener {
                             player.sendMessage(plugin.pluginName + "Artron Energy Levels at maximum!");
                         } else if (item.equals(Material.valueOf(plugin.getConfig().getString("key")))) {
                             // kickstart the TARDIS Artron Energy Capacitor
-                            // get location from database
-                            String[] creeperData = rs.getCreeper().split(":");
-                            World w = b.getWorld();
-                            float cx = 0, cy = 0, cz = 0;
-                            try {
-                                cx = Float.parseFloat(creeperData[1]);
-                                cy = Float.parseFloat(creeperData[2]) + 1;
-                                cz = Float.parseFloat(creeperData[3]);
-                            } catch (NumberFormatException nfe) {
-                                plugin.debug("Couldn't convert to a float! " + nfe.getMessage());
-                            }
-                            Location l = new Location(w, cx, cy, cz);
-                            plugin.myspawn = true;
-                            Entity e = w.spawnEntity(l, EntityType.CREEPER);
-                            // if there is a creeper there already get rid of it!
-                            boolean first_time = true;
-                            for (Entity k : e.getNearbyEntities(1d, 1d, 1d)) {
-                                if (k.getType().equals(EntityType.CREEPER)) {
-                                    e.remove();
-                                    first_time = false;
+                            // has the TARDIS been initialised?
+                            if (!rs.isTardis_init()) {
+                                // get location from database
+                                String creeper = rs.getCreeper();
+                                if (!creeper.equals("")) {
+                                    String[] creeperData = creeper.split(":");
+                                    World w = b.getWorld();
+                                    float cx = 0, cy = 0, cz = 0;
+                                    try {
+                                        cx = Float.parseFloat(creeperData[1]);
+                                        cy = Float.parseFloat(creeperData[2]) + 1;
+                                        cz = Float.parseFloat(creeperData[3]);
+                                    } catch (NumberFormatException nfe) {
+                                        plugin.debug("Couldn't convert to a float! " + nfe.getMessage());
+                                    }
+                                    Location l = new Location(w, cx, cy, cz);
+                                    plugin.myspawn = true;
+                                    Entity e = w.spawnEntity(l, EntityType.CREEPER);
+                                    Creeper c = (Creeper) e;
+                                    c.setPowered(true);
                                 }
-                            }
-                            Creeper c = (Creeper) e;
-                            c.setPowered(true);
-                            // set the capacitor to 50% charge
-                            if (first_time && current_level == 0) {
+                                // set the capacitor to 50% charge
                                 HashMap<String, Object> set = new HashMap<String, Object>();
                                 set.put("artron_level", 500);
+                                set.put("tardis_init", 1);
                                 qf.doUpdate("tardis", set, wheret);
                                 player.sendMessage(plugin.pluginName + "Artron Energy Capacitor activated! Levels at 50%");
                             } else {
                                 player.sendMessage(plugin.pluginName + "You can only kick-start the Artron Energy Capacitor once!");
-                                return;
                             }
                         } else if (player.isSneaking()) {
                             // transfer player artron energy into the capacitor
