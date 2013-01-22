@@ -140,7 +140,7 @@ public class TARDISTravelCommands implements CommandExecutor {
                                     return true;
                                 }
                                 respect = new TARDISPluginRespect(plugin);
-                                if (respect.getRespect(player, player_loc, true)) {
+                                if (!respect.getRespect(player, player_loc, true)) {
                                     return true;
                                 }
                                 String save_loc = player_loc.getWorld().getName() + ":" + (player_loc.getBlockX() - 3) + ":" + player_loc.getBlockY() + ":" + player_loc.getBlockZ();
@@ -217,7 +217,7 @@ public class TARDISTravelCommands implements CommandExecutor {
                         Block block = w.getBlockAt(x, y, z);
                         Location location = block.getLocation();
                         respect = new TARDISPluginRespect(plugin);
-                        if (respect.getRespect(player, location, true)) {
+                        if (!respect.getRespect(player, location, true)) {
                             return true;
                         }
                         // check location

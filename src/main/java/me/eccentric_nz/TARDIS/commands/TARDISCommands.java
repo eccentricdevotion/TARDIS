@@ -424,7 +424,7 @@ public class TARDISCommands implements CommandExecutor {
                             return true;
                         }
                         respect = new TARDISPluginRespect(plugin);
-                        if (respect.getRespect(player, eyeLocation, true)) {
+                        if (!respect.getRespect(player, eyeLocation, true)) {
                             return true;
                         }
                         Material m = player.getTargetBlock(transparent, 50).getType();
@@ -850,7 +850,7 @@ public class TARDISCommands implements CommandExecutor {
                                 return true;
                             }
                             respect = new TARDISPluginRespect(plugin);
-                            if (respect.getRespect(player, l, true)) {
+                            if (!respect.getRespect(player, l, true)) {
                                 return true;
                             }
                             if (player.hasPermission("tardis.exile")) {
