@@ -131,6 +131,9 @@ public class TARDISUpdateListener implements Listener {
                 if (blockName.equalsIgnoreCase("button") && (validBlocks.contains(blockType) || blockType == Material.LEVER)) {
                     set.put("button", blockLocStr);
                 }
+                if (blockName.equalsIgnoreCase("handbrake") && blockType == Material.LEVER) {
+                    set.put("handbrake", blockLocStr);
+                }
                 if (blockName.equalsIgnoreCase("world-repeater") && (blockType == Material.DIODE_BLOCK_OFF || blockType == Material.DIODE_BLOCK_ON)) {
                     set.put("repeater0", blockLocStr);
                 }

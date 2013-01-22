@@ -70,6 +70,9 @@ public class TARDISUtils {
         if (m < 0) {
             if (bukkitversion.compareTo(prewoodbuttonversion) < 0 && (m == 143 || m == -113)) {
                 m = 77;
+            } else if (m == 92) {
+                m = 69;
+                d = (byte) 5;
             } else {
                 m = m + 256;
             }

@@ -213,7 +213,7 @@ public class TARDISBuilderInner {
                             }
                             if (id == 137 || id == -119) {
                                 /*
-                                 * command block will be coverted to the correct id by
+                                 * command block will be converted to the correct id by
                                  * setBlock(), but remember it to spawn the creeper on.
                                  */
                                 HashMap<String, Object> setcreep = new HashMap<String, Object>();
@@ -222,6 +222,18 @@ public class TARDISBuilderInner {
                                 setcreep.put("creeper", creeploc);
                                 wherecreep.put("tardis_id", dbID);
                                 qf.doUpdate("tardis", setcreep, wherecreep);
+                            }
+                            if (id == 92) {
+                                /*
+                                 * This block will be converted to a lever by
+                                 * setBlock(), but remember it so we can use it as the handbrake!
+                                 */
+                                HashMap<String, Object> sethandbrake = new HashMap<String, Object>();
+                                HashMap<String, Object> wherehandbrake = new HashMap<String, Object>();
+                                String handbrakeloc = world.getName() + ":" + startx + ":" + starty + ":" + startz;
+                                sethandbrake.put("handbrake", handbrakeloc);
+                                wherehandbrake.put("tardis_id", dbID);
+                                qf.doUpdate("tardis", sethandbrake, wherehandbrake);
                             }
                             if (id == 143 || id == -113) {
                                 /*

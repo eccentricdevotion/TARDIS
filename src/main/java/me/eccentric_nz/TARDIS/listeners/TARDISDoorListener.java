@@ -165,88 +165,95 @@ public class TARDISDoorListener implements Listener {
                                             userQuotes = true;
                                         }
                                         if (doortype == 1) {
-                                            // player is in the TARDIS
-                                            // change the yaw if the door directions are different
-                                            if (!dd.equals(d)) {
-                                                switch (dd) {
-                                                    case NORTH:
-                                                        yaw = yaw + adjustYaw[0][d.ordinal()];
-                                                        break;
-                                                    case WEST:
-                                                        yaw = yaw + adjustYaw[1][d.ordinal()];
-                                                        break;
-                                                    case SOUTH:
-                                                        yaw = yaw + adjustYaw[2][d.ordinal()];
-                                                        break;
-                                                    case EAST:
-                                                        yaw = yaw + adjustYaw[3][d.ordinal()];
-                                                        break;
+                                            if (!plugin.tardisMaterilising.contains(id)) {
+                                                if (rs.isHandbrake_on()) {
+                                                    // player is in the TARDIS
+                                                    // change the yaw if the door directions are different
+                                                    if (!dd.equals(d)) {
+                                                        switch (dd) {
+                                                            case NORTH:
+                                                                yaw = yaw + adjustYaw[0][d.ordinal()];
+                                                                break;
+                                                            case WEST:
+                                                                yaw = yaw + adjustYaw[1][d.ordinal()];
+                                                                break;
+                                                            case SOUTH:
+                                                                yaw = yaw + adjustYaw[2][d.ordinal()];
+                                                                break;
+                                                            case EAST:
+                                                                yaw = yaw + adjustYaw[3][d.ordinal()];
+                                                                break;
+                                                        }
+                                                    }
+                                                    // get location from database
+                                                    final Location exitTardis = plugin.utils.getLocationFromDB(save, yaw, pitch);
+                                                    // make location safe ie. outside of the bluebox
+                                                    double ex = exitTardis.getX();
+                                                    double ez = exitTardis.getZ();
+                                                    switch (d) {
+                                                        case NORTH:
+                                                            exitTardis.setX(ex + 0.5);
+                                                            exitTardis.setZ(ez + 2.5);
+                                                            break;
+                                                        case EAST:
+                                                            exitTardis.setX(ex - 1.5);
+                                                            exitTardis.setZ(ez + 0.5);
+                                                            break;
+                                                        case SOUTH:
+                                                            exitTardis.setX(ex + 0.5);
+                                                            exitTardis.setZ(ez - 1.5);
+                                                            break;
+                                                        case WEST:
+                                                            exitTardis.setX(ex + 2.5);
+                                                            exitTardis.setZ(ez + 0.5);
+                                                            break;
+                                                    }
+                                                    World exitWorld = exitTardis.getWorld();
+                                                    Location newl = null;
+                                                    // need some sort of check here to sort out who has exited
+                                                    // count number of travellers - if 1 less than number counted at start
+                                                    // then build and remember else just exit?
+                                                    int count = 1;
+                                                    HashMap<String, Object> whert = new HashMap<String, Object>();
+                                                    whert.put("tardis_id", id);
+                                                    ResultSetTravellers rst = new ResultSetTravellers(plugin, whert, true);
+                                                    if (rst.resultSet()) {
+                                                        count = rst.getData().size();
+                                                    }
+                                                    if (!save.equals(cl) && (count == plugin.trackTravellers.get(id))) {
+                                                        Location l = plugin.utils.getLocationFromDB(cl, 0, 0);
+                                                        newl = plugin.utils.getLocationFromDB(save, 0, 0);
+                                                        // remove torch
+                                                        plugin.destroyPB.destroyTorch(l);
+                                                        // remove sign
+                                                        plugin.destroyPB.destroySign(l, d);
+                                                        // remove blue box
+                                                        plugin.destroyPB.destroyPoliceBox(l, d, id, false);
+                                                    }
+                                                    // try preloading destination chunk
+                                                    while (!exitWorld.getChunkAt(exitTardis).isLoaded()) {
+                                                        exitWorld.getChunkAt(exitTardis).load();
+                                                    }
+                                                    // rebuild blue box
+                                                    if (newl != null && (count == plugin.trackTravellers.get(id))) {
+                                                        plugin.buildPB.buildPoliceBox(id, newl, d, cham, player, false);
+                                                    }
+                                                    // exit TARDIS!
+                                                    movePlayer(player, exitTardis, true, playerWorld, userQuotes, id, 0, tl);
+                                                    // remove player from traveller table
+                                                    HashMap<String, Object> wherd = new HashMap<String, Object>();
+                                                    wherd.put("player", playerNameStr);
+                                                    qf.doDelete("travellers", wherd);
+                                                } else {
+                                                    player.sendMessage(plugin.pluginName + "Engage the TARDIS handbrake to exit!");
                                                 }
+                                            } else {
+                                                player.sendMessage(plugin.pluginName + "The TARDIS is still travelling... don't get lost in the time vortex!");
                                             }
-                                            // get location from database
-                                            final Location exitTardis = plugin.utils.getLocationFromDB(save, yaw, pitch);
-                                            // make location safe ie. outside of the bluebox
-                                            double ex = exitTardis.getX();
-                                            double ez = exitTardis.getZ();
-                                            double ey = exitTardis.getY();
-                                            switch (d) {
-                                                case NORTH:
-                                                    exitTardis.setX(ex + 0.5);
-                                                    exitTardis.setZ(ez + 2.5);
-                                                    break;
-                                                case EAST:
-                                                    exitTardis.setX(ex - 1.5);
-                                                    exitTardis.setZ(ez + 0.5);
-                                                    break;
-                                                case SOUTH:
-                                                    exitTardis.setX(ex + 0.5);
-                                                    exitTardis.setZ(ez - 1.5);
-                                                    break;
-                                                case WEST:
-                                                    exitTardis.setX(ex + 2.5);
-                                                    exitTardis.setZ(ez + 0.5);
-                                                    break;
-                                            }
-                                            World exitWorld = exitTardis.getWorld();
-                                            Location newl = null;
-                                            // need some sort of check here to sort out who has exited
-                                            // count number of travellers - if 1 less than number counted at start
-                                            // then build and remember else just exit?
-                                            int count = 1;
-                                            HashMap<String, Object> whert = new HashMap<String, Object>();
-                                            whert.put("tardis_id", id);
-                                            ResultSetTravellers rst = new ResultSetTravellers(plugin, whert, true);
-                                            if (rst.resultSet()) {
-                                                count = rst.getData().size();
-                                            }
-                                            if (!save.equals(cl) && (count == plugin.trackTravellers.get(id))) {
-                                                Location l = plugin.utils.getLocationFromDB(cl, 0, 0);
-                                                newl = plugin.utils.getLocationFromDB(save, 0, 0);
-                                                // remove torch
-                                                plugin.destroyPB.destroyTorch(l);
-                                                // remove sign
-                                                plugin.destroyPB.destroySign(l, d);
-                                                // remove blue box
-                                                plugin.destroyPB.destroyPoliceBox(l, d, id, false);
-                                            }
-                                            // try preloading destination chunk
-                                            while (!exitWorld.getChunkAt(exitTardis).isLoaded()) {
-                                                exitWorld.getChunkAt(exitTardis).load();
-                                            }
-                                            // rebuild blue box
-                                            if (newl != null && (count == plugin.trackTravellers.get(id))) {
-                                                plugin.buildPB.buildPoliceBox(id, newl, d, cham, player, false);
-                                            }
-                                            // exit TARDIS!
-                                            movePlayer(player, exitTardis, true, playerWorld, userQuotes, id, 0, tl);
-                                            // remove player from traveller table
-                                            HashMap<String, Object> wherd = new HashMap<String, Object>();
-                                            wherd.put("player", playerNameStr);
-                                            qf.doDelete("travellers", wherd);
                                         } else {
                                             // is the TARDIS materialising?
                                             if (plugin.tardisMaterilising.contains(id)) {
-                                                player.sendMessage(plugin.pluginName + "The TARDIS still travelling... don't get lost in the time vortex!");
+                                                player.sendMessage(plugin.pluginName + "The TARDIS is still travelling... don't get lost in the time vortex!");
                                                 return;
                                             }
                                             boolean chkCompanion = false;

@@ -67,6 +67,7 @@ public class ResultSetTardis {
     private byte middle_data;
     private String creeper;
     private String handbrake;
+    private boolean handbrake_on;
     private boolean tardis_init;
     private ArrayList<HashMap<String, String>> data = new ArrayList<HashMap<String, String>>();
 
@@ -155,6 +156,7 @@ public class ResultSetTardis {
                     this.middle_data = rs.getByte("middle_data");
                     this.creeper = rs.getString("creeper");
                     this.handbrake = rs.getString("handbrake");
+                    this.handbrake_on = rs.getBoolean("handbrake_on");
                     this.tardis_init = rs.getBoolean("tardis_init");
                 }
             } else {
@@ -276,6 +278,10 @@ public class ResultSetTardis {
 
     public String getHandbrake() {
         return handbrake;
+    }
+
+    public boolean isHandbrake_on() {
+        return handbrake_on;
     }
 
     public boolean isTardis_init() {
