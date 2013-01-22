@@ -95,18 +95,14 @@ public class TARDIS extends JavaPlugin {
 
     private void loadClasses() {
         String packageName = this.getServer().getClass().getPackage().getName();
-        // Get full package string of CraftServer.
-        // org.bukkit.craftbukkit.versionstring (or for pre-refactor, just org.bukkit.craftbukkit
         String version = packageName.substring(packageName.lastIndexOf('.') + 1);
-        // Get the last element of the package
-        if (version.equals("craftbukkit")) { // If the last element of the package was "craftbukkit" we are now pre-refactor
+        if (version.equals("bukkit")) { 
             version = "pre";
         }
         try {
-            final Class<?> clazz = Class.forName("me.eccentric_nz.plugins.TARDIS.ImprovedOfflinePlayer_" + version);
-            // Check if we have a NMSHandler class at that location.
-            if (ImprovedOfflinePlayer_api.class.isAssignableFrom(clazz)) { // Make sure it actually implements IOP
-                this.iopHandler = (ImprovedOfflinePlayer_api) clazz.getConstructor().newInstance(); // Set our handler
+            final Class<?> clazz = Class.forName("me.eccentric_nz.plugins.TARDIS.ImprovedOfflinePlayer");
+            if (ImprovedOfflinePlayer_api.class.isAssignableFrom(clazz)) {
+                this.iopHandler = (ImprovedOfflinePlayer_api) clazz.getConstructor().newInstance();
             }
         } catch (final Exception e) {
             this.getLogger().severe("Could not find support for this CraftBukkit version.");

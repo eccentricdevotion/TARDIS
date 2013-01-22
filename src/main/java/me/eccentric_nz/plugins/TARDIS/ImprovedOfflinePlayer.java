@@ -26,11 +26,13 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.util.UUID;
-import net.minecraft.server.v1_4_R1.NBTCompressedStreamTools;
-import net.minecraft.server.v1_4_R1.NBTTagCompound;
-import net.minecraft.server.v1_4_R1.NBTTagDouble;
-import net.minecraft.server.v1_4_R1.NBTTagFloat;
-import net.minecraft.server.v1_4_R1.NBTTagList;
+
+import net.minecraft.nbt.CompressedStreamTools;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.NBTTagDouble;
+import net.minecraft.nbt.NBTTagFloat;
+import net.minecraft.nbt.NBTTagList;
+
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
@@ -40,7 +42,7 @@ import org.bukkit.World;
  * @version 1.5.0
  * @author one4me
  */
-public class ImprovedOfflinePlayer_v1_4_R1 implements ImprovedOfflinePlayer_api {
+public class ImprovedOfflinePlayer implements ImprovedOfflinePlayer_api {
 
     private String player;
     private File file;
@@ -61,7 +63,7 @@ public class ImprovedOfflinePlayer_v1_4_R1 implements ImprovedOfflinePlayer_api 
             for (World w : Bukkit.getWorlds()) {
                 this.file = new File(w.getWorldFolder(), "players" + File.separator + this.player + ".dat");
                 if (this.file.exists()) {
-                    this.compound = NBTCompressedStreamTools.a(new FileInputStream(this.file));
+                    this.compound = CompressedStreamTools.readCompressed(new FileInputStream(this.file));
                     this.player = this.file.getCanonicalFile().getName().replace(".dat", "");
                     return true;
                 }
@@ -75,7 +77,7 @@ public class ImprovedOfflinePlayer_v1_4_R1 implements ImprovedOfflinePlayer_api 
     public void savePlayerData() {
         if (this.exists) {
             try {
-                NBTCompressedStreamTools.a(this.compound, new FileOutputStream(this.file));
+            	CompressedStreamTools.writeCompressed(this.compound, new FileOutputStream(this.file));
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -93,16 +95,16 @@ public class ImprovedOfflinePlayer_v1_4_R1 implements ImprovedOfflinePlayer_api 
         UUID uuid = w.getUID();
         this.compound.setLong("WorldUUIDMost", uuid.getMostSignificantBits());
         this.compound.setLong("WorldUUIDLeast", uuid.getLeastSignificantBits());
-        this.compound.setInt("Dimension", w.getEnvironment().getId());
+        this.compound.setInteger("Dimension", w.getEnvironment().getId());
         NBTTagList position = new NBTTagList();
-        position.add(new NBTTagDouble(null, location.getX()));
-        position.add(new NBTTagDouble(null, location.getY()));
-        position.add(new NBTTagDouble(null, location.getZ()));
-        this.compound.set("Pos", position);
+        position.appendTag(new NBTTagDouble(null, location.getX()));
+        position.appendTag(new NBTTagDouble(null, location.getY()));
+        position.appendTag(new NBTTagDouble(null, location.getZ()));
+        this.compound.setTag("Pos", position);
         NBTTagList rotation = new NBTTagList();
-        rotation.add(new NBTTagFloat(null, location.getYaw()));
-        rotation.add(new NBTTagFloat(null, location.getPitch()));
-        this.compound.set("Rotation", rotation);
+        rotation.appendTag(new NBTTagFloat(null, location.getYaw()));
+        rotation.appendTag(new NBTTagFloat(null, location.getPitch()));
+        this.compound.setTag("Rotation", rotation);
         if (this.autosave) {
             savePlayerData();
         }
