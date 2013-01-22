@@ -246,6 +246,14 @@ public class TARDISAdminCommands implements CommandExecutor {
                     }
                 }
                 if (first.equals("delete")) {
+                    // this should be run from the console if the player running it is the player to be deleted
+                    if (sender instanceof Player) {
+                        Player player = (Player) sender;
+                        if (player.getName().equals(args[1])) {
+                            sender.sendMessage(plugin.pluginName + "To delete your own records, please disconnect and use the console.");
+                            return true;
+                        }
+                    }
                     HashMap<String, Object> where = new HashMap<String, Object>();
                     where.put("owner", args[1]);
                     ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
@@ -258,17 +266,22 @@ public class TARDISAdminCommands implements CommandExecutor {
                         String chunkLoc = rs.getChunk();
                         String[] cdata = chunkLoc.split(":");
                         World cw = plugin.getServer().getWorld(cdata[0]);
-                        World.Environment env = cw.getEnvironment();
                         int restore;
-                        switch (env) {
-                            case NETHER:
-                                restore = 87;
-                                break;
-                            case THE_END:
-                                restore = 121;
-                                break;
-                            default:
-                                restore = 1;
+                        // if (create_worlds) just use AIR
+                        if (plugin.getConfig().getBoolean("create_worlds")) {
+                            restore = 0;
+                        } else {
+                            World.Environment env = cw.getEnvironment();
+                            switch (env) {
+                                case NETHER:
+                                    restore = 87;
+                                    break;
+                                case THE_END:
+                                    restore = 121;
+                                    break;
+                                default:
+                                    restore = 1;
+                            }
                         }
                         // check if player is in the TARDIS
                         HashMap<String, Object> wheret = new HashMap<String, Object>();
