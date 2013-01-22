@@ -55,6 +55,9 @@ public class TARDISSpace {
             plugin.saveConfig();
             if (plugin.pm.isPluginEnabled("Multiverse-Core")) {
                 plugin.getServer().dispatchCommand(plugin.console, "mv import " + name + " normal -g TARDISChunkGenerator");
+                plugin.getServer().dispatchCommand(plugin.console, "mv modify set animals false " + name);
+                plugin.getServer().dispatchCommand(plugin.console, "mv modify set monsters false " + name);
+                plugin.getServer().dispatchCommand(plugin.console, "mv modify set hidden true " + name);
             }
             if (plugin.pm.isPluginEnabled("WorldBorder")) {
                 // wb <world> set <radius> <x> <z>
