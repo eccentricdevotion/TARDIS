@@ -1,5 +1,5 @@
 # TODO
-1. Add a handbrake (lever) that trigers the dematerialising/materialising before they travel to the place instead of being activated by the door. As the door should only be the door not what triggers the events. ex: they press the handbrake after they select their destination and it starts the process. Then no one can use the door untill the handbrake is activated and the TARDIS materlise.   
+1. Add a handbrake (lever) that trigers the dematerialising/materialising before they travel to the place instead of being activated by the door. As the door should only be the door not what triggers the events. ex: they press the handbrake after they select their destination and it starts the process. Then no one can use the door until the handbrake is activated and the TARDIS has materialised.   
 This would make the tardis be allowed for more ideas that I have for other effects.
 1. Check world is generating correctly beyond WorldBorder edges.
 2. Decrease materialsation time?
