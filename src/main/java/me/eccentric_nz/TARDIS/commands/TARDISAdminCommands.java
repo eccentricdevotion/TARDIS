@@ -175,6 +175,17 @@ public class TARDISAdminCommands implements CommandExecutor {
                                     String enabled = plugin.getConfig().getString("worlds." + wname);
                                     sender.sendMessage("      " + ChatColor.GREEN + wname + ": " + ChatColor.RESET + enabled);
                                 }
+                            }
+                            if (cname.equals("rechargers")) {
+                                sender.sendMessage(ChatColor.AQUA + cname + ":" + ChatColor.RESET);
+                                Set<String> chargerNames = plugin.getConfig().getConfigurationSection("rechargers").getKeys(false);
+                                for (String charname : chargerNames) {
+                                    sender.sendMessage("      " + ChatColor.GREEN + charname + ":");
+                                    sender.sendMessage("            world: " + plugin.getConfig().getString("rechargers." + charname + ".world"));
+                                    sender.sendMessage("            x: " + plugin.getConfig().getString("rechargers." + charname + ".x"));
+                                    sender.sendMessage("            y: " + plugin.getConfig().getString("rechargers." + charname + ".y"));
+                                    sender.sendMessage("            z: " + plugin.getConfig().getString("rechargers." + charname + ".z"));
+                                }
                             } else {
                                 sender.sendMessage(ChatColor.AQUA + cname + ": " + ChatColor.RESET + value);
                             }
