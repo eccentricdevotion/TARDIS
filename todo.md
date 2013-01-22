@@ -1,7 +1,7 @@
 # TODO
 0. Add cake block to TARDIS console in schematics as placeholder for handbrake (eat five slices to get data byte of 5?).
-1. Add a handbrake (lever) that trigers the dematerialising/materialising before they travel to the place instead of being activated by the door. As the door should only be the door not what triggers the events. ex: they press the handbrake after they select their destination and it starts the process. Then no one can use the door until the handbrake is activated and the TARDIS materlise.   
-This would make the tardis be allowed for more ideas that I have for other effects.
+1. Add a handbrake (lever) that trigers the dematerialising/materialising before they travel to the place instead of being activated by the door. As the door should only be the door not what triggers the events. ex: they press the handbrake after they select their destination and it starts the process. Then no one can use the door until the handbrake is activated and the TARDIS has materialised.    
+This would make the TARDIS be allowed for more ideas that I have for other effects.
 2. Decrease materialsation time?
 3. Check what happens when companions use the TARDIS with regards to:
    - Recharging
