@@ -54,7 +54,7 @@ public class TARDISSpace {
             plugin.getConfig().set("worlds:" + name, false);
             plugin.saveConfig();
             if (plugin.pm.isPluginEnabled("Multiverse-Core")) {
-                plugin.getServer().dispatchCommand(plugin.console, "mv import " + name + " normal TARDISChunkGenerator");
+                plugin.getServer().dispatchCommand(plugin.console, "mv import " + name + " normal -g TARDISChunkGenerator");
             }
             if (plugin.pm.isPluginEnabled("WorldBorder")) {
                 // wb <world> set <radius> <x> <z>
