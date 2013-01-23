@@ -51,7 +51,7 @@ public class TARDISSpace {
             // set the time to night
             tardisWorld.setTime(14000L);
             // add world to config, but disabled by default
-            plugin.getConfig().set("worlds:" + name, false);
+            plugin.getConfig().set("worlds." + name, false);
             plugin.saveConfig();
             if (plugin.pm.isPluginEnabled("Multiverse-Core")) {
                 plugin.getServer().dispatchCommand(plugin.console, "mv import " + name + " normal -g TARDISChunkGenerator");
