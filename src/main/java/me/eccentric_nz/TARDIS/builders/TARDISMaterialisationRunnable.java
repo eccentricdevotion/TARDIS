@@ -10,6 +10,7 @@ import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetDoors;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import org.bukkit.ChatColor;
+//import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -53,7 +54,7 @@ public class TARDISMaterialisationRunnable implements Runnable {
     public TARDISMaterialisationRunnable(TARDIS plugin, Location location, int mat, byte data, int tid, COMPASS d, boolean rebuild) {
         this.plugin = plugin;
         this.d = d;
-        this.loops = 8;
+        this.loops = 9;
         this.location = location;
         this.i = 0;
         this.tid = tid;
@@ -67,15 +68,8 @@ public class TARDISMaterialisationRunnable implements Runnable {
         int id;
         byte b;
         final World world;
-        if (i <= loops) {
+        if (i < loops) {
             i++;
-             // try loading chunk
-            world = l.getWorld();
-            Chunk chunk = world.getChunkAt(l);
-            if (!world.isChunkLoaded(chunk)) {
-                world.loadChunk(chunk);
-            }
-            world.refreshChunk(chunk.getX(), chunk.getZ());
             // expand placed blocks to a police box
             switch (i % 3) {
                 case 2:
@@ -107,6 +101,12 @@ public class TARDISMaterialisationRunnable implements Runnable {
             String doorloc = "";
             // first run - remember blocks
             if (i == 1) {
+                // maybe do chunk load once here if necessary
+//                Chunk chunk = world.getChunkAt(l);
+//                if (!world.isChunkLoaded(chunk)) {
+//                    world.loadChunk(chunk);
+//                }
+//                world.refreshChunk(chunk.getX(), chunk.getZ());
                 QueryFactory qf = new QueryFactory(plugin);
                 HashMap<String, Object> ps = new HashMap<String, Object>();
                 ps.put("tardis_id", tid);
