@@ -57,7 +57,7 @@ public class TARDISDatabase {
     public void createTables() {
         try {
             statement = connection.createStatement();
-            String queryTARDIS = "CREATE TABLE IF NOT EXISTS tardis (tardis_id INTEGER PRIMARY KEY NOT NULL, owner TEXT COLLATE NOCASE, chunk TEXT, direction TEXT, home TEXT, save TEXT, current TEXT, replaced TEXT DEFAULT '', chest TEXT, button TEXT, repeater0 TEXT, repeater1 TEXT, repeater2 TEXT, repeater3 TEXT, companions TEXT, platform TEXT DEFAULT '', chameleon TEXT DEFAULT '', chamele_on INTEGER DEFAULT 0, size TEXT DEFAULT '', save_sign TEXT DEFAULT '', artron_button TEXT DEFAULT '', artron_level INTEGER DEFAULT 0, creeper TEXT DEFAULT '', handbrake TEXT DEFAULT '', handbrake_on INT DEFAULT 1, tardis_init INTEGER DEFAULT 0, middle_id INTEGER, middle_data INTEGER)";
+            String queryTARDIS = "CREATE TABLE IF NOT EXISTS tardis (tardis_id INTEGER PRIMARY KEY NOT NULL, owner TEXT COLLATE NOCASE, chunk TEXT, direction TEXT, home TEXT, save TEXT, current TEXT, replaced TEXT DEFAULT '', chest TEXT, button TEXT, repeater0 TEXT, repeater1 TEXT, repeater2 TEXT, repeater3 TEXT, companions TEXT, platform TEXT DEFAULT '', chameleon TEXT DEFAULT '', chamele_on INTEGER DEFAULT 0, size TEXT DEFAULT '', save_sign TEXT DEFAULT '', artron_button TEXT DEFAULT '', artron_level INTEGER DEFAULT 0, creeper TEXT DEFAULT '', handbrake TEXT DEFAULT '', handbrake_on INT DEFAULT 1, tardis_init INTEGER DEFAULT 0, middle_id INTEGER, middle_data INTEGER, recharging INTEGER DEFAULT 0)";
             statement.executeUpdate(queryTARDIS);
             String queryTravellers = "CREATE TABLE IF NOT EXISTS travellers (traveller_id INTEGER PRIMARY KEY NOT NULL, tardis_id INTEGER, player TEXT COLLATE NOCASE)";
             statement.executeUpdate(queryTravellers);
@@ -104,8 +104,8 @@ public class TARDISDatabase {
             String queryAddBind = "SELECT sql FROM sqlite_master WHERE tbl_name = 'destinations' AND sql LIKE '%bind TEXT%'";
             ResultSet rsBind = statement.executeQuery(queryAddBind);
             if (!rsBind.next()) {
-                String queryAlter10 = "ALTER TABLE destinations ADD bind TEXT DEFAULT ''";
-                statement.executeUpdate(queryAlter10);
+                String queryAlter11 = "ALTER TABLE destinations ADD bind TEXT DEFAULT ''";
+                statement.executeUpdate(queryAlter11);
                 TARDIS.plugin.console.sendMessage(TARDIS.plugin.pluginName + "Adding new bind field to destinations!");
             }
             // handbrake
@@ -117,6 +117,14 @@ public class TARDISDatabase {
                 String queryAlter9 = "ALTER TABLE tardis ADD handbrake_on INT DEFAULT 1";
                 statement.executeUpdate(queryAlter9);
             }
+            // recharge persistence
+            String queryAddRecharge = "SELECT sql FROM sqlite_master WHERE tbl_name = 'tardis' AND sql LIKE '%recharging INTEGER%'";
+            ResultSet rsRecharge = statement.executeQuery(queryAddRecharge);
+            if (!rsRecharge.next()) {
+                String queryAlter10 = "ALTER TABLE tardis ADD recharging INTEGER DEFAULT 0";
+                statement.executeUpdate(queryAlter10);
+            }
+
         } catch (SQLException e) {
             TARDIS.plugin.console.sendMessage(TARDIS.plugin.pluginName + "Create table error: " + e);
         } finally {

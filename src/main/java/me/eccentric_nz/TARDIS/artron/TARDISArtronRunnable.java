@@ -56,14 +56,16 @@ public class TARDISArtronRunnable implements Runnable {
     @Override
     public void run() {
         int level = isFull(id);
+        HashMap<String, Object> where = new HashMap<String, Object>();
+        where.put("tardis_id", id);
         if (!isNearCharger(id) || level > 999) {
             plugin.getServer().getScheduler().cancelTask(task);
             task = 0;
-            plugin.trackRecharge.remove(Integer.valueOf(id));
+            HashMap<String, Object> set = new HashMap<String, Object>();
+            set.put("recharging", 0);
+            qf.doUpdate("tardis", set, where);
         }
         // update TARDIS artron_level
-        HashMap<String, Object> where = new HashMap<String, Object>();
-        where.put("tardis_id", id);
         qf.alterEnergyLevel("tardis", 10, where, p);
     }
 

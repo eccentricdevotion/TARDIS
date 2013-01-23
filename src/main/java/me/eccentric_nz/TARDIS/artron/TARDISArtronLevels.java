@@ -18,6 +18,7 @@ package me.eccentric_nz.TARDIS.artron;
 
 import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.TARDISDatabase;
 import org.bukkit.entity.Player;
@@ -45,7 +46,12 @@ public class TARDISArtronLevels {
      * away from the recharge location the task is cancelled.
      */
     public void recharge(int id, Player p) {
-        plugin.trackRecharge.add(id);
+        QueryFactory qf = new QueryFactory(plugin);
+        HashMap<String, Object> set = new HashMap<String, Object>();
+        set.put("recharging", 1);
+        HashMap<String, Object> where = new HashMap<String, Object>();
+        where.put("tardis_id", id);
+        qf.doUpdate("tardis", set, where);
         TARDISArtronRunnable runnable = new TARDISArtronRunnable(plugin, id, p);
         int taskID = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, runnable, 480L, 480L);
         runnable.setTask(taskID);
