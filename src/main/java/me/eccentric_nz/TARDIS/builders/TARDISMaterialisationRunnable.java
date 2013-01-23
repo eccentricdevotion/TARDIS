@@ -53,7 +53,7 @@ public class TARDISMaterialisationRunnable implements Runnable {
     public TARDISMaterialisationRunnable(TARDIS plugin, Location location, int mat, byte data, int tid, COMPASS d, boolean rebuild) {
         this.plugin = plugin;
         this.d = d;
-        this.loops = 15;
+        this.loops = 8;
         this.location = location;
         this.i = 0;
         this.tid = tid;
@@ -67,8 +67,15 @@ public class TARDISMaterialisationRunnable implements Runnable {
         int id;
         byte b;
         final World world;
-        if (i < loops) {
+        if (i <= loops) {
             i++;
+             // try loading chunk
+            world = l.getWorld();
+            Chunk chunk = world.getChunkAt(l);
+            if (!world.isChunkLoaded(chunk)) {
+                world.loadChunk(chunk);
+            }
+            world.refreshChunk(chunk.getX(), chunk.getZ());
             // expand placed blocks to a police box
             switch (i % 3) {
                 case 2:
