@@ -58,15 +58,17 @@ public class TARDISArtronRunnable implements Runnable {
         int level = isFull(id);
         HashMap<String, Object> where = new HashMap<String, Object>();
         where.put("tardis_id", id);
-        if (!isNearCharger(id) || level > 999) {
+        boolean near = isNearCharger(id);
+        if (!near || level > 999) {
             plugin.getServer().getScheduler().cancelTask(task);
             task = 0;
             HashMap<String, Object> set = new HashMap<String, Object>();
             set.put("recharging", 0);
             qf.doUpdate("tardis", set, where);
+        } else if (near) {
+            // update TARDIS artron_level
+            qf.alterEnergyLevel("tardis", 10, where, p);
         }
-        // update TARDIS artron_level
-        qf.alterEnergyLevel("tardis", 10, where, p);
     }
 
     /**
@@ -87,7 +89,7 @@ public class TARDISArtronRunnable implements Runnable {
         int y = plugin.utils.parseNum(data[2]);
         int z = plugin.utils.parseNum(data[3]);
         Location pb_loc = new Location(w, x, y, z);
-        // check location is within 10 blocks of a recharger
+        // check location is within configured blocks of a recharger
         for (Location l : rechargers) {
             if (plugin.utils.compareLocations(pb_loc, l)) {
                 // strike lightning to the Police Box torch location
@@ -125,8 +127,7 @@ public class TARDISArtronRunnable implements Runnable {
         HashMap<String, Object> where = new HashMap<String, Object>();
         where.put("tardis_id", id);
         ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
-        rs.resultSet();
-        return rs.getArtron_level();
+        return (rs.resultSet()) ? rs.getArtron_level() : 1000;
     }
 
     public void setTask(int task) {
