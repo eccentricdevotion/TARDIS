@@ -300,7 +300,7 @@ public class TARDISDoorListener implements Listener {
                                                         cy = Integer.parseInt(split[2]);
                                                         cz = Integer.parseInt(split[3]);
                                                     } catch (NumberFormatException nfe) {
-                                                        plugin.console.sendMessage(plugin.pluginName + "Could not convert to number!");
+                                                        plugin.debug(plugin.pluginName + "Could not convert to number!");
                                                     }
                                                     Location tmp_loc = cw.getBlockAt(cx, cy, cz).getLocation();
                                                     int getx = tmp_loc.getBlockX();
