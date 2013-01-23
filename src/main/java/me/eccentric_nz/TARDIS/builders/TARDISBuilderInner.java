@@ -72,11 +72,11 @@ public class TARDISBuilderInner {
         String[][][] s;
         short[] d;
         switch (schm) {
+            // TARDIS schematics supplied by ewized http://dev.bukkit.org/profiles/ewized/
             case BIGGER:
                 s = plugin.biggerschematic;
                 d = plugin.biggerdimensions;
                 break;
-            // Deluxe TARDIS schematic supplied by ewized http://dev.bukkit.org/profiles/ewized/
             case DELUXE:
                 s = plugin.deluxeschematic;
                 d = plugin.deluxedimensions;
