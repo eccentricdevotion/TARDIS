@@ -17,9 +17,9 @@
 package me.eccentric_nz.TARDIS.database;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import me.eccentric_nz.TARDIS.TARDIS;
 
 /**
@@ -52,13 +52,14 @@ public class ResultSetSave {
      * true if a matching record was found.
      */
     public boolean resultSet() {
-        Statement statement = null;
+        PreparedStatement statement = null;
         ResultSet rs = null;
-        String query = "SELECT save FROM tardis WHERE save LIKE '" + where + "'";
+        String query = "SELECT save FROM tardis WHERE save LIKE ?";
         //plugin.debug(query);
         try {
-            statement = connection.createStatement();
-            rs = statement.executeQuery(query);
+            statement = connection.prepareStatement(query);
+            statement.setString(1, where);
+            rs = statement.executeQuery();
             if (rs.isBeforeFirst()) {
                 return true;
             } else {

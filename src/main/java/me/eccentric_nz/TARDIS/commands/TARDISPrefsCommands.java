@@ -82,7 +82,7 @@ public class TARDISPrefsCommands implements CommandExecutor {
                     HashMap<String, Object> set = new HashMap<String, Object>();
                     if (!rsp.resultSet()) {
                         set.put("player", player.getName());
-                        qf.doInsert("player_prefs", set);
+                        qf.doPreparedInsert("player_prefs", set);
                     }
                     HashMap<String, Object> setp = new HashMap<String, Object>();
                     HashMap<String, Object> wherep = new HashMap<String, Object>();

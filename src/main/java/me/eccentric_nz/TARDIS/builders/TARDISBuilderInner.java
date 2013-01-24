@@ -148,7 +148,7 @@ public class TARDISBuilderInner {
             set.put("world", world.getName());
             set.put("x", c.getX());
             set.put("z", c.getZ());
-            qf.doInsert("chunks", set);
+            qf.doPreparedInsert("chunks", set);
         }
         // reset start positions and do over
         startx = resetx;
@@ -200,7 +200,7 @@ public class TARDISBuilderInner {
                                 setd.put("door_type", 1);
                                 setd.put("door_location", doorloc);
                                 setd.put("door_direction", "SOUTH");
-                                qf.doInsert("doors", setd);
+                                qf.doPreparedInsert("doors", setd);
                             }
                             if (id == 68) { // chameleon circuit sign
                                 HashMap<String, Object> setc = new HashMap<String, Object>();
@@ -265,7 +265,7 @@ public class TARDISBuilderInner {
                             HashMap<String, Object> setpb = new HashMap<String, Object>();
                             setpb.put("tardis_id", dbID);
                             setpb.put("location", new Location(world, startx, starty, startz).toString());
-                            qf.doInsert("blocks", setpb);
+                            qf.doPreparedInsert("blocks", setpb);
                         }
                         // if it's the door, don't set it just remember its block then do it at the end
                         if (id == 71) {

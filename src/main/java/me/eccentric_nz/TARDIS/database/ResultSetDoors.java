@@ -17,10 +17,10 @@
 package me.eccentric_nz.TARDIS.database;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -67,27 +67,33 @@ public class ResultSetDoors {
      * query. Use the getters to retrieve the results.
      */
     public boolean resultSet() {
-        Statement statement = null;
+        PreparedStatement statement = null;
         ResultSet rs = null;
         String wheres = "";
         if (where != null) {
             StringBuilder sbw = new StringBuilder();
             for (Map.Entry<String, Object> entry : where.entrySet()) {
-                sbw.append(entry.getKey()).append(" = ");
-                if (entry.getValue().getClass().equals(String.class)) {
-                    sbw.append("'").append(entry.getValue()).append("' AND ");
-                } else {
-                    sbw.append(entry.getValue()).append(" AND ");
-                }
+                sbw.append(entry.getKey()).append(" = ? AND ");
             }
             wheres = " WHERE " + sbw.toString().substring(0, sbw.length() - 5);
-            where.clear();
         }
         String query = "SELECT * FROM doors" + wheres;
         //plugin.debug(query);
         try {
-            statement = connection.createStatement();
-            rs = statement.executeQuery(query);
+            statement = connection.prepareStatement(query);
+            if (where != null) {
+                int s = 1;
+                for (Map.Entry<String, Object> entry : where.entrySet()) {
+                    if (entry.getValue().getClass().equals(String.class)) {
+                        statement.setString(s, entry.getValue().toString());
+                    } else {
+                        statement.setInt(s, plugin.utils.parseNum(entry.getValue().toString()));
+                    }
+                    s++;
+                }
+                where.clear();
+            }
+            rs = statement.executeQuery();
             if (rs.isBeforeFirst()) {
                 while (rs.next()) {
                     if (multiple) {

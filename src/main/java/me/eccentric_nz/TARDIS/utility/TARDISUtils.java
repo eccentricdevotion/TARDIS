@@ -109,7 +109,7 @@ public class TARDISUtils {
                 set.put("block", bid);
                 set.put("data", data);
             }
-            qf.doInsert("blocks", set);
+            qf.doPreparedInsert("blocks", set);
         }
         b.setTypeIdAndData(m, d, true);
     }

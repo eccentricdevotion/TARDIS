@@ -68,7 +68,7 @@ public class QueryFactory {
         fields = sbf.toString().substring(0, sbf.length() - 1);
         values = sbv.toString().substring(0, sbv.length() - 1);
         String query = "INSERT INTO " + table + " (" + fields + ") VALUES (" + values + ")";
-        //plugin.debug(query);
+        plugin.debug(query);
         try {
             statement = connection.createStatement();
             statement.executeUpdate(query);
@@ -95,15 +95,16 @@ public class QueryFactory {
      * @param data a HashMap<String, Object> of table fields and values to
      * insert.
      */
-    public boolean doPreparedInsert(String table, HashMap<String, Object> data) {
+    public int doPreparedInsert(String table, HashMap<String, Object> data) {
         PreparedStatement ps = null;
+        ResultSet idRS = null;
         String fields;
         String questions;
         StringBuilder sbf = new StringBuilder();
         StringBuilder sbq = new StringBuilder();
         for (Map.Entry<String, Object> entry : data.entrySet()) {
             sbf.append(entry.getKey()).append(",");
-            sbq.append("?").append(",");
+            sbq.append("?,");
         }
         fields = sbf.toString().substring(0, sbf.length() - 1);
         questions = sbq.toString().substring(0, sbq.length() - 1);
@@ -119,12 +120,15 @@ public class QueryFactory {
                 i++;
             }
             data.clear();
-            return (ps.executeUpdate() > 0);
+            ps.executeUpdate();
+            idRS = ps.getGeneratedKeys();
+            return (idRS.next()) ? idRS.getInt(1) : -1;
         } catch (SQLException e) {
             plugin.debug("Update error for " + table + "! " + e.getMessage());
-            return false;
+            return -1;
         } finally {
             try {
+                idRS.close();
                 ps.close();
             } catch (Exception e) {
                 plugin.debug("Error closing " + table + "! " + e.getMessage());
@@ -142,18 +146,13 @@ public class QueryFactory {
      * select the records to update.
      */
     public boolean doUpdate(String table, HashMap<String, Object> data, HashMap<String, Object> where) {
-        Statement statement = null;
+        PreparedStatement statement = null;
         String updates;
         String wheres;
         StringBuilder sbu = new StringBuilder();
         StringBuilder sbw = new StringBuilder();
         for (Map.Entry<String, Object> entry : data.entrySet()) {
-            sbu.append(entry.getKey()).append(" = ");
-            if (entry.getValue().getClass().equals(String.class)) {
-                sbu.append("'").append(entry.getValue()).append("',");
-            } else {
-                sbu.append(entry.getValue()).append(",");
-            }
+            sbu.append(entry.getKey()).append(" = ?,");
         }
         for (Map.Entry<String, Object> entry : where.entrySet()) {
             sbw.append(entry.getKey()).append(" = ");
@@ -163,15 +162,24 @@ public class QueryFactory {
                 sbw.append(entry.getValue()).append(" AND ");
             }
         }
-        data.clear();
         where.clear();
         updates = sbu.toString().substring(0, sbu.length() - 1);
         wheres = sbw.toString().substring(0, sbw.length() - 5);
         String query = "UPDATE " + table + " SET " + updates + " WHERE " + wheres;
-        //plugin.debug(query);
+        plugin.debug(query);
         try {
-            statement = connection.createStatement();
-            return (statement.executeUpdate(query) > 0);
+            statement = connection.prepareStatement(query);
+            int s = 1;
+            for (Map.Entry<String, Object> entry : data.entrySet()) {
+                if (entry.getValue().getClass().equals(String.class)) {
+                    statement.setString(s, entry.getValue().toString());
+                } else {
+                    statement.setInt(s, plugin.utils.parseNum(entry.getValue().toString()));
+                }
+                s++;
+            }
+            data.clear();
+            return (statement.executeUpdate() > 0);
         } catch (SQLException e) {
             plugin.debug("Update error for " + table + "! " + e.getMessage());
             return false;

@@ -141,7 +141,7 @@ public class TARDISInstaPoliceBox {
                 bdw = 2;
                 break;
         }
-        qf.doInsert("blocks", ps);
+        qf.doPreparedInsert("blocks", ps);
         // should insert the door when tardis is first made, and then update location there after!
         HashMap<String, Object> whered = new HashMap<String, Object>();
         whered.put("door_type", 0);
@@ -156,7 +156,7 @@ public class TARDISInstaPoliceBox {
         } else {
             setd.put("tardis_id", tid);
             setd.put("door_type", 0);
-            qf.doInsert("doors", setd);
+            qf.doPreparedInsert("doors", setd);
         }
         // bottom layer corners
         plugin.utils.setBlockAndRemember(world, plusx, down2y, plusz, mat, data, tid, rebuild);
