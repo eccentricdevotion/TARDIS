@@ -39,7 +39,6 @@ public class TARDISMaterialisationRunnable implements Runnable {
     private int mat;
     private byte data;
     private boolean rebuild;
-    ArrayList<HashMap<String, String>> travellers;
 
     /**
      * Runnable method to materialise the TARDIS Police Box. Tries to mimic the
@@ -109,13 +108,13 @@ public class TARDISMaterialisationRunnable implements Runnable {
                 where.put("tardis_id", tid);
                 ResultSetTravellers rst = new ResultSetTravellers(plugin, where, true);
                 if (rst.resultSet()) {
-                    travellers = rst.getData();
-                }
-                for (HashMap<String, String> map : travellers) {
-                    Player p = plugin.getServer().getPlayer(map.get("player"));
-                    if (p != null) {
-                        if (plugin.getServer().getPluginManager().getPlugin("Spout") != null && SpoutManager.getPlayer(p).isSpoutCraftEnabled()) {
-                            SpoutManager.getSoundManager().playCustomSoundEffect(plugin, SpoutManager.getPlayer(p), "https://dl.dropbox.com/u/53758864/tardis_land.mp3", false, p.getLocation(), 9, 75);
+                    ArrayList<HashMap<String, String>> travellers = rst.getData();
+                    for (HashMap<String, String> map : travellers) {
+                        Player p = plugin.getServer().getPlayer(map.get("player"));
+                        if (p != null) {
+                            if (plugin.getServer().getPluginManager().getPlugin("Spout") != null && SpoutManager.getPlayer(p).isSpoutCraftEnabled()) {
+                                SpoutManager.getSoundManager().playCustomSoundEffect(plugin, SpoutManager.getPlayer(p), "https://dl.dropbox.com/u/53758864/tardis_land.mp3", false, p.getLocation(), 9, 75);
+                            }
                         }
                     }
                 }
@@ -340,10 +339,16 @@ public class TARDISMaterialisationRunnable implements Runnable {
             plugin.tardisMaterilising.remove(Integer.valueOf(tid));
             task = 0;
             // message travellers in tardis
-            for (HashMap<String, String> map : travellers) {
-                Player p = plugin.getServer().getPlayer(map.get("player"));
-                if (p != null) {
-                    plugin.getServer().getPlayer(map.get("player")).sendMessage(plugin.pluginName + "Engage the handbrake to exit!");
+            HashMap<String, Object> where = new HashMap<String, Object>();
+            where.put("tardis_id", tid);
+            ResultSetTravellers rst = new ResultSetTravellers(plugin, where, true);
+            if (rst.resultSet()) {
+                ArrayList<HashMap<String, String>> travellers = rst.getData();
+                for (HashMap<String, String> map : travellers) {
+                    Player p = plugin.getServer().getPlayer(map.get("player"));
+                    if (p != null) {
+                        plugin.getServer().getPlayer(map.get("player")).sendMessage(plugin.pluginName + "Engage the handbrake to exit!");
+                    }
                 }
             }
         }
