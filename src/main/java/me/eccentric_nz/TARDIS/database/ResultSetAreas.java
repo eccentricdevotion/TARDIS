@@ -82,7 +82,7 @@ public class ResultSetAreas {
             wheres = " WHERE " + sbw.toString().substring(0, sbw.length() - 5);
         }
         String query = "SELECT * FROM areas" + wheres;
-        plugin.debug(query);
+        //plugin.debug(query);
         try {
             statement = connection.prepareStatement(query);
             if (where != null) {

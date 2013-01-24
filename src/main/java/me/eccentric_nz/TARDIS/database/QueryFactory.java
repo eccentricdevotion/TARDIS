@@ -120,7 +120,7 @@ public class QueryFactory {
         updates = sbu.toString().substring(0, sbu.length() - 1);
         wheres = sbw.toString().substring(0, sbw.length() - 5);
         String query = "UPDATE " + table + " SET " + updates + " WHERE " + wheres;
-        plugin.debug(query);
+        //plugin.debug(query);
         try {
             statement = connection.prepareStatement(query);
             int s = 1;

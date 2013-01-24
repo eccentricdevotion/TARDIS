@@ -247,7 +247,6 @@ public class TARDISButtonListener implements Listener {
                                 }
                                 HashMap<String, Object> set = new HashMap<String, Object>();
                                 set.put("save", d);
-                                plugin.debug("Button save: " + d);
                                 HashMap<String, Object> wherel = new HashMap<String, Object>();
                                 wherel.put("tardis_id", id);
                                 qf.doUpdate("tardis", set, wherel);
