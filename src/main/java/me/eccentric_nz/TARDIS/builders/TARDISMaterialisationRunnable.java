@@ -3,19 +3,22 @@
  */
 package me.eccentric_nz.TARDIS.builders;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants.COMPASS;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetDoors;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
+import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
 import org.bukkit.ChatColor;
-//import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.block.Sign;
+import org.bukkit.entity.Player;
+import org.getspout.spoutapi.SpoutManager;
 
 /**
  * A dematerialisation circuit was an essential part of a Type 40 TARDIS which
@@ -36,6 +39,7 @@ public class TARDISMaterialisationRunnable implements Runnable {
     private int mat;
     private byte data;
     private boolean rebuild;
+    ArrayList<HashMap<String, String>> travellers;
 
     /**
      * Runnable method to materialise the TARDIS Police Box. Tries to mimic the
@@ -101,12 +105,20 @@ public class TARDISMaterialisationRunnable implements Runnable {
             String doorloc = "";
             // first run - remember blocks
             if (i == 1) {
-                // maybe do chunk load once here if necessary
-//                Chunk chunk = world.getChunkAt(l);
-//                if (!world.isChunkLoaded(chunk)) {
-//                    world.loadChunk(chunk);
-//                }
-//                world.refreshChunk(chunk.getX(), chunk.getZ());
+                HashMap<String, Object> where = new HashMap<String, Object>();
+                where.put("tardis_id", tid);
+                ResultSetTravellers rst = new ResultSetTravellers(plugin, where, true);
+                if (rst.resultSet()) {
+                    travellers = rst.getData();
+                }
+                for (HashMap<String, String> map : travellers) {
+                    Player p = plugin.getServer().getPlayer(map.get("player"));
+                    if (p != null) {
+                        if (plugin.getServer().getPluginManager().getPlugin("Spout") != null && SpoutManager.getPlayer(p).isSpoutCraftEnabled()) {
+                            SpoutManager.getSoundManager().playCustomSoundEffect(plugin, SpoutManager.getPlayer(p), "https://dl.dropbox.com/u/53758864/tardis_land.mp3", false, p.getLocation(), 9, 75);
+                        }
+                    }
+                }
                 QueryFactory qf = new QueryFactory(plugin);
                 HashMap<String, Object> ps = new HashMap<String, Object>();
                 ps.put("tardis_id", tid);
@@ -222,9 +234,9 @@ public class TARDISMaterialisationRunnable implements Runnable {
                     if (plugin.getConfig().getBoolean("name_tardis")) {
                         HashMap<String, Object> wheret = new HashMap<String, Object>();
                         wheret.put("tardis_id", tid);
-                        ResultSetTardis rst = new ResultSetTardis(plugin, wheret, "", false);
+                        ResultSetTardis rstard = new ResultSetTardis(plugin, wheret, "", false);
                         if (rst.resultSet()) {
-                            String owner = rst.getOwner();
+                            String owner = rstard.getOwner();
                             if (owner.length() > 14) {
                                 s.setLine(0, owner.substring(0, 12) + "'s");
                             } else {
@@ -327,6 +339,13 @@ public class TARDISMaterialisationRunnable implements Runnable {
             plugin.getServer().getScheduler().cancelTask(task);
             plugin.tardisMaterilising.remove(Integer.valueOf(tid));
             task = 0;
+            // message travellers in tardis
+            for (HashMap<String, String> map : travellers) {
+                Player p = plugin.getServer().getPlayer(map.get("player"));
+                if (p != null) {
+                    plugin.getServer().getPlayer(map.get("player")).sendMessage(plugin.pluginName + "Engage the handbrake to exit!");
+                }
+            }
         }
     }
 
