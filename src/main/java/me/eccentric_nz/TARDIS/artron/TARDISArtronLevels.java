@@ -52,7 +52,7 @@ public class TARDISArtronLevels {
         HashMap<String, Object> where = new HashMap<String, Object>();
         where.put("tardis_id", id);
         qf.doUpdate("tardis", set, where);
-        TARDISArtronRunnable runnable = new TARDISArtronRunnable(plugin, id, p);
+        TARDISArtronRunnable runnable = new TARDISArtronRunnable(plugin, id);
         int taskID = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, runnable, 480L, 480L);
         runnable.setTask(taskID);
     }

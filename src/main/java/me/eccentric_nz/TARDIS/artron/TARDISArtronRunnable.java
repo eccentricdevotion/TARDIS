@@ -25,7 +25,6 @@ import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import org.bukkit.Location;
 import org.bukkit.World;
-import org.bukkit.entity.Player;
 
 /**
  * Within the TARDIS' generator room is an Artron Energy Capacitor. The Eighth
@@ -37,15 +36,13 @@ public class TARDISArtronRunnable implements Runnable {
 
     private final TARDIS plugin;
     private int id;
-    private Player p;
     private int task;
     List<Location> rechargers;
     QueryFactory qf;
 
-    public TARDISArtronRunnable(TARDIS plugin, int id, Player p) {
+    public TARDISArtronRunnable(TARDIS plugin, int id) {
         this.plugin = plugin;
         this.id = id;
-        this.p = p;
         this.rechargers = getRechargers();
         this.qf = new QueryFactory(plugin);
     }
@@ -67,7 +64,7 @@ public class TARDISArtronRunnable implements Runnable {
             qf.doUpdate("tardis", set, where);
         } else if (near) {
             // update TARDIS artron_level
-            qf.alterEnergyLevel("tardis", 10, where, p);
+            qf.alterEnergyLevel("tardis", 10, where, null);
         }
     }
 
