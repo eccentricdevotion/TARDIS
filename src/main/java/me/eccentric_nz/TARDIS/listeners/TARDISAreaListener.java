@@ -106,7 +106,7 @@ public class TARDISAreaListener implements Listener {
                     set.put("minz", minz);
                     set.put("maxx", maxx);
                     set.put("maxz", maxz);
-                    qf.doPreparedInsert("areas", set);
+                    qf.doInsert("areas", set);
                     player.sendMessage(plugin.pluginName + "The area [" + plugin.trackName.get(playerNameStr) + "] was saved successfully");
                     plugin.trackName.remove(playerNameStr);
                     plugin.trackBlock.remove(playerNameStr);

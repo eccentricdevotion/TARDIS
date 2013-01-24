@@ -42,52 +42,6 @@ public class QueryFactory {
     }
 
     /**
-     * Inserts data into an SQLite database table. This method builds an SQL
-     * query string from the parameters supplied and then executes the insert.
-     *
-     * @param table the database table name to insert the data into.
-     * @param data a HashMap<String, Object> of table fields and values to
-     * insert.
-     */
-    public int doInsert(String table, HashMap<String, Object> data) {
-        Statement statement = null;
-        ResultSet idRS = null;
-        String fields;
-        String values;
-        StringBuilder sbf = new StringBuilder();
-        StringBuilder sbv = new StringBuilder();
-        for (Map.Entry<String, Object> entry : data.entrySet()) {
-            sbf.append(entry.getKey()).append(",");
-            if (entry.getValue().getClass().equals(String.class)) {
-                sbv.append("'").append(entry.getValue()).append("',");
-            } else {
-                sbv.append(entry.getValue()).append(",");
-            }
-        }
-        data.clear();
-        fields = sbf.toString().substring(0, sbf.length() - 1);
-        values = sbv.toString().substring(0, sbv.length() - 1);
-        String query = "INSERT INTO " + table + " (" + fields + ") VALUES (" + values + ")";
-        plugin.debug(query);
-        try {
-            statement = connection.createStatement();
-            statement.executeUpdate(query);
-            idRS = statement.getGeneratedKeys();
-            return (idRS.next()) ? idRS.getInt(1) : -1;
-        } catch (SQLException e) {
-            plugin.debug("Insert error for " + table + "! " + e.getMessage());
-            return -1;
-        } finally {
-            try {
-                idRS.close();
-                statement.close();
-            } catch (Exception e) {
-                plugin.debug("Error closing " + table + "! " + e.getMessage());
-            }
-        }
-    }
-
-    /**
      * Inserts data into an SQLite database table. This method builds a prepared
      * SQL statement from the parameters supplied and then executes the insert.
      *
@@ -95,7 +49,7 @@ public class QueryFactory {
      * @param data a HashMap<String, Object> of table fields and values to
      * insert.
      */
-    public int doPreparedInsert(String table, HashMap<String, Object> data) {
+    public int doInsert(String table, HashMap<String, Object> data) {
         PreparedStatement ps = null;
         ResultSet idRS = null;
         String fields;

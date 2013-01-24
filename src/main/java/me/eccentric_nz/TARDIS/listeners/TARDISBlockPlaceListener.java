@@ -156,7 +156,7 @@ public class TARDISBlockPlaceListener implements Listener {
                             set.put("middle_id", middle_id);
                             set.put("middle_data", middle_data);
                         }
-                        final int lastInsertId = qf.doPreparedInsert("tardis", set);
+                        final int lastInsertId = qf.doInsert("tardis", set);
                         // remove redstone torch/lapis and iron blocks
                         block.setTypeId(0);
                         blockBelow.setTypeId(0);

@@ -305,7 +305,7 @@ public class TARDISCommands implements CommandExecutor {
                             HashMap<String, Object> wherei = new HashMap<String, Object>();
                             wherei.put("tardis_id", id);
                             wherei.put("player", player.getName());
-                            qf.doPreparedInsert("travellers", wherei);
+                            qf.doInsert("travellers", wherei);
                             occupied = ChatColor.GREEN + "OCCUPIED";
                         }
                         sender.sendMessage(plugin.pluginName + " TARDIS occupation was set to: " + occupied);
@@ -519,7 +519,7 @@ public class TARDISCommands implements CommandExecutor {
                                 set.put("tardis_id", id);
                                 set.put("dest_name", args[1].toLowerCase());
                                 QueryFactory qf = new QueryFactory(plugin);
-                                did = qf.doPreparedInsert("destinations", set);
+                                did = qf.doInsert("destinations", set);
                             } else {
                                 sender.sendMessage(plugin.pluginName + "Could not find a save with that name! Try using " + ChatColor.AQUA + "/tardis list saves" + ChatColor.RESET + " first.");
                                 return true;
@@ -775,7 +775,7 @@ public class TARDISCommands implements CommandExecutor {
                             set.put("x", plugin.utils.parseNum(curDest[1]));
                             set.put("y", plugin.utils.parseNum(curDest[2]));
                             set.put("z", plugin.utils.parseNum(curDest[3]));
-                            if (qf.doPreparedInsert("destinations", set) < 0) {
+                            if (qf.doInsert("destinations", set) < 0) {
                                 return false;
                             } else {
                                 sender.sendMessage(plugin.pluginName + "The location '" + args[1] + "' was saved successfully.");
@@ -872,7 +872,7 @@ public class TARDISCommands implements CommandExecutor {
                             set.put("x", dx);
                             set.put("y", dy);
                             set.put("z", dz);
-                            if (qf.doPreparedInsert("destinations", set) < 0) {
+                            if (qf.doInsert("destinations", set) < 0) {
                                 return false;
                             } else {
                                 sender.sendMessage(plugin.pluginName + "The destination '" + args[1] + "' was saved successfully.");
