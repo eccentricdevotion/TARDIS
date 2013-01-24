@@ -247,13 +247,14 @@ public class TARDISButtonListener implements Listener {
                                 }
                                 HashMap<String, Object> set = new HashMap<String, Object>();
                                 set.put("save", d);
+                                plugin.debug("Button save: " + d);
                                 HashMap<String, Object> wherel = new HashMap<String, Object>();
                                 wherel.put("tardis_id", id);
                                 qf.doUpdate("tardis", set, wherel);
                                 plugin.tardisHasTravelled.put(id, plugin.getConfig().getInt("random"));
-                                if (plugin.getServer().getPluginManager().getPlugin("Spout") != null && SpoutManager.getPlayer(player).isSpoutCraftEnabled() && playSound == true) {
-                                    SpoutManager.getSoundManager().playCustomSoundEffect(plugin, SpoutManager.getPlayer(player), "https://dl.dropbox.com/u/53758864/tardis_takeoff.mp3", false, b, 9, 75);
-                                }
+//                                if (plugin.getServer().getPluginManager().getPlugin("Spout") != null && SpoutManager.getPlayer(player).isSpoutCraftEnabled() && playSound == true) {
+//                                    SpoutManager.getSoundManager().playCustomSoundEffect(plugin, SpoutManager.getPlayer(player), "https://dl.dropbox.com/u/53758864/tardis_takeoff.mp3", false, b, 9, 75);
+//                                }
                             }
                         }
                     }
