@@ -27,6 +27,7 @@ import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.TARDISConstants.ROOM;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetDestinations;
+import me.eccentric_nz.TARDIS.database.ResultSetGravity;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.files.TARDISUpdateChecker;
@@ -216,7 +217,7 @@ public class TARDISCommands implements CommandExecutor {
                         String chunk = rs.getChunk();
                         String[] data = chunk.split(":");
                         if (!data[0].contains("TARDIS_WORLD_")) {
-                            player.sendMessage(plugin.pluginName + "You can not grow rooms unless your TARDIS was created in its own world!");
+                            player.sendMessage(plugin.pluginName + "You cannot grow rooms unless your TARDIS was created in its own world!");
                             return true;
                         }
                         int id = rs.getTardis_id();
@@ -235,8 +236,22 @@ public class TARDISCommands implements CommandExecutor {
                             player.sendMessage(plugin.pluginName + "The TARDIS does not have enough Artron Energy to grow this room!");
                             return true;
                         }
+                        String message;
+                        // if it is a gravity well, then check if they have one already
+                        if (room.equals("GRAVITY")) {
+                            HashMap<String, Object> whereg = new HashMap<String, Object>();
+                            whereg.put("tardis_id", id);
+                            ResultSetGravity rsg = new ResultSetGravity(plugin, whereg, false);
+                            if (rsg.resultSet()) {
+                                player.sendMessage(plugin.pluginName + "You can only grow one gravity well!");
+                                return true;
+                            }
+                            message = "Place the GRAVITY WELL seed block (" + plugin.getConfig().getString("rooms." + room + ".seed") + ") into the centre of the floor in an empty room, then hit it with the TARDIS key to start growing your room!";
+                        } else {
+                            message = "Place the " + room + " seed block (" + plugin.getConfig().getString("rooms." + room + ".seed") + ") where the door should be, then hit it with the TARDIS key to start growing your room!";
+                        }
                         plugin.trackRoomSeed.put(player.getName(), room);
-                        player.sendMessage(plugin.pluginName + "Place the " + room + " seed block (" + plugin.getConfig().getString("rooms." + room + ".seed") + ") where the door should be, then hit it with the TARDIS key to start growing your room!");
+                        player.sendMessage(plugin.pluginName + message);
                         return true;
                     } else {
                         sender.sendMessage(plugin.pluginName + TARDISConstants.NO_PERMS_MESSAGE);
@@ -250,6 +265,10 @@ public class TARDISCommands implements CommandExecutor {
                             return false;
                         }
                         String room = args[1].toUpperCase();
+                        if (room.equals("GRAVITY")) {
+                            player.sendMessage(plugin.pluginName + "You cannot jettison gravity wells!");
+                            return true;
+                        }
                         if (!Arrays.asList(ROOM.values()).contains(ROOM.valueOf(room))) {
                             player.sendMessage(plugin.pluginName + "That is not a valid room type! Try one of : passage|arboretum|pool|vault|kitchen|bedroom|library|empty");
                             return true;

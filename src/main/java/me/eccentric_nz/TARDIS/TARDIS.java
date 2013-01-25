@@ -52,6 +52,7 @@ import me.eccentric_nz.TARDIS.listeners.TARDISArtronCapacitorListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISBindListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISButtonListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISCreeperDeathListener;
+import me.eccentric_nz.TARDIS.listeners.TARDISGravityWellListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISHandbrakeListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISJettisonSeeder;
 import me.eccentric_nz.TARDIS.listeners.TARDISLightningListener;
@@ -97,6 +98,7 @@ public class TARDIS extends JavaPlugin {
     public File poolSchematicFile = null;
     public File vaultSchematicFile = null;
     public File emptySchematicFile = null;
+    public File gravitySchematicFile = null;
     public File budgetSchematicCSV = null;
     public File biggerSchematicCSV = null;
     public File deluxeSchematicCSV = null;
@@ -109,6 +111,7 @@ public class TARDIS extends JavaPlugin {
     public File poolSchematicCSV = null;
     public File vaultSchematicCSV = null;
     public File emptySchematicCSV = null;
+    public File gravitySchematicCSV = null;
     public File quotesfile = null;
     public String[][][] budgetschematic;
     public String[][][] biggerschematic;
@@ -122,6 +125,7 @@ public class TARDIS extends JavaPlugin {
     public String[][][] poolschematic;
     public String[][][] vaultschematic;
     public String[][][] emptyschematic;
+    public String[][][] gravityschematic;
     public short[] budgetdimensions = new short[3];
     public short[] biggerdimensions = new short[3];
     public short[] deluxedimensions = new short[3];
@@ -129,6 +133,7 @@ public class TARDIS extends JavaPlugin {
     public short[] arboretumdimensions = new short[3];
     public short[] pooldimensions = new short[3];
     public short[] roomdimensions = new short[3];
+    public short[] gravitydimensions = new short[3];
     public static TARDIS plugin;
     public TARDISUtils utils = new TARDISUtils(this);
     private TARDISCommands tardisCommand;
@@ -162,6 +167,7 @@ public class TARDIS extends JavaPlugin {
     TARDISJettisonSeeder jettisonListener = new TARDISJettisonSeeder(this);
     TARDISBindListener bindListener = new TARDISBindListener(this);
     TARDISHandbrakeListener handbrakeListener = new TARDISHandbrakeListener(this);
+    TARDISGravityWellListener gravityListener = new TARDISGravityWellListener(this);
     public PluginManager pm = Bukkit.getServer().getPluginManager();
     public HashMap<String, String> trackPlayers = new HashMap<String, String>();
     public HashMap<String, Integer> trackBinder = new HashMap<String, Integer>();
@@ -307,6 +313,7 @@ public class TARDIS extends JavaPlugin {
         pm.registerEvents(jettisonListener, this);
         pm.registerEvents(bindListener, this);
         pm.registerEvents(handbrakeListener, this);
+        pm.registerEvents(gravityListener, this);
     }
 
     /**
@@ -441,10 +448,10 @@ public class TARDIS extends JavaPlugin {
 
     private void checkTCG() {
         if (getConfig().getBoolean("create_worlds")) {
-            if (getServer().getPluginManager().getPlugin("TARDISChunkGenerator") == null) {
+            if (getServer().getPluginManager().getPlugin("TARDISChunkGenerator") == null || (pm.getPlugin("Multiverse") == null && pm.getPlugin("MultiWorld") == null)) {
                 getConfig().set("create_worlds", false);
                 saveConfig();
-                console.sendMessage(pluginName + "Create Worlds was disabled as the TARDISChunkGenerator plugin was not found!");
+                console.sendMessage(pluginName + "Create Worlds was disabled as it requires a multi-world plugin and TARDISChunkGenerator!");
             }
         }
     }

@@ -45,10 +45,11 @@ public class TARDISConstants {
     public static final String SCHEMATIC_POOL = "pool.schematic";
     public static final String SCHEMATIC_VAULT = "vault.schematic";
     public static final String SCHEMATIC_EMPTY = "empty.schematic";
+    public static final String SCHEMATIC_GRAVITY = "gravity.schematic";
 
     public enum SCHEMATIC {
 
-        BUDGET, BIGGER, DELUXE, ARBORETUM, BEDROOM, KITCHEN, LIBRARY, PASSAGE, POOL, VAULT, EMPTY;
+        BUDGET, BIGGER, DELUXE, ARBORETUM, BEDROOM, KITCHEN, LIBRARY, PASSAGE, POOL, VAULT, EMPTY, GRAVITY;
     }
     public static final String CONFIG_FILE_NAME = "config.yml";
     public static final String QUOTES_FILE_NAME = "quotes.txt";
@@ -71,7 +72,7 @@ public class TARDISConstants {
 
     public enum ROOM {
 
-        ARBORETUM, BEDROOM, KITCHEN, LIBRARY, PASSAGE, POOL, VAULT, EMPTY;
+        ARBORETUM, BEDROOM, KITCHEN, LIBRARY, PASSAGE, POOL, VAULT, EMPTY, GRAVITY;
     }
 
     public enum CMDS {

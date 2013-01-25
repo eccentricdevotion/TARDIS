@@ -76,35 +76,40 @@ public class TARDISRoomBuilder {
             roomData.setBlock(b);
             roomData.setDirection(d);
             roomData.setLocation(l);
-            switch (d) {
-                case NORTH:
-                    if (r.equalsIgnoreCase("PASSAGE")) {
-                        l.setX(l.getX() + 4);
-                    } else {
-                        l.setX(l.getX() + 6);
-                    }
-                    break;
-                case WEST:
-                    if (r.equalsIgnoreCase("PASSAGE")) {
-                        l.setZ(l.getZ() + 4);
-                    } else {
-                        l.setZ(l.getZ() + 6);
-                    }
-                    break;
-                case SOUTH:
-                    if (r.equalsIgnoreCase("PASSAGE")) {
-                        l.setX(l.getX() - 4);
-                    } else {
-                        l.setX(l.getX() - 6);
-                    }
-                    break;
-                default:
-                    if (r.equalsIgnoreCase("PASSAGE")) {
-                        l.setZ(l.getZ() - 4);
-                    } else {
-                        l.setZ(l.getZ() - 6);
-                    }
-                    break;
+            if (r.equalsIgnoreCase("GRAVITY")) {
+                l.setX(l.getX() - 6);
+                l.setZ(l.getZ() - 6);
+            } else {
+                switch (d) {
+                    case NORTH:
+                        if (r.equalsIgnoreCase("PASSAGE")) {
+                            l.setX(l.getX() + 4);
+                        } else {
+                            l.setX(l.getX() + 6);
+                        }
+                        break;
+                    case WEST:
+                        if (r.equalsIgnoreCase("PASSAGE")) {
+                            l.setZ(l.getZ() + 4);
+                        } else {
+                            l.setZ(l.getZ() + 6);
+                        }
+                        break;
+                    case SOUTH:
+                        if (r.equalsIgnoreCase("PASSAGE")) {
+                            l.setX(l.getX() - 4);
+                        } else {
+                            l.setX(l.getX() - 6);
+                        }
+                        break;
+                    default:
+                        if (r.equalsIgnoreCase("PASSAGE")) {
+                            l.setZ(l.getZ() - 4);
+                        } else {
+                            l.setZ(l.getZ() - 6);
+                        }
+                        break;
+                }
             }
             switch (ROOM.valueOf(r)) {
                 case PASSAGE:
@@ -115,6 +120,9 @@ public class TARDISRoomBuilder {
                     break;
                 case ARBORETUM:
                     l.setY(l.getY() - 4);
+                    break;
+                case GRAVITY:
+                    l.setY(l.getY() - 11);
                     break;
                 default:
                     l.setY(l.getY() - 1);
@@ -159,6 +167,10 @@ public class TARDISRoomBuilder {
                 case EMPTY:
                     s = plugin.emptyschematic;
                     dimensions = plugin.roomdimensions;
+                    break;
+                case GRAVITY:
+                    s = plugin.gravityschematic;
+                    dimensions = plugin.gravitydimensions;
                     break;
                 default:
                     // PASSAGE

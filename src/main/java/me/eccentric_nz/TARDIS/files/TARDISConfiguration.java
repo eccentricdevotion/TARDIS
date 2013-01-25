@@ -83,6 +83,7 @@ public class TARDISConfiguration {
         intOptions.put("rooms.POOL.cost", 500);
         intOptions.put("rooms.VAULT.cost", 500);
         intOptions.put("rooms.EMPTY.cost", 250);
+        intOptions.put("rooms.GRAVITY.cost", 500);
         intOptions.put("player", 2);
         intOptions.put("random", 25);
         intOptions.put("travel", 50);
@@ -107,6 +108,7 @@ public class TARDISConfiguration {
         strOptions.put("rooms.POOL.seed", "SNOW_BLOCK");
         strOptions.put("rooms.VAULT.seed", "DISPENSER");
         strOptions.put("rooms.EMPTY.seed", "GLASS");
+        strOptions.put("rooms.GRAVITY.seed", "MOSSY_COBBLESTONE");
     }
 
     /**

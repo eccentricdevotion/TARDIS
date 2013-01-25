@@ -101,6 +101,11 @@ public class TARDISSchematicReader {
                     plugin.pooldimensions[1] = width;
                     plugin.pooldimensions[2] = length;
                     break;
+                case GRAVITY:
+                    plugin.gravitydimensions[0] = height;
+                    plugin.gravitydimensions[1] = width;
+                    plugin.gravitydimensions[2] = length;
+                    break;
                 default:
                     plugin.roomdimensions[0] = height;
                     plugin.roomdimensions[1] = width;

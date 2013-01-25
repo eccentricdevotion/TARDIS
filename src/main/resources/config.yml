@@ -52,6 +52,9 @@ rooms:
   EMPTY:
     cost: 250
     seed: GLASS
+  GRAVITY:
+    cost: 500
+    seed: MOSSY_COBBLESTONE
 #artron energy
 player: 2
 random: 25
