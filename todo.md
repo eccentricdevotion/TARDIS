@@ -1,5 +1,5 @@
 # TODO
-1. Add Equivalent Exchange style Energy condenser for converting unwanted blocks into Artron energy. MAybe 1 DIRT = 0.5 artron levels?
+1. Add Equivalent Exchange style Energy condenser for converting unwanted blocks into Artron energy. Maybe 1 DIRT = 0.5 artron levels?(Or use ores because they are a little harder to get, but still can be used.)
 2. If `materialise` is `false` in  the config then don't materialise...
 3. Add basic entity remover for TARDIS worlds if WorldGuard is not installed on the server (probably not needed if 2. below...)
 5. Check what happens when companions use the TARDIS with regards to:
