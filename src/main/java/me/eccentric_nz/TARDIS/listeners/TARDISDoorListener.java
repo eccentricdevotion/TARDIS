@@ -28,6 +28,7 @@ import me.eccentric_nz.TARDIS.database.ResultSetDoors;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
+import me.eccentric_nz.TARDIS.destroyers.TARDISExterminator;
 import me.eccentric_nz.TARDIS.thirdparty.Version;
 import me.eccentric_nz.TARDIS.utility.TARDISItemRenamer;
 import multiworld.MultiWorldPlugin;
@@ -312,6 +313,11 @@ public class TARDISDoorListener implements Listener {
                                                     tmp_loc.setYaw(yaw);
                                                     final Location tardis_loc = tmp_loc;
                                                     movePlayer(player, tardis_loc, false, playerWorld, userQuotes);
+                                                    // remove living entities if no worldguard or multiverse
+                                                    if (plugin.getConfig().getBoolean("create_worlds") && !plugin.pm.isPluginEnabled("WorldGuard") && !plugin.pm.isPluginEnabled("Multiverse")) {
+                                                        TARDISExterminator dalek = new TARDISExterminator();
+                                                        dalek.exterminate(cw);
+                                                    }
                                                     // put player into travellers table
                                                     HashMap<String, Object> set = new HashMap<String, Object>();
                                                     set.put("tardis_id", id);
