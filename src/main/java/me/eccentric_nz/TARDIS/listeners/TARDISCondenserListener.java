@@ -36,6 +36,9 @@ import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
 
 /**
+ * Following his disrupted resurrection, the Master was able to offensively use
+ * energy - presumably his own artron energy - to strike his enemies with
+ * debilitating energy blasts, at the cost of reducing his own life force.
  *
  * @author eccentric_nz
  */
@@ -54,6 +57,11 @@ public class TARDISCondenserListener implements Listener {
         this.condensables.add(Material.ROTTEN_FLESH);
     }
 
+    /**
+     * Listens for player interaction with the TARDIS condensor chest. When the
+     * chest is closed, any DIRT, SAND, GRAVEL, COBBLESTONE or ROTTEN FLESH is
+     * converted to Artron Energy at a ratio of 1:1.
+     */
     @EventHandler(priority = EventPriority.NORMAL)
     public void onChestClose(InventoryCloseEvent event) {
         Inventory inv = event.getInventory();
