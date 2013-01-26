@@ -151,25 +151,26 @@ public class TARDISRoomRunnable implements Runnable {
         }
         plugin.utils.setBlock(l.getWorld(), startx, starty, startz, id, data);
         QueryFactory qf = new QueryFactory(plugin);
-        if (id == 35 && data == 6) {
-            // pink wool - gravity well down
-            HashMap<String, Object> setd = new HashMap<String, Object>();
-            setd.put("tardis_id", tardis_id);
-            setd.put("world", l.getWorld().toString());
-            setd.put("downx", startx);
-            setd.put("downz", startz);
-            qf.doInsert("gravity", setd);
+        if (room.equals("GRAVITY")) {
+            if (id == 35 && data == 6) {
+                // pink wool - gravity well down
+                HashMap<String, Object> setd = new HashMap<String, Object>();
+                setd.put("tardis_id", tardis_id);
+                setd.put("world", l.getWorld().toString());
+                setd.put("downx", startx);
+                setd.put("downz", startz);
+                qf.doInsert("gravity", setd);
+            }
+            if (id == 35 && data == 5) {
+                // pink wool - gravity well down
+                HashMap<String, Object> setu = new HashMap<String, Object>();
+                HashMap<String, Object> where = new HashMap<String, Object>();
+                setu.put("upx", startx);
+                setu.put("upz", startz);
+                where.put("tardis_id", tardis_id);
+                qf.doUpdate("gravity", setu, where);
+            }
         }
-        if (id == 35 && data == 5) {
-            // pink wool - gravity well down
-            HashMap<String, Object> setu = new HashMap<String, Object>();
-            HashMap<String, Object> where = new HashMap<String, Object>();
-            setu.put("upx", startx);
-            setu.put("upz", startz);
-            where.put("tardis_id", tardis_id);
-            qf.doUpdate("gravity", setu, where);
-        }
-
         startx += x;
         col++;
         if (col == c && row < w) {
