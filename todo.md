@@ -1,13 +1,10 @@
 # TODO
-1. Add Equivalent Exchange style Energy condenser for converting unwanted blocks into Artron energy. Maybe 1 DIRT = 0.5 artron levels?(Or use ores because they are a little harder to get, but still can be used.)
-2. If `materialise` is `false` in  the config then don't materialise...
-3. Add basic entity remover for TARDIS worlds if WorldGuard is not installed on the server (probably not needed if 2. below...)
-5. Check what happens when companions use the TARDIS with regards to:
+1. Change Energy condenser to use ores because they are a little harder to get, but can still be used.
+2. Check what happens when companions use the TARDIS with regards to:
    - Recharging
-6. Update schematic dimensions so all rooms have their own dimensions
-   - Still undecided whether we should allow/can actually let players use their own room schematics
-7. Finish doing tutorial videos
-8. TEST, TEST, TEST
+3. Remove room schematics in final release, and only supply CSV files.
+4. Finish doing tutorial videos
+5. TEST, TEST, TEST
 
 #Minecraft API when available
 1. Create custom blocks for the tardis box and console.
