@@ -66,6 +66,7 @@ public class ResultSetTardis {
     private int middle_id;
     private byte middle_data;
     private String creeper;
+    private String condenser;
     private String handbrake;
     private boolean handbrake_on;
     private boolean tardis_init;
@@ -161,6 +162,7 @@ public class ResultSetTardis {
                     this.middle_id = rs.getInt("middle_id");
                     this.middle_data = rs.getByte("middle_data");
                     this.creeper = rs.getString("creeper");
+                    this.condenser = rs.getString("condenser");
                     this.handbrake = rs.getString("handbrake");
                     this.handbrake_on = rs.getBoolean("handbrake_on");
                     this.tardis_init = rs.getBoolean("tardis_init");
@@ -280,6 +282,10 @@ public class ResultSetTardis {
 
     public String getCreeper() {
         return creeper;
+    }
+
+    public String getCondenser() {
+        return condenser;
     }
 
     public String getHandbrake() {

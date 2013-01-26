@@ -51,6 +51,7 @@ import me.eccentric_nz.TARDIS.listeners.TARDISAreaListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISArtronCapacitorListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISBindListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISButtonListener;
+import me.eccentric_nz.TARDIS.listeners.TARDISCondenserListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISCreeperDeathListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISGravityWellListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISHandbrakeListener;
@@ -168,6 +169,7 @@ public class TARDIS extends JavaPlugin {
     TARDISBindListener bindListener = new TARDISBindListener(this);
     TARDISHandbrakeListener handbrakeListener = new TARDISHandbrakeListener(this);
     TARDISGravityWellListener gravityListener = new TARDISGravityWellListener(this);
+    TARDISCondenserListener condenserListener = new TARDISCondenserListener(this);
     public PluginManager pm = Bukkit.getServer().getPluginManager();
     public HashMap<String, String> trackPlayers = new HashMap<String, String>();
     public HashMap<String, Integer> trackBinder = new HashMap<String, Integer>();
@@ -314,6 +316,7 @@ public class TARDIS extends JavaPlugin {
         pm.registerEvents(bindListener, this);
         pm.registerEvents(handbrakeListener, this);
         pm.registerEvents(gravityListener, this);
+        pm.registerEvents(condenserListener, this);
     }
 
     /**
@@ -424,7 +427,7 @@ public class TARDIS extends JavaPlugin {
                     try {
                         bufRdr.close();
                     } catch (Exception e) {
-                        plugin.debug("Error closing quotes reader! " + e.getMessage());
+                        debug("Error closing quotes reader! " + e.getMessage());
                     }
                 }
             }
