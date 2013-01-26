@@ -16,18 +16,21 @@
  */
 package me.eccentric_nz.TARDIS.builders;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetDoors;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
+import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.block.Sign;
+import org.bukkit.entity.Player;
 
 /**
  * A police box is a telephone kiosk that can be used by members of the public
@@ -232,5 +235,18 @@ public class TARDISInstaPoliceBox {
         plugin.utils.setBlockAndRemember(world, x, minusy, plusz, north, mdn, tid, rebuild);
         plugin.utils.setBlockAndRemember(world, minusx, minusy, z, east, mde, tid, rebuild);
         plugin.utils.setBlockAndRemember(world, x, minusy, minusz, south, mds, tid, rebuild);
+        // message travellers in tardis
+        HashMap<String, Object> where = new HashMap<String, Object>();
+        where.put("tardis_id", tid);
+        ResultSetTravellers rst = new ResultSetTravellers(plugin, where, true);
+        if (rst.resultSet()) {
+            ArrayList<HashMap<String, String>> travellers = rst.getData();
+            for (HashMap<String, String> map : travellers) {
+                Player p = plugin.getServer().getPlayer(map.get("player"));
+                if (p != null) {
+                    plugin.getServer().getPlayer(map.get("player")).sendMessage(plugin.pluginName + "Engage the handbrake to exit!");
+                }
+            }
+        }
     }
 }
