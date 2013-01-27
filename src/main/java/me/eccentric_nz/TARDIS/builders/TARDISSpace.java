@@ -59,6 +59,11 @@ public class TARDISSpace {
                 plugin.getServer().dispatchCommand(plugin.console, "mv modify set monsters false " + name);
                 plugin.getServer().dispatchCommand(plugin.console, "mv modify set hidden true " + name);
             }
+            if (plugin.pm.isPluginEnabled("MultiWorld")) {
+                plugin.getServer().dispatchCommand(plugin.console, "mw load " + name);
+                plugin.getServer().dispatchCommand(plugin.console, "mw setflag " + name + " SpawnMonster false");
+                plugin.getServer().dispatchCommand(plugin.console, "mw setflag " + name + " SpawnAnimal false");
+            }
             if (plugin.pm.isPluginEnabled("WorldBorder")) {
                 // wb <world> set <radius> <x> <z>
                 plugin.getServer().dispatchCommand(plugin.console, "wb " + name + " set " + plugin.getConfig().getInt("border_radius") + " 0 0");
