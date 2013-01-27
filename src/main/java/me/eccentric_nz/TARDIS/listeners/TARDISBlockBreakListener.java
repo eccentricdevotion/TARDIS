@@ -58,7 +58,8 @@ public class TARDISBlockBreakListener implements Listener {
 
     /**
      * Listens for the TARDIS Police Box sign being broken. If the sign is
-     * broken, then the TARDIS is destroyed and the database records removed.
+     * broken, then the TARDIS is destroyed, the database records removed and
+     * the TARDIS world deleted.
      */
     @EventHandler(priority = EventPriority.LOW)
     public void onSignBreak(BlockBreakEvent event) {
@@ -181,6 +182,10 @@ public class TARDISBlockBreakListener implements Listener {
                             HashMap<String, Object> did = new HashMap<String, Object>();
                             did.put("tardis_id", id);
                             qf.doDelete("doors", did);
+                            // remove gravity well
+                            HashMap<String, Object> gid = new HashMap<String, Object>();
+                            gid.put("tardis_id", id);
+                            qf.doDelete("gravity", gid);
                             player.sendMessage(plugin.pluginName + "The TARDIS was removed from the world and database successfully.");
                             // remove world guard region protection
                             if (plugin.worldGuardOnServer && plugin.getConfig().getBoolean("use_worldguard")) {
@@ -195,6 +200,9 @@ public class TARDISBlockBreakListener implements Listener {
                                 }
                                 if (plugin.pm.isPluginEnabled("Multiverse-Core")) {
                                     plugin.getServer().dispatchCommand(plugin.console, "mv remove " + name);
+                                }
+                                if (plugin.pm.isPluginEnabled("MultiWorld")) {
+                                    plugin.getServer().dispatchCommand(plugin.console, "mw unload " + name);
                                 }
                                 if (plugin.pm.isPluginEnabled("WorldBorder")) {
                                     // wb <world> clear
