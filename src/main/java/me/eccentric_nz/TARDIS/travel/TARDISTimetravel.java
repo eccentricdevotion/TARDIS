@@ -400,8 +400,9 @@ public class TARDISTimetravel {
         }
 
         // add chance of negative values
-        wherex = wherex * 2;
-        wherex = wherex - max;
+        if ((int) (Math.random() * 2) == 1) {
+            wherex = 0 - wherex;
+        }
 
         // use multiplier based on position of third (y) repeater
         if (ry >= 4 && ry <= 7) {
@@ -444,8 +445,10 @@ public class TARDISTimetravel {
         }
 
         // add chance of negative values
-        wherez = wherez * 2;
-        wherez = wherez - max;
+        if ((int) (Math.random() * 2) == 1) {
+            wherez = 0 - wherez;
+        }
+
 
         // use multiplier based on position of third (y) repeater
         if (ry >= 4 && ry <= 7) {
