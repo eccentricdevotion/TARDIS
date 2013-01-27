@@ -314,7 +314,7 @@ public class TARDISDoorListener implements Listener {
                                                     final Location tardis_loc = tmp_loc;
                                                     movePlayer(player, tardis_loc, false, playerWorld, userQuotes);
                                                     // remove living entities if no worldguard or multiverse - DISABLED for now
-//                                                    if (plugin.getConfig().getBoolean("create_worlds") && !plugin.pm.isPluginEnabled("WorldGuard") && !plugin.pm.isPluginEnabled("Multiverse")) {
+//                                                    if (plugin.getConfig().getBoolean("create_worlds") && !plugin.pm.isPluginEnabled("WorldGuard") && !plugin.pm.isPluginEnabled("Multiverse-Core")) {
 //                                                        TARDISExterminator dalek = new TARDISExterminator();
 //                                                        dalek.exterminate(cw);
 //                                                    }
