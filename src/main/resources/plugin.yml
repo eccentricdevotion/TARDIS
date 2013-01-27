@@ -7,7 +7,7 @@ softdepend: [Multiverse-Core,MultiWorld,WorldGuard,WorldBorder,Towny]
 website: http://dev.bukkit.org/server-mods/TARDIS/
 dev-url: http://dev.bukkit.org/server-mods/TARDIS/
 url: http://www.thenosefairy.co.nz/
-version: '2.0-beta-3'
+version: '2.0-beta-3b'
 permissions:
   tardis.admin:
     description: Allow players access to the TARDIS admin commands.
