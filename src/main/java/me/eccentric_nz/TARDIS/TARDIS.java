@@ -451,10 +451,10 @@ public class TARDIS extends JavaPlugin {
 
     private void checkTCG() {
         if (getConfig().getBoolean("create_worlds")) {
-            if (getServer().getPluginManager().getPlugin("TARDISChunkGenerator") == null || (pm.getPlugin("Multiverse") == null && pm.getPlugin("MultiWorld") == null)) {
+            if (getServer().getPluginManager().getPlugin("TARDISChunkGenerator") == null || (pm.getPlugin("Multiverse-Core") == null && pm.getPlugin("MultiWorld") == null)) {
                 getConfig().set("create_worlds", false);
                 saveConfig();
-                console.sendMessage(pluginName + "Create Worlds was disabled as it requires a multi-world plugin and TARDISChunkGenerator!");
+                console.sendMessage(pluginName + ChatColor.RED + "Create Worlds was disabled as it requires a multi-world plugin and TARDISChunkGenerator!");
             }
         }
     }
