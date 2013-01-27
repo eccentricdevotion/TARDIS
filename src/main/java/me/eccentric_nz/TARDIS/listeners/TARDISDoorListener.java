@@ -233,7 +233,7 @@ public class TARDISDoorListener implements Listener {
                                                             // is the player in the comapnion list
                                                             String[] companionData = companions.split(":");
                                                             for (String c : companionData) {
-                                                                //String lc_name = c.toLowerCase();
+                                                                //String lc_name = c.toLowerCase(Locale.ENGLISH);
                                                                 if (c.equalsIgnoreCase(playerNameStr)) {
                                                                     chkCompanion = true;
                                                                     break;
@@ -313,11 +313,11 @@ public class TARDISDoorListener implements Listener {
                                                     tmp_loc.setYaw(yaw);
                                                     final Location tardis_loc = tmp_loc;
                                                     movePlayer(player, tardis_loc, false, playerWorld, userQuotes);
-                                                    // remove living entities if no worldguard or multiverse
-                                                    if (plugin.getConfig().getBoolean("create_worlds") && !plugin.pm.isPluginEnabled("WorldGuard") && !plugin.pm.isPluginEnabled("Multiverse")) {
-                                                        TARDISExterminator dalek = new TARDISExterminator();
-                                                        dalek.exterminate(cw);
-                                                    }
+                                                    // remove living entities if no worldguard or multiverse - DISABLED for now
+//                                                    if (plugin.getConfig().getBoolean("create_worlds") && !plugin.pm.isPluginEnabled("WorldGuard") && !plugin.pm.isPluginEnabled("Multiverse")) {
+//                                                        TARDISExterminator dalek = new TARDISExterminator();
+//                                                        dalek.exterminate(cw);
+//                                                    }
                                                     // put player into travellers table
                                                     HashMap<String, Object> set = new HashMap<String, Object>();
                                                     set.put("tardis_id", id);

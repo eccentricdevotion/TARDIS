@@ -20,6 +20,7 @@ import me.eccentric_nz.TARDIS.database.TARDISDatabase;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import org.bukkit.ChatColor;
 
 /**
@@ -112,7 +113,7 @@ public class TARDISConstants {
     public static <T extends Enum<T>> T getEnumFromString(Class<T> c, String string) {
         if (c != null && string != null) {
             try {
-                return Enum.valueOf(c, string.trim().toUpperCase());
+                return Enum.valueOf(c, string.trim().toUpperCase(Locale.ENGLISH));
             } catch (IllegalArgumentException ex) {
                 TARDIS.plugin.debug(ex.getMessage());
             }

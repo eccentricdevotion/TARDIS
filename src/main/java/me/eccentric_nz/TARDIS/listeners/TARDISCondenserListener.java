@@ -83,6 +83,8 @@ public class TARDISCondenserListener implements Listener {
                         inv.remove(is);
                     }
                 }
+                // halve it cause 1:1 is too much...
+                amount = Math.round(amount / 2.0F);
                 QueryFactory qf = new QueryFactory(plugin);
                 HashMap<String, Object> wheret = new HashMap<String, Object>();
                 wheret.put("tardis_id", rs.getTardis_id());

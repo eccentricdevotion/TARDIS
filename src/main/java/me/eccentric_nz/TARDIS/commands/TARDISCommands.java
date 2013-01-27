@@ -22,6 +22,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Locale;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.TARDISConstants.ROOM;
@@ -116,7 +117,7 @@ public class TARDISCommands implements CommandExecutor {
                 return true;
             }
             // the command list - first argument MUST appear here!
-            if (!firstArgs.contains(args[0].toLowerCase())) {
+            if (!firstArgs.contains(args[0].toLowerCase(Locale.ENGLISH))) {
                 sender.sendMessage(plugin.pluginName + "That command wasn't recognised type " + ChatColor.GREEN + "/tardis help" + ChatColor.RESET + " to see the commands");
                 return false;
             }
@@ -202,7 +203,7 @@ public class TARDISCommands implements CommandExecutor {
                             player.sendMessage(plugin.pluginName + "Too few command arguments!");
                             return false;
                         }
-                        String room = args[1].toUpperCase();
+                        String room = args[1].toUpperCase(Locale.ENGLISH);
                         if (!Arrays.asList(ROOM.values()).contains(ROOM.valueOf(room))) {
                             player.sendMessage(plugin.pluginName + "That is not a valid room type! Try one of : passage|arboretum|pool|vault|kitchen|bedroom|library|empty");
                             return true;
@@ -264,7 +265,7 @@ public class TARDISCommands implements CommandExecutor {
                             player.sendMessage(plugin.pluginName + "Too few command arguments!");
                             return false;
                         }
-                        String room = args[1].toUpperCase();
+                        String room = args[1].toUpperCase(Locale.ENGLISH);
                         if (room.equals("GRAVITY")) {
                             player.sendMessage(plugin.pluginName + "You cannot jettison gravity wells!");
                             return true;
@@ -480,7 +481,7 @@ public class TARDISCommands implements CommandExecutor {
                             sender.sendMessage(plugin.pluginName + "Too few command arguments!");
                             return false;
                         }
-                        if (!Arrays.asList(validBlockNames).contains(args[1].toLowerCase())) {
+                        if (!Arrays.asList(validBlockNames).contains(args[1].toLowerCase(Locale.ENGLISH))) {
                             player.sendMessage(plugin.pluginName + "That is not a valid TARDIS block name! Try one of : door|button|world-repeater|x-repeater|z-repeater|y-repeater|chameleon|save-sign|artron|handbrake|condenser");
                             return false;
                         }
@@ -498,8 +499,8 @@ public class TARDISCommands implements CommandExecutor {
                             sender.sendMessage(plugin.pluginName + "You are not inside your TARDIS. You need to be to run this command!");
                             return false;
                         }
-                        plugin.trackPlayers.put(player.getName(), args[1].toLowerCase());
-                        player.sendMessage(plugin.pluginName + "Click the TARDIS " + args[1].toLowerCase() + " to update its position.");
+                        plugin.trackPlayers.put(player.getName(), args[1].toLowerCase(Locale.ENGLISH));
+                        player.sendMessage(plugin.pluginName + "Click the TARDIS " + args[1].toLowerCase(Locale.ENGLISH) + " to update its position.");
                         return true;
                     } else {
                         sender.sendMessage(plugin.pluginName + TARDISConstants.NO_PERMS_MESSAGE);
@@ -536,7 +537,7 @@ public class TARDISCommands implements CommandExecutor {
                             if (args[1].equalsIgnoreCase("hide") || args[1].equalsIgnoreCase("rebuild") || args[1].equalsIgnoreCase("home")) {
                                 HashMap<String, Object> set = new HashMap<String, Object>();
                                 set.put("tardis_id", id);
-                                set.put("dest_name", args[1].toLowerCase());
+                                set.put("dest_name", args[1].toLowerCase(Locale.ENGLISH));
                                 QueryFactory qf = new QueryFactory(plugin);
                                 did = qf.doInsert("destinations", set);
                             } else {
@@ -680,11 +681,11 @@ public class TARDISCommands implements CommandExecutor {
                             tid.put("tardis_id", id);
                             if (comps != null && !comps.equals("")) {
                                 // add to the list
-                                String newList = comps + ":" + args[1].toLowerCase();
+                                String newList = comps + ":" + args[1].toLowerCase(Locale.ENGLISH);
                                 set.put("companions", newList);
                             } else {
                                 // make a list
-                                set.put("companions", args[1].toLowerCase());
+                                set.put("companions", args[1].toLowerCase(Locale.ENGLISH));
                             }
                             qf.doUpdate("tardis", set, tid);
                             player.sendMessage(plugin.pluginName + "You added " + ChatColor.GREEN + args[1] + ChatColor.RESET + " as a TARDIS companion.");
@@ -727,7 +728,7 @@ public class TARDISCommands implements CommandExecutor {
                             if (split.length > 1) {
                                 // recompile string without the specified player
                                 for (String c : split) {
-                                    if (!c.equals(args[1].toLowerCase())) {
+                                    if (!c.equals(args[1].toLowerCase(Locale.ENGLISH))) {
                                         // add to new string
                                         buf.append(c).append(":");
                                     }
@@ -927,7 +928,7 @@ public class TARDISCommands implements CommandExecutor {
                         if (plugin.getConfig().getBoolean("chameleon")) {
                             cham = rs.isChamele_on();
                         }
-                        String dir = args[1].toUpperCase();
+                        String dir = args[1].toUpperCase(Locale.ENGLISH);
                         TARDISConstants.COMPASS old_d = rs.getDirection();
                         QueryFactory qf = new QueryFactory(plugin);
                         HashMap<String, Object> tid = new HashMap<String, Object>();
@@ -991,7 +992,7 @@ public class TARDISCommands implements CommandExecutor {
                             cmds.add(c.toString());
                         }
                         // check that the second arument is valid
-                        if (!cmds.contains(args[1].toUpperCase())) {
+                        if (!cmds.contains(args[1].toUpperCase(Locale.ENGLISH))) {
                             sender.sendMessage(plugin.pluginName + "That is not a valid help topic!");
                             return true;
                         }

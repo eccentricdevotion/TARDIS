@@ -23,6 +23,7 @@ import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 import me.eccentric_nz.TARDIS.TARDIS;
 import org.bukkit.World;
@@ -108,7 +109,7 @@ public class ResultSetGravity {
                         ResultSetMetaData rsmd = rs.getMetaData();
                         int columns = rsmd.getColumnCount();
                         for (int i = 1; i < columns + 1; i++) {
-                            row.put(rsmd.getColumnName(i).toLowerCase(), rs.getString(i));
+                            row.put(rsmd.getColumnName(i).toLowerCase(Locale.ENGLISH), rs.getString(i));
                         }
                         data.add(row);
                     }

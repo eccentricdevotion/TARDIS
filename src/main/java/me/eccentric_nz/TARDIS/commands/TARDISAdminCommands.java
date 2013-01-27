@@ -22,6 +22,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Locale;
 import java.util.Set;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
@@ -152,7 +153,7 @@ public class TARDISAdminCommands implements CommandExecutor {
                     sender.sendMessage(TARDISConstants.COMMAND_ADMIN.split("\n"));
                     return true;
                 }
-                String first = args[0].toLowerCase();
+                String first = args[0].toLowerCase(Locale.ENGLISH);
                 if (!firstsStr.contains(first) && !firstsBool.contains(first) && !firstsInt.contains(first) && !firstsRoom.contains(first)) {
                     sender.sendMessage(plugin.pluginName + "TARDIS does not recognise that command argument!");
                     return false;
@@ -342,7 +343,7 @@ public class TARDISAdminCommands implements CommandExecutor {
                     return true;
                 }
                 if (first.equals("key") || first.equals("full_charge_item")) {
-                    String setMaterial = args[1].toUpperCase();
+                    String setMaterial = args[1].toUpperCase(Locale.ENGLISH);
                     if (!Arrays.asList(TARDISMaterials.MATERIAL_LIST).contains(setMaterial)) {
                         sender.sendMessage(plugin.pluginName + ChatColor.RED + "That is not a valid Material! Try checking http://jd.bukkit.org/apidocs/org/bukkit/Material.html");
                         return false;
@@ -387,7 +388,7 @@ public class TARDISAdminCommands implements CommandExecutor {
                 //checks if its a boolean config option
                 if (firstsBool.contains(first)) {
                     // check they typed true of false
-                    String tf = args[1].toLowerCase();
+                    String tf = args[1].toLowerCase(Locale.ENGLISH);
                     if (!tf.equals("true") && !tf.equals("false")) {
                         sender.sendMessage(plugin.pluginName + ChatColor.RED + "The last argument must be true or false!");
                         return false;
@@ -405,7 +406,7 @@ public class TARDISAdminCommands implements CommandExecutor {
                         sender.sendMessage(plugin.pluginName + ChatColor.RED + " The last argument must be a number!");
                         return false;
                     }
-                    String option = (firstsRoom.contains(first)) ? "rooms." + first.toUpperCase() : first;
+                    String option = (firstsRoom.contains(first)) ? "rooms." + first.toUpperCase(Locale.ENGLISH) : first;
                     plugin.getConfig().set(option, val);
                 }
                 plugin.saveConfig();

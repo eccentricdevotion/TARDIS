@@ -20,6 +20,7 @@ import me.eccentric_nz.TARDIS.database.TARDISDatabase;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
@@ -67,7 +68,7 @@ public class TARDISPrefsCommands implements CommandExecutor {
                 sender.sendMessage(plugin.pluginName + ChatColor.RED + " This command can only be run by a player");
                 return false;
             }
-            String pref = args[0].toLowerCase();
+            String pref = args[0].toLowerCase(Locale.ENGLISH);
             if (firstArgs.contains(pref)) {
                 if (player.hasPermission("tardis.timetravel")) {
                     if (args.length < 2 || (!args[1].equalsIgnoreCase("on") && !args[1].equalsIgnoreCase("off"))) {
