@@ -128,7 +128,7 @@ public class TARDISRoomBuilder {
                     l.setY(l.getY() - 1);
                     break;
             }
-            if (d.equals(COMPASS.EAST) || d.equals(COMPASS.SOUTH)) {
+            if (d.equals(COMPASS.EAST) || d.equals(COMPASS.SOUTH) || r.equalsIgnoreCase("GRAVITY")) {
                 roomData.setX(1);
                 roomData.setZ(1);
             } else {
