@@ -95,11 +95,11 @@ public class TARDISDestroyerInner {
                         Chest chest = getDoubleChest(b);
                         if (chest != null) {
                             chest.getInventory().clear();
-                            chest.getBlock().setTypeId(i);
-                            container.getBlock().setTypeId(i);
+                            chest.getBlock().setTypeId(0);
+                            container.getBlock().setTypeId(0);
                         } else if (container != null) {
                             container.getInventory().clear();
-                            container.getBlock().setTypeId(i);
+                            container.getBlock().setTypeId(0);
                         }
                     }
                     // if it's a furnace clear the inventory first
