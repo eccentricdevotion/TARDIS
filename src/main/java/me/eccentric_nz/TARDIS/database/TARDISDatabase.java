@@ -100,12 +100,12 @@ public class TARDISDatabase {
                 statement.executeUpdate(queryAlter6);
                 String queryAlter7 = "ALTER TABLE tardis ADD tardis_init INTEGER DEFAULT 0";
                 statement.executeUpdate(queryAlter7);
-                String queryAlter8 = "ALTER TABLE tardis ADD handbrake TEXT DEFAULT ''";
-                statement.executeUpdate(queryAlter8);
-                String queryAlter9 = "ALTER TABLE tardis ADD handbrake_on INT DEFAULT 1";
-                statement.executeUpdate(queryAlter9);
-                String queryAlter10 = "ALTER TABLE tardis ADD recharging INTEGER DEFAULT 0";
-                statement.executeUpdate(queryAlter10);
+//                String queryAlter8 = "ALTER TABLE tardis ADD handbrake TEXT DEFAULT ''";
+//                statement.executeUpdate(queryAlter8);
+//                String queryAlter9 = "ALTER TABLE tardis ADD handbrake_on INT DEFAULT 1";
+//                statement.executeUpdate(queryAlter9);
+//                String queryAlter10 = "ALTER TABLE tardis ADD recharging INTEGER DEFAULT 0";
+//                statement.executeUpdate(queryAlter10);
                 TARDIS.plugin.console.sendMessage(TARDIS.plugin.pluginName + "Adding new database fields to tardis!");
             }
             // add bind to destinations
@@ -122,6 +122,16 @@ public class TARDISDatabase {
             if (!rsCondenser.next()) {
                 String queryAlter11 = "ALTER TABLE tardis ADD condenser TEXT DEFAULT ''";
                 statement.executeUpdate(queryAlter11);
+            }
+            String queryAddMissing = "SELECT sql FROM sqlite_master WHERE tbl_name = 'tardis' AND sql LIKE '%handbrake TEXT%'";
+            ResultSet rsMissing = statement.executeQuery(queryAddMissing);
+            if (!rsMissing.next()) {
+                String queryAlter8 = "ALTER TABLE tardis ADD handbrake TEXT DEFAULT ''";
+                statement.executeUpdate(queryAlter8);
+                String queryAlter9 = "ALTER TABLE tardis ADD handbrake_on INT DEFAULT 1";
+                statement.executeUpdate(queryAlter9);
+                String queryAlter10 = "ALTER TABLE tardis ADD recharging INTEGER DEFAULT 0";
+                statement.executeUpdate(queryAlter10);
             }
         } catch (SQLException e) {
             TARDIS.plugin.console.sendMessage(TARDIS.plugin.pluginName + "Create table error: " + e);
