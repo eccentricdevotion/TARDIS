@@ -234,7 +234,7 @@ public class TARDISMaterialisationRunnable implements Runnable {
                         HashMap<String, Object> wheret = new HashMap<String, Object>();
                         wheret.put("tardis_id", tid);
                         ResultSetTardis rstard = new ResultSetTardis(plugin, wheret, "", false);
-                        if (rst.resultSet()) {
+                        if (rstard.resultSet()) {
                             String owner = rstard.getOwner();
                             if (owner.length() > 14) {
                                 s.setLine(0, owner.substring(0, 12) + "'s");
