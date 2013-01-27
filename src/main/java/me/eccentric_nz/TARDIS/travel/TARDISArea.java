@@ -45,7 +45,7 @@ public class TARDISArea {
     }
 
     /**
-     * Checks if a location is contained within a any TARDIS area.
+     * Checks if a location is contained within any TARDIS area.
      *
      * @param l a location object to check.
      */
