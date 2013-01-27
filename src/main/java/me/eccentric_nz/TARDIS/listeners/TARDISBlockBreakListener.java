@@ -186,6 +186,10 @@ public class TARDISBlockBreakListener implements Listener {
                             HashMap<String, Object> gid = new HashMap<String, Object>();
                             gid.put("tardis_id", id);
                             qf.doDelete("gravity", gid);
+                            // remove saved destinations
+                            HashMap<String, Object> lid = new HashMap<String, Object>();
+                            lid.put("tardis_id", id);
+                            qf.doDelete("destinations", lid);
                             player.sendMessage(plugin.pluginName + "The TARDIS was removed from the world and database successfully.");
                             // remove world guard region protection
                             if (plugin.worldGuardOnServer && plugin.getConfig().getBoolean("use_worldguard")) {
