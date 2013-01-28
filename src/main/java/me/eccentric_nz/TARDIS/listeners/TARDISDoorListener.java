@@ -160,7 +160,7 @@ public class TARDISDoorListener implements Listener {
                                             userQuotes = true;
                                         }
                                         if (doortype == 1) {
-                                            if (!plugin.tardisHasTravelled.containsKey(Integer.valueOf(id))) {
+                                            if (plugin.tardisHasTravelled.containsKey(Integer.valueOf(id))) {
                                                 if (rs.isHandbrake_on()) {
                                                     // player is in the TARDIS
                                                     // change the yaw if the door directions are different
