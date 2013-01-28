@@ -3,8 +3,10 @@
 2. Check what happens when companions use the TARDIS with regards to:
    - Recharging
 3. Remove room schematics in final release, and only supply CSV files.
-4. Finish doing tutorial videos
-5. TEST, TEST, TEST
+4. Add a schematic to CSV converter.
+5. Add a way to grow rooms out of any CSV file in the schematic directory and enable the room if suplyed in the config.
+6. Finish doing tutorial videos
+7. TEST, TEST, TEST
 
 #Minecraft API when available
 1. Create custom blocks for the tardis box and console.
