@@ -555,6 +555,59 @@ public class TARDISCommands implements CommandExecutor {
                         return false;
                     }
                 }
+                if (args[0].equalsIgnoreCase("unbind")) {
+                    if (player.hasPermission("tardis.update")) {
+                        if (args.length < 2) {
+                            sender.sendMessage(plugin.pluginName + "Too few command arguments!");
+                            return false;
+                        }
+                        HashMap<String, Object> where = new HashMap<String, Object>();
+                        where.put("owner", player.getName());
+                        ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
+                        if (!rs.resultSet()) {
+                            sender.sendMessage(plugin.pluginName + "You are not a Timelord. You need to create a TARDIS first before using this command!");
+                            return false;
+                        }
+                        int id = rs.getTardis_id();
+                        HashMap<String, Object> wheret = new HashMap<String, Object>();
+                        wheret.put("player", player.getName());
+                        ResultSetTravellers rst = new ResultSetTravellers(plugin, wheret, false);
+                        if (!rst.resultSet()) {
+                            sender.sendMessage(plugin.pluginName + "You are not inside your TARDIS. You need to be to run this command!");
+                            return false;
+                        }
+                        HashMap<String, Object> whered = new HashMap<String, Object>();
+                        whered.put("tardis_id", id);
+                        whered.put("dest_name", args[1].toLowerCase(Locale.ENGLISH));
+                        ResultSetDestinations rsd = new ResultSetDestinations(plugin, whered, false);
+                        if (!rsd.resultSet()) {
+                            sender.sendMessage(plugin.pluginName + "Could not find a save with that name! Try using " + ChatColor.AQUA + "/tardis list saves" + ChatColor.RESET + " first.");
+                            return true;
+                        }
+                        if (rsd.getBind().equals("")) {
+                            sender.sendMessage(plugin.pluginName + "There is no button bound to that save name!");
+                            return true;
+                        }
+                        int did = rsd.getDest_id();
+                        QueryFactory qf = new QueryFactory(plugin);
+                        HashMap<String, Object> whereb = new HashMap<String, Object>();
+                        whereb.put("dest_id", did);
+                        if (args[1].equalsIgnoreCase("hide") || args[1].equalsIgnoreCase("rebuild") || args[1].equalsIgnoreCase("home")) {
+                            // delete the record
+                            qf.doDelete("destinations", whereb);
+                        } else {
+                            // just remove the bind location
+                            HashMap<String, Object> set = new HashMap<String, Object>();
+                            set.put("bind", "");
+                            qf.doUpdate("destinations", set, whereb);
+                        }
+                        player.sendMessage(plugin.pluginName + "The location was unbound. You can safely delete the block.");
+                        return true;
+                    } else {
+                        sender.sendMessage(plugin.pluginName + TARDISConstants.NO_PERMS_MESSAGE);
+                        return false;
+                    }
+                }
                 if (args[0].equalsIgnoreCase("rebuild") || args[0].equalsIgnoreCase("hide")) {
                     if (player.hasPermission("tardis.rebuild")) {
                         String save;
