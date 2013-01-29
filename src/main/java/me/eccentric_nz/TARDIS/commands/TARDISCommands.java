@@ -97,6 +97,7 @@ public class TARDISCommands implements CommandExecutor {
         firstArgs.add("room");
         firstArgs.add("jettison");
         firstArgs.add("bind");
+        firstArgs.add("unbind");
 
         String[] v = Bukkit.getServer().getBukkitVersion().split("-");
         bukkitversion = new Version(v[0]);
