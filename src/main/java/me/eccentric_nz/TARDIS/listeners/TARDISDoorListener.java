@@ -146,6 +146,7 @@ public class TARDISDoorListener implements Listener {
                                         TARDISConstants.COMPASS d = rs.getDirection();
                                         String tl = rs.getOwner();
                                         String save = rs.getSave();
+                                        String current = rs.getCurrent();
                                         float yaw = player.getLocation().getYaw();
                                         float pitch = player.getLocation().getPitch();
                                         String companions = rs.getCompanions();
@@ -160,60 +161,66 @@ public class TARDISDoorListener implements Listener {
                                             userQuotes = true;
                                         }
                                         if (doortype == 1) {
-                                            if (plugin.tardisHasTravelled.containsKey(Integer.valueOf(id))) {
-                                                if (rs.isHandbrake_on()) {
-                                                    // player is in the TARDIS
-                                                    // change the yaw if the door directions are different
-                                                    if (!dd.equals(d)) {
-                                                        switch (dd) {
-                                                            case NORTH:
-                                                                yaw = yaw + adjustYaw[0][d.ordinal()];
-                                                                break;
-                                                            case WEST:
-                                                                yaw = yaw + adjustYaw[1][d.ordinal()];
-                                                                break;
-                                                            case SOUTH:
-                                                                yaw = yaw + adjustYaw[2][d.ordinal()];
-                                                                break;
-                                                            case EAST:
-                                                                yaw = yaw + adjustYaw[3][d.ordinal()];
-                                                                break;
-                                                        }
-                                                    }
-                                                    // get location from database
-                                                    final Location exitTardis = plugin.utils.getLocationFromDB(save, yaw, pitch);
-                                                    // make location safe ie. outside of the bluebox
-                                                    double ex = exitTardis.getX();
-                                                    double ez = exitTardis.getZ();
-                                                    switch (d) {
+                                            Location exitLoc = plugin.utils.getLocationFromDB(save, yaw, pitch);
+                                            boolean hasDest = plugin.tardisHasDestination.containsKey(Integer.valueOf(id));
+                                            boolean hasTrav = plugin.tardisHasTravelled.contains(Integer.valueOf(id));
+                                            if (hasDest && !hasTrav) {
+                                                exitLoc = plugin.utils.getLocationFromDB(current, yaw, pitch);
+                                            }
+                                            if (rs.isHandbrake_on()) {
+                                                // player is in the TARDIS
+                                                // change the yaw if the door directions are different
+                                                if (!dd.equals(d)) {
+                                                    switch (dd) {
                                                         case NORTH:
-                                                            exitTardis.setX(ex + 0.5);
-                                                            exitTardis.setZ(ez + 2.5);
-                                                            break;
-                                                        case EAST:
-                                                            exitTardis.setX(ex - 1.5);
-                                                            exitTardis.setZ(ez + 0.5);
-                                                            break;
-                                                        case SOUTH:
-                                                            exitTardis.setX(ex + 0.5);
-                                                            exitTardis.setZ(ez - 1.5);
+                                                            yaw = yaw + adjustYaw[0][d.ordinal()];
                                                             break;
                                                         case WEST:
-                                                            exitTardis.setX(ex + 2.5);
-                                                            exitTardis.setZ(ez + 0.5);
+                                                            yaw = yaw + adjustYaw[1][d.ordinal()];
+                                                            break;
+                                                        case SOUTH:
+                                                            yaw = yaw + adjustYaw[2][d.ordinal()];
+                                                            break;
+                                                        case EAST:
+                                                            yaw = yaw + adjustYaw[3][d.ordinal()];
                                                             break;
                                                     }
-                                                    // exit TARDIS!
-                                                    movePlayer(player, exitTardis, true, playerWorld, userQuotes);
-                                                    // remove player from traveller table
-                                                    HashMap<String, Object> wherd = new HashMap<String, Object>();
-                                                    wherd.put("player", playerNameStr);
-                                                    qf.doDelete("travellers", wherd);
-                                                } else {
-                                                    player.sendMessage(plugin.pluginName + "Engage the TARDIS handbrake to exit!");
+                                                }
+                                                exitLoc.setYaw(yaw);
+                                                // get location from database
+                                                final Location exitTardis = exitLoc;
+                                                // make location safe ie. outside of the bluebox
+                                                double ex = exitTardis.getX();
+                                                double ez = exitTardis.getZ();
+                                                switch (d) {
+                                                    case NORTH:
+                                                        exitTardis.setX(ex + 0.5);
+                                                        exitTardis.setZ(ez + 2.5);
+                                                        break;
+                                                    case EAST:
+                                                        exitTardis.setX(ex - 1.5);
+                                                        exitTardis.setZ(ez + 0.5);
+                                                        break;
+                                                    case SOUTH:
+                                                        exitTardis.setX(ex + 0.5);
+                                                        exitTardis.setZ(ez - 1.5);
+                                                        break;
+                                                    case WEST:
+                                                        exitTardis.setX(ex + 2.5);
+                                                        exitTardis.setZ(ez + 0.5);
+                                                        break;
+                                                }
+                                                // exit TARDIS!
+                                                movePlayer(player, exitTardis, true, playerWorld, userQuotes);
+                                                // remove player from traveller table
+                                                HashMap<String, Object> wherd = new HashMap<String, Object>();
+                                                wherd.put("player", playerNameStr);
+                                                qf.doDelete("travellers", wherd);
+                                                if (hasTrav) {
+                                                    plugin.tardisHasTravelled.remove(Integer.valueOf(id));
                                                 }
                                             } else {
-                                                player.sendMessage(plugin.pluginName + "You need to release the handbrake!");
+                                                player.sendMessage(plugin.pluginName + "Engage the TARDIS handbrake to exit!");
                                             }
                                         } else {
                                             // is the TARDIS materialising?

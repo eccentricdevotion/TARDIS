@@ -89,7 +89,7 @@ public class TARDISHandbrakeListener implements Listener {
                         if (action == Action.RIGHT_CLICK_BLOCK) {
                             event.setCancelled(true);
                             // has a destination been set?
-                            if (plugin.tardisHasTravelled.containsKey(Integer.valueOf(id))) {
+                            if (plugin.tardisHasDestination.containsKey(Integer.valueOf(id))) {
                                 // handbrake off
                                 lever.setPowered(true);
                                 state.setData(lever);
@@ -125,7 +125,7 @@ public class TARDISHandbrakeListener implements Listener {
                                 player.sendMessage(plugin.pluginName + "You need to set a destination first!");
                             }
                         }
-                        // can we use left click and set the lever position?
+                        // can we use left click and set the lever position - yes
                         if (action == Action.LEFT_CLICK_BLOCK) {
                             if (!rs.isHandbrake_on()) {
                                 // handbrake on
@@ -138,9 +138,9 @@ public class TARDISHandbrakeListener implements Listener {
                                 TARDISArtronLevels tal = new TARDISArtronLevels(plugin);
                                 tal.recharge(id, player);
                                 // remove energy from TARDIS
-                                if (plugin.tardisHasTravelled.containsKey(Integer.valueOf(id))) {
+                                if (plugin.tardisHasDestination.containsKey(Integer.valueOf(id))) {
                                     QueryFactory qf = new QueryFactory(plugin);
-                                    int amount = plugin.tardisHasTravelled.get(id) * -1;
+                                    int amount = plugin.tardisHasDestination.get(id) * -1;
                                     HashMap<String, Object> wheret = new HashMap<String, Object>();
                                     wheret.put("tardis_id", id);
                                     qf.alterEnergyLevel("tardis", amount, wheret, player);
@@ -149,7 +149,8 @@ public class TARDISHandbrakeListener implements Listener {
                                         Player ptl = plugin.getServer().getPlayer(owner);
                                         ptl.sendMessage(plugin.pluginName + "You used " + Math.abs(amount) + " Artron Energy.");
                                     }
-                                    plugin.tardisHasTravelled.remove(Integer.valueOf(id));
+                                    plugin.tardisHasDestination.remove(Integer.valueOf(id));
+                                    plugin.tardisHasTravelled.add(Integer.valueOf(id));
                                     update = true;
                                 }
                             } else {
