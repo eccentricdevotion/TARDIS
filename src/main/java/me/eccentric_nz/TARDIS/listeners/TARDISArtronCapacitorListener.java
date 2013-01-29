@@ -126,7 +126,7 @@ public class TARDISArtronCapacitorListener implements Listener {
                             if (!rs.isTardis_init()) {
                                 // get location from database
                                 String creeper = rs.getCreeper();
-                                if (!creeper.equals("")) {
+                                if (!creeper.equals("") && !creeper.equals(":")) {
                                     String[] creeperData = creeper.split(":");
                                     World w = b.getWorld();
                                     float cx = 0, cy = 0, cz = 0;

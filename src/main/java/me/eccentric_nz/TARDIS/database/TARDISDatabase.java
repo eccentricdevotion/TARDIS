@@ -96,7 +96,7 @@ public class TARDISDatabase {
                 statement.executeUpdate(queryAlter4);
                 String queryAlter5 = "ALTER TABLE tardis ADD middle_data INTEGER";
                 statement.executeUpdate(queryAlter5);
-                String queryAlter6 = "ALTER TABLE tardis ADD creeper TEXT DEFAULT ':'";
+                String queryAlter6 = "ALTER TABLE tardis ADD creeper TEXT DEFAULT ''";
                 statement.executeUpdate(queryAlter6);
                 String queryAlter7 = "ALTER TABLE tardis ADD tardis_init INTEGER DEFAULT 0";
                 statement.executeUpdate(queryAlter7);
