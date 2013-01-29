@@ -93,7 +93,6 @@ public class TARDISAdminCommands implements CommandExecutor {
         firstsBool.add("name_tardis");
         firstsBool.add("nether");
         firstsBool.add("platform");
-        firstsBool.add("protect_blocks");
         firstsBool.add("sfx");
         firstsBool.add("the_end");
         firstsBool.add("name_tardis");
