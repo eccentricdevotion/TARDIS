@@ -2,7 +2,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>me.eccentric_nz.TARDIS</groupId>
     <artifactId>TARDIS</artifactId>
-    <version>2.0-beta-3b</version>
+    <version>2.0-beta-4</version>
     <name>TARDIS</name>
     <url>http://www.thenosefairy.co.nz/</url>
     <repositories>
