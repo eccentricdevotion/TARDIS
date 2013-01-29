@@ -1,5 +1,6 @@
 # TODO
-0. Allow for unbinding command from buttons.
+1. See if ICE blocks can be made to not melt…
+0. Add an unbinding command.
 1. Change Energy condenser to use ores because they are a little harder to get, but can still be used.
 2. Check what happens when companions use the TARDIS with regards to:
    - Recharging
