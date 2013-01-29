@@ -137,7 +137,7 @@ public class TARDISBindListener implements Listener {
                                 wheres.put("tardis_id", id);
                                 QueryFactory qf = new QueryFactory(plugin);
                                 qf.doUpdate("tardis", set, wheres);
-                                plugin.tardisHasTravelled.put(id, plugin.getConfig().getInt("travel"));
+                                plugin.tardisHasDestination.put(id, plugin.getConfig().getInt("travel"));
                                 player.sendMessage(plugin.pluginName + "Exit location set to " + dest_name);
                             }
                         }
