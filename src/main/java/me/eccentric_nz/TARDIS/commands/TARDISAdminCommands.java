@@ -192,27 +192,28 @@ public class TARDISAdminCommands implements CommandExecutor {
                         }
                         return true;
                     }
-                    if (first.equals("list")) {
-                        // get all tardis positions - max 18
-                        int start = 0, end = 18;
-                        if (args.length > 1) {
-                            int tmp = Integer.parseInt(args[1]);
-                            start = (tmp * 18) - 18;
-                            end = tmp * 18;
-                        }
-                        String limit = start + ", " + end;
-                        HashMap<String, Object> where = new HashMap<String, Object>();
-                        ResultSetTardis rsl = new ResultSetTardis(plugin, where, limit, true);
-                        if (rsl.resultSet()) {
-                            sender.sendMessage(plugin.pluginName + "TARDIS locations.");
-                            ArrayList<HashMap<String, String>> data = rsl.getData();
-                            for (HashMap<String, String> map : data) {
-                                sender.sendMessage("Timelord: " + map.get("Owner") + ", Location: " + map.get("current"));
-                            }
-                            sender.sendMessage(plugin.pluginName + "To see more locations, type: /tardisadmin list 2,  /tardisadmin list 3 etc.");
-                        }
-                        return true;
+                }
+                if (first.equals("list")) {
+                    // get all tardis positions - max 18
+                    int start = 0, end = 18;
+                    if (args.length > 1) {
+                        int tmp = plugin.utils.parseNum(args[1]);
+                        start = (tmp * 18) - 18;
+                        end = tmp * 18;
                     }
+                    String limit = start + ", " + end;
+                    ResultSetTardis rsl = new ResultSetTardis(plugin, null, limit, true);
+                    if (rsl.resultSet()) {
+                        sender.sendMessage(plugin.pluginName + "TARDIS locations.");
+                        ArrayList<HashMap<String, String>> data = rsl.getData();
+                        for (HashMap<String, String> map : data) {
+                            sender.sendMessage("Timelord: " + map.get("owner") + ", Location: " + map.get("current"));
+                        }
+                        sender.sendMessage(plugin.pluginName + "To see more locations, type: /tardisadmin list 2,  /tardisadmin list 3 etc.");
+                    } else {
+                        sender.sendMessage(plugin.pluginName + "There are no more records to display.");
+                    }
+                    return true;
                 }
                 if (args.length < 2) {
                     sender.sendMessage(plugin.pluginName + "Too few command arguments!");
