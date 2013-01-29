@@ -1,7 +1,9 @@
 # TODO
+0. Allow for unbinding command from buttons.
 1. Change Energy condenser to use ores because they are a little harder to get, but can still be used.
 2. Check what happens when companions use the TARDIS with regards to:
    - Recharging
+   - Update
 3. Remove room schematics in final release, and only supply CSV files.
 4. Add a schematic to CSV converter.
 5. Add a way to grow rooms out of any CSV file in the schematic directory and enable the room if suplyed in the config.
