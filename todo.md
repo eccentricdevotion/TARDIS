@@ -1,15 +1,14 @@
 # TODO
-1. See if ICE blocks can be made to not melt…
-0. Add an unbinding command.
-1. Change Energy condenser to use ores because they are a little harder to get, but can still be used.
-2. Check what happens when companions use the TARDIS with regards to:
+2. See if ICE blocks can be made to not melt…
+3. Change Energy condenser to use ores because they are a little harder to get, but can still be used.
+4. Check what happens when companions use the TARDIS with regards to:
    - Recharging
    - Update
-3. Remove room schematics in final release, and only supply CSV files.
-4. Add a schematic to CSV converter.
-5. Add a way to grow rooms out of any CSV file in the schematic directory and enable the room if suplyed in the config.
-6. Finish doing tutorial videos
-7. TEST, TEST, TEST
+5. Remove room schematics in final release, and only supply CSV files.
+6. Add a schematic to CSV converter.
+7. Add a way to grow rooms out of any CSV file in the schematic directory and enable the room if suplyed in the config.
+8. Finish doing tutorial videos
+9. TEST, TEST, TEST
 
 #Minecraft API when available
 1. Create custom blocks for the tardis box and console.
