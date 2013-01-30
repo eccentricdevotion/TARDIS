@@ -164,6 +164,10 @@ public class TARDISRoomBuilder {
                     s = plugin.vaultschematic;
                     dimensions = plugin.roomdimensions;
                     break;
+                case WORKSHOP:
+                    s = plugin.workshopschematic;
+                    dimensions = plugin.roomdimensions;
+                    break;
                 case EMPTY:
                     s = plugin.emptyschematic;
                     dimensions = plugin.roomdimensions;
