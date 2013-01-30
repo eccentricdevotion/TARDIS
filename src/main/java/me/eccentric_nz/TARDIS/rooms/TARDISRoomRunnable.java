@@ -16,11 +16,15 @@
  */
 package me.eccentric_nz.TARDIS.rooms;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants.COMPASS;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
+import org.bukkit.Chunk;
 import org.bukkit.Location;
+import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Player;
@@ -47,6 +51,8 @@ public class TARDISRoomRunnable implements Runnable {
     private boolean running;
     HashMap<String, Object> set;
     Player p;
+    World world;
+    List<Chunk> chunkList = new ArrayList<Chunk>();
 
     public TARDISRoomRunnable(TARDIS plugin, TARDISRoomData roomData, Player p) {
         this.plugin = plugin;
@@ -87,6 +93,7 @@ public class TARDISRoomRunnable implements Runnable {
             set.put("startx", startx);
             set.put("starty", starty);
             set.put("startz", startz);
+            world = l.getWorld();
             running = true;
             p.sendMessage(plugin.pluginName + "Started growing a " + room + "...");
         }
@@ -117,6 +124,11 @@ public class TARDISRoomRunnable implements Runnable {
             plugin.getServer().getScheduler().cancelTask(task);
             task = 0;
             p.sendMessage(plugin.pluginName + "Finished growing the " + room + "!");
+            if (chunkList.size() > 0) {
+                for (Chunk c : chunkList) {
+                    plugin.roomChunkList.remove(c);
+                }
+            }
         }
         // place one block
         tmp = s[level][row][col];
@@ -132,7 +144,7 @@ public class TARDISRoomRunnable implements Runnable {
             id = 0;
             data = (byte) 0;
         } else {
-            Block existing = l.getWorld().getBlockAt(startx, starty, startz);
+            Block existing = world.getBlockAt(startx, starty, startz);
             if (existing.getTypeId() != 0) {
                 if (room.equals("GRAVITY")) {
                     switch (id) {
@@ -148,6 +160,12 @@ public class TARDISRoomRunnable implements Runnable {
                     data = existing.getData();
                 }
             }
+        }
+
+        Chunk thisChunk = world.getChunkAt(world.getBlockAt(startx, starty, startz));
+        if (!plugin.roomChunkList.contains(thisChunk)) {
+            plugin.roomChunkList.add(thisChunk);
+            chunkList.add(thisChunk);
         }
         plugin.utils.setBlock(l.getWorld(), startx, starty, startz, id, data);
         QueryFactory qf = new QueryFactory(plugin);
