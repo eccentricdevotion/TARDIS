@@ -164,6 +164,7 @@ public class TARDISRoomRunnable implements Runnable {
 
         Chunk thisChunk = world.getChunkAt(world.getBlockAt(startx, starty, startz));
         if (!plugin.roomChunkList.contains(thisChunk)) {
+            plugin.debug(thisChunk);
             plugin.roomChunkList.add(thisChunk);
             chunkList.add(thisChunk);
         }

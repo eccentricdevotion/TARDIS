@@ -45,6 +45,7 @@ public class TARDISRoomChunkListener implements Listener {
      */
     @EventHandler(priority = EventPriority.NORMAL, ignoreCancelled = true)
     public void onChunkUnload(ChunkUnloadEvent event) {
+        plugin.debug("Chunk unloading!");
         if (plugin.roomChunkList.contains(event.getChunk())) {
             event.setCancelled(true);
             plugin.debug("Cancelled room chunk unloading!");

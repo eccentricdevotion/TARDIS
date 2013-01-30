@@ -59,6 +59,7 @@ import me.eccentric_nz.TARDIS.listeners.TARDISHandbrakeListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISIceMeltListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISJettisonSeeder;
 import me.eccentric_nz.TARDIS.listeners.TARDISLightningListener;
+import me.eccentric_nz.TARDIS.listeners.TARDISRoomChunkListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISRoomSeeder;
 import me.eccentric_nz.TARDIS.listeners.TARDISSignListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISUpdateListener;
@@ -177,6 +178,7 @@ public class TARDIS extends JavaPlugin {
     TARDISGravityWellListener gravityListener = new TARDISGravityWellListener(this);
     TARDISCondenserListener condenserListener = new TARDISCondenserListener(this);
     TARDISIceMeltListener meltListener = new TARDISIceMeltListener(this);
+    TARDISRoomChunkListener roomChunkListener = new TARDISRoomChunkListener(this);
     public PluginManager pm = Bukkit.getServer().getPluginManager();
     public HashMap<String, String> trackPlayers = new HashMap<String, String>();
     public HashMap<String, Integer> trackBinder = new HashMap<String, Integer>();
@@ -327,6 +329,7 @@ public class TARDIS extends JavaPlugin {
         pm.registerEvents(gravityListener, this);
         pm.registerEvents(condenserListener, this);
         pm.registerEvents(meltListener, this);
+        pm.registerEvents(roomChunkListener, this);
     }
 
     /**
