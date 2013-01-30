@@ -1,0 +1,121 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="chrome=1">
+<title>Tardis by eccentricdevotion</title>
+<link rel="stylesheet" href="stylesheets/styles.css">
+<link rel="stylesheet" href="stylesheets/pygment_trac.css">
+<script src="javascripts/scale.fix.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+<!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+</head>
+<body>
+<div class="wrapper">
+    <header>
+        <h1>Tardis</h1>
+        <p>A Bukkit plugin for all Doctor Who fans - create and use a TARDIS! It&rsquo;s bigger on the inside!</p>
+        <p class="view"><a href="https://github.com/eccentricdevotion/TARDIS">View the Project on GitHub <small>eccentricdevotion/TARDIS</small></a></p>
+        <ul>
+            <li><a href="http://eccentricdevotion.github.com/TARDIS/">Back <strong>home</strong></a></li>
+            <li><a href="http://eccentricdevotion.github.com/TARDIS/contents.html"><strong>Contents</strong> page</a></li>
+        </ul>
+    </header>
+    <section>
+        <h1>Permissions</h1>
+        <hr />
+        <blockquote>
+            <p><strong>Quote from eccentric_nz:</strong></p>
+            <p>If you are getting the error:</p>
+            <blockquote>
+                <p><em>Your exile status does not allow you to bring the TARDIS to this …</em></p>
+            </blockquote>
+            <p>or</p>
+            <blockquote>
+                <p><em>Your travel has been restricted to the [] area!</em></p>
+            </blockquote>
+            <p>Then your permissions setup is not working properly and you will need to remove the <code>tardis.exile</code> permission node (how you do this depends on which permissions plugin you are using).</p>
+            <p>Try setting (PermissionsBukkit)</p>
+            <p><code>tardis.exile: false</code></p>
+            <p>or (Essentials GroupManager/PEX)</p>
+            <p><code>- -tardis.exile</code></p>
+            <p>As recommended by PEX, do not use <code>'*'</code> !</p>
+        </blockquote>
+        <hr />
+        <p>Tested with PermissionsBukkit, there are a number of self explanatory permissions:</p>
+        <h2>General</h2>
+        <p>Allow players to use a TARDIS</p>
+        <pre><code>tardis.use
+</code></pre>
+        <p>There are 7 (probably unnecessary) child nodes:</p>
+        <pre><code>tardis.create
+tardis.delete
+tardis.timetravel
+tardis.list
+tardis.save
+tardis.add
+tardis.enter
+tardis.find
+tardis.update
+</code></pre>
+        <h2>TARDIS build sizes</h2>
+        <p>In order to be able to create a &lsquo;bigger&rsquo; or &lsquo;deluxe&rsquo; TARDIS, players will need:</p>
+        <pre><code>tardis.bigger
+tardis.deluxe
+</code></pre>
+        <h2>TARDIS rooms</h2>
+        <p>To allow players to grow new TARDIS rooms, they will need:</p>
+        <pre><code>tardis.room
+</code></pre>
+        <h2>Time travel</h2>
+        <p>There are a couple of time travel specific nodes:</p>
+        <p>Allow travel to player locations</p>
+        <pre><code>tardis.timetravel.player
+</code></pre>
+        <p>Allow travel to specified co-ordinates</p>
+        <pre><code>tardis.timetravel.location
+</code></pre>
+        <h2>Environment</h2>
+        <p>There are a couple of world environment specific nodes:</p>
+        <p>Allow travel to <strong>Nether</strong> worlds</p>
+        <pre><code>tardis.nether
+</code></pre>
+        <p>Allow travel to <strong>The End</strong> worlds</p>
+        <pre><code>tardis.end
+</code></pre>
+        <h2>TARDIS areas</h2>
+        <p>To allow access to TARDIS areas, users/groups must be given the permission</p>
+        <pre><code>tardis.area.[name_of_area]
+</code></pre>
+        <p>eg. to give access to the airport area, the permission would be:</p>
+        <pre><code>tardis.area.airport
+</code></pre>
+        <p>To restrict a player to a specific area, the player must have the permission:</p>
+        <pre><code>tardis.exile
+</code></pre>
+        <p>AND the permission for the area they are restricted to.</p>
+        <h2>Admin/moderator</h2>
+        <p>Allow players to do administration stuff</p>
+        <pre><code>tardis.admin
+tardis.delete
+tardis.skeletonkey
+</code></pre>
+        <h3>Deleting any TARDIS</h3>
+        <p>The node <code>tardis.delete</code> will allow admin users to remove any TARDIS by breaking the sign on the front of the Police Box, or using the <code>/tardisadmin delete [player]</code> command.</p>
+        <p>When breaking the sign, the TARDIS must not be occupied (including offline players).</p>
+        <p>When using the command, if the TARDIS is occupied offline players will have their location set to the world&rsquo;s spawn point.</p>
+        <p>The permission is set to <strong>false</strong> by default, so will have to explicitly given!</p>
+        <h3>Entering any TARDIS</h3>
+        <p>The node <code>tardis.skeletonkey</code> will allow admin users to enter and use any TARDIS.</p>
+        <p>The permission is set to <strong>false</strong> by default, so will have to explicitly given!</p>
+    </section>
+</div>
+<footer>
+    <p>Project maintained by <a href="https://github.com/eccentricdevotion">eccentricdevotion</a></p>
+    <p>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></p>
+</footer>
+<!--[if !IE]><script>fixScale(document);</script><![endif]-->
+</body>
+</html>

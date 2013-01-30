@@ -1,0 +1,59 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="chrome=1">
+<title>Tardis by eccentricdevotion</title>
+<link rel="stylesheet" href="stylesheets/styles.css">
+<link rel="stylesheet" href="stylesheets/pygment_trac.css">
+<script src="javascripts/scale.fix.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+<!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+</head>
+<body>
+<div class="wrapper">
+    <header>
+        <h1>Tardis</h1>
+        <p>A Bukkit plugin for all Doctor Who fans - create and use a TARDIS! It&rsquo;s bigger on the inside!</p>
+        <p class="view"><a href="https://github.com/eccentricdevotion/TARDIS">View the Project on GitHub <small>eccentricdevotion/TARDIS</small></a></p>
+        <ul>
+            <li><a href="http://eccentricdevotion.github.com/TARDIS/">Back <strong>home</strong></a></li>
+            <li><a href="http://eccentricdevotion.github.com/TARDIS/contents.html"><strong>Contents</strong> page</a></li>
+        </ul>
+    </header>
+    <section>
+        <p><a href="#video">Jump to video</a></p>
+        <h1>Schematics</h1>
+        <p>You can now use any schematic file you want to create the inner TARDIS, but there are a few things you need to know before you jump right in and start replacing files in the TARDIS plugin folder.</p>
+        <h2>Guidelines for TARDIS schematics</h2>
+        <ol>
+            <li>You need 1 file per size. Get the names of the files from the TARDIS plugin folder... they should be &lsquo;budget.schematic&rsquo;, &lsquo;bigger.schematic&rsquo;, and &lsquo;deluxe.schematic&rsquo;</li>
+            <li>The TARDISes can only have 4 repeaters, 1 iron door, 1 stone button, 1 wood button, and 1 sign in their initial designs.</li>
+            <li>TARDISes can be any size, and the chunks they use are reserved and cannot be used by other TARDISes - but be aware that big TARDISs will lag the server!</li>
+            <li>TARDISes should be squares i.e. that same width (x) and length (z) dimensions. A 16 x 16 block TARDIS is <em>good</em>, a 24 x 18 block TARDIS would be <strong>bad</strong>.</li>
+            <li>When you are facing the outside of the TARDIS door, you should be pointing SOUTH.</li>
+        </ol>
+        <h2>Making the schematics</h2>
+        <p>The WorldEdit plugin was used to create the default set of TARDIS schematics.</p>
+        <p>So you could:</p>
+        <ol>
+            <li>Build a TARDIS</li>
+            <li>Make a cuboid WorldEdit selection e.g. with <code>//hpos1</code> and <code>//hpos2</code></li>
+            <li><code>//copy</code></li>
+            <li><code>//schematic save {$SIZE}</code> - replacing <code>{$SIZE}</code> with either <em>Deluxe</em>, <em>Bigger</em> or <em>Budget</em></li>
+            <li>Move the new schematic files into the <em>plugins/TARDIS/schematics</em> folder and start up your server.</li>
+        </ol>
+        <h3 id="video">Video</h3>
+        <iframe src="http://player.vimeo.com/video/52214021" width="600" height="366" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+    </section>
+</div>
+<footer>
+    <p>Project maintained by <a href="https://github.com/eccentricdevotion">eccentricdevotion</a></p>
+    <p>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></p>
+</footer>
+<!--[if !IE]><script>fixScale(document);</script><![endif]-->
+
+</body>
+</html>
