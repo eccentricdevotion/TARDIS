@@ -127,6 +127,7 @@ public class TARDISRoomRunnable implements Runnable {
             if (chunkList.size() > 0) {
                 for (Chunk c : chunkList) {
                     plugin.roomChunkList.remove(c);
+                    plugin.debug("Removed local chunk: " + c);
                 }
             }
         }

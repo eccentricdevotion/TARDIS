@@ -34,6 +34,7 @@ import me.eccentric_nz.TARDIS.utility.TARDISMaterials;
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -72,6 +73,7 @@ public class TARDISAdminCommands implements CommandExecutor {
     public TARDISAdminCommands(TARDIS plugin) {
         this.plugin = plugin;
         // add first arguments
+        firstsStr.add("chunks");
         firstsStr.add("key");
         firstsStr.add("reload");
         firstsStr.add("config");
@@ -159,6 +161,12 @@ public class TARDISAdminCommands implements CommandExecutor {
                     return false;
                 }
                 if (args.length == 1) {
+                    if (first.equals("chunks")) {
+                        for (Chunk c : plugin.roomChunkList) {
+                            sender.sendMessage(plugin.pluginName + c);
+                        }
+                        return true;
+                    }
                     if (first.equals("reload")) {
                         plugin.reloadConfig();
                         sender.sendMessage(plugin.pluginName + "TARDIS config reloaded.");
