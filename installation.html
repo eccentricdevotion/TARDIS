@@ -1,65 +1,62 @@
 <!doctype html>
 <html>
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="chrome=1">
-    <title>Tardis by eccentricdevotion</title>
-
-    <link rel="stylesheet" href="stylesheets/styles.css">
-    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
-    <script src="javascripts/scale.fix.js"></script>
-    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
-
-    <!--[if lt IE 9]>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="chrome=1">
+<title>Tardis by eccentricdevotion</title>
+<link rel="stylesheet" href="stylesheets/styles.css">
+<link rel="stylesheet" href="stylesheets/pygment_trac.css">
+<script src="javascripts/scale.fix.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+<!--[if lt IE 9]>
     <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
-  </head>
-  <body>
-    <div class="wrapper">
-      <header>
+</head>
+<body>
+<div class="wrapper">
+    <header>
         <h1>Tardis</h1>
         <p>A Bukkit plugin for all Doctor Who fans - create and use a TARDIS! It's bigger on the inside!</p>
         <p class="view"><a href="https://github.com/eccentricdevotion/TARDIS">View the Project on GitHub <small>eccentricdevotion/TARDIS</small></a></p>
-        <ul>
-          <li><a href="https://github.com/eccentricdevotion/TARDIS/zipball/master">Download <strong>ZIP File</strong></a></li>
-          <li><a href="https://github.com/eccentricdevotion/TARDIS/tarball/master">Download <strong>TAR Ball</strong></a></li>
-          <li><a href="https://github.com/eccentricdevotion/TARDIS">View On <strong>GitHub</strong></a></li>
-        </ul>
-      </header>
-      <section>
-        <h3>Welcome to GitHub Pages.</h3>
-
-<p>This automatic page generator is the easiest way to create beautiful pages for all of your projects. Author your page content here using GitHub Flavored Markdown, select a template crafted by a designer, and publish. After your page is generated, you can check out the new branch:</p>
-
-<pre><code>$ cd your_repo_root/repo_name
-$ git fetch origin
-$ git checkout gh-pages
+    </header>
+    <section>
+        <h1>Installation</h1>
+        <p>Get the TARDIS plugin files from: <a href="http://dev.bukkit.org/server-mods/tardis">http://dev.bukkit.org/server-mods/tardis</a></p>
+        <hr />
+        <p>You install TARDIS just like you would any other Bukkit plugin, by dropping it into the Bukkit plugins folder and starting the server. The TARDIS database and configuration files will be created automatically.</p>
+        <p>For your Tardis Plugin to work correctly you must have CraftBukkit version <code>1.4.7-R0.1</code> or higher.</p>
+        <h3>Clean Installation:</h3>
+        <p>Place the following jar files in your plugins folder:</p>
+        <pre><code>TARDIS.jar
+TARDISChunkGenerator.jar
 </code></pre>
+        <h3>Upgrade Installation:</h3>
+        <p>** <em>Backup your TARDIS Folder!</em> **</p>
+        <p>Place the upgraded jar files in the plugin folder.</p>
+        <h4>Upgrade notes:</h4>
+        <p>It is recommended to delete the TARDIS <code>schematics</code> folder before an upgrade!</p>
+        <p>If you have trouble after an upgrade, please try a fresh install of the plugin by deleting your <code>TARDIS</code> Folder.</p>
+        <h2>Enhancing the TARDIS plugin</h2>
+        <p>While not essential to make the TARDIS plugin work, the following plugins will make your Time Travelleing experience even better.</p>
+        <ol>
+            <li>Install <a href="http://dev.bukkit.org/server-mods/multiverse">Multiverse</a> so you have multiple worlds to travel to. This is lso required if you want to generate TARDISes in their own self-conatined world.</li>
+            <li>Install the <a href="http://dev.bukkit.org/server-mods/tardis">TARDISChunkGenerator</a> plugin so that you can generate TARDISes in their own self-conatined world.</li>
+            <li>Install the <a href="http://get.spout.org/dev/spoutplugin.jar">SpoutPlugin</a>, so that you can hear TARDIS and Doctor Who sound effects.</li>
+            <li>Install <a href="http://dev.bukkit.org/server-mods/worldguard">WorldGuard</a> to automatically protect your TARDIS from griefing, and stop mobs spawning in TARDIS worlds.</li>
+            <li>Install <a href="http://dev.bukkit.org/server-mods/worldborder">WorldBorder</a> to restrict the size of the worlds generated for TARDIS occupation.</li>
+            <li>Install a Permissions plugin, so that you can restrict or grant players the rights to use TARDIS\' different features. We like <a href="http://dev.bukkit.org/server-mods/permbukkit/">PermissionsBukkit</a>.</li>
+        </ol>
+        <h2>Install Notes:</h2>
+        <p>If you desire your TARDIS to have its own world, please have Multiverse or another multi-world plugin installed and set <code>create_worlds: true</code> in your TARDIS configuration file. </p>
+        <p>If upgrading from a previous version of TARDIS that did not have generated worlds, or enabling them for the first time, please delete your previously created tardis and recreate them.</p>
+        <p>If upgrading from a version without an Artron Energy button or handbrake, please place these items, and use the <code>/tardis update</code> command to add them to your TARDIS. See <a href="https://github.com/eccentricdevotion/TARDIS/wiki/Commands">Commands</a> for more information.</p>
+    </section>
+</div>
+<footer>
+    <p>Project maintained by <a href="https://github.com/eccentricdevotion">eccentricdevotion</a></p>
+    <p>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></p>
+</footer>
+<!--[if !IE]><script>fixScale(document);</script><![endif]-->
 
-<p>If you're using the GitHub for Mac, simply sync your repository and you'll see the new branch.</p>
-
-<h3>Designer Templates</h3>
-
-<p>We've crafted some handsome templates for you to use. Go ahead and continue to layouts to browse through them. You can easily go back to edit your page before publishing. After publishing your page, you can revisit the page generator and switch to another theme. Your Page content will be preserved if it remained markdown format.</p>
-
-<h3>Rather Drive Stick?</h3>
-
-<p>If you prefer to not use the automatic generator, push a branch named <code>gh-pages</code> to your repository to create a page manually. In addition to supporting regular HTML content, GitHub Pages support Jekyll, a simple, blog aware static site generator written by our own Tom Preston-Werner. Jekyll makes it easy to create site-wide headers and footers without having to copy them across every page. It also offers intelligent blog support and other advanced templating features.</p>
-
-<h3>Authors and Contributors</h3>
-
-<p>You can <a href="https://github.com/blog/821" class="user-mention">@mention</a> a GitHub username to generate a link to their profile. The resulting <code>&lt;a&gt;</code> element will link to the contributor's GitHub Profile. For example: In 2007, Chris Wanstrath (<a href="https://github.com/defunkt" class="user-mention">@defunkt</a>), PJ Hyett (<a href="https://github.com/pjhyett" class="user-mention">@pjhyett</a>), and Tom Preston-Werner (<a href="https://github.com/mojombo" class="user-mention">@mojombo</a>) founded GitHub.</p>
-
-<h3>Support or Contact</h3>
-
-<p>Having trouble with Pages? Check out the documentation at <a href="http://help.github.com/pages">http://help.github.com/pages</a> or contact <a href="mailto:support@github.com">support@github.com</a> and we’ll help you sort it out.</p>
-      </section>
-    </div>
-    <footer>
-      <p>Project maintained by <a href="https://github.com/eccentricdevotion">eccentricdevotion</a></p>
-      <p>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></p>
-    </footer>
-    <!--[if !IE]><script>fixScale(document);</script><![endif]-->
-    
-  </body>
+</body>
 </html>
