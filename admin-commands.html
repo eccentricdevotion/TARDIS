@@ -1,0 +1,101 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="chrome=1">
+<title>Tardis by eccentricdevotion</title>
+<link rel="stylesheet" href="stylesheets/styles.css">
+<link rel="stylesheet" href="stylesheets/pygment_trac.css">
+<script src="javascripts/scale.fix.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+<!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+</head>
+<body>
+<div class="wrapper">
+    <header>
+        <h1>Tardis</h1>
+        <p>A Bukkit plugin for all Doctor Who fans - create and use a TARDIS! It&rsquo;s bigger on the inside!</p>
+        <p class="view"><a href="https://github.com/eccentricdevotion/TARDIS">View the Project on GitHub <small>eccentricdevotion/TARDIS</small></a></p>
+        <ul>
+            <li><a href="http://eccentricdevotion.github.com/TARDIS/">Back <strong>home</strong></a></li>
+            <li><a href="http://eccentricdevotion.github.com/TARDIS/contents.html"><strong>Contents</strong> page</a></li>
+        </ul>
+    </header>
+    <section>
+        <h1>Admin commands</h1>
+        <h3><code>/tardisadmin</code></h3>
+        <p>To view the current TARDIS plugin configuration type:</p>
+        <pre><code>/tardisadmin config
+</code></pre>
+        <p>Most TARDIS plugin config options can be set ingame or via the console, and take effect immediately.</p>
+        <p>There are three types of config options:</p>
+        <ol>
+            <li>Boolean values e.g. true or false</li>
+            <li>String values e.g. the names of things, like the TARDIS key</li>
+            <li>Integer values e.g. numbers, like the cost of a room</li>
+        </ol>
+        <p>To use the <code>/tardisadmin</code> command to set config options, you use the syntax:</p>
+        <pre><code>/tardisadmin [config option] [value]
+</code></pre>
+        <p>For example, to set the make the TARDIS never land on water you would type:</p>
+        <pre><code>/tardisadmin land_on_water false
+</code></pre>
+        <h3>Boolean config options:</h3>
+        <p><code>create_worlds</code> - set whether TARDIS are created in their own separate worlds. Requires the TARDISChunkGenerator plugin and a multi-world plugin.</p>
+        <p><code>check_for_updates</code> - whether to have the plugin check for an updated version. Version checking just reads a text file from <a href="http://www.thenosefairy.co.nz/tardis.txt">here</a></p>
+        <p><code>bonus_chest</code> - set whether the TARDIS chest is filled with items replaced during the TARDIS construction.</p>
+        <p><code>chameleon</code></p>
+        <p><code>materialise</code> - set whether the TARDIS police box simulates &rsquo;materialising&rsquo; upon entering a new time travel destination.</p>
+        <p><code>default_world</code> - set whether to use a default world for (inner) TARDIS construction.</p>
+        <p><code>include_default_world</code> - set whether the default world is included in time travel destinations.</p>
+        <p><code>land_on_water</code> - set whether the TARDIS will land on water in the Overworld.</p>
+        <p><code>give_key</code> - sets whether the TARDIS key is given when changing worlds (and using a multi-world inventory plugin).</p>
+        <p><code>nether</code> - set whether the TARDIS is allowed to travel to Nether worlds.</p>
+        <p><code>the_end</code> - set whether the TARDIS is allowed to travel to The End worlds.</p>
+        <p><code>platform</code> - set whether a platform is created outside the Police Box door if the exit is located over AIR or WATER - this overrides user preferences if turned off.</p>
+        <p><code>sfx</code> - set whether sound effects are played in the TARDIS interior - this overrides user preferences if turned off.</p>
+        <p><code>name_tardis</code> - set whether to put the player&rsquo;s name on the Police Box sign.</p>
+        <p><code>use_worldguard</code> - set whether the TARDIS interior becomes a protected WorldGuard region belonging to the player who created the TARDIS.</p>
+        <p><code>respect_worldguard</code> - set whether time travelling respects protected WorldGuard regions (if players do not have rights to build in an area, they will be denied access).</p>
+        <p><code>respect_towny</code> - same as <code>respect_worldguard</code>, but for the Towny plugin.</p>
+        <p><code>respect_worldborder</code> - same as <code>respect_worldguard</code>, but for the WorldBorder plugin.</p>
+        <h3>String values</h3>
+        <p><code>key</code> - set the TARDIS key item. You can use any valid Bukkit Material ENUM. A list can be found here: <a href="http://jd.bukkit.org/apidocs/org/bukkit/Material.html">http://jd.bukkit.org/apidocs/org/bukkit/Material.html</a></p>
+        <p><code>full_charge_item</code> - set the item that when clicked on the TARDIS Artron Energy button, boosts the Capacitor to 100%.</p>
+        <p><code>default_world_name</code> - set the name of the default world. This is only used if <code>default_world</code> is true.</p>
+        <h3>Integer values</h3>
+        <p><code>tp_radius</code> - set the maximum distance (in blocks) you can time travel in the TARDIS. <strong>Note</strong> The actual values is about 4 times this (due to the multiplier repeater).</p>
+        <p><code>timeout</code> &amp; <code>timeout_height</code> - sets the maximum time a random location task can take. If the task timesout then the Police Box location is set at the timeout_height value. This prevents the plugin crashing when using skyblock type worlds.</p>
+        <p><code>border_radius</code> - sets the distance of the WorldBorder barrier (only used if the plugin is installed on the server).</p>
+        <p><code>full_charge</code> - sets the Artron Energy Capacitor&rsquo;s full amount.</p>
+        <p><code>player</code> - sets the amount of Artron Energy a player receives each time they time travel. If the Minecraft/CraftBukkit version does not include beacon blocks, then this amount is multiplied by 10)</p>
+        <p><code>random</code> &amp; <code>travel</code> &amp; <code>comehere</code> &amp; <code>hide</code> - sets the Artron energy costs for each of these forms of time travel.</p>
+        <p><code>recharge_distance</code> - the maximum distance a TARDIS can be from a beacon in order to recharge. This is also the distance from a natural lightning strike, for the TARDIS to gain bonus energy.</p>
+        <p><code>lightning_recharge</code> &amp; <code>creeper_recharge</code> - set the amount of energy gained form natural lightning strikes and given to players for killing a charged creeper.</p>
+        <p><code>jettison</code> - set the percentage of the original cost of a room you get back when  jettisoning it.</p>
+        <p><code>nether_min</code> &amp; <code>the_end_min</code> - set the minmum Artron Energy level required to travel to the Nether and The End.</p>
+        <h2>Other admin commands</h2>
+        <p>Set the beacon block you are targeting in game, as a TARDIS recharge station.</p>
+        <pre><code>/tardisadmin recharger
+</code></pre>
+        <p>Set whether a specified world is included in time travel destinations.</p>
+        <pre><code>/tardisadmin exclude [world]
+</code></pre>
+        <p>List all TARDISs and their locations.</p>
+        <pre><code>/tardisadmin list
+</code></pre>
+        <p>Remove a specified player&rsquo;s TARDIS.</p>
+        <pre><code>/tardisadmin delete [player]
+</code></pre>
+    </section>
+</div>
+<footer>
+    <p>Project maintained by <a href="https://github.com/eccentricdevotion">eccentricdevotion</a></p>
+    <p>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></p>
+</footer>
+<!--[if !IE]><script>fixScale(document);</script><![endif]-->
+
+</body>
+</html>
