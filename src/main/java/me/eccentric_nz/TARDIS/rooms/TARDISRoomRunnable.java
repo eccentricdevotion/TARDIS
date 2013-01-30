@@ -120,16 +120,17 @@ public class TARDISRoomRunnable implements Runnable {
                 b.setTypeIdAndData(64, door_data, true);
                 b.getRelative(BlockFace.UP).setTypeIdAndData(64, (byte) 8, true);
             }
-            // cancel the task
-            plugin.getServer().getScheduler().cancelTask(task);
-            task = 0;
-            p.sendMessage(plugin.pluginName + "Finished growing the " + room + "!");
+			// remove the chunks, so they can unload as normal again
             if (chunkList.size() > 0) {
                 for (Chunk c : chunkList) {
                     plugin.roomChunkList.remove(c);
                     plugin.debug("Removed local chunk: " + c);
                 }
             }
+		   // cancel the task
+           plugin.getServer().getScheduler().cancelTask(task);
+            task = 0;
+            p.sendMessage(plugin.pluginName + "Finished growing the " + room + "!");
         }
         // place one block
         tmp = s[level][row][col];

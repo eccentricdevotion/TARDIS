@@ -1,4 +1,5 @@
 # TODO
+0. Test whether room chunks are being removed from the chunk list when room has finished growing.
 1. Add EMERALD block schematic for inner TARDIS
 2. Change Energy condenser to use ores because they are a little harder to get, but can still be used.
 3. Check what happens when companions use the TARDIS with regards to:
