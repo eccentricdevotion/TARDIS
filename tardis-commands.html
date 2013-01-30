@@ -1,0 +1,149 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="chrome=1">
+<title>Tardis by eccentricdevotion</title>
+<link rel="stylesheet" href="stylesheets/styles.css">
+<link rel="stylesheet" href="stylesheets/pygment_trac.css">
+<script src="javascripts/scale.fix.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+<!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+</head>
+<body>
+<div class="wrapper">
+    <header>
+        <h1>Tardis</h1>
+        <p>A Bukkit plugin for all Doctor Who fans - create and use a TARDIS! It&rsquo;s bigger on the inside!</p>
+        <p class="view"><a href="https://github.com/eccentricdevotion/TARDIS">View the Project on GitHub <small>eccentricdevotion/TARDIS</small></a></p>
+        <ul>
+            <li><a href="/TARDIS/">Back <strong>home</strong></a></li>
+            <li><a href="commands.html"><strong>Commands</strong> page</a></li>
+            <li><a href="contents.html"><strong>Contents</strong> page</a></li>
+        </ul>
+    </header>
+    <section>
+        <h1>TARDIS commands</h1>
+        <h3><code>/tardis help</code></h3>
+        <p>This is the most important command! It will tell you how to use the TARDIS (creation, removal and time travel), and give info on all of the other commands.</p>
+        <p><code>/tardis help</code> - lists all the available TARDIS commands</p>
+        <p><code>/tardis help [command]</code> - shows the usage for the specified command. Replace <code>[command]</code> with: create, delete, timetravel, list, save, update, travel or admin etc.</p>
+        <p>For example:</p>
+        <pre><code>/tardis help timetravel
+</code></pre>
+        <h3><code>/tardis home</code></h3>
+        <p>Set the TARDIS home location. </p>
+        <p>To set the TARDIS&rsquo;s new home, look at the block you want to be the location, then type:</p>
+        <pre><code>/tardis home
+</code></pre>
+        <h3><code>/tardis hide</code></h3>
+        <p>Make the TARDIS police box disappear. </p>
+        <p>To hide the police box, type:</p>
+        <pre><code>/tardis hide
+</code></pre>
+        <p>To show the police box again, type: <code>/tardis rebuild</code></p>
+        <h3><code>/tardis setdest</code></h3>
+        <p>Save potential TARDIS time travel locations where you might want the TARDIS Police Box to land. See also <a href="#tardis-save">/tardis save</a></p>
+        <p>To save a time travel location, look at the block you want the TARDIS to come to, and type:</p>
+        <pre><code>/tardis setdest [name]
+</code></pre>
+        <h3><code>/tardis direction</code></h3>
+        <p>Change the direction the TARDIS police box faces. </p>
+        <p>To change the direction, type:</p>
+        <pre><code>/tardis direction north
+/tardis direction west
+/tardis direction south
+/tardis direction east
+</code></pre>
+        <h3><code>/tardis find</code></h3>
+        <p>If you have forgotten where you left the blue Police box, simply type:</p>
+        <pre><code>/tardis find
+</code></pre>
+        <p>and you will be shown the co-ordinates where you left it.</p>
+        <h3><code>/tardis chameleon</code></h3>
+        <p>You can add the Chameleon Circuit, or toggle in on or off with this command, type:</p>
+        <pre><code>/tardis chameleon on
+/tardis chameleon off
+</code></pre>
+        <h3><code>/tardis comehere</code></h3>
+        <p>Make the TARDIS come to you. </p>
+        <p>To remote control the TARDIS, look at the block you want the TARDIS to come to, then type:</p>
+        <pre><code>/tardis comehere
+</code></pre>
+        <h3><code>/tardis save</code></h3>
+        <p>Save TARDIS time travel locations - use this command to save the location where the TARDIS Police Box currently is. </p>
+        <p>To save a time travel location, type:</p>
+        <pre><code>/tardis save [name]
+</code></pre>
+        <p>Where <code>[name]</code> is a what you want to call the destination. Eg:</p>
+        <pre><code>/tardis save Ravine
+</code></pre>
+        <h3><code>/tardis removesave</code></h3>
+        <p>Delete saved time travel locations. </p>
+        <p>To delete a time travel location, type:</p>
+        <pre><code>/tardis removesave [name]
+</code></pre>
+        <p>Where <code>[name]</code> is the destination to remove. Eg:</p>
+        <pre><code> /tardis removesave Lava_lake
+</code></pre>
+        <h3><code>/tardis list</code></h3>
+        <p>List saved time travel locations, companions, recharge points and TARDIS areas (such as airports).</p>
+        <p>Depending on which list you want to see, type:</p>
+        <pre><code>/tardis list saves
+/tardis list companions
+/tardis list areas
+/tardis list rechargers
+</code></pre>
+        <h3><code>/tardis add</code></h3>
+        <p>Add a player to your companions list and allow them to time travel with you.</p>
+        <p>Type:</p>
+        <pre><code>/tardis add [player]
+</code></pre>
+        <h3><code>/tardis remove</code></h3>
+        <p>Remove a player from your companions list.</p>
+        <p>Type:</p>
+        <pre><code>/tardis remove [player]
+</code></pre>
+        <h3><code>/tardis update</code></h3>
+        <p>If you want to modify the interior of the TARDIS you will need to use this command. The TARDIS plugin needs to know the location of the IRON<em>DOOR, STONE</em>BUTTON, the Chameleon Circuit sign, and the 4 REPEATERS. First move the blocks to their new position then, type:</p>
+        <pre><code>/tardis update door
+/tardis update button
+/tardis update artron
+/tardis update world-repeater
+/tardis update x-repeater
+/tardis update z-repeater
+/tardis update y-repeater
+/tardis update chameleon
+/tardis update save-sign
+/tardis update condenser
+</code></pre>
+        <p>After executing the command, click on the block to update the TARDIS settings.</p>
+        <ul>
+            <li><code>world-repeater</code> is the one closest to the door</li>
+            <li>With your back to the door the <code>x-repeater</code> is the one on the right</li>
+            <li>With your back to the door the <code>z-repeater</code> is the one on the left</li>
+            <li><code>y-repeater</code> is the one at the back</li>
+        </ul>
+        <p><em>If you have created a TARDIS with an older version of the plugin, you can also use this command to add any missing controls.</em></p>
+        <h3><code>/tardis rebuild</code></h3>
+        <p>If your blue Police Box gets damaged (damn those creepers!), lost due to a server crash or you&rsquo;ve hidden it, simply type:</p>
+        <pre><code>/tardis rebuild
+</code></pre>
+        <p>and the Police Box will be recreated at its last known save position. Use <code>/tardis find</code> to locate it if you cannot remember where that was!</p>
+        <h3><code>/tardis namekey</code></h3>
+        <p>Let&rsquo;s you rename the TARDIS key item to whatever you want. To rename it, simply type:</p>
+        <pre><code>/tardis namekey [your cool new name here]
+</code></pre>
+        <p>This command is only available if you are running CraftBukkit <code>1.4.6</code> or later.</p>
+    </section>
+</div>
+<footer>
+    <p>Project maintained by <a href="https://github.com/eccentricdevotion">eccentricdevotion</a></p>
+    <p>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></p>
+</footer>
+<!--[if !IE]><script>fixScale(document);</script><![endif]-->
+
+</body>
+</html>
