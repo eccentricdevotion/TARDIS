@@ -141,6 +141,7 @@ public class TARDISAdminCommands implements CommandExecutor {
         transparent.add((byte) Material.LONG_GRASS.getId());
         transparent.add((byte) Material.VINE.getId());
         transparent.add((byte) Material.IRON_FENCE.getId());
+        transparent.add((byte) Material.DEAD_BUSH.getId());
     }
 
     @Override
