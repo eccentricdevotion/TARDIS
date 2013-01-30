@@ -219,7 +219,7 @@ public class TARDISCommands implements CommandExecutor {
                         }
                         String chunk = rs.getChunk();
                         String[] data = chunk.split(":");
-                        if (!data[0].contains("TARDIS_WORLD_")) {
+                        if (!data[0].contains("TARDIS_WORLD_") || !data[0].contains("TARDIS_TimeVortex") ) {
                             player.sendMessage(plugin.pluginName + "You cannot grow rooms unless your TARDIS was created in its own world!");
                             return true;
                         }
