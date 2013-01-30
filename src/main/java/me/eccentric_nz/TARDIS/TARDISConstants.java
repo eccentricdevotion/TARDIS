@@ -74,7 +74,7 @@ public class TARDISConstants {
 
     public enum ROOM {
 
-        ARBORETUM, BEDROOM, KITCHEN, LIBRARY, PASSAGE, POOL, VAULT, EMPTY, GRAVITY;
+        ARBORETUM, BEDROOM, KITCHEN, LIBRARY, PASSAGE, POOL, VAULT, WORKSHOP, EMPTY, GRAVITY;
     }
 
     public enum CMDS {
