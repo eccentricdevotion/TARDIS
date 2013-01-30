@@ -48,6 +48,9 @@ rooms:
   VAULT:
     cost: 500
     seed: DISPENSER
+  WORKSHOP:
+    cost: 500
+    seed: NETHER_BRICK
   EMPTY:
     cost: 250
     seed: GLASS

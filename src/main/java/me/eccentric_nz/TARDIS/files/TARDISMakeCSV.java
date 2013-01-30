@@ -70,6 +70,7 @@ public class TARDISMakeCSV {
             plugin.passageSchematicCSV_EW = createFile(TARDISConstants.SCHEMATIC_PASSAGE + "_EW.csv");
             plugin.poolSchematicCSV = createFile(TARDISConstants.SCHEMATIC_POOL + ".csv");
             plugin.vaultSchematicCSV = createFile(TARDISConstants.SCHEMATIC_VAULT + ".csv");
+            plugin.workshopSchematicCSV = createFile(TARDISConstants.SCHEMATIC_WORKSHOP + ".csv");
             plugin.emptySchematicCSV = createFile(TARDISConstants.SCHEMATIC_EMPTY + ".csv");
             plugin.gravitySchematicCSV = createFile(TARDISConstants.SCHEMATIC_GRAVITY + ".csv");
             reader = new TARDISSchematicReader(plugin);
@@ -95,6 +96,8 @@ public class TARDISMakeCSV {
             plugin.poolSchematicFile = copy(poolnstr, plugin.getResource(TARDISConstants.SCHEMATIC_POOL));
             String vaunstr = basepath + TARDISConstants.SCHEMATIC_VAULT;
             plugin.vaultSchematicFile = copy(vaunstr, plugin.getResource(TARDISConstants.SCHEMATIC_VAULT));
+            String wornstr = basepath + TARDISConstants.SCHEMATIC_WORKSHOP;
+            plugin.workshopSchematicFile = copy(wornstr, plugin.getResource(TARDISConstants.SCHEMATIC_WORKSHOP));
             String empnstr = basepath + TARDISConstants.SCHEMATIC_EMPTY;
             plugin.emptySchematicFile = copy(empnstr, plugin.getResource(TARDISConstants.SCHEMATIC_EMPTY));
             String granstr = basepath + TARDISConstants.SCHEMATIC_GRAVITY;
@@ -111,6 +114,7 @@ public class TARDISMakeCSV {
             reader.readAndMakeCSV(passnstr, TARDISConstants.SCHEMATIC.PASSAGE, true);
             reader.readAndMakeCSV(poolnstr, TARDISConstants.SCHEMATIC.POOL, false);
             reader.readAndMakeCSV(vaunstr, TARDISConstants.SCHEMATIC.VAULT, false);
+            reader.readAndMakeCSV(granstr, TARDISConstants.SCHEMATIC.WORKSHOP, false);
             reader.readAndMakeCSV(empnstr, TARDISConstants.SCHEMATIC.EMPTY, false);
             reader.readAndMakeCSV(granstr, TARDISConstants.SCHEMATIC.GRAVITY, false);
             // load the schematic data into the csv files
@@ -125,6 +129,7 @@ public class TARDISMakeCSV {
             plugin.passageschematic_EW = TARDISSchematic.schematic(plugin.passageSchematicCSV_EW, plugin.passagedimensions[0], plugin.passagedimensions[1], plugin.passagedimensions[2]);
             plugin.poolschematic = TARDISSchematic.schematic(plugin.poolSchematicCSV, plugin.pooldimensions[0], plugin.pooldimensions[1], plugin.pooldimensions[2]);
             plugin.vaultschematic = TARDISSchematic.schematic(plugin.vaultSchematicCSV, plugin.roomdimensions[0], plugin.roomdimensions[1], plugin.roomdimensions[2]);
+            plugin.workshopschematic = TARDISSchematic.schematic(plugin.workshopSchematicCSV, plugin.roomdimensions[0], plugin.roomdimensions[1], plugin.roomdimensions[2]);
             plugin.emptyschematic = TARDISSchematic.schematic(plugin.emptySchematicCSV, plugin.roomdimensions[0], plugin.roomdimensions[1], plugin.roomdimensions[2]);
             plugin.gravityschematic = TARDISSchematic.schematic(plugin.gravitySchematicCSV, plugin.gravitydimensions[0], plugin.gravitydimensions[1], plugin.gravitydimensions[2]);
         } catch (Exception e) {
