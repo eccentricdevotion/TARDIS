@@ -37,6 +37,7 @@ import me.eccentric_nz.TARDIS.travel.TARDISPluginRespect;
 import me.eccentric_nz.TARDIS.travel.TARDISTimetravel;
 import me.eccentric_nz.TARDIS.utility.TARDISItemRenamer;
 import me.eccentric_nz.TARDIS.utility.TARDISLister;
+import me.eccentric_nz.tardischunkgenerator.TARDISChunkGenerator;
 import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.block.Sign;
@@ -46,6 +47,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
+import org.bukkit.generator.ChunkGenerator;
 import org.bukkit.inventory.ItemStack;
 import org.getspout.spoutapi.SpoutManager;
 
@@ -219,7 +221,11 @@ public class TARDISCommands implements CommandExecutor {
                         }
                         String chunk = rs.getChunk();
                         String[] data = chunk.split(":");
-                        if (!data[0].contains("TARDIS_WORLD_") || !data[0].contains("TARDIS_TimeVortex") ) {
+                        World room_world = plugin.getServer().getWorld(data[0]);
+                        ChunkGenerator gen = room_world.getGenerator();
+                        WorldType wt = room_world.getWorldType();
+                        boolean special = (data[0].contains("TARDIS_TimeVortex") && (wt.equals(WorldType.FLAT) || gen instanceof TARDISChunkGenerator));
+                        if (!data[0].contains("TARDIS_WORLD_") || !special) {
                             player.sendMessage(plugin.pluginName + "You cannot grow rooms unless your TARDIS was created in its own world!");
                             return true;
                         }
