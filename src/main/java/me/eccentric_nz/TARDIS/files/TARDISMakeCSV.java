@@ -114,7 +114,7 @@ public class TARDISMakeCSV {
             reader.readAndMakeCSV(passnstr, TARDISConstants.SCHEMATIC.PASSAGE, true);
             reader.readAndMakeCSV(poolnstr, TARDISConstants.SCHEMATIC.POOL, false);
             reader.readAndMakeCSV(vaunstr, TARDISConstants.SCHEMATIC.VAULT, false);
-            reader.readAndMakeCSV(granstr, TARDISConstants.SCHEMATIC.WORKSHOP, false);
+            reader.readAndMakeCSV(wornstr, TARDISConstants.SCHEMATIC.WORKSHOP, false);
             reader.readAndMakeCSV(empnstr, TARDISConstants.SCHEMATIC.EMPTY, false);
             reader.readAndMakeCSV(granstr, TARDISConstants.SCHEMATIC.GRAVITY, false);
             // load the schematic data into the csv files
