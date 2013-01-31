@@ -109,7 +109,7 @@ public class TARDISMakeCSV {
             reader.readAndMakeCSV(budnstr, TARDISConstants.SCHEMATIC.BUDGET, false);
             reader.readAndMakeCSV(bignstr, TARDISConstants.SCHEMATIC.BIGGER, false);
             reader.readAndMakeCSV(delnstr, TARDISConstants.SCHEMATIC.DELUXE, false);
-            reader.readAndMakeCSV(delnstr, TARDISConstants.SCHEMATIC.ELEVENTH, false);
+            reader.readAndMakeCSV(elenstr, TARDISConstants.SCHEMATIC.ELEVENTH, false);
             reader.readAndMakeCSV(arbornstr, TARDISConstants.SCHEMATIC.ARBORETUM, false);
             reader.readAndMakeCSV(bednstr, TARDISConstants.SCHEMATIC.BEDROOM, false);
             reader.readAndMakeCSV(kitnstr, TARDISConstants.SCHEMATIC.KITCHEN, false);

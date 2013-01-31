@@ -83,6 +83,9 @@ permissions:
   tardis.deluxe:
     description: Allow players to build the 'deluxe' TARDIS.
     default: op
+  tardis.eleventh:
+    description: Allow players to build the 'eleventh' TARDIS.
+    default: op
   tardis.end:
     description: Allow players to time travel to the END.
     default: op
@@ -158,6 +161,11 @@ commands:
     bind:
       description: Bind a saved location or the 'home', 'hide' and 'rebuild' commands to a button.
       usage: /<command> bind [save name|home|hide|rebuild]
+      permission: tardis.update
+      permission-message: You don't have the permission <permission> to use this command
+    unbind:
+      description: unbind a saved location or the 'home', 'hide' and 'rebuild' commands from a button.
+      usage: /<command> unbind [save name|home|hide|rebuild]
       permission: tardis.update
       permission-message: You don't have the permission <permission> to use this command
     reload:
