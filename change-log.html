@@ -219,11 +219,8 @@
             <li>The <code>/tardis save</code> command has changed slightly as you no longer need to specify a slot number. Unlimited TARDIS destinations can now be saved using just: <code>/tardis save [mycoolsavename]</code></li>
             <li>A new sign can be added to the TARDIS interior - this is a &lsquo;save&rsquo; sign. First place a sign, then use the <code>/tardis update save-sign</code> command to initiate it.
                 <ul>
-                    <li>Right-clicking the sign will cycle through the TARDIS&rsquo;s saved destinations, as well as the TARDIS &lsquo;Home&rsquo;.
-                        <ul>
-                            <li>Right-clicking the sign while sneaking will set the TARDIS destination to the save currently shown on the sign.</li>
-                        </ul>
-                    </li>
+                    <li>Right-clicking the sign will cycle through the TARDIS&rsquo;s saved destinations, as well as the TARDIS &lsquo;Home&rsquo;.</li>
+                    <li>Right-clicking the sign while sneaking will set the TARDIS destination to the save currently shown on the sign.</li>
                 </ul>
             </li>
             <li>New command <code>/tardis removesave [savename]</code></li>
@@ -413,9 +410,9 @@
             <li>Added Multiworld support - tested on a server running Multiverse only at this stage, and time travel is only to NORMAL worlds</li>
             <li>
                 <p>Added configuration option so that the (inner) TARDIS can now be created in a specific world, this world can also be excluded from the time travel destinations - commands (thanks bryantkelley14):</p>
-                <p>/tardis admin default [true|false]
+                <pre><code>/tardis admin default [true|false]
                     /tardis admin name [World]
-                    /tardis admin include [true|false]</p>
+                    /tardis admin include [true|false]</code></pre>
             </li>
             <li>
                 <p>Added configurable TARDIS key - can now use any valid Material - use <code>/tardis admin key [Material]</code> to set (thanks woodendinosaur)</p>
