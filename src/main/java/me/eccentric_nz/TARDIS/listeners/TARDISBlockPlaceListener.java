@@ -74,7 +74,7 @@ public class TARDISBlockPlaceListener implements Listener {
             final byte middle_data = blockBelow.getData();
             Block blockBottom = blockBelow.getRelative(BlockFace.DOWN);
             // only continue if the redstone torch is placed on top of [JUST ABOUT ANY] BLOCK on top of an IRON/GOLD/DIAMOND_BLOCK
-            if (MIDDLE_BLOCKS.contains(blockBelow.getType().toString()) && (blockBottom.getType() == Material.IRON_BLOCK || blockBottom.getType() == Material.GOLD_BLOCK || blockBottom.getType() == Material.DIAMOND_BLOCK)) {
+            if (MIDDLE_BLOCKS.contains(blockBelow.getType().toString()) && (blockBottom.getType() == Material.IRON_BLOCK || blockBottom.getType() == Material.GOLD_BLOCK || blockBottom.getType() == Material.DIAMOND_BLOCK || blockBottom.getType() == Material.EMERALD_BLOCK)) {
                 final TARDISConstants.SCHEMATIC schm;
                 final Player player = event.getPlayer();
                 switch (blockBottom.getType()) {
@@ -91,6 +91,14 @@ public class TARDISBlockPlaceListener implements Listener {
                             schm = TARDISConstants.SCHEMATIC.DELUXE;
                         } else {
                             player.sendMessage(plugin.pluginName + "You don't have permission to create a 'deluxe' TARDIS!");
+                            return;
+                        }
+                        break;
+                    case EMERALD_BLOCK:
+                        if (player.hasPermission("tardis.eleventh")) {
+                            schm = TARDISConstants.SCHEMATIC.ELEVENTH;
+                        } else {
+                            player.sendMessage(plugin.pluginName + "You don't have permission to create an 'eleventh Doctor's' TARDIS!");
                             return;
                         }
                         break;

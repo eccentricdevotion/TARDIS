@@ -86,6 +86,11 @@ public class TARDISSchematicReader {
                     plugin.deluxedimensions[1] = width;
                     plugin.deluxedimensions[2] = length;
                     break;
+                case ELEVENTH:
+                    plugin.eleventhdimensions[0] = height;
+                    plugin.eleventhdimensions[1] = width;
+                    plugin.eleventhdimensions[2] = length;
+                    break;
                 case PASSAGE:
                     plugin.passagedimensions[0] = height;
                     plugin.passagedimensions[1] = width;

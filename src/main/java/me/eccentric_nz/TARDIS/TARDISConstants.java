@@ -34,10 +34,11 @@ public class TARDISConstants {
 
     public final static TARDISDatabase service = TARDISDatabase.getInstance();
     protected static String TARDIS_KEY;
+    // TARDIS schematics supplied by ewized http://dev.bukkit.org/profiles/ewized/
     public static final String SCHEMATIC_BUDGET = "budget.schematic";
     public static final String SCHEMATIC_BIGGER = "bigger.schematic";
-    // Deluxe TARDIS schematic supplied by ewized http://dev.bukkit.org/profiles/ewized/
     public static final String SCHEMATIC_DELUXE = "deluxe.schematic";
+    public static final String SCHEMATIC_ELEVENTH = "eleventh.schematic";
     public static final String SCHEMATIC_ARBORETUM = "arboretum.schematic";
     public static final String SCHEMATIC_BEDROOM = "bedroom.schematic";
     public static final String SCHEMATIC_KITCHEN = "kitchen.schematic";
@@ -51,7 +52,7 @@ public class TARDISConstants {
 
     public enum SCHEMATIC {
 
-        BUDGET, BIGGER, DELUXE, ARBORETUM, BEDROOM, KITCHEN, LIBRARY, PASSAGE, POOL, VAULT, WORKSHOP, EMPTY, GRAVITY;
+        BUDGET, BIGGER, DELUXE, ELEVENTH, ARBORETUM, BEDROOM, KITCHEN, LIBRARY, PASSAGE, POOL, VAULT, WORKSHOP, EMPTY, GRAVITY;
     }
     public static final String CONFIG_FILE_NAME = "config.yml";
     public static final String QUOTES_FILE_NAME = "quotes.txt";
