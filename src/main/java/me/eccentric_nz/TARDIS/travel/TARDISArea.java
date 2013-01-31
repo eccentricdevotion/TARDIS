@@ -177,6 +177,7 @@ public class TARDISArea {
                 World w = plugin.getServer().getWorld(wStr);
                 int y = w.getHighestBlockYAt(x, z);
                 location = w.getBlockAt(x, y, z).getLocation();
+                plugin.debug(location);
             }
         }
         return location;
