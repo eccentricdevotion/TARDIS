@@ -124,89 +124,88 @@ public class TARDISRoomRunnable implements Runnable {
             if (chunkList.size() > 0) {
                 for (Chunk ch : chunkList) {
                     plugin.roomChunkList.remove(ch);
-                    plugin.debug("Removed local chunk: " + ch);
                 }
             }
             // cancel the task
             plugin.getServer().getScheduler().cancelTask(task);
             task = 0;
             p.sendMessage(plugin.pluginName + "Finished growing the " + room + "!");
-        }
-        // place one block
-        tmp = s[level][row][col];
-        String[] iddata = tmp.split(":");
-        id = plugin.utils.parseNum(iddata[0]);
-        data = Byte.parseByte(iddata[1]);
-        if (id == 35 && data == 1) {
-            id = middle_id;
-            data = middle_data;
-        }
-        // always remove sponge
-        if (id == 19) {
-            id = 0;
-            data = (byte) 0;
         } else {
-            Block existing = world.getBlockAt(startx, starty, startz);
-            if (existing.getTypeId() != 0) {
-                if (room.equals("GRAVITY")) {
-                    switch (id) {
-                        case 35:
-                            break;
-                        default:
-                            id = existing.getTypeId();
-                            data = existing.getData();
-                            break;
+            // place one block
+            tmp = s[level][row][col];
+            String[] iddata = tmp.split(":");
+            id = plugin.utils.parseNum(iddata[0]);
+            data = Byte.parseByte(iddata[1]);
+            if (id == 35 && data == 1) {
+                id = middle_id;
+                data = middle_data;
+            }
+            // always remove sponge
+            if (id == 19) {
+                id = 0;
+                data = (byte) 0;
+            } else {
+                Block existing = world.getBlockAt(startx, starty, startz);
+                if (existing.getTypeId() != 0) {
+                    if (room.equals("GRAVITY")) {
+                        switch (id) {
+                            case 35:
+                                break;
+                            default:
+                                id = existing.getTypeId();
+                                data = existing.getData();
+                                break;
+                        }
+                    } else {
+                        id = existing.getTypeId();
+                        data = existing.getData();
                     }
-                } else {
-                    id = existing.getTypeId();
-                    data = existing.getData();
                 }
             }
-        }
 
-        Chunk thisChunk = world.getChunkAt(world.getBlockAt(startx, starty, startz));
-        if (!plugin.roomChunkList.contains(thisChunk)) {
-            plugin.debug(thisChunk);
-            plugin.roomChunkList.add(thisChunk);
-            chunkList.add(thisChunk);
-        }
-        plugin.utils.setBlock(l.getWorld(), startx, starty, startz, id, data);
-        QueryFactory qf = new QueryFactory(plugin);
-        if (room.equals("GRAVITY")) {
-            if (id == 35 && data == 6) {
-                // pink wool - gravity well down
-                HashMap<String, Object> setd = new HashMap<String, Object>();
-                setd.put("tardis_id", tardis_id);
-                setd.put("world", l.getWorld().toString());
-                setd.put("downx", startx);
-                setd.put("downz", startz);
-                qf.doInsert("gravity", setd);
+            Chunk thisChunk = world.getChunkAt(world.getBlockAt(startx, starty, startz));
+            if (!plugin.roomChunkList.contains(thisChunk)) {
+                plugin.roomChunkList.add(thisChunk);
+                chunkList.add(thisChunk);
             }
-            if (id == 35 && data == 5) {
-                // pink wool - gravity well down
-                HashMap<String, Object> setu = new HashMap<String, Object>();
-                HashMap<String, Object> where = new HashMap<String, Object>();
-                setu.put("upx", startx);
-                setu.put("upz", startz);
-                where.put("tardis_id", tardis_id);
-                qf.doUpdate("gravity", setu, where);
+            plugin.utils.setBlock(l.getWorld(), startx, starty, startz, id, data);
+            QueryFactory qf = new QueryFactory(plugin);
+            if (room.equals("GRAVITY")) {
+                if (id == 35 && data == 6) {
+                    // pink wool - gravity well down
+                    HashMap<String, Object> setd = new HashMap<String, Object>();
+                    setd.put("tardis_id", tardis_id);
+                    setd.put("world", l.getWorld().toString());
+                    setd.put("downx", startx);
+                    setd.put("downz", startz);
+                    qf.doInsert("gravity", setd);
+                }
+                if (id == 35 && data == 5) {
+                    // pink wool - gravity well down
+                    HashMap<String, Object> setu = new HashMap<String, Object>();
+                    HashMap<String, Object> where = new HashMap<String, Object>();
+                    setu.put("upx", startx);
+                    setu.put("upz", startz);
+                    where.put("tardis_id", tardis_id);
+                    qf.doUpdate("gravity", setu, where);
+                }
             }
-        }
-        startx += x;
-        col++;
-        if (col == c && row < w) {
-            col = 0;
-            startx = resetx;
-            startz += z;
-            row++;
-        }
-        if (col == c && row == w && level < h) {
-            col = 0;
-            row = 0;
-            startx = resetx;
-            startz = resetz;
-            starty += 1;
-            level++;
+            startx += x;
+            col++;
+            if (col == c && row < w) {
+                col = 0;
+                startx = resetx;
+                startz += z;
+                row++;
+            }
+            if (col == c && row == w && level < h) {
+                col = 0;
+                row = 0;
+                startx = resetx;
+                startz = resetz;
+                starty += 1;
+                level++;
+            }
         }
     }
 
