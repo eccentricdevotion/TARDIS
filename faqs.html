@@ -32,6 +32,25 @@
         <p>Then follow the onscreen instructions to remedy the situation.</p>
         <h4>My Tardis is not generating its own world!</h4>
         <p>Future</p>
+        <h4 id="import">How do I import my TARDIS world into my multiworld plugin?</h4>
+        <p>If you are using <strong>Multiverse-Core</strong>:</p>
+        <pre><code>
+        /mv import [world name] normal -g TARDISChunkGenerator
+        /mv modify set animals false [world name]
+        /mv modify set monsters false [world name]
+        /mv modify set hidden true [world name]
+        /mv modify set weather false [world name]
+        /mv modify set memory false [world name]
+        /mv modify set portalform none [world name]
+        </code></pre>
+        <p>Only the first command is required, but the TARDIS plugin sets the other world options as well by default.</p>
+        <p>If you are using <strong>MultiWorld</strong></p>
+        <pre><code>
+        /mw load [world name]
+        /mw setflag [world name] SpawnMonster false
+        /mw setflag [world name] SpawnAnimal false
+        </code></pre>
+        <p>Again, only the first command is required.</p>
         <h4>My Handbrake is not re-engaging!</h4>
         <p>To re-engage the handbrake you must <strong>LEFT</strong>-click the lever.</p>
         <h4>My TARDIS isn&rsquo;t charging at a recharge beacon</h4>
