@@ -81,6 +81,10 @@ public class TARDISBuilderInner {
                 s = plugin.deluxeschematic;
                 d = plugin.deluxedimensions;
                 break;
+            case ELEVENTH:
+                s = plugin.eleventhschematic;
+                d = plugin.eleventhdimensions;
+                break;
             default:
                 s = plugin.budgetschematic;
                 d = plugin.budgetdimensions;
