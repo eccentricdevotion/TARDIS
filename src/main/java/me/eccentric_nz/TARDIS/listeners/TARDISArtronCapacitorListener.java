@@ -99,6 +99,7 @@ public class TARDISArtronCapacitorListener implements Listener {
                     where.put("artron_button", buttonloc);
                     ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
                     if (rs.resultSet()) {
+                        int fc = plugin.getConfig().getInt("full_charge");
                         QueryFactory qf = new QueryFactory(plugin);
                         int current_level = rs.getArtron_level();
                         HashMap<String, Object> wheret = new HashMap<String, Object>();
@@ -109,7 +110,7 @@ public class TARDISArtronCapacitorListener implements Listener {
                         if (item.equals(full)) {
                             // give TARDIS full charge
                             HashMap<String, Object> set = new HashMap<String, Object>();
-                            set.put("artron_level", 1000);
+                            set.put("artron_level", fc);
                             qf.doUpdate("tardis", set, wheret);
                             // remove the NETHER_STAR!
                             int a = player.getInventory().getItemInHand().getAmount();
@@ -178,14 +179,14 @@ public class TARDISArtronCapacitorListener implements Listener {
                                 HashMap<String, Object> sett = new HashMap<String, Object>();
                                 sett.put("artron_level", new_level);
                                 qf.doUpdate("tardis", sett, wheret);
-                                int percent = Math.round((new_level * 100F) / 1000);
+                                int percent = Math.round((new_level * 100F) / fc);
                                 player.sendMessage(plugin.pluginName + "You charged the Artron Energy Capacitor to " + percent + "%");
                             } else {
                                 player.sendMessage(plugin.pluginName + "You don't have any Artron Energy to give the TARDIS");
                             }
                         } else {
                             // just tell us how much energy we have
-                            int percent = Math.round((current_level * 100F) / 1000);
+                            int percent = Math.round((current_level * 100F) / fc);
                             player.sendMessage(plugin.pluginName + "The Artron Energy Capacitor is at " + percent + "%");
                         }
                     }
