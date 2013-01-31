@@ -140,6 +140,10 @@ public class TARDISConfiguration {
                 i++;
             }
         }
+        if (!config.isConfigurationSection("rechargers")) {
+            plugin.getConfig().createSection("rechargers");
+            i++;
+        }
         if (i > 0) {
             plugin.console.sendMessage(plugin.pluginName + "Added " + ChatColor.AQUA + i + ChatColor.RESET + " new items to config");
         }
