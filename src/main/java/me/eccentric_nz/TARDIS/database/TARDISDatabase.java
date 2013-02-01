@@ -67,7 +67,7 @@ public class TARDISDatabase {
             statement.executeUpdate(queryDoors);
             String queryPlayers = "CREATE TABLE IF NOT EXISTS player_prefs (pp_id INTEGER PRIMARY KEY NOT NULL, player TEXT COLLATE NOCASE, sfx_on INTEGER DEFAULT 0, platform_on INTEGER DEFAULT 0, quotes_on INTEGER DEFAULT 0, artron_level INTEGER DEFAULT 0)";
             statement.executeUpdate(queryPlayers);
-            String queryProtectBlocks = "CREATE TABLE IF NOT EXISTS blocks (b_id INTEGER PRIMARY KEY NOT NULL, tardis_id INTEGER, location TEXT COLLATE NOCASE DEFAULT '', block INTEGER DEFAULT 0, data INTEGER DEFAULT 0)";
+            String queryProtectBlocks = "CREATE TABLE IF NOT EXISTS blocks (b_id INTEGER PRIMARY KEY NOT NULL, tardis_id INTEGER, location TEXT COLLATE NOCASE DEFAULT '', block INTEGER DEFAULT 0, data INTEGER DEFAULT 0, police_box INTEGER DEFAULT 0)";
             statement.executeUpdate(queryProtectBlocks);
             String queryDestinations = "CREATE TABLE IF NOT EXISTS destinations (dest_id INTEGER PRIMARY KEY NOT NULL, tardis_id INTEGER, dest_name TEXT COLLATE NOCASE DEFAULT '', world TEXT COLLATE NOCASE DEFAULT '', x INTEGER, y INTEGER, z INTEGER, bind TEXT DEFAULT '')";
             statement.executeUpdate(queryDestinations);
@@ -122,6 +122,14 @@ public class TARDISDatabase {
             if (!rsCondenser.next()) {
                 String queryAlter11 = "ALTER TABLE tardis ADD condenser TEXT DEFAULT ''";
                 statement.executeUpdate(queryAlter11);
+            }
+            // add bind to destinations
+            String queryAddPoliceBox = "SELECT sql FROM sqlite_master WHERE tbl_name = 'blocks' AND sql LIKE '%police_box INTEGER%'";
+            ResultSet rsPB = statement.executeQuery(queryAddPoliceBox);
+            if (!rsPB.next()) {
+                String queryAlter13 = "ALTER TABLE blocks ADD police_box INTEGER DEFAULT 0";
+                statement.executeUpdate(queryAlter13);
+                TARDIS.plugin.console.sendMessage(TARDIS.plugin.pluginName + "Adding new police_box field to blocks!");
             }
             String queryAddMissing = "SELECT sql FROM sqlite_master WHERE tbl_name = 'tardis' AND sql LIKE '%handbrake TEXT%'";
             ResultSet rsMissing = statement.executeQuery(queryAddMissing);

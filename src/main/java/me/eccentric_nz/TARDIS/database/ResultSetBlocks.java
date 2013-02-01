@@ -45,6 +45,7 @@ public class ResultSetBlocks {
     private String location;
     private int blockId;
     private byte blockData;
+    private boolean police_box;
     private ArrayList<HashMap<String, String>> data = new ArrayList<HashMap<String, String>>();
 
     /**
@@ -112,6 +113,7 @@ public class ResultSetBlocks {
                     this.location = rs.getString("location");
                     this.blockId = rs.getInt("block");
                     this.blockData = rs.getByte("data");
+                    this.police_box = rs.getBoolean("police_box");
                 }
             } else {
                 return false;
@@ -148,6 +150,10 @@ public class ResultSetBlocks {
 
     public byte getBlockData() {
         return blockData;
+    }
+
+    public boolean isPolice_box() {
+        return police_box;
     }
 
     public ArrayList<HashMap<String, String>> getData() {

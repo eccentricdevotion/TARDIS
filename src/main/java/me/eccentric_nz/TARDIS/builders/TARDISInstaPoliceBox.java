@@ -144,6 +144,7 @@ public class TARDISInstaPoliceBox {
                 bdw = 2;
                 break;
         }
+        ps.put("police_box", 1);
         qf.doInsert("blocks", ps);
         // should insert the door when tardis is first made, and then update location there after!
         HashMap<String, Object> whered = new HashMap<String, Object>();

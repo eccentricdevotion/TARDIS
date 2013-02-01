@@ -110,6 +110,7 @@ public class TARDISUtils {
                 set.put("block", bid);
                 set.put("data", data);
             }
+            set.put("police_box", 1);
             qf.doInsert("blocks", set);
         }
         b.setTypeIdAndData(m, d, true);

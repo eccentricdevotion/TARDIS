@@ -166,6 +166,7 @@ public class TARDISDestroyerPoliceBox {
         if (hide == false) {
             HashMap<String, Object> whereb = new HashMap<String, Object>();
             whereb.put("tardis_id", id);
+            whereb.put("police_box", 1);
             qf.doDelete("blocks", whereb);
         }
     }

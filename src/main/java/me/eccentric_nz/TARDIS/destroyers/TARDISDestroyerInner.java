@@ -16,8 +16,10 @@
  */
 package me.eccentric_nz.TARDIS.destroyers;
 
+import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
+import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.TARDISDatabase;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -118,6 +120,11 @@ public class TARDISDestroyerInner {
             startz = resetz;
             starty -= 1;
         }
+        // remove blocks saved to blocks table (iron/gold/diamond/emerald)
+        QueryFactory qf = new QueryFactory(plugin);
+        HashMap<String, Object> where = new HashMap<String, Object>();
+        where.put("tardis_id", id);
+        qf.doDelete("blocks", where);
         if (plugin.worldGuardOnServer) {
             plugin.wgchk.removeRegion(w, p);
         }
