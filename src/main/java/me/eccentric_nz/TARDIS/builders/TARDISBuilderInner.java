@@ -16,6 +16,8 @@
  */
 package me.eccentric_nz.TARDIS.builders;
 
+import com.onarandombox.MultiverseCore.MultiverseCore;
+import com.onarandombox.MultiverseCore.api.MultiverseWorld;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -37,6 +39,7 @@ import org.bukkit.block.Sign;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.plugin.Plugin;
 
 /**
  * The TARDIS was prone to a number of technical faults, ranging from depleted
@@ -207,8 +210,19 @@ public class TARDISBuilderInner {
                                 qf.doInsert("doors", setd);
                                 // if create_worlds is true, set the world spawn
                                 if (plugin.getConfig().getBoolean("create_worlds")) {
-                                    world.setSpawnLocation(startx, starty + 1, startz - 2);
+                                    if (plugin.pm.isPluginEnabled("Multiverse-Core")) {
+                                        Plugin mvplugin = plugin.pm.getPlugin("Multiverse-Core");
+                                        if (mvplugin instanceof MultiverseCore) {
+                                            MultiverseCore mvc = (MultiverseCore) mvplugin;
+                                            MultiverseWorld foundWorld = mvc.getMVWorldManager().getMVWorld(world.getName());
+                                            Location spawn = new Location(world, (startx + 0.5), starty, (startz + 1.5), 0, 0);
+                                            foundWorld.setSpawnLocation(spawn);
+                                        }
+                                    } else {
+                                        world.setSpawnLocation(startx, starty, (startz + 1));
+                                    }
                                 }
+                                plugin.debug("Spawn location set to: " + startx + ":" + starty + ":" + (startz + 1));
                             }
                             if (id == 68) { // chameleon circuit sign
                                 HashMap<String, Object> setc = new HashMap<String, Object>();
