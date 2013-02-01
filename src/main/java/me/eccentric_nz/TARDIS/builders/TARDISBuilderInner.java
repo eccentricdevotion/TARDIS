@@ -222,7 +222,6 @@ public class TARDISBuilderInner {
                                         world.setSpawnLocation(startx, starty, (startz + 1));
                                     }
                                 }
-                                plugin.debug("Spawn location set to: " + startx + ":" + starty + ":" + (startz + 1));
                             }
                             if (id == 68) { // chameleon circuit sign
                                 HashMap<String, Object> setc = new HashMap<String, Object>();
