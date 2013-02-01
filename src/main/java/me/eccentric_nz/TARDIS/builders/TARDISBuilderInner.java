@@ -205,6 +205,10 @@ public class TARDISBuilderInner {
                                 setd.put("door_location", doorloc);
                                 setd.put("door_direction", "SOUTH");
                                 qf.doInsert("doors", setd);
+                                // if create_worlds is true, set the world spawn
+                                if (plugin.getConfig().getBoolean("create_worlds")) {
+                                    world.setSpawnLocation(startx, starty + 1, startz - 2);
+                                }
                             }
                             if (id == 68) { // chameleon circuit sign
                                 HashMap<String, Object> setc = new HashMap<String, Object>();
@@ -269,6 +273,7 @@ public class TARDISBuilderInner {
                             HashMap<String, Object> setpb = new HashMap<String, Object>();
                             setpb.put("tardis_id", dbID);
                             setpb.put("location", new Location(world, startx, starty, startz).toString());
+                            setpb.put("police_box", 0);
                             qf.doInsert("blocks", setpb);
                         }
                         // if it's the door, don't set it just remember its block then do it at the end
