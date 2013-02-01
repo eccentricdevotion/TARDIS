@@ -28,7 +28,6 @@ import me.eccentric_nz.TARDIS.database.ResultSetDoors;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
-import me.eccentric_nz.TARDIS.destroyers.TARDISExterminator;
 import me.eccentric_nz.TARDIS.thirdparty.Version;
 import me.eccentric_nz.TARDIS.utility.TARDISItemRenamer;
 import multiworld.MultiWorldPlugin;
@@ -220,7 +219,7 @@ public class TARDISDoorListener implements Listener {
                                                     plugin.tardisHasTravelled.remove(Integer.valueOf(id));
                                                 }
                                             } else {
-                                                player.sendMessage(plugin.pluginName + "Engage the TARDIS handbrake to exit!");
+                                                player.sendMessage(plugin.pluginName + "The TARDIS is still travelling... you would get lost in the time vortex!");
                                             }
                                         } else {
                                             // is the TARDIS materialising?
@@ -405,7 +404,7 @@ public class TARDISDoorListener implements Listener {
                     int player_artron = (plugin.getConfig().getBoolean("create_worlds")) ? plugin.getConfig().getInt("player") : plugin.getConfig().getInt("player") * 10;
                     qf.alterEnergyLevel("player_prefs", player_artron, where, p);
                     // give a key
-                    if (bukkitversion.compareTo(preIMversion) > 0 || (bukkitversion.compareTo(preIMversion) == 0 && SUBversion.compareTo(preSUBversion) >= 0)) {
+                    if (plugin.getConfig().getBoolean("give_key") && (bukkitversion.compareTo(preIMversion) > 0 || (bukkitversion.compareTo(preIMversion) == 0 && SUBversion.compareTo(preSUBversion) >= 0))) {
                         Inventory inv = p.getInventory();
                         Material m = Material.valueOf(plugin.TARDIS_KEY);
                         if (!inv.contains(m) && plugin.getConfig().getBoolean("give_key") == true) {
