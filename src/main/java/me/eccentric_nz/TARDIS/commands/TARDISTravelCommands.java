@@ -84,10 +84,15 @@ public class TARDISTravelCommands implements CommandExecutor {
                 wheret.put("player", player.getName());
                 ResultSetTravellers rst = new ResultSetTravellers(plugin, wheret, false);
                 if (!rst.resultSet()) {
-                    sender.sendMessage(plugin.pluginName + "You are not inside your TARDIS. You need to be to run this command!");
+                    sender.sendMessage(plugin.pluginName + "You are not inside the TARDIS. You need to be to run this command!");
                     return true;
                 }
+                int tardis_id = rst.getTardis_id();
                 int id = rs.getTardis_id();
+                if (tardis_id != id) {
+                    sender.sendMessage(plugin.pluginName + "You can only run this command if you are the Timeloerd of " + ChatColor.LIGHT_PURPLE + "this" + ChatColor.RESET + " TARDIS!");
+                    return true;
+                }
                 int level = rs.getArtron_level();
                 int travel = plugin.getConfig().getInt("travel");
                 if (level < travel) {
