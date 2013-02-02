@@ -146,7 +146,7 @@ public class TARDISBuilderPoliceBox {
             }
         }
         if (plugin.getConfig().getBoolean("materialise") && rebuild == false) {
-            TARDISMaterialisationRunnable runnable = new TARDISMaterialisationRunnable(plugin, l, wall_block, chameleonData, id, d, rebuild);
+            TARDISMaterialisationRunnable runnable = new TARDISMaterialisationRunnable(plugin, l, wall_block, chameleonData, id, d, false);
             int taskID = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, runnable, 10L, 20L);
             runnable.setTask(taskID);
             plugin.tardisMaterilising.add(id);

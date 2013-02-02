@@ -90,7 +90,7 @@ public class TARDISTravelCommands implements CommandExecutor {
                 int tardis_id = rst.getTardis_id();
                 int id = rs.getTardis_id();
                 if (tardis_id != id) {
-                    sender.sendMessage(plugin.pluginName + "You can only run this command if you are the Timeloerd of " + ChatColor.LIGHT_PURPLE + "this" + ChatColor.RESET + " TARDIS!");
+                    sender.sendMessage(plugin.pluginName + "You can only run this command if you are the Timelord of " + ChatColor.LIGHT_PURPLE + "this" + ChatColor.RESET + " TARDIS!");
                     return true;
                 }
                 int level = rs.getArtron_level();

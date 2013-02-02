@@ -98,13 +98,13 @@ public class TARDISUtils {
     public void setBlockAndRemember(World w, int x, int y, int z, int m, byte d, int id, boolean rebuild) {
         Block b = w.getBlockAt(x, y, z);
         // save the block location so that we can protect it from damage and restore it (if it wasn't air)!
-        int bid = b.getTypeId();
-        String l = b.getLocation().toString();
-        if (rebuild == false) {
+        if (!rebuild) {
+            String l = b.getLocation().toString();
             QueryFactory qf = new QueryFactory(plugin);
             HashMap<String, Object> set = new HashMap<String, Object>();
             set.put("tardis_id", id);
             set.put("location", l);
+            int bid = b.getTypeId();
             if (bid != 0) {
                 byte data = b.getData();
                 set.put("block", bid);
