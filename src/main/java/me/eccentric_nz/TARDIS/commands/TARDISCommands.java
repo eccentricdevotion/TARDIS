@@ -1054,6 +1054,8 @@ public class TARDISCommands implements CommandExecutor {
                         int z = plugin.utils.parseNum(save_data[3]);
                         Location l = new Location(w, x, y, z);
                         TARDISConstants.COMPASS d = TARDISConstants.COMPASS.valueOf(dir);
+                        // destroy platform
+                        plugin.destroyPB.destroyPlatform(rs.getPlatform(), id);
                         plugin.destroyPB.destroySign(l, old_d);
                         plugin.buildPB.buildPoliceBox(id, l, d, cham, player, true);
                         return true;

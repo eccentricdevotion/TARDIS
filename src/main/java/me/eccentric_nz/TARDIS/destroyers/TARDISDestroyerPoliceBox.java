@@ -112,30 +112,7 @@ public class TARDISDestroyerPoliceBox {
         // get rid of platform is there is one
         if (plugin.getConfig().getBoolean("platform")) {
             String plat = rs.getPlatform();
-            if (!plat.equals("")) {
-                int px = 0, py = 0, pz = 0;
-                String[] str_blocks = plat.split("~");
-                for (String sb : str_blocks) {
-                    String[] p_data = sb.split(":");
-                    World pw = plugin.getServer().getWorld(p_data[0]);
-                    Material mat = Material.valueOf(p_data[4]);
-                    try {
-                        px = Integer.valueOf(p_data[1]);
-                        py = Integer.valueOf(p_data[2]);
-                        pz = Integer.valueOf(p_data[3]);
-                    } catch (NumberFormatException nfe) {
-                        plugin.console.sendMessage(plugin.pluginName + "Could not convert to number!");
-                    }
-                    Block pb = pw.getBlockAt(px, py, pz);
-                    pb.setType(mat);
-                }
-            }
-            // forget the platform blocks
-            HashMap<String, Object> setp = new HashMap<String, Object>();
-            setp.put("platform", "");
-            HashMap<String, Object> wherep = new HashMap<String, Object>();
-            wherep.put("tardis_id", id);
-            qf.doUpdate("tardis", setp, wherep);
+            destroyPlatform(plat, id);
         }
         // check protected blocks if has block id and data stored then put the block back!
         HashMap<String, Object> tid = new HashMap<String, Object>();
@@ -202,5 +179,33 @@ public class TARDISDestroyerPoliceBox {
         int ty = l.getBlockY() + 3;
         int tz = l.getBlockZ();
         plugin.utils.setBlock(w, tx, ty, tz, 0, (byte) 0);
+    }
+
+    public void destroyPlatform(String plat, int id) {
+        if (!plat.equals("")) {
+            int px = 0, py = 0, pz = 0;
+            String[] str_blocks = plat.split("~");
+            for (String sb : str_blocks) {
+                String[] p_data = sb.split(":");
+                World pw = plugin.getServer().getWorld(p_data[0]);
+                Material mat = Material.valueOf(p_data[4]);
+                try {
+                    px = Integer.valueOf(p_data[1]);
+                    py = Integer.valueOf(p_data[2]);
+                    pz = Integer.valueOf(p_data[3]);
+                } catch (NumberFormatException nfe) {
+                    plugin.console.sendMessage(plugin.pluginName + "Could not convert to number!");
+                }
+                Block pb = pw.getBlockAt(px, py, pz);
+                pb.setType(mat);
+            }
+        }
+        // forget the platform blocks
+        QueryFactory qf = new QueryFactory(plugin);
+        HashMap<String, Object> setp = new HashMap<String, Object>();
+        setp.put("platform", "");
+        HashMap<String, Object> wherep = new HashMap<String, Object>();
+        wherep.put("tardis_id", id);
+        qf.doUpdate("tardis", setp, wherep);
     }
 }
