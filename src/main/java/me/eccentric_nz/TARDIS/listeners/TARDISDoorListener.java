@@ -375,8 +375,8 @@ public class TARDISDoorListener implements Listener {
         // try loading chunk
         World world = l.getWorld();
         final boolean isSurvival = checkSurvival(world);
-        Chunk chunk = world.getChunkAt(l);
-        world.refreshChunk(chunk.getX(), chunk.getZ());
+//        Chunk chunk = world.getChunkAt(l);
+//        world.refreshChunk(chunk.getX(), chunk.getZ());
 
         Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
             @Override
