@@ -366,7 +366,13 @@ public class TARDISCommands implements CommandExecutor {
                             int yplusone = eyeLocation.getBlockY();
                             eyeLocation.setY(yplusone + 1);
                         }
-                        // set save location
+                        // check the world is not excluded
+                        String world = eyeLocation.getWorld().getName();
+                        if (!plugin.getConfig().getBoolean("worlds." + world)) {
+                            sender.sendMessage(plugin.pluginName + "You cannot bring the TARDIS Police Box to this world");
+                            return true;
+                        }
+                        // check they are a timelord
                         HashMap<String, Object> where = new HashMap<String, Object>();
                         where.put("owner", player.getName());
                         ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
@@ -375,6 +381,15 @@ public class TARDISCommands implements CommandExecutor {
                             return true;
                         }
                         final int id = rs.getTardis_id();
+                        // check they are not in the tardis
+                        HashMap<String, Object> wherettrav = new HashMap<String, Object>();
+                        wherettrav.put("player", player.getName());
+                        wherettrav.put("tardis_id", id);
+                        ResultSetTravellers rst = new ResultSetTravellers(plugin, wherettrav, false);
+                        if (rst.resultSet()) {
+                            player.sendMessage(plugin.pluginName + "You cannot bring the Police Box here because you are inside a TARDIS!");
+                            return true;
+                        }
                         if (plugin.tardisMaterilising.contains(id)) {
                             sender.sendMessage(plugin.pluginName + "You cannot do that while the TARDIS is materialising!");
                             return true;
@@ -460,6 +475,12 @@ public class TARDISCommands implements CommandExecutor {
                             int yplusone = eyeLocation.getBlockY();
                             eyeLocation.setY(yplusone + 1);
                         }
+                        // check the world is not excluded
+                        String world = eyeLocation.getWorld().getName();
+                        if (!plugin.getConfig().getBoolean("worlds." + world)) {
+                            sender.sendMessage(plugin.pluginName + "You cannot set the TARDIS home location to this world");
+                            return true;
+                        }
                         HashMap<String, Object> where = new HashMap<String, Object>();
                         where.put("owner", player.getName());
                         ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
@@ -468,6 +489,15 @@ public class TARDISCommands implements CommandExecutor {
                             return false;
                         }
                         int id = rs.getTardis_id();
+                        // check they are not in the tardis
+                        HashMap<String, Object> wherettrav = new HashMap<String, Object>();
+                        wherettrav.put("player", player.getName());
+                        wherettrav.put("tardis_id", id);
+                        ResultSetTravellers rst = new ResultSetTravellers(plugin, wherettrav, false);
+                        if (rst.resultSet()) {
+                            player.sendMessage(plugin.pluginName + "You cannot set the home locatopn here because you are inside a TARDIS!");
+                            return true;
+                        }
                         String sethome = eyeLocation.getWorld().getName() + ":" + eyeLocation.getBlockX() + ":" + eyeLocation.getBlockY() + ":" + eyeLocation.getBlockZ();
                         QueryFactory qf = new QueryFactory(plugin);
                         HashMap<String, Object> tid = new HashMap<String, Object>();
@@ -923,11 +953,26 @@ public class TARDISCommands implements CommandExecutor {
                             return false;
                         } else {
                             int id = rs.getTardis_id();
+                            // check they are not in the tardis
+                            HashMap<String, Object> wherettrav = new HashMap<String, Object>();
+                            wherettrav.put("player", player.getName());
+                            wherettrav.put("tardis_id", id);
+                            ResultSetTravellers rst = new ResultSetTravellers(plugin, wherettrav, false);
+                            if (rst.resultSet()) {
+                                player.sendMessage(plugin.pluginName + "You cannot bring the Police Box here because you are inside a TARDIS!");
+                                return true;
+                            }
                             // get location player is looking at
                             Block b = player.getTargetBlock(transparent, 50);
                             Location l = b.getLocation();
-                            if (!plugin.getConfig().getBoolean("include_default_world") && plugin.getConfig().getBoolean("default_world") && l.getWorld().getName().equals(plugin.getConfig().getString("default_world_name"))) {
+                            String world = l.getWorld().getName();
+                            if (!plugin.getConfig().getBoolean("include_default_world") && plugin.getConfig().getBoolean("default_world") && world.equals(plugin.getConfig().getString("default_world_name"))) {
                                 sender.sendMessage(plugin.pluginName + "The server admin will not allow you to set the TARDIS destination to this world!");
+                                return true;
+                            }
+                            // check the world is not excluded
+                            if (!plugin.getConfig().getBoolean("worlds." + world)) {
+                                sender.sendMessage(plugin.pluginName + "You cannot bring the TARDIS Police Box to this world");
                                 return true;
                             }
                             respect = new TARDISPluginRespect(plugin);
