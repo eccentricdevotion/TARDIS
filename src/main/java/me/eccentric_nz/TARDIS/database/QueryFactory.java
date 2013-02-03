@@ -82,8 +82,12 @@ public class QueryFactory {
             return -1;
         } finally {
             try {
-                idRS.close();
-                ps.close();
+                if (idRS != null) {
+                    idRS.close();
+                }
+                if (ps != null) {
+                    ps.close();
+                }
             } catch (Exception e) {
                 plugin.debug("Error closing " + table + "! " + e.getMessage());
             }
@@ -139,7 +143,9 @@ public class QueryFactory {
             return false;
         } finally {
             try {
-                statement.close();
+                if (statement != null) {
+                    statement.close();
+                }
             } catch (Exception e) {
                 plugin.debug("Error closing " + table + "! " + e.getMessage());
             }
@@ -178,7 +184,9 @@ public class QueryFactory {
             return false;
         } finally {
             try {
-                statement.close();
+                if (statement != null) {
+                    statement.close();
+                }
             } catch (Exception e) {
                 plugin.debug("Error closing " + table + "! " + e.getMessage());
             }
@@ -224,7 +232,9 @@ public class QueryFactory {
             return false;
         } finally {
             try {
-                statement.close();
+                if (statement != null) {
+                    statement.close();
+                }
             } catch (Exception e) {
                 plugin.debug("Artron Energy error closing " + table + "! " + e.getMessage());
             }

@@ -48,6 +48,7 @@ public class ResultSetAreas {
     private int minz;
     private int maxx;
     private int maxz;
+    private int y;
     private ArrayList<HashMap<String, String>> data = new ArrayList<HashMap<String, String>>();
 
     /**
@@ -117,6 +118,7 @@ public class ResultSetAreas {
                     this.minz = rs.getInt("minz");
                     this.maxx = rs.getInt("maxx");
                     this.maxz = rs.getInt("maxz");
+                    this.y = rs.getInt("y");
                 }
             } else {
                 return false;
@@ -126,8 +128,12 @@ public class ResultSetAreas {
             return false;
         } finally {
             try {
-                rs.close();
-                statement.close();
+                if (rs != null) {
+                    rs.close();
+                }
+                if (statement != null) {
+                    statement.close();
+                }
             } catch (Exception e) {
                 plugin.debug("Error closing areas table! " + e.getMessage());
             }
@@ -165,6 +171,10 @@ public class ResultSetAreas {
 
     public int getMaxz() {
         return maxz;
+    }
+
+    public int getY() {
+        return y;
     }
 
     public ArrayList<HashMap<String, String>> getData() {

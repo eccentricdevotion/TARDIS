@@ -70,8 +70,12 @@ public class ResultSetSave {
             return false;
         } finally {
             try {
-                rs.close();
-                statement.close();
+                if (rs != null) {
+                    rs.close();
+                }
+                if (statement != null) {
+                    statement.close();
+                }
             } catch (Exception e) {
                 plugin.debug("Error closing (save) tardis table! " + e.getMessage());
             }
