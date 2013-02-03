@@ -110,7 +110,9 @@ public class TARDISDestroyerInner {
                         fur.getInventory().clear();
                     }
                     if (!m.equals(Material.CHEST)) {
-                        plugin.utils.setBlock(w, startx, starty, startz, i, (byte) 0);
+                        if (w.getBlockAt(startx, starty, startz).getTypeId() != i) {
+                            plugin.utils.setBlock(w, startx, starty, startz, i, (byte) 0);
+                        }
                     }
                     startx += x;
                 }
