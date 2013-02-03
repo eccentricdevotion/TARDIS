@@ -16,7 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.listeners;
 
-import me.eccentric_nz.TARDIS.database.TARDISDatabase;
 import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
@@ -40,7 +39,6 @@ import org.bukkit.event.player.PlayerInteractEvent;
 public class TARDISAreaListener implements Listener {
 
     private TARDIS plugin;
-    TARDISDatabase service = TARDISDatabase.getInstance();
 
     public TARDISAreaListener(TARDIS plugin) {
         this.plugin = plugin;

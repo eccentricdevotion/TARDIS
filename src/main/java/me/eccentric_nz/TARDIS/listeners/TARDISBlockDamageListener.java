@@ -17,7 +17,6 @@
 package me.eccentric_nz.TARDIS.listeners;
 
 import java.util.HashMap;
-import me.eccentric_nz.TARDIS.database.TARDISDatabase;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.ResultSetBlocks;
 import org.bukkit.block.Block;
@@ -36,7 +35,6 @@ import org.bukkit.event.block.BlockDamageEvent;
 public class TARDISBlockDamageListener implements Listener {
 
     private final TARDIS plugin;
-    TARDISDatabase service = TARDISDatabase.getInstance();
 
     public TARDISBlockDamageListener(TARDIS plugin) {
         this.plugin = plugin;

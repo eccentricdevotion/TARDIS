@@ -16,7 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.utility;
 
-import me.eccentric_nz.TARDIS.database.TARDISDatabase;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -45,7 +44,6 @@ import org.bukkit.entity.Player;
 public class TARDISUtils {
 
     private final TARDIS plugin;
-    TARDISDatabase service = TARDISDatabase.getInstance();
     Version bukkitversion;
     Version prewoodbuttonversion = new Version("1.4.2");
 

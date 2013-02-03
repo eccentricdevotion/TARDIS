@@ -16,7 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.listeners;
 
-import me.eccentric_nz.TARDIS.database.TARDISDatabase;
 import java.util.ArrayList;
 import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
@@ -40,7 +39,6 @@ import org.bukkit.event.entity.EntityExplodeEvent;
 public class TARDISExplosionListener implements Listener {
 
     private TARDIS plugin;
-    TARDISDatabase service = TARDISDatabase.getInstance();
 
     public TARDISExplosionListener(TARDIS plugin) {
         this.plugin = plugin;

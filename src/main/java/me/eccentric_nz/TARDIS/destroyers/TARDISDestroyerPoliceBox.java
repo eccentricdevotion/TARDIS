@@ -18,7 +18,6 @@ package me.eccentric_nz.TARDIS.destroyers;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import me.eccentric_nz.TARDIS.database.TARDISDatabase;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
@@ -41,7 +40,6 @@ import org.bukkit.block.Block;
 public class TARDISDestroyerPoliceBox {
 
     private final TARDIS plugin;
-    TARDISDatabase service = TARDISDatabase.getInstance();
 
     public TARDISDestroyerPoliceBox(TARDIS plugin) {
         this.plugin = plugin;

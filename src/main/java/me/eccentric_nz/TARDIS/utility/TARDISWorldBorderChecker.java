@@ -29,11 +29,9 @@ import org.bukkit.Location;
  */
 public class TARDISWorldBorderChecker {
 
-    private TARDIS plugin;
     private WorldBorder border;
 
     public TARDISWorldBorderChecker(TARDIS plugin) {
-        this.plugin = plugin;
         if (plugin.borderOnServer) {
             border = (WorldBorder) plugin.getServer().getPluginManager().getPlugin("WorldBorder");
         }

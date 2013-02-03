@@ -18,7 +18,6 @@ package me.eccentric_nz.TARDIS.listeners;
 
 import com.onarandombox.MultiverseCore.MultiverseCore;
 import com.onarandombox.MultiverseCore.api.MultiverseWorld;
-import me.eccentric_nz.TARDIS.database.TARDISDatabase;
 import java.util.HashMap;
 import java.util.Random;
 import me.eccentric_nz.TARDIS.TARDIS;
@@ -35,7 +34,6 @@ import multiworld.api.MultiWorldAPI;
 import multiworld.api.MultiWorldWorldData;
 import multiworld.api.flag.FlagName;
 import org.bukkit.Bukkit;
-import org.bukkit.Chunk;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -64,7 +62,6 @@ public class TARDISDoorListener implements Listener {
 
     private TARDIS plugin;
     float[][] adjustYaw = new float[4][4];
-    TARDISDatabase service = TARDISDatabase.getInstance();
     Version bukkitversion;
     Version preIMversion = new Version("1.4.5");
     Version SUBversion;

@@ -16,7 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.commands;
 
-import me.eccentric_nz.TARDIS.database.TARDISDatabase;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -60,7 +59,6 @@ import org.getspout.spoutapi.SpoutManager;
 public class TARDISCommands implements CommandExecutor {
 
     private TARDIS plugin;
-    TARDISDatabase service = TARDISDatabase.getInstance();
     private TARDISPluginRespect respect;
     HashSet<Byte> transparent = new HashSet<Byte>();
     private List<String> firstArgs = new ArrayList<String>();

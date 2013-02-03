@@ -23,7 +23,6 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
-import me.eccentric_nz.TARDIS.database.TARDISDatabase;
 import me.eccentric_nz.TARDIS.thirdparty.Version;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -51,7 +50,6 @@ import org.bukkit.inventory.ItemStack;
 public class TARDISArtronCapacitorListener implements Listener {
 
     private final TARDIS plugin;
-    TARDISDatabase service = TARDISDatabase.getInstance();
     List<Material> validBlocks = new ArrayList<Material>();
     Version bukkitversion;
     Version prewoodbuttonversion = new Version("1.4.2");
@@ -114,7 +112,7 @@ public class TARDISArtronCapacitorListener implements Listener {
                             qf.doUpdate("tardis", set, wheret);
                             // remove the NETHER_STAR!
                             int a = player.getInventory().getItemInHand().getAmount();
-                            int a2 = new Integer(a - 1);
+                            int a2 = Integer.valueOf(a) - 1;
                             if (a2 > 0) {
                                 player.getInventory().getItemInHand().setAmount(a2);
                             } else {

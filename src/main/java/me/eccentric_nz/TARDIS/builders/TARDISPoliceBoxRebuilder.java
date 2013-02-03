@@ -47,7 +47,6 @@ public class TARDISPoliceBoxRebuilder {
     private TARDISConstants.COMPASS d;
     private Location location;
     private int tid;
-    public int task;
     private int mat;
     private byte data;
 

@@ -16,7 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.travel;
 
-import me.eccentric_nz.TARDIS.database.TARDISDatabase;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Set;
@@ -38,7 +37,6 @@ import org.bukkit.permissions.PermissionAttachmentInfo;
 public class TARDISArea {
 
     private TARDIS plugin;
-    TARDISDatabase service = TARDISDatabase.getInstance();
 
     public TARDISArea(TARDIS plugin) {
         this.plugin = plugin;

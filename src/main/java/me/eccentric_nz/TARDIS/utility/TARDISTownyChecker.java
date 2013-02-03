@@ -32,11 +32,9 @@ import org.bukkit.entity.Player;
  */
 public class TARDISTownyChecker {
 
-    private TARDIS plugin;
     private Towny towny;
 
     public TARDISTownyChecker(TARDIS plugin) {
-        this.plugin = plugin;
         if (plugin.townyOnServer) {
             towny = (Towny) plugin.getServer().getPluginManager().getPlugin("Towny");
         }

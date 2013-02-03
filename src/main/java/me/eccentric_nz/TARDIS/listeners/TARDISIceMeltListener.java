@@ -19,7 +19,6 @@ package me.eccentric_nz.TARDIS.listeners;
 import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.ResultSetBlocks;
-import me.eccentric_nz.TARDIS.database.TARDISDatabase;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.event.EventHandler;
@@ -38,7 +37,6 @@ import org.bukkit.event.block.BlockFadeEvent;
 public class TARDISIceMeltListener implements Listener {
 
     private final TARDIS plugin;
-    TARDISDatabase service = TARDISDatabase.getInstance();
 
     public TARDISIceMeltListener(TARDIS plugin) {
         this.plugin = plugin;

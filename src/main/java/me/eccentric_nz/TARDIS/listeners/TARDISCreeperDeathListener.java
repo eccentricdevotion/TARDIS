@@ -21,7 +21,6 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
-import me.eccentric_nz.TARDIS.database.TARDISDatabase;
 import org.bukkit.entity.Creeper;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
@@ -40,7 +39,6 @@ import org.bukkit.event.entity.EntityDeathEvent;
 public class TARDISCreeperDeathListener implements Listener {
 
     private final TARDIS plugin;
-    TARDISDatabase service = TARDISDatabase.getInstance();
 
     public TARDISCreeperDeathListener(TARDIS plugin) {
         this.plugin = plugin;

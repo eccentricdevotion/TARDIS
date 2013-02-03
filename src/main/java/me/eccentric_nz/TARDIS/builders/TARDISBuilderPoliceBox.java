@@ -16,7 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.builders;
 
-import me.eccentric_nz.TARDIS.database.TARDISDatabase;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -44,7 +43,6 @@ import org.bukkit.entity.Player;
 public class TARDISBuilderPoliceBox {
 
     private final TARDIS plugin;
-    TARDISDatabase service = TARDISDatabase.getInstance();
 
     public TARDISBuilderPoliceBox(TARDIS plugin) {
         this.plugin = plugin;

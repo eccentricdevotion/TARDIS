@@ -16,7 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.commands;
 
-import me.eccentric_nz.TARDIS.database.TARDISDatabase;
 import java.util.ArrayList;
 import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
@@ -41,7 +40,6 @@ import org.bukkit.entity.Player;
 public class TARDISAreaCommands implements CommandExecutor {
 
     private TARDIS plugin;
-    TARDISDatabase service = TARDISDatabase.getInstance();
 
     public TARDISAreaCommands(TARDIS plugin) {
         this.plugin = plugin;

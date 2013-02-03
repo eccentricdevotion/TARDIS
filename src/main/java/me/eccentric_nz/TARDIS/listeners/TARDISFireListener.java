@@ -16,7 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.listeners;
 
-import me.eccentric_nz.TARDIS.database.TARDISDatabase;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -39,7 +38,6 @@ import org.bukkit.event.block.BlockIgniteEvent;
 public class TARDISFireListener implements Listener {
 
     private TARDIS plugin;
-    TARDISDatabase service = TARDISDatabase.getInstance();
     List<BlockFace> faces = new ArrayList<BlockFace>();
 
     public TARDISFireListener(TARDIS plugin) {

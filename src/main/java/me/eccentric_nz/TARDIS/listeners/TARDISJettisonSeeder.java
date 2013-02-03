@@ -20,7 +20,6 @@ import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants.COMPASS;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
-import me.eccentric_nz.TARDIS.database.TARDISDatabase;
 import me.eccentric_nz.TARDIS.rooms.TARDISRoomRemover;
 import org.bukkit.Effect;
 import org.bukkit.Location;
@@ -42,7 +41,6 @@ import org.bukkit.inventory.ItemStack;
 public class TARDISJettisonSeeder implements Listener {
 
     private final TARDIS plugin;
-    TARDISDatabase service = TARDISDatabase.getInstance();
 
     public TARDISJettisonSeeder(TARDIS plugin) {
         this.plugin = plugin;

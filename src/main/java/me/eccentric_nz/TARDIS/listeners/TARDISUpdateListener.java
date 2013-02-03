@@ -17,7 +17,6 @@
 package me.eccentric_nz.TARDIS.listeners;
 
 import java.util.ArrayList;
-import me.eccentric_nz.TARDIS.database.TARDISDatabase;
 import java.util.HashMap;
 import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
@@ -49,7 +48,6 @@ import org.bukkit.event.player.PlayerInteractEvent;
 public class TARDISUpdateListener implements Listener {
 
     private TARDIS plugin;
-    TARDISDatabase service = TARDISDatabase.getInstance();
     List<Material> validBlocks = new ArrayList<Material>();
     Version bukkitversion;
     Version prewoodbuttonversion = new Version("1.4.2");
@@ -108,7 +106,7 @@ public class TARDISUpdateListener implements Listener {
                 String table = "tardis";
                 if (blockName.equalsIgnoreCase("door") && blockType == Material.IRON_DOOR_BLOCK) {
                     // get door data this should let us determine the direction
-                    String d = "EAST";
+                    String d;
                     switch (blockData) {
                         case 0:
                             d = "EAST";
@@ -121,6 +119,9 @@ public class TARDISUpdateListener implements Listener {
                             break;
                         case 3:
                             d = "NORTH";
+                            break;
+                        default:
+                            d = "EAST";
                             break;
                     }
                     table = "doors";

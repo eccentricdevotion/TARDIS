@@ -21,7 +21,6 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants.COMPASS;
 import me.eccentric_nz.TARDIS.TARDISConstants.ROOM;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
-import me.eccentric_nz.TARDIS.database.TARDISDatabase;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
@@ -38,7 +37,6 @@ import org.bukkit.entity.Player;
 public class TARDISRoomBuilder {
 
     private final TARDIS plugin;
-    TARDISDatabase service = TARDISDatabase.getInstance();
     private String r;
     private Location l;
     private COMPASS d;

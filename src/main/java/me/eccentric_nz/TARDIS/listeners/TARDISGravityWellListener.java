@@ -20,7 +20,6 @@ import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.ResultSetGravity;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
-import me.eccentric_nz.TARDIS.database.TARDISDatabase;
 import me.eccentric_nz.TARDIS.rooms.TARDISGravityWellRunnable;
 import org.bukkit.Location;
 import org.bukkit.World;
@@ -40,7 +39,6 @@ import org.bukkit.event.player.PlayerMoveEvent;
 public class TARDISGravityWellListener implements Listener {
 
     private final TARDIS plugin;
-    TARDISDatabase service = TARDISDatabase.getInstance();
 
     public TARDISGravityWellListener(TARDIS plugin) {
         this.plugin = plugin;

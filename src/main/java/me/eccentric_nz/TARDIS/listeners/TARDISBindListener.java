@@ -24,7 +24,6 @@ import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetDestinations;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
-import me.eccentric_nz.TARDIS.database.TARDISDatabase;
 import me.eccentric_nz.TARDIS.thirdparty.Version;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -46,7 +45,6 @@ import org.bukkit.event.player.PlayerInteractEvent;
 public class TARDISBindListener implements Listener {
 
     private final TARDIS plugin;
-    TARDISDatabase service = TARDISDatabase.getInstance();
     List<Material> validBlocks = new ArrayList<Material>();
     Version bukkitversion;
     Version prewoodbuttonversion = new Version("1.4.2");

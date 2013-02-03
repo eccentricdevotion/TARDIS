@@ -265,7 +265,6 @@ public class TARDISTimetravel {
             for (row = 0; row < rowcount; row++) {
                 for (col = 0; col < colcount; col++) {
                     int id = w.getBlockAt(startx, starty, startz).getTypeId();
-                    Location l = w.getBlockAt(startx, starty, startz).getLocation();
                     if (!isItSafe(id)) {
                         count++;
                     }
@@ -464,7 +463,7 @@ public class TARDISTimetravel {
         }
 
         // add chance of negative values
-        if ((int) (Math.random() * 2) == 1) {
+        if (rand.nextInt(2) == 1) {
             wherex = 0 - wherex;
         }
 
@@ -509,7 +508,7 @@ public class TARDISTimetravel {
         }
 
         // add chance of negative values
-        if ((int) (Math.random() * 2) == 1) {
+        if (rand.nextInt(2) == 1) {
             wherez = 0 - wherez;
         }
 

@@ -20,7 +20,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
-import me.eccentric_nz.TARDIS.database.TARDISDatabase;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.entity.Creeper;
@@ -36,7 +35,6 @@ import org.bukkit.entity.EntityType;
 public class TARDISCreeperChecker {
 
     private final TARDIS plugin;
-    TARDISDatabase service = TARDISDatabase.getInstance();
 
     public TARDISCreeperChecker(TARDIS plugin) {
         this.plugin = plugin;

@@ -22,7 +22,6 @@ import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
-import me.eccentric_nz.TARDIS.database.TARDISDatabase;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Chest;
@@ -45,7 +44,6 @@ import org.bukkit.inventory.ItemStack;
 public class TARDISCondenserListener implements Listener {
 
     private final TARDIS plugin;
-    TARDISDatabase service = TARDISDatabase.getInstance();
     List<Material> condensables = new ArrayList<Material>();
 
     public TARDISCondenserListener(TARDIS plugin) {
@@ -90,7 +88,7 @@ public class TARDISCondenserListener implements Listener {
                 wheret.put("tardis_id", rs.getTardis_id());
                 final Player player = (Player) event.getPlayer();
                 qf.alterEnergyLevel("tardis", amount, wheret, player);
-                String message = "";
+                String message;
                 if (amount > 0) {
                     message = "You condensed the molecules of the universe itself into " + amount + " artron energy!";
                 } else {

@@ -21,7 +21,6 @@ import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
-import me.eccentric_nz.TARDIS.database.TARDISDatabase;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.entity.LightningStrike;
@@ -40,7 +39,6 @@ import org.bukkit.event.weather.LightningStrikeEvent;
 public class TARDISLightningListener implements Listener {
 
     private final TARDIS plugin;
-    TARDISDatabase service = TARDISDatabase.getInstance();
 
     public TARDISLightningListener(TARDIS plugin) {
         this.plugin = plugin;

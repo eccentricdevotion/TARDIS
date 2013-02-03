@@ -17,7 +17,6 @@
 package me.eccentric_nz.TARDIS.listeners;
 
 import java.util.ArrayList;
-import me.eccentric_nz.TARDIS.database.TARDISDatabase;
 import java.util.HashMap;
 import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
@@ -43,7 +42,6 @@ import org.bukkit.event.entity.EntityChangeBlockEvent;
 public class TARDISWitherDragonListener implements Listener {
 
     private final TARDIS plugin;
-    TARDISDatabase service = TARDISDatabase.getInstance();
     List<EntityType> ents = new ArrayList<EntityType>();
     Version bukkitversion;
     Version prewitherversion = new Version("1.4.2");

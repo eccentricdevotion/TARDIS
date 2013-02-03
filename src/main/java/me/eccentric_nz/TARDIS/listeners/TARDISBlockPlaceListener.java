@@ -16,7 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.listeners;
 
-import me.eccentric_nz.TARDIS.database.TARDISDatabase;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -51,7 +50,6 @@ public class TARDISBlockPlaceListener implements Listener {
 
     private TARDIS plugin;
     private TARDISUtils utils;
-    TARDISDatabase service = TARDISDatabase.getInstance();
     public static final List<String> MIDDLE_BLOCKS = Arrays.asList(new String[]{"LAPIS_BLOCK", "STONE", "DIRT", "WOOD", "SANDSTONE", "WOOL", "BRICK", "NETHERRACK", "SOUL_SAND", "SMOOTH_BRICK", "HUGE_MUSHROOM_1", "HUGE_MUSHROOM_2", "ENDER_STONE"});
 
     public TARDISBlockPlaceListener(TARDIS plugin) {

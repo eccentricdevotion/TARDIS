@@ -43,7 +43,6 @@ public class ResultSetAreas {
     private int area_id;
     private String area_name;
     private String world;
-    private String location;
     private int minx;
     private int minz;
     private int maxx;
@@ -151,10 +150,6 @@ public class ResultSetAreas {
 
     public String getWorld() {
         return world;
-    }
-
-    public String getLocation() {
-        return location;
     }
 
     public int getMinx() {

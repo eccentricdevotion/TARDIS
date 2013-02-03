@@ -26,7 +26,6 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
-import me.eccentric_nz.TARDIS.database.TARDISDatabase;
 import org.bukkit.ChatColor;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
@@ -52,7 +51,6 @@ import org.bukkit.plugin.Plugin;
 public class TARDISBuilderInner {
 
     private final TARDIS plugin;
-    TARDISDatabase service = TARDISDatabase.getInstance();
 
     public TARDISBuilderInner(TARDIS plugin) {
         this.plugin = plugin;
@@ -319,7 +317,7 @@ public class TARDISBuilderInner {
         // put on the door and the redstone torches
         for (Map.Entry<Block, Byte> entry : postDoorBlocks.entrySet()) {
             Block pdb = entry.getKey();
-            byte pddata = Byte.valueOf(entry.getValue());
+            byte pddata = entry.getValue();
             pdb.setTypeIdAndData(71, pddata, true);
         }
         for (Map.Entry<Block, Byte> entry : postTorchBlocks.entrySet()) {
@@ -385,6 +383,8 @@ public class TARDISBuilderInner {
                                 break;
                             case 129: // emerald ore to emerald
                                 rid = 388;
+                                break;
+                            default:
                                 break;
                         }
                         // add items to chest

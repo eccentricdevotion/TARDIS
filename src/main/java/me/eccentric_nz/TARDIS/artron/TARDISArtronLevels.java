@@ -20,7 +20,6 @@ import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
-import me.eccentric_nz.TARDIS.database.TARDISDatabase;
 import org.bukkit.entity.Player;
 
 /**
@@ -34,7 +33,6 @@ import org.bukkit.entity.Player;
 public class TARDISArtronLevels {
 
     private final TARDIS plugin;
-    TARDISDatabase service = TARDISDatabase.getInstance();
 
     public TARDISArtronLevels(TARDIS plugin) {
         this.plugin = plugin;

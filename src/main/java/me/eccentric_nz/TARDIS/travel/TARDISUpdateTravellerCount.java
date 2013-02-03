@@ -21,7 +21,6 @@ import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
-import me.eccentric_nz.TARDIS.database.TARDISDatabase;
 
 /**
  * Companions were the Doctor's closest friends. Such people knew the Doctor's
@@ -33,7 +32,6 @@ import me.eccentric_nz.TARDIS.database.TARDISDatabase;
 public class TARDISUpdateTravellerCount {
 
     private final TARDIS plugin;
-    TARDISDatabase service = TARDISDatabase.getInstance();
 
     public TARDISUpdateTravellerCount(TARDIS plugin) {
         this.plugin = plugin;
