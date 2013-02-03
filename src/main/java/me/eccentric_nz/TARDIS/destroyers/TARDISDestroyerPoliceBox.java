@@ -24,6 +24,7 @@ import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetBlocks;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
+import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -57,18 +58,22 @@ public class TARDISDestroyerPoliceBox {
      */
     public void destroyPoliceBox(Location l, TARDISConstants.COMPASS d, int id, boolean hide) {
         World w = l.getWorld();
+        final Chunk chunk = w.getChunkAt(l);
+        while (!chunk.isLoaded()) {
+            chunk.load();
+        }
         int sbx = l.getBlockX() - 1;
         int rbx = sbx;
-        int gbx = sbx;
         int sby = l.getBlockY();
         int sbz = l.getBlockZ() - 1;
         int rbz = sbz;
-        int gbz = sbz;
         // remove blue wool and door
         for (int yy = 0; yy < 3; yy++) {
             for (int xx = 0; xx < 3; xx++) {
                 for (int zz = 0; zz < 3; zz++) {
-                    plugin.utils.setBlock(w, sbx, sby, sbz, 0, (byte) 0);
+                    if (w.getBlockAt(sbx, sby, sbz).getTypeId() != 0) {
+                        plugin.utils.setBlock(w, sbx, sby, sbz, 0, (byte) 0);
+                    }
                     sbx++;
                 }
                 sbx = rbx;

@@ -123,7 +123,7 @@ public class TARDISRoomRunnable implements Runnable {
             // remove the chunks, so they can unload as normal again
             if (chunkList.size() > 0) {
                 for (Chunk ch : chunkList) {
-                    plugin.roomChunkList.remove(ch);
+                    plugin.tardisChunkList.remove(ch);
                 }
             }
             // cancel the task
@@ -164,8 +164,8 @@ public class TARDISRoomRunnable implements Runnable {
             }
 
             Chunk thisChunk = world.getChunkAt(world.getBlockAt(startx, starty, startz));
-            if (!plugin.roomChunkList.contains(thisChunk)) {
-                plugin.roomChunkList.add(thisChunk);
+            if (!plugin.tardisChunkList.contains(thisChunk)) {
+                plugin.tardisChunkList.add(thisChunk);
                 chunkList.add(thisChunk);
             }
             plugin.utils.setBlock(l.getWorld(), startx, starty, startz, id, data);

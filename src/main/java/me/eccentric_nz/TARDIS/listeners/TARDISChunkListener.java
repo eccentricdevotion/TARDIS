@@ -31,11 +31,11 @@ import org.bukkit.event.world.ChunkUnloadEvent;
  *
  * @author eccentric_nz
  */
-public class TARDISRoomChunkListener implements Listener {
+public class TARDISChunkListener implements Listener {
 
     private final TARDIS plugin;
 
-    public TARDISRoomChunkListener(TARDIS plugin) {
+    public TARDISChunkListener(TARDIS plugin) {
         this.plugin = plugin;
     }
 
@@ -45,7 +45,7 @@ public class TARDISRoomChunkListener implements Listener {
      */
     @EventHandler(priority = EventPriority.NORMAL, ignoreCancelled = true)
     public void onChunkUnload(ChunkUnloadEvent event) {
-        if (plugin.roomChunkList.contains(event.getChunk())) {
+        if (plugin.tardisChunkList.contains(event.getChunk())) {
             event.setCancelled(true);
         }
     }

@@ -59,7 +59,7 @@ import me.eccentric_nz.TARDIS.listeners.TARDISHandbrakeListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISIceMeltListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISJettisonSeeder;
 import me.eccentric_nz.TARDIS.listeners.TARDISLightningListener;
-import me.eccentric_nz.TARDIS.listeners.TARDISRoomChunkListener;
+import me.eccentric_nz.TARDIS.listeners.TARDISChunkListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISRoomSeeder;
 import me.eccentric_nz.TARDIS.listeners.TARDISSignListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISUpdateListener;
@@ -182,7 +182,7 @@ public class TARDIS extends JavaPlugin {
     TARDISGravityWellListener gravityListener = new TARDISGravityWellListener(this);
     TARDISCondenserListener condenserListener = new TARDISCondenserListener(this);
     TARDISIceMeltListener meltListener = new TARDISIceMeltListener(this);
-    TARDISRoomChunkListener roomChunkListener = new TARDISRoomChunkListener(this);
+    TARDISChunkListener roomChunkListener = new TARDISChunkListener(this);
     public PluginManager pm = Bukkit.getServer().getPluginManager();
     public HashMap<String, String> trackPlayers = new HashMap<String, String>();
     public HashMap<String, Integer> trackBinder = new HashMap<String, Integer>();
@@ -197,7 +197,7 @@ public class TARDIS extends JavaPlugin {
     public HashMap<Integer, Integer> tardisHasDestination = new HashMap<Integer, Integer>();
     public ArrayList<Integer> tardisHasTravelled = new ArrayList<Integer>();
     public ArrayList<Integer> tardisMaterilising = new ArrayList<Integer>();
-    public List<Chunk> roomChunkList = new ArrayList<Chunk>();
+    public List<Chunk> tardisChunkList = new ArrayList<Chunk>();
     private static ArrayList<String> quotes = new ArrayList<String>();
     public ArrayList<String> quote;
     public HashMap<Material, String> seeds;

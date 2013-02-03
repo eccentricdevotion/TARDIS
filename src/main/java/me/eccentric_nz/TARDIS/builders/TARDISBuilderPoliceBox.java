@@ -24,6 +24,7 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
+import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -145,14 +146,24 @@ public class TARDISBuilderPoliceBox {
                 }
             }
         }
-        if (plugin.getConfig().getBoolean("materialise") && rebuild == false) {
-            TARDISMaterialisationRunnable runnable = new TARDISMaterialisationRunnable(plugin, l, wall_block, chameleonData, id, d, false);
+        // keep the chunk this Police box is in loaded
+        Chunk thisChunk = l.getChunk();
+        if (!plugin.tardisChunkList.contains(thisChunk)) {
+            plugin.tardisChunkList.add(thisChunk);
+        }
+        if (plugin.getConfig().getBoolean("materialise")) {
+            TARDISMaterialisationRunnable runnable = new TARDISMaterialisationRunnable(plugin, l, wall_block, chameleonData, id, d);
             int taskID = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, runnable, 10L, 20L);
             runnable.setTask(taskID);
             plugin.tardisMaterilising.add(id);
         } else {
-            TARDISInstaPoliceBox insta = new TARDISInstaPoliceBox(plugin, l, wall_block, chameleonData, id, d, rebuild);
-            insta.buildPoliceBox();
+            if (rebuild) {
+                TARDISPoliceBoxRebuilder rebuilder = new TARDISPoliceBoxRebuilder(plugin, l, wall_block, chameleonData, id, d);
+                rebuilder.rebuildPoliceBox();
+            } else {
+                TARDISInstaPoliceBox insta = new TARDISInstaPoliceBox(plugin, l, wall_block, chameleonData, id, d);
+                insta.buildPoliceBox();
+            }
         }
 
         // add platform if configured and necessary
@@ -200,7 +211,11 @@ public class TARDISBuilderPoliceBox {
                 for (Block pb : platform_blocks) {
                     Material mat = pb.getType();
                     if (mat == Material.AIR || mat == Material.STATIONARY_WATER || mat == Material.WATER || mat == Material.VINE || mat == Material.RED_MUSHROOM || mat == Material.BROWN_MUSHROOM || mat == Material.LONG_GRASS || mat == Material.SAPLING || mat == Material.DEAD_BUSH || mat == Material.RED_ROSE || mat == Material.YELLOW_FLOWER || mat == Material.SNOW) {
-                        plugin.utils.setBlockAndRemember(world, pb.getX(), pb.getY(), pb.getZ(), 35, grey, id, rebuild);
+                        if (rebuild) {
+                            plugin.utils.setBlockAndRemember(world, pb.getX(), pb.getY(), pb.getZ(), 35, grey, id);
+                        } else {
+                            plugin.utils.setBlock(world, pb.getX(), pb.getY(), pb.getZ(), 35, grey);
+                        }
                         String p_tmp = world.getName() + ":" + pb.getX() + ":" + pb.getY() + ":" + pb.getZ() + ":" + mat.toString();
                         sb.append(p_tmp).append("~");
                     }

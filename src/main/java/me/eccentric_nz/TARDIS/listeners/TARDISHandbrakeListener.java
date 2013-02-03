@@ -102,15 +102,18 @@ public class TARDISHandbrakeListener implements Listener {
                                 COMPASS d = rs.getDirection();
                                 boolean cham = rs.isChamele_on();
                                 Location exit = plugin.utils.getLocationFromDB(save, 0, 0);
-                                if (!save.equals(cl)) {
-                                    Location l = plugin.utils.getLocationFromDB(cl, 0, 0);
-                                    // remove torch
-                                    plugin.destroyPB.destroyTorch(l);
-                                    // remove sign
-                                    plugin.destroyPB.destroySign(l, d);
-                                    // remove blue box
-                                    plugin.destroyPB.destroyPoliceBox(l, d, id, false);
+                                Location l = plugin.utils.getLocationFromDB(cl, 0, 0);
+                                // remove current location chunk from list
+                                Chunk oldChunk = l.getChunk();
+                                if (plugin.tardisChunkList.contains(oldChunk)) {
+                                    plugin.tardisChunkList.remove(oldChunk);
                                 }
+                                // remove torch
+                                plugin.destroyPB.destroyTorch(l);
+                                // remove sign
+                                plugin.destroyPB.destroySign(l, d);
+                                // remove blue box
+                                plugin.destroyPB.destroyPoliceBox(l, d, id, false);
                                 // try preloading destination chunk
                                 World exitWorld = exit.getWorld();
                                 Chunk chunk = exitWorld.getChunkAt(exit);
