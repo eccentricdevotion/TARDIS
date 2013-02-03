@@ -134,7 +134,7 @@ public class TARDISTimetravel {
             }
             i = i + 1;
         }
-        if (randworld.getEnvironment().equals(Environment.NETHER)) {
+        if (randworld != null && randworld.getEnvironment().equals(Environment.NETHER)) {
             while (danger == true) {
                 wherex = randomX(rand, range, quarter, rx, ry, max);
                 wherez = randomZ(rand, range, quarter, rz, ry, max);
@@ -144,7 +144,7 @@ public class TARDISTimetravel {
                 }
             }
         }
-        if (randworld.getEnvironment().equals(Environment.THE_END)) {
+        if (randworld != null && randworld.getEnvironment().equals(Environment.THE_END)) {
             while (danger == true) {
                 wherex = rand.nextInt(240);
                 wherez = rand.nextInt(240);
@@ -183,7 +183,7 @@ public class TARDISTimetravel {
             }
             dest = new Location(randworld, wherex, highest, wherez);
         }
-        if (randworld.getEnvironment().equals(Environment.NORMAL)) {
+        if (randworld != null && randworld.getEnvironment().equals(Environment.NORMAL)) {
             long timeout = System.currentTimeMillis() + (plugin.getConfig().getLong("timeout") * 1000);
             while (danger == true) {
                 if (System.currentTimeMillis() < timeout) {
@@ -281,6 +281,70 @@ public class TARDISTimetravel {
     }
 
     /**
+     * Checks if a location is safe for the TARDIS Police Box to land at. Used
+     * for debugging purposes only. The Police Box requires a clear 4 x 3 x 4 (d
+     * x w x h) area.
+     *
+     * @param l a starting location.
+     * @param d the direction the Police Box is facing.
+     */
+    public void testSafeLocation(Location loc, TARDISConstants.COMPASS d) {
+        final World w = loc.getWorld();
+        final int starty = loc.getBlockY();
+        int sx, sz;
+        switch (d) {
+            case EAST:
+                sx = loc.getBlockX() - 2;
+                sz = loc.getBlockZ() - 1;
+                break;
+            case SOUTH:
+                sx = loc.getBlockX() - 1;
+                sz = loc.getBlockZ() - 2;
+                break;
+            default:
+                sx = loc.getBlockX() - 1;
+                sz = loc.getBlockZ() - 1;
+                break;
+        }
+        int row, col;
+        switch (d) {
+            case EAST:
+            case WEST:
+                row = 2;
+                col = 3;
+                break;
+            default:
+                row = 3;
+                col = 2;
+                break;
+        }
+        final int r = row;
+        final int c = col;
+        final int startx = sx;
+        final int startz = sz;
+        plugin.utils.setBlock(w, startx, starty, startz, 89, (byte) 0);
+        plugin.utils.setBlock(w, startx, starty, startz + row, 89, (byte) 0);
+        plugin.utils.setBlock(w, startx + col, starty, startz, 89, (byte) 0);
+        plugin.utils.setBlock(w, startx + col, starty, startz + row, 89, (byte) 0);
+        plugin.utils.setBlock(w, startx, starty + 3, startz, 89, (byte) 0);
+        plugin.utils.setBlock(w, startx + col, starty + 3, startz, 89, (byte) 0);
+        plugin.utils.setBlock(w, startx, starty + 3, startz + row, 89, (byte) 0);
+        plugin.utils.setBlock(w, startx + col, starty + 3, startz + row, 89, (byte) 0);
+        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
+            public void run() {
+                plugin.utils.setBlock(w, startx, starty, startz, 0, (byte) 0);
+                plugin.utils.setBlock(w, startx, starty, startz + r, 0, (byte) 0);
+                plugin.utils.setBlock(w, startx + c, starty, startz, 0, (byte) 0);
+                plugin.utils.setBlock(w, startx + c, starty, startz + r, 0, (byte) 0);
+                plugin.utils.setBlock(w, startx, starty + 3, startz, 0, (byte) 0);
+                plugin.utils.setBlock(w, startx + c, starty + 3, startz, 0, (byte) 0);
+                plugin.utils.setBlock(w, startx, starty + 3, startz + r, 0, (byte) 0);
+                plugin.utils.setBlock(w, startx + c, starty + 3, startz + r, 0, (byte) 0);
+            }
+        }, 300L);
+    }
+
+    /**
      * Checks if a block to see whether it is clear. Blocks include AIR,
      * LONG_GRASS, MUSHROOMS, SNOW etc.
      *
@@ -304,7 +368,7 @@ public class TARDISTimetravel {
     public int[] getStartLocation(Location loc, TARDISConstants.COMPASS d) {
         switch (d) {
             case EAST:
-                startLoc[0] = loc.getBlockX() - 3;
+                startLoc[0] = loc.getBlockX() - 2;
                 startLoc[1] = startLoc[0];
                 startLoc[2] = loc.getBlockZ() - 1;
                 startLoc[3] = startLoc[2];
@@ -312,7 +376,7 @@ public class TARDISTimetravel {
             case SOUTH:
                 startLoc[0] = loc.getBlockX() - 1;
                 startLoc[1] = startLoc[0];
-                startLoc[2] = loc.getBlockZ() - 3;
+                startLoc[2] = loc.getBlockZ() - 2;
                 startLoc[3] = startLoc[2];
                 break;
             case WEST:
