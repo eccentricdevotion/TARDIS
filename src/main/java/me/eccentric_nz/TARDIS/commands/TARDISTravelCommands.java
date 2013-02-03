@@ -139,7 +139,7 @@ public class TARDISTravelCommands implements CommandExecutor {
                                 Location player_loc = destPlayer.getLocation();
                                 World w = player_loc.getWorld();
                                 int[] start_loc = tt.getStartLocation(player_loc, d);
-                                int count = tt.safeLocation(start_loc[0] - 3, player_loc.getBlockY(), start_loc[2], start_loc[1], start_loc[3], w, d);
+                                int count = tt.safeLocation(start_loc[0] - 3, player_loc.getBlockY(), start_loc[2], start_loc[1] - 3, start_loc[3], w, d);
                                 if (count > 0) {
                                     sender.sendMessage(plugin.pluginName + "The player's location would not be safe! Please tell the player to move!");
                                     return true;
