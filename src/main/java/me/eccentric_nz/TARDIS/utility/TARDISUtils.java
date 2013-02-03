@@ -92,27 +92,24 @@ public class TARDISUtils {
      * @param m the typeId to set the block to.
      * @param d the data bit to set the block to.
      * @param id the TARDIS this block belongs to.
-     * @param rebuild a boolean to determine whether the blocks should be
-     * remembered (this stops ghost Police Boxes from occurring).
      */
-    public void setBlockAndRemember(World w, int x, int y, int z, int m, byte d, int id, boolean rebuild) {
+    public void setBlockAndRemember(World w, int x, int y, int z, int m, byte d, int id) {
         Block b = w.getBlockAt(x, y, z);
         // save the block location so that we can protect it from damage and restore it (if it wasn't air)!
-        if (!rebuild) {
-            String l = b.getLocation().toString();
-            QueryFactory qf = new QueryFactory(plugin);
-            HashMap<String, Object> set = new HashMap<String, Object>();
-            set.put("tardis_id", id);
-            set.put("location", l);
-            int bid = b.getTypeId();
-            if (bid != 0) {
-                byte data = b.getData();
-                set.put("block", bid);
-                set.put("data", data);
-            }
-            set.put("police_box", 1);
-            qf.doInsert("blocks", set);
+        String l = b.getLocation().toString();
+        QueryFactory qf = new QueryFactory(plugin);
+        HashMap<String, Object> set = new HashMap<String, Object>();
+        set.put("tardis_id", id);
+        set.put("location", l);
+        int bid = b.getTypeId();
+        if (bid != 0) {
+            byte data = b.getData();
+            set.put("block", bid);
+            set.put("data", data);
         }
+        set.put("police_box", 1);
+        qf.doInsert("blocks", set);
+        // set the block
         b.setTypeIdAndData(m, d, true);
     }
 

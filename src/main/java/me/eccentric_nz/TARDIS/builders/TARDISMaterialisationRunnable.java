@@ -38,7 +38,6 @@ public class TARDISMaterialisationRunnable implements Runnable {
     private int i;
     private int mat;
     private byte data;
-    private boolean rebuild;
 
     /**
      * Runnable method to materialise the TARDIS Police Box. Tries to mimic the
@@ -52,9 +51,8 @@ public class TARDISMaterialisationRunnable implements Runnable {
      * @param data the material data to construct the final walls
      * @param tid the tardis_id this Police Box belongs to
      * @param d the COMPASS direction the Police Box is facing
-     * @param rebuild boolean, if false, save the block locations for this build
      */
-    public TARDISMaterialisationRunnable(TARDIS plugin, Location location, int mat, byte data, int tid, COMPASS d, boolean rebuild) {
+    public TARDISMaterialisationRunnable(TARDIS plugin, Location location, int mat, byte data, int tid, COMPASS d) {
         this.plugin = plugin;
         this.d = d;
         this.loops = 9;
@@ -63,7 +61,6 @@ public class TARDISMaterialisationRunnable implements Runnable {
         this.tid = tid;
         this.mat = mat;
         this.data = data;
-        this.rebuild = rebuild;
     }
 
     @Override
@@ -191,41 +188,41 @@ public class TARDISMaterialisationRunnable implements Runnable {
                     qf.doInsert("doors", setd);
                 }
                 // bottom layer corners
-                plugin.utils.setBlockAndRemember(world, plusx, down2y, plusz, id, b, tid, rebuild);
-                plugin.utils.setBlockAndRemember(world, minusx, down2y, plusz, id, b, tid, rebuild);
-                plugin.utils.setBlockAndRemember(world, minusx, down2y, minusz, id, b, tid, rebuild);
-                plugin.utils.setBlockAndRemember(world, plusx, down2y, minusz, id, b, tid, rebuild);
+                plugin.utils.setBlockAndRemember(world, plusx, down2y, plusz, id, b, tid);
+                plugin.utils.setBlockAndRemember(world, minusx, down2y, plusz, id, b, tid);
+                plugin.utils.setBlockAndRemember(world, minusx, down2y, minusz, id, b, tid);
+                plugin.utils.setBlockAndRemember(world, plusx, down2y, minusz, id, b, tid);
                 // middle layer corners
-                plugin.utils.setBlockAndRemember(world, plusx, minusy, plusz, id, b, tid, rebuild);
-                plugin.utils.setBlockAndRemember(world, minusx, minusy, plusz, id, b, tid, rebuild);
-                plugin.utils.setBlockAndRemember(world, minusx, minusy, minusz, id, b, tid, rebuild);
-                plugin.utils.setBlockAndRemember(world, plusx, minusy, minusz, id, b, tid, rebuild);
+                plugin.utils.setBlockAndRemember(world, plusx, minusy, plusz, id, b, tid);
+                plugin.utils.setBlockAndRemember(world, minusx, minusy, plusz, id, b, tid);
+                plugin.utils.setBlockAndRemember(world, minusx, minusy, minusz, id, b, tid);
+                plugin.utils.setBlockAndRemember(world, plusx, minusy, minusz, id, b, tid);
                 // top layer
                 switch (id) {
                     case 18:
-                        plugin.utils.setBlockAndRemember(world, x, y, z, 17, b, tid, rebuild);
+                        plugin.utils.setBlockAndRemember(world, x, y, z, 17, b, tid);
                         break;
                     case 46:
-                        plugin.utils.setBlockAndRemember(world, x, y, z, 35, (byte) 14, tid, rebuild);
+                        plugin.utils.setBlockAndRemember(world, x, y, z, 35, (byte) 14, tid);
                         break;
                     case 79:
-                        plugin.utils.setBlockAndRemember(world, x, y, z, 35, (byte) 3, tid, rebuild);
+                        plugin.utils.setBlockAndRemember(world, x, y, z, 35, (byte) 3, tid);
                         break;
                     case 89:
-                        plugin.utils.setBlockAndRemember(world, x, y, z, 35, (byte) 4, tid, rebuild);
+                        plugin.utils.setBlockAndRemember(world, x, y, z, 35, (byte) 4, tid);
                         break;
                     default:
-                        plugin.utils.setBlockAndRemember(world, x, y, z, id, b, tid, rebuild);
+                        plugin.utils.setBlockAndRemember(world, x, y, z, id, b, tid);
                         break;
                 }
-                plugin.utils.setBlockAndRemember(world, plusx, y, z, id, b, tid, rebuild); // east
-                plugin.utils.setBlockAndRemember(world, plusx, y, plusz, id, b, tid, rebuild);
-                plugin.utils.setBlockAndRemember(world, x, y, plusz, id, b, tid, rebuild); // south
-                plugin.utils.setBlockAndRemember(world, minusx, y, plusz, id, b, tid, rebuild);
-                plugin.utils.setBlockAndRemember(world, minusx, y, z, id, b, tid, rebuild); // west
-                plugin.utils.setBlockAndRemember(world, minusx, y, minusz, id, b, tid, rebuild);
-                plugin.utils.setBlockAndRemember(world, x, y, minusz, id, b, tid, rebuild); // north
-                plugin.utils.setBlockAndRemember(world, plusx, y, minusz, id, b, tid, rebuild);
+                plugin.utils.setBlockAndRemember(world, plusx, y, z, id, b, tid); // east
+                plugin.utils.setBlockAndRemember(world, plusx, y, plusz, id, b, tid);
+                plugin.utils.setBlockAndRemember(world, x, y, plusz, id, b, tid); // south
+                plugin.utils.setBlockAndRemember(world, minusx, y, plusz, id, b, tid);
+                plugin.utils.setBlockAndRemember(world, minusx, y, z, id, b, tid); // west
+                plugin.utils.setBlockAndRemember(world, minusx, y, minusz, id, b, tid);
+                plugin.utils.setBlockAndRemember(world, x, y, minusz, id, b, tid); // north
+                plugin.utils.setBlockAndRemember(world, plusx, y, minusz, id, b, tid);
                 // set sign
                 plugin.utils.setBlock(world, signx, y, signz, 68, sd);
                 Block sign = world.getBlockAt(signx, y, signz);
@@ -250,20 +247,20 @@ public class TARDISMaterialisationRunnable implements Runnable {
                 }
                 // put torch on top
                 if (id == 79) {
-                    plugin.utils.setBlockAndRemember(world, x, plusy, z, 76, (byte) 5, tid, rebuild);
+                    plugin.utils.setBlockAndRemember(world, x, plusy, z, 76, (byte) 5, tid);
                 } else {
-                    plugin.utils.setBlockAndRemember(world, x, plusy, z, 50, (byte) 5, tid, rebuild);
+                    plugin.utils.setBlockAndRemember(world, x, plusy, z, 50, (byte) 5, tid);
                 }
                 // bottom layer with door bottom
-                plugin.utils.setBlockAndRemember(world, plusx, down2y, z, west, bdw, tid, rebuild);
-                plugin.utils.setBlockAndRemember(world, x, down2y, plusz, north, bdn, tid, rebuild);
-                plugin.utils.setBlockAndRemember(world, minusx, down2y, z, east, bde, tid, rebuild);
-                plugin.utils.setBlockAndRemember(world, x, down2y, minusz, south, bds, tid, rebuild);
+                plugin.utils.setBlockAndRemember(world, plusx, down2y, z, west, bdw, tid);
+                plugin.utils.setBlockAndRemember(world, x, down2y, plusz, north, bdn, tid);
+                plugin.utils.setBlockAndRemember(world, minusx, down2y, z, east, bde, tid);
+                plugin.utils.setBlockAndRemember(world, x, down2y, minusz, south, bds, tid);
                 // middle layer with door top
-                plugin.utils.setBlockAndRemember(world, plusx, minusy, z, west, mdw, tid, rebuild);
-                plugin.utils.setBlockAndRemember(world, x, minusy, plusz, north, mdn, tid, rebuild);
-                plugin.utils.setBlockAndRemember(world, minusx, minusy, z, east, mde, tid, rebuild);
-                plugin.utils.setBlockAndRemember(world, x, minusy, minusz, south, mds, tid, rebuild);
+                plugin.utils.setBlockAndRemember(world, plusx, minusy, z, west, mdw, tid);
+                plugin.utils.setBlockAndRemember(world, x, minusy, plusz, north, mdn, tid);
+                plugin.utils.setBlockAndRemember(world, minusx, minusy, z, east, mde, tid);
+                plugin.utils.setBlockAndRemember(world, x, minusy, minusz, south, mds, tid);
             } else {
                 // just change the walls
                 // bottom layer corners

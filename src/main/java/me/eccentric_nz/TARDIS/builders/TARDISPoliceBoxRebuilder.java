@@ -41,7 +41,7 @@ import org.bukkit.entity.Player;
  *
  * @author eccentric_nz
  */
-public class TARDISInstaPoliceBox {
+public class TARDISPoliceBoxRebuilder {
 
     private final TARDIS plugin;
     private TARDISConstants.COMPASS d;
@@ -51,7 +51,7 @@ public class TARDISInstaPoliceBox {
     private int mat;
     private byte data;
 
-    public TARDISInstaPoliceBox(TARDIS plugin, Location location, int mat, byte data, int tid, TARDISConstants.COMPASS d) {
+    public TARDISPoliceBoxRebuilder(TARDIS plugin, Location location, int mat, byte data, int tid, TARDISConstants.COMPASS d) {
         this.plugin = plugin;
         this.d = d;
         this.location = location;
@@ -63,7 +63,7 @@ public class TARDISInstaPoliceBox {
     /**
      * Builds the TARDIS Police Box.
      */
-    public void buildPoliceBox() {
+    public void rebuildPoliceBox() {
         int plusx, minusx, x, plusz, minusz, z;
         byte sd = 0, norm = 0, grey = 8;
         byte mds = data, mdw = data, mdn = data, mde = data, bds = data, bdw = data, bdn = data, bde = data;
@@ -161,41 +161,41 @@ public class TARDISInstaPoliceBox {
             qf.doInsert("doors", setd);
         }
         // bottom layer corners
-        plugin.utils.setBlockAndRemember(world, plusx, down2y, plusz, mat, data, tid);
-        plugin.utils.setBlockAndRemember(world, minusx, down2y, plusz, mat, data, tid);
-        plugin.utils.setBlockAndRemember(world, minusx, down2y, minusz, mat, data, tid);
-        plugin.utils.setBlockAndRemember(world, plusx, down2y, minusz, mat, data, tid);
+        plugin.utils.setBlock(world, plusx, down2y, plusz, mat, data);
+        plugin.utils.setBlock(world, minusx, down2y, plusz, mat, data);
+        plugin.utils.setBlock(world, minusx, down2y, minusz, mat, data);
+        plugin.utils.setBlock(world, plusx, down2y, minusz, mat, data);
         // middle layer corners
-        plugin.utils.setBlockAndRemember(world, plusx, minusy, plusz, mat, data, tid);
-        plugin.utils.setBlockAndRemember(world, minusx, minusy, plusz, mat, data, tid);
-        plugin.utils.setBlockAndRemember(world, minusx, minusy, minusz, mat, data, tid);
-        plugin.utils.setBlockAndRemember(world, plusx, minusy, minusz, mat, data, tid);
+        plugin.utils.setBlock(world, plusx, minusy, plusz, mat, data);
+        plugin.utils.setBlock(world, minusx, minusy, plusz, mat, data);
+        plugin.utils.setBlock(world, minusx, minusy, minusz, mat, data);
+        plugin.utils.setBlock(world, plusx, minusy, minusz, mat, data);
         // top layer
         switch (mat) {
             case 18:
-                plugin.utils.setBlockAndRemember(world, x, y, z, 17, data, tid);
+                plugin.utils.setBlock(world, x, y, z, 17, data);
                 break;
             case 46:
-                plugin.utils.setBlockAndRemember(world, x, y, z, 35, (byte) 14, tid);
+                plugin.utils.setBlock(world, x, y, z, 35, (byte) 14);
                 break;
             case 79:
-                plugin.utils.setBlockAndRemember(world, x, y, z, 35, (byte) 3, tid);
+                plugin.utils.setBlock(world, x, y, z, 35, (byte) 3);
                 break;
             case 89:
-                plugin.utils.setBlockAndRemember(world, x, y, z, 35, (byte) 4, tid);
+                plugin.utils.setBlock(world, x, y, z, 35, (byte) 4);
                 break;
             default:
-                plugin.utils.setBlockAndRemember(world, x, y, z, mat, data, tid);
+                plugin.utils.setBlock(world, x, y, z, mat, data);
                 break;
         }
-        plugin.utils.setBlockAndRemember(world, plusx, y, z, mat, data, tid); // east
-        plugin.utils.setBlockAndRemember(world, plusx, y, plusz, mat, data, tid);
-        plugin.utils.setBlockAndRemember(world, x, y, plusz, mat, data, tid); // south
-        plugin.utils.setBlockAndRemember(world, minusx, y, plusz, mat, data, tid);
-        plugin.utils.setBlockAndRemember(world, minusx, y, z, mat, data, tid); // west
-        plugin.utils.setBlockAndRemember(world, minusx, y, minusz, mat, data, tid);
-        plugin.utils.setBlockAndRemember(world, x, y, minusz, mat, data, tid); // north
-        plugin.utils.setBlockAndRemember(world, plusx, y, minusz, mat, data, tid);
+        plugin.utils.setBlock(world, plusx, y, z, mat, data); // east
+        plugin.utils.setBlock(world, plusx, y, plusz, mat, data);
+        plugin.utils.setBlock(world, x, y, plusz, mat, data); // south
+        plugin.utils.setBlock(world, minusx, y, plusz, mat, data);
+        plugin.utils.setBlock(world, minusx, y, z, mat, data); // west
+        plugin.utils.setBlock(world, minusx, y, minusz, mat, data);
+        plugin.utils.setBlock(world, x, y, minusz, mat, data); // north
+        plugin.utils.setBlock(world, plusx, y, minusz, mat, data);
         // set sign
         plugin.utils.setBlock(world, signx, y, signz, 68, sd);
         Block sign = world.getBlockAt(signx, y, signz);
@@ -220,36 +220,32 @@ public class TARDISInstaPoliceBox {
         }
         // put torch on top
         if (mat == 79) {
-            plugin.utils.setBlockAndRemember(world, x, plusy, z, 76, (byte) 5, tid);
+            plugin.utils.setBlock(world, x, plusy, z, 76, (byte) 5);
         } else {
-            plugin.utils.setBlockAndRemember(world, x, plusy, z, 50, (byte) 5, tid);
+            plugin.utils.setBlock(world, x, plusy, z, 50, (byte) 5);
         }
         // bottom layer with door bottom
-        plugin.utils.setBlockAndRemember(world, plusx, down2y, z, west, bdw, tid);
-        plugin.utils.setBlockAndRemember(world, x, down2y, plusz, north, bdn, tid);
-        plugin.utils.setBlockAndRemember(world, minusx, down2y, z, east, bde, tid);
-        plugin.utils.setBlockAndRemember(world, x, down2y, minusz, south, bds, tid);
+        plugin.utils.setBlock(world, plusx, down2y, z, west, bdw);
+        plugin.utils.setBlock(world, x, down2y, plusz, north, bdn);
+        plugin.utils.setBlock(world, minusx, down2y, z, east, bde);
+        plugin.utils.setBlock(world, x, down2y, minusz, south, bds);
         // middle layer with door top
-        plugin.utils.setBlockAndRemember(world, plusx, minusy, z, west, mdw, tid);
-        plugin.utils.setBlockAndRemember(world, x, minusy, plusz, north, mdn, tid);
-        plugin.utils.setBlockAndRemember(world, minusx, minusy, z, east, mde, tid);
-        plugin.utils.setBlockAndRemember(world, x, minusy, minusz, south, mds, tid);
+        plugin.utils.setBlock(world, plusx, minusy, z, west, mdw);
+        plugin.utils.setBlock(world, x, minusy, plusz, north, mdn);
+        plugin.utils.setBlock(world, minusx, minusy, z, east, mde);
+        plugin.utils.setBlock(world, x, minusy, minusz, south, mds);
         // message travellers in tardis
         HashMap<String, Object> where = new HashMap<String, Object>();
         where.put("tardis_id", tid);
         ResultSetTravellers rst = new ResultSetTravellers(plugin, where, true);
         if (rst.resultSet()) {
-            final ArrayList<HashMap<String, String>> travellers = rst.getData();
-            plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
-                public void run() {
-                    for (HashMap<String, String> map : travellers) {
-                        Player p = plugin.getServer().getPlayer(map.get("player"));
-                        if (p != null) {
-                            plugin.getServer().getPlayer(map.get("player")).sendMessage(plugin.pluginName + "Engage the handbrake to exit!");
-                        }
-                    }
+            ArrayList<HashMap<String, String>> travellers = rst.getData();
+            for (HashMap<String, String> map : travellers) {
+                Player p = plugin.getServer().getPlayer(map.get("player"));
+                if (p != null) {
+                    plugin.getServer().getPlayer(map.get("player")).sendMessage(plugin.pluginName + "Engage the handbrake to exit!");
                 }
-            }, 30L);
+            }
         }
     }
 }
