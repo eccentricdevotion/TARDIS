@@ -101,6 +101,7 @@ public class TARDISCommands implements CommandExecutor {
         firstArgs.add("jettison");
         firstArgs.add("bind");
         firstArgs.add("unbind");
+        firstArgs.add("check_loc");
 
         String[] v = Bukkit.getServer().getBukkitVersion().split("-");
         bukkitversion = new Version(v[0]);
@@ -398,7 +399,7 @@ public class TARDISCommands implements CommandExecutor {
                         TARDISTimetravel tt = new TARDISTimetravel(plugin);
                         int[] start_loc = tt.getStartLocation(eyeLocation, d);
                         // safeLocation(int startx, int starty, int startz, int resetx, int resetz, World w, TARDISConstants.COMPASS d)
-                        int count = tt.safeLocation(start_loc[0] - 3, eyeLocation.getBlockY() + 1, start_loc[2], start_loc[1] - 3, start_loc[3], eyeLocation.getWorld(), d);
+                        int count = tt.safeLocation(start_loc[0], eyeLocation.getBlockY(), start_loc[2], start_loc[1], start_loc[3], eyeLocation.getWorld(), d);
                         if (count > 0) {
                             sender.sendMessage(plugin.pluginName + "That location would grief existing blocks! Try somewhere else!");
                             return true;
@@ -459,6 +460,26 @@ public class TARDISCommands implements CommandExecutor {
                         sender.sendMessage(plugin.pluginName + TARDISConstants.NO_PERMS_MESSAGE);
                         return false;
                     }
+                }
+                if (args[0].equalsIgnoreCase("check_loc")) {
+                    final Location eyeLocation = player.getTargetBlock(transparent, 50).getLocation();
+                    Material m = player.getTargetBlock(transparent, 50).getType();
+                    if (m != Material.SNOW) {
+                        int yplusone = eyeLocation.getBlockY();
+                        eyeLocation.setY(yplusone + 1);
+                    }
+                    // check they are a timelord
+                    HashMap<String, Object> where = new HashMap<String, Object>();
+                    where.put("owner", player.getName());
+                    ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
+                    if (!rs.resultSet()) {
+                        sender.sendMessage(plugin.pluginName + "You must be the Timelord of a TARDIS to use this command!");
+                        return true;
+                    }
+                    final TARDISConstants.COMPASS d = rs.getDirection();
+                    TARDISTimetravel tt = new TARDISTimetravel(plugin);
+                    tt.testSafeLocation(eyeLocation, d);
+                    return true;
                 }
                 if (args[0].equalsIgnoreCase("home")) {
                     if (player.hasPermission("tardis.timetravel")) {
