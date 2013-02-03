@@ -164,7 +164,7 @@ public class TARDISAdminCommands implements CommandExecutor {
                     if (first.equals("chunks")) {
                         if (plugin.tardisChunkList.size() > 0) {
                             for (Chunk c : plugin.tardisChunkList) {
-                                sender.sendMessage(plugin.pluginName + c);
+                                sender.sendMessage(plugin.pluginName + c.getWorld().getName() + ": " + c);
                             }
                         } else {
                             sender.sendMessage("No chunks in list!");
