@@ -397,7 +397,8 @@ public class TARDISCommands implements CommandExecutor {
                         final TARDISConstants.COMPASS d = rs.getDirection();
                         TARDISTimetravel tt = new TARDISTimetravel(plugin);
                         int[] start_loc = tt.getStartLocation(eyeLocation, d);
-                        int count = tt.safeLocation(start_loc[0] - 3, eyeLocation.getBlockY() + 1, start_loc[2], start_loc[1], start_loc[3], eyeLocation.getWorld(), d);
+                        // safeLocation(int startx, int starty, int startz, int resetx, int resetz, World w, TARDISConstants.COMPASS d)
+                        int count = tt.safeLocation(start_loc[0] - 3, eyeLocation.getBlockY() + 1, start_loc[2], start_loc[1] - 3, start_loc[3], eyeLocation.getWorld(), d);
                         if (count > 0) {
                             sender.sendMessage(plugin.pluginName + "That location would grief existing blocks! Try somewhere else!");
                             return true;
