@@ -125,7 +125,7 @@ public class TARDISTravelCommands implements CommandExecutor {
                         if (args[0].equalsIgnoreCase("home")) {
                             set.put("save", home);
                             qf.doUpdate("tardis", set, tid);
-                            sender.sendMessage(plugin.pluginName + "Home location loaded succesfully. Please exit the TARDIS!");
+                            sender.sendMessage(plugin.pluginName + "Home location loaded succesfully. Please release the handbrake!");
                             plugin.utils.updateTravellerCount(id);
                             plugin.tardisHasDestination.put(id, travel);
                             return true;
@@ -151,7 +151,7 @@ public class TARDISTravelCommands implements CommandExecutor {
                                 String save_loc = player_loc.getWorld().getName() + ":" + (player_loc.getBlockX() - 3) + ":" + player_loc.getBlockY() + ":" + player_loc.getBlockZ();
                                 set.put("save", save_loc);
                                 qf.doUpdate("tardis", set, tid);
-                                sender.sendMessage(plugin.pluginName + "The player location was saved succesfully. Please exit the TARDIS!");
+                                sender.sendMessage(plugin.pluginName + "The player location was saved succesfully. Please release the handbrake!");
                                 plugin.utils.updateTravellerCount(id);
                                 plugin.tardisHasDestination.put(id, travel);
                                 return true;
@@ -173,7 +173,7 @@ public class TARDISTravelCommands implements CommandExecutor {
                         String save_loc = rsd.getWorld() + ":" + rsd.getX() + ":" + rsd.getY() + ":" + rsd.getZ();
                         set.put("save", save_loc);
                         qf.doUpdate("tardis", set, tid);
-                        sender.sendMessage(plugin.pluginName + "The specified location was set succesfully. Please exit the TARDIS!");
+                        sender.sendMessage(plugin.pluginName + "The specified location was set succesfully. Please release the handbrake!");
                         plugin.utils.updateTravellerCount(id);
                         plugin.tardisHasDestination.put(id, travel);
                         return true;
@@ -184,7 +184,7 @@ public class TARDISTravelCommands implements CommandExecutor {
                         wherea.put("area_name", args[1]);
                         ResultSetAreas rsa = new ResultSetAreas(plugin, wherea, false);
                         if (!rsa.resultSet()) {
-                            sender.sendMessage(plugin.pluginName + "Could not find an area with that name! try using " + ChatColor.GREEN + "/TARDIS list areas" + ChatColor.RESET + " first.");
+                            sender.sendMessage(plugin.pluginName + "Could not find an area with that name! try using " + ChatColor.GREEN + "/tardis list areas" + ChatColor.RESET + " first.");
                             return true;
                         }
                         if (!player.hasPermission("tardis.area." + args[1]) || !player.isPermissionSet("tardis.area." + args[1])) {
@@ -235,7 +235,7 @@ public class TARDISTravelCommands implements CommandExecutor {
                             String save_loc = location.getWorld().getName() + ":" + location.getBlockX() + ":" + location.getBlockY() + ":" + location.getBlockZ();
                             set.put("save", save_loc);
                             qf.doUpdate("tardis", set, tid);
-                            sender.sendMessage(plugin.pluginName + "The specified location was saved succesfully. Please exit the TARDIS!");
+                            sender.sendMessage(plugin.pluginName + "The specified location was saved succesfully. Please release the handbrake!");
                             plugin.utils.updateTravellerCount(id);
                             plugin.tardisHasDestination.put(id, travel);
                             return true;
