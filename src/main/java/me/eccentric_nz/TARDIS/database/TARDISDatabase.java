@@ -71,7 +71,7 @@ public class TARDISDatabase {
             statement.executeUpdate(queryProtectBlocks);
             String queryDestinations = "CREATE TABLE IF NOT EXISTS destinations (dest_id INTEGER PRIMARY KEY NOT NULL, tardis_id INTEGER, dest_name TEXT COLLATE NOCASE DEFAULT '', world TEXT COLLATE NOCASE DEFAULT '', x INTEGER, y INTEGER, z INTEGER, bind TEXT DEFAULT '')";
             statement.executeUpdate(queryDestinations);
-            String queryPresets = "CREATE TABLE IF NOT EXISTS areas (area_id INTEGER PRIMARY KEY NOT NULL, area_name TEXT COLLATE NOCASE DEFAULT '', world TEXT COLLATE NOCASE DEFAULT '', minx INTEGER, minz INTEGER, maxx INTEGER, maxz INTEGER)";
+            String queryPresets = "CREATE TABLE IF NOT EXISTS areas (area_id INTEGER PRIMARY KEY NOT NULL, area_name TEXT COLLATE NOCASE DEFAULT '', world TEXT COLLATE NOCASE DEFAULT '', minx INTEGER, minz INTEGER, maxx INTEGER, maxz INTEGER, y INTEGER)";
             statement.executeUpdate(queryPresets);
             String queryGravity = "CREATE TABLE IF NOT EXISTS gravity (g_id INTEGER PRIMARY KEY NOT NULL, tardis_id INTEGER, world TEXT COLLATE NOCASE DEFAULT '', upx INTEGER, upz INTEGER, downx INTEGER, downz INTEGER)";
             statement.executeUpdate(queryGravity);
@@ -123,13 +123,21 @@ public class TARDISDatabase {
                 String queryAlter11 = "ALTER TABLE tardis ADD condenser TEXT DEFAULT ''";
                 statement.executeUpdate(queryAlter11);
             }
-            // add bind to destinations
+            // add police_box to blocks
             String queryAddPoliceBox = "SELECT sql FROM sqlite_master WHERE tbl_name = 'blocks' AND sql LIKE '%police_box INTEGER%'";
             ResultSet rsPB = statement.executeQuery(queryAddPoliceBox);
             if (!rsPB.next()) {
                 String queryAlter13 = "ALTER TABLE blocks ADD police_box INTEGER DEFAULT 0";
                 statement.executeUpdate(queryAlter13);
                 TARDIS.plugin.console.sendMessage(TARDIS.plugin.pluginName + "Adding new police_box field to blocks!");
+            }
+            // add y to areas
+            String queryAddY = "SELECT sql FROM sqlite_master WHERE tbl_name = 'areas' AND sql LIKE '%y INTEGER%'";
+            ResultSet rsY = statement.executeQuery(queryAddY);
+            if (!rsY.next()) {
+                String queryAlter14 = "ALTER TABLE areas ADD y INTEGER";
+                statement.executeUpdate(queryAlter14);
+                TARDIS.plugin.console.sendMessage(TARDIS.plugin.pluginName + "Adding new y coord field to areas!");
             }
             String queryAddMissing = "SELECT sql FROM sqlite_master WHERE tbl_name = 'tardis' AND sql LIKE '%handbrake TEXT%'";
             ResultSet rsMissing = statement.executeQuery(queryAddMissing);

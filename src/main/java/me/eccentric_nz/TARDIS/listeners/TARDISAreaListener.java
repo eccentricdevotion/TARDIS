@@ -61,7 +61,7 @@ public class TARDISAreaListener implements Listener {
                 Location block_loc = block.getLocation();
                 // check if block is in an already defined area
                 if (plugin.ta.areaCheckInExisting(block_loc)) {
-                    String locStr = block_loc.getWorld().getName() + ":" + block_loc.getBlockX() + ":" + block_loc.getBlockZ();
+                    String locStr = block_loc.getWorld().getName() + ":" + block_loc.getBlockX() + ":" + block_loc.getBlockY() + ":" + block_loc.getBlockZ();
                     plugin.trackBlock.put(playerNameStr, locStr);
                     player.sendMessage(plugin.pluginName + "You have 60 seconds to select the area end block - use the " + ChatColor.GREEN + "/tardisarea end" + ChatColor.RESET + " command.");
                     plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
@@ -80,7 +80,13 @@ public class TARDISAreaListener implements Listener {
                 if (plugin.ta.areaCheckInExisting(block_loc)) {
                     String[] firstblock = plugin.trackBlock.get(playerNameStr).split(":");
                     if (!block_loc.getWorld().getName().equals(firstblock[0])) {
-                        player.sendMessage(plugin.pluginName + ChatColor.RED + " Area start and end blocks must be in the same world! Try again");
+                        player.sendMessage(plugin.pluginName + ChatColor.RED + "Area start and end blocks must be in the same world! Try again");
+                        return;
+                    }
+                    int y = block_loc.getBlockY();
+                    if (y != (plugin.utils.parseNum(firstblock[2]))) {
+                        player.sendMessage(plugin.pluginName + ChatColor.RED + "Area start and end blocks must be at the same Y co-ordinate! Try again with a FLAT area.");
+                        return;
                     }
                     int minx, minz, maxx, maxz;
                     if (plugin.utils.parseNum(firstblock[1]) < block_loc.getBlockX()) {
@@ -90,12 +96,12 @@ public class TARDISAreaListener implements Listener {
                         minx = block_loc.getBlockX();
                         maxx = plugin.utils.parseNum(firstblock[1]);
                     }
-                    if (plugin.utils.parseNum(firstblock[2]) < block_loc.getBlockZ()) {
-                        minz = plugin.utils.parseNum(firstblock[2]);
+                    if (plugin.utils.parseNum(firstblock[3]) < block_loc.getBlockZ()) {
+                        minz = plugin.utils.parseNum(firstblock[3]);
                         maxz = block_loc.getBlockZ();
                     } else {
                         minz = block_loc.getBlockZ();
-                        maxz = plugin.utils.parseNum(firstblock[2]);
+                        maxz = plugin.utils.parseNum(firstblock[3]);
                     }
                     String n = plugin.trackName.get(playerNameStr);
                     QueryFactory qf = new QueryFactory(plugin);
@@ -106,6 +112,7 @@ public class TARDISAreaListener implements Listener {
                     set.put("minz", minz);
                     set.put("maxx", maxx);
                     set.put("maxz", maxz);
+                    set.put("y", y + 1);
                     qf.doInsert("areas", set);
                     player.sendMessage(plugin.pluginName + "The area [" + plugin.trackName.get(playerNameStr) + "] was saved successfully");
                     plugin.trackName.remove(playerNameStr);

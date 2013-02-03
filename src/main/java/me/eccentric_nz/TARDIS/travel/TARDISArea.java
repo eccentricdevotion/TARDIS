@@ -175,7 +175,10 @@ public class TARDISArea {
             }
             if (chk == true) {
                 World w = plugin.getServer().getWorld(wStr);
-                int y = w.getHighestBlockYAt(x, z);
+                int y = rsa.getY();
+                if (y == 0) {
+                    y = w.getHighestBlockYAt(x, z);
+                }
                 location = w.getBlockAt(x, y, z).getLocation();
             }
         }
