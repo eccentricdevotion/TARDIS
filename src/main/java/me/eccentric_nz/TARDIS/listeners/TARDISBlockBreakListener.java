@@ -146,7 +146,6 @@ public class TARDISBlockBreakListener implements Listener {
                         int signy = -2;
                         // if the sign was on the TARDIS destroy the TARDIS!
                         if (sign_loc.getBlockX() == bb_loc.getBlockX() + signx && sign_loc.getBlockY() + signy == bb_loc.getBlockY() && sign_loc.getBlockZ() == bb_loc.getBlockZ() + signz) {
-                            int cwx = 0, cwz = 0;
                             // clear the torch
                             plugin.destroyPB.destroyTorch(bb_loc);
                             plugin.destroyPB.destroySign(bb_loc, d);
@@ -169,10 +168,12 @@ public class TARDISBlockBreakListener implements Listener {
                             HashMap<String, Object> cid = new HashMap<String, Object>();
                             cid.put("tardis_id", id);
                             qf.doDelete("chunks", cid);
-                            if (cw.getWorldType() == WorldType.FLAT || cw.getName().contains("TARDIS_WORLD_")) {
+                            if (cw.getWorldType() == WorldType.FLAT) {
                                 restore = 0;
                             }
-                            plugin.destroyI.destroyInner(schm, id, cw, restore, playerNameStr);
+                            if (!cw.getName().contains("TARDIS_WORLD_")) {
+                                plugin.destroyI.destroyInner(schm, id, cw, restore, playerNameStr);
+                            }
                             plugin.destroyPB.destroyPoliceBox(bb_loc, d, id, false);
                             // remove record from tardis table
                             HashMap<String, Object> tid = new HashMap<String, Object>();
