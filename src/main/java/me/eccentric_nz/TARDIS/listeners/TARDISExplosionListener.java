@@ -75,7 +75,7 @@ public class TARDISExplosionListener implements Listener {
                 int z = plugin.utils.parseNum(zStr[1].substring(0, (zStr[1].length() - 2)));
                 Block block = w.getBlockAt(x, y, z);
                 // if the block is a TARDIS block then remove it
-                if (e.blockList().contains(block)) {
+                if (block != null && e.blockList().contains(block)) {
                     e.blockList().remove(block);
                 }
                 if (id != idchk) {
