@@ -71,6 +71,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Chunk;
 import org.bukkit.Material;
+import org.bukkit.World;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.PluginManager;
@@ -198,6 +199,7 @@ public class TARDIS extends JavaPlugin {
     public ArrayList<Integer> tardisHasTravelled = new ArrayList<Integer>();
     public ArrayList<Integer> tardisMaterilising = new ArrayList<Integer>();
     public List<Chunk> tardisChunkList = new ArrayList<Chunk>();
+    public List<Chunk> roomChunkList = new ArrayList<Chunk>();
     private static ArrayList<String> quotes = new ArrayList<String>();
     public ArrayList<String> quote;
     public HashMap<Material, String> seeds;
@@ -247,10 +249,13 @@ public class TARDIS extends JavaPlugin {
         cc.startCreeperCheck();
         TARDISSpace alwaysNight = new TARDISSpace(this);
         alwaysNight.keepNight();
+        loadChunks();
     }
 
     @Override
     public void onDisable() {
+        // save chunks to file so we can reload them onenable next server startup
+        saveChunks();
         saveConfig();
         closeDatabase();
     }
@@ -472,6 +477,57 @@ public class TARDIS extends JavaPlugin {
                 getConfig().set("create_worlds", false);
                 saveConfig();
                 console.sendMessage(pluginName + ChatColor.RED + "Create Worlds was disabled as it requires a multi-world plugin and TARDISChunkGenerator!");
+            }
+        }
+    }
+
+    /**
+     * Saves the list of chunks that are being stopped from unloading. Chunk
+     * locations are either rooms being grown or Police Box locations. The file
+     * is read onEnable() and the tardisChunkList is re-populated.
+     */
+    public void saveChunks() {
+        if (tardisChunkList.size() > 0) {
+            String file = getDataFolder() + "chunks.txt";
+            try {
+                BufferedWriter bw = new BufferedWriter(new FileWriter(file, false));
+                for (Chunk c : tardisChunkList) {
+                    String line = c.getWorld().getName() + ":" + c.getX() + ":" + c.getZ();
+                    bw.write(line);
+                    bw.newLine();
+                }
+                bw.close();
+            } catch (IOException e) {
+                plugin.debug("Could not create and write to chunks.txt! " + e.getMessage());
+            }
+        }
+    }
+
+    /**
+     * Loads chunks from file to stop them from being unloaded. Chunk locations
+     * are either rooms being grown or Police Box locations.
+     */
+    public void loadChunks() {
+        File file = new File(getDataFolder() + "chunks.txt");
+        if (file.exists()) {
+            try {
+                BufferedReader br = new BufferedReader(new FileReader(file));
+                String line;
+                while ((line = br.readLine()) != null) {
+                    String[] split = line.split(":");
+                    World w = getServer().getWorld(split[0]);
+                    int x = 0, z = 0;
+                    try {
+                        x = Integer.parseInt(split[1]);
+                        z = Integer.parseInt(split[2]);
+                    } catch (NumberFormatException nfe) {
+                    }
+                    Chunk c = w.getChunkAt(x, z);
+                    tardisChunkList.add(c);
+                }
+                br.close();
+            } catch (IOException e) {
+                plugin.debug("Could not create and write to chunks.txt! " + e.getMessage());
             }
         }
     }

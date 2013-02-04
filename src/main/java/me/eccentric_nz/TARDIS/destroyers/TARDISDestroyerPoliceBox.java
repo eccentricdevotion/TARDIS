@@ -46,9 +46,9 @@ public class TARDISDestroyerPoliceBox {
     }
 
     /**
-     * Destroys the TARDIS Police Box.
+     * Destroys the TARDIS Police Box. A 3 x 3 x 3 block area.
      *
-     * @param l the location of the TARDIS Police Box.
+     * @param l the location of the TARDIS Police Box (bottom centre).
      * @param d the direction the Police Box is facing.
      * @param id the unique key of the record for this TARDIS in the database.
      * @param hide boolean determining whether to forget the protected Police
@@ -56,7 +56,8 @@ public class TARDISDestroyerPoliceBox {
      */
     public void destroyPoliceBox(Location l, TARDISConstants.COMPASS d, int id, boolean hide) {
         World w = l.getWorld();
-        final Chunk chunk = w.getChunkAt(l);
+        // make sure chunk is loaded
+        Chunk chunk = w.getChunkAt(l);
         while (!chunk.isLoaded()) {
             chunk.load();
         }
@@ -69,8 +70,9 @@ public class TARDISDestroyerPoliceBox {
         for (int yy = 0; yy < 3; yy++) {
             for (int xx = 0; xx < 3; xx++) {
                 for (int zz = 0; zz < 3; zz++) {
-                    if (w.getBlockAt(sbx, sby, sbz).getTypeId() != 0) {
-                        plugin.utils.setBlock(w, sbx, sby, sbz, 0, (byte) 0);
+                    Block b = w.getBlockAt(sbx, sby, sbz);
+                    if (b.getTypeId() != 0) {
+                        b.setTypeId(0);
                     }
                     sbx++;
                 }

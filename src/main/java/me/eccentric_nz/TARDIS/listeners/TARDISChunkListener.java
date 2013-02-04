@@ -17,6 +17,7 @@
 package me.eccentric_nz.TARDIS.listeners;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import org.bukkit.Chunk;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -45,8 +46,9 @@ public class TARDISChunkListener implements Listener {
      */
     @EventHandler(priority = EventPriority.NORMAL, ignoreCancelled = true)
     public void onChunkUnload(ChunkUnloadEvent event) {
-        if (plugin.tardisChunkList.contains(event.getChunk())) {
-            plugin.debug("Cancelled chunk unloading...");
+        Chunk c = event.getChunk();
+        if (plugin.tardisChunkList.contains(c) || plugin.roomChunkList.contains(c)) {
+            //plugin.debug("Cancelled chunk unloading...");
             event.setCancelled(true);
         }
     }
