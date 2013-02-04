@@ -146,6 +146,9 @@ public class TARDISBuilderPoliceBox {
         }
         // keep the chunk this Police box is in loaded
         Chunk thisChunk = l.getChunk();
+        while (!thisChunk.isLoaded()) {
+            thisChunk.load();
+        }
         if (!plugin.tardisChunkList.contains(thisChunk)) {
             plugin.tardisChunkList.add(thisChunk);
         }
