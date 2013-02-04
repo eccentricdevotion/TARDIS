@@ -28,7 +28,7 @@ import org.bukkit.World;
 
 /**
  * Within the TARDIS' generator room is an Artron Energy Capacitor. The Eighth
- * Doctor had a habit of using artron energy to make toast.
+ * Doctor had a habit of using Artron Energy to make toast.
  *
  * @author eccentric_nz
  */
@@ -63,8 +63,10 @@ public class TARDISArtronRunnable implements Runnable {
             set.put("recharging", 0);
             qf.doUpdate("tardis", set, where);
         } else if (near) {
+            // calculate percentage
+            int onepercent = Math.round(plugin.getConfig().getInt("full_charge") / 100.0F);
             // update TARDIS artron_level
-            qf.alterEnergyLevel("tardis", 10, where, null);
+            qf.alterEnergyLevel("tardis", onepercent, where, null);
         }
     }
 
