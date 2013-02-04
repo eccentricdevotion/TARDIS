@@ -487,8 +487,9 @@ public class TARDIS extends JavaPlugin {
      * is read onEnable() and the tardisChunkList is re-populated.
      */
     public void saveChunks() {
+        plugin.debug("Saving Police Box chunks to file!");
         if (tardisChunkList.size() > 0) {
-            String file = getDataFolder() + "chunks.txt";
+            String file = getDataFolder() + File.separator + "chunks.txt";
             try {
                 BufferedWriter bw = new BufferedWriter(new FileWriter(file, false));
                 for (Chunk c : tardisChunkList) {
@@ -508,7 +509,7 @@ public class TARDIS extends JavaPlugin {
      * are either rooms being grown or Police Box locations.
      */
     public void loadChunks() {
-        File file = new File(getDataFolder() + "chunks.txt");
+        File file = new File(getDataFolder() + File.separator + "chunks.txt");
         if (file.exists()) {
             try {
                 BufferedReader br = new BufferedReader(new FileReader(file));
@@ -524,8 +525,10 @@ public class TARDIS extends JavaPlugin {
                     }
                     Chunk c = w.getChunkAt(x, z);
                     tardisChunkList.add(c);
+                    c.load();
                 }
                 br.close();
+                plugin.debug("Loading chunks from chunks.txt!");
             } catch (IOException e) {
                 plugin.debug("Could not create and write to chunks.txt! " + e.getMessage());
             }
@@ -533,7 +536,7 @@ public class TARDIS extends JavaPlugin {
     }
 
     /**
-     * Outputs a message to the console. Requires debug: true in the config.
+     * Outputs a message to the console. Requires debug: true in config.yml
      */
     public void debug(Object o) {
         if (getConfig().getBoolean("debug") == true) {
