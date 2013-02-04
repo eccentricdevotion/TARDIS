@@ -149,9 +149,12 @@ public class TARDISBuilderPoliceBox {
         while (!thisChunk.isLoaded()) {
             thisChunk.load();
         }
-        if (!plugin.tardisChunkList.contains(thisChunk)) {
-            plugin.tardisChunkList.add(thisChunk);
-        }
+        /*
+         * We can always add the chunk, as List.remove() only removes the first
+         * occurence - and we want the chunk to remain loaded if there are other
+         * Police Boxes in it.
+         */
+        plugin.tardisChunkList.add(thisChunk);
         if (plugin.getConfig().getBoolean("materialise")) {
             TARDISMaterialisationRunnable runnable = new TARDISMaterialisationRunnable(plugin, l, wall_block, chameleonData, id, d);
             int taskID = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, runnable, 10L, 20L);
