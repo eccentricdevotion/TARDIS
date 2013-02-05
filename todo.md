@@ -1,5 +1,5 @@
 # TODO
-0. Find and squash the Police Box dupe bug (maybe fixed now?)
+0. Find and squash the Police Box dupe bug (maybe fixed now?) Still around when traveling across dimensions Nether End.
 1. Allow admins to enter hidden TARDISs
 1. Allow companions to enter and exit the tardis at will.
 2. Change Energy condenser to use ores because they are a little harder to get, but can still be used.
