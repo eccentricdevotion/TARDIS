@@ -33,7 +33,6 @@ import org.bukkit.ChatColor;
 public class TARDISConstants {
 
     public final static TARDISDatabase service = TARDISDatabase.getInstance();
-    protected static String TARDIS_KEY;
     // TARDIS schematics supplied by ewized http://dev.bukkit.org/profiles/ewized/
     public static final String SCHEMATIC_BUDGET = "budget.schematic";
     public static final String SCHEMATIC_BIGGER = "bigger.schematic";

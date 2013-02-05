@@ -209,7 +209,6 @@ public class TARDIS extends JavaPlugin {
     public boolean borderOnServer = false;
     public ConsoleCommandSender console;
     public String pluginName;
-    public String TARDIS_KEY;
     public boolean myspawn = false;
 
     @Override
@@ -235,7 +234,6 @@ public class TARDIS extends JavaPlugin {
         loadTowny();
         loadWorldBorder();
 
-        TARDIS_KEY = getConfig().getString("key");
         quote = quotes();
         quotelen = quote.size();
         if (getConfig().getBoolean("check_for_updates")) {

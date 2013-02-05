@@ -371,9 +371,6 @@ public class TARDISAdminCommands implements CommandExecutor {
                         return false;
                     } else {
                         plugin.getConfig().set(first, setMaterial);
-                        if (first.equals("key")) {
-                            plugin.TARDIS_KEY = setMaterial;
-                        }
                     }
                 }
                 if (first.equals("default_world_name")) {

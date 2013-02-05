@@ -351,7 +351,7 @@ public class TARDISDoorListener implements Listener {
                         Material baType = blockAbove.getType();
                         byte baData = blockAbove.getData();
                         if (baType == Material.WOOL && (baData == 1 || baData == 11)) {
-                            player.sendMessage(plugin.pluginName + TARDISConstants.WRONG_MATERIAL + plugin.TARDIS_KEY + ". You have a " + material + " in your hand!");
+                            player.sendMessage(plugin.pluginName + TARDISConstants.WRONG_MATERIAL + plugin.getConfig().getString("key") + ". You have a " + material + " in your hand!");
                         }
                     }
                 }
@@ -398,20 +398,9 @@ public class TARDISDoorListener implements Listener {
                     where.put("player", name);
                     int player_artron = (plugin.getConfig().getBoolean("create_worlds")) ? plugin.getConfig().getInt("player") : plugin.getConfig().getInt("player") * 10;
                     qf.alterEnergyLevel("player_prefs", player_artron, where, p);
-                    // give a key
-                    if (plugin.getConfig().getBoolean("give_key") && (bukkitversion.compareTo(preIMversion) > 0 || (bukkitversion.compareTo(preIMversion) == 0 && SUBversion.compareTo(preSUBversion) >= 0))) {
-                        Inventory inv = p.getInventory();
-                        Material m = Material.valueOf(plugin.TARDIS_KEY);
-                        if (!inv.contains(m) && plugin.getConfig().getBoolean("give_key") == true) {
-                            ItemStack is = new ItemStack(m, 1);
-                            TARDISItemRenamer ir = new TARDISItemRenamer(is);
-                            ir.setName("Sonic Screwdriver", true);
-                            inv.addItem(is);
-                            p.updateInventory();
-                            p.sendMessage(plugin.pluginName + "Don't forget your TARDIS key!");
-                        }
-                    }
                 }
+                // give a key
+                giveKey(p);
             }
         }, 10L);
     }
@@ -434,5 +423,21 @@ public class TARDISDoorListener implements Listener {
             }
         }
         return bool;
+    }
+
+    @SuppressWarnings("deprecation")
+    private void giveKey(Player p) {
+        if (plugin.getConfig().getBoolean("give_key") && (bukkitversion.compareTo(preIMversion) > 0 || (bukkitversion.compareTo(preIMversion) == 0 && SUBversion.compareTo(preSUBversion) >= 0)) && !plugin.getConfig().getString("key").equals("AIR")) {
+            Inventory inv = p.getInventory();
+            Material m = Material.valueOf(plugin.getConfig().getString("key"));
+            if (!inv.contains(m) && plugin.getConfig().getBoolean("give_key") == true) {
+                ItemStack is = new ItemStack(m, 1);
+                TARDISItemRenamer ir = new TARDISItemRenamer(is);
+                ir.setName("Sonic Screwdriver", true);
+                inv.addItem(is);
+                p.updateInventory();
+                p.sendMessage(plugin.pluginName + "Don't forget your TARDIS key!");
+            }
+        }
     }
 }
