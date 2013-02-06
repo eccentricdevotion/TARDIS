@@ -334,7 +334,7 @@ public class TARDISMaterialisationRunnable implements Runnable {
             }
         } else {
             plugin.getServer().getScheduler().cancelTask(task);
-            plugin.tardisMaterilising.remove(Integer.valueOf(tid));
+            plugin.tardisMaterialising.remove(Integer.valueOf(tid));
             task = 0;
             // message travellers in tardis
             HashMap<String, Object> where = new HashMap<String, Object>();

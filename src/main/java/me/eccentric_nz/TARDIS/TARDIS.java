@@ -197,7 +197,7 @@ public class TARDIS extends JavaPlugin {
     public HashMap<Integer, Integer> trackTravellers = new HashMap<Integer, Integer>();
     public HashMap<Integer, Integer> tardisHasDestination = new HashMap<Integer, Integer>();
     public ArrayList<Integer> tardisHasTravelled = new ArrayList<Integer>();
-    public ArrayList<Integer> tardisMaterilising = new ArrayList<Integer>();
+    public ArrayList<Integer> tardisMaterialising = new ArrayList<Integer>();
     public List<Chunk> tardisChunkList = new ArrayList<Chunk>();
     public List<Chunk> roomChunkList = new ArrayList<Chunk>();
     private static ArrayList<String> quotes = new ArrayList<String>();
