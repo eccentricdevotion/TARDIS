@@ -250,5 +250,6 @@ public class TARDISInstaPoliceBox {
                 }
             }, 30L);
         }
+        plugin.tardisMaterialising.remove(Integer.valueOf(tid));
     }
 }
