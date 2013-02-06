@@ -78,6 +78,7 @@ public class TARDISHandbrakeListener implements Listener {
                     int id = rs.getTardis_id();
                     // check to make sure we're not in the time vortex
                     if (!plugin.tardisMaterialising.contains(Integer.valueOf(id))) {
+                        plugin.tardisMaterialising.add(id);
                         Action action = event.getAction();
                         HashMap<String, Object> set = new HashMap<String, Object>();
                         String message = "";
