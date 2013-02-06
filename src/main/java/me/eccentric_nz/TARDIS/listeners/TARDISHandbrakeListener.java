@@ -75,10 +75,10 @@ public class TARDISHandbrakeListener implements Listener {
                 where.put("handbrake", hb_loc);
                 ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
                 if (rs.resultSet()) {
+                    event.setCancelled(true);
                     int id = rs.getTardis_id();
                     // check to make sure we're not in the time vortex
                     if (!plugin.tardisMaterialising.contains(Integer.valueOf(id))) {
-                        plugin.tardisMaterialising.add(id);
                         Action action = event.getAction();
                         HashMap<String, Object> set = new HashMap<String, Object>();
                         String message = "";
@@ -86,45 +86,48 @@ public class TARDISHandbrakeListener implements Listener {
                         Lever lever = (Lever) state.getData();
                         boolean update = false;
                         if (action == Action.RIGHT_CLICK_BLOCK) {
-                            event.setCancelled(true);
-                            // has a destination been set?
-                            if (plugin.tardisHasDestination.containsKey(Integer.valueOf(id))) {
-                                // handbrake off
-                                lever.setPowered(true);
-                                state.setData(lever);
-                                state.update();
-                                set.put("handbrake_on", 0);
-                                message = "OFF! Entering the time vortex...";
-                                // get location from database
-                                String save = rs.getSave();
-                                String cl = rs.getCurrent();
-                                COMPASS d = rs.getDirection();
-                                boolean cham = rs.isChamele_on();
-                                Location exit = plugin.utils.getLocationFromDB(save, 0, 0);
-                                Location l = plugin.utils.getLocationFromDB(cl, 0, 0);
-                                // remove torch
-                                plugin.destroyPB.destroyTorch(l);
-                                // remove sign
-                                plugin.destroyPB.destroySign(l, d);
-                                // remove blue box
-                                plugin.destroyPB.destroyPoliceBox(l, d, id, false);
-                                // remove current location chunk from list
-                                Chunk oldChunk = l.getChunk();
-                                if (plugin.tardisChunkList.contains(oldChunk)) {
-                                    plugin.tardisChunkList.remove(oldChunk);
+                            if (rs.isHandbrake_on()) {
+                                // has a destination been set?
+                                if (plugin.tardisHasDestination.containsKey(Integer.valueOf(id))) {
+                                    // handbrake off
+                                    lever.setPowered(true);
+                                    state.setData(lever);
+                                    state.update();
+                                    set.put("handbrake_on", 0);
+                                    message = "OFF! Entering the time vortex...";
+                                    // get location from database
+                                    String save = rs.getSave();
+                                    String cl = rs.getCurrent();
+                                    COMPASS d = rs.getDirection();
+                                    boolean cham = rs.isChamele_on();
+                                    Location exit = plugin.utils.getLocationFromDB(save, 0, 0);
+                                    Location l = plugin.utils.getLocationFromDB(cl, 0, 0);
+                                    // remove torch
+                                    plugin.destroyPB.destroyTorch(l);
+                                    // remove sign
+                                    plugin.destroyPB.destroySign(l, d);
+                                    // remove blue box
+                                    plugin.destroyPB.destroyPoliceBox(l, d, id, false);
+                                    // remove current location chunk from list
+                                    Chunk oldChunk = l.getChunk();
+                                    if (plugin.tardisChunkList.contains(oldChunk)) {
+                                        plugin.tardisChunkList.remove(oldChunk);
+                                    }
+                                    // try preloading destination chunk
+                                    World exitWorld = exit.getWorld();
+                                    Chunk chunk = exitWorld.getChunkAt(exit);
+                                    if (!exitWorld.isChunkLoaded(chunk)) {
+                                        exitWorld.loadChunk(chunk);
+                                    }
+                                    exitWorld.refreshChunk(chunk.getX(), chunk.getZ());
+                                    // rebuild blue box
+                                    plugin.buildPB.buildPoliceBox(id, exit, d, cham, player, false);
+                                    update = true;
+                                } else {
+                                    player.sendMessage(plugin.pluginName + "You need to set a destination first!");
                                 }
-                                // try preloading destination chunk
-                                World exitWorld = exit.getWorld();
-                                Chunk chunk = exitWorld.getChunkAt(exit);
-                                if (!exitWorld.isChunkLoaded(chunk)) {
-                                    exitWorld.loadChunk(chunk);
-                                }
-                                exitWorld.refreshChunk(chunk.getX(), chunk.getZ());
-                                // rebuild blue box
-                                plugin.buildPB.buildPoliceBox(id, exit, d, cham, player, false);
-                                update = true;
                             } else {
-                                player.sendMessage(plugin.pluginName + "You need to set a destination first!");
+                                player.sendMessage(plugin.pluginName + "The handbrake is already off!");
                             }
                         }
                         // can we use left click and set the lever position - yes
@@ -167,7 +170,7 @@ public class TARDISHandbrakeListener implements Listener {
                             player.sendMessage(plugin.pluginName + "Handbrake " + message);
                         }
                     } else {
-                        player.sendMessage(plugin.pluginName + "You cannot engage the handbrake while the TARDIS is in the time vortex!");
+                        player.sendMessage(plugin.pluginName + "You cannot change the handbrake while the TARDIS is in the time vortex!");
                     }
                 }
             }

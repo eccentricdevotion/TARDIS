@@ -333,8 +333,8 @@ public class TARDISMaterialisationRunnable implements Runnable {
                 plugin.utils.setBlock(world, x, minusy, minusz, south, mds);
             }
         } else {
-            plugin.getServer().getScheduler().cancelTask(task);
             plugin.tardisMaterialising.remove(Integer.valueOf(tid));
+            plugin.getServer().getScheduler().cancelTask(task);
             task = 0;
             // message travellers in tardis
             HashMap<String, Object> where = new HashMap<String, Object>();
