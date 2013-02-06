@@ -91,6 +91,10 @@ public class TARDISAreaCommands implements CommandExecutor {
                 return true;
             }
             if (args[0].equals("remove")) {
+                if (args.length < 2) {
+                    player.sendMessage(plugin.pluginName + "You need to supply an area name!");
+                    return false;
+                }
                 HashMap<String, Object> where = new HashMap<String, Object>();
                 where.put("area_name", args[1]);
                 QueryFactory qf = new QueryFactory(plugin);
@@ -99,6 +103,10 @@ public class TARDISAreaCommands implements CommandExecutor {
                 return true;
             }
             if (args[0].equals("show")) {
+                if (args.length < 2) {
+                    player.sendMessage(plugin.pluginName + "You need to supply an area name!");
+                    return false;
+                }
                 HashMap<String, Object> where = new HashMap<String, Object>();
                 where.put("area_name", args[1]);
                 ResultSetAreas rsa = new ResultSetAreas(plugin, where, false);
