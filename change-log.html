@@ -26,6 +26,36 @@
     <section>
         <h1>Change log</h1>
         <h2>What&rsquo;s been changed?</h2>
+        <h3>v2.0-beta-6</h3>
+        <ul>
+            <li>Changed the <code>/tardis check_loc</code> and <code>/tardisarea show</code> marker block to SNOW instead of GLOWSTONE</li>
+            <li>Made the Beacon recharge amount a percentage of the full_charge config value</li>
+            <li>The handbrake can no longer be clicked on/off while the TARDIS is materialising - fixes dupe bug #1</li>
+            <li>The TARDIS now uses the correct location to destroy the Police Box when a destination has been set but not used - fixes dupe bug #2</li>
+            <li>If <code>materialise: true</code> is set in the config, the Police Box now rebuilds correctly - fixes dupe bug #3</li>
+            <li>The Police Box is now impervious to FIREBALLs</li>
+            <li>Multiverse no longer tries to adjust the TARDIS world spawn point (TARDIS sets it itself)</li>
+            <li>Mistyping or using an invalid room name no longer throws an error</li>
+            <li>if <code>give_key: true</code> is set in the config the TARDIS will give a key to players when entering the TARDIS as well as exiting, should they not have one in their inventory</li>
+        </ul>
+        <h3>v2.0-beta-5</h3>
+        <ul>
+            <li>The precious blocks under the TARDIS beacon are now protected properly from harvesting after travelling for the first time Note this will only be in effect for newly created TARDISs</li>
+            <li>The spawn point of TARDIS worlds is now set inside the TARDIS, so no more falling to your death in the void if you die and respawn in your TARDIS. Note this will only be in effect for newly created TARDISs + untested with MultiWorld plugin</li>
+            <li>Improved messaging when clicking on the door and handbrake while travelling</li>
+            <li>The plugin now properly respects the give_key config option</li>
+            <li>The full_charge config value is now used where it should be</li>
+            <li>The EMERALD/Eleventh TARDIS schematic now sets the handbrake block correctly - please delete the old schematic and CSV file</li>
+            <li>You can no longer use the commands: <code>/tardis come here</code>, <code>/tardis home</code>, and <code>/tardis setdest [name]</code> when you are in a TARDIS</li>
+            <li>You can no longer use any travel commands if you are the NOT the timelord of the TARDIS you are currently inside</li>
+            <li>The Police Box platform gets properly destroyed (if present) when using the <code>/tardis direction</code> command</li>
+            <li>The chunks that Police Boxes are in are now kept loaded - this is to prevent the Police Box from not being destroyed properly when time travelling. Once the Police Box is moved the chunks are allowed to unload normally again. You can check which chunks are kept loaded with the command <code>/tardisadmin chunks</code></li>
+            <li>Police Box chunks are now saved to a text file (chunks.txt) when the plugin is disabled, and reloaded again when the plugin is next enabled</li>
+            <li>Safe location finding has been improved, there should always be at least one clear block in front of the door</li>
+            <li>TARDIS areas set up in the Nether now work correctly. Note this will only be in effect for newly created areas. The plugin now also checks that the area start and end blocks are at the same Y level</li>
+            <li>If a TARDIS was created in its own world, then the plugin no longer bothers to destroy the actual TARDIS as the world is deleted anyway</li>
+            <li>General code tidying</li>
+        </ul>
         <h3>v2.0-beta-4</h3>
         <ul>
             <li>Fixed bug with the <code>/tardisadmin list</code> command</li>
