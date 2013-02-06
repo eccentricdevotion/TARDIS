@@ -54,13 +54,14 @@ public class TARDISSpace {
             plugin.getConfig().set("worlds." + name, false);
             plugin.saveConfig();
             if (plugin.pm.isPluginEnabled("Multiverse-Core")) {
-                plugin.getServer().dispatchCommand(plugin.console, "mv import " + name + " normal -g TARDISChunkGenerator");
+                plugin.getServer().dispatchCommand(plugin.console, "mv import " + name + " normal -g TARDISChunkGenerator -n");
                 plugin.getServer().dispatchCommand(plugin.console, "mv modify set animals false " + name);
                 plugin.getServer().dispatchCommand(plugin.console, "mv modify set monsters false " + name);
                 plugin.getServer().dispatchCommand(plugin.console, "mv modify set hidden true " + name);
                 plugin.getServer().dispatchCommand(plugin.console, "mv modify set weather false " + name);
                 plugin.getServer().dispatchCommand(plugin.console, "mv modify set memory false " + name);
                 plugin.getServer().dispatchCommand(plugin.console, "mv modify set portalform none " + name);
+                plugin.getServer().dispatchCommand(plugin.console, "mv modify set adjustspawn false " + name);
             }
             if (plugin.pm.isPluginEnabled("MultiWorld")) {
                 plugin.getServer().dispatchCommand(plugin.console, "mw load " + name);
