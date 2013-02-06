@@ -102,11 +102,11 @@ public class TARDISBlockBreakListener implements Listener {
                 occupied:
                 try {
                     if (rs.resultSet()) {
-                        String saveLoc = rs.getSave();
+                        int id = rs.getTardis_id();
+                        String saveLoc = (plugin.tardisHasDestination.containsKey(id)) ? rs.getCurrent() : rs.getSave();
                         String chunkLoc = rs.getChunk();
                         String owner = rs.getOwner();
                         TARDISConstants.SCHEMATIC schm = rs.getSchematic();
-                        int id = rs.getTardis_id();
                         TARDISConstants.COMPASS d = rs.getDirection();
                         // need to check that a player is not currently in the TARDIS (if admin delete - maybe always?)
                         if (player.hasPermission("tardis.delete")) {

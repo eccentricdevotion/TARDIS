@@ -325,7 +325,7 @@ public class TARDISAdminCommands implements CommandExecutor {
                         QueryFactory qf = new QueryFactory(plugin);
                         HashMap<String, Object> whered = new HashMap<String, Object>();
                         whered.put("tardis_id", id);
-                        if (rst.resultSet()) {
+                        if (rst.resultSet() || plugin.tardisHasDestination.containsKey(id)) {
                             useCurrent = true;
                             Location spawn = cw.getSpawnLocation();
                             ArrayList<HashMap<String, String>> data = rst.getData();

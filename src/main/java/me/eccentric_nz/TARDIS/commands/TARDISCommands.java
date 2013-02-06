@@ -759,7 +759,8 @@ public class TARDISCommands implements CommandExecutor {
                             sender.sendMessage(plugin.pluginName + TARDISConstants.NO_TARDIS);
                             return false;
                         }
-                        String loc = rs.getSave();
+                        int id = rs.getTardis_id();
+                        String loc = (plugin.tardisHasDestination.containsKey(id)) ? rs.getCurrent() : rs.getSave();
                         String[] findData = loc.split(":");
                         sender.sendMessage(plugin.pluginName + "TARDIS was left at " + findData[0] + " at x: " + findData[1] + " y: " + findData[2] + " z: " + findData[3]);
                         return true;
@@ -895,7 +896,7 @@ public class TARDISCommands implements CommandExecutor {
                             HashMap<String, Object> wheret = new HashMap<String, Object>();
                             wheret.put("player", player.getName());
                             ResultSetTravellers rst = new ResultSetTravellers(plugin, wheret, false);
-                            if (rst.resultSet()) {
+                            if (rst.resultSet() || plugin.tardisHasDestination.containsKey(id)) {
                                 // inside TARDIS
                                 curDest = cur.split(":");
                             } else {
@@ -1047,9 +1048,9 @@ public class TARDISCommands implements CommandExecutor {
                             sender.sendMessage(plugin.pluginName + TARDISConstants.NO_TARDIS);
                             return false;
                         }
-                        String save = rs.getSave();
-                        String[] save_data = save.split(":");
                         int id = rs.getTardis_id();
+                        String save = (plugin.tardisHasDestination.containsKey(id)) ? rs.getCurrent() : rs.getSave();
+                        String[] save_data = save.split(":");
                         if (plugin.tardisMaterialising.contains(id)) {
                             sender.sendMessage(plugin.pluginName + "You cannot do that while the TARDIS is materialising!");
                             return true;
