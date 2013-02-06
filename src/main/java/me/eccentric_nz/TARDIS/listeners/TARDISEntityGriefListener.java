@@ -39,14 +39,14 @@ import org.bukkit.event.entity.EntityChangeBlockEvent;
  *
  * @author eccentric_nz
  */
-public class TARDISWitherDragonListener implements Listener {
+public class TARDISEntityGriefListener implements Listener {
 
     private final TARDIS plugin;
     List<EntityType> ents = new ArrayList<EntityType>();
     Version bukkitversion;
     Version prewitherversion = new Version("1.4.2");
 
-    public TARDISWitherDragonListener(TARDIS plugin) {
+    public TARDISEntityGriefListener(TARDIS plugin) {
         this.plugin = plugin;
         String[] v = Bukkit.getServer().getBukkitVersion().split("-");
         bukkitversion = new Version(v[0]);

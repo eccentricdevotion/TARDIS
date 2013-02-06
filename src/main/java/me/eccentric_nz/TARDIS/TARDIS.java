@@ -35,7 +35,7 @@ import me.eccentric_nz.TARDIS.builders.TARDISBuilderPoliceBox;
 import me.eccentric_nz.TARDIS.listeners.TARDISFireListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISExplosionListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISBlockPlaceListener;
-import me.eccentric_nz.TARDIS.listeners.TARDISWitherDragonListener;
+import me.eccentric_nz.TARDIS.listeners.TARDISEntityGriefListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISBlockBreakListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISBlockDamageListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISDoorListener;
@@ -172,7 +172,7 @@ public class TARDIS extends JavaPlugin {
     TARDISFireListener protectListener = new TARDISFireListener(this);
     TARDISBlockDamageListener damageListener = new TARDISBlockDamageListener(this);
     TARDISExplosionListener explosionListener = new TARDISExplosionListener(this);
-    TARDISWitherDragonListener dragonListener = new TARDISWitherDragonListener(this);
+    TARDISEntityGriefListener entityListener = new TARDISEntityGriefListener(this);
     TARDISLightningListener lightningListener = new TARDISLightningListener(this);
     TARDISCreeperDeathListener creeperListener = new TARDISCreeperDeathListener(this);
     TARDISArtronCapacitorListener energyListener = new TARDISArtronCapacitorListener(this);
@@ -325,7 +325,7 @@ public class TARDIS extends JavaPlugin {
         pm.registerEvents(protectListener, this);
         pm.registerEvents(damageListener, this);
         pm.registerEvents(explosionListener, this);
-        pm.registerEvents(dragonListener, this);
+        pm.registerEvents(entityListener, this);
         pm.registerEvents(lightningListener, this);
         pm.registerEvents(creeperListener, this);
         pm.registerEvents(energyListener, this);
