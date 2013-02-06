@@ -155,17 +155,17 @@ public class TARDISBuilderPoliceBox {
          * Police Boxes in it.
          */
         plugin.tardisChunkList.add(thisChunk);
-        if (plugin.getConfig().getBoolean("materialise")) {
-            plugin.tardisMaterialising.add(id);
-            TARDISMaterialisationRunnable runnable = new TARDISMaterialisationRunnable(plugin, l, wall_block, chameleonData, id, d);
-            int taskID = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, runnable, 10L, 20L);
-            runnable.setTask(taskID);
+        if (rebuild) {
+            TARDISPoliceBoxRebuilder rebuilder = new TARDISPoliceBoxRebuilder(plugin, l, wall_block, chameleonData, id, d);
+            rebuilder.rebuildPoliceBox();
         } else {
-            if (rebuild) {
-                TARDISPoliceBoxRebuilder rebuilder = new TARDISPoliceBoxRebuilder(plugin, l, wall_block, chameleonData, id, d);
-                rebuilder.rebuildPoliceBox();
+            if (plugin.getConfig().getBoolean("materialise")) {
+                //plugin.tardisMaterialising.add(id);
+                TARDISMaterialisationRunnable runnable = new TARDISMaterialisationRunnable(plugin, l, wall_block, chameleonData, id, d);
+                int taskID = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, runnable, 10L, 20L);
+                runnable.setTask(taskID);
             } else {
-                plugin.tardisMaterialising.add(id);
+                //plugin.tardisMaterialising.add(id);
                 TARDISInstaPoliceBox insta = new TARDISInstaPoliceBox(plugin, l, wall_block, chameleonData, id, d);
                 insta.buildPoliceBox();
             }
