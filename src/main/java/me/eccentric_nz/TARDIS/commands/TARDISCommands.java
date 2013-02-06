@@ -62,6 +62,7 @@ public class TARDISCommands implements CommandExecutor {
     private TARDISPluginRespect respect;
     HashSet<Byte> transparent = new HashSet<Byte>();
     private List<String> firstArgs = new ArrayList<String>();
+    private List<String> roomArgs = new ArrayList<String>();
     Version bukkitversion;
     Version preIMversion = new Version("1.4.5");
     Version SUBversion;
@@ -100,7 +101,10 @@ public class TARDISCommands implements CommandExecutor {
         firstArgs.add("bind");
         firstArgs.add("unbind");
         firstArgs.add("check_loc");
-
+        // rooms
+        for (ROOM r : ROOM.values()) {
+            roomArgs.add(r.toString());
+        }
         String[] v = Bukkit.getServer().getBukkitVersion().split("-");
         bukkitversion = new Version(v[0]);
         SUBversion = new Version(v[1].substring(1, v[1].length()));
@@ -207,8 +211,8 @@ public class TARDISCommands implements CommandExecutor {
                             return false;
                         }
                         String room = args[1].toUpperCase(Locale.ENGLISH);
-                        if (!Arrays.asList(ROOM.values()).contains(ROOM.valueOf(room))) {
-                            player.sendMessage(plugin.pluginName + "That is not a valid room type! Try one of : passage|arboretum|pool|vault|kitchen|bedroom|library|workshop|empty");
+                        if (!roomArgs.contains(room)) {
+                            player.sendMessage(plugin.pluginName + "That is not a valid room type! Try one of : passage|arboretum|pool|vault|kitchen|bedroom|library|workshop|empty|gravity");
                             return true;
                         }
                         HashMap<String, Object> where = new HashMap<String, Object>();
@@ -389,7 +393,7 @@ public class TARDISCommands implements CommandExecutor {
                             player.sendMessage(plugin.pluginName + "You cannot bring the Police Box here because you are inside a TARDIS!");
                             return true;
                         }
-                        if (plugin.tardisMaterilising.contains(id)) {
+                        if (plugin.tardisMaterialising.contains(id)) {
                             sender.sendMessage(plugin.pluginName + "You cannot do that while the TARDIS is materialising!");
                             return true;
                         }
@@ -409,7 +413,7 @@ public class TARDISCommands implements CommandExecutor {
                             return true;
                         }
                         final Player p = player;
-                        String badsave = rs.getSave();
+                        String badsave = (plugin.tardisHasDestination.containsKey(id)) ? rs.getCurrent() : rs.getSave();
                         boolean chamtmp = false;
                         if (plugin.getConfig().getBoolean("chameleon")) {
                             chamtmp = rs.isChamele_on();
@@ -680,9 +684,9 @@ public class TARDISCommands implements CommandExecutor {
                             sender.sendMessage(plugin.pluginName + TARDISConstants.NO_TARDIS);
                             return false;
                         }
-                        save = rs.getSave();
                         id = rs.getTardis_id();
-                        if (plugin.tardisMaterilising.contains(id)) {
+                        save = (plugin.tardisHasDestination.containsKey(id)) ? rs.getCurrent() : rs.getSave();
+                        if (plugin.tardisMaterialising.contains(id)) {
                             sender.sendMessage(plugin.pluginName + "You cannot do that while the TARDIS is materialising!");
                             return true;
                         }
@@ -1046,7 +1050,7 @@ public class TARDISCommands implements CommandExecutor {
                         String save = rs.getSave();
                         String[] save_data = save.split(":");
                         int id = rs.getTardis_id();
-                        if (plugin.tardisMaterilising.contains(id)) {
+                        if (plugin.tardisMaterialising.contains(id)) {
                             sender.sendMessage(plugin.pluginName + "You cannot do that while the TARDIS is materialising!");
                             return true;
                         }
