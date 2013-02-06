@@ -321,14 +321,14 @@ public class TARDISTimetravel {
         final int c = col;
         final int startx = sx;
         final int startz = sz;
-        plugin.utils.setBlock(w, startx, starty, startz, 89, (byte) 0);
-        plugin.utils.setBlock(w, startx, starty, startz + row, 89, (byte) 0);
-        plugin.utils.setBlock(w, startx + col, starty, startz, 89, (byte) 0);
-        plugin.utils.setBlock(w, startx + col, starty, startz + row, 89, (byte) 0);
-        plugin.utils.setBlock(w, startx, starty + 3, startz, 89, (byte) 0);
-        plugin.utils.setBlock(w, startx + col, starty + 3, startz, 89, (byte) 0);
-        plugin.utils.setBlock(w, startx, starty + 3, startz + row, 89, (byte) 0);
-        plugin.utils.setBlock(w, startx + col, starty + 3, startz + row, 89, (byte) 0);
+        plugin.utils.setBlock(w, startx, starty, startz, 80, (byte) 0);
+        plugin.utils.setBlock(w, startx, starty, startz + row, 80, (byte) 0);
+        plugin.utils.setBlock(w, startx + col, starty, startz, 80, (byte) 0);
+        plugin.utils.setBlock(w, startx + col, starty, startz + row, 80, (byte) 0);
+        plugin.utils.setBlock(w, startx, starty + 3, startz, 80, (byte) 0);
+        plugin.utils.setBlock(w, startx + col, starty + 3, startz, 80, (byte) 0);
+        plugin.utils.setBlock(w, startx, starty + 3, startz + row, 80, (byte) 0);
+        plugin.utils.setBlock(w, startx + col, starty + 3, startz + row, 80, (byte) 0);
         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
             public void run() {
                 plugin.utils.setBlock(w, startx, starty, startz, 0, (byte) 0);

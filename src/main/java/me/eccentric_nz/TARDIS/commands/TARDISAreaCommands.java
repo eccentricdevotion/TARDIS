@@ -112,13 +112,13 @@ public class TARDISAreaCommands implements CommandExecutor {
                 int maz = rsa.getMaxz();
                 World w = plugin.getServer().getWorld(rsa.getWorld());
                 final Block b1 = w.getHighestBlockAt(mix, miz).getRelative(BlockFace.UP);
-                b1.setTypeId(89);
+                b1.setTypeId(80);
                 final Block b2 = w.getHighestBlockAt(mix, maz).getRelative(BlockFace.UP);
-                b2.setTypeId(89);
+                b2.setTypeId(80);
                 final Block b3 = w.getHighestBlockAt(max, miz).getRelative(BlockFace.UP);
-                b3.setTypeId(89);
+                b3.setTypeId(80);
                 final Block b4 = w.getHighestBlockAt(max, maz).getRelative(BlockFace.UP);
-                b4.setTypeId(89);
+                b4.setTypeId(80);
                 plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
                     @Override
                     public void run() {
