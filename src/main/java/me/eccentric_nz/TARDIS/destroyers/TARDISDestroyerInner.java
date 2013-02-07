@@ -16,6 +16,7 @@
  */
 package me.eccentric_nz.TARDIS.destroyers;
 
+import java.util.Collections;
 import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
@@ -125,6 +126,8 @@ public class TARDISDestroyerInner {
         HashMap<String, Object> where = new HashMap<String, Object>();
         where.put("tardis_id", id);
         qf.doDelete("blocks", where);
+        // remove from protectBlockMap - remove(Integer.valueOf(id)) would only remove the first one
+        plugin.protectBlockMap.values().removeAll(Collections.singleton(Integer.valueOf(id)));
         if (plugin.worldGuardOnServer) {
             plugin.wgchk.removeRegion(w, p);
         }

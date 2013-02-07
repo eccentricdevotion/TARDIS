@@ -17,6 +17,7 @@
 package me.eccentric_nz.TARDIS.destroyers;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
@@ -150,6 +151,8 @@ public class TARDISDestroyerPoliceBox {
             whereb.put("tardis_id", id);
             whereb.put("police_box", 1);
             qf.doDelete("blocks", whereb);
+            // remove from protectBlockMap - remove(Integer.valueOf(id)) would only remove the first one
+            plugin.protectBlockMap.values().removeAll(Collections.singleton(Integer.valueOf(id)));
         }
     }
 
