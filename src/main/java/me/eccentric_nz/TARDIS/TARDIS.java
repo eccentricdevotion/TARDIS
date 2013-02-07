@@ -46,6 +46,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Set;
 import me.eccentric_nz.TARDIS.builders.TARDISSpace;
+import me.eccentric_nz.TARDIS.files.TARDISBlockLoader;
 import me.eccentric_nz.TARDIS.files.TARDISMakeCSV;
 import me.eccentric_nz.TARDIS.files.TARDISUpdateChecker;
 import me.eccentric_nz.TARDIS.listeners.TARDISAreaListener;
@@ -200,6 +201,9 @@ public class TARDIS extends JavaPlugin {
     public ArrayList<Integer> tardisMaterialising = new ArrayList<Integer>();
     public List<Chunk> tardisChunkList = new ArrayList<Chunk>();
     public List<Chunk> roomChunkList = new ArrayList<Chunk>();
+    public List<String> gravityUpList = new ArrayList<String>();
+    public List<String> gravityDownList = new ArrayList<String>();
+    public HashMap<String, Integer> protectBlockMap = new HashMap<String, Integer>();
     private static ArrayList<String> quotes = new ArrayList<String>();
     public ArrayList<String> quote;
     public HashMap<Material, String> seeds;
@@ -248,6 +252,9 @@ public class TARDIS extends JavaPlugin {
         TARDISSpace alwaysNight = new TARDISSpace(this);
         alwaysNight.keepNight();
         loadChunks();
+        TARDISBlockLoader bl = new TARDISBlockLoader(this);
+        bl.loadProtectBlocks();
+        bl.loadGravityWells();
     }
 
     @Override
