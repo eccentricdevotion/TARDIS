@@ -107,6 +107,7 @@ public class TARDISUtils {
         }
         set.put("police_box", 1);
         qf.doInsert("blocks", set);
+        plugin.protectBlockMap.put(l, id);
         // set the block
         b.setTypeIdAndData(m, d, true);
     }
