@@ -16,21 +16,16 @@
  */
 package me.eccentric_nz.TARDIS.builders;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
-import me.eccentric_nz.TARDIS.database.QueryFactory;
-import me.eccentric_nz.TARDIS.database.ResultSetDoors;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
-import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.block.Sign;
-import org.bukkit.entity.Player;
 
 /**
  * A police box is a telephone kiosk that can be used by members of the public
@@ -64,7 +59,7 @@ public class TARDISPoliceBoxRebuilder {
      */
     public void rebuildPoliceBox() {
         int plusx, minusx, x, plusz, minusz, z;
-        byte sd = 0, norm = 0, grey = 8;
+        byte sd = 0, grey = 8;
         byte mds = data, mdw = data, mdn = data, mde = data, bds = data, bdw = data, bdn = data, bde = data;
         final World world;
         // expand placed blocks to a police box
@@ -85,18 +80,11 @@ public class TARDISPoliceBoxRebuilder {
         minusz = (location.getBlockZ() - 1);
         world = location.getWorld();
         int south = mat, west = mat, north = mat, east = mat, signx = 0, signz = 0;
-        String doorloc = "";
-
-        QueryFactory qf = new QueryFactory(plugin);
-        HashMap<String, Object> ps = new HashMap<String, Object>();
-        ps.put("tardis_id", tid);
-        // get direction player is facing from yaw place block under door if block is in list of blocks an iron door cannot go on
+        // get direction police box is facing, place block under door if block is in list of blocks an iron door cannot go on
         switch (d) {
             case SOUTH:
                 //if (yaw >= 315 || yaw < 45)
                 plugin.utils.setBlockCheck(world, x, down3y, minusz, 35, grey, tid); // door is here if player facing south
-                ps.put("location", world.getBlockAt(x, down3y, minusz).getLocation().toString());
-                doorloc = world.getName() + ":" + x + ":" + down2y + ":" + minusz;
                 sd = 2;
                 signx = x;
                 signz = (minusz - 1);
@@ -107,8 +95,6 @@ public class TARDISPoliceBoxRebuilder {
             case EAST:
                 //if (yaw >= 225 && yaw < 315)
                 plugin.utils.setBlockCheck(world, minusx, down3y, z, 35, grey, tid); // door is here if player facing east
-                ps.put("location", world.getBlockAt(minusx, down3y, z).getLocation().toString());
-                doorloc = world.getName() + ":" + minusx + ":" + down2y + ":" + z;
                 sd = 4;
                 signx = (minusx - 1);
                 signz = z;
@@ -119,8 +105,6 @@ public class TARDISPoliceBoxRebuilder {
             case NORTH:
                 //if (yaw >= 135 && yaw < 225)
                 plugin.utils.setBlockCheck(world, x, down3y, plusz, 35, grey, tid); // door is here if player facing north
-                ps.put("location", world.getBlockAt(x, down3y, plusz).getLocation().toString());
-                doorloc = world.getName() + ":" + x + ":" + down2y + ":" + plusz;
                 sd = 3;
                 signx = x;
                 signz = (plusz + 1);
@@ -131,8 +115,6 @@ public class TARDISPoliceBoxRebuilder {
             case WEST:
                 //if (yaw >= 45 && yaw < 135)
                 plugin.utils.setBlockCheck(world, plusx, down3y, z, 35, grey, tid); // door is here if player facing west
-                ps.put("location", world.getBlockAt(plusx, down3y, z).getLocation().toString());
-                doorloc = world.getName() + ":" + plusx + ":" + down2y + ":" + z;
                 sd = 5;
                 signx = (plusx + 1);
                 signz = z;
@@ -140,24 +122,6 @@ public class TARDISPoliceBoxRebuilder {
                 mdw = 8;
                 bdw = 2;
                 break;
-        }
-        ps.put("police_box", 1);
-        qf.doInsert("blocks", ps);
-        // should insert the door when tardis is first made, and then update location there after!
-        HashMap<String, Object> whered = new HashMap<String, Object>();
-        whered.put("door_type", 0);
-        whered.put("tardis_id", tid);
-        ResultSetDoors rsd = new ResultSetDoors(plugin, whered, false);
-        HashMap<String, Object> setd = new HashMap<String, Object>();
-        setd.put("door_location", doorloc);
-        if (rsd.resultSet()) {
-            HashMap<String, Object> whereid = new HashMap<String, Object>();
-            whereid.put("door_id", rsd.getDoor_id());
-            qf.doUpdate("doors", setd, whereid);
-        } else {
-            setd.put("tardis_id", tid);
-            setd.put("door_type", 0);
-            qf.doInsert("doors", setd);
         }
         // bottom layer corners
         plugin.utils.setBlock(world, plusx, down2y, plusz, mat, data);
@@ -233,18 +197,5 @@ public class TARDISPoliceBoxRebuilder {
         plugin.utils.setBlock(world, x, minusy, plusz, north, mdn);
         plugin.utils.setBlock(world, minusx, minusy, z, east, mde);
         plugin.utils.setBlock(world, x, minusy, minusz, south, mds);
-        // message travellers in tardis
-        HashMap<String, Object> where = new HashMap<String, Object>();
-        where.put("tardis_id", tid);
-        ResultSetTravellers rst = new ResultSetTravellers(plugin, where, true);
-        if (rst.resultSet()) {
-            ArrayList<HashMap<String, String>> travellers = rst.getData();
-            for (HashMap<String, String> map : travellers) {
-                Player p = plugin.getServer().getPlayer(map.get("player"));
-                if (p != null) {
-                    plugin.getServer().getPlayer(map.get("player")).sendMessage(plugin.pluginName + "Engage the handbrake to exit!");
-                }
-            }
-        }
     }
 }
