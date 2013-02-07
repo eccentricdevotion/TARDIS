@@ -168,26 +168,29 @@ public class TARDISRoomRunnable implements Runnable {
                 plugin.roomChunkList.add(thisChunk);
                 chunkList.add(thisChunk);
             }
-            plugin.utils.setBlock(l.getWorld(), startx, starty, startz, id, data);
+            plugin.utils.setBlock(world, startx, starty, startz, id, data);
             QueryFactory qf = new QueryFactory(plugin);
             if (room.equals("GRAVITY")) {
+                String loc;
                 if (id == 35 && data == 6) {
                     // pink wool - gravity well down
+                    loc = new Location(world, startx, starty, startz).toString();
                     HashMap<String, Object> setd = new HashMap<String, Object>();
                     setd.put("tardis_id", tardis_id);
-                    setd.put("world", l.getWorld().toString());
-                    setd.put("downx", startx);
-                    setd.put("downz", startz);
-                    qf.doInsert("gravity", setd);
+                    setd.put("location", loc);
+                    setd.put("direction", 0);
+                    qf.doInsert("gravity_well", setd);
+                    plugin.gravityDownList.add(loc);
                 }
                 if (id == 35 && data == 5) {
                     // pink wool - gravity well down
+                    loc = new Location(world, startx, starty, startz).toString();
                     HashMap<String, Object> setu = new HashMap<String, Object>();
-                    HashMap<String, Object> where = new HashMap<String, Object>();
-                    setu.put("upx", startx);
-                    setu.put("upz", startz);
-                    where.put("tardis_id", tardis_id);
-                    qf.doUpdate("gravity", setu, where);
+                    setu.put("tardis_id", tardis_id);
+                    setu.put("location", loc);
+                    setu.put("direction", 1);
+                    qf.doInsert("gravity_well", setu);
+                    plugin.gravityUpList.add(loc);
                 }
             }
             startx += x;
