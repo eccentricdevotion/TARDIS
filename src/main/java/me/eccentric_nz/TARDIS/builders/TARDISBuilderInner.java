@@ -282,10 +282,12 @@ public class TARDISBuilderInner {
                         // if it's a iron/gold/diamond/emerald block put it in the blocks table
                         if (id == 41 || id == 42 || id == 57 || id == 133 || id == -123) {
                             HashMap<String, Object> setpb = new HashMap<String, Object>();
+                            String loc = new Location(world, startx, starty, startz).toString();
                             setpb.put("tardis_id", dbID);
-                            setpb.put("location", new Location(world, startx, starty, startz).toString());
+                            setpb.put("location", loc);
                             setpb.put("police_box", 0);
                             qf.doInsert("blocks", setpb);
+                            plugin.protectBlockMap.put(loc, dbID);
                         }
                         // if it's the door, don't set it just remember its block then do it at the end
                         if (id == 71) {

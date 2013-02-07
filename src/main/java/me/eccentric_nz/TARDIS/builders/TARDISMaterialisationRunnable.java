@@ -85,7 +85,7 @@ public class TARDISMaterialisationRunnable implements Runnable {
                     b = data;
                     break;
             }
-            byte mds = b, mdw = b, mdn = b, mde = b, bds = b, bdw = b, bdn = b, bde = b, sd = 0, norm = 0, grey = 8;
+            byte mds = b, mdw = b, mdn = b, mde = b, bds = b, bdw = b, bdn = b, bde = b, sd = 0, grey = 8;
             int plusx, minusx, x, plusz, minusz, z;
             // get relative locations
             x = location.getBlockX();
@@ -118,12 +118,14 @@ public class TARDISMaterialisationRunnable implements Runnable {
                 QueryFactory qf = new QueryFactory(plugin);
                 HashMap<String, Object> ps = new HashMap<String, Object>();
                 ps.put("tardis_id", tid);
+                String loc = "";
                 // get direction player is facing from yaw place block under door if block is in list of blocks an iron door cannot go on
                 switch (d) {
                     case SOUTH:
                         //if (yaw >= 315 || yaw < 45)
                         plugin.utils.setBlockCheck(world, x, down3y, minusz, 35, grey, tid); // door is here if player facing south
-                        ps.put("location", world.getBlockAt(x, down3y, minusz).getLocation().toString());
+                        loc = world.getBlockAt(x, down3y, minusz).getLocation().toString();
+                        ps.put("location", loc);
                         doorloc = world.getName() + ":" + x + ":" + down2y + ":" + minusz;
                         sd = 2;
                         signx = x;
@@ -135,7 +137,8 @@ public class TARDISMaterialisationRunnable implements Runnable {
                     case EAST:
                         //if (yaw >= 225 && yaw < 315)
                         plugin.utils.setBlockCheck(world, minusx, down3y, z, 35, grey, tid); // door is here if player facing east
-                        ps.put("location", world.getBlockAt(minusx, down3y, z).getLocation().toString());
+                        loc = world.getBlockAt(minusx, down3y, z).getLocation().toString();
+                        ps.put("location", loc);
                         doorloc = world.getName() + ":" + minusx + ":" + down2y + ":" + z;
                         sd = 4;
                         signx = (minusx - 1);
@@ -147,7 +150,8 @@ public class TARDISMaterialisationRunnable implements Runnable {
                     case NORTH:
                         //if (yaw >= 135 && yaw < 225)
                         plugin.utils.setBlockCheck(world, x, down3y, plusz, 35, grey, tid); // door is here if player facing north
-                        ps.put("location", world.getBlockAt(x, down3y, plusz).getLocation().toString());
+                        loc = world.getBlockAt(x, down3y, plusz).getLocation().toString();
+                        ps.put("location", loc);
                         doorloc = world.getName() + ":" + x + ":" + down2y + ":" + plusz;
                         sd = 3;
                         signx = x;
@@ -159,7 +163,8 @@ public class TARDISMaterialisationRunnable implements Runnable {
                     case WEST:
                         //if (yaw >= 45 && yaw < 135)
                         plugin.utils.setBlockCheck(world, plusx, down3y, z, 35, grey, tid); // door is here if player facing west
-                        ps.put("location", world.getBlockAt(plusx, down3y, z).getLocation().toString());
+                        loc = world.getBlockAt(plusx, down3y, z).getLocation().toString();
+                        ps.put("location", loc);
                         doorloc = world.getName() + ":" + plusx + ":" + down2y + ":" + z;
                         sd = 5;
                         signx = (plusx + 1);
@@ -171,6 +176,9 @@ public class TARDISMaterialisationRunnable implements Runnable {
                 }
                 ps.put("police_box", 1);
                 qf.doInsert("blocks", ps);
+                if (!loc.equals("")) {
+                    plugin.protectBlockMap.put(loc, tid);
+                }
                 // should insert the door when tardis is first made, and then update location there after!
                 HashMap<String, Object> whered = new HashMap<String, Object>();
                 whered.put("door_type", 0);
@@ -185,6 +193,7 @@ public class TARDISMaterialisationRunnable implements Runnable {
                 } else {
                     setd.put("tardis_id", tid);
                     setd.put("door_type", 0);
+                    setd.put("door_direction", d.toString());
                     qf.doInsert("doors", setd);
                 }
                 // bottom layer corners
