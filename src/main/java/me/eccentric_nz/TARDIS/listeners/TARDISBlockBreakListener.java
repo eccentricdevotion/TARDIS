@@ -181,10 +181,10 @@ public class TARDISBlockBreakListener implements Listener {
                             HashMap<String, Object> did = new HashMap<String, Object>();
                             did.put("tardis_id", id);
                             qf.doDelete("doors", did);
-                            // remove gravity well
+                            // remove gravity wells
                             HashMap<String, Object> gid = new HashMap<String, Object>();
                             gid.put("tardis_id", id);
-                            qf.doDelete("gravity", gid);
+                            qf.doDelete("gravity_well", gid);
                             // remove saved destinations
                             HashMap<String, Object> lid = new HashMap<String, Object>();
                             lid.put("tardis_id", id);

@@ -26,16 +26,11 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 import me.eccentric_nz.TARDIS.TARDIS;
-import org.bukkit.World;
 
 /**
  * Anti-gravity was the process of creating objects free from or releasing
  * objects from the force of gravity. The Time Lords' Matrix held many advanced
  * scientific techniques, including the secret of anti-gravity power.
- *
- * Air corridors projected by TARDISes had the option to use anti-gravity,
- * allowing the occupant of the corridor to float through the corridor instead
- * of walk.
  *
  * @author eccentric_nz
  */
@@ -48,16 +43,13 @@ public class ResultSetGravity {
     private boolean multiple;
     private int gravity_id;
     private int tardis_id;
-    private World world;
-    private int upx;
-    private int upz;
-    private int downx;
-    private int downz;
+    private String location;
+    private int direction;
     private ArrayList<HashMap<String, String>> data = new ArrayList<HashMap<String, String>>();
 
     /**
      * Creates a class instance that can be used to retrieve an SQL ResultSet
-     * from the gravity table.
+     * from the gravity_well table.
      *
      * @param plugin an instance of the main class.
      * @param where a HashMap<String, Object> of table fields and values to
@@ -85,7 +77,7 @@ public class ResultSetGravity {
             }
             wheres = " WHERE " + sbw.toString().substring(0, sbw.length() - 5);
         }
-        String query = "SELECT * FROM gravity" + wheres;
+        String query = "SELECT * FROM gravity_well" + wheres;
         //plugin.debug(query);
         try {
             statement = connection.prepareStatement(query);
@@ -115,11 +107,8 @@ public class ResultSetGravity {
                     }
                     this.gravity_id = rs.getInt("g_id");
                     this.tardis_id = rs.getInt("tardis_id");
-                    this.world = plugin.getServer().getWorld(rs.getString("world"));
-                    this.upx = rs.getInt("upx");
-                    this.upz = rs.getInt("upz");
-                    this.downx = rs.getInt("downx");
-                    this.downz = rs.getInt("downz");
+                    this.location = rs.getString("location");
+                    this.direction = rs.getInt("direction");
                 }
             } else {
                 return false;
@@ -150,24 +139,12 @@ public class ResultSetGravity {
         return tardis_id;
     }
 
-    public World getWorld() {
-        return world;
+    public String getLocation() {
+        return location;
     }
 
-    public int getUpx() {
-        return upx;
-    }
-
-    public int getUpz() {
-        return upz;
-    }
-
-    public int getDownx() {
-        return downx;
-    }
-
-    public int getDownz() {
-        return downz;
+    public int getDirection() {
+        return direction;
     }
 
     public ArrayList<HashMap<String, String>> getData() {

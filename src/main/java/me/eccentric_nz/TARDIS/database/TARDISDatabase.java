@@ -73,8 +73,12 @@ public class TARDISDatabase {
             statement.executeUpdate(queryDestinations);
             String queryPresets = "CREATE TABLE IF NOT EXISTS areas (area_id INTEGER PRIMARY KEY NOT NULL, area_name TEXT COLLATE NOCASE DEFAULT '', world TEXT COLLATE NOCASE DEFAULT '', minx INTEGER, minz INTEGER, maxx INTEGER, maxz INTEGER, y INTEGER)";
             statement.executeUpdate(queryPresets);
-            String queryGravity = "CREATE TABLE IF NOT EXISTS gravity (g_id INTEGER PRIMARY KEY NOT NULL, tardis_id INTEGER, world TEXT COLLATE NOCASE DEFAULT '', upx INTEGER, upz INTEGER, downx INTEGER, downz INTEGER)";
+            String queryGravity = "CREATE TABLE IF NOT EXISTS gravity_well (g_id INTEGER PRIMARY KEY NOT NULL, tardis_id INTEGER, location TEXT COLLATE NOCASE DEFAULT '', direction INTEGER)";
             statement.executeUpdate(queryGravity);
+
+            // delete old gravity table
+//            String dropGravity = "DROP TABLE IF EXISTS gravity";
+//            statement.executeUpdate(dropGravity);
 
             // just when I thought I'd got rid of them all... another check to add a column
             String queryAddArtron = "SELECT sql FROM sqlite_master WHERE tbl_name = 'player_prefs' AND sql LIKE '%artron_level INTEGER%'";
