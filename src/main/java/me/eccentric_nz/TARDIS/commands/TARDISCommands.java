@@ -378,7 +378,7 @@ public class TARDISCommands implements CommandExecutor {
                         // check they are a timelord
                         HashMap<String, Object> where = new HashMap<String, Object>();
                         where.put("owner", player.getName());
-                        ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
+                        final ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
                         if (!rs.resultSet()) {
                             sender.sendMessage(plugin.pluginName + "You must be the Timelord of the TARDIS to use this command!");
                             return true;
@@ -446,6 +446,7 @@ public class TARDISCommands implements CommandExecutor {
                         Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
                             @Override
                             public void run() {
+                                plugin.destroyPB.destroyPlatform(rs.getPlatform(), id);
                                 plugin.destroyPB.destroySign(oldSave, d);
                                 plugin.destroyPB.destroyTorch(oldSave);
                                 plugin.destroyPB.destroyPoliceBox(oldSave, d, id, false);
