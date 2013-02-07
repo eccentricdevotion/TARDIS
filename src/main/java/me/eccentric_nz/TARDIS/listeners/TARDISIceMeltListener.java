@@ -16,9 +16,7 @@
  */
 package me.eccentric_nz.TARDIS.listeners;
 
-import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.database.ResultSetBlocks;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.event.EventHandler;
@@ -52,10 +50,7 @@ public class TARDISIceMeltListener implements Listener {
         Material m = b.getType();
         if (m.equals(Material.ICE)) {
             String l = b.getLocation().toString();
-            HashMap<String, Object> where = new HashMap<String, Object>();
-            where.put("location", l);
-            ResultSetBlocks rs = new ResultSetBlocks(plugin, where, false);
-            if (rs.resultSet()) {
+            if (plugin.protectBlockMap.containsKey(l)) {
                 event.setCancelled(true);
             }
         }

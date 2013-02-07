@@ -16,14 +16,10 @@
  */
 package me.eccentric_nz.TARDIS.listeners;
 
-import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.database.ResultSetGravity;
-import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.rooms.TARDISGravityWellRunnable;
 import org.bukkit.Location;
 import org.bukkit.World;
-import org.bukkit.block.Block;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -33,6 +29,9 @@ import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 
 /**
+ * Air corridors projected by TARDISes had the option to use anti-gravity,
+ * allowing the occupant of the corridor to float through the corridor instead
+ * of walk.
  *
  * @author eccentric_nz
  */
@@ -44,64 +43,46 @@ public class TARDISGravityWellListener implements Listener {
         this.plugin = plugin;
     }
 
+    /**
+     * Listens for a player walking over a Gravity Well location. If the block
+     * the player is on is contained in the gravityUpList then the player is
+     * transported up.
+     */
     @EventHandler(priority = EventPriority.MONITOR)
-    public void onInteract(PlayerMoveEvent event) {
-        final Player player = event.getPlayer();
-        HashMap<String, Object> where = new HashMap<String, Object>();
-        where.put("player", player.getName());
-        ResultSetTravellers rst = new ResultSetTravellers(plugin, where, false);
-        if (rst.resultSet()) {
-            int tid = rst.getTardis_id();
-            HashMap<String, Object> whereg = new HashMap<String, Object>();
-            whereg.put("tardis_id", tid);
-            ResultSetGravity rsg = new ResultSetGravity(plugin, whereg, false);
-            if (rsg.resultSet()) {
-                World world = event.getTo().getWorld();
-                Location loc = new Location(world, event.getTo().getX(), event.getTo().getY() - .2, event.getTo().getZ());
-                Block b = loc.getBlock();
-                double endy;
-                int id = b.getTypeId();
-                byte data = b.getData();
-                int x = loc.getBlockX();
-                int z = loc.getBlockZ();
-                if (id == 35 && data == (byte) 5 && (loc.getBlockX() == rsg.getUpx() && loc.getBlockZ() == rsg.getUpz())) {
-                    endy = loc.getY() + 10;
-                    TARDISGravityWellRunnable runnable = new TARDISGravityWellRunnable(plugin, player, 0.5D, endy, x, z);
-                    int task = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, runnable, 2L, 3L);
-                    runnable.setTask(task);
-                }
-//                if (id == 0) {
-//                    if (loc.getBlockX() == rsg.getDownx() && loc.getBlockZ() == rsg.getDownz()) {
-//                        endy = loc.getY() - 10;
-//                        TARDISGravityWellRunnable runnable = new TARDISGravityWellRunnable(plugin, player, -0.5D, endy, x, z);
-//                        int task = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, runnable, 2L, 3L);
-//                        runnable.setTask(task);
-//                    }
-//                }
-            }
+    public void onPlayerMove(PlayerMoveEvent event) {
+        World world = event.getTo().getWorld();
+        Location l = new Location(world, event.getTo().getBlockX(), event.getTo().getBlockY() - 1, event.getTo().getBlockZ(), 0.0F, 0.0F);
+        String loc = l.toString();
+        if (plugin.gravityUpList.contains(loc)) {
+            Player player = event.getPlayer();
+            int x = l.getBlockX();
+            int z = l.getBlockZ();
+            double endy = l.getY() + 10;
+            TARDISGravityWellRunnable runnable = new TARDISGravityWellRunnable(plugin, player, 0.5D, endy, x, z);
+            int task = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, runnable, 2L, 3L);
+            runnable.setTask(task);
         }
     }
 
+    /**
+     * Listens for a player falling onto a Gravity Well location. If the block
+     * the player lands on is contained in the gravityDownList then the player
+     * receives no fall damage.
+     */
     @EventHandler
     public void onEntityDamage(EntityDamageEvent e) {
         if (e.getCause() == EntityDamageEvent.DamageCause.FALL) {
             Entity ent = e.getEntity();
             if ((ent instanceof Player)) {
-                Player player = (Player) ent;
-                HashMap<String, Object> where = new HashMap<String, Object>();
-                where.put("player", player.getName());
-                ResultSetTravellers rst = new ResultSetTravellers(plugin, where, false);
-                if (rst.resultSet()) {
-                    int tid = rst.getTardis_id();
-                    HashMap<String, Object> whereg = new HashMap<String, Object>();
-                    whereg.put("tardis_id", tid);
-                    ResultSetGravity rsg = new ResultSetGravity(plugin, whereg, false);
-                    if (rsg.resultSet()) {
-                        Location loc = ent.getLocation();
-                        if (loc.getBlockX() == rsg.getDownx() && loc.getBlockZ() == rsg.getDownz()) {
-                            e.setCancelled(true);
-                        }
-                    }
+                Location l = ent.getLocation();
+                l.setX(l.getBlockX());
+                l.setY(l.getBlockY() - 1);
+                l.setZ(l.getBlockZ());
+                l.setPitch(0.0F);
+                l.setYaw(0.0F);
+                String loc = l.toString();
+                if (plugin.gravityDownList.contains(loc)) {
+                    e.setCancelled(true);
                 }
             }
         }

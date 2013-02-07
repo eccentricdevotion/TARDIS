@@ -17,10 +17,8 @@
 package me.eccentric_nz.TARDIS.listeners;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.database.ResultSetBlocks;
 import me.eccentric_nz.TARDIS.thirdparty.Version;
 import org.bukkit.Bukkit;
 import org.bukkit.block.Block;
@@ -58,8 +56,9 @@ public class TARDISEntityGriefListener implements Listener {
     }
 
     /**
-     * Listens for Wither and Dragon entity interaction with the TARDIS blocks.
-     * If the block is a TARDIS block, then the block change event is canceled.
+     * Listens for Fireball, Wither and Dragon entity interaction with the
+     * TARDIS blocks. If the block is a TARDIS block, then the block change
+     * event is canceled.
      */
     @EventHandler(priority = EventPriority.LOW)
     public void bossBlockBreak(EntityChangeBlockEvent event) {
@@ -72,10 +71,7 @@ public class TARDISEntityGriefListener implements Listener {
             eType = null;
         }
         if (eType != null && ents.contains(eType)) {
-            HashMap<String, Object> where = new HashMap<String, Object>();
-            where.put("location", l);
-            ResultSetBlocks rs = new ResultSetBlocks(plugin, where, false);
-            if (rs.resultSet()) {
+            if (plugin.protectBlockMap.containsKey(l)) {
                 event.setCancelled(true);
             }
         }

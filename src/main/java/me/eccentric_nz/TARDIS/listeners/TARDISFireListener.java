@@ -17,10 +17,8 @@
 package me.eccentric_nz.TARDIS.listeners;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.database.ResultSetBlocks;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.event.EventHandler;
@@ -61,10 +59,7 @@ public class TARDISFireListener implements Listener {
         for (BlockFace bf : faces) {
             Block chkBlock = b.getRelative(bf);
             String l = chkBlock.getLocation().toString();
-            HashMap<String, Object> where = new HashMap<String, Object>();
-            where.put("location", l);
-            ResultSetBlocks rs = new ResultSetBlocks(plugin, where, false);
-            if (rs.resultSet()) {
+            if (plugin.protectBlockMap.containsKey(l)) {
                 event.setCancelled(true);
                 break;
             }
@@ -75,10 +70,7 @@ public class TARDISFireListener implements Listener {
     public void onBlockBurn(BlockBurnEvent event) {
         Block b = event.getBlock();
         String l = b.getLocation().toString();
-        HashMap<String, Object> where = new HashMap<String, Object>();
-        where.put("location", l);
-        ResultSetBlocks rs = new ResultSetBlocks(plugin, where, false);
-        if (rs.resultSet()) {
+        if (plugin.protectBlockMap.containsKey(l)) {
             event.setCancelled(true);
         }
     }
