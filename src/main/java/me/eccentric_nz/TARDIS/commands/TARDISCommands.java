@@ -16,6 +16,10 @@
  */
 package me.eccentric_nz.TARDIS.commands;
 
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -27,9 +31,9 @@ import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.TARDISConstants.ROOM;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetDestinations;
-import me.eccentric_nz.TARDIS.database.ResultSetGravity;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
+import me.eccentric_nz.TARDIS.database.TARDISDatabase;
 import me.eccentric_nz.TARDIS.files.TARDISUpdateChecker;
 import me.eccentric_nz.TARDIS.thirdparty.Version;
 import me.eccentric_nz.TARDIS.travel.TARDISPluginRespect;
@@ -101,6 +105,7 @@ public class TARDISCommands implements CommandExecutor {
         firstArgs.add("bind");
         firstArgs.add("unbind");
         firstArgs.add("check_loc");
+        firstArgs.add("gravity");
         // rooms
         for (ROOM r : ROOM.values()) {
             roomArgs.add(r.toString());
@@ -127,6 +132,51 @@ public class TARDISCommands implements CommandExecutor {
             if (!firstArgs.contains(args[0].toLowerCase(Locale.ENGLISH))) {
                 sender.sendMessage(plugin.pluginName + "That command wasn't recognised type " + ChatColor.GREEN + "/tardis help" + ChatColor.RESET + " to see the commands");
                 return false;
+            }
+            // temporary command to convert old gravity well to new style
+            if (args[0].equalsIgnoreCase("gravity")) {
+                if (player == null) {
+                    sender.sendMessage(plugin.pluginName + "Must be a player");
+                    return false;
+                }
+                // get the players TARDIS id
+                HashMap<String, Object> where = new HashMap<String, Object>();
+                where.put("owner", player.getName());
+                ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
+                if (!rs.resultSet()) {
+                    sender.sendMessage(plugin.pluginName + TARDISConstants.NO_TARDIS);
+                    return false;
+                }
+                int id = rs.getTardis_id();
+                try {
+                    TARDISDatabase service = TARDISDatabase.getInstance();
+                    Connection connection = service.getConnection();
+                    Statement statement = connection.createStatement();
+                    String query = "SELECT * FROM gravity WHERE tardis_id = " + id;
+                    ResultSet rsg = statement.executeQuery(query);
+                    if (rsg.isBeforeFirst()) {
+                        // Location{world=CraftWorld{name=TARDIS_WORLD_eccentric_nz},x=-14.0,y=10.0,z=5.0,pitch=0.0,yaw=0.0}
+                        String up = "Location{world=CraftWorld{name=" + rsg.getString("world") + "},x=" + rsg.getString("upx") + ",y=10.0,z=" + rsg.getString("upz") + ",pitch=0.0,yaw=0.0}";
+                        plugin.gravityUpList.add(up);
+                        String down = "Location{world=CraftWorld{name=" + rsg.getString("world") + "},x=" + rsg.getString("downx") + ",y=10.0,z=" + rsg.getString("downz") + ",pitch=0.0,yaw=0.0}";
+                        plugin.gravityDownList.add(down);
+                        HashMap<String, Object> setu = new HashMap<String, Object>();
+                        setu.put("tardis_id", id);
+                        setu.put("location", up);
+                        setu.put("direction", 1);
+                        HashMap<String, Object> setd = new HashMap<String, Object>();
+                        setd.put("tardis_id", id);
+                        setd.put("location", down);
+                        setd.put("direction", 0);
+                        QueryFactory qf = new QueryFactory(plugin);
+                        qf.doInsert("gravity_well", setu);
+                        qf.doInsert("gravity_well", setd);
+                        player.sendMessage(plugin.pluginName + "Gravity well converted successfully.");
+                        return true;
+                    }
+                } catch (SQLException e) {
+                    plugin.debug("Gravity conversion error: " + e.getMessage());
+                }
             }
             if (args[0].equalsIgnoreCase("version")) {
                 FileConfiguration pluginYml = YamlConfiguration.loadConfiguration(plugin.pm.getPlugin("TARDIS").getResource("plugin.yml"));
@@ -249,15 +299,8 @@ public class TARDISCommands implements CommandExecutor {
                             return true;
                         }
                         String message;
-                        // if it is a gravity well, then check if they have one already
+                        // if it is a gravity well
                         if (room.equals("GRAVITY")) {
-                            HashMap<String, Object> whereg = new HashMap<String, Object>();
-                            whereg.put("tardis_id", id);
-                            ResultSetGravity rsg = new ResultSetGravity(plugin, whereg, false);
-                            if (rsg.resultSet()) {
-                                player.sendMessage(plugin.pluginName + "You can only grow one gravity well!");
-                                return true;
-                            }
                             message = "Place the GRAVITY WELL seed block (" + plugin.getConfig().getString("rooms." + room + ".seed") + ") into the centre of the floor in an empty room, then hit it with the TARDIS key to start growing your room!";
                         } else {
                             message = "Place the " + room + " seed block (" + plugin.getConfig().getString("rooms." + room + ".seed") + ") where the door should be, then hit it with the TARDIS key to start growing your room!";
