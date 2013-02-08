@@ -73,9 +73,14 @@ public class TARDISExplosionListener implements Listener {
                 int x = plugin.utils.parseNum(xStr[1].substring(0, (xStr[1].length() - 2)));
                 int y = plugin.utils.parseNum(yStr[1].substring(0, (yStr[1].length() - 2)));
                 int z = plugin.utils.parseNum(zStr[1].substring(0, (zStr[1].length() - 2)));
+                // so what is null?
+                plugin.debug("World: " + w);
+                plugin.debug("x: " + x);
+                plugin.debug("y: " + y);
+                plugin.debug("z: " + z);
                 Block block = w.getBlockAt(x, y, z);
                 // if the block is a TARDIS block then remove it
-                if (block != null && e.blockList().contains(block)) {
+                if (e.blockList().contains(block)) {
                     e.blockList().remove(block);
                 }
                 if (id != idchk) {
