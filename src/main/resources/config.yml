@@ -37,7 +37,7 @@ rooms:
     cost: 475
     seed: GLOWSTONE
   KITCHEN:
-    cost: 750
+    cost: 450
     seed: PUMPKIN
   LIBRARY:
     cost: 550
@@ -55,7 +55,7 @@ rooms:
     cost: 250
     seed: GLASS
   GRAVITY:
-    cost: 525
+    cost: 625
     seed: MOSSY_COBBLESTONE
 #artron energy
 player: 25
@@ -63,8 +63,8 @@ random: 75
 travel: 100
 comehere: 400
 hide: 500
-nether_min: 1250
-the_end_min: 1500
+nether_min: 5250
+the_end_min: 5500
 recharge_distance: 16
 lightning_recharge: 100
 creeper_recharge: 50
