@@ -3,7 +3,7 @@ debug: false
 check_for_updates: true
 key: STICK
 bonus_chest: true
-tp_radius: 256
+tp_radius: 500
 protect_blocks: true
 default_world: false
 default_world_name: myridiculouslylongworldnameiscalledcuthbert
@@ -28,47 +28,47 @@ materialise: true
 #rooms
 rooms:
   PASSAGE:
-    cost: 250
+    cost: 200
     seed: CLAY
   ARBORETUM:
-    cost: 500
+    cost: 325
     seed: LEAVES
   BEDROOM:
-    cost: 500
+    cost: 475
     seed: GLOWSTONE
   KITCHEN:
-    cost: 500
+    cost: 750
     seed: PUMPKIN
   LIBRARY:
-    cost: 500
+    cost: 550
     seed: BOOKSHELF
   POOL:
-    cost: 500
+    cost: 450
     seed: SNOW_BLOCK
   VAULT:
-    cost: 500
+    cost: 350
     seed: DISPENSER
   WORKSHOP:
-    cost: 500
+    cost: 400
     seed: NETHER_BRICK
   EMPTY:
     cost: 250
     seed: GLASS
   GRAVITY:
-    cost: 500
+    cost: 525
     seed: MOSSY_COBBLESTONE
 #artron energy
-player: 2
-random: 25
-travel: 50
-comehere: 200
-hide: 400
+player: 25
+random: 75
+travel: 100
+comehere: 400
+hide: 500
 nether_min: 1250
 the_end_min: 1500
 recharge_distance: 16
 lightning_recharge: 100
 creeper_recharge: 50
-full_charge: 1000
+full_charge: 5000
 full_charge_item: NETHER_STAR
 # jettison is a percentage of orginal room cost
 jettison: 75
