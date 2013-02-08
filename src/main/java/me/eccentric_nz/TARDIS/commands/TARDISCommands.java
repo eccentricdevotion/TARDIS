@@ -155,10 +155,11 @@ public class TARDISCommands implements CommandExecutor {
                     String query = "SELECT * FROM gravity WHERE tardis_id = " + id;
                     ResultSet rsg = statement.executeQuery(query);
                     if (rsg.isBeforeFirst()) {
+                        // Location{world=CraftWorld{name=TARDIS_WORLD_eccentric_nz},x=-14,y=10.0,z=27,pitch=0.0,yaw=0.0}
                         // Location{world=CraftWorld{name=TARDIS_WORLD_eccentric_nz},x=-14.0,y=10.0,z=5.0,pitch=0.0,yaw=0.0}
-                        String up = "Location{world=CraftWorld{name=" + rsg.getString("world") + "},x=" + rsg.getString("upx") + ",y=10.0,z=" + rsg.getString("upz") + ",pitch=0.0,yaw=0.0}";
+                        String up = "Location{world=" + rsg.getString("world") + ",x=" + rsg.getFloat("upx") + ",y=10.0,z=" + rsg.getFloat("upz") + ",pitch=0.0,yaw=0.0}";
                         plugin.gravityUpList.add(up);
-                        String down = "Location{world=CraftWorld{name=" + rsg.getString("world") + "},x=" + rsg.getString("downx") + ",y=10.0,z=" + rsg.getString("downz") + ",pitch=0.0,yaw=0.0}";
+                        String down = "Location{world=" + rsg.getString("world") + ",x=" + rsg.getFloat("downx") + ",y=10.0,z=" + rsg.getFloat("downz") + ",pitch=0.0,yaw=0.0}";
                         plugin.gravityDownList.add(down);
                         HashMap<String, Object> setu = new HashMap<String, Object>();
                         setu.put("tardis_id", id);
