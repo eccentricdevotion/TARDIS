@@ -1,6 +1,5 @@
 # TODO
 0. Find and squash the Police Box dupe bug (maybe fixed now?)
-1. Test the `/tardis gravity` command
 2. Sort out the Explode Listener
 3. Add secondary console room
 4. Allow admins to enter hidden TARDISs
