@@ -144,7 +144,8 @@ public class TARDISArtronCapacitorListener implements Listener {
                                 }
                                 // set the capacitor to 50% charge
                                 HashMap<String, Object> set = new HashMap<String, Object>();
-                                set.put("artron_level", 500);
+                                int half = Math.round(plugin.getConfig().getInt("full_charge") / 2.0F);
+                                set.put("artron_level", half);
                                 set.put("tardis_init", 1);
                                 qf.doUpdate("tardis", set, wheret);
                                 player.sendMessage(plugin.pluginName + "Artron Energy Capacitor activated! Levels at 50%");
