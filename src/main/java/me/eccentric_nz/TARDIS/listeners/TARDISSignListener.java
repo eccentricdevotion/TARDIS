@@ -102,6 +102,10 @@ public class TARDISSignListener implements Listener {
                             qf.doUpdate("tardis", set, tid);
                         } else {
                             if (event.getAction().equals(Action.RIGHT_CLICK_BLOCK) && player.isSneaking()) {
+                                if (!rs.isHandbrake_on()) {
+                                    player.sendMessage(plugin.pluginName + ChatColor.RED + "You cannot set a destination while the TARDIS is travelling!");
+                                    return;
+                                }
                                 // check they have enough artron energy to travel
                                 int level = rs.getArtron_level();
                                 if (level < plugin.getConfig().getInt("travel")) {

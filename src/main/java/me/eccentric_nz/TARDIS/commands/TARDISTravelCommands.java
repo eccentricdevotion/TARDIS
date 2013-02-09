@@ -78,6 +78,10 @@ public class TARDISTravelCommands implements CommandExecutor {
                     sender.sendMessage(plugin.pluginName + "You are not a Timelord. You need to create a TARDIS before using this command!");
                     return true;
                 }
+                if (!rs.isHandbrake_on()) {
+                    player.sendMessage(plugin.pluginName + ChatColor.RED + "You cannot set a destination while the TARDIS is travelling!");
+                    return true;
+                }
                 HashMap<String, Object> wheret = new HashMap<String, Object>();
                 wheret.put("player", player.getName());
                 ResultSetTravellers rst = new ResultSetTravellers(plugin, wheret, false);
