@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.TARDISConstants.COMPASS;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import org.bukkit.Chunk;
@@ -48,6 +49,7 @@ public class TARDISRoomRunnable implements Runnable {
     Block b;
     COMPASS d;
     String room;
+    String grammar;
     private boolean running;
     HashMap<String, Object> set;
     Player p;
@@ -95,7 +97,11 @@ public class TARDISRoomRunnable implements Runnable {
             set.put("startz", startz);
             world = l.getWorld();
             running = true;
-            p.sendMessage(plugin.pluginName + "Started growing a " + room + "...");
+            grammar = (TARDISConstants.vowels.contains(room.substring(0, 1))) ? "an " + room : "a " + room;
+            if (room.equals("GRAVITY")) {
+                grammar += " WELL";
+            }
+            p.sendMessage(plugin.pluginName + "Started growing " + grammar + "...");
         }
         String tmp;
         if (level == h && row == w && col == (c - 1)) {

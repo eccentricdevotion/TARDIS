@@ -39,7 +39,6 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
-import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -339,7 +338,13 @@ public class TARDISDoorListener implements Listener {
                                     }
                                 }
                             } else {
-                                player.sendMessage(plugin.pluginName + TARDISConstants.WRONG_MATERIAL + plugin.getConfig().getString("key") + ". You have a " + material + " in your hand!");
+                                String grammar;
+                                if (!material.equals(Material.AIR)) {
+                                    grammar = (TARDISConstants.vowels.contains(material.toString().substring(0, 1))) ? "an " + material : "a " + material;
+                                } else {
+                                    grammar = "nothing";
+                                }
+                                player.sendMessage(plugin.pluginName + "The TARDIS key is a " + plugin.getConfig().getString("key") + ". You have " + grammar + " in your hand!");
                             }
                         }
                     } else {

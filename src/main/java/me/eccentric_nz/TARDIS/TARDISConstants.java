@@ -107,9 +107,9 @@ public class TARDISConstants {
     public static final String NO_PERMS_MESSAGE = "You do not have permission to do that!";
     public static final String NOT_OWNER = "You are not the Timelord or Companion for this TARDIS!";
     public static final String NO_TARDIS = "You have not created a TARDIS yet!";
-    public static final String WRONG_MATERIAL = "The TARDIS key is a ";
     public static final String TIMELORD_OFFLINE = "The Timelord who owns this TARDIS is offline!";
     public static final String TIMELORD_NOT_IN = "The Timelord who owns this TARDIS is not inside!";
+    public static final List<String> vowels = Arrays.asList(new String[]{"A", "E", "I", "O", "U"});
 
     public static <T extends Enum<T>> T getEnumFromString(Class<T> c, String string) {
         if (c != null && string != null) {
