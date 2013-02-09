@@ -92,6 +92,10 @@ public class TARDISButtonListener implements Listener {
                     ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
                     if (rs.resultSet()) {
                         int id = rs.getTardis_id();
+                        if (!rs.isHandbrake_on()) {
+                            player.sendMessage(plugin.pluginName + ChatColor.RED + "You cannot set a destination while the TARDIS is travelling!");
+                            return;
+                        }
                         int level = rs.getArtron_level();
                         if (level < plugin.getConfig().getInt("random")) {
                             player.sendMessage(plugin.pluginName + ChatColor.RED + "The TARDIS does not have enough Artron Energy to make this trip!");
@@ -212,45 +216,49 @@ public class TARDISButtonListener implements Listener {
                                 // create a random destination
                                 TARDISTimetravel tt = new TARDISTimetravel(plugin);
                                 Location rand = tt.randomDestination(player, r1_data, r2_data, r3_data, dir, environment);
-                                String d = rand.getWorld().getName() + ":" + rand.getBlockX() + ":" + rand.getBlockY() + ":" + rand.getBlockZ();
-                                String dchat = rand.getWorld().getName() + " at x: " + rand.getBlockX() + " y: " + rand.getBlockY() + " z: " + rand.getBlockZ();
-                                boolean isTL = true;
-                                String comps = rs.getCompanions();
-                                if (comps != null && !comps.equals("")) {
-                                    String[] companions = comps.split(":");
-                                    for (String c : companions) {
-                                        // are they online - AND are they travelling
-                                        if (plugin.getServer().getPlayer(c) != null) {
-                                            // are they travelling
-                                            HashMap<String, Object> wherec = new HashMap<String, Object>();
-                                            wherec.put("tardis_id", id);
-                                            wherec.put("player", c);
-                                            ResultSetTravellers rsc = new ResultSetTravellers(plugin, wherec, false);
-                                            if (rsc.resultSet()) {
-                                                plugin.getServer().getPlayer(c).sendMessage(plugin.pluginName + "Destination: " + dchat);
+                                if (rand != null) {
+                                    String d = rand.getWorld().getName() + ":" + rand.getBlockX() + ":" + rand.getBlockY() + ":" + rand.getBlockZ();
+                                    String dchat = rand.getWorld().getName() + " at x: " + rand.getBlockX() + " y: " + rand.getBlockY() + " z: " + rand.getBlockZ();
+                                    boolean isTL = true;
+                                    String comps = rs.getCompanions();
+                                    if (comps != null && !comps.equals("")) {
+                                        String[] companions = comps.split(":");
+                                        for (String c : companions) {
+                                            // are they online - AND are they travelling
+                                            if (plugin.getServer().getPlayer(c) != null) {
+                                                // are they travelling
+                                                HashMap<String, Object> wherec = new HashMap<String, Object>();
+                                                wherec.put("tardis_id", id);
+                                                wherec.put("player", c);
+                                                ResultSetTravellers rsc = new ResultSetTravellers(plugin, wherec, false);
+                                                if (rsc.resultSet()) {
+                                                    plugin.getServer().getPlayer(c).sendMessage(plugin.pluginName + "Destination: " + dchat);
+                                                }
+                                            }
+                                            if (c.equalsIgnoreCase(player.getName())) {
+                                                isTL = false;
                                             }
                                         }
-                                        if (c.equalsIgnoreCase(player.getName())) {
-                                            isTL = false;
+                                    }
+                                    if (isTL == true) {
+                                        player.sendMessage(plugin.pluginName + "Destination: " + dchat);
+                                    } else {
+                                        if (plugin.getServer().getPlayer(rs.getOwner()) != null) {
+                                            plugin.getServer().getPlayer(rs.getOwner()).sendMessage(plugin.pluginName + "Destination: " + dchat);
                                         }
                                     }
-                                }
-                                if (isTL == true) {
-                                    player.sendMessage(plugin.pluginName + "Destination: " + dchat);
-                                } else {
-                                    if (plugin.getServer().getPlayer(rs.getOwner()) != null) {
-                                        plugin.getServer().getPlayer(rs.getOwner()).sendMessage(plugin.pluginName + "Destination: " + dchat);
-                                    }
-                                }
-                                HashMap<String, Object> set = new HashMap<String, Object>();
-                                set.put("save", d);
-                                HashMap<String, Object> wherel = new HashMap<String, Object>();
-                                wherel.put("tardis_id", id);
-                                qf.doUpdate("tardis", set, wherel);
-                                plugin.tardisHasDestination.put(id, plugin.getConfig().getInt("random"));
+                                    HashMap<String, Object> set = new HashMap<String, Object>();
+                                    set.put("save", d);
+                                    HashMap<String, Object> wherel = new HashMap<String, Object>();
+                                    wherel.put("tardis_id", id);
+                                    qf.doUpdate("tardis", set, wherel);
+                                    plugin.tardisHasDestination.put(id, plugin.getConfig().getInt("random"));
 //                                if (plugin.getServer().getPluginManager().getPlugin("Spout") != null && SpoutManager.getPlayer(player).isSpoutCraftEnabled() && playSound == true) {
 //                                    SpoutManager.getSoundManager().playCustomSoundEffect(plugin, SpoutManager.getPlayer(player), "https://dl.dropbox.com/u/53758864/tardis_takeoff.mp3", false, b, 9, 75);
 //                                }
+                                } else {
+                                    player.sendMessage(plugin.pluginName + "Could not find a suitable location within the current settings, the area may be protected.");
+                                }
                             }
                         }
                     }
