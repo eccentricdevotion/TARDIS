@@ -227,8 +227,12 @@ public class TARDISTimetravel {
                         break;
                     }
                 } else {
-                    highest = plugin.getConfig().getInt("timeout_height");
-                    break;
+                    if (!respect.getRespect(p, new Location(randworld, wherex, highest, wherez), false)) {
+                        return null;
+                    } else {
+                        highest = plugin.getConfig().getInt("timeout_height");
+                        break;
+                    }
                 }
             }
             dest = new Location(randworld, wherex, highest, wherez);
