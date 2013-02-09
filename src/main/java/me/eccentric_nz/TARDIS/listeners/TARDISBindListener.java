@@ -103,16 +103,16 @@ public class TARDISBindListener implements Listener {
                         wheret.put("tardis_id", id);
                         ResultSetTardis rs = new ResultSetTardis(plugin, wheret, "", false);
                         if (rs.resultSet()) {
-                            if (!rs.isHandbrake_on()) {
-                                player.sendMessage(plugin.pluginName + ChatColor.RED + "You cannot set a destination while the TARDIS is travelling!");
-                                return;
-                            }
+
                             HashMap<String, Object> whereb = new HashMap<String, Object>();
                             whereb.put("tardis_id", id);
                             whereb.put("bind", l);
                             ResultSetDestinations rsd = new ResultSetDestinations(plugin, whereb, false);
                             if (rsd.resultSet()) {
-                                // is this a save button or command button?
+                                if (!rs.isHandbrake_on()) {
+                                    player.sendMessage(plugin.pluginName + ChatColor.RED + "You cannot set a destination while the TARDIS is travelling!");
+                                    return;
+                                }                                // is this a save button or command button?
                                 String dest_name = rsd.getDest_name();
                                 if (dest_name.equals("rebuild")) {
                                     player.performCommand("tardis rebuild");
