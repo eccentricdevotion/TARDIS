@@ -77,6 +77,7 @@ public class TARDISAdminCommands implements CommandExecutor {
         firstsStr.add("config");
         firstsStr.add("default_world_name");
         firstsStr.add("exclude");
+        firstsStr.add("include");
         firstsStr.add("delete");
         firstsStr.add("find");
         firstsStr.add("list");
@@ -386,7 +387,7 @@ public class TARDISAdminCommands implements CommandExecutor {
                     String nodots = StringUtils.replace(t, ".", "_");
                     plugin.getConfig().set("default_world_name", nodots);
                 }
-                if (first.equals("exclude")) {
+                if (first.equals("exclude") || first.equals("include")) {
                     // get world name
                     int count = args.length;
                     StringBuilder buf = new StringBuilder();
@@ -402,7 +403,11 @@ public class TARDISAdminCommands implements CommandExecutor {
                         sender.sendMessage(plugin.pluginName + ChatColor.RED + "World does not exist!");
                         return false;
                     }
-                    plugin.getConfig().set("worlds." + nodots, false);
+                    if (first.equals("include")) {
+                        plugin.getConfig().set("worlds." + nodots, true);
+                    } else {
+                        plugin.getConfig().set("worlds." + nodots, false);
+                    }
                 }
                 //checks if its a boolean config option
                 if (firstsBool.contains(first)) {
