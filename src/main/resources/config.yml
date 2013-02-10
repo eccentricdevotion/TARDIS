@@ -59,16 +59,16 @@ rooms:
     seed: MOSSY_COBBLESTONE
   HARMONY:
     cost: 450
-    seed: BRICK_STAIRS
+    seed: SMOOTH_STAIRS
   FIRST:
     cost: 350
-    seed: ENDER_STONE
+    seed: GRAVEL
   BAKER:
     cost: 350
     seed: ENDER_STONE
   WOOD:
     cost: 350
-    seed: ENDER_STONE
+    seed: WOOD
 #artron energy
 player: 25
 random: 75

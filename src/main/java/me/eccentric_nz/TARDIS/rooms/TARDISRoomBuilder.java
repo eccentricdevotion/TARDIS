@@ -174,6 +174,22 @@ public class TARDISRoomBuilder {
                     s = plugin.gravityschematic;
                     dimensions = plugin.gravitydimensions;
                     break;
+                case HARMONY:
+                    s = plugin.harmonyschematic;
+                    dimensions = plugin.roomdimensions;
+                    break;
+                case FIRST:
+                    s = plugin.firstschematic;
+                    dimensions = plugin.roomdimensions;
+                    break;
+                case BAKER:
+                    s = plugin.bakerschematic;
+                    dimensions = plugin.roomdimensions;
+                    break;
+                case WOOD:
+                    s = plugin.woodschematic;
+                    dimensions = plugin.wooddimensions;
+                    break;
                 default:
                     // PASSAGE
                     s = (d.equals(COMPASS.EAST) || d.equals(COMPASS.WEST)) ? plugin.passageschematic_EW : plugin.passageschematic;

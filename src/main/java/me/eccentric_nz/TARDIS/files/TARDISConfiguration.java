@@ -114,9 +114,9 @@ public class TARDISConfiguration {
         strOptions.put("rooms.EMPTY.seed", "GLASS");
         strOptions.put("rooms.GRAVITY.seed", "MOSSY_COBBLESTONE");
         strOptions.put("rooms.HARMONY.seed", "BRICK_STAIRS");
-        strOptions.put("rooms.FIRST.seed", "ENDER_STONE");
+        strOptions.put("rooms.FIRST.seed", "GRAVEL");
         strOptions.put("rooms.BAKER.seed", "ENDER_STONE");
-        strOptions.put("rooms.WOOD.seed", "ENDER_STONE");
+        strOptions.put("rooms.WOOD.seed", "WOOD");
     }
 
     /**
