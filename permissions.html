@@ -45,8 +45,7 @@
         <p>Tested with PermissionsBukkit, there are a number of self explanatory permissions:</p>
         <h2>General</h2>
         <p>Allow players to use a TARDIS</p>
-        <pre><code>tardis.use
-</code></pre>
+        <pre><code>tardis.use</code></pre>
         <p>There are 7 (probably unnecessary) child nodes:</p>
         <pre><code>tardis.create
 tardis.delete
@@ -56,50 +55,40 @@ tardis.save
 tardis.add
 tardis.enter
 tardis.find
-tardis.update
-</code></pre>
+tardis.update</code></pre>
         <h2>TARDIS build sizes</h2>
-        <p>In order to be able to create a &lsquo;bigger&rsquo; or &lsquo;deluxe&rsquo; TARDIS, players will need:</p>
+        <p>In order to be able to create a &lsquo;bigger&rsquo;, &lsquo;deluxe&rsquo; or &lsquo;eleventh&rsquo; TARDIS, players will need:</p>
         <pre><code>tardis.bigger
 tardis.deluxe
-</code></pre>
+tardis.eleventh</code></pre>
         <h2>TARDIS rooms</h2>
         <p>To allow players to grow new TARDIS rooms, they will need:</p>
-        <pre><code>tardis.room
-</code></pre>
+        <pre><code>tardis.room</code></pre>
         <h2>Time travel</h2>
         <p>There are a couple of time travel specific nodes:</p>
         <p>Allow travel to player locations</p>
-        <pre><code>tardis.timetravel.player
-</code></pre>
+        <pre><code>tardis.timetravel.player</code></pre>
         <p>Allow travel to specified co-ordinates</p>
-        <pre><code>tardis.timetravel.location
-</code></pre>
+        <pre><code>tardis.timetravel.location</code></pre>
         <h2>Environment</h2>
         <p>There are a couple of world environment specific nodes:</p>
         <p>Allow travel to <strong>Nether</strong> worlds</p>
-        <pre><code>tardis.nether
-</code></pre>
+        <pre><code>tardis.nether</code></pre>
         <p>Allow travel to <strong>The End</strong> worlds</p>
-        <pre><code>tardis.end
-</code></pre>
+        <pre><code>tardis.end</code></pre>
         <h2>TARDIS areas</h2>
         <p>To allow access to TARDIS areas, users/groups must be given the permission</p>
-        <pre><code>tardis.area.[name_of_area]
-</code></pre>
+        <pre><code>tardis.area.[name_of_area]</code></pre>
         <p>eg. to give access to the airport area, the permission would be:</p>
-        <pre><code>tardis.area.airport
-</code></pre>
+        <pre><code>tardis.area.airport</code></pre>
         <p>To restrict a player to a specific area, the player must have the permission:</p>
-        <pre><code>tardis.exile
-</code></pre>
+        <pre><code>tardis.exile</code></pre>
         <p>AND the permission for the area they are restricted to.</p>
         <h2>Admin/moderator</h2>
         <p>Allow players to do administration stuff</p>
         <pre><code>tardis.admin
 tardis.delete
-tardis.skeletonkey
-</code></pre>
+tardis.skeletonkey</code></pre>
         <h3>Deleting any TARDIS</h3>
         <p>The node <code>tardis.delete</code> will allow admin users to remove any TARDIS by breaking the sign on the front of the Police Box, or using the <code>/tardisadmin delete [player]</code> command.</p>
         <p>When breaking the sign, the TARDIS must not be occupied (including offline players).</p>
