@@ -214,6 +214,10 @@ public class TARDISTravelCommands implements CommandExecutor {
                         // must be a location then
                         int x, y, z;
                         World w = plugin.getServer().getWorld(args[0]);
+                        if (w == null) {
+                            sender.sendMessage(plugin.pluginName + "Cannot find the specified world! Make sure you type it correctly.");
+                            return true;
+                        }
                         if (!plugin.getConfig().getBoolean("include_default_world") && plugin.getConfig().getBoolean("default_world") && args[0].equals(plugin.getConfig().getString("default_world_name"))) {
                             sender.sendMessage(plugin.pluginName + "The server admin does not allow time travel to this world!");
                             return true;
