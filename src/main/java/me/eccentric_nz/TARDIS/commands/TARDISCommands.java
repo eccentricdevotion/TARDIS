@@ -488,6 +488,9 @@ public class TARDISCommands implements CommandExecutor {
                                 SpoutManager.getSoundManager().playCustomSoundEffect(plugin, SpoutManager.getPlayer(player), "https://dl.dropbox.com/u/53758864/tardis_land.mp3", false, eyeLocation, 9, 75);
                                 delay = 400L;
                             }
+                            else{
+                                p.playSound(p.getLocation(), Sound.MINECART_INSIDE, 1, 0);
+                            }
                             Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
                                 @Override
                                 public void run() {
