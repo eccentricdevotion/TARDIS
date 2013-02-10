@@ -465,44 +465,49 @@ public class TARDISCommands implements CommandExecutor {
                         final boolean cham = chamtmp;
                         String[] saveData = badsave.split(":");
                         World w = plugin.getServer().getWorld(saveData[0]);
-                        int x, y, z;
-                        x = plugin.utils.parseNum(saveData[1]);
-                        y = plugin.utils.parseNum(saveData[2]);
-                        z = plugin.utils.parseNum(saveData[3]);
-                        final Location oldSave = w.getBlockAt(x, y, z).getLocation();
-                        //rs.close();
-                        String comehere = eyeLocation.getWorld().getName() + ":" + eyeLocation.getBlockX() + ":" + eyeLocation.getBlockY() + ":" + eyeLocation.getBlockZ();
-                        QueryFactory qf = new QueryFactory(plugin);
-                        HashMap<String, Object> tid = new HashMap<String, Object>();
-                        HashMap<String, Object> set = new HashMap<String, Object>();
-                        tid.put("tardis_id", id);
-                        set.put("save", comehere);
-                        set.put("current", comehere);
-                        qf.doUpdate("tardis", set, tid);
-                        // how many travellers are in the TARDIS?
-                        plugin.utils.updateTravellerCount(id);
-                        sender.sendMessage(plugin.pluginName + "The TARDIS is coming...");
-                        long delay = 100L;
-                        if (plugin.getServer().getPluginManager().getPlugin("Spout") != null && SpoutManager.getPlayer(player).isSpoutCraftEnabled()) {
-                            SpoutManager.getSoundManager().playCustomSoundEffect(plugin, SpoutManager.getPlayer(player), "https://dl.dropbox.com/u/53758864/tardis_land.mp3", false, eyeLocation, 9, 75);
-                            delay = 400L;
-                        }
-                        Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
-                            @Override
-                            public void run() {
-                                plugin.destroyPB.destroyPlatform(rs.getPlatform(), id);
-                                plugin.destroyPB.destroySign(oldSave, d);
-                                plugin.destroyPB.destroyTorch(oldSave);
-                                plugin.destroyPB.destroyPoliceBox(oldSave, d, id, false);
-                                plugin.buildPB.buildPoliceBox(id, eyeLocation, d, cham, p, false);
+                        if (w != null) {
+                            int x, y, z;
+                            x = plugin.utils.parseNum(saveData[1]);
+                            y = plugin.utils.parseNum(saveData[2]);
+                            z = plugin.utils.parseNum(saveData[3]);
+                            final Location oldSave = w.getBlockAt(x, y, z).getLocation();
+                            //rs.close();
+                            String comehere = eyeLocation.getWorld().getName() + ":" + eyeLocation.getBlockX() + ":" + eyeLocation.getBlockY() + ":" + eyeLocation.getBlockZ();
+                            QueryFactory qf = new QueryFactory(plugin);
+                            HashMap<String, Object> tid = new HashMap<String, Object>();
+                            HashMap<String, Object> set = new HashMap<String, Object>();
+                            tid.put("tardis_id", id);
+                            set.put("save", comehere);
+                            set.put("current", comehere);
+                            qf.doUpdate("tardis", set, tid);
+                            // how many travellers are in the TARDIS?
+                            plugin.utils.updateTravellerCount(id);
+                            sender.sendMessage(plugin.pluginName + "The TARDIS is coming...");
+                            long delay = 100L;
+                            if (plugin.getServer().getPluginManager().getPlugin("Spout") != null && SpoutManager.getPlayer(player).isSpoutCraftEnabled()) {
+                                SpoutManager.getSoundManager().playCustomSoundEffect(plugin, SpoutManager.getPlayer(player), "https://dl.dropbox.com/u/53758864/tardis_land.mp3", false, eyeLocation, 9, 75);
+                                delay = 400L;
                             }
-                        }, delay);
-                        // remove energy from TARDIS
-                        HashMap<String, Object> wheret = new HashMap<String, Object>();
-                        wheret.put("tardis_id", id);
-                        qf.alterEnergyLevel("tardis", -ch, wheret, player);
-                        plugin.tardisHasDestination.remove(id);
-                        return true;
+                            Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
+                                @Override
+                                public void run() {
+                                    plugin.destroyPB.destroyPlatform(rs.getPlatform(), id);
+                                    plugin.destroyPB.destroySign(oldSave, d);
+                                    plugin.destroyPB.destroyTorch(oldSave);
+                                    plugin.destroyPB.destroyPoliceBox(oldSave, d, id, false);
+                                    plugin.buildPB.buildPoliceBox(id, eyeLocation, d, cham, p, false);
+                                }
+                            }, delay);
+                            // remove energy from TARDIS
+                            HashMap<String, Object> wheret = new HashMap<String, Object>();
+                            wheret.put("tardis_id", id);
+                            qf.alterEnergyLevel("tardis", -ch, wheret, player);
+                            plugin.tardisHasDestination.remove(id);
+                            return true;
+                        } else {
+                            sender.sendMessage(plugin.pluginName + "Could not get the previous location of the TARDIS!");
+                            return true;
+                        }
                     } else {
                         sender.sendMessage(plugin.pluginName + TARDISConstants.NO_PERMS_MESSAGE);
                         return false;
