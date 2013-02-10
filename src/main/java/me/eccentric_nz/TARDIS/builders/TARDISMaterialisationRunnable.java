@@ -55,7 +55,7 @@ public class TARDISMaterialisationRunnable implements Runnable {
     public TARDISMaterialisationRunnable(TARDIS plugin, Location location, int mat, byte data, int tid, COMPASS d) {
         this.plugin = plugin;
         this.d = d;
-        this.loops = 9;
+        this.loops = 12;
         this.location = location;
         this.i = 0;
         this.tid = tid;
@@ -111,6 +111,9 @@ public class TARDISMaterialisationRunnable implements Runnable {
                         if (p != null) {
                             if (plugin.getServer().getPluginManager().getPlugin("Spout") != null && SpoutManager.getPlayer(p).isSpoutCraftEnabled()) {
                                 SpoutManager.getSoundManager().playCustomSoundEffect(plugin, SpoutManager.getPlayer(p), "https://dl.dropbox.com/u/53758864/tardis_land.mp3", false, p.getLocation(), 9, 75);
+                            }
+                            else{
+                                p.playSound(p.getLocation(), Sound.MINECART_INSIDE, 1, 0);
                             }
                         }
                     }
