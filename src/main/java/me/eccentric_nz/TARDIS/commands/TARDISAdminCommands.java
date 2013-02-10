@@ -339,6 +339,10 @@ public class TARDISAdminCommands implements CommandExecutor {
                         }
                         // need to determine if we use the save location or the current location
                         Location bb_loc = (useCurrent) ? plugin.utils.getLocationFromDB(currentLoc, 0, 0) : plugin.utils.getLocationFromDB(saveLoc, 0, 0);
+                        if (bb_loc == null) {
+                            sender.sendMessage(plugin.pluginName + "Could not get the location of the TARDIS!");
+                            return true;
+                        }
                         // destroy the TARDIS
                         plugin.destroyPB.destroyTorch(bb_loc);
                         plugin.destroyPB.destroySign(bb_loc, d);
