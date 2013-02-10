@@ -40,14 +40,21 @@ public class TARDISSpace {
     }
 
     /**
-     * Gets THE_END world for the specified TARDIS. If the world does not exist,
+     * Gets custom world for the specified TARDIS. If the world does not exist,
      * it is created.
      *
      * @param name the name of this world
      */
     public World getTardisWorld(String name) {
         if (tardisWorld == null) {
-            tardisWorld = WorldCreator.name(name).type(WorldType.LARGE_BIOMES).environment(World.Environment.NORMAL).generator(new TARDISChunkGenerator()).createWorld();
+            if (plugin.pm.isPluginEnabled("MultiWorld")) {
+                plugin.getServer().dispatchCommand(plugin.console, "mw create " + name + " plugin:TARDISChunkGenerator");
+                plugin.getServer().dispatchCommand(plugin.console, "mw setflag " + name + " SpawnMonster false");
+                plugin.getServer().dispatchCommand(plugin.console, "mw setflag " + name + " SpawnAnimal false");
+                tardisWorld = plugin.getServer().getWorld(name);
+            } else {
+                tardisWorld = WorldCreator.name(name).type(WorldType.LARGE_BIOMES).environment(World.Environment.NORMAL).generator(new TARDISChunkGenerator()).createWorld();
+            }
             // set the time to night
             tardisWorld.setTime(14000L);
             // add world to config, but disabled by default
@@ -62,11 +69,6 @@ public class TARDISSpace {
                 plugin.getServer().dispatchCommand(plugin.console, "mv modify set memory false " + name);
                 plugin.getServer().dispatchCommand(plugin.console, "mv modify set portalform none " + name);
                 plugin.getServer().dispatchCommand(plugin.console, "mv modify set adjustspawn false " + name);
-            }
-            if (plugin.pm.isPluginEnabled("MultiWorld")) {
-                plugin.getServer().dispatchCommand(plugin.console, "mw load " + name);
-                plugin.getServer().dispatchCommand(plugin.console, "mw setflag " + name + " SpawnMonster false");
-                plugin.getServer().dispatchCommand(plugin.console, "mw setflag " + name + " SpawnAnimal false");
             }
             if (plugin.pm.isPluginEnabled("WorldBorder")) {
                 // wb <world> set <radius> <x> <z>
