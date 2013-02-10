@@ -325,7 +325,7 @@ public class TARDISCommands implements CommandExecutor {
                             player.sendMessage(plugin.pluginName + "You cannot jettison gravity wells!");
                             return true;
                         }
-                        if (!Arrays.asList(ROOM.values()).contains(ROOM.valueOf(room))) {
+                        if (!roomArgs.contains(room)) {
                             player.sendMessage(plugin.pluginName + "That is not a valid room type! Try one of : passage|arboretum|pool|vault|kitchen|bedroom|library|empty");
                             return true;
                         }
