@@ -101,28 +101,33 @@ public class TARDISHandbrakeListener implements Listener {
                                     COMPASS d = rs.getDirection();
                                     boolean cham = rs.isChamele_on();
                                     Location exit = plugin.utils.getLocationFromDB(save, 0, 0);
-                                    Location l = plugin.utils.getLocationFromDB(cl, 0, 0);
-                                    // remove torch
-                                    plugin.destroyPB.destroyTorch(l);
-                                    // remove sign
-                                    plugin.destroyPB.destroySign(l, d);
-                                    // remove blue box
-                                    plugin.destroyPB.destroyPoliceBox(l, d, id, false);
-                                    // remove current location chunk from list
-                                    Chunk oldChunk = l.getChunk();
-                                    if (plugin.tardisChunkList.contains(oldChunk)) {
-                                        plugin.tardisChunkList.remove(oldChunk);
+                                    if (exit == null) {
+                                        player.sendMessage(plugin.pluginName + "Could not engage time circuits! Try setting the destination again.");
+                                        return;
+                                    } else {
+                                        Location l = plugin.utils.getLocationFromDB(cl, 0, 0);
+                                        // remove torch
+                                        plugin.destroyPB.destroyTorch(l);
+                                        // remove sign
+                                        plugin.destroyPB.destroySign(l, d);
+                                        // remove blue box
+                                        plugin.destroyPB.destroyPoliceBox(l, d, id, false);
+                                        // remove current location chunk from list
+                                        Chunk oldChunk = l.getChunk();
+                                        if (plugin.tardisChunkList.contains(oldChunk)) {
+                                            plugin.tardisChunkList.remove(oldChunk);
+                                        }
+                                        // try preloading destination chunk
+                                        World exitWorld = exit.getWorld();
+                                        Chunk chunk = exitWorld.getChunkAt(exit);
+                                        if (!exitWorld.isChunkLoaded(chunk)) {
+                                            exitWorld.loadChunk(chunk);
+                                        }
+                                        exitWorld.refreshChunk(chunk.getX(), chunk.getZ());
+                                        // rebuild blue box
+                                        plugin.buildPB.buildPoliceBox(id, exit, d, cham, player, false);
+                                        update = true;
                                     }
-                                    // try preloading destination chunk
-                                    World exitWorld = exit.getWorld();
-                                    Chunk chunk = exitWorld.getChunkAt(exit);
-                                    if (!exitWorld.isChunkLoaded(chunk)) {
-                                        exitWorld.loadChunk(chunk);
-                                    }
-                                    exitWorld.refreshChunk(chunk.getX(), chunk.getZ());
-                                    // rebuild blue box
-                                    plugin.buildPB.buildPoliceBox(id, exit, d, cham, player, false);
-                                    update = true;
                                 } else {
                                     player.sendMessage(plugin.pluginName + "You need to set a destination first!");
                                 }
