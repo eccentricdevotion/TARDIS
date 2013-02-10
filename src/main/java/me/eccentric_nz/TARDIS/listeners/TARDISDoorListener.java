@@ -37,6 +37,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.Sound;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
@@ -205,6 +206,7 @@ public class TARDISDoorListener implements Listener {
                                                     break;
                                             }
                                             // exit TARDIS!
+                                            player.playSound(player.getLocation(), Sound.DOOR_CLOSE, 1, 1);
                                             movePlayer(player, exitTardis, true, playerWorld, userQuotes);
                                             // remove player from traveller table
                                             HashMap<String, Object> wherd = new HashMap<String, Object>();
@@ -292,6 +294,7 @@ public class TARDISDoorListener implements Listener {
                                                         break;
                                                 }
                                                 // enter TARDIS!
+                                                player.playSound(player.getLocation(), Sound.DOOR_OPEN, 1, 1);
                                                 cw.getChunkAt(tmp_loc).load();
                                                 tmp_loc.setPitch(pitch);
                                                 // get inner door direction so we can adjust yaw if necessary
