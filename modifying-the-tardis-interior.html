@@ -24,8 +24,8 @@
         </ul>
     </header>
     <section>
-        <h1>Entering and exiting the TARDIS</h1>
-        <p>While you can't modify the Police Box - as it gets recreated every time you travel to a new destination, it is possible to alter the interior of the TARDIS. However there are some blocks that the plugin expects to be in a certain position. These are:</p>
+        <h1>Modifying the TARDIS interior</h1>
+        <p>While you can't modify the Police Box - as it gets recreated every time you travel to a new destination, it is possible to alter the interior of the TARDIS (aside from growing <a href="rooms.html">rooms</a>). However there are some blocks that the plugin expects to be in a certain position. These are:</p>
         <ul>
             <li>On the TARDIS console
                 <ul>
@@ -44,7 +44,23 @@
         <pre><code>/tardis update [the block to update]</code></pre>
         <p>So that the TARDIS plugin will know of the new locations and your TARDIS will function correctly. Visit the <a href="tardis-commands.html">Commands</a> page for more detailed info on the command.</p>
         <p>Anything else can be destroyed and changed.</p>
-        <p><strong>Note:</strong> If <code>create_worlds</code> is false in the TARDIS configuration file, the plugin only reserves and protects the initial chunks used to create the TARDIS in, which means that another player could potentially create a TARDIS that overlaps yours if you make it bigger.</p>
+        <p><strong>Note 1:</strong> The TARDIS expects the blocks for the controls to be a certain type. The table below shows which blocks you can use for each:</p>
+        <table>
+        <tr><th>TARDIS control</th><th>Valid blocks</th></tr>
+        <tr><td><code>world-repeater</code></td><td>Redstone Repeater</td></tr>
+        <tr><td><code>x-repeater</code></td><td>Redstone Repeater</td></tr>
+        <tr><td><code>y-repeater</code> (multiplier)</td><td>Redstone Repeater</td></tr>
+        <tr><td><code>z-repeater</code></td><td>Redstone Repeater</td></tr>
+        <tr><td><code>handbrake</code></td><td>Lever</td></tr>
+        <tr><td><code>button</code></td><td>Stone Button, Wood Button, Lever</td></tr>
+        <tr><td><code>artron</code></td><td>Stone Button, Wood Button, Lever</td></tr>
+        <tr><td><code>chameleon</code></td><td>Wall Sign, Sign Post</td></tr>
+        <tr><td><code>save-sign</code></td><td>Wall Sign, Sign Post</td></tr>
+        <tr><td><code>door</code></td><td>Iron Door</td></tr>
+        <tr><td><code>condenser</code></td><td>Single Chest</td></tr>
+        </table>
+        <p><strong>Note 2:</strong> If <code>create_worlds</code> is false in the TARDIS configuration file, the plugin only reserves and protects the initial chunks used to create the TARDIS in, which means that another player could potentially create a TARDIS that overlaps yours if you make it bigger.</p>
+        <p>See also: <a href="bind-commands.html">Binding saves to blocks</a></p>
     </section>
 </div>
 <footer>

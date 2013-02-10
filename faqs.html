@@ -32,23 +32,33 @@
         <h4>My Tardis is not generating its own world!</h4>
         <p>Future</p>
         <h4 id="import">How do I import my TARDIS world into my multi-world plugin?</h4>
+        <p>You should only need to do this if you created a TARDIS before installing the multi-world plugin (and only if you&rsquo;re using an early version 2.0 beta of TARDIS)</p>
         <p>If you are using <strong>Multiverse-Core</strong>:</p>
-        <pre><code>
-        /mv import [world name] normal -g TARDISChunkGenerator
-        /mv modify set animals false [world name]
-        /mv modify set monsters false [world name]
-        /mv modify set hidden true [world name]
-        /mv modify set weather false [world name]
-        /mv modify set memory false [world name]
-        /mv modify set portalform none [world name]</code></pre>
+        <pre><code>/mv import [world name] normal -g TARDISChunkGenerator -n
+/mv modify set animals false [world name]
+/mv modify set monsters false [world name]
+/mv modify set hidden true [world name]
+/mv modify set weather false [world name]
+/mv modify set memory false [world name]
+/mv modify set portalform none [world name]</code></pre>
         <p>Only the first command is required, but the TARDIS plugin sets the other world options as well by default.</p>
         <p><strong>Remember</strong> to change <code>[world name]</code> to the name of your own TARDIS world!</p>
         <p>If you are using <strong>MultiWorld</strong></p>
-        <pre><code>
-        /mw load [world name]
-        /mw setflag [world name] SpawnMonster false
-        /mw setflag [world name] SpawnAnimal false</code></pre>
-        <p>Again, only the first command is required.</p>
+        <p>You&rsquo;re a bit stuck, as MultiWorld doesn't have an easy way of loading a world after it is created.</p>
+        <ol>
+            <li>Open up the MultiWorld config file and duplicate the section for the server&rsquo;s default world.</li>
+            <li>Change the section so it looks like the one below - don't forget to change the world name to your actual world.</li>
+        </ol>
+        <pre><code>TARDIS_WORLD_eccentric_nz:
+    seed: -400605742453603641
+    worldgen: PLUGIN
+    options: TARDISChunkGenerator
+    difficulty: 2
+    autoload: true
+    flags:
+      SPAWNMONSTER: false
+      SPAWNANIMAL: false
+    spawnGroup: defaultGroup</code></pre>
         <h4>My Handbrake is not re-engaging!</h4>
         <p>To re-engage the handbrake you must <strong>LEFT</strong>-click the lever.</p>
         <h4>My TARDIS isn&rsquo;t charging at a recharge beacon</h4>
