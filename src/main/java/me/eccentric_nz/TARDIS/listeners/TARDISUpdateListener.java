@@ -60,7 +60,6 @@ public class TARDISUpdateListener implements Listener {
             validBlocks.add(Material.WOOD_BUTTON);
         }
         validBlocks.add(Material.STONE_BUTTON);
-
     }
 
     /**
@@ -174,8 +173,12 @@ public class TARDISUpdateListener implements Listener {
                     s.setLine(3, coords[1] + "," + coords[2] + "," + coords[3]);
                     s.update();
                 }
-                qf.doUpdate(table, set, tid);
-                player.sendMessage(plugin.pluginName + "The position of the TARDIS " + blockName + " was updated successfully.");
+                if (set.size() > 0) {
+                    qf.doUpdate(table, set, tid);
+                    player.sendMessage(plugin.pluginName + "The position of the TARDIS " + blockName + " was updated successfully.");
+                } else {
+                    player.sendMessage(plugin.pluginName + "You didn't click the correct type of block for the " + blockName + "! Try the command again.");
+                }
             }
         }
     }
