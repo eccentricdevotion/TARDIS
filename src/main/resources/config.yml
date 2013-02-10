@@ -57,6 +57,18 @@ rooms:
   GRAVITY:
     cost: 625
     seed: MOSSY_COBBLESTONE
+  HARMONY:
+    cost: 450
+    seed: BRICK_STAIRS
+  FIRST:
+    cost: 350
+    seed: ENDER_STONE
+  BAKER:
+    cost: 350
+    seed: ENDER_STONE
+  WOOD:
+    cost: 350
+    seed: ENDER_STONE
 #artron energy
 player: 25
 random: 75
