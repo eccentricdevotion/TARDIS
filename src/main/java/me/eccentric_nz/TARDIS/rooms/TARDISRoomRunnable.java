@@ -28,7 +28,9 @@ import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
+import org.bukkit.block.BlockState;
 import org.bukkit.entity.Player;
+import org.bukkit.material.Lever;
 
 /**
  * The TARDIS had a swimming pool. After the TARDIS' crash following the
@@ -55,6 +57,7 @@ public class TARDISRoomRunnable implements Runnable {
     Player p;
     World world;
     List<Chunk> chunkList = new ArrayList<Chunk>();
+    List<Lever> levers = new ArrayList<Lever>();
 
     public TARDISRoomRunnable(TARDIS plugin, TARDISRoomData roomData, Player p) {
         this.plugin = plugin;
@@ -126,6 +129,11 @@ public class TARDISRoomRunnable implements Runnable {
                 b.setTypeIdAndData(64, door_data, true);
                 b.getRelative(BlockFace.UP).setTypeIdAndData(64, (byte) 8, true);
             }
+            // set all the levers to powered
+            for (Lever lvr : levers) {
+                lvr.setPowered(true);
+            }
+            levers.clear();
             // remove the chunks, so they can unload as normal again
             if (chunkList.size() > 0) {
                 for (Chunk ch : chunkList) {
@@ -141,7 +149,11 @@ public class TARDISRoomRunnable implements Runnable {
             tmp = s[level][row][col];
             String[] iddata = tmp.split(":");
             id = plugin.utils.parseNum(iddata[0]);
-            data = Byte.parseByte(iddata[1]);
+            if (TARDISConstants.PROBLEM_BLOCKS.contains(Integer.valueOf(id)) && (d.equals(COMPASS.SOUTH) || d.equals(COMPASS.WEST))) {
+                data = TARDISDataRecalculator.calculateData(id, Byte.parseByte(iddata[1]));
+            } else {
+                data = Byte.parseByte(iddata[1]);
+            }
             if (id == 35 && data == 1) {
                 id = middle_id;
                 data = middle_data;
@@ -173,6 +185,12 @@ public class TARDISRoomRunnable implements Runnable {
             if (!plugin.roomChunkList.contains(thisChunk)) {
                 plugin.roomChunkList.add(thisChunk);
                 chunkList.add(thisChunk);
+            }
+            if (id == 69) {
+                Block block = world.getBlockAt(startx, starty, startz);
+                BlockState state = block.getState();
+                Lever lever = (Lever) state.getData();
+                levers.add(lever);
             }
             plugin.utils.setBlock(world, startx, starty, startz, id, data);
             QueryFactory qf = new QueryFactory(plugin);
