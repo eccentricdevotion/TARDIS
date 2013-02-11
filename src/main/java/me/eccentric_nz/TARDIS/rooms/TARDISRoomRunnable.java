@@ -57,7 +57,7 @@ public class TARDISRoomRunnable implements Runnable {
     Player p;
     World world;
     List<Chunk> chunkList = new ArrayList<Chunk>();
-    List<Lever> levers = new ArrayList<Lever>();
+    List<Block> iceblocks = new ArrayList<Block>();
 
     public TARDISRoomRunnable(TARDIS plugin, TARDISRoomData roomData, Player p) {
         this.plugin = plugin;
@@ -129,11 +129,14 @@ public class TARDISRoomRunnable implements Runnable {
                 b.setTypeIdAndData(64, door_data, true);
                 b.getRelative(BlockFace.UP).setTypeIdAndData(64, (byte) 8, true);
             }
-            // set all the levers to powered
-            for (Lever lvr : levers) {
-                lvr.setPowered(true);
+            if (room.equals("POOL")) // set all the ice to water
+            {
+                plugin.debug("Thawing the pool!");
             }
-            levers.clear();
+            for (Block ice : iceblocks) {
+                ice.setTypeId(9);
+            }
+            iceblocks.clear();
             // remove the chunks, so they can unload as normal again
             if (chunkList.size() > 0) {
                 for (Chunk ch : chunkList) {
@@ -149,7 +152,7 @@ public class TARDISRoomRunnable implements Runnable {
             tmp = s[level][row][col];
             String[] iddata = tmp.split(":");
             id = plugin.utils.parseNum(iddata[0]);
-            if (TARDISConstants.PROBLEM_BLOCKS.contains(Integer.valueOf(id)) && (d.equals(COMPASS.SOUTH) || d.equals(COMPASS.WEST))) {
+            if (TARDISConstants.PROBLEM_BLOCKS.contains(Integer.valueOf(id)) && (d.equals(COMPASS.NORTH) || d.equals(COMPASS.WEST))) {
                 data = TARDISDataRecalculator.calculateData(id, Byte.parseByte(iddata[1]));
             } else {
                 data = Byte.parseByte(iddata[1]);
@@ -186,13 +189,12 @@ public class TARDISRoomRunnable implements Runnable {
                 plugin.roomChunkList.add(thisChunk);
                 chunkList.add(thisChunk);
             }
-            if (id == 69) {
-                Block block = world.getBlockAt(startx, starty, startz);
-                BlockState state = block.getState();
-                Lever lever = (Lever) state.getData();
-                levers.add(lever);
-            }
             plugin.utils.setBlock(world, startx, starty, startz, id, data);
+            // remember ice blocks
+            if (id == 79) {
+                Block icy = world.getBlockAt(startx, starty, startz);
+                iceblocks.add(icy);
+            }
             QueryFactory qf = new QueryFactory(plugin);
             if (room.equals("GRAVITY")) {
                 String loc;
