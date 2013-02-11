@@ -483,13 +483,6 @@ public class TARDISCommands implements CommandExecutor {
                             // how many travellers are in the TARDIS?
                             plugin.utils.updateTravellerCount(id);
                             sender.sendMessage(plugin.pluginName + "The TARDIS is coming...");
-                            long delay = 100L;
-                            if (plugin.getServer().getPluginManager().getPlugin("Spout") != null && SpoutManager.getPlayer(player).isSpoutCraftEnabled()) {
-                                SpoutManager.getSoundManager().playCustomSoundEffect(plugin, SpoutManager.getPlayer(player), "https://dl.dropbox.com/u/53758864/tardis_land.mp3", false, eyeLocation, 9, 75);
-                                delay = 400L;
-                            } else {
-                                p.playSound(p.getLocation(), Sound.MINECART_INSIDE, 1, 0);
-                            }
                             Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
                                 @Override
                                 public void run() {
@@ -499,7 +492,7 @@ public class TARDISCommands implements CommandExecutor {
                                     plugin.destroyPB.destroyPoliceBox(oldSave, d, id, false);
                                     plugin.buildPB.buildPoliceBox(id, eyeLocation, d, cham, p, false);
                                 }
-                            }, delay);
+                            }, 100L);
                             // remove energy from TARDIS
                             HashMap<String, Object> wheret = new HashMap<String, Object>();
                             wheret.put("tardis_id", id);
