@@ -117,6 +117,7 @@ public class TARDISMaterialisationRunnable implements Runnable {
             if (i == 1) {
                 HashMap<String, Object> where = new HashMap<String, Object>();
                 where.put("tardis_id", tid);
+                //figure out a way to make play the sound at the world not the player.
                 ResultSetTravellers rst = new ResultSetTravellers(plugin, where, true);
                 if (rst.resultSet()) {
                     ArrayList<HashMap<String, String>> travellers = rst.getData();
@@ -125,11 +126,13 @@ public class TARDISMaterialisationRunnable implements Runnable {
                         if (p != null) {
                             if (plugin.getServer().getPluginManager().getPlugin("Spout") != null && SpoutManager.getPlayer(p).isSpoutCraftEnabled()) {
                                 SpoutManager.getSoundManager().playCustomSoundEffect(plugin, SpoutManager.getPlayer(p), "https://dl.dropbox.com/u/53758864/tardis_land.mp3", false, p.getLocation(), 9, 75);
-                            } else {
-                                p.playSound(p.getLocation(), Sound.MINECART_INSIDE, 1, 0);
                             }
                         }
                     }
+                }
+                //play sound were box is comming.
+                if (plugin.getServer().getPluginManager().getPlugin("Spout") == null) {
+                    world.playSound(location, Sound.MINECART_INSIDE, 1, 0);
                 }
                 QueryFactory qf = new QueryFactory(plugin);
                 HashMap<String, Object> ps = new HashMap<String, Object>();
