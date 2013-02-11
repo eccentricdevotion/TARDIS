@@ -1,5 +1,6 @@
 # TODO
 ## Current version `2.0`
+0. Add a confirmation message on breaking the sign
 1. Build 'first' console room
 2. Check what happens when companions use the TARDIS with regards to:
    - Recharging
@@ -13,8 +14,10 @@
 1. Add a schematic to CSV converter.
 2. Add a way to grow rooms out of any CSV file in the schematic directory and enable the room if supplied in the config.
 3. Allow admins to enter hidden TARDISs
-4. Allow companions to enter and exit the tardis at will.
+4. Allow companions to enter and exit the tardis at will (and steal it).
 5. Check what happens when companions steal the TARDIS
+6. Allow "Shorting out" the Chameleon curcuit. So that a player can always have a "Leaves" Police Box, or an "Ice" police box.
+7. Allow "Locking" the door, so registered companions can't come in.
 
 ## Minecraft API when available `3.0`
 1. Create custom blocks for the TARDIS and console.
