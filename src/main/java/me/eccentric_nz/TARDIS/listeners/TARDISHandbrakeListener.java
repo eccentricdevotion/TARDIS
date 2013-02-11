@@ -25,6 +25,7 @@ import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.Sound;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockState;
@@ -35,6 +36,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.material.Lever;
+import org.getspout.spoutapi.SpoutManager;
 
 /**
  * The handbrake was a utensil on the TARDIS used for quick stops. River song
@@ -65,6 +67,7 @@ public class TARDISHandbrakeListener implements Listener {
             if (blockType == Material.LEVER) {
                 // get clicked block location
                 Location b = block.getLocation();
+                World w = b.getWorld();
                 String bw = b.getWorld().getName();
                 int bx = b.getBlockX();
                 int by = b.getBlockY();
@@ -94,6 +97,11 @@ public class TARDISHandbrakeListener implements Listener {
                                     state.setData(lever);
                                     state.update();
                                     set.put("handbrake_on", 0);
+                                    if (plugin.getServer().getPluginManager().getPlugin("Spout") != null) {
+                                        SpoutManager.getSoundManager().playGlobalCustomSoundEffect(plugin, "https://dl.dropbox.com/u/53758864/tardis_land.mp3", false, b, 9, 75);
+                                    } else {
+                                        w.playSound(b, Sound.MINECART_INSIDE, 1, 0);
+                                    }
                                     message = "OFF! Entering the time vortex...";
                                     // get location from database
                                     String save = rs.getSave();
