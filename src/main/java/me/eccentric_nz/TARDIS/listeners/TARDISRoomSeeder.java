@@ -50,7 +50,7 @@ public class TARDISRoomSeeder implements Listener {
      * Listens for player interaction with one of the blocks required to seed a
      * room. If the block is clicked with the TARDIS key after running the
      * command /tardis room [room type], the seed block will start growing into
-     * a passageway and the room type specified.
+     * a passageway or the room type specified.
      *
      * Requires the TARDIS to have sufficient Artron Energy to grow the room.
      */
