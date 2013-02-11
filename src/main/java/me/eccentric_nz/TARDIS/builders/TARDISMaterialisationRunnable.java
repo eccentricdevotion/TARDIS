@@ -112,8 +112,7 @@ public class TARDISMaterialisationRunnable implements Runnable {
                         if (p != null) {
                             if (plugin.getServer().getPluginManager().getPlugin("Spout") != null && SpoutManager.getPlayer(p).isSpoutCraftEnabled()) {
                                 SpoutManager.getSoundManager().playCustomSoundEffect(plugin, SpoutManager.getPlayer(p), "https://dl.dropbox.com/u/53758864/tardis_land.mp3", false, p.getLocation(), 9, 75);
-                            }
-                            else{
+                            } else {
                                 p.playSound(p.getLocation(), Sound.MINECART_INSIDE, 1, 0);
                             }
                         }
