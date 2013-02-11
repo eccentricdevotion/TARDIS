@@ -8,11 +8,11 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 package me.eccentric_nz.TARDIS.listeners;
 
@@ -161,8 +161,8 @@ public class TARDISHandbrakeListener implements Listener {
                                     }
                                     plugin.tardisHasDestination.remove(Integer.valueOf(id));
                                     plugin.tardisHasTravelled.add(Integer.valueOf(id));
-                                    update = true;
                                 }
+                                update = true;
                             } else {
                                 player.sendMessage(plugin.pluginName + "The handbrake is already on!");
                             }
