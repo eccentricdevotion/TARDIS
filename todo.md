@@ -1,15 +1,13 @@
 # TODO
 ## Current version `2.0`
 1. Build 'first' console room
-3. Fix Eye of Harmony/wood console schematics
-4. Fix block (chests, furnace, stairs, levers, buttons, ladders) direction/powered state when creating TARDIS/rooms
-5. Check what happens when companions use the TARDIS with regards to:
+2. Check what happens when companions use the TARDIS with regards to:
    - Recharging
    - Update
-6. Remove room schematics in final release, and only supply CSV files.
-7. Documentation!
-8. More tutorial videos
-9. TEST, TEST, TEST
+3. Remove room schematics in final release, and only supply CSV files.
+4. Documentation!
+5. More tutorial videos
+6. TEST, TEST, TEST
 
 ## In a future version `2.1+`
 1. Add a schematic to CSV converter.
