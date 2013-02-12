@@ -92,7 +92,6 @@ public class TARDISExterminator {
             where.put("owner", playerNameStr);
         }
         ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
-        occupied:
         try {
             if (rs.resultSet()) {
                 int id = rs.getTardis_id();
@@ -101,14 +100,14 @@ public class TARDISExterminator {
                 String owner = rs.getOwner();
                 TARDISConstants.SCHEMATIC schm = rs.getSchematic();
                 TARDISConstants.COMPASS d = rs.getDirection();
-                // need to check that a player is not currently in the TARDIS (if admin delete - maybe always?)
+                // need to check that a player is not currently in the TARDIS
                 if (player.hasPermission("tardis.delete")) {
-                    HashMap<String, Object> tid = new HashMap<String, Object>();
-                    tid.put("tardis_id", id);
-                    ResultSetTravellers rst = new ResultSetTravellers(plugin, tid, false);
+                    HashMap<String, Object> travid = new HashMap<String, Object>();
+                    travid.put("tardis_id", id);
+                    ResultSetTravellers rst = new ResultSetTravellers(plugin, travid, false);
                     if (rst.resultSet()) {
                         player.sendMessage(plugin.pluginName + ChatColor.RED + "You cannot delete this TARDIS as it is occupied!");
-                        break occupied;
+                        return false;
                     }
                 }
                 // check the sign location
