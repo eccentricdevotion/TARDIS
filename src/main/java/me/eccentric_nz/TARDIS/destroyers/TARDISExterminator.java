@@ -168,6 +168,10 @@ public class TARDISExterminator {
                     HashMap<String, Object> tid = new HashMap<String, Object>();
                     tid.put("tardis_id", id);
                     qf.doDelete("tardis", tid);
+                    // remove blocks from blocks table
+                    HashMap<String, Object> bid = new HashMap<String, Object>();
+                    bid.put("tardis_id", id);
+                    qf.doDelete("blocks", bid);
                     // remove doors from doors table
                     HashMap<String, Object> did = new HashMap<String, Object>();
                     did.put("tardis_id", id);
