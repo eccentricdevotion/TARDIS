@@ -34,6 +34,7 @@ import me.eccentric_nz.TARDIS.database.ResultSetDestinations;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.database.TARDISDatabase;
+import me.eccentric_nz.TARDIS.destroyers.TARDISExterminator;
 import me.eccentric_nz.TARDIS.files.TARDISUpdateChecker;
 import me.eccentric_nz.TARDIS.thirdparty.Version;
 import me.eccentric_nz.TARDIS.travel.TARDISPluginRespect;
@@ -52,7 +53,6 @@ import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.generator.ChunkGenerator;
 import org.bukkit.inventory.ItemStack;
-import org.getspout.spoutapi.SpoutManager;
 
 /**
  * A TARDIS console room or control room is the area which houses the TARDIS'
@@ -106,6 +106,7 @@ public class TARDISCommands implements CommandExecutor {
         firstArgs.add("unbind");
         firstArgs.add("check_loc");
         firstArgs.add("gravity");
+        firstArgs.add("exterminate");
         // rooms
         for (ROOM r : ROOM.values()) {
             roomArgs.add(r.toString());
@@ -132,6 +133,19 @@ public class TARDISCommands implements CommandExecutor {
             if (!firstArgs.contains(args[0].toLowerCase(Locale.ENGLISH))) {
                 sender.sendMessage(plugin.pluginName + "That command wasn't recognised type " + ChatColor.GREEN + "/tardis help" + ChatColor.RESET + " to see the commands");
                 return false;
+            }
+            // delete the TARDIS
+            if (args[0].equalsIgnoreCase("exterminate")) {
+                if (player == null) {
+                    sender.sendMessage(plugin.pluginName + "Must be a player");
+                    return false;
+                }
+                if (!plugin.trackExterminate.containsKey(player.getName())) {
+                    sender.sendMessage(plugin.pluginName + "You must break the TARDIS Police Box sign first!");
+                    return false;
+                }
+                TARDISExterminator del = new TARDISExterminator(plugin);
+                return del.exterminate(player, plugin.trackExterminate.get(player.getName()));
             }
             // temporary command to convert old gravity well to new style
             if (args[0].equalsIgnoreCase("gravity")) {

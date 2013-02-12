@@ -73,6 +73,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.Chunk;
 import org.bukkit.Material;
 import org.bukkit.World;
+import org.bukkit.block.Block;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.PluginManager;
@@ -210,6 +211,7 @@ public class TARDIS extends JavaPlugin {
     public HashMap<String, String> trackJettison = new HashMap<String, String>();
     public HashMap<Integer, Integer> trackTravellers = new HashMap<Integer, Integer>();
     public HashMap<Integer, Integer> tardisHasDestination = new HashMap<Integer, Integer>();
+    public HashMap<String, Block> trackExterminate = new HashMap<String, Block>();
     public ArrayList<Integer> tardisHasTravelled = new ArrayList<Integer>();
     public ArrayList<Integer> tardisMaterialising = new ArrayList<Integer>();
     public List<Chunk> tardisChunkList = new ArrayList<Chunk>();
