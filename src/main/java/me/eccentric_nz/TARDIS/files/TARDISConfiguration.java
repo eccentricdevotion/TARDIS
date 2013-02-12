@@ -155,8 +155,13 @@ public class TARDISConfiguration {
         if (i > 0) {
             plugin.console.sendMessage(plugin.pluginName + "Added " + ChatColor.AQUA + i + ChatColor.RESET + " new items to config");
         }
-        // add worlds
-        List<World> worlds = this.plugin.getServer().getWorlds();
+        // worlds
+        doWorlds();
+        plugin.saveConfig();
+    }
+
+    public void doWorlds() {
+        List<World> worlds = plugin.getServer().getWorlds();
         for (World w : worlds) {
             String worldname = "worlds." + w.getName();
             if (!config.contains(worldname)) {
@@ -173,6 +178,5 @@ public class TARDISConfiguration {
                 plugin.console.sendMessage(plugin.pluginName + "Removed '" + cw + " from config.yml");
             }
         }
-        plugin.saveConfig();
     }
 }

@@ -28,6 +28,7 @@ import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
+import me.eccentric_nz.TARDIS.files.TARDISConfiguration;
 import me.eccentric_nz.TARDIS.thirdparty.Version;
 import me.eccentric_nz.TARDIS.utility.TARDISMaterials;
 import org.apache.commons.lang.StringUtils;
@@ -172,6 +173,10 @@ public class TARDISAdminCommands implements CommandExecutor {
                     }
                     if (first.equals("reload")) {
                         plugin.reloadConfig();
+                        // check worlds
+                        TARDISConfiguration tc = new TARDISConfiguration(plugin);
+                        tc.doWorlds();
+                        plugin.saveConfig();
                         sender.sendMessage(plugin.pluginName + "TARDIS config reloaded.");
                         return true;
                     }
