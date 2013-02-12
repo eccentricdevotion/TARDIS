@@ -277,7 +277,7 @@ public class TARDISCommands implements CommandExecutor {
                         }
                         String room = args[1].toUpperCase(Locale.ENGLISH);
                         if (!roomArgs.contains(room)) {
-                            player.sendMessage(plugin.pluginName + "That is not a valid room type! Try one of: passage|arboretum|pool|vault|kitchen|bedroom|library|workshop|empty|gravity|harmony|first|baker|wood");
+                            player.sendMessage(plugin.pluginName + "That is not a valid room type! Try one of: passage|arboretum|pool|vault|kitchen|bedroom|library|workshop|empty|gravity|harmony|baker|wood");
                             return true;
                         }
                         HashMap<String, Object> where = new HashMap<String, Object>();
@@ -340,7 +340,7 @@ public class TARDISCommands implements CommandExecutor {
                             return true;
                         }
                         if (!roomArgs.contains(room)) {
-                            player.sendMessage(plugin.pluginName + "That is not a valid room type! Try one of : passage|arboretum|pool|vault|kitchen|bedroom|library|empty|harmony|first|baker|wood");
+                            player.sendMessage(plugin.pluginName + "That is not a valid room type! Try one of : passage|arboretum|pool|vault|kitchen|bedroom|library|empty|harmony|baker|wood");
                             return true;
                         }
                         HashMap<String, Object> where = new HashMap<String, Object>();

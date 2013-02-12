@@ -1,6 +1,5 @@
 # TODO
 ## Current version `2.0`
-1. Build 'first' console room
 2. Check what happens when companions use the TARDIS with regards to:
    - Recharging
    - Update

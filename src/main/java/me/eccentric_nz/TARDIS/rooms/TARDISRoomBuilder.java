@@ -178,17 +178,13 @@ public class TARDISRoomBuilder {
                     s = plugin.harmonyschematic;
                     dimensions = plugin.roomdimensions;
                     break;
-                case FIRST:
-                    s = plugin.firstschematic;
-                    dimensions = plugin.roomdimensions;
-                    break;
                 case BAKER:
                     s = plugin.bakerschematic;
                     dimensions = plugin.roomdimensions;
                     break;
                 case WOOD:
                     s = plugin.woodschematic;
-                    dimensions = plugin.wooddimensions;
+                    dimensions = plugin.roomdimensions;
                     break;
                 default:
                     // PASSAGE
