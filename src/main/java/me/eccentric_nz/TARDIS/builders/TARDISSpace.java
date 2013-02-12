@@ -51,6 +51,7 @@ public class TARDISSpace {
                 plugin.getServer().dispatchCommand(plugin.console, "mw create " + name + " plugin:TARDISChunkGenerator");
                 plugin.getServer().dispatchCommand(plugin.console, "mw setflag " + name + " SpawnMonster false");
                 plugin.getServer().dispatchCommand(plugin.console, "mw setflag " + name + " SpawnAnimal false");
+                plugin.getServer().dispatchCommand(plugin.console, "mw setflag " + name + " PvP false");
                 tardisWorld = plugin.getServer().getWorld(name);
             } else {
                 tardisWorld = WorldCreator.name(name).type(WorldType.LARGE_BIOMES).environment(World.Environment.NORMAL).generator(new TARDISChunkGenerator()).createWorld();
@@ -69,6 +70,7 @@ public class TARDISSpace {
                 plugin.getServer().dispatchCommand(plugin.console, "mv modify set memory false " + name);
                 plugin.getServer().dispatchCommand(plugin.console, "mv modify set portalform none " + name);
                 plugin.getServer().dispatchCommand(plugin.console, "mv modify set adjustspawn false " + name);
+                plugin.getServer().dispatchCommand(plugin.console, "mv modify set pvp false " + name);
             }
             if (plugin.pm.isPluginEnabled("WorldBorder")) {
                 // wb <world> set <radius> <x> <z>
