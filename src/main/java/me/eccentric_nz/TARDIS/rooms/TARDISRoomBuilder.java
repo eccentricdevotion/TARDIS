@@ -120,7 +120,7 @@ public class TARDISRoomBuilder {
                     l.setY(l.getY() - 4);
                     break;
                 case GRAVITY:
-                    l.setY(l.getY() - 11);
+                    l.setY(l.getY() - 12);
                     break;
                 default:
                     l.setY(l.getY() - 1);

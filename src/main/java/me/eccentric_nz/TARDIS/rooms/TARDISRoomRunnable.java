@@ -28,9 +28,7 @@ import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
-import org.bukkit.block.BlockState;
 import org.bukkit.entity.Player;
-import org.bukkit.material.Lever;
 
 /**
  * The TARDIS had a swimming pool. After the TARDIS' crash following the

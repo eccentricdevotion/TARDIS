@@ -57,7 +57,7 @@ public class TARDISGravityWellListener implements Listener {
             Player player = event.getPlayer();
             int x = l.getBlockX();
             int z = l.getBlockZ();
-            double endy = l.getY() + 10;
+            double endy = l.getY() + 11;
             TARDISGravityWellRunnable runnable = new TARDISGravityWellRunnable(plugin, player, 0.5D, endy, x, z);
             int task = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, runnable, 2L, 3L);
             runnable.setTask(task);
