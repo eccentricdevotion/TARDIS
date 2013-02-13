@@ -19,12 +19,15 @@ package me.eccentric_nz.TARDIS.listeners;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.utility.TARDISUtils;
 import me.eccentric_nz.TARDIS.builders.TARDISSpace;
+import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
+import me.eccentric_nz.TARDIS.rooms.TARDISWalls;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -155,14 +158,35 @@ public class TARDISBlockPlaceListener implements Listener {
                         set.put("home", home);
                         set.put("save", save);
                         set.put("size", schm.name());
+                        HashMap<String, Object> setpp = new HashMap<String, Object>();
                         if (middle_id == 22) {
                             set.put("middle_id", 35);
-                            set.put("middle_data", 1);
+                            if (blockBottom.getType().equals(Material.EMERALD_BLOCK)) {
+                                set.put("middle_data", 8);
+                                setpp.put("wall", "LIGHT_GREY_WOOL");
+                            } else {
+                                set.put("middle_data", 1);
+                                setpp.put("wall", "ORANGE_WOOL");
+                            }
                         } else {
                             set.put("middle_id", middle_id);
                             set.put("middle_data", middle_data);
+                            // determine wall block material from HashMap
+                            setpp.put("wall", getWallKey(middle_id, (int) middle_data));
                         }
                         final int lastInsertId = qf.doInsert("tardis", set);
+                        // insert/update  player prefs
+                        HashMap<String, Object> wherep = new HashMap<String, Object>();
+                        wherep.put("player", player.getName());
+                        ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, where);
+                        if (!rsp.resultSet()) {
+                            setpp.put("player", player.getName());
+                            qf.doInsert("player_prefs", setpp);
+                        } else {
+                            HashMap<String, Object> wherepp = new HashMap<String, Object>();
+                            wherepp.put("player", player.getName());
+                            qf.doUpdate("player_prefs", setpp, wherepp);
+                        }
                         // remove redstone torch/lapis and iron blocks
                         block.setTypeId(0);
                         blockBelow.setTypeId(0);
@@ -181,5 +205,16 @@ public class TARDISBlockPlaceListener implements Listener {
                 }
             }
         }
+    }
+
+    private static String getWallKey(int i, int d) {
+        TARDISWalls tw = new TARDISWalls();
+        for (Map.Entry<String, Integer[]> entry : tw.blocks.entrySet()) {
+            Integer[] value = entry.getValue();
+            if (value[0] == Integer.valueOf(i) && value[1] == Integer.valueOf(d)) {
+                return entry.getKey();
+            }
+        }
+        return "ORANGE_WOOL";
     }
 }

@@ -131,6 +131,9 @@ public class TARDISUpdateListener implements Listener {
                 if (blockName.equalsIgnoreCase("button") && (validBlocks.contains(blockType) || blockType == Material.LEVER)) {
                     set.put("button", blockLocStr);
                 }
+                if (blockName.equalsIgnoreCase("scanner") && (validBlocks.contains(blockType) || blockType == Material.LEVER)) {
+                    set.put("scanner", blockLocStr);
+                }
                 if (blockName.equalsIgnoreCase("handbrake") && blockType == Material.LEVER) {
                     set.put("handbrake", blockLocStr);
                 }

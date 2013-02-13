@@ -20,6 +20,7 @@ import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants.COMPASS;
 import me.eccentric_nz.TARDIS.TARDISConstants.ROOM;
+import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
@@ -62,12 +63,24 @@ public class TARDISRoomBuilder {
         where.put("owner", p.getName());
         ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
         if (rs.resultSet()) {
+            HashMap<String, Object> wherepp = new HashMap<String, Object>();
+            wherepp.put("player", p.getName());
+            ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, wherepp);
             TARDISRoomData roomData = new TARDISRoomData();
             roomData.setTardis_id(rs.getTardis_id());
             // get middle data, default to orange wool if not set
-            int middle_id = (rs.getMiddle_id() != 0) ? rs.getMiddle_id() : 35;
+            int middle_id;
+            byte middle_data;
+            if (rsp.resultSet()) {
+                TARDISWalls tw = new TARDISWalls();
+                Integer[] id_data = tw.blocks.get(rsp.getWall());
+                middle_id = id_data[0].intValue();
+                middle_data = id_data[1].byteValue();
+            } else {
+                middle_id = 35;
+                middle_data = 1;
+            }
             roomData.setMiddle_id(middle_id);
-            byte middle_data = (rs.getMiddle_data() != 0) ? rs.getMiddle_data() : 1;
             roomData.setMiddle_data(middle_data);
             // get start locations
             Block b = l.getBlock();

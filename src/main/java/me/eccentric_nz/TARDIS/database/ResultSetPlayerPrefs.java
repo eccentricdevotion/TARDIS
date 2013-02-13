@@ -42,6 +42,7 @@ public class ResultSetPlayerPrefs {
     private boolean platform_on;
     private boolean quotes_on;
     private int artron_level;
+    private String wall;
 
     /**
      * Creates a class instance that can be used to retrieve an SQL ResultSet
@@ -96,6 +97,7 @@ public class ResultSetPlayerPrefs {
                 this.platform_on = rs.getBoolean("platform_on");
                 this.quotes_on = rs.getBoolean("quotes_on");
                 this.artron_level = rs.getInt("artron_level");
+                this.wall = rs.getString("wall");
             } else {
                 return false;
             }
@@ -139,5 +141,9 @@ public class ResultSetPlayerPrefs {
 
     public int getArtron_level() {
         return artron_level;
+    }
+
+    public String getWall() {
+        return wall;
     }
 }
