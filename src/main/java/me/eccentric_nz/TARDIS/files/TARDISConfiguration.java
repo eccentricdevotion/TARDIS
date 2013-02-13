@@ -71,22 +71,24 @@ public class TARDISConfiguration {
         // integer
         intOptions.put("timeout_height", 135);
         intOptions.put("timeout", 5);
-        intOptions.put("tp_radius", 256);
+        intOptions.put("confirm_timeout", 15);
         intOptions.put("border_radius", 64);
-        intOptions.put("rooms.PASSAGE.cost", 200);
+        intOptions.put("scan_radius", 64);
+        intOptions.put("tp_radius", 256);
         intOptions.put("rooms.ARBORETUM.cost", 325);
+        intOptions.put("rooms.BAKER.cost", 350);
         intOptions.put("rooms.BEDROOM.cost", 475);
-        intOptions.put("rooms.KITCHEN.cost", 450);
-        intOptions.put("rooms.LIBRARY.cost", 550);
-        intOptions.put("rooms.POOL.cost", 450);
-        intOptions.put("rooms.VAULT.cost", 350);
-        intOptions.put("rooms.WORKSHOP.cost", 400);
         intOptions.put("rooms.EMPTY.cost", 250);
+        intOptions.put("rooms.FIRST.cost", 350);
         intOptions.put("rooms.GRAVITY.cost", 625);
         intOptions.put("rooms.HARMONY.cost", 450);
-        intOptions.put("rooms.FIRST.cost", 350);
-        intOptions.put("rooms.BAKER.cost", 350);
+        intOptions.put("rooms.KITCHEN.cost", 450);
+        intOptions.put("rooms.LIBRARY.cost", 550);
+        intOptions.put("rooms.PASSAGE.cost", 200);
+        intOptions.put("rooms.POOL.cost", 450);
+        intOptions.put("rooms.VAULT.cost", 350);
         intOptions.put("rooms.WOOD.cost", 350);
+        intOptions.put("rooms.WORKSHOP.cost", 400);
         intOptions.put("player", 25);
         intOptions.put("random", 75);
         intOptions.put("travel", 100);
@@ -103,20 +105,20 @@ public class TARDISConfiguration {
         strOptions.put("default_world_name", "myridiculouslylongworldnameiscalledcuthbert");
         strOptions.put("key", "STICK");
         strOptions.put("full_charge_item", "NETHER_STAR");
-        strOptions.put("rooms.PASSAGE.seed", "CLAY");
         strOptions.put("rooms.ARBORETUM.seed", "LEAVES");
+        strOptions.put("rooms.BAKER.seed", "ENDER_STONE");
         strOptions.put("rooms.BEDROOM.seed", "GLOWSTONE");
-        strOptions.put("rooms.KITCHEN.seed", "PUMPKIN");
-        strOptions.put("rooms.LIBRARY.seed", "BOOKSHELF");
-        strOptions.put("rooms.POOL.seed", "SNOW_BLOCK");
-        strOptions.put("rooms.VAULT.seed", "DISPENSER");
-        strOptions.put("rooms.WORKSHOP.seed", "NETHER_BRICK");
         strOptions.put("rooms.EMPTY.seed", "GLASS");
+        strOptions.put("rooms.FIRST.seed", "GRAVEL");
         strOptions.put("rooms.GRAVITY.seed", "MOSSY_COBBLESTONE");
         strOptions.put("rooms.HARMONY.seed", "BRICK_STAIRS");
-        strOptions.put("rooms.FIRST.seed", "GRAVEL");
-        strOptions.put("rooms.BAKER.seed", "ENDER_STONE");
+        strOptions.put("rooms.KITCHEN.seed", "PUMPKIN");
+        strOptions.put("rooms.LIBRARY.seed", "BOOKSHELF");
+        strOptions.put("rooms.PASSAGE.seed", "CLAY");
+        strOptions.put("rooms.POOL.seed", "SNOW_BLOCK");
+        strOptions.put("rooms.VAULT.seed", "DISPENSER");
         strOptions.put("rooms.WOOD.seed", "WOOD");
+        strOptions.put("rooms.WORKSHOP.seed", "NETHER_BRICK");
     }
 
     /**

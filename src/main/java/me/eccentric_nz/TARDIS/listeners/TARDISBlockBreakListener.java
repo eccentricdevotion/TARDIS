@@ -16,22 +16,10 @@
  */
 package me.eccentric_nz.TARDIS.listeners;
 
-import java.io.File;
-import java.util.HashMap;
-import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.TARDISConstants;
-import me.eccentric_nz.TARDIS.database.QueryFactory;
-import me.eccentric_nz.TARDIS.database.ResultSetTardis;
-import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
 import org.bukkit.ChatColor;
-import org.bukkit.Location;
 import org.bukkit.Material;
-import org.bukkit.World;
-import org.bukkit.World.Environment;
-import org.bukkit.WorldType;
 import org.bukkit.block.Block;
-import org.bukkit.block.BlockFace;
 import org.bukkit.block.Sign;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -74,12 +62,13 @@ public class TARDISBlockBreakListener implements Listener {
                 Player player = event.getPlayer();
                 final String playerNameStr = player.getName();
                 plugin.trackExterminate.put(playerNameStr, block);
-                player.sendMessage(plugin.pluginName + "Are you sure you want to delete the TARDIS? Type " + ChatColor.AQUA + "/tardis exterminate" + ChatColor.RESET + " within 15 seconds to proceed.");
+                long timeout = plugin.getConfig().getLong("confirm_timeout");
+                player.sendMessage(plugin.pluginName + "Are you sure you want to delete the TARDIS? Type " + ChatColor.AQUA + "/tardis exterminate" + ChatColor.RESET + " within " + timeout + " seconds to proceed.");
                 plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
                     public void run() {
                         plugin.trackExterminate.remove(playerNameStr);
                     }
-                }, 300L);
+                }, timeout * 20);
             }
         }
     }
