@@ -1,5 +1,6 @@
 # TODO
 ## Current version `2.0`
+0. Add a scanner, which if you toggle a lever, will display in chat what biome is outside of the TARDIS, whether it is day or night, the Police Box coordinates, lifeforms etc.
 1. Make a proper "upward" Gravity Well
 2. Add 'farm' room if schematic supplied
 3. Check what happens when companions use the TARDIS with regards to:
