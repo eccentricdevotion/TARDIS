@@ -55,6 +55,8 @@ import org.bukkit.generator.ChunkGenerator;
 import org.bukkit.inventory.ItemStack;
 
 /**
+ * Command /tardis [arguments].
+ *
  * A TARDIS console room or control room is the area which houses the TARDIS'
  * control console, by which the TARDIS was operated.
  *
@@ -81,32 +83,32 @@ public class TARDISCommands implements CommandExecutor {
         transparent.add((byte) Material.VINE.getId());
         transparent.add((byte) Material.DEAD_BUSH.getId());
         // add first arguments
-        firstArgs.add("chameleon");
-        firstArgs.add("save");
-        firstArgs.add("removesave");
-        firstArgs.add("list");
-        firstArgs.add("help");
-        firstArgs.add("find");
-        firstArgs.add("reload");
         firstArgs.add("add");
-        firstArgs.add("remove");
-        firstArgs.add("update");
-        firstArgs.add("rebuild");
+        firstArgs.add("bind");
+        firstArgs.add("chameleon");
+        firstArgs.add("check_loc");
         firstArgs.add("comehere");
-        firstArgs.add("occupy");
         firstArgs.add("direction");
-        firstArgs.add("setdest");
+        firstArgs.add("exterminate");
+        firstArgs.add("find");
+        firstArgs.add("gravity");
+        firstArgs.add("help");
         firstArgs.add("hide");
         firstArgs.add("home");
-        firstArgs.add("namekey");
-        firstArgs.add("version");
-        firstArgs.add("room");
         firstArgs.add("jettison");
-        firstArgs.add("bind");
+        firstArgs.add("list");
+        firstArgs.add("namekey");
+        firstArgs.add("occupy");
+        firstArgs.add("rebuild");
+        firstArgs.add("reload");
+        firstArgs.add("remove");
+        firstArgs.add("removesave");
+        firstArgs.add("room");
+        firstArgs.add("save");
+        firstArgs.add("setdest");
         firstArgs.add("unbind");
-        firstArgs.add("check_loc");
-        firstArgs.add("gravity");
-        firstArgs.add("exterminate");
+        firstArgs.add("update");
+        firstArgs.add("version");
         // rooms
         for (ROOM r : ROOM.values()) {
             roomArgs.add(r.toString());
@@ -597,13 +599,14 @@ public class TARDISCommands implements CommandExecutor {
                 }
                 if (args[0].equalsIgnoreCase("update")) {
                     if (player.hasPermission("tardis.update")) {
-                        String[] validBlockNames = {"door", "button", "world-repeater", "x-repeater", "z-repeater", "y-repeater", "chameleon", "save-sign", "artron", "handbrake", "condenser"};
+                        String[] validBlockNames = {"door", "button", "world-repeater", "x-repeater", "z-repeater", "y-repeater", "chameleon", "save-sign", "artron", "handbrake", "condenser", "scanner"};
                         if (args.length < 2) {
                             sender.sendMessage(plugin.pluginName + "Too few command arguments!");
                             return false;
                         }
-                        if (!Arrays.asList(validBlockNames).contains(args[1].toLowerCase(Locale.ENGLISH))) {
-                            player.sendMessage(plugin.pluginName + "That is not a valid TARDIS block name! Try one of : door|button|world-repeater|x-repeater|z-repeater|y-repeater|chameleon|save-sign|artron|handbrake|condenser");
+                        String tardis_block = args[1].toLowerCase(Locale.ENGLISH);
+                        if (!Arrays.asList(validBlockNames).contains(tardis_block)) {
+                            player.sendMessage(plugin.pluginName + "That is not a valid TARDIS block name! Try one of : door|button|world-repeater|x-repeater|z-repeater|y-repeater|chameleon|save-sign|artron|handbrake|condenser|scanner");
                             return false;
                         }
                         HashMap<String, Object> where = new HashMap<String, Object>();
@@ -620,8 +623,8 @@ public class TARDISCommands implements CommandExecutor {
                             sender.sendMessage(plugin.pluginName + "You are not inside your TARDIS. You need to be to run this command!");
                             return false;
                         }
-                        plugin.trackPlayers.put(player.getName(), args[1].toLowerCase(Locale.ENGLISH));
-                        player.sendMessage(plugin.pluginName + "Click the TARDIS " + args[1].toLowerCase(Locale.ENGLISH) + " to update its position.");
+                        plugin.trackPlayers.put(player.getName(), tardis_block);
+                        player.sendMessage(plugin.pluginName + "Click the TARDIS " + tardis_block + " to update its position.");
                         return true;
                     } else {
                         sender.sendMessage(plugin.pluginName + TARDISConstants.NO_PERMS_MESSAGE);
