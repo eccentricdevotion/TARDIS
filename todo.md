@@ -1,6 +1,5 @@
 # TODO
 ## Current version `2.0`
-0. Add a scanner, which if you toggle a lever, will display in chat what biome is outside of the TARDIS, whether it is day or night, the Police Box coordinates, lifeforms etc.
 1. Make a proper "upward" Gravity Well
 2. Add 'farm' room if schematic supplied
 3. Check what happens when companions use the TARDIS with regards to:
@@ -12,16 +11,15 @@
 7. TEST, TEST, TEST
 
 ## In a future version `2.1+`
-1. Allow the desired blocks used to grow room walls be saved in playerprefs.
-2. Allow an "Autonomous Curcuit" to be created, allowing the TARDIS to travel to a player's home or the last used charging station in the event of the player's death.
-3. Revamp Spout sounds
-4. Add a schematic to CSV converter.
-5. Add a way to grow rooms out of any CSV file in the schematic directory and enable the room if supplied in the config.
-6. Allow admins to enter hidden TARDISs
-7. Allow companions to enter and exit the tardis at will (and steal it).
-8. Check what happens when companions steal the TARDIS
-9. Allow "Shorting out" the Chameleon curcuit. So that a player can always have a "Leaves" Police Box, or an "Ice" police box.
-10. Allow "Locking" the door, so registered companions can't come in.
+1. Allow an "Autonomous Curcuit" to be created, allowing the TARDIS to travel to a player's home or the last used charging station in the event of the player's death.
+2. Revamp Spout sounds [started]
+3. Add a schematic to CSV converter.
+4. Add a way to grow rooms out of any CSV file in the schematic directory and enable the room if supplied in the config.
+5. Allow admins to enter hidden TARDISs
+6. Allow companions to enter and exit the tardis at will (and steal it).
+7. Check what happens when companions steal the TARDIS
+8. Allow "Shorting out" the Chameleon curcuit. So that a player can always have a "Leaves" Police Box, or an "Ice" police box.
+9. Allow "Locking" the door, so registered companions can't come in.
 
 ## Minecraft API when available `3.0`
 1. Create custom blocks for the TARDIS and console.
