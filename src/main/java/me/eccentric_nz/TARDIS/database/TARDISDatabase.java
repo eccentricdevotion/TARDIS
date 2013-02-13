@@ -143,20 +143,22 @@ public class TARDISDatabase {
                 statement.executeUpdate(queryAlter14);
                 TARDIS.plugin.console.sendMessage(TARDIS.plugin.pluginName + "Adding new y coord field to areas!");
             }
-            // add wall to player_prefs
+            // add wall/auto_on to player_prefs
             String queryAddWall = "SELECT sql FROM sqlite_master WHERE tbl_name = 'player_prefs' AND sql LIKE '%wall TEXT%'";
             ResultSet rsWall = statement.executeQuery(queryAddWall);
             if (!rsWall.next()) {
                 String queryAlter15 = "ALTER TABLE player_prefs ADD wall TEXT DEFAULT 'ORANGE_WOOL'";
                 statement.executeUpdate(queryAlter15);
+                String queryAlter16 = "ALTER TABLE player_prefs ADD auto_on INTEGER DEFAULT 0";
+                statement.executeUpdate(queryAlter16);
                 TARDIS.plugin.console.sendMessage(TARDIS.plugin.pluginName + "Adding wall field to player prefs!");
             }
             // add scanner to tardis
             String queryAddScanner = "SELECT sql FROM sqlite_master WHERE tbl_name = 'tardis' AND sql LIKE '%scanner TEXT%'";
             ResultSet rsScanner = statement.executeQuery(queryAddScanner);
             if (!rsScanner.next()) {
-                String queryAlter16 = "ALTER TABLE tardis ADD scanner TEXT DEFAULT ''";
-                statement.executeUpdate(queryAlter16);
+                String queryAlter17 = "ALTER TABLE tardis ADD scanner TEXT DEFAULT ''";
+                statement.executeUpdate(queryAlter17);
                 TARDIS.plugin.console.sendMessage(TARDIS.plugin.pluginName + "Adding scanner to tardis!");
             }
             String queryAddMissing = "SELECT sql FROM sqlite_master WHERE tbl_name = 'tardis' AND sql LIKE '%handbrake TEXT%'";

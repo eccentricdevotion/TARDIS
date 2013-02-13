@@ -1,5 +1,6 @@
 # TODO
 ## Current version `2.0`
+0. Do a block update on the TARDIS/room lamp blocks to make them lit.
 1. Make a proper "upward" Gravity Well
 2. Add 'farm' room if schematic supplied
 3. Check what happens when companions use the TARDIS with regards to:
