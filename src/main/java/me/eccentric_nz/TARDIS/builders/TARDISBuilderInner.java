@@ -51,6 +51,7 @@ import org.bukkit.plugin.Plugin;
 public class TARDISBuilderInner {
 
     private final TARDIS plugin;
+    List<Block> lampblocks = new ArrayList<Block>();
 
     public TARDISBuilderInner(TARDIS plugin) {
         this.plugin = plugin;
@@ -266,6 +267,11 @@ public class TARDISBuilderInner {
                                 wherewb.put("tardis_id", dbID);
                                 qf.doUpdate("tardis", setwb, wherewb);
                             }
+                            // remember lamp blocks
+                            if (id == 124) {
+                                Block lamp = world.getBlockAt(startx, starty, startz);
+                                lampblocks.add(lamp);
+                            }
                             if (id == 35 && data == 1) {
                                 switch (middle_id) {
                                     case 22:
@@ -399,6 +405,10 @@ public class TARDISBuilderInner {
                 plugin.console.sendMessage(plugin.pluginName + "Could not find chest location in DB!");
             }
         }
+        for (Block lamp : lampblocks) {
+            lamp.setType(Material.REDSTONE_LAMP_ON);
+        }
+        lampblocks.clear();
         if (plugin.worldGuardOnServer && plugin.getConfig().getBoolean("use_worldguard")) {
             plugin.wgchk.addWGProtection(p, wg1, wg2);
         }

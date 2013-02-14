@@ -25,6 +25,7 @@ import me.eccentric_nz.TARDIS.TARDISConstants.COMPASS;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
@@ -56,6 +57,7 @@ public class TARDISRoomRunnable implements Runnable {
     World world;
     List<Chunk> chunkList = new ArrayList<Chunk>();
     List<Block> iceblocks = new ArrayList<Block>();
+    List<Block> lampblocks = new ArrayList<Block>();
 
     public TARDISRoomRunnable(TARDIS plugin, TARDISRoomData roomData, Player p) {
         this.plugin = plugin;
@@ -128,13 +130,19 @@ public class TARDISRoomRunnable implements Runnable {
                 b.getRelative(BlockFace.UP).setTypeIdAndData(64, (byte) 8, true);
             }
             if (room.equals("POOL")) {
-                // set all the ice to water
                 p.sendMessage(plugin.pluginName + "Thawing the pool!");
             }
+            // set all the ice to water
             for (Block ice : iceblocks) {
                 ice.setTypeId(9);
             }
             iceblocks.clear();
+            // update lamp block states
+            p.sendMessage(plugin.pluginName + "Turning on the lights!");
+            for (Block lamp : lampblocks) {
+                lamp.setType(Material.REDSTONE_LAMP_ON);
+            }
+            lampblocks.clear();
             // remove the chunks, so they can unload as normal again
             if (chunkList.size() > 0) {
                 for (Chunk ch : chunkList) {
@@ -192,6 +200,11 @@ public class TARDISRoomRunnable implements Runnable {
             if (id == 79) {
                 Block icy = world.getBlockAt(startx, starty, startz);
                 iceblocks.add(icy);
+            }
+            // remember lamp blocks
+            if (id == 124) {
+                Block lamp = world.getBlockAt(startx, starty, startz);
+                lampblocks.add(lamp);
             }
             QueryFactory qf = new QueryFactory(plugin);
             if (room.equals("GRAVITY")) {
