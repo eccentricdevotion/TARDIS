@@ -176,7 +176,9 @@ public class TARDISRoomRunnable implements Runnable {
                 if (existing.getTypeId() != 0) {
                     if (room.equals("GRAVITY") || room.equals("ANTIGRAVITY")) {
                         switch (id) {
+                            case 20:
                             case 35:
+                            case 98:
                                 break;
                             default:
                                 id = existing.getTypeId();

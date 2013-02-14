@@ -59,16 +59,16 @@ public class TARDISMakeCSV {
                 }
             }
             // load csv files - create them if they don't exist
-            plugin.arboretumSchematicCSV = createFile(TARDISConstants.SCHEMATIC_ARBORETUM + ".csv");
-            plugin.bakerSchematicCSV = createFile(TARDISConstants.SCHEMATIC_BAKER + ".csv");
-            plugin.bedroomSchematicCSV = createFile(TARDISConstants.SCHEMATIC_BEDROOM + ".csv");
             plugin.biggerSchematicCSV = createFile(TARDISConstants.SCHEMATIC_BIGGER + ".csv");
             plugin.budgetSchematicCSV = createFile(TARDISConstants.SCHEMATIC_BUDGET + ".csv");
             plugin.deluxeSchematicCSV = createFile(TARDISConstants.SCHEMATIC_DELUXE + ".csv");
             plugin.eleventhSchematicCSV = createFile(TARDISConstants.SCHEMATIC_ELEVENTH + ".csv");
+            plugin.arboretumSchematicCSV = createFile(TARDISConstants.SCHEMATIC_ARBORETUM + ".csv");
+            plugin.bakerSchematicCSV = createFile(TARDISConstants.SCHEMATIC_BAKER + ".csv");
+            plugin.bedroomSchematicCSV = createFile(TARDISConstants.SCHEMATIC_BEDROOM + ".csv");
             plugin.emptySchematicCSV = createFile(TARDISConstants.SCHEMATIC_EMPTY + ".csv");
-            plugin.gravitySchematicCSV = createFile(TARDISConstants.SCHEMATIC_ANTIGRAVITY + ".csv");
-            plugin.antigravitySchematicCSV = createFile(TARDISConstants.SCHEMATIC_GRAVITY + ".csv");
+            plugin.gravitySchematicCSV = createFile(TARDISConstants.SCHEMATIC_GRAVITY + ".csv");
+            plugin.antigravitySchematicCSV = createFile(TARDISConstants.SCHEMATIC_ANTIGRAVITY + ".csv");
             plugin.harmonySchematicCSV = createFile(TARDISConstants.SCHEMATIC_HARMONY + ".csv");
             plugin.kitchenSchematicCSV = createFile(TARDISConstants.SCHEMATIC_KITCHEN + ".csv");
             plugin.librarySchematicCSV = createFile(TARDISConstants.SCHEMATIC_LIBRARY + ".csv");
