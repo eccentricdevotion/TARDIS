@@ -1,18 +1,16 @@
 # TODO
 ## Current version `2.0`
-0. Do a block update on the TARDIS/room lamp blocks to make them lit.
-1. Make a proper "upward" Gravity Well
-2. Add 'farm' room if schematic supplied
-3. Check what happens when companions use the TARDIS with regards to:
+1. Add 'farm' room if schematic supplied
+2. Check what happens when companions use the TARDIS with regards to:
    - Recharging
    - Update
-4. Remove room schematics in final release, and only supply CSV files.
-5. Documentation!
-6. More tutorial videos
-7. TEST, TEST, TEST
+3. Remove room schematics in final release, and only supply CSV files.
+4. Documentation!
+5. More tutorial videos
+6. TEST, TEST, TEST
 
 ## In a future version `2.1+`
-1. Allow an "Autonomous Curcuit" to be created, allowing the TARDIS to travel to a player's home or the last used charging station in the event of the player's death.
+1. Allow an "Autonomous Curcuit" to be created, allowing the TARDIS to travel to a player's home or the last used charging station in the event of the player's death. [table field already added to player_prefs]
 2. Revamp Spout sounds [started]
 3. Add a schematic to CSV converter.
 4. Add a way to grow rooms out of any CSV file in the schematic directory and enable the room if supplied in the config.
