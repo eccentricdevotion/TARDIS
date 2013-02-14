@@ -178,7 +178,7 @@ public class TARDISBlockPlaceListener implements Listener {
                         // insert/update  player prefs
                         HashMap<String, Object> wherep = new HashMap<String, Object>();
                         wherep.put("player", player.getName());
-                        ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, where);
+                        ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, wherep);
                         if (!rsp.resultSet()) {
                             setpp.put("player", player.getName());
                             qf.doInsert("player_prefs", setpp);
