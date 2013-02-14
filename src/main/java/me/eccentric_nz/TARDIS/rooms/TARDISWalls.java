@@ -31,6 +31,7 @@ public class TARDISWalls {
     public HashMap<String, Integer[]> blocks;
 
     public TARDISWalls() {
+        blocks = new HashMap<String, Integer[]>();
         blocks.put("STONE", new Integer[]{1, 0});
         blocks.put("COBBLESTONE", new Integer[]{4, 0});
         blocks.put("MOSSY_COBBLESTONE", new Integer[]{48, 0});
