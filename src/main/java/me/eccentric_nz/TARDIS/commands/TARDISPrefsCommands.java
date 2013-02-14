@@ -97,7 +97,7 @@ public class TARDISPrefsCommands implements CommandExecutor {
                             for (String w : tw.blocks.keySet()) {
                                 sender.sendMessage(w);
                             }
-                            return false;
+                            return true;
                         }
                         QueryFactory qf = new QueryFactory(plugin);
                         HashMap<String, Object> set = new HashMap<String, Object>();
