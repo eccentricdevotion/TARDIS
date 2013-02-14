@@ -59,6 +59,9 @@ rooms:
   GRAVITY:
     cost: 625
     seed: MOSSY_COBBLESTONE
+  ANTIGRAVITY:
+    cost: 625
+    seed: SANDSTONE
   HARMONY:
     cost: 450
     seed: SMOOTH_STAIRS
