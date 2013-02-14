@@ -68,7 +68,7 @@ public class TARDISMakeCSV {
             plugin.eleventhSchematicCSV = createFile(TARDISConstants.SCHEMATIC_ELEVENTH + ".csv");
             plugin.emptySchematicCSV = createFile(TARDISConstants.SCHEMATIC_EMPTY + ".csv");
             plugin.gravitySchematicCSV = createFile(TARDISConstants.SCHEMATIC_ANTIGRAVITY + ".csv");
-            plugin.gravitySchematicCSV = createFile(TARDISConstants.SCHEMATIC_GRAVITY + ".csv");
+            plugin.antigravitySchematicCSV = createFile(TARDISConstants.SCHEMATIC_GRAVITY + ".csv");
             plugin.harmonySchematicCSV = createFile(TARDISConstants.SCHEMATIC_HARMONY + ".csv");
             plugin.kitchenSchematicCSV = createFile(TARDISConstants.SCHEMATIC_KITCHEN + ".csv");
             plugin.librarySchematicCSV = createFile(TARDISConstants.SCHEMATIC_LIBRARY + ".csv");
@@ -81,13 +81,13 @@ public class TARDISMakeCSV {
             reader = new TARDISSchematicReader(plugin);
             // load schematic files - copy the defaults if they don't exist
             String basepath = plugin.getDataFolder() + File.separator + "schematics" + File.separator;
-            String arbornstr = basepath + TARDISConstants.SCHEMATIC_ARBORETUM;
-            String baknstr = basepath + TARDISConstants.SCHEMATIC_BAKER;
-            String bednstr = basepath + TARDISConstants.SCHEMATIC_BEDROOM;
             String bignstr = basepath + TARDISConstants.SCHEMATIC_BIGGER;
             String budnstr = basepath + TARDISConstants.SCHEMATIC_BUDGET;
             String delnstr = basepath + TARDISConstants.SCHEMATIC_DELUXE;
             String elenstr = basepath + TARDISConstants.SCHEMATIC_ELEVENTH;
+            String arbornstr = basepath + TARDISConstants.SCHEMATIC_ARBORETUM;
+            String baknstr = basepath + TARDISConstants.SCHEMATIC_BAKER;
+            String bednstr = basepath + TARDISConstants.SCHEMATIC_BEDROOM;
             String empnstr = basepath + TARDISConstants.SCHEMATIC_EMPTY;
             String granstr = basepath + TARDISConstants.SCHEMATIC_GRAVITY;
             String antnstr = basepath + TARDISConstants.SCHEMATIC_ANTIGRAVITY;
@@ -99,13 +99,13 @@ public class TARDISMakeCSV {
             String vaunstr = basepath + TARDISConstants.SCHEMATIC_VAULT;
             String woonstr = basepath + TARDISConstants.SCHEMATIC_WOOD;
             String wornstr = basepath + TARDISConstants.SCHEMATIC_WORKSHOP;
-            plugin.arboretumSchematicFile = copy(arbornstr, plugin.getResource(TARDISConstants.SCHEMATIC_ARBORETUM));
-            plugin.bakerSchematicFile = copy(baknstr, plugin.getResource(TARDISConstants.SCHEMATIC_BAKER));
-            plugin.bedroomSchematicFile = copy(bednstr, plugin.getResource(TARDISConstants.SCHEMATIC_BEDROOM));
             plugin.biggerSchematicFile = copy(bignstr, plugin.getResource(TARDISConstants.SCHEMATIC_BIGGER));
             plugin.budgetSchematicFile = copy(budnstr, plugin.getResource(TARDISConstants.SCHEMATIC_BUDGET));
             plugin.deluxeSchematicFile = copy(delnstr, plugin.getResource(TARDISConstants.SCHEMATIC_DELUXE));
             plugin.eleventhSchematicFile = copy(elenstr, plugin.getResource(TARDISConstants.SCHEMATIC_ELEVENTH));
+            plugin.arboretumSchematicFile = copy(arbornstr, plugin.getResource(TARDISConstants.SCHEMATIC_ARBORETUM));
+            plugin.bakerSchematicFile = copy(baknstr, plugin.getResource(TARDISConstants.SCHEMATIC_BAKER));
+            plugin.bedroomSchematicFile = copy(bednstr, plugin.getResource(TARDISConstants.SCHEMATIC_BEDROOM));
             plugin.emptySchematicFile = copy(empnstr, plugin.getResource(TARDISConstants.SCHEMATIC_EMPTY));
             plugin.gravitySchematicFile = copy(granstr, plugin.getResource(TARDISConstants.SCHEMATIC_GRAVITY));
             plugin.antigravitySchematicFile = copy(antnstr, plugin.getResource(TARDISConstants.SCHEMATIC_ANTIGRAVITY));
@@ -117,7 +117,7 @@ public class TARDISMakeCSV {
             plugin.vaultSchematicFile = copy(vaunstr, plugin.getResource(TARDISConstants.SCHEMATIC_VAULT));
             plugin.woodSchematicFile = copy(woonstr, plugin.getResource(TARDISConstants.SCHEMATIC_WOOD));
             plugin.workshopSchematicFile = copy(wornstr, plugin.getResource(TARDISConstants.SCHEMATIC_WORKSHOP));
-            // read the schematics
+            // read the schematics and make the CSV files
             reader.readAndMakeCSV(arbornstr, TARDISConstants.SCHEMATIC.ARBORETUM, false);
             reader.readAndMakeCSV(baknstr, TARDISConstants.SCHEMATIC.BAKER, false);
             reader.readAndMakeCSV(bednstr, TARDISConstants.SCHEMATIC.BEDROOM, false);
@@ -137,14 +137,14 @@ public class TARDISMakeCSV {
             reader.readAndMakeCSV(vaunstr, TARDISConstants.SCHEMATIC.VAULT, false);
             reader.readAndMakeCSV(woonstr, TARDISConstants.SCHEMATIC.WOOD, false);
             reader.readAndMakeCSV(wornstr, TARDISConstants.SCHEMATIC.WORKSHOP, false);
-            // load the schematic data into the csv files
-            plugin.arboretumschematic = TARDISSchematic.schematic(plugin.arboretumSchematicCSV, plugin.arboretumdimensions[0], plugin.arboretumdimensions[1], plugin.arboretumdimensions[2]);
-            plugin.bakerschematic = TARDISSchematic.schematic(plugin.bakerSchematicCSV, plugin.roomdimensions[0], plugin.roomdimensions[1], plugin.roomdimensions[2]);
-            plugin.bedroomschematic = TARDISSchematic.schematic(plugin.bedroomSchematicCSV, plugin.roomdimensions[0], plugin.roomdimensions[1], plugin.roomdimensions[2]);
+            // load the schematic data from the csv files
             plugin.biggerschematic = TARDISSchematic.schematic(plugin.biggerSchematicCSV, plugin.biggerdimensions[0], plugin.biggerdimensions[1], plugin.biggerdimensions[2]);
             plugin.budgetschematic = TARDISSchematic.schematic(plugin.budgetSchematicCSV, plugin.budgetdimensions[0], plugin.budgetdimensions[1], plugin.budgetdimensions[2]);
             plugin.deluxeschematic = TARDISSchematic.schematic(plugin.deluxeSchematicCSV, plugin.deluxedimensions[0], plugin.deluxedimensions[1], plugin.deluxedimensions[2]);
             plugin.eleventhschematic = TARDISSchematic.schematic(plugin.eleventhSchematicCSV, plugin.eleventhdimensions[0], plugin.eleventhdimensions[1], plugin.eleventhdimensions[2]);
+            plugin.bedroomschematic = TARDISSchematic.schematic(plugin.bedroomSchematicCSV, plugin.roomdimensions[0], plugin.roomdimensions[1], plugin.roomdimensions[2]);
+            plugin.arboretumschematic = TARDISSchematic.schematic(plugin.arboretumSchematicCSV, plugin.arboretumdimensions[0], plugin.arboretumdimensions[1], plugin.arboretumdimensions[2]);
+            plugin.bakerschematic = TARDISSchematic.schematic(plugin.bakerSchematicCSV, plugin.roomdimensions[0], plugin.roomdimensions[1], plugin.roomdimensions[2]);
             plugin.emptyschematic = TARDISSchematic.schematic(plugin.emptySchematicCSV, plugin.roomdimensions[0], plugin.roomdimensions[1], plugin.roomdimensions[2]);
             plugin.gravityschematic = TARDISSchematic.schematic(plugin.gravitySchematicCSV, plugin.gravitydimensions[0], plugin.gravitydimensions[1], plugin.gravitydimensions[2]);
             plugin.antigravityschematic = TARDISSchematic.schematic(plugin.antigravitySchematicCSV, plugin.antigravitydimensions[0], plugin.antigravitydimensions[1], plugin.antigravitydimensions[2]);
