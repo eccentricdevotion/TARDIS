@@ -101,10 +101,12 @@ public class TARDISPrefsCommands implements CommandExecutor {
                         }
                         QueryFactory qf = new QueryFactory(plugin);
                         HashMap<String, Object> set = new HashMap<String, Object>();
-                        set.put("wall", tw);
+                        set.put("wall", wall_mat);
                         HashMap<String, Object> where = new HashMap<String, Object>();
                         where.put("player", player.getName());
                         qf.doUpdate("player_prefs", set, where);
+                        sender.sendMessage(plugin.pluginName + "Wall material saved.");
+                        return true;
                     }
                     if (args.length < 2 || (!args[1].equalsIgnoreCase("on") && !args[1].equalsIgnoreCase("off"))) {
                         sender.sendMessage(plugin.pluginName + "You need to specify if " + pref + " should be on or off!");
