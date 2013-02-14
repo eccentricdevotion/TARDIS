@@ -109,6 +109,7 @@ public class TARDIS extends JavaPlugin {
     public File workshopSchematicFile = null;
     public File emptySchematicFile = null;
     public File gravitySchematicFile = null;
+    public File antigravitySchematicFile = null;
     public File harmonySchematicFile = null;
     public File bakerSchematicFile = null;
     public File woodSchematicFile = null;
@@ -127,6 +128,7 @@ public class TARDIS extends JavaPlugin {
     public File workshopSchematicCSV = null;
     public File emptySchematicCSV = null;
     public File gravitySchematicCSV = null;
+    public File antigravitySchematicCSV = null;
     public File harmonySchematicCSV = null;
     public File bakerSchematicCSV = null;
     public File woodSchematicCSV = null;
@@ -145,6 +147,7 @@ public class TARDIS extends JavaPlugin {
     public String[][][] vaultschematic;
     public String[][][] emptyschematic;
     public String[][][] gravityschematic;
+    public String[][][] antigravityschematic;
     public String[][][] workshopschematic;
     public String[][][] harmonyschematic;
     public String[][][] bakerschematic;
@@ -158,6 +161,7 @@ public class TARDIS extends JavaPlugin {
     public short[] pooldimensions = new short[3];
     public short[] roomdimensions = new short[3];
     public short[] gravitydimensions = new short[3];
+    public short[] antigravitydimensions = new short[3];
     public static TARDIS plugin;
     public TARDISUtils utils = new TARDISUtils(this);
     private TARDISCommands tardisCommand;

@@ -109,7 +109,7 @@ public class TARDISRoomRunnable implements Runnable {
         String tmp;
         if (level == h && row == w && col == (c - 1)) {
             // the entire schematic has been read :)
-            if (!room.equals("GRAVITY")) {
+            if (!room.equals("GRAVITY") && !room.equals("ANTIGRAVITY")) {
                 byte door_data;
                 switch (d) {
                     case NORTH:
@@ -174,7 +174,7 @@ public class TARDISRoomRunnable implements Runnable {
             } else {
                 Block existing = world.getBlockAt(startx, starty, startz);
                 if (existing.getTypeId() != 0) {
-                    if (room.equals("GRAVITY")) {
+                    if (room.equals("GRAVITY") || room.equals("ANTIGRAVITY")) {
                         switch (id) {
                             case 35:
                                 break;
@@ -207,7 +207,7 @@ public class TARDISRoomRunnable implements Runnable {
                 lampblocks.add(lamp);
             }
             QueryFactory qf = new QueryFactory(plugin);
-            if (room.equals("GRAVITY")) {
+            if (room.equals("GRAVITY") || room.equals("ANTIGRAVITY")) {
                 String loc;
                 if (id == 35 && data == 6) {
                     // pink wool - gravity well down

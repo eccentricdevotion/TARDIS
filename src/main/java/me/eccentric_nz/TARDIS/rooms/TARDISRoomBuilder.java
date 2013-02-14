@@ -87,7 +87,7 @@ public class TARDISRoomBuilder {
             roomData.setBlock(b);
             roomData.setDirection(d);
             roomData.setLocation(l);
-            if (r.equalsIgnoreCase("GRAVITY")) {
+            if (r.equalsIgnoreCase("GRAVITY") || r.equalsIgnoreCase("ANTIGRAVITY")) {
                 l.setX(l.getX() - 6);
                 l.setZ(l.getZ() - 6);
             } else {
@@ -123,6 +123,8 @@ public class TARDISRoomBuilder {
                 }
             }
             switch (ROOM.valueOf(r)) {
+                case ANTIGRAVITY:
+                    break;
                 case PASSAGE:
                     l.setY(l.getY() - 2);
                     break;
@@ -139,7 +141,7 @@ public class TARDISRoomBuilder {
                     l.setY(l.getY() - 1);
                     break;
             }
-            if (d.equals(COMPASS.EAST) || d.equals(COMPASS.SOUTH) || r.equalsIgnoreCase("GRAVITY")) {
+            if (d.equals(COMPASS.EAST) || d.equals(COMPASS.SOUTH) || r.equalsIgnoreCase("GRAVITY") || r.equalsIgnoreCase("ANTIGRAVITY")) {
                 roomData.setX(1);
                 roomData.setZ(1);
             } else {
@@ -186,6 +188,10 @@ public class TARDISRoomBuilder {
                 case GRAVITY:
                     s = plugin.gravityschematic;
                     dimensions = plugin.gravitydimensions;
+                    break;
+                case ANTIGRAVITY:
+                    s = plugin.antigravityschematic;
+                    dimensions = plugin.antigravitydimensions;
                     break;
                 case HARMONY:
                     s = plugin.harmonyschematic;

@@ -38,23 +38,24 @@ public class TARDISConstants {
     public static final String SCHEMATIC_BIGGER = "bigger.schematic";
     public static final String SCHEMATIC_DELUXE = "deluxe.schematic";
     public static final String SCHEMATIC_ELEVENTH = "eleventh.schematic";
+    public static final String SCHEMATIC_ANTIGRAVITY = "antigravity.schematic";
     public static final String SCHEMATIC_ARBORETUM = "arboretum.schematic";
+    public static final String SCHEMATIC_BAKER = "baker.schematic";
     public static final String SCHEMATIC_BEDROOM = "bedroom.schematic";
+    public static final String SCHEMATIC_EMPTY = "empty.schematic";
+    public static final String SCHEMATIC_GRAVITY = "gravity.schematic";
+    public static final String SCHEMATIC_HARMONY = "harmony.schematic";
     public static final String SCHEMATIC_KITCHEN = "kitchen.schematic";
     public static final String SCHEMATIC_LIBRARY = "library.schematic";
     public static final String SCHEMATIC_PASSAGE = "passage.schematic";
     public static final String SCHEMATIC_POOL = "pool.schematic";
     public static final String SCHEMATIC_VAULT = "vault.schematic";
-    public static final String SCHEMATIC_WORKSHOP = "workshop.schematic";
-    public static final String SCHEMATIC_EMPTY = "empty.schematic";
-    public static final String SCHEMATIC_GRAVITY = "gravity.schematic";
-    public static final String SCHEMATIC_HARMONY = "harmony.schematic";
-    public static final String SCHEMATIC_BAKER = "baker.schematic";
     public static final String SCHEMATIC_WOOD = "wood.schematic";
+    public static final String SCHEMATIC_WORKSHOP = "workshop.schematic";
 
     public enum SCHEMATIC {
 
-        BUDGET, BIGGER, DELUXE, ELEVENTH, ARBORETUM, BEDROOM, KITCHEN, LIBRARY, PASSAGE, POOL, VAULT, WORKSHOP, EMPTY, GRAVITY, HARMONY, BAKER, WOOD;
+        BUDGET, BIGGER, DELUXE, ELEVENTH, ARBORETUM, BEDROOM, KITCHEN, LIBRARY, PASSAGE, POOL, VAULT, WORKSHOP, EMPTY, GRAVITY, ANTIGRAVITY, HARMONY, BAKER, WOOD;
     }
     public static final String CONFIG_FILE_NAME = "config.yml";
     public static final String QUOTES_FILE_NAME = "quotes.txt";
@@ -79,7 +80,7 @@ public class TARDISConstants {
 
     public enum ROOM {
 
-        ARBORETUM, BEDROOM, KITCHEN, LIBRARY, PASSAGE, POOL, VAULT, WORKSHOP, EMPTY, GRAVITY, HARMONY, BAKER, WOOD;
+        ARBORETUM, BEDROOM, KITCHEN, LIBRARY, PASSAGE, POOL, VAULT, WORKSHOP, EMPTY, GRAVITY, ANTIGRAVITY, HARMONY, BAKER, WOOD;
     }
 
     public enum CMDS {

@@ -279,7 +279,7 @@ public class TARDISCommands implements CommandExecutor {
                         }
                         String room = args[1].toUpperCase(Locale.ENGLISH);
                         if (!roomArgs.contains(room)) {
-                            player.sendMessage(plugin.pluginName + "That is not a valid room type! Try one of: passage|arboretum|pool|vault|kitchen|bedroom|library|workshop|empty|gravity|harmony|baker|wood");
+                            player.sendMessage(plugin.pluginName + "That is not a valid room type! Try one of: passage|arboretum|pool|vault|kitchen|bedroom|library|workshop|empty|gravity|antigravity|harmony|baker|wood");
                             return true;
                         }
                         HashMap<String, Object> where = new HashMap<String, Object>();
@@ -317,7 +317,7 @@ public class TARDISCommands implements CommandExecutor {
                         }
                         String message;
                         // if it is a gravity well
-                        if (room.equals("GRAVITY")) {
+                        if (room.equals("GRAVITY") || room.equals("ANTIGRAVITY")) {
                             message = "Place the GRAVITY WELL seed block (" + plugin.getConfig().getString("rooms." + room + ".seed") + ") into the centre of the floor in an empty room, then hit it with the TARDIS key to start growing your room!";
                         } else {
                             message = "Place the " + room + " seed block (" + plugin.getConfig().getString("rooms." + room + ".seed") + ") where the door should be, then hit it with the TARDIS key to start growing your room!";
@@ -337,7 +337,7 @@ public class TARDISCommands implements CommandExecutor {
                             return false;
                         }
                         String room = args[1].toUpperCase(Locale.ENGLISH);
-                        if (room.equals("GRAVITY")) {
+                        if (room.equals("GRAVITY") || room.equals("ANTIGRAVITY")) {
                             player.sendMessage(plugin.pluginName + "You cannot jettison gravity wells!");
                             return true;
                         }

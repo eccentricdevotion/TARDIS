@@ -111,6 +111,11 @@ public class TARDISSchematicReader {
                     plugin.gravitydimensions[1] = width;
                     plugin.gravitydimensions[2] = length;
                     break;
+                case ANTIGRAVITY:
+                    plugin.antigravitydimensions[0] = height;
+                    plugin.antigravitydimensions[1] = width;
+                    plugin.antigravitydimensions[2] = length;
+                    break;
                 default:
                     plugin.roomdimensions[0] = height;
                     plugin.roomdimensions[1] = width;
@@ -176,20 +181,19 @@ public class TARDISSchematicReader {
         }
     }
 
-    /**
-     * Rotates a square 2D array 90 degrees clockwise.
-     */
-    private static String[][] rotateSquareCW(String[][] mat) {
-        final int size = mat.length;
-        String[][] out = new String[size][size];
-        for (int r = 0; r < size; r++) {
-            for (int c = 0; c < size; c++) {
-                out[c][size - 1 - r] = mat[r][c];
-            }
-        }
-        return out;
-    }
-
+//    /**
+//     * Rotates a square 2D array 90 degrees clockwise.
+//     */
+//    private static String[][] rotateSquareCW(String[][] mat) {
+//        final int size = mat.length;
+//        String[][] out = new String[size][size];
+//        for (int r = 0; r < size; r++) {
+//            for (int c = 0; c < size; c++) {
+//                out[c][size - 1 - r] = mat[r][c];
+//            }
+//        }
+//        return out;
+//    }
     /**
      * Rotates a square 2D array 90 degrees counterclockwise. This is used for
      * the (non-symmetrical) TARDIS passage ways so that they are built
