@@ -416,14 +416,18 @@ public class TARDISCommands implements CommandExecutor {
                         }
                         respect = new TARDISPluginRespect(plugin);
                         if (!respect.getRespect(player, eyeLocation, true)) {
-                            return false;
+                            return true;
                         }
                         if (player.hasPermission("tardis.exile")) {
                             String areaPerm = plugin.ta.getExileArea(player);
                             if (plugin.ta.areaCheckInExile(areaPerm, eyeLocation)) {
                                 sender.sendMessage(plugin.pluginName + "You exile status does not allow you to bring the TARDIS to this location!");
-                                return false;
+                                return true;
                             }
+                        }
+                        if (!plugin.ta.areaCheckInExisting(eyeLocation)) {
+                            sender.sendMessage(plugin.pluginName + "You cannot use /tardis comehere to bring the Police Box to a TARDIS area! Please use " + ChatColor.AQUA + "/tardistravel area [area name]");
+                            return true;
                         }
                         Material m = player.getTargetBlock(transparent, 50).getType();
                         if (m != Material.SNOW) {
