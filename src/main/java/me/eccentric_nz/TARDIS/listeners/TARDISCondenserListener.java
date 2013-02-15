@@ -22,6 +22,7 @@ import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
+import me.eccentric_nz.TARDIS.rooms.TARDISCondensables;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Chest;
@@ -73,11 +74,13 @@ public class TARDISCondenserListener implements Listener {
             ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
             if (rs.resultSet()) {
                 int amount = 0;
+                TARDISCondensables tc = new TARDISCondensables();
                 // get the stacks in the inventory
                 for (ItemStack is : inv.getContents()) {
-                    if (is != null && condensables.contains(is.getType())) {
+                    String item = is.getType().name();
+                    if (is != null && tc.condensables.containsKey(item)) {
                         int stack_size = is.getAmount();
-                        amount += stack_size;
+                        amount += stack_size * tc.condensables.get(item);
                         inv.remove(is);
                     }
                 }

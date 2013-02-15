@@ -52,7 +52,7 @@ public class TARDISRoomRunnable implements Runnable {
     String room;
     String grammar;
     private boolean running;
-    HashMap<String, Object> set;
+//    HashMap<String, Object> set;
     Player p;
     World world;
     List<Chunk> chunkList = new ArrayList<Chunk>();
@@ -83,7 +83,7 @@ public class TARDISRoomRunnable implements Runnable {
     public void run() {
         // initialise
         if (!running) {
-            set = new HashMap<String, Object>();
+//            set = new HashMap<String, Object>();
             level = 0;
             row = 0;
             col = 0;
@@ -95,9 +95,9 @@ public class TARDISRoomRunnable implements Runnable {
             startz = l.getBlockZ();
             resetx = startx;
             resetz = startz;
-            set.put("startx", startx);
-            set.put("starty", starty);
-            set.put("startz", startz);
+//            set.put("startx", startx);
+//            set.put("starty", starty);
+//            set.put("startz", startz);
             world = l.getWorld();
             running = true;
             grammar = (TARDISConstants.vowels.contains(room.substring(0, 1))) ? "an " + room : "a " + room;
@@ -167,6 +167,15 @@ public class TARDISRoomRunnable implements Runnable {
                 id = middle_id;
                 data = middle_data;
             }
+            QueryFactory qf = new QueryFactory(plugin);
+            // set condenser
+            if (id == 54 && room.equals("HARMONY")) {
+                HashMap<String, Object> setc = new HashMap<String, Object>();
+                setc.put("condenser", world.getName() + ":" + startx + ":" + starty + ":" + startz);
+                HashMap<String, Object> wherec = new HashMap<String, Object>();
+                wherec.put("tardis_id", tardis_id);
+                qf.doUpdate("tardis", setc, wherec);
+            }
             // always remove sponge
             if (id == 19) {
                 id = 0;
@@ -208,7 +217,6 @@ public class TARDISRoomRunnable implements Runnable {
                 Block lamp = world.getBlockAt(startx, starty, startz);
                 lampblocks.add(lamp);
             }
-            QueryFactory qf = new QueryFactory(plugin);
             if (room.equals("GRAVITY") || room.equals("ANTIGRAVITY")) {
                 String loc;
                 if (id == 35 && data == 6) {
