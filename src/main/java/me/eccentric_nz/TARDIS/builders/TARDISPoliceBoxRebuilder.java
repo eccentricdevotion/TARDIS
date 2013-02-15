@@ -19,6 +19,7 @@ package me.eccentric_nz.TARDIS.builders;
 import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
+import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -81,6 +82,7 @@ public class TARDISPoliceBoxRebuilder {
         world = location.getWorld();
         int south = mat, west = mat, north = mat, east = mat, signx = 0, signz = 0;
         // get direction police box is facing, place block under door if block is in list of blocks an iron door cannot go on
+        String doorloc = "";
         switch (d) {
             case SOUTH:
                 //if (yaw >= 315 || yaw < 45)
@@ -91,6 +93,7 @@ public class TARDISPoliceBoxRebuilder {
                 south = 71;
                 mds = 8;
                 bds = 1;
+                doorloc = world.getName() + ":" + x + ":" + down2y + ":" + minusz;
                 break;
             case EAST:
                 //if (yaw >= 225 && yaw < 315)
@@ -101,6 +104,7 @@ public class TARDISPoliceBoxRebuilder {
                 east = 71;
                 mde = 8;
                 bde = 0;
+                doorloc = world.getName() + ":" + minusx + ":" + down2y + ":" + z;
                 break;
             case NORTH:
                 //if (yaw >= 135 && yaw < 225)
@@ -111,6 +115,7 @@ public class TARDISPoliceBoxRebuilder {
                 north = 71;
                 mdn = 8;
                 bdn = 3;
+                doorloc = world.getName() + ":" + x + ":" + down2y + ":" + plusz;
                 break;
             case WEST:
                 //if (yaw >= 45 && yaw < 135)
@@ -121,8 +126,17 @@ public class TARDISPoliceBoxRebuilder {
                 west = 71;
                 mdw = 8;
                 bdw = 2;
+                doorloc = world.getName() + ":" + plusx + ":" + down2y + ":" + z;
                 break;
         }
+        QueryFactory qf = new QueryFactory(plugin);
+
+        HashMap<String, Object> setd = new HashMap<String, Object>();
+        setd.put("door_location", doorloc);
+        HashMap<String, Object> whereid = new HashMap<String, Object>();
+        whereid.put("tardis_id", tid);
+        whereid.put("door_type", 0);
+        qf.doUpdate("doors", setd, whereid);
         // bottom layer corners
         plugin.utils.setBlock(world, plusx, down2y, plusz, mat, data);
         plugin.utils.setBlock(world, minusx, down2y, plusz, mat, data);
