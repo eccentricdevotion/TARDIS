@@ -26,7 +26,6 @@ border_radius: 64
 create_worlds: true
 materialise: true
 confirm_timeout: 15
-scan_radius: 16
 #rooms
 rooms:
   PASSAGE:

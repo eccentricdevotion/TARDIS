@@ -52,7 +52,6 @@ public class TARDISScannerListener implements Listener {
     private final TARDIS plugin;
     List<Material> validBlocks = new ArrayList<Material>();
     List<EntityType> entities = new ArrayList<EntityType>();
-    HashMap<EntityType, Integer> scannedentities = new HashMap<EntityType, Integer>();
     Version bukkitversion;
     Version prewoodbuttonversion = new Version("1.4.2");
 
@@ -118,10 +117,10 @@ public class TARDISScannerListener implements Listener {
                 ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
                 if (rs.resultSet()) {
                     int id = rs.getTardis_id();
-                    if (plugin.getServer().getPluginManager().getPlugin("Spout") != null) {
+                    if (plugin.getServer().getPluginManager().getPlugin("Spout") != null && SpoutManager.getPlayer(player).isSpoutCraftEnabled()) {
                         SpoutManager.getSoundManager().playGlobalCustomSoundEffect(plugin, "https://dl.dropbox.com/u/53758864/soundeffects/scanner.mp3", false, b, 20, 75);
                     } else {
-                        w.playSound(b, Sound.FIZZ, 1, 0);
+                        w.playSound(b, Sound.ORB_PICKUP, 1, 0);
                     }
                     String policebox;
                     String whereisit;
@@ -133,17 +132,15 @@ public class TARDISScannerListener implements Listener {
                         whereisit = "current location";
                     }
                     Location scan_loc = plugin.utils.getLocationFromDB(policebox, 0, 0);
-                    World pbw = scan_loc.getWorld();
-                    Entity e = pbw.spawnEntity(scan_loc, EntityType.EGG);
-                    double scan_radius = plugin.getConfig().getDouble("scan_radius");
                     // record nearby entities
-                    for (Entity k : e.getNearbyEntities(scan_radius, scan_radius, scan_radius)) {
+                    HashMap<EntityType, Integer> scannedentities = new HashMap<EntityType, Integer>();
+                    for (Entity k : getNearbyEntities(scan_loc, 16)) {
                         EntityType et = k.getType();
                         if (entities.contains(et)) {
-                            scannedentities.put(et, scannedentities.get(et) + 1);
+                            Integer entity_count = (scannedentities.containsKey(et)) ? scannedentities.get(et) : 0;
+                            scannedentities.put(et, entity_count + 1);
                         }
                     }
-                    e.remove();
                     long time = scan_loc.getWorld().getTime();
                     String daynight = getTime(time);
                     // message the player
@@ -164,13 +161,14 @@ public class TARDISScannerListener implements Listener {
                         weather = (scan_loc.getWorld().hasStorm()) ? "raining" : "clear";
                     }
                     player.sendMessage("Weather: " + weather);
-                    player.sendMessage("Humidity: " + scan_loc.getBlock().getHumidity());
-                    player.sendMessage("Temperature: " + scan_loc.getBlock().getTemperature());
+                    player.sendMessage("Humidity: " + String.format("%.2f", scan_loc.getBlock().getHumidity()));
+                    player.sendMessage("Temperature: " + String.format("%.2f", scan_loc.getBlock().getTemperature()));
                     if (scannedentities.size() > 0) {
                         player.sendMessage("Nearby entities:");
                         for (Map.Entry<EntityType, Integer> entry : scannedentities.entrySet()) {
-                            player.sendMessage(entry.getKey().getName() + ": " + entry.getValue());
+                            player.sendMessage("    " + entry.getKey().getName() + ": " + entry.getValue());
                         }
+                        scannedentities.clear();
                     } else {
                         player.sendMessage("Nearby entities: none");
                     }
@@ -221,5 +219,21 @@ public class TARDISScannerListener implements Listener {
         } else {
             return "pre-dawn";
         }
+    }
+
+    public static List<Entity> getNearbyEntities(Location l, int radius) {
+        int chunkRadius = radius < 16 ? 1 : (radius - (radius % 16)) / 16;
+        List<Entity> radiusEntities = new ArrayList<Entity>();
+        for (int chX = 0 - chunkRadius; chX <= chunkRadius; chX++) {
+            for (int chZ = 0 - chunkRadius; chZ <= chunkRadius; chZ++) {
+                int x = (int) l.getX(), y = (int) l.getY(), z = (int) l.getZ();
+                for (Entity e : new Location(l.getWorld(), x + (chX * 16), y, z + (chZ * 16)).getChunk().getEntities()) {
+                    if (e.getLocation().distance(l) <= radius && e.getLocation().getBlock() != l.getBlock()) {
+                        radiusEntities.add(e);
+                    }
+                }
+            }
+        }
+        return radiusEntities;
     }
 }

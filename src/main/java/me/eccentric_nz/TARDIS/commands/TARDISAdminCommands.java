@@ -96,7 +96,6 @@ public class TARDISAdminCommands implements CommandExecutor {
         firstsBool.add("land_on_water");
         firstsBool.add("materialise");
         firstsBool.add("name_tardis");
-        firstsBool.add("name_tardis");
         firstsBool.add("nether");
         firstsBool.add("platform");
         firstsBool.add("respect_towny");
@@ -119,7 +118,6 @@ public class TARDISAdminCommands implements CommandExecutor {
         firstsInt.add("random");
         firstsInt.add("recharge_distance");
         firstsInt.add("the_end_min");
-        firstsInt.add("scan_radius");
         firstsInt.add("timeout");
         firstsInt.add("timeout_height");
         firstsInt.add("tp_radius");

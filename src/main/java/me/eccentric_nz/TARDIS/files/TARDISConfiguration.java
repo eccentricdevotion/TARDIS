@@ -73,7 +73,6 @@ public class TARDISConfiguration {
         intOptions.put("timeout", 5);
         intOptions.put("confirm_timeout", 15);
         intOptions.put("border_radius", 64);
-        intOptions.put("scan_radius", 64);
         intOptions.put("tp_radius", 256);
         intOptions.put("rooms.ARBORETUM.cost", 325);
         intOptions.put("rooms.BAKER.cost", 350);
