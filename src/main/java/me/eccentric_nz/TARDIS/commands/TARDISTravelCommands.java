@@ -16,6 +16,7 @@
  */
 package me.eccentric_nz.TARDIS.commands;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
@@ -175,6 +176,21 @@ public class TARDISTravelCommands implements CommandExecutor {
                             return true;
                         }
                         String save_loc = rsd.getWorld() + ":" + rsd.getX() + ":" + rsd.getY() + ":" + rsd.getZ();
+                        World w = plugin.getServer().getWorld(rsd.getWorld());
+                        Location save_dest = new Location(w, rsd.getX(), rsd.getY(), rsd.getZ());
+                        if (!plugin.ta.areaCheckInExisting(save_dest)) {
+                            // save is in a TARDIS area, so check that the spot is not occupied
+                            HashMap<String, Object> wheres = new HashMap<String, Object>();
+                            wheres.put("save", save_loc);
+                            ResultSetTardis rsz = new ResultSetTardis(plugin, wheres, "", true);
+                            if (rsz.resultSet()) {
+                                ArrayList<HashMap<String, String>> data = rsz.getData();
+                                if (data.size() > 1) {
+                                    sender.sendMessage(plugin.pluginName + "A TARDIS already occupies this parking spot! Try using the " + ChatColor.AQUA + "/tardistravel area [name]" + ChatColor.RESET + " command instead.");
+                                    return true;
+                                }
+                            }
+                        }
                         set.put("save", save_loc);
                         qf.doUpdate("tardis", set, tid);
                         sender.sendMessage(plugin.pluginName + "The specified location was set succesfully. Please release the handbrake!");
