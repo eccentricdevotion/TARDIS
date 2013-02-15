@@ -580,7 +580,7 @@ public class TARDISCommands implements CommandExecutor {
                         wherettrav.put("tardis_id", id);
                         ResultSetTravellers rst = new ResultSetTravellers(plugin, wherettrav, false);
                         if (rst.resultSet()) {
-                            player.sendMessage(plugin.pluginName + "You cannot set the home locatopn here because you are inside a TARDIS!");
+                            player.sendMessage(plugin.pluginName + "You cannot set the home location here because you are inside a TARDIS!");
                             return true;
                         }
                         String sethome = eyeLocation.getWorld().getName() + ":" + eyeLocation.getBlockX() + ":" + eyeLocation.getBlockY() + ":" + eyeLocation.getBlockZ();
