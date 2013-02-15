@@ -28,6 +28,7 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.World;
+import org.bukkit.block.Biome;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
@@ -145,14 +146,23 @@ public class TARDISScannerListener implements Listener {
                     e.remove();
                     long time = scan_loc.getWorld().getTime();
                     String daynight = getTime(time);
-                    // get weather
-                    String weather = (scan_loc.getWorld().hasStorm()) ? "raining" : "not raining";
                     // message the player
                     player.sendMessage(plugin.pluginName + "Scanner results for the TARDIS's " + whereisit);
                     player.sendMessage("World: " + scan_loc.getWorld().getName());
                     player.sendMessage("Co-ordinates: " + scan_loc.getBlockX() + ":" + scan_loc.getBlockY() + ":" + scan_loc.getBlockZ());
-                    player.sendMessage("Biome type: " + scan_loc.getBlock().getBiome());
-                    player.sendMessage("Time of day: " + daynight + " - " + time + " ticks");
+                    // get biome
+                    Biome biome = scan_loc.getBlock().getBiome();
+                    player.sendMessage("Biome type: " + biome);
+                    player.sendMessage("Time of day: " + daynight + " / " + time + " ticks");
+                    // get weather
+                    String weather;
+                    if (biome.equals(Biome.DESERT) || biome.equals(Biome.DESERT_HILLS)) {
+                        weather = "dry as a bone";
+                    } else if (biome.equals(Biome.TAIGA) || biome.equals(Biome.TAIGA_HILLS) || biome.equals(Biome.ICE_PLAINS)) {
+                        weather = (scan_loc.getWorld().hasStorm()) ? "snowing" : "clear, but cold";
+                    } else {
+                        weather = (scan_loc.getWorld().hasStorm()) ? "raining" : "clear";
+                    }
                     player.sendMessage("Weather: " + weather);
                     player.sendMessage("Humidity: " + scan_loc.getBlock().getHumidity());
                     player.sendMessage("Temperature: " + scan_loc.getBlock().getTemperature());
