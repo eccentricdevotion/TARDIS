@@ -39,6 +39,7 @@ import me.eccentric_nz.TARDIS.listeners.TARDISEntityGriefListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISBlockBreakListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISBlockDamageListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISDoorListener;
+import me.eccentric_nz.TARDIS.listeners.TARDISScannerListener;
 import me.eccentric_nz.TARDIS.database.TARDISDatabase;
 import java.io.*;
 import java.util.ArrayList;
@@ -199,6 +200,7 @@ public class TARDIS extends JavaPlugin {
     TARDISCondenserListener condenserListener = new TARDISCondenserListener(this);
     TARDISIceMeltListener meltListener = new TARDISIceMeltListener(this);
     TARDISChunkListener roomChunkListener = new TARDISChunkListener(this);
+    TARDISScannerListener scannerListener = new TARDISScannerListener(this);
     public PluginManager pm = Bukkit.getServer().getPluginManager();
     public HashMap<String, String> trackPlayers = new HashMap<String, String>();
     public HashMap<String, Integer> trackBinder = new HashMap<String, Integer>();
@@ -359,6 +361,7 @@ public class TARDIS extends JavaPlugin {
         pm.registerEvents(condenserListener, this);
         pm.registerEvents(meltListener, this);
         pm.registerEvents(roomChunkListener, this);
+        pm.registerEvents(scannerListener, this);
     }
 
     /**
