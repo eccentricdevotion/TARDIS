@@ -185,7 +185,7 @@ public class TARDISTravelCommands implements CommandExecutor {
                             ResultSetTardis rsz = new ResultSetTardis(plugin, wheres, "", true);
                             if (rsz.resultSet()) {
                                 ArrayList<HashMap<String, String>> data = rsz.getData();
-                                if (data.size() > 1) {
+                                if (data.size() > 0) {
                                     sender.sendMessage(plugin.pluginName + "A TARDIS already occupies this parking spot! Try using the " + ChatColor.AQUA + "/tardistravel area [name]" + ChatColor.RESET + " command instead.");
                                     return true;
                                 }
