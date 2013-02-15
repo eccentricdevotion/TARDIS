@@ -556,6 +556,10 @@ public class TARDISCommands implements CommandExecutor {
                             sender.sendMessage(plugin.pluginName + "The server admin will not allow you to set the TARDIS home in this world!");
                             return true;
                         }
+                        if (!plugin.ta.areaCheckInExisting(eyeLocation)) {
+                            sender.sendMessage(plugin.pluginName + "You cannot use /tardis home in a TARDIS area! Please use " + ChatColor.AQUA + "/tardistravel area [area name]");
+                            return true;
+                        }
                         respect = new TARDISPluginRespect(plugin);
                         if (!respect.getRespect(player, eyeLocation, true)) {
                             return true;
@@ -1057,6 +1061,10 @@ public class TARDISCommands implements CommandExecutor {
                             // get location player is looking at
                             Block b = player.getTargetBlock(transparent, 50);
                             Location l = b.getLocation();
+                            if (!plugin.ta.areaCheckInExisting(l)) {
+                                sender.sendMessage(plugin.pluginName + "You cannot use /tardis setdest in a TARDIS area! Please use " + ChatColor.AQUA + "/tardistravel area [area name]");
+                                return true;
+                            }
                             String world = l.getWorld().getName();
                             if (!plugin.getConfig().getBoolean("include_default_world") && plugin.getConfig().getBoolean("default_world") && world.equals(plugin.getConfig().getString("default_world_name"))) {
                                 sender.sendMessage(plugin.pluginName + "The server admin will not allow you to set the TARDIS destination to this world!");

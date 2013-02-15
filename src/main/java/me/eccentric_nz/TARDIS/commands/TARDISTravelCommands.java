@@ -142,6 +142,10 @@ public class TARDISTravelCommands implements CommandExecutor {
                                 }
                                 Player destPlayer = plugin.getServer().getPlayer(args[0]);
                                 Location player_loc = destPlayer.getLocation();
+                                if (!plugin.ta.areaCheckInExisting(player_loc)) {
+                                    sender.sendMessage(plugin.pluginName + "The player is in a TARDIS area! Please use " + ChatColor.AQUA + "/tardistravel area [area name]");
+                                    return true;
+                                }
                                 World w = player_loc.getWorld();
                                 int[] start_loc = tt.getStartLocation(player_loc, d);
                                 int count = tt.safeLocation(start_loc[0] - 3, player_loc.getBlockY(), start_loc[2], start_loc[1] - 3, start_loc[3], w, d);
@@ -245,6 +249,10 @@ public class TARDISTravelCommands implements CommandExecutor {
                         z = plugin.utils.parseNum(args[3]);
                         Block block = w.getBlockAt(x, y, z);
                         Location location = block.getLocation();
+                        if (!plugin.ta.areaCheckInExisting(location)) {
+                            sender.sendMessage(plugin.pluginName + "The location is in a TARDIS area! Please use " + ChatColor.AQUA + "/tardistravel area [area name]");
+                            return true;
+                        }
                         respect = new TARDISPluginRespect(plugin);
                         if (!respect.getRespect(player, location, true)) {
                             return true;
