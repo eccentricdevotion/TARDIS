@@ -77,11 +77,13 @@ public class TARDISCondenserListener implements Listener {
                 TARDISCondensables tc = new TARDISCondensables();
                 // get the stacks in the inventory
                 for (ItemStack is : inv.getContents()) {
-                    String item = is.getType().name();
-                    if (is != null && tc.condensables.containsKey(item)) {
-                        int stack_size = is.getAmount();
-                        amount += stack_size * tc.condensables.get(item);
-                        inv.remove(is);
+                    if (is != null) {
+                        String item = is.getType().name();
+                        if (tc.condensables.containsKey(item)) {
+                            int stack_size = is.getAmount();
+                            amount += stack_size * tc.condensables.get(item);
+                            inv.remove(is);
+                        }
                     }
                 }
                 // halve it cause 1:1 is too much...
