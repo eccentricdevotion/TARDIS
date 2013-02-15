@@ -144,14 +144,11 @@ public class TARDISScannerListener implements Listener {
                     }
                     e.remove();
                     long time = scan_loc.getWorld().getTime();
-                    String daynight = "day";
-                    if (time > 12000) {
-                        daynight = "night";
-                    }
+                    String daynight = getTime(time);
                     // get weather
                     String weather = (scan_loc.getWorld().hasStorm()) ? "raining" : "not raining";
                     // message the player
-                    player.sendMessage(plugin.pluginName + "Sane results for the TARDIS's " + whereisit);
+                    player.sendMessage(plugin.pluginName + "Scanner results for the TARDIS's " + whereisit);
                     player.sendMessage("World: " + scan_loc.getWorld().getName());
                     player.sendMessage("Co-ordinates: " + scan_loc.getBlockX() + ":" + scan_loc.getBlockY() + ":" + scan_loc.getBlockZ());
                     player.sendMessage("Biome type: " + scan_loc.getBlock().getBiome());
@@ -159,12 +156,60 @@ public class TARDISScannerListener implements Listener {
                     player.sendMessage("Weather: " + weather);
                     player.sendMessage("Humidity: " + scan_loc.getBlock().getHumidity());
                     player.sendMessage("Temperature: " + scan_loc.getBlock().getTemperature());
-                    player.sendMessage("Nearby entities:");
-                    for (Map.Entry<EntityType, Integer> entry : scannedentities.entrySet()) {
-                        player.sendMessage(entry.getKey().getName() + ": " + entry.getValue());
+                    if (scannedentities.size() > 0) {
+                        player.sendMessage("Nearby entities:");
+                        for (Map.Entry<EntityType, Integer> entry : scannedentities.entrySet()) {
+                            player.sendMessage(entry.getKey().getName() + ": " + entry.getValue());
+                        }
+                    } else {
+                        player.sendMessage("Nearby entities: none");
                     }
                 }
             }
+        }
+    }
+
+    private String getTime(long t) {
+        if (t > 0 && t <= 2000) {
+            return "early morning";
+        }
+        if (t > 2000 && t <= 3500) {
+            return "mid morning";
+        }
+        if (t > 3500 && t <= 5500) {
+            return "late morning";
+        }
+        if (t > 5500 && t <= 6500) {
+            return "around noon";
+        }
+        if (t > 6500 && t <= 8000) {
+            return "afternoon";
+        }
+        if (t > 8000 && t <= 10000) {
+            return "mid afternoon";
+        }
+        if (t > 10000 && t <= 12000) {
+            return "late afternoon";
+        }
+        if (t > 12000 && t <= 14000) {
+            return "twilight";
+        }
+        if (t > 14000 && t <= 16000) {
+            return "evening";
+        }
+        if (t > 16000 && t <= 17500) {
+            return "late evening";
+        }
+        if (t > 17500 && t <= 18500) {
+            return "around midnight";
+        }
+        if (t > 18500 && t <= 20000) {
+            return "the small hours";
+        }
+        if (t > 20000 && t <= 22000) {
+            return "the wee hours";
+        } else {
+            return "pre-dawn";
         }
     }
 }
