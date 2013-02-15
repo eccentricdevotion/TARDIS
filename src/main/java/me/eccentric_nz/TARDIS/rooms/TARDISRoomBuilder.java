@@ -217,9 +217,10 @@ public class TARDISRoomBuilder {
             // set door space to air
             b.setTypeId(0);
             b.getRelative(BlockFace.UP).setTypeId(0);
-
+            // build faster if in debug mode
+            long delay = (plugin.getConfig().getBoolean("debug")) ? 2 : 5;
             TARDISRoomRunnable runnable = new TARDISRoomRunnable(plugin, roomData, p);
-            int taskID = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, runnable, 5L, 5L);
+            int taskID = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, runnable, delay, delay);
             runnable.setTask(taskID);
         }
         return true;
