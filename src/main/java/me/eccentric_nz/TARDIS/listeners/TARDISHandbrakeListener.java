@@ -97,7 +97,7 @@ public class TARDISHandbrakeListener implements Listener {
                                     state.setData(lever);
                                     state.update();
                                     set.put("handbrake_on", 0);
-                                    if (plugin.getServer().getPluginManager().getPlugin("Spout") != null) {
+                                    if (plugin.getServer().getPluginManager().getPlugin("Spout") != null && SpoutManager.getPlayer(player).isSpoutCraftEnabled()) {
                                         SpoutManager.getSoundManager().playGlobalCustomSoundEffect(plugin, "https://dl.dropbox.com/u/53758864/tardis_land.mp3", false, b, 20, 75);
                                     } else {
                                         w.playSound(b, Sound.MINECART_INSIDE, 1, 0);
