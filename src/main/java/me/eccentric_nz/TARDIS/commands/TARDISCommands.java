@@ -756,6 +756,13 @@ public class TARDISCommands implements CommandExecutor {
                             return false;
                         }
                         id = rs.getTardis_id();
+                        HashMap<String, Object> wherein = new HashMap<String, Object>();
+                        wherein.put("player", player.getName());
+                        ResultSetTravellers rst = new ResultSetTravellers(plugin, wherein, false);
+                        if (rst.resultSet()) {
+                            sender.sendMessage(plugin.pluginName + "You cannot rebuild the TARDIS right now! Try travelling first.");
+                            return true;
+                        }
                         int level = rs.getArtron_level();
                         save = (plugin.tardisHasDestination.containsKey(id)) ? rs.getCurrent() : rs.getSave();
                         if (plugin.tardisMaterialising.contains(id)) {
