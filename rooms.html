@@ -9,8 +9,8 @@
 <script src="javascripts/scale.fix.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
 <!--[if lt IE 9]>
-    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
+<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+<![endif]-->
 </head>
 <body>
 <div class="wrapper">
@@ -33,26 +33,35 @@
         <pre><code>/tardis room [room type]</code></pre>
         <p>and follow the instructions. The room types and their corresponding seed blocks are as follows: </p>
         <pre><code>Empty - GLASS
-Bedroom - GLOWSTONE
-Kitchen - PUMPKIN
-Vault - DISPENSER
 Arboretum - LEAVES
-Library - BOOKCASE
-Pool - SNOW block
-Workshop - NETHER BRICK block
-Passage - CLAY block
+Bedroom - GLOWSTONE
+Eye of Harmony - BRICK STAIRS
 Gravity well - MOSSY COBBLESTONE
 Anti-Gravity well - SANDSTONE
-Eye of Harmony - BRICK STAIRS
+Kitchen - PUMPKIN
+Library - BOOKCASE
+Passage - CLAY block
+Pool - SNOW block
 Secondary console - ENDER STONE/WOOD</code></pre>
+        Vault - DISPENSER
+        Workshop - NETHER BRICK block
         <h3>Notes:</h3>
         <ul>
+            <li>The <em>Eye of Harmony</em> room type is <code>harmony</code></li>
             <li>The <em>gravity well</em> room type is <code>gravity</code> and requires the seed block to be placed in the <strong>middle</strong> of an <strong>empty</strong> room.</li>
             <li>The <em>anti gravity well</em> room type is <code>antigravity</code> and also requires the seed block to be placed in the middle of an empty room.</li>
-            <li>The <em>Eye of Harmony</em> room type is <code>harmony</code></li>
             <li>The secondary console room types are: <code>baker</code> and <code>wood</code></li>
         </ul>
         <p>Once the room is finished generating, a door will appear at the chosen location and a confirmation message will be shown.</p>
+        <h3>Changing the room wall block</h3>
+        <p>By default (most) room walls are ORANGE wool. If you would like to replace all the ORANGE wool blocks with another material, you can set a wall palyer prefernce <strong>before</strong> growing the room.</p>
+        <p>To see a list of available wall materials, type:</p>
+        <pre><code>/tardisprefs wall help</code></pre>
+        <p>To set your wall block preference, type:</p>
+        <pre><code>/tardisprefs wall [material]</code></pre>
+        <p>Where <code>[material]</code> is a block from the wall help list.</p>
+        <p>The next room your grow (if it normally contains ORANGE wool) will have the blocks replaced with yopur preference.</p>
+        <p><img src="https://dl.dropbox.com/u/53758864/mushroompassage.jpg" alt="Mushroom passage" /></p>
         <h2>Removing rooms</h2>
         <p>Rooms may also be removed (or in TARDIS terms - jettisoned).</p>
         <p>Simply place TNT on the interior entrance of the room and use the command:</p>
@@ -68,6 +77,5 @@ Secondary console - ENDER STONE/WOOD</code></pre>
     <p>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></p>
 </footer>
 <!--[if !IE]><script>fixScale(document);</script><![endif]-->
-
 </body>
 </html>
