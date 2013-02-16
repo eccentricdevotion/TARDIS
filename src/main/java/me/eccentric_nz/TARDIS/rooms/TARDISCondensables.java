@@ -183,7 +183,7 @@ public class TARDISCondensables {
         condensables.put("SEEDS", 2);
         condensables.put("SHEARS", 44);
         condensables.put("SIGN", 2);
-        condensables.put("SLIMEBALL", 50);
+        condensables.put("SLIME_BALL", 50);
         condensables.put("SMOOTH_BRICK", 4);
         condensables.put("SMOOTH_STAIRS", 24);
         condensables.put("SNOWBALL", 1);
@@ -212,13 +212,12 @@ public class TARDISCondensables {
         condensables.put("THIN_GLASS", 5);
         condensables.put("TNT", 100);
         condensables.put("TORCH", 4);
-        condensables.put("WALLSIGN", 1);
+        condensables.put("WALL_SIGN", 1);
         condensables.put("WATCH", 6);
         condensables.put("WATER_BUCKET", 40);
         condensables.put("WATER_LILY", 1);
         condensables.put("WHEAT", 9);
         condensables.put("WOOD", 1);
-        condensables.put("WOODSWORD", 1);
         condensables.put("WOOD_AXE", 2);
         condensables.put("WOOD_DOOR", 3);
         condensables.put("WOOD_HOE", 2);
@@ -227,8 +226,9 @@ public class TARDISCondensables {
         condensables.put("WOOD_SPADE", 1);
         condensables.put("WOOD_STAIRS", 1);
         condensables.put("WOOD_STEP", 1);
+        condensables.put("WOOD_SWORD", 1);
         condensables.put("WOOL", 20);
         condensables.put("WORKBENCH", 3);
-        condensables.put("YELLOWFLOWER", 2);
+        condensables.put("YELLOW_FLOWER", 2);
     }
 }
