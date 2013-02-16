@@ -156,11 +156,11 @@ public class TARDISArea {
                 String queryLoc = wStr + ":" + x + ":%:" + z;
                 ResultSetSave rs = new ResultSetSave(plugin, queryLoc);
                 if (rs.resultSet()) {
-                    if (x <= maxx) {
+                    if (x + 5 <= maxx) {
                         x += 5;
                     } else {
                         x = minx + 2;
-                        if (z <= maxz) {
+                        if (z + 5 <= maxz) {
                             z += 5;
                         } else {
                             z = minz + 2;
