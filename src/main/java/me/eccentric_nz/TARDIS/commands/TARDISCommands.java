@@ -756,6 +756,7 @@ public class TARDISCommands implements CommandExecutor {
                             return false;
                         }
                         id = rs.getTardis_id();
+                        int level = rs.getArtron_level();
                         save = (plugin.tardisHasDestination.containsKey(id)) ? rs.getCurrent() : rs.getSave();
                         if (plugin.tardisMaterialising.contains(id)) {
                             sender.sendMessage(plugin.pluginName + "You cannot do that while the TARDIS is materialising!");
@@ -771,13 +772,21 @@ public class TARDISCommands implements CommandExecutor {
                         y = plugin.utils.parseNum(save_data[2]);
                         z = plugin.utils.parseNum(save_data[3]);
                         Location l = new Location(w, x, y, z);
+                        HashMap<String, Object> wheret = new HashMap<String, Object>();
+                        wheret.put("tardis_id", id);
+                        QueryFactory qf = new QueryFactory(plugin);
                         if (args[0].equalsIgnoreCase("rebuild")) {
+                            int rebuild = plugin.getConfig().getInt("random");
+                            if (level < rebuild) {
+                                player.sendMessage(plugin.pluginName + ChatColor.RED + "The TARDIS does not have enough Artron Energy to rebuild!");
+                                return false;
+                            }
                             plugin.buildPB.buildPoliceBox(id, l, d, cham, player, true);
                             sender.sendMessage(plugin.pluginName + "The TARDIS Police Box was rebuilt!");
+                            qf.alterEnergyLevel("tardis", -rebuild, wheret, player);
                             return true;
                         }
                         if (args[0].equalsIgnoreCase("hide")) {
-                            int level = rs.getArtron_level();
                             int hide = plugin.getConfig().getInt("hide");
                             if (level < hide) {
                                 player.sendMessage(plugin.pluginName + ChatColor.RED + "The TARDIS does not have enough Artron Energy to hide!");
@@ -790,9 +799,6 @@ public class TARDISCommands implements CommandExecutor {
                             // remove blue box
                             plugin.destroyPB.destroyPoliceBox(l, d, id, true);
                             sender.sendMessage(plugin.pluginName + "The TARDIS Police Box was hidden! Use " + ChatColor.GREEN + "/tardis rebuild" + ChatColor.RESET + " to show it again.");
-                            HashMap<String, Object> wheret = new HashMap<String, Object>();
-                            wheret.put("tardis_id", id);
-                            QueryFactory qf = new QueryFactory(plugin);
                             qf.alterEnergyLevel("tardis", -hide, wheret, player);
                             return true;
                         }
