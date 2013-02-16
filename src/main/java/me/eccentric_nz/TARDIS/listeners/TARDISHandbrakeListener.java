@@ -53,37 +53,42 @@ public class TARDISHandbrakeListener implements Listener {
         this.plugin = plugin;
     }
 
+    /**
+     * Listens for player interaction with the handbrake (lever) on the TARDIS
+     * console. If the button is right-clicked the handbrake is set off, if
+     * right-clicked while sneaking it is set on.
+     */
     @EventHandler(priority = EventPriority.MONITOR)
     public void onInteract(PlayerInteractEvent event) {
     	Player player = event.getPlayer();
-        Block block = event.getClickedBlock();
-        if (block != null) {
-        	Material blockType = block.getType();
-        	if (blockType == Material.LEVER) {
-        		//Checks handbrake location against the database.
-        		Location handbrake_loc = block.getLocation();
-        		World handbrake_locw = block.getWorld();
-        		String bw = handbrake_loc.getWorld().getName();
-                int bx = handbrake_loc.getBlockX();
-                int by = handbrake_loc.getBlockY();
-                int bz = handbrake_loc.getBlockZ();
-                String hb_loc = bw + ":" + bx + ":" + by + ":" + bz;
-                //ResultSet data to used through the file
-        		HashMap<String, Object> where = new HashMap<String, Object>();
-        		ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
-        		where.put("handbrake", hb_loc);
-                HashMap<String, Object> set = new HashMap<String, Object>();             
+    	Block block = event.getClickedBlock();
+    	if (block != null) {
+    		Material blockType = block.getType();
+    		if (blockType == Material.LEVER) {
+    			//Checks handbrake location against the database.
+    			Location handbrake_loc = block.getLocation();
+    			World handbrake_locw = block.getWorld();
+    			String bw = handbrake_loc.getWorld().getName();
+    			int bx = handbrake_loc.getBlockX();
+    			int by = handbrake_loc.getBlockY();
+    			int bz = handbrake_loc.getBlockZ();
+    			String hb_loc = bw + ":" + bx + ":" + by + ":" + bz;
+    			//ResultSet data to used through the file
+    			HashMap<String, Object> where = new HashMap<String, Object>();
+    			where.put("handbrake", hb_loc);
+    			ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
+    			HashMap<String, Object> set = new HashMap<String, Object>();             
                 
-                if (rs.resultSet()) {
-                	event.setCancelled(true);
-                    int id = rs.getTardis_id();
-                    COMPASS d = rs.getDirection();
-                    boolean cham = rs.isChamele_on();
-                    String save = rs.getSave();
-                    String cl = rs.getCurrent();
-                    String owner = rs.getOwner();
-                    Location exit = plugin.utils.getLocationFromDB(save, 0, 0);
-                    boolean error = false;
+    			if (rs.resultSet()) {
+    				event.setCancelled(true);
+    				int id = rs.getTardis_id();
+    				COMPASS d = rs.getDirection();
+    				boolean cham = rs.isChamele_on();
+    				String save = rs.getSave();
+    				String cl = rs.getCurrent();
+    				String owner = rs.getOwner();
+    				Location exit = plugin.utils.getLocationFromDB(save, 0, 0);
+    				boolean error = false;
                     
                 	if (!plugin.tardisMaterialising.contains(Integer.valueOf(id))) {
                 		Action action = event.getAction();
@@ -133,9 +138,9 @@ public class TARDISHandbrakeListener implements Listener {
                 		
                 		if (action == Action.LEFT_CLICK_BLOCK ){
                 			if(!rs.isHandbrake_on()){
-                                //Changes the lever to on.
-                                lever.setPowered(true);
-                                state.setData(lever);
+                				//Changes the lever to on.
+                				lever.setPowered(true);
+                				state.setData(lever);
                                 state.update();
                                 //Check if its at a recharge point
                                 TARDISArtronLevels tal = new TARDISArtronLevels(plugin);
@@ -144,20 +149,20 @@ public class TARDISHandbrakeListener implements Listener {
                                 set.put("handbrake_on", 1);
                                 player.sendMessage(plugin.pluginName + "Handbrake ON! Nice parking...");
                                 if (plugin.tardisHasDestination.containsKey(Integer.valueOf(id))) {
-	                                QueryFactory qf = new QueryFactory(plugin);
-	                                int amount = plugin.tardisHasDestination.get(id) * -1;
+                                	QueryFactory qf = new QueryFactory(plugin);
+                                	int amount = plugin.tardisHasDestination.get(id) * -1;
 	                                HashMap<String, Object> wheret = new HashMap<String, Object>();
 	                                wheret.put("tardis_id", id);
 	                                qf.alterEnergyLevel("tardis", amount, wheret, player);
 	                                if (!player.getName().equals(owner)) {
-	                                    Player ptl = plugin.getServer().getPlayer(owner);
+	                                	Player ptl = plugin.getServer().getPlayer(owner);
 	                                    ptl.sendMessage(plugin.pluginName + "You used " + Math.abs(amount) + " Artron Energy.");
 	                                }
                                 }
                                 plugin.tardisHasDestination.remove(Integer.valueOf(id));
                                 plugin.tardisHasTravelled.add(Integer.valueOf(id));
-
-	                		} else{
+                                
+                			} else{
 	                			player.sendMessage(plugin.pluginName + "The handbrake is already on!");
 	                			error = true;
 	                		}
@@ -170,13 +175,12 @@ public class TARDISHandbrakeListener implements Listener {
                 			qf.doUpdate("tardis", set, whereh);
                 		}
                 		
-                    } else {
-                        player.sendMessage(plugin.pluginName + "You cannot change the handbrake while the TARDIS is in the time vortex!");
+                	} else {
+                		player.sendMessage(plugin.pluginName + "You cannot change the handbrake while the TARDIS is in the time vortex!");
                         return;
                     }
-                }
-            }
-        }
+    			}
+    		}
+    	}
     }
 }
-
