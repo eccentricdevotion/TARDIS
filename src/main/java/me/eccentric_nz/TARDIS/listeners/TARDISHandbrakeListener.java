@@ -149,7 +149,7 @@ public class TARDISHandbrakeListener implements Listener {
 	                                HashMap<String, Object> wheret = new HashMap<String, Object>();
 	                                wheret.put("tardis_id", id);
 	                                qf.alterEnergyLevel("tardis", amount, wheret, player);
-	                                if (player.getName().equals(owner)) {
+	                                if (!player.getName().equals(owner)) {
 	                                    Player ptl = plugin.getServer().getPlayer(owner);
 	                                    ptl.sendMessage(plugin.pluginName + "You used " + Math.abs(amount) + " Artron Energy.");
 	                                }
@@ -165,9 +165,9 @@ public class TARDISHandbrakeListener implements Listener {
                 		
                 		if (!error){
                 			QueryFactory qf = new QueryFactory(plugin);
-                            HashMap<String, Object> whereh = new HashMap<String, Object>();
-                            whereh.put("tardis_id", id);
-                            qf.doUpdate("tardis", set, whereh);
+                			HashMap<String, Object> whereh = new HashMap<String, Object>();
+                			whereh.put("tardis_id", id);
+                			qf.doUpdate("tardis", set, whereh);
                 		}
                 		
                     } else {
@@ -175,7 +175,7 @@ public class TARDISHandbrakeListener implements Listener {
                         return;
                     }
                 }
-        	}
+            }
         }
     }
 }
