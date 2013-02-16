@@ -129,8 +129,8 @@ public class TARDISRoomRunnable implements Runnable {
                 b.setTypeIdAndData(64, door_data, true);
                 b.getRelative(BlockFace.UP).setTypeIdAndData(64, (byte) 8, true);
             }
-            if (room.equals("POOL")) {
-                p.sendMessage(plugin.pluginName + "Thawing the pool!");
+            if (room.equals("POOL") || room.equals("ARBORETUM")) {
+                p.sendMessage(plugin.pluginName + "Thawing water!");
             }
             // set all the ice to water
             for (Block ice : iceblocks) {

@@ -72,7 +72,7 @@ public class TARDISRoomSeeder implements Listener {
                 String r = plugin.seeds.get(blockType);
                 // check that the blockType is the same as the one they ran the /tardis room [type] command for
                 if (!plugin.trackRoomSeed.get(playerNameStr).equals(r)) {
-                    player.sendMessage(plugin.pluginName + "That is not the correct seed block to grow a " + r + " room!");
+                    player.sendMessage(plugin.pluginName + "That is not the correct seed block, This will grow a " + r + " room!");
                     return;
                 }
                 // get clicked block location
