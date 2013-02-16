@@ -19,6 +19,7 @@
 7. Check what happens when companions steal the TARDIS
 8. Allow "Shorting out" the Chameleon curcuit. So that a player can always have a "Leaves" Police Box, or an "Ice" police box.
 9. Allow "Locking" the door, so registered companions can't come in.
+10. Make the TARDIS key a per TARDIS preference
 
 ## Minecraft API when available `3.0`
 1. Create custom blocks for the TARDIS and console.
