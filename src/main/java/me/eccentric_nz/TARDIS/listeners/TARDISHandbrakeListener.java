@@ -53,140 +53,130 @@ public class TARDISHandbrakeListener implements Listener {
         this.plugin = plugin;
     }
 
-    /**
-     * Listens for player interaction with the handbrake (lever) on the TARDIS
-     * console. If the button is right-clicked the handbrake is set off, if
-     * right-clicked while sneaking it is set on.
-     */
     @EventHandler(priority = EventPriority.MONITOR)
     public void onInteract(PlayerInteractEvent event) {
-        final Player player = event.getPlayer();
+    	Player player = event.getPlayer();
         Block block = event.getClickedBlock();
         if (block != null) {
-            Material blockType = block.getType();
-            if (blockType == Material.LEVER) {
-                // get clicked block location
-                Location b = block.getLocation();
-                World w = b.getWorld();
-                String bw = b.getWorld().getName();
-                int bx = b.getBlockX();
-                int by = b.getBlockY();
-                int bz = b.getBlockZ();
+        	Material blockType = block.getType();
+        	if (blockType == Material.LEVER) {
+        		//Checks handbrake location against the database.
+        		Location handbrake_loc = block.getLocation();
+        		World handbrake_locw = block.getWorld();
+        		String bw = handbrake_loc.getWorld().getName();
+                int bx = handbrake_loc.getBlockX();
+                int by = handbrake_loc.getBlockY();
+                int bz = handbrake_loc.getBlockZ();
                 String hb_loc = bw + ":" + bx + ":" + by + ":" + bz;
-                // get tardis from saved handbrake location
-                HashMap<String, Object> where = new HashMap<String, Object>();
-                where.put("handbrake", hb_loc);
-                ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
+                //ResultSet data to used through the file
+        		HashMap<String, Object> where = new HashMap<String, Object>();
+        		ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
+        		where.put("handbrake", hb_loc);
+                HashMap<String, Object> set = new HashMap<String, Object>();             
+                
                 if (rs.resultSet()) {
-                    event.setCancelled(true);
+                	event.setCancelled(true);
                     int id = rs.getTardis_id();
-                    // check to make sure we're not in the time vortex
-                    if (!plugin.tardisMaterialising.contains(Integer.valueOf(id))) {
-                        Action action = event.getAction();
-                        HashMap<String, Object> set = new HashMap<String, Object>();
-                        String message = "";
-                        BlockState state = block.getState();
+                    COMPASS d = rs.getDirection();
+                    boolean cham = rs.isChamele_on();
+                    String save = rs.getSave();
+                    String cl = rs.getCurrent();
+                    String owner = rs.getOwner();
+                    Location exit = plugin.utils.getLocationFromDB(save, 0, 0);
+                    boolean error = false;
+                    
+                	if (!plugin.tardisMaterialising.contains(Integer.valueOf(id))) {
+                		Action action = event.getAction();
+                		BlockState state = block.getState();
                         Lever lever = (Lever) state.getData();
-                        boolean update = false;
-                        if (action == Action.RIGHT_CLICK_BLOCK) {
-                            if (rs.isHandbrake_on()) {
-                                // has a destination been set?
-                                if (plugin.tardisHasDestination.containsKey(Integer.valueOf(id))) {
-                                    // handbrake off
-                                    lever.setPowered(true);
-                                    state.setData(lever);
-                                    state.update();
-                                    set.put("handbrake_on", 0);
-                                    if (plugin.getServer().getPluginManager().getPlugin("Spout") != null && SpoutManager.getPlayer(player).isSpoutCraftEnabled()) {
-                                        SpoutManager.getSoundManager().playGlobalCustomSoundEffect(plugin, "https://dl.dropbox.com/u/53758864/tardis_land.mp3", false, b, 20, 75);
-                                    } else {
-                                        w.playSound(b, Sound.MINECART_INSIDE, 1, 0);
-                                    }
-                                    message = "OFF! Entering the time vortex...";
-                                    // get location from database
-                                    String save = rs.getSave();
-                                    String cl = rs.getCurrent();
-                                    COMPASS d = rs.getDirection();
-                                    boolean cham = rs.isChamele_on();
-                                    Location exit = plugin.utils.getLocationFromDB(save, 0, 0);
-                                    if (exit == null) {
-                                        player.sendMessage(plugin.pluginName + "Could not engage time circuits! Try setting the destination again.");
-                                        return;
-                                    } else {
-                                        Location l = plugin.utils.getLocationFromDB(cl, 0, 0);
-                                        // remove torch
-                                        plugin.destroyPB.destroyTorch(l);
-                                        // remove sign
-                                        plugin.destroyPB.destroySign(l, d);
-                                        // remove blue box
-                                        plugin.destroyPB.destroyPoliceBox(l, d, id, false);
-                                        // remove current location chunk from list
-                                        Chunk oldChunk = l.getChunk();
-                                        if (plugin.tardisChunkList.contains(oldChunk)) {
-                                            plugin.tardisChunkList.remove(oldChunk);
-                                        }
-                                        // try preloading destination chunk
-                                        World exitWorld = exit.getWorld();
-                                        Chunk chunk = exitWorld.getChunkAt(exit);
-                                        if (!exitWorld.isChunkLoaded(chunk)) {
-                                            exitWorld.loadChunk(chunk);
-                                        }
-                                        exitWorld.refreshChunk(chunk.getX(), chunk.getZ());
-                                        // rebuild blue box
-                                        plugin.buildPB.buildPoliceBox(id, exit, d, cham, player, false);
-                                        update = true;
-                                    }
-                                } else {
-                                    player.sendMessage(plugin.pluginName + "You need to set a destination first!");
-                                }
-                            } else {
-                                player.sendMessage(plugin.pluginName + "The handbrake is already off!");
-                            }
-                        }
-                        // can we use left click and set the lever position - yes
-                        if (action == Action.LEFT_CLICK_BLOCK) {
-                            if (!rs.isHandbrake_on()) {
-                                // handbrake on
-                                lever.setPowered(false);
+                        
+                		if (action == Action.RIGHT_CLICK_BLOCK ) {
+                			if(rs.isHandbrake_on()){
+	                			if (plugin.tardisHasDestination.containsKey(Integer.valueOf(id)) && exit != null) {
+	                				//Changes the lever to off.
+		                			lever.setPowered(false);
+		                            state.setData(lever);
+		                            state.update();
+		                            //Removes BlueBox and loads chunk if it unloaded somehow.
+		                            if (!exit.getWorld().isChunkLoaded(exit.getChunk())) {
+	                                    exit.getWorld().loadChunk(exit.getChunk());
+	                                }
+		                            exit.getWorld().refreshChunk(exit.getChunk().getX(), exit.getChunk().getZ());
+		                            
+	                                Location l = plugin.utils.getLocationFromDB(cl, 0, 0);
+	                                plugin.destroyPB.destroyTorch(l);
+	                                plugin.destroyPB.destroySign(l, d);
+	                                plugin.destroyPB.destroyPoliceBox(l, d, id, false);
+		                            plugin.buildPB.buildPoliceBox(id, exit, d, cham, player, false);
+	                                Chunk oldChunk = l.getChunk();
+	                                if (plugin.tardisChunkList.contains(oldChunk)) {
+	                                    plugin.tardisChunkList.remove(oldChunk);
+	                                }
+	                                //Sets database and sends the player/world message/sounds.
+		                            set.put("handbrake_on", 0);
+		                            player.sendMessage(plugin.pluginName + "Handbrake OFF! Entering the time vortex...");
+	                                if (plugin.getServer().getPluginManager().getPlugin("Spout") != null && SpoutManager.getPlayer(player).isSpoutCraftEnabled()) {
+	                                    SpoutManager.getSoundManager().playGlobalCustomSoundEffect(plugin, "https://dl.dropbox.com/u/53758864/tardis_land.mp3", false, handbrake_loc, 20, 75);
+	                                } else {
+	                                	handbrake_locw.playSound(handbrake_loc, Sound.MINECART_INSIDE, 1, 0);
+	                                }
+	                			} else{
+	                				player.sendMessage(plugin.pluginName + "You need to set a destination first!");
+	                				error = true;
+	                			}
+	                			
+	                		} else{
+	                			player.sendMessage(plugin.pluginName + "The handbrake is already off!");
+	                			error = true;
+	                		}
+                		}
+                		
+                		if (action == Action.LEFT_CLICK_BLOCK ){
+                			if(!rs.isHandbrake_on()){
+                                //Changes the lever to on.
+                                lever.setPowered(true);
                                 state.setData(lever);
                                 state.update();
-                                set.put("handbrake_on", 1);
-                                message = "ON! Nice parking.";
-                                // check if at a recharge point
+                                //Check if its at a recharge point
                                 TARDISArtronLevels tal = new TARDISArtronLevels(plugin);
                                 tal.recharge(id, player);
-                                // remove energy from TARDIS
+                                //Remove energy from TARDIS and sets database
+                                set.put("handbrake_on", 1);
+                                player.sendMessage(plugin.pluginName + "Handbrake ON! Nice parking...");
                                 if (plugin.tardisHasDestination.containsKey(Integer.valueOf(id))) {
-                                    QueryFactory qf = new QueryFactory(plugin);
-                                    int amount = plugin.tardisHasDestination.get(id) * -1;
-                                    HashMap<String, Object> wheret = new HashMap<String, Object>();
-                                    wheret.put("tardis_id", id);
-                                    qf.alterEnergyLevel("tardis", amount, wheret, player);
-                                    String owner = rs.getOwner();
-                                    if (!player.getName().equals(owner)) {
-                                        Player ptl = plugin.getServer().getPlayer(owner);
-                                        ptl.sendMessage(plugin.pluginName + "You used " + Math.abs(amount) + " Artron Energy.");
-                                    }
-                                    plugin.tardisHasDestination.remove(Integer.valueOf(id));
-                                    plugin.tardisHasTravelled.add(Integer.valueOf(id));
+	                                QueryFactory qf = new QueryFactory(plugin);
+	                                int amount = plugin.tardisHasDestination.get(id) * -1;
+	                                HashMap<String, Object> wheret = new HashMap<String, Object>();
+	                                wheret.put("tardis_id", id);
+	                                qf.alterEnergyLevel("tardis", amount, wheret, player);
+	                                if (player.getName().equals(owner)) {
+	                                    Player ptl = plugin.getServer().getPlayer(owner);
+	                                    ptl.sendMessage(plugin.pluginName + "You used " + Math.abs(amount) + " Artron Energy.");
+	                                }
                                 }
-                                update = true;
-                            } else {
-                                player.sendMessage(plugin.pluginName + "The handbrake is already on!");
-                            }
-                        }
-                        if (update) {
-                            QueryFactory qf = new QueryFactory(plugin);
+                                plugin.tardisHasDestination.remove(Integer.valueOf(id));
+                                plugin.tardisHasTravelled.add(Integer.valueOf(id));
+
+	                		} else{
+	                			player.sendMessage(plugin.pluginName + "The handbrake is already on!");
+	                			error = true;
+	                		}
+                		}
+                		
+                		if (!error){
+                			QueryFactory qf = new QueryFactory(plugin);
                             HashMap<String, Object> whereh = new HashMap<String, Object>();
                             whereh.put("tardis_id", id);
                             qf.doUpdate("tardis", set, whereh);
-                            player.sendMessage(plugin.pluginName + "Handbrake " + message);
-                        }
+                		}
+                		
                     } else {
                         player.sendMessage(plugin.pluginName + "You cannot change the handbrake while the TARDIS is in the time vortex!");
+                        return;
                     }
                 }
-            }
+        	}
         }
     }
 }
+
