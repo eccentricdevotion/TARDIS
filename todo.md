@@ -1,13 +1,12 @@
 # TODO
 ## Current version `2.0`
-1. Add 'farm' room if schematic supplied
-2. Check what happens when companions use the TARDIS with regards to:
+1. Check what happens when companions use the TARDIS with regards to:
    - Recharging
    - Update
-3. Remove room schematics in final release, and only supply CSV files.
-4. Documentation!
-5. More tutorial videos
-6. TEST, TEST, TEST
+2. Remove room schematics in final release, and only supply CSV files.
+3. Documentation - update Bukkit Dev page to point o the new github pages
+4. Tutorial video - bind command
+5. TEST, TEST, TEST
 
 ## In a future version `2.1+`
 1. Allow an "Autonomous Curcuit" to be created, allowing the TARDIS to travel to a player's home or the last used charging station in the event of the player's death. [table field already added to player_prefs]
@@ -20,6 +19,7 @@
 8. Allow "Shorting out" the Chameleon curcuit. So that a player can always have a "Leaves" Police Box, or an "Ice" police box.
 9. Allow "Locking" the door, so registered companions can't come in.
 10. Make the TARDIS key a per TARDIS preference
+11. Allow binding of TARDIS areas to buttons
 
 ## Minecraft API when available `3.0`
 1. Create custom blocks for the TARDIS and console.
