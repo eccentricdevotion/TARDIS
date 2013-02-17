@@ -25,9 +25,13 @@
     </header>
     <section>
         <h1>Troubleshooting/Common Problems</h1>
-        <h4>Help! I&rsquo;m stuck in my TARDIS!</h4>
-        <p>Your TARDIS door may not be saved. This may occur after an upgrade. Simply use the command:</p>
-        <pre><code>/tardis update door</code></pre>
+        <p><a href="#own-world">My TARDIS is not generating its own world!</a><br>
+            <a href="#import">How do I import my TARDIS world into my multi-world plugin?</a><br>
+            <a href="#handbrake">My Handbrake is not re-engaging!</a><br>
+            <a href="#charging">My TARDIS isn&rsquo;t charging at a recharge beacon</a><br>
+            <a href="sfx">I can&rsquo;t hear the custom sound effects</a><br>
+            <a href="#inside">It says I'm still inside the TARDIS, but I'm not</a><br>
+            <a href="#stuck">Help! I&rsquo;m stuck in my TARDIS!</a> </p>
         <p>Then follow the onscreen instructions to remedy the situation.</p>
         <h4 id="own-world">My TARDIS is not generating its own world!</h4>
         <p>For best results, follow these steps to set up the plugin to create TARDIS worlds:</p>
@@ -72,7 +76,7 @@
     spawnGroup: defaultGroup</code></pre>
         <h4 id="handbrake">My Handbrake is not re-engaging!</h4>
         <p>To re-engage the handbrake you must <strong>LEFT</strong>-click the lever.</p>
-        <h4>My TARDIS isn&rsquo;t charging at a recharge beacon</h4>
+        <h4 id="charging">My TARDIS isn&rsquo;t charging at a recharge beacon</h4>
         <p>You must time travel to the recharge location.</p>
         <p>Charging is triggered by players actually travelling to the recharge point, not remotely bringing their TARDIS into position with the <code>/tardis comehere</code> command.</p>
         <h4 id="sfx">I can&rsquo;t hear the custom sound effects</h4>
@@ -83,6 +87,17 @@
             <li>Restart the server</li>
             <li>Connect to the server with the SpoutCraft client</li>
         </ul>
+        <h4 id="inside">It says I'm still inside the TARDIS, but I'm not</h4>
+        <p>This happens if you have exited the TARDIS by some other way than the TARDIS door - this could be because of death, call, teleport, Multiverse teleport, or server crash.</p>
+        <p>To fix this you need to get back inside your TARDIS. To do this:</p>
+        <ul>
+            <li>If using the Multiverse plugin and your TARDIS is in its own world, type: <code>/mvtp TARDIS_WORLD_yournamehere</code></li>
+            <li>If your TARDIS was created in a normal world, teleport back to its location, or dig a hole down to its level underground.</li>
+            <li>Once inside the TARDIS again, exit the door properly and things should be back to normal.</li>
+        </ul>
+        <h4 id="stuck">Help! I&rsquo;m stuck in my TARDIS!</h4>
+        <p>Your TARDIS door may not be saved. This may occur after an upgrade. Simply use the command:</p>
+        <pre><code>/tardis update door</code></pre>
     </section>
 </div>
 <footer>
