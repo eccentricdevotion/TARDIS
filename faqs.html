@@ -49,7 +49,8 @@
 /mv modify set hidden true [world name]
 /mv modify set weather false [world name]
 /mv modify set memory false [world name]
-/mv modify set portalform none [world name]</code></pre>
+/mv modify set portalform none [world name]
+/mv modify set pvp false [world name]</code></pre>
         <p>Only the first command is required, but the TARDIS plugin sets the other world options as well by default.</p>
         <p><strong>Remember</strong> to change <code>[world name]</code> to the name of your own TARDIS world!</p>
         <p>If you are using <strong>MultiWorld</strong></p>
@@ -67,12 +68,21 @@
     flags:
       SPAWNMONSTER: false
       SPAWNANIMAL: false
+      PVP: false
     spawnGroup: defaultGroup</code></pre>
-        <h4>My Handbrake is not re-engaging!</h4>
+        <h4 id="handbrake">My Handbrake is not re-engaging!</h4>
         <p>To re-engage the handbrake you must <strong>LEFT</strong>-click the lever.</p>
         <h4>My TARDIS isn&rsquo;t charging at a recharge beacon</h4>
         <p>You must time travel to the recharge location.</p>
         <p>Charging is triggered by players actually travelling to the recharge point, not remotely bringing their TARDIS into position with the <code>/tardis comehere</code> command.</p>
+        <h4 id="sfx">I can&rsquo;t hear the custom sound effects</h4>
+        <p>The custom TARDIS sound effects require you to have the <strong>SpoutPlugin</strong> installed on the server, and that you connect to the server using the <strong>SpoutCraft</strong> client.</p>
+        <p>To get these required components, visit the Spout page at <a href="http://get.spout.org/">http://get.spout.org/</a> and download both files.</p>
+        <ul>
+            <li>Put the SpoutPlugin in the server&rsquo;s plugins folder</li>
+            <li>Restart the server</li>
+            <li>Connect to the server with the SpoutCraft client</li>
+        </ul>
     </section>
 </div>
 <footer>
@@ -80,6 +90,5 @@
     <p>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></p>
 </footer>
 <!--[if !IE]><script>fixScale(document);</script><![endif]-->
-
 </body>
 </html>
