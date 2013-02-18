@@ -273,63 +273,65 @@ public class TARDISCommands implements CommandExecutor {
                     }
                 }
                 if (args[0].equalsIgnoreCase("room")) {
-                    if (player.hasPermission("tardis.room")) {
-                        if (args.length < 2) {
-                            player.sendMessage(plugin.pluginName + "Too few command arguments!");
-                            return false;
-                        }
-                        String room = args[1].toUpperCase(Locale.ENGLISH);
-                        if (!roomArgs.contains(room)) {
-                            player.sendMessage(plugin.pluginName + "That is not a valid room type! Try one of: passage|arboretum|pool|vault|kitchen|bedroom|library|workshop|empty|gravity|antigravity|harmony|baker|wood");
-                            return true;
-                        }
-                        HashMap<String, Object> where = new HashMap<String, Object>();
-                        where.put("owner", player.getName());
-                        ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
-                        if (!rs.resultSet()) {
-                            player.sendMessage(plugin.pluginName + "You are not a Timelord. You need to create a TARDIS first before using this command!");
-                            return true;
-                        }
-                        String chunk = rs.getChunk();
-                        String[] data = chunk.split(":");
-                        World room_world = plugin.getServer().getWorld(data[0]);
-                        ChunkGenerator gen = room_world.getGenerator();
-                        WorldType wt = room_world.getWorldType();
-                        boolean special = (data[0].contains("TARDIS_TimeVortex") && (wt.equals(WorldType.FLAT) || gen instanceof TARDISChunkGenerator));
-                        if (!data[0].contains("TARDIS_WORLD_") && !special) {
-                            player.sendMessage(plugin.pluginName + "You cannot grow rooms unless your TARDIS was created in its own world!");
-                            return true;
-                        }
-                        int id = rs.getTardis_id();
-                        int level = rs.getArtron_level();
-                        // check they are in the tardis
-                        HashMap<String, Object> wheret = new HashMap<String, Object>();
-                        wheret.put("player", player.getName());
-                        wheret.put("tardis_id", id);
-                        ResultSetTravellers rst = new ResultSetTravellers(plugin, wheret, false);
-                        if (!rst.resultSet()) {
-                            player.sendMessage(plugin.pluginName + "You are not inside your TARDIS. You need to be to run this command!");
-                            return true;
-                        }
-                        // check they have enough artron energy
-                        if (level < plugin.getConfig().getInt("rooms." + room + ".cost")) {
-                            player.sendMessage(plugin.pluginName + "The TARDIS does not have enough Artron Energy to grow this room!");
-                            return true;
-                        }
-                        String message;
-                        // if it is a gravity well
-                        if (room.equals("GRAVITY") || room.equals("ANTIGRAVITY")) {
-                            message = "Place the GRAVITY WELL seed block (" + plugin.getConfig().getString("rooms." + room + ".seed") + ") into the centre of the floor in an empty room, then hit it with the TARDIS key to start growing your room!";
-                        } else {
-                            message = "Place the " + room + " seed block (" + plugin.getConfig().getString("rooms." + room + ".seed") + ") where the door should be, then hit it with the TARDIS key to start growing your room!";
-                        }
-                        plugin.trackRoomSeed.put(player.getName(), room);
-                        player.sendMessage(plugin.pluginName + message);
-                        return true;
-                    } else {
-                        sender.sendMessage(plugin.pluginName + TARDISConstants.NO_PERMS_MESSAGE);
+                    if (args.length < 2) {
+                        player.sendMessage(plugin.pluginName + "Too few command arguments!");
                         return false;
                     }
+                    String room = args[1].toUpperCase(Locale.ENGLISH);
+                    if (!roomArgs.contains(room)) {
+                        player.sendMessage(plugin.pluginName + "That is not a valid room type! Try one of: passage|arboretum|pool|vault|kitchen|bedroom|library|workshop|empty|gravity|antigravity|harmony|baker|wood");
+                        return true;
+                    }
+                    String perm = "tardis.room." + args[1].toLowerCase(Locale.ENGLISH);
+                    if (!player.hasPermission(perm)) {
+                        String grammar = (TARDISConstants.vowels.contains(room.substring(0, 1))) ? "an" : "a";
+                        sender.sendMessage(plugin.pluginName + "You do not have permission to grow " + grammar + " " + room);
+                        return true;
+                    }
+                    HashMap<String, Object> where = new HashMap<String, Object>();
+                    where.put("owner", player.getName());
+                    ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
+                    if (!rs.resultSet()) {
+                        player.sendMessage(plugin.pluginName + "You are not a Timelord. You need to create a TARDIS first before using this command!");
+                        return true;
+                    }
+                    String chunk = rs.getChunk();
+                    String[] data = chunk.split(":");
+                    World room_world = plugin.getServer().getWorld(data[0]);
+                    ChunkGenerator gen = room_world.getGenerator();
+                    WorldType wt = room_world.getWorldType();
+                    boolean special = (data[0].contains("TARDIS_TimeVortex") && (wt.equals(WorldType.FLAT) || gen instanceof TARDISChunkGenerator));
+                    if (!data[0].contains("TARDIS_WORLD_") && !special) {
+                        player.sendMessage(plugin.pluginName + "You cannot grow rooms unless your TARDIS was created in its own world!");
+                        return true;
+                    }
+                    int id = rs.getTardis_id();
+                    int level = rs.getArtron_level();
+                    // check they are in the tardis
+                    HashMap<String, Object> wheret = new HashMap<String, Object>();
+                    wheret.put("player", player.getName());
+                    wheret.put("tardis_id", id);
+                    ResultSetTravellers rst = new ResultSetTravellers(plugin, wheret, false);
+                    if (!rst.resultSet()) {
+                        player.sendMessage(plugin.pluginName + "You are not inside your TARDIS. You need to be to run this command!");
+                        return true;
+                    }
+                    // check they have enough artron energy
+                    if (level < plugin.getConfig().getInt("rooms." + room + ".cost")) {
+                        player.sendMessage(plugin.pluginName + "The TARDIS does not have enough Artron Energy to grow this room!");
+                        return true;
+                    }
+                    String message;
+                    // if it is a gravity well
+                    if (room.equals("GRAVITY") || room.equals("ANTIGRAVITY")) {
+                        message = "Place the GRAVITY WELL seed block (" + plugin.getConfig().getString("rooms." + room + ".seed") + ") into the centre of the floor in an empty room, then hit it with the TARDIS key to start growing your room!";
+                    } else {
+                        message = "Place the " + room + " seed block (" + plugin.getConfig().getString("rooms." + room + ".seed") + ") where the door should be, then hit it with the TARDIS key to start growing your room!";
+                    }
+                    plugin.trackRoomSeed.put(player.getName(), room);
+                    player.sendMessage(plugin.pluginName + message);
+                    return true;
+
                 }
                 if (args[0].equalsIgnoreCase("jettison")) {
                     if (player.hasPermission("tardis.room")) {

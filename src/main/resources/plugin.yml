@@ -94,6 +94,21 @@ permissions:
     default: op
   tardis.room:
     description: Allow players to grow extra rooms.
+    children:
+      tardis.room.antigravity: true
+      tardis.room.arboretum: true
+      tardis.room.baker: true
+      tardis.room.bedroom: true
+      tardis.room.empty: true
+      tardis.room.gravity: true
+      tardis.room.harmony: true
+      tardis.room.kitchen: true
+      tardis.room.library: true
+      tardis.room.passage: true
+      tardis.room.pool: true
+      tardis.room.vault: true
+      tardis.room.wood: true
+      tardis.room.workshop: true
     default: op
 commands:
   tardis:
