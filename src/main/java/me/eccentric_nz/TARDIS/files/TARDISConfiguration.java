@@ -120,6 +120,7 @@ public class TARDISConfiguration {
         strOptions.put("rooms.VAULT.seed", "DISPENSER");
         strOptions.put("rooms.WOOD.seed", "WOOD");
         strOptions.put("rooms.WORKSHOP.seed", "NETHER_BRICK");
+        strOptions.put("gamemode", "survival");
     }
 
     /**

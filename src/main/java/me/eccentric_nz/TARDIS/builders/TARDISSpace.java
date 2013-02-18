@@ -17,6 +17,7 @@
 package me.eccentric_nz.TARDIS.builders;
 
 import java.util.List;
+import java.util.Locale;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.tardischunkgenerator.TARDISChunkGenerator;
 import org.bukkit.World;
@@ -47,14 +48,18 @@ public class TARDISSpace {
      */
     public World getTardisWorld(String name) {
         if (tardisWorld == null) {
+            String gm = plugin.getConfig().getString("gamemode").toLowerCase(Locale.ENGLISH);
             if (plugin.pm.isPluginEnabled("MultiWorld")) {
                 plugin.getServer().dispatchCommand(plugin.console, "mw create " + name + " plugin:TARDISChunkGenerator");
                 plugin.getServer().dispatchCommand(plugin.console, "mw setflag " + name + " SpawnMonster false");
                 plugin.getServer().dispatchCommand(plugin.console, "mw setflag " + name + " SpawnAnimal false");
                 plugin.getServer().dispatchCommand(plugin.console, "mw setflag " + name + " PvP false");
+                if (gm.equalsIgnoreCase("creative")) {
+                    plugin.getServer().dispatchCommand(plugin.console, "mw setflag " + name + " CreativeWorld true");
+                }
                 tardisWorld = plugin.getServer().getWorld(name);
             } else {
-                tardisWorld = WorldCreator.name(name).type(WorldType.LARGE_BIOMES).environment(World.Environment.NORMAL).generator(new TARDISChunkGenerator()).createWorld();
+                tardisWorld = WorldCreator.name(name).type(WorldType.FLAT).environment(World.Environment.NORMAL).generator(new TARDISChunkGenerator()).createWorld();
             }
             // set the time to night
             tardisWorld.setTime(14000L);
@@ -71,6 +76,7 @@ public class TARDISSpace {
                 plugin.getServer().dispatchCommand(plugin.console, "mv modify set portalform none " + name);
                 plugin.getServer().dispatchCommand(plugin.console, "mv modify set adjustspawn false " + name);
                 plugin.getServer().dispatchCommand(plugin.console, "mv modify set pvp false " + name);
+                plugin.getServer().dispatchCommand(plugin.console, "mv modify set mode " + gm + " " + name);
             }
             if (plugin.pm.isPluginEnabled("WorldBorder")) {
                 // wb <world> set <radius> <x> <z>

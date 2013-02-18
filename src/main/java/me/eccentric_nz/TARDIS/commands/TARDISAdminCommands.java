@@ -78,6 +78,7 @@ public class TARDISAdminCommands implements CommandExecutor {
         firstsStr.add("delete");
         firstsStr.add("exclude");
         firstsStr.add("find");
+        firstsStr.add("gamemode");
         firstsStr.add("full_charge_item");
         firstsStr.add("include");
         firstsStr.add("key");
@@ -401,6 +402,13 @@ public class TARDISAdminCommands implements CommandExecutor {
                     // need to make there are no periods(.) in the text
                     String nodots = StringUtils.replace(t, ".", "_");
                     plugin.getConfig().set("default_world_name", nodots);
+                }
+                if (first.equals("gamemode")) {
+                    if (!args[1].equalsIgnoreCase("creative") || !args[1].equalsIgnoreCase("survival")) {
+                        sender.sendMessage(plugin.pluginName + ChatColor.RED + "Gamemode must be creative or survival!");
+                        return true;
+                    }
+                    plugin.getConfig().set("gamemode", args[1].toLowerCase(Locale.ENGLISH));
                 }
                 if (first.equals("exclude") || first.equals("include")) {
                     // get world name
