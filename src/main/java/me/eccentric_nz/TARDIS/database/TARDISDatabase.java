@@ -65,7 +65,7 @@ public class TARDISDatabase {
             statement.executeUpdate(queryChunks);
             String queryDoors = "CREATE TABLE IF NOT EXISTS doors (door_id INTEGER PRIMARY KEY NOT NULL, tardis_id INTEGER, door_type INTEGER, door_location TEXT, door_direction TEXT DEFAULT 'SOUTH')";
             statement.executeUpdate(queryDoors);
-            String queryPlayers = "CREATE TABLE IF NOT EXISTS player_prefs (pp_id INTEGER PRIMARY KEY NOT NULL, player TEXT COLLATE NOCASE, sfx_on INTEGER DEFAULT 0, platform_on INTEGER DEFAULT 0, quotes_on INTEGER DEFAULT 0, artron_level INTEGER DEFAULT 0, wall TEXT DEFAULT 'ORANGE_WOOL')";
+            String queryPlayers = "CREATE TABLE IF NOT EXISTS player_prefs (pp_id INTEGER PRIMARY KEY NOT NULL, player TEXT COLLATE NOCASE, sfx_on INTEGER DEFAULT 0, platform_on INTEGER DEFAULT 0, quotes_on INTEGER DEFAULT 0, artron_level INTEGER DEFAULT 0, wall TEXT DEFAULT 'ORANGE_WOOL', auto_on INTEGER DEFAULT 0)";
             statement.executeUpdate(queryPlayers);
             String queryProtectBlocks = "CREATE TABLE IF NOT EXISTS blocks (b_id INTEGER PRIMARY KEY NOT NULL, tardis_id INTEGER, location TEXT COLLATE NOCASE DEFAULT '', block INTEGER DEFAULT 0, data INTEGER DEFAULT 0, police_box INTEGER DEFAULT 0)";
             statement.executeUpdate(queryProtectBlocks);
@@ -143,15 +143,21 @@ public class TARDISDatabase {
                 statement.executeUpdate(queryAlter14);
                 TARDIS.plugin.console.sendMessage(TARDIS.plugin.pluginName + "Adding new y coord field to areas!");
             }
-            // add wall/auto_on to player_prefs
+            // add wall to player_prefs
             String queryAddWall = "SELECT sql FROM sqlite_master WHERE tbl_name = 'player_prefs' AND sql LIKE '%wall TEXT%'";
             ResultSet rsWall = statement.executeQuery(queryAddWall);
             if (!rsWall.next()) {
                 String queryAlter15 = "ALTER TABLE player_prefs ADD wall TEXT DEFAULT 'ORANGE_WOOL'";
                 statement.executeUpdate(queryAlter15);
+                TARDIS.plugin.console.sendMessage(TARDIS.plugin.pluginName + "Adding wall field to player prefs!");
+            }
+            // add auto_on to player_prefs
+            String queryAddAuto = "SELECT sql FROM sqlite_master WHERE tbl_name = 'player_prefs' AND sql LIKE '%auto_on INTEGER%'";
+            ResultSet rsAuto = statement.executeQuery(queryAddAuto);
+            if (!rsAuto.next()) {
                 String queryAlter16 = "ALTER TABLE player_prefs ADD auto_on INTEGER DEFAULT 0";
                 statement.executeUpdate(queryAlter16);
-                TARDIS.plugin.console.sendMessage(TARDIS.plugin.pluginName + "Adding wall field to player prefs!");
+                TARDIS.plugin.console.sendMessage(TARDIS.plugin.pluginName + "Adding auto_on field to player prefs!");
             }
             // add scanner to tardis
             String queryAddScanner = "SELECT sql FROM sqlite_master WHERE tbl_name = 'tardis' AND sql LIKE '%scanner TEXT%'";
