@@ -100,11 +100,11 @@ public class TARDISRoomRunnable implements Runnable {
 //            set.put("startz", startz);
             world = l.getWorld();
             running = true;
-            grammar = (TARDISConstants.vowels.contains(room.substring(0, 1))) ? "an " + room : "a " + room;
+            grammar = (TARDISConstants.vowels.contains(room.substring(0, 1))) ? "an" : "a";
             if (room.equals("GRAVITY")) {
                 grammar += " WELL";
             }
-            p.sendMessage(plugin.pluginName + "Started growing " + grammar + "...");
+            p.sendMessage(plugin.pluginName + "Started growing " + grammar + " " + room + "...");
         }
         String tmp;
         if (level == h && row == w && col == (c - 1)) {
