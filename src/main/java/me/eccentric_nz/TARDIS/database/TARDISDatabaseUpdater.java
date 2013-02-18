@@ -19,9 +19,10 @@ package me.eccentric_nz.TARDIS.database;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
+import org.bukkit.ChatColor;
 
 /**
  * TARDISes prefer the environment of the Space-Time Vortex to the four
@@ -32,45 +33,90 @@ import me.eccentric_nz.TARDIS.TARDIS;
  */
 public class TARDISDatabaseUpdater {
 
-    private HashMap<String, String> updates = new HashMap<String, String>();
+    private List<String> areaupdates = new ArrayList<String>();
+    private List<String> blockupdates = new ArrayList<String>();
+    private List<String> destupdates = new ArrayList<String>();
+    private List<String> prefsupdates = new ArrayList<String>();
+    private List<String> tardisupdates = new ArrayList<String>();
     private Statement statement;
 
     public TARDISDatabaseUpdater(Statement statement) {
         this.statement = statement;
-        updates.put("areas", "y INTEGER");
-        updates.put("blocks", "police_box INTEGER DEFAULT 0");
-        updates.put("destinations", "bind TEXT DEFAULT ''");
-        updates.put("player_prefs", "artron_level INTEGER DEFAULT 0");
-        updates.put("player_prefs", "auto_on INTEGER DEFAULT 0");
-        updates.put("player_prefs", "wall TEXT DEFAULT 'ORANGE_WOOL'");
-        updates.put("tardis", "artron_button TEXT DEFAULT ''");
-        updates.put("tardis", "artron_level INTEGER DEFAULT 0");
-        updates.put("tardis", "condenser TEXT DEFAULT ''");
-        updates.put("tardis", "creeper TEXT DEFAULT ''");
-        updates.put("tardis", "handbrake TEXT DEFAULT ''");
-        updates.put("tardis", "handbrake_on INT DEFAULT 1");
-        updates.put("tardis", "middle_data INTEGER");
-        updates.put("tardis", "middle_id INTEGER");
-        updates.put("tardis", "scanner TEXT DEFAULT ''");
-        updates.put("tardis", "tardis_init INTEGER DEFAULT 0");
+        areaupdates.add("y INTEGER");
+        blockupdates.add("police_box INTEGER DEFAULT 0");
+        destupdates.add("bind TEXT DEFAULT ''");
+        prefsupdates.add("artron_level INTEGER DEFAULT 0");
+        prefsupdates.add("auto_on INTEGER DEFAULT 0");
+        prefsupdates.add("wall TEXT DEFAULT ''");
+        tardisupdates.add("artron_button TEXT DEFAULT ''");
+        tardisupdates.add("artron_level INTEGER DEFAULT 0");
+        tardisupdates.add("condenser TEXT DEFAULT ''");
+        tardisupdates.add("creeper TEXT DEFAULT ''");
+        tardisupdates.add("handbrake TEXT DEFAULT ''");
+        tardisupdates.add("handbrake_on INTEGER DEFAULT 1");
+        tardisupdates.add("middle_data INTEGER");
+        tardisupdates.add("middle_id INTEGER");
+        tardisupdates.add("scanner TEXT DEFAULT ''");
+        tardisupdates.add("tardis_init INTEGER DEFAULT 0");
     }
 
     /**
-     * Updates the TARDIS database tables, adding new fields.
+     * Adds new fields to tables in the database.
      */
     public void updateTables() {
-        for (Map.Entry<String, String> a : updates.entrySet()) {
-            String query = "SELECT sql FROM sqlite_master WHERE tbl_name = '" + a.getKey() + "' AND sql LIKE '%" + a.getValue() + "%'";
-            try {
-                ResultSet rsa = statement.executeQuery(query);
+        int i = 0;
+        try {
+            for (String a : areaupdates) {
+                String a_query = "SELECT sql FROM sqlite_master WHERE tbl_name = 'areas' AND sql LIKE '%" + a + "%'";
+                ResultSet rsa = statement.executeQuery(a_query);
                 if (!rsa.next()) {
-                    String alter = "ALTER TABLE " + a.getKey() + " ADD " + a.getValue();
-                    statement.executeUpdate(alter);
+                    i++;
+                    String a_alter = "ALTER TABLE areas ADD " + a;
+                    statement.executeUpdate(a_alter);
                 }
-            } catch (SQLException e) {
-                TARDIS.plugin.debug("Database update error: " + a + " - " + e.getMessage());
             }
+            for (String b : blockupdates) {
+                String b_query = "SELECT sql FROM sqlite_master WHERE tbl_name = 'blocks' AND sql LIKE '%" + b + "%'";
+                ResultSet rsb = statement.executeQuery(b_query);
+                if (!rsb.next()) {
+                    i++;
+                    String b_alter = "ALTER TABLE blocks ADD " + b;
+                    statement.executeUpdate(b_alter);
+                }
+            }
+            for (String d : destupdates) {
+                String d_query = "SELECT sql FROM sqlite_master WHERE tbl_name = 'destinations' AND sql LIKE '%" + d + "%'";
+                ResultSet rsd = statement.executeQuery(d_query);
+                if (!rsd.next()) {
+                    i++;
+                    String d_alter = "ALTER TABLE destinations ADD " + d;
+                    statement.executeUpdate(d_alter);
+                }
+            }
+            for (String p : prefsupdates) {
+                String p_query = "SELECT sql FROM sqlite_master WHERE tbl_name = 'player_prefs' AND sql LIKE '%" + p + "%'";
+                ResultSet rsp = statement.executeQuery(p_query);
+                if (!rsp.next()) {
+                    i++;
+                    String p_alter = "ALTER TABLE player_prefs ADD " + p;
+                    statement.executeUpdate(p_alter);
+                }
+            }
+            for (String t : tardisupdates) {
+                String t_query = "SELECT sql FROM sqlite_master WHERE tbl_name = 'tardis' AND sql LIKE '%" + t + "%'";
+                ResultSet rst = statement.executeQuery(t_query);
+                if (!rst.next()) {
+                    i++;
+                    String t_alter = "ALTER TABLE tardis ADD " + t;
+                    statement.executeUpdate(t_alter);
+                }
+            }
+        } catch (SQLException e) {
+            TARDIS.plugin.debug("Database add fields error: " + e.getMessage());
         }
-        TARDIS.plugin.console.sendMessage(TARDIS.plugin.pluginName + "Adding scanner to tardis!");
+        TARDIS.plugin.console.sendMessage(TARDIS.plugin.pluginName + "Added " + ChatColor.AQUA + i + ChatColor.RESET + " fields to the database!");
     }
 }
+/*
+
+ */
