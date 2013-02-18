@@ -21,6 +21,7 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 
 /**
@@ -57,7 +58,7 @@ public class TARDISDatabase {
     public void createTables() {
         try {
             statement = connection.createStatement();
-            String queryTARDIS = "CREATE TABLE IF NOT EXISTS tardis (tardis_id INTEGER PRIMARY KEY NOT NULL, owner TEXT COLLATE NOCASE, chunk TEXT, direction TEXT, home TEXT, save TEXT, current TEXT, replaced TEXT DEFAULT '', chest TEXT, button TEXT, repeater0 TEXT, repeater1 TEXT, repeater2 TEXT, repeater3 TEXT, companions TEXT, platform TEXT DEFAULT '', chameleon TEXT DEFAULT '', chamele_on INTEGER DEFAULT 0, size TEXT DEFAULT '', save_sign TEXT DEFAULT '', artron_button TEXT DEFAULT '', artron_level INTEGER DEFAULT 0, creeper TEXT DEFAULT '', handbrake TEXT DEFAULT '', handbrake_on INT DEFAULT 1, tardis_init INTEGER DEFAULT 0, middle_id INTEGER, middle_data INTEGER, scanner TEXT DEFAULT '')";
+            String queryTARDIS = "CREATE TABLE IF NOT EXISTS tardis (tardis_id INTEGER PRIMARY KEY NOT NULL, owner TEXT COLLATE NOCASE, chunk TEXT, direction TEXT, home TEXT, save TEXT, current TEXT, replaced TEXT DEFAULT '', chest TEXT, button TEXT, repeater0 TEXT, repeater1 TEXT, repeater2 TEXT, repeater3 TEXT, companions TEXT, platform TEXT DEFAULT '', chameleon TEXT DEFAULT '', chamele_on INTEGER DEFAULT 0, size TEXT DEFAULT '', save_sign TEXT DEFAULT '', artron_button TEXT DEFAULT '', artron_level INTEGER DEFAULT 0, creeper TEXT DEFAULT '', handbrake TEXT DEFAULT '', handbrake_on INTEGER DEFAULT 1, tardis_init INTEGER DEFAULT 0, middle_id INTEGER, middle_data INTEGER, scanner TEXT DEFAULT '')";
             statement.executeUpdate(queryTARDIS);
             String queryTravellers = "CREATE TABLE IF NOT EXISTS travellers (traveller_id INTEGER PRIMARY KEY NOT NULL, tardis_id INTEGER, player TEXT COLLATE NOCASE)";
             statement.executeUpdate(queryTravellers);
@@ -80,103 +81,10 @@ public class TARDISDatabase {
 //            String dropGravity = "DROP TABLE IF EXISTS gravity";
 //            statement.executeUpdate(dropGravity);
 
-            // just when I thought I'd got rid of them all... another check to add a column
-            String queryAddArtron = "SELECT sql FROM sqlite_master WHERE tbl_name = 'player_prefs' AND sql LIKE '%artron_level INTEGER%'";
-            ResultSet rsArtron = statement.executeQuery(queryAddArtron);
-            if (!rsArtron.next()) {
-                String queryAlter = "ALTER TABLE player_prefs ADD artron_level INTEGER DEFAULT 0";
-                statement.executeUpdate(queryAlter);
-                TARDIS.plugin.console.sendMessage(TARDIS.plugin.pluginName + "Adding new Artron Levels to player prefs!");
-            }
-            // add other fields to tardis table as well
-            String queryAddTardis = "SELECT sql FROM sqlite_master WHERE tbl_name = 'tardis' AND sql LIKE '%artron_button TEXT%'";
-            ResultSet rsTardis = statement.executeQuery(queryAddTardis);
-            if (!rsTardis.next()) {
-                String queryAlter2 = "ALTER TABLE tardis ADD artron_button TEXT DEFAULT ''";
-                statement.executeUpdate(queryAlter2);
-                String queryAlter3 = "ALTER TABLE tardis ADD artron_level INTEGER DEFAULT 0";
-                statement.executeUpdate(queryAlter3);
-                String queryAlter4 = "ALTER TABLE tardis ADD middle_id INTEGER";
-                statement.executeUpdate(queryAlter4);
-                String queryAlter5 = "ALTER TABLE tardis ADD middle_data INTEGER";
-                statement.executeUpdate(queryAlter5);
-                String queryAlter6 = "ALTER TABLE tardis ADD creeper TEXT DEFAULT ''";
-                statement.executeUpdate(queryAlter6);
-                String queryAlter7 = "ALTER TABLE tardis ADD tardis_init INTEGER DEFAULT 0";
-                statement.executeUpdate(queryAlter7);
-//                String queryAlter8 = "ALTER TABLE tardis ADD handbrake TEXT DEFAULT ''";
-//                statement.executeUpdate(queryAlter8);
-//                String queryAlter9 = "ALTER TABLE tardis ADD handbrake_on INT DEFAULT 1";
-//                statement.executeUpdate(queryAlter9);
-//                String queryAlter10 = "ALTER TABLE tardis ADD recharging INTEGER DEFAULT 0";
-//                statement.executeUpdate(queryAlter10);
-                TARDIS.plugin.console.sendMessage(TARDIS.plugin.pluginName + "Adding new database fields to tardis!");
-            }
-            // add bind to destinations
-            String queryAddBind = "SELECT sql FROM sqlite_master WHERE tbl_name = 'destinations' AND sql LIKE '%bind TEXT%'";
-            ResultSet rsBind = statement.executeQuery(queryAddBind);
-            if (!rsBind.next()) {
-                String queryAlter12 = "ALTER TABLE destinations ADD bind TEXT DEFAULT ''";
-                statement.executeUpdate(queryAlter12);
-                TARDIS.plugin.console.sendMessage(TARDIS.plugin.pluginName + "Adding new bind field to destinations!");
-            }
-            // condenser
-            String queryAddCondenser = "SELECT sql FROM sqlite_master WHERE tbl_name = 'tardis' AND sql LIKE '%condenser TEXT%'";
-            ResultSet rsCondenser = statement.executeQuery(queryAddCondenser);
-            if (!rsCondenser.next()) {
-                String queryAlter11 = "ALTER TABLE tardis ADD condenser TEXT DEFAULT ''";
-                statement.executeUpdate(queryAlter11);
-            }
-            // add police_box to blocks
-            String queryAddPoliceBox = "SELECT sql FROM sqlite_master WHERE tbl_name = 'blocks' AND sql LIKE '%police_box INTEGER%'";
-            ResultSet rsPB = statement.executeQuery(queryAddPoliceBox);
-            if (!rsPB.next()) {
-                String queryAlter13 = "ALTER TABLE blocks ADD police_box INTEGER DEFAULT 0";
-                statement.executeUpdate(queryAlter13);
-                TARDIS.plugin.console.sendMessage(TARDIS.plugin.pluginName + "Adding new police_box field to blocks!");
-            }
-            // add y to areas
-            String queryAddY = "SELECT sql FROM sqlite_master WHERE tbl_name = 'areas' AND sql LIKE '%y INTEGER%'";
-            ResultSet rsY = statement.executeQuery(queryAddY);
-            if (!rsY.next()) {
-                String queryAlter14 = "ALTER TABLE areas ADD y INTEGER";
-                statement.executeUpdate(queryAlter14);
-                TARDIS.plugin.console.sendMessage(TARDIS.plugin.pluginName + "Adding new y coord field to areas!");
-            }
-            // add wall to player_prefs
-            String queryAddWall = "SELECT sql FROM sqlite_master WHERE tbl_name = 'player_prefs' AND sql LIKE '%wall TEXT%'";
-            ResultSet rsWall = statement.executeQuery(queryAddWall);
-            if (!rsWall.next()) {
-                String queryAlter15 = "ALTER TABLE player_prefs ADD wall TEXT DEFAULT 'ORANGE_WOOL'";
-                statement.executeUpdate(queryAlter15);
-                TARDIS.plugin.console.sendMessage(TARDIS.plugin.pluginName + "Adding wall field to player prefs!");
-            }
-            // add auto_on to player_prefs
-            String queryAddAuto = "SELECT sql FROM sqlite_master WHERE tbl_name = 'player_prefs' AND sql LIKE '%auto_on INTEGER%'";
-            ResultSet rsAuto = statement.executeQuery(queryAddAuto);
-            if (!rsAuto.next()) {
-                String queryAlter16 = "ALTER TABLE player_prefs ADD auto_on INTEGER DEFAULT 0";
-                statement.executeUpdate(queryAlter16);
-                TARDIS.plugin.console.sendMessage(TARDIS.plugin.pluginName + "Adding auto_on field to player prefs!");
-            }
-            // add scanner to tardis
-            String queryAddScanner = "SELECT sql FROM sqlite_master WHERE tbl_name = 'tardis' AND sql LIKE '%scanner TEXT%'";
-            ResultSet rsScanner = statement.executeQuery(queryAddScanner);
-            if (!rsScanner.next()) {
-                String queryAlter17 = "ALTER TABLE tardis ADD scanner TEXT DEFAULT ''";
-                statement.executeUpdate(queryAlter17);
-                TARDIS.plugin.console.sendMessage(TARDIS.plugin.pluginName + "Adding scanner to tardis!");
-            }
-            String queryAddMissing = "SELECT sql FROM sqlite_master WHERE tbl_name = 'tardis' AND sql LIKE '%handbrake TEXT%'";
-            ResultSet rsMissing = statement.executeQuery(queryAddMissing);
-            if (!rsMissing.next()) {
-                String queryAlter8 = "ALTER TABLE tardis ADD handbrake TEXT DEFAULT ''";
-                statement.executeUpdate(queryAlter8);
-                String queryAlter9 = "ALTER TABLE tardis ADD handbrake_on INT DEFAULT 1";
-                statement.executeUpdate(queryAlter9);
-                String queryAlter10 = "ALTER TABLE tardis ADD recharging INTEGER DEFAULT 0";
-                statement.executeUpdate(queryAlter10);
-            }
+            // update tables
+            TARDISDatabaseUpdater dbu = new TARDISDatabaseUpdater(statement);
+            dbu.updateTables();
+
         } catch (SQLException e) {
             TARDIS.plugin.console.sendMessage(TARDIS.plugin.pluginName + "Create table error: " + e);
         } finally {
