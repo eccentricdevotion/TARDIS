@@ -161,7 +161,7 @@ public class TARDISBuilderPoliceBox {
         } else {
             if (plugin.getConfig().getBoolean("materialise")) {
                 plugin.tardisMaterialising.add(id);
-                TARDISMaterialisationRunnable runnable = new TARDISMaterialisationRunnable(plugin, l, wall_block, chameleonData, id, d);
+                TARDISMaterialisationRunnable runnable = new TARDISMaterialisationRunnable(plugin, l, wall_block, chameleonData, id, d, p);
                 int taskID = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, runnable, 10L, 20L);
                 runnable.setTask(taskID);
             } else {

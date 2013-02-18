@@ -52,6 +52,7 @@ public class TARDISMaterialisationRunnable implements Runnable {
     private int i;
     private int mat;
     private byte data;
+    private Player player;
 
     /**
      * Runnable method to materialise the TARDIS Police Box. Tries to mimic the
@@ -66,7 +67,7 @@ public class TARDISMaterialisationRunnable implements Runnable {
      * @param tid the tardis_id this Police Box belongs to
      * @param d the COMPASS direction the Police Box is facing
      */
-    public TARDISMaterialisationRunnable(TARDIS plugin, Location location, int mat, byte data, int tid, COMPASS d) {
+    public TARDISMaterialisationRunnable(TARDIS plugin, Location location, int mat, byte data, int tid, COMPASS d, Player player) {
         this.plugin = plugin;
         this.d = d;
         this.loops = 12;
@@ -75,13 +76,21 @@ public class TARDISMaterialisationRunnable implements Runnable {
         this.tid = tid;
         this.mat = mat;
         this.data = data;
+        this.player = player;
     }
 
     @Override
     public void run() {
         int id;
         byte b;
-        final World world;
+        // get relative locations
+        int x = location.getBlockX(), plusx = location.getBlockX() + 1, minusx = location.getBlockX() - 1;
+        int y = location.getBlockY() + 2, plusy = location.getBlockY() + 3, minusy = location.getBlockY() + 1;
+        int down2y = location.getBlockY(), down3y = location.getBlockY() - 1;
+        int z = location.getBlockZ(), plusz = location.getBlockZ() + 1, minusz = location.getBlockZ() - 1;
+        World world = location.getWorld();
+        int signx = 0, signz = 0;
+        byte sd = 0, grey = 8;
         if (i < loops) {
             i++;
             // expand placed blocks to a police box
@@ -99,25 +108,14 @@ public class TARDISMaterialisationRunnable implements Runnable {
                     b = data;
                     break;
             }
-            byte mds = b, mdw = b, mdn = b, mde = b, bds = b, bdw = b, bdn = b, bde = b, sd = 0, grey = 8;
-            int plusx, minusx, x, plusz, minusz, z;
-            // get relative locations
-            x = location.getBlockX();
-            plusx = (location.getBlockX() + 1);
-            minusx = (location.getBlockX() - 1);
-            int y = location.getBlockY() + 2;
-            int plusy = (location.getBlockY() + 3), minusy = (location.getBlockY() + 1), down2y = location.getBlockY(), down3y = (location.getBlockY() - 1);
-            z = (location.getBlockZ());
-            plusz = (location.getBlockZ() + 1);
-            minusz = (location.getBlockZ() - 1);
-            world = location.getWorld();
-            int south = id, west = id, north = id, east = id, signx = 0, signz = 0;
+            int south = id, west = id, north = id, east = id;
+            byte mds = b, mdw = b, mdn = b, mde = b, bds = b, bdw = b, bdn = b, bde = b;
             String doorloc = "";
             // first run - remember blocks
             if (i == 1) {
                 HashMap<String, Object> where = new HashMap<String, Object>();
                 where.put("tardis_id", tid);
-                if (plugin.getServer().getPluginManager().getPlugin("Spout") != null) {
+                if (plugin.getServer().getPluginManager().getPlugin("Spout") != null && SpoutManager.getPlayer(player).isSpoutCraftEnabled()) {
                     SpoutManager.getSoundManager().playGlobalCustomSoundEffect(plugin, "https://dl.dropbox.com/u/53758864/tardis_land.mp3", false, location, 9, 75);
                 } else {
                     world.playSound(location, Sound.MINECART_INSIDE, 1, 0);
