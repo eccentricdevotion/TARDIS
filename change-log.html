@@ -26,6 +26,98 @@
     <section>
         <h1>Change log</h1>
         <h2>What&rsquo;s been changed?</h2>
+        <h3>v2.0-PRE-c</h3>
+        <ul>
+            <li>You can now only travel to a TARDIS area (for the first time) using the <code>/tardistravel area [name]</code> command
+                once there you can still use <code>/tardis save [name]</code> to remember the destination (and bind it to a button)
+                if a player uses <code>/tardistravel dest [save]</code> and the saved location is currently occupied, then they will be asked to use the <code>/tardistravel area [name]</code> command instead</li>
+            <li>Fixed TARDISes finding parking spots outside a TARDIS area</li>
+            <li>You can now no longer rebuild the TARDIS while you are inside it and a destination has been set but not travelled to</li>
+            <li>Rebuilding the TARDIS now uses Artron Energy (the same amount as random location travelling)</li>
+            <li>Fixed the message when clicking the wrong seed block when trying to grow a room</li>
+            <li>Fixed some item names in the Energy condenser list</li>
+            <li>The Gamemode for TARDIS worlds is now configurable between <em>creative</em> and <em>survival</em> - change <code>gamemode</code> in config.yml - default is survival</li>
+            <li>Recoded the method to add new fields to database tables - this also fixes room walls not using the player\'s \'wall\' preference</li>
+            <li>(Minecraft) TARDIS sounds should play more consistently if SpoutPlugin is installed, but players are not using the SpoutCraft client</li>
+            <li>Added per room permissions:
+                <ul>
+                    <li>parent node is still <code>tardis.room</code> for access to all rooms</li>
+                    <li>individual room nodes are of the format: <code>tardis.room.roomtype</code> e.g. <code>tardis.room.harmony</code></li>
+                </ul>
+            </li>
+            <li>Other minor improvements</li>
+        </ul>
+        <h3>v2.0-PRE-b</h3>
+        <ul>
+            <li>Fixed <code>/tardis direction</code> command not updating the door location in database</li>
+            <li>Fixed bug where if a player had saved a location in a TARDIS area, travelling there could make Police Boxes overlap as the spot may have been filled while they were elsewhere</li>
+        </ul>
+        <h3>v2.0-PRE-a</h3>
+        <ul>
+            <li>Fixed grammar and spelling in some player messages</li>
+            <li>Fixed bug if supplying an invalid room type to the <code>/tardis room</code> command</li>
+            <li>Fixed bug if supplying an invalid world name to <code>/tardistravel</code> command</li>
+            <li>Fixed a NPE error in the HandBrake Listener</li>
+            <li>Fixed an error when clicking the wrong block type after using the <code>/tardis update</code> command</li>
+            <li>Fixed a NPE in <code>/tardis comehere</code> command</li>
+            <li>Fixed a NPE in <code>/tardisadmin delete</code> command</li>
+            <li>Added WOODEN SLAB ids to list of blocks that need to be replaced under the Police Box door</li>
+            <li>Added four new \'rooms\'
+                Eye of Harmony - <code>/tardis room harmony</code> - seed block SMOOTH STONE STAIR - The Eye contains a chest, which is automatically set as the TARDIS condenser.
+                Secondary console - <code>/tardis room baker</code> - seed block ENDER STONE
+                Secondary console - <code>/tardis room wood</code> - seed block WOOD PLANK
+                Anti-gravity well - <code>/tardis room antigravity</code> - seed block SANDSTONE - This one goes up! Place the seed block in the middle of an empty room as you would for the Gravity Well</li>
+            <li>Fixed MultiWorld plugin support - TARDIS worlds will be created by MultiWorld rather than Bukkit</li>
+            <li>Added vanilla Minecraft sounds to materialisation and door entry and exit (if not using Spout)</li>
+            <li>Fixed Handbrake not updating after a server restart</li>
+            <li>Fixed some blocks (stairs, ladders, buttons etc) not facing the correct direction when rooms are grown in a North or West direction</li>
+            <li>The \'eleventh\' TARDIS has been updated</li>
+            <li>The Gravity Well is now one block taller/deeper to accommodate growing rooms underneath the \'arboretum\' room</li>
+            <li>The ICE blocks in the \'pool\' room are now thawed upon room completion</li>
+            <li>Lamps are now all turned on correctly upon room completion</li>
+            <li>Worlds in the config are now added/removed as necessary when using the <code>/tardisadmin reload</code> command</li>
+            <li>Added a confirmation command <code>/tardis exterminate</code> with a configurable timeout period (##confirm_timeout##) when breaking the Police Box sign (deleting the TARDIS)</li>
+            <li>New TARDIS worlds now have PVP set to false by default</li>
+            <li>Added a TARDIS scanner - this can be a button or lever - use the <code>/tardis update scanner</code> command to add it. The scanner will tell you about the location of the current saved destination/current Police Box location (if no destination has been set). It includes information on the following:
+                <ul>
+                    <li>The world and co-ordinates</li>
+                    <li>Biome type</li>
+                    <li>Time of day</li>
+                    <li>Weather</li>
+                    <li>Humidity</li>
+                    <li>Temperature</li>
+                    <li>Nearby entities (in a 1 chunk radius)</li>
+                </ul>
+            </li>
+            <li>Added player preference to set the block used to grow room walls - use <code>/tardisprefs wall help</code> to see a list of available blocks. The preference is automatically set when creating the TARDIS - default, bigger and deluxe sizes are set to ORANGE<em>WOOL and the eleventh to LIGHT</em>GREY_WOOL if using LAPIS as the middle block (in the creation stack). Otherwise it is set the the material used for the middle block.</li>
+            <li>If the config contains <code>debug: true</code>, rooms grow faster</li>
+            <li>The TARDIS condenser now accepts most blocks and items for conversion. You get more energy for items of higher worth e.g. if the value of DIRT = 1, then a diamond = 200</li>
+            <li>You can no longer use the <code>/tardis comehere</code> command to bring the Police Box to a predefined TARDIS area - this should stop potential overlaps and dupes</li>
+        </ul>
+        <h3>v2.0-beta-8</h3>
+        <p>Big thanks to <strong>vistaero</strong> for finding a whole bunch of bugs and making a video so we can fix them :)</p>
+        <ul>
+            <li>The default Artron Energy values have been adjusted - rename your old config file and let the plugin regenerate a new one if you want to see them</li>
+            <li>Fixed some inconsistencies with the Emerald TARDIS</li>
+            <li>You can no longer set a destination while the Handbrake is off - this includes using the random location button, any \'bound\' buttons, the save sign, and the <code>/tardistravel</code> commands</li>
+            <li>If random location finding times out - due to the area defined by the repeater settings being protected by another plugin (such as WorldGuard) - then the player is messaged and no destination is saved</li>
+            <li>The plugin no longer nags you about the TARDIS key if you click on a non-TARDIS iron door with blue wool on the top of it</li>
+            <li>Added <code>/tardisadmin include [world]</code> command</li>
+            <li>The TARDIS initialisation charge is now 50% of the <code>full_charge</code> config value and not a static 500 units</li>
+        </ul>
+        <h3>v2.0-beta-7</h3>
+        <ul>
+            <li>Fixed <code>/tardisarea show</code> command throwing an error if no area name was supplied</li>
+            <li>The platform (if there is one) is destroyed correctly when using `/tardis comehere##</li>
+            <li>Optimised some of the various TARDIS Listener classes to (hopefully) reduce server lag</li>
+            <li>You can now add more than one gravity well to the TARDIS. Technically you can make one go up a level, but you\'ll have to be a bit creative...
+                <ul>
+                    <li>This breaks the current gravity wells so they will need updating</li>
+                    <li>Added <code>/tardis gravity</code> command to update old gravity wells to the new format. Use the command while inside your TARDIS - changes should take effect immediately</li>
+                </ul>
+            </li>
+            <li>Added some debug info for the EntityExplodeEvent Listener</li>
+        </ul>
         <h3>v2.0-beta-6</h3>
         <ul>
             <li>Changed the <code>/tardis check_loc</code> and <code>/tardisarea show</code> marker block to SNOW instead of GLOWSTONE</li>
