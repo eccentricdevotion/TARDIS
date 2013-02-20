@@ -69,11 +69,19 @@ public class TARDISConfiguration {
         boolOptions.put("check_for_updates", true);
         boolOptions.put("materialise", true);
         // integer
-        intOptions.put("timeout_height", 135);
-        intOptions.put("timeout", 5);
-        intOptions.put("confirm_timeout", 15);
         intOptions.put("border_radius", 64);
-        intOptions.put("tp_radius", 256);
+        intOptions.put("comehere", 400);
+        intOptions.put("confirm_timeout", 15);
+        intOptions.put("creeper_recharge", 150);
+        intOptions.put("full_charge", 5000);
+        intOptions.put("hide", 500);
+        intOptions.put("inventory_group", 0);
+        intOptions.put("jettison", 75);
+        intOptions.put("lightning_recharge", 300);
+        intOptions.put("nether_min", 4250);
+        intOptions.put("player", 25);
+        intOptions.put("random", 75);
+        intOptions.put("recharge_distance", 20);
         intOptions.put("rooms.ARBORETUM.cost", 325);
         intOptions.put("rooms.BAKER.cost", 350);
         intOptions.put("rooms.BEDROOM.cost", 475);
@@ -89,18 +97,11 @@ public class TARDISConfiguration {
         intOptions.put("rooms.VAULT.cost", 350);
         intOptions.put("rooms.WOOD.cost", 350);
         intOptions.put("rooms.WORKSHOP.cost", 400);
-        intOptions.put("player", 25);
-        intOptions.put("random", 75);
-        intOptions.put("travel", 100);
-        intOptions.put("comehere", 400);
-        intOptions.put("hide", 500);
-        intOptions.put("recharge_distance", 20);
-        intOptions.put("lightning_recharge", 300);
-        intOptions.put("creeper_recharge", 150);
-        intOptions.put("jettison", 75);
-        intOptions.put("full_charge", 5000);
-        intOptions.put("nether_min", 4250);
         intOptions.put("the_end_min", 5500);
+        intOptions.put("timeout", 5);
+        intOptions.put("timeout_height", 135);
+        intOptions.put("tp_radius", 256);
+        intOptions.put("travel", 100);
         // string
         strOptions.put("default_world_name", "myridiculouslylongworldnameiscalledcuthbert");
         strOptions.put("key", "STICK");

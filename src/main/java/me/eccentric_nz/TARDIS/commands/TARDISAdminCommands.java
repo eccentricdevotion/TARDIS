@@ -78,9 +78,10 @@ public class TARDISAdminCommands implements CommandExecutor {
         firstsStr.add("delete");
         firstsStr.add("exclude");
         firstsStr.add("find");
-        firstsStr.add("gamemode");
         firstsStr.add("full_charge_item");
+        firstsStr.add("gamemode");
         firstsStr.add("include");
+        firstsStr.add("inventory_group");
         firstsStr.add("key");
         firstsStr.add("list");
         firstsStr.add("recharger");
@@ -409,6 +410,9 @@ public class TARDISAdminCommands implements CommandExecutor {
                         return true;
                     }
                     plugin.getConfig().set("gamemode", args[1].toLowerCase(Locale.ENGLISH));
+                }
+                if (first.equals("inventory_group")) {
+                    plugin.getConfig().set("inventory_group", args[1]);
                 }
                 if (first.equals("exclude") || first.equals("include")) {
                     // get world name

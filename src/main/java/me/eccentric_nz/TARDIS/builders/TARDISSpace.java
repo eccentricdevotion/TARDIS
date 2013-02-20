@@ -16,6 +16,8 @@
  */
 package me.eccentric_nz.TARDIS.builders;
 
+import com.onarandombox.multiverseinventories.MultiverseInventories;
+import com.onarandombox.multiverseinventories.api.profile.WorldGroupProfile;
 import java.util.List;
 import java.util.Locale;
 import me.eccentric_nz.TARDIS.TARDIS;
@@ -77,6 +79,14 @@ public class TARDISSpace {
                 plugin.getServer().dispatchCommand(plugin.console, "mv modify set adjustspawn false " + name);
                 plugin.getServer().dispatchCommand(plugin.console, "mv modify set pvp false " + name);
                 plugin.getServer().dispatchCommand(plugin.console, "mv modify set mode " + gm + " " + name);
+            }
+            if (plugin.pm.isPluginEnabled("Multiverse-Inventories")) {
+                String inventory_group = plugin.getConfig().getString("inventory_group");
+                if (!inventory_group.equals("0")) {
+                    MultiverseInventories mi = (MultiverseInventories) plugin.pm.getPlugin("Multiverse-Inventories");
+                    WorldGroupProfile wgp = mi.getGroupManager().getGroup(inventory_group);
+                    wgp.addWorld(name);
+                }
             }
             if (plugin.pm.isPluginEnabled("WorldBorder")) {
                 // wb <world> set <radius> <x> <z>
