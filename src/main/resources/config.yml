@@ -1,0 +1,92 @@
+# config file
+debug: false
+check_for_updates: true
+key: STICK
+bonus_chest: true
+tp_radius: 500
+protect_blocks: true
+default_world: false
+default_world_name: myridiculouslylongworldnameiscalledcuthbert
+include_default_world: false
+platform: false
+chameleon: true
+sfx: true
+give_key: false
+the_end: false
+nether: false
+use_worldguard: true
+respect_worldguard: true
+respect_towny: true
+respect_worldborder: true
+land_on_water: true
+timeout: 5
+timeout_height: 135
+name_tardis: false
+border_radius: 64
+create_worlds: true
+gamemode: survival
+materialise: true
+confirm_timeout: 15
+#rooms
+rooms:
+  PASSAGE:
+    cost: 200
+    seed: CLAY
+  ARBORETUM:
+    cost: 325
+    seed: LEAVES
+  BEDROOM:
+    cost: 475
+    seed: GLOWSTONE
+  KITCHEN:
+    cost: 450
+    seed: PUMPKIN
+  LIBRARY:
+    cost: 550
+    seed: BOOKSHELF
+  POOL:
+    cost: 450
+    seed: SNOW_BLOCK
+  VAULT:
+    cost: 350
+    seed: DISPENSER
+  WORKSHOP:
+    cost: 400
+    seed: NETHER_BRICK
+  EMPTY:
+    cost: 250
+    seed: GLASS
+  GRAVITY:
+    cost: 625
+    seed: MOSSY_COBBLESTONE
+  ANTIGRAVITY:
+    cost: 625
+    seed: SANDSTONE
+  HARMONY:
+    cost: 450
+    seed: SMOOTH_STAIRS
+  FIRST:
+    cost: 350
+    seed: GRAVEL
+  BAKER:
+    cost: 350
+    seed: ENDER_STONE
+  WOOD:
+    cost: 350
+    seed: WOOD
+#artron energy
+player: 25
+random: 75
+travel: 100
+comehere: 400
+hide: 500
+nether_min: 4250
+the_end_min: 5500
+recharge_distance: 20
+lightning_recharge: 300
+creeper_recharge: 150
+full_charge: 5000
+full_charge_item: NETHER_STAR
+# jettison is a percentage of orginal room cost
+jettison: 75
+inventory_group: 0
