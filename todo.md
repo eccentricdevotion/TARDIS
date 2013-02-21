@@ -20,6 +20,7 @@
 9. Allow "Locking" the door, so registered companions can't come in.
 10. Make the TARDIS key a per TARDIS preference
 11. Allow binding of TARDIS areas to buttons
+12. Allow random chance of TARDIS malfunction which deposits player in some unexpected place
 
 ## Minecraft API when available `3.0`
 1. Create custom blocks for the TARDIS and console.

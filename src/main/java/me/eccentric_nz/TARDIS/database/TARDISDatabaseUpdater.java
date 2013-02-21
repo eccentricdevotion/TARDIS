@@ -117,6 +117,3 @@ public class TARDISDatabaseUpdater {
         TARDIS.plugin.console.sendMessage(TARDIS.plugin.pluginName + "Added " + ChatColor.AQUA + i + ChatColor.RESET + " fields to the database!");
     }
 }
-/*
-
- */
