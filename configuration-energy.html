@@ -62,6 +62,16 @@ the_end_min: [amount] - default: 5500</code></pre>
         <p>Set the percentage of energy the TARDIS gets back when a room is jettisoned.</p>
         <pre><code>jettison: [percentage]</code></pre>
         <p>The default is <code>75</code>.</p>
+        <h1>Rechargers configuration section</h1>
+        <p>The rechargers section holds the locations of the TARDIS recharge beacons.</p>
+        <p>The format is:</p>
+        <pre><code>rechargers:
+   [name]:
+      world: [world]
+      x: [co-ordinate]
+      y: [co-ordinate]
+      z: [co-ordinate]</code></pre>
+        <p>Entries are added automatically by the <code>/tardisadmin recharger [name]</code> command, you should only need to edit this section if you want to remove a recharge point.</p>
         <p><a href="configuration.html">Back to main configuration page</a></p>
     </section>
 </div>
