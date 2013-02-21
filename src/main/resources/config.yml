@@ -65,9 +65,6 @@ rooms:
   HARMONY:
     cost: 450
     seed: SMOOTH_STAIRS
-  FIRST:
-    cost: 350
-    seed: GRAVEL
   BAKER:
     cost: 350
     seed: ENDER_STONE
