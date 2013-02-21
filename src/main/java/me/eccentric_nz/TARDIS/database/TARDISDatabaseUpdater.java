@@ -53,7 +53,7 @@ public class TARDISDatabaseUpdater {
         tardisupdates.add("condenser TEXT DEFAULT ''");
         tardisupdates.add("creeper TEXT DEFAULT ''");
         tardisupdates.add("handbrake TEXT DEFAULT ''");
-        tardisupdates.add("handbrake_on INTEGER DEFAULT 1");
+        tardisupdates.add("handbrake_on INT DEFAULT 1");
         tardisupdates.add("middle_data INTEGER");
         tardisupdates.add("middle_id INTEGER");
         tardisupdates.add("scanner TEXT DEFAULT ''");

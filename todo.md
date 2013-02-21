@@ -4,7 +4,7 @@
    - Recharging
    - Update
 2. Remove room schematics in final release, and only supply CSV files.
-3. Documentation - update Bukkit Dev page to point o the new github pages
+3. Documentation - update Bukkit Dev page to point to the new github pages
 4. Tutorial video - bind command
 5. TEST, TEST, TEST
 
