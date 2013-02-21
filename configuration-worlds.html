@@ -1,0 +1,72 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="chrome=1">
+<title>TARDIS: Configuration</title>
+<link rel="stylesheet" href="stylesheets/styles.css">
+<link rel="stylesheet" href="stylesheets/pygment_trac.css">
+<script src="javascripts/scale.fix.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+<!--[if lt IE 9]>
+<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+<![endif]-->
+</head>
+<body>
+<div class="wrapper">
+    <header>
+        <h1>TARDIS</h1>
+        <p>A Bukkit plugin for all Doctor Who fans - create and use a TARDIS! It&rsquo;s bigger on the inside!</p>
+        <p class="view"><a href="https://github.com/eccentricdevotion/TARDIS">View the Project on GitHub <small>eccentricdevotion/TARDIS</small></a></p>
+        <ul>
+            <li><a href="/TARDIS/">Back <strong>home</strong></a></li>
+            <li><a href="contents.html"><strong>Contents</strong> page</a></li>
+            <li><a href="configuration.html"><strong>Config</strong> page</a></li>
+        </ul>
+    </header>
+    <section>
+        <h1>World configuration</h1>
+        <p>These configuration options relate to the plugins use of worlds.</p>
+        <h2>Create worlds</h2>
+        <p>Set whether the (inner) TARDIS is constructed in its own world.</p>
+        <p>Setting this option to <code>true</code> requires that the TARDISChunkGenerator plugin and a multi-world plugin (preferably Multivers-Core) are also enabled on the server. If either of these options is unavailable, <code>create_worlds</code> will be automatically set to <code>false</code>.</p>
+        <pre><code>create_worlds: [true|false]</code></pre>
+        <p>The default is <code>true</code>.</p>
+        <h2>Game mode</h2>
+        <p>Set which game mode TARDIS worlds are set to upon creation.</p>
+        <pre><code>gamemode: [survival|creative]</code></pre>
+        <p>The default is <code>survival</code>.</p>
+        <h2>Inventory group</h2>
+        <p>If the Multiverse-Inventories plugin is enabled on the server, this option sets the world group TARDIS worlds are automatically added to when they are created. If you don&rsquo;t wish to use this feature (even if Multiverse-Inventories is installed) set it to <code>0</code></p>
+        <pre><code>inventory_group: [world group name|0]</code></pre>
+        <p>The default is <code>0</code>.</p>
+        <h2>Default world</h2>
+        <p>Set whether the (inner) TARDIS is constructed in a specific world (for instance a FLAT world).</p>
+        <pre><code>default_world: [true|false]</code></pre>
+        <p>The default is <code>false</code>.</p>
+        <h2>Default world name</h2>
+        <p>Set the default world that the TARDIS is constructed in when <code>default_world</code> is <code>true</code>.</p>
+        <pre><code>default_world_name: [World]</code></pre>
+        <p>The default is <code>myridiculouslylongworldnameiscalledcuthbert</code></p>
+        <h2>Include default world</h2>
+        <p>Toggle whether the default world is included in the possible destinations when time traveling in the TARDIS.</p>
+        <pre><code>include_default_world: [true|false]</code></pre>
+        <p>The default is <code>false</code>.</p>
+        <h2>The End</h2>
+        <p>Whether travel to End worlds should be enabled for the plugin</p>
+        <pre><code>the_end: [true|false]</code></pre>
+        <p>The default is <code>false</code>.</p>
+        <h2>The Nether</h2>
+        <p>Set whether NETHER worlds are included in random Time Travel destinations</p>
+        <pre><code>nether: [true|false]</code></pre>
+        <p>The default is <code>false</code>.</p>
+        <p><a href="configuration.html">Back to main configuration page</a></p>
+    </section>
+</div>
+<footer>
+    <p>Project maintained by <a href="https://github.com/eccentricdevotion">eccentricdevotion</a></p>
+    <p>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></p>
+</footer>
+<!--[if !IE]><script>fixScale(document);</script><![endif]-->
+</body>
+</html>
