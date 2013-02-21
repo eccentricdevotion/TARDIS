@@ -86,7 +86,6 @@ public class TARDISConfiguration {
         intOptions.put("rooms.BAKER.cost", 350);
         intOptions.put("rooms.BEDROOM.cost", 475);
         intOptions.put("rooms.EMPTY.cost", 250);
-        intOptions.put("rooms.FIRST.cost", 350);
         intOptions.put("rooms.GRAVITY.cost", 625);
         intOptions.put("rooms.ANTIGRAVITY.cost", 625);
         intOptions.put("rooms.HARMONY.cost", 450);
