@@ -156,7 +156,9 @@ public class TARDISHandbrakeListener implements Listener {
                                     qf.alterEnergyLevel("tardis", amount, wheret, player);
                                     if (!player.getName().equals(owner)) {
                                         Player ptl = plugin.getServer().getPlayer(owner);
-                                        ptl.sendMessage(plugin.pluginName + "You used " + Math.abs(amount) + " Artron Energy.");
+                                        if (ptl != null) {
+                                            ptl.sendMessage(plugin.pluginName + "You used " + Math.abs(amount) + " Artron Energy.");
+                                        }
                                     }
                                 }
                                 plugin.tardisHasDestination.remove(Integer.valueOf(id));
