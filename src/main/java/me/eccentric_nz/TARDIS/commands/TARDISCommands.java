@@ -761,7 +761,7 @@ public class TARDISCommands implements CommandExecutor {
                         HashMap<String, Object> wherein = new HashMap<String, Object>();
                         wherein.put("player", player.getName());
                         ResultSetTravellers rst = new ResultSetTravellers(plugin, wherein, false);
-                        if (rst.resultSet() && args[0].equalsIgnoreCase("rebuild")) {
+                        if (rst.resultSet() && args[0].equalsIgnoreCase("rebuild") && plugin.tardisHasDestination.containsKey(id)) {
                             sender.sendMessage(plugin.pluginName + "You cannot rebuild the TARDIS right now! Try travelling first.");
                             return true;
                         }
