@@ -2,7 +2,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>me.eccentric_nz.TARDIS</groupId>
     <artifactId>TARDIS</artifactId>
-    <version>2.0</version>
+    <version>2.1-beta</version>
     <name>TARDIS</name>
     <url>http://eccentricdevotion.github.com/TARDIS/</url>
     <repositories>
@@ -19,6 +19,14 @@
             <url>http://maven.sk89q.com</url>
         </repository>
     </repositories>
+    <scm>
+        <connection>scm:git:ssh://github.com/eccentricdevotion/TARDIS</connection>
+        <developerConnection>scm:git:ssh://github.com/eccentricdevotion/TARDIS</developerConnection>
+    </scm>
+    <ciManagement>
+        <system>jenkins</system>
+        <url>https://192.168.1.11:8080</url>
+    </ciManagement>
     <build>
         <finalName>TARDIS</finalName>
         <plugins>
@@ -27,8 +35,14 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>2.0.2</version>
                 <configuration>
-                    <source>1.5</source>
-                    <target>1.5</target>
+                    <source>1.6</source>
+                    <target>1.6</target>
+                    <systemProperties>
+                        <property>
+                            <name>java.awt.headless</name>
+                            <value>true</value>
+                        </property>
+                    </systemProperties>
                 </configuration>
             </plugin>
         </plugins>
