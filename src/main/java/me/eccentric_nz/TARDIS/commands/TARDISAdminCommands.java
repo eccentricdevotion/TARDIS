@@ -26,9 +26,11 @@ import java.util.Set;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
+import me.eccentric_nz.TARDIS.database.ResultSetDoors;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.files.TARDISConfiguration;
+import me.eccentric_nz.TARDIS.listeners.TARDISDoorListener;
 import me.eccentric_nz.TARDIS.thirdparty.Version;
 import me.eccentric_nz.TARDIS.utility.TARDISMaterials;
 import org.apache.commons.lang.StringUtils;
@@ -37,6 +39,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.Sound;
 import org.bukkit.World;
 import org.bukkit.WorldType;
 import org.bukkit.block.Block;
@@ -76,6 +79,7 @@ public class TARDISAdminCommands implements CommandExecutor {
         firstsStr.add("config");
         firstsStr.add("default_world_name");
         firstsStr.add("delete");
+        firstsStr.add("enter");
         firstsStr.add("exclude");
         firstsStr.add("find");
         firstsStr.add("full_charge_item");
@@ -291,6 +295,105 @@ public class TARDISAdminCommands implements CommandExecutor {
                         Location wg1 = new Location(l.getWorld(), minx, l.getBlockY(), minz);
                         Location wg2 = new Location(l.getWorld(), maxx, l.getBlockY(), maxz);
                         plugin.wgchk.addRechargerProtection(player, args[1], wg1, wg2);
+                    }
+                }
+                if (first.equals("enter")) {
+                    Player player = null;
+                    if (sender instanceof Player) {
+                        player = (Player) sender;
+                    }
+                    if (player == null) {
+                        sender.sendMessage(plugin.pluginName + "Only a player can run this command!");
+                        return true;
+                    }
+                    if (!player.hasPermission("tardis.skeletonkey")) {
+                        sender.sendMessage(plugin.pluginName + "You do not have permission to run this command!");
+                        return true;
+                    }
+                    HashMap<String, Object> where = new HashMap<String, Object>();
+                    where.put("owner", args[1]);
+                    ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
+                    if (rs.resultSet()) {
+                        int id = rs.getTardis_id();
+                        HashMap<String, Object> wherei = new HashMap<String, Object>();
+                        wherei.put("door_type", 1);
+                        wherei.put("tardis_id", id);
+                        ResultSetDoors rsi = new ResultSetDoors(plugin, wherei, false);
+                        if (rsi.resultSet()) {
+                            TARDISConstants.COMPASS innerD = rsi.getDoor_direction();
+                            String doorLocStr = rsi.getDoor_location();
+                            String[] split = doorLocStr.split(":");
+                            World cw = plugin.getServer().getWorld(split[0]);
+                            int cx = 0, cy = 0, cz = 0;
+                            try {
+                                cx = Integer.parseInt(split[1]);
+                                cy = Integer.parseInt(split[2]);
+                                cz = Integer.parseInt(split[3]);
+                            } catch (NumberFormatException nfe) {
+                                plugin.debug(plugin.pluginName + "Could not convert to number!");
+                            }
+                            Location tmp_loc = cw.getBlockAt(cx, cy, cz).getLocation();
+                            int getx = tmp_loc.getBlockX();
+                            int getz = tmp_loc.getBlockZ();
+                            switch (innerD) {
+                                case NORTH:
+                                    // z -ve
+                                    tmp_loc.setX(getx + 0.5);
+                                    tmp_loc.setZ(getz - 0.5);
+                                    break;
+                                case EAST:
+                                    // x +ve
+                                    tmp_loc.setX(getx + 1.5);
+                                    tmp_loc.setZ(getz + 0.5);
+                                    break;
+                                case SOUTH:
+                                    // z +ve
+                                    tmp_loc.setX(getx + 0.5);
+                                    tmp_loc.setZ(getz + 1.5);
+                                    break;
+                                case WEST:
+                                    // x -ve
+                                    tmp_loc.setX(getx - 0.5);
+                                    tmp_loc.setZ(getz + 0.5);
+                                    break;
+                            }
+                            // enter TARDIS!
+                            player.playSound(player.getLocation(), Sound.ENDERMAN_TELEPORT, 1, 1);
+                            cw.getChunkAt(tmp_loc).load();
+                            float yaw = player.getLocation().getYaw();
+                            float pitch = player.getLocation().getPitch();
+                            tmp_loc.setPitch(pitch);
+                            // get players direction so we can adjust yaw if necessary
+                            TARDISConstants.COMPASS d = TARDISConstants.COMPASS.valueOf(plugin.utils.getPlayersDirection(player));
+                            TARDISDoorListener tdl = new TARDISDoorListener(plugin);
+                            if (!innerD.equals(d)) {
+                                switch (d) {
+                                    case NORTH:
+                                        yaw = yaw + tdl.adjustYaw[0][innerD.ordinal()];
+                                        break;
+                                    case WEST:
+                                        yaw = yaw + tdl.adjustYaw[1][innerD.ordinal()];
+                                        break;
+                                    case SOUTH:
+                                        yaw = yaw + tdl.adjustYaw[2][innerD.ordinal()];
+                                        break;
+                                    case EAST:
+                                        yaw = yaw + tdl.adjustYaw[3][innerD.ordinal()];
+                                        break;
+                                }
+                            }
+                            tmp_loc.setYaw(yaw);
+                            final Location tardis_loc = tmp_loc;
+                            World playerWorld = player.getLocation().getWorld();
+                            tdl.movePlayer(player, tardis_loc, false, playerWorld, false);
+                            // put player into travellers table
+                            QueryFactory qf = new QueryFactory(plugin);
+                            HashMap<String, Object> set = new HashMap<String, Object>();
+                            set.put("tardis_id", id);
+                            set.put("player", player.getName());
+                            qf.doInsert("travellers", set);
+                            return true;
+                        }
                     }
                 }
                 if (first.equals("delete")) {

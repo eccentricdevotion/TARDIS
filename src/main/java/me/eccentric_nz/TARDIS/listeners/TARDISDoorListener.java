@@ -61,7 +61,7 @@ import org.getspout.spoutapi.SpoutManager;
 public class TARDISDoorListener implements Listener {
 
     private TARDIS plugin;
-    float[][] adjustYaw = new float[4][4];
+    public float[][] adjustYaw = new float[4][4];
     Version bukkitversion;
     Version preIMversion = new Version("1.4.5");
     Version SUBversion;
@@ -359,7 +359,7 @@ public class TARDISDoorListener implements Listener {
     }
     Random r = new Random();
 
-    private void movePlayer(final Player p, Location l, final boolean exit, final World from, boolean q) {
+    public void movePlayer(final Player p, Location l, final boolean exit, final World from, boolean q) {
 
         final int i = r.nextInt(plugin.quotelen);
         final Location theLocation = l;
