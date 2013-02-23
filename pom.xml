@@ -92,28 +92,28 @@
         <dependency>
             <groupId>org.getspout</groupId>
             <artifactId>spoutplugin</artifactId>
-            <version>1.4.6-R0.2-b1412</version>
+            <version>1.4.7-R1.0-b1432</version>
             <type>jar</type>
             <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>com.sk89q</groupId>
             <artifactId>worldguard</artifactId>
-            <version>5.7-SNAPSHOT</version>
+            <version>5.7.1</version>
             <type>jar</type>
             <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>com.sk89q</groupId>
             <artifactId>worldedit</artifactId>
-            <version>5.5-SNAPSHOT</version>
+            <version>5.5.1</version>
             <type>jar</type>
             <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>com.palmergames.bukkit.towny</groupId>
             <artifactId>towny</artifactId>
-            <version>0.82.0.5</version>
+            <version>0.82.1.0</version>
             <type>jar</type>
             <scope>compile</scope>
         </dependency>
@@ -141,7 +141,7 @@
         <dependency>
             <groupId>multiworld</groupId>
             <artifactId>MultiWorld</artifactId>
-            <version>4.4.2</version>
+            <version>4.5.1</version>
             <type>jar</type>
             <scope>compile</scope>
         </dependency>
