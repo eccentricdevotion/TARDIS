@@ -1,12 +1,6 @@
 # TODO
 ## Current version `2.0`
-1. Check what happens when companions use the TARDIS with regards to:
-   - Recharging
-   - Update
-2. Remove room schematics in final release, and only supply CSV files.
-3. Documentation - update Bukkit Dev page to point to the new github pages
-4. Tutorial video - bind command
-5. TEST, TEST, TEST
+1. Nothing right now
 
 ## In a future version `2.1+`
 1. Allow an "Autonomous Curcuit" to be created, allowing the TARDIS to travel to a player's home or the last used charging station in the event of the player's death. [table field already added to player_prefs]
