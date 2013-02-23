@@ -114,6 +114,8 @@ public class TARDISDatabaseUpdater {
         } catch (SQLException e) {
             TARDIS.plugin.debug("Database add fields error: " + e.getMessage());
         }
-        TARDIS.plugin.console.sendMessage(TARDIS.plugin.pluginName + "Added " + ChatColor.AQUA + i + ChatColor.RESET + " fields to the database!");
+        if (i > 0) {
+            TARDIS.plugin.console.sendMessage(TARDIS.plugin.pluginName + "Added " + ChatColor.AQUA + i + ChatColor.RESET + " fields to the database!");
+        }
     }
 }
