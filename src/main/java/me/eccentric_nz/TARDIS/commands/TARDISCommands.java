@@ -278,6 +278,11 @@ public class TARDISCommands implements CommandExecutor {
                         return false;
                     }
                     String room = args[1].toUpperCase(Locale.ENGLISH);
+                    if (room.equals("HELP")) {
+                        player.sendMessage(plugin.pluginName + "There are currently 14 room types! They are: passage, arboretum, pool, vault, kitchen, bedroom, library, workshop, empty, gravity, antigravity, harmony, baker and wood.");
+                        player.sendMessage("View a TARDIS room gallery at http://eccentricdevotion.github.com/TARDIS/room-gallery.html");
+                        return true;
+                    }
                     if (!roomArgs.contains(room)) {
                         player.sendMessage(plugin.pluginName + "That is not a valid room type! Try one of: passage|arboretum|pool|vault|kitchen|bedroom|library|workshop|empty|gravity|antigravity|harmony|baker|wood");
                         return true;

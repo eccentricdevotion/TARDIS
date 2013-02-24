@@ -25,7 +25,7 @@
     </scm>
     <ciManagement>
         <system>jenkins</system>
-        <url>https://192.168.1.11:8080</url>
+        <url>http://keetley.servegame.com:8080</url>
     </ciManagement>
     <build>
         <finalName>TARDIS</finalName>
@@ -37,12 +37,6 @@
                 <configuration>
                     <source>1.6</source>
                     <target>1.6</target>
-                    <systemProperties>
-                        <property>
-                            <name>java.awt.headless</name>
-                            <value>true</value>
-                        </property>
-                    </systemProperties>
                 </configuration>
             </plugin>
         </plugins>

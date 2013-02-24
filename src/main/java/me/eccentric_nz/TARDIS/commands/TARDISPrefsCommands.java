@@ -93,7 +93,8 @@ public class TARDISPrefsCommands implements CommandExecutor {
                         }
                         TARDISWalls tw = new TARDISWalls();
                         if (!tw.blocks.containsKey(wall_mat)) {
-                            sender.sendMessage(plugin.pluginName + "That is not a valid wall material! Try:");
+                            String message = (wall_mat.equals("HELP")) ? "Here is a list of valid wall materials:" : "That is not a valid wall material! Try:";
+                            sender.sendMessage(plugin.pluginName + message);
                             for (String w : tw.blocks.keySet()) {
                                 sender.sendMessage(w);
                             }
