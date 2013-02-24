@@ -105,6 +105,18 @@ public class TARDISArtronCapacitorListener implements Listener {
                         // we need to get this block's location and then get the tardis_id from it
                         Material item = player.getItemInHand().getType();
                         Material full = Material.valueOf(plugin.getConfig().getString("full_charge_item"));
+                        // determine key item
+                        HashMap<String, Object> wherek = new HashMap<String, Object>();
+                        wherek.put("player", player.getName());
+                        ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, wherek);
+                        String key;
+                        boolean hasPrefs = false;
+                        if (rsp.resultSet()) {
+                            hasPrefs = true;
+                            key = (!rsp.getKey().equals("")) ? rsp.getKey() : plugin.getConfig().getString("key");
+                        } else {
+                            key = plugin.getConfig().getString("key");
+                        }
                         if (item.equals(full)) {
                             // give TARDIS full charge
                             HashMap<String, Object> set = new HashMap<String, Object>();
@@ -119,7 +131,7 @@ public class TARDISArtronCapacitorListener implements Listener {
                                 player.getInventory().removeItem(new ItemStack(full, 1));
                             }
                             player.sendMessage(plugin.pluginName + "Artron Energy Levels at maximum!");
-                        } else if (item.equals(Material.valueOf(plugin.getConfig().getString("key")))) {
+                        } else if (item.equals(Material.valueOf(key))) {
                             // kickstart the TARDIS Artron Energy Capacitor
                             // has the TARDIS been initialised?
                             if (!rs.isTardis_init()) {
@@ -160,8 +172,7 @@ public class TARDISArtronCapacitorListener implements Listener {
                             }
                             HashMap<String, Object> wherep = new HashMap<String, Object>();
                             wherep.put("player", player.getName());
-                            ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, wherep);
-                            if (rsp.resultSet()) {
+                            if (hasPrefs) {
                                 int level = rsp.getArtron_level();
                                 if (level < 1) {
                                     player.sendMessage(plugin.pluginName + "You don't have any Artron Energy to give the TARDIS");

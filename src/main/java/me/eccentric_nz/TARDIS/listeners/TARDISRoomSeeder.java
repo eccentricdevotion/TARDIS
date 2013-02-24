@@ -20,6 +20,7 @@ import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants.COMPASS;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
+import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.rooms.TARDISRoomBuilder;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -29,7 +30,6 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractEvent;
-import org.bukkit.inventory.ItemStack;
 
 /**
  * The Doctor kept some of the clothes from his previous regenerations, as well
@@ -61,9 +61,18 @@ public class TARDISRoomSeeder implements Listener {
         Block block = event.getClickedBlock();
         if (block != null) {
             Material blockType = block.getType();
-            ItemStack inhand = player.getItemInHand();
+            Material inhand = player.getItemInHand().getType();
+            String key;
+            HashMap<String, Object> where = new HashMap<String, Object>();
+            where.put("player", playerNameStr);
+            ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, where);
+            if (rsp.resultSet()) {
+                key = (!rsp.getKey().equals("")) ? rsp.getKey() : plugin.getConfig().getString("key");
+            } else {
+                key = plugin.getConfig().getString("key");
+            }
             // only proceed if they are clicking a seed block with the TARDIS key!
-            if (plugin.seeds.containsKey(blockType) && inhand.getType().equals(Material.valueOf(plugin.getConfig().getString("key")))) {
+            if (plugin.seeds.containsKey(blockType) && inhand.equals(Material.valueOf(key))) {
                 // check that player is in TARDIS
                 if (!plugin.trackRoomSeed.containsKey(playerNameStr)) {
                     return;

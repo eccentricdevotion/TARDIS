@@ -17,6 +17,7 @@
 package me.eccentric_nz.TARDIS.commands;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -25,6 +26,7 @@ import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.rooms.TARDISWalls;
+import me.eccentric_nz.TARDIS.utility.TARDISMaterials;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -48,9 +50,10 @@ public class TARDISPrefsCommands implements CommandExecutor {
 
     public TARDISPrefsCommands(TARDIS plugin) {
         this.plugin = plugin;
-        firstArgs.add("sfx");
+        firstArgs.add("key");
         firstArgs.add("platform");
         firstArgs.add("quotes");
+        firstArgs.add("sfx");
         firstArgs.add("wall");
     }
 
@@ -73,7 +76,27 @@ public class TARDISPrefsCommands implements CommandExecutor {
             String pref = args[0].toLowerCase(Locale.ENGLISH);
             if (firstArgs.contains(pref)) {
                 if (player.hasPermission("tardis.timetravel")) {
-                    if (args[0].equalsIgnoreCase("wall")) {
+                    if (pref.equals("key")) {
+                        if (args.length < 2) {
+                            sender.sendMessage(plugin.pluginName + "You need to specify a wall material!");
+                            return false;
+                        }
+                        String setMaterial = args[1].toUpperCase(Locale.ENGLISH);
+                        if (!Arrays.asList(TARDISMaterials.MATERIAL_LIST).contains(setMaterial)) {
+                            sender.sendMessage(plugin.pluginName + ChatColor.RED + "That is not a valid Material! Try checking http://jd.bukkit.org/apidocs/org/bukkit/Material.html");
+                            return false;
+                        } else {
+                            QueryFactory qf = new QueryFactory(plugin);
+                            HashMap<String, Object> set = new HashMap<String, Object>();
+                            set.put("key", setMaterial);
+                            HashMap<String, Object> where = new HashMap<String, Object>();
+                            where.put("player", player.getName());
+                            qf.doUpdate("player_prefs", set, where);
+                            sender.sendMessage(plugin.pluginName + "Key preference saved.");
+                            return true;
+                        }
+                    }
+                    if (pref.equals("wall")) {
                         if (args.length < 2) {
                             sender.sendMessage(plugin.pluginName + "You need to specify a wall material!");
                             return false;

@@ -20,6 +20,7 @@ import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants.COMPASS;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
+import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.rooms.TARDISRoomRemover;
 import org.bukkit.Effect;
 import org.bukkit.Location;
@@ -30,7 +31,6 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractEvent;
-import org.bukkit.inventory.ItemStack;
 
 /**
  * Artron energy is to normal energy what movements within the deeps of the sea
@@ -60,9 +60,18 @@ public class TARDISJettisonSeeder implements Listener {
         Block block = event.getClickedBlock();
         if (block != null) {
             Material blockType = block.getType();
-            ItemStack inhand = player.getItemInHand();
+            Material inhand = player.getItemInHand().getType();
+            String key;
+            HashMap<String, Object> where = new HashMap<String, Object>();
+            where.put("player", playerNameStr);
+            ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, where);
+            if (rsp.resultSet()) {
+                key = (!rsp.getKey().equals("")) ? rsp.getKey() : plugin.getConfig().getString("key");
+            } else {
+                key = plugin.getConfig().getString("key");
+            }
             // only proceed if they are clicking a seed block with the TARDIS key!
-            if (blockType.equals(Material.TNT) && inhand.getType().equals(Material.valueOf(plugin.getConfig().getString("key")))) {
+            if (blockType.equals(Material.TNT) && inhand.equals(Material.valueOf(key))) {
                 // check that player is in TARDIS
                 if (!plugin.trackJettison.containsKey(playerNameStr)) {
                     return;

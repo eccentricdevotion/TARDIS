@@ -124,13 +124,24 @@ public class TARDISDoorListener implements Listener {
                         String doorloc = bw + ":" + bx + ":" + by + ":" + bz;
                         ItemStack stack = player.getItemInHand();
                         Material material = stack.getType();
-                        // get key material from config
-                        Material key = Material.getMaterial(plugin.getConfig().getString("key"));
+                        // get key material
+                        HashMap<String, Object> wherepp = new HashMap<String, Object>();
+                        wherepp.put("player", playerNameStr);
+                        ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, wherepp);
+                        String key;
+                        boolean hasPrefs = false;
+                        if (rsp.resultSet()) {
+                            hasPrefs = true;
+                            key = (!rsp.getKey().equals("")) ? rsp.getKey() : plugin.getConfig().getString("key");
+                        } else {
+                            key = plugin.getConfig().getString("key");
+                        }
+                        Material m = Material.getMaterial(key);
                         HashMap<String, Object> where = new HashMap<String, Object>();
                         where.put("door_location", doorloc);
                         ResultSetDoors rsd = new ResultSetDoors(plugin, where, false);
                         if ((rsd.resultSet())) {
-                            if (material == key) {
+                            if (material == m) {
                                 int id = rsd.getTardis_id();
                                 int doortype = rsd.getDoor_type();
                                 TARDISConstants.COMPASS dd = rsd.getDoor_direction();
@@ -146,12 +157,9 @@ public class TARDISDoorListener implements Listener {
                                     float pitch = player.getLocation().getPitch();
                                     String companions = rs.getCompanions();
                                     // get quotes player prefs
-                                    HashMap<String, Object> whereq = new HashMap<String, Object>();
-                                    whereq.put("player", playerNameStr);
-                                    ResultSetPlayerPrefs rsq = new ResultSetPlayerPrefs(plugin, whereq);
                                     boolean userQuotes;
-                                    if (rsq.resultSet()) {
-                                        userQuotes = rsq.isQuotes_on();
+                                    if (hasPrefs) {
+                                        userQuotes = rsp.isQuotes_on();
                                     } else {
                                         userQuotes = true;
                                     }
@@ -317,11 +325,6 @@ public class TARDISDoorListener implements Listener {
                                                 tmp_loc.setYaw(yaw);
                                                 final Location tardis_loc = tmp_loc;
                                                 movePlayer(player, tardis_loc, false, playerWorld, userQuotes);
-                                                // remove living entities if no worldguard or multiverse - DISABLED for now
-//                                                    if (plugin.getConfig().getBoolean("create_worlds") && !plugin.pm.isPluginEnabled("WorldGuard") && !plugin.pm.isPluginEnabled("Multiverse-Core")) {
-//                                                        TARDISExterminator dalek = new TARDISExterminator();
-//                                                        dalek.exterminate(cw);
-//                                                    }
                                                 // put player into travellers table
                                                 HashMap<String, Object> set = new HashMap<String, Object>();
                                                 set.put("tardis_id", id);
@@ -347,7 +350,7 @@ public class TARDISDoorListener implements Listener {
                                 } else {
                                     grammar = "nothing";
                                 }
-                                player.sendMessage(plugin.pluginName + "The TARDIS key is a " + plugin.getConfig().getString("key") + ". You have " + grammar + " in your hand!");
+                                player.sendMessage(plugin.pluginName + "The TARDIS key is a " + key + ". You have " + grammar + " in your hand!");
                             }
                         }
                     } else {
@@ -426,10 +429,19 @@ public class TARDISDoorListener implements Listener {
 
     @SuppressWarnings("deprecation")
     private void giveKey(Player p) {
-        if (plugin.getConfig().getBoolean("give_key") && (bukkitversion.compareTo(preIMversion) > 0 || (bukkitversion.compareTo(preIMversion) == 0 && SUBversion.compareTo(preSUBversion) >= 0)) && !plugin.getConfig().getString("key").equals("AIR")) {
+        String key;
+        HashMap<String, Object> where = new HashMap<String, Object>();
+        where.put("player", p.getName());
+        ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, where);
+        if (rsp.resultSet()) {
+            key = (!rsp.getKey().equals("")) ? rsp.getKey() : plugin.getConfig().getString("key");
+        } else {
+            key = plugin.getConfig().getString("key");
+        }
+        if (plugin.getConfig().getBoolean("give_key") && (bukkitversion.compareTo(preIMversion) > 0 || (bukkitversion.compareTo(preIMversion) == 0 && SUBversion.compareTo(preSUBversion) >= 0)) && !key.equals("AIR")) {
             Inventory inv = p.getInventory();
-            Material m = Material.valueOf(plugin.getConfig().getString("key"));
-            if (!inv.contains(m) && plugin.getConfig().getBoolean("give_key") == true) {
+            Material m = Material.valueOf(key);
+            if (!inv.contains(m)) {
                 ItemStack is = new ItemStack(m, 1);
                 TARDISItemRenamer ir = new TARDISItemRenamer(is);
                 ir.setName("Sonic Screwdriver", true);

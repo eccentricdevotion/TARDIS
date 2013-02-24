@@ -31,6 +31,7 @@ import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.TARDISConstants.ROOM;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetDestinations;
+import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.database.TARDISDatabase;
@@ -1189,7 +1190,17 @@ public class TARDISCommands implements CommandExecutor {
                         sender.sendMessage(plugin.pluginName + "You cannot rename the TARDIS key with this version of Bukkit!");
                         return true;
                     }
-                    Material m = Material.getMaterial(plugin.getConfig().getString("key"));
+                    // determine key item
+                    String key;
+                    HashMap<String, Object> where = new HashMap<String, Object>();
+                    where.put("player", player.getName());
+                    ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, where);
+                    if (rsp.resultSet()) {
+                        key = (!rsp.getKey().equals("")) ? rsp.getKey() : plugin.getConfig().getString("key");
+                    } else {
+                        key = plugin.getConfig().getString("key");
+                    }
+                    Material m = Material.getMaterial(key);
                     ItemStack is = player.getItemInHand();
                     if (!is.getType().equals(m)) {
                         sender.sendMessage(plugin.pluginName + "You can only rename the TARDIS key!");
