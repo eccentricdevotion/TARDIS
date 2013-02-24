@@ -1,8 +1,5 @@
 # TODO
-## Current version `2.0`
-1. Nothing right now
-
-## In a future version `2.1+`
+## Current version `2.1-beta`
 1. `/tardis direction` consumes Artron Energy
 2. Revamp Spout sounds [started]
 3. Add a schematic to CSV converter.

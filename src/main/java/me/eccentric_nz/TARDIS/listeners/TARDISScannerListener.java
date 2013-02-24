@@ -61,10 +61,11 @@ public class TARDISScannerListener implements Listener {
         bukkitversion = new Version(v[0]);
         if (bukkitversion.compareTo(prewoodbuttonversion) >= 0) {
             validBlocks.add(Material.WOOD_BUTTON);
+            entities.add(EntityType.WITCH);
+            entities.add(EntityType.BAT);
         }
         validBlocks.add(Material.STONE_BUTTON);
         validBlocks.add(Material.LEVER);
-        entities.add(EntityType.BAT);
         entities.add(EntityType.BLAZE);
         entities.add(EntityType.CAVE_SPIDER);
         entities.add(EntityType.CHICKEN);
@@ -86,7 +87,6 @@ public class TARDISScannerListener implements Listener {
         entities.add(EntityType.SPIDER);
         entities.add(EntityType.SQUID);
         entities.add(EntityType.VILLAGER);
-        entities.add(EntityType.WITCH);
         entities.add(EntityType.WOLF);
         entities.add(EntityType.ZOMBIE);
     }
