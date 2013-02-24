@@ -76,7 +76,12 @@ public class TARDISUpdateChecker {
                     break;
                 default:
                     // equal
-                    message = plugin.pluginName + "Well done, you are running the latest version of TARDIS!";
+                    // check if there was a beta or pre on the end
+                    if (verStr.contains("-")) {
+                        message = plugin.pluginName + "A (" + ChatColor.LIGHT_PURPLE + latest + ChatColor.RESET + ") release version of TARDIS is available! Get it at " + pluginYml.getString("website");
+                    } else {
+                        message = plugin.pluginName + "Well done, you are running the latest version of TARDIS!";
+                    }
                     break;
             }
             if (p != null) {

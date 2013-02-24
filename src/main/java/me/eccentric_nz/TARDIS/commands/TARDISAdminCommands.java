@@ -418,10 +418,11 @@ public class TARDISAdminCommands implements CommandExecutor {
                         TARDISConstants.COMPASS d = rs.getDirection();
                         String chunkLoc = rs.getChunk();
                         String[] cdata = chunkLoc.split(":");
-                        World cw = plugin.getServer().getWorld(cdata[0]);
+                        String name = cdata[0];
+                        World cw = plugin.getServer().getWorld(name);
                         int restore = 0;
                         // if (!create_worlds) set the restore block
-                        if (!plugin.getConfig().getBoolean("create_worlds") && cw.getWorldType() != WorldType.FLAT) {
+                        if (!name.contains("TARDIS_WORLD_") && cw.getWorldType() != WorldType.FLAT) {
                             World.Environment env = cw.getEnvironment();
                             switch (env) {
                                 case NETHER:
@@ -445,7 +446,7 @@ public class TARDISAdminCommands implements CommandExecutor {
                         if (rst.resultSet() || plugin.tardisHasDestination.containsKey(id)) {
                             useCurrent = true;
                             Location spawn;
-                            if (plugin.getConfig().getBoolean("create_worlds")) {
+                            if (name.contains("TARDIS_WORLD_")) {
                                 spawn = plugin.getServer().getWorlds().get(0).getSpawnLocation();
                             } else {
                                 spawn = cw.getSpawnLocation();
@@ -465,9 +466,8 @@ public class TARDISAdminCommands implements CommandExecutor {
                             return true;
                         }
                         // destroy the TARDIS
-                        if (plugin.getConfig().getBoolean("create_worlds")) {
+                        if (plugin.getConfig().getBoolean("create_worlds") || name.contains("TARDIS_WORLD_")) {
                             // delete TARDIS world
-                            String name = cw.getName();
                             List<Player> players = cw.getPlayers();
                             for (Player p : players) {
                                 p.kickPlayer("World scheduled for deletion!");
