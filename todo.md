@@ -3,7 +3,7 @@
 1. Nothing right now
 
 ## In a future version `2.1+`
-1. Allow an "Autonomous Curcuit" to be created, allowing the TARDIS to travel to a player's home or the last used charging station in the event of the player's death. [table field already added to player_prefs]
+1. Open TARDIS door by SHIFT-clicking it.
 2. Revamp Spout sounds [started]
 3. Add a schematic to CSV converter.
 4. Add a way to grow rooms out of any CSV file in the schematic directory and enable the room if supplied in the config.
@@ -12,7 +12,6 @@
 7. Check what happens when companions steal the TARDIS
 8. Allow "Locking" the door, so registered companions can't come in.
 9. Allow "Shorting out" the Chameleon curcuit. So that a player can always have a "Leaves" Police Box, or an "Ice" police box.
-10. Make the TARDIS key a per TARDIS preference
 11. Allow binding of TARDIS areas to buttons
 12. Allow binding of player locations to buttons
 

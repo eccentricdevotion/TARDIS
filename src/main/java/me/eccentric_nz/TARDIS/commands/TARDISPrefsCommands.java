@@ -50,6 +50,7 @@ public class TARDISPrefsCommands implements CommandExecutor {
 
     public TARDISPrefsCommands(TARDIS plugin) {
         this.plugin = plugin;
+        firstArgs.add("auto");
         firstArgs.add("key");
         firstArgs.add("platform");
         firstArgs.add("quotes");
@@ -149,13 +150,14 @@ public class TARDISPrefsCommands implements CommandExecutor {
                     HashMap<String, Object> setp = new HashMap<String, Object>();
                     HashMap<String, Object> wherep = new HashMap<String, Object>();
                     wherep.put("player", player.getName());
+                    String grammar = (TARDISConstants.vowels.contains(pref.substring(0, 1))) ? " was" : " were";
                     if (args[1].equalsIgnoreCase("on")) {
                         setp.put(pref + "_on", 1);
-                        sender.sendMessage(plugin.pluginName + pref + " were turned ON!");
+                        sender.sendMessage(plugin.pluginName + pref + grammar + " turned ON!");
                     }
                     if (args[1].equalsIgnoreCase("off")) {
                         setp.put(pref + "_on", 0);
-                        sender.sendMessage(plugin.pluginName + pref + " were turned OFF.");
+                        sender.sendMessage(plugin.pluginName + pref + grammar + " turned OFF.");
                     }
                     qf.doUpdate("player_prefs", setp, wherep);
                     return true;
