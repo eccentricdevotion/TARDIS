@@ -3,7 +3,7 @@
 1. Nothing right now
 
 ## In a future version `2.1+`
-1. Open TARDIS door by SHIFT-clicking it.
+1. `/tardis direction` consumes Artron Energy
 2. Revamp Spout sounds [started]
 3. Add a schematic to CSV converter.
 4. Add a way to grow rooms out of any CSV file in the schematic directory and enable the room if supplied in the config.

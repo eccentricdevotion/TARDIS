@@ -34,12 +34,14 @@ import multiworld.api.MultiWorldAPI;
 import multiworld.api.MultiWorldWorldData;
 import multiworld.api.flag.FlagName;
 import org.bukkit.Bukkit;
+import org.bukkit.Effect;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.World;
 import org.bukkit.block.Block;
+import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -48,6 +50,7 @@ import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.material.Door;
 import org.getspout.spoutapi.SpoutManager;
 
 /**
@@ -107,44 +110,81 @@ public class TARDISDoorListener implements Listener {
         if (block != null) {
             Material blockType = block.getType();
             Action action = event.getAction();
-            if (action == Action.RIGHT_CLICK_BLOCK) {
-                World playerWorld = player.getLocation().getWorld();
-                // only proceed if they are clicking an iron door with a TARDIS key!
-                if (blockType == Material.IRON_DOOR_BLOCK) {
-                    if (player.hasPermission("tardis.enter")) {
-                        Location block_loc = block.getLocation();
-                        byte doorData = block.getData();
-                        String bw = block_loc.getWorld().getName();
-                        int bx = block_loc.getBlockX();
-                        int by = block_loc.getBlockY();
-                        int bz = block_loc.getBlockZ();
-                        if (doorData >= 8) {
-                            by = (by - 1);
-                        }
-                        String doorloc = bw + ":" + bx + ":" + by + ":" + bz;
-                        ItemStack stack = player.getItemInHand();
-                        Material material = stack.getType();
-                        // get key material
-                        HashMap<String, Object> wherepp = new HashMap<String, Object>();
-                        wherepp.put("player", playerNameStr);
-                        ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, wherepp);
-                        String key;
-                        boolean hasPrefs = false;
-                        if (rsp.resultSet()) {
-                            hasPrefs = true;
-                            key = (!rsp.getKey().equals("")) ? rsp.getKey() : plugin.getConfig().getString("key");
-                        } else {
-                            key = plugin.getConfig().getString("key");
-                        }
-                        Material m = Material.getMaterial(key);
-                        HashMap<String, Object> where = new HashMap<String, Object>();
-                        where.put("door_location", doorloc);
-                        ResultSetDoors rsd = new ResultSetDoors(plugin, where, false);
-                        if ((rsd.resultSet())) {
-                            if (material == m) {
+            // only proceed if they are clicking an iron door with a TARDIS key!
+            if (blockType == Material.IRON_DOOR_BLOCK) {
+                if (player.hasPermission("tardis.enter")) {
+                    World playerWorld = player.getLocation().getWorld();
+                    Location block_loc = block.getLocation();
+                    byte doorData = block.getData();
+                    String bw = block_loc.getWorld().getName();
+                    int bx = block_loc.getBlockX();
+                    int by = block_loc.getBlockY();
+                    int bz = block_loc.getBlockZ();
+                    if (doorData >= 8) {
+                        by = (by - 1);
+                    }
+                    String doorloc = bw + ":" + bx + ":" + by + ":" + bz;
+                    ItemStack stack = player.getItemInHand();
+                    Material material = stack.getType();
+                    // get key material
+                    HashMap<String, Object> wherepp = new HashMap<String, Object>();
+                    wherepp.put("player", playerNameStr);
+                    ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, wherepp);
+                    String key;
+                    boolean hasPrefs = false;
+                    if (rsp.resultSet()) {
+                        hasPrefs = true;
+                        key = (!rsp.getKey().equals("")) ? rsp.getKey() : plugin.getConfig().getString("key");
+                    } else {
+                        key = plugin.getConfig().getString("key");
+                    }
+                    Material m = Material.getMaterial(key);
+                    HashMap<String, Object> where = new HashMap<String, Object>();
+                    where.put("door_location", doorloc);
+                    ResultSetDoors rsd = new ResultSetDoors(plugin, where, false);
+                    if ((rsd.resultSet())) {
+                        if (material == m) {
+                            TARDISConstants.COMPASS dd = rsd.getDoor_direction();
+                            if (action == Action.RIGHT_CLICK_BLOCK && player.isSneaking()) {
+                                // toogle the door open/closed
+                                Block door_bottom;
+                                Door door = (Door) block.getState().getData();
+                                door_bottom = (door.isTopHalf()) ? block.getRelative(BlockFace.DOWN) : block;
+                                byte door_data = door_bottom.getData();
+                                switch (dd) {
+                                    case NORTH:
+                                        if (door_data == 3) {
+                                            door_bottom.setData((byte) 7, false);
+                                        } else {
+                                            door_bottom.setData((byte) 3, false);
+                                        }
+                                        break;
+                                    case WEST:
+                                        if (door_data == 2) {
+                                            door_bottom.setData((byte) 6, false);
+                                        } else {
+                                            door_bottom.setData((byte) 2, false);
+                                        }
+                                        break;
+                                    case SOUTH:
+                                        if (door_data == 1) {
+                                            door_bottom.setData((byte) 5, false);
+                                        } else {
+                                            door_bottom.setData((byte) 1, false);
+                                        }
+                                        break;
+                                    default:
+                                        if (door_data == 0) {
+                                            door_bottom.setData((byte) 4, false);
+                                        } else {
+                                            door_bottom.setData((byte) 0, false);
+                                        }
+                                        break;
+                                }
+                                playerWorld.playEffect(block_loc, Effect.DOOR_TOGGLE, 0);
+                            } else if (action == Action.RIGHT_CLICK_BLOCK) {
                                 int id = rsd.getTardis_id();
                                 int doortype = rsd.getDoor_type();
-                                TARDISConstants.COMPASS dd = rsd.getDoor_direction();
                                 HashMap<String, Object> tid = new HashMap<String, Object>();
                                 tid.put("tardis_id", id);
                                 ResultSetTardis rs = new ResultSetTardis(plugin, tid, "", false);
@@ -353,9 +393,9 @@ public class TARDISDoorListener implements Listener {
                                 player.sendMessage(plugin.pluginName + "The TARDIS key is a " + key + ". You have " + grammar + " in your hand!");
                             }
                         }
-                    } else {
-                        player.sendMessage(plugin.pluginName + TARDISConstants.NO_PERMS_MESSAGE);
                     }
+                } else {
+                    player.sendMessage(plugin.pluginName + TARDISConstants.NO_PERMS_MESSAGE);
                 }
             }
         }
