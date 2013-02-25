@@ -32,11 +32,12 @@
             <li><a href="#handbrake">My Handbrake is not re-engaging!</a></li>
             <li><a href="#charging">My TARDIS isn&rsquo;t charging at a recharge beacon</a></li>
             <li><a href="sfx">I can&rsquo;t hear the custom sound effects</a></li>
-            <li><a href="#inside">It says I'm still inside the TARDIS, but I'm not</a></li>
+            <li><a href="#inside">It says I&rsquo;m still inside the TARDIS, but I&rsquo;m not</a></li>
             <li><a href="#stuck">Help! I&rsquo;m stuck in my TARDIS!</a></li>
             <li><a href="#gravity">My Gravity Well stopped working</a></li>
-            <li><a href="#perms">It keeps saying I'm restricted to the [] area or something about my exile status!</a></li>
+            <li><a href="#perms">It keeps saying I&rsquo;m restricted to the [] area or something about my exile status!</a></li>
             <li><a href="#config">I changed some config options but they keep changing back!</a></li>
+            <li><a href="#missing">I created a TARDIS but some of the blocks are missing!</a></li>
             <li><a href="#txtpac">What is the Texture Pack in the videos?</a></li>
         </ul>
         <h4 id="own-world">My TARDIS is not generating its own world!</h4>
@@ -45,7 +46,7 @@
             <li>Remove all current TARDISes by breaking the Police Box sign</li>
             <li>Stop the server</li>
             <li>Delete the <code>plugins/TARDIS</code> folder</li>
-            <li>Install TARDISChunkGenerator (if you haven't already)</li>
+            <li>Install TARDISChunkGenerator (if you haven&rsquo;t already)</li>
             <li>Install <a href="http://dev.bukkit.org/server-mods/multiverse-core/">Multiverse-Core</a></li>
             <li>Start the server</li>
             <li>Create a TARDIS</li>
@@ -65,10 +66,10 @@
         <p>Only the first command is required, but the TARDIS plugin sets the other world options as well by default.</p>
         <p><strong>Remember</strong> to change <code>[world name]</code> to the name of your own TARDIS world!</p>
         <p>If you are using <strong>MultiWorld</strong></p>
-        <p>You&rsquo;re a bit stuck, as MultiWorld doesn't have an easy way of loading a world after it is created.</p>
+        <p>You&rsquo;re a bit stuck, as MultiWorld doesn&rsquo;t have an easy way of loading a world after it is created.</p>
         <ol>
             <li>Open up the MultiWorld config file and duplicate the section for the server&rsquo;s default world.</li>
-            <li>Change the section so it looks like the one below - don't forget to change the world name to your actual world.</li>
+            <li>Change the section so it looks like the one below - don&rsquo;t forget to change the world name to your actual world.</li>
         </ol>
         <pre><code>TARDIS_WORLD_eccentric_nz:
     seed: -400605742453603641
@@ -101,7 +102,7 @@
             <li>Connect to the server with the SpoutCraft client</li>
         </ul>
         <p><a href="#top">Back to top</a></p>
-        <h4 id="inside">It says I'm still inside the TARDIS, but I'm not</h4>
+        <h4 id="inside">It says I&rsquo;m still inside the TARDIS, but I&rsquo;m not</h4>
         <p>This happens if you have exited the TARDIS by some other way than the TARDIS door - this could be because of death, call, teleport, Multiverse teleport, or server crash.</p>
         <p>To fix this, type the command:</p>
         <pre><code>/tardis occupy</code></pre>
@@ -121,12 +122,15 @@
         <p>The way gravity wells work was changed in TARDIS v2.0-beta-7. To fix the gravity wells and update them to the new style, just run the command:</p>
         <pre><code>/tardis gravity</code></pre>
         <p><a href="#top">Back to top</a></p>
-        <h4 id="perms">It keeps saying I'm restricted to the [] area or something about my exile status!</h4>
+        <h4 id="perms">It keeps saying I&rsquo;m restricted to the [] area or something about my exile status!</h4>
         <p>Please read the first part of the <a href="permissions.html">Permissions</a> page.</p>
         <p><a href="#top">Back to top</a></p>
         <h4 id="config">I changed some config options but they keep changing back!</h4>
         <p>If you manually edit the TARDIS config file while the server is running, you will need to use the <code>/tardisadmin reload</code> command (DO NOT use <code>/reload</code> as the plugin saves the current settings when it is disabled).</p>
         <p>The better option is to set the config options in game with the <code>/tardisadmin [config option] [value]</code> command - changes take effect immediately, no server restart required. See the <a href="admin-commands.html">Admin Commands</a> page for more details.</p>
+        <p><a href="#top">Back to top</a></p>
+        <h4 id="missing">I created a TARDIS but some of the blocks are missing!</h4>
+        <p>You are probably using a server that is a fork of CraftBukkit, such as Spigot, FTB Mindcrack or MCPC+. These forked version have been changed in a way that makes this happen. We really don&rsquo;t have time to support these server versions (just keeping up with CraftBukkit takes enough time), we suggest you try and get some help on the forums of the server you are using.</p>
         <p><a href="#top">Back to top</a></p>
         <h4 id="txtpac">What is the Texture Pack in the videos?</h4>
         <p>An unreleased (and unfinished - still most of the mobs to do) pack called Bromley Massive Vector, also by eccentric_nz. Maybe, one day he will finish it.</p>
