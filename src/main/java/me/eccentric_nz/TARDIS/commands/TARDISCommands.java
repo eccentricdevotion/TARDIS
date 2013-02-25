@@ -142,7 +142,7 @@ public class TARDISCommands implements CommandExecutor {
             // delete the TARDIS
             if (args[0].equalsIgnoreCase("exterminate")) {
                 if (player == null) {
-                    sender.sendMessage(plugin.pluginName + "Must be a player");
+                    sender.sendMessage(plugin.pluginName + "You must be a player to run this command!");
                     return false;
                 }
                 if (!plugin.trackExterminate.containsKey(player.getName())) {
@@ -671,107 +671,6 @@ public class TARDISCommands implements CommandExecutor {
                         return false;
                     }
                 }
-                if (args[0].equalsIgnoreCase("bind")) {
-                    if (player.hasPermission("tardis.update")) {
-                        if (args.length < 2) {
-                            sender.sendMessage(plugin.pluginName + "Too few command arguments!");
-                            return false;
-                        }
-                        HashMap<String, Object> where = new HashMap<String, Object>();
-                        where.put("owner", player.getName());
-                        ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
-                        if (!rs.resultSet()) {
-                            sender.sendMessage(plugin.pluginName + "You are not a Timelord. You need to create a TARDIS first before using this command!");
-                            return false;
-                        }
-                        int id = rs.getTardis_id();
-                        HashMap<String, Object> wheret = new HashMap<String, Object>();
-                        wheret.put("player", player.getName());
-                        ResultSetTravellers rst = new ResultSetTravellers(plugin, wheret, false);
-                        if (!rst.resultSet()) {
-                            sender.sendMessage(plugin.pluginName + "You are not inside your TARDIS. You need to be to run this command!");
-                            return false;
-                        }
-                        int did;
-                        HashMap<String, Object> whered = new HashMap<String, Object>();
-                        whered.put("tardis_id", id);
-                        whered.put("dest_name", args[1]);
-                        ResultSetDestinations rsd = new ResultSetDestinations(plugin, whered, false);
-                        if (!rsd.resultSet()) {
-                            if (args[1].equalsIgnoreCase("hide") || args[1].equalsIgnoreCase("rebuild") || args[1].equalsIgnoreCase("home")) {
-                                HashMap<String, Object> set = new HashMap<String, Object>();
-                                set.put("tardis_id", id);
-                                set.put("dest_name", args[1].toLowerCase(Locale.ENGLISH));
-                                QueryFactory qf = new QueryFactory(plugin);
-                                did = qf.doInsert("destinations", set);
-                            } else {
-                                sender.sendMessage(plugin.pluginName + "Could not find a save with that name! Try using " + ChatColor.AQUA + "/tardis list saves" + ChatColor.RESET + " first.");
-                                return true;
-                            }
-                        } else {
-                            did = rsd.getDest_id();
-                        }
-                        plugin.trackBinder.put(player.getName(), did);
-                        player.sendMessage(plugin.pluginName + "Click the block you want to bind to this save location.");
-                        return true;
-                    } else {
-                        sender.sendMessage(plugin.pluginName + TARDISConstants.NO_PERMS_MESSAGE);
-                        return false;
-                    }
-                }
-                if (args[0].equalsIgnoreCase("unbind")) {
-                    if (player.hasPermission("tardis.update")) {
-                        if (args.length < 2) {
-                            sender.sendMessage(plugin.pluginName + "Too few command arguments!");
-                            return false;
-                        }
-                        HashMap<String, Object> where = new HashMap<String, Object>();
-                        where.put("owner", player.getName());
-                        ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
-                        if (!rs.resultSet()) {
-                            sender.sendMessage(plugin.pluginName + "You are not a Timelord. You need to create a TARDIS first before using this command!");
-                            return false;
-                        }
-                        int id = rs.getTardis_id();
-                        HashMap<String, Object> wheret = new HashMap<String, Object>();
-                        wheret.put("player", player.getName());
-                        ResultSetTravellers rst = new ResultSetTravellers(plugin, wheret, false);
-                        if (!rst.resultSet()) {
-                            sender.sendMessage(plugin.pluginName + "You are not inside your TARDIS. You need to be to run this command!");
-                            return false;
-                        }
-                        HashMap<String, Object> whered = new HashMap<String, Object>();
-                        whered.put("tardis_id", id);
-                        whered.put("dest_name", args[1].toLowerCase(Locale.ENGLISH));
-                        ResultSetDestinations rsd = new ResultSetDestinations(plugin, whered, false);
-                        if (!rsd.resultSet()) {
-                            sender.sendMessage(plugin.pluginName + "Could not find a save with that name! Try using " + ChatColor.AQUA + "/tardis list saves" + ChatColor.RESET + " first.");
-                            return true;
-                        }
-                        if (rsd.getBind().equals("")) {
-                            sender.sendMessage(plugin.pluginName + "There is no button bound to that save name!");
-                            return true;
-                        }
-                        int did = rsd.getDest_id();
-                        QueryFactory qf = new QueryFactory(plugin);
-                        HashMap<String, Object> whereb = new HashMap<String, Object>();
-                        whereb.put("dest_id", did);
-                        if (args[1].equalsIgnoreCase("hide") || args[1].equalsIgnoreCase("rebuild") || args[1].equalsIgnoreCase("home")) {
-                            // delete the record
-                            qf.doDelete("destinations", whereb);
-                        } else {
-                            // just remove the bind location
-                            HashMap<String, Object> set = new HashMap<String, Object>();
-                            set.put("bind", "");
-                            qf.doUpdate("destinations", set, whereb);
-                        }
-                        player.sendMessage(plugin.pluginName + "The location was unbound. You can safely delete the block.");
-                        return true;
-                    } else {
-                        sender.sendMessage(plugin.pluginName + TARDISConstants.NO_PERMS_MESSAGE);
-                        return false;
-                    }
-                }
                 if (args[0].equalsIgnoreCase("rebuild") || args[0].equalsIgnoreCase("hide")) {
                     if (player.hasPermission("tardis.rebuild")) {
                         String save;
@@ -998,9 +897,6 @@ public class TARDISCommands implements CommandExecutor {
                         }
                         if (!args[1].matches("[A-Za-z0-9_]{2,16}")) {
                             sender.sendMessage(plugin.pluginName + "That doesn't appear to be a valid save name (it may be too long or contains spaces).");
-                            return false;
-                        } else if (args[1].equalsIgnoreCase("hide") || args[1].equalsIgnoreCase("rebuild") || args[1].equalsIgnoreCase("home")) {
-                            sender.sendMessage(plugin.pluginName + "That is a reserved destination name!");
                             return false;
                         } else {
                             String cur = rs.getCurrent();

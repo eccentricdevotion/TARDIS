@@ -173,16 +173,6 @@ commands:
       usage: Hold the key in your hand, then type /<command> namekey [new name]
       permission: tardis.timetravel
       permission-message: You don't have the permission <permission> to use this command
-    bind:
-      description: Bind a saved location or the 'home', 'hide' and 'rebuild' commands to a button.
-      usage: /<command> bind [save name|home|hide|rebuild]
-      permission: tardis.update
-      permission-message: You don't have the permission <permission> to use this command
-    unbind:
-      description: unbind a saved location or the 'home', 'hide' and 'rebuild' commands from a button.
-      usage: /<command> unbind [save name|home|hide|rebuild]
-      permission: tardis.update
-      permission-message: You don't have the permission <permission> to use this command
     reload:
       description: Reloads the TARDIS configuration.
       usage: /<command> reload
@@ -246,4 +236,30 @@ commands:
       description: Remove a TARDIS area.
       usage: /<command> remove [name]
       permission: tardis.admin
+      permission-message: You don't have the permission <permission> to use this command
+  tardisbind:
+    save:
+      description: Bind a saved location to a button.
+      usage: /<command> [save name]
+      permission: tardis.update
+      permission-message: You don't have the permission <permission> to use this command
+    cmd:
+      description: Bind the 'home', 'hide' or 'rebuild' commands to a button.
+      usage: /<command> [home|hide|rebuild]
+      permission: tardis.update
+      permission-message: You don't have the permission <permission> to use this command
+    player:
+      description: Bind a player location to a button.
+      usage: /<command> [player]
+      permission: tardis.update
+      permission-message: You don't have the permission <permission> to use this command
+    area:
+      description: Bind a TARDIS area to a button.
+      usage: /<command> [area name]
+      permission: tardis.update
+      permission-message: You don't have the permission <permission> to use this command
+    remove:
+      description: Remove a 'bound' saved location, command, player or area from a button.
+      usage: /<command> [save name|cmd|player|area]
+      permission: tardis.update
       permission-message: You don't have the permission <permission> to use this command

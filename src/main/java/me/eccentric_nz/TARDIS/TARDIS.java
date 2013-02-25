@@ -28,6 +28,7 @@ import me.eccentric_nz.TARDIS.commands.TARDISCommands;
 import me.eccentric_nz.TARDIS.commands.TARDISAreaCommands;
 import me.eccentric_nz.TARDIS.commands.TARDISTravelCommands;
 import me.eccentric_nz.TARDIS.commands.TARDISAdminCommands;
+import me.eccentric_nz.TARDIS.commands.TARDISBindCommands;
 import me.eccentric_nz.TARDIS.destroyers.TARDISDestroyerInner;
 import me.eccentric_nz.TARDIS.destroyers.TARDISDestroyerPoliceBox;
 import me.eccentric_nz.TARDIS.builders.TARDISBuilderInner;
@@ -171,6 +172,7 @@ public class TARDIS extends JavaPlugin {
     private TARDISPrefsCommands tardisPrefsCommand;
     private TARDISTravelCommands tardisTravelCommand;
     private TARDISAreaCommands tardisAreaCommand;
+    private TARDISBindCommands tardisBindCommand;
     public TARDISBuilderInner buildI = new TARDISBuilderInner(this);
     public TARDISBuilderPoliceBox buildPB = new TARDISBuilderPoliceBox(this);
     public TARDISDestroyerInner destroyI = new TARDISDestroyerInner(this);
@@ -376,11 +378,13 @@ public class TARDIS extends JavaPlugin {
         tardisPrefsCommand = new TARDISPrefsCommands(this);
         tardisTravelCommand = new TARDISTravelCommands(this);
         tardisAreaCommand = new TARDISAreaCommands(this);
+        tardisBindCommand = new TARDISBindCommands(this);
         getCommand("tardis").setExecutor(tardisCommand);
         getCommand("tardisadmin").setExecutor(tardisAdminCommand);
         getCommand("tardisprefs").setExecutor(tardisPrefsCommand);
         getCommand("tardistravel").setExecutor(tardisTravelCommand);
         getCommand("tardisarea").setExecutor(tardisAreaCommand);
+        getCommand("tardisbind").setExecutor(tardisBindCommand);
     }
 
     /**

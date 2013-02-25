@@ -64,10 +64,10 @@ public class TARDISBindListener implements Listener {
     }
 
     /**
-     * Listens for player interaction with blocks after running the /tardis bind
-     * command. If the player's name is contained in the trackBinder HashMap
-     * then the block location is recorded in the bind field of the destinations
-     * table.
+     * Listens for player interaction with blocks after running the /tardisbind
+     * [save|cmd|player|area] command. If the player's name is contained in the
+     * trackBinder HashMap then the block location is recorded in the bind field
+     * of the destinations table.
      *
      * If the player is travelling in the TARDIS then a check is made of the
      * destinations table for the location of the clicked block. If found the
@@ -103,7 +103,6 @@ public class TARDISBindListener implements Listener {
                         wheret.put("tardis_id", id);
                         ResultSetTardis rs = new ResultSetTardis(plugin, wheret, "", false);
                         if (rs.resultSet()) {
-
                             HashMap<String, Object> whereb = new HashMap<String, Object>();
                             whereb.put("tardis_id", id);
                             whereb.put("bind", l);
@@ -112,35 +111,31 @@ public class TARDISBindListener implements Listener {
                                 if (!rs.isHandbrake_on()) {
                                     player.sendMessage(plugin.pluginName + ChatColor.RED + "You cannot set a destination while the TARDIS is travelling!");
                                     return;
-                                }                                // is this a save button or command button?
+                                }
+                                // what bind type is it?
+                                int type = rsd.getType();
                                 String dest_name = rsd.getDest_name();
-                                if (dest_name.equals("rebuild")) {
-                                    player.performCommand("tardis rebuild");
-                                    return;
+                                switch (type) {
+                                    case 1: // command
+                                        if (dest_name.equals("rebuild")) {
+                                            player.performCommand("tardis rebuild");
+                                        }
+                                        if (dest_name.equals("hide")) {
+                                            player.performCommand("tardis hide");
+                                        }
+                                        if (dest_name.equals("home")) {
+                                            player.performCommand("tardistravel home");
+                                        }
+                                        break;
+                                    case 2: // player
+                                        player.performCommand("tardistravel " + dest_name);
+                                        break;
+                                    case 3: // area
+                                        player.performCommand("tardistravel area " + dest_name);
+                                        break;
+                                    default: // save
+                                        player.performCommand("tardistravel dest " + dest_name);
                                 }
-                                if (dest_name.equals("hide")) {
-                                    player.performCommand("tardis hide");
-                                    return;
-                                }
-                                if (dest_name.equals("home")) {
-                                    player.performCommand("tardistravel home");
-                                    return;
-                                }
-                                int level = rs.getArtron_level();
-                                if (level < plugin.getConfig().getInt("travel")) {
-                                    player.sendMessage(plugin.pluginName + ChatColor.RED + "The TARDIS does not have enough Artron Energy to make this trip!");
-                                    return;
-                                }
-                                // get travel location
-                                String save = rsd.getWorld() + ":" + rsd.getX() + ":" + rsd.getY() + ":" + rsd.getZ();
-                                HashMap<String, Object> set = new HashMap<String, Object>();
-                                set.put("save", save);
-                                HashMap<String, Object> wheres = new HashMap<String, Object>();
-                                wheres.put("tardis_id", id);
-                                QueryFactory qf = new QueryFactory(plugin);
-                                qf.doUpdate("tardis", set, wheres);
-                                plugin.tardisHasDestination.put(id, plugin.getConfig().getInt("travel"));
-                                player.sendMessage(plugin.pluginName + "Exit location set to " + dest_name);
                             }
                         }
                     }

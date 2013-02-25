@@ -45,6 +45,7 @@ public class TARDISDatabaseUpdater {
         areaupdates.add("y INTEGER");
         blockupdates.add("police_box INTEGER DEFAULT 0");
         destupdates.add("bind TEXT DEFAULT ''");
+        destupdates.add("type INTEGER DEFAULT 0");
         prefsupdates.add("key TEXT DEFAULT ''");
         prefsupdates.add("artron_level INTEGER DEFAULT 0");
         prefsupdates.add("auto_on INTEGER DEFAULT 0");

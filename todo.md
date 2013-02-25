@@ -8,9 +8,6 @@
 6. Allow companions to enter and exit the tardis at will (and steal it).
 7. Check what happens when companions steal the TARDIS
 8. Allow "Locking" the door, so registered companions can't come in.
-9. Allow "Shorting out" the Chameleon curcuit. So that a player can always have a "Leaves" Police Box, or an "Ice" police box.
-11. Allow binding of TARDIS areas to buttons
-12. Allow binding of player locations to buttons
 
 ## Minecraft API when available `3.0`
 1. Create custom blocks for the TARDIS and console.

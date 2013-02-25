@@ -48,6 +48,7 @@ public class ResultSetDestinations {
     private int y;
     private int z;
     private String bind;
+    private int type;
     private ArrayList<HashMap<String, String>> data = new ArrayList<HashMap<String, String>>();
 
     /**
@@ -118,6 +119,7 @@ public class ResultSetDestinations {
                     this.y = rs.getInt("y");
                     this.z = rs.getInt("z");
                     this.bind = rs.getString("bind");
+                    this.type = rs.getInt("type");
                 }
             } else {
                 return false;
@@ -170,6 +172,10 @@ public class ResultSetDestinations {
 
     public String getBind() {
         return bind;
+    }
+
+    public int getType() {
+        return type;
     }
 
     public ArrayList<HashMap<String, String>> getData() {
