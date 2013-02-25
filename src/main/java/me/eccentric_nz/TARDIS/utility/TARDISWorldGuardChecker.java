@@ -147,6 +147,20 @@ public class TARDISWorldGuardChecker {
     }
 
     /**
+     * Removes the WorldGuard region when the recharger is removed.
+     */
+    public void removeRechargerRegion(String name) {
+        World w = plugin.getServer().getWorld(plugin.getConfig().getString("rechargers." + name + ".world"));
+        RegionManager rm = wg.getRegionManager(w);
+        rm.removeRegion("tardis_recharger_" + name);
+        try {
+            rm.save();
+        } catch (ProtectionDatabaseException e) {
+            plugin.console.sendMessage(plugin.pluginName + "could not remove recharger WorldGuard Protection! " + e);
+        }
+    }
+
+    /**
      * Turns a location object into a vector.
      */
     public BlockVector makeBlockVector(Location location) {

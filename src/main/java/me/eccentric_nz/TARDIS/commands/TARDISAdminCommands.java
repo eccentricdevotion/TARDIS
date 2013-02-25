@@ -16,9 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.commands;
 
-import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
-import com.sk89q.worldguard.protection.databases.ProtectionDatabaseException;
-import com.sk89q.worldguard.protection.managers.RegionManager;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -30,7 +27,6 @@ import java.util.Set;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
-import me.eccentric_nz.TARDIS.database.ResultSetAreas;
 import me.eccentric_nz.TARDIS.database.ResultSetDoors;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
@@ -43,6 +39,7 @@ import org.apache.commons.lang.StringUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Chunk;
+import org.bukkit.Effect;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Sound;
@@ -310,15 +307,7 @@ public class TARDISAdminCommands implements CommandExecutor {
                         return true;
                     }
                     if (plugin.worldGuardOnServer && plugin.getConfig().getBoolean("use_worldguard")) {
-                        World w = plugin.getServer().getWorld(plugin.getConfig().getString("rechargers." + args[1] + ".world"));
-                        WorldGuardPlugin wg = (WorldGuardPlugin) plugin.getServer().getPluginManager().getPlugin("WorldGuard");
-                        RegionManager rm = wg.getRegionManager(w);
-                        rm.removeRegion("tardis_recharger_" + args[1]);
-                        try {
-                            rm.save();
-                        } catch (ProtectionDatabaseException e) {
-                            plugin.console.sendMessage(plugin.pluginName + "could not remove recharger WorldGuard Protection! " + e);
-                        }
+                        plugin.wgchk.removeRechargerRegion(args[1]);
                     }
                     plugin.getConfig().set("rechargers." + args[1], null);
                 }
@@ -383,7 +372,12 @@ public class TARDISAdminCommands implements CommandExecutor {
                                     break;
                             }
                             // enter TARDIS!
-                            player.playSound(player.getLocation(), Sound.ENDERMAN_TELEPORT, 1, 1);
+                            try {
+                                Class.forName("org.bukkit.Sound");
+                                player.playSound(player.getLocation(), Sound.ENDERMAN_TELEPORT, 1, 1);
+                            } catch (ClassNotFoundException e) {
+                                player.getLocation().getWorld().playEffect(player.getLocation(), Effect.GHAST_SHRIEK, 0);
+                            }
                             cw.getChunkAt(tmp_loc).load();
                             float yaw = player.getLocation().getYaw();
                             float pitch = player.getLocation().getPitch();
