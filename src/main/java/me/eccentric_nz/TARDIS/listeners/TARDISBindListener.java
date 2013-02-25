@@ -119,22 +119,28 @@ public class TARDISBindListener implements Listener {
                                     case 1: // command
                                         if (dest_name.equals("rebuild")) {
                                             player.performCommand("tardis rebuild");
+                                            plugin.console.sendMessage(player.getName() + " issued server command: /tardis rebuild");
                                         }
                                         if (dest_name.equals("hide")) {
                                             player.performCommand("tardis hide");
+                                            plugin.console.sendMessage(player.getName() + " issued server command: /tardis hide");
                                         }
                                         if (dest_name.equals("home")) {
                                             player.performCommand("tardistravel home");
+                                            plugin.console.sendMessage(player.getName() + " issued server command: /tardistravel home");
                                         }
                                         break;
                                     case 2: // player
                                         player.performCommand("tardistravel " + dest_name);
+                                        plugin.console.sendMessage(player.getName() + " issued server command: /tardistravel " + dest_name);
                                         break;
                                     case 3: // area
                                         player.performCommand("tardistravel area " + dest_name);
+                                        plugin.console.sendMessage(player.getName() + " issued server command: /tardistravel area " + dest_name);
                                         break;
                                     default: // save
                                         player.performCommand("tardistravel dest " + dest_name);
+                                        plugin.console.sendMessage(player.getName() + " issued server command: /tardistravel dest " + dest_name);
                                 }
                             }
                         }
