@@ -71,7 +71,7 @@ public class TARDISJettisonSeeder implements Listener {
                 key = plugin.getConfig().getString("key");
             }
             // only proceed if they are clicking a seed block with the TARDIS key!
-            if (blockType.equals(Material.TNT) && inhand.equals(Material.getMaterial(key))) {
+            if (blockType.equals(Material.getMaterial(plugin.getConfig().getString("jettison_seed"))) && inhand.equals(Material.getMaterial(key))) {
                 // check that player is in TARDIS
                 if (!plugin.trackJettison.containsKey(playerNameStr)) {
                     return;

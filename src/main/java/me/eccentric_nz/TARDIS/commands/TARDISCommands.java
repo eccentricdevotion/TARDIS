@@ -372,7 +372,8 @@ public class TARDISCommands implements CommandExecutor {
                             return true;
                         }
                         plugin.trackJettison.put(player.getName(), room);
-                        player.sendMessage(plugin.pluginName + "Stand in the doorway of the room you want to jettison and place a TNT block directly in front of the door. Hit the TNT with the TARDIS key to jettison the room!");
+                        String seed = plugin.getConfig().getString("jettison_seed");
+                        player.sendMessage(plugin.pluginName + "Stand in the doorway of the room you want to jettison and place a " + seed + " block directly in front of the door. Hit the " + seed + " with the TARDIS key to jettison the room!");
                         return true;
                     } else {
                         sender.sendMessage(plugin.pluginName + TARDISConstants.NO_PERMS_MESSAGE);

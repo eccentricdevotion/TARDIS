@@ -90,6 +90,7 @@ public class TARDISAdminCommands implements CommandExecutor {
         firstsStr.add("gamemode");
         firstsStr.add("include");
         firstsStr.add("inventory_group");
+        firstsStr.add("jettison_seed");
         firstsStr.add("key");
         firstsStr.add("list");
         firstsStr.add("recharger");
@@ -539,7 +540,7 @@ public class TARDISAdminCommands implements CommandExecutor {
                     }
                     return true;
                 }
-                if (first.equals("key") || first.equals("full_charge_item")) {
+                if (first.equals("key") || first.equals("full_charge_item") || first.equals("jettison_seed")) {
                     String setMaterial = args[1].toUpperCase(Locale.ENGLISH);
                     if (!Arrays.asList(TARDISMaterials.MATERIAL_LIST).contains(setMaterial)) {
                         sender.sendMessage(plugin.pluginName + ChatColor.RED + "That is not a valid Material! Try checking http://jd.bukkit.org/apidocs/org/bukkit/Material.html");
