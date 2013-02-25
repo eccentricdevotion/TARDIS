@@ -24,6 +24,7 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.thirdparty.Version;
 import org.bukkit.Bukkit;
+import org.bukkit.Effect;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Sound;
@@ -120,7 +121,12 @@ public class TARDISScannerListener implements Listener {
                     if (plugin.getServer().getPluginManager().getPlugin("Spout") != null && SpoutManager.getPlayer(player).isSpoutCraftEnabled()) {
                         SpoutManager.getSoundManager().playGlobalCustomSoundEffect(plugin, "https://dl.dropbox.com/u/53758864/soundeffects/scanner.mp3", false, b, 20, 75);
                     } else {
-                        w.playSound(b, Sound.ORB_PICKUP, 1, 0);
+                        try {
+                            Class.forName("org.bukkit.Sound");
+                            w.playSound(b, Sound.ORB_PICKUP, 1, 0);
+                        } catch (ClassNotFoundException e) {
+                            w.playEffect(b, Effect.BOW_FIRE, 0);
+                        }
                     }
                     String policebox;
                     String whereisit;

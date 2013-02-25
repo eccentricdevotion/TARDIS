@@ -25,6 +25,7 @@ import me.eccentric_nz.TARDIS.database.ResultSetDoors;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
 import org.bukkit.ChatColor;
+import org.bukkit.Effect;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Sound;
@@ -118,7 +119,12 @@ public class TARDISMaterialisationRunnable implements Runnable {
                 if (plugin.getServer().getPluginManager().getPlugin("Spout") != null && SpoutManager.getPlayer(player).isSpoutCraftEnabled()) {
                     SpoutManager.getSoundManager().playGlobalCustomSoundEffect(plugin, "https://dl.dropbox.com/u/53758864/tardis_land.mp3", false, location, 9, 75);
                 } else {
-                    world.playSound(location, Sound.MINECART_INSIDE, 1, 0);
+                    try {
+                        Class.forName("org.bukkit.Sound");
+                        world.playSound(location, Sound.MINECART_INSIDE, 1, 0);
+                    } catch (ClassNotFoundException e) {
+                        world.playEffect(location, Effect.BLAZE_SHOOT, 0);
+                    }
                 }
                 QueryFactory qf = new QueryFactory(plugin);
                 HashMap<String, Object> ps = new HashMap<String, Object>();

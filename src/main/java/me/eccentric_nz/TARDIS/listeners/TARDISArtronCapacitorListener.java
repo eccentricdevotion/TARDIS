@@ -131,7 +131,7 @@ public class TARDISArtronCapacitorListener implements Listener {
                                 player.getInventory().removeItem(new ItemStack(full, 1));
                             }
                             player.sendMessage(plugin.pluginName + "Artron Energy Levels at maximum!");
-                        } else if (item.equals(Material.valueOf(key))) {
+                        } else if (item.equals(Material.getMaterial(key))) {
                             // kickstart the TARDIS Artron Energy Capacitor
                             // has the TARDIS been initialised?
                             if (!rs.isTardis_init()) {

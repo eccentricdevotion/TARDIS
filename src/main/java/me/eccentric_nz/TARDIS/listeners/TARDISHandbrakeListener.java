@@ -23,6 +23,7 @@ import me.eccentric_nz.TARDIS.artron.TARDISArtronLevels;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import org.bukkit.Chunk;
+import org.bukkit.Effect;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Sound;
@@ -123,7 +124,12 @@ public class TARDISHandbrakeListener implements Listener {
                                     if (plugin.getServer().getPluginManager().getPlugin("Spout") != null && SpoutManager.getPlayer(player).isSpoutCraftEnabled()) {
                                         SpoutManager.getSoundManager().playGlobalCustomSoundEffect(plugin, "https://dl.dropbox.com/u/53758864/tardis_land.mp3", false, handbrake_loc, 20, 75);
                                     } else {
-                                        handbrake_locw.playSound(handbrake_loc, Sound.MINECART_INSIDE, 1, 0);
+                                        try {
+                                            Class.forName("org.bukkit.Sound");
+                                            handbrake_locw.playSound(handbrake_loc, Sound.MINECART_INSIDE, 1, 0);
+                                        } catch (ClassNotFoundException e) {
+                                            handbrake_locw.playEffect(handbrake_loc, Effect.BLAZE_SHOOT, 0);
+                                        }
                                     }
                                 } else {
                                     player.sendMessage(plugin.pluginName + "You need to set a destination first!");

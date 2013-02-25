@@ -254,7 +254,12 @@ public class TARDISDoorListener implements Listener {
                                                     break;
                                             }
                                             // exit TARDIS!
-                                            player.playSound(player.getLocation(), Sound.DOOR_CLOSE, 1, 1);
+                                            try {
+                                                Class.forName("org.bukkit.Sound");
+                                                player.playSound(player.getLocation(), Sound.DOOR_CLOSE, 1, 1);
+                                            } catch (ClassNotFoundException e) {
+                                                playerWorld.playEffect(block_loc, Effect.DOOR_TOGGLE, 0);
+                                            }
                                             movePlayer(player, exitTardis, true, playerWorld, userQuotes);
                                             // remove player from traveller table
                                             HashMap<String, Object> wherd = new HashMap<String, Object>();
@@ -342,7 +347,12 @@ public class TARDISDoorListener implements Listener {
                                                         break;
                                                 }
                                                 // enter TARDIS!
-                                                player.playSound(player.getLocation(), Sound.DOOR_OPEN, 1, 1);
+                                                try {
+                                                    Class.forName("org.bukkit.Sound");
+                                                    player.playSound(player.getLocation(), Sound.DOOR_OPEN, 1, 1);
+                                                } catch (ClassNotFoundException e) {
+                                                    playerWorld.playEffect(block_loc, Effect.DOOR_TOGGLE, 0);
+                                                }
                                                 cw.getChunkAt(tmp_loc).load();
                                                 tmp_loc.setPitch(pitch);
                                                 // get inner door direction so we can adjust yaw if necessary
