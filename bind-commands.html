@@ -9,8 +9,8 @@
 <script src="javascripts/scale.fix.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
 <!--[if lt IE 9]>
-    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
+<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+<![endif]-->
 </head>
 <body>
 <div class="wrapper">
@@ -26,20 +26,21 @@
     <section>
         <p><a href="#video">Jump to video</a></p>
         <h1>The Bind command</h1>
-        <p>To make travelling to saved destinations easier you can &lsquo;bind&rsquo; them to buttons, levers and signs.</p>
+        <p>To make travelling to saved destinations, TARDIS areas and players easier you can &lsquo;bind&rsquo; them to buttons, levers and signs.</p>
         <p>You can also bind the following commands:</p>
         <pre><code>/tardis hide
 /tardis rebuild
 /tardistravel home</code></pre>
         <h3>Binding</h3>
         <p>To bind the destination/command to a block run the command:</p>
-        <pre><code>/tardis bind [save name]
-    or
-/tardis bind [hide|rebuild|home]</code></pre>
+        <pre><code>/tardisbind save [save name]
+/tardisbind cmd [hide|rebuild|home]
+/tardisbind player [player name]
+/tardisbind area [area name]</code></pre>
         <p>Follow the onscreen instructions, and click the block you want to bind.</p>
         <h3>Unbinding</h3>
         <p>To unbind a destination/command from a block run the command:</p>
-        <pre><code>/tardis unbind [save name or command]</code></pre>
+        <pre><code>/tardisbind remove [save|command|player|area]</code></pre>
         <p>You will receive a confirmation message that the block is now safe to be removed.</p>
         <h3 id="video">Video</h3>
         <iframe src="http://player.vimeo.com/video/dunno" width="600" height="366" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
@@ -50,6 +51,5 @@
     <p>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></p>
 </footer>
 <!--[if !IE]><script>fixScale(document);</script><![endif]-->
-
 </body>
 </html>
