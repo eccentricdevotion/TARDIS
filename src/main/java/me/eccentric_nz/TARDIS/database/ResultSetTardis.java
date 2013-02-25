@@ -62,6 +62,8 @@ public class ResultSetTardis {
     private String save_sign;
     private String chameleon;
     private boolean chamele_on;
+    private int chameleon_id;
+    private byte chameleon_data;
     private int artron_level;
     private String artron_button;
     private int middle_id;
@@ -159,6 +161,8 @@ public class ResultSetTardis {
                     this.save_sign = rs.getString("save_sign");
                     this.chameleon = rs.getString("chameleon");
                     this.chamele_on = rs.getBoolean("chamele_on");
+                    this.chameleon_id = rs.getInt("chameleon_id");
+                    this.chameleon_data = rs.getByte("chameleon_data");
                     this.artron_level = rs.getInt("artron_level");
                     this.artron_button = rs.getString("artron_button");
                     this.middle_id = rs.getInt("middle_id");
@@ -269,6 +273,14 @@ public class ResultSetTardis {
 
     public boolean isChamele_on() {
         return chamele_on;
+    }
+
+    public int getChameleon_id() {
+        return chameleon_id;
+    }
+
+    public byte getChameleon_data() {
+        return chameleon_data;
     }
 
     public int getArtron_level() {

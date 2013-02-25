@@ -29,6 +29,7 @@ import java.util.Locale;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.TARDISConstants.ROOM;
+import me.eccentric_nz.TARDIS.builders.TARDISChameleonCircuit;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetDestinations;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
@@ -219,7 +220,7 @@ public class TARDISCommands implements CommandExecutor {
                         return false;
                     }
                     if (player.hasPermission("tardis.timetravel")) {
-                        if (args.length < 2 || (!args[1].equalsIgnoreCase("on") && !args[1].equalsIgnoreCase("off"))) {
+                        if (args.length < 2 || (!args[1].equalsIgnoreCase("on") && !args[1].equalsIgnoreCase("off") && !args[1].equalsIgnoreCase("short") && !args[1].equalsIgnoreCase("reset"))) {
                             sender.sendMessage(plugin.pluginName + "Too few command arguments!");
                             return false;
                         }
@@ -237,34 +238,55 @@ public class TARDISCommands implements CommandExecutor {
                             sender.sendMessage(plugin.pluginName + "Could not find the Chameleon Circuit!");
                             return false;
                         } else {
-                            int x, y, z;
-                            String[] chamData = chamStr.split(":");
-                            World w = plugin.getServer().getWorld(chamData[0]);
-                            TARDISConstants.COMPASS d = rs.getDirection();
-                            x = plugin.utils.parseNum(chamData[1]);
-                            y = plugin.utils.parseNum(chamData[2]);
-                            z = plugin.utils.parseNum(chamData[3]);
-                            Block chamBlock = w.getBlockAt(x, y, z);
-                            Material chamType = chamBlock.getType();
-                            if (chamType == Material.WALL_SIGN || chamType == Material.SIGN_POST) {
-                                Sign cs = (Sign) chamBlock.getState();
-                                QueryFactory qf = new QueryFactory(plugin);
-                                HashMap<String, Object> tid = new HashMap<String, Object>();
-                                HashMap<String, Object> set = new HashMap<String, Object>();
-                                tid.put("tardis_id", id);
-                                if (args[1].equalsIgnoreCase("on")) {
-                                    set.put("chamele_on", 1);
-                                    qf.doUpdate("tardis", set, tid);
-                                    sender.sendMessage(plugin.pluginName + "The Chameleon Circuit was turned ON!");
-                                    cs.setLine(3, ChatColor.GREEN + "ON");
+                            QueryFactory qf = new QueryFactory(plugin);
+                            HashMap<String, Object> tid = new HashMap<String, Object>();
+                            HashMap<String, Object> set = new HashMap<String, Object>();
+                            tid.put("tardis_id", id);
+                            if (args[1].equalsIgnoreCase("on") || args[1].equalsIgnoreCase("off")) {
+                                int x, y, z;
+                                String[] chamData = chamStr.split(":");
+                                World w = plugin.getServer().getWorld(chamData[0]);
+                                TARDISConstants.COMPASS d = rs.getDirection();
+                                x = plugin.utils.parseNum(chamData[1]);
+                                y = plugin.utils.parseNum(chamData[2]);
+                                z = plugin.utils.parseNum(chamData[3]);
+                                Block chamBlock = w.getBlockAt(x, y, z);
+                                Material chamType = chamBlock.getType();
+                                if (chamType == Material.WALL_SIGN || chamType == Material.SIGN_POST) {
+                                    Sign cs = (Sign) chamBlock.getState();
+                                    if (args[1].equalsIgnoreCase("on")) {
+                                        set.put("chamele_on", 1);
+                                        qf.doUpdate("tardis", set, tid);
+                                        sender.sendMessage(plugin.pluginName + "The Chameleon Circuit was turned ON!");
+                                        cs.setLine(3, ChatColor.GREEN + "ON");
+                                    }
+                                    if (args[1].equalsIgnoreCase("off")) {
+                                        set.put("chamele_on", 0);
+                                        qf.doUpdate("tardis", set, tid);
+                                        sender.sendMessage(plugin.pluginName + "The Chameleon Circuit was turned OFF.");
+                                        cs.setLine(3, ChatColor.RED + "OFF");
+                                    }
+                                    cs.update();
                                 }
-                                if (args[1].equalsIgnoreCase("off")) {
-                                    set.put("chamele_on", 0);
-                                    qf.doUpdate("tardis", set, tid);
-                                    sender.sendMessage(plugin.pluginName + "The Chameleon Circuit was turned OFF.");
-                                    cs.setLine(3, ChatColor.RED + "OFF");
+                            }
+                            if (args[1].equalsIgnoreCase("short")) {
+                                // get the block the player is targeting
+                                Block target_block = player.getTargetBlock(transparent, 50).getLocation().getBlock();
+                                TARDISChameleonCircuit tcc = new TARDISChameleonCircuit(plugin);
+                                int[] b_data = tcc.getChameleonBlock(target_block, player, true);
+                                int c_id = b_data[0], c_data = b_data[1];
+                                set.put("chameleon_id", c_id);
+                                set.put("chameleon_data", c_data);
+                                qf.doUpdate("tardis", set, tid);
+                                if (c_id != 35 && c_data != 11) {
+                                    sender.sendMessage(plugin.pluginName + "The Chameleon Circuit was shorted out to: " + target_block.getType().toString() + ".");
                                 }
-                                cs.update();
+                            }
+                            if (args[1].equalsIgnoreCase("reset")) {
+                                set.put("chameleon_id", 35);
+                                set.put("chameleon_data", 11);
+                                qf.doUpdate("tardis", set, tid);
+                                sender.sendMessage(plugin.pluginName + "The Chameleon Circuit was repaired.");
                             }
                         }
                         return true;
