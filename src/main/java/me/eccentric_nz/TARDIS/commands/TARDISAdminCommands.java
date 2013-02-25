@@ -16,6 +16,9 @@
  */
 package me.eccentric_nz.TARDIS.commands;
 
+import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
+import com.sk89q.worldguard.protection.databases.ProtectionDatabaseException;
+import com.sk89q.worldguard.protection.managers.RegionManager;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -27,6 +30,7 @@ import java.util.Set;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
+import me.eccentric_nz.TARDIS.database.ResultSetAreas;
 import me.eccentric_nz.TARDIS.database.ResultSetDoors;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
@@ -81,6 +85,7 @@ public class TARDISAdminCommands implements CommandExecutor {
         firstsStr.add("config");
         firstsStr.add("default_world_name");
         firstsStr.add("delete");
+        firstsStr.add("decharge");
         firstsStr.add("enter");
         firstsStr.add("exclude");
         firstsStr.add("find");
@@ -288,16 +293,34 @@ public class TARDISAdminCommands implements CommandExecutor {
                     plugin.getConfig().set("rechargers." + args[1] + ".x", l.getBlockX());
                     plugin.getConfig().set("rechargers." + args[1] + ".y", l.getBlockY());
                     plugin.getConfig().set("rechargers." + args[1] + ".z", l.getBlockZ());
-                    // if worldguard is on the server, protect a 3x3 area around beacon
+                    // if worldguard is on the server, protect a 3x3x3 area around beacon
                     if (plugin.worldGuardOnServer && plugin.getConfig().getBoolean("use_worldguard")) {
                         int minx = l.getBlockX() - 2;
                         int maxx = l.getBlockX() + 2;
                         int minz = l.getBlockZ() - 2;
                         int maxz = l.getBlockZ() + 2;
-                        Location wg1 = new Location(l.getWorld(), minx, l.getBlockY(), minz);
-                        Location wg2 = new Location(l.getWorld(), maxx, l.getBlockY(), maxz);
+                        Location wg1 = new Location(l.getWorld(), minx, l.getBlockY() + 2, minz);
+                        Location wg2 = new Location(l.getWorld(), maxx, l.getBlockY() - 2, maxz);
                         plugin.wgchk.addRechargerProtection(player, args[1], wg1, wg2);
                     }
+                }
+                if (first.equals("decharge")) {
+                    if (!plugin.getConfig().contains("rechargers." + args[1])) {
+                        sender.sendMessage(plugin.pluginName + "Could not find a recharger with that name! Try using " + ChatColor.AQUA + "/tardis list rechargers" + ChatColor.RESET + " first.");
+                        return true;
+                    }
+                    if (plugin.worldGuardOnServer && plugin.getConfig().getBoolean("use_worldguard")) {
+                        World w = plugin.getServer().getWorld(plugin.getConfig().getString("rechargers." + args[1] + ".world"));
+                        WorldGuardPlugin wg = (WorldGuardPlugin) plugin.getServer().getPluginManager().getPlugin("WorldGuard");
+                        RegionManager rm = wg.getRegionManager(w);
+                        rm.removeRegion("tardis_recharger_" + args[1]);
+                        try {
+                            rm.save();
+                        } catch (ProtectionDatabaseException e) {
+                            plugin.console.sendMessage(plugin.pluginName + "could not remove recharger WorldGuard Protection! " + e);
+                        }
+                    }
+                    plugin.getConfig().set("rechargers." + args[1], null);
                 }
                 if (first.equals("enter")) {
                     Player player = null;
