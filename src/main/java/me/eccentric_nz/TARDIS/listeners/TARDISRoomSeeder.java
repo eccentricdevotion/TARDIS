@@ -64,15 +64,6 @@ public class TARDISRoomSeeder implements Listener {
         String playerNameStr = player.getName();
         Block block = event.getClickedBlock();
         if (block != null) {
-            // check they are still in the TARDIS world
-            World world = block.getLocation().getWorld();
-            String name = world.getName();
-            ChunkGenerator gen = world.getGenerator();
-            boolean special = name.contains("TARDIS_TimeVortex") && (world.getWorldType().equals(WorldType.FLAT) || gen instanceof TARDISChunkGenerator);
-            if (!name.equals("TARDIS_WORLD_" + playerNameStr) && !special) {
-                player.sendMessage(plugin.pluginName + "You must be in a TARDIS world to grow a room!");
-                return;
-            }
             Material blockType = block.getType();
             Material inhand = player.getItemInHand().getType();
             String key;
@@ -88,6 +79,15 @@ public class TARDISRoomSeeder implements Listener {
             if (plugin.seeds.containsKey(blockType) && inhand.equals(Material.getMaterial(key))) {
                 // check that player is in TARDIS
                 if (!plugin.trackRoomSeed.containsKey(playerNameStr)) {
+                    return;
+                }
+                // check they are still in the TARDIS world
+                World world = block.getLocation().getWorld();
+                String name = world.getName();
+                ChunkGenerator gen = world.getGenerator();
+                boolean special = name.contains("TARDIS_TimeVortex") && (world.getWorldType().equals(WorldType.FLAT) || gen instanceof TARDISChunkGenerator);
+                if (!name.equals("TARDIS_WORLD_" + playerNameStr) && !special) {
+                    player.sendMessage(plugin.pluginName + "You must be in a TARDIS world to grow a room!");
                     return;
                 }
                 // get schematic
