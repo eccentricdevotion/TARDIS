@@ -139,6 +139,13 @@
             <type>jar</type>
             <scope>compile</scope>
         </dependency>
+        <dependency>
+            <groupId>com.massivecraft</groupId>
+            <artifactId>factions</artifactId>
+            <version>1.8.0</version>
+            <type>jar</type>
+            <scope>compile</scope>
+        </dependency>
     </dependencies>
     <properties>
         <netbeans.hint.license>gpl30</netbeans.hint.license>

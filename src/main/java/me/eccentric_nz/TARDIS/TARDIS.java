@@ -69,6 +69,7 @@ import me.eccentric_nz.TARDIS.listeners.TARDISSignListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISUpdateListener;
 import me.eccentric_nz.TARDIS.travel.TARDISUpdateTravellerCount;
 import me.eccentric_nz.TARDIS.utility.TARDISCreeperChecker;
+import me.eccentric_nz.TARDIS.utility.TARDISFactionsChecker;
 import me.eccentric_nz.TARDIS.utility.TARDISTownyChecker;
 import me.eccentric_nz.TARDIS.utility.TARDISWorldBorderChecker;
 import org.bukkit.Bukkit;
@@ -181,6 +182,7 @@ public class TARDIS extends JavaPlugin {
     public TARDISWorldGuardChecker wgchk;
     public TARDISTownyChecker tychk;
     public TARDISWorldBorderChecker borderchk;
+    public TARDISFactionsChecker factionschk;
     TARDISBlockPlaceListener blockPlaceListener = new TARDISBlockPlaceListener(this);
     TARDISBlockBreakListener blockBreakListener = new TARDISBlockBreakListener(this);
     TARDISDoorListener doorListener = new TARDISDoorListener(this);
@@ -232,6 +234,7 @@ public class TARDIS extends JavaPlugin {
     public boolean worldGuardOnServer = false;
     public boolean townyOnServer = false;
     public boolean borderOnServer = false;
+    public boolean factionsOnServer = false;
     public ConsoleCommandSender console;
     public String pluginName;
     public boolean myspawn = false;
@@ -258,6 +261,7 @@ public class TARDIS extends JavaPlugin {
         loadWorldGuard();
         loadTowny();
         loadWorldBorder();
+        loadFactions();
 
         quote = quotes();
         quotelen = quote.size();
@@ -453,6 +457,16 @@ public class TARDIS extends JavaPlugin {
         if (getServer().getPluginManager().getPlugin("WorldBorder") != null) {
             borderOnServer = true;
             borderchk = new TARDISWorldBorderChecker(this);
+        }
+    }
+
+    /**
+     * Checks if the Factions plugin is available, and loads support if it is.
+     */
+    private void loadFactions() {
+        if (getServer().getPluginManager().getPlugin("Factions") != null) {
+            factionsOnServer = true;
+            factionschk = new TARDISFactionsChecker(this);
         }
     }
 

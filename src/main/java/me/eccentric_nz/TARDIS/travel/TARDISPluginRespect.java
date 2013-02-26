@@ -62,6 +62,12 @@ public class TARDISPluginRespect {
             }
             bool = false;
         }
+        if (plugin.factionsOnServer && plugin.getConfig().getBoolean("respect_factions") && !plugin.factionschk.isInFaction(p, l)) {
+            if (message) {
+                p.sendMessage(plugin.pluginName + "That location is in another faction's claim!");
+            }
+            bool = false;
+        }
         if (plugin.ta.areaCheckLocPlayer(p, l)) {
             if (message) {
                 p.sendMessage(plugin.pluginName + "You do not have permission [" + plugin.trackPerm.get(p.getName()) + "] to bring the TARDIS to this location!");

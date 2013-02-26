@@ -18,6 +18,7 @@ use_worldguard: true
 respect_worldguard: true
 respect_towny: true
 respect_worldborder: true
+respect_factions: true
 land_on_water: true
 timeout: 5
 timeout_height: 135

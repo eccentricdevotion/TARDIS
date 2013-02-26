@@ -49,25 +49,26 @@ public class TARDISConfiguration {
         this.configFile = new File(plugin.getDataFolder(), TARDISConstants.CONFIG_FILE_NAME);
         this.config = YamlConfiguration.loadConfiguration(configFile);
         // boolean
-        boolOptions.put("debug", false);
         boolOptions.put("bonus_chest", true);
         boolOptions.put("chameleon", true);
-        boolOptions.put("default_world", false);
+        boolOptions.put("check_for_updates", true);
+        boolOptions.put("create_worlds", true);
+        boolOptions.put("debug", false);
         boolOptions.put("give_key", false);
+        boolOptions.put("default_world", false);
         boolOptions.put("include_default_world", false);
         boolOptions.put("land_on_water", true);
+        boolOptions.put("materialise", true);
         boolOptions.put("name_tardis", false);
         boolOptions.put("nether", false);
         boolOptions.put("platform", false);
+        boolOptions.put("respect_factions", true);
+        boolOptions.put("respect_towny", true);
+        boolOptions.put("respect_worldborder", true);
+        boolOptions.put("respect_worldguard", true);
         boolOptions.put("sfx", true);
         boolOptions.put("the_end", false);
         boolOptions.put("use_worldguard", true);
-        boolOptions.put("respect_worldguard", true);
-        boolOptions.put("respect_towny", true);
-        boolOptions.put("respect_worldborder", true);
-        boolOptions.put("create_worlds", true);
-        boolOptions.put("check_for_updates", true);
-        boolOptions.put("materialise", true);
         // integer
         intOptions.put("border_radius", 64);
         intOptions.put("comehere", 400);
@@ -103,6 +104,7 @@ public class TARDISConfiguration {
         intOptions.put("travel", 100);
         // string
         strOptions.put("default_world_name", "myridiculouslylongworldnameiscalledcuthbert");
+        strOptions.put("gamemode", "survival");
         strOptions.put("key", "STICK");
         strOptions.put("jettison_seed", "TNT");
         strOptions.put("full_charge_item", "NETHER_STAR");
@@ -120,7 +122,6 @@ public class TARDISConfiguration {
         strOptions.put("rooms.VAULT.seed", "DISPENSER");
         strOptions.put("rooms.WOOD.seed", "WOOD");
         strOptions.put("rooms.WORKSHOP.seed", "NETHER_BRICK");
-        strOptions.put("gamemode", "survival");
     }
 
     /**
