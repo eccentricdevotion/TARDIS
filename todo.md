@@ -9,7 +9,6 @@
 7. Check what happens when companions steal the TARDIS
 8. Allow "Locking" the door, so registered companions can't come in.
 9. Find a way to transport mobs to the TARDIS interior/farm room if they are herded into the Police Box.
-10. Add a way to set permissions for TARDIS worlds if using GroupManager or another perms plugin that has a config file per world
 
 ## Minecraft API when available `3.0`
 1. Create custom blocks for the TARDIS and console.
