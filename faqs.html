@@ -38,6 +38,7 @@
             <li><a href="#perms">It keeps saying I&rsquo;m restricted to the [] area or something about my exile status!</a></li>
             <li><a href="#config">I changed some config options but they keep changing back!</a></li>
             <li><a href="#missing">I created a TARDIS but some of the blocks are missing!</a></li>
+            <li><a href="#config">I edited the config file, but when I reload the changes don&rsquo;t save!</a></li>
             <li><a href="#txtpac">What is the Texture Pack in the videos?</a></li>
         </ul>
         <h4 id="own-world">My TARDIS is not generating its own world!</h4>
@@ -132,6 +133,15 @@
         <h4 id="missing">I created a TARDIS but some of the blocks are missing!</h4>
         <p>You are probably using a server that is a fork of CraftBukkit, such as Spigot, FTB Mindcrack or MCPC+. These forked version have been changed in a way that makes this happen. We really don&rsquo;t have time to support these server versions (just keeping up with CraftBukkit takes enough time), we suggest you try and get some help on the forums of the server you are using.</p>
         <p><a href="#top">Back to top</a></p>
+        <h4 id="config">I edited the config file, but when I reload the changes don&rsquo;t save!</h4>
+        <p>This is fairly standard behaviour for plugins. The <strong>currently loaded</strong> config options are saved when you restart the server, and the new ones you put in are overwritten.</p>
+        <p>You have three options:</p>
+        <ol>
+            <li>Use the the TARDIS admin commands to change the options i.e. <code>/tardisadmin [config option] [value]</code> for example <code>/tardisadmin key CARROT</code> - the benefit is that changes take effect immediately, you don&rsquo;t need to restart the server. Refer to the <a href="admin-commands.html">admin commands</a> page.</li>
+            <li>Manually edit the file, save it, and use the <code>/tardisadmin reload</code> command to load your changes into the server&rsquo; memory.</li>
+            <li><strong>STOP</strong> the server. Edit the config file, save it, then start the server.</li>
+        </ol>
+        <p><strong>Note:</strong> It is generally not good practice to use the <code>/reload</code> command.</p>
         <h4 id="txtpac">What is the Texture Pack in the videos?</h4>
         <p>An unreleased (and unfinished - still most of the mobs to do) pack called Bromley Massive Vector, also by eccentric_nz. Maybe, one day he will finish it.</p>
         <p><img src="https://dl.dropbox.com/u/53758864/bmv.jpg" alt="Bromley Massive Vector Texture Pack"</p>
