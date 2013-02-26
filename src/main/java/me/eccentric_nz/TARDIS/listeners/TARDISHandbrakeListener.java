@@ -121,7 +121,7 @@ public class TARDISHandbrakeListener implements Listener {
                                     // Sets database and sends the player/world message/sounds.
                                     set.put("handbrake_on", 0);
                                     player.sendMessage(plugin.pluginName + "Handbrake OFF! Entering the time vortex...");
-                                    if (plugin.getServer().getPluginManager().getPlugin("Spout") != null && SpoutManager.getPlayer(player).isSpoutCraftEnabled()) {
+                                    if (plugin.pm.getPlugin("Spout") != null && SpoutManager.getPlayer(player).isSpoutCraftEnabled()) {
                                         SpoutManager.getSoundManager().playGlobalCustomSoundEffect(plugin, "https://dl.dropbox.com/u/53758864/tardis_land.mp3", false, handbrake_loc, 20, 75);
                                     } else {
                                         try {

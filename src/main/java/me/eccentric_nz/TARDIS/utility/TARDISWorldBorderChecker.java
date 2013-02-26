@@ -33,7 +33,7 @@ public class TARDISWorldBorderChecker {
 
     public TARDISWorldBorderChecker(TARDIS plugin) {
         if (plugin.borderOnServer) {
-            border = (WorldBorder) plugin.getServer().getPluginManager().getPlugin("WorldBorder");
+            border = (WorldBorder) plugin.pm.getPlugin("WorldBorder");
         }
     }
 

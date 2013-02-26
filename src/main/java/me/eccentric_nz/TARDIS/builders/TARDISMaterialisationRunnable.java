@@ -116,7 +116,7 @@ public class TARDISMaterialisationRunnable implements Runnable {
             if (i == 1) {
                 HashMap<String, Object> where = new HashMap<String, Object>();
                 where.put("tardis_id", tid);
-                if (plugin.getServer().getPluginManager().getPlugin("Spout") != null && SpoutManager.getPlayer(player).isSpoutCraftEnabled()) {
+                if (plugin.pm.getPlugin("Spout") != null && SpoutManager.getPlayer(player).isSpoutCraftEnabled()) {
                     SpoutManager.getSoundManager().playGlobalCustomSoundEffect(plugin, "https://dl.dropbox.com/u/53758864/tardis_land.mp3", false, location, 9, 75);
                 } else {
                     try {

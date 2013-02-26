@@ -386,7 +386,7 @@ public class TARDISDoorListener implements Listener {
                                                 HashMap<String, Object> wherec = new HashMap<String, Object>();
                                                 wherec.put("tardis_id", id);
                                                 qf.doUpdate("tardis", setc, wherec);
-                                                if (plugin.getServer().getPluginManager().getPlugin("Spout") != null && SpoutManager.getPlayer(player).isSpoutCraftEnabled()) {
+                                                if (plugin.pm.getPlugin("Spout") != null && SpoutManager.getPlayer(player).isSpoutCraftEnabled()) {
                                                     SpoutManager.getSoundManager().playCustomSoundEffect(plugin, SpoutManager.getPlayer(player), "https://dl.dropbox.com/u/53758864/tardis_hum.mp3", false, tardis_loc, 9, 25);
                                                 }
                                             }

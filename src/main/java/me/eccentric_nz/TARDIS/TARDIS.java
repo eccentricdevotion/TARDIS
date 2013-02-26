@@ -18,6 +18,7 @@ package me.eccentric_nz.TARDIS;
 
 import me.eccentric_nz.TARDIS.utility.TARDISSounds;
 import me.eccentric_nz.TARDIS.travel.TARDISArea;
+import me.eccentric_nz.TARDIS.files.TARDISMakeCSV;
 import me.eccentric_nz.TARDIS.thirdparty.ImprovedOfflinePlayer_api;
 import me.eccentric_nz.TARDIS.thirdparty.MetricsLite;
 import me.eccentric_nz.TARDIS.utility.TARDISUtils;
@@ -280,6 +281,7 @@ public class TARDIS extends JavaPlugin {
         TARDISBlockLoader bl = new TARDISBlockLoader(this);
         bl.loadProtectBlocks();
         bl.loadGravityWells();
+        loadPerms();
     }
 
     @Override
@@ -419,7 +421,7 @@ public class TARDIS extends JavaPlugin {
      * the server.
      */
     private void startSound() {
-        if (plugin.getServer().getPluginManager().getPlugin("Spout") != null && getConfig().getBoolean("sfx")) {
+        if (plugin.pm.getPlugin("Spout") != null && getConfig().getBoolean("sfx")) {
             this.getServer().getScheduler().scheduleSyncRepeatingTask(this, new Runnable() {
                 @Override
                 public void run() {
@@ -433,7 +435,7 @@ public class TARDIS extends JavaPlugin {
      * Checks if the WorldGuard plugin is available, and loads support if it is.
      */
     private void loadWorldGuard() {
-        if (getServer().getPluginManager().getPlugin("WorldGuard") != null) {
+        if (pm.getPlugin("WorldGuard") != null) {
             worldGuardOnServer = true;
             wgchk = new TARDISWorldGuardChecker(this);
         }
@@ -443,7 +445,7 @@ public class TARDIS extends JavaPlugin {
      * Checks if the Towny plugin is available, and loads support if it is.
      */
     private void loadTowny() {
-        if (getServer().getPluginManager().getPlugin("Towny") != null) {
+        if (pm.getPlugin("Towny") != null) {
             townyOnServer = true;
             tychk = new TARDISTownyChecker(this);
         }
@@ -454,7 +456,7 @@ public class TARDIS extends JavaPlugin {
      * is.
      */
     private void loadWorldBorder() {
-        if (getServer().getPluginManager().getPlugin("WorldBorder") != null) {
+        if (pm.getPlugin("WorldBorder") != null) {
             borderOnServer = true;
             borderchk = new TARDISWorldBorderChecker(this);
         }
@@ -464,9 +466,23 @@ public class TARDIS extends JavaPlugin {
      * Checks if the Factions plugin is available, and loads support if it is.
      */
     private void loadFactions() {
-        if (getServer().getPluginManager().getPlugin("Factions") != null) {
+        if (pm.getPlugin("Factions") != null) {
             factionsOnServer = true;
             factionschk = new TARDISFactionsChecker(this);
+        }
+    }
+
+    /**
+     * Loads the permissions handler for TARDIS worlds if the relevant
+     * permissions plugin is enabled. Currently supports GroupManager and
+     * bPermissions (as they have per world config files).
+     */
+    private void loadPerms() {
+        if (pm.getPlugin("GroupManager") != null || pm.getPlugin("bPermissions") != null) {
+            // copy default permissions file if not present
+            TARDISMakeCSV tmc = new TARDISMakeCSV(this);
+            tmc.copy(getDataFolder() + File.separator + "permissions.txt", getResource("permissions.txt"));
+            console.sendMessage(pluginName + "World specific permissions plugin detected please edit plugins/TARDIS/permissions.txt");
         }
     }
 
@@ -517,7 +533,7 @@ public class TARDIS extends JavaPlugin {
 
     private void checkTCG() {
         if (getConfig().getBoolean("create_worlds")) {
-            if (getServer().getPluginManager().getPlugin("TARDISChunkGenerator") == null || (pm.getPlugin("Multiverse-Core") == null && pm.getPlugin("MultiWorld") == null)) {
+            if (pm.getPlugin("TARDISChunkGenerator") == null || (pm.getPlugin("Multiverse-Core") == null && pm.getPlugin("MultiWorld") == null)) {
                 getConfig().set("create_worlds", false);
                 saveConfig();
                 console.sendMessage(pluginName + ChatColor.RED + "Create Worlds was disabled as it requires a multi-world plugin and TARDISChunkGenerator!");

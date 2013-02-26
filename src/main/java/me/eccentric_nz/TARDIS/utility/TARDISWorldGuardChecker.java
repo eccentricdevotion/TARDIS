@@ -47,7 +47,7 @@ public class TARDISWorldGuardChecker {
     public TARDISWorldGuardChecker(TARDIS plugin) {
         this.plugin = plugin;
         if (plugin.worldGuardOnServer) {
-            wg = (WorldGuardPlugin) plugin.getServer().getPluginManager().getPlugin("WorldGuard");
+            wg = (WorldGuardPlugin) plugin.pm.getPlugin("WorldGuard");
         }
     }
 

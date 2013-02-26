@@ -96,6 +96,7 @@ public class TARDISAdminCommands implements CommandExecutor {
         firstsStr.add("recharger");
         firstsStr.add("reload");
         // boolean
+        firstsBool.add("add_perms");
         firstsBool.add("bonus_chest");
         firstsBool.add("chameleon");
         firstsBool.add("check_for_updates");
