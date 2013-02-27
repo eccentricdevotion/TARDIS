@@ -28,6 +28,7 @@ import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.thirdparty.Version;
+import me.eccentric_nz.TARDIS.travel.TARDISFarmer;
 import me.eccentric_nz.TARDIS.utility.TARDISItemRenamer;
 import multiworld.MultiWorldPlugin;
 import multiworld.api.MultiWorldAPI;
@@ -345,6 +346,11 @@ public class TARDISDoorListener implements Listener {
                                                         tmp_loc.setX(getx - 0.5);
                                                         tmp_loc.setZ(getz + 0.5);
                                                         break;
+                                                }
+                                                // check for entities in the police box
+                                                if (plugin.getConfig().getBoolean("allow_mob_farming")) {
+                                                    TARDISFarmer tf = new TARDISFarmer(plugin);
+                                                    tf.farmAnimals(block_loc, d, id, player);
                                                 }
                                                 // enter TARDIS!
                                                 try {

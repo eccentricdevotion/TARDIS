@@ -96,3 +96,4 @@ jettison: 75
 jettison_seed: TNT
 inventory_group: 0
 add_perms: true
+allow_mob_farming: true

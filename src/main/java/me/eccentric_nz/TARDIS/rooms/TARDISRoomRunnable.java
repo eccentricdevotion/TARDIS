@@ -176,6 +176,17 @@ public class TARDISRoomRunnable implements Runnable {
                 wherec.put("tardis_id", tardis_id);
                 qf.doUpdate("tardis", setc, wherec);
             }
+            // set farm
+            if (id == 16 && room.equals("FARM")) {
+                HashMap<String, Object> setf = new HashMap<String, Object>();
+                setf.put("farm", world.getName() + ":" + startx + ":" + starty + ":" + startz);
+                HashMap<String, Object> wheref = new HashMap<String, Object>();
+                wheref.put("tardis_id", tardis_id);
+                qf.doUpdate("tardis", setf, wheref);
+                // replace with light grey wool
+                id = 35;
+                data = (byte) 8;
+            }
             // always remove sponge
             if (id == 19) {
                 id = 0;

@@ -97,6 +97,7 @@ public class TARDISAdminCommands implements CommandExecutor {
         firstsStr.add("reload");
         // boolean
         firstsBool.add("add_perms");
+        firstsBool.add("allow_mob_farming");
         firstsBool.add("bonus_chest");
         firstsBool.add("chameleon");
         firstsBool.add("check_for_updates");
