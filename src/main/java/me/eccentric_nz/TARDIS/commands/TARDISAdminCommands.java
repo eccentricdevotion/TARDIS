@@ -139,7 +139,9 @@ public class TARDISAdminCommands implements CommandExecutor {
         firstsRoom.add("arboretum");
         firstsRoom.add("baker");
         firstsRoom.add("bedroom");
+        firstsRoom.add("cross");
         firstsRoom.add("empty");
+        firstsRoom.add("farm");
         firstsRoom.add("gravity");
         firstsRoom.add("harmony");
         firstsRoom.add("kitchen");

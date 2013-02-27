@@ -72,6 +72,12 @@ rooms:
   WOOD:
     cost: 350
     seed: WOOD
+  FARM:
+    cost: 350
+    seed: DIRT
+  CROSS:
+    cost: 350
+    seed: SOUL_SAND
 #artron energy
 player: 25
 random: 75

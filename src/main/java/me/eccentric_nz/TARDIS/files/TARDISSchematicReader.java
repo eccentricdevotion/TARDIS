@@ -116,6 +116,11 @@ public class TARDISSchematicReader {
                     plugin.antigravitydimensions[1] = width;
                     plugin.antigravitydimensions[2] = length;
                     break;
+                case CROSS:
+                    plugin.crossdimensions[0] = height;
+                    plugin.crossdimensions[1] = width;
+                    plugin.crossdimensions[2] = length;
+                    break;
                 default:
                     plugin.roomdimensions[0] = height;
                     plugin.roomdimensions[1] = width;

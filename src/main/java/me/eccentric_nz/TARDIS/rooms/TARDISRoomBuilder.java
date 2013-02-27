@@ -205,6 +205,14 @@ public class TARDISRoomBuilder {
                     s = plugin.woodschematic;
                     dimensions = plugin.roomdimensions;
                     break;
+                case FARM:
+                    s = plugin.farmschematic;
+                    dimensions = plugin.roomdimensions;
+                    break;
+                case CROSS:
+                    s = plugin.crossschematic;
+                    dimensions = plugin.crossdimensions;
+                    break;
                 default:
                     // PASSAGE
                     s = (d.equals(COMPASS.EAST) || d.equals(COMPASS.WEST)) ? plugin.passageschematic_EW : plugin.passageschematic;
