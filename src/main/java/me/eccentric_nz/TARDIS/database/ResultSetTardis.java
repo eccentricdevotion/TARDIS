@@ -73,6 +73,7 @@ public class ResultSetTardis {
     private String handbrake;
     private boolean handbrake_on;
     private boolean tardis_init;
+    private boolean recharging;
     private String scanner;
     private String farm;
     private ArrayList<HashMap<String, String>> data = new ArrayList<HashMap<String, String>>();
@@ -173,6 +174,7 @@ public class ResultSetTardis {
                     this.handbrake = rs.getString("handbrake");
                     this.handbrake_on = rs.getBoolean("handbrake_on");
                     this.tardis_init = rs.getBoolean("tardis_init");
+                    this.recharging = rs.getBoolean("recharging");
                     this.scanner = rs.getString("scanner");
                     this.farm = rs.getString("farm");
                 }
@@ -319,6 +321,10 @@ public class ResultSetTardis {
 
     public boolean isTardis_init() {
         return tardis_init;
+    }
+
+    public boolean isRecharging() {
+        return recharging;
     }
 
     public String getScanner() {

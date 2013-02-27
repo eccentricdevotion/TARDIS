@@ -60,6 +60,7 @@ public class TARDISDatabaseUpdater {
         tardisupdates.add("handbrake_on INT DEFAULT 1");
         tardisupdates.add("middle_data INTEGER");
         tardisupdates.add("middle_id INTEGER");
+        tardisupdates.add("recharging INTEGER DEFAULT 0");
         tardisupdates.add("scanner TEXT DEFAULT ''");
         tardisupdates.add("tardis_init INTEGER DEFAULT 0");
         tardisupdates.add("farm TEXT default ''");
