@@ -100,6 +100,7 @@ permissions:
       tardis.room.baker: true
       tardis.room.bedroom: true
       tardis.room.empty: true
+      tardis.room.farm: true
       tardis.room.gravity: true
       tardis.room.harmony: true
       tardis.room.kitchen: true
