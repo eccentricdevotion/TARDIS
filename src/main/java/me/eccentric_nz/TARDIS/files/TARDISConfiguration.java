@@ -51,6 +51,7 @@ public class TARDISConfiguration {
         // boolean
         boolOptions.put("allow_mob_farming", true);
         boolOptions.put("add_perms", true);
+        boolOptions.put("allow_autonomous", true);
         boolOptions.put("bonus_chest", true);
         boolOptions.put("chameleon", true);
         boolOptions.put("check_for_updates", true);
@@ -72,6 +73,7 @@ public class TARDISConfiguration {
         boolOptions.put("the_end", false);
         boolOptions.put("use_worldguard", true);
         // integer
+        intOptions.put("autonomous", 100);
         intOptions.put("border_radius", 64);
         intOptions.put("comehere", 400);
         intOptions.put("confirm_timeout", 15);

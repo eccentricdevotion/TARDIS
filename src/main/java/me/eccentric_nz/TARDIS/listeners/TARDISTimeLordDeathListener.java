@@ -53,73 +53,81 @@ public class TARDISTimeLordDeathListener implements Listener {
      */
     @EventHandler(priority = EventPriority.MONITOR)
     public void onTimeLordDeath(PlayerDeathEvent event) {
-        final Player player = event.getEntity();
-        String playerNameStr = player.getName();
-        HashMap<String, Object> where = new HashMap<String, Object>();
-        where.put("owner", playerNameStr);
-        ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
-        // are they a time lord?
-        if (rs.resultSet()) {
-            HashMap<String, Object> wherep = new HashMap<String, Object>();
-            wherep.put("player", playerNameStr);
-            ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, wherep);
-            if (rsp.resultSet()) {
-                // do they have the autonomous circuit on?
-                if (rsp.isAuto_on()) {
-                    Location death_loc = player.getLocation();
-                    String death_world = death_loc.getWorld().getName();
-                    int id = rs.getTardis_id();
-                    // where is the TARDIS Police Box?
-                    String save = (plugin.tardisHasDestination.containsKey(id)) ? rs.getCurrent() : rs.getSave();
-                    String[] save_data = save.split(":");
-                    World sw = plugin.getServer().getWorld(save_data[0]);
-                    int sx = plugin.utils.parseNum(save_data[1]);
-                    int sy = plugin.utils.parseNum(save_data[2]);
-                    int sz = plugin.utils.parseNum(save_data[3]);
-                    Location sl = new Location(sw, sx, sy, sz);
-                    // where is home?
-                    String home = rs.getHome();
-                    String[] home_data = home.split(":");
-                    World hw = plugin.getServer().getWorld(home_data[0]);
-                    int hx = plugin.utils.parseNum(home_data[1]);
-                    int hy = plugin.utils.parseNum(home_data[2]);
-                    int hz = plugin.utils.parseNum(home_data[3]);
-                    Location home_loc = new Location(hw, hx, hy, hz);
-                    Location goto_loc;
-                    // if home world is NOT the death world
-                    if (!home_data[0].equals(death_world)) {
-                        // look for a recharge location
-                        goto_loc = getRecharger(death_world, player);
-                        if (goto_loc == null) {
-                            // no parking spots - default to TARDIS home location
-                            goto_loc = home_loc;
-                        }
-                    } else {
-                        // died in home world get closest location
-                        Location recharger = getRecharger(death_world, player);
-                        if (recharger != null) {
-                            // which is closer?
-                            goto_loc = (death_loc.distanceSquared(home_loc) > death_loc.distanceSquared(recharger)) ? recharger : home_loc;
-                        } else {
-                            // no parking spots - set to TARDIS home location
-                            goto_loc = home_loc;
+        if (plugin.getConfig().getBoolean("allow_autonomous")) {
+            final Player player = event.getEntity();
+            if (player.hasPermission("tardis.autonomous")) {
+                String playerNameStr = player.getName();
+                HashMap<String, Object> where = new HashMap<String, Object>();
+                where.put("owner", playerNameStr);
+                ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
+                // are they a time lord?
+                if (rs.resultSet()) {
+                    HashMap<String, Object> wherep = new HashMap<String, Object>();
+                    wherep.put("player", playerNameStr);
+                    ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, wherep);
+                    if (rsp.resultSet()) {
+                        // do they have the autonomous circuit on?
+                        if (rsp.isAuto_on()) {
+                            Location death_loc = player.getLocation();
+                            String death_world = death_loc.getWorld().getName();
+                            int id = rs.getTardis_id();
+                            // where is the TARDIS Police Box?
+                            String save = (plugin.tardisHasDestination.containsKey(id)) ? rs.getCurrent() : rs.getSave();
+                            String[] save_data = save.split(":");
+                            World sw = plugin.getServer().getWorld(save_data[0]);
+                            int sx = plugin.utils.parseNum(save_data[1]);
+                            int sy = plugin.utils.parseNum(save_data[2]);
+                            int sz = plugin.utils.parseNum(save_data[3]);
+                            Location sl = new Location(sw, sx, sy, sz);
+                            // where is home?
+                            String home = rs.getHome();
+                            String[] home_data = home.split(":");
+                            World hw = plugin.getServer().getWorld(home_data[0]);
+                            int hx = plugin.utils.parseNum(home_data[1]);
+                            int hy = plugin.utils.parseNum(home_data[2]);
+                            int hz = plugin.utils.parseNum(home_data[3]);
+                            Location home_loc = new Location(hw, hx, hy, hz);
+                            Location goto_loc;
+                            // if home world is NOT the death world
+                            if (!home_data[0].equals(death_world)) {
+                                // look for a recharge location
+                                goto_loc = getRecharger(death_world, player);
+                                if (goto_loc == null) {
+                                    // no parking spots - default to TARDIS home location
+                                    goto_loc = home_loc;
+                                }
+                            } else {
+                                // died in home world get closest location
+                                Location recharger = getRecharger(death_world, player);
+                                if (recharger != null) {
+                                    // which is closer?
+                                    goto_loc = (death_loc.distanceSquared(home_loc) > death_loc.distanceSquared(recharger)) ? recharger : home_loc;
+                                } else {
+                                    // no parking spots - set to TARDIS home location
+                                    goto_loc = home_loc;
+                                }
+                            }
+                            // destroy police box
+                            COMPASS d = rs.getDirection();
+                            plugin.destroyPB.destroyPlatform(rs.getPlatform(), id);
+                            plugin.destroyPB.destroySign(sl, d);
+                            plugin.destroyPB.destroyTorch(sl);
+                            plugin.destroyPB.destroyPoliceBox(sl, d, id, false);
+                            // rebuild police box
+                            plugin.buildPB.buildPoliceBox(id, goto_loc, d, rs.isChamele_on(), player, false);
+                            String save_loc = goto_loc.getWorld().getName() + ":" + goto_loc.getBlockX() + ":" + goto_loc.getBlockY() + ":" + goto_loc.getBlockZ();
+                            QueryFactory qf = new QueryFactory(plugin);
+                            HashMap<String, Object> tid = new HashMap<String, Object>();
+                            HashMap<String, Object> set = new HashMap<String, Object>();
+                            tid.put("tardis_id", id);
+                            set.put("save", save_loc);
+                            qf.doUpdate("tardis", set, tid);
+                            HashMap<String, Object> wherea = new HashMap<String, Object>();
+                            wherea.put("tardis_id", id);
+                            int amount = plugin.getConfig().getInt("autonomous") * -1;
+                            qf.alterEnergyLevel("tardis", amount, wherea, player);
                         }
                     }
-                    // destroy police box
-                    COMPASS d = rs.getDirection();
-                    plugin.destroyPB.destroyPlatform(rs.getPlatform(), id);
-                    plugin.destroyPB.destroySign(sl, d);
-                    plugin.destroyPB.destroyTorch(sl);
-                    plugin.destroyPB.destroyPoliceBox(sl, d, id, false);
-                    // rebuild police box
-                    plugin.buildPB.buildPoliceBox(id, goto_loc, d, rs.isChamele_on(), player, false);
-                    String save_loc = goto_loc.getWorld().getName() + ":" + goto_loc.getBlockX() + ":" + goto_loc.getBlockY() + ":" + goto_loc.getBlockZ();
-                    QueryFactory qf = new QueryFactory(plugin);
-                    HashMap<String, Object> tid = new HashMap<String, Object>();
-                    HashMap<String, Object> set = new HashMap<String, Object>();
-                    tid.put("tardis_id", id);
-                    set.put("save", save_loc);
-                    qf.doUpdate("tardis", set, tid);
                 }
             }
         }

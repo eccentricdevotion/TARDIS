@@ -110,6 +110,9 @@ permissions:
       tardis.room.wood: true
       tardis.room.workshop: true
     default: op
+  tardis.autonomous:
+    description: Allow players to use the TARDIS autonomous homing function.
+    default: op
 commands:
   tardis:
     description: Manipulate TARDISs (TARDII?) with various arguments (list, save, find, help, etc). Type /TARDIS help - to see more.

@@ -98,6 +98,7 @@ public class TARDISAdminCommands implements CommandExecutor {
         // boolean
         firstsBool.add("add_perms");
         firstsBool.add("allow_mob_farming");
+        firstsBool.add("allow_autonomous");
         firstsBool.add("bonus_chest");
         firstsBool.add("chameleon");
         firstsBool.add("check_for_updates");
@@ -119,6 +120,7 @@ public class TARDISAdminCommands implements CommandExecutor {
         firstsBool.add("the_end");
         firstsBool.add("use_worldguard");
         // integer
+        firstsInt.add("autonomous");
         firstsInt.add("border_radius");
         firstsInt.add("comehere");
         firstsInt.add("confirm_timeout");

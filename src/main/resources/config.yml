@@ -91,9 +91,11 @@ lightning_recharge: 300
 creeper_recharge: 150
 full_charge: 5000
 full_charge_item: NETHER_STAR
+autonomous: 100
 # jettison is a percentage of orginal room cost
 jettison: 75
 jettison_seed: TNT
 inventory_group: 0
 add_perms: true
 allow_mob_farming: true
+allow_autonomous: true
