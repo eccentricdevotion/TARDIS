@@ -1,13 +1,8 @@
 # TODO
 ## Current version `2.1-beta`
-1. `/tardis direction` consumes Artron Energy
-2. Add a autonomous config option to allow turning it on and off on a server basis
-3. Add an autonomous Artron Energy cost
-3. Add an autonomous permission
-3. Add cunks command to docs
+3. Add chunks command to docs
 4. Add pre-beacon (1.4.2) bukkit versions can use REDSTONE_LAMP_ON as a recharger instead to docs
 5. Add `spawn-protection=0` to docs
-6. If `default_world: true`, don't create a TARDIS world, as `create_worlds` may still be true in config!
 7. Fix Police Box door opening incorrectly in some directions when SHIFT-clicked
 8. Revamp Spout sounds [started]
 9. Add a schematic to CSV converter.

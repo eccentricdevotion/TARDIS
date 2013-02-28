@@ -1064,6 +1064,12 @@ public class TARDISCommands implements CommandExecutor {
                             return false;
                         }
                         int id = rs.getTardis_id();
+                        int level = rs.getArtron_level();
+                        int amount = plugin.getConfig().getInt("random");
+                        if (level < amount) {
+                            sender.sendMessage(plugin.pluginName + "The TARDIS does not have enough Artron Energy to change the Police Box direction!");
+                            return true;
+                        }
                         String save = (plugin.tardisHasDestination.containsKey(id)) ? rs.getCurrent() : rs.getSave();
                         String[] save_data = save.split(":");
                         if (plugin.tardisMaterialising.contains(id)) {
@@ -1098,6 +1104,10 @@ public class TARDISCommands implements CommandExecutor {
                         plugin.destroyPB.destroyPlatform(rs.getPlatform(), id);
                         plugin.destroyPB.destroySign(l, old_d);
                         plugin.buildPB.buildPoliceBox(id, l, d, cham, player, true);
+                        HashMap<String, Object> wherea = new HashMap<String, Object>();
+                        wherea.put("tardis_id", id);
+                        qf.alterEnergyLevel("tardis", -amount, wherea, player);
+                        sender.sendMessage(plugin.pluginName + "You used " + amount + " Artron Energy changing the Police Box direction.");
                         return true;
                     } else {
                         sender.sendMessage(plugin.pluginName + TARDISConstants.NO_PERMS_MESSAGE);
