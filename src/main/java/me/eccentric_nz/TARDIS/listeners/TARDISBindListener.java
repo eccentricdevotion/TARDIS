@@ -52,7 +52,7 @@ public class TARDISBindListener implements Listener {
     public TARDISBindListener(TARDIS plugin) {
         this.plugin = plugin;
         String[] v = Bukkit.getServer().getBukkitVersion().split("-");
-        bukkitversion = new Version(v[0]);
+        bukkitversion = (!v[0].equalsIgnoreCase("unknown")) ? new Version(v[0]) : new Version("1.4.7");
 
         validBlocks.add(Material.WALL_SIGN);
         validBlocks.add(Material.SIGN_POST);

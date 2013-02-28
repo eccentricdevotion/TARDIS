@@ -154,7 +154,7 @@ public class TARDISAdminCommands implements CommandExecutor {
         firstsRoom.add("workshop");
 
         String[] v = Bukkit.getServer().getBukkitVersion().split("-");
-        bukkitversion = new Version(v[0]);
+        bukkitversion = (!v[0].equalsIgnoreCase("unknown")) ? new Version(v[0]) : new Version("1.4.7");
         if (bukkitversion.compareTo(prebeaconversion) >= 0) {
             charger = Material.BEACON;
         }

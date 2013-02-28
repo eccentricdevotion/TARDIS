@@ -92,8 +92,8 @@ public class TARDISDoorListener implements Listener {
         adjustYaw[3][3] = 0;
 
         String[] v = Bukkit.getServer().getBukkitVersion().split("-");
-        bukkitversion = new Version(v[0]);
-        SUBversion = new Version(v[1].substring(1, v[1].length()));
+        bukkitversion = (!v[0].equalsIgnoreCase("unknown")) ? new Version(v[0]) : new Version("1.4.7");
+        SUBversion = (!v[0].equalsIgnoreCase("unknown")) ? new Version(v[1].substring(1, v[1].length())) : new Version("4.7");
     }
 
     /**
