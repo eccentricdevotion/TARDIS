@@ -120,7 +120,7 @@ public class TARDISBlockPlaceListener implements Listener {
                         int cz;
                         String cw;
                         final World chunkworld;
-                        if (plugin.getConfig().getBoolean("create_worlds")) {
+                        if (plugin.getConfig().getBoolean("create_worlds") && !plugin.getConfig().getBoolean("default_world")) {
                             // create a new world to store this TARDIS
                             cw = "TARDIS_WORLD_" + playerNameStr;
                             TARDISSpace space = new TARDISSpace(plugin);
