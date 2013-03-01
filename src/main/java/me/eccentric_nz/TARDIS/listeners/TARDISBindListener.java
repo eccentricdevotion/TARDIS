@@ -138,7 +138,7 @@ public class TARDISBindListener implements Listener {
                                         player.performCommand("tardistravel area " + dest_name);
                                         plugin.console.sendMessage(player.getName() + " issued server command: /tardistravel area " + dest_name);
                                         break;
-                                    default: // save
+                                    default: // (0) save
                                         player.performCommand("tardistravel dest " + dest_name);
                                         plugin.console.sendMessage(player.getName() + " issued server command: /tardistravel dest " + dest_name);
                                 }

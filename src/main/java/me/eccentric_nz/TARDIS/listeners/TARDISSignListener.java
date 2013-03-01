@@ -142,8 +142,7 @@ public class TARDISSignListener implements Listener {
                                         if (home.equals("")) {
                                             home = "Home:" + rs.getHome();
                                         }
-                                        String dest = map.get("dest_name");
-                                        if (!dest.equals("hide") && !dest.equals("rebuild") && !dest.equals("home")) {
+                                        if (map.get("type").equals("0")) {
                                             dests.add(map.get("dest_name") + ":" + map.get("world") + ":" + map.get("x") + ":" + map.get("y") + ":" + map.get("z"));
                                         }
                                     }
