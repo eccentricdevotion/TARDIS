@@ -47,7 +47,7 @@ public class TARDISDatabaseUpdater {
         destupdates.add("bind TEXT DEFAULT ''");
         prefsupdates.add("artron_level INTEGER DEFAULT 0");
         prefsupdates.add("auto_on INTEGER DEFAULT 0");
-        prefsupdates.add("wall TEXT DEFAULT ''");
+        prefsupdates.add("wall TEXT DEFAULT `ORANGE_WOOL`");
         tardisupdates.add("artron_button TEXT DEFAULT ''");
         tardisupdates.add("artron_level INTEGER DEFAULT 0");
         tardisupdates.add("condenser TEXT DEFAULT ''");
@@ -58,6 +58,7 @@ public class TARDISDatabaseUpdater {
         tardisupdates.add("middle_id INTEGER");
         tardisupdates.add("scanner TEXT DEFAULT ''");
         tardisupdates.add("tardis_init INTEGER DEFAULT 0");
+        tardisupdates.add("recharging INTEGER DEFAULT 0");
     }
 
     /**
@@ -114,9 +115,8 @@ public class TARDISDatabaseUpdater {
         } catch (SQLException e) {
             TARDIS.plugin.debug("Database add fields error: " + e.getMessage());
         }
-        TARDIS.plugin.console.sendMessage(TARDIS.plugin.pluginName + "Added " + ChatColor.AQUA + i + ChatColor.RESET + " fields to the database!");
+        if (i > 0) {
+            TARDIS.plugin.console.sendMessage(TARDIS.plugin.pluginName + "Added " + ChatColor.AQUA + i + ChatColor.RESET + " fields to the database!");
+        }
     }
 }
-/*
-
- */

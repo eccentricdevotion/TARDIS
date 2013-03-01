@@ -408,7 +408,7 @@ public class TARDIS extends JavaPlugin {
      * the server.
      */
     private void startSound() {
-        if (plugin.getServer().getPluginManager().getPlugin("Spout") != null && getConfig().getBoolean("sfx")) {
+        if (this.getServer().getPluginManager().getPlugin("Spout") != null && getConfig().getBoolean("sfx")) {
             this.getServer().getScheduler().scheduleSyncRepeatingTask(this, new Runnable() {
                 @Override
                 public void run() {
@@ -510,7 +510,7 @@ public class TARDIS extends JavaPlugin {
      * is read onEnable() and the tardisChunkList is re-populated.
      */
     public void saveChunks() {
-        plugin.debug("Saving Police Box chunks to file!");
+        debug("Saving Police Box chunks to file!");
         if (tardisChunkList.size() > 0) {
             String file = getDataFolder() + File.separator + "chunks.txt";
             try {
@@ -522,7 +522,7 @@ public class TARDIS extends JavaPlugin {
                 }
                 bw.close();
             } catch (IOException e) {
-                plugin.debug("Could not create and write to chunks.txt! " + e.getMessage());
+                debug("Could not create and write to chunks.txt! " + e.getMessage());
             }
         }
     }
@@ -551,9 +551,9 @@ public class TARDIS extends JavaPlugin {
                     c.load();
                 }
                 br.close();
-                plugin.debug("Loading chunks from chunks.txt!");
+                debug("Loading chunks from chunks.txt!");
             } catch (IOException e) {
-                plugin.debug("Could not create and write to chunks.txt! " + e.getMessage());
+                debug("Could not create and write to chunks.txt! " + e.getMessage());
             }
         }
     }
