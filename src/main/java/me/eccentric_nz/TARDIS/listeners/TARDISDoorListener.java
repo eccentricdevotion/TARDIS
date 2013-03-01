@@ -376,7 +376,7 @@ public class TARDISDoorListener implements Listener {
                                                         break;
                                                 }
                                                 // check for entities in the police box
-                                                if (plugin.getConfig().getBoolean("allow_mob_farming")) {
+                                                if (plugin.getConfig().getBoolean("allow_mob_farming") && player.hasPermission("tardis.farm")) {
                                                     TARDISFarmer tf = new TARDISFarmer(plugin);
                                                     tf.farmAnimals(block_loc, d, id, player);
                                                 }
