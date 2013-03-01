@@ -51,7 +51,7 @@ public class TARDISDatabaseUpdater {
         prefsupdates.add("key TEXT DEFAULT ''");
         prefsupdates.add("artron_level INTEGER DEFAULT 0");
         prefsupdates.add("auto_on INTEGER DEFAULT 0");
-        prefsupdates.add("wall TEXT DEFAULT ''");
+        prefsupdates.add("wall TEXT DEFAULT `ORANGE_WOOL`");
         tardisupdates.add("artron_button TEXT DEFAULT ''");
         tardisupdates.add("artron_level INTEGER DEFAULT 0");
         tardisupdates.add("chameleon_id INTEGER DEFAULT 35");
