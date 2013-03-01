@@ -40,6 +40,11 @@
         <p>If the Multiverse-Inventories plugin is enabled on the server, this option sets the world group TARDIS worlds are automatically added to when they are created. If you don&rsquo;t wish to use this feature (even if Multiverse-Inventories is installed) set it to <code>0</code></p>
         <pre><code>inventory_group: [world group name|0]</code></pre>
         <p>The default is <code>0</code>.</p>
+        <h2>Permissions</h2>
+        <p>If the server uses a permissions plugin with per-world config files (such as Essentials GroupManager), then you can automatically set the player's permissions for TARDIS worlds.</p>
+        <pre><code>add_perms: [true|false]</code></pre>
+        <p>The default is <code>true</code>.</p>
+        <p>To set up the permissions that the player receives, edit the <em>permissions.txt</em> file in the plugins/TARDIS folder. For more information on setting this up visit the <a href="add-permissions.html">Add permissions</a> page.</p>
         <h2>Default world</h2>
         <p>Set whether the (inner) TARDIS is constructed in a specific world (for instance a FLAT world).</p>
         <pre><code>default_world: [true|false]</code></pre>
