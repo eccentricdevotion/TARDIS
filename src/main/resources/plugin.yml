@@ -99,7 +99,9 @@ permissions:
       tardis.room.arboretum: true
       tardis.room.baker: true
       tardis.room.bedroom: true
+      tardis.room.cross: true
       tardis.room.empty: true
+      tardis.room.farm: true
       tardis.room.gravity: true
       tardis.room.harmony: true
       tardis.room.kitchen: true
@@ -110,6 +112,9 @@ permissions:
       tardis.room.wood: true
       tardis.room.workshop: true
     default: op
+  tardis.farm:
+    description: Allow players to farm mobs.
+    default: op
   tardis.autonomous:
     description: Allow players to use the TARDIS autonomous homing function.
     default: op
@@ -118,7 +123,7 @@ commands:
     description: Manipulate TARDISs (TARDII?) with various arguments (list, save, find, help, etc). Type /TARDIS help - to see more.
     chameleon:
       description: Toggle the TARDIS Chameleon Circuit on and off.
-      usage: /<command> chameleon [on|off]
+      usage: /<command> chameleon [on|off|short|reset]
       permission: tardis.timetravel
       permission-message: You don't have the permission <permission> to use this command
     list:
