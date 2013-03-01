@@ -46,6 +46,7 @@ public class ResultSetDoors {
     private int door_type;
     private String door_location;
     private TARDISConstants.COMPASS door_direction;
+    private boolean locked;
     private ArrayList<HashMap<String, String>> data = new ArrayList<HashMap<String, String>>();
 
     /**
@@ -111,6 +112,7 @@ public class ResultSetDoors {
                     this.door_type = rs.getInt("door_type");
                     this.door_location = rs.getString("door_location");
                     this.door_direction = TARDISConstants.COMPASS.valueOf(rs.getString("door_direction"));
+                    this.locked = rs.getBoolean("locked");
                 }
             } else {
                 return false;
@@ -151,6 +153,10 @@ public class ResultSetDoors {
 
     public TARDISConstants.COMPASS getDoor_direction() {
         return door_direction;
+    }
+
+    public boolean isLocked() {
+        return locked;
     }
 
     public ArrayList<HashMap<String, String>> getData() {

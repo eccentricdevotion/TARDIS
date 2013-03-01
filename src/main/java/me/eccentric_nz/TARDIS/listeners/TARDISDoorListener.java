@@ -146,6 +146,31 @@ public class TARDISDoorListener implements Listener {
                     if ((rsd.resultSet())) {
                         if (material == m) {
                             TARDISConstants.COMPASS dd = rsd.getDoor_direction();
+                            int doortype = rsd.getDoor_type();
+                            if (action == Action.LEFT_CLICK_BLOCK) {
+                                if (doortype == 0) {
+                                    // must be the owner
+                                    int id = rsd.getTardis_id();
+                                    HashMap<String, Object> oid = new HashMap<String, Object>();
+                                    oid.put("owner", player.getName());
+                                    ResultSetTardis rs = new ResultSetTardis(plugin, oid, "", false);
+                                    if (rs.resultSet()) {
+                                        if (rs.getTardis_id() != id) {
+                                            player.sendMessage(plugin.pluginName + "You can only lock or unlock your own door!");
+                                            return;
+                                        }
+                                        int locked = (rsd.isLocked()) ? 0 : 1;
+                                        String message = (rsd.isLocked()) ? "unlocked" : "locked";
+                                        HashMap<String, Object> setl = new HashMap<String, Object>();
+                                        setl.put("locked", locked);
+                                        HashMap<String, Object> wherel = new HashMap<String, Object>();
+                                        wherel.put("tardis_id", rsd.getTardis_id());
+                                        wherel.put("door_type", 0);
+                                        qf.doUpdate("doors", setl, wherel);
+                                        player.sendMessage(plugin.pluginName + "The door was " + message);
+                                    }
+                                }
+                            }
                             if (action == Action.RIGHT_CLICK_BLOCK && player.isSneaking()) {
                                 // toogle the door open/closed
                                 Block door_bottom;
@@ -185,7 +210,6 @@ public class TARDISDoorListener implements Listener {
                                 playerWorld.playEffect(block_loc, Effect.DOOR_TOGGLE, 0);
                             } else if (action == Action.RIGHT_CLICK_BLOCK) {
                                 int id = rsd.getTardis_id();
-                                int doortype = rsd.getDoor_type();
                                 HashMap<String, Object> tid = new HashMap<String, Object>();
                                 tid.put("tardis_id", id);
                                 ResultSetTardis rs = new ResultSetTardis(plugin, tid, "", false);
@@ -276,6 +300,10 @@ public class TARDISDoorListener implements Listener {
                                         // is the TARDIS materialising?
                                         if (plugin.tardisMaterialising.contains(id)) {
                                             player.sendMessage(plugin.pluginName + "The TARDIS is still travelling... you would get lost in the time vortex!");
+                                            return;
+                                        }
+                                        if (rsd.isLocked()) {
+                                            player.sendMessage(plugin.pluginName + "The door is locked!");
                                             return;
                                         }
                                         boolean chkCompanion = false;
@@ -399,15 +427,15 @@ public class TARDISDoorListener implements Listener {
                                         }
                                     }
                                 }
-                            } else {
-                                String grammar;
-                                if (!material.equals(Material.AIR)) {
-                                    grammar = (TARDISConstants.vowels.contains(material.toString().substring(0, 1))) ? "an " + material : "a " + material;
-                                } else {
-                                    grammar = "nothing";
-                                }
-                                player.sendMessage(plugin.pluginName + "The TARDIS key is a " + key + ". You have " + grammar + " in your hand!");
                             }
+                        } else {
+                            String grammar;
+                            if (!material.equals(Material.AIR)) {
+                                grammar = (TARDISConstants.vowels.contains(material.toString().substring(0, 1))) ? "an " + material : "a " + material;
+                            } else {
+                                grammar = "nothing";
+                            }
+                            player.sendMessage(plugin.pluginName + "The TARDIS key is a " + key + ". You have " + grammar + " in your hand!");
                         }
                     }
                 } else {

@@ -36,6 +36,7 @@ public class TARDISDatabaseUpdater {
     private List<String> areaupdates = new ArrayList<String>();
     private List<String> blockupdates = new ArrayList<String>();
     private List<String> destupdates = new ArrayList<String>();
+    private List<String> doorupdates = new ArrayList<String>();
     private List<String> prefsupdates = new ArrayList<String>();
     private List<String> tardisupdates = new ArrayList<String>();
     private Statement statement;
@@ -46,6 +47,7 @@ public class TARDISDatabaseUpdater {
         blockupdates.add("police_box INTEGER DEFAULT 0");
         destupdates.add("bind TEXT DEFAULT ''");
         destupdates.add("type INTEGER DEFAULT 0");
+        doorupdates.add("locked INTEGER DEFAULT 0");
         prefsupdates.add("key TEXT DEFAULT ''");
         prefsupdates.add("artron_level INTEGER DEFAULT 0");
         prefsupdates.add("auto_on INTEGER DEFAULT 0");
