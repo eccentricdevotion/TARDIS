@@ -101,6 +101,15 @@ public class TARDISDatabaseUpdater {
                     statement.executeUpdate(d_alter);
                 }
             }
+            for (String o : doorupdates) {
+                String o_query = "SELECT sql FROM sqlite_master WHERE tbl_name = 'doors' AND sql LIKE '%" + o + "%'";
+                ResultSet rso = statement.executeQuery(o_query);
+                if (!rso.next()) {
+                    i++;
+                    String o_alter = "ALTER TABLE doors ADD " + o;
+                    statement.executeUpdate(o_alter);
+                }
+            }
             for (String p : prefsupdates) {
                 String p_query = "SELECT sql FROM sqlite_master WHERE tbl_name = 'player_prefs' AND sql LIKE '%" + p + "%'";
                 ResultSet rsp = statement.executeQuery(p_query);
