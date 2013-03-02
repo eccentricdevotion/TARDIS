@@ -51,7 +51,6 @@ public class TARDISDatabaseUpdater {
         prefsupdates.add("key TEXT DEFAULT ''");
         prefsupdates.add("artron_level INTEGER DEFAULT 0");
         prefsupdates.add("auto_on INTEGER DEFAULT 0");
-        prefsupdates.add("wall TEXT DEFAULT `ORANGE_WOOL`");
         tardisupdates.add("artron_button TEXT DEFAULT ''");
         tardisupdates.add("artron_level INTEGER DEFAULT 0");
         tardisupdates.add("chameleon_id INTEGER DEFAULT 35");
@@ -118,6 +117,12 @@ public class TARDISDatabaseUpdater {
                     String p_alter = "ALTER TABLE player_prefs ADD " + p;
                     statement.executeUpdate(p_alter);
                 }
+            }
+            String pp_query = "SELECT sql FROM sqlite_master WHERE tbl_name = 'player_prefs' AND sql LIKE '%wall TEXT DEFAULT%'";
+            ResultSet rspp = statement.executeQuery(pp_query);
+            if (!rspp.next()) {
+                String pp_alter = "ALTER TABLE player_prefs ADD wall TEXT DEFAULT 'ORANGE_WOOL'";
+                statement.executeUpdate(pp_alter);
             }
             for (String t : tardisupdates) {
                 String t_query = "SELECT sql FROM sqlite_master WHERE tbl_name = 'tardis' AND sql LIKE '%" + t + "%'";
