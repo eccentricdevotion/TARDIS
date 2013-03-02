@@ -57,6 +57,7 @@ public class TARDISRoomRunnable implements Runnable {
     List<Chunk> chunkList = new ArrayList<Chunk>();
     List<Block> iceblocks = new ArrayList<Block>();
     List<Block> lampblocks = new ArrayList<Block>();
+    List<Block> caneblocks = new ArrayList<Block>();
 
     public TARDISRoomRunnable(TARDIS plugin, TARDISRoomData roomData, Player p) {
         this.plugin = plugin;
@@ -132,6 +133,10 @@ public class TARDISRoomRunnable implements Runnable {
                 ice.setTypeId(9);
             }
             iceblocks.clear();
+            // plant the sugar cane
+            for (Block cane : caneblocks) {
+                cane.setTypeId(83);
+            }
             // update lamp block states
             p.sendMessage(plugin.pluginName + "Turning on the lights!");
             for (Block lamp : lampblocks) {
@@ -182,6 +187,15 @@ public class TARDISRoomRunnable implements Runnable {
                 id = 35;
                 data = (byte) 8;
             }
+            // set farmland hydrated
+            if (id == 60 && data == 0) {
+                data = (byte) 4;
+            }
+            // remember sugar cane
+            if (id == 83) {
+                Block cane = world.getBlockAt(startx, starty, startz);
+                caneblocks.add(cane);
+            }
             // always remove sponge
             if (id == 19) {
                 id = 0;
@@ -212,7 +226,9 @@ public class TARDISRoomRunnable implements Runnable {
                 plugin.roomChunkList.add(thisChunk);
                 chunkList.add(thisChunk);
             }
-            plugin.utils.setBlock(world, startx, starty, startz, id, data);
+            if (id != 83) {
+                plugin.utils.setBlock(world, startx, starty, startz, id, data);
+            }
             // remember ice blocks
             if (id == 79) {
                 Block icy = world.getBlockAt(startx, starty, startz);
