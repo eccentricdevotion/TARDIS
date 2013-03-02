@@ -26,6 +26,35 @@
     <section>
         <h1>Change log</h1>
         <h2>What&rsquo;s been changed?</h2>
+        <h3>v2.1-beta-1</h3>
+        <ul>
+            <li>Players with the <code>tardis.skeletonkey</code> permissions can now enter any TARDIS whether hidden or otherwise with the command: <code>/tardis enter [player]</code></li>
+            <li>There is now a proper help message when using the <code>/tardis room help</code> and <code>/tardisprefs wall help</code> commands</li>
+            <li>Admin deleting a TARDIS with <code>/tardisadmin delete [player]</code> now properly removes the TARDIS world if <code>create_worlds</code> is true</li>
+            <li>TARDIS worlds are properly deleted even if <code>create_worlds</code> has been set to false after the TARDIS was created</li>
+            <li>Adjusted the update checker message so that servers are informed if a final release with the same base version number as a beta or pre-release has been uploaded</li>
+            <li>The TARDIS key is now a player preference, to set it use: <code>/tardisprefs key [material]</code> - if not set then the config default is used</li>
+            <li>Added an autonomous homing preference - if the player dies they can have the TARDIS fly home or to a recharge point (whichever is the closest). There is are config settings <code>allow_autonomous: [true|false]</code> and for Artron energy <code>autonomous: [cost]</code>, a permission node <code>tardis.autonomous</code> and the command to toggle it on and off <code>/tardisprefs auto [on|off]</code> - <a href="http://eccentricdevotion.github.com/TARDIS/autonomous.html">http://eccentricdevotion.github.com/TARDIS/autonomous.html</a></li>
+            <li>You can now open the TARDIS door by RIGHT-clicking it while SNEAKING (use left SHIFT key)</li>
+            <li>Time Lords can now lock their Police Box doors by LEFT-clicking them. No one will be able to enter (including the Time Lord) until it is unlocked. Use another LEFT-click to unlock it</li>
+            <li>Added the command <code>/tardisadmin decharge [name]</code> to remove recharge points from the config</li>
+            <li>Fixed bugs stopping the plugin from loading on Tekkit Classic servers</li>
+            <li>The room jettison seed block is now a configurable item - <code>jettison_seed: [material]</code> - the default is still TNT</li>
+            <li>The TARDIS\'s Chameleon Circuit can now be shorted out. This means you can always have a leaves or stone brick TARDIS if you really want. To short out the circuit use: <code>/tardis chameleon short</code> while targeting the block of your choice. To repair the circuit and use the regular Chameleon block type: <code>/tardis chameleon reset</code> - the circuit of course needs to be ON - <a href="http://eccentricdevotion.github.com/TARDIS/chameleon-circuit.html">http://eccentricdevotion.github.com/TARDIS/chameleon-circuit.html</a></li>
+            <li>The bind command has been changed to <code>/tardisbind [bind type] [name]</code> - this means you can now bind buttons to players and TARDIS areas as well as saved locations and the hide, rebuild and home commands - <a href="http://eccentricdevotion.github.com/TARDIS/bind-commands.html">http://eccentricdevotion.github.com/TARDIS/bind-commands.html</a></li>
+            <li>You can no longer run the <code>/tardis room</code> command leave the TARDIS world and grow a room in another location</li>
+            <li>Added simple support for the Factions plugin - location finding / checking now allows players to only land in their own faction space or wilderness. Has the config option: `respect_factions [true|false]</li>
+            <li>Added a way to set permissions for TARDIS worlds if using a permissions plugin that has a config file per world. Support is only for Essentials GroupManager and bPermissions at the moment. Set <code>add_perms: [true|false]</code> in the config, and add the permissions players should have in TARDIS worlds to the <em>plugins/TARDIS/permissions.txt</em> - more information: <a href="http://eccentricdevotion.github.com/TARDIS/add-permissions.html">http://eccentricdevotion.github.com/TARDIS/add-permissions.html</a></li>
+            <li>Fixed a bug when using <code>/tardis update door</code> and clicking on the top half of the door. Doors directions are now updated correctly</li>
+            <li>Added a farm room and the ability to farm mobs if they are captured in the Police Box. Config option <code>allow_mob_farming: [true|false]</code>, permission node <code>tardis.farm</code> - <a href="http://eccentricdevotion.github.com/TARDIS/farming.html">http://eccentricdevotion.github.com/TARDIS/farming.html</a></li>
+            <li>Fixed an error in lightning listener if you had a freshly installed v2.0 plugin - missing recharging database column in tardis table is now added correctly</li>
+            <li>Using <code>/tardis direction</code> now consumes Artron Energy (the same amount as random time travel)</li>
+            <li>Fixed a bug where TARDIS worlds were created even if <code>default_world</code> was true</li>
+            <li>Fixed the wall player preference field in the database not being populated with the default value. If you have a problem growing rooms use: <code>/tardisprefs wall [material]</code> to set your preference (should only apply to TARDIS created before updating to v2.0)</li>
+            <li>Fixed a bug with the TARDIS save-sign displaying \'bound\' player names and null, null, null</li>
+            <li>Added new rooms: crossroads, mushroom, long passage and greenhouse - see <a href="http://eccentricdevotion.github.com/TARDIS/rooms.html">http://eccentricdevotion.github.com/TARDIS/rooms.html</a> and <a href="http://eccentricdevotion.github.com/TARDIS/room-gallery.html">http://eccentricdevotion.github.com/TARDIS/room-gallery.html</a> - permissions: <code>tardis.cross</code>, <code>tardis.mushroom</code>, <code>tardis.long</code> and <code>tardis.greenhouse</code>. Thanks to @gaeasson for ideas and schematics</li>
+            <li>Fixed an error if typing <code>/tardisbind</code> with no arguments</li>
+        </ul>
         <h3>v2.0 (final release)</h3>
         <ul>
             <li>Added support for Multiverse-Inventories - TARDIS worlds are automatically added to the <code>inventory_group</code> specified in config.yml</li>
