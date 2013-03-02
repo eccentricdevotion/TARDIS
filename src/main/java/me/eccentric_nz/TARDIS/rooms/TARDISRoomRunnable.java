@@ -19,6 +19,7 @@ package me.eccentric_nz.TARDIS.rooms;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.TARDISConstants.COMPASS;
@@ -58,6 +59,7 @@ public class TARDISRoomRunnable implements Runnable {
     List<Block> iceblocks = new ArrayList<Block>();
     List<Block> lampblocks = new ArrayList<Block>();
     List<Block> caneblocks = new ArrayList<Block>();
+    HashMap<Block, Byte> cocoablocks = new HashMap<Block, Byte>();
 
     public TARDISRoomRunnable(TARDIS plugin, TARDISRoomData roomData, Player p) {
         this.plugin = plugin;
@@ -133,9 +135,17 @@ public class TARDISRoomRunnable implements Runnable {
                 ice.setTypeId(9);
             }
             iceblocks.clear();
-            // plant the sugar cane
-            for (Block cane : caneblocks) {
-                cane.setTypeId(83);
+            if (room.equals("GREENHOUSE")) {
+                // plant the sugar cane
+                for (Block cane : caneblocks) {
+                    cane.setTypeId(83);
+                }
+                caneblocks.clear();
+                // attach the cocoa
+                for (Map.Entry<Block, Byte> entry : cocoablocks.entrySet()) {
+                    entry.getKey().setTypeIdAndData(127, entry.getValue(), true);
+                }
+                cocoablocks.clear();
             }
             // update lamp block states
             p.sendMessage(plugin.pluginName + "Turning on the lights!");
@@ -191,10 +201,17 @@ public class TARDISRoomRunnable implements Runnable {
             if (id == 60 && data == 0) {
                 data = (byte) 4;
             }
-            // remember sugar cane
-            if (id == 83) {
-                Block cane = world.getBlockAt(startx, starty, startz);
-                caneblocks.add(cane);
+            if (room.equals("GREENHOUSE")) {
+                // remember sugar cane
+                if (id == 83) {
+                    Block cane = world.getBlockAt(startx, starty, startz);
+                    caneblocks.add(cane);
+                }
+                // remember cocoa
+                if (id == 127) {
+                    Block cocoa = world.getBlockAt(startx, starty, startz);
+                    cocoablocks.put(cocoa, data);
+                }
             }
             // always remove sponge
             if (id == 19) {
@@ -226,7 +243,7 @@ public class TARDISRoomRunnable implements Runnable {
                 plugin.roomChunkList.add(thisChunk);
                 chunkList.add(thisChunk);
             }
-            if (id != 83) {
+            if (id != 83 && id != 127) {
                 plugin.utils.setBlock(world, startx, starty, startz, id, data);
             }
             // remember ice blocks

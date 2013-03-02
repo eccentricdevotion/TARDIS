@@ -16,6 +16,8 @@
  */
 package me.eccentric_nz.TARDIS.rooms;
 
+import me.eccentric_nz.TARDIS.TARDISConstants.COMPASS;
+
 /**
  * Lady Calcula was the wife of Colonel Nasgard and the mother of Yarvell and
  * Davros, the latter by her lover Councillor Quested. She was a senior figure
@@ -44,7 +46,6 @@ public class TARDISDataRecalculator {
             case 108:
             case 109:
             case 114:
-            case 127: // cocoa
             case 128:
             case 134:
             case 135:
@@ -120,21 +121,22 @@ public class TARDISDataRecalculator {
                 }
                 break;
             // cocoa
-//            case 127:
-//                switch (bit) {
-//                    case 1:
-//                        data = 2;
-//                        break;
-//                    case 2:
-//                        data = 1;
-//                        break;
-//                    case 3:
-//                        data = 4;
-//                        break;
-//                    default:
-//                        data = 3;
-//                        break;
-//                }
+            case 127:
+                switch (bit) {
+                    case 1:
+                        data = 3;
+                        break;
+                    case 2:
+                        data = 0;
+                        break;
+                    case 3:
+                        data = 1;
+                        break;
+                    default:
+                        data = 2;
+                        break;
+                }
+                break;
             // buttons
             case 77:
             case 143:
