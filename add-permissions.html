@@ -1,0 +1,56 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="chrome=1">
+<title>TARDIS: Add permissions</title>
+<link rel="stylesheet" href="stylesheets/styles.css">
+<link rel="stylesheet" href="stylesheets/pygment_trac.css">
+<script src="javascripts/scale.fix.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+<!--[if lt IE 9]>
+<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+<![endif]-->
+</head>
+<body>
+<div class="wrapper">
+    <header>
+        <h1>TARDIS</h1>
+        <p>A Bukkit plugin for all Doctor Who fans - create and use a TARDIS! It's bigger on the inside!</p>
+        <p class="view"><a href="https://github.com/eccentricdevotion/TARDIS">View the Project on GitHub <small>eccentricdevotion/TARDIS</small></a></p>
+        <ul>
+            <li><a href="/TARDIS/">Back <strong>home</strong></a></li>
+            <li><a href="contents.html"><strong>Contents</strong> page</a></li>
+        </ul>
+    </header>
+    <section>
+        <h1>Add permissions</h1>
+        <p>If you are using a permissions manager that has per world config files, you would normally need to manually add permissions for players when they create a TARDIS in its own world. By setting <code>add_perms: true</code> in the TARDIS config file, you can get the plugin to automatically add a permissions group with your desired permissions attached to it.</p>
+        <p>To do this:</p>
+        <ol>
+            <li>With TARDIS installed, run the server once so that it creates its default files</li>
+            <li>Stop the server and edit <em>plugins/TARDIS/permissions.txt</em></li>
+            <li>Use the example (in file and) below:</li>
+        </ol>
+        <h3>Example permissions.txt</h3>
+        <pre><code>tardis_users
+tardis.use
+tardis.room
+tardis.timetravel.player
+tardis.timetravel.location
+-tardis.exile</code></pre>
+        <ul>
+            <li>The first line is the name of the permissions group the player should be added to</li>
+            <li>Then it's just one permission per line</li>
+            <li>Add a minus in front of the permissions to make it false.</li>
+        </ul>
+        <p>This feature supports Essentials GroupManager and bPermissions only at this stage.</p>
+    </section>
+</div>
+<footer>
+    <p>Project maintained by <a href="https://github.com/eccentricdevotion">eccentricdevotion</a></p>
+    <p>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></p>
+</footer>
+<!--[if !IE]><script>fixScale(document);</script><![endif]-->
+</body>
+</html>
