@@ -76,6 +76,10 @@ public class TARDISBindCommands implements CommandExecutor {
                 sender.sendMessage(plugin.pluginName + "You must be a player to run this command!");
                 return false;
             }
+            if (args.length < 1) {
+                sender.sendMessage(plugin.pluginName + "Too few command arguments!");
+                return false;
+            }
             if (!firstArgs.contains(args[0].toLowerCase(Locale.ENGLISH))) {
                 sender.sendMessage(plugin.pluginName + "That is not a valid 'bind' type! Try one of: save|cmd|player|area|remove");
                 return false;
