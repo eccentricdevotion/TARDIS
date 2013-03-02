@@ -95,9 +95,12 @@ public class TARDISConfiguration {
         intOptions.put("rooms.FARM.cost", 350);
         intOptions.put("rooms.GRAVITY.cost", 625);
         intOptions.put("rooms.ANTIGRAVITY.cost", 625);
+        intOptions.put("rooms.GREENHOUSE.cost", 450);
         intOptions.put("rooms.HARMONY.cost", 450);
         intOptions.put("rooms.KITCHEN.cost", 450);
         intOptions.put("rooms.LIBRARY.cost", 550);
+        intOptions.put("rooms.LONG.cost", 300);
+        intOptions.put("rooms.MUSHROOM.cost", 350);
         intOptions.put("rooms.PASSAGE.cost", 200);
         intOptions.put("rooms.POOL.cost", 450);
         intOptions.put("rooms.VAULT.cost", 350);
@@ -122,9 +125,12 @@ public class TARDISConfiguration {
         strOptions.put("rooms.FARM.seed", "DIRT");
         strOptions.put("rooms.GRAVITY.seed", "MOSSY_COBBLESTONE");
         strOptions.put("rooms.ANTIGRAVITY.seed", "SANDSTONE");
+        strOptions.put("rooms.GRENHOUSE.seed", "MELON_BLOCK");
         strOptions.put("rooms.HARMONY.seed", "BRICK_STAIRS");
         strOptions.put("rooms.KITCHEN.seed", "PUMPKIN");
         strOptions.put("rooms.LIBRARY.seed", "BOOKSHELF");
+        strOptions.put("rooms.LONG.seed", "NOTE_BLOCK");
+        strOptions.put("rooms.MUSHROOM.seed", "GRAVEL");
         strOptions.put("rooms.PASSAGE.seed", "CLAY");
         strOptions.put("rooms.POOL.seed", "SNOW_BLOCK");
         strOptions.put("rooms.VAULT.seed", "DISPENSER");

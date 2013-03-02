@@ -126,6 +126,8 @@ public class TARDISRoomBuilder {
                 case ANTIGRAVITY:
                     break;
                 case PASSAGE:
+                case LONG:
+                case GREENHOUSE:
                     l.setY(l.getY() - 2);
                     break;
                 case POOL:
@@ -212,6 +214,18 @@ public class TARDISRoomBuilder {
                 case CROSS:
                     s = plugin.crossschematic;
                     dimensions = plugin.crossdimensions;
+                    break;
+                case GREENHOUSE:
+                    s = plugin.greenhouseschematic;
+                    dimensions = plugin.greenhousedimensions;
+                    break;
+                case MUSHROOM:
+                    s = plugin.mushroomschematic;
+                    dimensions = plugin.roomdimensions;
+                    break;
+                case LONG:
+                    s = (d.equals(COMPASS.EAST) || d.equals(COMPASS.WEST)) ? plugin.longschematic_EW : plugin.longschematic;
+                    dimensions = plugin.longdimensions;
                     break;
                 default:
                     // PASSAGE

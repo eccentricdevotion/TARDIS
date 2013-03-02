@@ -121,6 +121,16 @@ public class TARDISSchematicReader {
                     plugin.crossdimensions[1] = width;
                     plugin.crossdimensions[2] = length;
                     break;
+                case GREENHOUSE:
+                    plugin.greenhousedimensions[0] = height;
+                    plugin.greenhousedimensions[1] = width;
+                    plugin.greenhousedimensions[2] = length;
+                    break;
+                case LONG:
+                    plugin.longdimensions[0] = height;
+                    plugin.longdimensions[1] = width;
+                    plugin.longdimensions[2] = length;
+                    break;
                 default:
                     plugin.roomdimensions[0] = height;
                     plugin.roomdimensions[1] = width;

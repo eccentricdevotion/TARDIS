@@ -129,7 +129,7 @@ public class TARDISRoomRunnable implements Runnable {
                 b.setTypeIdAndData(64, door_data, true);
                 b.getRelative(BlockFace.UP).setTypeIdAndData(64, (byte) 8, true);
             }
-            if (room.equals("POOL") || room.equals("ARBORETUM")) {
+            if (room.equals("POOL") || room.equals("ARBORETUM") || room.equals("GREENHOUSE")) {
                 p.sendMessage(plugin.pluginName + "Melting the ice!");
             }
             // set all the ice to water

@@ -78,6 +78,15 @@ rooms:
   CROSS:
     cost: 350
     seed: SOUL_SAND
+  GREENHOUSE:
+    cost: 450
+    seed: MELON_BLOCK
+  LONG:
+    cost: 300
+    seed: NOTE_BLOCK
+  MUSHROOM:
+    cost: 350
+    seed: GRAVEL
 #artron energy
 player: 25
 random: 75

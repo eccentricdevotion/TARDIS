@@ -302,12 +302,12 @@ public class TARDISCommands implements CommandExecutor {
                     }
                     String room = args[1].toUpperCase(Locale.ENGLISH);
                     if (room.equals("HELP")) {
-                        player.sendMessage(plugin.pluginName + "There are currently 14 room types! They are: passage, arboretum, pool, vault, kitchen, bedroom, library, workshop, empty, gravity, antigravity, harmony, baker and wood.");
+                        player.sendMessage(plugin.pluginName + "There are currently 19 room types! They are: antigravity, arboretum, baker, bedroom, cross, empty, farm, gravity, greenhouse, harmony, kitchen, library, long, mushroom, passage, pool, vault, wood and workshop.");
                         player.sendMessage("View a TARDIS room gallery at http://eccentricdevotion.github.com/TARDIS/room-gallery.html");
                         return true;
                     }
                     if (!roomArgs.contains(room)) {
-                        player.sendMessage(plugin.pluginName + "That is not a valid room type! Try one of: passage|arboretum|pool|vault|kitchen|bedroom|library|workshop|empty|gravity|antigravity|harmony|baker|wood");
+                        player.sendMessage(plugin.pluginName + "That is not a valid room type! Try one of: antigravity, arboretum, baker, bedroom, cross, empty, farm, gravity, greenhouse, harmony, kitchen, library, long, mushroom, passage, pool, vault, wood and workshop.");
                         return true;
                     }
                     String perm = "tardis.room." + args[1].toLowerCase(Locale.ENGLISH);
@@ -373,7 +373,7 @@ public class TARDISCommands implements CommandExecutor {
                             return true;
                         }
                         if (!roomArgs.contains(room)) {
-                            player.sendMessage(plugin.pluginName + "That is not a valid room type! Try one of : passage|arboretum|pool|vault|kitchen|bedroom|library|empty|harmony|baker|wood");
+                            player.sendMessage(plugin.pluginName + "That is not a valid room type! Try one of: arboretum, baker, bedroom, cross, empty, farm, greenhouse, harmony, kitchen, library, long, mushroom, passage, pool, vault, wood and workshop");
                             return true;
                         }
                         HashMap<String, Object> where = new HashMap<String, Object>();
