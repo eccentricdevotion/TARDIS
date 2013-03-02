@@ -82,27 +82,27 @@ public class TARDISTravelCommands implements CommandExecutor {
                     return true;
                 }
                 int id = rs.getTardis_id();
-                if (rs.isHandbrake_on() && args[0].equalsIgnoreCase("reset")) {
-                    HashMap<String, Object> wherer = new HashMap<String, Object>();
-                    wherer.put("tardis_id", id);
-                    HashMap<String, Object> setr = new HashMap<String, Object>();
-                    String current = rs.getCurrent();
-                    String save = rs.getSave();
-                    setr.put("save", current);
-                    setr.put("handbrake_on", 1);
-                    qf.doUpdate("tardis", setr, wherer);
-                    if (plugin.tardisHasTravelled.contains(id)) {
-                        plugin.tardisHasTravelled.remove(id);
-                    }
-                    if (plugin.tardisHasDestination.containsKey(id)) {
-                        plugin.tardisHasDestination.remove(id);
-                    }
-                    if (plugin.tardisMaterialising.contains(id)) {
-                        plugin.tardisMaterialising.remove(id);
-                    }
-                    player.sendMessage(plugin.pluginName + "Time circuits reset! Destination aborted.");
-                    return true;
-                }
+//                if (args[0].equalsIgnoreCase("reset")) {
+//                    HashMap<String, Object> wherer = new HashMap<String, Object>();
+//                    wherer.put("tardis_id", id);
+//                    HashMap<String, Object> setr = new HashMap<String, Object>();
+//                    String current = rs.getCurrent();
+////                    String save = rs.getSave();
+//                    setr.put("save", current);
+//                    setr.put("handbrake_on", 1);
+//                    qf.doUpdate("tardis", setr, wherer);
+//                    if (plugin.tardisHasTravelled.contains(id)) {
+//                        plugin.tardisHasTravelled.remove(id);
+//                    }
+//                    if (plugin.tardisHasDestination.containsKey(id)) {
+//                        plugin.tardisHasDestination.remove(id);
+//                    }
+//                    if (plugin.tardisMaterialising.contains(id)) {
+//                        plugin.tardisMaterialising.remove(id);
+//                    }
+//                    player.sendMessage(plugin.pluginName + "Time circuits reset! Destination aborted.");
+//                    return true;
+//                }
                 if (!rs.isHandbrake_on()) {
                     player.sendMessage(plugin.pluginName + ChatColor.RED + "You cannot set a destination while the TARDIS is travelling!");
                     return true;
