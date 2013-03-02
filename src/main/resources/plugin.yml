@@ -7,7 +7,7 @@ softdepend: [Multiverse-Core,MultiWorld,WorldGuard,WorldBorder,Towny]
 website: http://dev.bukkit.org/server-mods/TARDIS/
 dev-url: http://dev.bukkit.org/server-mods/TARDIS/
 url: http://eccentricdevotion.github.com/TARDIS/
-version: '2.1-beta'
+version: '2.1-beta-1'
 permissions:
   tardis.admin:
     description: Allow players access to the TARDIS admin commands.
@@ -103,9 +103,12 @@ permissions:
       tardis.room.empty: true
       tardis.room.farm: true
       tardis.room.gravity: true
+      tardis.room.greenhouse: true
       tardis.room.harmony: true
       tardis.room.kitchen: true
       tardis.room.library: true
+      tardis.room.long: true
+      tardis.room.mushroom: true
       tardis.room.passage: true
       tardis.room.pool: true
       tardis.room.vault: true
