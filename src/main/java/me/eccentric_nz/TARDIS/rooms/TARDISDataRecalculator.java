@@ -116,7 +116,7 @@ public class TARDISDataRecalculator {
                         data = 1;
                         break;
                     default:
-                        data = 5;
+                        data = bit;
                         break;
                 }
                 break;
