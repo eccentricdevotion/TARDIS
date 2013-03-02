@@ -52,6 +52,8 @@ public class TARDISRoomRemover {
         int sx, sy, sz, ex, ey, ez, downy, upy;
         switch (ROOM.valueOf(r)) {
             case PASSAGE:
+            case GREENHOUSE:
+            case LONG:
                 downy = 2;
                 upy = 4;
                 break;
