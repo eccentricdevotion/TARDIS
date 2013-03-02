@@ -52,7 +52,6 @@ public class TARDISRoomRunnable implements Runnable {
     String room;
     String grammar;
     private boolean running;
-//    HashMap<String, Object> set;
     Player p;
     World world;
     List<Chunk> chunkList = new ArrayList<Chunk>();
@@ -83,7 +82,6 @@ public class TARDISRoomRunnable implements Runnable {
     public void run() {
         // initialise
         if (!running) {
-//            set = new HashMap<String, Object>();
             level = 0;
             row = 0;
             col = 0;
@@ -95,9 +93,6 @@ public class TARDISRoomRunnable implements Runnable {
             startz = l.getBlockZ();
             resetx = startx;
             resetz = startz;
-//            set.put("startx", startx);
-//            set.put("starty", starty);
-//            set.put("startz", startz);
             world = l.getWorld();
             running = true;
             grammar = (TARDISConstants.vowels.contains(room.substring(0, 1))) ? "an" : "a";
