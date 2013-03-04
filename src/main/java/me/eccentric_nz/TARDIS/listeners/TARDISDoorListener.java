@@ -164,7 +164,7 @@ public class TARDISDoorListener implements Listener {
                                     setl.put("locked", locked);
                                     HashMap<String, Object> wherel = new HashMap<String, Object>();
                                     wherel.put("tardis_id", rsd.getTardis_id());
-                                    wherel.put("door_type", 0);
+                                    wherel.put("door_type", rsd.getDoor_type());
                                     qf.doUpdate("doors", setl, wherel);
                                     player.sendMessage(plugin.pluginName + "The door was " + message);
                                 }
@@ -211,6 +211,10 @@ public class TARDISDoorListener implements Listener {
                                     player.sendMessage(plugin.pluginName + "You need to unlock the door!");
                                 }
                             } else if (action == Action.RIGHT_CLICK_BLOCK) {
+                                if (rsd.isLocked()) {
+                                    player.sendMessage(plugin.pluginName + "The door is locked!");
+                                    return;
+                                }
                                 int id = rsd.getTardis_id();
                                 HashMap<String, Object> tid = new HashMap<String, Object>();
                                 tid.put("tardis_id", id);
@@ -302,10 +306,6 @@ public class TARDISDoorListener implements Listener {
                                         // is the TARDIS materialising?
                                         if (plugin.tardisMaterialising.contains(id)) {
                                             player.sendMessage(plugin.pluginName + "The TARDIS is still travelling... you would get lost in the time vortex!");
-                                            return;
-                                        }
-                                        if (rsd.isLocked()) {
-                                            player.sendMessage(plugin.pluginName + "The door is locked!");
                                             return;
                                         }
                                         boolean chkCompanion = false;
