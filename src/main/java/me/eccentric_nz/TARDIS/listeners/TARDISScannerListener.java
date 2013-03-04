@@ -140,11 +140,16 @@ public class TARDISScannerListener implements Listener {
                     Location scan_loc = plugin.utils.getLocationFromDB(policebox, 0, 0);
                     // record nearby entities
                     HashMap<EntityType, Integer> scannedentities = new HashMap<EntityType, Integer>();
+                    List<String> playernames = new ArrayList<String>();
                     for (Entity k : getNearbyEntities(scan_loc, 16)) {
                         EntityType et = k.getType();
                         if (entities.contains(et)) {
                             Integer entity_count = (scannedentities.containsKey(et)) ? scannedentities.get(et) : 0;
                             scannedentities.put(et, entity_count + 1);
+                            if (et.equals(EntityType.PLAYER)) {
+                                Player entPlayer = (Player) k;
+                                playernames.add(entPlayer.getName());
+                            }
                         }
                     }
                     long time = scan_loc.getWorld().getTime();
@@ -172,7 +177,14 @@ public class TARDISScannerListener implements Listener {
                     if (scannedentities.size() > 0) {
                         player.sendMessage("Nearby entities:");
                         for (Map.Entry<EntityType, Integer> entry : scannedentities.entrySet()) {
-                            player.sendMessage("    " + entry.getKey().getName() + ": " + entry.getValue());
+                            String message = "";
+                            if (entry.getKey().equals(EntityType.PLAYER) && playernames.size() > 0) {
+                                for (String p : playernames) {
+                                    message += ", " + p;
+                                }
+                                message = " (" + message.substring(2) + ")";
+                            }
+                            player.sendMessage("    " + entry.getKey() + ": " + entry.getValue() + message);
                         }
                         scannedentities.clear();
                     } else {
