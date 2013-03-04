@@ -148,66 +148,68 @@ public class TARDISDoorListener implements Listener {
                             TARDISConstants.COMPASS dd = rsd.getDoor_direction();
                             int doortype = rsd.getDoor_type();
                             if (action == Action.LEFT_CLICK_BLOCK) {
-                                if (doortype == 0) {
-                                    // must be the owner
-                                    int id = rsd.getTardis_id();
-                                    HashMap<String, Object> oid = new HashMap<String, Object>();
-                                    oid.put("owner", player.getName());
-                                    ResultSetTardis rs = new ResultSetTardis(plugin, oid, "", false);
-                                    if (rs.resultSet()) {
-                                        if (rs.getTardis_id() != id) {
-                                            player.sendMessage(plugin.pluginName + "You can only lock or unlock your own door!");
-                                            return;
-                                        }
-                                        int locked = (rsd.isLocked()) ? 0 : 1;
-                                        String message = (rsd.isLocked()) ? "unlocked" : "locked";
-                                        HashMap<String, Object> setl = new HashMap<String, Object>();
-                                        setl.put("locked", locked);
-                                        HashMap<String, Object> wherel = new HashMap<String, Object>();
-                                        wherel.put("tardis_id", rsd.getTardis_id());
-                                        wherel.put("door_type", 0);
-                                        qf.doUpdate("doors", setl, wherel);
-                                        player.sendMessage(plugin.pluginName + "The door was " + message);
+                                // must be the owner
+                                int id = rsd.getTardis_id();
+                                HashMap<String, Object> oid = new HashMap<String, Object>();
+                                oid.put("owner", player.getName());
+                                ResultSetTardis rs = new ResultSetTardis(plugin, oid, "", false);
+                                if (rs.resultSet()) {
+                                    if (rs.getTardis_id() != id) {
+                                        player.sendMessage(plugin.pluginName + "You can only lock or unlock your own door!");
+                                        return;
                                     }
+                                    int locked = (rsd.isLocked()) ? 0 : 1;
+                                    String message = (rsd.isLocked()) ? "unlocked" : "locked";
+                                    HashMap<String, Object> setl = new HashMap<String, Object>();
+                                    setl.put("locked", locked);
+                                    HashMap<String, Object> wherel = new HashMap<String, Object>();
+                                    wherel.put("tardis_id", rsd.getTardis_id());
+                                    wherel.put("door_type", 0);
+                                    qf.doUpdate("doors", setl, wherel);
+                                    player.sendMessage(plugin.pluginName + "The door was " + message);
                                 }
                             }
                             if (action == Action.RIGHT_CLICK_BLOCK && player.isSneaking()) {
-                                // toogle the door open/closed
-                                Block door_bottom;
-                                Door door = (Door) block.getState().getData();
-                                door_bottom = (door.isTopHalf()) ? block.getRelative(BlockFace.DOWN) : block;
-                                byte door_data = door_bottom.getData();
-                                switch (dd) {
-                                    case NORTH:
-                                        if (door_data == 3) {
-                                            door_bottom.setData((byte) 7, false);
-                                        } else {
-                                            door_bottom.setData((byte) 3, false);
-                                        }
-                                        break;
-                                    case WEST:
-                                        if (door_data == 2) {
-                                            door_bottom.setData((byte) 6, false);
-                                        } else {
-                                            door_bottom.setData((byte) 2, false);
-                                        }
-                                        break;
-                                    case SOUTH:
-                                        if (door_data == 1) {
-                                            door_bottom.setData((byte) 5, false);
-                                        } else {
-                                            door_bottom.setData((byte) 1, false);
-                                        }
-                                        break;
-                                    default:
-                                        if (door_data == 0) {
-                                            door_bottom.setData((byte) 4, false);
-                                        } else {
-                                            door_bottom.setData((byte) 0, false);
-                                        }
-                                        break;
+                                if (!rsd.isLocked()) {
+                                    // toogle the door open/closed
+                                    Block door_bottom;
+                                    Door door = (Door) block.getState().getData();
+                                    door_bottom = (door.isTopHalf()) ? block.getRelative(BlockFace.DOWN) : block;
+                                    byte door_data = door_bottom.getData();
+                                    switch (dd) {
+                                        case NORTH:
+                                            if (door_data == 3) {
+                                                door_bottom.setData((byte) 7, false);
+                                            } else {
+                                                door_bottom.setData((byte) 3, false);
+                                            }
+                                            break;
+                                        case WEST:
+                                            if (door_data == 2) {
+                                                door_bottom.setData((byte) 6, false);
+                                            } else {
+                                                door_bottom.setData((byte) 2, false);
+                                            }
+                                            break;
+                                        case SOUTH:
+                                            if (door_data == 1) {
+                                                door_bottom.setData((byte) 5, false);
+                                            } else {
+                                                door_bottom.setData((byte) 1, false);
+                                            }
+                                            break;
+                                        default:
+                                            if (door_data == 0) {
+                                                door_bottom.setData((byte) 4, false);
+                                            } else {
+                                                door_bottom.setData((byte) 0, false);
+                                            }
+                                            break;
+                                    }
+                                    playerWorld.playEffect(block_loc, Effect.DOOR_TOGGLE, 0);
+                                } else {
+                                    player.sendMessage(plugin.pluginName + "You need to unlock the door!");
                                 }
-                                playerWorld.playEffect(block_loc, Effect.DOOR_TOGGLE, 0);
                             } else if (action == Action.RIGHT_CLICK_BLOCK) {
                                 int id = rsd.getTardis_id();
                                 HashMap<String, Object> tid = new HashMap<String, Object>();
