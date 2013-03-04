@@ -54,7 +54,7 @@ public class TARDISBlockDamageListener implements Listener {
         ResultSetBlocks rs = new ResultSetBlocks(plugin, where, false);
         if (rs.resultSet()) {
             event.setCancelled(true);
-            if (rs.getBlockId() != 71) {
+            if (b.getTypeId() != 71) {
                 p.sendMessage(plugin.pluginName + "You cannot break the TARDIS blocks!");
             }
         }
