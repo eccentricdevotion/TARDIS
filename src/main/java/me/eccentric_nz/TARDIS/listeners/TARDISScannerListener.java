@@ -130,7 +130,7 @@ public class TARDISScannerListener implements Listener {
                     }
                     String policebox;
                     String whereisit;
-                    if (plugin.tardisHasDestination.containsKey(Integer.valueOf(id))) {
+                    if (plugin.tardisHasDestination.containsKey(Integer.valueOf(id)) || plugin.tardisHasTravelled.contains(Integer.valueOf(id))) {
                         policebox = rs.getSave();
                         whereisit = "next destination";
                     } else {
