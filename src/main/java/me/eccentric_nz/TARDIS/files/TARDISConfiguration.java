@@ -60,6 +60,7 @@ public class TARDISConfiguration {
         boolOptions.put("give_key", false);
         boolOptions.put("default_world", false);
         boolOptions.put("include_default_world", false);
+        boolOptions.put("keep_night", true);
         boolOptions.put("land_on_water", true);
         boolOptions.put("materialise", true);
         boolOptions.put("name_tardis", false);

@@ -28,6 +28,7 @@ create_worlds: true
 gamemode: survival
 materialise: true
 confirm_timeout: 15
+keep_night: true
 #rooms
 rooms:
   PASSAGE:

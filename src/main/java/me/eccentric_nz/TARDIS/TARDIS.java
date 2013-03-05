@@ -295,7 +295,9 @@ public class TARDIS extends JavaPlugin {
         TARDISCreeperChecker cc = new TARDISCreeperChecker(this);
         cc.startCreeperCheck();
         TARDISSpace alwaysNight = new TARDISSpace(this);
-        alwaysNight.keepNight();
+        if (getConfig().getBoolean("keep_night")) {
+            alwaysNight.keepNight();
+        }
         loadChunks();
         TARDISBlockLoader bl = new TARDISBlockLoader(this);
         bl.loadProtectBlocks();
