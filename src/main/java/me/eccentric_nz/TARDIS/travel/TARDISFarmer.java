@@ -119,7 +119,6 @@ public class TARDISFarmer {
                     for (Entity e : old_macd_had_a_chicken) {
                         plugin.myspawn = true;
                         world.spawnEntity(chicken_pen, EntityType.CHICKEN);
-                        plugin.debug("Spawned a chicken");
                         e.remove();
                     }
                 }
@@ -131,7 +130,6 @@ public class TARDISFarmer {
                     for (Entity e : old_macd_had_a_cow) {
                         plugin.myspawn = true;
                         world.spawnEntity(cow_pen, EntityType.COW);
-                        plugin.debug("Spawned a cow");
                         e.remove();
                     }
                 }
@@ -143,7 +141,6 @@ public class TARDISFarmer {
                     for (Entity e : old_macd_had_a_pig) {
                         plugin.myspawn = true;
                         world.spawnEntity(pig_pen, EntityType.PIG);
-                        plugin.debug("Spawned a pig");
                         e.remove();
                     }
                 }
@@ -155,7 +152,6 @@ public class TARDISFarmer {
                     for (Entity e : old_macd_had_a_sheep) {
                         plugin.myspawn = true;
                         world.spawnEntity(sheep_pen, EntityType.SHEEP);
-                        plugin.debug("Spawned a sheep");
                         e.remove();
                     }
                 }
