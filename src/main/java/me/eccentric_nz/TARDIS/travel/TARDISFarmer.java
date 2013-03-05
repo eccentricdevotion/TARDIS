@@ -119,30 +119,43 @@ public class TARDISFarmer {
                     for (Entity e : old_macd_had_a_chicken) {
                         plugin.myspawn = true;
                         world.spawnEntity(chicken_pen, EntityType.CHICKEN);
+                        plugin.debug("Spawned a chicken");
                         e.remove();
                     }
                 }
                 if (old_macd_had_a_cow.size() > 0) {
                     Location cow_pen = new Location(world, x + 3, y, z + 3);
+                    while (!world.getChunkAt(cow_pen).isLoaded()) {
+                        world.getChunkAt(cow_pen).load();
+                    }
                     for (Entity e : old_macd_had_a_cow) {
                         plugin.myspawn = true;
                         world.spawnEntity(cow_pen, EntityType.COW);
+                        plugin.debug("Spawned a cow");
                         e.remove();
                     }
                 }
                 if (old_macd_had_a_pig.size() > 0) {
                     Location pig_pen = new Location(world, x - 3, y, z - 3);
+                    while (!world.getChunkAt(pig_pen).isLoaded()) {
+                        world.getChunkAt(pig_pen).load();
+                    }
                     for (Entity e : old_macd_had_a_pig) {
                         plugin.myspawn = true;
                         world.spawnEntity(pig_pen, EntityType.PIG);
+                        plugin.debug("Spawned a pig");
                         e.remove();
                     }
                 }
                 if (old_macd_had_a_sheep.size() > 0) {
                     Location sheep_pen = new Location(world, x - 3, y, z + 3);
+                    while (!world.getChunkAt(sheep_pen).isLoaded()) {
+                        world.getChunkAt(sheep_pen).load();
+                    }
                     for (Entity e : old_macd_had_a_sheep) {
                         plugin.myspawn = true;
                         world.spawnEntity(sheep_pen, EntityType.SHEEP);
+                        plugin.debug("Spawned a sheep");
                         e.remove();
                     }
                 }
