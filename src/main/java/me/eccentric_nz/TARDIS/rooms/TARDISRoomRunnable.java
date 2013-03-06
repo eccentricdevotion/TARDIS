@@ -98,11 +98,11 @@ public class TARDISRoomRunnable implements Runnable {
             resetz = startz;
             world = l.getWorld();
             running = true;
-            grammar = (TARDISConstants.vowels.contains(room.substring(0, 1))) ? "an" : "a";
-            if (room.equals("GRAVITY")) {
+            grammar = (TARDISConstants.vowels.contains(room.substring(0, 1))) ? "an " + room : "a " + room;
+            if (room.equals("GRAVITY") || room.equals("ANTIGRAVITY")) {
                 grammar += " WELL";
             }
-            p.sendMessage(plugin.pluginName + "Started growing " + grammar + " " + room + "...");
+            p.sendMessage(plugin.pluginName + "Started growing " + grammar + "...");
         }
         String tmp;
         if (level == h && row == w && col == (c - 1)) {
@@ -162,7 +162,8 @@ public class TARDISRoomRunnable implements Runnable {
             // cancel the task
             plugin.getServer().getScheduler().cancelTask(task);
             task = 0;
-            p.sendMessage(plugin.pluginName + "Finished growing the " + room + "!");
+            String rname = (room.equals("GRAVITY") || room.equals("ANTIGRAVITY")) ? room + " WELL" : room;
+            p.sendMessage(plugin.pluginName + "Finished growing the " + rname + "!");
         } else {
             // place one block
             tmp = s[level][row][col];
