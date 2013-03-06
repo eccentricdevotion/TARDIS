@@ -202,26 +202,31 @@ public class TARDISTravelCommands implements CommandExecutor {
                         }
                         String save_loc = rsd.getWorld() + ":" + rsd.getX() + ":" + rsd.getY() + ":" + rsd.getZ();
                         World w = plugin.getServer().getWorld(rsd.getWorld());
-                        Location save_dest = new Location(w, rsd.getX(), rsd.getY(), rsd.getZ());
-                        if (!plugin.ta.areaCheckInExisting(save_dest)) {
-                            // save is in a TARDIS area, so check that the spot is not occupied
-                            HashMap<String, Object> wheres = new HashMap<String, Object>();
-                            wheres.put("save", save_loc);
-                            ResultSetTardis rsz = new ResultSetTardis(plugin, wheres, "", true);
-                            if (rsz.resultSet()) {
-                                ArrayList<HashMap<String, String>> data = rsz.getData();
-                                if (data.size() > 0) {
-                                    sender.sendMessage(plugin.pluginName + "A TARDIS already occupies this parking spot! Try using the " + ChatColor.AQUA + "/tardistravel area [name]" + ChatColor.RESET + " command instead.");
-                                    return true;
+                        if (w != null) {
+                            Location save_dest = new Location(w, rsd.getX(), rsd.getY(), rsd.getZ());
+                            if (!plugin.ta.areaCheckInExisting(save_dest)) {
+                                // save is in a TARDIS area, so check that the spot is not occupied
+                                HashMap<String, Object> wheres = new HashMap<String, Object>();
+                                wheres.put("save", save_loc);
+                                ResultSetTardis rsz = new ResultSetTardis(plugin, wheres, "", true);
+                                if (rsz.resultSet()) {
+                                    ArrayList<HashMap<String, String>> data = rsz.getData();
+                                    if (data.size() > 0) {
+                                        sender.sendMessage(plugin.pluginName + "A TARDIS already occupies this parking spot! Try using the " + ChatColor.AQUA + "/tardistravel area [name]" + ChatColor.RESET + " command instead.");
+                                        return true;
+                                    }
                                 }
                             }
+                            set.put("save", save_loc);
+                            qf.doUpdate("tardis", set, tid);
+                            sender.sendMessage(plugin.pluginName + "The specified location was set succesfully. Please release the handbrake!");
+                            plugin.utils.updateTravellerCount(id);
+                            plugin.tardisHasDestination.put(id, travel);
+                            return true;
+                        } else {
+                            sender.sendMessage(plugin.pluginName + "Could not get the world for this save!");
+                            return true;
                         }
-                        set.put("save", save_loc);
-                        qf.doUpdate("tardis", set, tid);
-                        sender.sendMessage(plugin.pluginName + "The specified location was set succesfully. Please release the handbrake!");
-                        plugin.utils.updateTravellerCount(id);
-                        plugin.tardisHasDestination.put(id, travel);
-                        return true;
                     }
                     if (args.length == 2 && args[0].equalsIgnoreCase("area")) {
                         // we're thinking this is admin defined area name
