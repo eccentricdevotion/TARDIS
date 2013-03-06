@@ -278,7 +278,8 @@ public class TARDISCommands implements CommandExecutor {
                                 set.put("chameleon_id", c_id);
                                 set.put("chameleon_data", c_data);
                                 qf.doUpdate("tardis", set, tid);
-                                if (c_id != 35 && c_data != 11) {
+                                boolean bluewool = (c_id == 35 && c_data == (byte) 11);
+                                if (!bluewool) {
                                     sender.sendMessage(plugin.pluginName + "The Chameleon Circuit was shorted out to: " + target_block.getType().toString() + ".");
                                 }
                             }

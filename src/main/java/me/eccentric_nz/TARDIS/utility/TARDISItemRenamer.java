@@ -37,7 +37,7 @@ public class TARDISItemRenamer {
 
     /**
      * Sets the name of the held item to the specified string. Also adds some
-     * lore, which I don't actually know how to get to display.
+     * lore.
      */
     public void setName(String name, boolean setlore) {
         ItemMeta im = this.itemStack.getItemMeta();
