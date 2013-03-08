@@ -37,6 +37,15 @@
                 <configuration>
                     <source>1.6</source>
                     <target>1.6</target>
+                    <encoding>${project.build.sourceEncoding}</encoding>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-resources-plugin</artifactId>
+                <version>2.4.3</version>
+                <configuration>
+                    <encoding>${project.build.sourceEncoding}</encoding>
                 </configuration>
             </plugin>
         </plugins>
@@ -152,5 +161,6 @@
         <netbeans.hint.oranisation>The Nose Fairy</netbeans.hint.oranisation>
         <netbeans.hint.company>The Nose Fairy</netbeans.hint.company>
         <netbeans.hint.user>eccentric_nz</netbeans.hint.user>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 </project>
