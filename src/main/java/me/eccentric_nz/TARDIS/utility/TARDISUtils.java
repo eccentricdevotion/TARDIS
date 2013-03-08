@@ -184,11 +184,15 @@ public class TARDISUtils {
         // compile location from string
         String[] data = s.split(":");
         World savedw = Bukkit.getServer().getWorld(data[0]);
-        savedx = parseNum(data[1]);
-        savedy = parseNum(data[2]);
-        savedz = parseNum(data[3]);
-        Location dest = new Location(savedw, savedx, savedy, savedz, yaw, pitch);
-        return dest;
+        if (savedw != null) {
+            savedx = parseNum(data[1]);
+            savedy = parseNum(data[2]);
+            savedz = parseNum(data[3]);
+            Location dest = new Location(savedw, savedx, savedy, savedz, yaw, pitch);
+            return dest;
+        } else {
+            return null;
+        }
     }
 
     /**
