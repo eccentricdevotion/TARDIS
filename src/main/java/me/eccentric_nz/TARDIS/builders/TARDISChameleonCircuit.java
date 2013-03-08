@@ -117,6 +117,27 @@ public class TARDISChameleonCircuit {
                 }
             }
         }
+        // if it's a precious block or TNT and all_chameleon_blocks is false, then switch it to wool of similar colour
+        if (TARDISConstants.CHAMELEON_BLOCKS_PRECIOUS.contains((Integer) chameleonType) && !plugin.getConfig().getBoolean("all_chameleon_blocks")) {
+            wall_block = 35;
+            switch (chameleonType) {
+                case 41:
+                    chameleonData = (byte) 8;
+                    break;
+                case 42:
+                    chameleonData = (byte) 4;
+                    break;
+                case 46:
+                    chameleonData = (byte) 14;
+                    break;
+                case 57:
+                    chameleonData = (byte) 3;
+                    break;
+                case 133:
+                    chameleonData = (byte) 5;
+                    break;
+            }
+        }
         data[0] = wall_block;
         data[1] = chameleonData;
         return data;

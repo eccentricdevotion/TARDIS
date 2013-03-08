@@ -4,12 +4,12 @@ check_for_updates: true
 key: STICK
 bonus_chest: true
 tp_radius: 500
-protect_blocks: true
 default_world: false
 default_world_name: myridiculouslylongworldnameiscalledcuthbert
 include_default_world: false
 platform: false
 chameleon: true
+all_chameleon_blocks: false
 sfx: true
 give_key: false
 the_end: false

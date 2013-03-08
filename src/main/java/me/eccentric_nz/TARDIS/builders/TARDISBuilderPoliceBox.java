@@ -102,7 +102,6 @@ public class TARDISBuilderPoliceBox {
          */
         plugin.tardisChunkList.add(thisChunk);
         if (rebuild) {
-            plugin.debug(wall_block + ":" + chameleonData);
             TARDISPoliceBoxRebuilder rebuilder = new TARDISPoliceBoxRebuilder(plugin, l, wall_block, chameleonData, id, d);
             rebuilder.rebuildPoliceBox();
         } else {

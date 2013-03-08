@@ -97,8 +97,9 @@ public class TARDISAdminCommands implements CommandExecutor {
         firstsStr.add("reload");
         // boolean
         firstsBool.add("add_perms");
-        firstsBool.add("allow_mob_farming");
+        firstsBool.add("all_chameleon_blocks");
         firstsBool.add("allow_autonomous");
+        firstsBool.add("allow_mob_farming");
         firstsBool.add("bonus_chest");
         firstsBool.add("chameleon");
         firstsBool.add("check_for_updates");
@@ -113,10 +114,10 @@ public class TARDISAdminCommands implements CommandExecutor {
         firstsBool.add("name_tardis");
         firstsBool.add("nether");
         firstsBool.add("platform");
+        firstsBool.add("respect_factions");
         firstsBool.add("respect_towny");
         firstsBool.add("respect_worldborder");
         firstsBool.add("respect_worldguard");
-        firstsBool.add("respect_factions");
         firstsBool.add("sfx");
         firstsBool.add("the_end");
         firstsBool.add("use_worldguard");

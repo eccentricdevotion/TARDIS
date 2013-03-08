@@ -72,6 +72,7 @@ public class TARDISConstants {
     public static final List<Integer> CHAMELEON_BLOCKS_CHANGE = Arrays.asList(new Integer[]{2, 12, 13, 44, 53, 67, 78, 81, 96, 97, 101, 104, 105, 106, 108, 109, 113, 114, 120, 125, 126, 128, 134, 135, 136});
     public static final HashMap<Integer, Integer> CHAMELEON_BLOCKS_CHANGE_HASH = toMap(CHAMELEON_BLOCKS_CHANGE_ARR, CHAMELEON_BLOCKS_CHANGE_TO_ARR);
     public static final List<Integer> CHAMELEON_BLOCKS_NEXT = Arrays.asList(new Integer[]{0, 27, 28, 30, 31, 32, 37, 38, 39, 40, 66});
+    public static final List<Integer> CHAMELEON_BLOCKS_PRECIOUS = Arrays.asList(new Integer[]{41, 42, 46, 57, 133});
     // problem blocks for schematics
     public static final List<Integer> PROBLEM_BLOCKS = Arrays.asList(new Integer[]{53, 54, 61, 65, 67, 68, 77, 93, 99, 100, 108, 109, 114, 127, 128, 134, 135, 136, 143, -113, -120, -121, -122});
     // messages

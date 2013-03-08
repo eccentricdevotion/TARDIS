@@ -49,16 +49,17 @@ public class TARDISConfiguration {
         this.configFile = new File(plugin.getDataFolder(), TARDISConstants.CONFIG_FILE_NAME);
         this.config = YamlConfiguration.loadConfiguration(configFile);
         // boolean
-        boolOptions.put("allow_mob_farming", true);
         boolOptions.put("add_perms", true);
+        boolOptions.put("all_chameleon_blocks", false);
         boolOptions.put("allow_autonomous", true);
+        boolOptions.put("allow_mob_farming", true);
         boolOptions.put("bonus_chest", true);
         boolOptions.put("chameleon", true);
         boolOptions.put("check_for_updates", true);
         boolOptions.put("create_worlds", true);
         boolOptions.put("debug", false);
-        boolOptions.put("give_key", false);
         boolOptions.put("default_world", false);
+        boolOptions.put("give_key", false);
         boolOptions.put("include_default_world", false);
         boolOptions.put("keep_night", true);
         boolOptions.put("land_on_water", true);
