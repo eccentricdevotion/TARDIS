@@ -266,18 +266,20 @@ public class TARDISRoomRunnable implements Runnable {
                     setd.put("tardis_id", tardis_id);
                     setd.put("location", loc);
                     setd.put("direction", 0);
+                    setd.put("distance", 0);
                     qf.doInsert("gravity_well", setd);
                     plugin.gravityDownList.add(loc);
                 }
                 if (id == 35 && data == 5) {
-                    // pink wool - gravity well down
+                    // light green wool - gravity well up
                     loc = new Location(world, startx, starty, startz).toString();
                     HashMap<String, Object> setu = new HashMap<String, Object>();
                     setu.put("tardis_id", tardis_id);
                     setu.put("location", loc);
                     setu.put("direction", 1);
+                    setu.put("distance", 11);
                     qf.doInsert("gravity_well", setu);
-                    plugin.gravityUpList.add(loc);
+                    plugin.gravityUpList.put(loc, 11);
                 }
             }
             startx += x;

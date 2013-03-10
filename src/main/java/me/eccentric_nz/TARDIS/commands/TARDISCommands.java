@@ -106,6 +106,7 @@ public class TARDISCommands implements CommandExecutor {
         firstArgs.add("reload");
         firstArgs.add("remove");
         firstArgs.add("removesave");
+        firstArgs.add("gravity");
         firstArgs.add("room");
         firstArgs.add("save");
         firstArgs.add("setdest");
@@ -174,20 +175,20 @@ public class TARDISCommands implements CommandExecutor {
                     String query = "SELECT * FROM gravity WHERE tardis_id = " + id;
                     ResultSet rsg = statement.executeQuery(query);
                     if (rsg.isBeforeFirst()) {
-                        // Location{world=CraftWorld{name=TARDIS_WORLD_eccentric_nz},x=-14,y=10.0,z=27,pitch=0.0,yaw=0.0}
-                        // Location{world=CraftWorld{name=TARDIS_WORLD_eccentric_nz},x=-14.0,y=10.0,z=5.0,pitch=0.0,yaw=0.0}
                         String up = "Location{world=" + rsg.getString("world") + ",x=" + rsg.getFloat("upx") + ",y=10.0,z=" + rsg.getFloat("upz") + ",pitch=0.0,yaw=0.0}";
-                        plugin.gravityUpList.add(up);
+                        plugin.gravityUpList.put(up, 11);
                         String down = "Location{world=" + rsg.getString("world") + ",x=" + rsg.getFloat("downx") + ",y=10.0,z=" + rsg.getFloat("downz") + ",pitch=0.0,yaw=0.0}";
                         plugin.gravityDownList.add(down);
                         HashMap<String, Object> setu = new HashMap<String, Object>();
                         setu.put("tardis_id", id);
                         setu.put("location", up);
                         setu.put("direction", 1);
+                        setu.put("distance", 11);
                         HashMap<String, Object> setd = new HashMap<String, Object>();
                         setd.put("tardis_id", id);
                         setd.put("location", down);
                         setd.put("direction", 0);
+                        setd.put("distance", 0);
                         QueryFactory qf = new QueryFactory(plugin);
                         qf.doInsert("gravity_well", setu);
                         qf.doInsert("gravity_well", setd);
@@ -370,7 +371,7 @@ public class TARDISCommands implements CommandExecutor {
                         }
                         String room = args[1].toUpperCase(Locale.ENGLISH);
                         if (room.equals("GRAVITY") || room.equals("ANTIGRAVITY")) {
-                            player.sendMessage(plugin.pluginName + "You cannot jettison gravity wells!");
+                            player.sendMessage(plugin.pluginName + "You cannot jettison gravity wells! To remove the gravity blocks use the " + ChatColor.AQUA + "/tardisgravity remove" + ChatColor.RESET + " command.");
                             return true;
                         }
                         if (!roomArgs.contains(room)) {

@@ -130,7 +130,7 @@ public class TARDISRoomRemover {
         if (w.getBlockAt(sx + 2, l.getBlockY() - 1, sz + 2).getType().equals(Material.AIR)) {
             return false;
         }
-        // loop throgh blocks and set them to air
+        // loop through blocks and set them to air
         for (int y = sy; y <= ey; y++) {
             for (int x = sx; x <= ex; x++) {
                 for (int z = sz; z <= ez; z++) {

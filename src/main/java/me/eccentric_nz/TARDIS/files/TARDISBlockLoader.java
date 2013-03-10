@@ -52,12 +52,32 @@ public class TARDISBlockLoader {
         if (rsg.resultSet()) {
             ArrayList<HashMap<String, String>> data = rsg.getData();
             for (HashMap<String, String> map : data) {
-                if (map.get("direction").endsWith("1")) {
-                    // going up
-                    plugin.gravityUpList.add(map.get("location"));
-                } else {
-                    // going down
-                    plugin.gravityDownList.add(map.get("location"));
+                int i = plugin.utils.parseNum(map.get("direction"));
+                switch (i) {
+                    case 1:
+                        // going up
+                        plugin.gravityUpList.put(map.get("location"), Integer.valueOf(map.get("distance")));
+                        break;
+                    case 2:
+                        // going north
+                        plugin.gravityNorthList.put(map.get("location"), Integer.valueOf(map.get("distance")));
+                        break;
+                    case 3:
+                        // going west
+                        plugin.gravityWestList.put(map.get("location"), Integer.valueOf(map.get("distance")));
+                        break;
+                    case 4:
+                        // going south
+                        plugin.gravitySouthList.put(map.get("location"), Integer.valueOf(map.get("distance")));
+                        break;
+                    case 5:
+                        // going east
+                        plugin.gravityEastList.put(map.get("location"), Integer.valueOf(map.get("distance")));
+                        break;
+                    default:
+                        // going down
+                        plugin.gravityDownList.add(map.get("location"));
+                        break;
                 }
             }
             plugin.debug("Loaded Gravity Wells");

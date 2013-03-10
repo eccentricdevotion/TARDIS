@@ -86,7 +86,7 @@ public class TARDISJettisonSeeder implements Listener {
                     plugin.trackJettison.remove(playerNameStr);
                     block.setTypeIdAndData(0, (byte) 0, true);
                     b.getWorld().playEffect(b, Effect.POTION_BREAK, 9);
-                    // ok they clicked it, so take their energy!
+                    // ok they clicked it, so give them their energy!
                     int amount = Math.round((plugin.getConfig().getInt("jettison") / 100F) * plugin.getConfig().getInt("rooms." + r + ".cost"));
                     QueryFactory qf = new QueryFactory(plugin);
                     HashMap<String, Object> set = new HashMap<String, Object>();

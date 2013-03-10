@@ -37,6 +37,7 @@ public class TARDISDatabaseUpdater {
     private List<String> blockupdates = new ArrayList<String>();
     private List<String> destupdates = new ArrayList<String>();
     private List<String> doorupdates = new ArrayList<String>();
+    private List<String> gravityupdates = new ArrayList<String>();
     private List<String> prefsupdates = new ArrayList<String>();
     private List<String> tardisupdates = new ArrayList<String>();
     private Statement statement;
@@ -48,6 +49,7 @@ public class TARDISDatabaseUpdater {
         destupdates.add("bind TEXT DEFAULT ''");
         destupdates.add("type INTEGER DEFAULT 0");
         doorupdates.add("locked INTEGER DEFAULT 0");
+        gravityupdates.add("distance INTEGER DEFAULT 11");
         prefsupdates.add("key TEXT DEFAULT ''");
         prefsupdates.add("artron_level INTEGER DEFAULT 0");
         prefsupdates.add("auto_on INTEGER DEFAULT 0");
@@ -107,6 +109,15 @@ public class TARDISDatabaseUpdater {
                     i++;
                     String o_alter = "ALTER TABLE doors ADD " + o;
                     statement.executeUpdate(o_alter);
+                }
+            }
+            for (String g : gravityupdates) {
+                String g_query = "SELECT sql FROM sqlite_master WHERE tbl_name = 'gravity_well' AND sql LIKE '%" + g + "%'";
+                ResultSet rsg = statement.executeQuery(g_query);
+                if (!rsg.next()) {
+                    i++;
+                    String g_alter = "ALTER TABLE gravity_well ADD " + g;
+                    statement.executeUpdate(g_alter);
                 }
             }
             for (String p : prefsupdates) {

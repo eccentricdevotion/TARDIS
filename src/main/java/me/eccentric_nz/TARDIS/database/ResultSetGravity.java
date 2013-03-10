@@ -45,6 +45,7 @@ public class ResultSetGravity {
     private int tardis_id;
     private String location;
     private int direction;
+    private int distance;
     private ArrayList<HashMap<String, String>> data = new ArrayList<HashMap<String, String>>();
 
     /**
@@ -109,6 +110,7 @@ public class ResultSetGravity {
                     this.tardis_id = rs.getInt("tardis_id");
                     this.location = rs.getString("location");
                     this.direction = rs.getInt("direction");
+                    this.distance = rs.getInt("distance");
                 }
             } else {
                 return false;
@@ -145,6 +147,10 @@ public class ResultSetGravity {
 
     public int getDirection() {
         return direction;
+    }
+
+    public int getDistance() {
+        return distance;
     }
 
     public ArrayList<HashMap<String, String>> getData() {

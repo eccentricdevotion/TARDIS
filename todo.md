@@ -1,8 +1,7 @@
 # TODO
 ## Current version `2.1-beta`
-1. RE-TEST with Tekkit Classic and add guide to using with Tekkit to docs
-2. Revamp Spout sounds [started]. This is probably just going to be changing the the files in DropBox to more relevant internal TARDIS sounds i.e. sound FX instead of speech FX.
-3. TEST
+1. Revamp Spout sounds [started]. This is probably just going to be changing the the files in DropBox to more relevant internal TARDIS sounds i.e. sound FX instead of speech FX.
+2. TEST
 
 ## Release version `2.1`
 1. Update for Minecraft 1.5
