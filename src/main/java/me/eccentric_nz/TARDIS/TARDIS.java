@@ -239,7 +239,7 @@ public class TARDIS extends JavaPlugin {
     public HashMap<String, String> trackDest = new HashMap<String, String>();
     public HashMap<String, String> trackRoomSeed = new HashMap<String, String>();
     public HashMap<String, String> trackJettison = new HashMap<String, String>();
-    public HashMap<String, Integer[]> trackGravity = new HashMap<String, Integer[]>();
+    public HashMap<String, Double[]> trackGravity = new HashMap<String, Double[]>();
     public HashMap<Integer, Integer> trackTravellers = new HashMap<Integer, Integer>();
     public HashMap<Integer, Integer> tardisHasDestination = new HashMap<Integer, Integer>();
     public HashMap<String, Block> trackExterminate = new HashMap<String, Block>();
@@ -247,12 +247,12 @@ public class TARDIS extends JavaPlugin {
     public ArrayList<Integer> tardisMaterialising = new ArrayList<Integer>();
     public List<Chunk> tardisChunkList = new ArrayList<Chunk>();
     public List<Chunk> roomChunkList = new ArrayList<Chunk>();
-    public HashMap<String, Integer> gravityUpList = new HashMap<String, Integer>();
+    public HashMap<String, Double[]> gravityUpList = new HashMap<String, Double[]>();
     public List<String> gravityDownList = new ArrayList<String>();
-    public HashMap<String, Integer> gravityNorthList = new HashMap<String, Integer>();
-    public HashMap<String, Integer> gravityWestList = new HashMap<String, Integer>();
-    public HashMap<String, Integer> gravitySouthList = new HashMap<String, Integer>();
-    public HashMap<String, Integer> gravityEastList = new HashMap<String, Integer>();
+    public HashMap<String, Double[]> gravityNorthList = new HashMap<String, Double[]>();
+    public HashMap<String, Double[]> gravityWestList = new HashMap<String, Double[]>();
+    public HashMap<String, Double[]> gravitySouthList = new HashMap<String, Double[]>();
+    public HashMap<String, Double[]> gravityEastList = new HashMap<String, Double[]>();
     public HashMap<String, Integer> protectBlockMap = new HashMap<String, Integer>();
     private static ArrayList<String> quotes = new ArrayList<String>();
     public ArrayList<String> quote;

@@ -276,6 +276,6 @@ commands:
       permission-message: You don't have the permission <permission> to use this command
   tardisgravity:
       description: Add or remove gravity well blocks.
-      usage: /<command> [up|down|north|west|south|east|remove] [distance]
+      usage: /<command> [up|down|north|west|south|east|remove] [distance] [velocity]
       permission: tardis.update
       permission-message: You don't have the permission <permission> to use this command

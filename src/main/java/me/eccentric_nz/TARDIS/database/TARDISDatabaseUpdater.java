@@ -50,6 +50,7 @@ public class TARDISDatabaseUpdater {
         destupdates.add("type INTEGER DEFAULT 0");
         doorupdates.add("locked INTEGER DEFAULT 0");
         gravityupdates.add("distance INTEGER DEFAULT 11");
+        gravityupdates.add("velocity REAL DEFAULT 0.5");
         prefsupdates.add("key TEXT DEFAULT ''");
         prefsupdates.add("artron_level INTEGER DEFAULT 0");
         prefsupdates.add("auto_on INTEGER DEFAULT 0");

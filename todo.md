@@ -1,7 +1,10 @@
 # TODO
 ## Current version `2.1-beta`
-1. Revamp Spout sounds [started]. This is probably just going to be changing the the files in DropBox to more relevant internal TARDIS sounds i.e. sound FX instead of speech FX.
-2. TEST
+1. Add `/tardisprefs floor [material]` command
+2. Add config option to allow 'economy breaking' blocks to be used for walls and floors
+3. Add an inertial dampened passage room
+4. Revamp Spout sounds [started]. This is probably just going to be changing the the files in DropBox to more relevant internal TARDIS sounds i.e. sound FX instead of speech FX.
+5. TEST
 
 ## Release version `2.1`
 1. Update for Minecraft 1.5

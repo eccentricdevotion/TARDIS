@@ -40,7 +40,7 @@ public class TARDISGravityCommands implements CommandExecutor {
 
     private TARDIS plugin;
     private List<String> directions = new ArrayList<String>();
-    private HashMap<String, Integer> gravityDirection = new HashMap<String, Integer>();
+    private HashMap<String, Double> gravityDirection = new HashMap<String, Double>();
 
     public TARDISGravityCommands(TARDIS plugin) {
         this.plugin = plugin;
@@ -51,13 +51,13 @@ public class TARDISGravityCommands implements CommandExecutor {
         directions.add("south");
         directions.add("east");
         directions.add("remove");
-        gravityDirection.put("down", 0);
-        gravityDirection.put("up", 1);
-        gravityDirection.put("north", 2);
-        gravityDirection.put("west", 3);
-        gravityDirection.put("south", 4);
-        gravityDirection.put("east", 5);
-        gravityDirection.put("remove", 6);
+        gravityDirection.put("down", 0D);
+        gravityDirection.put("up", 1D);
+        gravityDirection.put("north", 2D);
+        gravityDirection.put("west", 3D);
+        gravityDirection.put("south", 4D);
+        gravityDirection.put("east", 5D);
+        gravityDirection.put("remove", 6D);
     }
 
     @Override
@@ -78,20 +78,25 @@ public class TARDISGravityCommands implements CommandExecutor {
             }
             String dir = args[0].toLowerCase(Locale.ENGLISH);
             if (directions.contains(dir)) {
-                Integer[] values = new Integer[2];
+                Double[] values = new Double[3];
                 values[0] = gravityDirection.get(dir);
                 if (!dir.equals("remove") && !dir.equals("down")) {
                     if (args.length < 2) {
                         return false;
                     }
                     try {
-                        values[1] = Integer.parseInt(args[1]);
+                        values[1] = Double.parseDouble(args[1]);
                     } catch (NumberFormatException e) {
                         player.sendMessage(plugin.pluginName + "Second argument must be a number!");
                         return false;
                     }
                 } else {
-                    values[1] = 0;
+                    values[1] = 0D;
+                }
+                if (args.length == 3) {
+                    values[2] = Double.parseDouble(args[2]);
+                } else {
+                    values[2] = 0.5D;
                 }
                 plugin.trackGravity.put(player.getName(), values);
                 String message = (dir.equals("remove")) ? "remove it from the database" : "save its position";

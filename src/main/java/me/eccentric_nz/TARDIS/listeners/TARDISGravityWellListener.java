@@ -44,23 +44,23 @@ import org.bukkit.event.player.PlayerMoveEvent;
 public class TARDISGravityWellListener implements Listener {
 
     private final TARDIS plugin;
-    private HashMap<Integer, Byte> woolData = new HashMap<Integer, Byte>();
-    private HashMap<Integer, String> woolColour = new HashMap<Integer, String>();
+    private HashMap<Double, Byte> woolData = new HashMap<Double, Byte>();
+    private HashMap<Double, String> woolColour = new HashMap<Double, String>();
 
     public TARDISGravityWellListener(TARDIS plugin) {
         this.plugin = plugin;
-        woolData.put(0, (byte) 6);
-        woolData.put(1, (byte) 5);
-        woolData.put(2, (byte) 15);
-        woolData.put(3, (byte) 10);
-        woolData.put(4, (byte) 14);
-        woolData.put(5, (byte) 4);
-        woolColour.put(0, "PINK");
-        woolColour.put(1, "LIGHT GREEN");
-        woolColour.put(2, "BLACK");
-        woolColour.put(3, "PURPLE");
-        woolColour.put(4, "RED");
-        woolColour.put(5, "YELLOW");
+        woolData.put(0D, (byte) 6);
+        woolData.put(1D, (byte) 5);
+        woolData.put(2D, (byte) 15);
+        woolData.put(3D, (byte) 10);
+        woolData.put(4D, (byte) 14);
+        woolData.put(5D, (byte) 4);
+        woolColour.put(0D, "PINK");
+        woolColour.put(1D, "LIGHT GREEN");
+        woolColour.put(2D, "BLACK");
+        woolColour.put(3D, "PURPLE");
+        woolColour.put(4D, "RED");
+        woolColour.put(5D, "YELLOW");
     }
 
     /**
@@ -73,52 +73,69 @@ public class TARDISGravityWellListener implements Listener {
         World world = event.getTo().getWorld();
         Location l = new Location(world, event.getTo().getBlockX(), event.getTo().getBlockY() - 1, event.getTo().getBlockZ(), 0.0F, 0.0F);
         String loc = l.toString();
+        Double[] values;
+        double end;
+        double vel;
         if (plugin.gravityUpList.containsKey(loc)) {
             Player player = event.getPlayer();
             int x = l.getBlockX();
             int z = l.getBlockZ();
-            double endy = l.getY() + plugin.gravityUpList.get(loc);
-            TARDISGravityWellRunnable runnable = new TARDISGravityWellRunnable(plugin, player, 0.5D, endy, x, z, 1);
+            values = plugin.gravityUpList.get(loc);
+            end = l.getY() + values[1];
+            vel = values[2];
+            TARDISGravityWellRunnable runnable = new TARDISGravityWellRunnable(plugin, player, vel, end, x, z, 1);
             int task = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, runnable, 2L, 3L);
             runnable.setTask(task);
+            return;
         }
         if (plugin.gravityNorthList.containsKey(loc)) {
             // move player north
             Player player = event.getPlayer();
             int x = l.getBlockX();
             int z = l.getBlockZ();
-            double endz = l.getZ() - plugin.gravityNorthList.get(loc);
-            TARDISGravityWellRunnable runnable = new TARDISGravityWellRunnable(plugin, player, 0.5D, endz, x, z, 2);
+            values = plugin.gravityNorthList.get(loc);
+            end = l.getZ() - values[1];
+            vel = values[2];
+            TARDISGravityWellRunnable runnable = new TARDISGravityWellRunnable(plugin, player, vel, end, x, z, 2);
             int task = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, runnable, 2L, 3L);
             runnable.setTask(task);
+            return;
         }
         if (plugin.gravityWestList.containsKey(loc)) {
             // move player west
             Player player = event.getPlayer();
             int x = l.getBlockX();
             int z = l.getBlockZ();
-            double endx = l.getX() - plugin.gravityWestList.get(loc);
-            TARDISGravityWellRunnable runnable = new TARDISGravityWellRunnable(plugin, player, 0.5D, endx, x, z, 3);
+            values = plugin.gravityWestList.get(loc);
+            end = l.getX() - values[1];
+            vel = values[2];
+            TARDISGravityWellRunnable runnable = new TARDISGravityWellRunnable(plugin, player, vel, end, x, z, 3);
             int task = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, runnable, 2L, 3L);
             runnable.setTask(task);
+            return;
         }
         if (plugin.gravitySouthList.containsKey(loc)) {
             // move player south
             Player player = event.getPlayer();
             int x = l.getBlockX();
             int z = l.getBlockZ();
-            double endz = l.getZ() + plugin.gravitySouthList.get(loc);
-            TARDISGravityWellRunnable runnable = new TARDISGravityWellRunnable(plugin, player, 0.5D, endz, x, z, 4);
+            values = plugin.gravitySouthList.get(loc);
+            end = l.getZ() + values[1];
+            vel = values[2];
+            TARDISGravityWellRunnable runnable = new TARDISGravityWellRunnable(plugin, player, vel, end, x, z, 4);
             int task = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, runnable, 2L, 3L);
             runnable.setTask(task);
+            return;
         }
         if (plugin.gravityEastList.containsKey(loc)) {
             // move player east
             Player player = event.getPlayer();
             int x = l.getBlockX();
             int z = l.getBlockZ();
-            double endx = l.getX() + plugin.gravityEastList.get(loc);
-            TARDISGravityWellRunnable runnable = new TARDISGravityWellRunnable(plugin, player, 0.5D, endx, x, z, 5);
+            values = plugin.gravityEastList.get(loc);
+            end = l.getX() + values[1];
+            vel = values[2];
+            TARDISGravityWellRunnable runnable = new TARDISGravityWellRunnable(plugin, player, vel, end, x, z, 5);
             int task = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, runnable, 2L, 3L);
             runnable.setTask(task);
         }
@@ -158,7 +175,7 @@ public class TARDISGravityWellListener implements Listener {
         final Player player = event.getPlayer();
         String playerNameStr = player.getName();
         if (plugin.trackGravity.containsKey(playerNameStr)) {
-            Integer[] values = plugin.trackGravity.get(playerNameStr);
+            Double[] values = plugin.trackGravity.get(playerNameStr);
             Block b = event.getClickedBlock();
             if (b != null) {
                 // get tardis_id
@@ -220,30 +237,31 @@ public class TARDISGravityWellListener implements Listener {
                     HashMap<String, Object> set = new HashMap<String, Object>();
                     set.put("tardis_id", id);
                     set.put("location", loc);
-                    set.put("direction", values[0]);
-                    set.put("distance", values[1]);
+                    set.put("direction", values[0].intValue());
+                    set.put("distance", values[1].intValue());
+                    set.put("velocity", values[2]);
                     qf.doInsert("gravity_well", set);
                     // add it to the block list
                     String dir;
-                    switch (values[0]) {
+                    switch (values[0].intValue()) {
                         case 1:
-                            plugin.gravityUpList.put(loc, values[1]);
+                            plugin.gravityUpList.put(loc, values);
                             dir = "UP";
                             break;
                         case 2:
-                            plugin.gravityNorthList.put(loc, values[1]);
+                            plugin.gravityNorthList.put(loc, values);
                             dir = "NORTH";
                             break;
                         case 3:
-                            plugin.gravityWestList.put(loc, values[1]);
+                            plugin.gravityWestList.put(loc, values);
                             dir = "WEST";
                             break;
                         case 4:
-                            plugin.gravitySouthList.put(loc, values[1]);
+                            plugin.gravitySouthList.put(loc, values);
                             dir = "SOUTH";
                             break;
                         case 5:
-                            plugin.gravityEastList.put(loc, values[1]);
+                            plugin.gravityEastList.put(loc, values);
                             dir = "EAST";
                             break;
                         default:

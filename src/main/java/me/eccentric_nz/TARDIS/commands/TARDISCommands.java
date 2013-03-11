@@ -176,7 +176,11 @@ public class TARDISCommands implements CommandExecutor {
                     ResultSet rsg = statement.executeQuery(query);
                     if (rsg.isBeforeFirst()) {
                         String up = "Location{world=" + rsg.getString("world") + ",x=" + rsg.getFloat("upx") + ",y=10.0,z=" + rsg.getFloat("upz") + ",pitch=0.0,yaw=0.0}";
-                        plugin.gravityUpList.put(up, 11);
+                        Double[] values = new Double[3];
+                        values[0] = 1D;
+                        values[1] = 11D;
+                        values[2] = 0.5D;
+                        plugin.gravityUpList.put(up, values);
                         String down = "Location{world=" + rsg.getString("world") + ",x=" + rsg.getFloat("downx") + ",y=10.0,z=" + rsg.getFloat("downz") + ",pitch=0.0,yaw=0.0}";
                         plugin.gravityDownList.add(down);
                         HashMap<String, Object> setu = new HashMap<String, Object>();
@@ -184,11 +188,13 @@ public class TARDISCommands implements CommandExecutor {
                         setu.put("location", up);
                         setu.put("direction", 1);
                         setu.put("distance", 11);
+                        setu.put("velocity", 0.5);
                         HashMap<String, Object> setd = new HashMap<String, Object>();
                         setd.put("tardis_id", id);
                         setd.put("location", down);
                         setd.put("direction", 0);
                         setd.put("distance", 0);
+                        setd.put("velocity", 0);
                         QueryFactory qf = new QueryFactory(plugin);
                         qf.doInsert("gravity_well", setu);
                         qf.doInsert("gravity_well", setd);
