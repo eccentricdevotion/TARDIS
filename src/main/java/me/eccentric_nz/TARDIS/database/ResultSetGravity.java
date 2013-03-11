@@ -89,7 +89,11 @@ public class ResultSetGravity {
                     if (entry.getValue().getClass().equals(String.class)) {
                         statement.setString(s, entry.getValue().toString());
                     } else {
-                        statement.setInt(s, plugin.utils.parseNum(entry.getValue().toString()));
+                        if (entry.getValue().getClass().getName().contains("Double")) {
+                            statement.setDouble(s, Double.parseDouble(entry.getValue().toString()));
+                        } else {
+                            statement.setInt(s, plugin.utils.parseNum(entry.getValue().toString()));
+                        }
                     }
                     s++;
                 }
