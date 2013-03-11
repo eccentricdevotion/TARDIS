@@ -50,7 +50,7 @@ public class TARDISConfiguration {
         this.config = YamlConfiguration.loadConfiguration(configFile);
         // boolean
         boolOptions.put("add_perms", true);
-        boolOptions.put("all_chameleon_blocks", false);
+        boolOptions.put("all_blocks", false);
         boolOptions.put("allow_autonomous", true);
         boolOptions.put("allow_mob_farming", true);
         boolOptions.put("bonus_chest", true);

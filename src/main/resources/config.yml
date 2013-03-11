@@ -9,7 +9,7 @@ default_world_name: myridiculouslylongworldnameiscalledcuthbert
 include_default_world: false
 platform: false
 chameleon: true
-all_chameleon_blocks: false
+all_blocks: false
 sfx: true
 give_key: false
 the_end: false

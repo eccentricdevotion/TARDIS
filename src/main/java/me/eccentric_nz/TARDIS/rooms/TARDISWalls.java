@@ -17,6 +17,7 @@
 package me.eccentric_nz.TARDIS.rooms;
 
 import java.util.HashMap;
+import me.eccentric_nz.TARDIS.TARDIS;
 
 /**
  * A TARDIS isn't just a vehicle for travelling in space and time. As a TARDIS
@@ -80,5 +81,24 @@ public class TARDISWalls {
         blocks.put("SOUL_SAND", new Integer[]{88, 0});
         blocks.put("HUGE_MUSHROOM_1", new Integer[]{99, 14});
         blocks.put("HUGE_MUSHROOM_2", new Integer[]{100, 14});
+        if (TARDIS.plugin.getConfig().getBoolean("all_blocks")) {
+            blocks.put("BEDROCK", new Integer[]{7, 0});
+//            blocks.put("COAL_ORE", new Integer[]{16, 0});
+            blocks.put("DIAMOND_BLOCK", new Integer[]{57, 0});
+//            blocks.put("DIAMOND_ORE", new Integer[]{56, 0});
+            blocks.put("EMERALD_BLOCK", new Integer[]{133, 0});
+//            blocks.put("EMERALD_ORE", new Integer[]{129, 0});
+            blocks.put("GOLD_BLOCK", new Integer[]{41, 0});
+//            blocks.put("GOLD_ORE", new Integer[]{14, 0});
+            blocks.put("IRON_BLOCK", new Integer[]{42, 0});
+//            blocks.put("IRON_ORE", new Integer[]{15, 0});
+            blocks.put("JACK_O_LANTERN", new Integer[]{91, 0});
+            blocks.put("LAPIS_BLOCK", new Integer[]{22, 0});
+            blocks.put("LAPIS_LAZULI", new Integer[]{22, 0});
+            blocks.put("MELON", new Integer[]{103, 0});
+            blocks.put("OBSIDIAN", new Integer[]{49, 0});
+            blocks.put("PUMPKIN", new Integer[]{86, 0});
+//            blocks.put("REDSTONE_ORE", new Integer[]{73, 0});
+        }
     }
 }
