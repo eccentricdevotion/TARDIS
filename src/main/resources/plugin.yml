@@ -225,6 +225,21 @@ commands:
       usage: /<command> platform [on|off]
       permission: tardis.timetravel
       permission-message: You don't have the permission <permission> to use this command
+    key:
+      description: Set the TARDIS key item.
+      usage: /<command> key [material]
+      permission: tardis.timetravel
+      permission-message: You don't have the permission <permission> to use this command
+    wall:
+      description: Set the TARDIS room growing wall material.
+      usage: /<command> wall [material]
+      permission: tardis.timetravel
+      permission-message: You don't have the permission <permission> to use this command
+    floor:
+      description: Set the TARDIS room growing floor material.
+      usage: /<command> floor [material]
+      permission: tardis.timetravel
+      permission-message: You don't have the permission <permission> to use this command
   tardisarea:
     description: Set up predefined TARDIS travel areas.
     usage: /<command> [start|end|show|remove] [name]

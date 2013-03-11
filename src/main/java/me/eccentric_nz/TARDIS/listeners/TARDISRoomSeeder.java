@@ -62,6 +62,10 @@ public class TARDISRoomSeeder implements Listener {
     public void onSeedBlockInteract(PlayerInteractEvent event) {
         final Player player = event.getPlayer();
         String playerNameStr = player.getName();
+        // check that player is in TARDIS
+        if (!plugin.trackRoomSeed.containsKey(playerNameStr)) {
+            return;
+        }
         Block block = event.getClickedBlock();
         if (block != null) {
             Material blockType = block.getType();
@@ -77,10 +81,6 @@ public class TARDISRoomSeeder implements Listener {
             }
             // only proceed if they are clicking a seed block with the TARDIS key!
             if (plugin.seeds.containsKey(blockType) && inhand.equals(Material.getMaterial(key))) {
-                // check that player is in TARDIS
-                if (!plugin.trackRoomSeed.containsKey(playerNameStr)) {
-                    return;
-                }
                 // check they are still in the TARDIS world
                 World world = block.getLocation().getWorld();
                 String name = world.getName();

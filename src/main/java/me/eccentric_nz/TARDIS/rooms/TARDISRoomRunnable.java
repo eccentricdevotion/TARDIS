@@ -46,8 +46,8 @@ public class TARDISRoomRunnable implements Runnable {
     private Location l;
     String[][][] s;
     short[] dim;
-    private int id, task, level, row, col, h, w, c, middle_id, startx, starty, startz, resetx, resetz, x, z, tardis_id;
-    byte data, middle_data;
+    private int id, task, level, row, col, h, w, c, middle_id, floor_id, startx, starty, startz, resetx, resetz, x, z, tardis_id;
+    byte data, middle_data, floor_data;
     Block b;
     COMPASS d;
     String room;
@@ -72,6 +72,8 @@ public class TARDISRoomRunnable implements Runnable {
         this.d = roomData.getDirection();
         this.middle_id = roomData.getMiddle_id();
         this.middle_data = roomData.getMiddle_data();
+        this.floor_id = roomData.getFloor_id();
+        this.floor_data = roomData.getFloor_data();
         this.room = roomData.getRoom().toString();
         this.tardis_id = roomData.getTardis_id();
         this.running = false;
@@ -129,12 +131,12 @@ public class TARDISRoomRunnable implements Runnable {
             }
             if (room.equals("POOL") || room.equals("ARBORETUM") || room.equals("GREENHOUSE")) {
                 p.sendMessage(plugin.pluginName + "Melting the ice!");
+                // set all the ice to water
+                for (Block ice : iceblocks) {
+                    ice.setTypeId(9);
+                }
+                iceblocks.clear();
             }
-            // set all the ice to water
-            for (Block ice : iceblocks) {
-                ice.setTypeId(9);
-            }
-            iceblocks.clear();
             if (room.equals("GREENHOUSE")) {
                 // plant the sugar cane
                 for (Block cane : caneblocks) {
@@ -177,6 +179,10 @@ public class TARDISRoomRunnable implements Runnable {
             if (id == 35 && data == 1) {
                 id = middle_id;
                 data = middle_data;
+            }
+            if (id == 35 && data == 8) {
+                id = floor_id;
+                data = floor_data;
             }
             QueryFactory qf = new QueryFactory(plugin);
             // set condenser

@@ -38,8 +38,8 @@ public class TARDISRoomData {
     Block block;
     String[][][] schematic;
     short[] dimensions;
-    int middle_id, x, z, tardis_id;
-    byte middle_data;
+    int middle_id, floor_id, x, z, tardis_id;
+    byte middle_data, floor_data;
 
     public TARDISRoomData() {
     }
@@ -100,6 +100,30 @@ public class TARDISRoomData {
         this.middle_id = middle_id;
     }
 
+    public byte getMiddle_data() {
+        return middle_data;
+    }
+
+    public void setMiddle_data(byte middle_data) {
+        this.middle_data = middle_data;
+    }
+
+    public int getFloor_id() {
+        return floor_id;
+    }
+
+    public void setFloor_id(int floor_id) {
+        this.floor_id = floor_id;
+    }
+
+    public byte getFloor_data() {
+        return floor_data;
+    }
+
+    public void setFloor_data(byte floor_data) {
+        this.floor_data = floor_data;
+    }
+
     public int getX() {
         return x;
     }
@@ -122,13 +146,5 @@ public class TARDISRoomData {
 
     public void setTardis_id(int tardis_id) {
         this.tardis_id = tardis_id;
-    }
-
-    public byte getMiddle_data() {
-        return middle_data;
-    }
-
-    public void setMiddle_data(byte middle_data) {
-        this.middle_data = middle_data;
     }
 }

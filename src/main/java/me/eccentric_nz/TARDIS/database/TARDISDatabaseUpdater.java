@@ -130,11 +130,19 @@ public class TARDISDatabaseUpdater {
                     statement.executeUpdate(p_alter);
                 }
             }
-            String pp_query = "SELECT sql FROM sqlite_master WHERE tbl_name = 'player_prefs' AND sql LIKE '%wall TEXT DEFAULT%'";
-            ResultSet rspp = statement.executeQuery(pp_query);
-            if (!rspp.next()) {
-                String pp_alter = "ALTER TABLE player_prefs ADD wall TEXT DEFAULT 'ORANGE_WOOL'";
-                statement.executeUpdate(pp_alter);
+            String ppw_query = "SELECT sql FROM sqlite_master WHERE tbl_name = 'player_prefs' AND sql LIKE '%wall TEXT DEFAULT%'";
+            ResultSet rsppw = statement.executeQuery(ppw_query);
+            if (!rsppw.next()) {
+                String ppw_alter = "ALTER TABLE player_prefs ADD wall TEXT DEFAULT 'ORANGE_WOOL'";
+                statement.executeUpdate(ppw_alter);
+                i++;
+            }
+            String ppf_query = "SELECT sql FROM sqlite_master WHERE tbl_name = 'player_prefs' AND sql LIKE '%floor TEXT DEFAULT%'";
+            ResultSet rsppf = statement.executeQuery(ppf_query);
+            if (!rsppf.next()) {
+                String ppf_alter = "ALTER TABLE player_prefs ADD floor TEXT DEFAULT 'LIGHT_GREY_WOOL'";
+                statement.executeUpdate(ppf_alter);
+                i++;
             }
             for (String t : tardisupdates) {
                 String t_query = "SELECT sql FROM sqlite_master WHERE tbl_name = 'tardis' AND sql LIKE '%" + t + "%'";

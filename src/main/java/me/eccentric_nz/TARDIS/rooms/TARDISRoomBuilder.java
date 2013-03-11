@@ -69,19 +69,26 @@ public class TARDISRoomBuilder {
             TARDISRoomData roomData = new TARDISRoomData();
             roomData.setTardis_id(rs.getTardis_id());
             // get middle data, default to orange wool if not set
-            int middle_id;
-            byte middle_data;
+            int middle_id, floor_id;
+            byte middle_data, floor_data;
             if (rsp.resultSet()) {
                 TARDISWalls tw = new TARDISWalls();
-                Integer[] id_data = tw.blocks.get(rsp.getWall());
-                middle_id = id_data[0].intValue();
-                middle_data = id_data[1].byteValue();
+                Integer[] wid_data = tw.blocks.get(rsp.getWall());
+                middle_id = wid_data[0].intValue();
+                middle_data = wid_data[1].byteValue();
+                Integer[] fid_data = tw.blocks.get(rsp.getFloor());
+                floor_id = fid_data[0].intValue();
+                floor_data = fid_data[1].byteValue();
             } else {
                 middle_id = 35;
                 middle_data = 1;
+                floor_id = 35;
+                floor_data = 8;
             }
             roomData.setMiddle_id(middle_id);
             roomData.setMiddle_data(middle_data);
+            roomData.setFloor_id(floor_id);
+            roomData.setFloor_data(floor_data);
             // get start locations
             Block b = l.getBlock();
             roomData.setBlock(b);

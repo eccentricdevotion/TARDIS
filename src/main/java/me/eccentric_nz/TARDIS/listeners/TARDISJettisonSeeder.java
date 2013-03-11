@@ -57,6 +57,10 @@ public class TARDISJettisonSeeder implements Listener {
     public void onSeedBlockInteract(PlayerInteractEvent event) {
         final Player player = event.getPlayer();
         String playerNameStr = player.getName();
+        // check that player is in TARDIS
+        if (!plugin.trackJettison.containsKey(playerNameStr)) {
+            return;
+        }
         Block block = event.getClickedBlock();
         if (block != null) {
             Material blockType = block.getType();
@@ -72,10 +76,6 @@ public class TARDISJettisonSeeder implements Listener {
             }
             // only proceed if they are clicking a seed block with the TARDIS key!
             if (blockType.equals(Material.getMaterial(plugin.getConfig().getString("jettison_seed"))) && inhand.equals(Material.getMaterial(key))) {
-                // check that player is in TARDIS
-                if (!plugin.trackJettison.containsKey(playerNameStr)) {
-                    return;
-                }
                 String r = plugin.trackJettison.get(playerNameStr);
                 // get clicked block location
                 Location b = block.getLocation();
