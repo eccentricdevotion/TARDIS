@@ -285,8 +285,8 @@ public class TARDISBuilderInner {
                             id = plugin.utils.parseNum(tmp);
                             data = 0;
                         }
-                        // if it's a iron/gold/diamond/emerald block put it in the blocks table
-                        if (id == 41 || id == 42 || id == 57 || id == 133 || id == -123) {
+                        // if it's a iron/gold/diamond/emerald/beacon block put it in the blocks table
+                        if (id == 41 || id == 42 || id == 57 || id == 133 || id == -123 || id == 138 || id == -118) {
                             HashMap<String, Object> setpb = new HashMap<String, Object>();
                             String loc = new Location(world, startx, starty, startz).toString();
                             setpb.put("tardis_id", dbID);
