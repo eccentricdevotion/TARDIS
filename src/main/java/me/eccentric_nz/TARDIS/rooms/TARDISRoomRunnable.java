@@ -194,7 +194,7 @@ public class TARDISRoomRunnable implements Runnable {
                 qf.doUpdate("tardis", setc, wherec);
             }
             // set farm
-            if (id == 16 && room.equals("FARM")) {
+            if (id == 52 && room.equals("FARM")) {
                 HashMap<String, Object> setf = new HashMap<String, Object>();
                 setf.put("farm", world.getName() + ":" + startx + ":" + starty + ":" + startz);
                 HashMap<String, Object> wheref = new HashMap<String, Object>();
