@@ -1,0 +1,108 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="chrome=1">
+<title>TARDIS: Gravity wells</title>
+<link rel="stylesheet" href="stylesheets/styles.css">
+<link rel="stylesheet" href="stylesheets/pygment_trac.css">
+<script src="javascripts/scale.fix.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+<!--[if lt IE 9]>
+<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+<![endif]-->
+</head>
+<body>
+<div class="wrapper">
+    <header>
+        <h1>TARDIS</h1>
+        <p>A Bukkit plugin for all Doctor Who fans - create and use a TARDIS! It&rsquo;s bigger on the inside!</p>
+        <p class="view"><a href="https://github.com/eccentricdevotion/TARDIS">View the Project on GitHub <small>eccentricdevotion/TARDIS</small></a></p>
+        <ul>
+            <li><a href="/TARDIS/">Back <strong>home</strong></a></li>
+            <li><a href="contents.html"><strong>Contents</strong> page</a></li>
+        </ul>
+    </header>
+    <section>
+        <p><a href="#video">Jump to videos</a></p>
+        <h1>Gravity Wells</h1>
+        <p>Gravity wells let you move around the TARDIS interior without having to walk or use ladders. They let you create multiple levels so you can expand the TARDIS as much as you want.</p>
+        <p>There are three types of gravity wells:</p>
+        <ol>
+            <li>The <em>gravity</em> room type grows gravity wells that go <strong>down</strong> a level</code></li>
+            <li>The <em>antigravity</em> room type grows gravity wells that go <strong>up</strong> a level</code></li>
+            <li>The <code>/tardisgravity</code> command lets you create <strong>sideways</strong> gravity wells (or inertial dampened passages)</li>
+        </ol>
+        <h2>Growing gravity wells</h2>
+        <p>Gravity wells are best grown in the middle of an empty room.</p>
+        <ol>
+            <li>Use the <code>/tardis room [gravity|antigravity]</code> command to get started</li>
+            <li>Place the seed block (MOSSY COBBLESTONE for gravity, and SANDSTONE for antigravity) down into the centre of the floor (don&rsquo;t sit it on top)</li>
+            <li>Click the seed block with the TARDIS key and sit back while you watch it grow</li>
+        </ol>
+        <p>The PINK side of the gravity well allows you fall down it without taking any damage, while the GREEN side will lift you up (without any need for flying).</p>
+        <h2>The <code>/tardisgravity</code> command</h2>
+        <p>This command will let you create either sideways gravity wells, or up and down ones of any height (though you&rsquo;ll need to build your own gravity shaft).</p>
+        <p>The command syntax is:</p>
+        <pre><code>/tardisgravity [direction] [distance] [velocity]</code></pre>
+        <p>Where <code>[direction]</code> is one of:</p>
+        <pre><code>up
+down
+north
+west
+south
+east</code></pre>
+        <p><code>[distance]</code> is the number of blocks you want to move</p>
+        <p><code>[velocity]</code> is how fast you want to move. As a guide, normal Minecraft walking speed is 0.37, and a standard (grown) TARDIS gravity well is 0.5.</p>
+        <p>You will find that the higher you set the velocity, the less you will have to set the distance. For example, a standard (grown) TARDIS gravity well uses <code>distance = 11</code>, <code>velocity = 0.5</code>. If we change the velocity to <code>1.5</code>, then the distance will need to be lowered to <code>2</code> to stop players hitting their heads on the ceiling.</p>
+        <p>After running the command you will be prompted to click the wool block that becomes the trigger for the gravity well.</p>
+        <h3>Wool colours</h3>
+        <p>The following table sets out the colour of the wool block needed for each gravity well direction.</p>
+        <table>
+            <tr>
+                <th>Direction</th>
+                <th>Wool colour</th>
+            </tr>
+            <tr>
+                <td>Up</td>
+                <td style="color:#cf0;">Light Green</td>
+            </tr>
+            <tr>
+                <td>Down</td>
+                <td style="color:#f6f;">Pink</td>
+            </tr>
+            <tr>
+                <td>North</td>
+                <td>Black</td>
+            </tr>
+            <tr>
+                <td>West</td>
+                <td style="color:#90f;">Purple</td>
+            </tr>
+            <tr>
+                <td>South</td>
+                <td style="color:#c00;">Red</td>
+            </tr>
+            <tr>
+                <td>East</td>
+                <td style="color:#ff0;">Yellow</td>
+            </tr>
+        </table>
+        <h2>Removing gravity well blocks</h2>
+        <p>You cannot jettison gravity wells, but sometimes you may want to remove them manually. To get rid of the gravity well trigger block, you can use the command:</p>
+        <pre><code>/tardisgravity remove</code></pre>
+        <p>You will be prompted to click on the block to remove the reference to it in the TARDIS database.</p>
+        <h3 id="video">Videos</h3>
+        <iframe src="http://player.vimeo.com/video/58275849" width="600" height="366" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+        <iframe src="http://player.vimeo.com/video/61447553" width="600" height="366" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+        <p>&nbsp;</p>
+        <p><a href="javascript:history.back()">Back</a></p>
+    </section>
+</div>
+<footer>
+    <p>Project maintained by <a href="https://github.com/eccentricdevotion">eccentricdevotion</a></p>
+    <p>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></p>
+</footer>
+<!--[if !IE]><script>fixScale(document);</script><![endif]-->
+</body>
+</html>

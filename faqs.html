@@ -37,6 +37,7 @@
             <li><a href="#gravity">My Gravity Well stopped working</a></li>
             <li><a href="#perms">It keeps saying I&rsquo;m restricted to the [] area or something about my exile status!</a></li>
             <li><a href="#config">I changed some config options but they keep changing back!</a></li>
+            <li><a href="#jettison">I jettisoned a room and it deleted part of the control room!</a></li>
             <li><a href="#missing">I created a TARDIS but some of the blocks are missing!</a></li>
             <li><a href="#config">I edited the config file, but when I reload the changes don&rsquo;t save!</a></li>
             <li><a href="#txtpac">What is the Texture Pack in the videos?</a></li>
@@ -130,6 +131,8 @@
         <p>If you manually edit the TARDIS config file while the server is running, you will need to use the <code>/tardisadmin reload</code> command (DO NOT use <code>/reload</code> as the plugin saves the current settings when it is disabled).</p>
         <p>The better option is to set the config options in game with the <code>/tardisadmin [config option] [value]</code> command - changes take effect immediately, no server restart required. See the <a href="admin-commands.html">Admin Commands</a> page for more details.</p>
         <p><a href="#top">Back to top</a></p>
+        <h4 id="jettison">I jettisoned a room and it deleted part of the control room!</h4>
+        <p>The <code>/tardis jettison</code> command relies on the direction the player is facing in order to work &mdash; always <strong>face into the room you want to jettison</strong>, otherwise you are likely to be removing parts of your TARDIS that you don&rsquo;t want to.</p>
         <h4 id="missing">I created a TARDIS but some of the blocks are missing!</h4>
         <p>You are probably using a server that is a fork of CraftBukkit, such as Spigot, Libigot, FTB Mindcrack or MCPC+. These forked versions have been changed in a way that makes this happen. We really don&rsquo;t have time to support these server versions (just keeping up with CraftBukkit takes enough time), we suggest you try and get some help on the forums of the server you are using.</p>
         <p><strong>Note:</strong> It seems the problem is with one of the CraftBukkit patches to do with chunks - specifically this one: <a href="https://github.com/EcoCityCraft/Spigot/blob/master/CraftBukkit-Patches/0015-Alternate-sync-free-but-safe-chunk-reference-cache.patch">Alternate-sync-free-but-safe-chunk-reference-cache.patch</a><br />If you build the server from source with the regular CraftBukkit code, it seems to fix the problem.</p>
