@@ -81,6 +81,9 @@ public class TARDISWalls {
         blocks.put("SOUL_SAND", new Integer[]{88, 0});
         blocks.put("HUGE_MUSHROOM_1", new Integer[]{99, 14});
         blocks.put("HUGE_MUSHROOM_2", new Integer[]{100, 14});
+        blocks.put("QUARTZ", new Integer[]{155, 0});
+        blocks.put("CHISELED_QUARTZ", new Integer[]{155, 1});
+        blocks.put("QUARTZ_PILLAR", new Integer[]{155, 2});
         if (TARDIS.plugin.getConfig().getBoolean("all_blocks")) {
             blocks.put("BEDROCK", new Integer[]{7, 0});
             blocks.put("COAL_ORE", new Integer[]{16, 0});
@@ -88,6 +91,7 @@ public class TARDISWalls {
             blocks.put("DIAMOND_ORE", new Integer[]{56, 0});
             blocks.put("EMERALD_BLOCK", new Integer[]{133, 0});
             blocks.put("EMERALD_ORE", new Integer[]{129, 0});
+            blocks.put("QUARTZ_ORE", new Integer[]{153, 0});
             blocks.put("GOLD_BLOCK", new Integer[]{41, 0});
             blocks.put("GOLD_ORE", new Integer[]{14, 0});
             blocks.put("IRON_BLOCK", new Integer[]{42, 0});
@@ -98,6 +102,7 @@ public class TARDISWalls {
             blocks.put("MELON", new Integer[]{103, 0});
             blocks.put("OBSIDIAN", new Integer[]{49, 0});
             blocks.put("PUMPKIN", new Integer[]{86, 0});
+            blocks.put("REDSTONE_BLOCK", new Integer[]{152, 0});
             blocks.put("REDSTONE_ORE", new Integer[]{73, 0});
         }
     }

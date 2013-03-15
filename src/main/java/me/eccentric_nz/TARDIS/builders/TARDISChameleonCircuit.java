@@ -136,6 +136,9 @@ public class TARDISChameleonCircuit {
                 case 133:
                     chameleonData = (byte) 5;
                     break;
+                case 152:
+                    chameleonData = (byte) 14;
+                    break;
             }
         }
         data[0] = wall_block;
