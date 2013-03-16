@@ -26,6 +26,7 @@
     <section>
         <h1 id="top">Troubleshooting/Common Problems</h1>
         <ul>
+            <li><a href="#rooms">The plugin says &lsquo;You cannot grow rooms unless your TARDIS was created in its own world&rsquo;</a></li>
             <li><a href="#own-world">My TARDIS is not generating its own world!</a></li>
             <li><a href="#import">How do I import my TARDIS world into my multi-world plugin?</a></li>
             <li><a href="#spawn">Non-op players can&rsquo;t break the blocks inside the TARDIS to grow rooms</a></li>
@@ -42,6 +43,8 @@
             <li><a href="#config">I edited the config file, but when I reload the changes don&rsquo;t save!</a></li>
             <li><a href="#txtpac">What is the Texture Pack in the videos?</a></li>
         </ul>
+        <h4 id="rooms">The plugin says &lsquo;You cannot grow rooms unless your TARDIS was created in its own world&rsquo;</h4>
+        <p>You need to set up the plugin to so that when you create a TARDIS, it is created in its own world. To do this you need follow the instructions for &ldquo;My TARDIS is not generating its own world!&rdquo; below.</p>
         <h4 id="own-world">My TARDIS is not generating its own world!</h4>
         <p>For best results, follow these steps to set up the plugin to create TARDIS worlds:</p>
         <ol>
@@ -50,6 +53,7 @@
             <li>Delete the <code>plugins/TARDIS</code> folder</li>
             <li>Install TARDISChunkGenerator (if you haven&rsquo;t already)</li>
             <li>Install <a href="http://dev.bukkit.org/server-mods/multiverse-core/">Multiverse-Core</a></li>
+            <li>Make sure that the TARDIS config option <code>create_worlds</code> is set to <code>true</code> - (it gets disabled automatically if a multi-world plugin is not found).</li>
             <li>Start the server</li>
             <li>Create a TARDIS</li>
         </ol>
