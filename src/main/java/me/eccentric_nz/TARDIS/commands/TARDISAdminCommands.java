@@ -16,7 +16,10 @@
  */
 package me.eccentric_nz.TARDIS.commands;
 
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -248,26 +251,47 @@ public class TARDISAdminCommands implements CommandExecutor {
                     }
                 }
                 if (first.equals("list")) {
-                    // get all tardis positions - max 18
-                    int start = 0, end = 18;
-                    if (args.length > 1) {
-                        int tmp = plugin.utils.parseNum(args[1]);
-                        start = (tmp * 18) - 18;
-                        end = tmp * 18;
-                    }
-                    String limit = start + ", " + end;
-                    ResultSetTardis rsl = new ResultSetTardis(plugin, null, limit, true);
-                    if (rsl.resultSet()) {
-                        sender.sendMessage(plugin.pluginName + "TARDIS locations.");
-                        ArrayList<HashMap<String, String>> data = rsl.getData();
-                        for (HashMap<String, String> map : data) {
-                            sender.sendMessage("Timelord: " + map.get("owner") + ", Location: " + map.get("current"));
+                    if (args.length > 1 && args[1].equalsIgnoreCase("save")) {
+                        ResultSetTardis rsl = new ResultSetTardis(plugin, null, "", true);
+                        if (rsl.resultSet()) {
+                            ArrayList<HashMap<String, String>> data = rsl.getData();
+                            String file = plugin.getDataFolder() + File.separator + "TARDIS_list.txt";
+                            try {
+                                BufferedWriter bw = new BufferedWriter(new FileWriter(file, false));
+                                for (HashMap<String, String> map : data) {
+                                    String line = "Timelord: " + map.get("owner") + ", Location: " + map.get("current");
+                                    bw.write(line);
+                                    bw.newLine();
+                                }
+                                bw.close();
+                            } catch (IOException e) {
+                                plugin.debug("Could not create and write to TARDIS_list.txt! " + e.getMessage());
+                            }
                         }
-                        sender.sendMessage(plugin.pluginName + "To see more locations, type: /tardisadmin list 2,  /tardisadmin list 3 etc.");
+                        sender.sendMessage(plugin.pluginName + "File saved to 'plugins/TARDIS/TARDIS_list.txt'");
+                        return true;
                     } else {
-                        sender.sendMessage(plugin.pluginName + "There are no more records to display.");
+                        // get all tardis positions - max 18
+                        int start = 0, end = 18;
+                        if (args.length > 1) {
+                            int tmp = plugin.utils.parseNum(args[1]);
+                            start = (tmp * 18) - 18;
+                            end = tmp * 18;
+                        }
+                        String limit = start + ", " + end;
+                        ResultSetTardis rsl = new ResultSetTardis(plugin, null, limit, true);
+                        if (rsl.resultSet()) {
+                            sender.sendMessage(plugin.pluginName + "TARDIS locations.");
+                            ArrayList<HashMap<String, String>> data = rsl.getData();
+                            for (HashMap<String, String> map : data) {
+                                sender.sendMessage("Timelord: " + map.get("owner") + ", Location: " + map.get("current"));
+                            }
+                            sender.sendMessage(plugin.pluginName + "To see more locations, type: /tardisadmin list 2,  /tardisadmin list 3 etc.");
+                        } else {
+                            sender.sendMessage(plugin.pluginName + "There are no more records to display.");
+                        }
+                        return true;
                     }
-                    return true;
                 }
                 if (args.length < 2) {
                     sender.sendMessage(plugin.pluginName + "Too few command arguments!");
