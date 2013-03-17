@@ -1,13 +1,9 @@
 # TODO
-## Current version `2.1-beta`
-1. Add an inertial dampened passage room
-2. Revamp Spout sounds [started]. This is probably just going to be changing the the files in DropBox to more relevant internal TARDIS sounds i.e. sound FX instead of speech FX.
-3. TEST
-
 ## Release version `2.1`
-1. Update for Minecraft 1.5
-
-## Future version `2.2+`
+1. Upload
+ 
+## Current version `2.2-beta`
+0. Add Redstone Block TARDIS
 1. Add a schematic to CSV converter.
 2. Add a way to grow rooms out of any CSV file in the schematic directory and enable the room if supplied in the config.
 3. Allow random chance of TARDIS malfunction which deposits player in some unexpected place
@@ -16,6 +12,9 @@
 6. Check what happens when companions steal the TARDIS
 7. Add TARDIS quests, level ups/XP for travelling
 8. Add save-sign and scanner button to TARDIS schematics
+
+## Future version `2.3+`
+?
 
 ## Minecraft API when available `3.0`
 1. Create custom blocks for the TARDIS and console.
