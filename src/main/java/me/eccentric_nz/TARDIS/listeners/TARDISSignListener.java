@@ -148,7 +148,7 @@ public class TARDISSignListener implements Listener {
                                     }
                                     dests.add(home);
                                     String[] display;
-                                    if (plugin.trackDest.containsKey(player.getName())) {
+                                    if (plugin.trackDest.containsKey(player.getName()) && dests.size() > 1) {
                                         reOrder(dests, plugin.trackDest.get(player.getName()));
                                         plugin.trackDest.put(player.getName(), dests.get(1));
                                         display = dests.get(1).split(":");
