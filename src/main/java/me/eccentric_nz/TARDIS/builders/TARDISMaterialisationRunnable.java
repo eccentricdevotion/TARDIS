@@ -365,7 +365,7 @@ public class TARDISMaterialisationRunnable implements Runnable {
                 for (HashMap<String, String> map : travellers) {
                     Player p = plugin.getServer().getPlayer(map.get("player"));
                     if (p != null) {
-                        plugin.getServer().getPlayer(map.get("player")).sendMessage(plugin.pluginName + "Engage the handbrake to exit!");
+                        plugin.getServer().getPlayer(map.get("player")).sendMessage(plugin.pluginName + "LEFT-click the handbrake to exit!");
                     }
                 }
             }
