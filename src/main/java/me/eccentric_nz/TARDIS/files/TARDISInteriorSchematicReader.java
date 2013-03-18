@@ -57,7 +57,7 @@ public class TARDISInteriorSchematicReader {
      * dimensions of the schematics are also stored for use by the TARDIS and
      * room builders.
      */
-    public void readAndMakeCSV(String fileStr, TARDISConstants.SCHEMATIC s, boolean rotate) {
+    public void readAndMakeCSV(String fileStr, TARDISConstants.SCHEMATIC s) {
         plugin.console.sendMessage(plugin.pluginName + "Loading schematic: " + fileStr);
         FileInputStream fis = null;
         try {
@@ -119,13 +119,10 @@ public class TARDISInteriorSchematicReader {
                         j++;
                     }
                 }
-                if (rotate) {
-                    strarr = rotateSquareCCW(strarr);
-                }
                 layers.add(strarr);
             }
             try {
-                String csvFile = (rotate) ? fileStr + "_EW.csv" : fileStr + ".csv";
+                String csvFile = fileStr + ".csv";
                 File file = new File(csvFile);
                 BufferedWriter bw = new BufferedWriter(new FileWriter(file, false));
                 for (String[][] l : layers) {
@@ -154,34 +151,5 @@ public class TARDISInteriorSchematicReader {
                 }
             }
         }
-    }
-
-//    /**
-//     * Rotates a square 2D array 90 degrees clockwise.
-//     */
-//    private static String[][] rotateSquareCW(String[][] mat) {
-//        final int size = mat.length;
-//        String[][] out = new String[size][size];
-//        for (int r = 0; r < size; r++) {
-//            for (int c = 0; c < size; c++) {
-//                out[c][size - 1 - r] = mat[r][c];
-//            }
-//        }
-//        return out;
-//    }
-    /**
-     * Rotates a square 2D array 90 degrees counterclockwise. This is used for
-     * the (non-symmetrical) TARDIS passage ways so that they are built
-     * correctly in the EAST and WEST directions.
-     */
-    private String[][] rotateSquareCCW(String[][] mat) {
-        int size = mat.length;
-        String[][] out = new String[size][size];
-        for (int r = 0; r < size; r++) {
-            for (int c = 0; c < size; c++) {
-                out[r][c] = mat[c][size - r - 1];
-            }
-        }
-        return out;
     }
 }

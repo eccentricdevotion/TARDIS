@@ -119,11 +119,11 @@ public class TARDISMakeTardisCSV {
             copy(wornstr, plugin.getResource(TARDISConstants.SCHEMATIC_WORKSHOP));
 
             // read the schematics and make the CSV files
-            reader.readAndMakeCSV(bignstr, TARDISConstants.SCHEMATIC.BIGGER, false);
-            reader.readAndMakeCSV(budnstr, TARDISConstants.SCHEMATIC.BUDGET, false);
-            reader.readAndMakeCSV(delnstr, TARDISConstants.SCHEMATIC.DELUXE, false);
-            reader.readAndMakeCSV(elenstr, TARDISConstants.SCHEMATIC.ELEVENTH, false);
-            reader.readAndMakeCSV(rednstr, TARDISConstants.SCHEMATIC.REDSTONE, false);
+            reader.readAndMakeCSV(bignstr, TARDISConstants.SCHEMATIC.BIGGER);
+            reader.readAndMakeCSV(budnstr, TARDISConstants.SCHEMATIC.BUDGET);
+            reader.readAndMakeCSV(delnstr, TARDISConstants.SCHEMATIC.DELUXE);
+            reader.readAndMakeCSV(elenstr, TARDISConstants.SCHEMATIC.ELEVENTH);
+            reader.readAndMakeCSV(rednstr, TARDISConstants.SCHEMATIC.REDSTONE);
             // load the schematic data from the tardisCSV files
             plugin.biggerschematic = TARDISSchematic.schematic(plugin.biggerSchematicCSV, plugin.biggerdimensions[0], plugin.biggerdimensions[1], plugin.biggerdimensions[2]);
             plugin.budgetschematic = TARDISSchematic.schematic(plugin.budgetSchematicCSV, plugin.budgetdimensions[0], plugin.budgetdimensions[1], plugin.budgetdimensions[2]);
