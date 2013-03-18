@@ -28,6 +28,7 @@ import me.eccentric_nz.TARDIS.commands.TARDISCommands;
 import me.eccentric_nz.TARDIS.commands.TARDISAreaCommands;
 import me.eccentric_nz.TARDIS.commands.TARDISTravelCommands;
 import me.eccentric_nz.TARDIS.commands.TARDISAdminCommands;
+import me.eccentric_nz.TARDIS.commands.TARDISBindCommands;
 import me.eccentric_nz.TARDIS.destroyers.TARDISDestroyerInner;
 import me.eccentric_nz.TARDIS.destroyers.TARDISDestroyerPoliceBox;
 import me.eccentric_nz.TARDIS.builders.TARDISBuilderInner;
@@ -40,6 +41,7 @@ import me.eccentric_nz.TARDIS.listeners.TARDISBlockBreakListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISBlockDamageListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISDoorListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISScannerListener;
+import me.eccentric_nz.TARDIS.listeners.TARDISTimeLordDeathListener;
 import me.eccentric_nz.TARDIS.database.TARDISDatabase;
 import java.io.*;
 import java.util.ArrayList;
@@ -47,6 +49,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Set;
 import me.eccentric_nz.TARDIS.builders.TARDISSpace;
+import me.eccentric_nz.TARDIS.commands.TARDISGravityCommands;
+import me.eccentric_nz.TARDIS.commands.TARDISRoomCommands;
 import me.eccentric_nz.TARDIS.files.TARDISBlockLoader;
 import me.eccentric_nz.TARDIS.files.TARDISMakeCSV;
 import me.eccentric_nz.TARDIS.files.TARDISUpdateChecker;
@@ -67,6 +71,7 @@ import me.eccentric_nz.TARDIS.listeners.TARDISSignListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISUpdateListener;
 import me.eccentric_nz.TARDIS.travel.TARDISUpdateTravellerCount;
 import me.eccentric_nz.TARDIS.utility.TARDISCreeperChecker;
+import me.eccentric_nz.TARDIS.utility.TARDISFactionsChecker;
 import me.eccentric_nz.TARDIS.utility.TARDISTownyChecker;
 import me.eccentric_nz.TARDIS.utility.TARDISWorldBorderChecker;
 import org.bukkit.Bukkit;
@@ -100,76 +105,103 @@ public class TARDIS extends JavaPlugin {
     public File biggerSchematicFile = null;
     public File deluxeSchematicFile = null;
     public File eleventhSchematicFile = null;
+    public File redstoneSchematicFile = null;
+    public File antigravitySchematicFile = null;
     public File arboretumSchematicFile = null;
+    public File bakerSchematicFile = null;
     public File bedroomSchematicFile = null;
+    public File crossSchematicFile = null;
+    public File emptySchematicFile = null;
+    public File farmSchematicFile = null;
+    public File gravitySchematicFile = null;
+    public File greenhouseSchematicFile = null;
+    public File harmonySchematicFile = null;
     public File kitchenSchematicFile = null;
     public File librarySchematicFile = null;
+    public File longSchematicFile = null;
+    public File mushroomSchematicFile = null;
     public File passageSchematicFile = null;
     public File poolSchematicFile = null;
     public File vaultSchematicFile = null;
-    public File workshopSchematicFile = null;
-    public File emptySchematicFile = null;
-    public File gravitySchematicFile = null;
-    public File antigravitySchematicFile = null;
-    public File harmonySchematicFile = null;
-    public File bakerSchematicFile = null;
     public File woodSchematicFile = null;
+    public File workshopSchematicFile = null;
     public File budgetSchematicCSV = null;
     public File biggerSchematicCSV = null;
     public File deluxeSchematicCSV = null;
     public File eleventhSchematicCSV = null;
+    public File redstoneSchematicCSV = null;
+    public File antigravitySchematicCSV = null;
     public File arboretumSchematicCSV = null;
+    public File bakerSchematicCSV = null;
     public File bedroomSchematicCSV = null;
+    public File crossSchematicCSV = null;
+    public File emptySchematicCSV = null;
+    public File farmSchematicCSV = null;
+    public File gravitySchematicCSV = null;
+    public File greenhouseSchematicCSV = null;
+    public File harmonySchematicCSV = null;
     public File kitchenSchematicCSV = null;
     public File librarySchematicCSV = null;
+    public File longSchematicCSV = null;
+    public File longSchematicCSV_EW = null;
+    public File mushroomSchematicCSV = null;
     public File passageSchematicCSV = null;
     public File passageSchematicCSV_EW = null;
     public File poolSchematicCSV = null;
     public File vaultSchematicCSV = null;
-    public File workshopSchematicCSV = null;
-    public File emptySchematicCSV = null;
-    public File gravitySchematicCSV = null;
-    public File antigravitySchematicCSV = null;
-    public File harmonySchematicCSV = null;
-    public File bakerSchematicCSV = null;
     public File woodSchematicCSV = null;
+    public File workshopSchematicCSV = null;
     public File quotesfile = null;
     public String[][][] budgetschematic;
     public String[][][] biggerschematic;
     public String[][][] deluxeschematic;
     public String[][][] eleventhschematic;
+    public String[][][] redstoneschematic;
+    public String[][][] antigravityschematic;
     public String[][][] arboretumschematic;
+    public String[][][] bakerschematic;
     public String[][][] bedroomschematic;
+    public String[][][] crossschematic;
+    public String[][][] emptyschematic;
+    public String[][][] farmschematic;
+    public String[][][] gravityschematic;
+    public String[][][] greenhouseschematic;
+    public String[][][] harmonyschematic;
     public String[][][] kitchenschematic;
     public String[][][] libraryschematic;
+    public String[][][] longschematic;
+    public String[][][] longschematic_EW;
+    public String[][][] mushroomschematic;
     public String[][][] passageschematic;
     public String[][][] passageschematic_EW;
     public String[][][] poolschematic;
     public String[][][] vaultschematic;
-    public String[][][] emptyschematic;
-    public String[][][] gravityschematic;
-    public String[][][] antigravityschematic;
-    public String[][][] workshopschematic;
-    public String[][][] harmonyschematic;
-    public String[][][] bakerschematic;
     public String[][][] woodschematic;
+    public String[][][] workshopschematic;
     public short[] budgetdimensions = new short[3];
     public short[] biggerdimensions = new short[3];
     public short[] deluxedimensions = new short[3];
     public short[] eleventhdimensions = new short[3];
-    public short[] passagedimensions = new short[3];
+    public short[] redstonedimensions = new short[3];
+    public short[] antigravitydimensions = new short[3];
     public short[] arboretumdimensions = new short[3];
+    public short[] crossdimensions = new short[3];
+    public short[] gravitydimensions = new short[3];
+    public short[] greenhousedimensions = new short[3];
+    public short[] longdimensions = new short[3];
+    public short[] passagedimensions = new short[3];
     public short[] pooldimensions = new short[3];
     public short[] roomdimensions = new short[3];
-    public short[] gravitydimensions = new short[3];
-    public short[] antigravitydimensions = new short[3];
     public static TARDIS plugin;
     public TARDISUtils utils = new TARDISUtils(this);
-    private TARDISCommands tardisCommand;
+    public TARDISCommands tardisCommand;
     private TARDISAdminCommands tardisAdminCommand;
     private TARDISPrefsCommands tardisPrefsCommand;
     private TARDISTravelCommands tardisTravelCommand;
     private TARDISAreaCommands tardisAreaCommand;
+    private TARDISBindCommands tardisBindCommand;
+    private TARDISRoomCommands tardisRoomCommand;
+    private TARDISGravityCommands tardisGravityCommand;
     public TARDISBuilderInner buildI = new TARDISBuilderInner(this);
     public TARDISBuilderPoliceBox buildPB = new TARDISBuilderPoliceBox(this);
     public TARDISDestroyerInner destroyI = new TARDISDestroyerInner(this);
@@ -178,6 +210,7 @@ public class TARDIS extends JavaPlugin {
     public TARDISWorldGuardChecker wgchk;
     public TARDISTownyChecker tychk;
     public TARDISWorldBorderChecker borderchk;
+    public TARDISFactionsChecker factionschk;
     TARDISBlockPlaceListener blockPlaceListener = new TARDISBlockPlaceListener(this);
     TARDISBlockBreakListener blockBreakListener = new TARDISBlockBreakListener(this);
     TARDISDoorListener doorListener = new TARDISDoorListener(this);
@@ -201,6 +234,7 @@ public class TARDIS extends JavaPlugin {
     TARDISIceMeltListener meltListener = new TARDISIceMeltListener(this);
     TARDISChunkListener roomChunkListener = new TARDISChunkListener(this);
     TARDISScannerListener scannerListener = new TARDISScannerListener(this);
+    TARDISTimeLordDeathListener deathListener = new TARDISTimeLordDeathListener(this);
     public PluginManager pm = Bukkit.getServer().getPluginManager();
     public HashMap<String, String> trackPlayers = new HashMap<String, String>();
     public HashMap<String, Integer> trackBinder = new HashMap<String, Integer>();
@@ -211,6 +245,7 @@ public class TARDIS extends JavaPlugin {
     public HashMap<String, String> trackDest = new HashMap<String, String>();
     public HashMap<String, String> trackRoomSeed = new HashMap<String, String>();
     public HashMap<String, String> trackJettison = new HashMap<String, String>();
+    public HashMap<String, Double[]> trackGravity = new HashMap<String, Double[]>();
     public HashMap<Integer, Integer> trackTravellers = new HashMap<Integer, Integer>();
     public HashMap<Integer, Integer> tardisHasDestination = new HashMap<Integer, Integer>();
     public HashMap<String, Block> trackExterminate = new HashMap<String, Block>();
@@ -218,8 +253,12 @@ public class TARDIS extends JavaPlugin {
     public ArrayList<Integer> tardisMaterialising = new ArrayList<Integer>();
     public List<Chunk> tardisChunkList = new ArrayList<Chunk>();
     public List<Chunk> roomChunkList = new ArrayList<Chunk>();
-    public List<String> gravityUpList = new ArrayList<String>();
+    public HashMap<String, Double[]> gravityUpList = new HashMap<String, Double[]>();
     public List<String> gravityDownList = new ArrayList<String>();
+    public HashMap<String, Double[]> gravityNorthList = new HashMap<String, Double[]>();
+    public HashMap<String, Double[]> gravityWestList = new HashMap<String, Double[]>();
+    public HashMap<String, Double[]> gravitySouthList = new HashMap<String, Double[]>();
+    public HashMap<String, Double[]> gravityEastList = new HashMap<String, Double[]>();
     public HashMap<String, Integer> protectBlockMap = new HashMap<String, Integer>();
     private static ArrayList<String> quotes = new ArrayList<String>();
     public ArrayList<String> quote;
@@ -228,6 +267,7 @@ public class TARDIS extends JavaPlugin {
     public boolean worldGuardOnServer = false;
     public boolean townyOnServer = false;
     public boolean borderOnServer = false;
+    public boolean factionsOnServer = false;
     public ConsoleCommandSender console;
     public String pluginName;
     public boolean myspawn = false;
@@ -254,6 +294,7 @@ public class TARDIS extends JavaPlugin {
         loadWorldGuard();
         loadTowny();
         loadWorldBorder();
+        loadFactions();
 
         quote = quotes();
         quotelen = quote.size();
@@ -266,12 +307,17 @@ public class TARDIS extends JavaPlugin {
         utc.getTravellers();
         TARDISCreeperChecker cc = new TARDISCreeperChecker(this);
         cc.startCreeperCheck();
-        TARDISSpace alwaysNight = new TARDISSpace(this);
-        alwaysNight.keepNight();
+        if (pm.isPluginEnabled("TARDISChunkGenerator")) {
+            TARDISSpace alwaysNight = new TARDISSpace(this);
+            if (getConfig().getBoolean("keep_night")) {
+                alwaysNight.keepNight();
+            }
+        }
         loadChunks();
         TARDISBlockLoader bl = new TARDISBlockLoader(this);
         bl.loadProtectBlocks();
         bl.loadGravityWells();
+        loadPerms();
     }
 
     @Override
@@ -362,6 +408,7 @@ public class TARDIS extends JavaPlugin {
         pm.registerEvents(meltListener, this);
         pm.registerEvents(roomChunkListener, this);
         pm.registerEvents(scannerListener, this);
+        pm.registerEvents(deathListener, this);
     }
 
     /**
@@ -373,11 +420,17 @@ public class TARDIS extends JavaPlugin {
         tardisPrefsCommand = new TARDISPrefsCommands(this);
         tardisTravelCommand = new TARDISTravelCommands(this);
         tardisAreaCommand = new TARDISAreaCommands(this);
+        tardisBindCommand = new TARDISBindCommands(this);
+        tardisGravityCommand = new TARDISGravityCommands(this);
+        tardisRoomCommand = new TARDISRoomCommands(this);
         getCommand("tardis").setExecutor(tardisCommand);
         getCommand("tardisadmin").setExecutor(tardisAdminCommand);
         getCommand("tardisprefs").setExecutor(tardisPrefsCommand);
         getCommand("tardistravel").setExecutor(tardisTravelCommand);
         getCommand("tardisarea").setExecutor(tardisAreaCommand);
+        getCommand("tardisbind").setExecutor(tardisBindCommand);
+        getCommand("tardisgravity").setExecutor(tardisGravityCommand);
+        getCommand("tardisroom").setExecutor(tardisRoomCommand);
     }
 
     /**
@@ -408,7 +461,7 @@ public class TARDIS extends JavaPlugin {
      * the server.
      */
     private void startSound() {
-        if (this.getServer().getPluginManager().getPlugin("Spout") != null && getConfig().getBoolean("sfx")) {
+        if (plugin.pm.getPlugin("Spout") != null && getConfig().getBoolean("sfx")) {
             this.getServer().getScheduler().scheduleSyncRepeatingTask(this, new Runnable() {
                 @Override
                 public void run() {
@@ -422,7 +475,7 @@ public class TARDIS extends JavaPlugin {
      * Checks if the WorldGuard plugin is available, and loads support if it is.
      */
     private void loadWorldGuard() {
-        if (getServer().getPluginManager().getPlugin("WorldGuard") != null) {
+        if (pm.getPlugin("WorldGuard") != null) {
             worldGuardOnServer = true;
             wgchk = new TARDISWorldGuardChecker(this);
         }
@@ -432,7 +485,7 @@ public class TARDIS extends JavaPlugin {
      * Checks if the Towny plugin is available, and loads support if it is.
      */
     private void loadTowny() {
-        if (getServer().getPluginManager().getPlugin("Towny") != null) {
+        if (pm.getPlugin("Towny") != null) {
             townyOnServer = true;
             tychk = new TARDISTownyChecker(this);
         }
@@ -443,9 +496,32 @@ public class TARDIS extends JavaPlugin {
      * is.
      */
     private void loadWorldBorder() {
-        if (getServer().getPluginManager().getPlugin("WorldBorder") != null) {
+        if (pm.getPlugin("WorldBorder") != null) {
             borderOnServer = true;
             borderchk = new TARDISWorldBorderChecker(this);
+        }
+    }
+
+    /**
+     * Checks if the Factions plugin is available, and loads support if it is.
+     */
+    private void loadFactions() {
+        if (pm.getPlugin("Factions") != null) {
+            factionsOnServer = true;
+            factionschk = new TARDISFactionsChecker(this);
+        }
+    }
+
+    /**
+     * Loads the permissions handler for TARDIS worlds if the relevant
+     * permissions plugin is enabled. Currently supports GroupManager and
+     * bPermissions (as they have per world config files).
+     */
+    private void loadPerms() {
+        if (pm.getPlugin("GroupManager") != null || pm.getPlugin("bPermissions") != null) {
+            // copy default permissions file if not present
+            csv.copy(getDataFolder() + File.separator + "permissions.txt", getResource("permissions.txt"));
+            console.sendMessage(pluginName + "World specific permissions plugin detected please edit plugins/TARDIS/permissions.txt");
         }
     }
 
@@ -496,7 +572,7 @@ public class TARDIS extends JavaPlugin {
 
     private void checkTCG() {
         if (getConfig().getBoolean("create_worlds")) {
-            if (getServer().getPluginManager().getPlugin("TARDISChunkGenerator") == null || (pm.getPlugin("Multiverse-Core") == null && pm.getPlugin("MultiWorld") == null)) {
+            if (pm.getPlugin("TARDISChunkGenerator") == null || (pm.getPlugin("Multiverse-Core") == null && pm.getPlugin("MultiWorld") == null)) {
                 getConfig().set("create_worlds", false);
                 saveConfig();
                 console.sendMessage(pluginName + ChatColor.RED + "Create Worlds was disabled as it requires a multi-world plugin and TARDISChunkGenerator!");
