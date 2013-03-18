@@ -17,6 +17,8 @@
 package me.eccentric_nz.TARDIS.commands;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -25,6 +27,7 @@ import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.rooms.TARDISWalls;
+import me.eccentric_nz.TARDIS.utility.TARDISMaterials;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -48,10 +51,13 @@ public class TARDISPrefsCommands implements CommandExecutor {
 
     public TARDISPrefsCommands(TARDIS plugin) {
         this.plugin = plugin;
-        firstArgs.add("sfx");
+        firstArgs.add("auto");
+        firstArgs.add("key");
         firstArgs.add("platform");
         firstArgs.add("quotes");
+        firstArgs.add("sfx");
         firstArgs.add("wall");
+        firstArgs.add("floor");
     }
 
     @Override
@@ -73,9 +79,29 @@ public class TARDISPrefsCommands implements CommandExecutor {
             String pref = args[0].toLowerCase(Locale.ENGLISH);
             if (firstArgs.contains(pref)) {
                 if (player.hasPermission("tardis.timetravel")) {
-                    if (args[0].equalsIgnoreCase("wall")) {
+                    if (pref.equals("key")) {
                         if (args.length < 2) {
-                            sender.sendMessage(plugin.pluginName + "You need to specify a wall material!");
+                            sender.sendMessage(plugin.pluginName + "You need to specify a key item!");
+                            return false;
+                        }
+                        String setMaterial = args[1].toUpperCase(Locale.ENGLISH);
+                        if (!Arrays.asList(TARDISMaterials.MATERIAL_LIST).contains(setMaterial)) {
+                            sender.sendMessage(plugin.pluginName + ChatColor.RED + "That is not a valid Material! Try checking http://jd.bukkit.org/apidocs/org/bukkit/Material.html");
+                            return false;
+                        } else {
+                            QueryFactory qf = new QueryFactory(plugin);
+                            HashMap<String, Object> set = new HashMap<String, Object>();
+                            set.put("key", setMaterial);
+                            HashMap<String, Object> where = new HashMap<String, Object>();
+                            where.put("player", player.getName());
+                            qf.doUpdate("player_prefs", set, where);
+                            sender.sendMessage(plugin.pluginName + "Key preference saved.");
+                            return true;
+                        }
+                    }
+                    if (pref.equals("wall") || pref.equals("floor")) {
+                        if (args.length < 2) {
+                            sender.sendMessage(plugin.pluginName + "You need to specify a " + pref + " material!");
                             return false;
                         }
                         String wall_mat;
@@ -93,19 +119,22 @@ public class TARDISPrefsCommands implements CommandExecutor {
                         }
                         TARDISWalls tw = new TARDISWalls();
                         if (!tw.blocks.containsKey(wall_mat)) {
-                            sender.sendMessage(plugin.pluginName + "That is not a valid wall material! Try:");
-                            for (String w : tw.blocks.keySet()) {
+                            String message = (wall_mat.equals("HELP")) ? "Here is a list of valid " + pref + " materials:" : "That is not a valid " + pref + " material! Try:";
+                            sender.sendMessage(plugin.pluginName + message);
+                            List<String> sortedKeys = new ArrayList(tw.blocks.keySet());
+                            Collections.sort(sortedKeys);
+                            for (String w : sortedKeys) {
                                 sender.sendMessage(w);
                             }
                             return true;
                         }
                         QueryFactory qf = new QueryFactory(plugin);
                         HashMap<String, Object> set = new HashMap<String, Object>();
-                        set.put("wall", wall_mat);
+                        set.put(pref, wall_mat);
                         HashMap<String, Object> where = new HashMap<String, Object>();
                         where.put("player", player.getName());
                         qf.doUpdate("player_prefs", set, where);
-                        sender.sendMessage(plugin.pluginName + "Wall material saved.");
+                        sender.sendMessage(plugin.pluginName + ucfirst(pref) + " material saved.");
                         return true;
                     }
                     if (args.length < 2 || (!args[1].equalsIgnoreCase("on") && !args[1].equalsIgnoreCase("off"))) {
@@ -125,13 +154,14 @@ public class TARDISPrefsCommands implements CommandExecutor {
                     HashMap<String, Object> setp = new HashMap<String, Object>();
                     HashMap<String, Object> wherep = new HashMap<String, Object>();
                     wherep.put("player", player.getName());
+                    String grammar = (TARDISConstants.vowels.contains(pref.substring(0, 1))) ? " was" : " were";
                     if (args[1].equalsIgnoreCase("on")) {
                         setp.put(pref + "_on", 1);
-                        sender.sendMessage(plugin.pluginName + pref + " were turned ON!");
+                        sender.sendMessage(plugin.pluginName + pref + grammar + " turned ON!");
                     }
                     if (args[1].equalsIgnoreCase("off")) {
                         setp.put(pref + "_on", 0);
-                        sender.sendMessage(plugin.pluginName + pref + " were turned OFF.");
+                        sender.sendMessage(plugin.pluginName + pref + grammar + " turned OFF.");
                     }
                     qf.doUpdate("player_prefs", setp, wherep);
                     return true;
@@ -142,5 +172,9 @@ public class TARDISPrefsCommands implements CommandExecutor {
             }
         }
         return false;
+    }
+
+    public static String ucfirst(String str) {
+        return str.substring(0, 1).toUpperCase() + str.substring(1).toLowerCase();
     }
 }

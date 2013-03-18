@@ -45,6 +45,8 @@ public class ResultSetGravity {
     private int tardis_id;
     private String location;
     private int direction;
+    private double distance;
+    private double velocity;
     private ArrayList<HashMap<String, String>> data = new ArrayList<HashMap<String, String>>();
 
     /**
@@ -87,7 +89,11 @@ public class ResultSetGravity {
                     if (entry.getValue().getClass().equals(String.class)) {
                         statement.setString(s, entry.getValue().toString());
                     } else {
-                        statement.setInt(s, plugin.utils.parseNum(entry.getValue().toString()));
+                        if (entry.getValue().getClass().getName().contains("Double")) {
+                            statement.setDouble(s, Double.parseDouble(entry.getValue().toString()));
+                        } else {
+                            statement.setInt(s, plugin.utils.parseNum(entry.getValue().toString()));
+                        }
                     }
                     s++;
                 }
@@ -109,6 +115,8 @@ public class ResultSetGravity {
                     this.tardis_id = rs.getInt("tardis_id");
                     this.location = rs.getString("location");
                     this.direction = rs.getInt("direction");
+                    this.distance = rs.getDouble("distance");
+                    this.velocity = rs.getDouble("velocity");
                 }
             } else {
                 return false;
@@ -145,6 +153,14 @@ public class ResultSetGravity {
 
     public int getDirection() {
         return direction;
+    }
+
+    public double getDistance() {
+        return distance;
+    }
+
+    public double getVelocity() {
+        return velocity;
     }
 
     public ArrayList<HashMap<String, String>> getData() {

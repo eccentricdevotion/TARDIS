@@ -69,24 +69,30 @@ public class TARDISRoomBuilder {
             TARDISRoomData roomData = new TARDISRoomData();
             roomData.setTardis_id(rs.getTardis_id());
             // get middle data, default to orange wool if not set
-            int middle_id;
-            byte middle_data;
+            int middle_id, floor_id;
+            byte middle_data, floor_data;
             if (rsp.resultSet()) {
                 TARDISWalls tw = new TARDISWalls();
-                Integer[] id_data = tw.blocks.get(rsp.getWall());
-                middle_id = id_data[0].intValue();
-                middle_data = id_data[1].byteValue();
+                Integer[] wid_data = tw.blocks.get(rsp.getWall());
+                middle_id = wid_data[0].intValue();
+                middle_data = wid_data[1].byteValue();
+                Integer[] fid_data = tw.blocks.get(rsp.getFloor());
+                floor_id = fid_data[0].intValue();
+                floor_data = fid_data[1].byteValue();
             } else {
                 middle_id = 35;
                 middle_data = 1;
+                floor_id = 35;
+                floor_data = 8;
             }
             roomData.setMiddle_id(middle_id);
             roomData.setMiddle_data(middle_data);
+            roomData.setFloor_id(floor_id);
+            roomData.setFloor_data(floor_data);
             // get start locations
             Block b = l.getBlock();
             roomData.setBlock(b);
             roomData.setDirection(d);
-            roomData.setLocation(l);
             if (r.equalsIgnoreCase("GRAVITY") || r.equalsIgnoreCase("ANTIGRAVITY")) {
                 l.setX(l.getX() - 6);
                 l.setZ(l.getZ() - 6);
@@ -122,25 +128,10 @@ public class TARDISRoomBuilder {
                         break;
                 }
             }
-            switch (ROOM.valueOf(r)) {
-                case ANTIGRAVITY:
-                    break;
-                case PASSAGE:
-                    l.setY(l.getY() - 2);
-                    break;
-                case POOL:
-                    l.setY(l.getY() - 3);
-                    break;
-                case ARBORETUM:
-                    l.setY(l.getY() - 4);
-                    break;
-                case GRAVITY:
-                    l.setY(l.getY() - 12);
-                    break;
-                default:
-                    l.setY(l.getY() - 1);
-                    break;
-            }
+            // set y offset
+            int offset = Math.abs(plugin.getConfig().getInt("rooms." + r + ".offset"));
+            l.setY(l.getY() - offset);
+            roomData.setLocation(l);
             if (d.equals(COMPASS.EAST) || d.equals(COMPASS.SOUTH) || r.equalsIgnoreCase("GRAVITY") || r.equalsIgnoreCase("ANTIGRAVITY")) {
                 roomData.setX(1);
                 roomData.setZ(1);
@@ -204,6 +195,26 @@ public class TARDISRoomBuilder {
                 case WOOD:
                     s = plugin.woodschematic;
                     dimensions = plugin.roomdimensions;
+                    break;
+                case FARM:
+                    s = plugin.farmschematic;
+                    dimensions = plugin.roomdimensions;
+                    break;
+                case CROSS:
+                    s = plugin.crossschematic;
+                    dimensions = plugin.crossdimensions;
+                    break;
+                case GREENHOUSE:
+                    s = plugin.greenhouseschematic;
+                    dimensions = plugin.greenhousedimensions;
+                    break;
+                case MUSHROOM:
+                    s = plugin.mushroomschematic;
+                    dimensions = plugin.roomdimensions;
+                    break;
+                case LONG:
+                    s = (d.equals(COMPASS.EAST) || d.equals(COMPASS.WEST)) ? plugin.longschematic_EW : plugin.longschematic;
+                    dimensions = plugin.longdimensions;
                     break;
                 default:
                     // PASSAGE

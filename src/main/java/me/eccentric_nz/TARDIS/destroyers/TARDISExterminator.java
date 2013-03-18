@@ -153,9 +153,6 @@ public class TARDISExterminator {
                             restore = 1;
                     }
                     QueryFactory qf = new QueryFactory(plugin);
-                    HashMap<String, Object> cid = new HashMap<String, Object>();
-                    cid.put("tardis_id", id);
-                    qf.doDelete("chunks", cid);
                     if (cw.getWorldType() == WorldType.FLAT) {
                         restore = 0;
                     }
@@ -183,6 +180,12 @@ public class TARDISExterminator {
                     HashMap<String, Object> lid = new HashMap<String, Object>();
                     lid.put("tardis_id", id);
                     qf.doDelete("destinations", lid);
+                    HashMap<String, Object> vid = new HashMap<String, Object>();
+                    vid.put("tardis_id", id);
+                    qf.doDelete("travellers", vid);
+                    HashMap<String, Object> cid = new HashMap<String, Object>();
+                    cid.put("tardis_id", id);
+                    qf.doDelete("chunks", cid);
                     player.sendMessage(plugin.pluginName + "The TARDIS was removed from the world and database successfully.");
                     // remove world guard region protection
                     if (plugin.worldGuardOnServer && plugin.getConfig().getBoolean("use_worldguard")) {
@@ -192,8 +195,10 @@ public class TARDISExterminator {
                     if (cw.getName().contains("TARDIS_WORLD_")) {
                         String name = cw.getName();
                         List<Player> players = cw.getPlayers();
+                        Location spawn = plugin.getServer().getWorlds().get(0).getSpawnLocation();
                         for (Player p : players) {
-                            p.kickPlayer("World scheduled for deletion!");
+                            p.sendMessage(plugin.pluginName + "World scheduled for deletion, teleporting you to spawn!");
+                            p.teleport(spawn);
                         }
                         if (plugin.pm.isPluginEnabled("Multiverse-Core")) {
                             plugin.getServer().dispatchCommand(plugin.console, "mv remove " + name);

@@ -23,6 +23,7 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
+import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -70,78 +71,23 @@ public class TARDISBuilderPoliceBox {
             } else {
                 chameleonBlock = l.getBlock().getRelative(BlockFace.DOWN);
             }
-            int chameleonType = chameleonBlock.getTypeId();
-            // determine wall_block
-            if (TARDISConstants.CHAMELEON_BLOCKS_VALID.contains((Integer) chameleonType)) {
-                wall_block = chameleonType;
-                chameleonData = chameleonBlock.getData();
-            }
-            if (TARDISConstants.CHAMELEON_BLOCKS_BAD.contains((Integer) chameleonType)) {
-                p.sendMessage(plugin.pluginName + "Bummer, the TARDIS could not engage the Chameleon Circuit!");
-            }
-            if (TARDISConstants.CHAMELEON_BLOCKS_CHANGE.contains((Integer) chameleonType)) {
-                wall_block = swapId(chameleonType);
-                switch (chameleonType) {
-                    case 22:
-                        chameleonData = 11;
-                        break;
-                    case 41:
-                        chameleonData = 4;
-                        break;
-                    case 42:
-                        chameleonData = 8;
-                        break;
-                    case 57:
-                        chameleonData = 3;
-                        break;
-                    case 133:
-                        chameleonData = 5;
-                        break;
-                    case 134:
-                        chameleonData = 1;
-                        break;
-                    case 135:
-                        chameleonData = 2;
-                        break;
-                    case 136:
-                        chameleonData = 3;
-                        break;
-                    default:
-                        chameleonData = chameleonBlock.getData();
-                        break;
-                }
-            }
-
-            if (TARDISConstants.CHAMELEON_BLOCKS_NEXT.contains((Integer) chameleonType)) {
-                List<BlockFace> surrounding = Arrays.asList(new BlockFace[]{BlockFace.EAST, BlockFace.SOUTH, BlockFace.WEST, BlockFace.NORTH, BlockFace.NORTH_EAST, BlockFace.NORTH_WEST, BlockFace.SOUTH_EAST, BlockFace.SOUTH_WEST});
-                // try the surrounding blocks
-                for (BlockFace bf : surrounding) {
-                    Block surroundblock = chameleonBlock.getRelative(bf);
-                    int eid = surroundblock.getTypeId();
-                    if (TARDISConstants.CHAMELEON_BLOCKS_VALID.contains((Integer) eid)) {
-                        wall_block = eid;
-                        chameleonData = surroundblock.getData();
-                        break;
-                    }
-                    if (TARDISConstants.CHAMELEON_BLOCKS_CHANGE.contains((Integer) eid)) {
-                        wall_block = swapId(eid);
-                        switch (eid) {
-                            case 134:
-                                chameleonData = 1;
-                                break;
-                            case 135:
-                                chameleonData = 2;
-                                break;
-                            case 136:
-                                chameleonData = 3;
-                                break;
-                            default:
-                                chameleonData = chameleonBlock.getData();
-                                break;
-                        }
-                        break;
-                    }
-                }
+            // get chameleon_id/data if set
+            HashMap<String, Object> wherec = new HashMap<String, Object>();
+            wherec.put("tardis_id", id);
+            ResultSetTardis rsc = new ResultSetTardis(plugin, wherec, "", false);
+            rsc.resultSet();
+            int c_id = rsc.getChameleon_id();
+            byte c_data = rsc.getChameleon_data();
+            boolean bluewool = (c_id == 35 && c_data == (byte) 11);
+            if (!bluewool) {
+                wall_block = c_id;
+                chameleonData = c_data;
+            } else {
+                // determine wall_block
+                TARDISChameleonCircuit tcc = new TARDISChameleonCircuit(plugin);
+                int[] b_data = tcc.getChameleonBlock(chameleonBlock, p, false);
+                wall_block = b_data[0];
+                chameleonData = (byte) b_data[1];
             }
         }
         // keep the chunk this Police box is in loaded
@@ -237,10 +183,5 @@ public class TARDISBuilderPoliceBox {
                 qf.doUpdate("tardis", setf, wheref);
             }
         }
-    }
-
-    public int swapId(int id) {
-        int swappedId = TARDISConstants.CHAMELEON_BLOCKS_CHANGE_HASH.get(id);
-        return swappedId;
     }
 }

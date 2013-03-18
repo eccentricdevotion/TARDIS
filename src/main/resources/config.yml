@@ -4,12 +4,12 @@ check_for_updates: true
 key: STICK
 bonus_chest: true
 tp_radius: 500
-protect_blocks: true
 default_world: false
 default_world_name: myridiculouslylongworldnameiscalledcuthbert
 include_default_world: false
 platform: false
 chameleon: true
+all_blocks: false
 sfx: true
 give_key: false
 the_end: false
@@ -18,6 +18,7 @@ use_worldguard: true
 respect_worldguard: true
 respect_towny: true
 respect_worldborder: true
+respect_factions: true
 land_on_water: true
 timeout: 5
 timeout_height: 135
@@ -27,50 +28,104 @@ create_worlds: true
 gamemode: survival
 materialise: true
 confirm_timeout: 15
+keep_night: true
 #rooms
 rooms:
   PASSAGE:
+    enabled: true
     cost: 200
+    offset: -2
     seed: CLAY
   ARBORETUM:
+    enabled: true
     cost: 325
+    offset: -4
     seed: LEAVES
   BEDROOM:
+    enabled: true
     cost: 475
+    offset: -1
     seed: GLOWSTONE
   KITCHEN:
+    enabled: true
     cost: 450
+    offset: -1
     seed: PUMPKIN
   LIBRARY:
+    enabled: true
     cost: 550
+    offset: -1
     seed: BOOKSHELF
   POOL:
+    enabled: true
     cost: 450
+    offset: -3
     seed: SNOW_BLOCK
   VAULT:
+    enabled: true
     cost: 350
+    offset: -1
     seed: DISPENSER
   WORKSHOP:
+    enabled: true
     cost: 400
+    offset: -1
     seed: NETHER_BRICK
   EMPTY:
+    enabled: true
     cost: 250
+    offset: -1
     seed: GLASS
   GRAVITY:
+    enabled: true
     cost: 625
+    offset: -12
     seed: MOSSY_COBBLESTONE
   ANTIGRAVITY:
+    enabled: true
     cost: 625
+    offset: -2
     seed: SANDSTONE
   HARMONY:
+    enabled: true
     cost: 450
+    offset: -1
     seed: SMOOTH_STAIRS
   BAKER:
+    enabled: true
     cost: 350
+    offset: -1
     seed: ENDER_STONE
   WOOD:
+    enabled: true
     cost: 350
+    offset: -1
     seed: WOOD
+  FARM:
+    enabled: true
+    cost: 350
+    offset: -1
+    seed: DIRT
+  CROSS:
+    enabled: true
+    cost: 350
+    offset: -1
+    seed: SOUL_SAND
+  GREENHOUSE:
+    enabled: true
+    cost: 450
+    offset: -2
+    seed: MELON_BLOCK
+  LONG:
+    enabled: true
+    cost: 300
+    offset: -2
+    seed: NOTE_BLOCK
+  MUSHROOM:
+    enabled: true
+    cost: 350
+    offset: -1
+    seed: GRAVEL
 #artron energy
 player: 25
 random: 75
@@ -84,6 +139,11 @@ lightning_recharge: 300
 creeper_recharge: 150
 full_charge: 5000
 full_charge_item: NETHER_STAR
+autonomous: 100
 # jettison is a percentage of orginal room cost
 jettison: 75
+jettison_seed: TNT
 inventory_group: 0
+add_perms: true
+allow_mob_farming: true
+allow_autonomous: true

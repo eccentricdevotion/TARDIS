@@ -20,6 +20,7 @@ import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants.COMPASS;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
+import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.rooms.TARDISRoomRemover;
 import org.bukkit.Effect;
 import org.bukkit.Location;
@@ -30,7 +31,6 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractEvent;
-import org.bukkit.inventory.ItemStack;
 
 /**
  * Artron energy is to normal energy what movements within the deeps of the sea
@@ -57,16 +57,25 @@ public class TARDISJettisonSeeder implements Listener {
     public void onSeedBlockInteract(PlayerInteractEvent event) {
         final Player player = event.getPlayer();
         String playerNameStr = player.getName();
+        // check that player is in TARDIS
+        if (!plugin.trackJettison.containsKey(playerNameStr)) {
+            return;
+        }
         Block block = event.getClickedBlock();
         if (block != null) {
             Material blockType = block.getType();
-            ItemStack inhand = player.getItemInHand();
+            Material inhand = player.getItemInHand().getType();
+            String key;
+            HashMap<String, Object> where = new HashMap<String, Object>();
+            where.put("player", playerNameStr);
+            ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, where);
+            if (rsp.resultSet()) {
+                key = (!rsp.getKey().equals("")) ? rsp.getKey() : plugin.getConfig().getString("key");
+            } else {
+                key = plugin.getConfig().getString("key");
+            }
             // only proceed if they are clicking a seed block with the TARDIS key!
-            if (blockType.equals(Material.TNT) && inhand.getType().equals(Material.valueOf(plugin.getConfig().getString("key")))) {
-                // check that player is in TARDIS
-                if (!plugin.trackJettison.containsKey(playerNameStr)) {
-                    return;
-                }
+            if (blockType.equals(Material.getMaterial(plugin.getConfig().getString("jettison_seed"))) && inhand.equals(Material.getMaterial(key))) {
                 String r = plugin.trackJettison.get(playerNameStr);
                 // get clicked block location
                 Location b = block.getLocation();
@@ -77,7 +86,7 @@ public class TARDISJettisonSeeder implements Listener {
                     plugin.trackJettison.remove(playerNameStr);
                     block.setTypeIdAndData(0, (byte) 0, true);
                     b.getWorld().playEffect(b, Effect.POTION_BREAK, 9);
-                    // ok they clicked it, so take their energy!
+                    // ok they clicked it, so give them their energy!
                     int amount = Math.round((plugin.getConfig().getInt("jettison") / 100F) * plugin.getConfig().getInt("rooms." + r + ".cost"));
                     QueryFactory qf = new QueryFactory(plugin);
                     HashMap<String, Object> set = new HashMap<String, Object>();

@@ -38,12 +38,14 @@ public class ResultSetPlayerPrefs {
     private HashMap<String, Object> where;
     private int pp_id;
     private String player;
+    private String key;
     private boolean sfx_on;
     private boolean platform_on;
     private boolean quotes_on;
     private boolean auto_on;
     private int artron_level;
     private String wall;
+    private String floor;
 
     /**
      * Creates a class instance that can be used to retrieve an SQL ResultSet
@@ -94,12 +96,14 @@ public class ResultSetPlayerPrefs {
             if (rs.next()) {
                 this.pp_id = rs.getInt("pp_id");
                 this.player = rs.getString("player");
+                this.key = rs.getString("key");
                 this.sfx_on = rs.getBoolean("sfx_on");
                 this.platform_on = rs.getBoolean("platform_on");
                 this.quotes_on = rs.getBoolean("quotes_on");
                 this.auto_on = rs.getBoolean("auto_on");
                 this.artron_level = rs.getInt("artron_level");
                 this.wall = rs.getString("wall");
+                this.floor = rs.getString("floor");
             } else {
                 return false;
             }
@@ -129,6 +133,10 @@ public class ResultSetPlayerPrefs {
         return player;
     }
 
+    public String getKey() {
+        return key;
+    }
+
     public boolean isSFX_on() {
         return sfx_on;
     }
@@ -151,5 +159,9 @@ public class ResultSetPlayerPrefs {
 
     public String getWall() {
         return wall;
+    }
+
+    public String getFloor() {
+        return floor;
     }
 }

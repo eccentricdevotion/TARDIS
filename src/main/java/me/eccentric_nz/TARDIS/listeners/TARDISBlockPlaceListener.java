@@ -53,7 +53,7 @@ public class TARDISBlockPlaceListener implements Listener {
 
     private TARDIS plugin;
     private TARDISUtils utils;
-    public static final List<String> MIDDLE_BLOCKS = Arrays.asList(new String[]{"LAPIS_BLOCK", "STONE", "DIRT", "WOOD", "SANDSTONE", "WOOL", "BRICK", "NETHERRACK", "SOUL_SAND", "SMOOTH_BRICK", "HUGE_MUSHROOM_1", "HUGE_MUSHROOM_2", "ENDER_STONE"});
+    public static final List<String> MIDDLE_BLOCKS = Arrays.asList(new String[]{"LAPIS_BLOCK", "STONE", "DIRT", "WOOD", "SANDSTONE", "WOOL", "BRICK", "NETHERRACK", "SOUL_SAND", "SMOOTH_BRICK", "HUGE_MUSHROOM_1", "HUGE_MUSHROOM_2", "ENDER_STONE", "QUARTZ_BLOCK", "CLAY"});
 
     public TARDISBlockPlaceListener(TARDIS plugin) {
         this.plugin = plugin;
@@ -75,7 +75,7 @@ public class TARDISBlockPlaceListener implements Listener {
             final byte middle_data = blockBelow.getData();
             Block blockBottom = blockBelow.getRelative(BlockFace.DOWN);
             // only continue if the redstone torch is placed on top of [JUST ABOUT ANY] BLOCK on top of an IRON/GOLD/DIAMOND_BLOCK
-            if (MIDDLE_BLOCKS.contains(blockBelow.getType().toString()) && (blockBottom.getType() == Material.IRON_BLOCK || blockBottom.getType() == Material.GOLD_BLOCK || blockBottom.getType() == Material.DIAMOND_BLOCK || blockBottom.getType() == Material.EMERALD_BLOCK)) {
+            if (MIDDLE_BLOCKS.contains(blockBelow.getType().toString()) && (blockBottom.getType() == Material.IRON_BLOCK || blockBottom.getType() == Material.GOLD_BLOCK || blockBottom.getType() == Material.DIAMOND_BLOCK || blockBottom.getType() == Material.EMERALD_BLOCK || blockBottom.getType() == Material.REDSTONE_BLOCK)) {
                 final TARDISConstants.SCHEMATIC schm;
                 final Player player = event.getPlayer();
                 switch (blockBottom.getType()) {
@@ -100,6 +100,14 @@ public class TARDISBlockPlaceListener implements Listener {
                             schm = TARDISConstants.SCHEMATIC.ELEVENTH;
                         } else {
                             player.sendMessage(plugin.pluginName + "You don't have permission to create an 'eleventh Doctor's' TARDIS!");
+                            return;
+                        }
+                        break;
+                    case REDSTONE_BLOCK:
+                        if (player.hasPermission("tardis.redstone")) {
+                            schm = TARDISConstants.SCHEMATIC.REDSTONE;
+                        } else {
+                            player.sendMessage(plugin.pluginName + "You don't have permission to create a 'redstone' TARDIS!");
                             return;
                         }
                         break;

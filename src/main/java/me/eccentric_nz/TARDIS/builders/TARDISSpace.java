@@ -21,6 +21,8 @@ import com.onarandombox.multiverseinventories.api.profile.WorldGroupProfile;
 import java.util.List;
 import java.util.Locale;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.perms.TARDISGroupManagerHandler;
+import me.eccentric_nz.TARDIS.perms.TARDISbPermissionsHandler;
 import me.eccentric_nz.tardischunkgenerator.TARDISChunkGenerator;
 import org.bukkit.World;
 import org.bukkit.WorldCreator;
@@ -92,12 +94,25 @@ public class TARDISSpace {
                 // wb <world> set <radius> <x> <z>
                 plugin.getServer().dispatchCommand(plugin.console, "wb " + name + " set " + plugin.getConfig().getInt("border_radius") + " 0 0");
             }
+            if (plugin.getConfig().getBoolean("add_perms")) {
+                if (plugin.pm.isPluginEnabled("GroupManager")) {
+                    TARDISGroupManagerHandler tgmh = new TARDISGroupManagerHandler(plugin);
+                    String player = name.substring(13);
+                    tgmh.addPerms(player);
+                }
+                if (plugin.pm.isPluginEnabled("bPermissions")) {
+                    TARDISbPermissionsHandler tbph = new TARDISbPermissionsHandler(plugin);
+                    String player = name.substring(13);
+                    tbph.addPerms(player);
+                }
+            }
         }
         return tardisWorld;
     }
 
     public void keepNight() {
         plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new Runnable() {
+            @Override
             public void run() {
                 timechk();
             }

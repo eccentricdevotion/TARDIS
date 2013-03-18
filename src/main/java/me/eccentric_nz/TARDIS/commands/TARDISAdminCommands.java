@@ -16,6 +16,10 @@
  */
 package me.eccentric_nz.TARDIS.commands;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -26,17 +30,22 @@ import java.util.Set;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
+import me.eccentric_nz.TARDIS.database.ResultSetDoors;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
+import static me.eccentric_nz.TARDIS.destroyers.TARDISExterminator.deleteFolder;
 import me.eccentric_nz.TARDIS.files.TARDISConfiguration;
+import me.eccentric_nz.TARDIS.listeners.TARDISDoorListener;
 import me.eccentric_nz.TARDIS.thirdparty.Version;
 import me.eccentric_nz.TARDIS.utility.TARDISMaterials;
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Chunk;
+import org.bukkit.Effect;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.Sound;
 import org.bukkit.World;
 import org.bukkit.WorldType;
 import org.bukkit.block.Block;
@@ -63,7 +72,6 @@ public class TARDISAdminCommands implements CommandExecutor {
     private List<String> firstsStr = new ArrayList<String>();
     private List<String> firstsBool = new ArrayList<String>();
     private List<String> firstsInt = new ArrayList<String>();
-    private List<String> firstsRoom = new ArrayList<String>();
     HashSet<Byte> transparent = new HashSet<Byte>();
     private Material charger = Material.REDSTONE_LAMP_ON;
     Version bukkitversion;
@@ -76,17 +84,24 @@ public class TARDISAdminCommands implements CommandExecutor {
         firstsStr.add("config");
         firstsStr.add("default_world_name");
         firstsStr.add("delete");
+        firstsStr.add("decharge");
+        firstsStr.add("enter");
         firstsStr.add("exclude");
         firstsStr.add("find");
         firstsStr.add("full_charge_item");
         firstsStr.add("gamemode");
         firstsStr.add("include");
         firstsStr.add("inventory_group");
+        firstsStr.add("jettison_seed");
         firstsStr.add("key");
         firstsStr.add("list");
         firstsStr.add("recharger");
         firstsStr.add("reload");
         // boolean
+        firstsBool.add("add_perms");
+        firstsBool.add("all_blocks");
+        firstsBool.add("allow_autonomous");
+        firstsBool.add("allow_mob_farming");
         firstsBool.add("bonus_chest");
         firstsBool.add("chameleon");
         firstsBool.add("check_for_updates");
@@ -95,11 +110,13 @@ public class TARDISAdminCommands implements CommandExecutor {
         firstsBool.add("default_world");
         firstsBool.add("give_key");
         firstsBool.add("include_default_world");
+        firstsBool.add("keep_night");
         firstsBool.add("land_on_water");
         firstsBool.add("materialise");
         firstsBool.add("name_tardis");
         firstsBool.add("nether");
         firstsBool.add("platform");
+        firstsBool.add("respect_factions");
         firstsBool.add("respect_towny");
         firstsBool.add("respect_worldborder");
         firstsBool.add("respect_worldguard");
@@ -107,6 +124,7 @@ public class TARDISAdminCommands implements CommandExecutor {
         firstsBool.add("the_end");
         firstsBool.add("use_worldguard");
         // integer
+        firstsInt.add("autonomous");
         firstsInt.add("border_radius");
         firstsInt.add("comehere");
         firstsInt.add("confirm_timeout");
@@ -124,23 +142,9 @@ public class TARDISAdminCommands implements CommandExecutor {
         firstsInt.add("timeout_height");
         firstsInt.add("tp_radius");
         firstsInt.add("travel");
-        // rooms
-        firstsRoom.add("arboretum");
-        firstsRoom.add("baker");
-        firstsRoom.add("bedroom");
-        firstsRoom.add("empty");
-        firstsRoom.add("gravity");
-        firstsRoom.add("harmony");
-        firstsRoom.add("kitchen");
-        firstsRoom.add("library");
-        firstsRoom.add("passage");
-        firstsRoom.add("pool");
-        firstsRoom.add("vault");
-        firstsRoom.add("wood");
-        firstsRoom.add("workshop");
 
         String[] v = Bukkit.getServer().getBukkitVersion().split("-");
-        bukkitversion = new Version(v[0]);
+        bukkitversion = (!v[0].equalsIgnoreCase("unknown")) ? new Version(v[0]) : new Version("1.4.7");
         if (bukkitversion.compareTo(prebeaconversion) >= 0) {
             charger = Material.BEACON;
         }
@@ -164,7 +168,7 @@ public class TARDISAdminCommands implements CommandExecutor {
                     return true;
                 }
                 String first = args[0].toLowerCase(Locale.ENGLISH);
-                if (!firstsStr.contains(first) && !firstsBool.contains(first) && !firstsInt.contains(first) && !firstsRoom.contains(first)) {
+                if (!firstsStr.contains(first) && !firstsBool.contains(first) && !firstsInt.contains(first)) {
                     sender.sendMessage(plugin.pluginName + "TARDIS does not recognise that command argument!");
                     return false;
                 }
@@ -230,26 +234,47 @@ public class TARDISAdminCommands implements CommandExecutor {
                     }
                 }
                 if (first.equals("list")) {
-                    // get all tardis positions - max 18
-                    int start = 0, end = 18;
-                    if (args.length > 1) {
-                        int tmp = plugin.utils.parseNum(args[1]);
-                        start = (tmp * 18) - 18;
-                        end = tmp * 18;
-                    }
-                    String limit = start + ", " + end;
-                    ResultSetTardis rsl = new ResultSetTardis(plugin, null, limit, true);
-                    if (rsl.resultSet()) {
-                        sender.sendMessage(plugin.pluginName + "TARDIS locations.");
-                        ArrayList<HashMap<String, String>> data = rsl.getData();
-                        for (HashMap<String, String> map : data) {
-                            sender.sendMessage("Timelord: " + map.get("owner") + ", Location: " + map.get("current"));
+                    if (args.length > 1 && args[1].equalsIgnoreCase("save")) {
+                        ResultSetTardis rsl = new ResultSetTardis(plugin, null, "", true);
+                        if (rsl.resultSet()) {
+                            ArrayList<HashMap<String, String>> data = rsl.getData();
+                            String file = plugin.getDataFolder() + File.separator + "TARDIS_list.txt";
+                            try {
+                                BufferedWriter bw = new BufferedWriter(new FileWriter(file, false));
+                                for (HashMap<String, String> map : data) {
+                                    String line = "Timelord: " + map.get("owner") + ", Location: " + map.get("current");
+                                    bw.write(line);
+                                    bw.newLine();
+                                }
+                                bw.close();
+                            } catch (IOException e) {
+                                plugin.debug("Could not create and write to TARDIS_list.txt! " + e.getMessage());
+                            }
                         }
-                        sender.sendMessage(plugin.pluginName + "To see more locations, type: /tardisadmin list 2,  /tardisadmin list 3 etc.");
+                        sender.sendMessage(plugin.pluginName + "File saved to 'plugins/TARDIS/TARDIS_list.txt'");
+                        return true;
                     } else {
-                        sender.sendMessage(plugin.pluginName + "There are no more records to display.");
+                        // get all tardis positions - max 18
+                        int start = 0, end = 18;
+                        if (args.length > 1) {
+                            int tmp = plugin.utils.parseNum(args[1]);
+                            start = (tmp * 18) - 18;
+                            end = tmp * 18;
+                        }
+                        String limit = start + ", " + end;
+                        ResultSetTardis rsl = new ResultSetTardis(plugin, null, limit, true);
+                        if (rsl.resultSet()) {
+                            sender.sendMessage(plugin.pluginName + "TARDIS locations.");
+                            ArrayList<HashMap<String, String>> data = rsl.getData();
+                            for (HashMap<String, String> map : data) {
+                                sender.sendMessage("Timelord: " + map.get("owner") + ", Location: " + map.get("current"));
+                            }
+                            sender.sendMessage(plugin.pluginName + "To see more locations, type: /tardisadmin list 2,  /tardisadmin list 3 etc.");
+                        } else {
+                            sender.sendMessage(plugin.pluginName + "There are no more records to display.");
+                        }
+                        return true;
                     }
-                    return true;
                 }
                 if (args.length < 2) {
                     sender.sendMessage(plugin.pluginName + "Too few command arguments!");
@@ -282,15 +307,129 @@ public class TARDISAdminCommands implements CommandExecutor {
                     plugin.getConfig().set("rechargers." + args[1] + ".x", l.getBlockX());
                     plugin.getConfig().set("rechargers." + args[1] + ".y", l.getBlockY());
                     plugin.getConfig().set("rechargers." + args[1] + ".z", l.getBlockZ());
-                    // if worldguard is on the server, protect a 3x3 area around beacon
+                    // if worldguard is on the server, protect a 3x3x3 area around beacon
                     if (plugin.worldGuardOnServer && plugin.getConfig().getBoolean("use_worldguard")) {
                         int minx = l.getBlockX() - 2;
                         int maxx = l.getBlockX() + 2;
                         int minz = l.getBlockZ() - 2;
                         int maxz = l.getBlockZ() + 2;
-                        Location wg1 = new Location(l.getWorld(), minx, l.getBlockY(), minz);
-                        Location wg2 = new Location(l.getWorld(), maxx, l.getBlockY(), maxz);
+                        Location wg1 = new Location(l.getWorld(), minx, l.getBlockY() + 2, minz);
+                        Location wg2 = new Location(l.getWorld(), maxx, l.getBlockY() - 2, maxz);
                         plugin.wgchk.addRechargerProtection(player, args[1], wg1, wg2);
+                    }
+                }
+                if (first.equals("decharge")) {
+                    if (!plugin.getConfig().contains("rechargers." + args[1])) {
+                        sender.sendMessage(plugin.pluginName + "Could not find a recharger with that name! Try using " + ChatColor.AQUA + "/tardis list rechargers" + ChatColor.RESET + " first.");
+                        return true;
+                    }
+                    if (plugin.worldGuardOnServer && plugin.getConfig().getBoolean("use_worldguard")) {
+                        plugin.wgchk.removeRechargerRegion(args[1]);
+                    }
+                    plugin.getConfig().set("rechargers." + args[1], null);
+                }
+                if (first.equals("enter")) {
+                    Player player = null;
+                    if (sender instanceof Player) {
+                        player = (Player) sender;
+                    }
+                    if (player == null) {
+                        sender.sendMessage(plugin.pluginName + "Only a player can run this command!");
+                        return true;
+                    }
+                    if (!player.hasPermission("tardis.skeletonkey")) {
+                        sender.sendMessage(plugin.pluginName + "You do not have permission to run this command!");
+                        return true;
+                    }
+                    HashMap<String, Object> where = new HashMap<String, Object>();
+                    where.put("owner", args[1]);
+                    ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
+                    if (rs.resultSet()) {
+                        int id = rs.getTardis_id();
+                        HashMap<String, Object> wherei = new HashMap<String, Object>();
+                        wherei.put("door_type", 1);
+                        wherei.put("tardis_id", id);
+                        ResultSetDoors rsi = new ResultSetDoors(plugin, wherei, false);
+                        if (rsi.resultSet()) {
+                            TARDISConstants.COMPASS innerD = rsi.getDoor_direction();
+                            String doorLocStr = rsi.getDoor_location();
+                            String[] split = doorLocStr.split(":");
+                            World cw = plugin.getServer().getWorld(split[0]);
+                            int cx = 0, cy = 0, cz = 0;
+                            try {
+                                cx = Integer.parseInt(split[1]);
+                                cy = Integer.parseInt(split[2]);
+                                cz = Integer.parseInt(split[3]);
+                            } catch (NumberFormatException nfe) {
+                                plugin.debug(plugin.pluginName + "Could not convert to number!");
+                            }
+                            Location tmp_loc = cw.getBlockAt(cx, cy, cz).getLocation();
+                            int getx = tmp_loc.getBlockX();
+                            int getz = tmp_loc.getBlockZ();
+                            switch (innerD) {
+                                case NORTH:
+                                    // z -ve
+                                    tmp_loc.setX(getx + 0.5);
+                                    tmp_loc.setZ(getz - 0.5);
+                                    break;
+                                case EAST:
+                                    // x +ve
+                                    tmp_loc.setX(getx + 1.5);
+                                    tmp_loc.setZ(getz + 0.5);
+                                    break;
+                                case SOUTH:
+                                    // z +ve
+                                    tmp_loc.setX(getx + 0.5);
+                                    tmp_loc.setZ(getz + 1.5);
+                                    break;
+                                case WEST:
+                                    // x -ve
+                                    tmp_loc.setX(getx - 0.5);
+                                    tmp_loc.setZ(getz + 0.5);
+                                    break;
+                            }
+                            // enter TARDIS!
+                            try {
+                                Class.forName("org.bukkit.Sound");
+                                player.playSound(player.getLocation(), Sound.ENDERMAN_TELEPORT, 1, 1);
+                            } catch (ClassNotFoundException e) {
+                                player.getLocation().getWorld().playEffect(player.getLocation(), Effect.GHAST_SHRIEK, 0);
+                            }
+                            cw.getChunkAt(tmp_loc).load();
+                            float yaw = player.getLocation().getYaw();
+                            float pitch = player.getLocation().getPitch();
+                            tmp_loc.setPitch(pitch);
+                            // get players direction so we can adjust yaw if necessary
+                            TARDISConstants.COMPASS d = TARDISConstants.COMPASS.valueOf(plugin.utils.getPlayersDirection(player));
+                            TARDISDoorListener tdl = new TARDISDoorListener(plugin);
+                            if (!innerD.equals(d)) {
+                                switch (d) {
+                                    case NORTH:
+                                        yaw = yaw + tdl.adjustYaw[0][innerD.ordinal()];
+                                        break;
+                                    case WEST:
+                                        yaw = yaw + tdl.adjustYaw[1][innerD.ordinal()];
+                                        break;
+                                    case SOUTH:
+                                        yaw = yaw + tdl.adjustYaw[2][innerD.ordinal()];
+                                        break;
+                                    case EAST:
+                                        yaw = yaw + tdl.adjustYaw[3][innerD.ordinal()];
+                                        break;
+                                }
+                            }
+                            tmp_loc.setYaw(yaw);
+                            final Location tardis_loc = tmp_loc;
+                            World playerWorld = player.getLocation().getWorld();
+                            tdl.movePlayer(player, tardis_loc, false, playerWorld, false);
+                            // put player into travellers table
+                            QueryFactory qf = new QueryFactory(plugin);
+                            HashMap<String, Object> set = new HashMap<String, Object>();
+                            set.put("tardis_id", id);
+                            set.put("player", player.getName());
+                            qf.doInsert("travellers", set);
+                            return true;
+                        }
                     }
                 }
                 if (first.equals("delete")) {
@@ -313,12 +452,11 @@ public class TARDISAdminCommands implements CommandExecutor {
                         TARDISConstants.COMPASS d = rs.getDirection();
                         String chunkLoc = rs.getChunk();
                         String[] cdata = chunkLoc.split(":");
-                        World cw = plugin.getServer().getWorld(cdata[0]);
-                        int restore;
-                        // if (create_worlds) just use AIR
-                        if (plugin.getConfig().getBoolean("create_worlds")) {
-                            restore = 0;
-                        } else {
+                        String name = cdata[0];
+                        World cw = plugin.getServer().getWorld(name);
+                        int restore = 0;
+                        // if (!create_worlds) set the restore block
+                        if (!name.contains("TARDIS_WORLD_") && cw.getWorldType() != WorldType.FLAT) {
                             World.Environment env = cw.getEnvironment();
                             switch (env) {
                                 case NETHER:
@@ -341,7 +479,12 @@ public class TARDISAdminCommands implements CommandExecutor {
                         whered.put("tardis_id", id);
                         if (rst.resultSet() || plugin.tardisHasDestination.containsKey(id)) {
                             useCurrent = true;
-                            Location spawn = cw.getSpawnLocation();
+                            Location spawn;
+                            if (name.contains("TARDIS_WORLD_")) {
+                                spawn = plugin.getServer().getWorlds().get(0).getSpawnLocation();
+                            } else {
+                                spawn = cw.getSpawnLocation();
+                            }
                             ArrayList<HashMap<String, String>> data = rst.getData();
                             for (HashMap<String, String> map : data) {
                                 String op = plugin.getServer().getOfflinePlayer(map.get("player")).getName();
@@ -357,13 +500,32 @@ public class TARDISAdminCommands implements CommandExecutor {
                             return true;
                         }
                         // destroy the TARDIS
+                        if (plugin.getConfig().getBoolean("create_worlds") || name.contains("TARDIS_WORLD_")) {
+                            // delete TARDIS world
+                            List<Player> players = cw.getPlayers();
+                            for (Player p : players) {
+                                p.kickPlayer("World scheduled for deletion!");
+                            }
+                            if (plugin.pm.isPluginEnabled("Multiverse-Core")) {
+                                plugin.getServer().dispatchCommand(plugin.console, "mv remove " + name);
+                            }
+                            if (plugin.pm.isPluginEnabled("MultiWorld")) {
+                                plugin.getServer().dispatchCommand(plugin.console, "mw unload " + name);
+                            }
+                            if (plugin.pm.isPluginEnabled("WorldBorder")) {
+                                // wb <world> clear
+                                plugin.getServer().dispatchCommand(plugin.console, "wb " + name + " clear");
+                            }
+                            plugin.getServer().unloadWorld(cw, true);
+                            File world_folder = new File(plugin.getServer().getWorldContainer() + File.separator + name + File.separator);
+                            if (!deleteFolder(world_folder)) {
+                                plugin.debug("Could not delete world <" + name + ">");
+                            }
+                        } else {
+                            plugin.destroyI.destroyInner(schm, id, cw, restore, args[1]);
+                        }
                         plugin.destroyPB.destroyTorch(bb_loc);
                         plugin.destroyPB.destroySign(bb_loc, d);
-                        plugin.destroyI.destroyInner(schm, id, cw, restore, args[1]);
-                        if (cw.getWorldType() == WorldType.FLAT) {
-                            // replace stone blocks with AIR
-                            plugin.destroyI.destroyInner(schm, id, cw, 0, args[1]);
-                        }
                         plugin.destroyPB.destroyPoliceBox(bb_loc, d, id, false);
                         // delete the TARDIS from the db
                         HashMap<String, Object> wherec = new HashMap<String, Object>();
@@ -375,6 +537,18 @@ public class TARDISAdminCommands implements CommandExecutor {
                         HashMap<String, Object> whereo = new HashMap<String, Object>();
                         whereo.put("tardis_id", id);
                         qf.doDelete("doors", whereo);
+                        HashMap<String, Object> whereb = new HashMap<String, Object>();
+                        whereb.put("tardis_id", id);
+                        qf.doDelete("blocks", whereb);
+                        HashMap<String, Object> wherev = new HashMap<String, Object>();
+                        wherev.put("tardis_id", id);
+                        qf.doDelete("travellers", wherev);
+                        HashMap<String, Object> whereg = new HashMap<String, Object>();
+                        whereg.put("tardis_id", id);
+                        qf.doDelete("gravity_well", whereg);
+                        HashMap<String, Object> wheres = new HashMap<String, Object>();
+                        wheres.put("tardis_id", id);
+                        qf.doDelete("destinations", wheres);
                         sender.sendMessage(plugin.pluginName + "The TARDIS was removed from the world and database successfully.");
                     } else {
                         sender.sendMessage(plugin.pluginName + "Could not find player [" + args[1] + "] in the database!");
@@ -382,7 +556,7 @@ public class TARDISAdminCommands implements CommandExecutor {
                     }
                     return true;
                 }
-                if (first.equals("key") || first.equals("full_charge_item")) {
+                if (first.equals("key") || first.equals("full_charge_item") || first.equals("jettison_seed")) {
                     String setMaterial = args[1].toUpperCase(Locale.ENGLISH);
                     if (!Arrays.asList(TARDISMaterials.MATERIAL_LIST).contains(setMaterial)) {
                         sender.sendMessage(plugin.pluginName + ChatColor.RED + "That is not a valid Material! Try checking http://jd.bukkit.org/apidocs/org/bukkit/Material.html");
@@ -447,7 +621,7 @@ public class TARDISAdminCommands implements CommandExecutor {
                     plugin.getConfig().set(first, Boolean.valueOf(tf));
                 }
                 //checks if its a number config option
-                if (firstsInt.contains(first) || firstsRoom.contains(first)) {
+                if (firstsInt.contains(first)) {
                     String a = args[1];
                     int val;
                     try {
@@ -457,8 +631,7 @@ public class TARDISAdminCommands implements CommandExecutor {
                         sender.sendMessage(plugin.pluginName + ChatColor.RED + " The last argument must be a number!");
                         return false;
                     }
-                    String option = (firstsRoom.contains(first)) ? "rooms." + first.toUpperCase(Locale.ENGLISH) : first;
-                    plugin.getConfig().set(option, val);
+                    plugin.getConfig().set(first, val);
                 }
                 plugin.saveConfig();
                 sender.sendMessage(plugin.pluginName + "The config was updated!");

@@ -24,6 +24,7 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.thirdparty.Version;
 import org.bukkit.Bukkit;
+import org.bukkit.Effect;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Sound;
@@ -58,13 +59,14 @@ public class TARDISScannerListener implements Listener {
     public TARDISScannerListener(TARDIS plugin) {
         this.plugin = plugin;
         String[] v = Bukkit.getServer().getBukkitVersion().split("-");
-        bukkitversion = new Version(v[0]);
+        bukkitversion = (!v[0].equalsIgnoreCase("unknown")) ? new Version(v[0]) : new Version("1.4.7");
         if (bukkitversion.compareTo(prewoodbuttonversion) >= 0) {
             validBlocks.add(Material.WOOD_BUTTON);
+            entities.add(EntityType.WITCH);
+            entities.add(EntityType.BAT);
         }
         validBlocks.add(Material.STONE_BUTTON);
         validBlocks.add(Material.LEVER);
-        entities.add(EntityType.BAT);
         entities.add(EntityType.BLAZE);
         entities.add(EntityType.CAVE_SPIDER);
         entities.add(EntityType.CHICKEN);
@@ -86,7 +88,6 @@ public class TARDISScannerListener implements Listener {
         entities.add(EntityType.SPIDER);
         entities.add(EntityType.SQUID);
         entities.add(EntityType.VILLAGER);
-        entities.add(EntityType.WITCH);
         entities.add(EntityType.WOLF);
         entities.add(EntityType.ZOMBIE);
     }
@@ -117,14 +118,19 @@ public class TARDISScannerListener implements Listener {
                 ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
                 if (rs.resultSet()) {
                     int id = rs.getTardis_id();
-                    if (plugin.getServer().getPluginManager().getPlugin("Spout") != null && SpoutManager.getPlayer(player).isSpoutCraftEnabled()) {
+                    if (plugin.pm.getPlugin("Spout") != null && SpoutManager.getPlayer(player).isSpoutCraftEnabled()) {
                         SpoutManager.getSoundManager().playGlobalCustomSoundEffect(plugin, "https://dl.dropbox.com/u/53758864/soundeffects/scanner.mp3", false, b, 20, 75);
                     } else {
-                        w.playSound(b, Sound.ORB_PICKUP, 1, 0);
+                        try {
+                            Class.forName("org.bukkit.Sound");
+                            w.playSound(b, Sound.ORB_PICKUP, 1, 0);
+                        } catch (ClassNotFoundException e) {
+                            w.playEffect(b, Effect.BOW_FIRE, 0);
+                        }
                     }
                     String policebox;
                     String whereisit;
-                    if (plugin.tardisHasDestination.containsKey(Integer.valueOf(id))) {
+                    if (plugin.tardisHasDestination.containsKey(Integer.valueOf(id)) || plugin.tardisHasTravelled.contains(Integer.valueOf(id))) {
                         policebox = rs.getSave();
                         whereisit = "next destination";
                     } else {
@@ -134,11 +140,16 @@ public class TARDISScannerListener implements Listener {
                     Location scan_loc = plugin.utils.getLocationFromDB(policebox, 0, 0);
                     // record nearby entities
                     HashMap<EntityType, Integer> scannedentities = new HashMap<EntityType, Integer>();
+                    List<String> playernames = new ArrayList<String>();
                     for (Entity k : getNearbyEntities(scan_loc, 16)) {
                         EntityType et = k.getType();
                         if (entities.contains(et)) {
                             Integer entity_count = (scannedentities.containsKey(et)) ? scannedentities.get(et) : 0;
                             scannedentities.put(et, entity_count + 1);
+                            if (et.equals(EntityType.PLAYER)) {
+                                Player entPlayer = (Player) k;
+                                playernames.add(entPlayer.getName());
+                            }
                         }
                     }
                     long time = scan_loc.getWorld().getTime();
@@ -166,7 +177,14 @@ public class TARDISScannerListener implements Listener {
                     if (scannedentities.size() > 0) {
                         player.sendMessage("Nearby entities:");
                         for (Map.Entry<EntityType, Integer> entry : scannedentities.entrySet()) {
-                            player.sendMessage("    " + entry.getKey().getName() + ": " + entry.getValue());
+                            String message = "";
+                            if (entry.getKey().equals(EntityType.PLAYER) && playernames.size() > 0) {
+                                for (String p : playernames) {
+                                    message += ", " + p;
+                                }
+                                message = " (" + message.substring(2) + ")";
+                            }
+                            player.sendMessage("    " + entry.getKey() + ": " + entry.getValue() + message);
                         }
                         scannedentities.clear();
                     } else {

@@ -36,7 +36,7 @@ public class TARDISTownyChecker {
 
     public TARDISTownyChecker(TARDIS plugin) {
         if (plugin.townyOnServer) {
-            towny = (Towny) plugin.getServer().getPluginManager().getPlugin("Towny");
+            towny = (Towny) plugin.pm.getPlugin("Towny");
         }
     }
 

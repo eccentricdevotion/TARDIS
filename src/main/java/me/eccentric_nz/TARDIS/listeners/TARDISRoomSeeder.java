@@ -20,16 +20,20 @@ import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants.COMPASS;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
+import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.rooms.TARDISRoomBuilder;
+import me.eccentric_nz.tardischunkgenerator.TARDISChunkGenerator;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.World;
+import org.bukkit.WorldType;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractEvent;
-import org.bukkit.inventory.ItemStack;
+import org.bukkit.generator.ChunkGenerator;
 
 /**
  * The Doctor kept some of the clothes from his previous regenerations, as well
@@ -58,14 +62,32 @@ public class TARDISRoomSeeder implements Listener {
     public void onSeedBlockInteract(PlayerInteractEvent event) {
         final Player player = event.getPlayer();
         String playerNameStr = player.getName();
+        // check that player is in TARDIS
+        if (!plugin.trackRoomSeed.containsKey(playerNameStr)) {
+            return;
+        }
         Block block = event.getClickedBlock();
         if (block != null) {
             Material blockType = block.getType();
-            ItemStack inhand = player.getItemInHand();
+            Material inhand = player.getItemInHand().getType();
+            String key;
+            HashMap<String, Object> where = new HashMap<String, Object>();
+            where.put("player", playerNameStr);
+            ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, where);
+            if (rsp.resultSet()) {
+                key = (!rsp.getKey().equals("")) ? rsp.getKey() : plugin.getConfig().getString("key");
+            } else {
+                key = plugin.getConfig().getString("key");
+            }
             // only proceed if they are clicking a seed block with the TARDIS key!
-            if (plugin.seeds.containsKey(blockType) && inhand.getType().equals(Material.valueOf(plugin.getConfig().getString("key")))) {
-                // check that player is in TARDIS
-                if (!plugin.trackRoomSeed.containsKey(playerNameStr)) {
+            if (plugin.seeds.containsKey(blockType) && inhand.equals(Material.getMaterial(key))) {
+                // check they are still in the TARDIS world
+                World world = block.getLocation().getWorld();
+                String name = world.getName();
+                ChunkGenerator gen = world.getGenerator();
+                boolean special = name.contains("TARDIS_TimeVortex") && (world.getWorldType().equals(WorldType.FLAT) || gen instanceof TARDISChunkGenerator);
+                if (!name.equals("TARDIS_WORLD_" + playerNameStr) && !special) {
+                    player.sendMessage(plugin.pluginName + "You must be in a TARDIS world to grow a room!");
                     return;
                 }
                 // get schematic

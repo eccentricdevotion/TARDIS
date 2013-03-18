@@ -56,7 +56,7 @@ public class TARDISButtonListener implements Listener {
     public TARDISButtonListener(TARDIS plugin) {
         this.plugin = plugin;
         String[] v = Bukkit.getServer().getBukkitVersion().split("-");
-        bukkitversion = new Version(v[0]);
+        bukkitversion = (!v[0].equalsIgnoreCase("unknown")) ? new Version(v[0]) : new Version("1.4.7");
         if (bukkitversion.compareTo(prewoodbuttonversion) >= 0) {
             validBlocks.add(Material.WOOD_BUTTON);
         }
@@ -253,7 +253,7 @@ public class TARDISButtonListener implements Listener {
                                     wherel.put("tardis_id", id);
                                     qf.doUpdate("tardis", set, wherel);
                                     plugin.tardisHasDestination.put(id, plugin.getConfig().getInt("random"));
-//                                if (plugin.getServer().getPluginManager().getPlugin("Spout") != null && SpoutManager.getPlayer(player).isSpoutCraftEnabled() && playSound == true) {
+//                                if (plugin.pm.getPlugin("Spout") != null && SpoutManager.getPlayer(player).isSpoutCraftEnabled() && playSound == true) {
 //                                    SpoutManager.getSoundManager().playCustomSoundEffect(plugin, SpoutManager.getPlayer(player), "https://dl.dropbox.com/u/53758864/tardis_takeoff.mp3", false, b, 9, 75);
 //                                }
                                 } else {

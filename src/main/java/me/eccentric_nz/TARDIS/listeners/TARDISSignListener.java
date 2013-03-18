@@ -142,14 +142,13 @@ public class TARDISSignListener implements Listener {
                                         if (home.equals("")) {
                                             home = "Home:" + rs.getHome();
                                         }
-                                        String dest = map.get("dest_name");
-                                        if (!dest.equals("hide") && !dest.equals("rebuild") && !dest.equals("home")) {
+                                        if (map.get("type").equals("0")) {
                                             dests.add(map.get("dest_name") + ":" + map.get("world") + ":" + map.get("x") + ":" + map.get("y") + ":" + map.get("z"));
                                         }
                                     }
                                     dests.add(home);
                                     String[] display;
-                                    if (plugin.trackDest.containsKey(player.getName())) {
+                                    if (plugin.trackDest.containsKey(player.getName()) && dests.size() > 1) {
                                         reOrder(dests, plugin.trackDest.get(player.getName()));
                                         plugin.trackDest.put(player.getName(), dests.get(1));
                                         display = dests.get(1).split(":");

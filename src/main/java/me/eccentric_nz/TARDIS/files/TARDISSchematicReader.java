@@ -91,6 +91,11 @@ public class TARDISSchematicReader {
                     plugin.eleventhdimensions[1] = width;
                     plugin.eleventhdimensions[2] = length;
                     break;
+                case REDSTONE:
+                    plugin.redstonedimensions[0] = height;
+                    plugin.redstonedimensions[1] = width;
+                    plugin.redstonedimensions[2] = length;
+                    break;
                 case PASSAGE:
                     plugin.passagedimensions[0] = height;
                     plugin.passagedimensions[1] = width;
@@ -115,6 +120,21 @@ public class TARDISSchematicReader {
                     plugin.antigravitydimensions[0] = height;
                     plugin.antigravitydimensions[1] = width;
                     plugin.antigravitydimensions[2] = length;
+                    break;
+                case CROSS:
+                    plugin.crossdimensions[0] = height;
+                    plugin.crossdimensions[1] = width;
+                    plugin.crossdimensions[2] = length;
+                    break;
+                case GREENHOUSE:
+                    plugin.greenhousedimensions[0] = height;
+                    plugin.greenhousedimensions[1] = width;
+                    plugin.greenhousedimensions[2] = length;
+                    break;
+                case LONG:
+                    plugin.longdimensions[0] = height;
+                    plugin.longdimensions[1] = width;
+                    plugin.longdimensions[2] = length;
                     break;
                 default:
                     plugin.roomdimensions[0] = height;

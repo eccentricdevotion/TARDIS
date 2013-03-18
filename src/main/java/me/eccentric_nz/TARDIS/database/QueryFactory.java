@@ -69,7 +69,11 @@ public class QueryFactory {
                 if (entry.getValue().getClass().equals(String.class)) {
                     ps.setString(i, entry.getValue().toString());
                 } else {
-                    ps.setInt(i, plugin.utils.parseNum(entry.getValue().toString()));
+                    if (entry.getValue().getClass().getName().contains("Double")) {
+                        ps.setDouble(i, Double.parseDouble(entry.getValue().toString()));
+                    } else {
+                        ps.setInt(i, plugin.utils.parseNum(entry.getValue().toString()));
+                    }
                 }
                 i++;
             }

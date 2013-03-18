@@ -29,12 +29,14 @@ import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
+import org.bukkit.block.BlockFace;
 import org.bukkit.block.Sign;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.material.Door;
 
 /**
  * The TARDIS interior goes through occasional metamorphoses, sometimes by
@@ -55,7 +57,7 @@ public class TARDISUpdateListener implements Listener {
     public TARDISUpdateListener(TARDIS plugin) {
         this.plugin = plugin;
         String[] v = Bukkit.getServer().getBukkitVersion().split("-");
-        bukkitversion = new Version(v[0]);
+        bukkitversion = (!v[0].equalsIgnoreCase("unknown")) ? new Version(v[0]) : new Version("1.4.7");
         if (bukkitversion.compareTo(prewoodbuttonversion) >= 0) {
             validBlocks.add(Material.WOOD_BUTTON);
         }
@@ -86,6 +88,7 @@ public class TARDISUpdateListener implements Listener {
                 byte blockData = block.getData();
                 if (blockData >= 8 && blockType == Material.IRON_DOOR_BLOCK) {
                     by = (by - 1);
+                    blockData = block.getRelative(BlockFace.DOWN).getData();
                 }
                 String blockLocStr = bw + ":" + bx + ":" + by + ":" + bz;
                 plugin.trackPlayers.remove(playerNameStr);
@@ -107,9 +110,6 @@ public class TARDISUpdateListener implements Listener {
                     // get door data this should let us determine the direction
                     String d;
                     switch (blockData) {
-                        case 0:
-                            d = "EAST";
-                            break;
                         case 1:
                             d = "SOUTH";
                             break;

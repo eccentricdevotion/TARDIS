@@ -50,7 +50,7 @@ public class TARDISUtils {
     public TARDISUtils(TARDIS plugin) {
         this.plugin = plugin;
         String[] v = Bukkit.getServer().getBukkitVersion().split("-");
-        bukkitversion = new Version(v[0]);
+        bukkitversion = (!v[0].equalsIgnoreCase("unknown")) ? new Version(v[0]) : new Version("1.4.7");
     }
 
     /**
@@ -184,11 +184,15 @@ public class TARDISUtils {
         // compile location from string
         String[] data = s.split(":");
         World savedw = Bukkit.getServer().getWorld(data[0]);
-        savedx = parseNum(data[1]);
-        savedy = parseNum(data[2]);
-        savedz = parseNum(data[3]);
-        Location dest = new Location(savedw, savedx, savedy, savedz, yaw, pitch);
-        return dest;
+        if (savedw != null) {
+            savedx = parseNum(data[1]);
+            savedy = parseNum(data[2]);
+            savedz = parseNum(data[3]);
+            Location dest = new Location(savedw, savedx, savedy, savedz, yaw, pitch);
+            return dest;
+        } else {
+            return null;
+        }
     }
 
     /**
