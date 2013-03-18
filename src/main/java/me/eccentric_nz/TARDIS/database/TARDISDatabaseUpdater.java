@@ -53,6 +53,8 @@ public class TARDISDatabaseUpdater {
         gravityupdates.add("velocity REAL DEFAULT 0.5");
         prefsupdates.add("key TEXT DEFAULT ''");
         prefsupdates.add("artron_level INTEGER DEFAULT 0");
+        prefsupdates.add("wall TEXT DEFAULT 'ORANGE_WOOL'");
+        prefsupdates.add("floor TEXT DEFAULT 'LIGHT_GREY_WOOL'");
         prefsupdates.add("auto_on INTEGER DEFAULT 0");
         tardisupdates.add("artron_button TEXT DEFAULT ''");
         tardisupdates.add("artron_level INTEGER DEFAULT 0");
@@ -61,7 +63,7 @@ public class TARDISDatabaseUpdater {
         tardisupdates.add("condenser TEXT DEFAULT ''");
         tardisupdates.add("creeper TEXT DEFAULT ''");
         tardisupdates.add("handbrake TEXT DEFAULT ''");
-        tardisupdates.add("handbrake_on INT DEFAULT 1");
+        tardisupdates.add("handbrake_on INTEGER DEFAULT 1");
         tardisupdates.add("middle_data INTEGER");
         tardisupdates.add("middle_id INTEGER");
         tardisupdates.add("recharging INTEGER DEFAULT 0");
@@ -77,7 +79,9 @@ public class TARDISDatabaseUpdater {
         int i = 0;
         try {
             for (String a : areaupdates) {
-                String a_query = "SELECT sql FROM sqlite_master WHERE tbl_name = 'areas' AND sql LIKE '%" + a + "%'";
+                String[] asplit = a.split(" ");
+                String acheck = asplit[0] + " " + asplit[1].substring(0, 3);
+                String a_query = "SELECT sql FROM sqlite_master WHERE tbl_name = 'areas' AND sql LIKE '%" + acheck + "%'";
                 ResultSet rsa = statement.executeQuery(a_query);
                 if (!rsa.next()) {
                     i++;
@@ -86,7 +90,8 @@ public class TARDISDatabaseUpdater {
                 }
             }
             for (String b : blockupdates) {
-                String b_query = "SELECT sql FROM sqlite_master WHERE tbl_name = 'blocks' AND sql LIKE '%" + b + "%'";
+                String[] bsplit = b.split(" ");
+                String b_query = "SELECT sql FROM sqlite_master WHERE tbl_name = 'blocks' AND sql LIKE '%" + bsplit[0] + "%'";
                 ResultSet rsb = statement.executeQuery(b_query);
                 if (!rsb.next()) {
                     i++;
@@ -95,7 +100,8 @@ public class TARDISDatabaseUpdater {
                 }
             }
             for (String d : destupdates) {
-                String d_query = "SELECT sql FROM sqlite_master WHERE tbl_name = 'destinations' AND sql LIKE '%" + d + "%'";
+                String[] dsplit = d.split(" ");
+                String d_query = "SELECT sql FROM sqlite_master WHERE tbl_name = 'destinations' AND sql LIKE '%" + dsplit[0] + "%'";
                 ResultSet rsd = statement.executeQuery(d_query);
                 if (!rsd.next()) {
                     i++;
@@ -104,7 +110,8 @@ public class TARDISDatabaseUpdater {
                 }
             }
             for (String o : doorupdates) {
-                String o_query = "SELECT sql FROM sqlite_master WHERE tbl_name = 'doors' AND sql LIKE '%" + o + "%'";
+                String[] osplit = o.split(" ");
+                String o_query = "SELECT sql FROM sqlite_master WHERE tbl_name = 'doors' AND sql LIKE '%" + osplit[0] + "%'";
                 ResultSet rso = statement.executeQuery(o_query);
                 if (!rso.next()) {
                     i++;
@@ -113,7 +120,8 @@ public class TARDISDatabaseUpdater {
                 }
             }
             for (String g : gravityupdates) {
-                String g_query = "SELECT sql FROM sqlite_master WHERE tbl_name = 'gravity_well' AND sql LIKE '%" + g + "%'";
+                String[] gsplit = g.split(" ");
+                String g_query = "SELECT sql FROM sqlite_master WHERE tbl_name = 'gravity_well' AND sql LIKE '%" + gsplit[0] + "%'";
                 ResultSet rsg = statement.executeQuery(g_query);
                 if (!rsg.next()) {
                     i++;
@@ -122,7 +130,9 @@ public class TARDISDatabaseUpdater {
                 }
             }
             for (String p : prefsupdates) {
-                String p_query = "SELECT sql FROM sqlite_master WHERE tbl_name = 'player_prefs' AND sql LIKE '%" + p + "%'";
+                String[] psplit = p.split(" ");
+                String pcheck = psplit[0] + " " + psplit[1].substring(0, 3);
+                String p_query = "SELECT sql FROM sqlite_master WHERE tbl_name = 'player_prefs' AND sql LIKE '%" + pcheck + "%'";
                 ResultSet rsp = statement.executeQuery(p_query);
                 if (!rsp.next()) {
                     i++;
@@ -130,22 +140,9 @@ public class TARDISDatabaseUpdater {
                     statement.executeUpdate(p_alter);
                 }
             }
-            String ppw_query = "SELECT sql FROM sqlite_master WHERE tbl_name = 'player_prefs' AND sql LIKE '%wall TEXT DEFAULT%'";
-            ResultSet rsppw = statement.executeQuery(ppw_query);
-            if (!rsppw.next()) {
-                String ppw_alter = "ALTER TABLE player_prefs ADD wall TEXT DEFAULT 'ORANGE_WOOL'";
-                statement.executeUpdate(ppw_alter);
-                i++;
-            }
-            String ppf_query = "SELECT sql FROM sqlite_master WHERE tbl_name = 'player_prefs' AND sql LIKE '%floor TEXT DEFAULT%'";
-            ResultSet rsppf = statement.executeQuery(ppf_query);
-            if (!rsppf.next()) {
-                String ppf_alter = "ALTER TABLE player_prefs ADD floor TEXT DEFAULT 'LIGHT_GREY_WOOL'";
-                statement.executeUpdate(ppf_alter);
-                i++;
-            }
             for (String t : tardisupdates) {
-                String t_query = "SELECT sql FROM sqlite_master WHERE tbl_name = 'tardis' AND sql LIKE '%" + t + "%'";
+                String[] tsplit = t.split(" ");
+                String t_query = "SELECT sql FROM sqlite_master WHERE tbl_name = 'tardis' AND sql LIKE '%" + tsplit[0] + "%'";
                 ResultSet rst = statement.executeQuery(t_query);
                 if (!rst.next()) {
                     i++;
@@ -154,7 +151,7 @@ public class TARDISDatabaseUpdater {
                 }
             }
         } catch (SQLException e) {
-            TARDIS.plugin.debug("Database add fields error: " + e.getMessage());
+            TARDIS.plugin.debug("Database add fields error: " + e.getMessage() + e.getErrorCode());
         }
         if (i > 0) {
             TARDIS.plugin.console.sendMessage(TARDIS.plugin.pluginName + "Added " + ChatColor.AQUA + i + ChatColor.RESET + " fields to the database!");
