@@ -63,6 +63,7 @@ public class TARDISMakeCSV {
             plugin.budgetSchematicCSV = createFile(TARDISConstants.SCHEMATIC_BUDGET + ".csv");
             plugin.deluxeSchematicCSV = createFile(TARDISConstants.SCHEMATIC_DELUXE + ".csv");
             plugin.eleventhSchematicCSV = createFile(TARDISConstants.SCHEMATIC_ELEVENTH + ".csv");
+            plugin.redstoneSchematicCSV = createFile(TARDISConstants.SCHEMATIC_REDSTONE + ".csv");
             plugin.antigravitySchematicCSV = createFile(TARDISConstants.SCHEMATIC_ANTIGRAVITY + ".csv");
             plugin.arboretumSchematicCSV = createFile(TARDISConstants.SCHEMATIC_ARBORETUM + ".csv");
             plugin.bakerSchematicCSV = createFile(TARDISConstants.SCHEMATIC_BAKER + ".csv");
@@ -91,6 +92,7 @@ public class TARDISMakeCSV {
             String budnstr = basepath + TARDISConstants.SCHEMATIC_BUDGET;
             String delnstr = basepath + TARDISConstants.SCHEMATIC_DELUXE;
             String elenstr = basepath + TARDISConstants.SCHEMATIC_ELEVENTH;
+            String rednstr = basepath + TARDISConstants.SCHEMATIC_REDSTONE;
             String antnstr = basepath + TARDISConstants.SCHEMATIC_ANTIGRAVITY;
             String arbornstr = basepath + TARDISConstants.SCHEMATIC_ARBORETUM;
             String baknstr = basepath + TARDISConstants.SCHEMATIC_BAKER;
@@ -114,6 +116,7 @@ public class TARDISMakeCSV {
             plugin.budgetSchematicFile = copy(budnstr, plugin.getResource(TARDISConstants.SCHEMATIC_BUDGET));
             plugin.deluxeSchematicFile = copy(delnstr, plugin.getResource(TARDISConstants.SCHEMATIC_DELUXE));
             plugin.eleventhSchematicFile = copy(elenstr, plugin.getResource(TARDISConstants.SCHEMATIC_ELEVENTH));
+            plugin.redstoneSchematicFile = copy(rednstr, plugin.getResource(TARDISConstants.SCHEMATIC_REDSTONE));
             plugin.antigravitySchematicFile = copy(antnstr, plugin.getResource(TARDISConstants.SCHEMATIC_ANTIGRAVITY));
             plugin.arboretumSchematicFile = copy(arbornstr, plugin.getResource(TARDISConstants.SCHEMATIC_ARBORETUM));
             plugin.bakerSchematicFile = copy(baknstr, plugin.getResource(TARDISConstants.SCHEMATIC_BAKER));
@@ -138,6 +141,7 @@ public class TARDISMakeCSV {
             reader.readAndMakeCSV(budnstr, TARDISConstants.SCHEMATIC.BUDGET, false);
             reader.readAndMakeCSV(delnstr, TARDISConstants.SCHEMATIC.DELUXE, false);
             reader.readAndMakeCSV(elenstr, TARDISConstants.SCHEMATIC.ELEVENTH, false);
+            reader.readAndMakeCSV(rednstr, TARDISConstants.SCHEMATIC.REDSTONE, false);
             reader.readAndMakeCSV(antnstr, TARDISConstants.SCHEMATIC.ANTIGRAVITY, false);
             reader.readAndMakeCSV(arbornstr, TARDISConstants.SCHEMATIC.ARBORETUM, false);
             reader.readAndMakeCSV(baknstr, TARDISConstants.SCHEMATIC.BAKER, false);
@@ -164,6 +168,7 @@ public class TARDISMakeCSV {
             plugin.budgetschematic = TARDISSchematic.schematic(plugin.budgetSchematicCSV, plugin.budgetdimensions[0], plugin.budgetdimensions[1], plugin.budgetdimensions[2]);
             plugin.deluxeschematic = TARDISSchematic.schematic(plugin.deluxeSchematicCSV, plugin.deluxedimensions[0], plugin.deluxedimensions[1], plugin.deluxedimensions[2]);
             plugin.eleventhschematic = TARDISSchematic.schematic(plugin.eleventhSchematicCSV, plugin.eleventhdimensions[0], plugin.eleventhdimensions[1], plugin.eleventhdimensions[2]);
+            plugin.redstoneschematic = TARDISSchematic.schematic(plugin.redstoneSchematicCSV, plugin.redstonedimensions[0], plugin.redstonedimensions[1], plugin.redstonedimensions[2]);
             plugin.antigravityschematic = TARDISSchematic.schematic(plugin.antigravitySchematicCSV, plugin.antigravitydimensions[0], plugin.antigravitydimensions[1], plugin.antigravitydimensions[2]);
             plugin.arboretumschematic = TARDISSchematic.schematic(plugin.arboretumSchematicCSV, plugin.arboretumdimensions[0], plugin.arboretumdimensions[1], plugin.arboretumdimensions[2]);
             plugin.bakerschematic = TARDISSchematic.schematic(plugin.bakerSchematicCSV, plugin.roomdimensions[0], plugin.roomdimensions[1], plugin.roomdimensions[2]);

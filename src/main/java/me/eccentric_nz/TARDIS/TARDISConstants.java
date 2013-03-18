@@ -38,6 +38,7 @@ public class TARDISConstants {
     public static final String SCHEMATIC_BIGGER = "bigger.schematic";
     public static final String SCHEMATIC_DELUXE = "deluxe.schematic";
     public static final String SCHEMATIC_ELEVENTH = "eleventh.schematic";
+    public static final String SCHEMATIC_REDSTONE = "redstone.schematic";
     public static final String SCHEMATIC_ANTIGRAVITY = "antigravity.schematic";
     public static final String SCHEMATIC_ARBORETUM = "arboretum.schematic";
     public static final String SCHEMATIC_BAKER = "baker.schematic";
@@ -60,7 +61,7 @@ public class TARDISConstants {
 
     public enum SCHEMATIC {
 
-        ANTIGRAVITY, ARBORETUM, BAKER, BEDROOM, BIGGER, BUDGET, CROSS, DELUXE, ELEVENTH, EMPTY, FARM, GRAVITY, GREENHOUSE, HARMONY, KITCHEN, LIBRARY, LONG, MUSHROOM, PASSAGE, POOL, VAULT, WOOD, WORKSHOP;
+        ANTIGRAVITY, ARBORETUM, BAKER, BEDROOM, BIGGER, BUDGET, CROSS, DELUXE, ELEVENTH, EMPTY, FARM, GRAVITY, GREENHOUSE, HARMONY, KITCHEN, LIBRARY, LONG, MUSHROOM, PASSAGE, POOL, REDSTONE, VAULT, WOOD, WORKSHOP;
     }
     public static final String CONFIG_FILE_NAME = "config.yml";
     public static final String QUOTES_FILE_NAME = "quotes.txt";
@@ -93,7 +94,7 @@ public class TARDISConstants {
 
         CREATE, DELETE, TIMETRAVEL, LIST, REMOVESAVE, SAVE, FIND, ADD, ADMIN, UPDATE, TRAVEL, REBUILD, CHAMELEON, SFX, PLATFORM, SETDEST, HOME, HIDE, AREA, VERSION, ROOM, ARTRON, BIND;
     }
-    public static final String COMMAND_CREATE = ChatColor.AQUA + "Creating a TARDIS\n" + ChatColor.RESET + "You create a TARDIS by placing a " + ChatColor.GOLD + "specific pattern of blocks." + ChatColor.RESET + "\nYou will need to have an IRON, GOLD or DIAMOND BLOCK, a LAPIS BLOCK, and a redstone torch in your inventory.\nYou place the blocks where you want the TARDIS to be, in the following order:\nBottom - IRON, GOLD or DIAMOND BLOCK, middle - LAPIS BLOCK, top - REDSTONE TORCH\nThe TARDIS takes up a 3 x 3 x 4 area (w x d x h), so keep this in mind.\nTo enter the TARDIS, right-click the door with your TARDIS key (by default a STICK).";
+    public static final String COMMAND_CREATE = ChatColor.AQUA + "Creating a TARDIS\n" + ChatColor.RESET + "You create a TARDIS by placing a " + ChatColor.GOLD + "specific pattern of blocks." + ChatColor.RESET + "\nYou will need to have an IRON, GOLD, REDSTONE, EMERALD or DIAMOND BLOCK, a LAPIS BLOCK, and a redstone torch in your inventory.\nYou place the blocks where you want the TARDIS to be, in the following order:\nBottom - IRON, GOLD, REDSTONE, EMERALD or DIAMOND BLOCK, middle - LAPIS BLOCK, top - REDSTONE TORCH\nThe TARDIS takes up a 3 x 3 x 4 area (w x d x h), so keep this in mind.\nTo enter the TARDIS, right-click the door with your TARDIS key (by default a STICK).";
     public static final String COMMAND_DELETE = ChatColor.AQUA + "Removing a TARDIS\n" + ChatColor.RESET + "To remove your TARDIS, " + ChatColor.GOLD + "break the 'POLICE BOX' wall sign" + ChatColor.RESET + " on the front of the TARDIS.\n" + ChatColor.RED + "WARNING:" + ChatColor.RESET + " You will lose any items you have stored in your TARDIS chest, and any saved time travel destinations.";
     public static final String COMMAND_TIMETRAVEL = ChatColor.AQUA + "Time travelling in the TARDIS\n" + ChatColor.RESET + "You can time travel in the TARDIS by changing the delay settings of the redstone repeaters on the TARDIS console.\nThe repeater closest to the door controls the kind of world you will travel to - the 1-tick delay setting selects a random world type, the 2 tick delay setting selects NORMAL worlds,\nthe 3-tick setting selects NETHER worlds, and the 4-tick setting selects THE END worlds. After changing the repeater settings, you then click the stone button at the rear of the TARDIS console.\nWhen exiting the TARDIS (right-click the door with your TARDIS key - by default a STICK) you will time travel to a random destination.";
     public static final String COMMAND_LIST = ChatColor.AQUA + "TARDIS Lists\n" + ChatColor.RESET + "Type " + ChatColor.GOLD + "/TARDIS list saves" + ChatColor.RESET + "\nto list the destinations saved in the TARDIS console.\nType " + ChatColor.GOLD + "/TARDIS list companions" + ChatColor.RESET + "\nto list players who you have added as TARDIS companions\nType " + ChatColor.GOLD + "/TARDIS list areas" + ChatColor.RESET + "\nto list admin defined TARDIS areas (like landing pads and airports)\nType " + ChatColor.GOLD + "/TARDIS list rechargers" + ChatColor.RESET + "\nto list Artron Energy Rechargers";

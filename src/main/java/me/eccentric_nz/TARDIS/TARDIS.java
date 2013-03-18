@@ -104,6 +104,7 @@ public class TARDIS extends JavaPlugin {
     public File biggerSchematicFile = null;
     public File deluxeSchematicFile = null;
     public File eleventhSchematicFile = null;
+    public File redstoneSchematicFile = null;
     public File antigravitySchematicFile = null;
     public File arboretumSchematicFile = null;
     public File bakerSchematicFile = null;
@@ -127,6 +128,7 @@ public class TARDIS extends JavaPlugin {
     public File biggerSchematicCSV = null;
     public File deluxeSchematicCSV = null;
     public File eleventhSchematicCSV = null;
+    public File redstoneSchematicCSV = null;
     public File antigravitySchematicCSV = null;
     public File arboretumSchematicCSV = null;
     public File bakerSchematicCSV = null;
@@ -153,6 +155,7 @@ public class TARDIS extends JavaPlugin {
     public String[][][] biggerschematic;
     public String[][][] deluxeschematic;
     public String[][][] eleventhschematic;
+    public String[][][] redstoneschematic;
     public String[][][] antigravityschematic;
     public String[][][] arboretumschematic;
     public String[][][] bakerschematic;
@@ -178,6 +181,7 @@ public class TARDIS extends JavaPlugin {
     public short[] biggerdimensions = new short[3];
     public short[] deluxedimensions = new short[3];
     public short[] eleventhdimensions = new short[3];
+    public short[] redstonedimensions = new short[3];
     public short[] antigravitydimensions = new short[3];
     public short[] arboretumdimensions = new short[3];
     public short[] crossdimensions = new short[3];
