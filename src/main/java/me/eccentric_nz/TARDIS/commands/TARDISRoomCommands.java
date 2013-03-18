@@ -17,12 +17,13 @@
 package me.eccentric_nz.TARDIS.commands;
 
 import java.io.File;
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 import java.util.Locale;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
+import me.eccentric_nz.TARDIS.files.TARDISMakeRoomCSV;
+import me.eccentric_nz.TARDIS.files.TARDISRoomSchematicReader;
+import me.eccentric_nz.TARDIS.files.TARDISSchematic;
 import me.eccentric_nz.TARDIS.utility.TARDISMaterials;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
@@ -74,7 +75,21 @@ public class TARDISRoomCommands implements CommandExecutor {
                     sender.sendMessage(plugin.pluginName + "You need to put the " + lower + ".schematic into the TARDIS schematics directory!");
                     return true;
                 }
+                TARDISMakeRoomCSV mrc = new TARDISMakeRoomCSV(plugin);
+                TARDISRoomSchematicReader reader = new TARDISRoomSchematicReader(plugin);
+                String basepath = plugin.getDataFolder() + File.separator + "schematics" + File.separator;
+                File csvfile = mrc.createFile(lower + ".csv");
+                boolean square = reader.readAndMakeCSV(basepath + lower, name, false);
+                if (!square) {
+                    sender.sendMessage(plugin.pluginName + "The schematic needs to have equal length sides!");
+                    return true;
+                }
+                short[] dimensions = plugin.room_dimensions.get(name);
+                String[][][] schem = TARDISSchematic.schematic(csvfile, dimensions[0], dimensions[1], dimensions[2]);
+                plugin.room_schematics.put(name, schem);
+                plugin.getConfig().set("rooms." + name + ".enabled", false);
                 plugin.saveConfig();
+                sender.sendMessage(plugin.pluginName + "Room added, please set the COST, SEED BLOCK and OFFSET, and then enable it!");
                 return true;
             } else {
                 // check they have specified a valid room
@@ -86,6 +101,11 @@ public class TARDISRoomCommands implements CommandExecutor {
                 String option = args[1].toLowerCase(Locale.ENGLISH);
                 if (option.equals("true") || option.equals("false")) {
                     // boolean enable/disable
+                    // check that the other options have been set first
+                    if (!plugin.getConfig().contains("rooms." + name + ".cost") || !plugin.getConfig().contains("rooms." + name + ".seed") || !plugin.getConfig().contains("rooms." + name + ".offset")) {
+                        sender.sendMessage(plugin.pluginName + "You must set the COST, SEED BLOCK and OFFSET before you can enable a room!");
+                        return true;
+                    }
                     boolean bool = Boolean.valueOf(args[1]);
                     plugin.debug(bool);
                     plugin.getConfig().set("rooms." + name + ".enabled", bool);

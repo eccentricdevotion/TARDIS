@@ -1,8 +1,8 @@
 # TODO
  
 ## Current version `2.2-beta`
-1. Add a schematic to CSV converter.
-2. Add a way to grow rooms out of any CSV file in the schematic directory and enable the room if supplied in the config.
+1. Fix room remover so that it can work with any custom schematic dimensions
+2. Add documentation for custom rooms
 3. Allow random chance of TARDIS malfunction which deposits player in some unexpected place
 4. Allow companions to enter and exit the tardis at will (and steal it).
 5. Add isomorphic controls preference so that only the Time Lord of a TARDIS can pilot it
