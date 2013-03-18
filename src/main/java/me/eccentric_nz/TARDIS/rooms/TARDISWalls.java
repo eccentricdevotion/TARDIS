@@ -70,6 +70,7 @@ public class TARDISWalls {
         blocks.put("RED_WOOL", new Integer[]{35, 14});
         blocks.put("BLACK_WOOL", new Integer[]{35, 15});
         blocks.put("BRICK", new Integer[]{45, 0});
+        blocks.put("CLAY", new Integer[]{82, 0});
         blocks.put("STONE_BRICK", new Integer[]{98, 0});
         blocks.put("SMOOTH_BRICK", new Integer[]{98, 0});
         blocks.put("MOSSY_BRICK", new Integer[]{98, 1});
