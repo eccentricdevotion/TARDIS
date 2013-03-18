@@ -32,61 +32,99 @@ keep_night: true
 #rooms
 rooms:
   PASSAGE:
+    enabled: true
     cost: 200
+    offset: -2
     seed: CLAY
   ARBORETUM:
+    enabled: true
     cost: 325
+    offset: -4
     seed: LEAVES
   BEDROOM:
+    enabled: true
     cost: 475
+    offset: -1
     seed: GLOWSTONE
   KITCHEN:
+    enabled: true
     cost: 450
+    offset: -1
     seed: PUMPKIN
   LIBRARY:
+    enabled: true
     cost: 550
+    offset: -1
     seed: BOOKSHELF
   POOL:
+    enabled: true
     cost: 450
+    offset: -3
     seed: SNOW_BLOCK
   VAULT:
+    enabled: true
     cost: 350
+    offset: -1
     seed: DISPENSER
   WORKSHOP:
+    enabled: true
     cost: 400
+    offset: -1
     seed: NETHER_BRICK
   EMPTY:
+    enabled: true
     cost: 250
+    offset: -1
     seed: GLASS
   GRAVITY:
+    enabled: true
     cost: 625
+    offset: -12
     seed: MOSSY_COBBLESTONE
   ANTIGRAVITY:
+    enabled: true
     cost: 625
+    offset: -2
     seed: SANDSTONE
   HARMONY:
+    enabled: true
     cost: 450
+    offset: -1
     seed: SMOOTH_STAIRS
   BAKER:
+    enabled: true
     cost: 350
+    offset: -1
     seed: ENDER_STONE
   WOOD:
+    enabled: true
     cost: 350
+    offset: -1
     seed: WOOD
   FARM:
+    enabled: true
     cost: 350
+    offset: -1
     seed: DIRT
   CROSS:
+    enabled: true
     cost: 350
+    offset: -1
     seed: SOUL_SAND
   GREENHOUSE:
+    enabled: true
     cost: 450
+    offset: -2
     seed: MELON_BLOCK
   LONG:
+    enabled: true
     cost: 300
+    offset: -2
     seed: NOTE_BLOCK
   MUSHROOM:
+    enabled: true
     cost: 350
+    offset: -1
     seed: GRAVEL
 #artron energy
 player: 25

@@ -1,9 +1,6 @@
 # TODO
-## Release version `2.1`
-1. Upload
  
 ## Current version `2.2-beta`
-0. Add Redstone Block TARDIS
 1. Add a schematic to CSV converter.
 2. Add a way to grow rooms out of any CSV file in the schematic directory and enable the room if supplied in the config.
 3. Allow random chance of TARDIS malfunction which deposits player in some unexpected place

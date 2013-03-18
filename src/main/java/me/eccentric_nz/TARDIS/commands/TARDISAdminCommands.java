@@ -72,7 +72,6 @@ public class TARDISAdminCommands implements CommandExecutor {
     private List<String> firstsStr = new ArrayList<String>();
     private List<String> firstsBool = new ArrayList<String>();
     private List<String> firstsInt = new ArrayList<String>();
-    private List<String> firstsRoom = new ArrayList<String>();
     HashSet<Byte> transparent = new HashSet<Byte>();
     private Material charger = Material.REDSTONE_LAMP_ON;
     Version bukkitversion;
@@ -143,22 +142,6 @@ public class TARDISAdminCommands implements CommandExecutor {
         firstsInt.add("timeout_height");
         firstsInt.add("tp_radius");
         firstsInt.add("travel");
-        // rooms
-        firstsRoom.add("arboretum");
-        firstsRoom.add("baker");
-        firstsRoom.add("bedroom");
-        firstsRoom.add("cross");
-        firstsRoom.add("empty");
-        firstsRoom.add("farm");
-        firstsRoom.add("gravity");
-        firstsRoom.add("harmony");
-        firstsRoom.add("kitchen");
-        firstsRoom.add("library");
-        firstsRoom.add("passage");
-        firstsRoom.add("pool");
-        firstsRoom.add("vault");
-        firstsRoom.add("wood");
-        firstsRoom.add("workshop");
 
         String[] v = Bukkit.getServer().getBukkitVersion().split("-");
         bukkitversion = (!v[0].equalsIgnoreCase("unknown")) ? new Version(v[0]) : new Version("1.4.7");
@@ -185,7 +168,7 @@ public class TARDISAdminCommands implements CommandExecutor {
                     return true;
                 }
                 String first = args[0].toLowerCase(Locale.ENGLISH);
-                if (!firstsStr.contains(first) && !firstsBool.contains(first) && !firstsInt.contains(first) && !firstsRoom.contains(first)) {
+                if (!firstsStr.contains(first) && !firstsBool.contains(first) && !firstsInt.contains(first)) {
                     sender.sendMessage(plugin.pluginName + "TARDIS does not recognise that command argument!");
                     return false;
                 }
@@ -638,7 +621,7 @@ public class TARDISAdminCommands implements CommandExecutor {
                     plugin.getConfig().set(first, Boolean.valueOf(tf));
                 }
                 //checks if its a number config option
-                if (firstsInt.contains(first) || firstsRoom.contains(first)) {
+                if (firstsInt.contains(first)) {
                     String a = args[1];
                     int val;
                     try {
@@ -648,8 +631,7 @@ public class TARDISAdminCommands implements CommandExecutor {
                         sender.sendMessage(plugin.pluginName + ChatColor.RED + " The last argument must be a number!");
                         return false;
                     }
-                    String option = (firstsRoom.contains(first)) ? "rooms." + first.toUpperCase(Locale.ENGLISH) : first;
-                    plugin.getConfig().set(option, val);
+                    plugin.getConfig().set(first, val);
                 }
                 plugin.saveConfig();
                 sender.sendMessage(plugin.pluginName + "The config was updated!");

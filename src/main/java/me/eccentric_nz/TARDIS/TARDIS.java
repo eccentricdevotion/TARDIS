@@ -50,6 +50,7 @@ import java.util.List;
 import java.util.Set;
 import me.eccentric_nz.TARDIS.builders.TARDISSpace;
 import me.eccentric_nz.TARDIS.commands.TARDISGravityCommands;
+import me.eccentric_nz.TARDIS.commands.TARDISRoomCommands;
 import me.eccentric_nz.TARDIS.files.TARDISBlockLoader;
 import me.eccentric_nz.TARDIS.files.TARDISMakeCSV;
 import me.eccentric_nz.TARDIS.files.TARDISUpdateChecker;
@@ -193,12 +194,13 @@ public class TARDIS extends JavaPlugin {
     public short[] roomdimensions = new short[3];
     public static TARDIS plugin;
     public TARDISUtils utils = new TARDISUtils(this);
-    private TARDISCommands tardisCommand;
+    public TARDISCommands tardisCommand;
     private TARDISAdminCommands tardisAdminCommand;
     private TARDISPrefsCommands tardisPrefsCommand;
     private TARDISTravelCommands tardisTravelCommand;
     private TARDISAreaCommands tardisAreaCommand;
     private TARDISBindCommands tardisBindCommand;
+    private TARDISRoomCommands tardisRoomCommand;
     private TARDISGravityCommands tardisGravityCommand;
     public TARDISBuilderInner buildI = new TARDISBuilderInner(this);
     public TARDISBuilderPoliceBox buildPB = new TARDISBuilderPoliceBox(this);
@@ -420,6 +422,7 @@ public class TARDIS extends JavaPlugin {
         tardisAreaCommand = new TARDISAreaCommands(this);
         tardisBindCommand = new TARDISBindCommands(this);
         tardisGravityCommand = new TARDISGravityCommands(this);
+        tardisRoomCommand = new TARDISRoomCommands(this);
         getCommand("tardis").setExecutor(tardisCommand);
         getCommand("tardisadmin").setExecutor(tardisAdminCommand);
         getCommand("tardisprefs").setExecutor(tardisPrefsCommand);
@@ -427,6 +430,7 @@ public class TARDIS extends JavaPlugin {
         getCommand("tardisarea").setExecutor(tardisAreaCommand);
         getCommand("tardisbind").setExecutor(tardisBindCommand);
         getCommand("tardisgravity").setExecutor(tardisGravityCommand);
+        getCommand("tardisroom").setExecutor(tardisRoomCommand);
     }
 
     /**

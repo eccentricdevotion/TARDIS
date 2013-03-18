@@ -93,7 +93,6 @@ public class TARDISRoomBuilder {
             Block b = l.getBlock();
             roomData.setBlock(b);
             roomData.setDirection(d);
-            roomData.setLocation(l);
             if (r.equalsIgnoreCase("GRAVITY") || r.equalsIgnoreCase("ANTIGRAVITY")) {
                 l.setX(l.getX() - 6);
                 l.setZ(l.getZ() - 6);
@@ -129,27 +128,10 @@ public class TARDISRoomBuilder {
                         break;
                 }
             }
-            switch (ROOM.valueOf(r)) {
-                case ANTIGRAVITY:
-                    break;
-                case PASSAGE:
-                case LONG:
-                case GREENHOUSE:
-                    l.setY(l.getY() - 2);
-                    break;
-                case POOL:
-                    l.setY(l.getY() - 3);
-                    break;
-                case ARBORETUM:
-                    l.setY(l.getY() - 4);
-                    break;
-                case GRAVITY:
-                    l.setY(l.getY() - 12);
-                    break;
-                default:
-                    l.setY(l.getY() - 1);
-                    break;
-            }
+            // set y offset
+            int offset = Math.abs(plugin.getConfig().getInt("rooms." + r + ".offset"));
+            l.setY(l.getY() - offset);
+            roomData.setLocation(l);
             if (d.equals(COMPASS.EAST) || d.equals(COMPASS.SOUTH) || r.equalsIgnoreCase("GRAVITY") || r.equalsIgnoreCase("ANTIGRAVITY")) {
                 roomData.setX(1);
                 roomData.setZ(1);

@@ -70,7 +70,7 @@ public class TARDISCommands implements CommandExecutor {
     private TARDISPluginRespect respect;
     HashSet<Byte> transparent = new HashSet<Byte>();
     private List<String> firstArgs = new ArrayList<String>();
-    private List<String> roomArgs = new ArrayList<String>();
+    public List<String> roomArgs = new ArrayList<String>();
     Version bukkitversion;
     Version preIMversion = new Version("1.4.5");
     Version SUBversion;
@@ -113,9 +113,11 @@ public class TARDISCommands implements CommandExecutor {
         firstArgs.add("unbind");
         firstArgs.add("update");
         firstArgs.add("version");
-        // rooms
-        for (ROOM r : ROOM.values()) {
-            roomArgs.add(r.toString());
+        // rooms - only add if enabled in the config
+        for (String r : plugin.getConfig().getConfigurationSection("rooms").getKeys(false)) {
+            if (plugin.getConfig().getBoolean("rooms." + r + ".enabled")) {
+                roomArgs.add(r);
+            }
         }
         String[] v = Bukkit.getServer().getBukkitVersion().split("-");
         bukkitversion = (!v[0].equalsIgnoreCase("unknown")) ? new Version(v[0]) : new Version("1.4.7");
@@ -309,13 +311,18 @@ public class TARDISCommands implements CommandExecutor {
                         return false;
                     }
                     String room = args[1].toUpperCase(Locale.ENGLISH);
+                    StringBuilder buf = new StringBuilder(args[1]);
+                    for (String rl : roomArgs) {
+                        buf.append(rl).append(", ");
+                    }
+                    String roomlist = buf.toString().substring(0, buf.length() - 2);
                     if (room.equals("HELP")) {
-                        player.sendMessage(plugin.pluginName + "There are currently 19 room types! They are: antigravity, arboretum, baker, bedroom, cross, empty, farm, gravity, greenhouse, harmony, kitchen, library, long, mushroom, passage, pool, vault, wood and workshop.");
+                        player.sendMessage(plugin.pluginName + "There are currently " + roomArgs.size() + " room types! They are: " + roomlist + ".");
                         player.sendMessage("View a TARDIS room gallery at http://eccentricdevotion.github.com/TARDIS/room-gallery.html");
                         return true;
                     }
                     if (!roomArgs.contains(room)) {
-                        player.sendMessage(plugin.pluginName + "That is not a valid room type! Try one of: antigravity, arboretum, baker, bedroom, cross, empty, farm, gravity, greenhouse, harmony, kitchen, library, long, mushroom, passage, pool, vault, wood and workshop.");
+                        player.sendMessage(plugin.pluginName + "That is not a valid room type! Try one of: " + roomlist + ".");
                         return true;
                     }
                     String perm = "tardis.room." + args[1].toLowerCase(Locale.ENGLISH);
