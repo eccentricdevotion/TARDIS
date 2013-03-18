@@ -211,6 +211,9 @@ public class TARDISConfiguration {
             plugin.getConfig().createSection("rechargers");
             i++;
         }
+        if (config.contains("rooms.FIRST")) {
+            plugin.getConfig().set("rooms.FIRST", null);
+        }
         if (i > 0) {
             plugin.console.sendMessage(plugin.pluginName + "Added " + ChatColor.AQUA + i + ChatColor.RESET + " new items to config");
         }

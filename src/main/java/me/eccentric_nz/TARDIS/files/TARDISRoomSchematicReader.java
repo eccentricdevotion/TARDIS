@@ -25,7 +25,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.TARDISConstants;
 import org.jnbt.ByteArrayTag;
 import org.jnbt.CompoundTag;
 import org.jnbt.NBTInputStream;
@@ -33,17 +32,17 @@ import org.jnbt.ShortTag;
 import org.jnbt.Tag;
 
 /**
- * The Ood are a humanoid species with coleoid tentacles on the lower portions
- * of their faces. They have no vocal cords and instead communicate by
- * telepathy.
+ * The Abzorbaloff was an alien who disguised himself as a human under the alias
+ * Victor Kennedy. He could absorb the bodies of his victims, along with their
+ * memories and consciousness, into himself at a simple touch.
  *
  * @author eccentric_nz
  */
-public class TARDISSchematicReader {
+public class TARDISRoomSchematicReader {
 
     private TARDIS plugin;
 
-    public TARDISSchematicReader(TARDIS plugin) {
+    public TARDISRoomSchematicReader(TARDIS plugin) {
         this.plugin = plugin;
     }
 
@@ -54,14 +53,13 @@ public class TARDISSchematicReader {
 
     /**
      * Reads a WorldEdit schematic file and writes the data to a CSV file. The
-     * dimensions of the schematics are also stored for use by the TARDIS and
-     * room builders.
+     * dimensions of the schematics are also stored for use by the room builder.
      */
-    public void readAndMakeCSV(String fileStr, TARDISConstants.SCHEMATIC s, boolean rotate) {
-        plugin.console.sendMessage(plugin.pluginName + "Loading schematic: " + fileStr);
+    public void readAndMakeCSV(String fileStr, String s, boolean rotate) {
+        plugin.console.sendMessage(plugin.pluginName + "Loading schematic: " + fileStr + ".schematic");
         FileInputStream fis = null;
         try {
-            File f = new File(fileStr);
+            File f = new File(fileStr + ".schematic");
             fis = new FileInputStream(f);
             NBTInputStream nbt = new NBTInputStream(fis);
             CompoundTag backuptag = (CompoundTag) nbt.readTag();
@@ -70,78 +68,12 @@ public class TARDISSchematicReader {
             short width = (Short) getChildTag(tagCollection, "Width", ShortTag.class).getValue();
             short height = (Short) getChildTag(tagCollection, "Height", ShortTag.class).getValue();
             short length = (Short) getChildTag(tagCollection, "Length", ShortTag.class).getValue();
-            switch (s) {
-                case BUDGET:
-                    plugin.budgetdimensions[0] = height;
-                    plugin.budgetdimensions[1] = width;
-                    plugin.budgetdimensions[2] = length;
-                    break;
-                case BIGGER:
-                    plugin.biggerdimensions[0] = height;
-                    plugin.biggerdimensions[1] = width;
-                    plugin.biggerdimensions[2] = length;
-                    break;
-                case DELUXE:
-                    plugin.deluxedimensions[0] = height;
-                    plugin.deluxedimensions[1] = width;
-                    plugin.deluxedimensions[2] = length;
-                    break;
-                case ELEVENTH:
-                    plugin.eleventhdimensions[0] = height;
-                    plugin.eleventhdimensions[1] = width;
-                    plugin.eleventhdimensions[2] = length;
-                    break;
-                case REDSTONE:
-                    plugin.redstonedimensions[0] = height;
-                    plugin.redstonedimensions[1] = width;
-                    plugin.redstonedimensions[2] = length;
-                    break;
-                case PASSAGE:
-                    plugin.passagedimensions[0] = height;
-                    plugin.passagedimensions[1] = width;
-                    plugin.passagedimensions[2] = length;
-                    break;
-                case ARBORETUM:
-                    plugin.arboretumdimensions[0] = height;
-                    plugin.arboretumdimensions[1] = width;
-                    plugin.arboretumdimensions[2] = length;
-                    break;
-                case POOL:
-                    plugin.pooldimensions[0] = height;
-                    plugin.pooldimensions[1] = width;
-                    plugin.pooldimensions[2] = length;
-                    break;
-                case GRAVITY:
-                    plugin.gravitydimensions[0] = height;
-                    plugin.gravitydimensions[1] = width;
-                    plugin.gravitydimensions[2] = length;
-                    break;
-                case ANTIGRAVITY:
-                    plugin.antigravitydimensions[0] = height;
-                    plugin.antigravitydimensions[1] = width;
-                    plugin.antigravitydimensions[2] = length;
-                    break;
-                case CROSS:
-                    plugin.crossdimensions[0] = height;
-                    plugin.crossdimensions[1] = width;
-                    plugin.crossdimensions[2] = length;
-                    break;
-                case GREENHOUSE:
-                    plugin.greenhousedimensions[0] = height;
-                    plugin.greenhousedimensions[1] = width;
-                    plugin.greenhousedimensions[2] = length;
-                    break;
-                case LONG:
-                    plugin.longdimensions[0] = height;
-                    plugin.longdimensions[1] = width;
-                    plugin.longdimensions[2] = length;
-                    break;
-                default:
-                    plugin.roomdimensions[0] = height;
-                    plugin.roomdimensions[1] = width;
-                    plugin.roomdimensions[2] = length;
-                    break;
-            }
+
+            short[] dimensions = new short[3];
+            dimensions[0] = height;
+            dimensions[1] = width;
+            dimensions[2] = length;
+            plugin.room_dimensions.put(s, dimensions);
 
             byte[] blocks = (byte[]) getChildTag(tagCollection, "Blocks", ByteArrayTag.class).getValue();
             byte[] data = (byte[]) getChildTag(tagCollection, "Data", ByteArrayTag.class).getValue();

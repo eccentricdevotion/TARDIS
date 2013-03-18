@@ -52,7 +52,8 @@ import me.eccentric_nz.TARDIS.builders.TARDISSpace;
 import me.eccentric_nz.TARDIS.commands.TARDISGravityCommands;
 import me.eccentric_nz.TARDIS.commands.TARDISRoomCommands;
 import me.eccentric_nz.TARDIS.files.TARDISBlockLoader;
-import me.eccentric_nz.TARDIS.files.TARDISMakeCSV;
+import me.eccentric_nz.TARDIS.files.TARDISMakeRoomCSV;
+import me.eccentric_nz.TARDIS.files.TARDISMakeTardisCSV;
 import me.eccentric_nz.TARDIS.files.TARDISUpdateChecker;
 import me.eccentric_nz.TARDIS.listeners.TARDISAreaListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISArtronCapacitorListener;
@@ -99,99 +100,32 @@ public class TARDIS extends JavaPlugin {
 
     public ImprovedOfflinePlayer_api iopHandler;
     TARDISDatabase service = TARDISDatabase.getInstance();
-    public TARDISMakeCSV csv = new TARDISMakeCSV(this);
+    public TARDISMakeTardisCSV tardisCSV = new TARDISMakeTardisCSV(this);
+    public TARDISMakeRoomCSV roomCSV = new TARDISMakeRoomCSV(this);
     public PluginDescriptionFile pdfFile;
     public File budgetSchematicFile = null;
     public File biggerSchematicFile = null;
     public File deluxeSchematicFile = null;
     public File eleventhSchematicFile = null;
     public File redstoneSchematicFile = null;
-    public File antigravitySchematicFile = null;
-    public File arboretumSchematicFile = null;
-    public File bakerSchematicFile = null;
-    public File bedroomSchematicFile = null;
-    public File crossSchematicFile = null;
-    public File emptySchematicFile = null;
-    public File farmSchematicFile = null;
-    public File gravitySchematicFile = null;
-    public File greenhouseSchematicFile = null;
-    public File harmonySchematicFile = null;
-    public File kitchenSchematicFile = null;
-    public File librarySchematicFile = null;
-    public File longSchematicFile = null;
-    public File mushroomSchematicFile = null;
-    public File passageSchematicFile = null;
-    public File poolSchematicFile = null;
-    public File vaultSchematicFile = null;
-    public File woodSchematicFile = null;
-    public File workshopSchematicFile = null;
     public File budgetSchematicCSV = null;
     public File biggerSchematicCSV = null;
     public File deluxeSchematicCSV = null;
     public File eleventhSchematicCSV = null;
     public File redstoneSchematicCSV = null;
-    public File antigravitySchematicCSV = null;
-    public File arboretumSchematicCSV = null;
-    public File bakerSchematicCSV = null;
-    public File bedroomSchematicCSV = null;
-    public File crossSchematicCSV = null;
-    public File emptySchematicCSV = null;
-    public File farmSchematicCSV = null;
-    public File gravitySchematicCSV = null;
-    public File greenhouseSchematicCSV = null;
-    public File harmonySchematicCSV = null;
-    public File kitchenSchematicCSV = null;
-    public File librarySchematicCSV = null;
-    public File longSchematicCSV = null;
-    public File longSchematicCSV_EW = null;
-    public File mushroomSchematicCSV = null;
-    public File passageSchematicCSV = null;
-    public File passageSchematicCSV_EW = null;
-    public File poolSchematicCSV = null;
-    public File vaultSchematicCSV = null;
-    public File woodSchematicCSV = null;
-    public File workshopSchematicCSV = null;
     public File quotesfile = null;
     public String[][][] budgetschematic;
     public String[][][] biggerschematic;
     public String[][][] deluxeschematic;
     public String[][][] eleventhschematic;
     public String[][][] redstoneschematic;
-    public String[][][] antigravityschematic;
-    public String[][][] arboretumschematic;
-    public String[][][] bakerschematic;
-    public String[][][] bedroomschematic;
-    public String[][][] crossschematic;
-    public String[][][] emptyschematic;
-    public String[][][] farmschematic;
-    public String[][][] gravityschematic;
-    public String[][][] greenhouseschematic;
-    public String[][][] harmonyschematic;
-    public String[][][] kitchenschematic;
-    public String[][][] libraryschematic;
-    public String[][][] longschematic;
-    public String[][][] longschematic_EW;
-    public String[][][] mushroomschematic;
-    public String[][][] passageschematic;
-    public String[][][] passageschematic_EW;
-    public String[][][] poolschematic;
-    public String[][][] vaultschematic;
-    public String[][][] woodschematic;
-    public String[][][] workshopschematic;
+    public HashMap<String, String[][][]> room_schematics = new HashMap<String, String[][][]>();
     public short[] budgetdimensions = new short[3];
     public short[] biggerdimensions = new short[3];
     public short[] deluxedimensions = new short[3];
     public short[] eleventhdimensions = new short[3];
     public short[] redstonedimensions = new short[3];
-    public short[] antigravitydimensions = new short[3];
-    public short[] arboretumdimensions = new short[3];
-    public short[] crossdimensions = new short[3];
-    public short[] gravitydimensions = new short[3];
-    public short[] greenhousedimensions = new short[3];
-    public short[] longdimensions = new short[3];
-    public short[] passagedimensions = new short[3];
-    public short[] pooldimensions = new short[3];
-    public short[] roomdimensions = new short[3];
+    public HashMap<String, short[]> room_dimensions = new HashMap<String, short[]>();
     public static TARDIS plugin;
     public TARDISUtils utils = new TARDISUtils(this);
     public TARDISCommands tardisCommand;
@@ -438,8 +372,9 @@ public class TARDIS extends JavaPlugin {
      * quotes from the quotes file.
      */
     private void loadFiles() {
-        csv.loadCSV();
-        quotesfile = csv.copy(getDataFolder() + File.separator + TARDISConstants.QUOTES_FILE_NAME, getResource(TARDISConstants.QUOTES_FILE_NAME));
+        tardisCSV.loadCSV();
+        roomCSV.loadCSV();
+        quotesfile = tardisCSV.copy(getDataFolder() + File.separator + TARDISConstants.QUOTES_FILE_NAME, getResource(TARDISConstants.QUOTES_FILE_NAME));
     }
 
     /**
@@ -520,7 +455,7 @@ public class TARDIS extends JavaPlugin {
     private void loadPerms() {
         if (pm.getPlugin("GroupManager") != null || pm.getPlugin("bPermissions") != null) {
             // copy default permissions file if not present
-            csv.copy(getDataFolder() + File.separator + "permissions.txt", getResource("permissions.txt"));
+            tardisCSV.copy(getDataFolder() + File.separator + "permissions.txt", getResource("permissions.txt"));
             console.sendMessage(pluginName + "World specific permissions plugin detected please edit plugins/TARDIS/permissions.txt");
         }
     }
