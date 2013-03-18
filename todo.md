@@ -12,6 +12,7 @@
 6. Check what happens when companions steal the TARDIS
 7. Add TARDIS quests, level ups/XP for travelling
 8. Add save-sign and scanner button to TARDIS schematics
+9. Pets
 
 ## Future version `2.3+`
 ?
