@@ -387,7 +387,12 @@ public class TARDISCommands implements CommandExecutor {
                             return true;
                         }
                         if (!roomArgs.contains(room)) {
-                            player.sendMessage(plugin.pluginName + "That is not a valid room type! Try one of: arboretum, baker, bedroom, cross, empty, farm, greenhouse, harmony, kitchen, library, long, mushroom, passage, pool, vault, wood and workshop");
+                            StringBuilder buf = new StringBuilder(args[1]);
+                            for (String rl : roomArgs) {
+                                buf.append(rl).append(", ");
+                            }
+                            String roomlist = buf.toString().substring(0, buf.length() - 2);
+                            player.sendMessage(plugin.pluginName + "That is not a valid room type! Try one of: " + roomlist);
                             return true;
                         }
                         HashMap<String, Object> where = new HashMap<String, Object>();
