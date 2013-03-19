@@ -55,7 +55,7 @@ public class TARDISRoomSchematicReader {
      * Reads a WorldEdit schematic file and writes the data to a CSV file. The
      * dimensions of the schematics are also stored for use by the room builder.
      */
-    public boolean readAndMakeCSV(String fileStr, String s, boolean rotate) {
+    public boolean readAndMakeRoomCSV(String fileStr, String s, boolean rotate) {
         boolean square = true;
         plugin.console.sendMessage(plugin.pluginName + "Loading schematic: " + fileStr + ".schematic");
         FileInputStream fis = null;

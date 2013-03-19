@@ -79,7 +79,7 @@ public class TARDISRoomCommands implements CommandExecutor {
                 TARDISRoomSchematicReader reader = new TARDISRoomSchematicReader(plugin);
                 String basepath = plugin.getDataFolder() + File.separator + "schematics" + File.separator;
                 File csvfile = mrc.createFile(lower + ".csv");
-                boolean square = reader.readAndMakeCSV(basepath + lower, name, false);
+                boolean square = reader.readAndMakeRoomCSV(basepath + lower, name, false);
                 if (!square) {
                     sender.sendMessage(plugin.pluginName + "The schematic needs to have equal length sides!");
                     return true;
@@ -138,6 +138,13 @@ public class TARDISRoomCommands implements CommandExecutor {
                         if (!Arrays.asList(TARDISMaterials.MATERIAL_LIST).contains(setMaterial)) {
                             sender.sendMessage(plugin.pluginName + ChatColor.RED + "That is not a valid Material! Try checking http://jd.bukkit.org/apidocs/org/bukkit/Material.html");
                             return false;
+                        }
+                        // check seed material is not already in use
+                        for (String m : plugin.getConfig().getConfigurationSection("rooms").getKeys(false)) {
+                            if (setMaterial.equalsIgnoreCase(plugin.getConfig().getString("rooms." + m + ".seed"))) {
+                                sender.sendMessage(plugin.pluginName + "Seed block material is already in use!");
+                                return true;
+                            }
                         }
                         plugin.getConfig().set("rooms." + name + ".seed", setMaterial);
                         sender.sendMessage(plugin.pluginName + "The " + name + " seed block was set to " + setMaterial + "!");

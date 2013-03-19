@@ -57,7 +57,7 @@ public class TARDISInteriorSchematicReader {
      * dimensions of the schematics are also stored for use by the TARDIS and
      * room builders.
      */
-    public void readAndMakeCSV(String fileStr, TARDISConstants.SCHEMATIC s) {
+    public void readAndMakeInteriorCSV(String fileStr, TARDISConstants.SCHEMATIC s) {
         plugin.console.sendMessage(plugin.pluginName + "Loading schematic: " + fileStr);
         FileInputStream fis = null;
         try {
