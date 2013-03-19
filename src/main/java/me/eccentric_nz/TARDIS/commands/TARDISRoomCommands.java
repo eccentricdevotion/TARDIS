@@ -26,6 +26,7 @@ import me.eccentric_nz.TARDIS.files.TARDISRoomSchematicReader;
 import me.eccentric_nz.TARDIS.files.TARDISSchematic;
 import me.eccentric_nz.TARDIS.utility.TARDISMaterials;
 import org.bukkit.ChatColor;
+import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -149,6 +150,9 @@ public class TARDISRoomCommands implements CommandExecutor {
                         plugin.getConfig().set("rooms." + name + ".seed", setMaterial);
                         sender.sendMessage(plugin.pluginName + "The " + name + " seed block was set to " + setMaterial + "!");
                         plugin.saveConfig();
+                        // add the sedd block to plugin.seeds
+                        Material m = Material.valueOf(setMaterial);
+                        plugin.seeds.put(m, name);
                         return true;
                     }
                 }
