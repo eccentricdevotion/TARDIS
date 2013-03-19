@@ -1,7 +1,7 @@
 # TODO
  
 ## Current version `2.2-beta`
-1. Fix room remover so that it can work with any custom schematic dimensions
+1. Allow `add_perms` to have multiple groups
 2. Add documentation for custom rooms
 3. Allow random chance of TARDIS malfunction which deposits player in some unexpected place
 4. Allow companions to enter and exit the tardis at will (and steal it).
