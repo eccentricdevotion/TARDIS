@@ -1,8 +1,8 @@
 # TODO
  
 ## Current version `2.2-beta`
-1. Allow `add_perms` to have multiple groups
-2. Add documentation for custom rooms
+1. Add new `add_perms` to with multiple groups to documentation
+2. Add video for custom rooms
 3. Allow random chance of TARDIS malfunction which deposits player in some unexpected place
 4. Allow companions to enter and exit the tardis at will (and steal it).
 5. Add isomorphic controls preference so that only the Time Lord of a TARDIS can pilot it
