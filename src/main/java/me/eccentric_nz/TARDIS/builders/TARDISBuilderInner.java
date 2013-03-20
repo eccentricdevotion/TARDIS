@@ -106,6 +106,7 @@ public class TARDISBuilderInner {
         HashMap<Block, Byte> postDoorBlocks = new HashMap<Block, Byte>();
         HashMap<Block, Byte> postTorchBlocks = new HashMap<Block, Byte>();
         HashMap<Block, Byte> postSignBlocks = new HashMap<Block, Byte>();
+        Block postSaveBlock = null;
         // calculate startx, starty, startz
         int gsl[] = plugin.utils.getStartLocation(dbID);
         startx = gsl[0];
@@ -235,10 +236,29 @@ public class TARDISBuilderInner {
                                 wherec.put("tardis_id", dbID);
                                 qf.doUpdate("tardis", setc, wherec);
                             }
+                            if (id == 52) { // scanner button
+                                /*
+                                 * mob spawner will be converted to the correct id by
+                                 * setBlock(), but remember it for the scanner.
+                                 */
+                                HashMap<String, Object> setscan = new HashMap<String, Object>();
+                                HashMap<String, Object> wherescan = new HashMap<String, Object>();
+                                String scanloc = world.getName() + ":" + startx + ":" + starty + ":" + startz;
+                                setscan.put("scanner", scanloc);
+                                wherescan.put("tardis_id", dbID);
+                                qf.doUpdate("tardis", setscan, wherescan);
+                            }
+                            if (id == 97) { // silverfish stone -> save sign
+                                HashMap<String, Object> setss = new HashMap<String, Object>();
+                                HashMap<String, Object> wheress = new HashMap<String, Object>();
+                                String ssloc = world.getName() + ":" + startx + ":" + starty + ":" + startz;
+                                setss.put("save_sign", ssloc);
+                                wheress.put("tardis_id", dbID);
+                                qf.doUpdate("tardis", setss, wheress);
+                            }
                             if (id == 137 || id == -119) {
                                 /*
-                                 * command block will be converted to the correct id by
-                                 * setBlock(), but remember it to spawn the creeper on.
+                                 * command block - remember it to spawn the creeper on.
                                  */
                                 HashMap<String, Object> setcreep = new HashMap<String, Object>();
                                 HashMap<String, Object> wherecreep = new HashMap<String, Object>();
@@ -306,6 +326,8 @@ public class TARDISBuilderInner {
                             postTorchBlocks.put(world.getBlockAt(startx, starty, startz), data);
                         } else if (id == 68) {
                             postSignBlocks.put(world.getBlockAt(startx, starty, startz), data);
+                        } else if (id == 97) {
+                            postSaveBlock = world.getBlockAt(startx, starty, startz);
                         } else if (id == 19) {
                             int swap;
                             if (world.getWorldType().equals(WorldType.FLAT) || plugin.getConfig().getBoolean("create_worlds")) {
@@ -349,16 +371,28 @@ public class TARDISBuilderInner {
                 cs.update();
             }
         }
-        if (schematicHasChest && bonus_chest && !own_world) {
-            // get rid of last ":" and assign ids to an array
-            String rb = sb.toString();
-            replacedBlocks = rb.substring(0, rb.length() - 1);
-            String[] replaceddata = replacedBlocks.split(":");
-            // get saved chest location
-            HashMap<String, Object> where = new HashMap<String, Object>();
-            where.put("tardis_id", dbID);
-            ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
-            if (rs.resultSet()) {
+        HashMap<String, Object> where = new HashMap<String, Object>();
+        where.put("tardis_id", dbID);
+        ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
+        if (rs.resultSet()) {
+            if (postSaveBlock != null) {
+                postSaveBlock.setTypeIdAndData(68, (byte) 3, true);
+                if (postSaveBlock.getType().equals(Material.WALL_SIGN)) {
+                    Sign ss = (Sign) postSaveBlock.getState();
+                    String[] coords = rs.getHome().split(":");
+                    ss.setLine(0, "Saves");
+                    ss.setLine(1, "Home");
+                    ss.setLine(2, coords[0]);
+                    ss.setLine(3, coords[1] + "," + coords[2] + "," + coords[3]);
+                    ss.update();
+                }
+            }
+            if (schematicHasChest && bonus_chest && !own_world) {
+                // get rid of last ":" and assign ids to an array
+                String rb = sb.toString();
+                replacedBlocks = rb.substring(0, rb.length() - 1);
+                String[] replaceddata = replacedBlocks.split(":");
+                // get saved chest location
                 String saved_chestloc = rs.getChest();
                 String[] cdata = saved_chestloc.split(":");
                 World cw = plugin.getServer().getWorld(cdata[0]);
@@ -405,9 +439,9 @@ public class TARDISBuilderInner {
                         damage = 0; // reset damage
                     }
                 }
-            } else {
-                plugin.console.sendMessage(plugin.pluginName + "Could not find chest location in DB!");
             }
+        } else {
+            plugin.console.sendMessage(plugin.pluginName + "Could not find chest location in DB!");
         }
         for (Block lamp : lampblocks) {
             lamp.setType(Material.REDSTONE_LAMP_ON);
