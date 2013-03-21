@@ -1,6 +1,7 @@
 # TODO
  
 ## Current version `2.2-beta`
+0. Fix Maven
 1. Add new `add_perms` with multiple groups to documentation
 2. Add video for custom rooms
 3. Allow random chance of TARDIS malfunction which deposits player in some unexpected place
