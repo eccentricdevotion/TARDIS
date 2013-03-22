@@ -1,7 +1,6 @@
 # TODO
  
 ## Current version `2.2-beta`
-0. Fix Maven
 1. Add new `add_perms` with multiple groups to documentation
 2. Add video for custom rooms
 3. Allow random chance of TARDIS malfunction which deposits player in some unexpected place
@@ -10,7 +9,7 @@
 6. Check what happens when companions steal the TARDIS
 7. Add TARDIS quests, level ups/XP for travelling
 8. Pets
-9. Only gorw rooms out of blocks that you have discoved or have condensed, perhaps require to condense all/stack the blocks before you can grow that room?
+9. Only grow rooms out of blocks that you have discovered or have condensed, perhaps require to condense all/stack the blocks before you can grow that room?
 
 ## Future version `2.3+`
 ?

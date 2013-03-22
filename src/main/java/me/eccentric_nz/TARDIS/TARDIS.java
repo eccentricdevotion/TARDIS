@@ -282,7 +282,7 @@ public class TARDIS extends JavaPlugin {
                 this.iopHandler = (ImprovedOfflinePlayer_api) clazz.getConstructor().newInstance(); // Set our handler
             }
         } catch (final Exception e) {
-            this.getLogger().severe("Could not find support for this CraftBukkit version.");
+            this.getLogger().severe("Could not load support for this CraftBukkit version.");
             this.getLogger().info("Check for updates at http://dev.bukkit.org/server-mods/tardis/");
             this.setEnabled(false);
             return;
