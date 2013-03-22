@@ -25,7 +25,7 @@
     </header>
     <section>
         <h1>Add permissions</h1>
-        <p>If you are using a permissions manager that has per world config files, you would normally need to manually add permissions for players when they create a TARDIS in its own world. By setting <code>add_perms: true</code> in the TARDIS config file, you can get the plugin to automatically add a permissions group with your desired permissions attached to it.</p>
+        <p>If you are using a permissions manager that has per world config files, you would normally need to manually add permissions for players when they create a TARDIS in its own world. By setting <code>add_perms: true</code> in the TARDIS config file, you can get the plugin to automatically add permissions groups with your desired permissions attached to them.</p>
         <p>To do this:</p>
         <ol>
             <li>With TARDIS installed, run the server once so that it creates its default files</li>
@@ -33,17 +33,22 @@
             <li>Use the example (in file and) below:</li>
         </ol>
         <h3>Example permissions.txt</h3>
-        <pre><code>tardis_users
+        <pre><code>#first_group
 tardis.use
 tardis.room
 tardis.timetravel.player
 tardis.timetravel.location
--tardis.exile</code></pre>
+-tardis.exile
+#second_group
+tardis.enter
+</code></pre>
         <ul>
-            <li>The first line is the name of the permissions group the player should be added to, so it would be something like: <strong>Builder</strong> or <strong>Donor</strong></li>
-            <li>Then it's just one permission per line (any permission, not just TARDIS ones)</li>
+            <li>The first line is the name of the permissions group the player should be added to, so it would be something like: <em>Timelord</em> or <em>Donor</stemrong> &mdash; it <strong>MUST</strong> start with a <code>#</code></li>
+            <li>Then it's just one permission per line (any permission, not just TARDIS ones) taht you want to give this group</li>
             <li>Add a minus in front of the permissions to make it false.</li>
+            <li>If you want to add other groups, put the group name (with a <code>#</code> at the start) and add the permissions for the players in that group</li>
         </ul>
+        <p>In the example above the <code>first_group</code> is the one that the TARDIS owner will be added to. The <code>second_group</code> would be used for any companions that the <code>first_group</code> player might want to tag along (they can't build TARDISes, but can enter any one elses if they are a companion).</p>
         <p>This feature supports Essentials GroupManager and bPermissions only at this stage.</p>
     </section>
 </div>
