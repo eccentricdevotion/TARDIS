@@ -204,6 +204,10 @@ public class TARDISTravelCommands implements CommandExecutor {
                         World w = plugin.getServer().getWorld(rsd.getWorld());
                         if (w != null) {
                             Location save_dest = new Location(w, rsd.getX(), rsd.getY(), rsd.getZ());
+                            respect = new TARDISPluginRespect(plugin);
+                            if (!respect.getRespect(player, save_dest, true)) {
+                                return true;
+                            }
                             if (!plugin.ta.areaCheckInExisting(save_dest)) {
                                 // save is in a TARDIS area, so check that the spot is not occupied
                                 HashMap<String, Object> wheres = new HashMap<String, Object>();
