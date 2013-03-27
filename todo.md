@@ -1,6 +1,7 @@
 # TODO
  
 ## Current version `2.2-beta`
+1. Don't allow travel to a player if they are in an excluded world
 2. Add video for custom rooms
 3. Allow random chance of TARDIS malfunction which deposits player in some unexpected place
 4. Allow companions to enter and exit the tardis at will (and steal it).
