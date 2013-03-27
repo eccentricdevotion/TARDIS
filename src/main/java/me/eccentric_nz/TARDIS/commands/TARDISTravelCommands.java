@@ -178,6 +178,10 @@ public class TARDISTravelCommands implements CommandExecutor {
                                 if (!respect.getRespect(player, player_loc, true)) {
                                     return true;
                                 }
+                                if (!plugin.getConfig().getBoolean("worlds." + player_loc.getWorld().getName())) {
+                                    sender.sendMessage(plugin.pluginName + "The server does not allow time travel to this world!");
+                                    return true;
+                                }
                                 String save_loc = player_loc.getWorld().getName() + ":" + (player_loc.getBlockX() - 3) + ":" + player_loc.getBlockY() + ":" + player_loc.getBlockZ();
                                 set.put("save", save_loc);
                                 qf.doUpdate("tardis", set, tid);
@@ -270,8 +274,12 @@ public class TARDISTravelCommands implements CommandExecutor {
                             sender.sendMessage(plugin.pluginName + "Cannot find the specified world! Make sure you type it correctly.");
                             return true;
                         }
+                        if (!plugin.getConfig().getBoolean("worlds." + w.getName())) {
+                            sender.sendMessage(plugin.pluginName + "The server does not allow time travel to this world!");
+                            return true;
+                        }
                         if (!plugin.getConfig().getBoolean("include_default_world") && plugin.getConfig().getBoolean("default_world") && args[0].equals(plugin.getConfig().getString("default_world_name"))) {
-                            sender.sendMessage(plugin.pluginName + "The server admin does not allow time travel to this world!");
+                            sender.sendMessage(plugin.pluginName + "The server does not allow time travel to this world!");
                             return true;
                         }
                         x = plugin.utils.parseNum(args[1]);
