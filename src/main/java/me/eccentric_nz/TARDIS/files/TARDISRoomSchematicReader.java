@@ -22,6 +22,7 @@ import java.io.FileInputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import me.eccentric_nz.TARDIS.TARDIS;
@@ -56,6 +57,7 @@ public class TARDISRoomSchematicReader {
      * dimensions of the schematics are also stored for use by the room builder.
      */
     public boolean readAndMakeRoomCSV(String fileStr, String s, boolean rotate) {
+        HashMap<Integer, Integer> blockIDs = new HashMap<Integer, Integer>();
         boolean square = true;
         plugin.console.sendMessage(plugin.pluginName + "Loading schematic: " + fileStr + ".schematic");
         FileInputStream fis = null;
@@ -88,10 +90,21 @@ public class TARDISRoomSchematicReader {
                 fis.close();
                 int i = 0;
                 String[] blockdata = new String[width * height * length];
+                int adjust = 256;
                 for (byte b : blocks) {
+                    if (b != 0 && b != 52 && b != 14 && b != 19 && b != 79) {
+                        Integer bid = (b < (byte) 0) ? b + adjust : b;
+                        if (blockIDs.containsKey(bid)) {
+                            Integer count = blockIDs.get(bid) + 1;
+                            blockIDs.put(bid, count);
+                        } else {
+                            blockIDs.put(bid, 1);
+                        }
+                    }
                     blockdata[i] = b + ":" + data[i];
                     i++;
                 }
+                plugin.roomBlockCounts.put(s, blockIDs);
                 int j = 0;
                 List<String[][]> layers = new ArrayList<String[][]>();
                 for (int h = 0; h < height; h++) {

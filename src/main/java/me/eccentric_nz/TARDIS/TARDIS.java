@@ -205,6 +205,7 @@ public class TARDIS extends JavaPlugin {
     public ConsoleCommandSender console;
     public String pluginName;
     public boolean myspawn = false;
+    public HashMap<String, HashMap<Integer, Integer>> roomBlockCounts = new HashMap<String, HashMap<Integer, Integer>>();
 
     @Override
     public void onEnable() {

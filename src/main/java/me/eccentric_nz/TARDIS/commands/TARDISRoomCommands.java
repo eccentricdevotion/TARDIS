@@ -16,11 +16,17 @@
  */
 package me.eccentric_nz.TARDIS.commands;
 
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.Locale;
+import java.util.Map;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
+import me.eccentric_nz.TARDIS.artron.TARDISCondensables;
 import me.eccentric_nz.TARDIS.files.TARDISMakeRoomCSV;
 import me.eccentric_nz.TARDIS.files.TARDISRoomSchematicReader;
 import me.eccentric_nz.TARDIS.files.TARDISSchematic;
@@ -59,10 +65,36 @@ public class TARDISRoomCommands implements CommandExecutor {
                 sender.sendMessage(plugin.pluginName + "Too few command arguments!");
                 return false;
             }
-            if (args[0].toLowerCase(Locale.ENGLISH).equals("add")) {
+            if (args[0].toLowerCase(Locale.ENGLISH).equals("blocks")) {
+                TARDISCondensables tc = new TARDISCondensables();
                 String name = args[1].toUpperCase(Locale.ENGLISH);
-                if (name.equals("ADD")) {
-                    sender.sendMessage(plugin.pluginName + "You cannot call your room 'add'!");
+                HashMap<Integer, Integer> blockIDs = plugin.roomBlockCounts.get(name);
+                String file = plugin.getDataFolder() + File.separator + name + "_block_list.txt";
+                int cost = 0;
+                try {
+                    BufferedWriter bw = new BufferedWriter(new FileWriter(file, false));
+                    for (Map.Entry<Integer, Integer> entry : blockIDs.entrySet()) {
+                        String mat = Material.getMaterial(entry.getKey()).toString();
+                        String line = mat + " (" + entry.getKey() + "), " + entry.getValue();
+                        bw.write(line);
+                        bw.newLine();
+                        if (tc.condensables.containsKey(mat)) {
+                            int value = entry.getValue() * tc.condensables.get(mat);
+                            cost += value;
+                        }
+                    }
+                    bw.write("Actual room cost: " + cost);
+                    bw.newLine();
+                    bw.close();
+                } catch (IOException e) {
+                    plugin.debug("Could not create and write to " + name + "_block_list.txt! " + e.getMessage());
+                }
+                sender.sendMessage(plugin.pluginName + "File saved to 'plugins/TARDIS/" + name + "_block_list.txt'");
+                return true;
+            } else if (args[0].toLowerCase(Locale.ENGLISH).equals("add")) {
+                String name = args[1].toUpperCase(Locale.ENGLISH);
+                if (name.equals("ADD") || name.equals("BLOCKS")) {
+                    sender.sendMessage(plugin.pluginName + "You cannot call your room '" + args[1] + "'!");
                     return false;
                 }
                 if (plugin.getConfig().contains("rooms." + name)) {
@@ -158,6 +190,7 @@ public class TARDISRoomCommands implements CommandExecutor {
                 }
             }
         }
+
         return false;
     }
 }

@@ -22,7 +22,7 @@ import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
-import me.eccentric_nz.TARDIS.rooms.TARDISCondensables;
+import me.eccentric_nz.TARDIS.artron.TARDISCondensables;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Chest;
