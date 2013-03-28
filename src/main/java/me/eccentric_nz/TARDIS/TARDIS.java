@@ -70,6 +70,7 @@ import me.eccentric_nz.TARDIS.listeners.TARDISChunkListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISRoomSeeder;
 import me.eccentric_nz.TARDIS.listeners.TARDISSignListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISUpdateListener;
+import me.eccentric_nz.TARDIS.rooms.TARDISCondenserData;
 import me.eccentric_nz.TARDIS.travel.TARDISUpdateTravellerCount;
 import me.eccentric_nz.TARDIS.utility.TARDISCreeperChecker;
 import me.eccentric_nz.TARDIS.utility.TARDISFactionsChecker;
@@ -194,6 +195,7 @@ public class TARDIS extends JavaPlugin {
     public HashMap<String, Double[]> gravitySouthList = new HashMap<String, Double[]>();
     public HashMap<String, Double[]> gravityEastList = new HashMap<String, Double[]>();
     public HashMap<String, Integer> protectBlockMap = new HashMap<String, Integer>();
+    public HashMap<String, TARDISCondenserData> roomCondenserData = new HashMap<String, TARDISCondenserData>();
     private static ArrayList<String> quotes = new ArrayList<String>();
     public ArrayList<String> quote;
     public HashMap<Material, String> seeds;

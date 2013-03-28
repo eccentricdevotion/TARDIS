@@ -244,4 +244,45 @@ public class QueryFactory {
             }
         }
     }
+
+    /**
+     * Removes condenser block counts from an SQLite database table. This method
+     * builds an SQL query string from the parameters supplied and then executes
+     * the query.
+     *
+     * @param amount the amount of blocks to remove
+     * @param where a HashMap<String, Object> of table fields and values to
+     * select the records to alter.
+     */
+    public void alterCondenserBlockCount(int amount, HashMap<String, Object> where) {
+        Statement statement = null;
+        String wheres;
+        StringBuilder sbw = new StringBuilder();
+        for (Map.Entry<String, Object> entry : where.entrySet()) {
+            sbw.append(entry.getKey()).append(" = ");
+            if (entry.getValue().getClass().equals(String.class)) {
+                sbw.append("'").append(entry.getValue()).append("' AND ");
+            } else {
+                sbw.append(entry.getValue()).append(" AND ");
+            }
+        }
+        where.clear();
+        wheres = sbw.toString().substring(0, sbw.length() - 5);
+        String query = "UPDATE condenser SET block_count = block_count - " + amount + " WHERE " + wheres;
+        plugin.debug(query);
+        try {
+            statement = connection.createStatement();
+            statement.executeUpdate(query);
+        } catch (SQLException e) {
+            plugin.debug("Block count update error for condenser! " + e.getMessage());
+        } finally {
+            try {
+                if (statement != null) {
+                    statement.close();
+                }
+            } catch (Exception e) {
+                plugin.debug("Error closing condenser table! " + e.getMessage());
+            }
+        }
+    }
 }

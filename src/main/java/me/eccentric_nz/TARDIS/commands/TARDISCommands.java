@@ -39,6 +39,7 @@ import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.database.TARDISDatabase;
 import me.eccentric_nz.TARDIS.destroyers.TARDISExterminator;
 import me.eccentric_nz.TARDIS.files.TARDISUpdateChecker;
+import me.eccentric_nz.TARDIS.rooms.TARDISCondenserData;
 import me.eccentric_nz.TARDIS.rooms.TARDISWalls;
 import me.eccentric_nz.TARDIS.thirdparty.Version;
 import me.eccentric_nz.TARDIS.travel.TARDISPluginRespect;
@@ -367,6 +368,7 @@ public class TARDISCommands implements CommandExecutor {
                         return true;
                     }
                     if (plugin.getConfig().getBoolean("rooms_require_blocks")) {
+                        HashMap<String, Integer> blockIDCount = new HashMap<String, Integer>();
                         boolean hasRequired = true;
                         HashMap<String, Integer> roomBlocks = plugin.roomBlockCounts.get(room);
                         String wall = "ORANGE_WOOL";
@@ -395,6 +397,7 @@ public class TARDISCommands implements CommandExecutor {
                                 bdata = String.format("%d", bid);
                             }
                             int required = Math.round((entry.getValue() / 100.0F) * plugin.getConfig().getInt("rooms_condenser_percent"));
+                            blockIDCount.put(bdata, required);
                             HashMap<String, Object> wherec = new HashMap<String, Object>();
                             wherec.put("tardis_id", id);
                             wherec.put("block_data", bdata);
@@ -414,6 +417,10 @@ public class TARDISCommands implements CommandExecutor {
                             player.sendMessage("-----------------------------");
                             return true;
                         }
+                        TARDISCondenserData c_data = new TARDISCondenserData();
+                        c_data.setBlockIDCount(blockIDCount);
+                        c_data.setTardis_id(id);
+                        plugin.roomCondenserData.put(player.getName(), c_data);
                     }
                     String message;
                     // if it is a gravity well
