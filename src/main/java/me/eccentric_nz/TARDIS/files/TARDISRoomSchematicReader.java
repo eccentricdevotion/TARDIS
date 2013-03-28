@@ -22,6 +22,7 @@ import java.io.FileInputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -42,9 +43,26 @@ import org.jnbt.Tag;
 public class TARDISRoomSchematicReader {
 
     private TARDIS plugin;
+    private HashMap<Integer, Integer> blockConversion = new HashMap<Integer, Integer>();
+    private List<Byte> ignoreBlocks = Arrays.asList(new Byte[]{0, 14, 19, 52, 79});
 
     public TARDISRoomSchematicReader(TARDIS plugin) {
         this.plugin = plugin;
+        blockConversion.put(1, 4); // stone -> cobblestone
+        blockConversion.put(2, 3); // grass -> dirt
+        blockConversion.put(18, 6); // leaves -> sapling
+        blockConversion.put(31, 295); // long grass -> seeds
+        blockConversion.put(59, 295); // crops -> seeds
+        blockConversion.put(60, 3); // farmland -> dirt
+        blockConversion.put(83, 338); // sugarcane block -> sugarcane item
+        blockConversion.put(99, 39); // mushroom block -> brown mushroom
+        blockConversion.put(100, 39); // mushroom block -> brown mushroom
+        blockConversion.put(104, 361); // pumpkin stem -> pumpkin seed
+        blockConversion.put(105, 362); // melon stem -> melon seed
+        blockConversion.put(124, 123); // restone lamp on -> redstone lamp off
+        blockConversion.put(127, 351); // cocoa plant -> cocoa seed
+        blockConversion.put(141, 391); // carrot plant -> carrot
+        blockConversion.put(142, 392); // potato plant -> potato
     }
 
     private static Tag getChildTag(Map<String, Tag> items, String key, Class<? extends Tag> expected) {
@@ -57,7 +75,7 @@ public class TARDISRoomSchematicReader {
      * dimensions of the schematics are also stored for use by the room builder.
      */
     public boolean readAndMakeRoomCSV(String fileStr, String s, boolean rotate) {
-        HashMap<Integer, Integer> blockIDs = new HashMap<Integer, Integer>();
+        HashMap<String, Integer> blockIDs = new HashMap<String, Integer>();
         boolean square = true;
         plugin.console.sendMessage(plugin.pluginName + "Loading schematic: " + fileStr + ".schematic");
         FileInputStream fis = null;
@@ -92,13 +110,26 @@ public class TARDISRoomSchematicReader {
                 String[] blockdata = new String[width * height * length];
                 int adjust = 256;
                 for (byte b : blocks) {
-                    if (b != 0 && b != 52 && b != 14 && b != 19 && b != 79) {
+                    if (!ignoreBlocks.contains(b)) {
                         Integer bid = (b < (byte) 0) ? b + adjust : b;
-                        if (blockIDs.containsKey(bid)) {
-                            Integer count = blockIDs.get(bid) + 1;
-                            blockIDs.put(bid, count);
+                        if (blockConversion.containsKey(bid)) {
+                            bid = blockConversion.get(bid);
+                        }
+                        if (bid == 35 && (data[i] == 1 || data[i] == 8)) {
+                            String bstr = bid + ":" + data[i];
+                            if (blockIDs.containsKey(bstr)) {
+                                Integer count = blockIDs.get(bstr) + 1;
+                                blockIDs.put(bstr, count);
+                            } else {
+                                blockIDs.put(bstr, 1);
+                            }
                         } else {
-                            blockIDs.put(bid, 1);
+                            if (blockIDs.containsKey(bid.toString())) {
+                                Integer count = blockIDs.get(bid.toString()) + 1;
+                                blockIDs.put(bid.toString(), count);
+                            } else {
+                                blockIDs.put(bid.toString(), 1);
+                            }
                         }
                     }
                     blockdata[i] = b + ":" + data[i];

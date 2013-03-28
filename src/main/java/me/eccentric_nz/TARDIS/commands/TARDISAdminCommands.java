@@ -120,6 +120,7 @@ public class TARDISAdminCommands implements CommandExecutor {
         firstsBool.add("respect_towny");
         firstsBool.add("respect_worldborder");
         firstsBool.add("respect_worldguard");
+        firstsBool.add("rooms_require_blocks");
         firstsBool.add("sfx");
         firstsBool.add("the_end");
         firstsBool.add("use_worldguard");
@@ -137,6 +138,7 @@ public class TARDISAdminCommands implements CommandExecutor {
         firstsInt.add("player");
         firstsInt.add("random");
         firstsInt.add("recharge_distance");
+        firstsInt.add("rooms_condenser_percent");
         firstsInt.add("the_end_min");
         firstsInt.add("timeout");
         firstsInt.add("timeout_height");

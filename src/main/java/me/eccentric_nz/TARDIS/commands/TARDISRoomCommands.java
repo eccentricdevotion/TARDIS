@@ -24,9 +24,11 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Set;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.artron.TARDISCondensables;
+import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.files.TARDISMakeRoomCSV;
 import me.eccentric_nz.TARDIS.files.TARDISRoomSchematicReader;
 import me.eccentric_nz.TARDIS.files.TARDISSchematic;
@@ -36,6 +38,7 @@ import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
 
 /**
  * The Sub-Wave Network was a piece of sentient software programmed to find
@@ -57,10 +60,6 @@ public class TARDISRoomCommands implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
         if (cmd.getName().equalsIgnoreCase("tardisroom")) {
-            if (!sender.hasPermission("tardis.admin")) {
-                sender.sendMessage(plugin.pluginName + TARDISConstants.NO_PERMS_MESSAGE);
-                return false;
-            }
             if (args.length < 2) {
                 sender.sendMessage(plugin.pluginName + "Too few command arguments!");
                 return false;
@@ -68,30 +67,79 @@ public class TARDISRoomCommands implements CommandExecutor {
             if (args[0].toLowerCase(Locale.ENGLISH).equals("blocks")) {
                 TARDISCondensables tc = new TARDISCondensables();
                 String name = args[1].toUpperCase(Locale.ENGLISH);
-                HashMap<Integer, Integer> blockIDs = plugin.roomBlockCounts.get(name);
-                String file = plugin.getDataFolder() + File.separator + name + "_block_list.txt";
-                int cost = 0;
-                try {
-                    BufferedWriter bw = new BufferedWriter(new FileWriter(file, false));
-                    for (Map.Entry<Integer, Integer> entry : blockIDs.entrySet()) {
-                        String mat = Material.getMaterial(entry.getKey()).toString();
-                        String line = mat + " (" + entry.getKey() + "), " + entry.getValue();
-                        bw.write(line);
-                        bw.newLine();
-                        if (tc.condensables.containsKey(mat)) {
-                            int value = entry.getValue() * tc.condensables.get(mat);
-                            cost += value;
+                Set<String> rooms = plugin.getConfig().getConfigurationSection("rooms").getKeys(false);
+                if (name.equals("SAVE")) {
+                    if (!sender.hasPermission("tardis.admin")) {
+                        sender.sendMessage(plugin.pluginName + TARDISConstants.NO_PERMS_MESSAGE);
+                        return false;
+                    }
+                    for (String r : rooms) {
+                        HashMap<String, Integer> blockIDs = plugin.roomBlockCounts.get(r);
+                        String file = plugin.getDataFolder() + File.separator + r + "_block_list.txt";
+                        int cost = 0;
+                        try {
+                            BufferedWriter bw = new BufferedWriter(new FileWriter(file, false));
+                            for (Map.Entry<String, Integer> entry : blockIDs.entrySet()) {
+                                String[] data = entry.getKey().split(":");
+                                int bid = plugin.utils.parseNum(data[0]);
+                                String mat = Material.getMaterial(bid).toString();
+                                String line = mat + " (" + entry.getKey() + "), " + entry.getValue();
+                                bw.write(line);
+                                bw.newLine();
+                                if (tc.condensables.containsKey(mat)) {
+                                    int value = entry.getValue() * tc.condensables.get(mat);
+                                    cost += value;
+                                }
+                            }
+                            bw.write("Actual room cost: " + Math.round(cost / 2.0F));
+                            bw.newLine();
+                            bw.close();
+                        } catch (IOException e) {
+                            plugin.debug("Could not create and write to " + r + "_block_list.txt! " + e.getMessage());
+                        }
+                        sender.sendMessage(plugin.pluginName + "File saved to 'plugins/TARDIS/" + r + "_block_list.txt'");
+                    }
+                    return true;
+                } else {
+                    if (!rooms.contains(name)) {
+                        sender.sendMessage(plugin.pluginName + "Could not find a room with that name");
+                        return true;
+                    }
+                    HashMap<String, Integer> blockIDs = plugin.roomBlockCounts.get(name);
+                    boolean hasPrefs = false;
+                    String wall = "ORANGE WOOL";
+                    String floor = "LIGHT GREY WOOL";
+                    if (sender instanceof Player) {
+                        HashMap<String, Object> wherepp = new HashMap<String, Object>();
+                        wherepp.put("player", ((Player) sender).getName());
+                        ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, wherepp);
+                        if (rsp.resultSet()) {
+                            hasPrefs = true;
+                            wall = rsp.getWall();
+                            floor = rsp.getFloor();
                         }
                     }
-                    bw.write("Actual room cost: " + cost);
-                    bw.newLine();
-                    bw.close();
-                } catch (IOException e) {
-                    plugin.debug("Could not create and write to " + name + "_block_list.txt! " + e.getMessage());
+                    sender.sendMessage(plugin.pluginName + name + " blocks:");
+                    for (Map.Entry<String, Integer> entry : blockIDs.entrySet()) {
+                        String[] data = entry.getKey().split(":");
+                        int bid = plugin.utils.parseNum(data[0]);
+                        String mat;
+                        if (hasPrefs && data.length == 2 && (data[1].equals("1") || data[1].equals("8"))) {
+                            mat = (data[1].equals("1")) ? wall : floor;
+                        } else {
+                            mat = Material.getMaterial(bid).toString();
+                        }
+                        int amount = Math.round((entry.getValue() / 100F) * plugin.getConfig().getInt("rooms_condenser_percent"));
+                        String line = mat + ", " + amount;
+                        sender.sendMessage(line);
+                    }
+                    return true;
                 }
-                sender.sendMessage(plugin.pluginName + "File saved to 'plugins/TARDIS/" + name + "_block_list.txt'");
-                return true;
             } else if (args[0].toLowerCase(Locale.ENGLISH).equals("add")) {
+                if (!sender.hasPermission("tardis.admin")) {
+                    sender.sendMessage(plugin.pluginName + TARDISConstants.NO_PERMS_MESSAGE);
+                    return false;
+                }
                 String name = args[1].toUpperCase(Locale.ENGLISH);
                 if (name.equals("ADD") || name.equals("BLOCKS")) {
                     sender.sendMessage(plugin.pluginName + "You cannot call your room '" + args[1] + "'!");

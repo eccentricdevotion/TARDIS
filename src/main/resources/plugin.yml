@@ -212,7 +212,7 @@ commands:
     permission-message: You don't have the permission <permission> to use this command
   tardisroom:
     description: Set TARDIS room configuration options, and add new rooms.
-    usage: /<command> add [name] or /<command> [name] [boolean|integer|string]
+    usage: /<command> add [name] or /<command> [name] [boolean|integer|string] or /<command> blocks [name|save]
     permission: tardis.admin
     permission-message: You don't have the permission <permission> to use this command
   tardisprefs:

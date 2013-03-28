@@ -26,10 +26,12 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.builders.TARDISChameleonCircuit;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
+import me.eccentric_nz.TARDIS.database.ResultSetCondenser;
 import me.eccentric_nz.TARDIS.database.ResultSetDestinations;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
@@ -37,6 +39,7 @@ import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.database.TARDISDatabase;
 import me.eccentric_nz.TARDIS.destroyers.TARDISExterminator;
 import me.eccentric_nz.TARDIS.files.TARDISUpdateChecker;
+import me.eccentric_nz.TARDIS.rooms.TARDISWalls;
 import me.eccentric_nz.TARDIS.thirdparty.Version;
 import me.eccentric_nz.TARDIS.travel.TARDISPluginRespect;
 import me.eccentric_nz.TARDIS.travel.TARDISTimetravel;
@@ -362,6 +365,55 @@ public class TARDISCommands implements CommandExecutor {
                     if (level < plugin.getConfig().getInt("rooms." + room + ".cost")) {
                         player.sendMessage(plugin.pluginName + "The TARDIS does not have enough Artron Energy to grow this room!");
                         return true;
+                    }
+                    if (plugin.getConfig().getBoolean("rooms_require_blocks")) {
+                        boolean hasRequired = true;
+                        HashMap<String, Integer> roomBlocks = plugin.roomBlockCounts.get(room);
+                        String wall = "ORANGE_WOOL";
+                        String floor = "LIGHT_GREY_WOOL";
+                        HashMap<String, Object> wherepp = new HashMap<String, Object>();
+                        boolean hasPrefs = false;
+                        wherepp.put("player", player.getName());
+                        ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, wherepp);
+                        if (rsp.resultSet()) {
+                            hasPrefs = true;
+                            wall = rsp.getWall();
+                            floor = rsp.getFloor();
+                        }
+                        for (Map.Entry<String, Integer> entry : roomBlocks.entrySet()) {
+                            String[] block_data = entry.getKey().split(":");
+                            int bid = plugin.utils.parseNum(block_data[0]);
+                            String mat;
+                            String bdata;
+                            if (hasPrefs && block_data.length == 2 && (block_data[1].equals("1") || block_data[1].equals("8"))) {
+                                mat = (block_data[1].equals("1")) ? wall : floor;
+                                TARDISWalls tw = new TARDISWalls();
+                                Integer[] iddata = tw.blocks.get(mat);
+                                bdata = String.format("%d", iddata[0]);
+                            } else {
+                                mat = Material.getMaterial(bid).toString();
+                                bdata = String.format("%d", bid);
+                            }
+                            int required = Math.round((entry.getValue() / 100.0F) * plugin.getConfig().getInt("rooms_condenser_percent"));
+                            HashMap<String, Object> wherec = new HashMap<String, Object>();
+                            wherec.put("tardis_id", id);
+                            wherec.put("block_data", bdata);
+                            ResultSetCondenser rsc = new ResultSetCondenser(plugin, wherec, false);
+                            if (rsc.resultSet()) {
+                                if (rsc.getBlock_count() < required) {
+                                    hasRequired = false;
+                                    int diff = required - rsc.getBlock_count();
+                                    player.sendMessage(plugin.pluginName + "You need to condense " + diff + " more " + mat + "!");
+                                }
+                            } else {
+                                hasRequired = false;
+                                player.sendMessage(plugin.pluginName + "You need to condense a minimum of " + required + " " + mat);
+                            }
+                        }
+                        if (hasRequired == false) {
+                            player.sendMessage("-----------------------------");
+                            return true;
+                        }
                     }
                     String message;
                     // if it is a gravity well

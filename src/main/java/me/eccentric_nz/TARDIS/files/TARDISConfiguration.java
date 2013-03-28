@@ -93,6 +93,7 @@ public class TARDISConfiguration {
         boolOptions.put("rooms.VAULT.enabled", true);
         boolOptions.put("rooms.WOOD.enabled", true);
         boolOptions.put("rooms.WORKSHOP.enabled", true);
+        boolOptions.put("rooms_require_blocks", true);
         // integer
         intOptions.put("autonomous", 100);
         intOptions.put("border_radius", 64);
@@ -146,6 +147,7 @@ public class TARDISConfiguration {
         intOptions.put("rooms.VAULT.offset", -1);
         intOptions.put("rooms.WOOD.offset", -1);
         intOptions.put("rooms.WORKSHOP.offset", -1);
+        intOptions.put("rooms_condenser_percent", 100);
         intOptions.put("the_end_min", 5500);
         intOptions.put("timeout", 5);
         intOptions.put("timeout_height", 135);

@@ -126,6 +126,8 @@ rooms:
     cost: 350
     offset: -1
     seed: GRAVEL
+rooms_require_blocks: false
+rooms_condenser_percent: 100
 #artron energy
 player: 25
 random: 75
