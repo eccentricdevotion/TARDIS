@@ -214,45 +214,46 @@ public class TARDIS extends JavaPlugin {
         plugin = this;
         console = getServer().getConsoleSender();
 
-        loadClasses();
-        saveDefaultConfig();
-        TARDISConfiguration tc = new TARDISConfiguration(this);
-        tc.checkConfig();
-        checkTCG();
-        loadDatabase();
-        loadFiles();
-        seeds = getSeeds();
-        registerListeners();
-        loadCommands();
-        loadMetrics();
-        startSound();
-        loadWorldGuard();
-        loadTowny();
-        loadWorldBorder();
-        loadFactions();
+        if (loadClasses()) {
+            saveDefaultConfig();
+            TARDISConfiguration tc = new TARDISConfiguration(this);
+            tc.checkConfig();
+            checkTCG();
+            loadDatabase();
+            loadFiles();
+            seeds = getSeeds();
+            registerListeners();
+            loadCommands();
+            loadMetrics();
+            startSound();
+            loadWorldGuard();
+            loadTowny();
+            loadWorldBorder();
+            loadFactions();
 
-        quote = quotes();
-        quotelen = quote.size();
-        if (getConfig().getBoolean("check_for_updates")) {
-            TARDISUpdateChecker update = new TARDISUpdateChecker(this);
-            update.checkVersion(null);
-        }
-
-        TARDISUpdateTravellerCount utc = new TARDISUpdateTravellerCount(this);
-        utc.getTravellers();
-        TARDISCreeperChecker cc = new TARDISCreeperChecker(this);
-        cc.startCreeperCheck();
-        if (pm.isPluginEnabled("TARDISChunkGenerator")) {
-            TARDISSpace alwaysNight = new TARDISSpace(this);
-            if (getConfig().getBoolean("keep_night")) {
-                alwaysNight.keepNight();
+            quote = quotes();
+            quotelen = quote.size();
+            if (getConfig().getBoolean("check_for_updates")) {
+                TARDISUpdateChecker update = new TARDISUpdateChecker(this);
+                update.checkVersion(null);
             }
+
+            TARDISUpdateTravellerCount utc = new TARDISUpdateTravellerCount(this);
+            utc.getTravellers();
+            TARDISCreeperChecker cc = new TARDISCreeperChecker(this);
+            cc.startCreeperCheck();
+            if (pm.isPluginEnabled("TARDISChunkGenerator")) {
+                TARDISSpace alwaysNight = new TARDISSpace(this);
+                if (getConfig().getBoolean("keep_night")) {
+                    alwaysNight.keepNight();
+                }
+            }
+            loadChunks();
+            TARDISBlockLoader bl = new TARDISBlockLoader(this);
+            bl.loadProtectBlocks();
+            bl.loadGravityWells();
+            loadPerms();
         }
-        loadChunks();
-        TARDISBlockLoader bl = new TARDISBlockLoader(this);
-        bl.loadProtectBlocks();
-        bl.loadGravityWells();
-        loadPerms();
     }
 
     @Override
@@ -267,7 +268,8 @@ public class TARDIS extends JavaPlugin {
      * Used to load net.minecraft.server methods for various versions of
      * CraftBukkit.
      */
-    private void loadClasses() {
+    private boolean loadClasses() {
+        boolean found;
         String packageName = this.getServer().getClass().getPackage().getName();
         // Get full package string of CraftServer.
         // org.bukkit.craftbukkit.versionstring (or for pre-refactor, just org.bukkit.craftbukkit
@@ -282,13 +284,15 @@ public class TARDIS extends JavaPlugin {
             if (ImprovedOfflinePlayer_api.class.isAssignableFrom(clazz)) { // Make sure it actually implements IOP
                 this.iopHandler = (ImprovedOfflinePlayer_api) clazz.getConstructor().newInstance(); // Set our handler
             }
+            found = true;
         } catch (final Exception e) {
             this.getLogger().severe("Could not load support for this CraftBukkit version.");
             this.getLogger().info("Check for updates at http://dev.bukkit.org/server-mods/tardis/");
             this.setEnabled(false);
-            return;
+            found = false;
         }
         console.sendMessage(pluginName + "Loading support for CB " + version);
+        return found;
     }
 
     /**
