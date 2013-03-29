@@ -177,11 +177,12 @@ public class TARDISBuilderInner {
                             data = Byte.parseByte(iddata[1]);
                             if (id == 54) { // chest
                                 schematicHasChest = true;
-                                // remember the location of this chest
+                                // remember the location of this chest - if create_worlds is true make it the condenser chest
                                 HashMap<String, Object> setc = new HashMap<String, Object>();
                                 HashMap<String, Object> wherec = new HashMap<String, Object>();
                                 String chest = world.getName() + ":" + startx + ":" + starty + ":" + startz;
-                                setc.put("chest", chest);
+                                String which = (own_world) ? "condenser" : "chest";
+                                setc.put(which, chest);
                                 wherec.put("tardis_id", dbID);
                                 qf.doUpdate("tardis", setc, wherec);
                             }
@@ -213,7 +214,7 @@ public class TARDISBuilderInner {
                                 setd.put("door_direction", "SOUTH");
                                 qf.doInsert("doors", setd);
                                 // if create_worlds is true, set the world spawn
-                                if (plugin.getConfig().getBoolean("create_worlds")) {
+                                if (own_world) {
                                     if (plugin.pm.isPluginEnabled("Multiverse-Core")) {
                                         Plugin mvplugin = plugin.pm.getPlugin("Multiverse-Core");
                                         if (mvplugin instanceof MultiverseCore) {
@@ -330,7 +331,7 @@ public class TARDISBuilderInner {
                             postSaveBlock = world.getBlockAt(startx, starty, startz);
                         } else if (id == 19) {
                             int swap;
-                            if (world.getWorldType().equals(WorldType.FLAT) || plugin.getConfig().getBoolean("create_worlds")) {
+                            if (world.getWorldType().equals(WorldType.FLAT) || own_world) {
                                 swap = 0;
                             } else {
                                 swap = 1;
