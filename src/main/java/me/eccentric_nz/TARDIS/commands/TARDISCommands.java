@@ -116,6 +116,7 @@ public class TARDISCommands implements CommandExecutor {
         firstArgs.add("unbind");
         firstArgs.add("update");
         firstArgs.add("version");
+        firstArgs.add("inside");
         // rooms - only add if enabled in the config
         for (String r : plugin.getConfig().getConfigurationSection("rooms").getKeys(false)) {
             if (plugin.getConfig().getBoolean("rooms." + r + ".enabled")) {
@@ -656,6 +657,30 @@ public class TARDISCommands implements CommandExecutor {
                     final TARDISConstants.COMPASS d = rs.getDirection();
                     TARDISTimetravel tt = new TARDISTimetravel(plugin);
                     tt.testSafeLocation(eyeLocation, d);
+                    return true;
+                }
+                if (args[0].equalsIgnoreCase("inside")) {
+                    // check they are a timelord
+                    HashMap<String, Object> where = new HashMap<String, Object>();
+                    where.put("owner", player.getName());
+                    ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
+                    if (!rs.resultSet()) {
+                        sender.sendMessage(plugin.pluginName + "You must be the Timelord of a TARDIS to use this command!");
+                        return true;
+                    }
+                    int id = rs.getTardis_id();
+                    HashMap<String, Object> wheret = new HashMap<String, Object>();
+                    wheret.put("tardis_id", id);
+                    ResultSetTravellers rst = new ResultSetTravellers(plugin, wheret, true);
+                    if (rst.resultSet()) {
+                        ArrayList<HashMap<String, String>> data = rst.getData();
+                        sender.sendMessage(plugin.pluginName + "The players inside your TARDIS are:");
+                        for (HashMap<String, String> map : data) {
+                            sender.sendMessage(map.get("player"));
+                        }
+                    } else {
+                        sender.sendMessage(plugin.pluginName + "Nobody is inside your TARDIS.");
+                    }
                     return true;
                 }
                 if (args[0].equalsIgnoreCase("home")) {

@@ -224,7 +224,6 @@ public class QueryFactory {
         where.clear();
         wheres = sbw.toString().substring(0, sbw.length() - 5);
         String query = "UPDATE " + table + " SET artron_level = artron_level + " + amount + " WHERE " + wheres;
-        //plugin.debug(query);
         if (amount < 0) {
             p.sendMessage(plugin.pluginName + "You used " + Math.abs(amount) + " Artron Energy.");
         }
@@ -269,7 +268,6 @@ public class QueryFactory {
         where.clear();
         wheres = sbw.toString().substring(0, sbw.length() - 5);
         String query = "UPDATE condenser SET block_count = block_count - " + amount + " WHERE " + wheres;
-        plugin.debug(query);
         try {
             statement = connection.createStatement();
             statement.executeUpdate(query);
