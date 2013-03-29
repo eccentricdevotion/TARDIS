@@ -85,7 +85,7 @@ public class TARDISCondenserListener implements Listener {
                                 ResultSetCondenser rsc = new ResultSetCondenser(plugin, wherec, false);
                                 HashMap<String, Object> setc = new HashMap<String, Object>();
                                 if (rsc.resultSet()) {
-                                    setc.put("block_count", amount + rsc.getBlock_count());
+                                    setc.put("block_count", stack_size + rsc.getBlock_count());
                                     HashMap<String, Object> wheret = new HashMap<String, Object>();
                                     wheret.put("tardis_id", rs.getTardis_id());
                                     wheret.put("block_data", block_data);
@@ -93,7 +93,7 @@ public class TARDISCondenserListener implements Listener {
                                 } else {
                                     setc.put("tardis_id", rs.getTardis_id());
                                     setc.put("block_data", block_data);
-                                    setc.put("block_count", amount);
+                                    setc.put("block_count", stack_size);
                                     qf.doInsert("condenser", setc);
                                 }
                             }
