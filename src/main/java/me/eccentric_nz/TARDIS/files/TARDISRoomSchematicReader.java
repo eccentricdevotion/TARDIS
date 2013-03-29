@@ -59,6 +59,7 @@ public class TARDISRoomSchematicReader {
         blockConversion.put(100, 39); // mushroom block -> brown mushroom
         blockConversion.put(104, 361); // pumpkin stem -> pumpkin seed
         blockConversion.put(105, 362); // melon stem -> melon seed
+        blockConversion.put(110, 3); // mycelium -> dirt
         blockConversion.put(124, 123); // restone lamp on -> redstone lamp off
         blockConversion.put(127, 351); // cocoa plant -> cocoa seed
         blockConversion.put(141, 391); // carrot plant -> carrot
