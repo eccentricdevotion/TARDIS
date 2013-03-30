@@ -62,18 +62,18 @@ public class TARDISGravityCommands implements CommandExecutor {
 
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
-        Player player = null;
-        if (sender instanceof Player) {
-            player = (Player) sender;
-        }
         // If the player typed /tardisarea then do the following...
         // check there is the right number of arguments
         if (cmd.getName().equalsIgnoreCase("tardisgravity")) {
-            if (args.length < 1) {
-                return false;
+            Player player = null;
+            if (sender instanceof Player) {
+                player = (Player) sender;
             }
             if (player == null) {
                 sender.sendMessage(plugin.pluginName + ChatColor.RED + " This command can only be run by a player");
+                return false;
+            }
+            if (args.length < 1) {
                 return false;
             }
             String dir = args[0].toLowerCase(Locale.ENGLISH);
