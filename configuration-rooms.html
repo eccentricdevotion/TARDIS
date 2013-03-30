@@ -30,108 +30,130 @@
         <p>The format is:</p>
         <pre><code>rooms:
    [ROOMTYPE]:
+      enabled: [true|false]
       cost: [amount]
+      offset: [negative amount]
       seed: [MATERIAL]</code></pre>
-        <p>The defaults are:</p>
+        <p>All rooms are enabled by default, the rest of the settings are:</p>
         <table>
             <tr>
                 <th>ROOMTYPE</th>
                 <th>cost</th>
+                <th>offset</th>
                 <th>seed block</th>
             </tr>
             <tr>
                 <td>ARBORETUM</td>
                 <td>325</td>
+                <td>-4</td>
                 <td>LEAVES</td>
             </tr>
             <tr>
                 <td>BAKER</td>
                 <td>350</td>
+                <td>-1</td>
                 <td>ENDER_STONE</td>
             </tr>
             <tr>
                 <td>BEDROOM</td>
                 <td>475</td>
+                <td>-1</td>
                 <td>GLOWSTONE</td>
             </tr>
             <tr>
                 <td>CROSS</td>
                 <td>350</td>
+                <td>-1</td>
                 <td>SOUL_SAND</td>
             </tr>
             <tr>
                 <td>EMPTY</td>
                 <td>250</td>
+                <td>-1</td>
                 <td>GLASS</td>
             </tr>
             <tr>
                 <td>FARM</td>
                 <td>350</td>
+                <td>-1</td>
                 <td>DIRT</td>
             </tr>
             <tr>
                 <td>GRAVITY</td>
                 <td>625</td>
+                <td>-12</td>
                 <td>MOSSY_COBBLESTONE</td>
             </tr>
             <tr>
                 <td>ANTIGRAVITY</td>
                 <td>625</td>
+                <td>-2</td>
                 <td>SANDSTONE</td>
             </tr>
             <tr>
                 <td>GREENHOUSE</td>
                 <td>450</td>
+                <td>-2</td>
                 <td>MELON_BLOCK</td>
             </tr>
             <tr>
                 <td>HARMONY</td>
                 <td>450</td>
+                <td>-1</td>
                 <td>SMOOTH_STAIRS</td>
             </tr>
             <tr>
                 <td>KITCHEN</td>
                 <td>450</td>
+                <td>-1</td>
                 <td>PUMPKIN</td>
             </tr>
             <tr>
                 <td>LIBRARY</td>
                 <td>550</td>
+                <td>-1</td>
                 <td>BOOKSHELF</td>
             </tr>
             <tr>
                 <td>LONG</td>
                 <td>300</td>
+                <td>-2</td>
                 <td>NOTE_BLOCK</td>
             </tr>
             <tr>
                 <td>MUSHROOM</td>
                 <td>350</td>
+                <td>-1</td>
                 <td>GRAVEL</td>
             </tr>
             <tr>
                 <td>PASSAGE</td>
                 <td>325</td>
+                <td>-2</td>
                 <td>LEAVES</td>
             </tr>
             <tr>
                 <td>POOL</td>
                 <td>450</td>
+                <td>-3</td>
                 <td>SNOW_BLOCK</td>
             </tr>
             <tr>
                 <td>VAULT</td>
                 <td>350</td>
+                <td>-1</td>
                 <td>DISPENSER</td>
             </tr>
             <tr>
                 <td>WOOD</td>
                 <td>350</td>
+                <td>-1</td>
                 <td>WOOD</td>
             </tr>
             <tr>
                 <td>WORKSHOP</td>
                 <td>400</td>
+                <td>-1</td>
                 <td>NETHER_BRICK</td>
             </tr>
         </table>
@@ -142,6 +164,14 @@
         <p>Set the seed block for room jettisons.</p>
         <pre><code>jettison_seed: [material]</code></pre>
         <p>The default is <code>TNT</code>.</p>
+        <h2>Rooms require blocks</h2>
+        <p>Set whether growing a room requires the player to have collected and condensed the materials required to grow the room. For more information see the <a href="rooms-and-economies.html">Rooms and server economies page</a>.</p>
+        <pre><code>rooms_require_blocks: [true|false]</code></pre>
+        <p>The default is <code>false</code>.</p>
+        <p>You can alse set the percentage of the required room blocks the player must gather.</p>
+        <pre><code>rooms_condenser_percent: [percentage]</code></pre>
+        <p>The default is <code>100</code>.</p>
+
         <p><a href="configuration.html">Back to main configuration page</a></p>
     </section>
 </div>
