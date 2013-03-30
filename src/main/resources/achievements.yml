@@ -1,0 +1,12 @@
+tardis:
+  name: Get transport
+  description: Create a TARDIS
+  trigger: plugin
+  reward_type: none
+  reward_amount: 0
+rooms:
+  name: Room freak
+  description: Grow all room types
+  trigger: plugin
+  reward_type: XP
+  reward_amount: 50
