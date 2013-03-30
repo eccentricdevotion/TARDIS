@@ -126,6 +126,7 @@ permissions:
     default: op
 commands:
   tardis:
+    aliases: [tt,ttardis,/tardis,timelord]
     description: Manipulate TARDISs (TARDII?) with various arguments (list, save, find, help, etc). Type /TARDIS help - to see more.
     chameleon:
       description: Toggle the TARDIS Chameleon Circuit on and off.
@@ -196,6 +197,7 @@ commands:
       description: View TARDIS help pages.
       usage: /<command> help [command]
   tardistravel:
+    aliases: ttravel
     description: Travel to destinations in various ways.
     usage: |
       /<command> [player] or /<command> [world x y z] or /<command> dest [name] or /<command> area [name]
@@ -206,16 +208,19 @@ commands:
     permission: tardis.timetravel
     permission-message: You don't have the permission <permission> to use this command
   tardisadmin:
+    aliases: tadmin
     description: Set TARDIS configuration options.
     usage: /<command> [config option] [value]
     permission: tardis.admin
     permission-message: You don't have the permission <permission> to use this command
   tardisroom:
+    aliases: troom
     description: Set TARDIS room configuration options, and add new rooms.
     usage: /<command> add [name] or /<command> [name] [boolean|integer|string] or /<command> blocks [name|save]
     permission: tardis.admin
     permission-message: You don't have the permission <permission> to use this command
   tardisprefs:
+    aliases: tprefs
     description: Set player preferences.
     usage: /<command> [preference] [on|off]
     sfx:
@@ -249,6 +254,7 @@ commands:
       permission: tardis.timetravel
       permission-message: You don't have the permission <permission> to use this command
   tardisarea:
+    aliases: tarea
     description: Set up predefined TARDIS travel areas.
     usage: /<command> [start|end|show|remove] [name]
     start:
@@ -272,6 +278,7 @@ commands:
       permission: tardis.admin
       permission-message: You don't have the permission <permission> to use this command
   tardisbind:
+    aliases: tbind
     save:
       description: Bind a saved location to a button.
       usage: /<command> [save name]
@@ -298,7 +305,8 @@ commands:
       permission: tardis.update
       permission-message: You don't have the permission <permission> to use this command
   tardisgravity:
-      description: Add or remove gravity well blocks.
-      usage: /<command> [up|down|north|west|south|east|remove] [distance] [velocity]
-      permission: tardis.update
-      permission-message: You don't have the permission <permission> to use this command
+    aliases: tgravity
+    description: Add or remove gravity well blocks.
+    usage: /<command> [up|down|north|west|south|east|remove] [distance] [velocity]
+    permission: tardis.update
+    permission-message: You don't have the permission <permission> to use this command
