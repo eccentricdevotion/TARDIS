@@ -49,6 +49,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Set;
 import me.eccentric_nz.TARDIS.builders.TARDISSpace;
+import me.eccentric_nz.TARDIS.commands.TARDISBookCommands;
 import me.eccentric_nz.TARDIS.commands.TARDISGravityCommands;
 import me.eccentric_nz.TARDIS.commands.TARDISRoomCommands;
 import me.eccentric_nz.TARDIS.files.TARDISBlockLoader;
@@ -136,6 +137,7 @@ public class TARDIS extends JavaPlugin {
     private TARDISAreaCommands tardisAreaCommand;
     private TARDISBindCommands tardisBindCommand;
     private TARDISRoomCommands tardisRoomCommand;
+    private TARDISBookCommands tardisBookCommand;
     private TARDISGravityCommands tardisGravityCommand;
     public TARDISBuilderInner buildI = new TARDISBuilderInner(this);
     public TARDISBuilderPoliceBox buildPB = new TARDISBuilderPoliceBox(this);
@@ -364,6 +366,7 @@ public class TARDIS extends JavaPlugin {
         tardisBindCommand = new TARDISBindCommands(this);
         tardisGravityCommand = new TARDISGravityCommands(this);
         tardisRoomCommand = new TARDISRoomCommands(this);
+        tardisBookCommand = new TARDISBookCommands(this);
         getCommand("tardis").setExecutor(tardisCommand);
         getCommand("tardisadmin").setExecutor(tardisAdminCommand);
         getCommand("tardisprefs").setExecutor(tardisPrefsCommand);
@@ -372,6 +375,7 @@ public class TARDIS extends JavaPlugin {
         getCommand("tardisbind").setExecutor(tardisBindCommand);
         getCommand("tardisgravity").setExecutor(tardisGravityCommand);
         getCommand("tardisroom").setExecutor(tardisRoomCommand);
+        getCommand("tardisbook").setExecutor(tardisBookCommand);
     }
 
     /**
@@ -382,6 +386,17 @@ public class TARDIS extends JavaPlugin {
         tardisCSV.loadCSV();
         roomCSV.loadCSV();
         quotesfile = tardisCSV.copy(getDataFolder() + File.separator + TARDISConstants.QUOTES_FILE_NAME, getResource(TARDISConstants.QUOTES_FILE_NAME));
+        // copy book files
+        File bookDir = new File(plugin.getDataFolder() + File.separator + "books");
+        if (!bookDir.exists()) {
+            boolean result = bookDir.mkdir();
+            if (result) {
+                bookDir.setWritable(true);
+                bookDir.setExecutable(true);
+                console.sendMessage(pluginName + "Created books directory.");
+            }
+        }
+        tardisCSV.copy(getDataFolder() + File.separator + "books" + File.separator + "lore.txt", getResource("lore.txt"));
     }
 
     /**

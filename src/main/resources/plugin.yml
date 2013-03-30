@@ -310,3 +310,9 @@ commands:
     usage: /<command> [up|down|north|west|south|east|remove] [distance] [velocity]
     permission: tardis.update
     permission-message: You don't have the permission <permission> to use this command
+  tardisbook:
+    aliases: tbook
+    description: Read TARDIS books.
+    usage: /<command> [book name]
+    permission: tardis.create
+    permission-message: You don't have the permission <permission> to use this command
