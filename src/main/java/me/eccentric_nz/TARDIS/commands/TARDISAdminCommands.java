@@ -482,7 +482,7 @@ public class TARDISAdminCommands implements CommandExecutor {
                         if (rst.resultSet() || plugin.tardisHasDestination.containsKey(id)) {
                             useCurrent = true;
                             Location spawn;
-                            if (name.contains("TARDIS_WORLD_")) {
+                            if (name.contains("TARDIS_WORLD_") || plugin.getConfig().getBoolean("default_world")) {
                                 spawn = plugin.getServer().getWorlds().get(0).getSpawnLocation();
                             } else {
                                 spawn = cw.getSpawnLocation();
@@ -502,7 +502,7 @@ public class TARDISAdminCommands implements CommandExecutor {
                             return true;
                         }
                         // destroy the TARDIS
-                        if (plugin.getConfig().getBoolean("create_worlds") || name.contains("TARDIS_WORLD_")) {
+                        if ((plugin.getConfig().getBoolean("create_worlds") && !plugin.getConfig().getBoolean("default_world")) || name.contains("TARDIS_WORLD_")) {
                             // delete TARDIS world
                             List<Player> players = cw.getPlayers();
                             for (Player p : players) {
