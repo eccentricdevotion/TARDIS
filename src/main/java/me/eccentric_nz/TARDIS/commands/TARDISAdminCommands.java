@@ -581,7 +581,7 @@ public class TARDISAdminCommands implements CommandExecutor {
                     plugin.getConfig().set("default_world_name", nodots);
                 }
                 if (first.equals("gamemode")) {
-                    if (!args[1].equalsIgnoreCase("creative") || !args[1].equalsIgnoreCase("survival")) {
+                    if (!args[1].equalsIgnoreCase("creative") && !args[1].equalsIgnoreCase("survival")) {
                         sender.sendMessage(plugin.pluginName + ChatColor.RED + "Gamemode must be creative or survival!");
                         return true;
                     }
