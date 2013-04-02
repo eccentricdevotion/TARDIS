@@ -1,12 +1,77 @@
 tardis:
   name: Get transport
   description: Create a TARDIS
-  trigger: plugin
+  book: lore
   reward_type: none
   reward_amount: 0
+  enabled: true
+  repeatable: false
+  auto: true
+  message: The time vortex awaits!
+  icon: LAPIS_BLOCK
 rooms:
   name: Room freak
   description: Grow all room types
-  trigger: plugin
+  book: room
   reward_type: XP
   reward_amount: 50
+  enabled: true
+  repeatable: false
+  auto: true
+  message: Grew a truckload of rooms
+  icon: BOOKSHELF
+kill:
+  name: Lucky hunter
+  description: Kill a charged creeper
+  book: creeper
+  reward_type: DIAMOND_HELMET
+  reward_amount: 1
+  enabled: true
+  repeatable: true
+  auto: false
+  message: Best hunter of the hour
+  icon: BEACON
+energy:
+  name: Power hungry
+  description: Overcharge the Artron Energy Capacitor by 1000%
+  book: energy
+  reward_type: XP
+  reward_amount: 100
+  enabled: true
+  repeatable: true
+  auto: false
+  message: East my dust, Energiser bunny
+  icon: REDSTONE_BLOCK
+friends:
+  name: The host with the most
+  description: Add 10 companions to your TARDIS
+  book: friends
+  reward_type: DIAMOND
+  reward_amount: 3
+  enabled: true
+  repeatable: false
+  auto: false
+  message: Life of the party!
+  icon: RED_ROSE
+travel:
+  name: Got the travel bug
+  description: Travel 10,000 blocks in your TARDIS
+  book: travel
+  reward_type: XP
+  reward_amount: 50
+  enabled: true
+  repeatable: true
+  auto: true
+  message: Life of the party!
+  icon: DIAMOND_BLOCK
+farm:
+  name: Old MacDonald had a farm
+  description: Farm all allowed animal types
+  book: travel
+  reward_type: XP
+  reward_amount: 50
+  enabled: true
+  auto: true
+  repeatable: false
+  message: Life of the party!
+  icon: WHEAT
