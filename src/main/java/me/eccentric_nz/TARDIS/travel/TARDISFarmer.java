@@ -75,6 +75,7 @@ public class TARDISFarmer {
         List<Entity> old_macd_had_a_cow = new ArrayList<Entity>();
         List<Entity> old_macd_had_a_pig = new ArrayList<Entity>();
         List<Entity> old_macd_had_a_sheep = new ArrayList<Entity>();
+        List<Entity> old_macd_had_a_mooshroom = new ArrayList<Entity>();
         // spawn an entity at this location so we can get nearby entities - an egg will do
         World w = l.getWorld();
         Entity ent = w.spawnEntity(l, EntityType.EGG);
@@ -92,6 +93,9 @@ public class TARDISFarmer {
                     break;
                 case SHEEP:
                     old_macd_had_a_sheep.add(e);
+                    break;
+                case MUSHROOM_COW:
+                    old_macd_had_a_mooshroom.add(e);
                     break;
                 default:
                     break;
@@ -155,6 +159,17 @@ public class TARDISFarmer {
                         e.remove();
                     }
                 }
+                if (old_macd_had_a_mooshroom.size() > 0) {
+                    Location cow_pen = new Location(world, x + 3, y, z + 3);
+                    while (!world.getChunkAt(cow_pen).isLoaded()) {
+                        world.getChunkAt(cow_pen).load();
+                    }
+                    for (Entity e : old_macd_had_a_mooshroom) {
+                        plugin.myspawn = true;
+                        world.spawnEntity(cow_pen, EntityType.MUSHROOM_COW);
+                        e.remove();
+                    }
+                }
             } else {
                 // no farm, give the player spawn eggs
                 Inventory inv = p.getInventory();
@@ -182,6 +197,13 @@ public class TARDISFarmer {
                 if (old_macd_had_a_sheep.size() > 0) {
                     for (Entity e : old_macd_had_a_sheep) {
                         ItemStack is = new ItemStack(Material.MONSTER_EGG, 1, (short) 91);
+                        inv.addItem(is);
+                        e.remove();
+                    }
+                }
+                if (old_macd_had_a_mooshroom.size() > 0) {
+                    for (Entity e : old_macd_had_a_mooshroom) {
+                        ItemStack is = new ItemStack(Material.MONSTER_EGG, 1, (short) 96);
                         inv.addItem(is);
                         e.remove();
                     }
