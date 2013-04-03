@@ -58,7 +58,7 @@ public class TARDISInteriorSchematicReader {
      * room builders.
      */
     public void readAndMakeInteriorCSV(String fileStr, TARDISConstants.SCHEMATIC s) {
-        plugin.console.sendMessage(plugin.pluginName + "Loading schematic: " + fileStr);
+        plugin.debug("Loading schematic: " + fileStr);
         FileInputStream fis = null;
         try {
             File f = new File(fileStr);
