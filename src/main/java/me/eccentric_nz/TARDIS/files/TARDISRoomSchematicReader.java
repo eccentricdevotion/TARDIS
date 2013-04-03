@@ -78,7 +78,7 @@ public class TARDISRoomSchematicReader {
     public boolean readAndMakeRoomCSV(String fileStr, String s, boolean rotate) {
         HashMap<String, Integer> blockIDs = new HashMap<String, Integer>();
         boolean square = true;
-        plugin.console.sendMessage(plugin.pluginName + "Loading schematic: " + fileStr + ".schematic");
+        plugin.debug("Loading schematic: " + fileStr + ".schematic");
         FileInputStream fis = null;
         try {
             File f = new File(fileStr + ".schematic");
