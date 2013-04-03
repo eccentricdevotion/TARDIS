@@ -16,14 +16,18 @@
  */
 package me.eccentric_nz.TARDIS.commands;
 
+import java.io.File;
 import java.util.HashMap;
 import java.util.Locale;
+import java.util.Set;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.achievement.TARDISBook;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 
 /**
@@ -46,7 +50,8 @@ public class TARDISBookCommands implements CommandExecutor {
         this.plugin = plugin;
         this.books = new HashMap<String, String>();
         // filename, title
-        this.books.put("lore", "Timelore: The Beginning");
+        //this.books.put("lore", "Timelore: The Beginning");
+        books = getAchievements();
     }
 
     @Override
@@ -77,5 +82,16 @@ public class TARDISBookCommands implements CommandExecutor {
             return true;
         }
         return false;
+    }
+
+    private HashMap<String, String> getAchievements() {
+        File afile = new File(plugin.getDataFolder(), "achievements.yml");
+        FileConfiguration ayml = YamlConfiguration.loadConfiguration(afile);
+        HashMap<String, String> map = new HashMap<String, String>();
+        Set<String> aset = ayml.getKeys(false);
+        for (String a : aset) {
+            map.put(ayml.getString(a + ".book"), ayml.getString(a + ".name"));
+        }
+        return map;
     }
 }

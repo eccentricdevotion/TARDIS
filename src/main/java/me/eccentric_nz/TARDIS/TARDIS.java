@@ -397,6 +397,7 @@ public class TARDIS extends JavaPlugin {
             }
         }
         tardisCSV.copy(getDataFolder() + File.separator + "books" + File.separator + "lore.txt", getResource("lore.txt"));
+        tardisCSV.copy(getDataFolder() + "achievements.yml", getResource("achievements.yml"));
     }
 
     /**
