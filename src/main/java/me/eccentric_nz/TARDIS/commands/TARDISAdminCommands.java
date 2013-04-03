@@ -491,6 +491,7 @@ public class TARDISAdminCommands implements CommandExecutor {
                             for (HashMap<String, String> map : data) {
                                 String op = plugin.getServer().getOfflinePlayer(map.get("player")).getName();
                                 // teleport offline player to spawn
+                                System.out.println("[TARDIS Debug] Spawn = " + spawn);
                                 plugin.iopHandler.setLocation(op, spawn);
                             }
                             qf.doDelete("travellers", whered);
