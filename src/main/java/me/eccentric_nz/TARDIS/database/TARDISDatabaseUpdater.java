@@ -69,7 +69,7 @@ public class TARDISDatabaseUpdater {
         tardisupdates.add("recharging INTEGER DEFAULT 0");
         tardisupdates.add("scanner TEXT DEFAULT ''");
         tardisupdates.add("tardis_init INTEGER DEFAULT 0");
-        tardisupdates.add("farm TEXT default ''");
+        tardisupdates.add("farm TEXT DEFAULT ''");
     }
 
     /**
