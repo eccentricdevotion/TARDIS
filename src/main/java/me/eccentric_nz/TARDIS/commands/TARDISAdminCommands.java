@@ -479,8 +479,7 @@ public class TARDISAdminCommands implements CommandExecutor {
                         QueryFactory qf = new QueryFactory(plugin);
                         HashMap<String, Object> whered = new HashMap<String, Object>();
                         whered.put("tardis_id", id);
-                        if (rst.resultSet() || plugin.tardisHasDestination.containsKey(id)) {
-                            useCurrent = true;
+                        if (rst.resultSet()) {
                             Location spawn;
                             if (name.contains("TARDIS_WORLD_") || plugin.getConfig().getBoolean("default_world")) {
                                 spawn = plugin.getServer().getWorlds().get(0).getSpawnLocation();
@@ -491,13 +490,12 @@ public class TARDISAdminCommands implements CommandExecutor {
                             for (HashMap<String, String> map : data) {
                                 String op = plugin.getServer().getOfflinePlayer(map.get("player")).getName();
                                 // teleport offline player to spawn
-                                System.out.println("[TARDIS Debug] Spawn = " + spawn);
                                 plugin.iopHandler.setLocation(op, spawn);
                             }
                             qf.doDelete("travellers", whered);
                         }
                         // need to determine if we use the save location or the current location
-                        Location bb_loc = (useCurrent) ? plugin.utils.getLocationFromDB(currentLoc, 0, 0) : plugin.utils.getLocationFromDB(saveLoc, 0, 0);
+                        Location bb_loc = plugin.utils.getLocationFromDB(currentLoc, 0, 0);
                         if (bb_loc == null) {
                             sender.sendMessage(plugin.pluginName + "Could not get the location of the TARDIS!");
                             return true;

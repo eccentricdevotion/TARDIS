@@ -79,7 +79,6 @@ public class TARDISHandbrakeListener implements Listener {
                 where.put("handbrake", hb_loc);
                 ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
                 HashMap<String, Object> set = new HashMap<String, Object>();
-
                 if (rs.resultSet()) {
                     event.setCancelled(true);
                     int id = rs.getTardis_id();
@@ -90,12 +89,10 @@ public class TARDISHandbrakeListener implements Listener {
                     String owner = rs.getOwner();
                     Location exit = plugin.utils.getLocationFromDB(save, 0, 0);
                     boolean error = false;
-
                     if (!plugin.tardisMaterialising.contains(Integer.valueOf(id))) {
                         Action action = event.getAction();
                         BlockState state = block.getState();
                         Lever lever = (Lever) state.getData();
-
                         if (action == Action.RIGHT_CLICK_BLOCK) {
                             if (rs.isHandbrake_on()) {
                                 if (plugin.tardisHasDestination.containsKey(Integer.valueOf(id)) && exit != null) {
@@ -108,7 +105,6 @@ public class TARDISHandbrakeListener implements Listener {
                                         exit.getWorld().loadChunk(exit.getChunk());
                                     }
                                     exit.getWorld().refreshChunk(exit.getChunk().getX(), exit.getChunk().getZ());
-
                                     Location l = plugin.utils.getLocationFromDB(cl, 0, 0);
                                     plugin.destroyPB.destroyTorch(l);
                                     plugin.destroyPB.destroySign(l, d);
@@ -119,6 +115,7 @@ public class TARDISHandbrakeListener implements Listener {
                                         plugin.tardisChunkList.remove(oldChunk);
                                     }
                                     // Sets database and sends the player/world message/sounds.
+                                    set.put("current", save);
                                     set.put("handbrake_on", 0);
                                     player.sendMessage(plugin.pluginName + "Handbrake OFF! Entering the time vortex...");
                                     if (plugin.pm.getPlugin("Spout") != null && SpoutManager.getPlayer(player).isSpoutCraftEnabled()) {
@@ -135,13 +132,11 @@ public class TARDISHandbrakeListener implements Listener {
                                     player.sendMessage(plugin.pluginName + "You need to set a destination first!");
                                     error = true;
                                 }
-
                             } else {
                                 player.sendMessage(plugin.pluginName + "The handbrake is already off!");
                                 error = true;
                             }
                         }
-
                         if (action == Action.LEFT_CLICK_BLOCK) {
                             if (!rs.isHandbrake_on()) {
                                 //Changes the lever to on.
@@ -168,7 +163,6 @@ public class TARDISHandbrakeListener implements Listener {
                                     }
                                 }
                                 plugin.tardisHasDestination.remove(Integer.valueOf(id));
-                                plugin.tardisHasTravelled.add(Integer.valueOf(id));
                             } else {
                                 player.sendMessage(plugin.pluginName + "The handbrake is already on!");
                                 error = true;

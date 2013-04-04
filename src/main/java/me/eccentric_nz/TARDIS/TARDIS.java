@@ -186,7 +186,6 @@ public class TARDIS extends JavaPlugin {
     public HashMap<Integer, Integer> trackTravellers = new HashMap<Integer, Integer>();
     public HashMap<Integer, Integer> tardisHasDestination = new HashMap<Integer, Integer>();
     public HashMap<String, Block> trackExterminate = new HashMap<String, Block>();
-    public ArrayList<Integer> tardisHasTravelled = new ArrayList<Integer>();
     public ArrayList<Integer> tardisMaterialising = new ArrayList<Integer>();
     public List<Chunk> tardisChunkList = new ArrayList<Chunk>();
     public List<Chunk> roomChunkList = new ArrayList<Chunk>();

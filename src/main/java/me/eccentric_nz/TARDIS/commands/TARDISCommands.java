@@ -588,7 +588,7 @@ public class TARDISCommands implements CommandExecutor {
                             return true;
                         }
                         final Player p = player;
-                        String badsave = (plugin.tardisHasDestination.containsKey(id)) ? rs.getCurrent() : rs.getSave();
+                        String badsave = rs.getCurrent();
                         boolean chamtmp = false;
                         if (plugin.getConfig().getBoolean("chameleon")) {
                             chamtmp = rs.isChamele_on();
@@ -797,7 +797,7 @@ public class TARDISCommands implements CommandExecutor {
                             return true;
                         }
                         int level = rs.getArtron_level();
-                        save = (plugin.tardisHasDestination.containsKey(id)) ? rs.getCurrent() : rs.getSave();
+                        save = rs.getCurrent();
                         if (plugin.tardisMaterialising.contains(id)) {
                             sender.sendMessage(plugin.pluginName + "You cannot do that while the TARDIS is materialising!");
                             return true;
@@ -877,7 +877,7 @@ public class TARDISCommands implements CommandExecutor {
                             return false;
                         }
                         int id = rs.getTardis_id();
-                        String loc = (plugin.tardisHasDestination.containsKey(id)) ? rs.getCurrent() : rs.getSave();
+                        String loc = rs.getCurrent();
                         String[] findData = loc.split(":");
                         sender.sendMessage(plugin.pluginName + "TARDIS was left at " + findData[0] + " at x: " + findData[1] + " y: " + findData[2] + " z: " + findData[3]);
                         return true;
@@ -1002,21 +1002,10 @@ public class TARDISCommands implements CommandExecutor {
                             sender.sendMessage(plugin.pluginName + "That doesn't appear to be a valid save name (it may be too long or contains spaces).");
                             return false;
                         } else {
-                            String cur = rs.getCurrent();
-                            String sav = rs.getSave();
                             int id = rs.getTardis_id();
-                            String[] curDest;
                             // get current destination
-                            HashMap<String, Object> wheret = new HashMap<String, Object>();
-                            wheret.put("player", player.getName());
-                            ResultSetTravellers rst = new ResultSetTravellers(plugin, wheret, false);
-                            if (rst.resultSet() || plugin.tardisHasDestination.containsKey(id)) {
-                                // inside TARDIS
-                                curDest = cur.split(":");
-                            } else {
-                                // outside TARDIS
-                                curDest = sav.split(":");
-                            }
+                            String cur = rs.getCurrent();
+                            String[] curDest = cur.split(":");
                             QueryFactory qf = new QueryFactory(plugin);
                             HashMap<String, Object> set = new HashMap<String, Object>();
                             set.put("tardis_id", id);
@@ -1173,7 +1162,7 @@ public class TARDISCommands implements CommandExecutor {
                             sender.sendMessage(plugin.pluginName + "The TARDIS does not have enough Artron Energy to change the Police Box direction!");
                             return true;
                         }
-                        String save = (plugin.tardisHasDestination.containsKey(id)) ? rs.getCurrent() : rs.getSave();
+                        String save = rs.getCurrent();
                         String[] save_data = save.split(":");
                         if (plugin.tardisMaterialising.contains(id)) {
                             sender.sendMessage(plugin.pluginName + "You cannot do that while the TARDIS is materialising!");

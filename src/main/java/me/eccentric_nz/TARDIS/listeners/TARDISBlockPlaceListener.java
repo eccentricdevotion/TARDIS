@@ -204,7 +204,7 @@ public class TARDISBlockPlaceListener implements Listener {
                         plugin.buildI.buildInner(schm, chunkworld, lastInsertId, player, middle_id, middle_data);
                     } else {
                         int id = rs.getTardis_id();
-                        String leftLoc = (plugin.tardisHasDestination.containsKey(id)) ? rs.getCurrent() : rs.getSave();
+                        String leftLoc = rs.getCurrent();
                         String[] leftData = leftLoc.split(":");
                         player.sendMessage(plugin.pluginName + "You already have a TARDIS, you left it in " + leftData[0] + " at x:" + leftData[1] + " y:" + leftData[2] + " z:" + leftData[3]);
                     }

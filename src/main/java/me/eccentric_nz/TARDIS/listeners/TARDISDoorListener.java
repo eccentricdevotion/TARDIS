@@ -235,12 +235,8 @@ public class TARDISDoorListener implements Listener {
                                         userQuotes = true;
                                     }
                                     if (doortype == 1) {
-                                        Location exitLoc = plugin.utils.getLocationFromDB(save, yaw, pitch);
-                                        boolean hasDest = plugin.tardisHasDestination.containsKey(Integer.valueOf(id));
-                                        boolean hasTrav = plugin.tardisHasTravelled.contains(Integer.valueOf(id));
-                                        if (hasDest && !hasTrav) {
-                                            exitLoc = plugin.utils.getLocationFromDB(current, yaw, pitch);
-                                        }
+                                        // always exit to current location
+                                        Location exitLoc = plugin.utils.getLocationFromDB(current, yaw, pitch);
                                         if (rs.isHandbrake_on()) {
                                             // player is in the TARDIS
                                             // change the yaw if the door directions are different
@@ -296,9 +292,6 @@ public class TARDISDoorListener implements Listener {
                                             HashMap<String, Object> wherd = new HashMap<String, Object>();
                                             wherd.put("player", playerNameStr);
                                             qf.doDelete("travellers", wherd);
-                                            if (hasTrav) {
-                                                plugin.tardisHasTravelled.remove(Integer.valueOf(id));
-                                            }
                                         } else {
                                             player.sendMessage(plugin.pluginName + "The TARDIS is still travelling... you would get lost in the time vortex!");
                                         }
@@ -416,12 +409,6 @@ public class TARDISDoorListener implements Listener {
                                                 set.put("tardis_id", id);
                                                 set.put("player", playerNameStr);
                                                 qf.doInsert("travellers", set);
-                                                // update current TARDIS location
-                                                HashMap<String, Object> setc = new HashMap<String, Object>();
-                                                setc.put("current", save);
-                                                HashMap<String, Object> wherec = new HashMap<String, Object>();
-                                                wherec.put("tardis_id", id);
-                                                qf.doUpdate("tardis", setc, wherec);
                                                 if (plugin.pm.getPlugin("Spout") != null && SpoutManager.getPlayer(player).isSpoutCraftEnabled()) {
                                                     SpoutManager.getSoundManager().playCustomSoundEffect(plugin, SpoutManager.getPlayer(player), "https://dl.dropbox.com/u/53758864/tardis_hum.mp3", false, tardis_loc, 9, 25);
                                                 }
@@ -485,6 +472,7 @@ public class TARDISDoorListener implements Listener {
                     HashMap<String, Object> where = new HashMap<String, Object>();
                     where.put("player", name);
                     int player_artron = (plugin.getConfig().getBoolean("create_worlds")) ? plugin.getConfig().getInt("player") : plugin.getConfig().getInt("player") * 10;
+                    plugin.debug(player_artron);
                     qf.alterEnergyLevel("player_prefs", player_artron, where, p);
                 }
                 // give a key

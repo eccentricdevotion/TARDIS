@@ -72,7 +72,7 @@ public class TARDISTimeLordDeathListener implements Listener {
                             String death_world = death_loc.getWorld().getName();
                             int id = rs.getTardis_id();
                             // where is the TARDIS Police Box?
-                            String save = (plugin.tardisHasDestination.containsKey(id)) ? rs.getCurrent() : rs.getSave();
+                            String save = rs.getCurrent();
                             String[] save_data = save.split(":");
                             World sw = plugin.getServer().getWorld(save_data[0]);
                             int sx = plugin.utils.parseNum(save_data[1]);

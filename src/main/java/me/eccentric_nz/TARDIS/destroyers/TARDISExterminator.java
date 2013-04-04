@@ -95,7 +95,7 @@ public class TARDISExterminator {
         try {
             if (rs.resultSet()) {
                 int id = rs.getTardis_id();
-                String saveLoc = (plugin.tardisHasDestination.containsKey(id)) ? rs.getCurrent() : rs.getSave();
+                String saveLoc = rs.getCurrent();
                 String chunkLoc = rs.getChunk();
                 String owner = rs.getOwner();
                 TARDISConstants.SCHEMATIC schm = rs.getSchematic();
