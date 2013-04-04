@@ -199,6 +199,7 @@ public class TARDISTravelCommands implements CommandExecutor {
                         // we're thinking this is a saved destination name
                         HashMap<String, Object> whered = new HashMap<String, Object>();
                         whered.put("dest_name", args[1]);
+                        whered.put("tardis_id", id);
                         ResultSetDestinations rsd = new ResultSetDestinations(plugin, whered, false);
                         if (!rsd.resultSet()) {
                             sender.sendMessage(plugin.pluginName + "Could not find a destination with that name! try using " + ChatColor.GREEN + "/TARDIS list saves" + ChatColor.RESET + " first.");
