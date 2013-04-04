@@ -188,7 +188,6 @@ public class TARDISRoomCommands implements CommandExecutor {
                         return true;
                     }
                     boolean bool = Boolean.valueOf(args[1]);
-                    plugin.debug(bool);
                     plugin.getConfig().set("rooms." + name + ".enabled", bool);
                     plugin.saveConfig();
                     // also add or remove the room from the TARDISCommands.roomArgs List

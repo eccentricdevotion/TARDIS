@@ -98,7 +98,6 @@ public class TARDISRoomBuilder {
                 l.setZ(l.getZ() - 6);
             } else {
                 int xzoffset = (dimensions[1] / 2);
-                plugin.debug(xzoffset);
                 switch (d) {
                     case NORTH:
                         l.setX(l.getX() + xzoffset);
