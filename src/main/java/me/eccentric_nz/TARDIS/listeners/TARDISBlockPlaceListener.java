@@ -165,6 +165,7 @@ public class TARDISBlockPlaceListener implements Listener {
                         set.put("direction", d);
                         set.put("home", home);
                         set.put("save", save);
+                        set.put("current", save);
                         set.put("size", schm.name());
                         HashMap<String, Object> setpp = new HashMap<String, Object>();
                         if (middle_id == 22) {
