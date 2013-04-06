@@ -16,16 +16,19 @@
  */
 package me.eccentric_nz.TARDIS.listeners;
 
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants.COMPASS;
+import me.eccentric_nz.TARDIS.achievement.TARDISAchievementNotify;
+import me.eccentric_nz.TARDIS.achievement.TARDISXPRewarder;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
-import me.eccentric_nz.TARDIS.database.ResultSetCondenser;
+import me.eccentric_nz.TARDIS.database.ResultSetAchievements;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.rooms.TARDISCondenserData;
 import me.eccentric_nz.TARDIS.rooms.TARDISRoomBuilder;
-import me.eccentric_nz.TARDIS.rooms.TARDISWalls;
 import me.eccentric_nz.tardischunkgenerator.TARDISChunkGenerator;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -38,6 +41,8 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.generator.ChunkGenerator;
+import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.ItemStack;
 
 /**
  * The Doctor kept some of the clothes from his previous regenerations, as well
@@ -124,6 +129,55 @@ public class TARDISRoomSeeder implements Listener {
                             qf.alterCondenserBlockCount(entry.getValue(), wherec);
                         }
                         plugin.roomCondenserData.remove(playerNameStr);
+                    }
+                    // are we doing an achievement?
+                    if (plugin.ayml.getBoolean("rooms.enabled")) {
+                        // have they started the achievement?
+                        HashMap<String, Object> wherea = new HashMap<String, Object>();
+                        wherea.put("player", playerNameStr);
+                        wherea.put("name", "rooms");
+                        wherea.put("completed", 0);
+                        ResultSetAchievements rsa = new ResultSetAchievements(plugin, where, false);
+                        HashMap<String, Object> seta = new HashMap<String, Object>();
+                        if (rsa.resultSet()) {
+                            // have they grown this room type before?
+                            List<String> data = Arrays.asList(rsa.getAmount().split(":"));
+                            HashMap<String, Object> wherem = new HashMap<String, Object>();
+                            wherem.put("a_id", rsa.getA_id());
+                            // check if this is the last room type
+                            if ((data.size() + 1) == plugin.seeds.size()) {
+                                // award achievement!
+                                int reward_amount = plugin.ayml.getInt("rooms.reward_amount");
+                                String reward_type = plugin.ayml.getString("rooms.reward_type");
+                                TARDISAchievementNotify tan = new TARDISAchievementNotify(plugin);
+                                tan.sendAchievement(player, plugin.ayml.getString("rooms.message"), Material.valueOf(plugin.ayml.getString("rooms.icon")));
+                                if (reward_type.equalsIgnoreCase("XP")) {
+                                    TARDISXPRewarder txr = new TARDISXPRewarder(player);
+                                    txr.changeExp(reward_amount);
+                                } else {
+                                    ItemStack is = new ItemStack(Material.valueOf(reward_type), reward_amount);
+                                    Inventory inv = player.getInventory();
+                                    HashMap<Integer, ItemStack> excess = inv.addItem(is);
+                                    for (Map.Entry<Integer, ItemStack> me : excess.entrySet()) {
+                                        player.getWorld().dropItem(player.getLocation(), me.getValue());
+                                    }
+                                }
+                                // set achievement as done
+                                seta.put("completed", 1);
+                            } else if (!data.contains(r)) {
+                                seta.put("amount", rsa.getAmount() + ":" + r);
+                            }
+                            qf.doUpdate("achievements", seta, wherem);
+                        } else {
+                            // is it an auto achievement?
+                            if (plugin.ayml.getBoolean("rooms.auto")) {
+                                // insert a new record
+                                seta.put("player", player.getName());
+                                seta.put("name", "rooms");
+                                seta.put("amount", r);
+                                qf.doInsert("achievements", seta);
+                            }
+                        }
                     }
                 }
             }

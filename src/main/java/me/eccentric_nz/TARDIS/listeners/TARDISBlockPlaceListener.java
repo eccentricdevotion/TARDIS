@@ -22,6 +22,7 @@ import java.util.List;
 import java.util.Map;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
+import me.eccentric_nz.TARDIS.achievement.TARDISAchievementNotify;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.utility.TARDISUtils;
@@ -203,6 +204,17 @@ public class TARDISBlockPlaceListener implements Listener {
                         // turn the block stack into a TARDIS
                         plugin.buildPB.buildPoliceBox(lastInsertId, block_loc, TARDISConstants.COMPASS.valueOf(d), false, player, false);
                         plugin.buildI.buildInner(schm, chunkworld, lastInsertId, player, middle_id, middle_data);
+                        // set achievement completed
+                        if (player.hasPermission("tardis.book")) {
+                            HashMap<String, Object> seta = new HashMap<String, Object>();
+                            seta.put("completed", 1);
+                            HashMap<String, Object> wherea = new HashMap<String, Object>();
+                            wherea.put("player", player.getName());
+                            wherea.put("name", "tardis");
+                            qf.doUpdate("achievements", seta, wherea);
+                            TARDISAchievementNotify tan = new TARDISAchievementNotify(plugin);
+                            tan.sendAchievement(player, plugin.ayml.getString("tardis.message"), Material.valueOf(plugin.ayml.getString("tardis.icon")));
+                        }
                     } else {
                         int id = rs.getTardis_id();
                         String leftLoc = rs.getCurrent();

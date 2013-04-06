@@ -68,6 +68,7 @@ import me.eccentric_nz.TARDIS.listeners.TARDISIceMeltListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISJettisonSeeder;
 import me.eccentric_nz.TARDIS.listeners.TARDISLightningListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISChunkListener;
+import me.eccentric_nz.TARDIS.listeners.TARDISJoinListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISRoomSeeder;
 import me.eccentric_nz.TARDIS.listeners.TARDISSignListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISUpdateListener;
@@ -84,6 +85,8 @@ import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.command.ConsoleCommandSender;
+import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -172,6 +175,7 @@ public class TARDIS extends JavaPlugin {
     TARDISChunkListener roomChunkListener = new TARDISChunkListener(this);
     TARDISScannerListener scannerListener = new TARDISScannerListener(this);
     TARDISTimeLordDeathListener deathListener = new TARDISTimeLordDeathListener(this);
+    TARDISJoinListener joinListener = new TARDISJoinListener(this);
     public PluginManager pm = Bukkit.getServer().getPluginManager();
     public HashMap<String, String> trackPlayers = new HashMap<String, String>();
     public HashMap<String, Integer> trackBinder = new HashMap<String, Integer>();
@@ -209,6 +213,8 @@ public class TARDIS extends JavaPlugin {
     public String pluginName;
     public boolean myspawn = false;
     public HashMap<String, HashMap<String, Integer>> roomBlockCounts = new HashMap<String, HashMap<String, Integer>>();
+    private File afile;
+    public FileConfiguration ayml;
 
     @Override
     public void onEnable() {
@@ -224,6 +230,7 @@ public class TARDIS extends JavaPlugin {
             checkTCG();
             loadDatabase();
             loadFiles();
+            loadAchievements();
             seeds = getSeeds();
             registerListeners();
             loadCommands();
@@ -256,6 +263,7 @@ public class TARDIS extends JavaPlugin {
             bl.loadProtectBlocks();
             bl.loadGravityWells();
             loadPerms();
+            loadBooks();
         }
     }
 
@@ -351,6 +359,7 @@ public class TARDIS extends JavaPlugin {
         pm.registerEvents(roomChunkListener, this);
         pm.registerEvents(scannerListener, this);
         pm.registerEvents(deathListener, this);
+        pm.registerEvents(joinListener, this);
     }
 
     /**
@@ -385,6 +394,21 @@ public class TARDIS extends JavaPlugin {
         tardisCSV.loadCSV();
         roomCSV.loadCSV();
         quotesfile = tardisCSV.copy(getDataFolder() + File.separator + TARDISConstants.QUOTES_FILE_NAME, getResource(TARDISConstants.QUOTES_FILE_NAME));
+    }
+
+    /**
+     * Loads the achievements.yml file for use with other classes.
+     */
+    private void loadAchievements() {
+        tardisCSV.copy(getDataFolder() + File.separator + "achievements.yml", getResource("achievements.yml"));
+        afile = new File(plugin.getDataFolder(), "achievements.yml");
+        ayml = YamlConfiguration.loadConfiguration(afile);
+    }
+
+    /**
+     * Saves the default book files to the /plugins/TARDIS/books directory.
+     */
+    private void loadBooks() {
         // copy book files
         File bookDir = new File(plugin.getDataFolder() + File.separator + "books");
         if (!bookDir.exists()) {
@@ -395,8 +419,10 @@ public class TARDIS extends JavaPlugin {
                 console.sendMessage(pluginName + "Created books directory.");
             }
         }
-        tardisCSV.copy(getDataFolder() + File.separator + "books" + File.separator + "lore.txt", getResource("lore.txt"));
-        tardisCSV.copy(getDataFolder() + File.separator + "achievements.yml", getResource("achievements.yml"));
+        Set<String> booknames = ayml.getKeys(false);
+        for (String b : booknames) {
+            tardisCSV.copy(getDataFolder() + File.separator + "books" + File.separator + b + ".txt", getResource(b + ".txt"));
+        }
     }
 
     /**
