@@ -17,12 +17,15 @@
 package me.eccentric_nz.TARDIS.commands;
 
 import java.io.File;
+import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 import java.util.LinkedHashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.achievement.TARDISBook;
+import me.eccentric_nz.TARDIS.database.QueryFactory;
+import me.eccentric_nz.TARDIS.database.ResultSetAchievements;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -50,46 +53,77 @@ public class TARDISBookCommands implements CommandExecutor {
     public TARDISBookCommands(TARDIS plugin) {
         this.plugin = plugin;
         this.books = new LinkedHashMap<String, String>();
-        // filename, title
-        //this.books.put("lore", "Timelore: The Beginning");
         books = getAchievements();
     }
 
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
         // If the player typed /tardisbook then do the following...
-        // check there is the right number of arguments
         if (cmd.getName().equalsIgnoreCase("tardisbook")) {
-            String bookname = args[0].toLowerCase(Locale.ENGLISH);
-            if (bookname.equals("list")) {
-                int b = 1;
-                sender.sendMessage(TARDIS.plugin.pluginName + "The books of Rassilon");
-                for (Map.Entry<String, String> entry : books.entrySet()) {
-                    sender.sendMessage(b + ". [" + entry.getKey() + "] - " + entry.getValue());
-                    b++;
+            if (sender.hasPermission("tardis.book")) {
+                String first = args[0].toLowerCase(Locale.ENGLISH);
+                if (first.equals("list")) {
+                    int b = 1;
+                    sender.sendMessage(TARDIS.plugin.pluginName + "The books of Rassilon");
+                    for (Map.Entry<String, String> entry : books.entrySet()) {
+                        sender.sendMessage(b + ". [" + entry.getKey() + "] - " + entry.getValue());
+                        b++;
+                    }
+                    return true;
                 }
-                return true;
+                Player player = null;
+                if (sender instanceof Player) {
+                    player = (Player) sender;
+                }
+                if (player == null) {
+                    sender.sendMessage(plugin.pluginName + ChatColor.RED + " This command can only be run by a player");
+                    return true;
+                }
+                if (args.length < 2) {
+                    sender.sendMessage(plugin.pluginName + "You need to specify a book name!");
+                    return false;
+                }
+                String bookname = args[1].toLowerCase(Locale.ENGLISH);
+                if (!books.containsKey(bookname)) {
+                    sender.sendMessage(plugin.pluginName + "Could not find that book!");
+                    return true;
+                }
+                if (first.equals("get")) {
+                    TARDISBook book = new TARDISBook(plugin);
+                    // title, author, filename, player
+                    book.writeBook(books.get(bookname), "Rassilon", bookname, player);
+                    return true;
+                }
+                if (first.equals("start")) {
+                    File afile = new File(plugin.getDataFolder(), "achievements.yml");
+                    FileConfiguration ayml = YamlConfiguration.loadConfiguration(afile);
+                    if (ayml.getBoolean(bookname + ".auto")) {
+                        sender.sendMessage(plugin.pluginName + "This achievement is awarded automatically!");
+                        return true;
+                    }
+                    // check they have not already started the achievement
+                    HashMap<String, Object> where = new HashMap<String, Object>();
+                    where.put("player", player.getName());
+                    where.put("name", bookname);
+                    ResultSetAchievements rsa = new ResultSetAchievements(plugin, where, false);
+                    if (rsa.resultSet()) {
+                        if (rsa.isCompleted()) {
+                            if (!ayml.getBoolean(bookname + ".repeatable")) {
+                                sender.sendMessage(plugin.pluginName + "This achievement can only be gained once!");
+                                return true;
+                            }
+                        } else {
+                            sender.sendMessage(plugin.pluginName + "You have already started this achievement!");
+                            return true;
+                        }
+                        HashMap<String, Object> set = new HashMap<String, Object>();
+                        set.put("player", player.getName());
+                        set.put("name", bookname);
+                        QueryFactory qf = new QueryFactory(plugin);
+                        qf.doInsert("achievements", set);
+                    }
+                }
             }
-            Player player = null;
-            if (sender instanceof Player) {
-                player = (Player) sender;
-            }
-            if (player == null) {
-                sender.sendMessage(plugin.pluginName + ChatColor.RED + " This command can only be run by a player");
-                return true;
-            }
-            if (args.length == 0) {
-                sender.sendMessage(plugin.pluginName + "You need to specify a book name!");
-                return false;
-            }
-            if (!books.containsKey(bookname)) {
-                sender.sendMessage(plugin.pluginName + "Could not find that book!");
-                return true;
-            }
-            TARDISBook book = new TARDISBook(plugin);
-            // title, author, filename, player
-            book.writeBook(books.get(bookname), "Rassilon", bookname, player);
-            return true;
         }
         return false;
     }
