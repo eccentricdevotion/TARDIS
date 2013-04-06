@@ -16,7 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.commands;
 
-import java.io.File;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
@@ -30,8 +29,6 @@ import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
-import org.bukkit.configuration.file.FileConfiguration;
-import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 
 /**
@@ -89,15 +86,14 @@ public class TARDISBookCommands implements CommandExecutor {
                     return true;
                 }
                 if (first.equals("get")) {
+                    // need to check whether they already have been given the book
                     TARDISBook book = new TARDISBook(plugin);
                     // title, author, filename, player
                     book.writeBook(books.get(bookname), "Rassilon", bookname, player);
                     return true;
                 }
                 if (first.equals("start")) {
-                    File afile = new File(plugin.getDataFolder(), "achievements.yml");
-                    FileConfiguration ayml = YamlConfiguration.loadConfiguration(afile);
-                    if (ayml.getBoolean(bookname + ".auto")) {
+                    if (plugin.ayml.getBoolean(bookname + ".auto")) {
                         sender.sendMessage(plugin.pluginName + "This achievement is awarded automatically!");
                         return true;
                     }
@@ -108,7 +104,7 @@ public class TARDISBookCommands implements CommandExecutor {
                     ResultSetAchievements rsa = new ResultSetAchievements(plugin, where, false);
                     if (rsa.resultSet()) {
                         if (rsa.isCompleted()) {
-                            if (!ayml.getBoolean(bookname + ".repeatable")) {
+                            if (!plugin.ayml.getBoolean(bookname + ".repeatable")) {
                                 sender.sendMessage(plugin.pluginName + "This achievement can only be gained once!");
                                 return true;
                             }
@@ -129,12 +125,13 @@ public class TARDISBookCommands implements CommandExecutor {
     }
 
     private LinkedHashMap<String, String> getAchievements() {
-        File afile = new File(plugin.getDataFolder(), "achievements.yml");
-        FileConfiguration ayml = YamlConfiguration.loadConfiguration(afile);
         LinkedHashMap<String, String> map = new LinkedHashMap<String, String>();
-        Set<String> aset = ayml.getKeys(false);
+        Set<String> aset = plugin.ayml.getRoot().getKeys(false);
         for (String a : aset) {
-            map.put(ayml.getString(a + ".book"), ayml.getString(a + ".name"));
+            String namereward = plugin.ayml.getString(a + ".name") + " - " + plugin.ayml.getString(a + ".reward_type") + ":" + plugin.ayml.getString(a + ".reward_amount");
+            if (plugin.ayml.getBoolean(a + ".enabled")) {
+                map.put(a, namereward);
+            }
         }
         return map;
     }
