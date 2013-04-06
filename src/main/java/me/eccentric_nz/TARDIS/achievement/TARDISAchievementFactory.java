@@ -93,6 +93,7 @@ public class TARDISAchievementFactory {
                 }
                 // set achievement as done
                 seta.put("completed", 1);
+                qf.doUpdate("achievements", seta, wherem);
             } else {
                 if (obj.getClass().equals(String.class)) {
                     if (data != null && !data.contains((String) obj)) {
