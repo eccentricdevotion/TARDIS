@@ -17,9 +17,10 @@
 package me.eccentric_nz.TARDIS.commands;
 
 import java.io.File;
-import java.util.HashMap;
 import java.util.Locale;
+import java.util.Map;
 import java.util.Set;
+import java.util.LinkedHashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.achievement.TARDISBook;
 import org.bukkit.ChatColor;
@@ -44,11 +45,11 @@ import org.bukkit.entity.Player;
 public class TARDISBookCommands implements CommandExecutor {
 
     private TARDIS plugin;
-    HashMap<String, String> books;
+    LinkedHashMap<String, String> books;
 
     public TARDISBookCommands(TARDIS plugin) {
         this.plugin = plugin;
-        this.books = new HashMap<String, String>();
+        this.books = new LinkedHashMap<String, String>();
         // filename, title
         //this.books.put("lore", "Timelore: The Beginning");
         books = getAchievements();
@@ -59,6 +60,16 @@ public class TARDISBookCommands implements CommandExecutor {
         // If the player typed /tardisbook then do the following...
         // check there is the right number of arguments
         if (cmd.getName().equalsIgnoreCase("tardisbook")) {
+            String bookname = args[0].toLowerCase(Locale.ENGLISH);
+            if (bookname.equals("list")) {
+                int b = 1;
+                sender.sendMessage(TARDIS.plugin.pluginName + "The books of Rassilon");
+                for (Map.Entry<String, String> entry : books.entrySet()) {
+                    sender.sendMessage(b + ". [" + entry.getKey() + "] - " + entry.getValue());
+                    b++;
+                }
+                return true;
+            }
             Player player = null;
             if (sender instanceof Player) {
                 player = (Player) sender;
@@ -71,7 +82,6 @@ public class TARDISBookCommands implements CommandExecutor {
                 sender.sendMessage(plugin.pluginName + "You need to specify a book name!");
                 return false;
             }
-            String bookname = args[0].toLowerCase(Locale.ENGLISH);
             if (!books.containsKey(bookname)) {
                 sender.sendMessage(plugin.pluginName + "Could not find that book!");
                 return true;
@@ -84,10 +94,10 @@ public class TARDISBookCommands implements CommandExecutor {
         return false;
     }
 
-    private HashMap<String, String> getAchievements() {
+    private LinkedHashMap<String, String> getAchievements() {
         File afile = new File(plugin.getDataFolder(), "achievements.yml");
         FileConfiguration ayml = YamlConfiguration.loadConfiguration(afile);
-        HashMap<String, String> map = new HashMap<String, String>();
+        LinkedHashMap<String, String> map = new LinkedHashMap<String, String>();
         Set<String> aset = ayml.getKeys(false);
         for (String a : aset) {
             map.put(ayml.getString(a + ".book"), ayml.getString(a + ".name"));
