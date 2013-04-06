@@ -76,6 +76,8 @@ public class TARDISDatabase {
             statement.executeUpdate(queryGravity);
             String queryCondenser = "CREATE TABLE IF NOT EXISTS condenser (c_id INTEGER PRIMARY KEY NOT NULL, tardis_id INTEGER, block_data TEXT COLLATE NOCASE DEFAULT '', block_count INTEGER)";
             statement.executeUpdate(queryCondenser);
+            String queryAchievements = "CREATE TABLE IF NOT EXISTS achievements (a_id INTEGER PRIMARY KEY NOT NULL, player TEXT COLLATE NOCASE, name TEXT DEFAULT '', amount TEXT DEFAULT '', completed INTEGER DEFAULT 0)";
+            statement.executeUpdate(queryAchievements);
 
             // delete old gravity table
 //            String dropGravity = "DROP TABLE IF EXISTS gravity";
