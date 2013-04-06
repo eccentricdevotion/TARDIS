@@ -3,8 +3,9 @@
 ## Current version `2.2-beta`
 1. Add video for custom rooms
 2. Allow random chance of TARDIS malfunction which deposits player in some unexpected place
-6. Add TARDIS achievements, level ups/XP for travelling
-7. Allow pets into the TARDIS
+3. Don't play any SFX if the `sfx` player_pref is off
+4. Add TARDIS achievements, level ups/XP for travelling
+5. Allow pets into the TARDIS
 
 ## Future version `2.3+`
 1. Allow companions to enter and exit the tardis at will (and steal it).
