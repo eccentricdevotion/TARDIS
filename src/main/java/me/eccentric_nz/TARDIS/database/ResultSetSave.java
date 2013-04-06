@@ -24,7 +24,7 @@ import me.eccentric_nz.TARDIS.TARDIS;
 
 /**
  * Many facts, figures, and formulas are contained within the Matrix,
- * including... an easy way to retreive a saved time travel location.
+ * including... an easy way to retrieve a saved time travel location.
  *
  * @author eccentric_nz
  */
