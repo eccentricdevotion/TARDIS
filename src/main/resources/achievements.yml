@@ -67,7 +67,7 @@ travel:
 farm:
   name: Old MacDonald had a farm
   description: Farm all allowed animal types
-  book: travel
+  book: farm
   reward_type: XP
   reward_amount: 50
   enabled: true

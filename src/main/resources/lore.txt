@@ -19,3 +19,5 @@ Top: Redstone Torch
 Stand back and watch your new TARDIS materialise before your eyes! You can enter with your TARDIS key - the Stick you crafted earlier.
 
 You still need power to travel the Time Vortex. Look for the Artron Energy Capacitor button (it's made of wood) and click it with your TARDIS key.
+
+You can achieve many great things in your TARDIS, and be rewarded for your efforts. Use the command '/tardisbook list' to view other tasks.
