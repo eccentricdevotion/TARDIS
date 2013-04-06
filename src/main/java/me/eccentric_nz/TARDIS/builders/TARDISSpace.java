@@ -25,6 +25,7 @@ import me.eccentric_nz.TARDIS.perms.TARDISGroupManagerHandler;
 import me.eccentric_nz.TARDIS.perms.TARDISbPermissionsHandler;
 import me.eccentric_nz.tardischunkgenerator.TARDISChunkGenerator;
 import org.bukkit.World;
+import org.bukkit.World.Environment;
 import org.bukkit.WorldCreator;
 import org.bukkit.WorldType;
 
@@ -122,7 +123,7 @@ public class TARDISSpace {
     private void timechk() {
         List<World> serverWorlds = plugin.getServer().getWorlds();
         for (World w : serverWorlds) {
-            if (w.getName().contains("TARDIS_WORLD_")) {
+            if (w.getName().contains("TARDIS_") && w.getEnvironment().equals(Environment.NORMAL)) {
                 Long now = w.getTime();
                 Long dawn = 14000L;
                 Long dusk = 21000L;
