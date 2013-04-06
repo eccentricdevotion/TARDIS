@@ -137,7 +137,7 @@ public class TARDISRoomSeeder implements Listener {
                         wherea.put("player", playerNameStr);
                         wherea.put("name", "rooms");
                         wherea.put("completed", 0);
-                        ResultSetAchievements rsa = new ResultSetAchievements(plugin, where, false);
+                        ResultSetAchievements rsa = new ResultSetAchievements(plugin, wherea, false);
                         HashMap<String, Object> seta = new HashMap<String, Object>();
                         if (rsa.resultSet()) {
                             // have they grown this room type before?
@@ -152,8 +152,7 @@ public class TARDISRoomSeeder implements Listener {
                                 TARDISAchievementNotify tan = new TARDISAchievementNotify(plugin);
                                 tan.sendAchievement(player, plugin.ayml.getString("rooms.message"), Material.valueOf(plugin.ayml.getString("rooms.icon")));
                                 if (reward_type.equalsIgnoreCase("XP")) {
-                                    TARDISXPRewarder txr = new TARDISXPRewarder(player);
-                                    txr.changeExp(reward_amount);
+                                    new TARDISXPRewarder(player).changeExp(reward_amount);
                                 } else {
                                     ItemStack is = new ItemStack(Material.valueOf(reward_type), reward_amount);
                                     Inventory inv = player.getInventory();
