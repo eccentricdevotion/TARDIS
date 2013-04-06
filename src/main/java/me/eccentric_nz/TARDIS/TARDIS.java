@@ -547,8 +547,10 @@ public class TARDIS extends JavaPlugin {
         HashMap<Material, String> map = new HashMap<Material, String>();
         Set<String> rooms = getConfig().getConfigurationSection("rooms").getKeys(false);
         for (String s : rooms) {
-            Material m = Material.valueOf(getConfig().getString("rooms." + s + ".seed"));
-            map.put(m, s);
+            if (getConfig().getBoolean("rooms." + s + ".enabled")) {
+                Material m = Material.valueOf(getConfig().getString("rooms." + s + ".seed"));
+                map.put(m, s);
+            }
         }
         return map;
     }
