@@ -1,6 +1,7 @@
 tardis:
   name: Get transport
   description: Create a TARDIS
+  required: 1
   reward_type: TARDIS
   reward_amount: 1
   enabled: true
@@ -11,6 +12,7 @@ tardis:
 rooms:
   name: Room freak
   description: Grow all room types
+  required: 1
   reward_type: XP
   reward_amount: 50
   enabled: true
@@ -21,6 +23,7 @@ rooms:
 kill:
   name: Lucky hunter
   description: Kill a charged creeper
+  required: 1
   reward_type: DIAMOND_HELMET
   reward_amount: 1
   enabled: true
@@ -30,7 +33,8 @@ kill:
   icon: BEACON
 energy:
   name: Power hungry
-  description: Overcharge the Artron Energy Capacitor by 1000%
+  description: Overcharge the Artron Energy Capacitor
+  required: 1000
   reward_type: XP
   reward_amount: 100
   enabled: true
@@ -40,7 +44,8 @@ energy:
   icon: REDSTONE_BLOCK
 friends:
   name: The host with the most
-  description: Add 10 companions to your TARDIS
+  description: Add companions to your TARDIS
+  required: 10
   reward_type: DIAMOND
   reward_amount: 3
   enabled: true
@@ -50,7 +55,8 @@ friends:
   icon: RED_ROSE
 travel:
   name: Got the travel bug
-  description: Travel 10,000 blocks in your TARDIS
+  description: Travel in your TARDIS
+  required: 10000
   reward_type: XP
   reward_amount: 50
   enabled: true
@@ -61,10 +67,11 @@ travel:
 farm:
   name: Old MacDonald had a farm
   description: Farm all allowed animal types
+  required: 1
   reward_type: XP
   reward_amount: 50
   enabled: true
   auto: true
   repeatable: false
-  message: Life of the party!
+  message: E-i-e-i-o!
   icon: WHEAT
