@@ -62,7 +62,7 @@ travel:
   enabled: true
   repeatable: true
   auto: true
-  message: Life of the party!
+  message: There and back again!
   icon: DIAMOND_BLOCK
 farm:
   name: Old MacDonald had a farm
