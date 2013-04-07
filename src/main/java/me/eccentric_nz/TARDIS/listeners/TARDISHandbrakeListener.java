@@ -19,6 +19,7 @@ package me.eccentric_nz.TARDIS.listeners;
 import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants.COMPASS;
+import me.eccentric_nz.TARDIS.achievement.TARDISAchievementFactory;
 import me.eccentric_nz.TARDIS.artron.TARDISArtronLevels;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
@@ -93,6 +94,7 @@ public class TARDISHandbrakeListener implements Listener {
                         Action action = event.getAction();
                         BlockState state = block.getState();
                         Lever lever = (Lever) state.getData();
+                        int dist = 0;
                         if (action == Action.RIGHT_CLICK_BLOCK) {
                             if (rs.isHandbrake_on()) {
                                 if (plugin.tardisHasDestination.containsKey(Integer.valueOf(id)) && exit != null) {
@@ -126,6 +128,11 @@ public class TARDISHandbrakeListener implements Listener {
                                             handbrake_locw.playSound(handbrake_loc, Sound.MINECART_INSIDE, 1, 0);
                                         } catch (ClassNotFoundException e) {
                                             handbrake_locw.playEffect(handbrake_loc, Effect.BLAZE_SHOOT, 0);
+                                        }
+                                    }
+                                    if (plugin.ayml.getBoolean("travel.enabled")) {
+                                        if (l.getWorld().equals(exit.getWorld())) {
+                                            dist = (int) l.distance(exit);
                                         }
                                     }
                                 } else {
@@ -173,6 +180,10 @@ public class TARDISHandbrakeListener implements Listener {
                             HashMap<String, Object> whereh = new HashMap<String, Object>();
                             whereh.put("tardis_id", id);
                             qf.doUpdate("tardis", set, whereh);
+                            if (dist > 0 && plugin.ayml.getBoolean("travel.enabled")) {
+                                TARDISAchievementFactory taf = new TARDISAchievementFactory(plugin, player, "travel", 1);
+                                taf.doAchievement(dist);
+                            }
                         }
                     } else {
                         player.sendMessage(plugin.pluginName + "You cannot change the handbrake while the TARDIS is in the time vortex!");
