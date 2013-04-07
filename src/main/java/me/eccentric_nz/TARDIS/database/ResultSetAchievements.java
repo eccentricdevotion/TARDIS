@@ -28,8 +28,10 @@ import java.util.Map;
 import me.eccentric_nz.TARDIS.TARDIS;
 
 /**
- * Many facts, figures, and formulas are contained within the Matrix,
- * including... an easy way to retrieve a saved time travel location.
+ * Chronomium was a time-active element that displaced time around it. In its
+ * unprocessed form, chronomium slowed down time around it. In its refined
+ * state, it could be used to accelerate time, achieve time travel, and protect
+ * against temporal fields.
  *
  * @author eccentric_nz
  */

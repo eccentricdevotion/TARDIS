@@ -29,6 +29,10 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
 /**
+ * Rassilon was the founder of Time Lord civilisation and perhaps the single
+ * greatest figure of Gallifreyan history. He was generally considered the first
+ * Time Lord. Rassilon brought the Eye of Harmony, actually the singularity of a
+ * black hole, to Gallifrey. He invented TARDISes.
  *
  * @author eccentric_nz
  */
