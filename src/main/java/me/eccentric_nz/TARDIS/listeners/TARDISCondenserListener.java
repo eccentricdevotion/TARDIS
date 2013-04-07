@@ -18,6 +18,7 @@ package me.eccentric_nz.TARDIS.listeners;
 
 import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.achievement.TARDISAchievementFactory;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.artron.TARDISCondensables;
@@ -49,7 +50,7 @@ public class TARDISCondenserListener implements Listener {
     }
 
     /**
-     * Listens for player interaction with the TARDIS condensor chest. When the
+     * Listens for player interaction with the TARDIS condenser chest. When the
      * chest is closed, any DIRT, SAND, GRAVEL, COBBLESTONE or ROTTEN FLESH is
      * converted to Artron Energy at a ratio of 1:1.
      */
@@ -109,6 +110,19 @@ public class TARDISCondenserListener implements Listener {
                 String message;
                 if (amount > 0) {
                     message = "You condensed the molecules of the universe itself into " + amount + " artron energy!";
+                    // are we doing an achievement?
+                    if (plugin.ayml.getBoolean("energy.enabled")) {
+                        // determine the current percentage
+                        int current_level = rs.getArtron_level() + amount;
+                        int fc = plugin.getConfig().getInt("full_charge");
+                        int percent = Math.round((current_level * 100F) / fc);
+                        TARDISAchievementFactory taf = new TARDISAchievementFactory(plugin, player, "energy", 1);
+                        if (percent >= plugin.ayml.getInt("energy.required")) {
+                            taf.doAchievement(percent);
+                        } else {
+                            taf.doAchievement(Math.round((amount * 100F) / fc));
+                        }
+                    }
                 } else {
                     message = "There were no valid materials to condense!";
                 }
