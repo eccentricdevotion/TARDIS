@@ -29,6 +29,7 @@ import java.util.Locale;
 import java.util.Map;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
+import me.eccentric_nz.TARDIS.achievement.TARDISAchievementFactory;
 import me.eccentric_nz.TARDIS.builders.TARDISChameleonCircuit;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetCondenser;
@@ -922,6 +923,11 @@ public class TARDISCommands implements CommandExecutor {
                             }
                             qf.doUpdate("tardis", set, tid);
                             player.sendMessage(plugin.pluginName + "You added " + ChatColor.GREEN + args[1] + ChatColor.RESET + " as a TARDIS companion.");
+                            // are we doing an achievement?
+                            if (plugin.ayml.getBoolean("friends.enabled")) {
+                                TARDISAchievementFactory taf = new TARDISAchievementFactory(plugin, player, "friends", 1);
+                                taf.doAchievement(1);
+                            }
                             return true;
                         }
                     } else {
