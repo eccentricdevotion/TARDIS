@@ -19,6 +19,7 @@ package me.eccentric_nz.TARDIS.listeners;
 import com.onarandombox.MultiverseCore.MultiverseCore;
 import com.onarandombox.MultiverseCore.api.MultiverseWorld;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Random;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
@@ -29,6 +30,7 @@ import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.thirdparty.Version;
 import me.eccentric_nz.TARDIS.travel.TARDISFarmer;
+import me.eccentric_nz.TARDIS.travel.TARDISPet;
 import me.eccentric_nz.TARDIS.utility.TARDISItemRenamer;
 import multiworld.MultiWorldPlugin;
 import multiworld.api.MultiWorldAPI;
@@ -43,7 +45,12 @@ import org.bukkit.Sound;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
+import org.bukkit.entity.EntityType;
+import org.bukkit.entity.LivingEntity;
+import org.bukkit.entity.Ocelot;
 import org.bukkit.entity.Player;
+import org.bukkit.entity.Tameable;
+import org.bukkit.entity.Wolf;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -334,6 +341,7 @@ public class TARDISDoorListener implements Listener {
                                             wherei.put("tardis_id", id);
                                             ResultSetDoors rsi = new ResultSetDoors(plugin, wherei, false);
                                             if (rsi.resultSet()) {
+                                                List<TARDISPet> pets = null;
                                                 TARDISConstants.COMPASS innerD = rsi.getDoor_direction();
                                                 String doorLocStr = rsi.getDoor_location();
                                                 String[] split = doorLocStr.split(":");
@@ -373,7 +381,7 @@ public class TARDISDoorListener implements Listener {
                                                 // check for entities in the police box
                                                 if (plugin.getConfig().getBoolean("allow_mob_farming") && player.hasPermission("tardis.farm")) {
                                                     TARDISFarmer tf = new TARDISFarmer(plugin);
-                                                    tf.farmAnimals(block_loc, d, id, player);
+                                                    pets = tf.farmAnimals(block_loc, d, id, player);
                                                 }
                                                 // enter TARDIS!
                                                 try {
@@ -404,6 +412,9 @@ public class TARDISDoorListener implements Listener {
                                                 tmp_loc.setYaw(yaw);
                                                 final Location tardis_loc = tmp_loc;
                                                 movePlayer(player, tardis_loc, false, playerWorld, userQuotes);
+                                                if (pets != null) {
+                                                    movePets(pets, tardis_loc, player);
+                                                }
                                                 // put player into travellers table
                                                 HashMap<String, Object> set = new HashMap<String, Object>();
                                                 set.put("tardis_id", id);
@@ -498,6 +509,30 @@ public class TARDISDoorListener implements Listener {
             }
         }
         return bool;
+    }
+
+    private void movePets(List<TARDISPet> p, Location l, Player player) {
+        Location pl = l.clone();
+        World w = l.getWorld();
+        pl.setX(l.getX() + 1);
+        pl.setZ(l.getZ() + 1);
+        for (TARDISPet pet : p) {
+            plugin.myspawn = true;
+            LivingEntity ent = (LivingEntity) w.spawnEntity(pl, pet.getType());
+            ent.setTicksLived(pet.getAge());
+            ((Tameable) ent).setTamed(true);
+            ((Tameable) ent).setOwner(player);
+            if (pet.getType().equals(EntityType.WOLF)) {
+                ((Wolf) ent).setCollarColor(pet.getCollar());
+                ((Wolf) ent).setSitting(pet.getSitting());
+                ((Wolf) ent).setHealth(pet.getHealth());
+            } else {
+                ((Ocelot) ent).setCatType(pet.getCatType());
+                ((Ocelot) ent).setSitting(pet.getSitting());
+                ((Ocelot) ent).setHealth(pet.getHealth());
+            }
+        }
+        p.clear();
     }
 
     @SuppressWarnings("deprecation")

@@ -28,7 +28,11 @@ import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
+import org.bukkit.entity.LivingEntity;
+import org.bukkit.entity.Ocelot;
 import org.bukkit.entity.Player;
+import org.bukkit.entity.Tameable;
+import org.bukkit.entity.Wolf;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
@@ -47,16 +51,21 @@ public class TARDISFarmer {
     }
 
     /**
-     * Checks whether there are any animals inside the TARDIS Police Box. If
-     * mobs are present they are teleported to the 'farm' room (if present),
+     * Checks whether there are any animals around the TARDIS Police Box. If
+     * mobs are found they are teleported to the 'farm' room (if present),
      * otherwise a spawn egg for the mob type is placed in the player's
-     * inventory. Only cows, sheep, pigs and chickens will be processed.
+     * inventory. Only cows, sheep, pigs, chickens and mooshrooms will be
+     * processed.
      *
-     * @param l The location to check for farm animals. This will be the current
+     * Also allows players to teleport their pets (tamed wolves and ocelots)
+     * with them.
+     *
+     * @param l The location to check for animals. This will be the current
      * location of the TARDIS Police Box.
      * @param id The database key of the TARDIS.
      */
-    public void farmAnimals(Location l, COMPASS d, int id, Player p) {
+    public List<TARDISPet> farmAnimals(Location l, COMPASS d, int id, Player p) {
+        List<TARDISPet> old_macd_had_a_pet = new ArrayList<TARDISPet>();
         switch (d) {
             case NORTH:
                 l.setZ(l.getZ() - 1);
@@ -117,6 +126,29 @@ public class TARDISFarmer {
                         old_macd_had_a_mooshroom.add(e);
                         if (taf != null) {
                             taf.doAchievement("MUSHROOM_COW");
+                        }
+                        break;
+                    case WOLF:
+                    case OCELOT:
+                        Tameable tamed = (Tameable) e;
+                        if (tamed.isTamed() && tamed.getOwner().getName().equals(p.getName())) {
+                            TARDISPet pet = new TARDISPet();
+                            pet.setType(e.getType());
+                            pet.setAge(e.getTicksLived());
+                            int health;
+                            if (e.getType().equals(EntityType.WOLF)) {
+                                pet.setSitting(((Wolf) e).isSitting());
+                                pet.setCollar(((Wolf) e).getCollarColor());
+                                health = (((Wolf) e).getHealth() > 8) ? 8 : ((Wolf) e).getHealth();
+                                pet.setHealth(health);
+                            } else {
+                                pet.setSitting(((Ocelot) e).isSitting());
+                                pet.setCatType(((Ocelot) e).getCatType());
+                                health = (((Ocelot) e).getHealth() > 8) ? 8 : ((Ocelot) e).getHealth();
+                                pet.setHealth(health);
+                            }
+                            old_macd_had_a_pet.add(pet);
+                            e.remove();
                         }
                         break;
                     default:
@@ -234,5 +266,6 @@ public class TARDISFarmer {
             }
         }
         ent.remove();
+        return old_macd_had_a_pet;
     }
 }
