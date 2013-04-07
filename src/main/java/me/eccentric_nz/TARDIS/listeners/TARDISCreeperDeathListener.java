@@ -18,6 +18,7 @@ package me.eccentric_nz.TARDIS.listeners;
 
 import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.achievement.TARDISAchievementFactory;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
@@ -81,6 +82,11 @@ public class TARDISCreeperDeathListener implements Listener {
                             qf.doUpdate("player_prefs", set, wherea);
                         }
                         p.sendMessage(plugin.pluginName + "You received " + amount + " Artron Energy for killing a charged creeper!");
+                        // are we doing an achievement?
+                        if (plugin.ayml.getBoolean("kill.enabled")) {
+                            TARDISAchievementFactory taf = new TARDISAchievementFactory(plugin, p, "kill", 1);
+                            taf.doAchievement(1);
+                        }
                     }
                 }
             }
