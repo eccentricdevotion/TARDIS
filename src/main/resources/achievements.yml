@@ -56,7 +56,7 @@ friends:
 travel:
   name: Got the travel bug
   description: Travel in your TARDIS
-  required: 10000
+  required: 100000
   reward_type: XP
   reward_amount: 50
   enabled: true
