@@ -112,12 +112,14 @@ public class TARDISBookCommands implements CommandExecutor {
                             sender.sendMessage(plugin.pluginName + "You have already started this achievement!");
                             return true;
                         }
-                        HashMap<String, Object> set = new HashMap<String, Object>();
-                        set.put("player", player.getName());
-                        set.put("name", bookname);
-                        QueryFactory qf = new QueryFactory(plugin);
-                        qf.doInsert("achievements", set);
                     }
+                    HashMap<String, Object> set = new HashMap<String, Object>();
+                    set.put("player", player.getName());
+                    set.put("name", bookname);
+                    QueryFactory qf = new QueryFactory(plugin);
+                    qf.doInsert("achievements", set);
+                    sender.sendMessage(plugin.pluginName + "Achievement '" + bookname + "' started!");
+                    return true;
                 }
             }
         }
