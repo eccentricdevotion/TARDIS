@@ -213,7 +213,9 @@ public class TARDISAdminCommands implements CommandExecutor {
                                     Set<String> roomNames = plugin.getConfig().getConfigurationSection("rooms").getKeys(false);
                                     for (String r : roomNames) {
                                         sender.sendMessage("      " + ChatColor.GREEN + r + ":");
+                                        sender.sendMessage("            enabled: " + plugin.getConfig().getString("rooms." + r + ".enabled"));
                                         sender.sendMessage("            cost: " + plugin.getConfig().getString("rooms." + r + ".cost"));
+                                        sender.sendMessage("            offset: " + plugin.getConfig().getString("rooms." + r + ".offset"));
                                         sender.sendMessage("            seed: " + plugin.getConfig().getString("rooms." + r + ".seed"));
                                     }
                                 }
