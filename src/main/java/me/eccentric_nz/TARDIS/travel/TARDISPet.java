@@ -32,6 +32,7 @@ public class TARDISPet {
     int health;
     boolean sitting;
     DyeColor collar;
+    String name;
 
     public TARDISPet() {
     }
@@ -82,5 +83,13 @@ public class TARDISPet {
 
     public void setCollar(DyeColor collar) {
         this.collar = collar;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }

@@ -28,6 +28,8 @@ import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
+import static org.bukkit.entity.EntityType.OCELOT;
+import static org.bukkit.entity.EntityType.WOLF;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Ocelot;
 import org.bukkit.entity.Player;
@@ -135,6 +137,7 @@ public class TARDISFarmer {
                             TARDISPet pet = new TARDISPet();
                             pet.setType(e.getType());
                             pet.setAge(e.getTicksLived());
+                            pet.setName(((LivingEntity) e).getCustomName());
                             int health;
                             if (e.getType().equals(EntityType.WOLF)) {
                                 pet.setSitting(((Wolf) e).isSitting());
@@ -266,6 +269,43 @@ public class TARDISFarmer {
             }
         }
         ent.remove();
+        return old_macd_had_a_pet;
+    }
+
+    public List<TARDISPet> exitPets(Player p) {
+        List<TARDISPet> old_macd_had_a_pet = new ArrayList<TARDISPet>();
+        Entity ent = (Entity) p;
+        List<Entity> mobs = ent.getNearbyEntities(3.5D, 3.5D, 3.5D);
+        for (Entity e : mobs) {
+            switch (e.getType()) {
+                case WOLF:
+                case OCELOT:
+                    Tameable tamed = (Tameable) e;
+                    if (tamed.isTamed() && tamed.getOwner().getName().equals(p.getName())) {
+                        TARDISPet pet = new TARDISPet();
+                        pet.setType(e.getType());
+                        pet.setAge(e.getTicksLived());
+                        pet.setName(((LivingEntity) e).getCustomName());
+                        int health;
+                        if (e.getType().equals(EntityType.WOLF)) {
+                            pet.setSitting(((Wolf) e).isSitting());
+                            pet.setCollar(((Wolf) e).getCollarColor());
+                            health = (((Wolf) e).getHealth() > 8) ? 8 : ((Wolf) e).getHealth();
+                            pet.setHealth(health);
+                        } else {
+                            pet.setSitting(((Ocelot) e).isSitting());
+                            pet.setCatType(((Ocelot) e).getCatType());
+                            health = (((Ocelot) e).getHealth() > 8) ? 8 : ((Ocelot) e).getHealth();
+                            pet.setHealth(health);
+                        }
+                        old_macd_had_a_pet.add(pet);
+                        e.remove();
+                    }
+                    break;
+                default:
+                    break;
+            }
+        }
         return old_macd_had_a_pet;
     }
 }
