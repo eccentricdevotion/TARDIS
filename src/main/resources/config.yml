@@ -149,3 +149,6 @@ inventory_group: 0
 add_perms: true
 allow_mob_farming: true
 allow_autonomous: true
+malfunction: 3
+malfunction_end: 3
+malfunction_nether: 3
