@@ -241,6 +241,7 @@ public class TARDISDoorListener implements Listener {
                                     } else {
                                         userQuotes = true;
                                     }
+                                    List<TARDISPet> pets = null;
                                     if (doortype == 1) {
                                         // always exit to current location
                                         Location exitLoc = plugin.utils.getLocationFromDB(current, yaw, pitch);
@@ -295,6 +296,13 @@ public class TARDISDoorListener implements Listener {
                                                 playerWorld.playEffect(block_loc, Effect.DOOR_TOGGLE, 0);
                                             }
                                             movePlayer(player, exitTardis, true, playerWorld, userQuotes);
+                                            if (plugin.getConfig().getBoolean("allow_mob_farming") && player.hasPermission("tardis.farm")) {
+                                                TARDISFarmer tf = new TARDISFarmer(plugin);
+                                                pets = tf.exitPets(player);
+                                                if (pets != null && pets.size() > 0) {
+                                                    movePets(pets, exitTardis, player);
+                                                }
+                                            }
                                             // remove player from traveller table
                                             HashMap<String, Object> wherd = new HashMap<String, Object>();
                                             wherd.put("player", playerNameStr);
@@ -341,7 +349,6 @@ public class TARDISDoorListener implements Listener {
                                             wherei.put("tardis_id", id);
                                             ResultSetDoors rsi = new ResultSetDoors(plugin, wherei, false);
                                             if (rsi.resultSet()) {
-                                                List<TARDISPet> pets = null;
                                                 TARDISConstants.COMPASS innerD = rsi.getDoor_direction();
                                                 String doorLocStr = rsi.getDoor_location();
                                                 String[] split = doorLocStr.split(":");
@@ -412,7 +419,7 @@ public class TARDISDoorListener implements Listener {
                                                 tmp_loc.setYaw(yaw);
                                                 final Location tardis_loc = tmp_loc;
                                                 movePlayer(player, tardis_loc, false, playerWorld, userQuotes);
-                                                if (pets != null) {
+                                                if (pets != null && pets.size() > 0) {
                                                     movePets(pets, tardis_loc, player);
                                                 }
                                                 // put player into travellers table
@@ -514,22 +521,26 @@ public class TARDISDoorListener implements Listener {
     private void movePets(List<TARDISPet> p, Location l, Player player) {
         Location pl = l.clone();
         World w = l.getWorld();
+        // will need to adjust this depending on direction Police Box is facing
         pl.setX(l.getX() + 1);
         pl.setZ(l.getZ() + 1);
         for (TARDISPet pet : p) {
             plugin.myspawn = true;
             LivingEntity ent = (LivingEntity) w.spawnEntity(pl, pet.getType());
             ent.setTicksLived(pet.getAge());
+            ent.setCustomName(pet.getName());
+            ent.setCustomNameVisible(true);
+            ent.setHealth(pet.getHealth());
             ((Tameable) ent).setTamed(true);
             ((Tameable) ent).setOwner(player);
             if (pet.getType().equals(EntityType.WOLF)) {
-                ((Wolf) ent).setCollarColor(pet.getCollar());
-                ((Wolf) ent).setSitting(pet.getSitting());
-                ((Wolf) ent).setHealth(pet.getHealth());
+                Wolf wolf = (Wolf) ent;
+                wolf.setCollarColor(pet.getCollar());
+                wolf.setSitting(pet.getSitting());
             } else {
-                ((Ocelot) ent).setCatType(pet.getCatType());
-                ((Ocelot) ent).setSitting(pet.getSitting());
-                ((Ocelot) ent).setHealth(pet.getHealth());
+                Ocelot cat = (Ocelot) ent;
+                cat.setCatType(pet.getCatType());
+                cat.setSitting(pet.getSitting());
             }
         }
         p.clear();

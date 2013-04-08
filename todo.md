@@ -3,7 +3,6 @@
 ## Current version `2.2-beta`
 1. Add video/docs for custom rooms/books/achievements
 2. Allow random chance of TARDIS malfunction which deposits player in some unexpected place
-3. Get pets to follow you out of the TARDIS
 
 ## Future version `2.3+`
 1. Allow companions to enter and exit the tardis at will (and steal it).
