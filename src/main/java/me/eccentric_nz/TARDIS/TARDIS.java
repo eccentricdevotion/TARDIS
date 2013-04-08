@@ -600,16 +600,18 @@ public class TARDIS extends JavaPlugin {
                 String line;
                 while ((line = br.readLine()) != null) {
                     String[] split = line.split(":");
-                    World w = getServer().getWorld(split[0]);
-                    int x = 0, z = 0;
-                    try {
-                        x = Integer.parseInt(split[1]);
-                        z = Integer.parseInt(split[2]);
-                    } catch (NumberFormatException nfe) {
+                    if (split.length == 3) {
+                        World w = getServer().getWorld(split[0]);
+                        int x = 0, z = 0;
+                        try {
+                            x = Integer.parseInt(split[1]);
+                            z = Integer.parseInt(split[2]);
+                        } catch (NumberFormatException nfe) {
+                        }
+                        Chunk c = w.getChunkAt(x, z);
+                        tardisChunkList.add(c);
+                        c.load();
                     }
-                    Chunk c = w.getChunkAt(x, z);
-                    tardisChunkList.add(c);
-                    c.load();
                 }
                 br.close();
                 debug("Loading chunks from chunks.txt!");
