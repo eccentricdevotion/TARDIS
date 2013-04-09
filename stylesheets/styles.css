@@ -231,7 +231,10 @@ blockquote {
 img {
   max-width: 100%;
 }
-
+img.icon {
+	width: 25px;
+	height: 25px;
+}
 code, pre {
   font-family: Monaco, Bitstream Vera Sans Mono, Lucida Console, Terminal;
   color: #333;
