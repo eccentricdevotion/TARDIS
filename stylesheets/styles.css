@@ -354,3 +354,26 @@ footer p + p {
     content: 'at http://github.com/';
   }
 }
+.data {
+	width: 105px;
+	height: 85px;
+	float: left;
+	padding: 8px 0 5px 0;
+	margin: 0 15px 0 0;
+	border-bottom: 1px solid #aaa;
+	font-size: 12px;
+}
+.info {
+	width: 210px;
+	background-color: #b2d2e1;
+	border: 1px solid #aaa;
+	padding: 12px;
+}
+.info table {
+	border-left: 1px solid #aaa;
+	border-top: 1px solid #aaa;
+}
+.info td {
+	border-right: 1px solid #aaa;
+	text-align: center;
+}
