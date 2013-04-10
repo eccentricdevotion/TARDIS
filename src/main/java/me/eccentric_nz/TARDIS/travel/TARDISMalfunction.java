@@ -85,11 +85,13 @@ public class TARDISMalfunction {
     }
 
     public void doMalfunction(Location l) {
+        plugin.debug("Starting malfunction");
         HashMap<String, Object> where = new HashMap<String, Object>();
         where.put("tardis_id", id);
         ResultSetLamps rsl = new ResultSetLamps(plugin, where, true);
         List<Block> lamps = new ArrayList<Block>();
         if (rsl.resultSet()) {
+            plugin.debug("Getting lamps");
             // flicker lights
             ArrayList<HashMap<String, String>> data = rsl.getData();
             for (HashMap<String, String> map : data) {
@@ -98,7 +100,7 @@ public class TARDISMalfunction {
             }
             final long start = System.currentTimeMillis() + 5000;
             TARDISLampsRunnable runnable = new TARDISLampsRunnable(plugin, lamps, start);
-            int taskID = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, runnable, 1L, 5L);
+            int taskID = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, runnable, 1L, 10L);
             runnable.setTask(taskID);
             // play tardis crash sound
             if (plugin.pm.getPlugin("Spout") != null && SpoutManager.getPlayer(p).isSpoutCraftEnabled()) {

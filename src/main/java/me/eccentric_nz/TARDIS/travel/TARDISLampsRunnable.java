@@ -43,13 +43,16 @@ public class TARDISLampsRunnable implements Runnable {
     @Override
     public void run() {
         for (Block b : lamps) {
-            if (b.getType() == Material.REDSTONE_LAMP_ON) {
-                b.setType(Material.REDSTONE_LAMP_OFF);
-            } else {
+            if (b.getType() == Material.REDSTONE_LAMP_OFF) {
                 b.setType(Material.REDSTONE_LAMP_ON);
+                plugin.debug("on");
+            } else {
+                b.setType(Material.REDSTONE_LAMP_OFF);
+                plugin.debug("off");
             }
         }
         if (System.currentTimeMillis() > start) {
+            plugin.debug("Cancelling malfunction...");
             // set all lamps back to on
             for (Block b : lamps) {
                 b.setType(Material.REDSTONE_LAMP_ON);
