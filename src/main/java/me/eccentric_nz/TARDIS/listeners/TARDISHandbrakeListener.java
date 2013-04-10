@@ -23,6 +23,7 @@ import me.eccentric_nz.TARDIS.achievement.TARDISAchievementFactory;
 import me.eccentric_nz.TARDIS.artron.TARDISArtronLevels;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
+import me.eccentric_nz.TARDIS.travel.TARDISMalfunction;
 import org.bukkit.Chunk;
 import org.bukkit.Effect;
 import org.bukkit.Location;
@@ -98,10 +99,34 @@ public class TARDISHandbrakeListener implements Listener {
                         if (action == Action.RIGHT_CLICK_BLOCK) {
                             if (rs.isHandbrake_on()) {
                                 if (plugin.tardisHasDestination.containsKey(Integer.valueOf(id)) && exit != null) {
-                                    // Changes the lever to off.
-                                    lever.setPowered(false);
-                                    state.setData(lever);
-                                    state.update();
+                                    boolean malfunction = false;
+                                    if (plugin.getConfig().getInt("malfunction") > 0) {
+                                        // check for a malfunction
+                                        TARDISMalfunction m = new TARDISMalfunction(plugin, id, player, d);
+                                        malfunction = m.isMalfunction();
+                                        if (malfunction) {
+                                            exit = m.getMalfunction();
+                                        }
+                                        if (plugin.tardisHasDestination.containsKey(Integer.valueOf(id))) {
+                                            QueryFactory qf = new QueryFactory(plugin);
+                                            int amount = plugin.tardisHasDestination.get(id) * -1;
+                                            HashMap<String, Object> wheret = new HashMap<String, Object>();
+                                            wheret.put("tardis_id", id);
+                                            qf.alterEnergyLevel("tardis", amount, wheret, player);
+                                            if (!player.getName().equals(owner)) {
+                                                Player ptl = plugin.getServer().getPlayer(owner);
+                                                if (ptl != null) {
+                                                    ptl.sendMessage(plugin.pluginName + "Are you sure you know how to fly this thing!");
+                                                }
+                                            }
+                                        }
+                                    }
+                                    if (!malfunction) {
+                                        // Changes the lever to off.
+                                        lever.setPowered(false);
+                                        state.setData(lever);
+                                        state.update();
+                                    }
                                     // Removes Blue Box and loads chunk if it unloaded somehow.
                                     if (!exit.getWorld().isChunkLoaded(exit.getChunk())) {
                                         exit.getWorld().loadChunk(exit.getChunk());
@@ -116,18 +141,20 @@ public class TARDISHandbrakeListener implements Listener {
                                     if (plugin.tardisChunkList.contains(oldChunk)) {
                                         plugin.tardisChunkList.remove(oldChunk);
                                     }
-                                    // Sets database and sends the player/world message/sounds.
-                                    set.put("current", save);
-                                    set.put("handbrake_on", 0);
-                                    player.sendMessage(plugin.pluginName + "Handbrake OFF! Entering the time vortex...");
-                                    if (plugin.pm.getPlugin("Spout") != null && SpoutManager.getPlayer(player).isSpoutCraftEnabled()) {
-                                        SpoutManager.getSoundManager().playGlobalCustomSoundEffect(plugin, "https://dl.dropbox.com/u/53758864/tardis_land.mp3", false, handbrake_loc, 20, 75);
-                                    } else {
-                                        try {
-                                            Class.forName("org.bukkit.Sound");
-                                            handbrake_locw.playSound(handbrake_loc, Sound.MINECART_INSIDE, 1, 0);
-                                        } catch (ClassNotFoundException e) {
-                                            handbrake_locw.playEffect(handbrake_loc, Effect.BLAZE_SHOOT, 0);
+                                    if (!malfunction) {
+                                        // Sets database and sends the player/world message/sounds.
+                                        set.put("current", save);
+                                        set.put("handbrake_on", 0);
+                                        player.sendMessage(plugin.pluginName + "Handbrake OFF! Entering the time vortex...");
+                                        if (plugin.pm.getPlugin("Spout") != null && SpoutManager.getPlayer(player).isSpoutCraftEnabled()) {
+                                            SpoutManager.getSoundManager().playGlobalCustomSoundEffect(plugin, "https://dl.dropbox.com/u/53758864/tardis_land.mp3", false, handbrake_loc, 20, 75);
+                                        } else {
+                                            try {
+                                                Class.forName("org.bukkit.Sound");
+                                                handbrake_locw.playSound(handbrake_loc, Sound.MINECART_INSIDE, 1, 0);
+                                            } catch (ClassNotFoundException e) {
+                                                handbrake_locw.playEffect(handbrake_loc, Effect.BLAZE_SHOOT, 0);
+                                            }
                                         }
                                     }
                                     if (plugin.ayml.getBoolean("travel.enabled")) {
