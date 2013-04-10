@@ -106,18 +106,14 @@ public class TARDISHandbrakeListener implements Listener {
                                         malfunction = m.isMalfunction();
                                         if (malfunction) {
                                             exit = m.getMalfunction();
-                                        }
-                                        if (plugin.tardisHasDestination.containsKey(Integer.valueOf(id))) {
-                                            QueryFactory qf = new QueryFactory(plugin);
-                                            int amount = plugin.tardisHasDestination.get(id) * -1;
-                                            HashMap<String, Object> wheret = new HashMap<String, Object>();
-                                            wheret.put("tardis_id", id);
-                                            qf.alterEnergyLevel("tardis", amount, wheret, player);
-                                            if (!player.getName().equals(owner)) {
-                                                Player ptl = plugin.getServer().getPlayer(owner);
-                                                if (ptl != null) {
-                                                    ptl.sendMessage(plugin.pluginName + "Are you sure you know how to fly this thing!");
-                                                }
+                                            save = exit.getWorld().getName() + ":" + exit.getBlockX() + ":" + exit.getBlockY() + ":" + exit.getBlockZ();
+                                            if (plugin.tardisHasDestination.containsKey(Integer.valueOf(id))) {
+                                                QueryFactory qf = new QueryFactory(plugin);
+                                                int amount = plugin.tardisHasDestination.get(id) * -1;
+                                                HashMap<String, Object> wheret = new HashMap<String, Object>();
+                                                wheret.put("tardis_id", id);
+                                                qf.alterEnergyLevel("tardis", amount, wheret, player);
+                                                player.sendMessage(plugin.pluginName + "Are you sure you know how to fly this thing!");
                                             }
                                         }
                                     }
@@ -141,9 +137,9 @@ public class TARDISHandbrakeListener implements Listener {
                                     if (plugin.tardisChunkList.contains(oldChunk)) {
                                         plugin.tardisChunkList.remove(oldChunk);
                                     }
+                                    set.put("current", save);
                                     if (!malfunction) {
                                         // Sets database and sends the player/world message/sounds.
-                                        set.put("current", save);
                                         set.put("handbrake_on", 0);
                                         player.sendMessage(plugin.pluginName + "Handbrake OFF! Entering the time vortex...");
                                         if (plugin.pm.getPlugin("Spout") != null && SpoutManager.getPlayer(player).isSpoutCraftEnabled()) {
