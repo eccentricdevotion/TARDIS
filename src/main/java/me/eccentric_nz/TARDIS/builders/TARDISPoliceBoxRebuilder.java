@@ -29,11 +29,9 @@ import org.bukkit.block.Block;
 import org.bukkit.block.Sign;
 
 /**
- * A police box is a telephone kiosk that can be used by members of the public
- * wishing to get help from the police. Early in the First Doctor's travels, the
- * TARDIS assumed the exterior shape of a police box during a five-month
- * stopover in 1963 London. Due a malfunction in its chameleon circuit, the
- * TARDIS became locked into that shape.
+ * The fault locator was a component of the TARDIS. It was located in the
+ * computer banks lining the console room wall. It was used to detect the source
+ * of malfunctions on the ship.
  *
  * @author eccentric_nz
  */

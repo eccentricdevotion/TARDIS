@@ -33,11 +33,9 @@ import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Player;
 
 /**
- * A police box is a telephone kiosk that can be used by members of the public
- * wishing to get help from the police. Early in the First Doctor's travels, the
- * TARDIS assumed the exterior shape of a police box during a five-month
- * stopover in 1963 London. Due a malfunction in its chameleon circuit, the
- * TARDIS became locked into that shape.
+ * The Wibbly lever was a part of The Doctor's TARDIS console. The lever had at
+ * least two functions: opening and closing doors and controlling implosions
+ * used to revert paradoxes in which the TARDIS had materialised within itself.
  *
  * @author eccentric_nz
  */
