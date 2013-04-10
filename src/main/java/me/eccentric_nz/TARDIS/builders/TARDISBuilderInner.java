@@ -296,6 +296,14 @@ public class TARDISBuilderInner {
                             if (id == 124) {
                                 Block lamp = world.getBlockAt(startx, starty, startz);
                                 lampblocks.add(lamp);
+                                if (plugin.getConfig().getInt("malfunction") > 0) {
+                                    // remember lamp block locations
+                                    HashMap<String, Object> setlb = new HashMap<String, Object>();
+                                    String lloc = world.getName() + ":" + startx + ":" + starty + ":" + startz;
+                                    setlb.put("tardis_id", dbID);
+                                    setlb.put("location", lloc);
+                                    qf.doInsert("lamps", setlb);
+                                }
                             }
                             if (id == 35 && data == 1) {
                                 switch (middle_id) {
