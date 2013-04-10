@@ -144,6 +144,9 @@ public class TARDISAdminCommands implements CommandExecutor {
         firstsInt.add("timeout_height");
         firstsInt.add("tp_radius");
         firstsInt.add("travel");
+        firstsInt.add("malfunction");
+        firstsInt.add("malfunction_end");
+        firstsInt.add("malfunction_nether");
 
         String[] v = Bukkit.getServer().getBukkitVersion().split("-");
         bukkitversion = (!v[0].equalsIgnoreCase("unknown")) ? new Version(v[0]) : new Version("1.4.7");

@@ -153,6 +153,9 @@ public class TARDISConfiguration {
         intOptions.put("timeout_height", 135);
         intOptions.put("tp_radius", 256);
         intOptions.put("travel", 100);
+        intOptions.put("malfunction", 3);
+        intOptions.put("malfunction_end", 3);
+        intOptions.put("malfunction_nether", 3);
         // string
         strOptions.put("default_world_name", "myridiculouslylongworldnameiscalledcuthbert");
         strOptions.put("gamemode", "survival");
