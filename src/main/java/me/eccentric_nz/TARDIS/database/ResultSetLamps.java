@@ -80,7 +80,7 @@ public class ResultSetLamps {
             }
             wheres = " WHERE " + sbw.toString().substring(0, sbw.length() - 5);
         }
-        String query = "SELECT * FROM blocks" + wheres;
+        String query = "SELECT * FROM lamps" + wheres;
         try {
             statement = connection.prepareStatement(query);
             if (where != null) {
