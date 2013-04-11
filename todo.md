@@ -2,10 +2,9 @@
  
 ## Current version `2.2-beta`
 1. Add video/docs for custom rooms/books/achievements
-2. Allow random chance of TARDIS malfunction which deposits player in some unexpected place - DONE, just need to make lights flicker...
-3. Add config option for `exile` - must be `true` to enable the feature - hopefully this will stop retarded server owners from complaining that the plugin doesn't work because they haven't set up their permissions correctly…
-4. Add per world travel permissions + config option
-5. Find a *simple* way to not remove the TARDIS Police Box if it is already hidden
+2. Add config option for `exile` - must be `true` to enable the feature - hopefully this will stop retarded server owners from complaining that the plugin doesn't work because they haven't set up their permissions correctly…
+3. Add per world travel permissions + config option
+4. Find a *simple* way to not remove the TARDIS Police Box if it is already hidden
 
 ## Future version `2.3+`
 1. Allow companions to enter and exit the tardis at will (and steal it).
