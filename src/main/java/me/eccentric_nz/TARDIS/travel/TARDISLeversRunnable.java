@@ -17,45 +17,62 @@
 package me.eccentric_nz.TARDIS.travel;
 
 import java.util.List;
+import java.util.Random;
 import me.eccentric_nz.TARDIS.TARDIS;
-import org.bukkit.Material;
+import org.bukkit.Effect;
+import org.bukkit.Location;
 import org.bukkit.block.Block;
+import org.bukkit.block.BlockState;
+import org.bukkit.material.Lever;
 
 /**
- * Phosphor lamps are used for lighting. They use electron excitation; when
+ * Phosphor levers are used for lighting. They use electron excitation; when
  * shaken, they grew brighter.
  *
  * @author eccentric_nz
  */
-public class TARDISLampsRunnable implements Runnable {
+public class TARDISLeversRunnable implements Runnable {
 
     private final TARDIS plugin;
-    private final List<Block> lamps;
+    private final List<Block> levers;
     private final long start;
     private int task;
+    private Location handbrake;
+    private Random rand = new Random();
 
-    public TARDISLampsRunnable(TARDIS plugin, List<Block> lamps, long start) {
+    public TARDISLeversRunnable(TARDIS plugin, List<Block> levers, long start) {
         this.plugin = plugin;
-        this.lamps = lamps;
+        this.levers = levers;
         this.start = start;
     }
 
     @Override
     public void run() {
-        for (Block b : lamps) {
-            if (b.getType() == Material.REDSTONE_LAMP_OFF) {
-                b.setType(Material.REDSTONE_LAMP_ON);
-                plugin.debug("on");
-            } else {
-                b.setType(Material.REDSTONE_LAMP_OFF);
+        plugin.debug(handbrake.getWorld().getName());
+        // play smoke effect
+        for (int j = 0; j < 9; j++) {
+            handbrake.getWorld().playEffect(handbrake, Effect.SMOKE, j);
+        }
+        for (Block b : levers) {
+            BlockState state = b.getState();
+            Lever l = (Lever) state.getData();
+            if (l.isPowered()) {
+                l.setPowered(false);
                 plugin.debug("off");
+            } else {
+                l.setPowered(true);
+                plugin.debug("on");
             }
+            state.setData(l);
+            state.update();
         }
         if (System.currentTimeMillis() > start) {
             plugin.debug("Cancelling malfunction...");
-            // set all lamps back to on
-            for (Block b : lamps) {
-                b.setType(Material.REDSTONE_LAMP_ON);
+            // set all levers back to on
+            for (Block b : levers) {
+                BlockState state = b.getState();
+                Lever l = (Lever) state.getData();
+                l.setPowered(true);
             }
             plugin.getServer().getScheduler().cancelTask(task);
         }
@@ -63,5 +80,9 @@ public class TARDISLampsRunnable implements Runnable {
 
     public void setTask(int task) {
         this.task = task;
+    }
+
+    public void setHandbrake(Location handbrake) {
+        this.handbrake = handbrake;
     }
 }

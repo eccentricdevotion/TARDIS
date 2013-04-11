@@ -39,6 +39,8 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.material.Lever;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 import org.getspout.spoutapi.SpoutManager;
 
 /**
@@ -102,7 +104,7 @@ public class TARDISHandbrakeListener implements Listener {
                                     boolean malfunction = false;
                                     if (plugin.getConfig().getInt("malfunction") > 0) {
                                         // check for a malfunction
-                                        TARDISMalfunction m = new TARDISMalfunction(plugin, id, player, d);
+                                        TARDISMalfunction m = new TARDISMalfunction(plugin, id, player, d, handbrake_loc);
                                         malfunction = m.isMalfunction();
                                         if (malfunction) {
                                             exit = m.getMalfunction();
@@ -114,7 +116,21 @@ public class TARDISHandbrakeListener implements Listener {
                                                 wheret.put("tardis_id", id);
                                                 qf.alterEnergyLevel("tardis", amount, wheret, player);
                                                 player.sendMessage(plugin.pluginName + "Are you sure you know how to fly this thing!");
+                                                plugin.tardisHasDestination.remove(Integer.valueOf(id));
                                             }
+                                            // play tardis crash sound
+                                            if (plugin.pm.getPlugin("Spout") != null && SpoutManager.getPlayer(player).isSpoutCraftEnabled()) {
+                                                SpoutManager.getSoundManager().playGlobalCustomSoundEffect(plugin, "https://dl.dropbox.com/u/53758864/tardis_emergency_land.mp3", false, handbrake_loc, 20, 75);
+                                            } else {
+                                                try {
+                                                    Class.forName("org.bukkit.Sound");
+                                                    handbrake_loc.getWorld().playSound(handbrake_loc, Sound.MINECART_INSIDE, 1, 0);
+                                                } catch (ClassNotFoundException e) {
+                                                    handbrake_loc.getWorld().playEffect(handbrake_loc, Effect.BLAZE_SHOOT, 0);
+                                                }
+                                            }
+                                            // add a potion effect to the player
+                                            player.addPotionEffect(new PotionEffect(PotionEffectType.CONFUSION, 150, 5));
                                         }
                                     }
                                     if (!malfunction) {

@@ -36,7 +36,7 @@ import me.eccentric_nz.TARDIS.TARDIS;
  *
  * @author eccentric_nz
  */
-public class ResultSetLamps {
+public class ResultSetLevers {
 
     private TARDISDatabase service = TARDISDatabase.getInstance();
     private Connection connection = service.getConnection();
@@ -58,7 +58,7 @@ public class ResultSetLamps {
      * @param multiple a boolean indicating whether multiple rows should be
      * fetched
      */
-    public ResultSetLamps(TARDIS plugin, HashMap<String, Object> where, boolean multiple) {
+    public ResultSetLevers(TARDIS plugin, HashMap<String, Object> where, boolean multiple) {
         this.plugin = plugin;
         this.where = where;
         this.multiple = multiple;
@@ -80,7 +80,7 @@ public class ResultSetLamps {
             }
             wheres = " WHERE " + sbw.toString().substring(0, sbw.length() - 5);
         }
-        String query = "SELECT * FROM lamps" + wheres;
+        String query = "SELECT * FROM levers" + wheres;
         try {
             statement = connection.prepareStatement(query);
             if (where != null) {

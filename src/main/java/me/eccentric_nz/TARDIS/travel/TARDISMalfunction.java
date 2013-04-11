@@ -22,15 +22,17 @@ import java.util.List;
 import java.util.Random;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
-import me.eccentric_nz.TARDIS.database.ResultSetLamps;
-import org.bukkit.Effect;
+import me.eccentric_nz.TARDIS.database.ResultSetLevers;
 import org.bukkit.Location;
-import org.bukkit.Sound;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
-import org.getspout.spoutapi.SpoutManager;
 
 /**
+ * The Dalek Asylum was a snowy and mountainous planet used by the Daleks as a
+ * prison and "dumping ground" for those among them who had malfunctioned, gone
+ * insane and/or become mentally scarred by battles. The sane Daleks left their
+ * insane fellows in the Asylum rather than kill them because they epitomised
+ * the Dalek concept of beauty: pure hatred.
  *
  * @author eccentric_nz
  */
@@ -40,13 +42,15 @@ public class TARDISMalfunction {
     private int id;
     private Player p;
     private TARDISConstants.COMPASS dir;
+    private Location handbrake;
     private Random rand;
 
-    public TARDISMalfunction(TARDIS plugin, int id, Player p, TARDISConstants.COMPASS dir) {
+    public TARDISMalfunction(TARDIS plugin, int id, Player p, TARDISConstants.COMPASS dir, Location handbrake) {
         this.plugin = plugin;
         this.id = id;
         this.p = p;
         this.dir = dir;
+        this.handbrake = handbrake;
         this.rand = new Random();
     }
 
@@ -88,31 +92,21 @@ public class TARDISMalfunction {
         plugin.debug("Starting malfunction");
         HashMap<String, Object> where = new HashMap<String, Object>();
         where.put("tardis_id", id);
-        ResultSetLamps rsl = new ResultSetLamps(plugin, where, true);
-        List<Block> lamps = new ArrayList<Block>();
+        ResultSetLevers rsl = new ResultSetLevers(plugin, where, true);
+        List<Block> levers = new ArrayList<Block>();
         if (rsl.resultSet()) {
-            plugin.debug("Getting lamps");
+            plugin.debug("Getting levers");
             // flicker lights
             ArrayList<HashMap<String, String>> data = rsl.getData();
             for (HashMap<String, String> map : data) {
                 Location loc = plugin.utils.getLocationFromDB(map.get("location"), 0.0F, 0.0F);
-                lamps.add(loc.getBlock());
+                levers.add(loc.getBlock());
             }
-            final long start = System.currentTimeMillis() + 5000;
-            TARDISLampsRunnable runnable = new TARDISLampsRunnable(plugin, lamps, start);
-            int taskID = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, runnable, 1L, 10L);
+            final long start = System.currentTimeMillis() + 15000;
+            TARDISLeversRunnable runnable = new TARDISLeversRunnable(plugin, levers, start);
+            int taskID = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, runnable, 10L, 10L);
             runnable.setTask(taskID);
-            // play tardis crash sound
-            if (plugin.pm.getPlugin("Spout") != null && SpoutManager.getPlayer(p).isSpoutCraftEnabled()) {
-                SpoutManager.getSoundManager().playGlobalCustomSoundEffect(plugin, "https://dl.dropbox.com/u/53758864/tardis_emergency_land.mp3", false, l, 20, 75);
-            } else {
-                try {
-                    Class.forName("org.bukkit.Sound");
-                    l.getWorld().playSound(l, Sound.MINECART_INSIDE, 1, 0);
-                } catch (ClassNotFoundException e) {
-                    l.getWorld().playEffect(l, Effect.BLAZE_SHOOT, 0);
-                }
-            }
+            runnable.setHandbrake(handbrake);
         }
     }
 }
