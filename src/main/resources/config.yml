@@ -126,6 +126,8 @@ rooms:
     cost: 350
     offset: -1
     seed: GRAVEL
+rooms_require_blocks: false
+rooms_condenser_percent: 100
 #artron energy
 player: 25
 random: 75
@@ -147,3 +149,8 @@ inventory_group: 0
 add_perms: true
 allow_mob_farming: true
 allow_autonomous: true
+malfunction: 3
+malfunction_end: 3
+malfunction_nether: 3
+exile: false
+per_world_perms: false
