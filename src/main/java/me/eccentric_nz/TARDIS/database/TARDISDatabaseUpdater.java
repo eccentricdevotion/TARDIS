@@ -51,25 +51,26 @@ public class TARDISDatabaseUpdater {
         doorupdates.add("locked INTEGER DEFAULT 0");
         gravityupdates.add("distance INTEGER DEFAULT 11");
         gravityupdates.add("velocity REAL DEFAULT 0.5");
-        prefsupdates.add("key TEXT DEFAULT ''");
         prefsupdates.add("artron_level INTEGER DEFAULT 0");
-        prefsupdates.add("wall TEXT DEFAULT 'ORANGE_WOOL'");
-        prefsupdates.add("floor TEXT DEFAULT 'LIGHT_GREY_WOOL'");
         prefsupdates.add("auto_on INTEGER DEFAULT 0");
+        prefsupdates.add("floor TEXT DEFAULT 'LIGHT_GREY_WOOL'");
+        prefsupdates.add("key TEXT DEFAULT ''");
+        prefsupdates.add("wall TEXT DEFAULT 'ORANGE_WOOL'");
         tardisupdates.add("artron_button TEXT DEFAULT ''");
         tardisupdates.add("artron_level INTEGER DEFAULT 0");
-        tardisupdates.add("chameleon_id INTEGER DEFAULT 35");
         tardisupdates.add("chameleon_data INTEGER DEFAULT 11");
+        tardisupdates.add("chameleon_id INTEGER DEFAULT 35");
         tardisupdates.add("condenser TEXT DEFAULT ''");
         tardisupdates.add("creeper TEXT DEFAULT ''");
+        tardisupdates.add("farm TEXT DEFAULT ''");
         tardisupdates.add("handbrake TEXT DEFAULT ''");
         tardisupdates.add("handbrake_on INTEGER DEFAULT 1");
+        tardisupdates.add("hidden INTEGER DEFAULT 0");
         tardisupdates.add("middle_data INTEGER");
         tardisupdates.add("middle_id INTEGER");
         tardisupdates.add("recharging INTEGER DEFAULT 0");
         tardisupdates.add("scanner TEXT DEFAULT ''");
         tardisupdates.add("tardis_init INTEGER DEFAULT 0");
-        tardisupdates.add("farm TEXT DEFAULT ''");
     }
 
     /**

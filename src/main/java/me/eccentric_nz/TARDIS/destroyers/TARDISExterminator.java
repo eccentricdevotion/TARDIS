@@ -134,9 +134,11 @@ public class TARDISExterminator {
                 int signy = -2;
                 // if the sign was on the TARDIS destroy the TARDIS!
                 if (sign_loc.getBlockX() == bb_loc.getBlockX() + signx && sign_loc.getBlockY() + signy == bb_loc.getBlockY() && sign_loc.getBlockZ() == bb_loc.getBlockZ() + signz) {
-                    // clear the torch
-                    plugin.destroyPB.destroyTorch(bb_loc);
-                    plugin.destroyPB.destroySign(bb_loc, d);
+                    if (!rs.isHidden()) {
+                        // clear the torch
+                        plugin.destroyPB.destroyTorch(bb_loc);
+                        plugin.destroyPB.destroySign(bb_loc, d);
+                    }
                     // also remove the location of the chunk from chunks table
                     String[] chunkworld = chunkLoc.split(":");
                     World cw = plugin.getServer().getWorld(chunkworld[0]);
@@ -159,7 +161,9 @@ public class TARDISExterminator {
                     if (!cw.getName().contains("TARDIS_WORLD_")) {
                         plugin.destroyI.destroyInner(schm, id, cw, restore, playerNameStr);
                     }
-                    plugin.destroyPB.destroyPoliceBox(bb_loc, d, id, false);
+                    if (!rs.isHidden()) {
+                        plugin.destroyPB.destroyPoliceBox(bb_loc, d, id, false);
+                    }
                     // remove record from tardis table
                     HashMap<String, Object> tid = new HashMap<String, Object>();
                     tid.put("tardis_id", id);

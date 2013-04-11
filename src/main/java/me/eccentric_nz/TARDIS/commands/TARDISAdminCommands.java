@@ -454,7 +454,6 @@ public class TARDISAdminCommands implements CommandExecutor {
                     ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
                     if (rs.resultSet()) {
                         int id = rs.getTardis_id();
-                        String saveLoc = rs.getSave();
                         String currentLoc = rs.getCurrent();
                         TARDISConstants.SCHEMATIC schm = rs.getSchematic();
                         TARDISConstants.COMPASS d = rs.getDirection();
@@ -481,7 +480,6 @@ public class TARDISAdminCommands implements CommandExecutor {
                         HashMap<String, Object> wheret = new HashMap<String, Object>();
                         wheret.put("tardis_id", id);
                         ResultSetTravellers rst = new ResultSetTravellers(plugin, wheret, true);
-                        boolean useCurrent = false;
                         QueryFactory qf = new QueryFactory(plugin);
                         HashMap<String, Object> whered = new HashMap<String, Object>();
                         whered.put("tardis_id", id);
@@ -531,9 +529,11 @@ public class TARDISAdminCommands implements CommandExecutor {
                         } else {
                             plugin.destroyI.destroyInner(schm, id, cw, restore, args[1]);
                         }
-                        plugin.destroyPB.destroyTorch(bb_loc);
-                        plugin.destroyPB.destroySign(bb_loc, d);
-                        plugin.destroyPB.destroyPoliceBox(bb_loc, d, id, false);
+                        if (!rs.isHidden()) {
+                            plugin.destroyPB.destroyTorch(bb_loc);
+                            plugin.destroyPB.destroySign(bb_loc, d);
+                            plugin.destroyPB.destroyPoliceBox(bb_loc, d, id, false);
+                        }
                         // delete the TARDIS from the db
                         HashMap<String, Object> wherec = new HashMap<String, Object>();
                         wherec.put("tardis_id", id);

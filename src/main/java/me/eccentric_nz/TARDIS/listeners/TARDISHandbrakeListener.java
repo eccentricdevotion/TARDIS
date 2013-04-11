@@ -145,9 +145,11 @@ public class TARDISHandbrakeListener implements Listener {
                                     }
                                     exit.getWorld().refreshChunk(exit.getChunk().getX(), exit.getChunk().getZ());
                                     Location l = plugin.utils.getLocationFromDB(cl, 0, 0);
-                                    plugin.destroyPB.destroyTorch(l);
-                                    plugin.destroyPB.destroySign(l, d);
-                                    plugin.destroyPB.destroyPoliceBox(l, d, id, false);
+                                    if (!rs.isHidden()) {
+                                        plugin.destroyPB.destroyTorch(l);
+                                        plugin.destroyPB.destroySign(l, d);
+                                        plugin.destroyPB.destroyPoliceBox(l, d, id, false);
+                                    }
                                     plugin.buildPB.buildPoliceBox(id, exit, d, cham, player, false);
                                     Chunk oldChunk = l.getChunk();
                                     if (plugin.tardisChunkList.contains(oldChunk)) {
