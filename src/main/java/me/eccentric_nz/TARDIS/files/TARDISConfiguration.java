@@ -67,6 +67,7 @@ public class TARDISConfiguration {
         boolOptions.put("materialise", true);
         boolOptions.put("name_tardis", false);
         boolOptions.put("nether", false);
+        boolOptions.put("per_world_perms", false);
         boolOptions.put("platform", false);
         boolOptions.put("respect_factions", true);
         boolOptions.put("respect_towny", true);

@@ -45,6 +45,15 @@ public class TARDISPluginRespect {
      */
     public boolean getRespect(Player p, Location l, boolean message) {
         boolean bool = true;
+        if (plugin.getConfig().getBoolean("per_world_perms")) {
+            String perm = l.getWorld().getName();
+            if (!p.hasPermission("tardis.travel." + perm)) {
+                if (message) {
+                    p.sendMessage(plugin.pluginName + "You do not have permission to travel to " + perm + "!");
+                }
+                bool = false;
+            }
+        }
         if (!plugin.getConfig().getBoolean("nether") && l.getWorld().getEnvironment().equals(Environment.NETHER)) {
             if (message) {
                 p.sendMessage(plugin.pluginName + "Time travel to the Nether is disabled!");

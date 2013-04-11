@@ -116,6 +116,7 @@ public class TARDISAdminCommands implements CommandExecutor {
         firstsBool.add("materialise");
         firstsBool.add("name_tardis");
         firstsBool.add("nether");
+        firstsBool.add("per_world_perms");
         firstsBool.add("platform");
         firstsBool.add("respect_factions");
         firstsBool.add("respect_towny");
