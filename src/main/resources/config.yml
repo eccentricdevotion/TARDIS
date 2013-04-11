@@ -152,3 +152,4 @@ allow_autonomous: true
 malfunction: 3
 malfunction_end: 3
 malfunction_nether: 3
+exile: false

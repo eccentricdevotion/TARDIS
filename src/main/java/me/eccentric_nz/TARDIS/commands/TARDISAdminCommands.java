@@ -108,6 +108,7 @@ public class TARDISAdminCommands implements CommandExecutor {
         firstsBool.add("create_worlds");
         firstsBool.add("debug");
         firstsBool.add("default_world");
+        firstsBool.add("exile");
         firstsBool.add("give_key");
         firstsBool.add("include_default_world");
         firstsBool.add("keep_night");

@@ -59,6 +59,7 @@ public class TARDISConfiguration {
         boolOptions.put("create_worlds", true);
         boolOptions.put("debug", false);
         boolOptions.put("default_world", false);
+        boolOptions.put("exile", false);
         boolOptions.put("give_key", false);
         boolOptions.put("include_default_world", false);
         boolOptions.put("keep_night", true);

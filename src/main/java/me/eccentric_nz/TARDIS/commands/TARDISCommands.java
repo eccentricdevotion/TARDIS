@@ -529,7 +529,7 @@ public class TARDISCommands implements CommandExecutor {
                         if (!respect.getRespect(player, eyeLocation, true)) {
                             return true;
                         }
-                        if (player.hasPermission("tardis.exile")) {
+                        if (player.hasPermission("tardis.exile") && plugin.getConfig().getBoolean("exile")) {
                             String areaPerm = plugin.ta.getExileArea(player);
                             if (plugin.ta.areaCheckInExile(areaPerm, eyeLocation)) {
                                 sender.sendMessage(plugin.pluginName + "You exile status does not allow you to bring the TARDIS to this location!");
@@ -1117,7 +1117,7 @@ public class TARDISCommands implements CommandExecutor {
                             if (!respect.getRespect(player, l, true)) {
                                 return true;
                             }
-                            if (player.hasPermission("tardis.exile")) {
+                            if (player.hasPermission("tardis.exile") && plugin.getConfig().getBoolean("exile")) {
                                 String areaPerm = plugin.ta.getExileArea(player);
                                 if (plugin.ta.areaCheckInExile(areaPerm, l)) {
                                     sender.sendMessage(plugin.pluginName + "You exile status does not allow you to save the TARDIS to this location!");

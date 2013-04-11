@@ -117,7 +117,7 @@ public class TARDISButtonListener implements Listener {
                             QueryFactory qf = new QueryFactory(plugin);
                             // how many travellers are in the TARDIS?
                             plugin.utils.updateTravellerCount(id);
-                            if (player.hasPermission("tardis.exile")) {
+                            if (player.hasPermission("tardis.exile") && plugin.getConfig().getBoolean("exile")) {
                                 // get the exile area
                                 String permArea = plugin.ta.getExileArea(player);
                                 player.sendMessage(plugin.pluginName + ChatColor.RED + " Notice:" + ChatColor.RESET + " Your travel has been restricted to the [" + permArea + "] area!");
