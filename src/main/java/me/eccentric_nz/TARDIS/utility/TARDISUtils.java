@@ -72,9 +72,13 @@ public class TARDISUtils {
                 m = m + 256;
             }
         }
-        if (m == 92) {
+        if (m == 92) { //cake -> handbrake
             m = 69;
             d = (byte) 5;
+        }
+        if (m == 52) { //mob spawner -> scanner button
+            m = (bukkitversion.compareTo(prewoodbuttonversion) < 0) ? 77 : 143;
+            d = (byte) 3;
         }
         b.setTypeIdAndData(m, d, true);
     }

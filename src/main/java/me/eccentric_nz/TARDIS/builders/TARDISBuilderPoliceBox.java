@@ -33,11 +33,9 @@ import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Player;
 
 /**
- * A police box is a telephone kiosk that can be used by members of the public
- * wishing to get help from the police. Early in the First Doctor's travels, the
- * TARDIS assumed the exterior shape of a police box during a five-month
- * stopover in 1963 London. Due a malfunction in its chameleon circuit, the
- * TARDIS became locked into that shape.
+ * The Wibbly lever was a part of The Doctor's TARDIS console. The lever had at
+ * least two functions: opening and closing doors and controlling implosions
+ * used to revert paradoxes in which the TARDIS had materialised within itself.
  *
  * @author eccentric_nz
  */
@@ -60,7 +58,7 @@ public class TARDISBuilderPoliceBox {
      * @param rebuild boolean determining whether the Police Box blocks should
      * be remembered in the database for protection purposes.
      */
-    public void buildPoliceBox(int id, Location l, TARDISConstants.COMPASS d, boolean c, Player p, boolean rebuild) {
+    public void buildPoliceBox(int id, Location l, TARDISConstants.COMPASS d, boolean c, Player p, boolean rebuild, boolean mal) {
         int plusx, minusx, x, y, plusz, minusz, z, wall_block = 35;
         byte grey = 8, chameleonData = 11;
         if (c) {
@@ -107,12 +105,12 @@ public class TARDISBuilderPoliceBox {
         } else {
             if (plugin.getConfig().getBoolean("materialise")) {
                 plugin.tardisMaterialising.add(id);
-                TARDISMaterialisationRunnable runnable = new TARDISMaterialisationRunnable(plugin, l, wall_block, chameleonData, id, d, p);
+                TARDISMaterialisationRunnable runnable = new TARDISMaterialisationRunnable(plugin, l, wall_block, chameleonData, id, d, p, mal);
                 int taskID = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, runnable, 10L, 20L);
                 runnable.setTask(taskID);
             } else {
                 plugin.tardisMaterialising.add(id);
-                TARDISInstaPoliceBox insta = new TARDISInstaPoliceBox(plugin, l, wall_block, chameleonData, id, d);
+                TARDISInstaPoliceBox insta = new TARDISInstaPoliceBox(plugin, l, wall_block, chameleonData, id, d, mal);
                 insta.buildPoliceBox();
             }
         }

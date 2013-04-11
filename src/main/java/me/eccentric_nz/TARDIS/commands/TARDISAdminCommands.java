@@ -108,6 +108,7 @@ public class TARDISAdminCommands implements CommandExecutor {
         firstsBool.add("create_worlds");
         firstsBool.add("debug");
         firstsBool.add("default_world");
+        firstsBool.add("exile");
         firstsBool.add("give_key");
         firstsBool.add("include_default_world");
         firstsBool.add("keep_night");
@@ -115,11 +116,13 @@ public class TARDISAdminCommands implements CommandExecutor {
         firstsBool.add("materialise");
         firstsBool.add("name_tardis");
         firstsBool.add("nether");
+        firstsBool.add("per_world_perms");
         firstsBool.add("platform");
         firstsBool.add("respect_factions");
         firstsBool.add("respect_towny");
         firstsBool.add("respect_worldborder");
         firstsBool.add("respect_worldguard");
+        firstsBool.add("rooms_require_blocks");
         firstsBool.add("sfx");
         firstsBool.add("the_end");
         firstsBool.add("use_worldguard");
@@ -137,11 +140,15 @@ public class TARDISAdminCommands implements CommandExecutor {
         firstsInt.add("player");
         firstsInt.add("random");
         firstsInt.add("recharge_distance");
+        firstsInt.add("rooms_condenser_percent");
         firstsInt.add("the_end_min");
         firstsInt.add("timeout");
         firstsInt.add("timeout_height");
         firstsInt.add("tp_radius");
         firstsInt.add("travel");
+        firstsInt.add("malfunction");
+        firstsInt.add("malfunction_end");
+        firstsInt.add("malfunction_nether");
 
         String[] v = Bukkit.getServer().getBukkitVersion().split("-");
         bukkitversion = (!v[0].equalsIgnoreCase("unknown")) ? new Version(v[0]) : new Version("1.4.7");
@@ -211,7 +218,9 @@ public class TARDISAdminCommands implements CommandExecutor {
                                     Set<String> roomNames = plugin.getConfig().getConfigurationSection("rooms").getKeys(false);
                                     for (String r : roomNames) {
                                         sender.sendMessage("      " + ChatColor.GREEN + r + ":");
+                                        sender.sendMessage("            enabled: " + plugin.getConfig().getString("rooms." + r + ".enabled"));
                                         sender.sendMessage("            cost: " + plugin.getConfig().getString("rooms." + r + ".cost"));
+                                        sender.sendMessage("            offset: " + plugin.getConfig().getString("rooms." + r + ".offset"));
                                         sender.sendMessage("            seed: " + plugin.getConfig().getString("rooms." + r + ".seed"));
                                     }
                                 }
@@ -446,7 +455,6 @@ public class TARDISAdminCommands implements CommandExecutor {
                     ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
                     if (rs.resultSet()) {
                         int id = rs.getTardis_id();
-                        String saveLoc = rs.getSave();
                         String currentLoc = rs.getCurrent();
                         TARDISConstants.SCHEMATIC schm = rs.getSchematic();
                         TARDISConstants.COMPASS d = rs.getDirection();
@@ -473,14 +481,12 @@ public class TARDISAdminCommands implements CommandExecutor {
                         HashMap<String, Object> wheret = new HashMap<String, Object>();
                         wheret.put("tardis_id", id);
                         ResultSetTravellers rst = new ResultSetTravellers(plugin, wheret, true);
-                        boolean useCurrent = false;
                         QueryFactory qf = new QueryFactory(plugin);
                         HashMap<String, Object> whered = new HashMap<String, Object>();
                         whered.put("tardis_id", id);
-                        if (rst.resultSet() || plugin.tardisHasDestination.containsKey(id)) {
-                            useCurrent = true;
+                        if (rst.resultSet()) {
                             Location spawn;
-                            if (name.contains("TARDIS_WORLD_")) {
+                            if (name.contains("TARDIS_WORLD_") || plugin.getConfig().getBoolean("default_world")) {
                                 spawn = plugin.getServer().getWorlds().get(0).getSpawnLocation();
                             } else {
                                 spawn = cw.getSpawnLocation();
@@ -494,13 +500,13 @@ public class TARDISAdminCommands implements CommandExecutor {
                             qf.doDelete("travellers", whered);
                         }
                         // need to determine if we use the save location or the current location
-                        Location bb_loc = (useCurrent) ? plugin.utils.getLocationFromDB(currentLoc, 0, 0) : plugin.utils.getLocationFromDB(saveLoc, 0, 0);
+                        Location bb_loc = plugin.utils.getLocationFromDB(currentLoc, 0, 0);
                         if (bb_loc == null) {
                             sender.sendMessage(plugin.pluginName + "Could not get the location of the TARDIS!");
                             return true;
                         }
                         // destroy the TARDIS
-                        if (plugin.getConfig().getBoolean("create_worlds") || name.contains("TARDIS_WORLD_")) {
+                        if ((plugin.getConfig().getBoolean("create_worlds") && !plugin.getConfig().getBoolean("default_world")) || name.contains("TARDIS_WORLD_")) {
                             // delete TARDIS world
                             List<Player> players = cw.getPlayers();
                             for (Player p : players) {
@@ -524,9 +530,11 @@ public class TARDISAdminCommands implements CommandExecutor {
                         } else {
                             plugin.destroyI.destroyInner(schm, id, cw, restore, args[1]);
                         }
-                        plugin.destroyPB.destroyTorch(bb_loc);
-                        plugin.destroyPB.destroySign(bb_loc, d);
-                        plugin.destroyPB.destroyPoliceBox(bb_loc, d, id, false);
+                        if (!rs.isHidden()) {
+                            plugin.destroyPB.destroyTorch(bb_loc);
+                            plugin.destroyPB.destroySign(bb_loc, d);
+                            plugin.destroyPB.destroyPoliceBox(bb_loc, d, id, false);
+                        }
                         // delete the TARDIS from the db
                         HashMap<String, Object> wherec = new HashMap<String, Object>();
                         wherec.put("tardis_id", id);
@@ -579,7 +587,7 @@ public class TARDISAdminCommands implements CommandExecutor {
                     plugin.getConfig().set("default_world_name", nodots);
                 }
                 if (first.equals("gamemode")) {
-                    if (!args[1].equalsIgnoreCase("creative") || !args[1].equalsIgnoreCase("survival")) {
+                    if (!args[1].equalsIgnoreCase("creative") && !args[1].equalsIgnoreCase("survival")) {
                         sender.sendMessage(plugin.pluginName + ChatColor.RED + "Gamemode must be creative or survival!");
                         return true;
                     }

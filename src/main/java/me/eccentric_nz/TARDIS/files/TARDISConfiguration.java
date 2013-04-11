@@ -59,6 +59,7 @@ public class TARDISConfiguration {
         boolOptions.put("create_worlds", true);
         boolOptions.put("debug", false);
         boolOptions.put("default_world", false);
+        boolOptions.put("exile", false);
         boolOptions.put("give_key", false);
         boolOptions.put("include_default_world", false);
         boolOptions.put("keep_night", true);
@@ -66,6 +67,7 @@ public class TARDISConfiguration {
         boolOptions.put("materialise", true);
         boolOptions.put("name_tardis", false);
         boolOptions.put("nether", false);
+        boolOptions.put("per_world_perms", false);
         boolOptions.put("platform", false);
         boolOptions.put("respect_factions", true);
         boolOptions.put("respect_towny", true);
@@ -93,6 +95,7 @@ public class TARDISConfiguration {
         boolOptions.put("rooms.VAULT.enabled", true);
         boolOptions.put("rooms.WOOD.enabled", true);
         boolOptions.put("rooms.WORKSHOP.enabled", true);
+        boolOptions.put("rooms_require_blocks", true);
         // integer
         intOptions.put("autonomous", 100);
         intOptions.put("border_radius", 64);
@@ -146,11 +149,15 @@ public class TARDISConfiguration {
         intOptions.put("rooms.VAULT.offset", -1);
         intOptions.put("rooms.WOOD.offset", -1);
         intOptions.put("rooms.WORKSHOP.offset", -1);
+        intOptions.put("rooms_condenser_percent", 100);
         intOptions.put("the_end_min", 5500);
         intOptions.put("timeout", 5);
         intOptions.put("timeout_height", 135);
         intOptions.put("tp_radius", 256);
         intOptions.put("travel", 100);
+        intOptions.put("malfunction", 3);
+        intOptions.put("malfunction_end", 3);
+        intOptions.put("malfunction_nether", 3);
         // string
         strOptions.put("default_world_name", "myridiculouslylongworldnameiscalledcuthbert");
         strOptions.put("gamemode", "survival");
@@ -210,6 +217,9 @@ public class TARDISConfiguration {
         if (!config.isConfigurationSection("rechargers")) {
             plugin.getConfig().createSection("rechargers");
             i++;
+        }
+        if (config.contains("rooms.FIRST")) {
+            plugin.getConfig().set("rooms.FIRST", null);
         }
         if (i > 0) {
             plugin.console.sendMessage(plugin.pluginName + "Added " + ChatColor.AQUA + i + ChatColor.RESET + " new items to config");

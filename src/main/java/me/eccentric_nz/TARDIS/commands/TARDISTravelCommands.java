@@ -130,7 +130,7 @@ public class TARDISTravelCommands implements CommandExecutor {
                 HashMap<String, Object> tid = new HashMap<String, Object>();
                 HashMap<String, Object> set = new HashMap<String, Object>();
                 tid.put("tardis_id", id);
-                if (player.hasPermission("tardis.exile")) {
+                if (player.hasPermission("tardis.exile") && plugin.getConfig().getBoolean("exile")) {
                     // get the exile area
                     String permArea = plugin.ta.getExileArea(player);
                     player.sendMessage(plugin.pluginName + ChatColor.RED + " Notice:" + ChatColor.RESET + " Your travel has been restricted to the [" + permArea + "] area!");
@@ -178,6 +178,10 @@ public class TARDISTravelCommands implements CommandExecutor {
                                 if (!respect.getRespect(player, player_loc, true)) {
                                     return true;
                                 }
+                                if (!plugin.getConfig().getBoolean("worlds." + player_loc.getWorld().getName())) {
+                                    sender.sendMessage(plugin.pluginName + "The server does not allow time travel to this world!");
+                                    return true;
+                                }
                                 String save_loc = player_loc.getWorld().getName() + ":" + (player_loc.getBlockX() - 3) + ":" + player_loc.getBlockY() + ":" + player_loc.getBlockZ();
                                 set.put("save", save_loc);
                                 qf.doUpdate("tardis", set, tid);
@@ -195,6 +199,7 @@ public class TARDISTravelCommands implements CommandExecutor {
                         // we're thinking this is a saved destination name
                         HashMap<String, Object> whered = new HashMap<String, Object>();
                         whered.put("dest_name", args[1]);
+                        whered.put("tardis_id", id);
                         ResultSetDestinations rsd = new ResultSetDestinations(plugin, whered, false);
                         if (!rsd.resultSet()) {
                             sender.sendMessage(plugin.pluginName + "Could not find a destination with that name! try using " + ChatColor.GREEN + "/TARDIS list saves" + ChatColor.RESET + " first.");
@@ -204,6 +209,10 @@ public class TARDISTravelCommands implements CommandExecutor {
                         World w = plugin.getServer().getWorld(rsd.getWorld());
                         if (w != null) {
                             Location save_dest = new Location(w, rsd.getX(), rsd.getY(), rsd.getZ());
+                            respect = new TARDISPluginRespect(plugin);
+                            if (!respect.getRespect(player, save_dest, true)) {
+                                return true;
+                            }
                             if (!plugin.ta.areaCheckInExisting(save_dest)) {
                                 // save is in a TARDIS area, so check that the spot is not occupied
                                 HashMap<String, Object> wheres = new HashMap<String, Object>();
@@ -266,8 +275,12 @@ public class TARDISTravelCommands implements CommandExecutor {
                             sender.sendMessage(plugin.pluginName + "Cannot find the specified world! Make sure you type it correctly.");
                             return true;
                         }
+                        if (!plugin.getConfig().getBoolean("worlds." + w.getName())) {
+                            sender.sendMessage(plugin.pluginName + "The server does not allow time travel to this world!");
+                            return true;
+                        }
                         if (!plugin.getConfig().getBoolean("include_default_world") && plugin.getConfig().getBoolean("default_world") && args[0].equals(plugin.getConfig().getString("default_world_name"))) {
-                            sender.sendMessage(plugin.pluginName + "The server admin does not allow time travel to this world!");
+                            sender.sendMessage(plugin.pluginName + "The server does not allow time travel to this world!");
                             return true;
                         }
                         x = plugin.utils.parseNum(args[1]);

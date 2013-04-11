@@ -117,7 +117,7 @@ public class TARDISButtonListener implements Listener {
                             QueryFactory qf = new QueryFactory(plugin);
                             // how many travellers are in the TARDIS?
                             plugin.utils.updateTravellerCount(id);
-                            if (player.hasPermission("tardis.exile")) {
+                            if (player.hasPermission("tardis.exile") && plugin.getConfig().getBoolean("exile")) {
                                 // get the exile area
                                 String permArea = plugin.ta.getExileArea(player);
                                 player.sendMessage(plugin.pluginName + ChatColor.RED + " Notice:" + ChatColor.RESET + " Your travel has been restricted to the [" + permArea + "] area!");
@@ -253,9 +253,6 @@ public class TARDISButtonListener implements Listener {
                                     wherel.put("tardis_id", id);
                                     qf.doUpdate("tardis", set, wherel);
                                     plugin.tardisHasDestination.put(id, plugin.getConfig().getInt("random"));
-//                                if (plugin.pm.getPlugin("Spout") != null && SpoutManager.getPlayer(player).isSpoutCraftEnabled() && playSound == true) {
-//                                    SpoutManager.getSoundManager().playCustomSoundEffect(plugin, SpoutManager.getPlayer(player), "https://dl.dropbox.com/u/53758864/tardis_takeoff.mp3", false, b, 9, 75);
-//                                }
                                 } else {
                                     player.sendMessage(plugin.pluginName + "Could not find a suitable location within the current settings, the area may be protected.");
                                 }

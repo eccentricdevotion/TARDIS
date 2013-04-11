@@ -21,7 +21,9 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import me.eccentric_nz.TARDIS.TARDIS;
 
 /**
@@ -35,7 +37,7 @@ public class TARDISbPermissionsHandler {
 
     private final TARDIS plugin;
     private File permissionsFile = null;
-    List<String> perms = new ArrayList<String>();
+    LinkedHashMap<String, List<String>> permgroups = new LinkedHashMap<String, List<String>>();
     String group;
 
     public TARDISbPermissionsHandler(TARDIS plugin) {
@@ -45,18 +47,18 @@ public class TARDISbPermissionsHandler {
 
     public void addPerms(String player) {
         BufferedReader bufRdr = null;
-        int i = 0;
         try {
             bufRdr = new BufferedReader(new FileReader(permissionsFile));
             String line;
             //read each line of text file
             while ((line = bufRdr.readLine()) != null) {
-                if (i == 0) {
-                    group = line.trim();
+                if (line.charAt(0) == '#') {
+                    group = line.substring(1).trim();
+                    permgroups.put(group, new ArrayList<String>());
                 } else {
-                    perms.add(line);
+                    List<String> perms = permgroups.get(group);
+                    perms.add(line.trim());
                 }
-                i++;
             }
         } catch (IOException io) {
             plugin.debug("Could not read perms file. " + io.getMessage());
@@ -70,12 +72,20 @@ public class TARDISbPermissionsHandler {
             }
         }
         plugin.getServer().dispatchCommand(plugin.console, "world TARDIS_WORLD_" + player);
-        plugin.getServer().dispatchCommand(plugin.console, "group " + group);
-        for (String p : perms) {
-            plugin.getServer().dispatchCommand(plugin.console, "group addperm " + p);
+        int i = 0;
+        for (Map.Entry<String, List<String>> entry : permgroups.entrySet()) {
+            String grpstr = entry.getKey();
+            List<String> perms = entry.getValue();
+            plugin.getServer().dispatchCommand(plugin.console, "group " + grpstr);
+            for (String p : perms) {
+                plugin.getServer().dispatchCommand(plugin.console, "group addperm " + p);
+            }
+            if (i == 0) {
+                plugin.getServer().dispatchCommand(plugin.console, "user " + player);
+                plugin.getServer().dispatchCommand(plugin.console, "user setgroup " + grpstr);
+            }
+            i++;
         }
-        plugin.getServer().dispatchCommand(plugin.console, "user " + player);
-        plugin.getServer().dispatchCommand(plugin.console, "user setgroup " + group);
         plugin.getServer().dispatchCommand(plugin.console, "permissions save");
         plugin.getServer().dispatchCommand(plugin.console, "permissions reload");
     }

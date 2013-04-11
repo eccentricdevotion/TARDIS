@@ -1,6 +1,8 @@
-tardis_users
+#first_group
 tardis.use
 tardis.room
 tardis.timetravel.player
 tardis.timetravel.location
 -tardis.exile
+#second_group
+tardis.enter

@@ -141,6 +141,7 @@ public class TARDISPrefsCommands implements CommandExecutor {
                         sender.sendMessage(plugin.pluginName + "You need to specify if " + pref + " should be on or off!");
                         return false;
                     }
+                    List<String> was = Arrays.asList(new String[]{"auto", "platform"});
                     // get the players preferences
                     HashMap<String, Object> where = new HashMap<String, Object>();
                     where.put("player", player.getName());
@@ -154,7 +155,7 @@ public class TARDISPrefsCommands implements CommandExecutor {
                     HashMap<String, Object> setp = new HashMap<String, Object>();
                     HashMap<String, Object> wherep = new HashMap<String, Object>();
                     wherep.put("player", player.getName());
-                    String grammar = (TARDISConstants.vowels.contains(pref.substring(0, 1))) ? " was" : " were";
+                    String grammar = (was.contains(pref)) ? " was" : " were";
                     if (args[1].equalsIgnoreCase("on")) {
                         setp.put(pref + "_on", 1);
                         sender.sendMessage(plugin.pluginName + pref + grammar + " turned ON!");

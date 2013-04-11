@@ -39,11 +39,11 @@ import org.jnbt.Tag;
  *
  * @author eccentric_nz
  */
-public class TARDISSchematicReader {
+public class TARDISInteriorSchematicReader {
 
     private TARDIS plugin;
 
-    public TARDISSchematicReader(TARDIS plugin) {
+    public TARDISInteriorSchematicReader(TARDIS plugin) {
         this.plugin = plugin;
     }
 
@@ -57,8 +57,8 @@ public class TARDISSchematicReader {
      * dimensions of the schematics are also stored for use by the TARDIS and
      * room builders.
      */
-    public void readAndMakeCSV(String fileStr, TARDISConstants.SCHEMATIC s, boolean rotate) {
-        plugin.console.sendMessage(plugin.pluginName + "Loading schematic: " + fileStr);
+    public void readAndMakeInteriorCSV(String fileStr, TARDISConstants.SCHEMATIC s) {
+        plugin.debug("Loading schematic: " + fileStr);
         FileInputStream fis = null;
         try {
             File f = new File(fileStr);
@@ -96,51 +96,6 @@ public class TARDISSchematicReader {
                     plugin.redstonedimensions[1] = width;
                     plugin.redstonedimensions[2] = length;
                     break;
-                case PASSAGE:
-                    plugin.passagedimensions[0] = height;
-                    plugin.passagedimensions[1] = width;
-                    plugin.passagedimensions[2] = length;
-                    break;
-                case ARBORETUM:
-                    plugin.arboretumdimensions[0] = height;
-                    plugin.arboretumdimensions[1] = width;
-                    plugin.arboretumdimensions[2] = length;
-                    break;
-                case POOL:
-                    plugin.pooldimensions[0] = height;
-                    plugin.pooldimensions[1] = width;
-                    plugin.pooldimensions[2] = length;
-                    break;
-                case GRAVITY:
-                    plugin.gravitydimensions[0] = height;
-                    plugin.gravitydimensions[1] = width;
-                    plugin.gravitydimensions[2] = length;
-                    break;
-                case ANTIGRAVITY:
-                    plugin.antigravitydimensions[0] = height;
-                    plugin.antigravitydimensions[1] = width;
-                    plugin.antigravitydimensions[2] = length;
-                    break;
-                case CROSS:
-                    plugin.crossdimensions[0] = height;
-                    plugin.crossdimensions[1] = width;
-                    plugin.crossdimensions[2] = length;
-                    break;
-                case GREENHOUSE:
-                    plugin.greenhousedimensions[0] = height;
-                    plugin.greenhousedimensions[1] = width;
-                    plugin.greenhousedimensions[2] = length;
-                    break;
-                case LONG:
-                    plugin.longdimensions[0] = height;
-                    plugin.longdimensions[1] = width;
-                    plugin.longdimensions[2] = length;
-                    break;
-                default:
-                    plugin.roomdimensions[0] = height;
-                    plugin.roomdimensions[1] = width;
-                    plugin.roomdimensions[2] = length;
-                    break;
             }
 
             byte[] blocks = (byte[]) getChildTag(tagCollection, "Blocks", ByteArrayTag.class).getValue();
@@ -164,13 +119,10 @@ public class TARDISSchematicReader {
                         j++;
                     }
                 }
-                if (rotate) {
-                    strarr = rotateSquareCCW(strarr);
-                }
                 layers.add(strarr);
             }
             try {
-                String csvFile = (rotate) ? fileStr + "_EW.csv" : fileStr + ".csv";
+                String csvFile = fileStr + ".csv";
                 File file = new File(csvFile);
                 BufferedWriter bw = new BufferedWriter(new FileWriter(file, false));
                 for (String[][] l : layers) {
@@ -199,34 +151,5 @@ public class TARDISSchematicReader {
                 }
             }
         }
-    }
-
-//    /**
-//     * Rotates a square 2D array 90 degrees clockwise.
-//     */
-//    private static String[][] rotateSquareCW(String[][] mat) {
-//        final int size = mat.length;
-//        String[][] out = new String[size][size];
-//        for (int r = 0; r < size; r++) {
-//            for (int c = 0; c < size; c++) {
-//                out[c][size - 1 - r] = mat[r][c];
-//            }
-//        }
-//        return out;
-//    }
-    /**
-     * Rotates a square 2D array 90 degrees counterclockwise. This is used for
-     * the (non-symmetrical) TARDIS passage ways so that they are built
-     * correctly in the EAST and WEST directions.
-     */
-    private String[][] rotateSquareCCW(String[][] mat) {
-        int size = mat.length;
-        String[][] out = new String[size][size];
-        for (int r = 0; r < size; r++) {
-            for (int c = 0; c < size; c++) {
-                out[r][c] = mat[c][size - r - 1];
-            }
-        }
-        return out;
     }
 }

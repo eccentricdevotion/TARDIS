@@ -18,6 +18,7 @@ package me.eccentric_nz.TARDIS.travel;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import org.bukkit.Location;
+import org.bukkit.World.Environment;
 import org.bukkit.entity.Player;
 
 /**
@@ -44,6 +45,39 @@ public class TARDISPluginRespect {
      */
     public boolean getRespect(Player p, Location l, boolean message) {
         boolean bool = true;
+        if (plugin.getConfig().getBoolean("per_world_perms")) {
+            String perm = l.getWorld().getName();
+            if (!p.hasPermission("tardis.travel." + perm)) {
+                if (message) {
+                    p.sendMessage(plugin.pluginName + "You do not have permission to travel to " + perm + "!");
+                }
+                bool = false;
+            }
+        }
+        if (!plugin.getConfig().getBoolean("nether") && l.getWorld().getEnvironment().equals(Environment.NETHER)) {
+            if (message) {
+                p.sendMessage(plugin.pluginName + "Time travel to the Nether is disabled!");
+            }
+            bool = false;
+        }
+        if (!p.hasPermission("tardis.nether") && l.getWorld().getEnvironment().equals(Environment.NETHER)) {
+            if (message) {
+                p.sendMessage(plugin.pluginName + "You do not have permission to time travel to the Nether!");
+            }
+            bool = false;
+        }
+        if (!plugin.getConfig().getBoolean("the_end") && l.getWorld().getEnvironment().equals(Environment.THE_END)) {
+            if (message) {
+                p.sendMessage(plugin.pluginName + "Time travel to the The End is disabled!");
+            }
+            bool = false;
+        }
+        if (!p.hasPermission("tardis.end") && l.getWorld().getEnvironment().equals(Environment.THE_END)) {
+            if (message) {
+                p.sendMessage(plugin.pluginName + "You do not have permission to time travel to The End!");
+            }
+            bool = false;
+        }
         if (plugin.worldGuardOnServer && plugin.getConfig().getBoolean("respect_worldguard") && plugin.wgchk.cantBuild(p, l)) {
             if (message) {
                 p.sendMessage(plugin.pluginName + "That location is protected by WorldGuard!");

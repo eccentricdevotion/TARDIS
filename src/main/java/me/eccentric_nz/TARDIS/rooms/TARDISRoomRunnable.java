@@ -74,7 +74,7 @@ public class TARDISRoomRunnable implements Runnable {
         this.middle_data = roomData.getMiddle_data();
         this.floor_id = roomData.getFloor_id();
         this.floor_data = roomData.getFloor_data();
-        this.room = roomData.getRoom().toString();
+        this.room = roomData.getRoom();
         this.tardis_id = roomData.getTardis_id();
         this.running = false;
         this.p = p;

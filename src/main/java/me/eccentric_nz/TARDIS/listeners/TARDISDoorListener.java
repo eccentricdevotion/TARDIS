@@ -19,6 +19,7 @@ package me.eccentric_nz.TARDIS.listeners;
 import com.onarandombox.MultiverseCore.MultiverseCore;
 import com.onarandombox.MultiverseCore.api.MultiverseWorld;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Random;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
@@ -29,6 +30,7 @@ import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.thirdparty.Version;
 import me.eccentric_nz.TARDIS.travel.TARDISFarmer;
+import me.eccentric_nz.TARDIS.travel.TARDISPet;
 import me.eccentric_nz.TARDIS.utility.TARDISItemRenamer;
 import multiworld.MultiWorldPlugin;
 import multiworld.api.MultiWorldAPI;
@@ -43,7 +45,12 @@ import org.bukkit.Sound;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
+import org.bukkit.entity.EntityType;
+import org.bukkit.entity.LivingEntity;
+import org.bukkit.entity.Ocelot;
 import org.bukkit.entity.Player;
+import org.bukkit.entity.Tameable;
+import org.bukkit.entity.Wolf;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -234,13 +241,10 @@ public class TARDISDoorListener implements Listener {
                                     } else {
                                         userQuotes = true;
                                     }
+                                    List<TARDISPet> pets = null;
                                     if (doortype == 1) {
-                                        Location exitLoc = plugin.utils.getLocationFromDB(save, yaw, pitch);
-                                        boolean hasDest = plugin.tardisHasDestination.containsKey(Integer.valueOf(id));
-                                        boolean hasTrav = plugin.tardisHasTravelled.contains(Integer.valueOf(id));
-                                        if (hasDest && !hasTrav) {
-                                            exitLoc = plugin.utils.getLocationFromDB(current, yaw, pitch);
-                                        }
+                                        // always exit to current location
+                                        Location exitLoc = plugin.utils.getLocationFromDB(current, yaw, pitch);
                                         if (rs.isHandbrake_on()) {
                                             // player is in the TARDIS
                                             // change the yaw if the door directions are different
@@ -292,13 +296,17 @@ public class TARDISDoorListener implements Listener {
                                                 playerWorld.playEffect(block_loc, Effect.DOOR_TOGGLE, 0);
                                             }
                                             movePlayer(player, exitTardis, true, playerWorld, userQuotes);
+                                            if (plugin.getConfig().getBoolean("allow_mob_farming") && player.hasPermission("tardis.farm")) {
+                                                TARDISFarmer tf = new TARDISFarmer(plugin);
+                                                pets = tf.exitPets(player);
+                                                if (pets != null && pets.size() > 0) {
+                                                    movePets(pets, exitTardis, player);
+                                                }
+                                            }
                                             // remove player from traveller table
                                             HashMap<String, Object> wherd = new HashMap<String, Object>();
                                             wherd.put("player", playerNameStr);
                                             qf.doDelete("travellers", wherd);
-                                            if (hasTrav) {
-                                                plugin.tardisHasTravelled.remove(Integer.valueOf(id));
-                                            }
                                         } else {
                                             player.sendMessage(plugin.pluginName + "The TARDIS is still travelling... you would get lost in the time vortex!");
                                         }
@@ -380,7 +388,7 @@ public class TARDISDoorListener implements Listener {
                                                 // check for entities in the police box
                                                 if (plugin.getConfig().getBoolean("allow_mob_farming") && player.hasPermission("tardis.farm")) {
                                                     TARDISFarmer tf = new TARDISFarmer(plugin);
-                                                    tf.farmAnimals(block_loc, d, id, player);
+                                                    pets = tf.farmAnimals(block_loc, d, id, player);
                                                 }
                                                 // enter TARDIS!
                                                 try {
@@ -411,17 +419,14 @@ public class TARDISDoorListener implements Listener {
                                                 tmp_loc.setYaw(yaw);
                                                 final Location tardis_loc = tmp_loc;
                                                 movePlayer(player, tardis_loc, false, playerWorld, userQuotes);
+                                                if (pets != null && pets.size() > 0) {
+                                                    movePets(pets, tardis_loc, player);
+                                                }
                                                 // put player into travellers table
                                                 HashMap<String, Object> set = new HashMap<String, Object>();
                                                 set.put("tardis_id", id);
                                                 set.put("player", playerNameStr);
                                                 qf.doInsert("travellers", set);
-                                                // update current TARDIS location
-                                                HashMap<String, Object> setc = new HashMap<String, Object>();
-                                                setc.put("current", save);
-                                                HashMap<String, Object> wherec = new HashMap<String, Object>();
-                                                wherec.put("tardis_id", id);
-                                                qf.doUpdate("tardis", setc, wherec);
                                                 if (plugin.pm.getPlugin("Spout") != null && SpoutManager.getPlayer(player).isSpoutCraftEnabled()) {
                                                     SpoutManager.getSoundManager().playCustomSoundEffect(plugin, SpoutManager.getPlayer(player), "https://dl.dropbox.com/u/53758864/tardis_hum.mp3", false, tardis_loc, 9, 25);
                                                 }
@@ -511,6 +516,34 @@ public class TARDISDoorListener implements Listener {
             }
         }
         return bool;
+    }
+
+    private void movePets(List<TARDISPet> p, Location l, Player player) {
+        Location pl = l.clone();
+        World w = l.getWorld();
+        // will need to adjust this depending on direction Police Box is facing
+        pl.setX(l.getX() + 1);
+        pl.setZ(l.getZ() + 1);
+        for (TARDISPet pet : p) {
+            plugin.myspawn = true;
+            LivingEntity ent = (LivingEntity) w.spawnEntity(pl, pet.getType());
+            ent.setTicksLived(pet.getAge());
+            ent.setCustomName(pet.getName());
+            ent.setCustomNameVisible(true);
+            ent.setHealth(pet.getHealth());
+            ((Tameable) ent).setTamed(true);
+            ((Tameable) ent).setOwner(player);
+            if (pet.getType().equals(EntityType.WOLF)) {
+                Wolf wolf = (Wolf) ent;
+                wolf.setCollarColor(pet.getCollar());
+                wolf.setSitting(pet.getSitting());
+            } else {
+                Ocelot cat = (Ocelot) ent;
+                cat.setCatType(pet.getCatType());
+                cat.setSitting(pet.getSitting());
+            }
+        }
+        p.clear();
     }
 
     @SuppressWarnings("deprecation")

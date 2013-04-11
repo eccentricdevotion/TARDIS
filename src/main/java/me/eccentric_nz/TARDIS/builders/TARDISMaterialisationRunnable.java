@@ -54,6 +54,7 @@ public class TARDISMaterialisationRunnable implements Runnable {
     private int mat;
     private byte data;
     private Player player;
+    private boolean mal;
 
     /**
      * Runnable method to materialise the TARDIS Police Box. Tries to mimic the
@@ -68,7 +69,7 @@ public class TARDISMaterialisationRunnable implements Runnable {
      * @param tid the tardis_id this Police Box belongs to
      * @param d the COMPASS direction the Police Box is facing
      */
-    public TARDISMaterialisationRunnable(TARDIS plugin, Location location, int mat, byte data, int tid, COMPASS d, Player player) {
+    public TARDISMaterialisationRunnable(TARDIS plugin, Location location, int mat, byte data, int tid, COMPASS d, Player player, boolean mal) {
         this.plugin = plugin;
         this.d = d;
         this.loops = 12;
@@ -78,6 +79,7 @@ public class TARDISMaterialisationRunnable implements Runnable {
         this.mat = mat;
         this.data = data;
         this.player = player;
+        this.mal = mal;
     }
 
     @Override
@@ -365,7 +367,8 @@ public class TARDISMaterialisationRunnable implements Runnable {
                 for (HashMap<String, String> map : travellers) {
                     Player p = plugin.getServer().getPlayer(map.get("player"));
                     if (p != null) {
-                        plugin.getServer().getPlayer(map.get("player")).sendMessage(plugin.pluginName + "LEFT-click the handbrake to exit!");
+                        String message = (mal) ? "here was a malfunction and the emergency handrake was engaged! Scan location before exit!" : "LEFT-click the handbrake to exit!";
+                        plugin.getServer().getPlayer(map.get("player")).sendMessage(plugin.pluginName + message);
                     }
                 }
             }

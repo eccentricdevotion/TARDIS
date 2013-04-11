@@ -19,7 +19,6 @@ package me.eccentric_nz.TARDIS.rooms;
 import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants.COMPASS;
-import me.eccentric_nz.TARDIS.TARDISConstants.ROOM;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import org.bukkit.Location;
@@ -93,38 +92,24 @@ public class TARDISRoomBuilder {
             Block b = l.getBlock();
             roomData.setBlock(b);
             roomData.setDirection(d);
+            short[] dimensions = plugin.room_dimensions.get(r);
             if (r.equalsIgnoreCase("GRAVITY") || r.equalsIgnoreCase("ANTIGRAVITY")) {
                 l.setX(l.getX() - 6);
                 l.setZ(l.getZ() - 6);
             } else {
+                int xzoffset = (dimensions[1] / 2);
                 switch (d) {
                     case NORTH:
-                        if (r.equalsIgnoreCase("PASSAGE")) {
-                            l.setX(l.getX() + 4);
-                        } else {
-                            l.setX(l.getX() + 6);
-                        }
+                        l.setX(l.getX() + xzoffset);
                         break;
                     case WEST:
-                        if (r.equalsIgnoreCase("PASSAGE")) {
-                            l.setZ(l.getZ() + 4);
-                        } else {
-                            l.setZ(l.getZ() + 6);
-                        }
+                        l.setZ(l.getZ() + xzoffset);
                         break;
                     case SOUTH:
-                        if (r.equalsIgnoreCase("PASSAGE")) {
-                            l.setX(l.getX() - 4);
-                        } else {
-                            l.setX(l.getX() - 6);
-                        }
+                        l.setX(l.getX() - xzoffset);
                         break;
                     default:
-                        if (r.equalsIgnoreCase("PASSAGE")) {
-                            l.setZ(l.getZ() - 4);
-                        } else {
-                            l.setZ(l.getZ() - 6);
-                        }
+                        l.setZ(l.getZ() - xzoffset);
                         break;
                 }
             }
@@ -139,90 +124,14 @@ public class TARDISRoomBuilder {
                 roomData.setX(-1);
                 roomData.setZ(-1);
             }
-            String[][][] s;
-            short[] dimensions;
-            ROOM room = ROOM.valueOf(r);
-            roomData.setRoom(room);
-            switch (room) {
-                case ARBORETUM:
-                    s = plugin.arboretumschematic;
-                    dimensions = plugin.arboretumdimensions;
-                    break;
-                case BEDROOM:
-                    s = plugin.bedroomschematic;
-                    dimensions = plugin.roomdimensions;
-                    break;
-                case KITCHEN:
-                    s = plugin.kitchenschematic;
-                    dimensions = plugin.roomdimensions;
-                    break;
-                case LIBRARY:
-                    s = plugin.libraryschematic;
-                    dimensions = plugin.roomdimensions;
-                    break;
-                case POOL:
-                    s = plugin.poolschematic;
-                    dimensions = plugin.pooldimensions;
-                    break;
-                case VAULT:
-                    s = plugin.vaultschematic;
-                    dimensions = plugin.roomdimensions;
-                    break;
-                case WORKSHOP:
-                    s = plugin.workshopschematic;
-                    dimensions = plugin.roomdimensions;
-                    break;
-                case EMPTY:
-                    s = plugin.emptyschematic;
-                    dimensions = plugin.roomdimensions;
-                    break;
-                case GRAVITY:
-                    s = plugin.gravityschematic;
-                    dimensions = plugin.gravitydimensions;
-                    break;
-                case ANTIGRAVITY:
-                    s = plugin.antigravityschematic;
-                    dimensions = plugin.antigravitydimensions;
-                    break;
-                case HARMONY:
-                    s = plugin.harmonyschematic;
-                    dimensions = plugin.roomdimensions;
-                    break;
-                case BAKER:
-                    s = plugin.bakerschematic;
-                    dimensions = plugin.roomdimensions;
-                    break;
-                case WOOD:
-                    s = plugin.woodschematic;
-                    dimensions = plugin.roomdimensions;
-                    break;
-                case FARM:
-                    s = plugin.farmschematic;
-                    dimensions = plugin.roomdimensions;
-                    break;
-                case CROSS:
-                    s = plugin.crossschematic;
-                    dimensions = plugin.crossdimensions;
-                    break;
-                case GREENHOUSE:
-                    s = plugin.greenhouseschematic;
-                    dimensions = plugin.greenhousedimensions;
-                    break;
-                case MUSHROOM:
-                    s = plugin.mushroomschematic;
-                    dimensions = plugin.roomdimensions;
-                    break;
-                case LONG:
-                    s = (d.equals(COMPASS.EAST) || d.equals(COMPASS.WEST)) ? plugin.longschematic_EW : plugin.longschematic;
-                    dimensions = plugin.longdimensions;
-                    break;
-                default:
-                    // PASSAGE
-                    s = (d.equals(COMPASS.EAST) || d.equals(COMPASS.WEST)) ? plugin.passageschematic_EW : plugin.passageschematic;
-                    dimensions = plugin.passagedimensions;
-                    break;
+            roomData.setRoom(r);
+            String whichroom;
+            if (r.equals("PASSAGE") || r.equals("LONG")) {
+                whichroom = (d.equals(COMPASS.EAST) || d.equals(COMPASS.WEST)) ? r + "_EW" : r;
+            } else {
+                whichroom = r;
             }
-            roomData.setSchematic(s);
+            roomData.setSchematic(plugin.room_schematics.get(whichroom));
             roomData.setDimensions(dimensions);
 
             // set door space to air

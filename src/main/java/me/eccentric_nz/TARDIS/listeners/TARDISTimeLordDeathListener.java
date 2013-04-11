@@ -72,7 +72,7 @@ public class TARDISTimeLordDeathListener implements Listener {
                             String death_world = death_loc.getWorld().getName();
                             int id = rs.getTardis_id();
                             // where is the TARDIS Police Box?
-                            String save = (plugin.tardisHasDestination.containsKey(id)) ? rs.getCurrent() : rs.getSave();
+                            String save = rs.getCurrent();
                             String[] save_data = save.split(":");
                             World sw = plugin.getServer().getWorld(save_data[0]);
                             int sx = plugin.utils.parseNum(save_data[1]);
@@ -109,12 +109,14 @@ public class TARDISTimeLordDeathListener implements Listener {
                             }
                             // destroy police box
                             COMPASS d = rs.getDirection();
-                            plugin.destroyPB.destroyPlatform(rs.getPlatform(), id);
-                            plugin.destroyPB.destroySign(sl, d);
-                            plugin.destroyPB.destroyTorch(sl);
-                            plugin.destroyPB.destroyPoliceBox(sl, d, id, false);
+                            if (!rs.isHidden()) {
+                                plugin.destroyPB.destroyPlatform(rs.getPlatform(), id);
+                                plugin.destroyPB.destroySign(sl, d);
+                                plugin.destroyPB.destroyTorch(sl);
+                                plugin.destroyPB.destroyPoliceBox(sl, d, id, false);
+                            }
                             // rebuild police box
-                            plugin.buildPB.buildPoliceBox(id, goto_loc, d, rs.isChamele_on(), player, false);
+                            plugin.buildPB.buildPoliceBox(id, goto_loc, d, rs.isChamele_on(), player, false, false);
                             String save_loc = goto_loc.getWorld().getName() + ":" + goto_loc.getBlockX() + ":" + goto_loc.getBlockY() + ":" + goto_loc.getBlockZ();
                             QueryFactory qf = new QueryFactory(plugin);
                             HashMap<String, Object> tid = new HashMap<String, Object>();

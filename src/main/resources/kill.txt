@@ -1,0 +1,7 @@
+Help us, Timelord @p
+This world seems to be overrun with nasty monsters. One in particular is quite destructive - though that destructive power can be harnessed to power the TARDIS!
+
+Your mission is to find and destroy the mighty charged creeper.
+Type
+§9/tardisbook start kill
+§0To get started

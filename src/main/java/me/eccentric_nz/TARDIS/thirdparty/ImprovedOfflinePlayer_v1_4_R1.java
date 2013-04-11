@@ -82,22 +82,24 @@ public class ImprovedOfflinePlayer_v1_4_R1 implements ImprovedOfflinePlayer_api 
     @Override
     public void setLocation(String playername, Location location) {
         this.exists = loadPlayerData(playername);
-        World w = location.getWorld();
-        UUID uuid = w.getUID();
-        this.compound.setLong("WorldUUIDMost", uuid.getMostSignificantBits());
-        this.compound.setLong("WorldUUIDLeast", uuid.getLeastSignificantBits());
-        this.compound.setInt("Dimension", w.getEnvironment().getId());
-        NBTTagList position = new NBTTagList();
-        position.add(new NBTTagDouble(null, location.getX()));
-        position.add(new NBTTagDouble(null, location.getY()));
-        position.add(new NBTTagDouble(null, location.getZ()));
-        this.compound.set("Pos", position);
-        NBTTagList rotation = new NBTTagList();
-        rotation.add(new NBTTagFloat(null, location.getYaw()));
-        rotation.add(new NBTTagFloat(null, location.getPitch()));
-        this.compound.set("Rotation", rotation);
-        if (this.autosave) {
-            savePlayerData();
+        if (this.exists) {
+            World w = location.getWorld();
+            UUID uuid = w.getUID();
+            this.compound.setLong("WorldUUIDMost", uuid.getMostSignificantBits());
+            this.compound.setLong("WorldUUIDLeast", uuid.getLeastSignificantBits());
+            this.compound.setInt("Dimension", w.getEnvironment().getId());
+            NBTTagList position = new NBTTagList();
+            position.add(new NBTTagDouble(null, location.getX()));
+            position.add(new NBTTagDouble(null, location.getY()));
+            position.add(new NBTTagDouble(null, location.getZ()));
+            this.compound.set("Pos", position);
+            NBTTagList rotation = new NBTTagList();
+            rotation.add(new NBTTagFloat(null, location.getYaw()));
+            rotation.add(new NBTTagFloat(null, location.getPitch()));
+            this.compound.set("Rotation", rotation);
+            if (this.autosave) {
+                savePlayerData();
+            }
         }
     }
 }

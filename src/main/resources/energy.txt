@@ -1,0 +1,7 @@
+How are you TARDIS, do you need a boost?
+Is @p not feeding you enough?
+
+Your mission is to use the TARDIS energy condenser to overcharge the Artron Energy Capacitor to more than 1000%.
+Type
+§9/tardisbook start energy
+§0To get started

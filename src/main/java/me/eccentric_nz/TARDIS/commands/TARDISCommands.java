@@ -26,11 +26,13 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
-import me.eccentric_nz.TARDIS.TARDISConstants.ROOM;
+import me.eccentric_nz.TARDIS.achievement.TARDISAchievementFactory;
 import me.eccentric_nz.TARDIS.builders.TARDISChameleonCircuit;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
+import me.eccentric_nz.TARDIS.database.ResultSetCondenser;
 import me.eccentric_nz.TARDIS.database.ResultSetDestinations;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
@@ -38,6 +40,8 @@ import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.database.TARDISDatabase;
 import me.eccentric_nz.TARDIS.destroyers.TARDISExterminator;
 import me.eccentric_nz.TARDIS.files.TARDISUpdateChecker;
+import me.eccentric_nz.TARDIS.rooms.TARDISCondenserData;
+import me.eccentric_nz.TARDIS.rooms.TARDISWalls;
 import me.eccentric_nz.TARDIS.thirdparty.Version;
 import me.eccentric_nz.TARDIS.travel.TARDISPluginRespect;
 import me.eccentric_nz.TARDIS.travel.TARDISTimetravel;
@@ -113,6 +117,7 @@ public class TARDISCommands implements CommandExecutor {
         firstArgs.add("unbind");
         firstArgs.add("update");
         firstArgs.add("version");
+        firstArgs.add("inside");
         // rooms - only add if enabled in the config
         for (String r : plugin.getConfig().getConfigurationSection("rooms").getKeys(false)) {
             if (plugin.getConfig().getBoolean("rooms." + r + ".enabled")) {
@@ -364,6 +369,61 @@ public class TARDISCommands implements CommandExecutor {
                         player.sendMessage(plugin.pluginName + "The TARDIS does not have enough Artron Energy to grow this room!");
                         return true;
                     }
+                    if (plugin.getConfig().getBoolean("rooms_require_blocks")) {
+                        HashMap<String, Integer> blockIDCount = new HashMap<String, Integer>();
+                        boolean hasRequired = true;
+                        HashMap<String, Integer> roomBlocks = plugin.roomBlockCounts.get(room);
+                        String wall = "ORANGE_WOOL";
+                        String floor = "LIGHT_GREY_WOOL";
+                        HashMap<String, Object> wherepp = new HashMap<String, Object>();
+                        boolean hasPrefs = false;
+                        wherepp.put("player", player.getName());
+                        ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, wherepp);
+                        if (rsp.resultSet()) {
+                            hasPrefs = true;
+                            wall = rsp.getWall();
+                            floor = rsp.getFloor();
+                        }
+                        for (Map.Entry<String, Integer> entry : roomBlocks.entrySet()) {
+                            String[] block_data = entry.getKey().split(":");
+                            int bid = plugin.utils.parseNum(block_data[0]);
+                            String mat;
+                            String bdata;
+                            if (hasPrefs && block_data.length == 2 && (block_data[1].equals("1") || block_data[1].equals("8"))) {
+                                mat = (block_data[1].equals("1")) ? wall : floor;
+                                TARDISWalls tw = new TARDISWalls();
+                                Integer[] iddata = tw.blocks.get(mat);
+                                bdata = String.format("%d", iddata[0]);
+                            } else {
+                                mat = Material.getMaterial(bid).toString();
+                                bdata = String.format("%d", bid);
+                            }
+                            int required = Math.round((entry.getValue() / 100.0F) * plugin.getConfig().getInt("rooms_condenser_percent"));
+                            blockIDCount.put(bdata, required);
+                            HashMap<String, Object> wherec = new HashMap<String, Object>();
+                            wherec.put("tardis_id", id);
+                            wherec.put("block_data", bdata);
+                            ResultSetCondenser rsc = new ResultSetCondenser(plugin, wherec, false);
+                            if (rsc.resultSet()) {
+                                if (rsc.getBlock_count() < required) {
+                                    hasRequired = false;
+                                    int diff = required - rsc.getBlock_count();
+                                    player.sendMessage(plugin.pluginName + "You need to condense " + diff + " more " + mat + "!");
+                                }
+                            } else {
+                                hasRequired = false;
+                                player.sendMessage(plugin.pluginName + "You need to condense a minimum of " + required + " " + mat);
+                            }
+                        }
+                        if (hasRequired == false) {
+                            player.sendMessage("-----------------------------");
+                            return true;
+                        }
+                        TARDISCondenserData c_data = new TARDISCondenserData();
+                        c_data.setBlockIDCount(blockIDCount);
+                        c_data.setTardis_id(id);
+                        plugin.roomCondenserData.put(player.getName(), c_data);
+                    }
                     String message;
                     // if it is a gravity well
                     if (room.equals("GRAVITY") || room.equals("ANTIGRAVITY")) {
@@ -388,7 +448,12 @@ public class TARDISCommands implements CommandExecutor {
                             return true;
                         }
                         if (!roomArgs.contains(room)) {
-                            player.sendMessage(plugin.pluginName + "That is not a valid room type! Try one of: arboretum, baker, bedroom, cross, empty, farm, greenhouse, harmony, kitchen, library, long, mushroom, passage, pool, vault, wood and workshop");
+                            StringBuilder buf = new StringBuilder(args[1]);
+                            for (String rl : roomArgs) {
+                                buf.append(rl).append(", ");
+                            }
+                            String roomlist = buf.toString().substring(0, buf.length() - 2);
+                            player.sendMessage(plugin.pluginName + "That is not a valid room type! Try one of: " + roomlist);
                             return true;
                         }
                         HashMap<String, Object> where = new HashMap<String, Object>();
@@ -464,7 +529,7 @@ public class TARDISCommands implements CommandExecutor {
                         if (!respect.getRespect(player, eyeLocation, true)) {
                             return true;
                         }
-                        if (player.hasPermission("tardis.exile")) {
+                        if (player.hasPermission("tardis.exile") && plugin.getConfig().getBoolean("exile")) {
                             String areaPerm = plugin.ta.getExileArea(player);
                             if (plugin.ta.areaCheckInExile(areaPerm, eyeLocation)) {
                                 sender.sendMessage(plugin.pluginName + "You exile status does not allow you to bring the TARDIS to this location!");
@@ -524,7 +589,7 @@ public class TARDISCommands implements CommandExecutor {
                             return true;
                         }
                         final Player p = player;
-                        String badsave = (plugin.tardisHasDestination.containsKey(id)) ? rs.getCurrent() : rs.getSave();
+                        String badsave = rs.getCurrent();
                         boolean chamtmp = false;
                         if (plugin.getConfig().getBoolean("chameleon")) {
                             chamtmp = rs.isChamele_on();
@@ -553,11 +618,13 @@ public class TARDISCommands implements CommandExecutor {
                             Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
                                 @Override
                                 public void run() {
-                                    plugin.destroyPB.destroyPlatform(rs.getPlatform(), id);
-                                    plugin.destroyPB.destroySign(oldSave, d);
-                                    plugin.destroyPB.destroyTorch(oldSave);
-                                    plugin.destroyPB.destroyPoliceBox(oldSave, d, id, false);
-                                    plugin.buildPB.buildPoliceBox(id, eyeLocation, d, cham, p, false);
+                                    if (!rs.isHidden()) {
+                                        plugin.destroyPB.destroyPlatform(rs.getPlatform(), id);
+                                        plugin.destroyPB.destroySign(oldSave, d);
+                                        plugin.destroyPB.destroyTorch(oldSave);
+                                        plugin.destroyPB.destroyPoliceBox(oldSave, d, id, false);
+                                    }
+                                    plugin.buildPB.buildPoliceBox(id, eyeLocation, d, cham, p, false, false);
                                 }
                             }, 100L);
                             // remove energy from TARDIS
@@ -593,6 +660,30 @@ public class TARDISCommands implements CommandExecutor {
                     final TARDISConstants.COMPASS d = rs.getDirection();
                     TARDISTimetravel tt = new TARDISTimetravel(plugin);
                     tt.testSafeLocation(eyeLocation, d);
+                    return true;
+                }
+                if (args[0].equalsIgnoreCase("inside")) {
+                    // check they are a timelord
+                    HashMap<String, Object> where = new HashMap<String, Object>();
+                    where.put("owner", player.getName());
+                    ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
+                    if (!rs.resultSet()) {
+                        sender.sendMessage(plugin.pluginName + "You must be the Timelord of a TARDIS to use this command!");
+                        return true;
+                    }
+                    int id = rs.getTardis_id();
+                    HashMap<String, Object> wheret = new HashMap<String, Object>();
+                    wheret.put("tardis_id", id);
+                    ResultSetTravellers rst = new ResultSetTravellers(plugin, wheret, true);
+                    if (rst.resultSet()) {
+                        ArrayList<HashMap<String, String>> data = rst.getData();
+                        sender.sendMessage(plugin.pluginName + "The players inside your TARDIS are:");
+                        for (HashMap<String, String> map : data) {
+                            sender.sendMessage(map.get("player"));
+                        }
+                    } else {
+                        sender.sendMessage(plugin.pluginName + "Nobody is inside your TARDIS.");
+                    }
                     return true;
                 }
                 if (args[0].equalsIgnoreCase("home")) {
@@ -709,7 +800,7 @@ public class TARDISCommands implements CommandExecutor {
                             return true;
                         }
                         int level = rs.getArtron_level();
-                        save = (plugin.tardisHasDestination.containsKey(id)) ? rs.getCurrent() : rs.getSave();
+                        save = rs.getCurrent();
                         if (plugin.tardisMaterialising.contains(id)) {
                             sender.sendMessage(plugin.pluginName + "You cannot do that while the TARDIS is materialising!");
                             return true;
@@ -733,9 +824,17 @@ public class TARDISCommands implements CommandExecutor {
                                 player.sendMessage(plugin.pluginName + ChatColor.RED + "The TARDIS does not have enough Artron Energy to rebuild!");
                                 return false;
                             }
-                            plugin.buildPB.buildPoliceBox(id, l, d, cham, player, true);
+                            plugin.buildPB.buildPoliceBox(id, l, d, cham, player, true, false);
                             sender.sendMessage(plugin.pluginName + "The TARDIS Police Box was rebuilt!");
                             qf.alterEnergyLevel("tardis", -rebuild, wheret, player);
+                            // set hidden to false
+                            if (rs.isHidden()) {
+                                HashMap<String, Object> whereh = new HashMap<String, Object>();
+                                whereh.put("tardis_id", id);
+                                HashMap<String, Object> seth = new HashMap<String, Object>();
+                                seth.put("hidden", 0);
+                                qf.doUpdate("tardis", seth, whereh);
+                            }
                             return true;
                         }
                         if (args[0].equalsIgnoreCase("hide")) {
@@ -752,6 +851,12 @@ public class TARDISCommands implements CommandExecutor {
                             plugin.destroyPB.destroyPoliceBox(l, d, id, true);
                             sender.sendMessage(plugin.pluginName + "The TARDIS Police Box was hidden! Use " + ChatColor.GREEN + "/tardis rebuild" + ChatColor.RESET + " to show it again.");
                             qf.alterEnergyLevel("tardis", -hide, wheret, player);
+                            // set hidden to true
+                            HashMap<String, Object> whereh = new HashMap<String, Object>();
+                            whereh.put("tardis_id", id);
+                            HashMap<String, Object> seth = new HashMap<String, Object>();
+                            seth.put("hidden", 1);
+                            qf.doUpdate("tardis", seth, whereh);
                             return true;
                         }
                     } else {
@@ -789,7 +894,7 @@ public class TARDISCommands implements CommandExecutor {
                             return false;
                         }
                         int id = rs.getTardis_id();
-                        String loc = (plugin.tardisHasDestination.containsKey(id)) ? rs.getCurrent() : rs.getSave();
+                        String loc = rs.getCurrent();
                         String[] findData = loc.split(":");
                         sender.sendMessage(plugin.pluginName + "TARDIS was left at " + findData[0] + " at x: " + findData[1] + " y: " + findData[2] + " z: " + findData[3]);
                         return true;
@@ -834,6 +939,11 @@ public class TARDISCommands implements CommandExecutor {
                             }
                             qf.doUpdate("tardis", set, tid);
                             player.sendMessage(plugin.pluginName + "You added " + ChatColor.GREEN + args[1] + ChatColor.RESET + " as a TARDIS companion.");
+                            // are we doing an achievement?
+                            if (plugin.ayml.getBoolean("friends.enabled")) {
+                                TARDISAchievementFactory taf = new TARDISAchievementFactory(plugin, player, "friends", 1);
+                                taf.doAchievement(1);
+                            }
                             return true;
                         }
                     } else {
@@ -914,21 +1024,10 @@ public class TARDISCommands implements CommandExecutor {
                             sender.sendMessage(plugin.pluginName + "That doesn't appear to be a valid save name (it may be too long or contains spaces).");
                             return false;
                         } else {
-                            String cur = rs.getCurrent();
-                            String sav = rs.getSave();
                             int id = rs.getTardis_id();
-                            String[] curDest;
                             // get current destination
-                            HashMap<String, Object> wheret = new HashMap<String, Object>();
-                            wheret.put("player", player.getName());
-                            ResultSetTravellers rst = new ResultSetTravellers(plugin, wheret, false);
-                            if (rst.resultSet() || plugin.tardisHasDestination.containsKey(id)) {
-                                // inside TARDIS
-                                curDest = cur.split(":");
-                            } else {
-                                // outside TARDIS
-                                curDest = sav.split(":");
-                            }
+                            String cur = rs.getCurrent();
+                            String[] curDest = cur.split(":");
                             QueryFactory qf = new QueryFactory(plugin);
                             HashMap<String, Object> set = new HashMap<String, Object>();
                             set.put("tardis_id", id);
@@ -1034,7 +1133,7 @@ public class TARDISCommands implements CommandExecutor {
                             if (!respect.getRespect(player, l, true)) {
                                 return true;
                             }
-                            if (player.hasPermission("tardis.exile")) {
+                            if (player.hasPermission("tardis.exile") && plugin.getConfig().getBoolean("exile")) {
                                 String areaPerm = plugin.ta.getExileArea(player);
                                 if (plugin.ta.areaCheckInExile(areaPerm, l)) {
                                     sender.sendMessage(plugin.pluginName + "You exile status does not allow you to save the TARDIS to this location!");
@@ -1085,7 +1184,7 @@ public class TARDISCommands implements CommandExecutor {
                             sender.sendMessage(plugin.pluginName + "The TARDIS does not have enough Artron Energy to change the Police Box direction!");
                             return true;
                         }
-                        String save = (plugin.tardisHasDestination.containsKey(id)) ? rs.getCurrent() : rs.getSave();
+                        String save = rs.getCurrent();
                         String[] save_data = save.split(":");
                         if (plugin.tardisMaterialising.contains(id)) {
                             sender.sendMessage(plugin.pluginName + "You cannot do that while the TARDIS is materialising!");
@@ -1116,9 +1215,11 @@ public class TARDISCommands implements CommandExecutor {
                         Location l = new Location(w, x, y, z);
                         TARDISConstants.COMPASS d = TARDISConstants.COMPASS.valueOf(dir);
                         // destroy platform
-                        plugin.destroyPB.destroyPlatform(rs.getPlatform(), id);
-                        plugin.destroyPB.destroySign(l, old_d);
-                        plugin.buildPB.buildPoliceBox(id, l, d, cham, player, true);
+                        if (!rs.isHidden()) {
+                            plugin.destroyPB.destroyPlatform(rs.getPlatform(), id);
+                            plugin.destroyPB.destroySign(l, old_d);
+                        }
+                        plugin.buildPB.buildPoliceBox(id, l, d, cham, player, true, false);
                         HashMap<String, Object> wherea = new HashMap<String, Object>();
                         wherea.put("tardis_id", id);
                         qf.alterEnergyLevel("tardis", -amount, wherea, player);

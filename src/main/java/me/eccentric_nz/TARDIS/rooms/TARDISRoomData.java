@@ -17,7 +17,6 @@
 package me.eccentric_nz.TARDIS.rooms;
 
 import me.eccentric_nz.TARDIS.TARDISConstants.COMPASS;
-import me.eccentric_nz.TARDIS.TARDISConstants.ROOM;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
 
@@ -33,7 +32,7 @@ import org.bukkit.block.Block;
 public class TARDISRoomData {
 
     COMPASS direction;
-    ROOM room;
+    String room;
     Location location;
     Block block;
     String[][][] schematic;
@@ -52,11 +51,11 @@ public class TARDISRoomData {
         this.direction = direction;
     }
 
-    public ROOM getRoom() {
+    public String getRoom() {
         return room;
     }
 
-    public void setRoom(ROOM room) {
+    public void setRoom(String room) {
         this.room = room;
     }
 

@@ -1,0 +1,23 @@
+Welcome, Timelord @p
+It seems that you are without transport. This world contains the resources that will let you to recreate your lost TARDIS.
+
+Here is a list of items you will need to collect or mine:
+1 Log
+1 Redstone Ore
+9 Iron Ore
+2-3 Lapis Lazuli Ore
+8 Cobblestone
+1-2 Coal Ore
+
+Once you have your items, craft a furnace to smelt the iron. Craft an Iron Block, a Lapis Block, a Redstone Torch and a Stick.
+
+Your crafted items should then be placed in the following order:
+Bottom: Iron Block
+Middle: Lapis Block
+Top: Redstone Torch
+
+Stand back and watch your new TARDIS materialise before your eyes! You can enter with your TARDIS key - the Stick you crafted earlier.
+
+You still need power to travel the Time Vortex. Look for the Artron Energy Capacitor button (it's made of wood) and click it with your TARDIS key.
+
+You can achieve many great things in your TARDIS, and be rewarded for your efforts. Use the command '/tardisbook list' to view other tasks.

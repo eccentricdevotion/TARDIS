@@ -1,0 +1,7 @@
+Feeling friendly @p?
+There is plenty of room inside this Blue Box for a party, so invite a crowd to join in the fun!
+
+Your mission is to add 10 companions.
+Type
+§9/tardisbook start friends
+§0To get started

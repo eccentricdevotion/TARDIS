@@ -83,7 +83,7 @@ public class TARDISExterminator {
                 Block blockDown = blockbehind.getRelative(BlockFace.DOWN, 2);
                 Location bd_loc = blockDown.getLocation();
                 String bd_str = bd_loc.getWorld().getName() + ":" + bd_loc.getBlockX() + ":" + bd_loc.getBlockY() + ":" + bd_loc.getBlockZ();
-                where.put("save", bd_str);
+                where.put("current", bd_str);
             } else {
                 player.sendMessage(plugin.pluginName + ChatColor.RED + "Could not get TARDIS save location!");
                 return false;
@@ -95,7 +95,7 @@ public class TARDISExterminator {
         try {
             if (rs.resultSet()) {
                 int id = rs.getTardis_id();
-                String saveLoc = (plugin.tardisHasDestination.containsKey(id)) ? rs.getCurrent() : rs.getSave();
+                String saveLoc = rs.getCurrent();
                 String chunkLoc = rs.getChunk();
                 String owner = rs.getOwner();
                 TARDISConstants.SCHEMATIC schm = rs.getSchematic();
@@ -134,9 +134,11 @@ public class TARDISExterminator {
                 int signy = -2;
                 // if the sign was on the TARDIS destroy the TARDIS!
                 if (sign_loc.getBlockX() == bb_loc.getBlockX() + signx && sign_loc.getBlockY() + signy == bb_loc.getBlockY() && sign_loc.getBlockZ() == bb_loc.getBlockZ() + signz) {
-                    // clear the torch
-                    plugin.destroyPB.destroyTorch(bb_loc);
-                    plugin.destroyPB.destroySign(bb_loc, d);
+                    if (!rs.isHidden()) {
+                        // clear the torch
+                        plugin.destroyPB.destroyTorch(bb_loc);
+                        plugin.destroyPB.destroySign(bb_loc, d);
+                    }
                     // also remove the location of the chunk from chunks table
                     String[] chunkworld = chunkLoc.split(":");
                     World cw = plugin.getServer().getWorld(chunkworld[0]);
@@ -159,7 +161,9 @@ public class TARDISExterminator {
                     if (!cw.getName().contains("TARDIS_WORLD_")) {
                         plugin.destroyI.destroyInner(schm, id, cw, restore, playerNameStr);
                     }
-                    plugin.destroyPB.destroyPoliceBox(bb_loc, d, id, false);
+                    if (!rs.isHidden()) {
+                        plugin.destroyPB.destroyPoliceBox(bb_loc, d, id, false);
+                    }
                     // remove record from tardis table
                     HashMap<String, Object> tid = new HashMap<String, Object>();
                     tid.put("tardis_id", id);
@@ -168,6 +172,10 @@ public class TARDISExterminator {
                     HashMap<String, Object> bid = new HashMap<String, Object>();
                     bid.put("tardis_id", id);
                     qf.doDelete("blocks", bid);
+                    // remove levers from levers table
+                    HashMap<String, Object> eid = new HashMap<String, Object>();
+                    eid.put("tardis_id", id);
+                    qf.doDelete("levers", eid);
                     // remove doors from doors table
                     HashMap<String, Object> did = new HashMap<String, Object>();
                     did.put("tardis_id", id);

@@ -48,7 +48,6 @@ public class TARDISChunkListener implements Listener {
     public void onChunkUnload(ChunkUnloadEvent event) {
         Chunk c = event.getChunk();
         if (plugin.tardisChunkList.contains(c) || plugin.roomChunkList.contains(c)) {
-            //plugin.debug("Cancelled chunk unloading...");
             event.setCancelled(true);
         }
     }

@@ -49,10 +49,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Set;
 import me.eccentric_nz.TARDIS.builders.TARDISSpace;
+import me.eccentric_nz.TARDIS.commands.TARDISBookCommands;
 import me.eccentric_nz.TARDIS.commands.TARDISGravityCommands;
 import me.eccentric_nz.TARDIS.commands.TARDISRoomCommands;
 import me.eccentric_nz.TARDIS.files.TARDISBlockLoader;
-import me.eccentric_nz.TARDIS.files.TARDISMakeCSV;
+import me.eccentric_nz.TARDIS.files.TARDISMakeRoomCSV;
+import me.eccentric_nz.TARDIS.files.TARDISMakeTardisCSV;
 import me.eccentric_nz.TARDIS.files.TARDISUpdateChecker;
 import me.eccentric_nz.TARDIS.listeners.TARDISAreaListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISArtronCapacitorListener;
@@ -66,9 +68,11 @@ import me.eccentric_nz.TARDIS.listeners.TARDISIceMeltListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISJettisonSeeder;
 import me.eccentric_nz.TARDIS.listeners.TARDISLightningListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISChunkListener;
+import me.eccentric_nz.TARDIS.listeners.TARDISJoinListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISRoomSeeder;
 import me.eccentric_nz.TARDIS.listeners.TARDISSignListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISUpdateListener;
+import me.eccentric_nz.TARDIS.rooms.TARDISCondenserData;
 import me.eccentric_nz.TARDIS.travel.TARDISUpdateTravellerCount;
 import me.eccentric_nz.TARDIS.utility.TARDISCreeperChecker;
 import me.eccentric_nz.TARDIS.utility.TARDISFactionsChecker;
@@ -81,6 +85,8 @@ import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.command.ConsoleCommandSender;
+import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -99,99 +105,32 @@ public class TARDIS extends JavaPlugin {
 
     public ImprovedOfflinePlayer_api iopHandler;
     TARDISDatabase service = TARDISDatabase.getInstance();
-    public TARDISMakeCSV csv = new TARDISMakeCSV(this);
+    public TARDISMakeTardisCSV tardisCSV = new TARDISMakeTardisCSV(this);
+    public TARDISMakeRoomCSV roomCSV = new TARDISMakeRoomCSV(this);
     public PluginDescriptionFile pdfFile;
     public File budgetSchematicFile = null;
     public File biggerSchematicFile = null;
     public File deluxeSchematicFile = null;
     public File eleventhSchematicFile = null;
     public File redstoneSchematicFile = null;
-    public File antigravitySchematicFile = null;
-    public File arboretumSchematicFile = null;
-    public File bakerSchematicFile = null;
-    public File bedroomSchematicFile = null;
-    public File crossSchematicFile = null;
-    public File emptySchematicFile = null;
-    public File farmSchematicFile = null;
-    public File gravitySchematicFile = null;
-    public File greenhouseSchematicFile = null;
-    public File harmonySchematicFile = null;
-    public File kitchenSchematicFile = null;
-    public File librarySchematicFile = null;
-    public File longSchematicFile = null;
-    public File mushroomSchematicFile = null;
-    public File passageSchematicFile = null;
-    public File poolSchematicFile = null;
-    public File vaultSchematicFile = null;
-    public File woodSchematicFile = null;
-    public File workshopSchematicFile = null;
     public File budgetSchematicCSV = null;
     public File biggerSchematicCSV = null;
     public File deluxeSchematicCSV = null;
     public File eleventhSchematicCSV = null;
     public File redstoneSchematicCSV = null;
-    public File antigravitySchematicCSV = null;
-    public File arboretumSchematicCSV = null;
-    public File bakerSchematicCSV = null;
-    public File bedroomSchematicCSV = null;
-    public File crossSchematicCSV = null;
-    public File emptySchematicCSV = null;
-    public File farmSchematicCSV = null;
-    public File gravitySchematicCSV = null;
-    public File greenhouseSchematicCSV = null;
-    public File harmonySchematicCSV = null;
-    public File kitchenSchematicCSV = null;
-    public File librarySchematicCSV = null;
-    public File longSchematicCSV = null;
-    public File longSchematicCSV_EW = null;
-    public File mushroomSchematicCSV = null;
-    public File passageSchematicCSV = null;
-    public File passageSchematicCSV_EW = null;
-    public File poolSchematicCSV = null;
-    public File vaultSchematicCSV = null;
-    public File woodSchematicCSV = null;
-    public File workshopSchematicCSV = null;
     public File quotesfile = null;
     public String[][][] budgetschematic;
     public String[][][] biggerschematic;
     public String[][][] deluxeschematic;
     public String[][][] eleventhschematic;
     public String[][][] redstoneschematic;
-    public String[][][] antigravityschematic;
-    public String[][][] arboretumschematic;
-    public String[][][] bakerschematic;
-    public String[][][] bedroomschematic;
-    public String[][][] crossschematic;
-    public String[][][] emptyschematic;
-    public String[][][] farmschematic;
-    public String[][][] gravityschematic;
-    public String[][][] greenhouseschematic;
-    public String[][][] harmonyschematic;
-    public String[][][] kitchenschematic;
-    public String[][][] libraryschematic;
-    public String[][][] longschematic;
-    public String[][][] longschematic_EW;
-    public String[][][] mushroomschematic;
-    public String[][][] passageschematic;
-    public String[][][] passageschematic_EW;
-    public String[][][] poolschematic;
-    public String[][][] vaultschematic;
-    public String[][][] woodschematic;
-    public String[][][] workshopschematic;
+    public HashMap<String, String[][][]> room_schematics = new HashMap<String, String[][][]>();
     public short[] budgetdimensions = new short[3];
     public short[] biggerdimensions = new short[3];
     public short[] deluxedimensions = new short[3];
     public short[] eleventhdimensions = new short[3];
     public short[] redstonedimensions = new short[3];
-    public short[] antigravitydimensions = new short[3];
-    public short[] arboretumdimensions = new short[3];
-    public short[] crossdimensions = new short[3];
-    public short[] gravitydimensions = new short[3];
-    public short[] greenhousedimensions = new short[3];
-    public short[] longdimensions = new short[3];
-    public short[] passagedimensions = new short[3];
-    public short[] pooldimensions = new short[3];
-    public short[] roomdimensions = new short[3];
+    public HashMap<String, short[]> room_dimensions = new HashMap<String, short[]>();
     public static TARDIS plugin;
     public TARDISUtils utils = new TARDISUtils(this);
     public TARDISCommands tardisCommand;
@@ -201,6 +140,7 @@ public class TARDIS extends JavaPlugin {
     private TARDISAreaCommands tardisAreaCommand;
     private TARDISBindCommands tardisBindCommand;
     private TARDISRoomCommands tardisRoomCommand;
+    private TARDISBookCommands tardisBookCommand;
     private TARDISGravityCommands tardisGravityCommand;
     public TARDISBuilderInner buildI = new TARDISBuilderInner(this);
     public TARDISBuilderPoliceBox buildPB = new TARDISBuilderPoliceBox(this);
@@ -235,6 +175,7 @@ public class TARDIS extends JavaPlugin {
     TARDISChunkListener roomChunkListener = new TARDISChunkListener(this);
     TARDISScannerListener scannerListener = new TARDISScannerListener(this);
     TARDISTimeLordDeathListener deathListener = new TARDISTimeLordDeathListener(this);
+    TARDISJoinListener joinListener = new TARDISJoinListener(this);
     public PluginManager pm = Bukkit.getServer().getPluginManager();
     public HashMap<String, String> trackPlayers = new HashMap<String, String>();
     public HashMap<String, Integer> trackBinder = new HashMap<String, Integer>();
@@ -249,7 +190,6 @@ public class TARDIS extends JavaPlugin {
     public HashMap<Integer, Integer> trackTravellers = new HashMap<Integer, Integer>();
     public HashMap<Integer, Integer> tardisHasDestination = new HashMap<Integer, Integer>();
     public HashMap<String, Block> trackExterminate = new HashMap<String, Block>();
-    public ArrayList<Integer> tardisHasTravelled = new ArrayList<Integer>();
     public ArrayList<Integer> tardisMaterialising = new ArrayList<Integer>();
     public List<Chunk> tardisChunkList = new ArrayList<Chunk>();
     public List<Chunk> roomChunkList = new ArrayList<Chunk>();
@@ -260,6 +200,7 @@ public class TARDIS extends JavaPlugin {
     public HashMap<String, Double[]> gravitySouthList = new HashMap<String, Double[]>();
     public HashMap<String, Double[]> gravityEastList = new HashMap<String, Double[]>();
     public HashMap<String, Integer> protectBlockMap = new HashMap<String, Integer>();
+    public HashMap<String, TARDISCondenserData> roomCondenserData = new HashMap<String, TARDISCondenserData>();
     private static ArrayList<String> quotes = new ArrayList<String>();
     public ArrayList<String> quote;
     public HashMap<Material, String> seeds;
@@ -271,6 +212,9 @@ public class TARDIS extends JavaPlugin {
     public ConsoleCommandSender console;
     public String pluginName;
     public boolean myspawn = false;
+    public HashMap<String, HashMap<String, Integer>> roomBlockCounts = new HashMap<String, HashMap<String, Integer>>();
+    private File afile;
+    public FileConfiguration ayml;
 
     @Override
     public void onEnable() {
@@ -279,45 +223,48 @@ public class TARDIS extends JavaPlugin {
         plugin = this;
         console = getServer().getConsoleSender();
 
-        loadClasses();
-        saveDefaultConfig();
-        TARDISConfiguration tc = new TARDISConfiguration(this);
-        tc.checkConfig();
-        checkTCG();
-        loadDatabase();
-        loadFiles();
-        seeds = getSeeds();
-        registerListeners();
-        loadCommands();
-        loadMetrics();
-        startSound();
-        loadWorldGuard();
-        loadTowny();
-        loadWorldBorder();
-        loadFactions();
+        if (loadClasses()) {
+            saveDefaultConfig();
+            TARDISConfiguration tc = new TARDISConfiguration(this);
+            tc.checkConfig();
+            checkTCG();
+            loadDatabase();
+            loadFiles();
+            loadAchievements();
+            seeds = getSeeds();
+            registerListeners();
+            loadCommands();
+            loadMetrics();
+            startSound();
+            loadWorldGuard();
+            loadTowny();
+            loadWorldBorder();
+            loadFactions();
 
-        quote = quotes();
-        quotelen = quote.size();
-        if (getConfig().getBoolean("check_for_updates")) {
-            TARDISUpdateChecker update = new TARDISUpdateChecker(this);
-            update.checkVersion(null);
-        }
-
-        TARDISUpdateTravellerCount utc = new TARDISUpdateTravellerCount(this);
-        utc.getTravellers();
-        TARDISCreeperChecker cc = new TARDISCreeperChecker(this);
-        cc.startCreeperCheck();
-        if (pm.isPluginEnabled("TARDISChunkGenerator")) {
-            TARDISSpace alwaysNight = new TARDISSpace(this);
-            if (getConfig().getBoolean("keep_night")) {
-                alwaysNight.keepNight();
+            quote = quotes();
+            quotelen = quote.size();
+            if (getConfig().getBoolean("check_for_updates")) {
+                TARDISUpdateChecker update = new TARDISUpdateChecker(this);
+                update.checkVersion(null);
             }
+
+            TARDISUpdateTravellerCount utc = new TARDISUpdateTravellerCount(this);
+            utc.getTravellers();
+            TARDISCreeperChecker cc = new TARDISCreeperChecker(this);
+            cc.startCreeperCheck();
+            if (pm.isPluginEnabled("TARDISChunkGenerator")) {
+                TARDISSpace alwaysNight = new TARDISSpace(this);
+                if (getConfig().getBoolean("keep_night")) {
+                    alwaysNight.keepNight();
+                }
+            }
+            loadChunks();
+            TARDISBlockLoader bl = new TARDISBlockLoader(this);
+            bl.loadProtectBlocks();
+            bl.loadGravityWells();
+            loadPerms();
+            loadBooks();
         }
-        loadChunks();
-        TARDISBlockLoader bl = new TARDISBlockLoader(this);
-        bl.loadProtectBlocks();
-        bl.loadGravityWells();
-        loadPerms();
     }
 
     @Override
@@ -332,7 +279,8 @@ public class TARDIS extends JavaPlugin {
      * Used to load net.minecraft.server methods for various versions of
      * CraftBukkit.
      */
-    private void loadClasses() {
+    private boolean loadClasses() {
+        boolean found;
         String packageName = this.getServer().getClass().getPackage().getName();
         // Get full package string of CraftServer.
         // org.bukkit.craftbukkit.versionstring (or for pre-refactor, just org.bukkit.craftbukkit
@@ -347,13 +295,15 @@ public class TARDIS extends JavaPlugin {
             if (ImprovedOfflinePlayer_api.class.isAssignableFrom(clazz)) { // Make sure it actually implements IOP
                 this.iopHandler = (ImprovedOfflinePlayer_api) clazz.getConstructor().newInstance(); // Set our handler
             }
+            found = true;
         } catch (final Exception e) {
-            this.getLogger().severe("Could not find support for this CraftBukkit version.");
+            this.getLogger().severe("Could not load support for this CraftBukkit version.");
             this.getLogger().info("Check for updates at http://dev.bukkit.org/server-mods/tardis/");
             this.setEnabled(false);
-            return;
+            found = false;
         }
         console.sendMessage(pluginName + "Loading support for CB " + version);
+        return found;
     }
 
     /**
@@ -409,6 +359,7 @@ public class TARDIS extends JavaPlugin {
         pm.registerEvents(roomChunkListener, this);
         pm.registerEvents(scannerListener, this);
         pm.registerEvents(deathListener, this);
+        pm.registerEvents(joinListener, this);
     }
 
     /**
@@ -423,6 +374,7 @@ public class TARDIS extends JavaPlugin {
         tardisBindCommand = new TARDISBindCommands(this);
         tardisGravityCommand = new TARDISGravityCommands(this);
         tardisRoomCommand = new TARDISRoomCommands(this);
+        tardisBookCommand = new TARDISBookCommands(this);
         getCommand("tardis").setExecutor(tardisCommand);
         getCommand("tardisadmin").setExecutor(tardisAdminCommand);
         getCommand("tardisprefs").setExecutor(tardisPrefsCommand);
@@ -431,6 +383,7 @@ public class TARDIS extends JavaPlugin {
         getCommand("tardisbind").setExecutor(tardisBindCommand);
         getCommand("tardisgravity").setExecutor(tardisGravityCommand);
         getCommand("tardisroom").setExecutor(tardisRoomCommand);
+        getCommand("tardisbook").setExecutor(tardisBookCommand);
     }
 
     /**
@@ -438,8 +391,38 @@ public class TARDIS extends JavaPlugin {
      * quotes from the quotes file.
      */
     private void loadFiles() {
-        csv.loadCSV();
-        quotesfile = csv.copy(getDataFolder() + File.separator + TARDISConstants.QUOTES_FILE_NAME, getResource(TARDISConstants.QUOTES_FILE_NAME));
+        tardisCSV.loadCSV();
+        roomCSV.loadCSV();
+        quotesfile = tardisCSV.copy(getDataFolder() + File.separator + TARDISConstants.QUOTES_FILE_NAME, getResource(TARDISConstants.QUOTES_FILE_NAME));
+    }
+
+    /**
+     * Loads the achievements.yml file for use with other classes.
+     */
+    private void loadAchievements() {
+        tardisCSV.copy(getDataFolder() + File.separator + "achievements.yml", getResource("achievements.yml"));
+        afile = new File(plugin.getDataFolder(), "achievements.yml");
+        ayml = YamlConfiguration.loadConfiguration(afile);
+    }
+
+    /**
+     * Saves the default book files to the /plugins/TARDIS/books directory.
+     */
+    private void loadBooks() {
+        // copy book files
+        File bookDir = new File(plugin.getDataFolder() + File.separator + "books");
+        if (!bookDir.exists()) {
+            boolean result = bookDir.mkdir();
+            if (result) {
+                bookDir.setWritable(true);
+                bookDir.setExecutable(true);
+                console.sendMessage(pluginName + "Created books directory.");
+            }
+        }
+        Set<String> booknames = ayml.getKeys(false);
+        for (String b : booknames) {
+            tardisCSV.copy(getDataFolder() + File.separator + "books" + File.separator + b + ".txt", getResource(b + ".txt"));
+        }
     }
 
     /**
@@ -520,7 +503,7 @@ public class TARDIS extends JavaPlugin {
     private void loadPerms() {
         if (pm.getPlugin("GroupManager") != null || pm.getPlugin("bPermissions") != null) {
             // copy default permissions file if not present
-            csv.copy(getDataFolder() + File.separator + "permissions.txt", getResource("permissions.txt"));
+            tardisCSV.copy(getDataFolder() + File.separator + "permissions.txt", getResource("permissions.txt"));
             console.sendMessage(pluginName + "World specific permissions plugin detected please edit plugins/TARDIS/permissions.txt");
         }
     }
@@ -564,8 +547,10 @@ public class TARDIS extends JavaPlugin {
         HashMap<Material, String> map = new HashMap<Material, String>();
         Set<String> rooms = getConfig().getConfigurationSection("rooms").getKeys(false);
         for (String s : rooms) {
-            Material m = Material.valueOf(getConfig().getString("rooms." + s + ".seed"));
-            map.put(m, s);
+            if (getConfig().getBoolean("rooms." + s + ".enabled")) {
+                Material m = Material.valueOf(getConfig().getString("rooms." + s + ".seed"));
+                map.put(m, s);
+            }
         }
         return map;
     }
@@ -615,16 +600,18 @@ public class TARDIS extends JavaPlugin {
                 String line;
                 while ((line = br.readLine()) != null) {
                     String[] split = line.split(":");
-                    World w = getServer().getWorld(split[0]);
-                    int x = 0, z = 0;
-                    try {
-                        x = Integer.parseInt(split[1]);
-                        z = Integer.parseInt(split[2]);
-                    } catch (NumberFormatException nfe) {
+                    if (split.length == 3) {
+                        World w = getServer().getWorld(split[0]);
+                        int x = 0, z = 0;
+                        try {
+                            x = Integer.parseInt(split[1]);
+                            z = Integer.parseInt(split[2]);
+                        } catch (NumberFormatException nfe) {
+                        }
+                        Chunk c = w.getChunkAt(x, z);
+                        tardisChunkList.add(c);
+                        c.load();
                     }
-                    Chunk c = w.getChunkAt(x, z);
-                    tardisChunkList.add(c);
-                    c.load();
                 }
                 br.close();
                 debug("Loading chunks from chunks.txt!");

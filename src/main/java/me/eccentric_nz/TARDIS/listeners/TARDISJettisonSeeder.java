@@ -81,7 +81,7 @@ public class TARDISJettisonSeeder implements Listener {
                 Location b = block.getLocation();
                 // get player's direction
                 COMPASS d = COMPASS.valueOf(plugin.utils.getPlayersDirection(player));
-                TARDISRoomRemover remover = new TARDISRoomRemover(r, b, d);
+                TARDISRoomRemover remover = new TARDISRoomRemover(plugin, r, b, d);
                 if (remover.remove()) {
                     plugin.trackJettison.remove(playerNameStr);
                     block.setTypeIdAndData(0, (byte) 0, true);

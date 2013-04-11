@@ -19,9 +19,11 @@ package me.eccentric_nz.TARDIS.listeners;
 import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants.COMPASS;
+import me.eccentric_nz.TARDIS.achievement.TARDISAchievementFactory;
 import me.eccentric_nz.TARDIS.artron.TARDISArtronLevels;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
+import me.eccentric_nz.TARDIS.travel.TARDISMalfunction;
 import org.bukkit.Chunk;
 import org.bukkit.Effect;
 import org.bukkit.Location;
@@ -37,6 +39,8 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.material.Lever;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 import org.getspout.spoutapi.SpoutManager;
 
 /**
@@ -79,7 +83,6 @@ public class TARDISHandbrakeListener implements Listener {
                 where.put("handbrake", hb_loc);
                 ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
                 HashMap<String, Object> set = new HashMap<String, Object>();
-
                 if (rs.resultSet()) {
                     event.setCancelled(true);
                     int id = rs.getTardis_id();
@@ -90,58 +93,98 @@ public class TARDISHandbrakeListener implements Listener {
                     String owner = rs.getOwner();
                     Location exit = plugin.utils.getLocationFromDB(save, 0, 0);
                     boolean error = false;
-
                     if (!plugin.tardisMaterialising.contains(Integer.valueOf(id))) {
                         Action action = event.getAction();
                         BlockState state = block.getState();
                         Lever lever = (Lever) state.getData();
-
+                        int dist = 0;
                         if (action == Action.RIGHT_CLICK_BLOCK) {
                             if (rs.isHandbrake_on()) {
                                 if (plugin.tardisHasDestination.containsKey(Integer.valueOf(id)) && exit != null) {
-                                    // Changes the lever to off.
-                                    lever.setPowered(false);
-                                    state.setData(lever);
-                                    state.update();
+                                    boolean malfunction = false;
+                                    if (plugin.getConfig().getInt("malfunction") > 0) {
+                                        // check for a malfunction
+                                        TARDISMalfunction m = new TARDISMalfunction(plugin, id, player, d, handbrake_loc);
+                                        malfunction = m.isMalfunction();
+                                        if (malfunction) {
+                                            exit = m.getMalfunction();
+                                            save = exit.getWorld().getName() + ":" + exit.getBlockX() + ":" + exit.getBlockY() + ":" + exit.getBlockZ();
+                                            if (plugin.tardisHasDestination.containsKey(Integer.valueOf(id))) {
+                                                QueryFactory qf = new QueryFactory(plugin);
+                                                int amount = plugin.tardisHasDestination.get(id) * -1;
+                                                HashMap<String, Object> wheret = new HashMap<String, Object>();
+                                                wheret.put("tardis_id", id);
+                                                qf.alterEnergyLevel("tardis", amount, wheret, player);
+                                                player.sendMessage(plugin.pluginName + "Are you sure you know how to fly this thing!");
+                                                plugin.tardisHasDestination.remove(Integer.valueOf(id));
+                                            }
+                                            // play tardis crash sound
+                                            if (plugin.pm.getPlugin("Spout") != null && SpoutManager.getPlayer(player).isSpoutCraftEnabled()) {
+                                                SpoutManager.getSoundManager().playGlobalCustomSoundEffect(plugin, "https://dl.dropbox.com/u/53758864/tardis_emergency_land.mp3", false, handbrake_loc, 20, 75);
+                                            } else {
+                                                try {
+                                                    Class.forName("org.bukkit.Sound");
+                                                    handbrake_loc.getWorld().playSound(handbrake_loc, Sound.MINECART_INSIDE, 1, 0);
+                                                } catch (ClassNotFoundException e) {
+                                                    handbrake_loc.getWorld().playEffect(handbrake_loc, Effect.BLAZE_SHOOT, 0);
+                                                }
+                                            }
+                                            // add a potion effect to the player
+                                            player.addPotionEffect(new PotionEffect(PotionEffectType.CONFUSION, 150, 5));
+                                        }
+                                    }
+                                    if (!malfunction) {
+                                        // Changes the lever to off.
+                                        lever.setPowered(false);
+                                        state.setData(lever);
+                                        state.update();
+                                    }
                                     // Removes Blue Box and loads chunk if it unloaded somehow.
                                     if (!exit.getWorld().isChunkLoaded(exit.getChunk())) {
                                         exit.getWorld().loadChunk(exit.getChunk());
                                     }
                                     exit.getWorld().refreshChunk(exit.getChunk().getX(), exit.getChunk().getZ());
-
                                     Location l = plugin.utils.getLocationFromDB(cl, 0, 0);
-                                    plugin.destroyPB.destroyTorch(l);
-                                    plugin.destroyPB.destroySign(l, d);
-                                    plugin.destroyPB.destroyPoliceBox(l, d, id, false);
-                                    plugin.buildPB.buildPoliceBox(id, exit, d, cham, player, false);
+                                    if (!rs.isHidden()) {
+                                        plugin.destroyPB.destroyTorch(l);
+                                        plugin.destroyPB.destroySign(l, d);
+                                        plugin.destroyPB.destroyPoliceBox(l, d, id, false);
+                                    }
+                                    plugin.buildPB.buildPoliceBox(id, exit, d, cham, player, false, malfunction);
                                     Chunk oldChunk = l.getChunk();
                                     if (plugin.tardisChunkList.contains(oldChunk)) {
                                         plugin.tardisChunkList.remove(oldChunk);
                                     }
-                                    // Sets database and sends the player/world message/sounds.
-                                    set.put("handbrake_on", 0);
-                                    player.sendMessage(plugin.pluginName + "Handbrake OFF! Entering the time vortex...");
-                                    if (plugin.pm.getPlugin("Spout") != null && SpoutManager.getPlayer(player).isSpoutCraftEnabled()) {
-                                        SpoutManager.getSoundManager().playGlobalCustomSoundEffect(plugin, "https://dl.dropbox.com/u/53758864/tardis_land.mp3", false, handbrake_loc, 20, 75);
-                                    } else {
-                                        try {
-                                            Class.forName("org.bukkit.Sound");
-                                            handbrake_locw.playSound(handbrake_loc, Sound.MINECART_INSIDE, 1, 0);
-                                        } catch (ClassNotFoundException e) {
-                                            handbrake_locw.playEffect(handbrake_loc, Effect.BLAZE_SHOOT, 0);
+                                    set.put("current", save);
+                                    if (!malfunction) {
+                                        // Sets database and sends the player/world message/sounds.
+                                        set.put("handbrake_on", 0);
+                                        player.sendMessage(plugin.pluginName + "Handbrake OFF! Entering the time vortex...");
+                                        if (plugin.pm.getPlugin("Spout") != null && SpoutManager.getPlayer(player).isSpoutCraftEnabled()) {
+                                            SpoutManager.getSoundManager().playGlobalCustomSoundEffect(plugin, "https://dl.dropbox.com/u/53758864/tardis_land.mp3", false, handbrake_loc, 20, 75);
+                                        } else {
+                                            try {
+                                                Class.forName("org.bukkit.Sound");
+                                                handbrake_locw.playSound(handbrake_loc, Sound.MINECART_INSIDE, 1, 0);
+                                            } catch (ClassNotFoundException e) {
+                                                handbrake_locw.playEffect(handbrake_loc, Effect.BLAZE_SHOOT, 0);
+                                            }
+                                        }
+                                    }
+                                    if (plugin.ayml.getBoolean("travel.enabled")) {
+                                        if (l.getWorld().equals(exit.getWorld())) {
+                                            dist = (int) l.distance(exit);
                                         }
                                     }
                                 } else {
                                     player.sendMessage(plugin.pluginName + "You need to set a destination first!");
                                     error = true;
                                 }
-
                             } else {
                                 player.sendMessage(plugin.pluginName + "The handbrake is already off!");
                                 error = true;
                             }
                         }
-
                         if (action == Action.LEFT_CLICK_BLOCK) {
                             if (!rs.isHandbrake_on()) {
                                 //Changes the lever to on.
@@ -168,7 +211,6 @@ public class TARDISHandbrakeListener implements Listener {
                                     }
                                 }
                                 plugin.tardisHasDestination.remove(Integer.valueOf(id));
-                                plugin.tardisHasTravelled.add(Integer.valueOf(id));
                             } else {
                                 player.sendMessage(plugin.pluginName + "The handbrake is already on!");
                                 error = true;
@@ -179,6 +221,10 @@ public class TARDISHandbrakeListener implements Listener {
                             HashMap<String, Object> whereh = new HashMap<String, Object>();
                             whereh.put("tardis_id", id);
                             qf.doUpdate("tardis", set, whereh);
+                            if (dist > 0 && plugin.ayml.getBoolean("travel.enabled")) {
+                                TARDISAchievementFactory taf = new TARDISAchievementFactory(plugin, player, "travel", 1);
+                                taf.doAchievement(dist);
+                            }
                         }
                     } else {
                         player.sendMessage(plugin.pluginName + "You cannot change the handbrake while the TARDIS is in the time vortex!");

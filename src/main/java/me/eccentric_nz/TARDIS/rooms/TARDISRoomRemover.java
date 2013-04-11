@@ -16,8 +16,8 @@
  */
 package me.eccentric_nz.TARDIS.rooms;
 
+import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants.COMPASS;
-import me.eccentric_nz.TARDIS.TARDISConstants.ROOM;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -32,11 +32,13 @@ import org.bukkit.block.Block;
  */
 public class TARDISRoomRemover {
 
+    private TARDIS plugin;
     private String r;
     private Location l;
     private COMPASS d;
 
-    public TARDISRoomRemover(String r, Location l, COMPASS d) {
+    public TARDISRoomRemover(TARDIS plugin, String r, Location l, COMPASS d) {
+        this.plugin = plugin;
         this.r = r;
         this.l = l;
         this.d = d;
@@ -49,79 +51,37 @@ public class TARDISRoomRemover {
      */
     public boolean remove() {
         // get start locations
-        int sx, sy, sz, ex, ey, ez, downy, upy;
-        switch (ROOM.valueOf(r)) {
-            case PASSAGE:
-            case GREENHOUSE:
-            case LONG:
-                downy = 2;
-                upy = 4;
-                break;
-            case POOL:
-                downy = 3;
-                upy = 7;
-                break;
-            case ARBORETUM:
-                downy = 4;
-                upy = 7;
-                break;
-            default:
-                downy = 1;
-                upy = 7;
-                break;
-        }
+        int sx, sy, sz, ex, ey, ez, downy, upy, half, lessthree;
+        // calculate values for downy and upy from schematic dimensions / config
+        short[] dimensions = plugin.room_dimensions.get(r);
+        downy = Math.abs(plugin.getConfig().getInt("rooms." + r + ".offset"));
+        upy = dimensions[0] - (downy + 1);
+        half = (dimensions[1] - 2) / 2;
+        lessthree = dimensions[1] - 3;
         switch (d) {
             case NORTH:
-                if (r.equalsIgnoreCase("PASSAGE")) {
-                    sx = l.getBlockX() - 4;
-                    sz = l.getBlockZ() - 6;
-                    ex = l.getBlockX() + 4;
-                    ez = l.getBlockZ();
-                } else {
-                    sx = l.getBlockX() - 5;
-                    sz = l.getBlockZ() - 10;
-                    ex = l.getBlockX() + 5;
-                    ez = l.getBlockZ();
-                }
+                sx = l.getBlockX() - half;
+                sz = l.getBlockZ() - lessthree;
+                ex = l.getBlockX() + half;
+                ez = l.getBlockZ();
                 break;
             case WEST:
-                if (r.equalsIgnoreCase("PASSAGE")) {
-                    sx = l.getBlockX() - 6;
-                    sz = l.getBlockZ() - 4;
-                    ex = l.getBlockX();
-                    ez = l.getBlockZ() + 4;
-                } else {
-                    sx = l.getBlockX() - 10;
-                    sz = l.getBlockZ() - 5;
-                    ex = l.getBlockX();
-                    ez = l.getBlockZ() + 5;
-                }
+                sx = l.getBlockX() - lessthree;
+                sz = l.getBlockZ() - half;
+                ex = l.getBlockX();
+                ez = l.getBlockZ() + half;
                 break;
             case SOUTH:
-                if (r.equalsIgnoreCase("PASSAGE")) {
-                    sx = l.getBlockX() - 4;
-                    sz = l.getBlockZ();
-                    ex = l.getBlockX() + 4;
-                    ez = l.getBlockZ() + 6;
-                } else {
-                    sx = l.getBlockX() - 5;
-                    sz = l.getBlockZ();
-                    ex = l.getBlockX() + 5;
-                    ez = l.getBlockZ() + 10;
-                }
+                sx = l.getBlockX() - half;
+                sz = l.getBlockZ();
+                ex = l.getBlockX() + half;
+                ez = l.getBlockZ() + lessthree;
                 break;
             default:
-                if (r.equalsIgnoreCase("PASSAGE")) {
-                    sx = l.getBlockX();
-                    sz = l.getBlockZ() - 4;
-                    ex = l.getBlockX() + 6;
-                    ez = l.getBlockZ() + 4;
-                } else {
-                    sx = l.getBlockX();
-                    sz = l.getBlockZ() - 5;
-                    ex = l.getBlockX() + 10;
-                    ez = l.getBlockZ() + 5;
-                }
+                sx = l.getBlockX();
+                sz = l.getBlockZ() - half;
+                ex = l.getBlockX() + lessthree;
+                ez = l.getBlockZ() + half;
                 break;
         }
         sy = l.getBlockY() - downy;
