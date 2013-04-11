@@ -83,7 +83,7 @@ public class TARDISExterminator {
                 Block blockDown = blockbehind.getRelative(BlockFace.DOWN, 2);
                 Location bd_loc = blockDown.getLocation();
                 String bd_str = bd_loc.getWorld().getName() + ":" + bd_loc.getBlockX() + ":" + bd_loc.getBlockY() + ":" + bd_loc.getBlockZ();
-                where.put("save", bd_str);
+                where.put("current", bd_str);
             } else {
                 player.sendMessage(plugin.pluginName + ChatColor.RED + "Could not get TARDIS save location!");
                 return false;
@@ -168,6 +168,10 @@ public class TARDISExterminator {
                     HashMap<String, Object> bid = new HashMap<String, Object>();
                     bid.put("tardis_id", id);
                     qf.doDelete("blocks", bid);
+                    // remove levers from levers table
+                    HashMap<String, Object> eid = new HashMap<String, Object>();
+                    eid.put("tardis_id", id);
+                    qf.doDelete("levers", eid);
                     // remove doors from doors table
                     HashMap<String, Object> did = new HashMap<String, Object>();
                     did.put("tardis_id", id);
