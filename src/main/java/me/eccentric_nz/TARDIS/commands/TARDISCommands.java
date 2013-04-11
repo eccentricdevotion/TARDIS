@@ -624,7 +624,7 @@ public class TARDISCommands implements CommandExecutor {
                                         plugin.destroyPB.destroyTorch(oldSave);
                                         plugin.destroyPB.destroyPoliceBox(oldSave, d, id, false);
                                     }
-                                    plugin.buildPB.buildPoliceBox(id, eyeLocation, d, cham, p, false);
+                                    plugin.buildPB.buildPoliceBox(id, eyeLocation, d, cham, p, false, false);
                                 }
                             }, 100L);
                             // remove energy from TARDIS
@@ -824,7 +824,7 @@ public class TARDISCommands implements CommandExecutor {
                                 player.sendMessage(plugin.pluginName + ChatColor.RED + "The TARDIS does not have enough Artron Energy to rebuild!");
                                 return false;
                             }
-                            plugin.buildPB.buildPoliceBox(id, l, d, cham, player, true);
+                            plugin.buildPB.buildPoliceBox(id, l, d, cham, player, true, false);
                             sender.sendMessage(plugin.pluginName + "The TARDIS Police Box was rebuilt!");
                             qf.alterEnergyLevel("tardis", -rebuild, wheret, player);
                             // set hidden to false
@@ -1215,9 +1215,11 @@ public class TARDISCommands implements CommandExecutor {
                         Location l = new Location(w, x, y, z);
                         TARDISConstants.COMPASS d = TARDISConstants.COMPASS.valueOf(dir);
                         // destroy platform
-                        plugin.destroyPB.destroyPlatform(rs.getPlatform(), id);
-                        plugin.destroyPB.destroySign(l, old_d);
-                        plugin.buildPB.buildPoliceBox(id, l, d, cham, player, true);
+                        if (!rs.isHidden()) {
+                            plugin.destroyPB.destroyPlatform(rs.getPlatform(), id);
+                            plugin.destroyPB.destroySign(l, old_d);
+                        }
+                        plugin.buildPB.buildPoliceBox(id, l, d, cham, player, true, false);
                         HashMap<String, Object> wherea = new HashMap<String, Object>();
                         wherea.put("tardis_id", id);
                         qf.alterEnergyLevel("tardis", -amount, wherea, player);

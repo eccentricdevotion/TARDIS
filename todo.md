@@ -2,7 +2,6 @@
  
 ## Current version `2.2-beta`
 1. Add video/docs for custom rooms/books/achievements
-2. Add per world travel permissions + config option
 
 ## Future version `2.3+`
 1. Allow companions to enter and exit the tardis at will (and steal it).

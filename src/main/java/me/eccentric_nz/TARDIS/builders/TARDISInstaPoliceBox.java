@@ -49,14 +49,16 @@ public class TARDISInstaPoliceBox {
     private int tid;
     private int mat;
     private byte data;
+    private boolean mal;
 
-    public TARDISInstaPoliceBox(TARDIS plugin, Location location, int mat, byte data, int tid, TARDISConstants.COMPASS d) {
+    public TARDISInstaPoliceBox(TARDIS plugin, Location location, int mat, byte data, int tid, TARDISConstants.COMPASS d, boolean mal) {
         this.plugin = plugin;
         this.d = d;
         this.location = location;
         this.tid = tid;
         this.mat = mat;
         this.data = data;
+        this.mal = mal;
     }
 
     /**
@@ -249,11 +251,13 @@ public class TARDISInstaPoliceBox {
         if (rst.resultSet()) {
             final ArrayList<HashMap<String, String>> travellers = rst.getData();
             plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
+                @Override
                 public void run() {
                     for (HashMap<String, String> map : travellers) {
                         Player p = plugin.getServer().getPlayer(map.get("player"));
                         if (p != null) {
-                            plugin.getServer().getPlayer(map.get("player")).sendMessage(plugin.pluginName + "Engage the handbrake to exit!");
+                            String message = (mal) ? "here was a malfunction and the emergency handrake was engaged! Scan location before exit!" : "LEFT-click the handbrake to exit!";
+                            plugin.getServer().getPlayer(map.get("player")).sendMessage(plugin.pluginName + message);
                         }
                     }
                 }

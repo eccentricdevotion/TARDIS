@@ -150,7 +150,7 @@ public class TARDISHandbrakeListener implements Listener {
                                         plugin.destroyPB.destroySign(l, d);
                                         plugin.destroyPB.destroyPoliceBox(l, d, id, false);
                                     }
-                                    plugin.buildPB.buildPoliceBox(id, exit, d, cham, player, false);
+                                    plugin.buildPB.buildPoliceBox(id, exit, d, cham, player, false, malfunction);
                                     Chunk oldChunk = l.getChunk();
                                     if (plugin.tardisChunkList.contains(oldChunk)) {
                                         plugin.tardisChunkList.remove(oldChunk);

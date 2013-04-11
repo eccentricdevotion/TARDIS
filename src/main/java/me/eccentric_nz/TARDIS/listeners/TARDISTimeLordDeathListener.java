@@ -116,7 +116,7 @@ public class TARDISTimeLordDeathListener implements Listener {
                                 plugin.destroyPB.destroyPoliceBox(sl, d, id, false);
                             }
                             // rebuild police box
-                            plugin.buildPB.buildPoliceBox(id, goto_loc, d, rs.isChamele_on(), player, false);
+                            plugin.buildPB.buildPoliceBox(id, goto_loc, d, rs.isChamele_on(), player, false, false);
                             String save_loc = goto_loc.getWorld().getName() + ":" + goto_loc.getBlockX() + ":" + goto_loc.getBlockY() + ":" + goto_loc.getBlockZ();
                             QueryFactory qf = new QueryFactory(plugin);
                             HashMap<String, Object> tid = new HashMap<String, Object>();

@@ -58,7 +58,7 @@ public class TARDISBuilderPoliceBox {
      * @param rebuild boolean determining whether the Police Box blocks should
      * be remembered in the database for protection purposes.
      */
-    public void buildPoliceBox(int id, Location l, TARDISConstants.COMPASS d, boolean c, Player p, boolean rebuild) {
+    public void buildPoliceBox(int id, Location l, TARDISConstants.COMPASS d, boolean c, Player p, boolean rebuild, boolean mal) {
         int plusx, minusx, x, y, plusz, minusz, z, wall_block = 35;
         byte grey = 8, chameleonData = 11;
         if (c) {
@@ -105,12 +105,12 @@ public class TARDISBuilderPoliceBox {
         } else {
             if (plugin.getConfig().getBoolean("materialise")) {
                 plugin.tardisMaterialising.add(id);
-                TARDISMaterialisationRunnable runnable = new TARDISMaterialisationRunnable(plugin, l, wall_block, chameleonData, id, d, p);
+                TARDISMaterialisationRunnable runnable = new TARDISMaterialisationRunnable(plugin, l, wall_block, chameleonData, id, d, p, mal);
                 int taskID = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, runnable, 10L, 20L);
                 runnable.setTask(taskID);
             } else {
                 plugin.tardisMaterialising.add(id);
-                TARDISInstaPoliceBox insta = new TARDISInstaPoliceBox(plugin, l, wall_block, chameleonData, id, d);
+                TARDISInstaPoliceBox insta = new TARDISInstaPoliceBox(plugin, l, wall_block, chameleonData, id, d, mal);
                 insta.buildPoliceBox();
             }
         }
