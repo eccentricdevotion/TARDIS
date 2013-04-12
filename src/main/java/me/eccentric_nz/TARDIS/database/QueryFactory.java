@@ -135,8 +135,12 @@ public class QueryFactory {
             for (Map.Entry<String, Object> entry : data.entrySet()) {
                 if (entry.getValue().getClass().equals(String.class)) {
                     statement.setString(s, entry.getValue().toString());
-                } else {
-                    statement.setInt(s, plugin.utils.parseNum(entry.getValue().toString()));
+                }
+                if (entry.getValue() instanceof Integer) {
+                    statement.setInt(s, (Integer) entry.getValue());
+                }
+                if (entry.getValue() instanceof Long) {
+                    statement.setLong(s, (Long) entry.getValue());
                 }
                 s++;
             }
