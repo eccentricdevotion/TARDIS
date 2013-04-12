@@ -89,7 +89,6 @@ public class TARDISMalfunction {
     }
 
     public void doMalfunction(Location l) {
-        plugin.debug("Starting malfunction");
         HashMap<String, Object> where = new HashMap<String, Object>();
         where.put("tardis_id", id);
         ResultSetLevers rsl = new ResultSetLevers(plugin, where, true);
