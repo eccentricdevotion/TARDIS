@@ -156,6 +156,13 @@ public class TARDISHandbrakeListener implements Listener {
                                         plugin.tardisChunkList.remove(oldChunk);
                                     }
                                     set.put("current", save);
+                                    long now;
+                                    if (player.hasPermission("tardis.prune.bypass")) {
+                                        now = Long.MAX_VALUE;
+                                    } else {
+                                        now = System.currentTimeMillis();
+                                    }
+                                    set.put("lastuse", now);
                                     if (!malfunction) {
                                         // Sets database and sends the player/world message/sounds.
                                         set.put("handbrake_on", 0);

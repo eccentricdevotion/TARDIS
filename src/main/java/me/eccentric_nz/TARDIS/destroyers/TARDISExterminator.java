@@ -53,8 +53,43 @@ public class TARDISExterminator {
         this.plugin = plugin;
     }
 
+    public boolean exterminate(int id) {
+        HashMap<String, Object> where = new HashMap<String, Object>();
+        where.put("tardis_id", id);
+        ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
+        try {
+            if (rs.resultSet()) {
+                String saveLoc = rs.getCurrent();
+                Location bb_loc = plugin.utils.getLocationFromDB(saveLoc, 0F, 0F);
+                String chunkLoc = rs.getChunk();
+                String owner = rs.getOwner();
+                TARDISConstants.SCHEMATIC schm = rs.getSchematic();
+                TARDISConstants.COMPASS d = rs.getDirection();
+                if (!rs.isHidden()) {
+                    // clear the torch
+                    plugin.destroyPB.destroyTorch(bb_loc);
+                    plugin.destroyPB.destroySign(bb_loc, d);
+                    plugin.destroyPB.destroyPoliceBox(bb_loc, d, id, false);
+                }
+                String[] chunkworld = chunkLoc.split(":");
+                World cw = plugin.getServer().getWorld(chunkworld[0]);
+                int restore = getRestore(cw);
+                if (!cw.getName().contains("TARDIS_WORLD_")) {
+                    plugin.destroyI.destroyInner(schm, id, cw, restore, owner);
+                }
+                cleanDatabase(id);
+                cleanWorlds(cw, owner);
+                return true;
+            }
+        } catch (Exception e) {
+            plugin.console.sendMessage(plugin.pluginName + "TARDIS prune by id error: " + e);
+        } finally {
+            return false;
+        }
+    }
+
     /**
-     * Deletes the TARDIS.
+     * Deletes a TARDIS.
      *
      * @param player running the command.
      * @param block the block that represents the Police Box sign
@@ -135,96 +170,21 @@ public class TARDISExterminator {
                 // if the sign was on the TARDIS destroy the TARDIS!
                 if (sign_loc.getBlockX() == bb_loc.getBlockX() + signx && sign_loc.getBlockY() + signy == bb_loc.getBlockY() && sign_loc.getBlockZ() == bb_loc.getBlockZ() + signz) {
                     if (!rs.isHidden()) {
-                        // clear the torch
+                        // remove Police Box
                         plugin.destroyPB.destroyTorch(bb_loc);
                         plugin.destroyPB.destroySign(bb_loc, d);
+                        plugin.destroyPB.destroyPoliceBox(bb_loc, d, id, false);
                     }
-                    // also remove the location of the chunk from chunks table
                     String[] chunkworld = chunkLoc.split(":");
                     World cw = plugin.getServer().getWorld(chunkworld[0]);
-                    World.Environment env = cw.getEnvironment();
-                    int restore;
-                    switch (env) {
-                        case NETHER:
-                            restore = 87;
-                            break;
-                        case THE_END:
-                            restore = 121;
-                            break;
-                        default:
-                            restore = 1;
-                    }
-                    QueryFactory qf = new QueryFactory(plugin);
-                    if (cw.getWorldType() == WorldType.FLAT) {
-                        restore = 0;
-                    }
+                    int restore = getRestore(cw);
                     if (!cw.getName().contains("TARDIS_WORLD_")) {
                         plugin.destroyI.destroyInner(schm, id, cw, restore, playerNameStr);
                     }
-                    if (!rs.isHidden()) {
-                        plugin.destroyPB.destroyPoliceBox(bb_loc, d, id, false);
-                    }
-                    // remove record from tardis table
-                    HashMap<String, Object> tid = new HashMap<String, Object>();
-                    tid.put("tardis_id", id);
-                    qf.doDelete("tardis", tid);
-                    // remove blocks from blocks table
-                    HashMap<String, Object> bid = new HashMap<String, Object>();
-                    bid.put("tardis_id", id);
-                    qf.doDelete("blocks", bid);
-                    // remove levers from levers table
-                    HashMap<String, Object> eid = new HashMap<String, Object>();
-                    eid.put("tardis_id", id);
-                    qf.doDelete("levers", eid);
-                    // remove doors from doors table
-                    HashMap<String, Object> did = new HashMap<String, Object>();
-                    did.put("tardis_id", id);
-                    qf.doDelete("doors", did);
-                    // remove gravity wells
-                    HashMap<String, Object> gid = new HashMap<String, Object>();
-                    gid.put("tardis_id", id);
-                    qf.doDelete("gravity_well", gid);
-                    // remove saved destinations
-                    HashMap<String, Object> lid = new HashMap<String, Object>();
-                    lid.put("tardis_id", id);
-                    qf.doDelete("destinations", lid);
-                    HashMap<String, Object> vid = new HashMap<String, Object>();
-                    vid.put("tardis_id", id);
-                    qf.doDelete("travellers", vid);
-                    HashMap<String, Object> cid = new HashMap<String, Object>();
-                    cid.put("tardis_id", id);
-                    qf.doDelete("chunks", cid);
+                    cleanDatabase(id);
+                    cleanWorlds(cw, owner);
                     player.sendMessage(plugin.pluginName + "The TARDIS was removed from the world and database successfully.");
-                    // remove world guard region protection
-                    if (plugin.worldGuardOnServer && plugin.getConfig().getBoolean("use_worldguard")) {
-                        plugin.wgchk.removeRegion(cw, owner);
-                    }
-                    // unload and remove the world if it's a TARDIS_WORLD_ world
-                    if (cw.getName().contains("TARDIS_WORLD_")) {
-                        String name = cw.getName();
-                        List<Player> players = cw.getPlayers();
-                        Location spawn = plugin.getServer().getWorlds().get(0).getSpawnLocation();
-                        for (Player p : players) {
-                            p.sendMessage(plugin.pluginName + "World scheduled for deletion, teleporting you to spawn!");
-                            p.teleport(spawn);
-                        }
-                        if (plugin.pm.isPluginEnabled("Multiverse-Core")) {
-                            plugin.getServer().dispatchCommand(plugin.console, "mv remove " + name);
-                        }
-                        if (plugin.pm.isPluginEnabled("MultiWorld")) {
-                            plugin.getServer().dispatchCommand(plugin.console, "mw unload " + name);
-                        }
-                        if (plugin.pm.isPluginEnabled("WorldBorder")) {
-                            // wb <world> clear
-                            plugin.getServer().dispatchCommand(plugin.console, "wb " + name + " clear");
-                        }
-                        plugin.getServer().unloadWorld(cw, true);
-                        File world_folder = new File(plugin.getServer().getWorldContainer() + File.separator + name + File.separator);
-                        if (!deleteFolder(world_folder)) {
-                            plugin.debug("Could not delete world <" + name + ">");
-                        }
-                        return true;
-                    }
+                    return true;
                 } else {
                     // cancel the event because it's not the player's TARDIS
                     player.sendMessage(TARDISConstants.NOT_OWNER);
@@ -238,6 +198,87 @@ public class TARDISExterminator {
             plugin.console.sendMessage(plugin.pluginName + "Block Break Listener Error: " + e);
         } finally {
             return false;
+        }
+    }
+
+    private int getRestore(World w) {
+        World.Environment env = w.getEnvironment();
+        if (w.getWorldType() == WorldType.FLAT || w.getName().equals("TARDIS_TimeVortex")) {
+            return 0;
+        }
+        switch (env) {
+            case NETHER:
+                return 87;
+            case THE_END:
+                return 121;
+            default:
+                return 1;
+        }
+    }
+
+    private void cleanDatabase(int id) {
+        QueryFactory qf = new QueryFactory(plugin);
+        // remove record from tardis table
+        HashMap<String, Object> tid = new HashMap<String, Object>();
+        tid.put("tardis_id", id);
+        qf.doDelete("tardis", tid);
+        // remove blocks from blocks table
+        HashMap<String, Object> bid = new HashMap<String, Object>();
+        bid.put("tardis_id", id);
+        qf.doDelete("blocks", bid);
+        // remove levers from levers table
+        HashMap<String, Object> eid = new HashMap<String, Object>();
+        eid.put("tardis_id", id);
+        qf.doDelete("levers", eid);
+        // remove doors from doors table
+        HashMap<String, Object> did = new HashMap<String, Object>();
+        did.put("tardis_id", id);
+        qf.doDelete("doors", did);
+        // remove gravity wells
+        HashMap<String, Object> gid = new HashMap<String, Object>();
+        gid.put("tardis_id", id);
+        qf.doDelete("gravity_well", gid);
+        // remove saved destinations
+        HashMap<String, Object> lid = new HashMap<String, Object>();
+        lid.put("tardis_id", id);
+        qf.doDelete("destinations", lid);
+        HashMap<String, Object> vid = new HashMap<String, Object>();
+        vid.put("tardis_id", id);
+        qf.doDelete("travellers", vid);
+        HashMap<String, Object> cid = new HashMap<String, Object>();
+        cid.put("tardis_id", id);
+        qf.doDelete("chunks", cid);
+    }
+
+    private void cleanWorlds(World w, String owner) {
+        // remove world guard region protection
+        if (plugin.worldGuardOnServer && plugin.getConfig().getBoolean("use_worldguard")) {
+            plugin.wgchk.removeRegion(w, owner);
+        }
+        // unload and remove the world if it's a TARDIS_WORLD_ world
+        if (w.getName().contains("TARDIS_WORLD_")) {
+            String name = w.getName();
+            List<Player> players = w.getPlayers();
+            Location spawn = plugin.getServer().getWorlds().get(0).getSpawnLocation();
+            for (Player p : players) {
+                p.sendMessage(plugin.pluginName + "World scheduled for deletion, teleporting you to spawn!");
+                p.teleport(spawn);
+            }
+            if (plugin.pm.isPluginEnabled("Multiverse-Core")) {
+                plugin.getServer().dispatchCommand(plugin.console, "mv remove " + name);
+            }
+            if (plugin.pm.isPluginEnabled("MultiWorld")) {
+                plugin.getServer().dispatchCommand(plugin.console, "mw unload " + name);
+            }
+            if (plugin.pm.isPluginEnabled("WorldBorder")) {
+                // wb <world> clear
+                plugin.getServer().dispatchCommand(plugin.console, "wb " + name + " clear");
+            }
+            plugin.getServer().unloadWorld(w, true);
+            File world_folder = new File(plugin.getServer().getWorldContainer() + File.separator + name + File.separator);
+            if (!deleteFolder(world_folder)) {
+                plugin.debug("Could not delete world <" + name + ">");
+            }
         }
     }
 

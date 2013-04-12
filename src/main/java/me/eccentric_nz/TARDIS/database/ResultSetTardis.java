@@ -77,6 +77,7 @@ public class ResultSetTardis {
     private String scanner;
     private String farm;
     private boolean hidden;
+    private long lastuse;
     private ArrayList<HashMap<String, String>> data = new ArrayList<HashMap<String, String>>();
 
     /**
@@ -179,6 +180,7 @@ public class ResultSetTardis {
                     this.scanner = rs.getString("scanner");
                     this.farm = rs.getString("farm");
                     this.hidden = rs.getBoolean("hidden");
+                    this.lastuse = rs.getLong("lastuse");
                 }
             } else {
                 return false;
@@ -339,6 +341,10 @@ public class ResultSetTardis {
 
     public boolean isHidden() {
         return hidden;
+    }
+
+    public long getLastuse() {
+        return lastuse;
     }
 
     public ArrayList<HashMap<String, String>> getData() {

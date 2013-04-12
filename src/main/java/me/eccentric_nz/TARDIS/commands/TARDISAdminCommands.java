@@ -34,6 +34,7 @@ import me.eccentric_nz.TARDIS.database.ResultSetDoors;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
 import static me.eccentric_nz.TARDIS.destroyers.TARDISExterminator.deleteFolder;
+import me.eccentric_nz.TARDIS.destroyers.TARDISPruner;
 import me.eccentric_nz.TARDIS.files.TARDISConfiguration;
 import me.eccentric_nz.TARDIS.listeners.TARDISDoorListener;
 import me.eccentric_nz.TARDIS.thirdparty.Version;
@@ -95,6 +96,7 @@ public class TARDISAdminCommands implements CommandExecutor {
         firstsStr.add("jettison_seed");
         firstsStr.add("key");
         firstsStr.add("list");
+        firstsStr.add("prune");
         firstsStr.add("recharger");
         firstsStr.add("reload");
         // boolean
@@ -288,6 +290,19 @@ public class TARDISAdminCommands implements CommandExecutor {
                 if (args.length < 2) {
                     sender.sendMessage(plugin.pluginName + "Too few command arguments!");
                     return false;
+                }
+                if (first.equals("prune")) {
+                    TARDISPruner pruner = new TARDISPruner(plugin);
+                    try {
+                        int days = Integer.parseInt(args[1]);
+                        pruner.prune(sender, days);
+                    } catch (NumberFormatException nfe) {
+                        if (args[1].equalsIgnoreCase("list") && args.length == 3) {
+                            int days = plugin.utils.parseNum(args[2]);
+                            pruner.list(sender, days);
+                        }
+                    }
+                    return true;
                 }
                 if (first.equals("recharger")) {
                     Player player = null;
@@ -499,7 +514,7 @@ public class TARDISAdminCommands implements CommandExecutor {
                             }
                             qf.doDelete("travellers", whered);
                         }
-                        // need to determine if we use the save location or the current location
+                        // get the current location
                         Location bb_loc = plugin.utils.getLocationFromDB(currentLoc, 0, 0);
                         if (bb_loc == null) {
                             sender.sendMessage(plugin.pluginName + "Could not get the location of the TARDIS!");

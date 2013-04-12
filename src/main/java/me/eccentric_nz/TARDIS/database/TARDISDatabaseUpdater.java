@@ -40,6 +40,7 @@ public class TARDISDatabaseUpdater {
     private List<String> gravityupdates = new ArrayList<String>();
     private List<String> prefsupdates = new ArrayList<String>();
     private List<String> tardisupdates = new ArrayList<String>();
+    private long now = System.currentTimeMillis();
     private Statement statement;
 
     public TARDISDatabaseUpdater(Statement statement) {
@@ -66,6 +67,7 @@ public class TARDISDatabaseUpdater {
         tardisupdates.add("handbrake TEXT DEFAULT ''");
         tardisupdates.add("handbrake_on INTEGER DEFAULT 1");
         tardisupdates.add("hidden INTEGER DEFAULT 0");
+        tardisupdates.add("lastuse INTEGER DEFAULT " + now);
         tardisupdates.add("middle_data INTEGER");
         tardisupdates.add("middle_id INTEGER");
         tardisupdates.add("recharging INTEGER DEFAULT 0");
