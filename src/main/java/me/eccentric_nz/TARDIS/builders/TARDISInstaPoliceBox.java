@@ -256,7 +256,7 @@ public class TARDISInstaPoliceBox {
                     for (HashMap<String, String> map : travellers) {
                         Player p = plugin.getServer().getPlayer(map.get("player"));
                         if (p != null) {
-                            String message = (mal) ? "here was a malfunction and the emergency handrake was engaged! Scan location before exit!" : "LEFT-click the handbrake to exit!";
+                            String message = (mal) ? "There was a malfunction and the emergency handrake was engaged! Scan location before exit!" : "LEFT-click the handbrake to exit!";
                             plugin.getServer().getPlayer(map.get("player")).sendMessage(plugin.pluginName + message);
                         }
                     }
