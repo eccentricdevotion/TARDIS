@@ -49,16 +49,18 @@
         <h2>General</h2>
         <p>Allow players to use a TARDIS</p>
         <pre><code>tardis.use</code></pre>
-        <p>There are 7 (probably unnecessary) child nodes:</p>
+        <p>There are a number of (probably unnecessary) child nodes:</p>
         <pre><code>tardis.create
-tardis.delete
 tardis.timetravel
 tardis.list
 tardis.save
-tardis.add
 tardis.enter
+tardis.add
 tardis.find
-tardis.update</code></pre>
+tardis.update
+tardis.rebuild
+tardis.help
+tardis.book</code></pre>
         <h2>TARDIS build sizes</h2>
         <p>In order to be able to create a &lsquo;bigger&rsquo;, &lsquo;deluxe&rsquo; or &lsquo;eleventh&rsquo; TARDIS, players will need:</p>
         <pre><code>tardis.bigger
@@ -95,6 +97,10 @@ tardis.room.workshop
         <pre><code>tardis.timetravel.player</code></pre>
         <p>Allow travel to specified co-ordinates</p>
         <pre><code>tardis.timetravel.location</code></pre>
+        <h2>Per world travel</h2>
+        <p>If the TARDIS config option <code>per_world_perms</code> is <code>true</code>, then players will need the appropriate permission to time travel to a world. The permission format is:</p>
+        <pre><code>tardis.travel.[world]</code></pre>
+        <p>Where <code>[world]</code> is the name of the world they will have access to.</p>
         <h2>Environment</h2>
         <p>There are a couple of world environment specific nodes:</p>
         <p>Allow travel to <strong>Nether</strong> worlds</p>
@@ -107,6 +113,9 @@ tardis.room.workshop
         <h2>TARDIS mob farming</h2>
         <p>To allow players to farm mobs:</p>
         <pre><code>tardis.farm</code></pre>
+        <h2>TARDIS books and achievements</h2>
+        <p>To allow players to get books and gain achievements:</p>
+        <pre><code>tardis.book</code></pre>
         <h2>TARDIS areas</h2>
         <p>To allow access to TARDIS areas, users/groups must be given the permission:</p>
         <pre><code>tardis.area.[name_of_area]</code></pre>
@@ -115,6 +124,9 @@ tardis.room.workshop
         <p>To restrict a player to a specific area, the player must have the permission:</p>
         <pre><code>tardis.exile</code></pre>
         <p>AND the permission for the area they are restricted to.</p>
+        <h2>Bypass TARDIS pruning</h2>
+        <p>To allow players to bypass the abandoned TARDIS pruning feature:</p>
+        <pre><code>tardis.prune.bypass</code></pre>
         <h2>Admin/moderator</h2>
         <p>Allow players to do administration stuff</p>
         <pre><code>tardis.admin

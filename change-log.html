@@ -9,8 +9,8 @@
 <script src="javascripts/scale.fix.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
 <!--[if lt IE 9]>
-    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
+<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+<![endif]-->
 </head>
 <body>
 <div class="wrapper">
@@ -26,6 +26,93 @@
     <section>
         <h1>Change log</h1>
         <h2>What&rsquo;s been changed?</h2>
+        <h3>v2.2-beta-2</h3>
+        <h4>Bug fixes</h4>
+        <ul>
+            <li>Travel to a previously saved destination in The End or the Nether is denied if they are disabled in the config or the player doesn&rsquo;t have permission.</li>
+            <li>Travel to a world that is disabled in the config is now denied for all travel commands (not just for random time travel)</li>
+            <li>The plugin no longer tries to load anything else if support for the CraftBukkit version is not found</li>
+            <li>The plugin now correctly finds the default world spawn location (sometimes used when admin deleting a TARDIS)</li>
+            <li>Fixed the <code>/tardisadmin delete [player]</code> command sometimes failing </li>
+            <li>Fixed the <code>/tardisadmin gamemode</code> command</li>
+            <li>The plugin no longer spams the console at startup so much &mdash; to revert to the old behaviour, set <code>debug: true</code> in the TARDIS config</li>
+            <li>Fixed a Police Box duplication bug</li>
+            <li>You can now only use your own TARDIS saves (even if you know the name of another player&rsquo;s)</li>
+            <li>If a &lsquo;TARDIS_TimeVortex&rsquo; world has a NORMAL environment, then it is now kept night like a regular TARDIS world</li>
+            <li>Fixed an error at startup related to loading Police Box chunks</li>
+            <li>Fixed a persistent error in the Creeper checker if a world was present in the TARDIS database, but not on the server</li>
+            <li>Added missing <code>room.enabled</code> and <code>room.offset</code> to <code>/tardisadmin config</code> command</li>
+            <li>Fixed grammar in the <code>/tardisprefs</code> command</li>
+            <li>The Police Box is no longer destroyed if it is already hidden</li>
+        </ul>
+        <h4>Additions</h4>
+        <ul>
+            <li>Added a config option <code>rooms_require_blocks: [true|false]</code> &mdash; if <code>true</code> it forces players to have condensed the blocks needed to grow a room.</li>
+            <li>Added a config option <code>rooms_condenser_percent: [amount]</code> &mdash; use this to set the percentage of the blocks required for a room, a player needs to condense</li>
+            <li>Added a command <code>/tardisroom blocks [room name]</code> &mdash; lists the blocks required to grow a room</li>
+            <li>Added a command <code>/tardisroom blocks save</code> &mdash; saves a list of rooms and their required blocks to file</li>
+            <li>Added some new 1.5 items to the TARDIS &lsquo;condensables&rsquo; list</li>
+            <li>Added a command <code>/tardis inside</code> &mdash; lists the occupants of the TARDIS</li>
+            <li>If <code>create_worlds</code> is true, then the TARDIS chest is automatically designated and the condenser</li>
+            <li>Added TARDIS books &mdash; give the player Timelore books to read and instruct them on: how to get TARDIS acheivements, do stuff with the plugin etc &mdash; Books are created from text files so are customisable &mdash; see <a href="books.html">books.html</a></li>
+            <li>Added command <code>/tardisbook list</code> &mdash; shows what books are available</li>
+            <li>Added command <code>/tardisbook get [book]</code> &mdash; gets the specified book</li>
+            <li>Added TARDIS achievements &mdash; in conjunction with TARDIS books, you can achieve goals and gain rewards &mdash; goal amounts and rewards are customisable &mdash; see <a href="achievements.html">achievements.html</a></li>
+            <li>Added command <code>/tardisbook start [book]</code> &mdash; to start the specified achievement</li>
+            <li>Added Mooshrooms to TARDIS mob farming</li>
+            <li>Player&rsquo;s pets will now enter/exit the TARDIS with the player if they are close to the TARDIS doors (the same distance as for mob farming)</li>
+            <li>Added config options: <code>malfunction</code>, <code>malfunction_nether</code> and <code>malfunction_end</code> &mdash; if not set to <code>0</code> gives a chance of TARDIS malfunction when time travelling, deposting the player in a different location than expected &mdash; a small (configurable) chance it may be the Nether or The End, even if they are disabled in the config or the player doesn&rsquo;t have permission. There is an emergency landing SFX (Spout required). Lights will flicker and there will be smoke and nausea effects (only if the TARDIS is created after updating to this version…) &mdash; see <a href="malfunction.html">malfunction.html</a></li>
+            <li>Added config option <code>exile: [true|false]</code> &mdash; sets whether the TARDIS exile feature is enabled</li>
+            <li>Added config option <code>per_world_perms: [true|false]</code> &mdash; sets whether to use permissions per world for time travel &mdash; if <code>true</code>, then the player requires the permission <code>tardis.travel.[world name]</code></li>
+            <li>Added command <code>/tardisadmin prune [days]</code> &mdash; automatically delete TARDISes that have not been used for the specified number of days (last use is set by the player using the TARDIS handbrake)</li>
+            <li>Added command <code>/tardisadmin prune list [days]</code> &mdash; check which TARDISes will be deleted &mdash; outputs to screen/console and also writes to file. There is also a <code>tardis.prune.bypass</code> permission &mdash; see <a href="prune.html">prune.html</a></li>
+            <li>Added command aliases for all commands, see table below:</li>
+        </ul>
+        <table>
+            <tr>
+                <th>Command</th>
+                <th>Aliases </th>
+            </tr>
+            <tr>
+                <td><code>/tardis</code></td>
+                <td><code>/tt<br />
+                    /ttardis<br />
+                    //tardis<br />
+                    /timelord</code></td>
+            </tr>
+            <tr>
+                <td><code>/tardistravel</code></td>
+                <td><code>/ttravel</code></td>
+            </tr>
+            <tr>
+                <td><code>/tardisadmin</code></td>
+                <td><code>/tadmin</code></td>
+            </tr>
+            <tr>
+                <td><code>/tardisroom</code></td>
+                <td><code>/troom</code></td>
+            </tr>
+            <tr>
+                <td><code>/tardisprefs</code></td>
+                <td><code>/tprefs</code></td>
+            </tr>
+            <tr>
+                <td><code>/tardisarea</code></td>
+                <td><code>/tarea</code></td>
+            </tr>
+            <tr>
+                <td><code>/tardisbind</code></td>
+                <td><code>/tbind</code></td>
+            </tr>
+            <tr>
+                <td><code>/tardisgravity</code></td>
+                <td><code>/tgravity</code></td>
+            </tr>
+            <tr>
+                <td><code>/tardisbook</code></td>
+                <td><code>/tbook</code></td>
+            </tr>
+        </table>
         <h3>v2.2-beta-1</h3>
         <ul>
             <li>Updated for CraftBukkit 1.5.1-R0.1</li>
@@ -75,7 +162,10 @@
             <li>TARDIS worlds are properly deleted even if <code>create_worlds</code> has been set to false after the TARDIS was created</li>
             <li>Adjusted the update checker message so that servers are informed if a final release with the same base version number as a beta or pre-release has been uploaded</li>
             <li>The TARDIS key is now a player preference, to set it use: <code>/tardisprefs key [material]</code> &mdash; if not set then the config default is used</li>
-            <li>Added an autonomous homing preference &mdash; if the player dies they can have the TARDIS fly home or to a recharge point (whichever is the closest). There is are config settings <code>allow_autonomous: [true|false]</code> and for Artron energy <code>autonomous: [cost]</code>, a permission node <code>tardis.autonomous</code> and the command to toggle it on and off <code>/tardisprefs auto [on|off]</code> &mdash; <a href="autonomous.html">autonomous.html</a></li>
+            <li>Added an autonomous homing preference &mdash; if the player dies they can have the TARDIS fly home or to a recharge point (whichever is the closest). There is are config settings <code>allow_autonomous: [true|false]</code> and for Artron energy <code>autonomous: [cost]</code>, a permission node <code>tardis.autonomous</code> and the command to toggle it on and off <code>/tardisprefs auto [on
+                </code></td>
+                <td><code>off]</code> &mdash; <a href="autonomous.html">autonomous.html</a>
+            </li>
             <li>You can now open the TARDIS door by RIGHT-clicking it while SNEAKING (use left SHIFT key)</li>
             <li>Time Lords can now lock their Police Box doors by LEFT-clicking them. No one will be able to enter (including the Time Lord) until it is unlocked. Use another LEFT-click to unlock it</li>
             <li>Added the command <code>/tardisadmin decharge [name]</code> to remove recharge points from the config</li>
@@ -515,7 +605,12 @@
             <li>You can now use your own schematic files to build the inner TARDIS &mdash; see the <a href="schematis.html">Schematics</a> page for more info...</li>
             <li>A fix for the &lsquo;chameleon circuit exploit&rsquo; &mdash; the Police Box is now indestructible in SURVIVAL mode (except for the sign &amp; platform if there is one).</li>
             <li>Random location finding and <code>/tardis comehere</code> command now respects WorldGuard regions (if WorldGuard is enabled on server).</li>
-            <li>New command <code>/tardis direction [north|west|south|east]</code> allows you to change the direction the TARDIS police box is facing.</li>
+            <li>New command <code>/tardis direction [north
+                </code></td>
+                <td><code>west</code></td>
+                <td><code>south</code></td>
+                <td><code>east]</code> allows you to change the direction the TARDIS police box is facing. 
+            </li>
             <li>Exit and entry locations fixed, should not take any damage now.</li>
             <li>If inner door is moved and updated its new location is now used to determine the entry point to inner TARDIS.</li>
             <li>TARDIS now lands on snow properly.</li>
@@ -525,7 +620,10 @@
         <h3>v1.5.1</h3>
         <ul>
             <li>Added Remote Control! You can now make your TARDIS come to the spot you are looking at with the command <code>/tardis comehere</code></li>
-            <li>Added player preferences for turning Who quotes on and off <code>/tardis quotes [on|off]</code></li>
+            <li>Added player preferences for turning Who quotes on and off <code>/tardis quotes [on
+                </code></td>
+                <td><code>off] 
+                </code></li>
             <li>Added admin command to view current config settings <code>/tardis admin config</code></li>
             <li>Improvements to Chameleon Circuit &mdash; shouldn&rsquo;t be any AIR TARDISs anymore, also if a valid blending block can&rsquo;t be found directly beneath the TARDIS, it now checks the surrounding blocks</li>
         </ul>

@@ -25,7 +25,16 @@
     </header>
     <section>
         <h1>Malfunctions</h1>
-        <p>Coming this weekend&hellip;!</p>
+        <p>You can configure the TARDIS plugin so that when a player time travels, there is a chance of a malfunction happening that deposits the TARDIS in an unexpected location. There is also a (configurable) chance the location may be the Nether or The End, even if they are disabled in the config or the player doesn&rsquo;t have permission.</p>
+        <p>When the TARDIS malfunctions, there is an emergency landing sound effect (Spout required). Lights will flicker and there will be smoke and nausea effects. <strong>Note:</strong> Effects will only be present if the TARDIS was created with <strong><a href="http://dev.bukkit.org/server-mods/tardis/files">TARDIS v2.2-beta-2</a></strong> or later.</p>
+        <h3>Config options</h3>
+        <p>There are three options that affect TARDIS malfunctions:</p>
+        <ul>
+            <li><code>malfunction: [percent]</code> &mdash; sets the percentage chance of a malfunction. Default: <code>3</code></li>
+            <li><code>malfunction_nether: [percent]</code> &mdash; sets the percentage chance of a malfunction landing in the Nether. Default: <code>3</code></li>
+            <li><code>malfunction_end: [percent]</code> &mdash; sets the percentage chance of a malfunction landing in The End. Default: <code>3</code></li>
+        </ul>
+        <p>With the default settings, there is a 3% chance of a TARDIS malfunction. If a malfunction does occur, then there is a 94% chance it will land in a NORMAL environment (overworld).</p>
     </section>
 </div>
 <footer>

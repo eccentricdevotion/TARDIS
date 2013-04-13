@@ -59,6 +59,8 @@
         <p><code>respect_worldguard</code> - set whether time travelling respects protected WorldGuard regions (if players do not have rights to build in an area, they will be denied access).</p>
         <p><code>respect_towny</code> - same as <code>respect_worldguard</code>, but for the Towny plugin.</p>
         <p><code>respect_worldborder</code> - same as <code>respect_worldguard</code>, but for the WorldBorder plugin.</p>
+        <p><code>exile</code> - whether the TARDIS exile feature is enabled.</p>
+        <p><code>per_world_perms</code> - whether players require the <code>tardis.travel.[world]</code> permission to travel to a world.</p>
         <h3>String values</h3>
         <p><code>key</code> - set the TARDIS key item. You can use any valid Bukkit Material ENUM. A list can be found here: <a href="http://jd.bukkit.org/apidocs/org/bukkit/Material.html">http://jd.bukkit.org/apidocs/org/bukkit/Material.html</a></p>
         <p><code>full_charge_item</code> - set the item that when clicked on the TARDIS Artron Energy button, boosts the Capacitor to 100%.</p>
@@ -76,13 +78,20 @@
         <p><code>lightning_recharge</code> &amp; <code>creeper_recharge</code> - set the amount of energy gained form natural lightning strikes and given to players for killing a charged creeper.</p>
         <p><code>jettison</code> - set the percentage of the original cost of a room you get back when  jettisoning it.</p>
         <p><code>nether_min</code> &amp; <code>the_end_min</code> - set the minmum Artron Energy level required to travel to the Nether and The End.</p>
+        <p><code>malfunction</code> - set the percentage chance the TARDIS will malfunction when travelling.</p>
+        <p><code>malfunction_nether</code> - set the percentage chance a malfunction will deposit the TARDIS in the Nether.</p>
+        <p><code>malfunction_end</code> - set the percentage chance a malfunction will deposit the TARDIS in the The End.</p>
         <h4>Reloading the config</h4>
         <p>If you have made changes to the config file by manually editing it, you should use the reload command to reload the changes. Type:</p>
         <pre><code>/tardisadmin reload</code></pre>
         <p><strong>Note:</strong> Do not use the server <code>/reload</code> command or the manual changes you have made will be overwritten when the TARDIS config is saved when it is disabled.</p>
         <h2>Other admin commands</h2>
+        <p>Enter a player&rsquo;s TARDIS (by direct teleport instead of the door).</p>
+        <pre><code>/tardisadmin enter [player]</code></pre>
         <p>Set the beacon block you are targeting in game, as a TARDIS recharge station.</p>
         <pre><code>/tardisadmin recharger [name]</code></pre>
+        <p>Remove the specified beacon recharger from the config.</p>
+        <pre><code>/tardisadmin decharge [name]</code></pre>
         <p>Set whether a specified world is included or excluded from random time travel destinations.</p>
         <pre><code>/tardisadmin include [world]
 /tardisadmin exclude [world]</code></pre>
@@ -90,6 +99,10 @@
         <pre><code>/tardisadmin list</code></pre>
         <p>Remove a specified player&rsquo;s TARDIS.</p>
         <pre><code>/tardisadmin delete [player]</code></pre>
+        <p>List TARDISes that haven&rsquo;t been used for an extended period.</p>
+        <pre><code>/tardisadmin prune list [number of days]</code></pre>
+        <p>Remove TARDISes that haven&rsquo;t been used for an extended period. See the <a href="prune.html">Prune</a> page for more details.</p>
+        <pre><code>/tardisadmin prune [number of days]</code></pre>
         <p>List chunks that are being kept loaded by TARDIS - either for room growing or Police Box locations.</p>
         <pre><code>/tardisadmin chunks</code></pre>
     </section>

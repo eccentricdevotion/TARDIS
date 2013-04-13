@@ -104,6 +104,20 @@ respect_worldguard: [true|false]</code></pre>
         <pre><code>timeout: [seconds]
 timeout_height: [y-height]</code></pre>
         <p>The defaults are <code>5</code> and <code>135</code></p>
+        <h2>TARDIS exile</h2>
+        <p>Set whether the TARDIS exile feature is enabled. If true, and a player has the <code>tardis.exile</code> permission they will only be able to travel within a designated area.</p>
+        <pre><code>exile: [true|false]</code></pre>
+        <p>The default is <code>false</code>.</p>
+        <h2>Per world travel permissions</h2>
+        <p>Set whether players require the <code>tardis.travel.[world]</code> permission to travel to a world.</p>
+        <pre><code>per_world_perms: [true|false]</code></pre>
+        <p>The default is <code>false</code>.</p>
+        <h2>Malfunctions</h2>
+        <p>Set the percentage chance of a TARDIS malfunction when time travelling. If <code>malfunction</code> is set to <code>0</code>, the malfunction feature is disabled.</p>
+        <pre><code>malfunction: [percent]
+malfunction_end: [percent]
+malfunction_nether: [percent]</code></pre>
+        <p>The default is <code>3</code> for all.</p>
         <p><a href="configuration.html">Back to main configuration page</a></p>
     </section>
 </div>

@@ -25,7 +25,49 @@
     </header>
     <section>
         <h1>Achievements</h1>
-        <p>Coming this weekend&hellip;!</p>
+        <p>Players can gain rewards for TARDIS achievements. The achievement system is mostly automatic, and works in conhunction with TARDIS <a href="books.html">books</a>. If using a Spout enabled server/client combination, then an actual Minecraft achievement popup is used :)</p>
+        <p>Players can get the following achievements.</p>
+        <ul>
+            <li><strong>tardis</strong> &mdash; awarded when they create their TARDIS</li>
+            <li><strong>travel</strong> &mdash; awarded for travelling the configured distance in their TARDIS (Note: only distances travelled from point A to point B <strong>in the same world</strong> count towards this achievement)</li>
+            <li><strong>rooms</strong> &mdash; awarded after growing one of each enabled roonm type</li>
+            <li><strong>farm</strong> &mdash; awarded after farming one of each mob type</li>
+            <li><strong>energy</strong> &mdash; awarded for overcharging the Artron Energy Capacitor by the configured amount</li>
+            <li><strong>friends</strong> &mdash; awarded for adding the configured amount of companions</li>
+            <li><strong>kill</strong> &mdash; awarded for killing a charged creeper</li>
+        </ul>
+        <p>Players can list achievements with the <code>/tardisbook list</code> command. This shows the name of the achievement/book and the reward type and amount.</p>
+        <h2>Customising achievements</h2>
+        <p>You can edit the <em>plugins/TARDIS/achievements.yml</em> file to change the attributes of each achievement. An achievement looks like this:</p>
+        <pre><code>rooms:
+  name: Room freak
+  description: Grow all room types
+  required: 1
+  reward_type: XP
+  reward_amount: 50
+  enabled: true
+  repeatable: false
+  auto: true
+  message: Grew a truckload of rooms
+  icon: BOOKSHELF</code></pre>
+        <ul>
+            <li>The achievement (in this example <code>rooms</code>) matches the name of the book the player gets to read about the achievement</li>
+            <li><code>name:</code> is used as the title of the book</li>
+            <li><code>description:</code> is not currently used</li>
+            <li><code>required:</code> is the amount of the goal the player needs to gain e.g. for the &lsquo;travel&rsquo; achievement this is set to 100000 &mdash; the number of blocks they need to travel</li>
+            <li><code>reward_type:</code> what sort of reward to give the player when they reach the achievement goal. This can be:
+                <ul style="margin-bottom:0;">
+                    <li><code>XP</code></li>
+                    <li><code>An item specified by the <a href="http://jd.bukkit.org/rb/apidocs/org/bukkit/Material.html">Bukkit material enum</a> name</code></li>
+                </ul>
+            </li>
+            <li><code>reward_amount:</code> the amount of the reward type the player gets</li>
+            <li><code>enabled:</code> a true of false value determining whether the achievement is availabale to players</li>
+            <li><code>repeatable:</code> a true of false value determining whether the achievement can be repeated</li>
+            <li><code>auto:</code> if <code>true</code> the player does not have to manually initiate the start of the achievement with the <code>/tardisbook start</code> command</li>
+            <li><code>message:</code> is the second line of the achievement notification</li>
+            <li><code>icon:</code> is material icon used in the achievement notification</li>
+        </ul>
     </section>
 </div>
 <footer>
