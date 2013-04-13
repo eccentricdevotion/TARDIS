@@ -319,7 +319,7 @@ commands:
     permission-message: You don't have the permission <permission> to use this command
   tardisbook:
     aliases: tbook
-    description: Read TARDIS books.
-    usage: /<command> [book name]
-    permission: tardis.create
+    description: Get and read TARDIS books and start TARDIS achievements.
+    usage: /<command> [list|get|start] [book name]
+    permission: tardis.book
     permission-message: You don't have the permission <permission> to use this command
