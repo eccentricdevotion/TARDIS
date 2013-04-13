@@ -42,15 +42,15 @@ public class TARDISMalfunction {
     private int id;
     private Player p;
     private TARDISConstants.COMPASS dir;
-    private Location handbrake;
+    private Location handbrake_loc;
     private Random rand;
 
-    public TARDISMalfunction(TARDIS plugin, int id, Player p, TARDISConstants.COMPASS dir, Location handbrake) {
+    public TARDISMalfunction(TARDIS plugin, int id, Player p, TARDISConstants.COMPASS dir, Location handbrake_loc) {
         this.plugin = plugin;
         this.id = id;
         this.p = p;
         this.dir = dir;
-        this.handbrake = handbrake;
+        this.handbrake_loc = handbrake_loc;
         this.rand = new Random();
     }
 
@@ -94,18 +94,17 @@ public class TARDISMalfunction {
         ResultSetLevers rsl = new ResultSetLevers(plugin, where, true);
         List<Block> levers = new ArrayList<Block>();
         if (rsl.resultSet()) {
-            plugin.debug("Getting levers");
             // flicker lights
             ArrayList<HashMap<String, String>> data = rsl.getData();
             for (HashMap<String, String> map : data) {
                 Location loc = plugin.utils.getLocationFromDB(map.get("location"), 0.0F, 0.0F);
                 levers.add(loc.getBlock());
             }
-            final long start = System.currentTimeMillis() + 15000;
+            final long start = System.currentTimeMillis() + 12500;
             TARDISLeversRunnable runnable = new TARDISLeversRunnable(plugin, levers, start);
+            runnable.setHandbrake(handbrake_loc);
             int taskID = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, runnable, 10L, 10L);
             runnable.setTask(taskID);
-            runnable.setHandbrake(handbrake);
         }
     }
 }

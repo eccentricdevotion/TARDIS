@@ -37,8 +37,7 @@ public class TARDISLeversRunnable implements Runnable {
     private final List<Block> levers;
     private final long start;
     private int task;
-    private Location handbrake;
-    private Random rand = new Random();
+    private Location handbrake_loc;
 
     public TARDISLeversRunnable(TARDIS plugin, List<Block> levers, long start) {
         this.plugin = plugin;
@@ -48,10 +47,9 @@ public class TARDISLeversRunnable implements Runnable {
 
     @Override
     public void run() {
-        plugin.debug(handbrake.getWorld().getName());
         // play smoke effect
         for (int j = 0; j < 9; j++) {
-            handbrake.getWorld().playEffect(handbrake, Effect.SMOKE, j);
+            handbrake_loc.getWorld().playEffect(handbrake_loc, Effect.SMOKE, j);
         }
         for (Block b : levers) {
             BlockState state = b.getState();
@@ -67,7 +65,6 @@ public class TARDISLeversRunnable implements Runnable {
             state.update();
         }
         if (System.currentTimeMillis() > start) {
-            plugin.debug("Cancelling malfunction...");
             // set all levers back to on
             for (Block b : levers) {
                 BlockState state = b.getState();
@@ -82,7 +79,7 @@ public class TARDISLeversRunnable implements Runnable {
         this.task = task;
     }
 
-    public void setHandbrake(Location handbrake) {
-        this.handbrake = handbrake;
+    public void setHandbrake(Location handbrake_loc) {
+        this.handbrake_loc = handbrake_loc;
     }
 }
