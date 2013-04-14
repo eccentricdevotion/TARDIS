@@ -47,12 +47,12 @@ public class TARDISBook {
      * Read text from a file and write it to a book. The book is then placed in
      * the player's inventory.
      *
-     * @param title The name of the book
+     * @param title_reward The name of the book
      * @param author Who wrote the book
      * @param name The name of the text file
      * @param p The player who will receive the book
      */
-    public void writeBook(String title, String author, String name, Player p) {
+    public void writeBook(String title_reward, String author, String name, Player p) {
         // read the file
         File file = new File(plugin.getDataFolder() + File.separator + "books" + File.separator + name + ".txt");
         StringBuilder fileContents = new StringBuilder((int) file.length());
@@ -77,7 +77,8 @@ public class TARDISBook {
         // make the book
         ItemStack book = new ItemStack(Material.WRITTEN_BOOK);
         BookMeta meta = (BookMeta) book.getItemMeta();
-        meta.setTitle(title);
+        String[] title = title_reward.split(" - ");
+        meta.setTitle(title[0]);
         meta.setAuthor(author);
         meta.setPages(pages);
         book.setItemMeta(meta);

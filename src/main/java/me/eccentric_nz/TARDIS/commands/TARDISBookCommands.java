@@ -130,9 +130,9 @@ public class TARDISBookCommands implements CommandExecutor {
         LinkedHashMap<String, String> map = new LinkedHashMap<String, String>();
         Set<String> aset = plugin.ayml.getRoot().getKeys(false);
         for (String a : aset) {
-            String namereward = plugin.ayml.getString(a + ".name") + " - " + plugin.ayml.getString(a + ".reward_type") + ":" + plugin.ayml.getString(a + ".reward_amount");
             if (plugin.ayml.getBoolean(a + ".enabled")) {
-                map.put(a, namereward);
+                String title_reward = plugin.ayml.getString(a + ".name") + " - " + plugin.ayml.getString(a + ".reward_type") + ":" + plugin.ayml.getString(a + ".reward_amount");
+                map.put(a, title_reward);
             }
         }
         return map;
