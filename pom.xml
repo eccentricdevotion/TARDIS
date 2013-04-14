@@ -61,7 +61,7 @@
         <dependency>
             <groupId>org.bukkit</groupId>
             <artifactId>bukkit</artifactId>
-            <version>1.5.1-R0.2-SNAPSHOT</version>
+            <version>1.5.1-R0.3-SNAPSHOT</version>
             <type>jar</type>
         </dependency>
         <dependency>
@@ -102,7 +102,7 @@
         <dependency>
             <groupId>org.bukkit</groupId>
             <artifactId>craftbukkit</artifactId>
-            <version>1.5.1-R0.2-SNAPSHOT</version>
+            <version>1.5.1-R0.3-SNAPSHOT</version>
             <type>jar</type>
             <scope>compile</scope>
         </dependency>
@@ -172,7 +172,7 @@
     </dependencies>
     <properties>
         <netbeans.hint.license>gpl30</netbeans.hint.license>
-        <netbeans.hint.oranisation>The Nose Fairy</netbeans.hint.oranisation>
+        <netbeans.hint.organisation>The Nose Fairy</netbeans.hint.organisation>
         <netbeans.hint.company>The Nose Fairy</netbeans.hint.company>
         <netbeans.hint.user>eccentric_nz</netbeans.hint.user>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
