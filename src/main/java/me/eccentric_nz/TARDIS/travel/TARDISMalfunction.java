@@ -100,7 +100,7 @@ public class TARDISMalfunction {
                 Location loc = plugin.utils.getLocationFromDB(map.get("location"), 0.0F, 0.0F);
                 levers.add(loc.getBlock());
             }
-            final long start = System.currentTimeMillis() + 12500;
+            final long start = System.currentTimeMillis() + 10000;
             TARDISLeversRunnable runnable = new TARDISLeversRunnable(plugin, levers, start);
             runnable.setHandbrake(handbrake_loc);
             int taskID = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, runnable, 10L, 10L);
