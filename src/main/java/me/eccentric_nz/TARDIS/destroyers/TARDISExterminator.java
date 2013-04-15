@@ -67,6 +67,7 @@ public class TARDISExterminator {
                 TARDISConstants.COMPASS d = rs.getDirection();
                 if (!rs.isHidden()) {
                     // clear the torch
+                    plugin.destroyPB.destroyPlatform(rs.getPlatform(), id);
                     plugin.destroyPB.destroyTorch(bb_loc);
                     plugin.destroyPB.destroySign(bb_loc, d);
                     plugin.destroyPB.destroyPoliceBox(bb_loc, d, id, false);
