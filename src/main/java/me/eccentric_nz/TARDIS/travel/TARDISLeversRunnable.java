@@ -52,24 +52,28 @@ public class TARDISLeversRunnable implements Runnable {
             handbrake_loc.getWorld().playEffect(handbrake_loc, Effect.SMOKE, j);
         }
         for (Block b : levers) {
-            BlockState state = b.getState();
-            Lever l = (Lever) state.getData();
-            if (l.isPowered()) {
-                l.setPowered(false);
-                plugin.debug("off");
-            } else {
-                l.setPowered(true);
-                plugin.debug("on");
+            if (b.getTypeId() == 69) {
+                BlockState state = b.getState();
+                Lever l = (Lever) state.getData();
+                if (l.isPowered()) {
+                    l.setPowered(false);
+                } else {
+                    l.setPowered(true);
+                }
+                state.setData(l);
+                state.update();
             }
-            state.setData(l);
-            state.update();
         }
         if (System.currentTimeMillis() > start) {
             // set all levers back to on
             for (Block b : levers) {
-                BlockState state = b.getState();
-                Lever l = (Lever) state.getData();
-                l.setPowered(true);
+                if (b.getTypeId() == 69) {
+                    BlockState state = b.getState();
+                    Lever l = (Lever) state.getData();
+                    l.setPowered(true);
+                    state.setData(l);
+                    state.update();
+                }
             }
             plugin.getServer().getScheduler().cancelTask(task);
         }
