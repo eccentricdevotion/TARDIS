@@ -1,6 +1,6 @@
 # TODO
  
-## Current version `2.2-beta`
+## Current version `2.2-release`
 1. Fix the flickering lights…
 2. Add videos for custom rooms/books/achievements/other new stuff
 
