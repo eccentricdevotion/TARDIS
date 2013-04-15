@@ -200,9 +200,9 @@ public class TARDISRoomRunnable implements Runnable {
                 HashMap<String, Object> wheref = new HashMap<String, Object>();
                 wheref.put("tardis_id", tardis_id);
                 qf.doUpdate("tardis", setf, wheref);
-                // replace with light grey wool
-                id = 35;
-                data = (byte) 8;
+                // replace with floor material
+                id = floor_id;
+                data = floor_data;
             }
             // set farmland hydrated
             if (id == 60 && data == 0) {
