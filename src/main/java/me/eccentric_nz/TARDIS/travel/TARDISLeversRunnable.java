@@ -17,31 +17,28 @@
 package me.eccentric_nz.TARDIS.travel;
 
 import java.util.List;
-import java.util.Random;
 import me.eccentric_nz.TARDIS.TARDIS;
 import org.bukkit.Effect;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
-import org.bukkit.block.BlockState;
-import org.bukkit.material.Lever;
 
 /**
- * Phosphor levers are used for lighting. They use electron excitation; when
- * shaken, they grew brighter.
+ * Phosphor lamps are used for lighting. They use electron excitation; when
+ * shaken, they grow brighter.
  *
  * @author eccentric_nz
  */
 public class TARDISLeversRunnable implements Runnable {
 
     private final TARDIS plugin;
-    private final List<Block> levers;
+    private final List<Block> lamps;
     private final long start;
     private int task;
     private Location handbrake_loc;
 
-    public TARDISLeversRunnable(TARDIS plugin, List<Block> levers, long start) {
+    public TARDISLeversRunnable(TARDIS plugin, List<Block> lamps, long start) {
         this.plugin = plugin;
-        this.levers = levers;
+        this.lamps = lamps;
         this.start = start;
     }
 
@@ -51,28 +48,18 @@ public class TARDISLeversRunnable implements Runnable {
         for (int j = 0; j < 9; j++) {
             handbrake_loc.getWorld().playEffect(handbrake_loc, Effect.SMOKE, j);
         }
-        for (Block b : levers) {
-            if (b.getTypeId() == 69) {
-                BlockState state = b.getState();
-                Lever l = (Lever) state.getData();
-                if (l.isPowered()) {
-                    l.setPowered(false);
-                } else {
-                    l.setPowered(true);
-                }
-                state.setData(l);
-                state.update();
+        for (Block b : lamps) {
+            if (b.getTypeId() == 124) {
+                b.setTypeId(19);
+            } else {
+                b.setTypeId(124);
             }
         }
         if (System.currentTimeMillis() > start) {
-            // set all levers back to on
-            for (Block b : levers) {
-                if (b.getTypeId() == 69) {
-                    BlockState state = b.getState();
-                    Lever l = (Lever) state.getData();
-                    l.setPowered(true);
-                    state.setData(l);
-                    state.update();
+            // set all lamps back to on
+            for (Block b : lamps) {
+                if (b.getTypeId() == 19) {
+                    b.setTypeId(124);
                 }
             }
             plugin.getServer().getScheduler().cancelTask(task);

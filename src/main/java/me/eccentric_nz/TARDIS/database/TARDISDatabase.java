@@ -68,8 +68,8 @@ public class TARDISDatabase {
             statement.executeUpdate(queryPlayers);
             String queryProtectBlocks = "CREATE TABLE IF NOT EXISTS blocks (b_id INTEGER PRIMARY KEY NOT NULL, tardis_id INTEGER, location TEXT COLLATE NOCASE DEFAULT '', block INTEGER DEFAULT 0, data INTEGER DEFAULT 0, police_box INTEGER DEFAULT 0)";
             statement.executeUpdate(queryProtectBlocks);
-            String queryLevers = "CREATE TABLE IF NOT EXISTS levers (l_id INTEGER PRIMARY KEY NOT NULL, tardis_id INTEGER, location TEXT COLLATE NOCASE DEFAULT '')";
-            statement.executeUpdate(queryLevers);
+            String queryLamps = "CREATE TABLE IF NOT EXISTS lamps (l_id INTEGER PRIMARY KEY NOT NULL, tardis_id INTEGER, location TEXT COLLATE NOCASE DEFAULT '')";
+            statement.executeUpdate(queryLamps);
             String queryDestinations = "CREATE TABLE IF NOT EXISTS destinations (dest_id INTEGER PRIMARY KEY NOT NULL, tardis_id INTEGER, dest_name TEXT COLLATE NOCASE DEFAULT '', world TEXT COLLATE NOCASE DEFAULT '', x INTEGER, y INTEGER, z INTEGER, bind TEXT DEFAULT '', type INTEGER DEFAULT 0)";
             statement.executeUpdate(queryDestinations);
             String queryPresets = "CREATE TABLE IF NOT EXISTS areas (area_id INTEGER PRIMARY KEY NOT NULL, area_name TEXT COLLATE NOCASE DEFAULT '', world TEXT COLLATE NOCASE DEFAULT '', minx INTEGER, minz INTEGER, maxx INTEGER, maxz INTEGER, y INTEGER)";
@@ -81,9 +81,11 @@ public class TARDISDatabase {
             String queryAchievements = "CREATE TABLE IF NOT EXISTS achievements (a_id INTEGER PRIMARY KEY NOT NULL, player TEXT COLLATE NOCASE, name TEXT DEFAULT '', amount TEXT DEFAULT '', completed INTEGER DEFAULT 0)";
             statement.executeUpdate(queryAchievements);
 
-            // delete old gravity table
-//            String dropGravity = "DROP TABLE IF EXISTS gravity";
-//            statement.executeUpdate(dropGravity);
+            // delete old gravity and levers tables
+            String dropGravity = "DROP TABLE IF EXISTS gravity";
+            statement.executeUpdate(dropGravity);
+            String dropLevers = "DROP TABLE IF EXISTS levers";
+            statement.executeUpdate(dropLevers);
             // update tables
             TARDISDatabaseUpdater dbu = new TARDISDatabaseUpdater(statement);
             dbu.updateTables();

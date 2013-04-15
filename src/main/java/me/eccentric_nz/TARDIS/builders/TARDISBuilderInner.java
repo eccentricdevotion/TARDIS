@@ -268,8 +268,8 @@ public class TARDISBuilderInner {
                                 wherecreep.put("tardis_id", dbID);
                                 qf.doUpdate("tardis", setcreep, wherecreep);
                             }
-                            if (id == 69 && plugin.getConfig().getInt("malfunction") > 0) {
-                                // remember lever block locations for malfunction
+                            if (id == 124 && plugin.getConfig().getInt("malfunction") > 0) {
+                                // remember lamp block locations for malfunction
                                 HashMap<String, Object> setlb = new HashMap<String, Object>();
                                 String lloc = world.getName() + ":" + startx + ":" + starty + ":" + startz;
                                 setlb.put("tardis_id", dbID);

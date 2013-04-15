@@ -22,7 +22,7 @@ import java.util.List;
 import java.util.Random;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
-import me.eccentric_nz.TARDIS.database.ResultSetLevers;
+import me.eccentric_nz.TARDIS.database.ResultSetLamps;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
@@ -91,17 +91,17 @@ public class TARDISMalfunction {
     public void doMalfunction(Location l) {
         HashMap<String, Object> where = new HashMap<String, Object>();
         where.put("tardis_id", id);
-        ResultSetLevers rsl = new ResultSetLevers(plugin, where, true);
-        List<Block> levers = new ArrayList<Block>();
+        ResultSetLamps rsl = new ResultSetLamps(plugin, where, true);
+        List<Block> lamps = new ArrayList<Block>();
         if (rsl.resultSet()) {
             // flicker lights
             ArrayList<HashMap<String, String>> data = rsl.getData();
             for (HashMap<String, String> map : data) {
                 Location loc = plugin.utils.getLocationFromDB(map.get("location"), 0.0F, 0.0F);
-                levers.add(loc.getBlock());
+                lamps.add(loc.getBlock());
             }
             final long start = System.currentTimeMillis() + 10000;
-            TARDISLeversRunnable runnable = new TARDISLeversRunnable(plugin, levers, start);
+            TARDISLeversRunnable runnable = new TARDISLeversRunnable(plugin, lamps, start);
             runnable.setHandbrake(handbrake_loc);
             int taskID = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, runnable, 10L, 10L);
             runnable.setTask(taskID);
