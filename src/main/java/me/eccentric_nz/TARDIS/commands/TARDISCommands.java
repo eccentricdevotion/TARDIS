@@ -46,6 +46,7 @@ import me.eccentric_nz.TARDIS.thirdparty.Version;
 import me.eccentric_nz.TARDIS.travel.TARDISPluginRespect;
 import me.eccentric_nz.TARDIS.travel.TARDISTimetravel;
 import me.eccentric_nz.TARDIS.utility.TARDISItemRenamer;
+import me.eccentric_nz.TARDIS.utility.TARDISLampScanner;
 import me.eccentric_nz.TARDIS.utility.TARDISLister;
 import me.eccentric_nz.tardischunkgenerator.TARDISChunkGenerator;
 import org.bukkit.*;
@@ -104,6 +105,7 @@ public class TARDISCommands implements CommandExecutor {
         firstArgs.add("home");
         firstArgs.add("jettison");
         firstArgs.add("list");
+        firstArgs.add("lamps");
         firstArgs.add("namekey");
         firstArgs.add("occupy");
         firstArgs.add("rebuild");
@@ -228,6 +230,10 @@ public class TARDISCommands implements CommandExecutor {
                 sender.sendMessage(plugin.pluginName + ChatColor.RED + " This command can only be run by a player");
                 return false;
             } else {
+                if (args[0].equalsIgnoreCase("lamps")) {
+                    TARDISLampScanner tls = new TARDISLampScanner(plugin);
+                    return tls.addLampBlocks(player);
+                }
                 if (args[0].equalsIgnoreCase("chameleon")) {
                     if (!plugin.getConfig().getBoolean("chameleon")) {
                         sender.sendMessage(plugin.pluginName + "This server does not allow the use of the chameleon circuit!");
