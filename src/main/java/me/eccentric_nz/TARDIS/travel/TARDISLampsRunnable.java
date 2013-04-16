@@ -28,7 +28,7 @@ import org.bukkit.block.Block;
  *
  * @author eccentric_nz
  */
-public class TARDISLeversRunnable implements Runnable {
+public class TARDISLampsRunnable implements Runnable {
 
     private final TARDIS plugin;
     private final List<Block> lamps;
@@ -36,7 +36,7 @@ public class TARDISLeversRunnable implements Runnable {
     private int task;
     private Location handbrake_loc;
 
-    public TARDISLeversRunnable(TARDIS plugin, List<Block> lamps, long start) {
+    public TARDISLampsRunnable(TARDIS plugin, List<Block> lamps, long start) {
         this.plugin = plugin;
         this.lamps = lamps;
         this.start = start;

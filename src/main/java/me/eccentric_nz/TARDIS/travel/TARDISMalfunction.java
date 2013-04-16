@@ -101,7 +101,7 @@ public class TARDISMalfunction {
                 lamps.add(loc.getBlock());
             }
             final long start = System.currentTimeMillis() + 10000;
-            TARDISLeversRunnable runnable = new TARDISLeversRunnable(plugin, lamps, start);
+            TARDISLampsRunnable runnable = new TARDISLampsRunnable(plugin, lamps, start);
             runnable.setHandbrake(handbrake_loc);
             int taskID = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, runnable, 10L, 10L);
             runnable.setTask(taskID);
