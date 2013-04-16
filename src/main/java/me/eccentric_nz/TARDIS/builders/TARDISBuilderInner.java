@@ -274,7 +274,7 @@ public class TARDISBuilderInner {
                                 String lloc = world.getName() + ":" + startx + ":" + starty + ":" + startz;
                                 setlb.put("tardis_id", dbID);
                                 setlb.put("location", lloc);
-                                qf.doInsert("levers", setlb);
+                                qf.doInsert("lamps", setlb);
                             }
                             if (id == 92) {
                                 /*

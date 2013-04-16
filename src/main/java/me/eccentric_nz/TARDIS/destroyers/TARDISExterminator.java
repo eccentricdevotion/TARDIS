@@ -227,10 +227,10 @@ public class TARDISExterminator {
         HashMap<String, Object> bid = new HashMap<String, Object>();
         bid.put("tardis_id", id);
         qf.doDelete("blocks", bid);
-        // remove levers from levers table
+        // remove lamps from lamps table
         HashMap<String, Object> eid = new HashMap<String, Object>();
         eid.put("tardis_id", id);
-        qf.doDelete("levers", eid);
+        qf.doDelete("lamps", eid);
         // remove doors from doors table
         HashMap<String, Object> did = new HashMap<String, Object>();
         did.put("tardis_id", id);
