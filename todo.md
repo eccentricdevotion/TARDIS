@@ -1,8 +1,7 @@
 # TODO
  
 ## Current version `2.2-release`
-1. Fix the flickering lights…
-2. Add videos for custom rooms/books/achievements/other new stuff
+1. Add videos for custom rooms/books/achievements/other new stuff
 
 ## Future version `2.3+`
 1. Allow companions to enter and exit the tardis at will (and steal it).

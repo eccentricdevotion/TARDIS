@@ -27,6 +27,7 @@ import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.utility.TARDISUtils;
 import me.eccentric_nz.TARDIS.builders.TARDISSpace;
+import me.eccentric_nz.TARDIS.database.ResultSetCount;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.rooms.TARDISWalls;
 import org.bukkit.Chunk;
@@ -79,6 +80,20 @@ public class TARDISBlockPlaceListener implements Listener {
             if (MIDDLE_BLOCKS.contains(blockBelow.getType().toString()) && (blockBottom.getType() == Material.IRON_BLOCK || blockBottom.getType() == Material.GOLD_BLOCK || blockBottom.getType() == Material.DIAMOND_BLOCK || blockBottom.getType() == Material.EMERALD_BLOCK || blockBottom.getType() == Material.REDSTONE_BLOCK)) {
                 final TARDISConstants.SCHEMATIC schm;
                 final Player player = event.getPlayer();
+                int max_count = plugin.getConfig().getInt("count");
+                int player_count = 0;
+                if (max_count > 0) {
+                    HashMap<String, Object> wherec = new HashMap<String, Object>();
+                    wherec.put("player", player.getName());
+                    ResultSetCount rsc = new ResultSetCount(plugin, wherec, false);
+                    if (rsc.resultSet()) {
+                        player_count = rsc.getCount();
+                        if (player_count == max_count) {
+                            player.sendMessage(plugin.pluginName + "You have used up your quota of TARDISes!");
+                            return;
+                        }
+                    }
+                }
                 switch (blockBottom.getType()) {
                     case GOLD_BLOCK:
                         if (player.hasPermission("tardis.bigger")) {
@@ -215,8 +230,22 @@ public class TARDISBlockPlaceListener implements Listener {
                             TARDISAchievementNotify tan = new TARDISAchievementNotify(plugin);
                             tan.sendAchievement(player, plugin.ayml.getString("tardis.message"), Material.valueOf(plugin.ayml.getString("tardis.icon")));
                         }
+                        if (max_count > 0) {
+                            player.sendMessage(plugin.pluginName + "You have used up " + (player_count + 1) + " of " + max_count + " TARDIS builds!");
+                            HashMap<String, Object> setc = new HashMap<String, Object>();
+                            setc.put("count", player_count + 1);
+                            if (player_count > 0) {
+                                // update the player's TARDIS count
+                                HashMap<String, Object> wheretc = new HashMap<String, Object>();
+                                wheretc.put("player", player.getName());
+                                qf.doUpdate("t_count", setc, wheretc);
+                            } else {
+                                // insert new TARDIS count record
+                                setc.put("player", player.getName());
+                                qf.doInsert("t_count", setc);
+                            }
+                        }
                     } else {
-                        int id = rs.getTardis_id();
                         String leftLoc = rs.getCurrent();
                         String[] leftData = leftLoc.split(":");
                         player.sendMessage(plugin.pluginName + "You already have a TARDIS, you left it in " + leftData[0] + " at x:" + leftData[1] + " y:" + leftData[2] + " z:" + leftData[3]);

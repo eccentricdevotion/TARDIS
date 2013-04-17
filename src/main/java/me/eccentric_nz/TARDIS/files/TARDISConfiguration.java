@@ -101,6 +101,7 @@ public class TARDISConfiguration {
         intOptions.put("border_radius", 64);
         intOptions.put("comehere", 400);
         intOptions.put("confirm_timeout", 15);
+        intOptions.put("count", 0);
         intOptions.put("creeper_recharge", 150);
         intOptions.put("full_charge", 5000);
         intOptions.put("hide", 500);

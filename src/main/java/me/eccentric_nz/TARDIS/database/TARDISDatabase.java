@@ -80,6 +80,8 @@ public class TARDISDatabase {
             statement.executeUpdate(queryCondenser);
             String queryAchievements = "CREATE TABLE IF NOT EXISTS achievements (a_id INTEGER PRIMARY KEY NOT NULL, player TEXT COLLATE NOCASE, name TEXT DEFAULT '', amount TEXT DEFAULT '', completed INTEGER DEFAULT 0)";
             statement.executeUpdate(queryAchievements);
+            String queryCounts = "CREATE TABLE IF NOT EXISTS t_count (t_id INTEGER PRIMARY KEY NOT NULL, player TEXT COLLATE NOCASE, count INTEGER DEFAULT 0)";
+            statement.executeUpdate(queryCounts);
 
             // delete old gravity and levers tables
             String dropGravity = "DROP TABLE IF EXISTS gravity";

@@ -30,6 +30,7 @@ import java.util.Set;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
+import me.eccentric_nz.TARDIS.database.ResultSetCount;
 import me.eccentric_nz.TARDIS.database.ResultSetDoors;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
@@ -97,6 +98,7 @@ public class TARDISAdminCommands implements CommandExecutor {
         firstsStr.add("key");
         firstsStr.add("list");
         firstsStr.add("prune");
+        firstsStr.add("playercount");
         firstsStr.add("recharger");
         firstsStr.add("reload");
         // boolean
@@ -133,6 +135,7 @@ public class TARDISAdminCommands implements CommandExecutor {
         firstsInt.add("border_radius");
         firstsInt.add("comehere");
         firstsInt.add("confirm_timeout");
+        firstsInt.add("count");
         firstsInt.add("creeper_recharge");
         firstsInt.add("full_charge");
         firstsInt.add("hide");
@@ -290,6 +293,31 @@ public class TARDISAdminCommands implements CommandExecutor {
                 if (args.length < 2) {
                     sender.sendMessage(plugin.pluginName + "Too few command arguments!");
                     return false;
+                }
+                if (first.equals("playercount")) {
+                    int max_count = plugin.getConfig().getInt("count");
+                    HashMap<String, Object> where = new HashMap<String, Object>();
+                    where.put("player", args[1]);
+                    ResultSetCount rsc = new ResultSetCount(plugin, where, false);
+                    if (rsc.resultSet()) {
+                        if (args.length == 3) {
+                            // set count
+                            int count = plugin.utils.parseNum(args[2]);
+                            HashMap<String, Object> setc = new HashMap<String, Object>();
+                            setc.put("count", count);
+                            HashMap<String, Object> wherec = new HashMap<String, Object>();
+                            wherec.put("player", args[1]);
+                            QueryFactory qf = new QueryFactory(plugin);
+                            qf.doUpdate("t_count", setc, wherec);
+                            sender.sendMessage(plugin.pluginName + args[1] + "'s TARDIS count was set to: " + args[2] + " of " + max_count);
+                        } else {
+                            // display count
+                            sender.sendMessage(plugin.pluginName + args[1] + "'s TARDIS count is: " + rsc.getCount() + " of " + max_count);
+                        }
+                    } else {
+                        sender.sendMessage(plugin.pluginName + "That player doesn't have a TARDIS count.");
+                    }
+                    return true;
                 }
                 if (first.equals("prune")) {
                     TARDISPruner pruner = new TARDISPruner(plugin);
