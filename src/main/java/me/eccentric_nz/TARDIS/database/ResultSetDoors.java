@@ -56,6 +56,8 @@ public class ResultSetDoors {
      * @param plugin an instance of the main class.
      * @param where a HashMap<String, Object> of table fields and values to
      * refine the search.
+     * @param multiple a boolean setting whether to retrieve more than on
+     * record, it true returns an ArrayList that can be looped through later.
      */
     public ResultSetDoors(TARDIS plugin, HashMap<String, Object> where, boolean multiple) {
         this.plugin = plugin;
