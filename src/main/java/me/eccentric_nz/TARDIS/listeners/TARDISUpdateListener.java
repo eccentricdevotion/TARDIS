@@ -36,7 +36,6 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractEvent;
-import org.bukkit.material.Door;
 
 /**
  * The TARDIS interior goes through occasional metamorphoses, sometimes by
