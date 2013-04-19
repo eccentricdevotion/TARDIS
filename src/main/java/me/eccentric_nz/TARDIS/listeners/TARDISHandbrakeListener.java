@@ -108,29 +108,31 @@ public class TARDISHandbrakeListener implements Listener {
                                         malfunction = m.isMalfunction();
                                         if (malfunction) {
                                             exit = m.getMalfunction();
-                                            save = exit.getWorld().getName() + ":" + exit.getBlockX() + ":" + exit.getBlockY() + ":" + exit.getBlockZ();
-                                            if (plugin.tardisHasDestination.containsKey(Integer.valueOf(id))) {
-                                                QueryFactory qf = new QueryFactory(plugin);
-                                                int amount = plugin.tardisHasDestination.get(id) * -1;
-                                                HashMap<String, Object> wheret = new HashMap<String, Object>();
-                                                wheret.put("tardis_id", id);
-                                                qf.alterEnergyLevel("tardis", amount, wheret, player);
-                                                player.sendMessage(plugin.pluginName + "Are you sure you know how to fly this thing!");
-                                                plugin.tardisHasDestination.remove(Integer.valueOf(id));
-                                            }
-                                            // play tardis crash sound
-                                            if (plugin.pm.getPlugin("Spout") != null && SpoutManager.getPlayer(player).isSpoutCraftEnabled()) {
-                                                SpoutManager.getSoundManager().playGlobalCustomSoundEffect(plugin, "https://dl.dropbox.com/u/53758864/tardis_emergency_land.mp3", false, handbrake_loc, 20, 75);
-                                            } else {
-                                                try {
-                                                    Class.forName("org.bukkit.Sound");
-                                                    handbrake_loc.getWorld().playSound(handbrake_loc, Sound.MINECART_INSIDE, 1, 0);
-                                                } catch (ClassNotFoundException e) {
-                                                    handbrake_loc.getWorld().playEffect(handbrake_loc, Effect.BLAZE_SHOOT, 0);
+                                            if (exit != null) {
+                                                save = exit.getWorld().getName() + ":" + exit.getBlockX() + ":" + exit.getBlockY() + ":" + exit.getBlockZ();
+                                                if (plugin.tardisHasDestination.containsKey(Integer.valueOf(id))) {
+                                                    QueryFactory qf = new QueryFactory(plugin);
+                                                    int amount = plugin.tardisHasDestination.get(id) * -1;
+                                                    HashMap<String, Object> wheret = new HashMap<String, Object>();
+                                                    wheret.put("tardis_id", id);
+                                                    qf.alterEnergyLevel("tardis", amount, wheret, player);
+                                                    player.sendMessage(plugin.pluginName + "Are you sure you know how to fly this thing!");
+                                                    plugin.tardisHasDestination.remove(Integer.valueOf(id));
                                                 }
+                                                // play tardis crash sound
+                                                if (plugin.pm.getPlugin("Spout") != null && SpoutManager.getPlayer(player).isSpoutCraftEnabled()) {
+                                                    SpoutManager.getSoundManager().playGlobalCustomSoundEffect(plugin, "https://dl.dropbox.com/u/53758864/tardis_emergency_land.mp3", false, handbrake_loc, 20, 75);
+                                                } else {
+                                                    try {
+                                                        Class.forName("org.bukkit.Sound");
+                                                        handbrake_loc.getWorld().playSound(handbrake_loc, Sound.MINECART_INSIDE, 1, 0);
+                                                    } catch (ClassNotFoundException e) {
+                                                        handbrake_loc.getWorld().playEffect(handbrake_loc, Effect.BLAZE_SHOOT, 0);
+                                                    }
+                                                }
+                                                // add a potion effect to the player
+                                                player.addPotionEffect(new PotionEffect(PotionEffectType.CONFUSION, 150, 5));
                                             }
-                                            // add a potion effect to the player
-                                            player.addPotionEffect(new PotionEffect(PotionEffectType.CONFUSION, 150, 5));
                                         }
                                     }
                                     if (!malfunction) {
