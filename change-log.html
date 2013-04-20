@@ -26,6 +26,25 @@
     <section>
         <h1>Change log</h1>
         <h2>What&rsquo;s been changed?</h2>
+        <h3>v2.2</h3>
+        <ul>
+        	<li>Updated for Bukkit 1.5.1-R0.3</li>
+            <li> Fixes levers popping off in the Budget and Bigger TARDIS schematics &mdash; delete the old schematics to update</li>
+            <li> Fixed typo in malfunction message</li>
+            <li> Fixed book titles also displaying the achievement reward</li>
+            <li> Fixed not being able to condense certain items when growing rooms and <code>rooms_require_blocks</code> is true</li>
+            <li> Fixed a farm room floor block not being replaced with the player&rsquo;s preferred floor block</li>
+            <li> The platform is destroyed properly when deleting the TARDIS</li>
+            <li> Adjusted the malfunction timing and changed the way that the lamps are made to flicker on and off</li>
+            <li> Added <code>/tardis lamps</code> command to allow TARDISes created prior to v2.2 to have malfunctioning lamps</li>
+            <li> Added Redstone blocks in the TARDIS to the protected block list</li>
+            <li> Added a config option <code>count: [amount]</code> &mdash; limit the number of times a player can create and destroy TARDISes</li>
+            <li> Added a command <code>/tardisadmin count [player]</code> &mdash; check a player&rsquo;s TARDIS build count</li>
+            <li> Added a command <code>/tardisadmin count [player] [count]</code> &mdash; set a player&rsquo;s TARDIS build count</li>
+            <li> Players will not be given the TARDIS book if the CraftBukkit server version does not support ItemMeta</li>
+            <li> Removed the &lsquo;no permission&rsquo; message when clicking on Iron doors</li>
+            <li> Split up the <code>/tardisadmin config</code> command &mdash; the base command just shows the general options &mdash; <code>/tardisadmin config [worlds|rooms|rechargers]</code> can be used to see the other configuration sections</li>
+        </ul>
         <h3>v2.2-beta-2</h3>
         <h4>Bug fixes</h4>
         <ul>
@@ -162,8 +181,8 @@
             <li>TARDIS worlds are properly deleted even if <code>create_worlds</code> has been set to false after the TARDIS was created</li>
             <li>Adjusted the update checker message so that servers are informed if a final release with the same base version number as a beta or pre-release has been uploaded</li>
             <li>The TARDIS key is now a player preference, to set it use: <code>/tardisprefs key [material]</code> &mdash; if not set then the config default is used</li>
-            <li>Added an autonomous homing preference &mdash; if the player dies they can have the TARDIS fly home or to a recharge point (whichever is the closest). There is are config settings <code>allow_autonomous: [true|false]</code> and for Artron energy <code>autonomous: [cost]</code>, a permission node <code>tardis.autonomous</code> and the command to toggle it on and off <code>/tardisprefs auto [on
-                </code></td>
+            <li>Added an autonomous homing preference &mdash; if the player dies they can have the TARDIS fly home or to a recharge point (whichever is the closest). There is are config settings <code>allow_autonomous: [true|false]</code> and for Artron energy <code>autonomous: [cost]</code>, a permission node <code>tardis.autonomous</code> and the command to toggle it on and off <code>/tardisprefs auto [on </code>
+                </td>
                 <td><code>off]</code> &mdash; <a href="autonomous.html">autonomous.html</a>
             </li>
             <li>You can now open the TARDIS door by RIGHT-clicking it while SNEAKING (use left SHIFT key)</li>
@@ -605,8 +624,8 @@
             <li>You can now use your own schematic files to build the inner TARDIS &mdash; see the <a href="schematis.html">Schematics</a> page for more info...</li>
             <li>A fix for the &lsquo;chameleon circuit exploit&rsquo; &mdash; the Police Box is now indestructible in SURVIVAL mode (except for the sign &amp; platform if there is one).</li>
             <li>Random location finding and <code>/tardis comehere</code> command now respects WorldGuard regions (if WorldGuard is enabled on server).</li>
-            <li>New command <code>/tardis direction [north
-                </code></td>
+            <li>New command <code>/tardis direction [north </code>
+                </td>
                 <td><code>west</code></td>
                 <td><code>south</code></td>
                 <td><code>east]</code> allows you to change the direction the TARDIS police box is facing. 
@@ -620,10 +639,10 @@
         <h3>v1.5.1</h3>
         <ul>
             <li>Added Remote Control! You can now make your TARDIS come to the spot you are looking at with the command <code>/tardis comehere</code></li>
-            <li>Added player preferences for turning Who quotes on and off <code>/tardis quotes [on
-                </code></td>
-                <td><code>off] 
-                </code></li>
+            <li>Added player preferences for turning Who quotes on and off <code>/tardis quotes [on </code>
+                </td>
+                <td><code>off] </code>
+            </li>
             <li>Added admin command to view current config settings <code>/tardis admin config</code></li>
             <li>Improvements to Chameleon Circuit &mdash; shouldn&rsquo;t be any AIR TARDISs anymore, also if a valid blending block can&rsquo;t be found directly beneath the TARDIS, it now checks the surrounding blocks</li>
         </ul>
