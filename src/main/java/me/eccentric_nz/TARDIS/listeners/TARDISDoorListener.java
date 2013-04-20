@@ -445,8 +445,6 @@ public class TARDISDoorListener implements Listener {
                             player.sendMessage(plugin.pluginName + "The TARDIS key is a " + key + ". You have " + grammar + " in your hand!");
                         }
                     }
-                } else {
-                    player.sendMessage(plugin.pluginName + TARDISConstants.NO_PERMS_MESSAGE);
                 }
             }
         }
