@@ -102,7 +102,7 @@ public class TARDISHandbrakeListener implements Listener {
                         int dist = 0;
                         if (action == Action.RIGHT_CLICK_BLOCK) {
                             if (rs.isHandbrake_on()) {
-                                if (plugin.tardisHasDestination.containsKey(Integer.valueOf(id)) && exit != null) {
+                                if (plugin.tardisHasDestination.containsKey(Integer.valueOf(id))) {
                                     boolean malfunction = false;
                                     if (plugin.getConfig().getInt("malfunction") > 0) {
                                         // check for a malfunction
