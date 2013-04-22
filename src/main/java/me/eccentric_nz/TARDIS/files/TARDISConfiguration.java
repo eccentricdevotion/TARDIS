@@ -98,6 +98,7 @@ public class TARDISConfiguration {
         boolOptions.put("rooms_require_blocks", false);
         // integer
         intOptions.put("autonomous", 100);
+        intOptions.put("backdoor", 100);
         intOptions.put("border_radius", 64);
         intOptions.put("comehere", 400);
         intOptions.put("confirm_timeout", 15);

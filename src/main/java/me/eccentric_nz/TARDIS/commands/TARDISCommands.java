@@ -751,15 +751,19 @@ public class TARDISCommands implements CommandExecutor {
                 }
                 if (args[0].equalsIgnoreCase("update")) {
                     if (player.hasPermission("tardis.update")) {
-                        String[] validBlockNames = {"door", "button", "world-repeater", "x-repeater", "z-repeater", "y-repeater", "chameleon", "save-sign", "artron", "handbrake", "condenser", "scanner"};
+                        String[] validBlockNames = {"door", "button", "world-repeater", "x-repeater", "z-repeater", "y-repeater", "chameleon", "save-sign", "artron", "handbrake", "condenser", "scanner", "backdoor"};
                         if (args.length < 2) {
                             sender.sendMessage(plugin.pluginName + "Too few command arguments!");
                             return false;
                         }
                         String tardis_block = args[1].toLowerCase(Locale.ENGLISH);
                         if (!Arrays.asList(validBlockNames).contains(tardis_block)) {
-                            player.sendMessage(plugin.pluginName + "That is not a valid TARDIS block name! Try one of : door|button|world-repeater|x-repeater|z-repeater|y-repeater|chameleon|save-sign|artron|handbrake|condenser|scanner");
+                            player.sendMessage(plugin.pluginName + "That is not a valid TARDIS block name! Try one of : door|button|world-repeater|x-repeater|z-repeater|y-repeater|chameleon|save-sign|artron|handbrake|condenser|scanner|backdoor");
                             return false;
+                        }
+                        if (!player.hasPermission("tardis.backdoor")) {
+                            sender.sendMessage(plugin.pluginName + "You do not have permission to create a back door!");
+                            return true;
                         }
                         HashMap<String, Object> where = new HashMap<String, Object>();
                         where.put("owner", player.getName());
@@ -768,12 +772,14 @@ public class TARDISCommands implements CommandExecutor {
                             sender.sendMessage(plugin.pluginName + "You are not a Timelord. You need to create a TARDIS first before using this command!");
                             return false;
                         }
-                        HashMap<String, Object> wheret = new HashMap<String, Object>();
-                        wheret.put("player", player.getName());
-                        ResultSetTravellers rst = new ResultSetTravellers(plugin, wheret, false);
-                        if (!rst.resultSet()) {
-                            sender.sendMessage(plugin.pluginName + "You are not inside your TARDIS. You need to be to run this command!");
-                            return false;
+                        if (!tardis_block.equals("backdoor")) {
+                            HashMap<String, Object> wheret = new HashMap<String, Object>();
+                            wheret.put("player", player.getName());
+                            ResultSetTravellers rst = new ResultSetTravellers(plugin, wheret, false);
+                            if (!rst.resultSet()) {
+                                sender.sendMessage(plugin.pluginName + "You are not inside your TARDIS. You need to be to run this command!");
+                                return false;
+                            }
                         }
                         plugin.trackPlayers.put(player.getName(), tardis_block);
                         player.sendMessage(plugin.pluginName + "Click the TARDIS " + tardis_block + " to update its position.");

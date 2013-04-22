@@ -132,6 +132,7 @@ public class TARDISAdminCommands implements CommandExecutor {
         firstsBool.add("use_worldguard");
         // integer
         firstsInt.add("autonomous");
+        firstsInt.add("backdoor");
         firstsInt.add("border_radius");
         firstsInt.add("comehere");
         firstsInt.add("confirm_timeout");
@@ -460,7 +461,7 @@ public class TARDISAdminCommands implements CommandExecutor {
                             float pitch = player.getLocation().getPitch();
                             tmp_loc.setPitch(pitch);
                             // get players direction so we can adjust yaw if necessary
-                            TARDISConstants.COMPASS d = TARDISConstants.COMPASS.valueOf(plugin.utils.getPlayersDirection(player));
+                            TARDISConstants.COMPASS d = TARDISConstants.COMPASS.valueOf(plugin.utils.getPlayersDirection(player, false));
                             TARDISDoorListener tdl = new TARDISDoorListener(plugin);
                             if (!innerD.equals(d)) {
                                 switch (d) {

@@ -22,7 +22,9 @@ import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
+import me.eccentric_nz.TARDIS.database.ResultSetDoors;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
+import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.thirdparty.Version;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -109,25 +111,38 @@ public class TARDISUpdateListener implements Listener {
                 String table = "tardis";
                 if (blockName.equalsIgnoreCase("door") && blockType == Material.IRON_DOOR_BLOCK) {
                     // get door data this should let us determine the direction
-                    String d;
-                    switch (blockData) {
-                        case 1:
-                            d = "SOUTH";
-                            break;
-                        case 2:
-                            d = "WEST";
-                            break;
-                        case 3:
-                            d = "NORTH";
-                            break;
-                        default:
-                            d = "EAST";
-                            break;
-                    }
+                    String d = getDirection(blockData);
                     table = "doors";
                     set.put("door_location", blockLocStr);
                     set.put("door_direction", d);
                     tid.put("door_type", 1);
+                }
+                if (blockName.equalsIgnoreCase("backdoor") && blockType == Material.IRON_DOOR_BLOCK) {
+                    // get door data - this should let us determine the direction
+                    String d = plugin.utils.getPlayersDirection(player, true);
+                    table = "doors";
+                    set.put("door_location", blockLocStr);
+                    set.put("door_direction", d);
+                    HashMap<String, Object> wheret = new HashMap<String, Object>();
+                    wheret.put("tardis_id", id);
+                    wheret.put("player", playerNameStr);
+                    ResultSetTravellers rst = new ResultSetTravellers(plugin, wheret, false);
+                    int type = (rst.resultSet()) ? 3 : 2;
+                    tid.put("door_type", type);
+                    // check if we have a backdoor yet
+                    HashMap<String, Object> whered = new HashMap<String, Object>();
+                    whered.put("tardis_id", id);
+                    whered.put("door_type", type);
+                    ResultSetDoors rsd = new ResultSetDoors(plugin, whered, false);
+                    if (!rsd.resultSet()) {
+                        // insert record
+                        HashMap<String, Object> setd = new HashMap<String, Object>();
+                        setd.put("tardis_id", id);
+                        setd.put("door_type", type);
+                        setd.put("door_location", blockLocStr);
+                        setd.put("door_direction", d);
+                        qf.doInsert("doors", setd);
+                    }
                 }
                 if (blockName.equalsIgnoreCase("button") && (validBlocks.contains(blockType) || blockType == Material.LEVER)) {
                     set.put("button", blockLocStr);
@@ -184,6 +199,19 @@ public class TARDISUpdateListener implements Listener {
                     player.sendMessage(plugin.pluginName + "You didn't click the correct type of block for the " + blockName + "! Try the command again.");
                 }
             }
+        }
+    }
+
+    private String getDirection(Byte blockData) {
+        switch (blockData) {
+            case 1:
+                return "SOUTH";
+            case 2:
+                return "WEST";
+            case 3:
+                return "NORTH";
+            default:
+                return "EAST";
         }
     }
 }

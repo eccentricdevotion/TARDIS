@@ -42,6 +42,7 @@ import org.bukkit.entity.Player;
  * @author eccentric_nz
  */
 public class TARDISUtils {
+
     private static int[] startLoc = new int[6];
 
     /**
@@ -54,7 +55,6 @@ public class TARDISUtils {
     public static int roundUp(int num, int divisor) {
         return (num + divisor - 1) / divisor;
     }
-
     private final TARDIS plugin;
     Version bukkitversion;
     Version prewoodbuttonversion = new Version("1.4.2");
@@ -295,7 +295,7 @@ public class TARDISUtils {
         return false;
     }
 
-    public String getPlayersDirection(Player p) {
+    public String getPlayersDirection(Player p, boolean swap) {
         // get player direction
         float pyaw = p.getLocation().getYaw();
         if (pyaw >= 0) {
@@ -306,16 +306,16 @@ public class TARDISUtils {
         // determine direction player is facing
         String d = "";
         if (pyaw >= 315 || pyaw < 45) {
-            d = "SOUTH";
+            d = (swap) ? "NORTH" : "SOUTH";
         }
         if (pyaw >= 225 && pyaw < 315) {
-            d = "EAST";
+            d = (swap) ? "WEST" : "EAST";
         }
         if (pyaw >= 135 && pyaw < 225) {
-            d = "NORTH";
+            d = (swap) ? "SOUTH" : "NORTH";
         }
         if (pyaw >= 45 && pyaw < 135) {
-            d = "WEST";
+            d = (swap) ? "EAST" : "WEST";
         }
         return d;
     }

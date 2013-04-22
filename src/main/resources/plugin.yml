@@ -6,7 +6,7 @@ startup: postworld
 softdepend: [Multiverse-Core,MultiWorld,WorldGuard,WorldBorder,Towny]
 website: http://dev.bukkit.org/server-mods/TARDIS/
 dev-url: http://dev.bukkit.org/server-mods/TARDIS/
-url: http://eccentricdevotion.github.com/TARDIS/
+url: http://eccentricdevotion.github.io/TARDIS/
 version: '2.3-beta-1'
 permissions:
   tardis.admin:
@@ -127,6 +127,9 @@ permissions:
     default: op
   tardis.book:
     description: Allow players to use TARDIS books and gain achievements.
+    default: op
+  tardis.backdoor:
+    description: Allow players to add a TARDIS back door.
     default: op
   tardis.prune.bypass:
     description: Ignore /tardisadmin prune [days] command to remove unused TARDISes.
