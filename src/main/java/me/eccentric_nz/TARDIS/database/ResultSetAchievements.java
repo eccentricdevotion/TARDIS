@@ -50,8 +50,8 @@ public class ResultSetAchievements {
     private ArrayList<HashMap<String, String>> data = new ArrayList<HashMap<String, String>>();
 
     /**
-     * Creates a class instance that can be used to check whether a parking spot
-     * in a TARDIS area is free for use.
+     * Creates a class instance that can be used to retrieve an SQL ResultSet
+     * from the achievements table.
      *
      * @param plugin an instance of the main class.
      * @param where a String location to check.

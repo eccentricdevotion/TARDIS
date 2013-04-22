@@ -50,7 +50,7 @@ public class ResultSetLamps {
 
     /**
      * Creates a class instance that can be used to retrieve an SQL ResultSet
-     * from the blocks table.
+     * from the lamps table.
      *
      * @param plugin an instance of the main class.
      * @param where a HashMap<String, Object> of table fields and values to

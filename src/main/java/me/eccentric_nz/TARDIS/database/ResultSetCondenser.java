@@ -29,7 +29,7 @@ import me.eccentric_nz.TARDIS.TARDIS;
 
 /**
  * Many facts, figures, and formulas are contained within the Matrix,
- * including... the chunk location of the TARDIS interior.
+ * including... the condensed blocks and items of the TARDIS's condenser.
  *
  * @author eccentric_nz
  */
@@ -48,7 +48,7 @@ public class ResultSetCondenser {
 
     /**
      * Creates a class instance that can be used to retrieve an SQL ResultSet
-     * from the chunks table.
+     * from the condenser table.
      *
      * @param plugin an instance of the main class.
      * @param where a HashMap<String, Object> of table fields and values to
