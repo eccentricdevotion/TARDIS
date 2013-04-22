@@ -20,7 +20,6 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
-import me.eccentric_nz.TARDIS.database.TARDISDatabase;
 import org.bukkit.ChatColor;
 
 /**
@@ -32,7 +31,6 @@ import org.bukkit.ChatColor;
  */
 public class TARDISConstants {
 
-    public final static TARDISDatabase service = TARDISDatabase.getInstance();
     // TARDIS schematics supplied by ewized http://dev.bukkit.org/profiles/ewized/
     public static final String SCHEMATIC_BUDGET = "budget.schematic";
     public static final String SCHEMATIC_BIGGER = "bigger.schematic";
