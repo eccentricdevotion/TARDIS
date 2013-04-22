@@ -1266,10 +1266,14 @@ public class TARDISCommands implements CommandExecutor {
                         buf.append(" ").append(args[i]);
                     }
                     String tmp = buf.toString();
-                    TARDISItemRenamer ir = new TARDISItemRenamer(is);
-                    ir.setName(tmp, false);
-                    sender.sendMessage(plugin.pluginName + "TARDIS key renamed to '" + tmp + "'");
-                    return true;
+                    if (!tmp.isEmpty()) {
+                        TARDISItemRenamer ir = new TARDISItemRenamer(is);
+                        ir.setName(tmp, false);
+                        sender.sendMessage(plugin.pluginName + "TARDIS key renamed to '" + tmp + "'");
+                        return true;
+                    } else {
+                        return false;
+                    }
                 }
                 if (args[0].equalsIgnoreCase("help")) {
                     if (args.length == 1) {
