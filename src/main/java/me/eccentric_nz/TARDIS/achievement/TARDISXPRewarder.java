@@ -17,8 +17,8 @@ import org.bukkit.entity.Player;
  * doesn't work properly after a player has enchanted something.
  */
 public class TARDISXPRewarder {
-    // this is to stop the lookup tables growing without control
 
+    // this is to stop the lookup tables growing without control
     private static int hardMaxLevel = 100000;
     private static int xpRequiredForNextLevel[];
     private static int xpTotalToReachLevel[];
@@ -44,7 +44,7 @@ public class TARDISXPRewarder {
      * 7 xp to get to level 1, 17 to level 2, 31 to level 3... At each level,
      * the increment to get to the next level increases alternately by 3 and 4
      *
-     * @param maxLevel	The highest level handled by the lookup tables
+     * @param maxLevel The highest level handled by the lookup tables
      */
     private static void initLookupTables(int maxLevel) {
         xpRequiredForNextLevel = new int[maxLevel];
@@ -76,7 +76,7 @@ public class TARDISXPRewarder {
      */
     private static int calculateLevelForExp(int exp) {
         int level = 0;
-        int curExp = 7;	// level 1
+        int curExp = 7; // level 1
         int incr = 10;
         while (curExp <= exp) {
             curExp += incr;
@@ -90,17 +90,17 @@ public class TARDISXPRewarder {
     /**
      * Create a new TARDISXPRewarder for the given player.
      *
-     * @param player	The player for this TARDISXPRewarder object
+     * @param player The player for this TARDISXPRewarder object
      */
     public TARDISXPRewarder(Player player) {
         this.playerName = player.getName();
-        getPlayer();	// ensure it's a valid player name
+        getPlayer(); // ensure it's a valid player name
     }
 
     /**
      * Get the Player associated with this TARDISXPRewarder.
      *
-     * @return	the Player object
+     * @return the Player object
      * @throws IllegalStateException if the player is no longer online
      */
     private Player getPlayer() {
@@ -116,7 +116,7 @@ public class TARDISXPRewarder {
      * Works around some of the non-intuitive behaviour of the basic Bukkit
      * player.giveExp() method.
      *
-     * @param amt	Amount of XP, may be negative
+     * @param amt Amount of XP, may be negative
      */
     public void changeExp(int amt) {
         setExp(getCurrentExp(), amt);
@@ -151,7 +151,7 @@ public class TARDISXPRewarder {
     /**
      * Get the player's current XP total.
      *
-     * @return	the player's total XP
+     * @return the player's total XP
      */
     public int getCurrentExp() {
         Player player = getPlayer();
@@ -163,8 +163,8 @@ public class TARDISXPRewarder {
     /**
      * Checks if the player has the given amount of XP.
      *
-     * @param amt	The amount to check for.
-     * @return	true if the player has enough XP, false otherwise
+     * @param amt The amount to check for.
+     * @return true if the player has enough XP, false otherwise
      */
     public boolean hasExp(int amt) {
         return getCurrentExp() >= amt;
@@ -173,8 +173,8 @@ public class TARDISXPRewarder {
     /**
      * Get the level that the given amount of XP falls within.
      *
-     * @param exp	The amount to check for.
-     * @return	The level that a player with this amount total XP would be.
+     * @param exp The amount to check for.
+     * @return The level that a player with this amount total XP would be.
      */
     public int getLevelForExp(int exp) {
         if (exp <= 0) {
@@ -195,8 +195,8 @@ public class TARDISXPRewarder {
     /**
      * Return the total XP needed to be the given level.
      *
-     * @param level	The level to check for.
-     * @return	The amount of XP needed for the level.
+     * @param level The level to check for.
+     * @return The amount of XP needed for the level.
      */
     public int getXpForLevel(int level) {
         if (level > hardMaxLevel) {
