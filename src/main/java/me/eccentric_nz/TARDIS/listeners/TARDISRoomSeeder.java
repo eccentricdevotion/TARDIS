@@ -105,7 +105,7 @@ public class TARDISRoomSeeder implements Listener {
                 // get clicked block location
                 Location b = block.getLocation();
                 // get player's direction
-                COMPASS d = COMPASS.valueOf(plugin.utils.getPlayersDirection(player));
+                COMPASS d = COMPASS.valueOf(plugin.utils.getPlayersDirection(player, false));
                 TARDISRoomBuilder builder = new TARDISRoomBuilder(plugin, r, b, d, player);
                 if (builder.build()) {
                     plugin.trackRoomSeed.remove(playerNameStr);

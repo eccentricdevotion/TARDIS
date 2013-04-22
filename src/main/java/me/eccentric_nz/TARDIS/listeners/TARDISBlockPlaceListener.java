@@ -52,6 +52,7 @@ import org.bukkit.event.block.BlockPlaceEvent;
  * @author eccentric_nz
  */
 public class TARDISBlockPlaceListener implements Listener {
+
     public static final List<String> MIDDLE_BLOCKS = Arrays.asList(new String[]{"LAPIS_BLOCK", "STONE", "DIRT", "WOOD", "SANDSTONE", "WOOL", "BRICK", "NETHERRACK", "SOUL_SAND", "SMOOTH_BRICK", "HUGE_MUSHROOM_1", "HUGE_MUSHROOM_2", "ENDER_STONE", "QUARTZ_BLOCK", "CLAY"});
 
     private static String getWallKey(int i, int d) {
@@ -64,7 +65,6 @@ public class TARDISBlockPlaceListener implements Listener {
         }
         return "ORANGE_WOOL";
     }
-
     private TARDIS plugin;
     private TARDISUtils utils;
 
@@ -181,7 +181,7 @@ public class TARDISBlockPlaceListener implements Listener {
                             }
                         }
                         // get player direction
-                        final String d = plugin.utils.getPlayersDirection(player);
+                        final String d = plugin.utils.getPlayersDirection(player, false);
                         // save data to database (tardis table)
                         final Location block_loc = blockBottom.getLocation();
                         String chun = cw + ":" + cx + ":" + cz;
