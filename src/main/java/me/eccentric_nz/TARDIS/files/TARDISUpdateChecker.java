@@ -56,9 +56,11 @@ public class TARDISUpdateChecker {
         if (exists(tardisURL)) {
             FileConfiguration pluginYml = YamlConfiguration.loadConfiguration(plugin.pm.getPlugin("TARDIS").getResource("plugin.yml"));
             String verStr = pluginYml.getString("version");
+            boolean notfinal = false;
             if (verStr.contains("-")) {
                 String[] tmp = verStr.split("-");
                 verStr = tmp[0];
+                notfinal = true;
             }
             String latest = URLReader(tardisURL);
             Version thisversion = new Version(verStr);
@@ -77,7 +79,7 @@ public class TARDISUpdateChecker {
                 default:
                     // equal
                     // check if there was a beta or pre on the end
-                    if (verStr.contains("-")) {
+                    if (notfinal) {
                         message = plugin.pluginName + "A (" + ChatColor.LIGHT_PURPLE + latest + ChatColor.RESET + ") release version of TARDIS is available! Get it at " + pluginYml.getString("website");
                     } else {
                         message = plugin.pluginName + "Well done, you are running the latest version of TARDIS!";
