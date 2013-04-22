@@ -107,6 +107,8 @@ public class TARDISDoorListener implements Listener {
      * Listens for player interaction with TARDIS doors. If the door is
      * right-clicked with the TARDIS key (configurable) it will teleport the
      * player either into or out of the TARDIS.
+     *
+     * @param event a player clicking a block
      */
     @EventHandler(priority = EventPriority.MONITOR)
     public void onDoorInteract(PlayerInteractEvent event) {

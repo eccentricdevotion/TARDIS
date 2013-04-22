@@ -50,6 +50,8 @@ public class TARDISTimeLordDeathListener implements Listener {
      * Listens for player death. If the player is a time lord and the autonomous
      * circuit is engaged, then the TARDIS will automatically return to its
      * 'home' location, or the nearest Recharge area.
+     *
+     * @param event a player dying
      */
     @EventHandler(priority = EventPriority.MONITOR)
     public void onTimeLordDeath(PlayerDeathEvent event) {

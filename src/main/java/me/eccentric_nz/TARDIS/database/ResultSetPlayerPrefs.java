@@ -64,6 +64,8 @@ public class ResultSetPlayerPrefs {
      * Retrieves an SQL ResultSet from the player_prefs table. This method
      * builds an SQL query string from the parameters supplied and then executes
      * the query. Use the getters to retrieve the results.
+     *
+     * @return true or false depending on whether any data matches the query
      */
     public boolean resultSet() {
         PreparedStatement statement = null;

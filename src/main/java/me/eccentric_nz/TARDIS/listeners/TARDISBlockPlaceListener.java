@@ -66,6 +66,8 @@ public class TARDISBlockPlaceListener implements Listener {
      * Listens for player block placing. If the player place a stack of blocks
      * in a certain pattern for example (but not limited to): IRON_BLOCK,
      * LAPIS_BLOCK, RESTONE_TORCH the pattern of blocks is turned into a TARDIS.
+     *
+     * @param event a player placing a block
      */
     @EventHandler(priority = EventPriority.MONITOR)
     public void onPlayerBlockPlace(BlockPlaceEvent event) {

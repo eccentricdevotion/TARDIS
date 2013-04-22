@@ -48,6 +48,7 @@ public class QueryFactory {
      * @param table the database table name to insert the data into.
      * @param data a HashMap<String, Object> of table fields and values to
      * insert.
+     * @return the number of records that were inserted
      */
     public int doInsert(String table, HashMap<String, Object> data) {
         PreparedStatement ps = null;
@@ -106,6 +107,8 @@ public class QueryFactory {
      * @param data a HashMap<String, Object> of table fields and values update.
      * @param where a HashMap<String, Object> of table fields and values to
      * select the records to update.
+     * @return true or false depending on whether the database update was
+     * successful
      */
     public boolean doUpdate(String table, HashMap<String, Object> data, HashMap<String, Object> where) {
         PreparedStatement statement = null;
@@ -167,6 +170,8 @@ public class QueryFactory {
      * @param table the database table name to insert the data into.
      * @param where a HashMap<String, Object> of table fields and values to
      * select the records to delete.
+     * @return true or false depending on whether the data was deleted
+     * successfully
      */
     public boolean doDelete(String table, HashMap<String, Object> where) {
         Statement statement = null;
@@ -212,6 +217,8 @@ public class QueryFactory {
      * @param where a HashMap<String, Object> of table fields and values to
      * select the records to alter.
      * @param p the player who receives the success message.
+     * @return true or false depending on whether the database update was
+     * successful
      */
     public boolean alterEnergyLevel(String table, int amount, HashMap<String, Object> where, Player p) {
         Statement statement = null;

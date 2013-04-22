@@ -72,6 +72,8 @@ public class TARDISBindListener implements Listener {
      * If the player is travelling in the TARDIS then a check is made of the
      * destinations table for the location of the clicked block. If found the
      * destination for the next TARDIS time travel location is set.
+     *
+     * @param event a player clicking a block
      */
     @EventHandler(priority = EventPriority.MONITOR)
     public void onInteract(PlayerInteractEvent event) {

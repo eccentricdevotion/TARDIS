@@ -53,6 +53,8 @@ public class TARDISJoinListener implements Listener {
      * permissions (ie not a guest), then check whether they have achieved the
      * building of a TARDIS. If not then insert an achievement record and give
      * them the tardis book.
+     *
+     * @param event a player joining the server
      */
     @EventHandler(priority = EventPriority.MONITOR)
     public void onJoin(PlayerJoinEvent event) {

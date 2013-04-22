@@ -152,6 +152,7 @@ public class TARDISUtils {
      * Gets a start location for building the inner TARDIS.
      *
      * @param id the TARDIS this location belongs to.
+     * @return
      */
     public int[] getStartLocation(int id) {
         int cx, cz;
@@ -182,6 +183,7 @@ public class TARDISUtils {
      * @param s the saved location data from the database.
      * @param yaw the player's yaw.
      * @param pitch the player's pitch.
+     * @return
      */
     public Location getLocationFromDB(String s, float yaw, float pitch) {
         int savedx, savedy, savedz;
@@ -206,6 +208,7 @@ public class TARDISUtils {
      * @param x the x co-ordinate of the chunk.
      * @param z the z co-ordinate of the chunk.
      * @param schm the schematic of the TARDIS being created.
+     * @return
      */
     public boolean checkChunk(String w, int x, int z, TARDISConstants.SCHEMATIC schm) {
         boolean chunkchk = false;
@@ -244,6 +247,7 @@ public class TARDISUtils {
      *
      * @param num the number being divided.
      * @param divisor the number to divide by.
+     * @return
      */
     public static int roundUp(int num, int divisor) {
         return (num + divisor - 1) / divisor;
@@ -253,6 +257,7 @@ public class TARDISUtils {
      * Returns a rounded integer after division.
      *
      * @param i the number to convert to an int.
+     * @return a number
      */
     public int parseNum(String i) {
         int num = 0;

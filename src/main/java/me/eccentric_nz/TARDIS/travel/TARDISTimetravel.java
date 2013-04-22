@@ -75,6 +75,7 @@ public class TARDISTimetravel {
      * @param d the direction the TARDIS Police Box faces.
      * @param e the environment(s) the player has chosen (or is allowed) to
      * travel to.
+     * @return a random Location
      */
     public Location randomDestination(Player p, byte rx, byte rz, byte ry, TARDISConstants.COMPASS d, String e) {
         int startx, starty, startz, resetx, resetz, listlen, rw;
@@ -251,6 +252,7 @@ public class TARDISTimetravel {
      * @param resetz a copy of the starting z position to return to.
      * @param w the world the location check will take place in.
      * @param d the direction the Police Box is facing.
+     * @return the number of unsafe blocks
      */
     public int safeLocation(int startx, int starty, int startz, int resetx, int resetz, World w, TARDISConstants.COMPASS d) {
         int level, row, col, rowcount, colcount, count = 0;
@@ -288,7 +290,7 @@ public class TARDISTimetravel {
      * for debugging purposes only. The Police Box requires a clear 4 x 3 x 4 (d
      * x w x h) area.
      *
-     * @param l a starting location.
+     * @param loc
      * @param d the direction the Police Box is facing.
      */
     public void testSafeLocation(Location loc, TARDISConstants.COMPASS d) {
@@ -334,6 +336,7 @@ public class TARDISTimetravel {
         plugin.utils.setBlock(w, startx, starty + 3, startz + row, 80, (byte) 0);
         plugin.utils.setBlock(w, startx + col, starty + 3, startz + row, 80, (byte) 0);
         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
+            @Override
             public void run() {
                 plugin.utils.setBlock(w, startx, starty, startz, 0, (byte) 0);
                 plugin.utils.setBlock(w, startx, starty, startz + r, 0, (byte) 0);
@@ -367,6 +370,7 @@ public class TARDISTimetravel {
      *
      * @param loc a location object to check.
      * @param d the direction the Police Box is facing.
+     * @return an array containing x and z coordinates
      */
     public int[] getStartLocation(Location loc, TARDISConstants.COMPASS d) {
         switch (d) {

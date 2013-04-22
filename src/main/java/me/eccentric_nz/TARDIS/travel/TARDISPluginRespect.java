@@ -42,6 +42,8 @@ public class TARDISPluginRespect {
      * @param p the player who is travelling.
      * @param l the location to check.
      * @param message whether to display a message to the sender.
+     * @return true or false depending on whether the player is allowed to
+     * travel to the specified location
      */
     public boolean getRespect(Player p, Location l, boolean message) {
         boolean bool = true;

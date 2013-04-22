@@ -46,6 +46,8 @@ public class TARDISBlockBreakListener implements Listener {
      * Listens for the TARDIS Police Box sign being broken. If the sign is
      * broken, then the TARDIS is destroyed, the database records removed and
      * the TARDIS world deleted.
+     *
+     * @param event a player breaking a block
      */
     @EventHandler(priority = EventPriority.LOW)
     public void onSignBreak(BlockBreakEvent event) {

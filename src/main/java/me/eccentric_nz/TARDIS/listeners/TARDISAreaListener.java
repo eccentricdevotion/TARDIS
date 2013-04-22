@@ -48,6 +48,8 @@ public class TARDISAreaListener implements Listener {
      * Listens for player clicking blocks. If the player's name is contained in
      * various tracking HashMaps then we know that they are trying to create a
      * TARDIS area.
+     *
+     * @param event a player clicking a block
      */
     @EventHandler(priority = EventPriority.MONITOR)
     public void onAreaInteract(PlayerInteractEvent event) {

@@ -68,6 +68,9 @@ public class TARDISMaterialisationRunnable implements Runnable {
      * @param data the material data to construct the final walls
      * @param tid the tardis_id this Police Box belongs to
      * @param d the COMPASS direction the Police Box is facing
+     * @param player a player
+     * @param mal a boolean determining whether there has been a TARDIS
+     * malfunction
      */
     public TARDISMaterialisationRunnable(TARDIS plugin, Location location, int mat, byte data, int tid, COMPASS d, Player player, boolean mal) {
         this.plugin = plugin;

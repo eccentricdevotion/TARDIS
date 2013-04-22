@@ -56,6 +56,9 @@ public class TARDISInteriorSchematicReader {
      * Reads a WorldEdit schematic file and writes the data to a CSV file. The
      * dimensions of the schematics are also stored for use by the TARDIS and
      * room builders.
+     *
+     * @param fileStr the path to the schematic file
+     * @param s the schematic name
      */
     public void readAndMakeInteriorCSV(String fileStr, TARDISConstants.SCHEMATIC s) {
         plugin.debug("Loading schematic: " + fileStr);

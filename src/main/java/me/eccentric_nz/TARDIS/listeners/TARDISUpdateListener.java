@@ -68,6 +68,8 @@ public class TARDISUpdateListener implements Listener {
      * items. If the block is clicked and players name is contained in the
      * appropriate HashMap, then the blocks position is recorded in the
      * database.
+     *
+     * @param event a player clicking on a block
      */
     @EventHandler(priority = EventPriority.MONITOR)
     public void onUpdateInteract(PlayerInteractEvent event) {

@@ -48,6 +48,8 @@ public class TARDISRoomRemover {
      * Jettison a TARDIS room, leaving just the walls behind. We will probably
      * need to get the dimensions of the room from the schematic, if user
      * supplied room schematics will be allowed.
+     *
+     * @return false if the room has already been jettisoned
      */
     public boolean remove() {
         // get start locations

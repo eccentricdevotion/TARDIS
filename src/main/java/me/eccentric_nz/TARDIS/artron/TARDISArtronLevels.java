@@ -42,8 +42,10 @@ public class TARDISArtronLevels {
      * Starts a repeating task to recharge the TARDIS. The task is started each
      * time the player exits the TARDIS after travelling. If the TARDIS moves
      * away from the recharge location the task is cancelled.
+     *
+     * @param id the unique TARDIS database key
      */
-    public void recharge(int id, Player p) {
+    public void recharge(int id) {
         QueryFactory qf = new QueryFactory(plugin);
         HashMap<String, Object> set = new HashMap<String, Object>();
         set.put("recharging", 1);
@@ -58,6 +60,11 @@ public class TARDISArtronLevels {
     /**
      * Checks whether the TARDIS has sufficient Artron Energy levels. If the
      * energy level will drop below 100, then the player is warned.
+     *
+     * @param id the unique TARDIS database key
+     * @param required
+     * @param p the player to message
+     * @return a boolean - true if the TARDIS has sufficient energy
      */
     public boolean checkLevel(int id, int required, Player p) {
         HashMap<String, Object> where = new HashMap<String, Object>();

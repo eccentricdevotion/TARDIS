@@ -43,6 +43,8 @@ public class TARDISIceMeltListener implements Listener {
     /**
      * Listens for ice melting when the TARDIS Police Box is materialising. If
      * the block is contained in the blocks table then it cancels the event.
+     *
+     * @param event ice melting
      */
     @EventHandler(priority = EventPriority.NORMAL)
     public void onIceMelt(BlockFadeEvent event) {

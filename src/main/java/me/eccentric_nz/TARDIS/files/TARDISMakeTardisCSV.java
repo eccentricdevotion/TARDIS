@@ -138,6 +138,9 @@ public class TARDISMakeTardisCSV {
     /**
      * Tries to find the specified CSV file. If it doesn't exist, an empty file
      * is created.
+     *
+     * @param filename the file to search for/create
+     * @return the File
      */
     public File createFile(String filename) {
         File file = new File(plugin.getDataFolder() + File.separator + "schematics" + File.separator, filename);
@@ -154,6 +157,10 @@ public class TARDISMakeTardisCSV {
     /**
      * Copies the schematic file to the TARDIS plugin directory if it is not
      * present.
+     *
+     * @param filepath the path to the file to write to
+     * @param in the input file to read from
+     * @return a File
      */
     public File copy(String filepath, InputStream in) {
         File file = new File(filepath);

@@ -60,6 +60,8 @@ public class TARDISRoomSeeder implements Listener {
      * a passageway or the room type specified.
      *
      * Requires the TARDIS to have sufficient Artron Energy to grow the room.
+     *
+     * @param event a player clicking a block
      */
     @EventHandler(priority = EventPriority.MONITOR)
     public void onSeedBlockInteract(PlayerInteractEvent event) {

@@ -43,6 +43,8 @@ public class TARDISChunkListener implements Listener {
     /**
      * Listens for chunks unloading when a TARDIS room is growing. If the chunk
      * is contained in the roomChunksList then it cancels the event.
+     *
+     * @param event a chunk unloading
      */
     @EventHandler(priority = EventPriority.NORMAL, ignoreCancelled = true)
     public void onChunkUnload(ChunkUnloadEvent event) {

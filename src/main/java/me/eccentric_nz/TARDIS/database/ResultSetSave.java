@@ -50,6 +50,8 @@ public class ResultSetSave {
     /**
      * Retrieves an SQL ResultSet from the tardis table. This method returns
      * true if a matching record was found.
+     *
+     * @return true or false depending on whether any data matches the query
      */
     public boolean resultSet() {
         PreparedStatement statement = null;

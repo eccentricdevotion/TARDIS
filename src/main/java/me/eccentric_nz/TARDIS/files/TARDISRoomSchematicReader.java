@@ -85,6 +85,12 @@ public class TARDISRoomSchematicReader {
     /**
      * Reads a WorldEdit schematic file and writes the data to a CSV file. The
      * dimensions of the schematics are also stored for use by the room builder.
+     *
+     * @param fileStr the schematic file to read
+     * @param s the schematic name
+     * @param rotate whether to rotate the schematic 90 degrees
+     * counter-clockwise
+     * @return true or false depending on whether the room is square or not
      */
     public boolean readAndMakeRoomCSV(String fileStr, String s, boolean rotate) {
         HashMap<String, Integer> blockIDs = new HashMap<String, Integer>();

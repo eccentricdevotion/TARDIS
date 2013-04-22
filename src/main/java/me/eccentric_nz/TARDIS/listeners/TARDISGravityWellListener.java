@@ -67,6 +67,8 @@ public class TARDISGravityWellListener implements Listener {
      * Listens for a player walking over a Gravity Well location. If the block
      * the player is on is contained in the gravityUpList then the player is
      * transported up.
+     *
+     * @param event a player moving
      */
     @EventHandler(priority = EventPriority.MONITOR)
     public void onPlayerMove(PlayerMoveEvent event) {
@@ -145,6 +147,8 @@ public class TARDISGravityWellListener implements Listener {
      * Listens for a player falling onto a Gravity Well location. If the block
      * the player lands on is contained in the gravityDownList then the player
      * receives no fall damage.
+     *
+     * @param e an entity taking damage
      */
     @EventHandler
     public void onEntityDamage(EntityDamageEvent e) {
@@ -169,6 +173,8 @@ public class TARDISGravityWellListener implements Listener {
      * Listens for a player clicking a wool block after running the
      * /tardisgravity command. If the block is the right type, it is added or
      * removed from the database.
+     *
+     * @param event a player clicking a block
      */
     @EventHandler(priority = EventPriority.MONITOR)
     public void onWoolInteract(PlayerInteractEvent event) {

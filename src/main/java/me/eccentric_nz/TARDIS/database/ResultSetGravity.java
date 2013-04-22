@@ -56,6 +56,7 @@ public class ResultSetGravity {
      * @param plugin an instance of the main class.
      * @param where a HashMap<String, Object> of table fields and values to
      * refine the search.
+     * @param multiple boolean determining whether to return multiple records
      */
     public ResultSetGravity(TARDIS plugin, HashMap<String, Object> where, boolean multiple) {
         this.plugin = plugin;
@@ -67,6 +68,8 @@ public class ResultSetGravity {
      * Retrieves an SQL ResultSet from the doors table. This method builds an
      * SQL query string from the parameters supplied and then executes the
      * query. Use the getters to retrieve the results.
+     *
+     * @return true or false depending on whether any data matches the query
      */
     public boolean resultSet() {
         PreparedStatement statement = null;

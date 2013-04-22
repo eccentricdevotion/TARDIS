@@ -54,6 +54,8 @@ public class TARDISSignListener implements Listener {
      * Listens for player interaction with the TARDIS chameleon or save-sign
      * Signs. If the signs are clicked, they trigger the appropriate actions,
      * for example turning the Chameleon Circuit on and off.
+     *
+     * @param event the player clicking a sign
      */
     @EventHandler(priority = EventPriority.MONITOR)
     public void onSignInteract(PlayerInteractEvent event) {
@@ -171,6 +173,9 @@ public class TARDISSignListener implements Listener {
 
     /**
      * Reorders a list so the the first item is moved to the end.
+     *
+     * @param list
+     * @param current
      */
     public void reOrder(List<String> list, String current) {
         int i = list.size();

@@ -98,6 +98,7 @@ public class TARDISUpdateChecker {
      * Checks whether a url is valid.
      *
      * @param url the URL to check.
+     * @return true or false depending on whether the URL can be reached
      */
     public boolean exists(URL url) {
         try {
@@ -115,6 +116,7 @@ public class TARDISUpdateChecker {
      *
      * @param url the URL to read from. This will always be
      * http://thenosefairy.co.nz/tardis.txt
+     * @return a TARDIS version string
      */
     public String URLReader(URL url) {
         String version = "";

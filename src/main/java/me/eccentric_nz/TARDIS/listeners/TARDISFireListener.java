@@ -52,6 +52,8 @@ public class TARDISFireListener implements Listener {
      * Listens for block burn and ignite events around the TARDIS. If the
      * affected block is part of the TARDIS, then the event is canceled there by
      * providing protection for the TARDIS blocks
+     *
+     * @param event a block catching fire
      */
     @EventHandler(priority = EventPriority.LOWEST)
     public void onBlockIgnite(BlockIgniteEvent event) {

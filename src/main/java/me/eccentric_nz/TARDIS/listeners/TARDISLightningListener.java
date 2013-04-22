@@ -49,6 +49,8 @@ public class TARDISLightningListener implements Listener {
      * is within (recharge_distance in config.yml) blocks, then the TARDIS
      * Artron Levels will be increased by the configured amount
      * (lightning_recharge in config.yml).
+     *
+     * @param e a lightning strike
      */
     @EventHandler(priority = EventPriority.LOW)
     public void onLightningStrike(LightningStrikeEvent e) {

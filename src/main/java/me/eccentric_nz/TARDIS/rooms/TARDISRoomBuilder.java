@@ -56,6 +56,8 @@ public class TARDISRoomBuilder {
      *
      * This needs to be set up to use the actual dimensions from the schematic
      * files, if user supplied room schematics are allowed to be used.
+     *
+     * @return true or false
      */
     public boolean build() {
         HashMap<String, Object> where = new HashMap<String, Object>();

@@ -55,6 +55,8 @@ public class ResultSetAchievements {
      *
      * @param plugin an instance of the main class.
      * @param where a String location to check.
+     * @param multiple a boolean setting whether to retrieve more than on
+     * record, it true returns an ArrayList that can be looped through later.
      */
     public ResultSetAchievements(TARDIS plugin, HashMap<String, Object> where, boolean multiple) {
         this.plugin = plugin;

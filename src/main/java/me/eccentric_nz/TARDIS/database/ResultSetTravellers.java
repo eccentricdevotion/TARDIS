@@ -56,6 +56,8 @@ public class ResultSetTravellers {
      * @param plugin an instance of the main class.
      * @param where a HashMap<String, Object> of table fields and values to
      * refine the search.
+     * @param multiple a boolean setting whether to retrieve more than on
+     * record, it true returns an ArrayList that can be looped through later.
      */
     public ResultSetTravellers(TARDIS plugin, HashMap<String, Object> where, boolean multiple) {
         this.plugin = plugin;
@@ -67,6 +69,8 @@ public class ResultSetTravellers {
      * Retrieves an SQL ResultSet from the travellers table. This method builds
      * an SQL query string from the parameters supplied and then executes the
      * query. Use the getters to retrieve the results.
+     *
+     * @return true or false depending on whether any data matches the query
      */
     public boolean resultSet() {
         PreparedStatement statement = null;

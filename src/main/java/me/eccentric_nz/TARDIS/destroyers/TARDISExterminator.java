@@ -94,6 +94,7 @@ public class TARDISExterminator {
      *
      * @param player running the command.
      * @param block the block that represents the Police Box sign
+     * @return true or false depending on whether the TARIS could be deleted
      */
     public boolean exterminate(Player player, Block block) {
         int signx = 0, signz = 0;

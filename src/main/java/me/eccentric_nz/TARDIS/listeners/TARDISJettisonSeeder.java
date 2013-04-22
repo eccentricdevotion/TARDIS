@@ -52,6 +52,8 @@ public class TARDISJettisonSeeder implements Listener {
      * type], the TNT block's location and the room type are used to determine a
      * cuboid region that is set to AIR. The room walls are left in place as
      * they maybe attached to other rooms/passage ways.
+     *
+     * @param event a player clicking a block
      */
     @EventHandler(priority = EventPriority.MONITOR)
     public void onSeedBlockInteract(PlayerInteractEvent event) {

@@ -36,6 +36,12 @@ public class TARDISSchematic {
 
     /**
      * Loads data from a CSV file into a 3D array.
+     *
+     * @param file the CSV file to read
+     * @param l the length in blocks of the cuboid object
+     * @param h the height in blocks of the cuboid object
+     * @param w the width in blocks of the cuboid object
+     * @return a 3-dimensional array of id:data values
      */
     public static String[][][] schematic(File file, short h, short w, short l) {
 

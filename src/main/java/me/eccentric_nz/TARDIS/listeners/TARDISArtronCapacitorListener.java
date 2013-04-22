@@ -74,6 +74,8 @@ public class TARDISArtronCapacitorListener implements Listener {
      *
      * If the button is just right-clicked, it displays the current capacitor
      * level as percentage of full.
+     *
+     * @param event the player clicking a block
      */
     @EventHandler(priority = EventPriority.MONITOR)
     public void onCapacitorInteract(PlayerInteractEvent event) {
@@ -209,6 +211,8 @@ public class TARDISArtronCapacitorListener implements Listener {
      * Listens for entity spawn events. If WorldGuard is enabled it blocks
      * mob-spawning inside the TARDIS, so this checks to see if we are doing the
      * spawning and un-cancels WorldGuards setCancelled(true).
+     *
+     * @param event
      */
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onEntitySpawn(CreatureSpawnEvent event) {

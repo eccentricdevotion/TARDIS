@@ -96,6 +96,8 @@ public class TARDISScannerListener implements Listener {
      * Listens for player interaction with the handbrake (lever) on the TARDIS
      * console. If the button is right-clicked the handbrake is set off, if
      * right-clicked while sneaking it is set on.
+     *
+     * @param event a player clicking a block
      */
     @EventHandler(priority = EventPriority.MONITOR)
     public void onInteract(PlayerInteractEvent event) {

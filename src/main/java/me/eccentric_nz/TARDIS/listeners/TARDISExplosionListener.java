@@ -49,6 +49,8 @@ public class TARDISExplosionListener implements Listener {
      * affects any of the Police Box blocks, then those blocks are removed from
      * the effect of the explosion, there by protecting the Police box from
      * damage.
+     *
+     * @param e an entity exploding
      */
     @EventHandler(priority = EventPriority.LOW)
     public void onEntityExplode(EntityExplodeEvent e) {

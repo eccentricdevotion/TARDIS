@@ -44,6 +44,11 @@ public class TARDISWorldGuardChecker {
     private TARDIS plugin;
     private WorldGuardPlugin wg;
 
+    /**
+     * Checks if WorldGuard is on the server.
+     *
+     * @param plugin an instance of the TARDIS plugin
+     */
     public TARDISWorldGuardChecker(TARDIS plugin) {
         this.plugin = plugin;
         if (plugin.worldGuardOnServer) {
@@ -56,6 +61,8 @@ public class TARDISWorldGuardChecker {
      *
      * @param p the player to check
      * @param l the location to check
+     * @return true of false depending on whether the player has permission to
+     * build at this location
      */
     public boolean cantBuild(Player p, Location l) {
         return (plugin.worldGuardOnServer) && (!wg.canBuild(p, l));
@@ -64,6 +71,10 @@ public class TARDISWorldGuardChecker {
     /**
      * Adds a WorldGuard protected region to the inner TARDIS location. This
      * stops other players and mobs from griefing the TARDIS :)
+     *
+     * @param p the player to assign as the owner of the region
+     * @param one a start location of a cuboid region
+     * @param two an end location of a cuboid region
      */
     public void addWGProtection(Player p, Location one, Location two) {
         RegionManager rm = wg.getRegionManager(one.getWorld());
@@ -105,6 +116,11 @@ public class TARDISWorldGuardChecker {
     /**
      * Adds a WorldGuard protected region to recharger location. A 3x3 block
      * area is protected.
+     *
+     * @param p the player to assign as the owner of the region
+     * @param name the name of the recharger
+     * @param one a start location of a cuboid region
+     * @param two an end location of a cuboid region
      */
     public void addRechargerProtection(Player p, String name, Location one, Location two) {
         RegionManager rm = wg.getRegionManager(one.getWorld());
@@ -135,6 +151,9 @@ public class TARDISWorldGuardChecker {
 
     /**
      * Removes the WorldGuard region when the TARDIS is deleted.
+     *
+     * @param w the world the region is located in
+     * @param p the player's name
      */
     public void removeRegion(World w, String p) {
         RegionManager rm = wg.getRegionManager(w);
@@ -148,6 +167,8 @@ public class TARDISWorldGuardChecker {
 
     /**
      * Removes the WorldGuard region when the recharger is removed.
+     *
+     * @param name the name of the recharger to remove
      */
     public void removeRechargerRegion(String name) {
         World w = plugin.getServer().getWorld(plugin.getConfig().getString("rechargers." + name + ".world"));
@@ -162,6 +183,9 @@ public class TARDISWorldGuardChecker {
 
     /**
      * Turns a location object into a vector.
+     *
+     * @param location the Location to convert to Vector
+     * @return a BlockVector
      */
     public BlockVector makeBlockVector(Location location) {
         return new BlockVector(location.getX(), location.getY(), location.getZ());

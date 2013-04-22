@@ -75,6 +75,9 @@ public class TARDISMakeRoomCSV {
     /**
      * Tries to find the specified CSV file. If it doesn't exist, an empty file
      * is created.
+     *
+     * @param filename the file to find/create
+     * @return a File
      */
     public File createFile(String filename) {
         File file = new File(plugin.getDataFolder() + File.separator + "schematics" + File.separator, filename);

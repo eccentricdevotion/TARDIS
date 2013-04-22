@@ -43,7 +43,10 @@ public class TARDISTownyChecker {
     /**
      * Checks whether a location is in 'wilderness'... ie NOT in a Towny town.
      *
+     * @param p the player
      * @param l the location instance to check.
+     * @return true or false depending on whether the player can build in this
+     * location
      */
     public boolean isWilderness(Player p, Location l) {
         boolean bool = true;

@@ -510,6 +510,8 @@ public class TARDIS extends JavaPlugin {
 
     /**
      * Loads the quotes from a text file.
+     *
+     * @return
      */
     public ArrayList<String> quotes() {
         if (quotesfile != null) {
@@ -623,6 +625,8 @@ public class TARDIS extends JavaPlugin {
 
     /**
      * Outputs a message to the console. Requires debug: true in config.yml
+     *
+     * @param o the Object to print to the console
      */
     public void debug(Object o) {
         if (getConfig().getBoolean("debug") == true) {

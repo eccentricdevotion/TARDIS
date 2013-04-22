@@ -49,6 +49,8 @@ public class TARDISCreeperDeathListener implements Listener {
      * Listens for Creeper deaths. If the creeper is killed by a player and the
      * creeper is a charged creeper, then the player receives the configured
      * amount of Artron Energy.
+     *
+     * @param e the death of an entity
      */
     @EventHandler(priority = EventPriority.LOW)
     public void onCreeperDeath(EntityDeathEvent e) {

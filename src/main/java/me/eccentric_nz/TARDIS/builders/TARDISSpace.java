@@ -50,6 +50,7 @@ public class TARDISSpace {
      * it is created.
      *
      * @param name the name of this world
+     * @return a new TARDID World
      */
     public World getTardisWorld(String name) {
         if (tardisWorld == null) {

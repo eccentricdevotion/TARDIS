@@ -42,6 +42,8 @@ public class TARDISWorldBorderChecker {
      * border.
      *
      * @param l the location to check.
+     * @return true or false depending on whether the location is within the
+     * border
      */
     public boolean isInBorder(Location l) {
         boolean bool = true;

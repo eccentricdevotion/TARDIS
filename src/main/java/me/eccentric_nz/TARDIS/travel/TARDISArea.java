@@ -46,6 +46,8 @@ public class TARDISArea {
      * Checks if a location is contained within any TARDIS area.
      *
      * @param l a location object to check.
+     * @return true or false depending on whether the location is within an
+     * existing TARDIS area
      */
     public boolean areaCheckInExisting(Location l) {
         boolean chk = true;
@@ -75,6 +77,8 @@ public class TARDISArea {
      *
      * @param a the TARDIS area to check in.
      * @param l a location object to check.
+     * @return true or false depending on whether the location is in the
+     * specified TARDIS area
      */
     public boolean areaCheckInExile(String a, Location l) {
         boolean chk = true;
@@ -101,6 +105,7 @@ public class TARDISArea {
      *
      * @param p a player to check.
      * @param l a location object to check.
+     * @return true or false depending on whether the player has permission
      */
     public boolean areaCheckLocPlayer(Player p, Location l) {
         boolean chk = false;
@@ -136,6 +141,7 @@ public class TARDISArea {
      * Gets the next available parking spot in a specified TARDIS area.
      *
      * @param a the TARDIS area to look in.
+     * @return the next free Location in an area
      */
     public Location getNextSpot(String a) {
         Location location = null;
@@ -187,6 +193,7 @@ public class TARDISArea {
      * Gets the TARDIS area a player is exiled to.
      *
      * @param p a player to check.
+     * @return the area the player has been exiled to
      */
     public String getExileArea(Player p) {
         Set<PermissionAttachmentInfo> perms = p.getEffectivePermissions();

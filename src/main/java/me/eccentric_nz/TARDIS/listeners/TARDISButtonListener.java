@@ -68,6 +68,8 @@ public class TARDISButtonListener implements Listener {
      * Listens for player interaction with the TARDIS console button. If the
      * button is clicked it will return a random destination based on the
      * settings of the four TARDIS console repeaters.
+     *
+     * @param event the player clicking a block
      */
     @EventHandler(priority = EventPriority.MONITOR)
     public void onButtonInteract(PlayerInteractEvent event) {

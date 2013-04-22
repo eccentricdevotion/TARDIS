@@ -57,6 +57,7 @@ public class TARDISBuilderPoliceBox {
      * @param p an instance of the player who owns the TARDIS.
      * @param rebuild boolean determining whether the Police Box blocks should
      * be remembered in the database for protection purposes.
+     * @param mal boolean determining whether a malfunction has occurred
      */
     public void buildPoliceBox(int id, Location l, TARDISConstants.COMPASS d, boolean c, Player p, boolean rebuild, boolean mal) {
         int plusx, minusx, x, y, plusz, minusz, z, wall_block = 35;

@@ -64,7 +64,10 @@ public class TARDISFarmer {
      *
      * @param l The location to check for animals. This will be the current
      * location of the TARDIS Police Box.
+     * @param d the direction the Police Box is facing
      * @param id The database key of the TARDIS.
+     * @param p the player to award achievements or give spawn eggs to
+     * @return a List of the player's pets (if any are nearby)
      */
     public List<TARDISPet> farmAnimals(Location l, COMPASS d, int id, Player p) {
         List<TARDISPet> old_macd_had_a_pet = new ArrayList<TARDISPet>();

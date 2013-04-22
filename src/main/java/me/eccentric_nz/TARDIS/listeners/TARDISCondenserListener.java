@@ -53,6 +53,8 @@ public class TARDISCondenserListener implements Listener {
      * Listens for player interaction with the TARDIS condenser chest. When the
      * chest is closed, any DIRT, SAND, GRAVEL, COBBLESTONE or ROTTEN FLESH is
      * converted to Artron Energy at a ratio of 1:1.
+     *
+     * @param event a chest closing
      */
     @EventHandler(priority = EventPriority.NORMAL)
     public void onChestClose(InventoryCloseEvent event) {
