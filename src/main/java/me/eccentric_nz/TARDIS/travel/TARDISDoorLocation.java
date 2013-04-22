@@ -18,6 +18,7 @@ package me.eccentric_nz.TARDIS.travel;
 
 import me.eccentric_nz.TARDIS.TARDISConstants.COMPASS;
 import org.bukkit.Location;
+import org.bukkit.World;
 
 /**
  *
@@ -26,6 +27,7 @@ import org.bukkit.Location;
 public class TARDISDoorLocation {
 
     private Location l;
+    private World w;
     private COMPASS d;
 
     public TARDISDoorLocation() {
@@ -37,6 +39,14 @@ public class TARDISDoorLocation {
 
     public void setL(Location l) {
         this.l = l;
+    }
+
+    public World getW() {
+        return w;
+    }
+
+    public void setW(World w) {
+        this.w = w;
     }
 
     public COMPASS getD() {
