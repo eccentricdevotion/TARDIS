@@ -102,9 +102,9 @@ import org.bukkit.plugin.java.JavaPlugin;
  * @author eccentric_nz
  */
 public class TARDIS extends JavaPlugin {
+
     public static TARDIS plugin;
     private static ArrayList<String> quotes = new ArrayList<String>();
-
     public ImprovedOfflinePlayer_api iopHandler;
     TARDISDatabase service = TARDISDatabase.getInstance();
     public TARDISMakeTardisCSV tardisCSV = new TARDISMakeTardisCSV(this);
@@ -135,14 +135,6 @@ public class TARDIS extends JavaPlugin {
     public HashMap<String, short[]> room_dimensions = new HashMap<String, short[]>();
     public TARDISUtils utils = new TARDISUtils(this);
     public TARDISCommands tardisCommand;
-    private TARDISAdminCommands tardisAdminCommand;
-    private TARDISPrefsCommands tardisPrefsCommand;
-    private TARDISTravelCommands tardisTravelCommand;
-    private TARDISAreaCommands tardisAreaCommand;
-    private TARDISBindCommands tardisBindCommand;
-    private TARDISRoomCommands tardisRoomCommand;
-    private TARDISBookCommands tardisBookCommand;
-    private TARDISGravityCommands tardisGravityCommand;
     public TARDISBuilderInner buildI = new TARDISBuilderInner(this);
     public TARDISBuilderPoliceBox buildPB = new TARDISBuilderPoliceBox(this);
     public TARDISDestroyerInner destroyI = new TARDISDestroyerInner(this);
@@ -152,31 +144,6 @@ public class TARDIS extends JavaPlugin {
     public TARDISTownyChecker tychk;
     public TARDISWorldBorderChecker borderchk;
     public TARDISFactionsChecker factionschk;
-    TARDISBlockPlaceListener blockPlaceListener = new TARDISBlockPlaceListener(this);
-    TARDISBlockBreakListener blockBreakListener = new TARDISBlockBreakListener(this);
-    TARDISDoorListener doorListener = new TARDISDoorListener(this);
-    TARDISButtonListener buttonListener = new TARDISButtonListener(this);
-    TARDISSignListener signListener = new TARDISSignListener(this);
-    TARDISAreaListener areaListener = new TARDISAreaListener(this);
-    TARDISUpdateListener updateListener = new TARDISUpdateListener(this);
-    TARDISFireListener protectListener = new TARDISFireListener(this);
-    TARDISBlockDamageListener damageListener = new TARDISBlockDamageListener(this);
-    TARDISExplosionListener explosionListener = new TARDISExplosionListener(this);
-    TARDISEntityGriefListener entityListener = new TARDISEntityGriefListener(this);
-    TARDISLightningListener lightningListener = new TARDISLightningListener(this);
-    TARDISCreeperDeathListener creeperListener = new TARDISCreeperDeathListener(this);
-    TARDISArtronCapacitorListener energyListener = new TARDISArtronCapacitorListener(this);
-    TARDISRoomSeeder seedListener = new TARDISRoomSeeder(this);
-    TARDISJettisonSeeder jettisonListener = new TARDISJettisonSeeder(this);
-    TARDISBindListener bindListener = new TARDISBindListener(this);
-    TARDISHandbrakeListener handbrakeListener = new TARDISHandbrakeListener(this);
-    TARDISGravityWellListener gravityListener = new TARDISGravityWellListener(this);
-    TARDISCondenserListener condenserListener = new TARDISCondenserListener(this);
-    TARDISIceMeltListener meltListener = new TARDISIceMeltListener(this);
-    TARDISChunkListener roomChunkListener = new TARDISChunkListener(this);
-    TARDISScannerListener scannerListener = new TARDISScannerListener(this);
-    TARDISTimeLordDeathListener deathListener = new TARDISTimeLordDeathListener(this);
-    TARDISJoinListener joinListener = new TARDISJoinListener(this);
     public PluginManager pm = Bukkit.getServer().getPluginManager();
     public HashMap<String, String> trackPlayers = new HashMap<String, String>();
     public HashMap<String, Integer> trackBinder = new HashMap<String, Integer>();
@@ -335,31 +302,31 @@ public class TARDIS extends JavaPlugin {
      * TARDIS.
      */
     private void registerListeners() {
-        pm.registerEvents(blockPlaceListener, this);
-        pm.registerEvents(blockBreakListener, this);
-        pm.registerEvents(doorListener, this);
-        pm.registerEvents(buttonListener, this);
-        pm.registerEvents(signListener, this);
-        pm.registerEvents(updateListener, this);
-        pm.registerEvents(areaListener, this);
-        pm.registerEvents(protectListener, this);
-        pm.registerEvents(damageListener, this);
-        pm.registerEvents(explosionListener, this);
-        pm.registerEvents(entityListener, this);
-        pm.registerEvents(lightningListener, this);
-        pm.registerEvents(creeperListener, this);
-        pm.registerEvents(energyListener, this);
-        pm.registerEvents(seedListener, this);
-        pm.registerEvents(jettisonListener, this);
-        pm.registerEvents(bindListener, this);
-        pm.registerEvents(handbrakeListener, this);
-        pm.registerEvents(gravityListener, this);
-        pm.registerEvents(condenserListener, this);
-        pm.registerEvents(meltListener, this);
-        pm.registerEvents(roomChunkListener, this);
-        pm.registerEvents(scannerListener, this);
-        pm.registerEvents(deathListener, this);
-        pm.registerEvents(joinListener, this);
+        pm.registerEvents(new TARDISBlockPlaceListener(this), this);
+        pm.registerEvents(new TARDISBlockBreakListener(this), this);
+        pm.registerEvents(new TARDISDoorListener(this), this);
+        pm.registerEvents(new TARDISButtonListener(this), this);
+        pm.registerEvents(new TARDISSignListener(this), this);
+        pm.registerEvents(new TARDISUpdateListener(this), this);
+        pm.registerEvents(new TARDISAreaListener(this), this);
+        pm.registerEvents(new TARDISFireListener(this), this);
+        pm.registerEvents(new TARDISBlockDamageListener(this), this);
+        pm.registerEvents(new TARDISExplosionListener(this), this);
+        pm.registerEvents(new TARDISEntityGriefListener(this), this);
+        pm.registerEvents(new TARDISLightningListener(this), this);
+        pm.registerEvents(new TARDISCreeperDeathListener(this), this);
+        pm.registerEvents(new TARDISArtronCapacitorListener(this), this);
+        pm.registerEvents(new TARDISRoomSeeder(this), this);
+        pm.registerEvents(new TARDISJettisonSeeder(this), this);
+        pm.registerEvents(new TARDISBindListener(this), this);
+        pm.registerEvents(new TARDISHandbrakeListener(this), this);
+        pm.registerEvents(new TARDISGravityWellListener(this), this);
+        pm.registerEvents(new TARDISCondenserListener(this), this);
+        pm.registerEvents(new TARDISIceMeltListener(this), this);
+        pm.registerEvents(new TARDISChunkListener(this), this);
+        pm.registerEvents(new TARDISScannerListener(this), this);
+        pm.registerEvents(new TARDISTimeLordDeathListener(this), this);
+        pm.registerEvents(new TARDISJoinListener(this), this);
     }
 
     /**
@@ -367,23 +334,15 @@ public class TARDIS extends JavaPlugin {
      */
     private void loadCommands() {
         tardisCommand = new TARDISCommands(this);
-        tardisAdminCommand = new TARDISAdminCommands(this);
-        tardisPrefsCommand = new TARDISPrefsCommands(this);
-        tardisTravelCommand = new TARDISTravelCommands(this);
-        tardisAreaCommand = new TARDISAreaCommands(this);
-        tardisBindCommand = new TARDISBindCommands(this);
-        tardisGravityCommand = new TARDISGravityCommands(this);
-        tardisRoomCommand = new TARDISRoomCommands(this);
-        tardisBookCommand = new TARDISBookCommands(this);
         getCommand("tardis").setExecutor(tardisCommand);
-        getCommand("tardisadmin").setExecutor(tardisAdminCommand);
-        getCommand("tardisprefs").setExecutor(tardisPrefsCommand);
-        getCommand("tardistravel").setExecutor(tardisTravelCommand);
-        getCommand("tardisarea").setExecutor(tardisAreaCommand);
-        getCommand("tardisbind").setExecutor(tardisBindCommand);
-        getCommand("tardisgravity").setExecutor(tardisGravityCommand);
-        getCommand("tardisroom").setExecutor(tardisRoomCommand);
-        getCommand("tardisbook").setExecutor(tardisBookCommand);
+        getCommand("tardisadmin").setExecutor(new TARDISAdminCommands(this));
+        getCommand("tardisprefs").setExecutor(new TARDISPrefsCommands(this));
+        getCommand("tardistravel").setExecutor(new TARDISTravelCommands(this));
+        getCommand("tardisarea").setExecutor(new TARDISAreaCommands(this));
+        getCommand("tardisbind").setExecutor(new TARDISBindCommands(this));
+        getCommand("tardisgravity").setExecutor(new TARDISGravityCommands(this));
+        getCommand("tardisroom").setExecutor(new TARDISRoomCommands(this));
+        getCommand("tardisbook").setExecutor(new TARDISBookCommands(this));
     }
 
     /**
