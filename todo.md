@@ -1,14 +1,17 @@
 # TODO
  
 ## Current version `2.2-release`
-1. Add videos for custom rooms/books/achievements/other new stuff
+1. Add video for books/achievements
 
-## Future version `2.3+`
+## Next version `2.3-beta-1`
 1. Allow companions to enter and exit the tardis at will (and steal it).
 2. Add isomorphic controls preference so that only the Time Lord of a TARDIS can pilot it
 3. Check what happens when companions steal the TARDIS
 4. Multiple controls spaces i.e. functional secondary consoles
 5. Add a 'back door'
+
+## Future version `2.4+`
+?
 
 ## Minecraft API when available `3.0?`
 1. Recreate everything with the new API :)
