@@ -95,7 +95,7 @@ public class TARDISConfiguration {
         boolOptions.put("rooms.VAULT.enabled", true);
         boolOptions.put("rooms.WOOD.enabled", true);
         boolOptions.put("rooms.WORKSHOP.enabled", true);
-        boolOptions.put("rooms_require_blocks", true);
+        boolOptions.put("rooms_require_blocks", false);
         // integer
         intOptions.put("autonomous", 100);
         intOptions.put("border_radius", 64);
