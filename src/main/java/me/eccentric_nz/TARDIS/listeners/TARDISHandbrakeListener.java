@@ -62,6 +62,8 @@ public class TARDISHandbrakeListener implements Listener {
      * Listens for player interaction with the handbrake (lever) on the TARDIS
      * console. If the button is right-clicked the handbrake is set off, if
      * right-clicked while sneaking it is set on.
+     *
+     * @param event the player clicking the handbrake
      */
     @EventHandler(priority = EventPriority.MONITOR)
     public void onInteract(PlayerInteractEvent event) {
@@ -91,7 +93,7 @@ public class TARDISHandbrakeListener implements Listener {
                     String save = rs.getSave();
                     String cl = rs.getCurrent();
                     String owner = rs.getOwner();
-                    Location exit = plugin.utils.getLocationFromDB(save, 0, 0);
+                    Location exit = null;
                     boolean error = false;
                     if (!plugin.tardisMaterialising.contains(Integer.valueOf(id))) {
                         Action action = event.getAction();
@@ -136,36 +138,11 @@ public class TARDISHandbrakeListener implements Listener {
                                         }
                                     }
                                     if (!malfunction) {
+                                        exit = plugin.utils.getLocationFromDB(save, 0, 0);
                                         // Changes the lever to off.
                                         lever.setPowered(false);
                                         state.setData(lever);
                                         state.update();
-                                    }
-                                    // Removes Blue Box and loads chunk if it unloaded somehow.
-                                    if (!exit.getWorld().isChunkLoaded(exit.getChunk())) {
-                                        exit.getWorld().loadChunk(exit.getChunk());
-                                    }
-                                    exit.getWorld().refreshChunk(exit.getChunk().getX(), exit.getChunk().getZ());
-                                    Location l = plugin.utils.getLocationFromDB(cl, 0, 0);
-                                    if (!rs.isHidden()) {
-                                        plugin.destroyPB.destroyTorch(l);
-                                        plugin.destroyPB.destroySign(l, d);
-                                        plugin.destroyPB.destroyPoliceBox(l, d, id, false);
-                                    }
-                                    plugin.buildPB.buildPoliceBox(id, exit, d, cham, player, false, malfunction);
-                                    Chunk oldChunk = l.getChunk();
-                                    if (plugin.tardisChunkList.contains(oldChunk)) {
-                                        plugin.tardisChunkList.remove(oldChunk);
-                                    }
-                                    set.put("current", save);
-                                    long now;
-                                    if (player.hasPermission("tardis.prune.bypass")) {
-                                        now = Long.MAX_VALUE;
-                                    } else {
-                                        now = System.currentTimeMillis();
-                                    }
-                                    set.put("lastuse", now);
-                                    if (!malfunction) {
                                         // Sets database and sends the player/world message/sounds.
                                         set.put("handbrake_on", 0);
                                         player.sendMessage(plugin.pluginName + "Handbrake OFF! Entering the time vortex...");
@@ -180,10 +157,39 @@ public class TARDISHandbrakeListener implements Listener {
                                             }
                                         }
                                     }
-                                    if (plugin.ayml.getBoolean("travel.enabled")) {
-                                        if (l.getWorld().equals(exit.getWorld())) {
-                                            dist = (int) l.distance(exit);
+                                    if (exit != null) {
+                                        // Removes Blue Box and loads chunk if it unloaded somehow.
+                                        if (!exit.getWorld().isChunkLoaded(exit.getChunk())) {
+                                            exit.getWorld().loadChunk(exit.getChunk());
                                         }
+                                        exit.getWorld().refreshChunk(exit.getChunk().getX(), exit.getChunk().getZ());
+                                        Location l = plugin.utils.getLocationFromDB(cl, 0, 0);
+                                        if (!rs.isHidden()) {
+                                            plugin.destroyPB.destroyTorch(l);
+                                            plugin.destroyPB.destroySign(l, d);
+                                            plugin.destroyPB.destroyPoliceBox(l, d, id, false);
+                                        }
+                                        plugin.buildPB.buildPoliceBox(id, exit, d, cham, player, false, malfunction);
+                                        Chunk oldChunk = l.getChunk();
+                                        if (plugin.tardisChunkList.contains(oldChunk)) {
+                                            plugin.tardisChunkList.remove(oldChunk);
+                                        }
+                                        set.put("current", save);
+                                        long now;
+                                        if (player.hasPermission("tardis.prune.bypass")) {
+                                            now = Long.MAX_VALUE;
+                                        } else {
+                                            now = System.currentTimeMillis();
+                                        }
+                                        set.put("lastuse", now);
+                                        if (plugin.ayml.getBoolean("travel.enabled")) {
+                                            if (l.getWorld().equals(exit.getWorld())) {
+                                                dist = (int) l.distance(exit);
+                                            }
+                                        }
+                                    } else {
+                                        player.sendMessage(plugin.pluginName + "There was a problem finding the exit!");
+                                        error = true;
                                     }
                                 } else {
                                     player.sendMessage(plugin.pluginName + "You need to set a destination first!");
@@ -202,7 +208,7 @@ public class TARDISHandbrakeListener implements Listener {
                                 state.update();
                                 //Check if its at a recharge point
                                 TARDISArtronLevels tal = new TARDISArtronLevels(plugin);
-                                tal.recharge(id, player);
+                                tal.recharge(id);
                                 //Remove energy from TARDIS and sets database
                                 set.put("handbrake_on", 1);
                                 player.sendMessage(plugin.pluginName + "Handbrake ON! Nice parking...");
