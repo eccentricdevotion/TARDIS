@@ -167,7 +167,7 @@ public class TARDISFarmer {
             ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
             if (rs.resultSet()) {
                 String farm = rs.getFarm();
-                if (!farm.equals("")) {
+                if (!farm.isEmpty()) {
                     // get location of farm room
                     String[] data = farm.split(":");
                     World world = plugin.getServer().getWorld(data[0]);

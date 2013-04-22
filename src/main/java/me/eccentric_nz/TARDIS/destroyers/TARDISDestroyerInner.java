@@ -56,7 +56,7 @@ public class TARDISDestroyerInner {
      * be 0 (AIR) or 1 (STONE).
      * @param p an instance of the player who owns the TARDIS.
      */
-    public final void destroyInner(TARDISConstants.SCHEMATIC schm, int id, World w, int i, String p) {
+    public void destroyInner(TARDISConstants.SCHEMATIC schm, int id, World w, int i, String p) {
         // get dimensions
         short[] d;
         switch (schm) {

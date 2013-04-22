@@ -115,7 +115,7 @@ public class TARDISArtronCapacitorListener implements Listener {
                         boolean hasPrefs = false;
                         if (rsp.resultSet()) {
                             hasPrefs = true;
-                            key = (!rsp.getKey().equals("")) ? rsp.getKey() : plugin.getConfig().getString("key");
+                            key = (!rsp.getKey().isEmpty()) ? rsp.getKey() : plugin.getConfig().getString("key");
                         } else {
                             key = plugin.getConfig().getString("key");
                         }
@@ -139,7 +139,7 @@ public class TARDISArtronCapacitorListener implements Listener {
                             if (!rs.isTardis_init()) {
                                 // get location from database
                                 String creeper = rs.getCreeper();
-                                if (!creeper.equals("") && !creeper.equals(":")) {
+                                if (!creeper.isEmpty() && !creeper.equals(":")) {
                                     String[] creeperData = creeper.split(":");
                                     World w = b.getWorld();
                                     float cx = 0, cy = 0, cz = 0;

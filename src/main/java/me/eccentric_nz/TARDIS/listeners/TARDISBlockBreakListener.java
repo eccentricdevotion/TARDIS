@@ -67,6 +67,7 @@ public class TARDISBlockBreakListener implements Listener {
                 long timeout = plugin.getConfig().getLong("confirm_timeout");
                 player.sendMessage(plugin.pluginName + "Are you sure you want to delete the TARDIS? Type " + ChatColor.AQUA + "/tardis exterminate" + ChatColor.RESET + " within " + timeout + " seconds to proceed.");
                 plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
+                    @Override
                     public void run() {
                         plugin.trackExterminate.remove(playerNameStr);
                     }

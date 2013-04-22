@@ -150,7 +150,7 @@ public class TARDISInstaPoliceBox {
         }
         ps.put("police_box", 1);
         qf.doInsert("blocks", ps);
-        if (!loc.equals("")) {
+        if (!loc.isEmpty()) {
             plugin.protectBlockMap.put(loc, tid);
         }
         // should insert the door when tardis is first made, and then update location there after!

@@ -25,10 +25,6 @@ public class Version implements Comparable<Version> {
 
     private String version;
 
-    public final String get() {
-        return this.version;
-    }
-
     public Version(String version) {
         if (version == null) {
             throw new IllegalArgumentException("Version can not be null");
@@ -37,6 +33,10 @@ public class Version implements Comparable<Version> {
             throw new IllegalArgumentException("Invalid version format");
         }
         this.version = version;
+    }
+
+    public String get() {
+        return this.version;
     }
 
     @Override

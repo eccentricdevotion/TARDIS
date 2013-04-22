@@ -38,7 +38,7 @@ package org.jnbt;
  * @author Graham Edgecombe
  *
  */
-public final class NBTUtils {
+public class NBTUtils {
 	
 	/**
 	 * Gets the type name of a tag.

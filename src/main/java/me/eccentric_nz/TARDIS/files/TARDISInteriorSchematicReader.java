@@ -41,15 +41,15 @@ import org.jnbt.Tag;
  */
 public class TARDISInteriorSchematicReader {
 
+    private static Tag getChildTag(Map<String, Tag> items, String key, Class<? extends Tag> expected) {
+        Tag tag = items.get(key);
+        return tag;
+    }
+
     private TARDIS plugin;
 
     public TARDISInteriorSchematicReader(TARDIS plugin) {
         this.plugin = plugin;
-    }
-
-    private static Tag getChildTag(Map<String, Tag> items, String key, Class<? extends Tag> expected) {
-        Tag tag = items.get(key);
-        return tag;
     }
 
     /**

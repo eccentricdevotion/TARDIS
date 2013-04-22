@@ -42,6 +42,11 @@ import org.jnbt.Tag;
  */
 public class TARDISRoomSchematicReader {
 
+    private static Tag getChildTag(Map<String, Tag> items, String key, Class<? extends Tag> expected) {
+        Tag tag = items.get(key);
+        return tag;
+    }
+
     private TARDIS plugin;
     private HashMap<Integer, Integer> blockConversion = new HashMap<Integer, Integer>();
     private List<Byte> ignoreBlocks = Arrays.asList(new Byte[]{0, 14, 19, 52, 79});
@@ -75,11 +80,6 @@ public class TARDISRoomSchematicReader {
         blockConversion.put(141, 391); // carrot plant -> carrot
         blockConversion.put(142, 392); // potato plant -> potato
         blockConversion.put(150, 149); // restone comparator on -> redstone comparator off
-    }
-
-    private static Tag getChildTag(Map<String, Tag> items, String key, Class<? extends Tag> expected) {
-        Tag tag = items.get(key);
-        return tag;
     }
 
     /**

@@ -72,7 +72,7 @@ public class TARDISJettisonSeeder implements Listener {
             where.put("player", playerNameStr);
             ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, where);
             if (rsp.resultSet()) {
-                key = (!rsp.getKey().equals("")) ? rsp.getKey() : plugin.getConfig().getString("key");
+                key = (!rsp.getKey().isEmpty()) ? rsp.getKey() : plugin.getConfig().getString("key");
             } else {
                 key = plugin.getConfig().getString("key");
             }

@@ -34,12 +34,12 @@ import me.eccentric_nz.TARDIS.TARDIS;
 public class TARDISDatabase {
 
     private static TARDISDatabase instance = new TARDISDatabase();
-    public Connection connection = null;
-    public Statement statement = null;
 
     public static synchronized TARDISDatabase getInstance() {
         return instance;
     }
+    public Connection connection = null;
+    public Statement statement = null;
 
     public void setConnection(String path) throws Exception {
         Class.forName("org.sqlite.JDBC");

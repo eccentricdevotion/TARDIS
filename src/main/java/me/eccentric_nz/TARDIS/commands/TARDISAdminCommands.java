@@ -465,16 +465,16 @@ public class TARDISAdminCommands implements CommandExecutor {
                             if (!innerD.equals(d)) {
                                 switch (d) {
                                     case NORTH:
-                                        yaw = yaw + tdl.adjustYaw[0][innerD.ordinal()];
+                                        yaw += tdl.adjustYaw[0][innerD.ordinal()];
                                         break;
                                     case WEST:
-                                        yaw = yaw + tdl.adjustYaw[1][innerD.ordinal()];
+                                        yaw += tdl.adjustYaw[1][innerD.ordinal()];
                                         break;
                                     case SOUTH:
-                                        yaw = yaw + tdl.adjustYaw[2][innerD.ordinal()];
+                                        yaw += tdl.adjustYaw[2][innerD.ordinal()];
                                         break;
                                     case EAST:
-                                        yaw = yaw + tdl.adjustYaw[3][innerD.ordinal()];
+                                        yaw += tdl.adjustYaw[3][innerD.ordinal()];
                                         break;
                                 }
                             }

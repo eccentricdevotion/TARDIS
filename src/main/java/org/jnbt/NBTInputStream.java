@@ -54,7 +54,7 @@ import java.util.zip.GZIPInputStream;
  * @author Graham Edgecombe
  *
  */
-public final class NBTInputStream implements Closeable {
+public class NBTInputStream implements Closeable {
 	
 	/**
 	 * The data input stream.

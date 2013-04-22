@@ -125,7 +125,7 @@ public class TARDISBindCommands implements CommandExecutor {
                     sender.sendMessage(plugin.pluginName + "Could not find a save with that name! Try using " + ChatColor.AQUA + "/tardis list saves" + ChatColor.RESET + " first.");
                     return true;
                 }
-                if (rsd.getBind().equals("")) {
+                if (rsd.getBind().isEmpty()) {
                     sender.sendMessage(plugin.pluginName + "There is no button bound to that save name!");
                     return true;
                 }

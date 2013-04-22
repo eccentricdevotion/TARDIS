@@ -39,7 +39,7 @@ package org.jnbt;
  * @author Graham Edgecombe
  *
  */
-public final class ByteArrayTag extends Tag {
+public class ByteArrayTag extends Tag {
 
     /**
      * The value.
@@ -74,7 +74,7 @@ public final class ByteArrayTag extends Tag {
         }
         String name = getName();
         String append = "";
-        if (name != null && !name.equals("")) {
+        if (name != null && !name.isEmpty()) {
             append = "(\"" + this.getName() + "\")";
         }
         return "TAG_Byte_Array" + append + ": " + hex.toString();

@@ -42,7 +42,7 @@ import java.util.Map;
  * @author Graham Edgecombe
  *
  */
-public final class CompoundTag extends Tag {
+public class CompoundTag extends Tag {
 
     /**
      * The value.
@@ -69,7 +69,7 @@ public final class CompoundTag extends Tag {
     public String toString() {
         String name = getName();
         String append = "";
-        if (name != null && !name.equals("")) {
+        if (name != null && !name.isEmpty()) {
             append = "(\"" + this.getName() + "\")";
         }
         StringBuilder bldr = new StringBuilder();

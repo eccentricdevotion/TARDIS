@@ -23,7 +23,7 @@ package me.eccentric_nz.TARDIS.utility;
  *
  * @author eccentric_nz
  */
-public class TARDISMaterials {
+public interface TARDISMaterials {
 
     public static final String[] MATERIAL_LIST = {
         "ACTIVATOR_RAIL",

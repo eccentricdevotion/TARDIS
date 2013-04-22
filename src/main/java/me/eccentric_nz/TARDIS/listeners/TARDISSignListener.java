@@ -141,7 +141,7 @@ public class TARDISSignListener implements Listener {
                                     String home = "";
                                     // cycle through saves
                                     for (HashMap<String, String> map : data) {
-                                        if (home.equals("")) {
+                                        if (home.isEmpty()) {
                                             home = "Home:" + rs.getHome();
                                         }
                                         if (map.get("type").equals("0")) {

@@ -38,7 +38,7 @@ package org.jnbt;
  * @author Graham Edgecombe
  *
  */
-public final class IntTag extends Tag {
+public class IntTag extends Tag {
 
 	/**
 	 * The value.
@@ -64,7 +64,7 @@ public final class IntTag extends Tag {
 	public String toString() {
 		String name = getName();
 		String append = "";
-		if(name != null && !name.equals("")) {
+		if(name != null && !name.isEmpty()) {
 			append = "(\"" + this.getName() + "\")";
 		}
 		return "TAG_Int" + append + ": " + value;

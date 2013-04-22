@@ -90,7 +90,7 @@ public class TARDISDestroyerPoliceBox {
         QueryFactory qf = new QueryFactory(plugin);
         if (rs.resultSet()) {
             String replacedData = rs.getReplaced();
-            if (!replacedData.equals("")) {
+            if (!replacedData.isEmpty()) {
                 String[] parts = replacedData.split(":");
                 World rw = plugin.getServer().getWorld(parts[0]);
                 int rx, ry, rz, rID;
@@ -190,7 +190,7 @@ public class TARDISDestroyerPoliceBox {
     }
 
     public void destroyPlatform(String plat, int id) {
-        if (!plat.equals("")) {
+        if (!plat.isEmpty()) {
             int px = 0, py = 0, pz = 0;
             String[] str_blocks = plat.split("~");
             for (String sb : str_blocks) {

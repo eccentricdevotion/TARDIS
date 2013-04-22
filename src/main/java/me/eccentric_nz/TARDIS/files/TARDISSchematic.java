@@ -73,4 +73,7 @@ public class TARDISSchematic {
         }
         return blocks;
     }
+
+    private TARDISSchematic() {
+    }
 }

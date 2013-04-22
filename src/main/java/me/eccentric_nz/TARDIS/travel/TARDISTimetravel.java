@@ -41,6 +41,7 @@ import org.bukkit.entity.Player;
  * @author eccentric_nz
  */
 public class TARDISTimetravel {
+    private static int[] startLoc = new int[6];
 
     private Location dest;
     private TARDIS plugin;
@@ -133,7 +134,7 @@ public class TARDISTimetravel {
             if (i == rw) {
                 randworld = wobj;
             }
-            i = i + 1;
+            i += 1;
         }
         if (randworld != null && randworld.getEnvironment().equals(Environment.NETHER)) {
             while (danger == true) {
@@ -149,8 +150,8 @@ public class TARDISTimetravel {
             while (danger == true) {
                 wherex = rand.nextInt(240);
                 wherez = rand.nextInt(240);
-                wherex = wherex - 120;
-                wherez = wherez - 120;
+                wherex -= 120;
+                wherez -= 120;
                 // get the spawn point
                 Location endSpawn = randworld.getSpawnLocation();
                 highest = randworld.getHighestBlockYAt(endSpawn.getBlockX() + wherex, endSpawn.getBlockZ() + wherez);
@@ -363,7 +364,6 @@ public class TARDISTimetravel {
         }
         return safe;
     }
-    private static int[] startLoc = new int[6];
 
     /**
      * Gets the starting location for safe location checking.
@@ -477,13 +477,13 @@ public class TARDISTimetravel {
 
         // use multiplier based on position of third (y) repeater
         if (ry >= 4 && ry <= 7) {
-            wherex = wherex * 2;
+            wherex *= 2;
         }
         if (ry >= 8 && ry <= 11) {
-            wherex = wherex * 3;
+            wherex *= 3;
         }
         if (ry >= 12 && ry <= 15) {
-            wherex = wherex * 4;
+            wherex *= 4;
         }
         return wherex;
     }
@@ -523,13 +523,13 @@ public class TARDISTimetravel {
 
         // use multiplier based on position of third (y) repeater
         if (ry >= 4 && ry <= 7) {
-            wherez = wherez * 2;
+            wherez *= 2;
         }
         if (ry >= 8 && ry <= 11) {
-            wherez = wherez * 3;
+            wherez *= 3;
         }
         if (ry >= 12 && ry <= 15) {
-            wherez = wherez * 4;
+            wherez *= 4;
         }
         return wherez;
     }

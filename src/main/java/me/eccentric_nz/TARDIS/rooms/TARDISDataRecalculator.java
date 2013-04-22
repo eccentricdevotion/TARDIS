@@ -161,4 +161,7 @@ public class TARDISDataRecalculator {
         }
         return data;
     }
+
+    private TARDISDataRecalculator() {
+    }
 }

@@ -16,11 +16,11 @@
  */
 package me.eccentric_nz.TARDIS;
 
-import me.eccentric_nz.TARDIS.database.TARDISDatabase;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import me.eccentric_nz.TARDIS.database.TARDISDatabase;
 import org.bukkit.ChatColor;
 
 /**
@@ -58,11 +58,6 @@ public class TARDISConstants {
     public static final String SCHEMATIC_VAULT = "vault.schematic";
     public static final String SCHEMATIC_WOOD = "wood.schematic";
     public static final String SCHEMATIC_WORKSHOP = "workshop.schematic";
-
-    public enum SCHEMATIC {
-
-        ANTIGRAVITY, ARBORETUM, BAKER, BEDROOM, BIGGER, BUDGET, CROSS, DELUXE, ELEVENTH, EMPTY, FARM, GRAVITY, GREENHOUSE, HARMONY, KITCHEN, LIBRARY, LONG, MUSHROOM, PASSAGE, POOL, REDSTONE, VAULT, WOOD, WORKSHOP;
-    }
     public static final String CONFIG_FILE_NAME = "config.yml";
     public static final String QUOTES_FILE_NAME = "quotes.txt";
     // chameleon blocks
@@ -79,21 +74,6 @@ public class TARDISConstants {
     // messages
     public static final String INSTRUCTIONS = "Your TARDIS is ready!\nRight-click the TARDIS door with your TARDIS key (by default a STICK) to enter.\nTo time travel, adjust the repeaters on the console. For more help, type " + ChatColor.GOLD + "/TARDIS help timetravel" + ChatColor.RESET + " in chat to see more instructions.";
     public static final String COMMANDS = ChatColor.AQUA + "TARDIS help\n" + ChatColor.RESET + "Type " + ChatColor.GOLD + "/TARDIS help <command>" + ChatColor.RESET + " to see more details about a command.\nType " + ChatColor.GOLD + "/TARDIS help create|delete|timetravel" + ChatColor.RESET + " for instructions on creating and removing a TARDIS and how to time travel.\nCommands\n" + ChatColor.GOLD + "/TARDIS list" + ChatColor.RESET + " - list saved time travel destinations, TARDIS companions, Artron Energy Rechargers or admin defined areas.\n" + ChatColor.GOLD + "/TARDIS save [name]" + ChatColor.RESET + " - save the current location of the Police Box.\n" + ChatColor.GOLD + "/TARDIS removesave [name]" + ChatColor.RESET + " - delete a saved destination.\n" + ChatColor.GOLD + "/TARDIS find" + ChatColor.RESET + " - show the co-ordinates of a lost TARDIS.\n" + ChatColor.GOLD + "/TARDIS add" + ChatColor.RESET + " - add a TARDIS companion.\n" + ChatColor.GOLD + "/TARDIS remove" + ChatColor.RESET + " - remove a TARDIS companion.\n" + ChatColor.GOLD + "/TARDIS update" + ChatColor.RESET + " - update the special block positions in a modified TARDIS interior.\n" + ChatColor.GOLD + "/TARDIS bind" + ChatColor.RESET + " - bind saved locations and some commands to blocks in the TARDIS interior.\n" + ChatColor.GOLD + "/tardistravel" + ChatColor.RESET + " - set the time travel destination to co-ordinates, a player's location, a saved destination, or to an admin defined area.\n" + ChatColor.GOLD + "/TARDIS rebuild" + ChatColor.RESET + " - rebuild a busted TARDIS Police Box.\n" + ChatColor.GOLD + "/TARDIS chameleon" + ChatColor.RESET + " - turn the Chameleon Circuit on or off.\n" + ChatColor.GOLD + "/tardisprefs sfx" + ChatColor.RESET + " - turn TARDIS sound effects on or off.\n" + ChatColor.GOLD + "/tardisprefs platform" + ChatColor.RESET + " - turn the TARDIS safety platform on or off.\n" + ChatColor.GOLD + "/tardisprefs quotes" + ChatColor.RESET + " - turn TARDIS quotes on or off.\n" + ChatColor.GOLD + "/TARDIS setdest" + ChatColor.RESET + " - save the block you are looking at as a destination.\n" + ChatColor.GOLD + "/TARDIS home" + ChatColor.RESET + " - change saved TARDIS home location to the block you are looking at.\n" + ChatColor.GOLD + "/TARDIS hide" + ChatColor.RESET + " - hide the TARDIS police box - use /tardis rebuild to bring it back.\n" + ChatColor.GOLD + "/TARDIS direction" + ChatColor.RESET + " - change the direction the TARDIS police box is facing.\n" + ChatColor.GOLD + "/TARDIS comehere" + ChatColor.RESET + " - Make the TARDIS come to the block you are looking at.\n" + ChatColor.GOLD + "/TARDIS namekey" + ChatColor.RESET + " - rename the TARDIS key.\n" + ChatColor.GOLD + "/TARDIS version" + ChatColor.RESET + " - check the version of the TARDIS plugin and CraftBukkit on the server.\n" + ChatColor.GOLD + "/TARDIS room [type]" + ChatColor.RESET + " - Add rooms to the TARDIS.";
-
-    public enum COMPASS {
-
-        NORTH, WEST, SOUTH, EAST;
-    }
-
-    public enum ROOM {
-
-        ANTIGRAVITY, ARBORETUM, BAKER, BEDROOM, CROSS, EMPTY, FARM, GRAVITY, GREENHOUSE, HARMONY, KITCHEN, LIBRARY, LONG, MUSHROOM, PASSAGE, POOL, VAULT, WOOD, WORKSHOP;
-    }
-
-    public enum CMDS {
-
-        CREATE, DELETE, TIMETRAVEL, LIST, REMOVESAVE, SAVE, FIND, ADD, ADMIN, UPDATE, TRAVEL, REBUILD, CHAMELEON, SFX, PLATFORM, SETDEST, HOME, HIDE, AREA, VERSION, ROOM, ARTRON, BIND;
-    }
     public static final String COMMAND_CREATE = ChatColor.AQUA + "Creating a TARDIS\n" + ChatColor.RESET + "You create a TARDIS by placing a " + ChatColor.GOLD + "specific pattern of blocks." + ChatColor.RESET + "\nYou will need to have an IRON, GOLD, REDSTONE, EMERALD or DIAMOND BLOCK, a LAPIS BLOCK, and a redstone torch in your inventory.\nYou place the blocks where you want the TARDIS to be, in the following order:\nBottom - IRON, GOLD, REDSTONE, EMERALD or DIAMOND BLOCK, middle - LAPIS BLOCK, top - REDSTONE TORCH\nThe TARDIS takes up a 3 x 3 x 4 area (w x d x h), so keep this in mind.\nTo enter the TARDIS, right-click the door with your TARDIS key (by default a STICK).";
     public static final String COMMAND_DELETE = ChatColor.AQUA + "Removing a TARDIS\n" + ChatColor.RESET + "To remove your TARDIS, " + ChatColor.GOLD + "break the 'POLICE BOX' wall sign" + ChatColor.RESET + " on the front of the TARDIS.\n" + ChatColor.RED + "WARNING:" + ChatColor.RESET + " You will lose any items you have stored in your TARDIS chest, and any saved time travel destinations.";
     public static final String COMMAND_TIMETRAVEL = ChatColor.AQUA + "Time travelling in the TARDIS\n" + ChatColor.RESET + "You can time travel in the TARDIS by changing the delay settings of the redstone repeaters on the TARDIS console.\nThe repeater closest to the door controls the kind of world you will travel to - the 1-tick delay setting selects a random world type, the 2 tick delay setting selects NORMAL worlds,\nthe 3-tick setting selects NETHER worlds, and the 4-tick setting selects THE END worlds. After changing the repeater settings, you then click the stone button at the rear of the TARDIS console.\nWhen exiting the TARDIS (right-click the door with your TARDIS key - by default a STICK) you will time travel to a random destination.";
@@ -158,5 +138,25 @@ public class TARDISConstants {
             map.put(keys[i], values[i]);
         }
         return map;
+    }
+
+    public enum SCHEMATIC {
+
+        ANTIGRAVITY, ARBORETUM, BAKER, BEDROOM, BIGGER, BUDGET, CROSS, DELUXE, ELEVENTH, EMPTY, FARM, GRAVITY, GREENHOUSE, HARMONY, KITCHEN, LIBRARY, LONG, MUSHROOM, PASSAGE, POOL, REDSTONE, VAULT, WOOD, WORKSHOP;
+    }
+
+    public enum COMPASS {
+
+        NORTH, WEST, SOUTH, EAST;
+    }
+
+    public enum ROOM {
+
+        ANTIGRAVITY, ARBORETUM, BAKER, BEDROOM, CROSS, EMPTY, FARM, GRAVITY, GREENHOUSE, HARMONY, KITCHEN, LIBRARY, LONG, MUSHROOM, PASSAGE, POOL, VAULT, WOOD, WORKSHOP;
+    }
+
+    public enum CMDS {
+
+        CREATE, DELETE, TIMETRAVEL, LIST, REMOVESAVE, SAVE, FIND, ADD, ADMIN, UPDATE, TRAVEL, REBUILD, CHAMELEON, SFX, PLATFORM, SETDEST, HOME, HIDE, AREA, VERSION, ROOM, ARTRON, BIND;
     }
 }

@@ -77,6 +77,7 @@ public class TARDISDoorListener implements Listener {
     Version preIMversion = new Version("1.4.5");
     Version SUBversion;
     Version preSUBversion = new Version("1.0");
+    Random r = new Random();
 
     public TARDISDoorListener(TARDIS plugin) {
         this.plugin = plugin;
@@ -111,11 +112,13 @@ public class TARDISDoorListener implements Listener {
      * @param event a player clicking a block
      */
     @EventHandler(priority = EventPriority.MONITOR)
-    public void onDoorInteract(PlayerInteractEvent event) {
+public void onDoorInteract(PlayerInteractEvent event) {
         QueryFactory qf = new QueryFactory(plugin);
         final Player player = event.getPlayer();
         final String playerNameStr = player.getName();
-        int cx = 0, cy = 0, cz = 0;
+        int cx = 0;
+        int cy = 0;
+        int cz = 0;
         Block block = event.getClickedBlock();
         if (block != null) {
             Material blockType = block.getType();
@@ -144,7 +147,7 @@ public class TARDISDoorListener implements Listener {
                     boolean hasPrefs = false;
                     if (rsp.resultSet()) {
                         hasPrefs = true;
-                        key = (!rsp.getKey().equals("")) ? rsp.getKey() : plugin.getConfig().getString("key");
+                        key = (!rsp.getKey().isEmpty()) ? rsp.getKey() : plugin.getConfig().getString("key");
                     } else {
                         key = plugin.getConfig().getString("key");
                     }
@@ -152,7 +155,7 @@ public class TARDISDoorListener implements Listener {
                     HashMap<String, Object> where = new HashMap<String, Object>();
                     where.put("door_location", doorloc);
                     ResultSetDoors rsd = new ResultSetDoors(plugin, where, false);
-                    if ((rsd.resultSet())) {
+                    if (rsd.resultSet()) {
                         if (material == m) {
                             TARDISConstants.COMPASS dd = rsd.getDoor_direction();
                             int doortype = rsd.getDoor_type();
@@ -253,16 +256,16 @@ public class TARDISDoorListener implements Listener {
                                             if (!dd.equals(d)) {
                                                 switch (dd) {
                                                     case NORTH:
-                                                        yaw = yaw + adjustYaw[0][d.ordinal()];
+                                                        yaw += adjustYaw[0][d.ordinal()];
                                                         break;
                                                     case WEST:
-                                                        yaw = yaw + adjustYaw[1][d.ordinal()];
+                                                        yaw += adjustYaw[1][d.ordinal()];
                                                         break;
                                                     case SOUTH:
-                                                        yaw = yaw + adjustYaw[2][d.ordinal()];
+                                                        yaw += adjustYaw[2][d.ordinal()];
                                                         break;
                                                     case EAST:
-                                                        yaw = yaw + adjustYaw[3][d.ordinal()];
+                                                        yaw += adjustYaw[3][d.ordinal()];
                                                         break;
                                                 }
                                             }
@@ -321,7 +324,7 @@ public class TARDISDoorListener implements Listener {
                                         boolean chkCompanion = false;
                                         if (!playerNameStr.equals(tl)) {
                                             if (plugin.getServer().getPlayer(tl) != null) {
-                                                if (companions != null && !companions.equals("")) {
+                                                if (companions != null && !companions.isEmpty()) {
                                                     // is the timelord in the TARDIS?
                                                     HashMap<String, Object> whert = new HashMap<String, Object>();
                                                     whert.put("tardis_id", id);
@@ -405,16 +408,16 @@ public class TARDISDoorListener implements Listener {
                                                 if (!innerD.equals(d)) {
                                                     switch (d) {
                                                         case NORTH:
-                                                            yaw = yaw + adjustYaw[0][innerD.ordinal()];
+                                                            yaw += adjustYaw[0][innerD.ordinal()];
                                                             break;
                                                         case WEST:
-                                                            yaw = yaw + adjustYaw[1][innerD.ordinal()];
+                                                            yaw += adjustYaw[1][innerD.ordinal()];
                                                             break;
                                                         case SOUTH:
-                                                            yaw = yaw + adjustYaw[2][innerD.ordinal()];
+                                                            yaw += adjustYaw[2][innerD.ordinal()];
                                                             break;
                                                         case EAST:
-                                                            yaw = yaw + adjustYaw[3][innerD.ordinal()];
+                                                            yaw += adjustYaw[3][innerD.ordinal()];
                                                             break;
                                                     }
                                                 }
@@ -451,7 +454,6 @@ public class TARDISDoorListener implements Listener {
             }
         }
     }
-    Random r = new Random();
 
     public void movePlayer(final Player p, Location l, final boolean exit, final World from, boolean q) {
 
@@ -498,7 +500,7 @@ public class TARDISDoorListener implements Listener {
         }, 10L);
     }
 
-    private boolean checkSurvival(World w) {
+        private boolean checkSurvival(World w) {
         boolean bool = false;
         if (plugin.pm.isPluginEnabled("Multiverse-Core")) {
             MultiverseCore mv = (MultiverseCore) plugin.pm.getPlugin("Multiverse-Core");
@@ -553,7 +555,7 @@ public class TARDISDoorListener implements Listener {
         where.put("player", p.getName());
         ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, where);
         if (rsp.resultSet()) {
-            key = (!rsp.getKey().equals("")) ? rsp.getKey() : plugin.getConfig().getString("key");
+            key = (!rsp.getKey().isEmpty()) ? rsp.getKey() : plugin.getConfig().getString("key");
         } else {
             key = plugin.getConfig().getString("key");
         }

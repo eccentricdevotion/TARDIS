@@ -47,6 +47,21 @@ import org.bukkit.entity.Player;
  */
 public class TARDISExterminator {
 
+    public static boolean deleteFolder(File folder) {
+        File[] files = folder.listFiles();
+        if (files != null) { //some JVMs return null for empty dirs
+            for (File f : files) {
+                if (f.isDirectory()) {
+                    deleteFolder(f);
+                } else {
+                    f.delete();
+                }
+            }
+        }
+        folder.delete();
+        return true;
+    }
+
     private TARDIS plugin;
 
     public TARDISExterminator(TARDIS plugin) {
@@ -282,20 +297,5 @@ public class TARDISExterminator {
                 plugin.debug("Could not delete world <" + name + ">");
             }
         }
-    }
-
-    public static boolean deleteFolder(File folder) {
-        File[] files = folder.listFiles();
-        if (files != null) { //some JVMs return null for empty dirs
-            for (File f : files) {
-                if (f.isDirectory()) {
-                    deleteFolder(f);
-                } else {
-                    f.delete();
-                }
-            }
-        }
-        folder.delete();
-        return true;
     }
 }

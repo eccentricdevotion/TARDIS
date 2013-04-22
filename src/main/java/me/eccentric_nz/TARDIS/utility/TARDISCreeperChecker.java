@@ -62,7 +62,7 @@ public class TARDISCreeperChecker {
             ArrayList<HashMap<String, String>> data = rs.getData();
             for (HashMap<String, String> map : data) {
                 // only if there is a saved creeper location
-                if (!map.get("creeper").equals("")) {
+                if (!map.get("creeper").isEmpty()) {
                     // only if the TARDIS has been initialised
                     if (map.get("tardis_init").equals("1")) {
                         String[] creeperData = map.get("creeper").split(":");

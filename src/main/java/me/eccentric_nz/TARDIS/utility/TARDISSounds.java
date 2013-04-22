@@ -73,4 +73,7 @@ public class TARDISSounds {
             }
         }
     }
+
+    private TARDISSounds() {
+    }
 }

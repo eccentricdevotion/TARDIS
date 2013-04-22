@@ -60,7 +60,6 @@ public class ImprovedOfflinePlayer_v1_5_R2 implements ImprovedOfflinePlayer_api 
                 }
             }
         } catch (Exception e) {
-            e.printStackTrace();
         }
         return false;
     }
@@ -70,7 +69,6 @@ public class ImprovedOfflinePlayer_v1_5_R2 implements ImprovedOfflinePlayer_api 
             try {
                 NBTCompressedStreamTools.a(this.compound, new FileOutputStream(this.file));
             } catch (Exception e) {
-                e.printStackTrace();
             }
         }
     }

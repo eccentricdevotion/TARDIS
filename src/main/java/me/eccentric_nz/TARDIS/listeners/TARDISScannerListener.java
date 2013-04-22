@@ -50,6 +50,22 @@ import org.getspout.spoutapi.SpoutManager;
  */
 public class TARDISScannerListener implements Listener {
 
+    public static List<Entity> getNearbyEntities(Location l, int radius) {
+        int chunkRadius = radius < 16 ? 1 : (radius - (radius % 16)) / 16;
+        List<Entity> radiusEntities = new ArrayList<Entity>();
+        for (int chX = 0 - chunkRadius; chX <= chunkRadius; chX++) {
+            for (int chZ = 0 - chunkRadius; chZ <= chunkRadius; chZ++) {
+                int x = (int) l.getX(), y = (int) l.getY(), z = (int) l.getZ();
+                for (Entity e : new Location(l.getWorld(), x + (chX * 16), y, z + (chZ * 16)).getChunk().getEntities()) {
+                    if (e.getLocation().distance(l) <= radius && e.getLocation().getBlock() != l.getBlock()) {
+                        radiusEntities.add(e);
+                    }
+                }
+            }
+        }
+        return radiusEntities;
+    }
+
     private final TARDIS plugin;
     List<Material> validBlocks = new ArrayList<Material>();
     List<EntityType> entities = new ArrayList<EntityType>();
@@ -239,21 +255,5 @@ public class TARDISScannerListener implements Listener {
         } else {
             return "pre-dawn";
         }
-    }
-
-    public static List<Entity> getNearbyEntities(Location l, int radius) {
-        int chunkRadius = radius < 16 ? 1 : (radius - (radius % 16)) / 16;
-        List<Entity> radiusEntities = new ArrayList<Entity>();
-        for (int chX = 0 - chunkRadius; chX <= chunkRadius; chX++) {
-            for (int chZ = 0 - chunkRadius; chZ <= chunkRadius; chZ++) {
-                int x = (int) l.getX(), y = (int) l.getY(), z = (int) l.getZ();
-                for (Entity e : new Location(l.getWorld(), x + (chX * 16), y, z + (chZ * 16)).getChunk().getEntities()) {
-                    if (e.getLocation().distance(l) <= radius && e.getLocation().getBlock() != l.getBlock()) {
-                        radiusEntities.add(e);
-                    }
-                }
-            }
-        }
-        return radiusEntities;
     }
 }

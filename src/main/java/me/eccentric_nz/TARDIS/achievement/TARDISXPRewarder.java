@@ -22,7 +22,6 @@ public class TARDISXPRewarder {
     private static int hardMaxLevel = 100000;
     private static int xpRequiredForNextLevel[];
     private static int xpTotalToReachLevel[];
-    private final String playerName;
 
     static {
         // 25 is an arbitrary value for the initial table size - the actual value isn't critically
@@ -86,6 +85,7 @@ public class TARDISXPRewarder {
         }
         return level;
     }
+    private final String playerName;
 
     /**
      * Create a new TARDISXPRewarder for the given player.

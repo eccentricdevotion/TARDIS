@@ -117,7 +117,7 @@ public class ResultSetTardis {
             }
             wheres = " WHERE " + sbw.toString().substring(0, sbw.length() - 5);
         }
-        if (!limit.equals("")) {
+        if (!limit.isEmpty()) {
             thelimit = " LIMIT " + limit;
         }
         String query = "SELECT * FROM tardis" + wheres + thelimit;

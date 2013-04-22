@@ -42,6 +42,18 @@ import org.bukkit.entity.Player;
  * @author eccentric_nz
  */
 public class TARDISUtils {
+    private static int[] startLoc = new int[6];
+
+    /**
+     * Returns a rounded integer after division.
+     *
+     * @param num the number being divided.
+     * @param divisor the number to divide by.
+     * @return
+     */
+    public static int roundUp(int num, int divisor) {
+        return (num + divisor - 1) / divisor;
+    }
 
     private final TARDIS plugin;
     Version bukkitversion;
@@ -69,7 +81,7 @@ public class TARDISUtils {
             if (bukkitversion.compareTo(prewoodbuttonversion) < 0 && (m == 143 || m == -113)) {
                 m = 77;
             } else {
-                m = m + 256;
+                m += 256;
             }
         }
         if (m == 92) { //cake -> handbrake
@@ -146,7 +158,6 @@ public class TARDISUtils {
             qf.doUpdate("tardis", set, where);
         }
     }
-    private static int[] startLoc = new int[6];
 
     /**
      * Gets a start location for building the inner TARDIS.
@@ -240,17 +251,6 @@ public class TARDISUtils {
             }
         }
         return chunkchk;
-    }
-
-    /**
-     * Returns a rounded integer after division.
-     *
-     * @param num the number being divided.
-     * @param divisor the number to divide by.
-     * @return
-     */
-    public static int roundUp(int num, int divisor) {
-        return (num + divisor - 1) / divisor;
     }
 
     /**

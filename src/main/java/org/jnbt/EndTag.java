@@ -38,7 +38,7 @@ package org.jnbt;
  * @author Graham Edgecombe
  *
  */
-public final class EndTag extends Tag {
+public class EndTag extends Tag {
 
 	/**
 	 * Creates the tag.

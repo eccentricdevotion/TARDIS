@@ -51,7 +51,7 @@ import java.util.zip.GZIPOutputStream;
  * @author Graham Edgecombe
  *
  */
-public final class NBTOutputStream implements Closeable {
+public class NBTOutputStream implements Closeable {
 	
 	/**
 	 * The output stream.
