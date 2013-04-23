@@ -4,11 +4,8 @@
 1. Add video for books/achievements
 
 ## Next version `2.3-beta-1`
-1. Allow companions to enter and exit the tardis at will (and steal it).
-2. Add isomorphic controls preference so that only the Time Lord of a TARDIS can pilot it
-3. Check what happens when companions steal the TARDIS
-4. Multiple controls spaces i.e. functional secondary consoles
-5. Fix lamps in eleventh TARDIS schematic (on lower level)
+1. Check what happens when companions steal the TARDIS
+2. Multiple controls spaces i.e. functional secondary consoles
 
 ## Future version `2.4+`
 1. Add an Emergency Program system. If a Time Lord dies, the autonomous circuit is on, and there are companions inside the TARDIS, then a fake "player" will spawn near the console and give a prerecorded "message" to the TARDIS occupants through chat. Add a preference setting for it, as well as making the message configurable by the player.
