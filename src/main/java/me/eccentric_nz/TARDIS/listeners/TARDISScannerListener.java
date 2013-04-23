@@ -65,7 +65,6 @@ public class TARDISScannerListener implements Listener {
         }
         return radiusEntities;
     }
-
     private final TARDIS plugin;
     List<Material> validBlocks = new ArrayList<Material>();
     List<EntityType> entities = new ArrayList<EntityType>();
@@ -196,11 +195,12 @@ public class TARDISScannerListener implements Listener {
                         player.sendMessage("Nearby entities:");
                         for (Map.Entry<EntityType, Integer> entry : scannedentities.entrySet()) {
                             String message = "";
+                            StringBuilder buf = new StringBuilder();
                             if (entry.getKey().equals(EntityType.PLAYER) && playernames.size() > 0) {
                                 for (String p : playernames) {
-                                    message += ", " + p;
+                                    buf.append(", ").append(p);
                                 }
-                                message = " (" + message.substring(2) + ")";
+                                message = " (" + buf.toString().substring(2) + ")";
                             }
                             player.sendMessage("    " + entry.getKey() + ": " + entry.getValue() + message);
                         }

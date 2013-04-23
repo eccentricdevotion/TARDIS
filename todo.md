@@ -8,7 +8,6 @@
 2. Add isomorphic controls preference so that only the Time Lord of a TARDIS can pilot it
 3. Check what happens when companions steal the TARDIS
 4. Multiple controls spaces i.e. functional secondary consoles
-5. Add a 'back door'
 
 ## Future version `2.4+`
 ?

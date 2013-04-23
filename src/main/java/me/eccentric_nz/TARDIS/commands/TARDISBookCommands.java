@@ -49,8 +49,7 @@ public class TARDISBookCommands implements CommandExecutor {
 
     public TARDISBookCommands(TARDIS plugin) {
         this.plugin = plugin;
-        this.books = new LinkedHashMap<String, String>();
-        books = getAchievements();
+        this.books = getAchievements();
     }
 
     @Override

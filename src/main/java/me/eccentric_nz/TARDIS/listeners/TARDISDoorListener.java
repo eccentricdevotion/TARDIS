@@ -429,6 +429,16 @@ public class TARDISDoorListener implements Listener {
         }
     }
 
+    /**
+     * A method to teleport the player into and out of the TARDIS.
+     *
+     * @param p the player to teleport
+     * @param l the location to teleport to
+     * @param exit whether the player is entering or exiting the TARDIS, if true
+     * they are exiting
+     * @param from the world they are teleporting from
+     * @param q whether the player will receive a TARDIS quote message
+     */
     public void movePlayer(final Player p, Location l, final boolean exit, final World from, boolean q) {
 
         final int i = r.nextInt(plugin.quotelen);
@@ -474,6 +484,12 @@ public class TARDISDoorListener implements Listener {
         }, 10L);
     }
 
+    /**
+     * Checks if the world the player is teleporting to is a SURVIVAL world.
+     *
+     * @param w the world to check
+     * @return true if the world is a SURVIVAL world, otherwise false
+     */
     private boolean checkSurvival(World w) {
         boolean bool = false;
         if (plugin.pm.isPluginEnabled("Multiverse-Core")) {
@@ -494,6 +510,14 @@ public class TARDISDoorListener implements Listener {
         return bool;
     }
 
+    /**
+     * A method to transport player pets (tamed mobs) into and out of the
+     * TARDIS.
+     *
+     * @param p a list of the player's pets found nearby
+     * @param l the location to teleport pets to
+     * @param player the player who owns the pets
+     */
     private void movePets(List<TARDISPet> p, Location l, Player player) {
         Location pl = l.clone();
         World w = l.getWorld();
@@ -522,6 +546,12 @@ public class TARDISDoorListener implements Listener {
         p.clear();
     }
 
+    /**
+     * A method to give the TARDIS key to a player if the server is using a
+     * multi-inventory plugin.
+     *
+     * @param p the player to give the key to
+     */
     @SuppressWarnings("deprecation")
     private void giveKey(Player p) {
         String key;
@@ -547,6 +577,13 @@ public class TARDISDoorListener implements Listener {
         }
     }
 
+    /**
+     * Adjusts the direction the player is facing after a teleport.
+     *
+     * @param d1 the direction the first door is facing
+     * @param d2 the direction the second door is facing
+     * @return the angle needed to correct the yaw
+     */
     private float adjustYaw(TARDISConstants.COMPASS d1, TARDISConstants.COMPASS d2) {
         switch (d1) {
             case NORTH:
@@ -560,6 +597,13 @@ public class TARDISDoorListener implements Listener {
         }
     }
 
+    /**
+     * Get door location data for teleport entry and exit of the TARDIS.
+     *
+     * @param doortype a reference to the door_type field in the doors table
+     * @param id the unique TARDIS identifier i the database
+     * @return an instance of the TARDISDoorLocation data class
+     */
     private TARDISDoorLocation getDoor(int doortype, int id) {
         TARDISDoorLocation tdl = new TARDISDoorLocation();
         // get door location
@@ -607,6 +651,13 @@ public class TARDISDoorListener implements Listener {
         return tdl;
     }
 
+    /**
+     * Plays a door sound when the iron door is clicked.
+     *
+     * @param p a player to play the sound for
+     * @param w a world to play the sound in
+     * @param l a location to play the sound at
+     */
     private void playDoorSound(Player p, World w, Location l) {
         try {
             Class.forName("org.bukkit.Sound");

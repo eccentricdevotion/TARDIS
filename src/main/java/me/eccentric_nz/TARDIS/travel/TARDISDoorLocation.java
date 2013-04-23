@@ -21,6 +21,8 @@ import org.bukkit.Location;
 import org.bukkit.World;
 
 /**
+ * A Tele-door was a teleport system that allowed an individual to travel vast
+ * spaces by merely walking through a door.
  *
  * @author eccentric_nz
  */
@@ -33,26 +35,50 @@ public class TARDISDoorLocation {
     public TARDISDoorLocation() {
     }
 
+    /**
+     * @return the Location of the door
+     */
     public Location getL() {
         return l;
     }
 
+    /**
+     * Set the location of the door
+     *
+     * @param l the location of the door
+     */
     public void setL(Location l) {
         this.l = l;
     }
 
+    /**
+     * @return the World the door is in
+     */
     public World getW() {
         return w;
     }
 
+    /**
+     * Set the world the door is in.
+     *
+     * @param w the world
+     */
     public void setW(World w) {
         this.w = w;
     }
 
+    /**
+     * @return the direction of the door
+     */
     public COMPASS getD() {
         return d;
     }
 
+    /**
+     * Set the door direction.
+     *
+     * @param d the direction (one of NORTH, SOUTH, EAST, WEST)
+     */
     public void setD(COMPASS d) {
         this.d = d;
     }

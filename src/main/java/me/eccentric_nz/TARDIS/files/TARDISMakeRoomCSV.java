@@ -48,27 +48,23 @@ public class TARDISMakeRoomCSV {
      * administrators to use their own schematic files.
      */
     public void loadCSV() {
-        try {
-            // load room CSV files - create them if they don't exist
-            reader = new TARDISRoomSchematicReader(plugin);
-            String basepath = plugin.getDataFolder() + File.separator + "schematics" + File.separator;
-            for (String r : plugin.getConfig().getConfigurationSection("rooms").getKeys(false)) {
-                String lower = r.toLowerCase(Locale.ENGLISH);
-                File file = createFile(lower + ".csv");
-                reader.readAndMakeRoomCSV(basepath + lower, r, false);
-                short[] dimensions = plugin.room_dimensions.get(r);
-                String[][][] schem = TARDISSchematic.schematic(file, dimensions[0], dimensions[1], dimensions[2]);
-                plugin.room_schematics.put(r, schem);
-                if (r.equals("PASSAGE") || r.equals("LONG")) {
-                    // repeat for EW
-                    File file_EW = createFile(lower + "_EW.csv");
-                    reader.readAndMakeRoomCSV(basepath + lower, r + "_EW", true);
-                    String[][][] schem_EW = TARDISSchematic.schematic(file_EW, dimensions[0], dimensions[1], dimensions[2]);
-                    plugin.room_schematics.put(r + "_EW", schem_EW);
-                }
+        // load room CSV files - create them if they don't exist
+        reader = new TARDISRoomSchematicReader(plugin);
+        String basepath = plugin.getDataFolder() + File.separator + "schematics" + File.separator;
+        for (String r : plugin.getConfig().getConfigurationSection("rooms").getKeys(false)) {
+            String lower = r.toLowerCase(Locale.ENGLISH);
+            File file = createFile(lower + ".csv");
+            reader.readAndMakeRoomCSV(basepath + lower, r, false);
+            short[] dimensions = plugin.room_dimensions.get(r);
+            String[][][] schem = TARDISSchematic.schematic(file, dimensions[0], dimensions[1], dimensions[2]);
+            plugin.room_schematics.put(r, schem);
+            if (r.equals("PASSAGE") || r.equals("LONG")) {
+                // repeat for EW
+                File file_EW = createFile(lower + "_EW.csv");
+                reader.readAndMakeRoomCSV(basepath + lower, r + "_EW", true);
+                String[][][] schem_EW = TARDISSchematic.schematic(file_EW, dimensions[0], dimensions[1], dimensions[2]);
+                plugin.room_schematics.put(r + "_EW", schem_EW);
             }
-        } catch (Exception e) {
-            plugin.console.sendMessage(plugin.pluginName + "Failed to create room schematics!");
         }
     }
 

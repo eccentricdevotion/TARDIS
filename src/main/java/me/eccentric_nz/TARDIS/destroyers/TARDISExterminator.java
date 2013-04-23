@@ -61,7 +61,6 @@ public class TARDISExterminator {
         folder.delete();
         return true;
     }
-
     private TARDIS plugin;
 
     public TARDISExterminator(TARDIS plugin) {
@@ -144,76 +143,70 @@ public class TARDISExterminator {
             where.put("owner", playerNameStr);
         }
         ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
-        try {
-            if (rs.resultSet()) {
-                int id = rs.getTardis_id();
-                String saveLoc = rs.getCurrent();
-                String chunkLoc = rs.getChunk();
-                String owner = rs.getOwner();
-                TARDISConstants.SCHEMATIC schm = rs.getSchematic();
-                TARDISConstants.COMPASS d = rs.getDirection();
-                // need to check that a player is not currently in the TARDIS
-                if (player.hasPermission("tardis.delete")) {
-                    HashMap<String, Object> travid = new HashMap<String, Object>();
-                    travid.put("tardis_id", id);
-                    ResultSetTravellers rst = new ResultSetTravellers(plugin, travid, false);
-                    if (rst.resultSet()) {
-                        player.sendMessage(plugin.pluginName + ChatColor.RED + "You cannot delete this TARDIS as it is occupied!");
-                        return false;
-                    }
-                }
-                // check the sign location
-                Location bb_loc = plugin.utils.getLocationFromDB(saveLoc, 0F, 0F);
-                // get TARDIS direction
-                switch (d) {
-                    case EAST:
-                        signx = -2;
-                        signz = 0;
-                        break;
-                    case SOUTH:
-                        signx = 0;
-                        signz = -2;
-                        break;
-                    case WEST:
-                        signx = 2;
-                        signz = 0;
-                        break;
-                    case NORTH:
-                        signx = 0;
-                        signz = 2;
-                        break;
-                }
-                int signy = -2;
-                // if the sign was on the TARDIS destroy the TARDIS!
-                if (sign_loc.getBlockX() == bb_loc.getBlockX() + signx && sign_loc.getBlockY() + signy == bb_loc.getBlockY() && sign_loc.getBlockZ() == bb_loc.getBlockZ() + signz) {
-                    if (!rs.isHidden()) {
-                        // remove Police Box
-                        plugin.destroyPB.destroyTorch(bb_loc);
-                        plugin.destroyPB.destroySign(bb_loc, d);
-                        plugin.destroyPB.destroyPoliceBox(bb_loc, d, id, false);
-                    }
-                    String[] chunkworld = chunkLoc.split(":");
-                    World cw = plugin.getServer().getWorld(chunkworld[0]);
-                    int restore = getRestore(cw);
-                    if (!cw.getName().contains("TARDIS_WORLD_")) {
-                        plugin.destroyI.destroyInner(schm, id, cw, restore, playerNameStr);
-                    }
-                    cleanDatabase(id);
-                    cleanWorlds(cw, owner);
-                    player.sendMessage(plugin.pluginName + "The TARDIS was removed from the world and database successfully.");
-                    return true;
-                } else {
-                    // cancel the event because it's not the player's TARDIS
-                    player.sendMessage(TARDISConstants.NOT_OWNER);
+        if (rs.resultSet()) {
+            int id = rs.getTardis_id();
+            String saveLoc = rs.getCurrent();
+            String chunkLoc = rs.getChunk();
+            String owner = rs.getOwner();
+            TARDISConstants.SCHEMATIC schm = rs.getSchematic();
+            TARDISConstants.COMPASS d = rs.getDirection();
+            // need to check that a player is not currently in the TARDIS
+            if (player.hasPermission("tardis.delete")) {
+                HashMap<String, Object> travid = new HashMap<String, Object>();
+                travid.put("tardis_id", id);
+                ResultSetTravellers rst = new ResultSetTravellers(plugin, travid, false);
+                if (rst.resultSet()) {
+                    player.sendMessage(plugin.pluginName + ChatColor.RED + "You cannot delete this TARDIS as it is occupied!");
                     return false;
                 }
+            }
+            // check the sign location
+            Location bb_loc = plugin.utils.getLocationFromDB(saveLoc, 0F, 0F);
+            // get TARDIS direction
+            switch (d) {
+                case EAST:
+                    signx = -2;
+                    signz = 0;
+                    break;
+                case SOUTH:
+                    signx = 0;
+                    signz = -2;
+                    break;
+                case WEST:
+                    signx = 2;
+                    signz = 0;
+                    break;
+                case NORTH:
+                    signx = 0;
+                    signz = 2;
+                    break;
+            }
+            int signy = -2;
+            // if the sign was on the TARDIS destroy the TARDIS!
+            if (sign_loc.getBlockX() == bb_loc.getBlockX() + signx && sign_loc.getBlockY() + signy == bb_loc.getBlockY() && sign_loc.getBlockZ() == bb_loc.getBlockZ() + signz) {
+                if (!rs.isHidden()) {
+                    // remove Police Box
+                    plugin.destroyPB.destroyTorch(bb_loc);
+                    plugin.destroyPB.destroySign(bb_loc, d);
+                    plugin.destroyPB.destroyPoliceBox(bb_loc, d, id, false);
+                }
+                String[] chunkworld = chunkLoc.split(":");
+                World cw = plugin.getServer().getWorld(chunkworld[0]);
+                int restore = getRestore(cw);
+                if (!cw.getName().contains("TARDIS_WORLD_")) {
+                    plugin.destroyI.destroyInner(schm, id, cw, restore, playerNameStr);
+                }
+                cleanDatabase(id);
+                cleanWorlds(cw, owner);
+                player.sendMessage(plugin.pluginName + "The TARDIS was removed from the world and database successfully.");
+                return true;
             } else {
-                player.sendMessage("Don't grief the TARDIS!");
+                // cancel the event because it's not the player's TARDIS
+                player.sendMessage(TARDISConstants.NOT_OWNER);
                 return false;
             }
-        } catch (Exception e) {
-            plugin.console.sendMessage(plugin.pluginName + "Block Break Listener Error: " + e);
-        } finally {
+        } else {
+            player.sendMessage("Don't grief the TARDIS!");
             return false;
         }
     }

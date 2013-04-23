@@ -139,29 +139,4 @@ public class TARDISPruner {
     private Timestamp getTimestamp(long l) {
         return new Timestamp(l);
     }
-
-    private ResultSet getResults(long prune) {
-        Statement statement = null;
-        ResultSet rs = null;
-        String query = "SELECT * FROM tardis WHERE lastuse < " + prune;
-        try {
-            statement = connection.createStatement();
-            rs = statement.executeQuery(query);
-            return rs;
-        } catch (SQLException e) {
-            plugin.debug("ResultSet error retrieving prunes! " + e.getMessage());
-            return rs;
-        } finally {
-            try {
-                if (rs != null) {
-                    rs.close();
-                }
-                if (statement != null) {
-                    statement.close();
-                }
-            } catch (Exception e) {
-                plugin.debug("Error closing tardis table when pruning! " + e.getMessage());
-            }
-        }
-    }
 }

@@ -59,7 +59,7 @@ public class TARDISBlockPlaceListener implements Listener {
         TARDISWalls tw = new TARDISWalls();
         for (Map.Entry<String, Integer[]> entry : tw.blocks.entrySet()) {
             Integer[] value = entry.getValue();
-            if (value[0] == Integer.valueOf(i) && value[1] == Integer.valueOf(d)) {
+            if (value[0].equals(Integer.valueOf(i)) && value[1].equals(Integer.valueOf(d))) {
                 return entry.getKey();
             }
         }

@@ -365,7 +365,7 @@ public class TARDISBuilderInner {
         }
         for (Map.Entry<Block, Byte> entry : postTorchBlocks.entrySet()) {
             Block ptb = entry.getKey();
-            byte ptdata = Byte.valueOf(entry.getValue());
+            byte ptdata = entry.getValue();
             ptb.setTypeIdAndData(76, ptdata, true);
         }
         for (Map.Entry<Block, Byte> entry : postSignBlocks.entrySet()) {
