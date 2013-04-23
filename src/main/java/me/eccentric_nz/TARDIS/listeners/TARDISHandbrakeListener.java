@@ -65,7 +65,7 @@ public class TARDISHandbrakeListener implements Listener {
      *
      * @param event the player clicking the handbrake
      */
-    @EventHandler(priority = EventPriority.MONITOR)
+    @EventHandler(priority = EventPriority.NORMAL)
     public void onInteract(PlayerInteractEvent event) {
         Player player = event.getPlayer();
         Block block = event.getClickedBlock();
@@ -87,12 +87,16 @@ public class TARDISHandbrakeListener implements Listener {
                 HashMap<String, Object> set = new HashMap<String, Object>();
                 if (rs.resultSet()) {
                     event.setCancelled(true);
+                    String owner = rs.getOwner();
+                    if (rs.isIso_on() && !player.getName().equals(owner) && event.isCancelled()) { // check if cancelled so we don't get double messages from the bind listener
+                        player.sendMessage(plugin.pluginName + "The isomorphic security lockout has been engaged... Hands off the controls!");
+                        return;
+                    }
                     int id = rs.getTardis_id();
                     COMPASS d = rs.getDirection();
                     boolean cham = rs.isChamele_on();
                     String save = rs.getSave();
                     String cl = rs.getCurrent();
-                    String owner = rs.getOwner();
                     Location exit = null;
                     boolean error = false;
                     if (!plugin.tardisMaterialising.contains(Integer.valueOf(id))) {

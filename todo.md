@@ -8,9 +8,10 @@
 2. Add isomorphic controls preference so that only the Time Lord of a TARDIS can pilot it
 3. Check what happens when companions steal the TARDIS
 4. Multiple controls spaces i.e. functional secondary consoles
+5. Fix lamps in eleventh TARDIS schematic (on lower level)
 
 ## Future version `2.4+`
-?
+1. Add an Emergency Program system. If a Time Lord dies, the autonomous circuit is on, and there are companions inside the TARDIS, then a fake "player" will spawn near the console and give a prerecorded "message" to the TARDIS occupants through chat. Add a preference setting for it, as well as making the message configurable by the player.
 
 ## Minecraft API when available `3.0?`
 1. Recreate everything with the new API :)

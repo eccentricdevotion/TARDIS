@@ -26,6 +26,7 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
+import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.rooms.TARDISWalls;
 import me.eccentric_nz.TARDIS.utility.TARDISMaterials;
 import org.bukkit.ChatColor;
@@ -55,12 +56,13 @@ public class TARDISPrefsCommands implements CommandExecutor {
     public TARDISPrefsCommands(TARDIS plugin) {
         this.plugin = plugin;
         firstArgs.add("auto");
+        firstArgs.add("floor");
+        firstArgs.add("isomorphic");
         firstArgs.add("key");
         firstArgs.add("platform");
         firstArgs.add("quotes");
         firstArgs.add("sfx");
         firstArgs.add("wall");
-        firstArgs.add("floor");
     }
 
     @Override
@@ -99,6 +101,28 @@ public class TARDISPrefsCommands implements CommandExecutor {
                             where.put("player", player.getName());
                             qf.doUpdate("player_prefs", set, where);
                             sender.sendMessage(plugin.pluginName + "Key preference saved.");
+                            return true;
+                        }
+                    }
+                    if (pref.equals("isomorphic")) {
+                        HashMap<String, Object> where = new HashMap<String, Object>();
+                        where.put("owner", player.getName());
+                        ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
+                        // does the player have a TARDIS
+                        if (rs.resultSet()) {
+                            int iso = (rs.isIso_on()) ? 0 : 1;
+                            String onoff = (rs.isIso_on()) ? "OFF" : "ON";
+                            int id = rs.getTardis_id();
+                            HashMap<String, Object> set = new HashMap<String, Object>();
+                            set.put("iso_on", iso);
+                            HashMap<String, Object> wheret = new HashMap<String, Object>();
+                            wheret.put("tardis_id", id);
+                            QueryFactory qf = new QueryFactory(plugin);
+                            qf.doUpdate("tardis", set, wheret);
+                            sender.sendMessage(plugin.pluginName + "Isomorphic controls were turned " + onoff + "!");
+                            return true;
+                        } else {
+                            sender.sendMessage(plugin.pluginName + "You don't have a TARDIS yet!");
                             return true;
                         }
                     }

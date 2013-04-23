@@ -78,6 +78,7 @@ public class ResultSetTardis {
     private String farm;
     private boolean hidden;
     private long lastuse;
+    private boolean iso_on;
     private ArrayList<HashMap<String, String>> data = new ArrayList<HashMap<String, String>>();
 
     /**
@@ -184,6 +185,7 @@ public class ResultSetTardis {
                     this.farm = rs.getString("farm");
                     this.hidden = rs.getBoolean("hidden");
                     this.lastuse = rs.getLong("lastuse");
+                    this.iso_on = rs.getBoolean("iso_on");
                 }
             } else {
                 return false;
@@ -348,6 +350,10 @@ public class ResultSetTardis {
 
     public long getLastuse() {
         return lastuse;
+    }
+
+    public boolean isIso_on() {
+        return iso_on;
     }
 
     public ArrayList<HashMap<String, String>> getData() {

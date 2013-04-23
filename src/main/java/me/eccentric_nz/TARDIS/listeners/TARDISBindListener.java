@@ -36,9 +36,10 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractEvent;
 
 /**
- * TARDISes could fly through space like conventional spacecraft, but doing so
- * for prolonged periods could damage the ship, at least in the case of the
- * Doctor's TARDIS.
+ * Isomorphic controls could only be operated by one user. Such controls
+ * ostensibly worked only after identifying the allowed user through genetics or
+ * other uniquely identifying properties, such as their biological morphic
+ * field, of which the name "isomorphic" was derived from.
  *
  * @author eccentric_nz
  */
@@ -100,11 +101,15 @@ public class TARDISBindListener implements Listener {
                     if (rst.resultSet()) {
                         int id = rst.getTardis_id();
                         plugin.utils.updateTravellerCount(id);
-                        // check they have enough artron energy to travel
                         HashMap<String, Object> wheret = new HashMap<String, Object>();
                         wheret.put("tardis_id", id);
                         ResultSetTardis rs = new ResultSetTardis(plugin, wheret, "", false);
                         if (rs.resultSet()) {
+                            String owner = rs.getOwner();
+                            if (rs.isIso_on() && !player.getName().equals(owner) && !event.isCancelled()) {
+                                player.sendMessage(plugin.pluginName + "The isomorphic security lockout has been engaged... Hands off the controls!");
+                                return;
+                            }
                             HashMap<String, Object> whereb = new HashMap<String, Object>();
                             whereb.put("tardis_id", id);
                             whereb.put("bind", l);
