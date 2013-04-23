@@ -62,16 +62,21 @@ public class TARDISBlockBreakListener implements Listener {
                 event.setCancelled(true);
                 sign.update();
                 Player player = event.getPlayer();
-                final String playerNameStr = player.getName();
-                plugin.trackExterminate.put(playerNameStr, block);
-                long timeout = plugin.getConfig().getLong("confirm_timeout");
-                player.sendMessage(plugin.pluginName + "Are you sure you want to delete the TARDIS? Type " + ChatColor.AQUA + "/tardis exterminate" + ChatColor.RESET + " within " + timeout + " seconds to proceed.");
-                plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
-                    @Override
-                    public void run() {
-                        plugin.trackExterminate.remove(playerNameStr);
-                    }
-                }, timeout * 20);
+                if (player.hasPermission("tardis.exterminate")) {
+                    final String playerNameStr = player.getName();
+                    // check it is their TARDIS
+                    plugin.trackExterminate.put(playerNameStr, block);
+                    long timeout = plugin.getConfig().getLong("confirm_timeout");
+                    player.sendMessage(plugin.pluginName + "Are you sure you want to delete the TARDIS? Type " + ChatColor.AQUA + "/tardis exterminate" + ChatColor.RESET + " within " + timeout + " seconds to proceed.");
+                    plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
+                        @Override
+                        public void run() {
+                            plugin.trackExterminate.remove(playerNameStr);
+                        }
+                    }, timeout * 20);
+                } else {
+                    player.sendMessage(plugin.pluginName + "You do not have permission to delete a TARDIS!");
+                }
             }
         }
     }
