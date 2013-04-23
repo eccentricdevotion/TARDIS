@@ -27,7 +27,6 @@ import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetDoors;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
-import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.thirdparty.Version;
 import me.eccentric_nz.TARDIS.travel.TARDISDoorLocation;
 import me.eccentric_nz.TARDIS.travel.TARDISFarmer;
@@ -249,10 +248,9 @@ public class TARDISDoorListener implements Listener {
                                     List<TARDISPet> pets = null;
                                     switch (doortype) {
                                         case 1:
-                                            // always exit to current location
+                                            // player is in the TARDIS - always exit to current location
                                             Location exitLoc = plugin.utils.getLocationFromDB(current, yaw, pitch);
                                             if (rs.isHandbrake_on()) {
-                                                // player is in the TARDIS
                                                 // change the yaw if the door directions are different
                                                 if (!dd.equals(d)) {
                                                     yaw += adjustYaw(dd, d);
@@ -307,12 +305,7 @@ public class TARDISDoorListener implements Listener {
                                             }
                                             boolean chkCompanion = false;
                                             if (!playerNameStr.equals(tl)) {
-//                                                if (plugin.getServer().getPlayer(tl) != null) { // is the timelord in the TARDIS?
                                                 if (companions != null && !companions.isEmpty()) {
-//                                                    HashMap<String, Object> whert = new HashMap<String, Object>();
-//                                                    whert.put("tardis_id", id);
-//                                                    ResultSetTravellers rst = new ResultSetTravellers(plugin, whert, true);
-//                                                    if (rst.resultSet()) {
                                                     // is the player in the comapnion list
                                                     String[] companionData = companions.split(":");
                                                     for (String c : companionData) {
@@ -322,14 +315,7 @@ public class TARDISDoorListener implements Listener {
                                                             break;
                                                         }
                                                     }
-//                                                    }
-//                                                    else {
-//                                                        player.sendMessage(plugin.pluginName + TARDISConstants.TIMELORD_NOT_IN);
-//                                                    }
                                                 }
-//                                                } else {
-//                                                    player.sendMessage(plugin.pluginName + TARDISConstants.TIMELORD_OFFLINE);
-//                                                }
                                             }
                                             if (playerNameStr.equals(tl) || chkCompanion == true || player.hasPermission("tardis.skeletonkey")) {
                                                 // get INNER TARDIS location
@@ -388,6 +374,10 @@ public class TARDISDoorListener implements Listener {
                                             if (plugin.pm.getPlugin("Spout") != null && SpoutManager.getPlayer(player).isSpoutCraftEnabled()) {
                                                 SpoutManager.getSoundManager().playCustomSoundEffect(plugin, SpoutManager.getPlayer(player), "https://dl.dropbox.com/u/53758864/tardis_hum.mp3", false, inner_loc, 9, 25);
                                             }
+                                            HashMap<String, Object> wheree = new HashMap<String, Object>();
+                                            wheree.put("tardis_id", id);
+                                            int cost = (0 - plugin.getConfig().getInt("backdoor"));
+                                            qf.alterEnergyLevel("tardis", cost, wheree, player);
                                             break;
                                         case 3:
                                             // always exit to outer back door
@@ -407,6 +397,11 @@ public class TARDISDoorListener implements Listener {
                                             HashMap<String, Object> wherd = new HashMap<String, Object>();
                                             wherd.put("player", playerNameStr);
                                             qf.doDelete("travellers", wherd);
+                                            // take energy
+                                            HashMap<String, Object> wherea = new HashMap<String, Object>();
+                                            wherea.put("tardis_id", id);
+                                            int costa = (0 - plugin.getConfig().getInt("backdoor"));
+                                            qf.alterEnergyLevel("tardis", costa, wherea, player);
                                             break;
                                         default:
                                             // do nothing
