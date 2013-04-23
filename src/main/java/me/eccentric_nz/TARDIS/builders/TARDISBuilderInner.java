@@ -190,7 +190,7 @@ public class TARDISBuilderInner {
                                 // remember the location of this button
                                 HashMap<String, Object> setb = new HashMap<String, Object>();
                                 HashMap<String, Object> whereb = new HashMap<String, Object>();
-                                String button = world.getName() + ":" + startx + ":" + starty + ":" + startz;
+                                String button = plugin.utils.makeLocationStr(world, startx, starty, startz);
                                 setb.put("button", button);
                                 whereb.put("tardis_id", dbID);
                                 qf.doUpdate("tardis", setb, whereb);
@@ -283,7 +283,7 @@ public class TARDISBuilderInner {
                                  */
                                 HashMap<String, Object> sethandbrake = new HashMap<String, Object>();
                                 HashMap<String, Object> wherehandbrake = new HashMap<String, Object>();
-                                String handbrakeloc = world.getName() + ":" + startx + ":" + starty + ":" + startz;
+                                String handbrakeloc = plugin.utils.makeLocationStr(world, startx, starty, startz);
                                 sethandbrake.put("handbrake", handbrakeloc);
                                 wherehandbrake.put("tardis_id", dbID);
                                 qf.doUpdate("tardis", sethandbrake, wherehandbrake);
@@ -295,7 +295,7 @@ public class TARDISBuilderInner {
                                  */
                                 HashMap<String, Object> setwb = new HashMap<String, Object>();
                                 HashMap<String, Object> wherewb = new HashMap<String, Object>();
-                                String woodbuttonloc = world.getName() + ":" + startx + ":" + starty + ":" + startz;
+                                String woodbuttonloc = plugin.utils.makeLocationStr(world, startx, starty, startz);
                                 setwb.put("artron_button", woodbuttonloc);
                                 wherewb.put("tardis_id", dbID);
                                 qf.doUpdate("tardis", setwb, wherewb);
@@ -321,7 +321,7 @@ public class TARDISBuilderInner {
                         // if it's an iron/gold/diamond/emerald/beacon/redstone block put it in the blocks table
                         if (id == 41 || id == 42 || id == 57 || id == 133 || id == -123 || id == 138 || id == -118 || id == 152 || id == -104) {
                             HashMap<String, Object> setpb = new HashMap<String, Object>();
-                            String loc = new Location(world, startx, starty, startz).toString();
+                            String loc = plugin.utils.makeLocationStr(world, startx, starty, startz);
                             setpb.put("tardis_id", dbID);
                             setpb.put("location", loc);
                             setpb.put("police_box", 0);

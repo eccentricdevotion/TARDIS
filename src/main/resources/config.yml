@@ -155,3 +155,4 @@ malfunction_end: 3
 malfunction_nether: 3
 exile: false
 per_world_perms: false
+conversion_done: true

@@ -70,6 +70,8 @@ public class TARDISDatabase {
             statement.executeUpdate(queryProtectBlocks);
             String queryLamps = "CREATE TABLE IF NOT EXISTS lamps (l_id INTEGER PRIMARY KEY NOT NULL, tardis_id INTEGER, location TEXT COLLATE NOCASE DEFAULT '')";
             statement.executeUpdate(queryLamps);
+            String queryControls = "CREATE TABLE IF NOT EXISTS controls (c_id INTEGER PRIMARY KEY NOT NULL, tardis_id INTEGER, type INTEGER, location TEXT COLLATE NOCASE DEFAULT '', secondary INTEGER DEFAULT 0)";
+            statement.executeUpdate(queryControls);
             String queryDestinations = "CREATE TABLE IF NOT EXISTS destinations (dest_id INTEGER PRIMARY KEY NOT NULL, tardis_id INTEGER, dest_name TEXT COLLATE NOCASE DEFAULT '', world TEXT COLLATE NOCASE DEFAULT '', x INTEGER, y INTEGER, z INTEGER, bind TEXT DEFAULT '', type INTEGER DEFAULT 0)";
             statement.executeUpdate(queryDestinations);
             String queryPresets = "CREATE TABLE IF NOT EXISTS areas (area_id INTEGER PRIMARY KEY NOT NULL, area_name TEXT COLLATE NOCASE DEFAULT '', world TEXT COLLATE NOCASE DEFAULT '', minx INTEGER, minz INTEGER, maxx INTEGER, maxz INTEGER, y INTEGER)";

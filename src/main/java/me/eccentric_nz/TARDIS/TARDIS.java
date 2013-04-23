@@ -33,6 +33,7 @@ import me.eccentric_nz.TARDIS.commands.TARDISGravityCommands;
 import me.eccentric_nz.TARDIS.commands.TARDISPrefsCommands;
 import me.eccentric_nz.TARDIS.commands.TARDISRoomCommands;
 import me.eccentric_nz.TARDIS.commands.TARDISTravelCommands;
+import me.eccentric_nz.TARDIS.database.TARDISControlsConverter;
 import me.eccentric_nz.TARDIS.database.TARDISDatabase;
 import me.eccentric_nz.TARDIS.destroyers.TARDISDestroyerInner;
 import me.eccentric_nz.TARDIS.destroyers.TARDISDestroyerPoliceBox;
@@ -231,6 +232,9 @@ public class TARDIS extends JavaPlugin {
             bl.loadGravityWells();
             loadPerms();
             loadBooks();
+            if (!getConfig().getBoolean("conversion_done")) {
+                new TARDISControlsConverter(this).convertControls();
+            }
         }
     }
 

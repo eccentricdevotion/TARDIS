@@ -56,6 +56,7 @@ public class TARDISConfiguration {
         boolOptions.put("bonus_chest", true);
         boolOptions.put("chameleon", true);
         boolOptions.put("check_for_updates", true);
+        boolOptions.put("conversion_done", false);
         boolOptions.put("create_worlds", true);
         boolOptions.put("debug", false);
         boolOptions.put("default_world", false);
