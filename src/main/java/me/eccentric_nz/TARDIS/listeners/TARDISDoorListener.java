@@ -157,7 +157,7 @@ public class TARDISDoorListener implements Listener {
                     where.put("door_location", doorloc);
                     ResultSetDoors rsd = new ResultSetDoors(plugin, where, false);
                     if (rsd.resultSet()) {
-                        if (material == m) {
+                        if (material.equals(m)) {
                             TARDISConstants.COMPASS dd = rsd.getDoor_direction();
                             int doortype = rsd.getDoor_type();
                             if (action == Action.LEFT_CLICK_BLOCK) {
@@ -307,29 +307,29 @@ public class TARDISDoorListener implements Listener {
                                             }
                                             boolean chkCompanion = false;
                                             if (!playerNameStr.equals(tl)) {
-                                                if (plugin.getServer().getPlayer(tl) != null) {
-                                                    if (companions != null && !companions.isEmpty()) {
-                                                        // is the timelord in the TARDIS?
-                                                        HashMap<String, Object> whert = new HashMap<String, Object>();
-                                                        whert.put("tardis_id", id);
-                                                        ResultSetTravellers rst = new ResultSetTravellers(plugin, whert, true);
-                                                        if (rst.resultSet()) {
-                                                            // is the player in the comapnion list
-                                                            String[] companionData = companions.split(":");
-                                                            for (String c : companionData) {
-                                                                //String lc_name = c.toLowerCase(Locale.ENGLISH);
-                                                                if (c.equalsIgnoreCase(playerNameStr)) {
-                                                                    chkCompanion = true;
-                                                                    break;
-                                                                }
-                                                            }
-                                                        } else {
-                                                            player.sendMessage(plugin.pluginName + TARDISConstants.TIMELORD_NOT_IN);
+//                                                if (plugin.getServer().getPlayer(tl) != null) { // is the timelord in the TARDIS?
+                                                if (companions != null && !companions.isEmpty()) {
+//                                                    HashMap<String, Object> whert = new HashMap<String, Object>();
+//                                                    whert.put("tardis_id", id);
+//                                                    ResultSetTravellers rst = new ResultSetTravellers(plugin, whert, true);
+//                                                    if (rst.resultSet()) {
+                                                    // is the player in the comapnion list
+                                                    String[] companionData = companions.split(":");
+                                                    for (String c : companionData) {
+                                                        plugin.debug(c);
+                                                        if (c.equalsIgnoreCase(playerNameStr)) {
+                                                            chkCompanion = true;
+                                                            break;
                                                         }
                                                     }
-                                                } else {
-                                                    player.sendMessage(plugin.pluginName + TARDISConstants.TIMELORD_OFFLINE);
+//                                                    }
+//                                                    else {
+//                                                        player.sendMessage(plugin.pluginName + TARDISConstants.TIMELORD_NOT_IN);
+//                                                    }
                                                 }
+//                                                } else {
+//                                                    player.sendMessage(plugin.pluginName + TARDISConstants.TIMELORD_OFFLINE);
+//                                                }
                                             }
                                             if (playerNameStr.equals(tl) || chkCompanion == true || player.hasPermission("tardis.skeletonkey")) {
                                                 // get INNER TARDIS location
@@ -423,6 +423,8 @@ public class TARDISDoorListener implements Listener {
                             }
                             player.sendMessage(plugin.pluginName + "The TARDIS key is a " + key + ". You have " + grammar + " in your hand!");
                         }
+                    } else {
+                        plugin.debug("Didn't find door!");
                     }
                 }
             }
