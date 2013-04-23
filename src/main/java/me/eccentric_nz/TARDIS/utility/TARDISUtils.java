@@ -43,8 +43,6 @@ import org.bukkit.entity.Player;
  */
 public class TARDISUtils {
 
-    private static int[] startLoc = new int[6];
-
     /**
      * Returns a rounded integer after division.
      *
@@ -133,9 +131,9 @@ public class TARDISUtils {
      * and data and remembers the block for replacement later on.
      *
      * @param w the world the block is in.
-     * @param x the x co-ordinate of the block.
-     * @param y the y co-ordinate of the block.
-     * @param z the z co-ordinate of the block.
+     * @param x the x coordinate of the block.
+     * @param y the y coordinate of the block.
+     * @param z the z coordinate of the block.
      * @param m the typeId to set the block to.
      * @param d the data bit to set the block to.
      * @param id the TARDIS this block belongs to.
@@ -166,6 +164,7 @@ public class TARDISUtils {
      * @return
      */
     public int[] getStartLocation(int id) {
+        int[] startLoc = new int[6];
         int cx, cz;
         HashMap<String, Object> where = new HashMap<String, Object>();
         where.put("tardis_id", id);
@@ -318,5 +317,31 @@ public class TARDISUtils {
             d = (swap) ? "EAST" : "WEST";
         }
         return d;
+    }
+
+    /**
+     * Convert a pre TARDIS v2.3 location string to a v2.3 one.
+     *
+     * @param data an old location string retrieved from the database
+     * @return a String in the style of org.bukkit.Location.toString() e.g.
+     * Location{world=CraftWorld{name=world},x=0.0,y=0.0,z=0.0,pitch=0.0,yaw=0.0}
+     */
+    public String makeLocationStr(String data) {
+        String[] s = data.split(":");
+        return "Location{world=CraftWorld{name=" + s[0] + "},x=" + s[1] + ".0,y=" + s[2] + ".0,z=" + s[3] + ".0,pitch=0.0,yaw=0.0}";
+    }
+
+    /**
+     * Create a TARDIS v2.3 location string from block coordinates.
+     *
+     * @param w the block's world
+     * @param x the x coordinate of the block's location
+     * @param y the y coordinate of the block's location
+     * @param z the z coordinate of the block's location
+     * @return a String in the style of org.bukkit.Location.toString() e.g.
+     * Location{world=CraftWorld{name=world},x=0.0,y=0.0,z=0.0,pitch=0.0,yaw=0.0}
+     */
+    public String makeLocationStr(World w, int x, int y, int z) {
+        return "Location{world=CraftWorld{name=" + w.getName() + "},x=" + x + ".0,y=" + y + ".0,z=" + z + ".0,pitch=0.0,yaw=0.0}";
     }
 }

@@ -108,9 +108,9 @@ public class TARDISScannerListener implements Listener {
     }
 
     /**
-     * Listens for player interaction with the handbrake (lever) on the TARDIS
-     * console. If the button is right-clicked the handbrake is set off, if
-     * right-clicked while sneaking it is set on.
+     * Listens for player interaction with the environment scanner (button) in
+     * the TARDIS. If the button is clicked the details of the location outside
+     * the Police Box are shown.
      *
      * @param event a player clicking a block
      */
@@ -129,7 +129,7 @@ public class TARDISScannerListener implements Listener {
                 int by = b.getBlockY();
                 int bz = b.getBlockZ();
                 String scanner_loc = bw + ":" + bx + ":" + by + ":" + bz;
-                // get tardis from saved handbrake location
+                // get tardis from saved scanner location
                 HashMap<String, Object> where = new HashMap<String, Object>();
                 where.put("scanner", scanner_loc);
                 ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);

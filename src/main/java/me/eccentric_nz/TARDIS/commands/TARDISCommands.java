@@ -905,7 +905,6 @@ public class TARDISCommands implements CommandExecutor {
                             sender.sendMessage(plugin.pluginName + TARDISConstants.NO_TARDIS);
                             return false;
                         }
-                        int id = rs.getTardis_id();
                         String loc = rs.getCurrent();
                         String[] findData = loc.split(":");
                         sender.sendMessage(plugin.pluginName + "TARDIS was left at " + findData[0] + " at x: " + findData[1] + " y: " + findData[2] + " z: " + findData[3]);
