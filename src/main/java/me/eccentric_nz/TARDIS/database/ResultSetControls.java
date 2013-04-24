@@ -35,8 +35,7 @@ import me.eccentric_nz.TARDIS.TARDIS;
  * 0 = handbrake
  * 1 = random button
  * 2 = x-repeater
- * 3 =
- * z-repeater
+ * 3 = z-repeater
  * 4 = multiplier-repeater
  * 5 = environment-repeater
  * 6 = artron button
@@ -54,7 +53,7 @@ public class ResultSetControls {
     private int tardis_id;
     private int type;
     private String location;
-    private boolean secondary;
+    private int secondary;
     private ArrayList<HashMap<String, String>> data = new ArrayList<HashMap<String, String>>();
 
     /**
@@ -91,7 +90,7 @@ public class ResultSetControls {
             }
             wheres = " WHERE " + sbw.toString().substring(0, sbw.length() - 5);
         }
-        String query = "SELECT * FROM destinations" + wheres;
+        String query = "SELECT * FROM controls" + wheres;
         //plugin.debug(query);
         try {
             statement = connection.prepareStatement(query);
@@ -123,13 +122,13 @@ public class ResultSetControls {
                     this.tardis_id = rs.getInt("tardis_id");
                     this.type = rs.getInt("type");
                     this.location = rs.getString("location");
-                    this.secondary = rs.getBoolean("secondary");
+                    this.secondary = rs.getInt("secondary");
                 }
             } else {
                 return false;
             }
         } catch (SQLException e) {
-            plugin.debug("ResultSet error for destinations table! " + e.getMessage());
+            plugin.debug("ResultSet error for controls table! " + e.getMessage());
             return false;
         } finally {
             try {
@@ -140,7 +139,7 @@ public class ResultSetControls {
                     statement.close();
                 }
             } catch (Exception e) {
-                plugin.debug("Error closing destinations table! " + e.getMessage());
+                plugin.debug("Error closing controls table! " + e.getMessage());
             }
         }
         return true;
@@ -162,7 +161,7 @@ public class ResultSetControls {
         return location;
     }
 
-    public boolean isSecondary() {
+    public int getSecondary() {
         return secondary;
     }
 
