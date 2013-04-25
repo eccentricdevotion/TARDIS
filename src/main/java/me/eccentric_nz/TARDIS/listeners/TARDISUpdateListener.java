@@ -30,6 +30,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.block.Sign;
@@ -52,6 +53,7 @@ public class TARDISUpdateListener implements Listener {
 
     private TARDIS plugin;
     List<Material> validBlocks = new ArrayList<Material>();
+    HashMap<String, Integer> controls = new HashMap<String, Integer>();
     Version bukkitversion;
     Version prewoodbuttonversion = new Version("1.4.2");
 
@@ -63,6 +65,13 @@ public class TARDISUpdateListener implements Listener {
             validBlocks.add(Material.WOOD_BUTTON);
         }
         validBlocks.add(Material.STONE_BUTTON);
+        controls.put("handbrake", 0);
+        controls.put("button", 1);
+        controls.put("x-repeater", 2);
+        controls.put("y-repeater", 3);
+        controls.put("z-repeater", 4);
+        controls.put("world-repeater", 5);
+        controls.put("artron", 6);
     }
 
     /**
@@ -84,7 +93,7 @@ public class TARDISUpdateListener implements Listener {
             if (plugin.trackPlayers.containsKey(playerNameStr)) {
                 String blockName = plugin.trackPlayers.get(playerNameStr);
                 Location block_loc = block.getLocation();
-                String bw = block_loc.getWorld().getName();
+                World bw = block_loc.getWorld();
                 int bx = block_loc.getBlockX();
                 int by = block_loc.getBlockY();
                 int bz = block_loc.getBlockZ();
@@ -93,8 +102,6 @@ public class TARDISUpdateListener implements Listener {
                     by = (by - 1);
                     blockData = block.getRelative(BlockFace.DOWN).getData();
                 }
-                String blockLocStr = bw + ":" + bx + ":" + by + ":" + bz;
-                plugin.trackPlayers.remove(playerNameStr);
                 HashMap<String, Object> where = new HashMap<String, Object>();
                 where.put("owner", player.getName());
                 ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
@@ -105,10 +112,20 @@ public class TARDISUpdateListener implements Listener {
                 int id = rs.getTardis_id();
                 String home = rs.getHome();
                 QueryFactory qf = new QueryFactory(plugin);
+                String table = "tardis";
                 HashMap<String, Object> tid = new HashMap<String, Object>();
                 HashMap<String, Object> set = new HashMap<String, Object>();
                 tid.put("tardis_id", id);
-                String table = "tardis";
+                String blockLocStr = bw.getName() + ":" + bx + ":" + by + ":" + bz;
+                if (controls.containsKey(blockName)) {
+                    if (!blockName.contains("repeater")) {
+                        blockLocStr = plugin.utils.makeLocationStr(bw, bx, by, bz);
+                    }
+                    table = "controls";
+                    tid.put("type", controls.get(blockName));
+                    tid.put("secondary", 0);
+                }
+                plugin.trackPlayers.remove(playerNameStr);
                 if (blockName.equalsIgnoreCase("door") && blockType == Material.IRON_DOOR_BLOCK) {
                     // get door data this should let us determine the direction
                     String d = getDirection(blockData);
@@ -145,31 +162,31 @@ public class TARDISUpdateListener implements Listener {
                     }
                 }
                 if (blockName.equalsIgnoreCase("button") && (validBlocks.contains(blockType) || blockType == Material.LEVER)) {
-                    set.put("button", blockLocStr);
+                    set.put("location", blockLocStr);
                 }
                 if (blockName.equalsIgnoreCase("scanner") && (validBlocks.contains(blockType) || blockType == Material.LEVER)) {
                     set.put("scanner", blockLocStr);
                 }
                 if (blockName.equalsIgnoreCase("handbrake") && blockType == Material.LEVER) {
-                    set.put("handbrake", blockLocStr);
+                    set.put("location", blockLocStr);
                 }
                 if (blockName.equalsIgnoreCase("condenser") && blockType == Material.CHEST) {
                     set.put("condenser", blockLocStr);
                 }
                 if (blockName.equalsIgnoreCase("world-repeater") && (blockType == Material.DIODE_BLOCK_OFF || blockType == Material.DIODE_BLOCK_ON)) {
-                    set.put("repeater0", blockLocStr);
+                    set.put("location", blockLocStr);
                 }
                 if (blockName.equalsIgnoreCase("x-repeater") && (blockType == Material.DIODE_BLOCK_OFF || blockType == Material.DIODE_BLOCK_ON)) {
-                    set.put("repeater1", blockLocStr);
+                    set.put("location", blockLocStr);
                 }
                 if (blockName.equalsIgnoreCase("z-repeater") && (blockType == Material.DIODE_BLOCK_OFF || blockType == Material.DIODE_BLOCK_ON)) {
-                    set.put("repeater2", blockLocStr);
+                    set.put("location", blockLocStr);
                 }
                 if (blockName.equalsIgnoreCase("y-repeater") && (blockType == Material.DIODE_BLOCK_OFF || blockType == Material.DIODE_BLOCK_ON)) {
-                    set.put("repeater3", blockLocStr);
+                    set.put("location", blockLocStr);
                 }
                 if (blockName.equalsIgnoreCase("artron") && validBlocks.contains(blockType)) {
-                    set.put("artron_button", blockLocStr);
+                    set.put("location", blockLocStr);
                 }
                 if (blockName.equalsIgnoreCase("chameleon") && (blockType == Material.WALL_SIGN || blockType == Material.SIGN_POST)) {
                     set.put("chameleon", blockLocStr);
