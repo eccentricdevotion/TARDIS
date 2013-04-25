@@ -17,6 +17,7 @@
 package me.eccentric_nz.TARDIS.rooms;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -289,6 +290,36 @@ public class TARDISRoomRunnable implements Runnable {
                     qf.doInsert("gravity_well", setu);
                     Double[] values = new Double[]{1D, 11D, 0.5D};
                     plugin.gravityUpList.put(loc, values);
+                }
+            }
+            if (room.equals("BAKER") || room.equals("WOOD")) {
+                // remember the controls
+                int secondary = (room.equals("BAKER")) ? 1 : 2;
+                int r = 2;
+                int type;
+                String loc_str;
+                List<Integer> controls = Arrays.asList(new Integer[]{69, 77, 92, 143, -113});
+                if (controls.contains(Integer.valueOf(id))) {
+                    switch (id) {
+                        case 77: // stone button - random
+                            type = 1;
+                            loc_str = plugin.utils.makeLocationStr(world, startx, starty, startz);
+                            break;
+                        case 93: // repeater
+                            type = r;
+                            loc_str = world.getName() + ":" + startx + ":" + starty + ":" + startz;
+                            r++;
+                            break;
+                        case -113: // wood button - artron
+                        case 143:
+                            type = 6;
+                            loc_str = plugin.utils.makeLocationStr(world, startx, starty, startz);
+                            break;
+                        default: // cake - handbrake
+                            type = 0;
+                            loc_str = plugin.utils.makeLocationStr(world, startx, starty, startz);
+                    }
+                    qf.insertControl(tardis_id, type, loc_str, secondary);
                 }
             }
             startx += x;

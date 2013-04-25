@@ -99,7 +99,7 @@ public class TARDISBuilderInner {
         short h = d[0];
         short w = d[1];
         short l = d[2];
-        int level, row, col, id, x, z, startx, starty = 15, startz, resetx, resetz, cx, cy, cz, rid, multiplier = 1, j = 0;
+        int level, row, col, id, x, z, startx, starty = 15, startz, resetx, resetz, cx, cy, cz, rid, multiplier = 1, j = 2;
         byte data;
         short damage = 0;
         String tmp, replacedBlocks;
@@ -188,21 +188,13 @@ public class TARDISBuilderInner {
                             }
                             if (id == 77) { // stone button
                                 // remember the location of this button
-                                HashMap<String, Object> setb = new HashMap<String, Object>();
-                                HashMap<String, Object> whereb = new HashMap<String, Object>();
                                 String button = plugin.utils.makeLocationStr(world, startx, starty, startz);
-                                setb.put("button", button);
-                                whereb.put("tardis_id", dbID);
-                                qf.doUpdate("tardis", setb, whereb);
+                                qf.insertControl(dbID, 1, button, 0);
                             }
                             if (id == 93) { // remember the location of this redstone repeater
                                 // save repeater location
-                                HashMap<String, Object> setr = new HashMap<String, Object>();
-                                HashMap<String, Object> wherer = new HashMap<String, Object>();
                                 String repeater = world.getName() + ":" + startx + ":" + starty + ":" + startz;
-                                setr.put("repeater" + j, repeater);
-                                wherer.put("tardis_id", dbID);
-                                qf.doUpdate("tardis", setr, wherer);
+                                qf.insertControl(dbID, j, repeater, 0);
                                 j++;
                             }
                             if (id == 71 && data < (byte) 8) { // iron door bottom
@@ -281,24 +273,16 @@ public class TARDISBuilderInner {
                                  * This block will be converted to a lever by
                                  * setBlock(), but remember it so we can use it as the handbrake!
                                  */
-                                HashMap<String, Object> sethandbrake = new HashMap<String, Object>();
-                                HashMap<String, Object> wherehandbrake = new HashMap<String, Object>();
                                 String handbrakeloc = plugin.utils.makeLocationStr(world, startx, starty, startz);
-                                sethandbrake.put("handbrake", handbrakeloc);
-                                wherehandbrake.put("tardis_id", dbID);
-                                qf.doUpdate("tardis", sethandbrake, wherehandbrake);
+                                qf.insertControl(dbID, 0, handbrakeloc, 0);
                             }
                             if (id == 143 || id == -113) {
                                 /*
                                  * wood button will be coverted to the correct id by
                                  * setBlock(), but remember it for the Artron Energy Capacitor.
                                  */
-                                HashMap<String, Object> setwb = new HashMap<String, Object>();
-                                HashMap<String, Object> wherewb = new HashMap<String, Object>();
                                 String woodbuttonloc = plugin.utils.makeLocationStr(world, startx, starty, startz);
-                                setwb.put("artron_button", woodbuttonloc);
-                                wherewb.put("tardis_id", dbID);
-                                qf.doUpdate("tardis", setwb, wherewb);
+                                qf.insertControl(dbID, 6, woodbuttonloc, 0);
                             }
                             // remember lamp blocks
                             if (id == 124) {
