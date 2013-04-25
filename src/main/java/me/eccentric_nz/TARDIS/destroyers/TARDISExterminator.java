@@ -244,6 +244,10 @@ public class TARDISExterminator {
         HashMap<String, Object> did = new HashMap<String, Object>();
         did.put("tardis_id", id);
         qf.doDelete("doors", did);
+        // remove controls from controls table
+        HashMap<String, Object> oid = new HashMap<String, Object>();
+        oid.put("tardis_id", id);
+        qf.doDelete("controls", oid);
         // remove gravity wells
         HashMap<String, Object> gid = new HashMap<String, Object>();
         gid.put("tardis_id", id);
