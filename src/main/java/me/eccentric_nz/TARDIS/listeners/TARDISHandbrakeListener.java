@@ -77,7 +77,6 @@ public class TARDISHandbrakeListener implements Listener {
                 Location handbrake_loc = block.getLocation();
                 World handbrake_locw = block.getWorld();
                 String hb_loc = block.getLocation().toString();
-                //ResultSet data used through the file
                 HashMap<String, Object> where = new HashMap<String, Object>();
                 where.put("type", 0);
                 where.put("location", hb_loc);
