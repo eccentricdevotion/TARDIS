@@ -21,6 +21,7 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants.COMPASS;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
+import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.rooms.TARDISRoomRemover;
 import org.bukkit.Effect;
 import org.bukkit.Location;
@@ -94,6 +95,21 @@ public class TARDISJettisonSeeder implements Listener {
                     HashMap<String, Object> set = new HashMap<String, Object>();
                     set.put("owner", playerNameStr);
                     qf.alterEnergyLevel("tardis", amount, set, player);
+                    // if it is a secondary console room remove the controls
+                    if (r.equals("BAKER") || r.equals("WOOD")) {
+                        // get tardis_id
+                        HashMap<String, Object> wheret = new HashMap<String, Object>();
+                        wheret.put("owner", playerNameStr);
+                        ResultSetTardis rst = new ResultSetTardis(plugin, wheret, "", false);
+                        if (rst.resultSet()) {
+                            int id = rst.getTardis_id();
+                            int secondary = (r.equals("BAKER")) ? 1 : 2;
+                            HashMap<String, Object> del = new HashMap<String, Object>();
+                            del.put("tardis_id", id);
+                            del.put("secondary", secondary);
+                            qf.doDelete("controls", del);
+                        }
+                    }
                     player.sendMessage(plugin.pluginName + "You added " + amount + " to the Artron Energy Capacitor");
                 } else {
                     player.sendMessage(plugin.pluginName + "The room has already been jettisoned!");

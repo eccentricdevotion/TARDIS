@@ -22,6 +22,8 @@ import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
+import me.eccentric_nz.TARDIS.database.ResultSetControls;
+import me.eccentric_nz.TARDIS.database.ResultSetRepeaters;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.thirdparty.Version;
@@ -82,40 +84,30 @@ public class TARDISButtonListener implements Listener {
                 // only proceed if they are clicking a type of a button or a lever!
                 if (validBlocks.contains(blockType)) {
                     // get clicked block location
-                    Location b = block.getLocation();
-                    String bw = b.getWorld().getName();
-                    int bx = b.getBlockX();
-                    int by = b.getBlockY();
-                    int bz = b.getBlockZ();
-                    String buttonloc = bw + ":" + bx + ":" + by + ":" + bz;
+                    String buttonloc = block.getLocation().toString();
                     // get tardis from saved button location
                     HashMap<String, Object> where = new HashMap<String, Object>();
-                    where.put("button", buttonloc);
-                    ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
-                    if (rs.resultSet()) {
-                        int id = rs.getTardis_id();
-                        if (!rs.isHandbrake_on()) {
-                            player.sendMessage(plugin.pluginName + ChatColor.RED + "You cannot set a destination while the TARDIS is travelling!");
-                            return;
-                        }
-                        int level = rs.getArtron_level();
-                        if (level < plugin.getConfig().getInt("random")) {
-                            player.sendMessage(plugin.pluginName + ChatColor.RED + "The TARDIS does not have enough Artron Energy to make this trip!");
-                            return;
-                        }
-                        String tl = rs.getOwner();
-                        String r0_str = rs.getRepeater0();
-                        String r1_str = rs.getRepeater1();
-                        String r2_str = rs.getRepeater2();
-                        String r3_str = rs.getRepeater3();
-                        TARDISConstants.COMPASS dir = rs.getDirection();
+                    where.put("type", 1);
+                    where.put("location", buttonloc);
+                    ResultSetControls rsc = new ResultSetControls(plugin, where, false);
+                    if (rsc.resultSet()) {
+                        int id = rsc.getTardis_id();
+                        HashMap<String, Object> whereid = new HashMap<String, Object>();
+                        whereid.put("tardis_id", id);
+                        ResultSetTardis rs = new ResultSetTardis(plugin, whereid, "", false);
+                        if (rs.resultSet()) {
+                            if (!rs.isHandbrake_on()) {
+                                player.sendMessage(plugin.pluginName + ChatColor.RED + "You cannot set a destination while the TARDIS is travelling!");
+                                return;
+                            }
+                            int level = rs.getArtron_level();
+                            if (level < plugin.getConfig().getInt("random")) {
+                                player.sendMessage(plugin.pluginName + ChatColor.RED + "The TARDIS does not have enough Artron Energy to make this trip!");
+                                return;
+                            }
 
-                        // check if player is travelling
-                        HashMap<String, Object> wheret = new HashMap<String, Object>();
-                        wheret.put("tardis_id", id);
-                        wheret.put("player", tl);
-                        ResultSetTravellers rst = new ResultSetTravellers(plugin, wheret, false);
-                        if (rst.resultSet()) {
+                            TARDISConstants.COMPASS dir = rs.getDirection();
+
                             QueryFactory qf = new QueryFactory(plugin);
                             // how many travellers are in the TARDIS?
                             plugin.utils.updateTravellerCount(id);
@@ -136,127 +128,117 @@ public class TARDISButtonListener implements Listener {
                                     player.sendMessage(plugin.pluginName + "Your TARDIS was approved for parking in [" + permArea + "]!");
                                 }
                             } else {
-                                // get repeater settings
-                                Location r0_loc = plugin.utils.getLocationFromDB(r0_str, 0, 0);
-                                Block r0 = r0_loc.getBlock();
-                                byte r0_data = r0.getData();
-                                Location r1_loc = plugin.utils.getLocationFromDB(r1_str, 0, 0);
-                                Block r1 = r1_loc.getBlock();
-                                byte r1_data = r1.getData();
-                                Location r2_loc = plugin.utils.getLocationFromDB(r2_str, 0, 0);
-                                Block r2 = r2_loc.getBlock();
-                                byte r2_data = r2.getData();
-                                Location r3_loc = plugin.utils.getLocationFromDB(r3_str, 0, 0);
-                                Block r3 = r3_loc.getBlock();
-                                byte r3_data = r3.getData();
-                                boolean playSound = true;
-                                String environment = "NORMAL";
-                                int nether_min = plugin.getConfig().getInt("nether_min");
-                                int the_end_min = plugin.getConfig().getInt("the_end_min");
-                                if (r0_data <= 3) { // first position
-                                    if (!plugin.getConfig().getBoolean("nether") && !plugin.getConfig().getBoolean("the_end")) {
-                                        environment = "NORMAL";
-                                    } else if (!plugin.getConfig().getBoolean("nether") || !plugin.getConfig().getBoolean("the_end")) {
-                                        if (plugin.getConfig().getBoolean("the_end") && player.hasPermission("tardis.end")) {
-                                            environment = (level >= the_end_min) ? "NORMAL:THE_END" : "NORMAL";
-                                        }
-                                        if (plugin.getConfig().getBoolean("nether") && player.hasPermission("tardis.nether")) {
-                                            environment = (level >= nether_min) ? "NORMAL:NETHER" : "NORMAL";
-                                        }
-                                    } else {
-                                        if (player.hasPermission("tardis.end") && player.hasPermission("tardis.nether")) {
-                                            // check they have enough artron energy to travel to the NETHER or THE_END
-                                            if (level < nether_min) {
-                                                environment = "NORMAL";
-                                            } else if (level >= nether_min && level < the_end_min) {
-                                                environment = "NORMAL:NETHER";
-                                            } else {
-                                                environment = "NORMAL:NETHER:THE_END";
+                                ResultSetRepeaters rsr = new ResultSetRepeaters(plugin, id, rsc.getSecondary());
+                                if (rsr.resultSet()) {
+                                    String environment = "NORMAL";
+                                    int nether_min = plugin.getConfig().getInt("nether_min");
+                                    int the_end_min = plugin.getConfig().getInt("the_end_min");
+                                    byte[] repeaters = rsr.getRepeaters();
+                                    if (repeaters[0] <= 3) { // first position
+                                        if (!plugin.getConfig().getBoolean("nether") && !plugin.getConfig().getBoolean("the_end")) {
+                                            environment = "NORMAL";
+                                        } else if (!plugin.getConfig().getBoolean("nether") || !plugin.getConfig().getBoolean("the_end")) {
+                                            if (plugin.getConfig().getBoolean("the_end") && player.hasPermission("tardis.end")) {
+                                                environment = (level >= the_end_min) ? "NORMAL:THE_END" : "NORMAL";
                                             }
-                                        }
-                                        if (!player.hasPermission("tardis.end") && player.hasPermission("tardis.nether")) {
-                                            // check they have enough artron energy to travel to the NETHER
-                                            environment = (level >= nether_min) ? "NORMAL:NETHER" : "NORMAL";
-                                        }
-                                        if (player.hasPermission("tardis.end") && !player.hasPermission("tardis.nether")) {
-                                            // check they have enough artron energy to travel to THE_END
-                                            environment = (level >= the_end_min) ? "NORMAL:THE_END" : "NORMAL";
-                                        }
-                                    }
-                                }
-                                if (r0_data >= 4 && r0_data <= 7) { // second position
-                                    environment = "NORMAL";
-                                }
-                                if (r0_data >= 8 && r0_data <= 11) { // third position
-                                    if (plugin.getConfig().getBoolean("nether") && player.hasPermission("tardis.nether")) {
-                                        // check they have enough artron energy to travel to the NETHER
-                                        if (level < nether_min) {
-                                            environment = "NORMAL";
-                                            player.sendMessage(plugin.pluginName + "You need at least " + nether_min + " Artron Energy to travel to the Nether! Overworld selected.");
+                                            if (plugin.getConfig().getBoolean("nether") && player.hasPermission("tardis.nether")) {
+                                                environment = (level >= nether_min) ? "NORMAL:NETHER" : "NORMAL";
+                                            }
                                         } else {
-                                            environment = "NETHER";
-                                        }
-                                    } else {
-                                        String message = (player.hasPermission("tardis.nether")) ? "The ancient, dusty senators of Gallifrey have disabled time travel to the Nether" : "You do not have permission to time travel to the Nether";
-                                        player.sendMessage(plugin.pluginName + message);
-                                    }
-                                }
-                                if (r0_data >= 12 && r0_data <= 15) { // last position
-                                    if (plugin.getConfig().getBoolean("the_end") && player.hasPermission("tardis.end")) {
-                                        // check they have enough artron energy to travel to THE_END
-                                        if (level < the_end_min) {
-                                            environment = "NORMAL";
-                                            player.sendMessage(plugin.pluginName + "You need at least " + the_end_min + " Artron Energy to travel to The End! Overworld selected.");
-                                        } else {
-                                            environment = "THE_END";
-                                        }
-                                    } else {
-                                        String message = (player.hasPermission("tardis.end")) ? "The ancient, dusty senators of Gallifrey have disabled time travel to The End" : "You do not have permission to time travel to The End";
-                                        player.sendMessage(plugin.pluginName + message);
-                                    }
-                                }
-                                // create a random destination
-                                TARDISTimetravel tt = new TARDISTimetravel(plugin);
-                                Location rand = tt.randomDestination(player, r1_data, r2_data, r3_data, dir, environment);
-                                if (rand != null) {
-                                    String d = rand.getWorld().getName() + ":" + rand.getBlockX() + ":" + rand.getBlockY() + ":" + rand.getBlockZ();
-                                    String dchat = rand.getWorld().getName() + " at x: " + rand.getBlockX() + " y: " + rand.getBlockY() + " z: " + rand.getBlockZ();
-                                    boolean isTL = true;
-                                    String comps = rs.getCompanions();
-                                    if (comps != null && !comps.isEmpty()) {
-                                        String[] companions = comps.split(":");
-                                        for (String c : companions) {
-                                            // are they online - AND are they travelling
-                                            if (plugin.getServer().getPlayer(c) != null) {
-                                                // are they travelling
-                                                HashMap<String, Object> wherec = new HashMap<String, Object>();
-                                                wherec.put("tardis_id", id);
-                                                wherec.put("player", c);
-                                                ResultSetTravellers rsc = new ResultSetTravellers(plugin, wherec, false);
-                                                if (rsc.resultSet()) {
-                                                    plugin.getServer().getPlayer(c).sendMessage(plugin.pluginName + "Destination: " + dchat);
+                                            if (player.hasPermission("tardis.end") && player.hasPermission("tardis.nether")) {
+                                                // check they have enough artron energy to travel to the NETHER or THE_END
+                                                if (level < nether_min) {
+                                                    environment = "NORMAL";
+                                                } else if (level >= nether_min && level < the_end_min) {
+                                                    environment = "NORMAL:NETHER";
+                                                } else {
+                                                    environment = "NORMAL:NETHER:THE_END";
                                                 }
                                             }
-                                            if (c.equalsIgnoreCase(player.getName())) {
-                                                isTL = false;
+                                            if (!player.hasPermission("tardis.end") && player.hasPermission("tardis.nether")) {
+                                                // check they have enough artron energy to travel to the NETHER
+                                                environment = (level >= nether_min) ? "NORMAL:NETHER" : "NORMAL";
+                                            }
+                                            if (player.hasPermission("tardis.end") && !player.hasPermission("tardis.nether")) {
+                                                // check they have enough artron energy to travel to THE_END
+                                                environment = (level >= the_end_min) ? "NORMAL:THE_END" : "NORMAL";
                                             }
                                         }
                                     }
-                                    if (isTL == true) {
-                                        player.sendMessage(plugin.pluginName + "Destination: " + dchat);
-                                    } else {
-                                        if (plugin.getServer().getPlayer(rs.getOwner()) != null) {
-                                            plugin.getServer().getPlayer(rs.getOwner()).sendMessage(plugin.pluginName + "Destination: " + dchat);
+                                    if (repeaters[0] >= 4 && repeaters[0] <= 7) { // second position
+                                        environment = "NORMAL";
+                                    }
+                                    if (repeaters[0] >= 8 && repeaters[0] <= 11) { // third position
+                                        if (plugin.getConfig().getBoolean("nether") && player.hasPermission("tardis.nether")) {
+                                            // check they have enough artron energy to travel to the NETHER
+                                            if (level < nether_min) {
+                                                environment = "NORMAL";
+                                                player.sendMessage(plugin.pluginName + "You need at least " + nether_min + " Artron Energy to travel to the Nether! Overworld selected.");
+                                            } else {
+                                                environment = "NETHER";
+                                            }
+                                        } else {
+                                            String message = (player.hasPermission("tardis.nether")) ? "The ancient, dusty senators of Gallifrey have disabled time travel to the Nether" : "You do not have permission to time travel to the Nether";
+                                            player.sendMessage(plugin.pluginName + message);
                                         }
                                     }
-                                    HashMap<String, Object> set = new HashMap<String, Object>();
-                                    set.put("save", d);
-                                    HashMap<String, Object> wherel = new HashMap<String, Object>();
-                                    wherel.put("tardis_id", id);
-                                    qf.doUpdate("tardis", set, wherel);
-                                    plugin.tardisHasDestination.put(id, plugin.getConfig().getInt("random"));
-                                } else {
-                                    player.sendMessage(plugin.pluginName + "Could not find a suitable location within the current settings, the area may be protected.");
+                                    if (repeaters[0] >= 12 && repeaters[0] <= 15) { // last position
+                                        if (plugin.getConfig().getBoolean("the_end") && player.hasPermission("tardis.end")) {
+                                            // check they have enough artron energy to travel to THE_END
+                                            if (level < the_end_min) {
+                                                environment = "NORMAL";
+                                                player.sendMessage(plugin.pluginName + "You need at least " + the_end_min + " Artron Energy to travel to The End! Overworld selected.");
+                                            } else {
+                                                environment = "THE_END";
+                                            }
+                                        } else {
+                                            String message = (player.hasPermission("tardis.end")) ? "The ancient, dusty senators of Gallifrey have disabled time travel to The End" : "You do not have permission to time travel to The End";
+                                            player.sendMessage(plugin.pluginName + message);
+                                        }
+                                    }
+                                    // create a random destination
+                                    TARDISTimetravel tt = new TARDISTimetravel(plugin);
+                                    Location rand = tt.randomDestination(player, repeaters[1], repeaters[2], repeaters[3], dir, environment);
+                                    if (rand != null) {
+                                        String d = rand.getWorld().getName() + ":" + rand.getBlockX() + ":" + rand.getBlockY() + ":" + rand.getBlockZ();
+                                        String dchat = rand.getWorld().getName() + " at x: " + rand.getBlockX() + " y: " + rand.getBlockY() + " z: " + rand.getBlockZ();
+                                        boolean isTL = true;
+                                        String comps = rs.getCompanions();
+                                        if (comps != null && !comps.isEmpty()) {
+                                            String[] companions = comps.split(":");
+                                            for (String c : companions) {
+                                                // are they online - AND are they travelling
+                                                if (plugin.getServer().getPlayer(c) != null) {
+                                                    // are they travelling
+                                                    HashMap<String, Object> wherec = new HashMap<String, Object>();
+                                                    wherec.put("tardis_id", id);
+                                                    wherec.put("player", c);
+                                                    ResultSetTravellers rsv = new ResultSetTravellers(plugin, wherec, false);
+                                                    if (rsv.resultSet()) {
+                                                        plugin.getServer().getPlayer(c).sendMessage(plugin.pluginName + "Destination: " + dchat);
+                                                    }
+                                                }
+                                                if (c.equalsIgnoreCase(player.getName())) {
+                                                    isTL = false;
+                                                }
+                                            }
+                                        }
+                                        if (isTL == true) {
+                                            player.sendMessage(plugin.pluginName + "Destination: " + dchat);
+                                        } else {
+                                            if (plugin.getServer().getPlayer(rs.getOwner()) != null) {
+                                                plugin.getServer().getPlayer(rs.getOwner()).sendMessage(plugin.pluginName + "Destination: " + dchat);
+                                            }
+                                        }
+                                        HashMap<String, Object> set = new HashMap<String, Object>();
+                                        set.put("save", d);
+                                        HashMap<String, Object> wherel = new HashMap<String, Object>();
+                                        wherel.put("tardis_id", id);
+                                        qf.doUpdate("tardis", set, wherel);
+                                        plugin.tardisHasDestination.put(id, plugin.getConfig().getInt("random"));
+                                    } else {
+                                        player.sendMessage(plugin.pluginName + "Could not find a suitable location within the current settings, the area may be protected.");
+                                    }
                                 }
                             }
                         }
