@@ -138,24 +138,31 @@ public class TARDISArtronCapacitorListener implements Listener {
                                 // kickstart the TARDIS Artron Energy Capacitor
                                 // has the TARDIS been initialised?
                                 if (!rs.isTardis_init()) {
-                                    // get location from database
+                                    // get locations from database
                                     String creeper = rs.getCreeper();
+                                    String beacon = rs.getBeacon();
                                     if (!creeper.isEmpty() && !creeper.equals(":")) {
                                         String[] creeperData = creeper.split(":");
+                                        String[] beaconData = beacon.split(":");
                                         World w = block.getLocation().getWorld();
-                                        float cx = 0, cy = 0, cz = 0;
+                                        float cx = 0, cy = 0, cz = 0, bx = 0, by = 0, bz = 0;
                                         try {
                                             cx = Float.parseFloat(creeperData[1]);
                                             cy = Float.parseFloat(creeperData[2]) + 1;
                                             cz = Float.parseFloat(creeperData[3]);
+                                            bx = Float.parseFloat(beaconData[1]);
+                                            by = Float.parseFloat(beaconData[2]);
+                                            bz = Float.parseFloat(beaconData[3]);
                                         } catch (NumberFormatException nfe) {
                                             plugin.debug("Couldn't convert to a float! " + nfe.getMessage());
                                         }
-                                        Location l = new Location(w, cx, cy, cz);
+                                        Location cl = new Location(w, cx, cy, cz);
                                         plugin.myspawn = true;
-                                        Entity e = w.spawnEntity(l, EntityType.CREEPER);
+                                        Entity e = w.spawnEntity(cl, EntityType.CREEPER);
                                         Creeper c = (Creeper) e;
                                         c.setPowered(true);
+                                        Location bl = new Location(w, bx, by, bz);
+                                        bl.getBlock().setTypeId(20);
                                     }
                                     // set the capacitor to 50% charge
                                     HashMap<String, Object> set = new HashMap<String, Object>();
