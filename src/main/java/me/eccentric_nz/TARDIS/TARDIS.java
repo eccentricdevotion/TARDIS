@@ -68,7 +68,6 @@ import me.eccentric_nz.TARDIS.listeners.TARDISSignListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISTimeLordDeathListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISUpdateListener;
 import me.eccentric_nz.TARDIS.rooms.TARDISCondenserData;
-import me.eccentric_nz.TARDIS.thirdparty.ImprovedOfflinePlayer_api;
 import me.eccentric_nz.TARDIS.thirdparty.MetricsLite;
 import me.eccentric_nz.TARDIS.travel.TARDISArea;
 import me.eccentric_nz.TARDIS.travel.TARDISUpdateTravellerCount;
@@ -106,7 +105,6 @@ public class TARDIS extends JavaPlugin {
 
     public static TARDIS plugin;
     private static ArrayList<String> quotes = new ArrayList<String>();
-    public ImprovedOfflinePlayer_api iopHandler;
     TARDISDatabase service = TARDISDatabase.getInstance();
     public TARDISMakeTardisCSV tardisCSV = new TARDISMakeTardisCSV(this);
     public TARDISMakeRoomCSV roomCSV = new TARDISMakeRoomCSV(this);
@@ -191,50 +189,48 @@ public class TARDIS extends JavaPlugin {
         plugin = this;
         console = getServer().getConsoleSender();
 
-        if (loadClasses()) {
-            saveDefaultConfig();
-            TARDISConfiguration tc = new TARDISConfiguration(this);
-            tc.checkConfig();
-            checkTCG();
-            loadDatabase();
-            loadFiles();
-            loadAchievements();
-            seeds = getSeeds();
-            registerListeners();
-            loadCommands();
-            loadMetrics();
-            startSound();
-            loadWorldGuard();
-            loadTowny();
-            loadWorldBorder();
-            loadFactions();
+        saveDefaultConfig();
+        TARDISConfiguration tc = new TARDISConfiguration(this);
+        tc.checkConfig();
+        checkTCG();
+        loadDatabase();
+        loadFiles();
+        loadAchievements();
+        seeds = getSeeds();
+        registerListeners();
+        loadCommands();
+        loadMetrics();
+        startSound();
+        loadWorldGuard();
+        loadTowny();
+        loadWorldBorder();
+        loadFactions();
 
-            quote = quotes();
-            quotelen = quote.size();
-            if (getConfig().getBoolean("check_for_updates")) {
-                TARDISUpdateChecker update = new TARDISUpdateChecker(this);
-                update.checkVersion(null);
-            }
+        quote = quotes();
+        quotelen = quote.size();
+        if (getConfig().getBoolean("check_for_updates")) {
+            TARDISUpdateChecker update = new TARDISUpdateChecker(this);
+            update.checkVersion(null);
+        }
 
-            TARDISUpdateTravellerCount utc = new TARDISUpdateTravellerCount(this);
-            utc.getTravellers();
-            TARDISCreeperChecker cc = new TARDISCreeperChecker(this);
-            cc.startCreeperCheck();
-            if (pm.isPluginEnabled("TARDISChunkGenerator")) {
-                TARDISSpace alwaysNight = new TARDISSpace(this);
-                if (getConfig().getBoolean("keep_night")) {
-                    alwaysNight.keepNight();
-                }
+        TARDISUpdateTravellerCount utc = new TARDISUpdateTravellerCount(this);
+        utc.getTravellers();
+        TARDISCreeperChecker cc = new TARDISCreeperChecker(this);
+        cc.startCreeperCheck();
+        if (pm.isPluginEnabled("TARDISChunkGenerator")) {
+            TARDISSpace alwaysNight = new TARDISSpace(this);
+            if (getConfig().getBoolean("keep_night")) {
+                alwaysNight.keepNight();
             }
-            loadChunks();
-            TARDISBlockLoader bl = new TARDISBlockLoader(this);
-            bl.loadProtectBlocks();
-            bl.loadGravityWells();
-            loadPerms();
-            loadBooks();
-            if (!getConfig().getBoolean("conversion_done")) {
-                new TARDISControlsConverter(this).convertControls();
-            }
+        }
+        loadChunks();
+        TARDISBlockLoader bl = new TARDISBlockLoader(this);
+        bl.loadProtectBlocks();
+        bl.loadGravityWells();
+        loadPerms();
+        loadBooks();
+        if (!getConfig().getBoolean("conversion_done")) {
+            new TARDISControlsConverter(this).convertControls();
         }
     }
 
@@ -244,37 +240,6 @@ public class TARDIS extends JavaPlugin {
         saveChunks();
         saveConfig();
         closeDatabase();
-    }
-
-    /**
-     * Used to load net.minecraft.server methods for various versions of
-     * CraftBukkit.
-     */
-    private boolean loadClasses() {
-        boolean found;
-        String packageName = this.getServer().getClass().getPackage().getName();
-        // Get full package string of CraftServer.
-        // org.bukkit.craftbukkit.versionstring (or for pre-refactor, just org.bukkit.craftbukkit
-        String version = packageName.substring(packageName.lastIndexOf('.') + 1);
-        // Get the last element of the package
-        if (version.equals("craftbukkit")) { // If the last element of the package was "craftbukkit" we are now pre-refactor
-            version = "pre";
-        }
-        try {
-            final Class<?> clazz = Class.forName("me.eccentric_nz.TARDIS.thirdparty.ImprovedOfflinePlayer_" + version);
-            // Check if we have a NMSHandler class at that location.
-            if (ImprovedOfflinePlayer_api.class.isAssignableFrom(clazz)) { // Make sure it actually implements IOP
-                this.iopHandler = (ImprovedOfflinePlayer_api) clazz.getConstructor().newInstance(); // Set our handler
-            }
-            found = true;
-        } catch (final Exception e) {
-            this.getLogger().severe("Could not load support for this CraftBukkit version.");
-            this.getLogger().info("Check for updates at http://dev.bukkit.org/server-mods/tardis/");
-            this.setEnabled(false);
-            found = false;
-        }
-        console.sendMessage(pluginName + "Loading support for CB " + version);
-        return found;
     }
 
     /**

@@ -537,18 +537,6 @@ public class TARDISAdminCommands implements CommandExecutor {
                         HashMap<String, Object> whered = new HashMap<String, Object>();
                         whered.put("tardis_id", id);
                         if (rst.resultSet()) {
-                            Location spawn;
-                            if (name.contains("TARDIS_WORLD_") || plugin.getConfig().getBoolean("default_world")) {
-                                spawn = plugin.getServer().getWorlds().get(0).getSpawnLocation();
-                            } else {
-                                spawn = cw.getSpawnLocation();
-                            }
-                            ArrayList<HashMap<String, String>> data = rst.getData();
-                            for (HashMap<String, String> map : data) {
-                                String op = plugin.getServer().getOfflinePlayer(map.get("player")).getName();
-                                // teleport offline player to spawn
-                                plugin.iopHandler.setLocation(op, spawn);
-                            }
                             qf.doDelete("travellers", whered);
                         }
                         // get the current location
