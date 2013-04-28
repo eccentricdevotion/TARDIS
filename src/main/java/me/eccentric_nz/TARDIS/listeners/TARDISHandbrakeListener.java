@@ -23,6 +23,7 @@ import me.eccentric_nz.TARDIS.achievement.TARDISAchievementFactory;
 import me.eccentric_nz.TARDIS.artron.TARDISArtronLevels;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetControls;
+import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.travel.TARDISMalfunction;
 import org.bukkit.Chunk;
@@ -98,6 +99,7 @@ public class TARDISHandbrakeListener implements Listener {
                         boolean cham = rs.isChamele_on();
                         String save = rs.getSave();
                         String cl = rs.getCurrent();
+                        String beacon = rs.getBeacon();
                         Location exit = null;
                         boolean error = false;
                         if (!plugin.tardisMaterialising.contains(Integer.valueOf(id))) {
@@ -105,9 +107,22 @@ public class TARDISHandbrakeListener implements Listener {
                             BlockState state = block.getState();
                             Lever lever = (Lever) state.getData();
                             int dist = 0;
+                            // should the beacon turn on
+                            HashMap<String, Object> wherek = new HashMap<String, Object>();
+                            wherek.put("player", player.getName());
+                            ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, wherek);
+                            boolean beac_on;
+                            if (rsp.resultSet()) {
+                                beac_on = rsp.isBeacon_on();
+                            } else {
+                                beac_on = true;
+                            }
                             if (action == Action.RIGHT_CLICK_BLOCK) {
                                 if (rs.isHandbrake_on()) {
                                     if (plugin.tardisHasDestination.containsKey(Integer.valueOf(id))) {
+                                        if (!beac_on && !beacon.isEmpty()) {
+                                            toggleBeacon(beacon, true);
+                                        }
                                         boolean malfunction = false;
                                         if (plugin.getConfig().getInt("malfunction") > 0) {
                                             // check for a malfunction
@@ -214,6 +229,9 @@ public class TARDISHandbrakeListener implements Listener {
                                     //Check if its at a recharge point
                                     TARDISArtronLevels tal = new TARDISArtronLevels(plugin);
                                     tal.recharge(id);
+                                    if (!beac_on && !beacon.isEmpty()) {
+                                        toggleBeacon(beacon, false);
+                                    }
                                     //Remove energy from TARDIS and sets database
                                     set.put("handbrake_on", 1);
                                     player.sendMessage(plugin.pluginName + "Handbrake ON! Nice parking...");
@@ -253,5 +271,21 @@ public class TARDISHandbrakeListener implements Listener {
                 }
             }
         }
+    }
+
+    private void toggleBeacon(String str, boolean on) {
+        String[] beaconData = str.split(":");
+        World w = plugin.getServer().getWorld(beaconData[0]);
+        float bx = 0, by = 0, bz = 0;
+        try {
+            bx = Float.parseFloat(beaconData[1]);
+            by = Float.parseFloat(beaconData[2]);
+            bz = Float.parseFloat(beaconData[3]);
+        } catch (NumberFormatException nfe) {
+            plugin.debug("Couldn't convert to a float! " + nfe.getMessage());
+        }
+        Location bl = new Location(w, bx, by, bz);
+        Block b = bl.getBlock();
+        b.setTypeId((on) ? 20 : 7);
     }
 }

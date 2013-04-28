@@ -30,6 +30,9 @@ import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.rooms.TARDISWalls;
 import me.eccentric_nz.TARDIS.utility.TARDISMaterials;
 import org.bukkit.ChatColor;
+import org.bukkit.Location;
+import org.bukkit.World;
+import org.bukkit.block.Block;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -56,6 +59,7 @@ public class TARDISPrefsCommands implements CommandExecutor {
     public TARDISPrefsCommands(TARDIS plugin) {
         this.plugin = plugin;
         firstArgs.add("auto");
+        firstArgs.add("beacon");
         firstArgs.add("floor");
         firstArgs.add("isomorphic");
         firstArgs.add("key");
@@ -168,7 +172,7 @@ public class TARDISPrefsCommands implements CommandExecutor {
                         sender.sendMessage(plugin.pluginName + "You need to specify if " + pref + " should be on or off!");
                         return false;
                     }
-                    List<String> was = Arrays.asList(new String[]{"auto", "platform"});
+                    List<String> was = Arrays.asList(new String[]{"auto", "beacon", "platform"});
                     // get the players preferences
                     HashMap<String, Object> where = new HashMap<String, Object>();
                     where.put("player", player.getName());
@@ -185,10 +189,16 @@ public class TARDISPrefsCommands implements CommandExecutor {
                     String grammar = (was.contains(pref)) ? " was" : " were";
                     if (args[1].equalsIgnoreCase("on")) {
                         setp.put(pref + "_on", 1);
+                        if (pref.equals("beacon")) {
+                            toggleBeacon(player.getName(), true);
+                        }
                         sender.sendMessage(plugin.pluginName + pref + grammar + " turned ON!");
                     }
                     if (args[1].equalsIgnoreCase("off")) {
                         setp.put(pref + "_on", 0);
+                        if (pref.equals("beacon")) {
+                            toggleBeacon(player.getName(), false);
+                        }
                         sender.sendMessage(plugin.pluginName + pref + grammar + " turned OFF.");
                     }
                     qf.doUpdate("player_prefs", setp, wherep);
@@ -200,5 +210,62 @@ public class TARDISPrefsCommands implements CommandExecutor {
             }
         }
         return false;
+    }
+
+    private void toggleBeacon(String name, boolean on) {
+        HashMap<String, Object> whereb = new HashMap<String, Object>();
+        whereb.put("owner", name);
+        ResultSetTardis rs = new ResultSetTardis(plugin, whereb, "", false);
+        if (rs.resultSet()) {
+            // toggle beacon
+            String beacon = rs.getBeacon();
+            String[] beaconData;
+            int plusy = 0;
+            if (beacon.isEmpty()) {
+                // get the location from the TARDIS size and the creeper location
+                switch (rs.getSchematic()) {
+                    case REDSTONE:
+                        plusy = 18;
+                        break;
+                    case ELEVENTH:
+                        plusy = 17;
+                        break;
+                    case DELUXE:
+                        plusy = 16;
+                        break;
+                    case BIGGER:
+                        plusy = 13;
+                        break;
+                    default:
+                        plusy = 12;
+                        break;
+                }
+                String creeper = rs.getCreeper();
+                beaconData = creeper.split(":");
+            } else {
+                beaconData = beacon.split(":");
+            }
+            World w = plugin.getServer().getWorld(beaconData[0]);
+            float bx = 0, by = 0, bz = 0;
+            try {
+                bx = Float.parseFloat(beaconData[1]);
+                by = Float.parseFloat(beaconData[2]) + plusy;
+                bz = Float.parseFloat(beaconData[3]);
+            } catch (NumberFormatException nfe) {
+                plugin.debug("Couldn't convert to a float! " + nfe.getMessage());
+            }
+            if (beacon.isEmpty()) {
+                String beacon_loc = beaconData[0] + ":" + beaconData[1] + ":" + by + ":" + beaconData[3];
+                HashMap<String, Object> set = new HashMap<String, Object>();
+                set.put("beacon", beacon_loc);
+                HashMap<String, Object> where = new HashMap<String, Object>();
+                where.put("tardis_id", rs.getTardis_id());
+                QueryFactory qf = new QueryFactory(plugin);
+                qf.doUpdate("tardis", set, where);
+            }
+            Location bl = new Location(w, bx, by, bz);
+            Block b = bl.getBlock();
+            b.setTypeId((on) ? 20 : 7);
+        }
     }
 }

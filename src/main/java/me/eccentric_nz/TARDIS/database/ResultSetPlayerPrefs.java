@@ -43,6 +43,7 @@ public class ResultSetPlayerPrefs {
     private boolean platform_on;
     private boolean quotes_on;
     private boolean auto_on;
+    private boolean beacon_on;
     private int artron_level;
     private String wall;
     private String floor;
@@ -103,6 +104,7 @@ public class ResultSetPlayerPrefs {
                 this.platform_on = rs.getBoolean("platform_on");
                 this.quotes_on = rs.getBoolean("quotes_on");
                 this.auto_on = rs.getBoolean("auto_on");
+                this.beacon_on = rs.getBoolean("beacon_on");
                 this.artron_level = rs.getInt("artron_level");
                 this.wall = rs.getString("wall");
                 this.floor = rs.getString("floor");
@@ -153,6 +155,10 @@ public class ResultSetPlayerPrefs {
 
     public boolean isAuto_on() {
         return auto_on;
+    }
+
+    public boolean isBeacon_on() {
+        return beacon_on;
     }
 
     public int getArtron_level() {

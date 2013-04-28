@@ -260,14 +260,6 @@ public class TARDISBuilderInner {
                                 wherecreep.put("tardis_id", dbID);
                                 qf.doUpdate("tardis", setcreep, wherecreep);
                             }
-                            if (id == 124 && plugin.getConfig().getInt("malfunction") > 0) {
-                                // remember lamp block locations for malfunction
-                                HashMap<String, Object> setlb = new HashMap<String, Object>();
-                                String lloc = world.getName() + ":" + startx + ":" + starty + ":" + startz;
-                                setlb.put("tardis_id", dbID);
-                                setlb.put("location", lloc);
-                                qf.doInsert("lamps", setlb);
-                            }
                             if (id == 92) {
                                 /*
                                  * This block will be converted to a lever by
@@ -284,10 +276,27 @@ public class TARDISBuilderInner {
                                 String woodbuttonloc = plugin.utils.makeLocationStr(world, startx, starty, startz);
                                 qf.insertControl(dbID, 6, woodbuttonloc, 0);
                             }
-                            // remember lamp blocks
+                            if (id == 7) {
+                                // remember bedrock location to block off the beacon light
+                                HashMap<String, Object> setbeac = new HashMap<String, Object>();
+                                HashMap<String, Object> wherebeac = new HashMap<String, Object>();
+                                String bedrocloc = world.getName() + ":" + startx + ":" + starty + ":" + startz;
+                                setbeac.put("beacon", bedrocloc);
+                                wherebeac.put("tardis_id", dbID);
+                                qf.doUpdate("tardis", setbeac, wherebeac);
+                            }
                             if (id == 124) {
+                                // remember lamp blocks
                                 Block lamp = world.getBlockAt(startx, starty, startz);
                                 lampblocks.add(lamp);
+                                if (plugin.getConfig().getInt("malfunction") > 0) {
+                                    // remember lamp block locations for malfunction
+                                    HashMap<String, Object> setlb = new HashMap<String, Object>();
+                                    String lloc = world.getName() + ":" + startx + ":" + starty + ":" + startz;
+                                    setlb.put("tardis_id", dbID);
+                                    setlb.put("location", lloc);
+                                    qf.doInsert("lamps", setlb);
+                                }
                             }
                             if (id == 35 && data == 1) {
                                 switch (middle_id) {
