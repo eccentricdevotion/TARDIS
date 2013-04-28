@@ -86,135 +86,175 @@ public class TARDISUpdateListener implements Listener {
     public void onUpdateInteract(PlayerInteractEvent event) {
         final Player player = event.getPlayer();
         final String playerNameStr = player.getName();
-
+        String blockName;
+        boolean secondary = false;
+        if (plugin.trackPlayers.containsKey(playerNameStr)) {
+            blockName = plugin.trackPlayers.get(playerNameStr);
+        } else if (plugin.trackSecondary.containsKey(playerNameStr)) {
+            blockName = plugin.trackSecondary.get(playerNameStr);
+            secondary = true;
+        } else {
+            return;
+        }
         Block block = event.getClickedBlock();
         if (block != null) {
             Material blockType = block.getType();
-            if (plugin.trackPlayers.containsKey(playerNameStr)) {
-                String blockName = plugin.trackPlayers.get(playerNameStr);
-                Location block_loc = block.getLocation();
-                World bw = block_loc.getWorld();
-                int bx = block_loc.getBlockX();
-                int by = block_loc.getBlockY();
-                int bz = block_loc.getBlockZ();
-                byte blockData = block.getData();
-                if (blockData >= 8 && blockType == Material.IRON_DOOR_BLOCK) {
-                    by = (by - 1);
-                    blockData = block.getRelative(BlockFace.DOWN).getData();
+            Location block_loc = block.getLocation();
+            World bw = block_loc.getWorld();
+            int bx = block_loc.getBlockX();
+            int by = block_loc.getBlockY();
+            int bz = block_loc.getBlockZ();
+            byte blockData = block.getData();
+            if (blockData >= 8 && blockType == Material.IRON_DOOR_BLOCK) {
+                by = (by - 1);
+                blockData = block.getRelative(BlockFace.DOWN).getData();
+            }
+            HashMap<String, Object> where = new HashMap<String, Object>();
+            where.put("owner", playerNameStr);
+            ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
+            if (!rs.resultSet()) {
+                player.sendMessage(plugin.pluginName + TARDISConstants.NO_TARDIS);
+                return;
+            }
+            int id = rs.getTardis_id();
+            String home = rs.getHome();
+            QueryFactory qf = new QueryFactory(plugin);
+            String table = "tardis";
+            HashMap<String, Object> tid = new HashMap<String, Object>();
+            HashMap<String, Object> set = new HashMap<String, Object>();
+            tid.put("tardis_id", id);
+            String blockLocStr = bw.getName() + ":" + bx + ":" + by + ":" + bz;
+            if (controls.containsKey(blockName)) {
+                if (!blockName.contains("repeater")) {
+                    blockLocStr = plugin.utils.makeLocationStr(bw, bx, by, bz);
                 }
-                HashMap<String, Object> where = new HashMap<String, Object>();
-                where.put("owner", player.getName());
-                ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
-                if (!rs.resultSet()) {
-                    player.sendMessage(plugin.pluginName + TARDISConstants.NO_TARDIS);
-                    return;
-                }
-                int id = rs.getTardis_id();
-                String home = rs.getHome();
-                QueryFactory qf = new QueryFactory(plugin);
-                String table = "tardis";
-                HashMap<String, Object> tid = new HashMap<String, Object>();
-                HashMap<String, Object> set = new HashMap<String, Object>();
-                tid.put("tardis_id", id);
-                String blockLocStr = bw.getName() + ":" + bx + ":" + by + ":" + bz;
-                if (controls.containsKey(blockName)) {
-                    if (!blockName.contains("repeater")) {
-                        blockLocStr = plugin.utils.makeLocationStr(bw, bx, by, bz);
-                    }
-                    table = "controls";
-                    tid.put("type", controls.get(blockName));
-                    tid.put("secondary", 0);
-                }
+                table = "controls";
+                tid.put("type", controls.get(blockName));
+                tid.put("secondary", 0);
+            }
+            if (secondary) {
+                plugin.trackSecondary.remove(playerNameStr);
+            } else {
                 plugin.trackPlayers.remove(playerNameStr);
-                if (blockName.equalsIgnoreCase("door") && blockType == Material.IRON_DOOR_BLOCK) {
-                    // get door data this should let us determine the direction
-                    String d = getDirection(blockData);
-                    table = "doors";
-                    set.put("door_location", blockLocStr);
-                    set.put("door_direction", d);
-                    tid.put("door_type", 1);
+            }
+            if (blockName.equalsIgnoreCase("door") && blockType == Material.IRON_DOOR_BLOCK) {
+                // get door data this should let us determine the direction
+                String d = getDirection(blockData);
+                table = "doors";
+                set.put("door_location", blockLocStr);
+                set.put("door_direction", d);
+                tid.put("door_type", 1);
+            }
+            if (blockName.equalsIgnoreCase("backdoor") && blockType == Material.IRON_DOOR_BLOCK) {
+                // get door data - this should let us determine the direction
+                String d = plugin.utils.getPlayersDirection(player, true);
+                table = "doors";
+                set.put("door_location", blockLocStr);
+                set.put("door_direction", d);
+                HashMap<String, Object> wheret = new HashMap<String, Object>();
+                wheret.put("tardis_id", id);
+                wheret.put("player", playerNameStr);
+                ResultSetTravellers rst = new ResultSetTravellers(plugin, wheret, false);
+                int type = (rst.resultSet()) ? 3 : 2;
+                tid.put("door_type", type);
+                // check if we have a backdoor yet
+                HashMap<String, Object> whered = new HashMap<String, Object>();
+                whered.put("tardis_id", id);
+                whered.put("door_type", type);
+                ResultSetDoors rsd = new ResultSetDoors(plugin, whered, false);
+                if (!rsd.resultSet()) {
+                    // insert record
+                    HashMap<String, Object> setd = new HashMap<String, Object>();
+                    setd.put("tardis_id", id);
+                    setd.put("door_type", type);
+                    setd.put("door_location", blockLocStr);
+                    setd.put("door_direction", d);
+                    qf.doInsert("doors", setd);
                 }
-                if (blockName.equalsIgnoreCase("backdoor") && blockType == Material.IRON_DOOR_BLOCK) {
-                    // get door data - this should let us determine the direction
-                    String d = plugin.utils.getPlayersDirection(player, true);
-                    table = "doors";
-                    set.put("door_location", blockLocStr);
-                    set.put("door_direction", d);
-                    HashMap<String, Object> wheret = new HashMap<String, Object>();
-                    wheret.put("tardis_id", id);
-                    wheret.put("player", playerNameStr);
-                    ResultSetTravellers rst = new ResultSetTravellers(plugin, wheret, false);
-                    int type = (rst.resultSet()) ? 3 : 2;
-                    tid.put("door_type", type);
-                    // check if we have a backdoor yet
-                    HashMap<String, Object> whered = new HashMap<String, Object>();
-                    whered.put("tardis_id", id);
-                    whered.put("door_type", type);
-                    ResultSetDoors rsd = new ResultSetDoors(plugin, whered, false);
-                    if (!rsd.resultSet()) {
-                        // insert record
-                        HashMap<String, Object> setd = new HashMap<String, Object>();
-                        setd.put("tardis_id", id);
-                        setd.put("door_type", type);
-                        setd.put("door_location", blockLocStr);
-                        setd.put("door_direction", d);
-                        qf.doInsert("doors", setd);
-                    }
-                }
-                if (blockName.equalsIgnoreCase("button") && (validBlocks.contains(blockType) || blockType == Material.LEVER)) {
-                    set.put("location", blockLocStr);
-                }
-                if (blockName.equalsIgnoreCase("scanner") && (validBlocks.contains(blockType) || blockType == Material.LEVER)) {
-                    set.put("scanner", blockLocStr);
-                }
-                if (blockName.equalsIgnoreCase("handbrake") && blockType == Material.LEVER) {
-                    set.put("location", blockLocStr);
-                }
-                if (blockName.equalsIgnoreCase("condenser") && blockType == Material.CHEST) {
-                    set.put("condenser", blockLocStr);
-                }
-                if (blockName.equalsIgnoreCase("world-repeater") && (blockType == Material.DIODE_BLOCK_OFF || blockType == Material.DIODE_BLOCK_ON)) {
-                    set.put("location", blockLocStr);
-                }
-                if (blockName.equalsIgnoreCase("x-repeater") && (blockType == Material.DIODE_BLOCK_OFF || blockType == Material.DIODE_BLOCK_ON)) {
-                    set.put("location", blockLocStr);
-                }
-                if (blockName.equalsIgnoreCase("z-repeater") && (blockType == Material.DIODE_BLOCK_OFF || blockType == Material.DIODE_BLOCK_ON)) {
-                    set.put("location", blockLocStr);
-                }
-                if (blockName.equalsIgnoreCase("y-repeater") && (blockType == Material.DIODE_BLOCK_OFF || blockType == Material.DIODE_BLOCK_ON)) {
-                    set.put("location", blockLocStr);
-                }
-                if (blockName.equalsIgnoreCase("artron") && validBlocks.contains(blockType)) {
-                    set.put("location", blockLocStr);
-                }
-                if (blockName.equalsIgnoreCase("chameleon") && (blockType == Material.WALL_SIGN || blockType == Material.SIGN_POST)) {
-                    set.put("chameleon", blockLocStr);
-                    set.put("chamele_on", 0);
-                    // add text to sign
-                    Sign s = (Sign) block.getState();
-                    s.setLine(0, "Chameleon");
-                    s.setLine(1, "Circuit");
-                    s.setLine(3, ChatColor.RED + "OFF");
-                    s.update();
-                }
-                if (blockName.equalsIgnoreCase("save-sign") && (blockType == Material.WALL_SIGN || blockType == Material.SIGN_POST)) {
-                    set.put("save_sign", blockLocStr);
-                    // add text to sign
-                    String[] coords = home.split(":");
-                    Sign s = (Sign) block.getState();
-                    s.setLine(0, "Saves");
-                    s.setLine(1, "Home");
-                    s.setLine(2, coords[0]);
-                    s.setLine(3, coords[1] + "," + coords[2] + "," + coords[3]);
-                    s.update();
-                }
-                if (set.size() > 0) {
-                    qf.doUpdate(table, set, tid);
-                    player.sendMessage(plugin.pluginName + "The position of the TARDIS " + blockName + " was updated successfully.");
+            }
+            if (blockName.equalsIgnoreCase("button") && (validBlocks.contains(blockType) || blockType == Material.LEVER)) {
+                if (secondary) {
+                    qf.insertControl(id, 1, blockLocStr, 1);
                 } else {
-                    player.sendMessage(plugin.pluginName + "You didn't click the correct type of block for the " + blockName + "! Try the command again.");
+                    set.put("location", blockLocStr);
                 }
+            }
+            if (blockName.equalsIgnoreCase("scanner") && (validBlocks.contains(blockType) || blockType == Material.LEVER)) {
+                set.put("scanner", blockLocStr);
+            }
+            if (blockName.equalsIgnoreCase("handbrake") && blockType == Material.LEVER) {
+                if (secondary) {
+                    qf.insertControl(id, 0, blockLocStr, 1);
+                } else {
+                    set.put("location", blockLocStr);
+                }
+            }
+            if (blockName.equalsIgnoreCase("condenser") && blockType == Material.CHEST) {
+                set.put("condenser", blockLocStr);
+            }
+            if (blockName.equalsIgnoreCase("world-repeater") && (blockType == Material.DIODE_BLOCK_OFF || blockType == Material.DIODE_BLOCK_ON)) {
+                if (secondary) {
+                    qf.insertControl(id, 5, blockLocStr, 1);
+                } else {
+                    set.put("location", blockLocStr);
+                }
+            }
+            if (blockName.equalsIgnoreCase("x-repeater") && (blockType == Material.DIODE_BLOCK_OFF || blockType == Material.DIODE_BLOCK_ON)) {
+                if (secondary) {
+                    qf.insertControl(id, 2, blockLocStr, 1);
+                } else {
+                    set.put("location", blockLocStr);
+                }
+            }
+            if (blockName.equalsIgnoreCase("z-repeater") && (blockType == Material.DIODE_BLOCK_OFF || blockType == Material.DIODE_BLOCK_ON)) {
+                if (secondary) {
+                    qf.insertControl(id, 3, blockLocStr, 1);
+                } else {
+                    set.put("location", blockLocStr);
+                }
+            }
+            if (blockName.equalsIgnoreCase("y-repeater") && (blockType == Material.DIODE_BLOCK_OFF || blockType == Material.DIODE_BLOCK_ON)) {
+                if (secondary) {
+                    qf.insertControl(id, 4, blockLocStr, 1);
+                } else {
+                    set.put("location", blockLocStr);
+                }
+            }
+            if (blockName.equalsIgnoreCase("artron") && validBlocks.contains(blockType)) {
+                if (secondary) {
+                    qf.insertControl(id, 6, blockLocStr, 1);
+                } else {
+                    set.put("location", blockLocStr);
+                }
+            }
+            if (blockName.equalsIgnoreCase("chameleon") && (blockType == Material.WALL_SIGN || blockType == Material.SIGN_POST)) {
+                set.put("chameleon", blockLocStr);
+                set.put("chamele_on", 0);
+                // add text to sign
+                Sign s = (Sign) block.getState();
+                s.setLine(0, "Chameleon");
+                s.setLine(1, "Circuit");
+                s.setLine(3, ChatColor.RED + "OFF");
+                s.update();
+            }
+            if (blockName.equalsIgnoreCase("save-sign") && (blockType == Material.WALL_SIGN || blockType == Material.SIGN_POST)) {
+                set.put("save_sign", blockLocStr);
+                // add text to sign
+                String[] coords = home.split(":");
+                Sign s = (Sign) block.getState();
+                s.setLine(0, "Saves");
+                s.setLine(1, "Home");
+                s.setLine(2, coords[0]);
+                s.setLine(3, coords[1] + "," + coords[2] + "," + coords[3]);
+                s.update();
+            }
+            if (set.size() > 0 || secondary) {
+                if (!secondary) {
+                    qf.doUpdate(table, set, tid);
+                }
+                player.sendMessage(plugin.pluginName + "The position of the TARDIS " + blockName + " was updated successfully.");
+            } else {
+                player.sendMessage(plugin.pluginName + "You didn't click the correct type of block for the " + blockName + "! Try the command again.");
             }
         }
     }

@@ -6,8 +6,6 @@
 ## Next version `2.3-beta-1`
 1. Check what happens when companions steal the TARDIS
 2. Check repeater order on console
-2. Test the `/tardis update` command
-2. Add a `/tardis secondary` command
 3. Add player pref to only have the beacon on while travelling
 
 ## Future version `2.4+`

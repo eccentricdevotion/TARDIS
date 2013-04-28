@@ -115,6 +115,7 @@ public class TARDISCommands implements CommandExecutor {
         firstArgs.add("gravity");
         firstArgs.add("room");
         firstArgs.add("save");
+        firstArgs.add("secondary");
         firstArgs.add("setdest");
         firstArgs.add("unbind");
         firstArgs.add("update");
@@ -789,6 +790,40 @@ public class TARDISCommands implements CommandExecutor {
                         return false;
                     }
                 }
+                if (args[0].equalsIgnoreCase("secondary")) {
+                    if (player.hasPermission("tardis.update")) {
+                        String[] validBlockNames = {"button", "world-repeater", "x-repeater", "z-repeater", "y-repeater", "artron", "handbrake"};
+                        if (args.length < 2) {
+                            sender.sendMessage(plugin.pluginName + "Too few command arguments!");
+                            return false;
+                        }
+                        String tardis_block = args[1].toLowerCase(Locale.ENGLISH);
+                        if (!Arrays.asList(validBlockNames).contains(tardis_block)) {
+                            player.sendMessage(plugin.pluginName + "That is not a valid TARDIS block name! Try one of : button|world-repeater|x-repeater|z-repeater|y-repeater|artron|handbrake");
+                            return false;
+                        }
+                        HashMap<String, Object> where = new HashMap<String, Object>();
+                        where.put("owner", player.getName());
+                        ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
+                        if (!rs.resultSet()) {
+                            sender.sendMessage(plugin.pluginName + "You are not a Timelord. You need to create a TARDIS first before using this command!");
+                            return false;
+                        }
+                        HashMap<String, Object> wheret = new HashMap<String, Object>();
+                        wheret.put("player", player.getName());
+                        ResultSetTravellers rst = new ResultSetTravellers(plugin, wheret, false);
+                        if (!rst.resultSet()) {
+                            sender.sendMessage(plugin.pluginName + "You are not inside your TARDIS. You need to be to run this command!");
+                            return false;
+                        }
+                        plugin.trackSecondary.put(player.getName(), tardis_block);
+                        player.sendMessage(plugin.pluginName + "Click the TARDIS " + tardis_block + " to update its position.");
+                        return true;
+                    } else {
+                        sender.sendMessage(plugin.pluginName + TARDISConstants.NO_PERMS_MESSAGE);
+                        return false;
+                    }
+                }
                 if (args[0].equalsIgnoreCase("rebuild") || args[0].equalsIgnoreCase("hide")) {
                     if (player.hasPermission("tardis.rebuild")) {
                         String save;
@@ -1374,6 +1409,7 @@ public class TARDISCommands implements CommandExecutor {
             }
         }
         // If the above has happened the function will break and return true. if this hasn't happened then value of false will be returned.
+
         return false;
     }
 }
