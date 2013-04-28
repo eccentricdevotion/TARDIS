@@ -255,6 +255,7 @@ public class TARDISPrefsCommands implements CommandExecutor {
                 plugin.debug("Couldn't convert to a float! " + nfe.getMessage());
             }
             if (beacon.isEmpty()) {
+                // update the tardis table so we don't have to do tnis again
                 String beacon_loc = beaconData[0] + ":" + beaconData[1] + ":" + by + ":" + beaconData[3];
                 HashMap<String, Object> set = new HashMap<String, Object>();
                 set.put("beacon", beacon_loc);
