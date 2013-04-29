@@ -26,9 +26,51 @@
     <section>
         <h1>Change log</h1>
         <h2>What&rsquo;s been changed?</h2>
+        <h3>v2.3-beta-1</h3>
+        <ul>
+            <li>The default for the config option <code>rooms_require_blocks</code> is now <code>false</code></li>
+            <li>Fixed the update checker giving the wrong message if a release version is available and the current version is a beta</li>
+            <li>Players can now add a <strong>back door</strong> to the tardis &mdash; and no funny jokes please...
+                <ul>
+                    <li>Requires the permission <code>tardis.backdoor</code></li>
+                    <li>Place a pair of IRON doors</li>
+                    <li>Use the command <code>/tardis update backdoor</code> to tell the TARDIS where they are located</li>
+                    <li>Using the back door requires Artron Energy &mdash; set the cost with the config option <code>backdoor</code></li>
+                </ul>
+            </li>
+            <li>Companions can now enter the TARDIS at any time (The Time Lord of the TARDIS does not have to be inside)</li>
+            <li>Added <strong>isomorphic controls</strong> so that Time Lords can lock the controls and prevent companions from stealing the TARDIS
+                <ul>
+                    <li>use the command <code>/tardisprefs isomorphic [on|off]</code></li>
+                </ul>
+            </li>
+            <li>Added the permission <code>tardis.exterminate</code> &mdash; players must have it to delete their TARDIS</li>
+            <li>Fixed some levers falling into the void (causing inactive lamps) in deluxe &amp; eleventh TARDIS schematics &mdash; <em>delete the old schematics</em></li>
+            <li>Fixed the handbrake not being added in the deluxe TARDIS schematic &mdash; <em>delete the old schematic</em></li>
+            <li>Added missing condensable <code>*_ITEM</code> items or cauldrons, brewing stands and nether_bricks to the condensables list. This should fix some rooms not being able to be grown when <code>rooms_require_blocks</code> is <code>true</code></li>
+            <li>Added the ability for functional secondary control consoles
+                <ul>
+                    <li>Old primary controls are automatically updated to the new format</li>
+                    <li>Old secondary controls can be updated with the command <code>tardis secondary [control]</code> &mdash; the command functions exactly the same way as <code>/tardis update</code></li>
+                    <li>Growing a <em>baker</em> or <em>wood</em> secondary console room automatically adds functional secondary controls &mdash; <em>delete the old room schematics</em></li>
+                </ul>
+            </li>
+            <li>Added a player preference to only have the TARDIS beacon on while travelling &mdash; <code>/tardisprefs beacon [on|off]</code>
+                <ul>
+                    <li>In new TARDISes the beacon is off until the Artron Energy Capacitor is initialised by clicking the Artron button with the TARDIS key &mdash; <em>delete the old schematics</em></li>
+                </ul>
+            </li>
+            <li>Removed all reliance on NMS and OCB methods
+                <ul>
+                    <li>this means that offline players no longer have their location set to the server&rsquo;s default world spawn point (probably a non-issue as spawn is usually controlled by another plugin anyway e.g. Essentials Spawn)</li>
+                    <li>this also means that the plugin will not break with every CraftBukkit update :)</li>
+                </ul>
+            </li>
+            <li>Fixed a NPE when trying the rename the TARDIS key when it is AIR</li>
+        </ul>
         <h3>v2.2</h3>
         <ul>
-        	<li>Updated for Bukkit 1.5.1-R0.3</li>
+            <li>Updated for Bukkit 1.5.1-R0.3</li>
             <li> Fixes levers popping off in the Budget and Bigger TARDIS schematics &mdash; delete the old schematics to update</li>
             <li> Fixed typo in malfunction message</li>
             <li> Fixed book titles also displaying the achievement reward</li>
