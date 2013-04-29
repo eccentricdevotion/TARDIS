@@ -104,6 +104,7 @@ public class TARDISArtronCapacitorListener implements Listener {
                             HashMap<String, Object> whereid = new HashMap<String, Object>();
                             whereid.put("tardis_id", id);
                             int current_level = rs.getArtron_level();
+                            boolean init = rs.isTardis_init();
                             int fc = plugin.getConfig().getInt("full_charge");
                             Material item = player.getItemInHand().getType();
                             Material full = Material.valueOf(plugin.getConfig().getString("full_charge_item"));
@@ -121,6 +122,10 @@ public class TARDISArtronCapacitorListener implements Listener {
                                 key = plugin.getConfig().getString("key");
                             }
                             if (item.equals(full)) {
+                                if (!init) {
+                                    player.sendMessage(plugin.pluginName + "You haven't initialised the Artron Energy capacitor yet!");
+                                    return;
+                                }
                                 // give TARDIS full charge
                                 HashMap<String, Object> set = new HashMap<String, Object>();
                                 set.put("artron_level", fc);
@@ -137,7 +142,7 @@ public class TARDISArtronCapacitorListener implements Listener {
                             } else if (item.equals(Material.getMaterial(key))) {
                                 // kickstart the TARDIS Artron Energy Capacitor
                                 // has the TARDIS been initialised?
-                                if (!rs.isTardis_init()) {
+                                if (!init) {
                                     // get locations from database
                                     String creeper = rs.getCreeper();
                                     String beacon = rs.getBeacon();
@@ -175,6 +180,10 @@ public class TARDISArtronCapacitorListener implements Listener {
                                     player.sendMessage(plugin.pluginName + "You can only kick-start the Artron Energy Capacitor once!");
                                 }
                             } else if (player.isSneaking()) {
+                                if (!init) {
+                                    player.sendMessage(plugin.pluginName + "You haven't initialised the Artron Energy capacitor yet!");
+                                    return;
+                                }
                                 // transfer player artron energy into the capacitor
                                 int ten_percent = Math.round(fc * 0.1F);
                                 if (current_level >= ten_percent && plugin.getConfig().getBoolean("create_worlds")) {
