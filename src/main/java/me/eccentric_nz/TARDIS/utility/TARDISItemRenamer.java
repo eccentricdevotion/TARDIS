@@ -44,12 +44,16 @@ public class TARDISItemRenamer {
      */
     public void setName(String name, boolean setlore) {
         ItemMeta im = this.itemStack.getItemMeta();
-        im.setDisplayName(name);
-        if (setlore) {
-            ArrayList<String> lore = new ArrayList<String>();
-            lore.add("Enter and exit your TARDIS");
-            im.setLore(lore);
+        if (im == null) {
+            System.out.println("[TARDIS] Debug: ItemMeta was null for ItemStack: " + itemStack.toString());
+        } else {
+            im.setDisplayName(name);
+            if (setlore) {
+                ArrayList<String> lore = new ArrayList<String>();
+                lore.add("Enter and exit your TARDIS");
+                im.setLore(lore);
+            }
+            this.itemStack.setItemMeta(im);
         }
-        this.itemStack.setItemMeta(im);
     }
 }
