@@ -1292,6 +1292,10 @@ public class TARDISCommands implements CommandExecutor {
                         key = plugin.getConfig().getString("key");
                     }
                     Material m = Material.getMaterial(key);
+                    if (m.equals(Material.AIR)) {
+                        sender.sendMessage(plugin.pluginName + "You cannot rename AIR!");
+                        return true;
+                    }
                     ItemStack is = player.getItemInHand();
                     if (!is.getType().equals(m)) {
                         sender.sendMessage(plugin.pluginName + "You can only rename the TARDIS key!");
