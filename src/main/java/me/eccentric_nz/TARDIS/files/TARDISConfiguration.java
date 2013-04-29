@@ -219,7 +219,6 @@ public class TARDISConfiguration {
         }
         if (!config.isConfigurationSection("rechargers")) {
             plugin.getConfig().createSection("rechargers");
-            i++;
         }
         if (config.contains("rooms.FIRST")) {
             plugin.getConfig().set("rooms.FIRST", null);

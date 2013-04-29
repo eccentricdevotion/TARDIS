@@ -29,6 +29,7 @@ gamemode: survival
 materialise: true
 confirm_timeout: 15
 keep_night: true
+count: 0
 #rooms
 rooms:
   PASSAGE:
