@@ -67,7 +67,7 @@
         <dependency>
             <groupId>org.getspout</groupId>
             <artifactId>spoutplugin</artifactId>
-            <version>1.4.7-R1.0-b1432</version>
+            <version>1.5.1-R0.3-b1442</version>
             <type>jar</type>
             <scope>compile</scope>
         </dependency>
@@ -95,7 +95,7 @@
         <dependency>
             <groupId>com.wimbli.WorldBorder</groupId>
             <artifactId>WorldBorder</artifactId>
-            <version>1.7.0</version>
+            <version>1.7.2</version>
             <type>jar</type>
             <scope>compile</scope>
         </dependency>
@@ -116,14 +116,14 @@
         <dependency>
             <groupId>multiworld</groupId>
             <artifactId>MultiWorld</artifactId>
-            <version>4.5.2</version>
+            <version>4.5.4</version>
             <type>jar</type>
             <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>com.massivecraft</groupId>
             <artifactId>factions</artifactId>
-            <version>1.8.0</version>
+            <version>1.8.2</version>
             <type>jar</type>
             <scope>compile</scope>
         </dependency>
