@@ -56,6 +56,9 @@ public class TARDISBookCommands implements CommandExecutor {
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
         // If the player typed /tardisbook then do the following...
         if (cmd.getName().equalsIgnoreCase("tardisbook")) {
+            if (args.length < 1) {
+                return false;
+            }
             if (sender.hasPermission("tardis.book")) {
                 String first = args[0].toLowerCase(Locale.ENGLISH);
                 if (first.equals("list")) {
