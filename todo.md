@@ -1,9 +1,12 @@
 # TODO
 
 ## Current version `2.3-beta-1`
-1. Check what happens when companions steal the TARDIS
-2. Add video for books/achievements
-3. Add docs for new features
+1. Add a check that ***both*** back doors have been added
+2. Add option to return seed block when room is jettisoned
+3. Check what happens when companions steal the TARDIS
+4. Add video for books/achievements
+5. Add docs for new features
+6. Add separate directory for user schematics
 
 ## Next version `2.4+`
 1. Add an Emergency Program system. If a Time Lord dies, the autonomous circuit is on, and there are companions inside the TARDIS, then a fake "player" will spawn near the console and give a prerecorded "message" to the TARDIS occupants through chat. Add a preference setting for it, as well as making the message configurable by the player.

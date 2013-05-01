@@ -84,8 +84,21 @@ public class TARDISSpace {
                 plugin.getServer().dispatchCommand(plugin.console, "mv modify set pvp false " + name);
                 plugin.getServer().dispatchCommand(plugin.console, "mv modify set mode " + gm + " " + name);
             }
+            String inventory_group = plugin.getConfig().getString("inventory_group");
+            if (plugin.pm.isPluginEnabled("My Worlds")) {
+                plugin.getServer().dispatchCommand(plugin.console, "myworlds load " + name + ":TARDISChunkGenerator");
+                plugin.getServer().dispatchCommand(plugin.console, "myworlds denyspawn all " + name);
+                plugin.getServer().dispatchCommand(plugin.console, "myworlds weather always sunny " + name);
+                plugin.getServer().dispatchCommand(plugin.console, "myworlds gamemode " + gm + " " + name);
+                if (plugin.getConfig().getBoolean("keep_night")) {
+                    plugin.getServer().dispatchCommand(plugin.console, "myworlds time always night " + name);
+                }
+                if (!inventory_group.equals("0")) {
+                    plugin.getServer().dispatchCommand(plugin.console, "world inventory merge " + name + " " + inventory_group);
+                }
+                plugin.getServer().dispatchCommand(plugin.console, "world config save");
+            }
             if (plugin.pm.isPluginEnabled("Multiverse-Inventories")) {
-                String inventory_group = plugin.getConfig().getString("inventory_group");
                 if (!inventory_group.equals("0")) {
                     MultiverseInventories mi = (MultiverseInventories) plugin.pm.getPlugin("Multiverse-Inventories");
                     WorldGroupProfile wgp = mi.getGroupManager().getGroup(inventory_group);
