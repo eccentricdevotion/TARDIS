@@ -232,6 +232,8 @@ public class TARDISDoorListener implements Listener {
                                 tid.put("tardis_id", id);
                                 ResultSetTardis rs = new ResultSetTardis(plugin, tid, "", false);
                                 if (rs.resultSet()) {
+                                    int artron = rs.getArtron_level();
+                                    int required = plugin.getConfig().getInt("backdoor");
                                     TARDISConstants.COMPASS d = rs.getDirection();
                                     String tl = rs.getOwner();
                                     String current = rs.getCurrent();
@@ -353,9 +355,17 @@ public class TARDISDoorListener implements Listener {
                                             }
                                             break;
                                         case 2:
+                                            if (artron < required) {
+                                                player.sendMessage(plugin.pluginName + "You don't have enough Artron Energy to use the back door!");
+                                                return;
+                                            }
                                             // always enter by the back door
                                             TARDISDoorLocation ibdl = getDoor(3, id);
                                             Location ibd_loc = ibdl.getL();
+                                            if (ibd_loc == null) {
+                                                player.sendMessage(plugin.pluginName + "You need to add a back door inside the TARDIS!");
+                                                return;
+                                            }
                                             TARDISConstants.COMPASS ibdd = ibdl.getD();
                                             TARDISConstants.COMPASS ipd = TARDISConstants.COMPASS.valueOf(plugin.utils.getPlayersDirection(player, false));
                                             if (!ibdd.equals(ipd)) {
@@ -380,9 +390,17 @@ public class TARDISDoorListener implements Listener {
                                             qf.alterEnergyLevel("tardis", cost, wheree, player);
                                             break;
                                         case 3:
+                                            if (artron < required) {
+                                                player.sendMessage(plugin.pluginName + "You don't have enough Artron Energy to use the back door!");
+                                                return;
+                                            }
                                             // always exit to outer back door
                                             TARDISDoorLocation obdl = getDoor(2, id);
                                             Location obd_loc = obdl.getL();
+                                            if (obd_loc == null) {
+                                                player.sendMessage(plugin.pluginName + "You need to add a back door outside the TARDIS!");
+                                                return;
+                                            }
                                             TARDISConstants.COMPASS obdd = obdl.getD();
                                             TARDISConstants.COMPASS opd = TARDISConstants.COMPASS.valueOf(plugin.utils.getPlayersDirection(player, false));
                                             if (!obdd.equals(opd)) {
@@ -418,8 +436,6 @@ public class TARDISDoorListener implements Listener {
                             }
                             player.sendMessage(plugin.pluginName + "The TARDIS key is a " + key + ". You have " + grammar + " in your hand!");
                         }
-                    } else {
-                        plugin.debug("Didn't find door!");
                     }
                 }
             }
@@ -607,11 +623,11 @@ public class TARDISDoorListener implements Listener {
         HashMap<String, Object> wherei = new HashMap<String, Object>();
         wherei.put("door_type", doortype);
         wherei.put("tardis_id", id);
-        ResultSetDoors rsi = new ResultSetDoors(plugin, wherei, false);
-        if (rsi.resultSet()) {
-            TARDISConstants.COMPASS d = rsi.getDoor_direction();
+        ResultSetDoors rsd = new ResultSetDoors(plugin, wherei, false);
+        if (rsd.resultSet()) {
+            TARDISConstants.COMPASS d = rsd.getDoor_direction();
             tdl.setD(d);
-            String doorLocStr = rsi.getDoor_location();
+            String doorLocStr = rsd.getDoor_location();
             String[] split = doorLocStr.split(":");
             World cw = plugin.getServer().getWorld(split[0]);
             tdl.setW(cw);
