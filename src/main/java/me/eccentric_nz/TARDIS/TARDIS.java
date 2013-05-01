@@ -488,6 +488,11 @@ public class TARDIS extends JavaPlugin {
 
     private void checkTCG() {
         if (getConfig().getBoolean("create_worlds")) {
+            if (getConfig().getBoolean("default_world")) {
+                getConfig().set("default_world", false);
+                saveConfig();
+                console.sendMessage(pluginName + ChatColor.RED + "default_world was disabled as create_worlds is true!");
+            }
             if (pm.getPlugin("TARDISChunkGenerator") == null || (pm.getPlugin("Multiverse-Core") == null && pm.getPlugin("MultiWorld") == null && pm.getPlugin("My Worlds") == null)) {
                 getConfig().set("create_worlds", false);
                 saveConfig();
