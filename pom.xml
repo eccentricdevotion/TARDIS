@@ -121,13 +121,6 @@
             <scope>compile</scope>
         </dependency>
         <dependency>
-            <groupId>com.bergerkiller.bukkit</groupId>
-            <artifactId>MyWorlds</artifactId>
-            <version>1.60</version>
-            <type>jar</type>
-            <scope>compile</scope>
-        </dependency>
-        <dependency>
             <groupId>com.massivecraft</groupId>
             <artifactId>factions</artifactId>
             <version>1.8.2</version>
