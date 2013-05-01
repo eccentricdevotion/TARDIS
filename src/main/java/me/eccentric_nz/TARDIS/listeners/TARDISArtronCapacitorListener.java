@@ -155,9 +155,11 @@ public class TARDISArtronCapacitorListener implements Listener {
                                             cx = Float.parseFloat(creeperData[1]);
                                             cy = Float.parseFloat(creeperData[2]) + 1;
                                             cz = Float.parseFloat(creeperData[3]);
-                                            bx = Float.parseFloat(beaconData[1]);
-                                            by = Float.parseFloat(beaconData[2]);
-                                            bz = Float.parseFloat(beaconData[3]);
+                                            if (beaconData.length > 2) {
+                                                bx = Float.parseFloat(beaconData[1]);
+                                                by = Float.parseFloat(beaconData[2]);
+                                                bz = Float.parseFloat(beaconData[3]);
+                                            }
                                         } catch (NumberFormatException nfe) {
                                             plugin.debug("Couldn't convert to a float! " + nfe.getMessage());
                                         }
@@ -166,8 +168,10 @@ public class TARDISArtronCapacitorListener implements Listener {
                                         Entity e = w.spawnEntity(cl, EntityType.CREEPER);
                                         Creeper c = (Creeper) e;
                                         c.setPowered(true);
-                                        Location bl = new Location(w, bx, by, bz);
-                                        bl.getBlock().setTypeId(20);
+                                        if (beaconData.length > 2) {
+                                            Location bl = new Location(w, bx, by, bz);
+                                            bl.getBlock().setTypeId(20);
+                                        }
                                     }
                                     // set the capacitor to 50% charge
                                     HashMap<String, Object> set = new HashMap<String, Object>();
