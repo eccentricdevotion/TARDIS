@@ -126,6 +126,7 @@ public class TARDISAdminCommands implements CommandExecutor {
         firstsBool.add("respect_towny");
         firstsBool.add("respect_worldborder");
         firstsBool.add("respect_worldguard");
+        firstsBool.add("return_room_seed");
         firstsBool.add("rooms_require_blocks");
         firstsBool.add("sfx");
         firstsBool.add("the_end");

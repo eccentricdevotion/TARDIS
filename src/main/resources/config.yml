@@ -127,6 +127,7 @@ rooms:
     cost: 350
     offset: -1
     seed: GRAVEL
+return_room_seed: true
 rooms_require_blocks: false
 rooms_condenser_percent: 100
 #artron energy

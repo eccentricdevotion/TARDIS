@@ -77,6 +77,7 @@ public class TARDISConfiguration {
         boolOptions.put("sfx", true);
         boolOptions.put("the_end", false);
         boolOptions.put("use_worldguard", true);
+        boolOptions.put("return_room_seed", true);
         boolOptions.put("rooms.ARBORETUM.enabled", true);
         boolOptions.put("rooms.BAKER.enabled", true);
         boolOptions.put("rooms.BEDROOM.enabled", true);

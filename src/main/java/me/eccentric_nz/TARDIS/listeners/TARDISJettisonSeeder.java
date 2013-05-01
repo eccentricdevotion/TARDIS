@@ -32,6 +32,8 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.ItemStack;
 
 /**
  * Artron energy is to normal energy what movements within the deeps of the sea
@@ -109,6 +111,13 @@ public class TARDISJettisonSeeder implements Listener {
                             del.put("secondary", secondary);
                             qf.doDelete("controls", del);
                         }
+                    }
+                    if (plugin.getConfig().getBoolean("return_room_seed")) {
+                        // give the player back the room seed block
+                        ItemStack is = new ItemStack(Material.getMaterial(plugin.getConfig().getString("rooms." + r + ".seed")));
+                        Inventory inv = player.getInventory();
+                        inv.addItem(is);
+                        player.updateInventory();
                     }
                     player.sendMessage(plugin.pluginName + "You added " + amount + " to the Artron Energy Capacitor");
                 } else {
