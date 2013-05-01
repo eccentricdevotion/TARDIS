@@ -22,6 +22,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.TARDISConstants;
 
 /**
  * Cyber-conversion into Cybermen involves the replacement of body parts
@@ -55,6 +56,9 @@ public class TARDISControlsConverter {
                 for (HashMap<String, String> map : data) {
                     int id = plugin.utils.parseNum(map.get("tardis_id"));
                     String hb = plugin.utils.makeLocationStr(map.get("handbrake"));
+                    if (hb.isEmpty()) {
+                        hb = estimateHandbrake(map.get("size"), map.get("chameleon"));
+                    }
                     String bn = plugin.utils.makeLocationStr(map.get("button"));
                     String ab = plugin.utils.makeLocationStr(map.get("artron_button"));
                     ps.setInt(1, id);
@@ -105,6 +109,20 @@ public class TARDISControlsConverter {
                 plugin.getConfig().set("conversion_done", true);
                 plugin.saveConfig();
             }
+        }
+    }
+
+    private String estimateHandbrake(String size, String cham) {
+        TARDISConstants.SCHEMATIC s = TARDISConstants.SCHEMATIC.valueOf(size);
+        String[] data = cham.split(":");
+        int x = plugin.utils.parseNum(data[1]);
+        int y = plugin.utils.parseNum(data[2]);
+        int z = plugin.utils.parseNum(data[3]);
+        switch (s) {
+            case DELUXE:
+                return data[0] + ":" + (x + 1) + ":" + (y + 1) + ":" + (z - 2);
+            default:
+                return data[0] + ":" + (x - 2) + ":" + y + ":" + z;
         }
     }
 }
