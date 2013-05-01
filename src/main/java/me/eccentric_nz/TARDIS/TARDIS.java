@@ -194,10 +194,10 @@ public class TARDIS extends JavaPlugin {
         TARDISConfiguration tc = new TARDISConfiguration(this);
         tc.checkConfig();
         checkTCG();
+        seeds = getSeeds();
         loadDatabase();
         loadFiles();
         loadAchievements();
-        seeds = getSeeds();
         registerListeners();
         loadCommands();
         loadMetrics();
@@ -478,11 +478,16 @@ public class TARDIS extends JavaPlugin {
         HashMap<Material, String> map = new HashMap<Material, String>();
         Set<String> rooms = getConfig().getConfigurationSection("rooms").getKeys(false);
         for (String s : rooms) {
+            if (!getConfig().contains("rooms." + s + ".user")) {
+                // set user supplied rooms as `user: true`
+                getConfig().set("rooms." + s + ".user", true);
+            }
             if (getConfig().getBoolean("rooms." + s + ".enabled")) {
                 Material m = Material.valueOf(getConfig().getString("rooms." + s + ".seed"));
                 map.put(m, s);
             }
         }
+        plugin.saveConfig();
         return map;
     }
 

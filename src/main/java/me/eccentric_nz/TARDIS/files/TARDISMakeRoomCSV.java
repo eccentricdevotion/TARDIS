@@ -48,19 +48,30 @@ public class TARDISMakeRoomCSV {
      * administrators to use their own schematic files.
      */
     public void loadCSV() {
+        File userDir = new File(plugin.getDataFolder() + File.separator + "user_schematics");
+        if (!userDir.exists()) {
+            boolean result = userDir.mkdir();
+            if (result) {
+                userDir.setWritable(true);
+                userDir.setExecutable(true);
+                plugin.console.sendMessage(plugin.pluginName + "Created user_schematics directory.");
+            }
+        }
         // load room CSV files - create them if they don't exist
         reader = new TARDISRoomSchematicReader(plugin);
-        String basepath = plugin.getDataFolder() + File.separator + "schematics" + File.separator;
+        String defaultbasepath = plugin.getDataFolder() + File.separator + "schematics" + File.separator;
+        String userbasepath = plugin.getDataFolder() + File.separator + "user_schematics" + File.separator;
         for (String r : plugin.getConfig().getConfigurationSection("rooms").getKeys(false)) {
+            String basepath = (plugin.getConfig().getBoolean("rooms." + r + ".user")) ? userbasepath : defaultbasepath;
             String lower = r.toLowerCase(Locale.ENGLISH);
-            File file = createFile(lower + ".csv");
+            File file = createFile(lower + ".csv", basepath);
             reader.readAndMakeRoomCSV(basepath + lower, r, false);
             short[] dimensions = plugin.room_dimensions.get(r);
             String[][][] schem = TARDISSchematic.schematic(file, dimensions[0], dimensions[1], dimensions[2]);
             plugin.room_schematics.put(r, schem);
             if (r.equals("PASSAGE") || r.equals("LONG")) {
                 // repeat for EW
-                File file_EW = createFile(lower + "_EW.csv");
+                File file_EW = createFile(lower + "_EW.csv", defaultbasepath);
                 reader.readAndMakeRoomCSV(basepath + lower, r + "_EW", true);
                 String[][][] schem_EW = TARDISSchematic.schematic(file_EW, dimensions[0], dimensions[1], dimensions[2]);
                 plugin.room_schematics.put(r + "_EW", schem_EW);
@@ -75,8 +86,8 @@ public class TARDISMakeRoomCSV {
      * @param filename the file to find/create
      * @return a File
      */
-    public File createFile(String filename) {
-        File file = new File(plugin.getDataFolder() + File.separator + "schematics" + File.separator, filename);
+    public File createFile(String filename, String folder) {
+        File file = new File(folder, filename);
         if (!file.exists()) {
             try {
                 file.createNewFile();

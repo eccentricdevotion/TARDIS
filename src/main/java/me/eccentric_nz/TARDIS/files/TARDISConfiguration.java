@@ -97,6 +97,25 @@ public class TARDISConfiguration {
         boolOptions.put("rooms.VAULT.enabled", true);
         boolOptions.put("rooms.WOOD.enabled", true);
         boolOptions.put("rooms.WORKSHOP.enabled", true);
+        boolOptions.put("rooms.ARBORETUM.user", false);
+        boolOptions.put("rooms.BAKER.user", false);
+        boolOptions.put("rooms.BEDROOM.user", false);
+        boolOptions.put("rooms.CROSS.user", false);
+        boolOptions.put("rooms.EMPTY.user", false);
+        boolOptions.put("rooms.FARM.user", false);
+        boolOptions.put("rooms.GRAVITY.user", false);
+        boolOptions.put("rooms.ANTIGRAVITY.user", false);
+        boolOptions.put("rooms.GREENHOUSE.user", false);
+        boolOptions.put("rooms.HARMONY.user", false);
+        boolOptions.put("rooms.KITCHEN.user", false);
+        boolOptions.put("rooms.LIBRARY.user", false);
+        boolOptions.put("rooms.LONG.user", false);
+        boolOptions.put("rooms.MUSHROOM.user", false);
+        boolOptions.put("rooms.PASSAGE.user", false);
+        boolOptions.put("rooms.POOL.user", false);
+        boolOptions.put("rooms.VAULT.user", false);
+        boolOptions.put("rooms.WOOD.user", false);
+        boolOptions.put("rooms.WORKSHOP.user", false);
         boolOptions.put("rooms_require_blocks", false);
         // integer
         intOptions.put("autonomous", 100);

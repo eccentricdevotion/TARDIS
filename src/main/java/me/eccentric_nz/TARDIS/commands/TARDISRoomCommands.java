@@ -150,16 +150,16 @@ public class TARDISRoomCommands implements CommandExecutor {
                     return true;
                 }
                 String lower = name.toLowerCase(Locale.ENGLISH);
-                String filepath = plugin.getDataFolder() + File.separator + "schematics" + File.separator + lower + ".schematic";
+                String filepath = plugin.getDataFolder() + File.separator + "user_schematics" + File.separator + lower + ".schematic";
                 File file = new File(filepath);
                 if (!file.exists()) {
-                    sender.sendMessage(plugin.pluginName + "You need to put the " + lower + ".schematic into the TARDIS schematics directory!");
+                    sender.sendMessage(plugin.pluginName + "You need to put the " + lower + ".schematic into the TARDIS user_schematics directory!");
                     return true;
                 }
                 TARDISMakeRoomCSV mrc = new TARDISMakeRoomCSV(plugin);
                 TARDISRoomSchematicReader reader = new TARDISRoomSchematicReader(plugin);
-                String basepath = plugin.getDataFolder() + File.separator + "schematics" + File.separator;
-                File csvfile = mrc.createFile(lower + ".csv");
+                String basepath = plugin.getDataFolder() + File.separator + "user_schematics" + File.separator;
+                File csvfile = mrc.createFile(lower + ".csv", basepath);
                 boolean square = reader.readAndMakeRoomCSV(basepath + lower, name, false);
                 if (!square) {
                     sender.sendMessage(plugin.pluginName + "The schematic needs to have equal length sides!");
