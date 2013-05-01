@@ -61,7 +61,7 @@
         <dependency>
             <groupId>org.bukkit</groupId>
             <artifactId>bukkit</artifactId>
-            <version>1.5.1-R0.3-SNAPSHOT</version>
+            <version>1.5.2-R0.1-SNAPSHOT</version>
             <type>jar</type>
         </dependency>
         <dependency>
@@ -117,6 +117,13 @@
             <groupId>multiworld</groupId>
             <artifactId>MultiWorld</artifactId>
             <version>4.5.4</version>
+            <type>jar</type>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.bergerkiller.bukkit</groupId>
+            <artifactId>MyWorlds</artifactId>
+            <version>1.60</version>
             <type>jar</type>
             <scope>compile</scope>
         </dependency>
