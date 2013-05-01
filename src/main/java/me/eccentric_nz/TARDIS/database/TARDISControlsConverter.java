@@ -55,10 +55,13 @@ public class TARDISControlsConverter {
                 ps = connection.prepareStatement("INSERT INTO controls (tardis_id, type, location) VALUES (?,?,?)");
                 for (HashMap<String, String> map : data) {
                     int id = plugin.utils.parseNum(map.get("tardis_id"));
-                    String hb = plugin.utils.makeLocationStr(map.get("handbrake"));
-                    if (hb.isEmpty()) {
-                        hb = estimateHandbrake(map.get("size"), map.get("chameleon"));
+                    String tmp;
+                    if (map.get("handbrake").isEmpty()) {
+                        tmp = estimateHandbrake(map.get("size"), map.get("chameleon"));
+                    } else {
+                        tmp = map.get("handbrake");
                     }
+                    String hb = plugin.utils.makeLocationStr(tmp);
                     String bn = plugin.utils.makeLocationStr(map.get("button"));
                     String ab = plugin.utils.makeLocationStr(map.get("artron_button"));
                     ps.setInt(1, id);
