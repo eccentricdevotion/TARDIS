@@ -541,8 +541,11 @@ public class TARDISDoorListener implements Listener {
             plugin.myspawn = true;
             LivingEntity ent = (LivingEntity) w.spawnEntity(pl, pet.getType());
             ent.setTicksLived(pet.getAge());
-            ent.setCustomName(pet.getName());
-            ent.setCustomNameVisible(true);
+            String pet_name = pet.getName();
+            if (pet_name != null && !pet_name.isEmpty()) {
+                ent.setCustomName(pet.getName());
+                ent.setCustomNameVisible(true);
+            }
             ent.setHealth(pet.getHealth());
             ((Tameable) ent).setTamed(true);
             ((Tameable) ent).setOwner(player);

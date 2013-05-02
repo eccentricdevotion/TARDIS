@@ -140,7 +140,10 @@ public class TARDISFarmer {
                             TARDISPet pet = new TARDISPet();
                             pet.setType(e.getType());
                             pet.setAge(e.getTicksLived());
-                            pet.setName(((LivingEntity) e).getCustomName());
+                            String pet_name = ((LivingEntity) e).getCustomName();
+                            if (pet_name != null) {
+                                pet.setName(pet_name);
+                            }
                             int health;
                             if (e.getType().equals(EntityType.WOLF)) {
                                 pet.setSitting(((Wolf) e).isSitting());
@@ -288,7 +291,10 @@ public class TARDISFarmer {
                         TARDISPet pet = new TARDISPet();
                         pet.setType(e.getType());
                         pet.setAge(e.getTicksLived());
-                        pet.setName(((LivingEntity) e).getCustomName());
+                        String pet_name = ((LivingEntity) e).getCustomName();
+                        if (pet_name != null) {
+                            pet.setName(pet_name);
+                        }
                         int health;
                         if (e.getType().equals(EntityType.WOLF)) {
                             pet.setSitting(((Wolf) e).isSitting());
