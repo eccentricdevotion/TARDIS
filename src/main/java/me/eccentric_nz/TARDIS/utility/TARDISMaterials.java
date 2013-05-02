@@ -25,6 +25,7 @@ package me.eccentric_nz.TARDIS.utility;
  */
 public interface TARDISMaterials {
 
+    // remember to remove tripwire and hook when updating
     public static final String[] MATERIAL_LIST = {
         "ACTIVATOR_RAIL",
         "AIR",
@@ -323,8 +324,6 @@ public interface TARDISMaterials {
         "TORCH",
         "TRAPPED_CHEST",
         "TRAP_DOOR",
-        "TRIPWIRE",
-        "TRIPWIRE_HOOK",
         "VINE",
         "WALL_SIGN",
         "WATCH",
