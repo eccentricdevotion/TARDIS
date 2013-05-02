@@ -155,7 +155,18 @@ public class TARDISUpdateListener implements Listener {
                 wheret.put("tardis_id", id);
                 wheret.put("player", playerNameStr);
                 ResultSetTravellers rst = new ResultSetTravellers(plugin, wheret, false);
-                int type = (rst.resultSet()) ? 3 : 2;
+                int type;
+                if (rst.resultSet()) {
+                    type = 3;
+                } else {
+                    type = 2;
+                    // check the world
+                    String wor = (plugin.getConfig().getBoolean("default_world")) ? plugin.getConfig().getString("default_world_name") : "TARDIS_";
+                    if (bw.getName().contains(wor)) {
+                        player.sendMessage(plugin.pluginName + "You didn't enter the TARDIS by the regular door, aborting...");
+                        return;
+                    }
+                }
                 tid.put("door_type", type);
                 // check if we have a backdoor yet
                 HashMap<String, Object> whered = new HashMap<String, Object>();
