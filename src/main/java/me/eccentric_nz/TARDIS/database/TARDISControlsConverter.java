@@ -19,10 +19,12 @@ package me.eccentric_nz.TARDIS.database;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
+import org.bukkit.ChatColor;
 
 /**
  * Cyber-conversion into Cybermen involves the replacement of body parts
@@ -50,20 +52,50 @@ public class TARDISControlsConverter {
         if (rs.resultSet()) {
             int i = 0;
             ArrayList<HashMap<String, String>> data = rs.getData();
+            Statement del = null;
             PreparedStatement ps = null;
             try {
+                // clear the controls table first - just incase they have reset `conversion_done` in the config
+                del = connection.createStatement();
+                del.executeUpdate("DELETE FROM controls");
+                // insert values from tardis table
                 ps = connection.prepareStatement("INSERT INTO controls (tardis_id, type, location) VALUES (?,?,?)");
                 for (HashMap<String, String> map : data) {
                     int id = plugin.utils.parseNum(map.get("tardis_id"));
-                    String tmp;
-                    if (map.get("handbrake").isEmpty()) {
-                        tmp = estimateHandbrake(map.get("size"), map.get("chameleon"));
+                    String tmph;
+                    if (map.get("handbrake") == null || map.get("handbrake").isEmpty()) {
+                        tmph = estimateHandbrake(map.get("size"), map.get("chameleon"));
+                        plugin.console.sendMessage(plugin.pluginName + ChatColor.RED + "Handbrake location not found, making an educated guess...");
                     } else {
-                        tmp = map.get("handbrake");
+                        tmph = map.get("handbrake");
                     }
-                    String hb = plugin.utils.makeLocationStr(tmp);
-                    String bn = plugin.utils.makeLocationStr(map.get("button"));
-                    String ab = plugin.utils.makeLocationStr(map.get("artron_button"));
+                    String tmpb;
+                    if (map.get("button") == null || map.get("button").isEmpty()) {
+                        tmpb = estimateButton(map.get("size"), map.get("chameleon"));
+                        plugin.console.sendMessage(plugin.pluginName + ChatColor.RED + "Button location not found, making an educated guess...");
+                    } else {
+                        tmpb = map.get("button");
+                    }
+                    String tmpa;
+                    if (map.get("artron_button") == null || map.get("artron_button").isEmpty()) {
+                        tmpa = estimateArtron(map.get("size"), map.get("chameleon"));
+                        plugin.console.sendMessage(plugin.pluginName + ChatColor.RED + "Artron Button location not found, making an educated guess...");
+                    } else {
+                        tmpa = map.get("artron_button");
+                    }
+                    String[] tmpr = new String[4];
+                    if (map.get("repeater0") == null || map.get("repeater0").isEmpty()) {
+                        tmpr = estimateRepeaters(map.get("size"), map.get("chameleon"));
+                        plugin.console.sendMessage(plugin.pluginName + ChatColor.RED + "Repeater locations not found, making an educated guess...");
+                    } else {
+                        tmpr[0] = map.get("repeater0");
+                        tmpr[1] = map.get("repeater1");
+                        tmpr[2] = map.get("repeater2");
+                        tmpr[3] = map.get("repeater3");
+                    }
+                    String hb = plugin.utils.makeLocationStr(tmph);
+                    String bn = plugin.utils.makeLocationStr(tmpb);
+                    String ab = plugin.utils.makeLocationStr(tmpa);
                     ps.setInt(1, id);
                     ps.setInt(2, 0);
                     ps.setString(3, hb);
@@ -74,19 +106,19 @@ public class TARDISControlsConverter {
                     ps.addBatch();
                     ps.setInt(1, id);
                     ps.setInt(2, 2);
-                    ps.setString(3, map.get("repeater0"));
+                    ps.setString(3, tmpr[0]);
                     ps.addBatch();
                     ps.setInt(1, id);
                     ps.setInt(2, 3);
-                    ps.setString(3, map.get("repeater1"));
+                    ps.setString(3, tmpr[1]);
                     ps.addBatch();
                     ps.setInt(1, id);
                     ps.setInt(2, 4);
-                    ps.setString(3, map.get("repeater2"));
+                    ps.setString(3, tmpr[2]);
                     ps.addBatch();
                     ps.setInt(1, id);
                     ps.setInt(2, 5);
-                    ps.setString(3, map.get("repeater3"));
+                    ps.setString(3, tmpr[3]);
                     ps.addBatch();
                     ps.setInt(1, id);
                     ps.setInt(2, 6);
@@ -100,10 +132,18 @@ public class TARDISControlsConverter {
             } catch (SQLException e) {
                 plugin.debug("Control conversion error: " + e.getMessage());
             } finally {
+                if (del != null) {
+                    try {
+                        del.close();
+                    } catch (Exception e) {
+                        plugin.debug("Control delete statement close error: " + e.getMessage());
+                    }
+                }
                 if (ps != null) {
                     try {
+                        ps.close();
                     } catch (Exception e) {
-                        plugin.debug("Control statement close error: " + e.getMessage());
+                        plugin.debug("Control prepared statement close error: " + e.getMessage());
                     }
                 }
             }
@@ -127,5 +167,55 @@ public class TARDISControlsConverter {
             default:
                 return data[0] + ":" + (x - 2) + ":" + y + ":" + z;
         }
+    }
+
+    private String estimateButton(String size, String cham) {
+        TARDISConstants.SCHEMATIC s = TARDISConstants.SCHEMATIC.valueOf(size);
+        String[] data = cham.split(":");
+        int x = plugin.utils.parseNum(data[1]);
+        int y = plugin.utils.parseNum(data[2]);
+        int z = plugin.utils.parseNum(data[3]);
+        switch (s) {
+            case DELUXE:
+                return data[0] + ":" + (x - 1) + ":" + y + ":" + (z - 1);
+            default:
+                return data[0] + ":" + x + ":" + y + ":" + (z + 2);
+        }
+    }
+
+    private String estimateArtron(String size, String cham) {
+        TARDISConstants.SCHEMATIC s = TARDISConstants.SCHEMATIC.valueOf(size);
+        String[] data = cham.split(":");
+        int x = plugin.utils.parseNum(data[1]);
+        int y = plugin.utils.parseNum(data[2]);
+        int z = plugin.utils.parseNum(data[3]);
+        switch (s) {
+            case DELUXE:
+                return data[0] + ":" + (x + 5) + ":" + y + ":" + (z - 1);
+            default:
+                return data[0] + ":" + (x - 2) + ":" + y + ":" + (z + 2);
+        }
+    }
+
+    private String[] estimateRepeaters(String size, String cham) {
+        String[] r = new String[4];
+        TARDISConstants.SCHEMATIC s = TARDISConstants.SCHEMATIC.valueOf(size);
+        String[] data = cham.split(":");
+        int x = plugin.utils.parseNum(data[1]);
+        int y = plugin.utils.parseNum(data[2]);
+        int z = plugin.utils.parseNum(data[3]);
+        switch (s) {
+            case DELUXE:
+                r[0] = data[0] + ":" + (x + 2) + ":" + (y + 1) + ":" + (z - 3); // environment
+                r[1] = data[0] + ":" + x + ":" + (y + 1) + ":" + (z - 1); // x
+                r[2] = data[0] + ":" + (x + 4) + ":" + (y + 1) + ":" + (z - 1); // z
+                r[3] = data[0] + ":" + (x + 2) + ":" + (y + 1) + ":" + (z + 1); // y
+            default:
+                r[0] = data[0] + ":" + (x - 1) + ":" + y + ":" + (z - 1);
+                r[1] = data[0] + ":" + (x - 3) + ":" + y + ":" + (z + 1);
+                r[2] = data[0] + ":" + (x + 1) + ":" + y + ":" + (z + 1);
+                r[3] = data[0] + ":" + (x - 1) + ":" + y + ":" + (z + 3);
+        }
+        return r;
     }
 }
