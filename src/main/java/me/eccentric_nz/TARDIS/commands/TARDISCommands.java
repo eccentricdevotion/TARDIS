@@ -323,7 +323,7 @@ public class TARDISCommands implements CommandExecutor {
                         return false;
                     }
                     String room = args[1].toUpperCase(Locale.ENGLISH);
-                    StringBuilder buf = new StringBuilder(args[1]);
+                    StringBuilder buf = new StringBuilder();
                     for (String rl : roomArgs) {
                         buf.append(rl).append(", ");
                     }
