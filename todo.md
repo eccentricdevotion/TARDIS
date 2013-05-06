@@ -1,15 +1,16 @@
 # TODO
 
-## Current version `2.3-beta-2`
+## Current version `2.3-pre`
 1. Check what happens when companions steal the TARDIS
 2. Add video for books/achievements
 3. Add docs for new features
-4. Fix pets names
+4. Put spider eyes in the condensables list
 
 ## Next version `2.4+`
 1. Add an Emergency Program system. If a Time Lord dies, the autonomous circuit is on, and there are companions inside the TARDIS, then a fake "player" will spawn near the console and give a prerecorded "message" to the TARDIS occupants through chat. Add a preference setting for it, as well as making the message configurable by the player.
 2. Add `/tardis rescue [player]` command
 3. Texture pack switching
+4. De-materialisation!
 
 ## Minecraft API when available `3.0?`
 1. Recreate everything with the new API :)
