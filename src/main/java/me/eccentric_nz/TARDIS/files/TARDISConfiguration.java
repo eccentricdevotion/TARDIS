@@ -17,6 +17,7 @@
 package me.eccentric_nz.TARDIS.files;
 
 import java.io.File;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -242,6 +243,11 @@ public class TARDISConfiguration {
         }
         if (config.contains("rooms.FIRST")) {
             plugin.getConfig().set("rooms.FIRST", null);
+        }
+        if (!config.contains("tardis_blocks")) {
+            List<String> MIDDLE_BLOCKS = Arrays.asList(new String[]{"LAPIS_BLOCK", "STONE", "DIRT", "WOOD", "SANDSTONE", "WOOL", "BRICK", "NETHERRACK", "SOUL_SAND", "SMOOTH_BRICK", "HUGE_MUSHROOM_1", "HUGE_MUSHROOM_2", "ENDER_STONE", "QUARTZ_BLOCK", "CLAY"});
+            plugin.getConfig().set("tardis_blocks", MIDDLE_BLOCKS);
+            i++;
         }
         if (i > 0) {
             plugin.console.sendMessage(plugin.pluginName + "Added " + ChatColor.AQUA + i + ChatColor.RESET + " new items to config");
