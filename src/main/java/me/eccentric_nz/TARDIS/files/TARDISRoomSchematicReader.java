@@ -46,7 +46,6 @@ public class TARDISRoomSchematicReader {
         Tag tag = items.get(key);
         return tag;
     }
-
     private TARDIS plugin;
     private HashMap<Integer, Integer> blockConversion = new HashMap<Integer, Integer>();
     private List<Byte> ignoreBlocks = Arrays.asList(new Byte[]{0, 14, 19, 52, 79});
@@ -64,6 +63,7 @@ public class TARDISRoomSchematicReader {
         blockConversion.put(68, 323); // wall sign -> sign
         blockConversion.put(76, 75); // restone torch on -> redstone torch off
         blockConversion.put(83, 338); // sugarcane block -> sugarcane item
+        blockConversion.put(92, 69); // cake block -> lever
         blockConversion.put(93, 356); // redstone repeater off -> redstone repeater item
         blockConversion.put(94, 356); // redstone repeater on -> redstone repeater item
         blockConversion.put(99, 39); // mushroom block -> brown mushroom
