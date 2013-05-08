@@ -1,11 +1,8 @@
 # TODO
 
-## Current version `2.3-pre`
+## Current version `2.3`
 1. Add video for books/achievements
 2. Add docs for new features
-3. Put spider eyes in the condensables list
-4. Fix baker and wood rooms requiring cake
-5. Make TARDIS blocks a configurable list - set the defaults to what they already currently are
 
 ## Next version `2.4+`
 1. Add an Emergency Program system. If a Time Lord dies, the autonomous circuit is on, and there are companions inside the TARDIS, then a fake "player" will spawn near the console and give a prerecorded "message" to the TARDIS occupants through chat. Add a preference setting for it, as well as making the message configurable by the player.

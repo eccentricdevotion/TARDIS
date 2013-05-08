@@ -53,8 +53,6 @@ import org.bukkit.event.block.BlockPlaceEvent;
  */
 public class TARDISBlockPlaceListener implements Listener {
 
-    public static final List<String> MIDDLE_BLOCKS = Arrays.asList(new String[]{"LAPIS_BLOCK", "STONE", "DIRT", "WOOD", "SANDSTONE", "WOOL", "BRICK", "NETHERRACK", "SOUL_SAND", "SMOOTH_BRICK", "HUGE_MUSHROOM_1", "HUGE_MUSHROOM_2", "ENDER_STONE", "QUARTZ_BLOCK", "CLAY"});
-
     private static String getWallKey(int i, int d) {
         TARDISWalls tw = new TARDISWalls();
         for (Map.Entry<String, Integer[]> entry : tw.blocks.entrySet()) {
@@ -90,7 +88,7 @@ public class TARDISBlockPlaceListener implements Listener {
             final byte middle_data = blockBelow.getData();
             Block blockBottom = blockBelow.getRelative(BlockFace.DOWN);
             // only continue if the redstone torch is placed on top of [JUST ABOUT ANY] BLOCK on top of an IRON/GOLD/DIAMOND_BLOCK
-            if (MIDDLE_BLOCKS.contains(blockBelow.getType().toString()) && (blockBottom.getType() == Material.IRON_BLOCK || blockBottom.getType() == Material.GOLD_BLOCK || blockBottom.getType() == Material.DIAMOND_BLOCK || blockBottom.getType() == Material.EMERALD_BLOCK || blockBottom.getType() == Material.REDSTONE_BLOCK)) {
+            if (plugin.getConfig().getStringList("tardis_blocks").contains(blockBelow.getType().toString()) && (blockBottom.getType() == Material.IRON_BLOCK || blockBottom.getType() == Material.GOLD_BLOCK || blockBottom.getType() == Material.DIAMOND_BLOCK || blockBottom.getType() == Material.EMERALD_BLOCK || blockBottom.getType() == Material.REDSTONE_BLOCK)) {
                 final TARDISConstants.SCHEMATIC schm;
                 final Player player = event.getPlayer();
                 int max_count = plugin.getConfig().getInt("count");
