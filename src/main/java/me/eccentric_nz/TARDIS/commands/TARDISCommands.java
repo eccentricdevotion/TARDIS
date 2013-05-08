@@ -405,7 +405,8 @@ public class TARDISCommands implements CommandExecutor {
                                 mat = Material.getMaterial(bid).toString();
                                 bdata = String.format("%d", bid);
                             }
-                            int required = Math.round((entry.getValue() / 100.0F) * plugin.getConfig().getInt("rooms_condenser_percent"));
+                            int tmp = Math.round((entry.getValue() / 100.0F) * plugin.getConfig().getInt("rooms_condenser_percent"));
+                            int required = (tmp > 0) ? tmp : 1;
                             blockIDCount.put(bdata, required);
                             HashMap<String, Object> wherec = new HashMap<String, Object>();
                             wherec.put("tardis_id", id);
