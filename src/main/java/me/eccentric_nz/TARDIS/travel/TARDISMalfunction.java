@@ -101,12 +101,7 @@ public class TARDISMalfunction {
                 Location loc = plugin.utils.getLocationFromDB(map.get("location"), 0.0F, 0.0F);
                 lamps.add(loc.getBlock());
             }
-            final long start = System.currentTimeMillis() + 10000;
-            TARDISLampsRunnable runnable = new TARDISLampsRunnable(plugin, lamps, start);
-            runnable.setHandbrake(handbrake_loc);
-            int taskID = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, runnable, 10L, 10L);
-            runnable.setTask(taskID);
-            if (plugin.getConfig().getBoolean("emergency_npc")) {
+            if (plugin.pm.isPluginEnabled("RemoteEntities") && plugin.getConfig().getBoolean("emergency_npc")) {
                 // get player prefs
                 HashMap<String, Object> wherep = new HashMap<String, Object>();
                 wherep.put("player", p.getName());
@@ -114,10 +109,14 @@ public class TARDISMalfunction {
                 if (rsp.resultSet() && rsp.isEPS_on()) {
                     // schedule the NPC to appear
                     TARDISEPSRunnable EPS_runnable = new TARDISEPSRunnable(plugin, rsp.getEPS_message(), p);
-                    runnable.setHandbrake(handbrake_loc);
                     plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, EPS_runnable, 120L);
                 }
             }
+            final long start = System.currentTimeMillis() + 10000;
+            TARDISLampsRunnable runnable = new TARDISLampsRunnable(plugin, lamps, start);
+            runnable.setHandbrake(handbrake_loc);
+            int taskID = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, runnable, 10L, 10L);
+            runnable.setTask(taskID);
         }
     }
 }

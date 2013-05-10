@@ -58,6 +58,8 @@ public class TARDISDatabaseUpdater {
         prefsupdates.add("floor TEXT DEFAULT 'LIGHT_GREY_WOOL'");
         prefsupdates.add("key TEXT DEFAULT ''");
         prefsupdates.add("wall TEXT DEFAULT 'ORANGE_WOOL'");
+        prefsupdates.add("eps_on INTEGER DEFAULT 0");
+        prefsupdates.add("eps_message TEXT DEFAULT ''");
         tardisupdates.add("artron_level INTEGER DEFAULT 0");
         tardisupdates.add("beacon TEXT DEFAULT ''");
         tardisupdates.add("chameleon_data INTEGER DEFAULT 11");

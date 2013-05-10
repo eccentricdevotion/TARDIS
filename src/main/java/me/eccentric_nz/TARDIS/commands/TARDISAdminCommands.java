@@ -112,6 +112,7 @@ public class TARDISAdminCommands implements CommandExecutor {
         firstsBool.add("create_worlds");
         firstsBool.add("debug");
         firstsBool.add("default_world");
+        firstsBool.add("emergency_npc");
         firstsBool.add("exile");
         firstsBool.add("give_key");
         firstsBool.add("include_default_world");
@@ -129,6 +130,7 @@ public class TARDISAdminCommands implements CommandExecutor {
         firstsBool.add("return_room_seed");
         firstsBool.add("rooms_require_blocks");
         firstsBool.add("sfx");
+        firstsBool.add("spawn_eggs");
         firstsBool.add("the_end");
         firstsBool.add("use_worldguard");
         // integer

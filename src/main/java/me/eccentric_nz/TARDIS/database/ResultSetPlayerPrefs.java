@@ -111,7 +111,13 @@ public class ResultSetPlayerPrefs {
                 this.wall = rs.getString("wall");
                 this.floor = rs.getString("floor");
                 this.EPS_on = rs.getBoolean("eps_on");
-                this.EPS_message = rs.getString("eps_message");
+                // if empty use default
+                String message = rs.getString("eps_message");
+                if (message.isEmpty()) {
+                    this.EPS_message = "This is Emergency Programme One. Now listen, this is important. If this message is activated, then it can only mean one thing: we must be in danger, and I mean fatal. You're about to die any second with no chance of escape.";
+                } else {
+                    this.EPS_message = rs.getString("eps_message");
+                }
             } else {
                 return false;
             }

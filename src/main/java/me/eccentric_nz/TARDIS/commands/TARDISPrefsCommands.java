@@ -60,6 +60,7 @@ public class TARDISPrefsCommands implements CommandExecutor {
         this.plugin = plugin;
         firstArgs.add("auto");
         firstArgs.add("beacon");
+        firstArgs.add("eps");
         firstArgs.add("floor");
         firstArgs.add("isomorphic");
         firstArgs.add("key");
@@ -172,7 +173,7 @@ public class TARDISPrefsCommands implements CommandExecutor {
                         sender.sendMessage(plugin.pluginName + "You need to specify if " + pref + " should be on or off!");
                         return false;
                     }
-                    List<String> was = Arrays.asList(new String[]{"auto", "beacon", "platform"});
+                    List<String> was = Arrays.asList(new String[]{"auto", "beacon", "platform", "eps"});
                     // get the players preferences
                     HashMap<String, Object> where = new HashMap<String, Object>();
                     where.put("player", player.getName());

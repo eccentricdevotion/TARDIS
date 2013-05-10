@@ -16,6 +16,8 @@
  */
 package me.eccentric_nz.TARDIS;
 
+import de.kumpelblase2.remoteentities.EntityManager;
+import de.kumpelblase2.remoteentities.RemoteEntities;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -182,6 +184,7 @@ public class TARDIS extends JavaPlugin {
     public HashMap<String, HashMap<String, Integer>> roomBlockCounts = new HashMap<String, HashMap<String, Integer>>();
     private File afile;
     public FileConfiguration ayml;
+    public EntityManager npcManager;
 
     @Override
     public void onEnable() {
@@ -233,6 +236,7 @@ public class TARDIS extends JavaPlugin {
         if (!getConfig().getBoolean("conversion_done")) {
             new TARDISControlsConverter(this).convertControls();
         }
+        getNPCManager();
     }
 
     @Override
@@ -503,6 +507,18 @@ public class TARDIS extends JavaPlugin {
                 saveConfig();
                 console.sendMessage(pluginName + ChatColor.RED + "Create Worlds was disabled as it requires a multi-world plugin and TARDISChunkGenerator!");
             }
+        }
+    }
+
+    private void getNPCManager() {
+        if (pm.getPlugin("RemoteEntities") != null && getConfig().getBoolean("emergency_npc")) {
+            npcManager = RemoteEntities.createManager(this);
+            console.sendMessage(pluginName + ChatColor.GREEN + "Enabling Emergency Program One!");
+        } else {
+            // set emergency_npc false as RemoteEntities not found
+            getConfig().set("emergency_npc", false);
+            saveConfig();
+            console.sendMessage(pluginName + ChatColor.RED + "Emergency Program One was disabled as it requires the RemoteEntities plugin!");
         }
     }
 
