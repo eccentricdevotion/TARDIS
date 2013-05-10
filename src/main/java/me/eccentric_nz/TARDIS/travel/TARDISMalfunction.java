@@ -103,13 +103,15 @@ public class TARDISMalfunction {
             }
             if (plugin.pm.isPluginEnabled("RemoteEntities") && plugin.getConfig().getBoolean("emergency_npc")) {
                 // get player prefs
+                String name = p.getName();
                 HashMap<String, Object> wherep = new HashMap<String, Object>();
-                wherep.put("player", p.getName());
+                wherep.put("player", name);
                 ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, wherep);
                 if (rsp.resultSet() && rsp.isEPS_on()) {
                     // schedule the NPC to appear
-                    TARDISEPSRunnable EPS_runnable = new TARDISEPSRunnable(plugin, rsp.getEPS_message(), p);
-                    plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, EPS_runnable, 120L);
+                    String message = "This is Emergency Programme One. Now listen, this is important. If this message is activated, then it can only mean one thing: we must be in danger, and I mean fatal. You're about to die any second with no chance of escape.";
+                    TARDISEPSRunnable EPS_runnable = new TARDISEPSRunnable(plugin, message, name, id);
+                    plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, EPS_runnable, 220L);
                 }
             }
             final long start = System.currentTimeMillis() + 10000;
