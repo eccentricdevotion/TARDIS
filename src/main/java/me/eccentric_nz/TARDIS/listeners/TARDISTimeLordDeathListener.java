@@ -17,12 +17,15 @@
 package me.eccentric_nz.TARDIS.listeners;
 
 import java.util.HashMap;
+import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants.COMPASS;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetAreas;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
+import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
+import me.eccentric_nz.TARDIS.travel.TARDISEPSRunnable;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
@@ -64,6 +67,7 @@ public class TARDISTimeLordDeathListener implements Listener {
                 ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
                 // are they a time lord?
                 if (rs.resultSet()) {
+                    int id = rs.getTardis_id();
                     HashMap<String, Object> wherep = new HashMap<String, Object>();
                     wherep.put("player", playerNameStr);
                     ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, wherep);
@@ -71,8 +75,24 @@ public class TARDISTimeLordDeathListener implements Listener {
                         // do they have the autonomous circuit on?
                         if (rsp.isAuto_on()) {
                             Location death_loc = player.getLocation();
+                            if (plugin.pm.isPluginEnabled("RemoteEntities") && plugin.getConfig().getBoolean("emergency_npc") && rsp.isEPS_on()) {
+                                plugin.debug("Starting Emergency Program One");
+                                // check if there are players in the TARDIS
+                                HashMap<String, Object> wherev = new HashMap<String, Object>();
+                                wherev.put("tardis_id", id);
+                                ResultSetTravellers rst = new ResultSetTravellers(plugin, wherev, true);
+                                if (rst.resultSet()) {
+                                    plugin.debug("Found travellers");
+                                    List data = rst.getData();
+                                    if (!data.contains(playerNameStr)) {
+                                        plugin.debug("Time Lord wasn't in TARDIS");
+                                        // schedule the NPC to appear
+                                        TARDISEPSRunnable EPS_runnable = new TARDISEPSRunnable(plugin, rsp.getEPS_message(), playerNameStr, id);
+                                        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, EPS_runnable, 20L);
+                                    }
+                                }
+                            }
                             String death_world = death_loc.getWorld().getName();
-                            int id = rs.getTardis_id();
                             // where is the TARDIS Police Box?
                             String save = rs.getCurrent();
                             String[] save_data = save.split(":");
@@ -125,6 +145,7 @@ public class TARDISTimeLordDeathListener implements Listener {
                             HashMap<String, Object> set = new HashMap<String, Object>();
                             tid.put("tardis_id", id);
                             set.put("save", save_loc);
+                            set.put("current", save_loc);
                             qf.doUpdate("tardis", set, tid);
                             HashMap<String, Object> wherea = new HashMap<String, Object>();
                             wherea.put("tardis_id", id);

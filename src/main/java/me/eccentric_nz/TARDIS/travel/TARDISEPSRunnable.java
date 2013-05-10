@@ -21,9 +21,12 @@ import de.kumpelblase2.remoteentities.api.RemoteEntityType;
 import de.kumpelblase2.remoteentities.api.thinking.EnterSightBehavior;
 import de.kumpelblase2.remoteentities.api.thinking.InteractBehavior;
 import de.kumpelblase2.remoteentities.api.thinking.goals.DesireLookAtNearest;
+import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.database.ResultSetDoors;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
+import org.bukkit.World;
 import org.bukkit.entity.Player;
 
 /**
@@ -35,47 +38,75 @@ import org.bukkit.entity.Player;
 public class TARDISEPSRunnable implements Runnable {
 
     private TARDIS plugin;
-    private Player p;
     private String message;
+    private String p;
+    private int id;
 
-    public TARDISEPSRunnable(TARDIS plugin, String message, Player p) {
+    public TARDISEPSRunnable(TARDIS plugin, String message, String p, int id) {
         this.plugin = plugin;
-        this.p = p;
         this.message = message;
+        this.p = p;
+        this.id = id;
     }
 
     @Override
     public void run() {
-        // get player location
-        Location loc = p.getLocation().getWorld().getSpawnLocation();
-        loc.setX(loc.getX() + 0.5);
-        loc.setZ(loc.getZ() + 0.5);
-        // get player's yaw so we can make the NPC face the player
-        float yaw = p.getLocation().getYaw() + 180F;
-        // create NPC
-        try {
-            final RemoteEntity npc = plugin.npcManager.createNamedEntity(RemoteEntityType.Human, loc, p.getName());
-            // set some behaviours
-            npc.setYaw(yaw);
-            npc.setStationary(true);
-            npc.getMind().addMovementDesire(new DesireLookAtNearest(npc, Player.class, 8F), 1);
-            npc.getMind().addBehaviour(new EnterSightBehavior(npc) {
-                @Override
-                public void onEnterSight(Player inPlayer) {
-                    inPlayer.sendMessage(ChatColor.RED + "[Emergency Program One] " + ChatColor.RESET + message);
-                    inPlayer.sendMessage(ChatColor.RED + "[Emergency Program One] " + ChatColor.RESET + "Right-click me to make me go away.");
-                }
-            });
-            npc.getMind().addBehaviour(new InteractBehavior(npc) {
-                @Override
-                public void onInteract(Player inPlayer) {
-                    // remove npc
-                    inPlayer.sendMessage(ChatColor.RED + "[Emergency Program One] " + ChatColor.RESET + "Bye!");
-                    plugin.npcManager.removeEntity(npc.getID());
-                }
-            });
-        } catch (Exception e) {
-            plugin.debug(e);
+        plugin.debug("Running Emergency Program One");
+        Location l = getSpawnLocation(id);
+        if (l != null) {
+            // get player location
+            l.setX(l.getX() + 0.5);
+            l.setZ(l.getZ() + 1.5);
+            // set yaw so npc faces into the tardis
+            float yaw = 0F;
+            // create NPC
+            try {
+                final RemoteEntity npc = plugin.npcManager.createNamedEntity(RemoteEntityType.Human, l, p);
+                // set some behaviours
+                npc.setYaw(yaw);
+                npc.setStationary(true);
+                npc.getMind().addMovementDesire(new DesireLookAtNearest(npc, Player.class, 8F), 1);
+                npc.getMind().addBehaviour(new EnterSightBehavior(npc) {
+                    @Override
+                    public void onEnterSight(Player inPlayer) {
+                        inPlayer.sendMessage(ChatColor.RED + "[Emergency Program One] " + ChatColor.RESET + message);
+                        inPlayer.sendMessage(ChatColor.RED + "[Emergency Program One] " + ChatColor.RESET + "Right-click me to make me go away.");
+                    }
+                });
+                npc.getMind().addBehaviour(new InteractBehavior(npc) {
+                    @Override
+                    public void onInteract(Player inPlayer) {
+                        // remove npc
+                        inPlayer.sendMessage(ChatColor.RED + "[Emergency Program One] " + ChatColor.RESET + "Bye!");
+                        plugin.npcManager.removeEntity(npc.getID());
+                    }
+                });
+            } catch (Exception e) {
+                plugin.debug(e);
+            }
+        }
+    }
+
+    private Location getSpawnLocation(int id) {
+        if (plugin.getConfig().getBoolean("create_worlds")) {
+            // get world spawn location
+            return plugin.getServer().getWorld("TARDIS_WORLD_" + p).getSpawnLocation();
+        } else {
+            HashMap<String, Object> where = new HashMap<String, Object>();
+            where.put("tardis_id", id);
+            where.put("door_type", 1);
+            ResultSetDoors rsd = new ResultSetDoors(plugin, where, false);
+            if (rsd.resultSet()) {
+                String[] door = rsd.getDoor_location().split(":");
+
+                World w = plugin.getServer().getWorld(door[0]);
+                int x = plugin.utils.parseNum(door[1]);
+                int y = plugin.utils.parseNum(door[2]);
+                int z = plugin.utils.parseNum(door[3]);
+                return new Location(w, x, y, z);
+            } else {
+                return null;
+            }
         }
     }
 }
