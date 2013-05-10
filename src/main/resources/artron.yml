@@ -1,0 +1,18 @@
+#artron energy
+player: 25
+random: 75
+travel: 100
+comehere: 400
+hide: 500
+nether_min: 4250
+the_end_min: 5500
+recharge_distance: 20
+lightning_recharge: 300
+creeper_recharge: 150
+full_charge: 5000
+full_charge_item: NETHER_STAR
+autonomous: 100
+backdoor: 100
+# jettison is a percentage of orginal room cost
+jettison: 75
+jettison_seed: TNT

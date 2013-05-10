@@ -1,0 +1,17 @@
+# TARDIS wall interior blocks - middle block in the creation stack
+tardis_blocks:
+  - LAPIS_BLOCK
+  - STONE
+  - DIRT
+  - WOOD
+  - SANDSTONE
+  - WOOL
+  - BRICK
+  - NETHERRACK
+  - SOUL_SAND
+  - SMOOTH_BRICK
+  - HUGE_MUSHROOM_1
+  - HUGE_MUSHROOM_2
+  - ENDER_STONE
+  - QUARTZ_BLOCK
+  - CLAY
