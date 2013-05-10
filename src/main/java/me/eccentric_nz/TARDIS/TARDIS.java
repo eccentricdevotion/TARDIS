@@ -63,6 +63,7 @@ import me.eccentric_nz.TARDIS.listeners.TARDISHandbrakeListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISIceMeltListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISJettisonSeeder;
 import me.eccentric_nz.TARDIS.listeners.TARDISJoinListener;
+import me.eccentric_nz.TARDIS.listeners.TARDISKeyboardListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISLightningListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISRoomSeeder;
 import me.eccentric_nz.TARDIS.listeners.TARDISScannerListener;
@@ -89,6 +90,7 @@ import org.bukkit.block.Block;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.block.Sign;
 import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -165,6 +167,7 @@ public class TARDIS extends JavaPlugin {
     public List<Chunk> roomChunkList = new ArrayList<Chunk>();
     public HashMap<String, Double[]> gravityUpList = new HashMap<String, Double[]>();
     public List<String> gravityDownList = new ArrayList<String>();
+    public HashMap<String, Sign> trackSign = new HashMap<String, Sign>();
     public HashMap<String, Double[]> gravityNorthList = new HashMap<String, Double[]>();
     public HashMap<String, Double[]> gravityWestList = new HashMap<String, Double[]>();
     public HashMap<String, Double[]> gravitySouthList = new HashMap<String, Double[]>();
@@ -301,6 +304,7 @@ public class TARDIS extends JavaPlugin {
         pm.registerEvents(new TARDISScannerListener(this), this);
         pm.registerEvents(new TARDISTimeLordDeathListener(this), this);
         pm.registerEvents(new TARDISJoinListener(this), this);
+        pm.registerEvents(new TARDISKeyboardListener(this), this);
     }
 
     /**

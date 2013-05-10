@@ -5,7 +5,7 @@
 2. Add docs for new features / perms / commands
 
 ## Next version `2.4+`
-1. Add an Emergency Program system. If a Time Lord dies, the autonomous circuit is on, and there are companions inside the TARDIS, then a fake "player" will spawn near the console and give a prerecorded "message" to the TARDIS occupants through chat. Add a preference setting for it, as well as making the message configurable by the player.
+1. Fix Emergency Program One spawn time.
 2. Add `/tardis rescue [player]` command
 3. Texture pack switching
 4. De-materialisation!

@@ -22,6 +22,7 @@ import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
+import me.eccentric_nz.TARDIS.database.ResultSetControls;
 import me.eccentric_nz.TARDIS.database.ResultSetDoors;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
@@ -72,6 +73,7 @@ public class TARDISUpdateListener implements Listener {
         controls.put("z-repeater", 4);
         controls.put("y-repeater", 5);
         controls.put("artron", 6);
+        controls.put("keyboard", 7);
     }
 
     /**
@@ -257,6 +259,25 @@ public class TARDISUpdateListener implements Listener {
                 s.setLine(1, "Home");
                 s.setLine(2, coords[0]);
                 s.setLine(3, coords[1] + "," + coords[2] + "," + coords[3]);
+                s.update();
+            }
+            if (blockName.equalsIgnoreCase("keyboard") && (blockType == Material.WALL_SIGN || blockType == Material.SIGN_POST)) {
+                HashMap<String, Object> wherec = new HashMap<String, Object>();
+                wherec.put("tardis_id", id);
+                wherec.put("type", 7);
+                ResultSetControls rsc = new ResultSetControls(plugin, wherec, false);
+                if (!rsc.resultSet()) {
+                    qf.insertControl(id, 7, blockLocStr, 0);
+                    secondary = true;
+                } else {
+                    set.put("location", blockLocStr);
+                }
+                // add text to sign
+                Sign s = (Sign) block.getState();
+                s.setLine(0, "Keyboard");
+                for (int i = 1; i < 4; i++) {
+                    s.setLine(i, "");
+                }
                 s.update();
             }
             if (set.size() > 0 || secondary) {

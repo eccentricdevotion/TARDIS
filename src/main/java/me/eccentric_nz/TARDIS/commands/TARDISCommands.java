@@ -753,14 +753,14 @@ public class TARDISCommands implements CommandExecutor {
                 }
                 if (args[0].equalsIgnoreCase("update")) {
                     if (player.hasPermission("tardis.update")) {
-                        String[] validBlockNames = {"door", "button", "world-repeater", "x-repeater", "z-repeater", "y-repeater", "chameleon", "save-sign", "artron", "handbrake", "condenser", "scanner", "backdoor"};
+                        String[] validBlockNames = {"door", "button", "world-repeater", "x-repeater", "z-repeater", "y-repeater", "chameleon", "save-sign", "artron", "handbrake", "condenser", "scanner", "backdoor", "keyboard"};
                         if (args.length < 2) {
                             sender.sendMessage(plugin.pluginName + "Too few command arguments!");
                             return false;
                         }
                         String tardis_block = args[1].toLowerCase(Locale.ENGLISH);
                         if (!Arrays.asList(validBlockNames).contains(tardis_block)) {
-                            player.sendMessage(plugin.pluginName + "That is not a valid TARDIS block name! Try one of : door|button|world-repeater|x-repeater|z-repeater|y-repeater|chameleon|save-sign|artron|handbrake|condenser|scanner|backdoor");
+                            player.sendMessage(plugin.pluginName + "That is not a valid TARDIS block name! Try one of : door|button|world-repeater|x-repeater|z-repeater|y-repeater|chameleon|save-sign|artron|handbrake|condenser|scanner|backdoor|keyboard");
                             return false;
                         }
                         if (!player.hasPermission("tardis.backdoor")) {
