@@ -61,6 +61,7 @@ public class TARDISConfiguration {
         boolOptions.put("create_worlds", true);
         boolOptions.put("debug", false);
         boolOptions.put("default_world", false);
+        boolOptions.put("emergency_npc", true);
         boolOptions.put("exile", false);
         boolOptions.put("give_key", false);
         boolOptions.put("include_default_world", false);
@@ -76,6 +77,7 @@ public class TARDISConfiguration {
         boolOptions.put("respect_worldborder", true);
         boolOptions.put("respect_worldguard", true);
         boolOptions.put("sfx", true);
+        boolOptions.put("spawn_eggs", true);
         boolOptions.put("the_end", false);
         boolOptions.put("use_worldguard", true);
         boolOptions.put("return_room_seed", true);

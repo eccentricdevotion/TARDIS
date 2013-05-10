@@ -171,6 +171,7 @@ jettison_seed: TNT
 inventory_group: 0
 add_perms: true
 allow_mob_farming: true
+spawn_eggs: true
 allow_autonomous: true
 malfunction: 3
 malfunction_end: 3

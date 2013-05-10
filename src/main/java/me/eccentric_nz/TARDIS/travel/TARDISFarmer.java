@@ -233,44 +233,48 @@ public class TARDISFarmer {
                         }
                     }
                 } else {
-                    // no farm, give the player spawn eggs
-                    Inventory inv = p.getInventory();
-                    if (old_macd_had_a_chicken.size() > 0) {
-                        for (Entity e : old_macd_had_a_chicken) {
-                            ItemStack is = new ItemStack(Material.MONSTER_EGG, 1, (short) 93);
-                            inv.addItem(is);
-                            e.remove();
+                    if (plugin.getConfig().getBoolean("spawn_eggs")) {
+                        // no farm, give the player spawn eggs
+                        Inventory inv = p.getInventory();
+                        if (old_macd_had_a_chicken.size() > 0) {
+                            for (Entity e : old_macd_had_a_chicken) {
+                                ItemStack is = new ItemStack(Material.MONSTER_EGG, 1, (short) 93);
+                                inv.addItem(is);
+                                e.remove();
+                            }
                         }
-                    }
-                    if (old_macd_had_a_cow.size() > 0) {
-                        for (Entity e : old_macd_had_a_cow) {
-                            ItemStack is = new ItemStack(Material.MONSTER_EGG, 1, (short) 92);
-                            inv.addItem(is);
-                            e.remove();
+                        if (old_macd_had_a_cow.size() > 0) {
+                            for (Entity e : old_macd_had_a_cow) {
+                                ItemStack is = new ItemStack(Material.MONSTER_EGG, 1, (short) 92);
+                                inv.addItem(is);
+                                e.remove();
+                            }
                         }
-                    }
-                    if (old_macd_had_a_pig.size() > 0) {
-                        for (Entity e : old_macd_had_a_pig) {
-                            ItemStack is = new ItemStack(Material.MONSTER_EGG, 1, (short) 90);
-                            inv.addItem(is);
-                            e.remove();
+                        if (old_macd_had_a_pig.size() > 0) {
+                            for (Entity e : old_macd_had_a_pig) {
+                                ItemStack is = new ItemStack(Material.MONSTER_EGG, 1, (short) 90);
+                                inv.addItem(is);
+                                e.remove();
+                            }
                         }
-                    }
-                    if (old_macd_had_a_sheep.size() > 0) {
-                        for (Entity e : old_macd_had_a_sheep) {
-                            ItemStack is = new ItemStack(Material.MONSTER_EGG, 1, (short) 91);
-                            inv.addItem(is);
-                            e.remove();
+                        if (old_macd_had_a_sheep.size() > 0) {
+                            for (Entity e : old_macd_had_a_sheep) {
+                                ItemStack is = new ItemStack(Material.MONSTER_EGG, 1, (short) 91);
+                                inv.addItem(is);
+                                e.remove();
+                            }
                         }
-                    }
-                    if (old_macd_had_a_mooshroom.size() > 0) {
-                        for (Entity e : old_macd_had_a_mooshroom) {
-                            ItemStack is = new ItemStack(Material.MONSTER_EGG, 1, (short) 96);
-                            inv.addItem(is);
-                            e.remove();
+                        if (old_macd_had_a_mooshroom.size() > 0) {
+                            for (Entity e : old_macd_had_a_mooshroom) {
+                                ItemStack is = new ItemStack(Material.MONSTER_EGG, 1, (short) 96);
+                                inv.addItem(is);
+                                e.remove();
+                            }
                         }
+                        p.updateInventory();
+                    } else {
+                        p.sendMessage(plugin.pluginName + "You need to grow a farm room before you can farm mobs!");
                     }
-                    p.updateInventory();
                 }
             }
         }
