@@ -28,10 +28,10 @@ import me.eccentric_nz.TARDIS.TARDIS;
  * over the years, giving it an increasing number of applications.
  *
  * Control types:
- * 2 = x-repeater
- * 3 = z-repeater
- * 4 = multiplier-repeater
- * 5 = environment-repeater
+ * 2 = environment-repeater
+ * 3 = x-repeater
+ * 4 = z-repeater
+ * 5 = y-repeater
  *
  * @author eccentric_nz
  */

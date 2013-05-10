@@ -67,10 +67,10 @@ public class TARDISUpdateListener implements Listener {
         validBlocks.add(Material.STONE_BUTTON);
         controls.put("handbrake", 0);
         controls.put("button", 1);
-        controls.put("x-repeater", 2);
-        controls.put("y-repeater", 3);
+        controls.put("world-repeater", 2);
+        controls.put("x-repeater", 3);
         controls.put("z-repeater", 4);
-        controls.put("world-repeater", 5);
+        controls.put("y-repeater", 5);
         controls.put("artron", 6);
     }
 
