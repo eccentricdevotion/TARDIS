@@ -114,7 +114,7 @@ public class ResultSetPlayerPrefs {
                 // if empty use default
                 String message = rs.getString("eps_message");
                 if (message.isEmpty()) {
-                    this.EPS_message = "This is Emergency Programme One. Now listen, this is important. If this message is activated, then it can only mean one thing: we must be in danger, and I mean fatal. You're about to die any second with no chance of escape.";
+                    this.EPS_message = "This is Emergency Programme One. I have died. I'm sure I will regenerate soon, but just in case. I have engaged the TARDIS autonomous circuit, and we are returning to my Home location or a recharge point - which ever is closest!";
                 } else {
                     this.EPS_message = rs.getString("eps_message");
                 }
