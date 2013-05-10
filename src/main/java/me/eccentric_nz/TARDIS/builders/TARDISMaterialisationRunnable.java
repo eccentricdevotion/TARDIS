@@ -16,8 +16,8 @@
  */
 package me.eccentric_nz.TARDIS.builders;
 
-import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants.COMPASS;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
@@ -366,12 +366,12 @@ public class TARDISMaterialisationRunnable implements Runnable {
             where.put("tardis_id", tid);
             ResultSetTravellers rst = new ResultSetTravellers(plugin, where, true);
             if (rst.resultSet()) {
-                ArrayList<HashMap<String, String>> travellers = rst.getData();
-                for (HashMap<String, String> map : travellers) {
-                    Player p = plugin.getServer().getPlayer(map.get("player"));
+                List<String> travellers = rst.getData();
+                for (String s : travellers) {
+                    Player p = plugin.getServer().getPlayer(s);
                     if (p != null) {
                         String message = (mal) ? "There was a malfunction and the emergency handbrake was engaged! Scan location before exit!" : "LEFT-click the handbrake to exit!";
-                        plugin.getServer().getPlayer(map.get("player")).sendMessage(plugin.pluginName + message);
+                        p.sendMessage(plugin.pluginName + message);
                     }
                 }
             }

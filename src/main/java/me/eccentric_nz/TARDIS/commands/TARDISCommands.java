@@ -684,10 +684,10 @@ public class TARDISCommands implements CommandExecutor {
                     wheret.put("tardis_id", id);
                     ResultSetTravellers rst = new ResultSetTravellers(plugin, wheret, true);
                     if (rst.resultSet()) {
-                        ArrayList<HashMap<String, String>> data = rst.getData();
+                        List<String> data = rst.getData();
                         sender.sendMessage(plugin.pluginName + "The players inside your TARDIS are:");
-                        for (HashMap<String, String> map : data) {
-                            sender.sendMessage(map.get("player"));
+                        for (String s : data) {
+                            sender.sendMessage(s);
                         }
                     } else {
                         sender.sendMessage(plugin.pluginName + "Nobody is inside your TARDIS.");
