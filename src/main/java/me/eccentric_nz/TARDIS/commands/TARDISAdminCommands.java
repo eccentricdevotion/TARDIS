@@ -143,6 +143,8 @@ public class TARDISAdminCommands implements CommandExecutor {
         firstsInt.add("creeper_recharge");
         firstsInt.add("full_charge");
         firstsInt.add("hide");
+        firstsInt.add("gravity_max_distance");
+        firstsInt.add("gravity_max_velocity");
         firstsInt.add("jettison");
         firstsInt.add("lightning_recharge");
         firstsInt.add("nether_min");

@@ -33,6 +33,7 @@ permissions:
       tardis.update: true
       tardis.rebuild: true
       tardis.book: true
+      tardis.gravity: true
     default: op
   tardis.exile:
     description: Disallow players from travelling anywhere but to areas they have a permission node for.
@@ -119,6 +120,9 @@ permissions:
       tardis.room.vault: true
       tardis.room.wood: true
       tardis.room.workshop: true
+    default: op
+  tardis.gravity:
+    description: Allow players to use the /tardisgravity command.
     default: op
   tardis.farm:
     description: Allow players to farm mobs.
@@ -319,7 +323,7 @@ commands:
     aliases: tgravity
     description: Add or remove gravity well blocks.
     usage: /<command> [up|down|north|west|south|east|remove] [distance] [velocity]
-    permission: tardis.update
+    permission: tardis.gravity
     permission-message: You don't have the permission <permission> to use this command
   tardisbook:
     aliases: tbook

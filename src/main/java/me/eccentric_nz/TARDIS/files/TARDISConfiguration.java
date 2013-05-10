@@ -130,6 +130,8 @@ public class TARDISConfiguration {
         intOptions.put("creeper_recharge", 150);
         intOptions.put("full_charge", 5000);
         intOptions.put("hide", 500);
+        intOptions.put("gravity_max_distance", 15);
+        intOptions.put("gravity_max_velocity", 5);
         intOptions.put("inventory_group", 0);
         intOptions.put("jettison", 75);
         intOptions.put("lightning_recharge", 300);

@@ -31,6 +31,8 @@ confirm_timeout: 15
 keep_night: true
 count: 0
 emergency_npc: true
+gravity_max_distance: 15
+gravity_max_velocity: 5
 #rooms
 rooms:
   PASSAGE:

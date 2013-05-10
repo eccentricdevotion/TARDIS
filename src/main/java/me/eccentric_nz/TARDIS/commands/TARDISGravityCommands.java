@@ -70,8 +70,12 @@ public class TARDISGravityCommands implements CommandExecutor {
                 player = (Player) sender;
             }
             if (player == null) {
-                sender.sendMessage(plugin.pluginName + ChatColor.RED + " This command can only be run by a player");
+                sender.sendMessage(plugin.pluginName + ChatColor.RED + "This command can only be run by a player");
                 return false;
+            }
+            if (!player.hasPermission("tardis.gravity")) {
+                sender.sendMessage(plugin.pluginName + ChatColor.RED + "You do not have permission to use this command!");
+                return true;
             }
             if (args.length < 1) {
                 return false;
@@ -86,6 +90,10 @@ public class TARDISGravityCommands implements CommandExecutor {
                     }
                     try {
                         values[1] = Double.parseDouble(args[1]);
+                        if (values[1] > plugin.getConfig().getDouble("gravity_max_distance")) {
+                            player.sendMessage(plugin.pluginName + "That distance is too far!");
+                            return true;
+                        }
                     } catch (NumberFormatException e) {
                         player.sendMessage(plugin.pluginName + "Second argument must be a number!");
                         return false;
@@ -95,6 +103,10 @@ public class TARDISGravityCommands implements CommandExecutor {
                 }
                 if (args.length == 3) {
                     values[2] = Double.parseDouble(args[2]);
+                    if (values[2] > plugin.getConfig().getDouble("gravity_max_velocity")) {
+                        player.sendMessage(plugin.pluginName + "That velocity is too fast!");
+                        return true;
+                    }
                 } else {
                     values[2] = 0.5D;
                 }
