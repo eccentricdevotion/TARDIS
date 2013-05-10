@@ -145,6 +145,7 @@ public class TARDISCondensables {
         condensables.put("IRON_SWORD", 24);
         condensables.put("JACK_O_LANTERN", 56);
         condensables.put("JUNGLE_WOOD_STAIRS", 1);
+        condensables.put("JUKEBOX", 208);
         condensables.put("LADDER", 1);
         condensables.put("LAPIS_BLOCK", 950);
         condensables.put("LAVA_BUCKET", 40);
@@ -169,7 +170,7 @@ public class TARDISCondensables {
         condensables.put("NETHER_FENCE", 10);
         condensables.put("NETHER_STALK", 2);
         condensables.put("NETHER_WARTS", 2);
-        condensables.put("NOTEBLOCK", 36);
+        condensables.put("NOTE_BLOCK", 40);
         condensables.put("OBSIDIAN", 130);
         condensables.put("PAINTING", 25);
         condensables.put("PAPER", 10);
