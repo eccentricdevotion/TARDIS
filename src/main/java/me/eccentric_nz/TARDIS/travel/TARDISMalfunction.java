@@ -23,6 +23,7 @@ import java.util.Random;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.database.ResultSetLamps;
+import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
@@ -105,6 +106,18 @@ public class TARDISMalfunction {
             runnable.setHandbrake(handbrake_loc);
             int taskID = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, runnable, 10L, 10L);
             runnable.setTask(taskID);
+            if (plugin.getConfig().getBoolean("emergency_npc")) {
+                // get player prefs
+                HashMap<String, Object> wherep = new HashMap<String, Object>();
+                wherep.put("player", p.getName());
+                ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, wherep);
+                if (rsp.resultSet() && rsp.isEPS_on()) {
+                    // schedule the NPC to appear
+                    TARDISEPSRunnable EPS_runnable = new TARDISEPSRunnable(plugin, rsp.getEPS_message(), p);
+                    runnable.setHandbrake(handbrake_loc);
+                    plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, EPS_runnable, 120L);
+                }
+            }
         }
     }
 }

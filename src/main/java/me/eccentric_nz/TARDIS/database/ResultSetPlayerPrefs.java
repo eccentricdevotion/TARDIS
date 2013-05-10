@@ -47,6 +47,8 @@ public class ResultSetPlayerPrefs {
     private int artron_level;
     private String wall;
     private String floor;
+    private boolean EPS_on;
+    private String EPS_message;
 
     /**
      * Creates a class instance that can be used to retrieve an SQL ResultSet
@@ -108,6 +110,8 @@ public class ResultSetPlayerPrefs {
                 this.artron_level = rs.getInt("artron_level");
                 this.wall = rs.getString("wall");
                 this.floor = rs.getString("floor");
+                this.EPS_on = rs.getBoolean("eps_on");
+                this.EPS_message = rs.getString("eps_message");
             } else {
                 return false;
             }
@@ -171,5 +175,13 @@ public class ResultSetPlayerPrefs {
 
     public String getFloor() {
         return floor;
+    }
+
+    public boolean isEPS_on() {
+        return EPS_on;
+    }
+
+    public String getEPS_message() {
+        return EPS_message;
     }
 }
