@@ -3,11 +3,11 @@ description: A plugin for all Doctor Who fans - create and use a TARDIS! Telepor
 main: me.eccentric_nz.TARDIS.TARDIS
 name: TARDIS
 startup: postworld
-softdepend: [Multiverse-Core,MultiWorld,My Worlds,WorldGuard,WorldBorder,Towny]
+softdepend: [Multiverse-Core,MultiWorld,My Worlds,WorldGuard,WorldBorder,Towny,RemoteEntities]
 website: http://dev.bukkit.org/server-mods/TARDIS/
 dev-url: http://dev.bukkit.org/server-mods/TARDIS/
 url: http://eccentricdevotion.github.io/TARDIS/
-version: '2.3'
+version: '2.4-beta-1'
 permissions:
   tardis.admin:
     description: Allow players access to the TARDIS admin commands.
