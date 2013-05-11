@@ -152,7 +152,6 @@ public class TARDISTravelCommands implements CommandExecutor {
                             set.put("save", home);
                             qf.doUpdate("tardis", set, tid);
                             sender.sendMessage(plugin.pluginName + "Home location loaded succesfully. Please release the handbrake!");
-                            plugin.utils.updateTravellerCount(id);
                             plugin.tardisHasDestination.put(id, travel);
                             return true;
                         } else {
@@ -186,7 +185,6 @@ public class TARDISTravelCommands implements CommandExecutor {
                                 set.put("save", save_loc);
                                 qf.doUpdate("tardis", set, tid);
                                 sender.sendMessage(plugin.pluginName + "The player location was saved succesfully. Please release the handbrake!");
-                                plugin.utils.updateTravellerCount(id);
                                 plugin.tardisHasDestination.put(id, travel);
                                 return true;
                             } else {
@@ -229,7 +227,6 @@ public class TARDISTravelCommands implements CommandExecutor {
                             set.put("save", save_loc);
                             qf.doUpdate("tardis", set, tid);
                             sender.sendMessage(plugin.pluginName + "The specified location was set succesfully. Please release the handbrake!");
-                            plugin.utils.updateTravellerCount(id);
                             plugin.tardisHasDestination.put(id, travel);
                             return true;
                         } else {
@@ -259,7 +256,6 @@ public class TARDISTravelCommands implements CommandExecutor {
                         set.put("save", save_loc);
                         qf.doUpdate("tardis", set, tid);
                         sender.sendMessage(plugin.pluginName + "Your TARDIS was approved for parking in [" + args[1] + "]!");
-                        plugin.utils.updateTravellerCount(id);
                         plugin.tardisHasDestination.put(id, travel);
                         return true;
                     }
@@ -307,7 +303,6 @@ public class TARDISTravelCommands implements CommandExecutor {
                             set.put("save", save_loc);
                             qf.doUpdate("tardis", set, tid);
                             sender.sendMessage(plugin.pluginName + "The specified location was saved succesfully. Please release the handbrake!");
-                            plugin.utils.updateTravellerCount(id);
                             plugin.tardisHasDestination.put(id, travel);
                             return true;
                         }

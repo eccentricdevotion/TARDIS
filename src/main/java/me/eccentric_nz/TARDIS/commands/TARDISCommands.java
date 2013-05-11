@@ -621,7 +621,6 @@ public class TARDISCommands implements CommandExecutor {
                             set.put("current", comehere);
                             qf.doUpdate("tardis", set, tid);
                             // how many travellers are in the TARDIS?
-                            plugin.utils.updateTravellerCount(id);
                             sender.sendMessage(plugin.pluginName + "The TARDIS is coming...");
                             Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
                                 @Override

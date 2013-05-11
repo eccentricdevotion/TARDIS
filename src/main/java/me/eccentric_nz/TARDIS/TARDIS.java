@@ -73,7 +73,6 @@ import me.eccentric_nz.TARDIS.listeners.TARDISUpdateListener;
 import me.eccentric_nz.TARDIS.rooms.TARDISCondenserData;
 import me.eccentric_nz.TARDIS.thirdparty.MetricsLite;
 import me.eccentric_nz.TARDIS.travel.TARDISArea;
-import me.eccentric_nz.TARDIS.travel.TARDISUpdateTravellerCount;
 import me.eccentric_nz.TARDIS.utility.TARDISCreeperChecker;
 import me.eccentric_nz.TARDIS.utility.TARDISFactionsChecker;
 import me.eccentric_nz.TARDIS.utility.TARDISSounds;
@@ -159,7 +158,6 @@ public class TARDIS extends JavaPlugin {
     public HashMap<String, String> trackJettison = new HashMap<String, String>();
     public HashMap<String, String> trackSecondary = new HashMap<String, String>();
     public HashMap<String, Double[]> trackGravity = new HashMap<String, Double[]>();
-    public HashMap<Integer, Integer> trackTravellers = new HashMap<Integer, Integer>();
     public HashMap<Integer, Integer> tardisHasDestination = new HashMap<Integer, Integer>();
     public HashMap<String, Block> trackExterminate = new HashMap<String, Block>();
     public ArrayList<Integer> tardisMaterialising = new ArrayList<Integer>();
@@ -220,8 +218,6 @@ public class TARDIS extends JavaPlugin {
             update.checkVersion(null);
         }
 
-        TARDISUpdateTravellerCount utc = new TARDISUpdateTravellerCount(this);
-        utc.getTravellers();
         TARDISCreeperChecker cc = new TARDISCreeperChecker(this);
         cc.startCreeperCheck();
         if (pm.isPluginEnabled("TARDISChunkGenerator")) {

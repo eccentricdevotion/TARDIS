@@ -268,23 +268,6 @@ public class TARDISUtils {
         return num;
     }
 
-    /**
-     * Updates how many travellers there are in a TARDIS. The resulting count is
-     * stored in a HashMap and is checked when players exit the TARDIS.
-     *
-     * @param id the TARDIS to get the count from.
-     */
-    public void updateTravellerCount(int id) {
-        // how many travellers are in the TARDIS?
-        HashMap<String, Object> where = new HashMap<String, Object>();
-        where.put("tardis_id", id);
-        ResultSetTravellers rs = new ResultSetTravellers(plugin, where, true);
-        if (rs.resultSet()) {
-            int count = rs.getData().size();
-            plugin.trackTravellers.put(id, count);
-        }
-    }
-
     public boolean compareLocations(Location a, Location b) {
         if (a.getWorld().equals(b.getWorld())) {
             double rd = plugin.getConfig().getDouble("recharge_distance");

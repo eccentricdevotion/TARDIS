@@ -127,7 +127,6 @@ public class TARDISSignListener implements Listener {
                                 HashMap<String, Object> sid = new HashMap<String, Object>();
                                 sid.put("tardis_id", id);
                                 qf.doUpdate("tardis", sets, sid);
-                                plugin.utils.updateTravellerCount(id);
                                 plugin.tardisHasDestination.put(id, plugin.getConfig().getInt("travel"));
                                 player.sendMessage(plugin.pluginName + "Exit location set to " + s.getLine(1));
                             }
