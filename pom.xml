@@ -2,7 +2,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>me.eccentric_nz.TARDIS</groupId>
     <artifactId>TARDIS</artifactId>
-    <version>2.4-beta-1-${BUILD_NUMBER}</version>
+    <version>2.4-beta-1</version>
     <name>TARDIS</name>
     <url>http://eccentricdevotion.github.com/TARDIS/</url>
     <repositories>
@@ -28,8 +28,8 @@
         <url>http://keetley.servegame.com:8080</url>
     </ciManagement>
     <build>
-        <finalName>TARDIS</finalName>
-        <plugins>
+        <finalName>S</finalName>
+        <plugins${project.artifactId}-${project.version}-${buildNumber}
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
