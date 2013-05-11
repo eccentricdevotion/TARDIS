@@ -28,8 +28,8 @@
         <url>http://keetley.servegame.com:8080</url>
     </ciManagement>
     <build>
-        <finalName>S</finalName>
-        <plugins${project.artifactId}-${project.version}-${buildNumber}
+        <finalName>${project.artifactId}-${project.version}-${buildNumber}</finalName>
+        <plugins></plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
