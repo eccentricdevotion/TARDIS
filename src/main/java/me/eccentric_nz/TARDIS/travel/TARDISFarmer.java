@@ -101,6 +101,8 @@ public class TARDISFarmer {
             if (plugin.ayml.getBoolean("farm.enabled")) {
                 taf = new TARDISAchievementFactory(plugin, p, "farm", 5);
             }
+            // count total mobs
+            int total = 0;
             for (Entity e : mobs) {
                 switch (e.getType()) {
                     case CHICKEN:
@@ -108,30 +110,35 @@ public class TARDISFarmer {
                         if (taf != null) {
                             taf.doAchievement("CHICKEN");
                         }
+                        total++;
                         break;
                     case COW:
                         old_macd_had_a_cow.add(e);
                         if (taf != null) {
                             taf.doAchievement("COW");
                         }
+                        total++;
                         break;
                     case PIG:
                         old_macd_had_a_pig.add(e);
                         if (taf != null) {
                             taf.doAchievement("PIG");
                         }
+                        total++;
                         break;
                     case SHEEP:
                         old_macd_had_a_sheep.add(e);
                         if (taf != null) {
                             taf.doAchievement("SHEEP");
                         }
+                        total++;
                         break;
                     case MUSHROOM_COW:
                         old_macd_had_a_mooshroom.add(e);
                         if (taf != null) {
                             taf.doAchievement("MUSHROOM_COW");
                         }
+                        total++;
                         break;
                     case WOLF:
                     case OCELOT:
@@ -272,7 +279,7 @@ public class TARDISFarmer {
                             }
                         }
                         p.updateInventory();
-                    } else {
+                    } else if (total > 0) {
                         p.sendMessage(plugin.pluginName + "You need to grow a farm room before you can farm mobs!");
                     }
                 }
