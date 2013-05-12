@@ -9,7 +9,7 @@
 2. Add `/tardis rescue [player]` command
 3. Texture pack switching
 4. De-materialisation!
-5. TARDIS shield
+5. TARDIS shield?
 6. Add cloister bell SFX
 7. Add HADS
 8. Add player preference to jettison the whole room (including walls)

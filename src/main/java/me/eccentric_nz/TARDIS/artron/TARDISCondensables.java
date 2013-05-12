@@ -251,6 +251,7 @@ public class TARDISCondensables {
         condensables.put("WHEAT", 9);
         condensables.put("WOOD", 1);
         condensables.put("WOOD_AXE", 2);
+        condensables.put("WOOD_BUTTON", 1);
         condensables.put("WOOD_DOOR", 3);
         condensables.put("WOOD_HOE", 2);
         condensables.put("WOOD_PICKAXE", 2);
