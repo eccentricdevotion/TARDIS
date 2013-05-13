@@ -61,7 +61,7 @@ public class TARDISEPSRunnable implements Runnable {
             float yaw = 0F;
             // create NPC
             try {
-                final RemoteEntity npc = plugin.npcManager.createNamedEntity(RemoteEntityType.Human, l, p);
+                final RemoteEntity npc = plugin.npcManager.createNamedEntity(RemoteEntityType.Villager, l, p);
                 // set some behaviours
                 npc.setYaw(yaw);
                 npc.setStationary(true);
