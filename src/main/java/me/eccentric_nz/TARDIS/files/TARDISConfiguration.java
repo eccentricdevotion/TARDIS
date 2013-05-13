@@ -267,7 +267,7 @@ public class TARDISConfiguration {
             String worldname = "worlds." + w.getName();
             if (!config.contains(worldname)) {
                 plugin.getConfig().set(worldname, true);
-                plugin.console.sendMessage(plugin.pluginName + "Added '" + w.getName() + "' to config. To exclude this world run: /tardis admin exclude " + w.getName());
+                plugin.console.sendMessage(plugin.pluginName + "Added '" + w.getName() + "' to config. To exclude this world run: /tardisadmin exclude " + w.getName());
             }
         }
         plugin.saveConfig();
