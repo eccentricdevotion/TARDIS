@@ -32,6 +32,7 @@ import me.eccentric_nz.TARDIS.travel.TARDISDoorLocation;
 import me.eccentric_nz.TARDIS.travel.TARDISFarmer;
 import me.eccentric_nz.TARDIS.travel.TARDISPet;
 import me.eccentric_nz.TARDIS.utility.TARDISItemRenamer;
+import me.eccentric_nz.TARDIS.utility.TARDISTexturePackChanger;
 import multiworld.MultiWorldPlugin;
 import multiworld.api.MultiWorldAPI;
 import multiworld.api.MultiWorldWorldData;
@@ -242,10 +243,13 @@ public class TARDISDoorListener implements Listener {
                                     String companions = rs.getCompanions();
                                     // get quotes player prefs
                                     boolean userQuotes;
+                                    boolean userTP;
                                     if (hasPrefs) {
                                         userQuotes = rsp.isQuotes_on();
+                                        userTP = rsp.isTexture_on();
                                     } else {
                                         userQuotes = true;
+                                        userTP = false;
                                     }
                                     List<TARDISPet> pets = null;
                                     switch (doortype) {
@@ -290,6 +294,9 @@ public class TARDISDoorListener implements Listener {
                                                     if (pets != null && pets.size() > 0) {
                                                         movePets(pets, exitTardis, player);
                                                     }
+                                                }
+                                                if (plugin.getConfig().getBoolean("allow_tp_switch") && userTP) {
+                                                    new TARDISTexturePackChanger(plugin).changeTP(player, rsp.getTexture_out());
                                                 }
                                                 // remove player from traveller table
                                                 HashMap<String, Object> wherd = new HashMap<String, Object>();
@@ -344,6 +351,11 @@ public class TARDISDoorListener implements Listener {
                                                 if (pets != null && pets.size() > 0) {
                                                     movePets(pets, tardis_loc, player);
                                                 }
+                                                if (plugin.getConfig().getBoolean("allow_tp_switch") && userTP) {
+                                                    if (!rsp.getTexture_in().isEmpty()) {
+                                                        new TARDISTexturePackChanger(plugin).changeTP(player, rsp.getTexture_in());
+                                                    }
+                                                }
                                                 // put player into travellers table
                                                 HashMap<String, Object> set = new HashMap<String, Object>();
                                                 set.put("tardis_id", id);
@@ -376,6 +388,9 @@ public class TARDISDoorListener implements Listener {
                                             final Location inner_loc = ibd_loc;
                                             playDoorSound(player, playerWorld, block_loc);
                                             movePlayer(player, inner_loc, false, playerWorld, userQuotes);
+                                            if (!rsp.getTexture_in().isEmpty()) {
+                                                new TARDISTexturePackChanger(plugin).changeTP(player, rsp.getTexture_in());
+                                            }
                                             // put player into travellers table
                                             HashMap<String, Object> set = new HashMap<String, Object>();
                                             set.put("tardis_id", id);
@@ -411,6 +426,9 @@ public class TARDISDoorListener implements Listener {
                                             final Location outer_loc = obd_loc;
                                             playDoorSound(player, playerWorld, block_loc);
                                             movePlayer(player, outer_loc, false, playerWorld, userQuotes);
+                                            if (plugin.getConfig().getBoolean("allow_tp_switch") && userTP) {
+                                                new TARDISTexturePackChanger(plugin).changeTP(player, rsp.getTexture_out());
+                                            }
                                             // remove player from traveller table
                                             HashMap<String, Object> wherd = new HashMap<String, Object>();
                                             wherd.put("player", playerNameStr);

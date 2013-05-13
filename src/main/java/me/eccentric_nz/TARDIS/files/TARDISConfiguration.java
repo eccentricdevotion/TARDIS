@@ -54,6 +54,7 @@ public class TARDISConfiguration {
         boolOptions.put("all_blocks", false);
         boolOptions.put("allow_autonomous", true);
         boolOptions.put("allow_mob_farming", true);
+        boolOptions.put("allow_tp_switch", true);
         boolOptions.put("bonus_chest", true);
         boolOptions.put("chameleon", true);
         boolOptions.put("check_for_updates", true);

@@ -22,6 +22,7 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Properties;
 import java.util.Set;
 import me.eccentric_nz.TARDIS.builders.TARDISBuilderInner;
 import me.eccentric_nz.TARDIS.builders.TARDISBuilderPoliceBox;
@@ -34,6 +35,7 @@ import me.eccentric_nz.TARDIS.commands.TARDISCommands;
 import me.eccentric_nz.TARDIS.commands.TARDISGravityCommands;
 import me.eccentric_nz.TARDIS.commands.TARDISPrefsCommands;
 import me.eccentric_nz.TARDIS.commands.TARDISRoomCommands;
+import me.eccentric_nz.TARDIS.commands.TARDISTextureCommands;
 import me.eccentric_nz.TARDIS.commands.TARDISTravelCommands;
 import me.eccentric_nz.TARDIS.database.TARDISControlsConverter;
 import me.eccentric_nz.TARDIS.database.TARDISDatabase;
@@ -186,6 +188,7 @@ public class TARDIS extends JavaPlugin {
     private File afile;
     public FileConfiguration ayml;
     public EntityManager npcManager;
+    public String tp;
 
     @Override
     public void onEnable() {
@@ -236,6 +239,8 @@ public class TARDIS extends JavaPlugin {
             new TARDISControlsConverter(this).convertControls();
         }
         getNPCManager();
+        tp = getServerTP();
+        debug(tp);
     }
 
     @Override
@@ -317,6 +322,7 @@ public class TARDIS extends JavaPlugin {
         getCommand("tardisgravity").setExecutor(new TARDISGravityCommands(this));
         getCommand("tardisroom").setExecutor(new TARDISRoomCommands(this));
         getCommand("tardisbook").setExecutor(new TARDISBookCommands(this));
+        getCommand("tardistexture").setExecutor(new TARDISTextureCommands(this));
     }
 
     /**
@@ -574,6 +580,38 @@ public class TARDIS extends JavaPlugin {
                 debug("Loading chunks from chunks.txt!");
             } catch (IOException e) {
                 debug("Could not create and write to chunks.txt! " + e.getMessage());
+            }
+        }
+    }
+
+    /**
+     * Gets the server default texture pack. Will use the Minecraft default pack
+     * if none is specified. Until Minecraft/Bukkit lets us set the TP back to
+     * Default, we'll have to host it on DropBox.
+     */
+    public String getServerTP() {
+        String link = "https://dl.dropboxusercontent.com/u/53758864/Minecraft_Default.zip";
+        FileInputStream in = null;
+        try {
+            Properties properties = new Properties();
+            String path = "server.properties";
+            in = new FileInputStream(path);
+            properties.load(in);
+            String texture_pack = properties.getProperty("texture-pack");
+            return (texture_pack.isEmpty()) ? link : texture_pack;
+        } catch (FileNotFoundException ex) {
+            plugin.debug("Could not find server.properties!");
+            return link;
+        } catch (IOException ex) {
+            plugin.debug("Could not read server.properties!");
+            return link;
+        } finally {
+            try {
+                if (in != null) {
+                    in.close();
+                }
+            } catch (IOException ex) {
+                plugin.debug("Could not close server.properties!");
             }
         }
     }

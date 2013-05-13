@@ -34,6 +34,7 @@ permissions:
       tardis.rebuild: true
       tardis.book: true
       tardis.gravity: true
+      tardis.texture: true
     default: op
   tardis.exile:
     description: Disallow players from travelling anywhere but to areas they have a permission node for.
@@ -135,6 +136,9 @@ permissions:
     default: op
   tardis.backdoor:
     description: Allow players to add a TARDIS back door.
+    default: op
+  tardis.texture:
+    description: Allow players to switch texture packs.
     default: op
   tardis.prune.bypass:
     description: Ignore /tardisadmin prune [days] command to remove unused TARDISes.
@@ -330,4 +334,10 @@ commands:
     description: Get and read TARDIS books and start TARDIS achievements.
     usage: /<command> [list|get|start] [book name]
     permission: tardis.book
+    permission-message: You don't have the permission <permission> to use this command
+  tardistexture:
+    aliases: [ttexture,ttext,ttp]
+    description: Set texure pack preferences.
+    usage: /<command> [on|off|in|out] [url]
+    permission: tardis.texture
     permission-message: You don't have the permission <permission> to use this command

@@ -49,6 +49,9 @@ public class ResultSetPlayerPrefs {
     private String floor;
     private boolean EPS_on;
     private String EPS_message;
+    private boolean texture_on;
+    private String texture_in;
+    private String texture_out;
 
     /**
      * Creates a class instance that can be used to retrieve an SQL ResultSet
@@ -118,6 +121,10 @@ public class ResultSetPlayerPrefs {
                 } else {
                     this.EPS_message = rs.getString("eps_message");
                 }
+                this.texture_on = rs.getBoolean("texture_on");
+                this.texture_in = rs.getString("texture_in");
+                String tp_out = rs.getString("texture_out");
+                this.texture_out = (tp_out.equals("default")) ? plugin.tp : tp_out;
             } else {
                 return false;
             }
@@ -189,5 +196,17 @@ public class ResultSetPlayerPrefs {
 
     public String getEPS_message() {
         return EPS_message;
+    }
+
+    public boolean isTexture_on() {
+        return texture_on;
+    }
+
+    public String getTexture_in() {
+        return texture_in;
+    }
+
+    public String getTexture_out() {
+        return texture_out;
     }
 }
