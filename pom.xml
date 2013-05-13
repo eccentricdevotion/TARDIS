@@ -18,6 +18,10 @@
             <id>sk89q-repo</id>
             <url>http://maven.sk89q.com</url>
         </repository>
+        <repository>
+            <id>citizensnpcs</id>
+            <url>http://repo.citizensnpcs.com</url>
+        </repository>
     </repositories>
     <scm>
         <connection>scm:git:ssh://github.com/eccentricdevotion/TARDIS</connection>
@@ -128,9 +132,10 @@
             <scope>compile</scope>
         </dependency>
         <dependency>
-            <groupId>de.kumpelblase2</groupId>
-            <artifactId>remoteentities</artifactId>
-            <version>1.6</version>
+            <groupId>net.citizensnpc</groupId>
+            <artifactId>citizensapi</artifactId>
+            <version>2.0.8-SNAPSHOT</version>
+            <scope>compile</scope>
         </dependency>
     </dependencies>
     <properties>

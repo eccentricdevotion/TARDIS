@@ -16,8 +16,6 @@
  */
 package me.eccentric_nz.TARDIS;
 
-import de.kumpelblase2.remoteentities.EntityManager;
-import de.kumpelblase2.remoteentities.RemoteEntities;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -67,6 +65,7 @@ import me.eccentric_nz.TARDIS.listeners.TARDISJettisonSeeder;
 import me.eccentric_nz.TARDIS.listeners.TARDISJoinListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISKeyboardListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISLightningListener;
+import me.eccentric_nz.TARDIS.listeners.TARDISNPCListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISRoomSeeder;
 import me.eccentric_nz.TARDIS.listeners.TARDISScannerListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISSignListener;
@@ -174,6 +173,7 @@ public class TARDIS extends JavaPlugin {
     public HashMap<String, Double[]> gravityEastList = new HashMap<String, Double[]>();
     public HashMap<String, Integer> protectBlockMap = new HashMap<String, Integer>();
     public HashMap<String, TARDISCondenserData> roomCondenserData = new HashMap<String, TARDISCondenserData>();
+    public List<Integer> npcIDs = new ArrayList<Integer>();
     public ArrayList<String> quote;
     public HashMap<Material, String> seeds;
     public int quotelen;
@@ -187,7 +187,6 @@ public class TARDIS extends JavaPlugin {
     public HashMap<String, HashMap<String, Integer>> roomBlockCounts = new HashMap<String, HashMap<String, Integer>>();
     private File afile;
     public FileConfiguration ayml;
-    public EntityManager npcManager;
     public String tp;
 
     @Override
@@ -238,7 +237,6 @@ public class TARDIS extends JavaPlugin {
         if (!getConfig().getBoolean("conversion_done")) {
             new TARDISControlsConverter(this).convertControls();
         }
-        getNPCManager();
         tp = getServerTP();
         debug(tp);
     }
@@ -306,6 +304,9 @@ public class TARDIS extends JavaPlugin {
         pm.registerEvents(new TARDISTimeLordDeathListener(this), this);
         pm.registerEvents(new TARDISJoinListener(this), this);
         pm.registerEvents(new TARDISKeyboardListener(this), this);
+        if (getNPCManager()) {
+            pm.registerEvents(new TARDISNPCListener(this), this);
+        }
     }
 
     /**
@@ -516,15 +517,16 @@ public class TARDIS extends JavaPlugin {
         }
     }
 
-    private void getNPCManager() {
-        if (pm.getPlugin("RemoteEntities") != null && getConfig().getBoolean("emergency_npc")) {
-            npcManager = RemoteEntities.createManager(this);
+    private boolean getNPCManager() {
+        if (pm.getPlugin("Citizens") != null && getConfig().getBoolean("emergency_npc")) {
             console.sendMessage(pluginName + ChatColor.GREEN + "Enabling Emergency Program One!");
+            return true;
         } else {
-            // set emergency_npc false as RemoteEntities not found
+            // set emergency_npc false as Citizens not found
             getConfig().set("emergency_npc", false);
             saveConfig();
-            console.sendMessage(pluginName + ChatColor.RED + "Emergency Program One was disabled as it requires the RemoteEntities plugin!");
+            console.sendMessage(pluginName + ChatColor.RED + "Emergency Program One was disabled as it requires the Citizens plugin!");
+            return false;
         }
     }
 

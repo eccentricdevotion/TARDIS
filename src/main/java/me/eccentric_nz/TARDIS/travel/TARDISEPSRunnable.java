@@ -16,17 +16,16 @@
  */
 package me.eccentric_nz.TARDIS.travel;
 
-import de.kumpelblase2.remoteentities.api.RemoteEntity;
-import de.kumpelblase2.remoteentities.api.RemoteEntityType;
-import de.kumpelblase2.remoteentities.api.thinking.EnterSightBehavior;
-import de.kumpelblase2.remoteentities.api.thinking.InteractBehavior;
-import de.kumpelblase2.remoteentities.api.thinking.goals.DesireLookAtNearest;
 import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.ResultSetDoors;
+import net.citizensnpcs.api.CitizensAPI;
+import net.citizensnpcs.api.npc.NPC;
+import net.citizensnpcs.api.npc.NPCRegistry;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.World;
+import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 
 /**
@@ -39,10 +38,10 @@ public class TARDISEPSRunnable implements Runnable {
 
     private TARDIS plugin;
     private String message;
-    private String p;
+    private Player p;
     private int id;
 
-    public TARDISEPSRunnable(TARDIS plugin, String message, String p, int id) {
+    public TARDISEPSRunnable(TARDIS plugin, String message, Player p, int id) {
         this.plugin = plugin;
         this.message = message;
         this.p = p;
@@ -54,33 +53,19 @@ public class TARDISEPSRunnable implements Runnable {
         plugin.debug("Running Emergency Program One");
         Location l = getSpawnLocation(id);
         if (l != null) {
-            // get player location
-            l.setX(l.getX() + 0.5);
-            l.setZ(l.getZ() + 1.5);
-            // set yaw so npc faces into the tardis
-            float yaw = 0F;
+            l.setX(l.getX() + 0.5F);
+            l.setZ(l.getZ() + 1.5F);
             // create NPC
+            NPCRegistry registry = CitizensAPI.getNPCRegistry();
+            NPC npc2 = registry.createNPC(EntityType.PLAYER, p.getName());
+            npc2.spawn(l);
+            int npcid = npc2.getId();
+            plugin.npcIDs.add(npcid);
+            p.sendMessage(ChatColor.RED + "[Emergency Program One] " + ChatColor.RESET + message);
+            p.sendMessage(ChatColor.RED + "[Emergency Program One] " + ChatColor.RESET + "Right-click me to make me go away.");
             try {
-                final RemoteEntity npc = plugin.npcManager.createNamedEntity(RemoteEntityType.Villager, l, p);
+                plugin.myspawn = true;
                 // set some behaviours
-                npc.setYaw(yaw);
-                npc.setStationary(true);
-                npc.getMind().addMovementDesire(new DesireLookAtNearest(npc, Player.class, 8F), 1);
-                npc.getMind().addBehaviour(new EnterSightBehavior(npc) {
-                    @Override
-                    public void onEnterSight(Player inPlayer) {
-                        inPlayer.sendMessage(ChatColor.RED + "[Emergency Program One] " + ChatColor.RESET + message);
-                        inPlayer.sendMessage(ChatColor.RED + "[Emergency Program One] " + ChatColor.RESET + "Right-click me to make me go away.");
-                    }
-                });
-                npc.getMind().addBehaviour(new InteractBehavior(npc) {
-                    @Override
-                    public void onInteract(Player inPlayer) {
-                        // remove npc
-                        inPlayer.sendMessage(ChatColor.RED + "[Emergency Program One] " + ChatColor.RESET + "Bye!");
-                        plugin.npcManager.removeEntity(npc.getID());
-                    }
-                });
             } catch (Exception e) {
                 plugin.debug(e);
             }
@@ -98,7 +83,6 @@ public class TARDISEPSRunnable implements Runnable {
             ResultSetDoors rsd = new ResultSetDoors(plugin, where, false);
             if (rsd.resultSet()) {
                 String[] door = rsd.getDoor_location().split(":");
-
                 World w = plugin.getServer().getWorld(door[0]);
                 int x = plugin.utils.parseNum(door[1]);
                 int y = plugin.utils.parseNum(door[2]);
