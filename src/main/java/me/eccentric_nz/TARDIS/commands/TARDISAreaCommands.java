@@ -49,6 +49,10 @@ public class TARDISAreaCommands implements CommandExecutor {
 
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
+        if (!sender.hasPermission("tardis.admin")) {
+            sender.sendMessage(plugin.pluginName + "You do not have permission to add TARDIS areas!");
+            return true;
+        }
         Player player = null;
         if (sender instanceof Player) {
             player = (Player) sender;
@@ -60,7 +64,7 @@ public class TARDISAreaCommands implements CommandExecutor {
                 return false;
             }
             if (player == null) {
-                sender.sendMessage(plugin.pluginName + ChatColor.RED + " This command can only be run by a player");
+                sender.sendMessage(plugin.pluginName + ChatColor.RED + "This command can only be run by a player");
                 return false;
             }
             if (args[0].equals("start")) {
@@ -85,7 +89,7 @@ public class TARDISAreaCommands implements CommandExecutor {
             }
             if (args[0].equals("end")) {
                 if (!plugin.trackBlock.containsKey(player.getName())) {
-                    player.sendMessage(plugin.pluginName + ChatColor.RED + " You haven't selected an area start block!");
+                    player.sendMessage(plugin.pluginName + ChatColor.RED + "You haven't selected an area start block!");
                     return false;
                 }
                 plugin.trackEnd.put(player.getName(), "end");

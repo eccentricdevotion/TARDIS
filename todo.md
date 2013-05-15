@@ -5,15 +5,13 @@
 2. Add docs for new features / perms / commands
 
 ## Next version `2.4+`
-1. Fix Emergency Program One spawn time.
-2. Add `/tardis rescue [player]` command
-3. Texture pack switching
-4. De-materialisation!
-5. TARDIS shield?
-6. Add cloister bell SFX
-7. Add HADS
-8. Add player preference to jettison the whole room (including walls)
-9. Add `/tardis secondary door` for an alternative inner TARDIS door
+1. Add `/tardis rescue [player]` command
+2. De-materialisation!
+3. TARDIS shield?
+4. Add cloister bell SFX
+5. Add HADS
+6. Add player preference to jettison the whole room (including walls)
+7. Add `/tardis secondary door` for an alternative inner TARDIS door
 
 ## Minecraft API when available `3.0?`
 1. Recreate everything with the new API :)
