@@ -71,7 +71,7 @@
             <li>Added the permission <code>tardis.exterminate</code> &mdash; players must have it to delete their TARDIS</li>
             <li>Fixed some levers falling into the void (causing inactive lamps) in deluxe &amp; eleventh TARDIS schematics &mdash; <em>delete the old schematics</em></li>
             <li>Fixed the handbrake not being added in the deluxe TARDIS schematic &mdash; <em>delete the old schematic</em></li>
-            <li>Added missing condensable <code>*_ITEM</code> items or cauldrons, brewing stands and nether_bricks to the condensables list. This should fix some rooms not being able to be grown when <code>rooms_require_blocks</code> is <code>true</code></li>
+            <li>Added missing condensable <code>*_ITEM</code> items for cauldrons, brewing stands and nether_bricks to the condensables list. This should fix some rooms not being able to be grown when <code>rooms_require_blocks</code> is <code>true</code></li>
             <li>Added the ability for functional secondary control consoles
                 <ul>
                     <li>Old primary controls are automatically updated to the new format</li>
@@ -344,7 +344,7 @@
                     <li>Nearby entities (in a 1 chunk radius)</li>
                 </ul>
             </li>
-            <li>Added player preference to set the block used to grow room walls &mdash; use <code>/tardisprefs wall help</code> to see a list of available blocks. The preference is automatically set when creating the TARDIS &mdash; default, bigger and deluxe sizes are set to ORANGE<em>WOOL and the eleventh to LIGHT</em>GREY_WOOL if using LAPIS as the middle block (in the creation stack). Otherwise it is set the the material used for the middle block.</li>
+            <li>Added player preference to set the block used to grow room walls &mdash; use <code>/tardisprefs wall help</code> to see a list of available blocks. The preference is automatically set when creating the TARDIS &mdash; default, bigger and deluxe sizes are set to ORANGE_WOOL and the eleventh to LIGHT_GREY_WOOL if using LAPIS as the middle block (in the creation stack). Otherwise it is set the the material used for the middle block.</li>
             <li>If the config contains <code>debug: true</code>, rooms grow faster</li>
             <li>The TARDIS condenser now accepts most blocks and items for conversion. You get more energy for items of higher worth e.g. if the value of DIRT = 1, then a diamond = 200</li>
             <li>You can no longer use the <code>/tardis comehere</code> command to bring the Police Box to a predefined TARDIS area &mdash; this should stop potential overlaps and dupes</li>
@@ -542,8 +542,8 @@
         <ul>
             <li>Added some new permissions:
                 <ul>
-                    <li><code>tardis.travel.player</code> &mdash; set whether a player can time travel to a player&rsquo;s location</li>
-                    <li><code>tardis.travel.location</code> &mdash; set whether a player can time travel to a co-ordinate location</li>
+                    <li><code>tardis.timetravel.player</code> &mdash; set whether a player can time travel to a player&rsquo;s location</li>
+                    <li><code>tardis.timetravel.location</code> &mdash; set whether a player can time travel to a co-ordinate location</li>
                 </ul>
             </li>
             <li>Added a timer and associated config keys, so that you can timetravel to skyblock type worlds
@@ -628,7 +628,7 @@
             <li>Really, really fixed safe location finding this time</li>
             <li>Made it so you can only rename the TARDIS key item (as determined by the TARDIS config)</li>
             <li>Added config options to enable/disable WorldGuard &mdash; for inner TARDIS protection and for respecting WorldGuard regions created with another plugin &mdash; <code>use_worldguard: [true|false]</code> and <code>respect_worldguard: [true|false]</code></li>
-            <li>Separated /tardis command into 5 separate commands:</li>
+            <li>Separated <code>/tardis</code> command into 5 separate commands:</li>
             <li><code>/tardis</code> &mdash; do stuff with your TARDIS</li>
             <li><code>/tardistravel</code> &mdash; go somewhere in your TARDIS</li>
             <li><code>/tardisprefs</code> &mdash; change your TARDIS preferences</li>
@@ -656,7 +656,7 @@
         <h3>v1.7.3</h3>
         <ul>
             <li>The TARDIS Police Box is now protected form TNT &amp; Creeper explosions plus Wither &amp; Ender Dragon damage</li>
-            <li>Added ability to travel to The End, (End worlds will be loaded into the config) but time travel to The End is disabled by default &mdash; edit the config and make the_end: true to enable</li>
+            <li>Added ability to travel to The End, (End worlds will be loaded into the config) but time travel to The End is disabled by default &mdash; edit the config and make <code>the_end: true</code> to enable</li>
         </ul>
         <h3>v1.7.2</h3>
         <ul>
@@ -798,8 +798,8 @@
             <li>
                 <p>Added configuration option so that the (inner) TARDIS can now be created in a specific world, this world can also be excluded from the time travel destinations &mdash; commands (thanks bryantkelley14):</p>
                 <pre><code>/tardis admin default [true|false]
-                    /tardis admin name [World]
-                    /tardis admin include [true|false]</code></pre>
+/tardis admin name [World]
+/tardis admin include [true|false]</code></pre>
             </li>
             <li>
                 <p>Added configurable TARDIS key &mdash; can now use any valid Material &mdash; use <code>/tardis admin key [Material]</code> to set (thanks woodendinosaur)</p>
