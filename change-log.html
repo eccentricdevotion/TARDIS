@@ -26,11 +26,35 @@
     <section>
         <h1>Change log</h1>
         <h2>What&rsquo;s been changed?</h2>
+        <h3>v2.3</h3>
+        <ul>
+            <li>If <code>rooms_require_blocks</code> was true and the <code>rooms_condenser_percentage</code> was low, there was a chance that you would be required to condense a zero amount of a block. The minimum will now always be at least 1.</li>
+            <li>Added SPIDER_EYE to the condensable items list</li>
+            <li>Fixed the &lsquo;baker&rsquo; and &lsquo;wood&rsquo; rooms requiring players to condense a CAKE_BLOCK if <code>rooms_require_blocks</code> was true</li>
+            <li>The middle blocks in the TARDIS creation stack can now be set in the config &mdash; add <a href="http://jd.bukkit.org/dev/apidocs/org/bukkit/Material.html">Bukkit Material enum</a> names to add extra blocks for use</li>
+        </ul>
+        <h3>v2.3-pre</h3>
+        <ul>
+            <li>Updated to Bukkit 1.5.2-R0.1</li>
+            <li>Added support for My Worlds plugin (as an alternative world manager to Multiverse-Core or Multi-world)</li>
+            <li>Fixed a NPE when using the <code>/tardisbook</code> command with no arguments</li>
+            <li>Fixed a NPE exception if the TARDIS schematics aren&rsquo;t updated</li>
+            <li>The config option <code>default_world</code> is disabled automatically if <code>create_worlds</code> is also true</li>
+            <li>Added a check that the TARDIS has enough Artron Energy to use the backdoor</li>
+            <li>Added a check that the other backdoor has been added successfully before allowing use of the backdoor feature</li>
+            <li>Added a check when updating the inner backdoor, that the player has entered the TARDIS properly by the regular door</li>
+            <li>Added a config option: <code>return_room_seed: [true|false]</code> &mdash; whether the player gets back the room seed block when jettisoning a room</li>
+            <li>Custom room schematics now have their own folder <em>user_schematics</em> &mdash; please move any custom schematics to here, custom rooms will be disabled in the config until you do&hellip;</li>
+            <li>Removed the TRIPWIRE and TRIPWIRE_HOOK items from the valid materials that can be used for the TARDIS key &mdash; they don&rsquo;t work anyway</li>
+            <li>Fixed pet name tags showing when transported into the TARDIS when the pet never had a custom name</li>
+            <li>Made the controls converter far more robust, if any of the control locations are missing then the plugin determines their position automagically</li>
+            <li>Fixed an ArrayOutOfBounds exception when controls had been converted more than once and there were duplicate records</li>
+        </ul>
         <h3>v2.3-beta-1</h3>
         <ul>
             <li>The default for the config option <code>rooms_require_blocks</code> is now <code>false</code></li>
             <li>Fixed the update checker giving the wrong message if a release version is available and the current version is a beta</li>
-            <li>Players can now add a <strong>back door</strong> to the tardis &mdash; and no funny jokes please...
+            <li>Players can now add a <strong>back door</strong> to the tardis &mdash; and no funny jokes please&hellip;
                 <ul>
                     <li>Requires the permission <code>tardis.backdoor</code></li>
                     <li>Place a pair of IRON doors &mdash; one inside and one outside!</li>
@@ -341,7 +365,7 @@
             <li>Fixed <code>/tardisarea show</code> command throwing an error if no area name was supplied</li>
             <li>The platform (if there is one) is destroyed correctly when using <code>/tardis comehere</code></li>
             <li>Optimised some of the various TARDIS Listener classes to (hopefully) reduce server lag</li>
-            <li>You can now add more than one gravity well to the TARDIS. Technically you can make one go up a level, but you&rsquo;ll have to be a bit creative...
+            <li>You can now add more than one gravity well to the TARDIS. Technically you can make one go up a level, but you&rsquo;ll have to be a bit creative&hellip;
                 <ul>
                     <li>This breaks the current gravity wells so they will need updating</li>
                     <li>Added <code>/tardis gravity</code> command to update old gravity wells to the new format. Use the command while inside your TARDIS &mdash; changes should take effect immediately</li>
@@ -663,7 +687,7 @@
         <h3>v1.6</h3>
         <ul>
             <li>Added different sized TARDIS interiors &mdash; The bottom block when creating a TARDIS determines the size &mdash; IRON block gives the current TARDIS, GOLD block gives a bigger TARDIS, DIAMOND block gives a deluxe TARDIS. Deluxe TARDIS schematic kindly provided by ewized.</li>
-            <li>You can now use your own schematic files to build the inner TARDIS &mdash; see the <a href="schematis.html">Schematics</a> page for more info...</li>
+            <li>You can now use your own schematic files to build the inner TARDIS &mdash; see the <a href="schematis.html">Schematics</a> page for more info&hellip;</li>
             <li>A fix for the &lsquo;chameleon circuit exploit&rsquo; &mdash; the Police Box is now indestructible in SURVIVAL mode (except for the sign &amp; platform if there is one).</li>
             <li>Random location finding and <code>/tardis comehere</code> command now respects WorldGuard regions (if WorldGuard is enabled on server).</li>
             <li>New command <code>/tardis direction [north </code>
@@ -735,7 +759,7 @@
         <h3>v1.3.1</h3>
         <ul>
             <li>Companion names should now be case-insensitive</li>
-            <li>Flying bugs fixed? Have reverted back to some older code with a few changes, seems to be working...</li>
+            <li>Flying bugs fixed? Have reverted back to some older code with a few changes, seems to be working&hellip;</li>
             <li>Platform building now copes with water better, also fixed incorrect platform building when TARDIS door was facing WEST</li>
             <li>Location finding has been updated (again) let&rsquo;s hope it works better this time</li>
             <li>Planetoid worlds no longer cause client timeout and endless looping on the server</li>
