@@ -46,7 +46,7 @@ public class TARDISChameleonCircuit {
         int wall_block = 35;
         byte chameleonData = 11;
         // determine wall_block
-        if (TARDISConstants.CHAMELEON_BLOCKS_VALID.contains((Integer) chameleonType)) {
+        if (plugin.getBlocksConfig().getIntegerList("chameleon_blocks").contains((Integer) chameleonType)) {
             wall_block = chameleonType;
             chameleonData = b.getData();
         }
