@@ -285,13 +285,13 @@ public class TARDISAdminCommands implements CommandExecutor {
                             }
                             if (cname.equals("rooms") && args[1].equalsIgnoreCase("rooms")) {
                                 sender.sendMessage(ChatColor.AQUA + cname + ":" + ChatColor.RESET);
-                                Set<String> roomNames = plugin.getConfig().getConfigurationSection("rooms").getKeys(false);
+                                Set<String> roomNames = plugin.getRoomsConfig().getConfigurationSection("rooms").getKeys(false);
                                 for (String r : roomNames) {
                                     sender.sendMessage("      " + ChatColor.GREEN + r + ":");
-                                    sender.sendMessage("            enabled: " + plugin.getConfig().getString("rooms." + r + ".enabled"));
-                                    sender.sendMessage("            cost: " + plugin.getConfig().getString("rooms." + r + ".cost"));
-                                    sender.sendMessage("            offset: " + plugin.getConfig().getString("rooms." + r + ".offset"));
-                                    sender.sendMessage("            seed: " + plugin.getConfig().getString("rooms." + r + ".seed"));
+                                    sender.sendMessage("            enabled: " + plugin.getRoomsConfig().getString("rooms." + r + ".enabled"));
+                                    sender.sendMessage("            cost: " + plugin.getRoomsConfig().getString("rooms." + r + ".cost"));
+                                    sender.sendMessage("            offset: " + plugin.getRoomsConfig().getString("rooms." + r + ".offset"));
+                                    sender.sendMessage("            seed: " + plugin.getRoomsConfig().getString("rooms." + r + ".seed"));
                                 }
                             }
                             if (cname.equals("rechargers") && args[1].equalsIgnoreCase("rechargers")) {

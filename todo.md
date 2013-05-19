@@ -12,6 +12,7 @@
 5. Add HADS
 6. Add player preference to jettison the whole room (including walls)
 7. Add `/tardis secondary door` for an alternative inner TARDIS door
+8. Configurable chameleon blocks
 
 ## Minecraft API when available `3.0?`
 1. Recreate everything with the new API :)

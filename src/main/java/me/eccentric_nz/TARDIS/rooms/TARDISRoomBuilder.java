@@ -116,7 +116,7 @@ public class TARDISRoomBuilder {
                 }
             }
             // set y offset
-            int offset = Math.abs(plugin.getConfig().getInt("rooms." + r + ".offset"));
+            int offset = Math.abs(plugin.getRoomsConfig().getInt("rooms." + r + ".offset"));
             l.setY(l.getY() - offset);
             roomData.setLocation(l);
             if (d.equals(COMPASS.EAST) || d.equals(COMPASS.SOUTH) || r.equalsIgnoreCase("GRAVITY") || r.equalsIgnoreCase("ANTIGRAVITY")) {

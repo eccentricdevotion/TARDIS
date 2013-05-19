@@ -46,9 +46,9 @@ public class TARDISLightningListener implements Listener {
 
     /**
      * Listens for lightning strikes around the TARDIS Police Box. If the strike
-     * is within (recharge_distance in config.yml) blocks, then the TARDIS
+     * is within (recharge_distance in artron.yml) blocks, then the TARDIS
      * Artron Levels will be increased by the configured amount
-     * (lightning_recharge in config.yml).
+     * (lightning_recharge in artron.yml).
      *
      * @param e a lightning strike
      */
@@ -79,7 +79,7 @@ public class TARDISLightningListener implements Listener {
                         // only recharge if the TARDIS is within range
                         if (plugin.utils.compareLocations(t, l)) {
                             QueryFactory qf = new QueryFactory(plugin);
-                            int amount = plugin.getConfig().getInt("lightning_recharge") + plugin.utils.parseNum(map.get("artron_level"));
+                            int amount = plugin.getArtronConfig().getInt("lightning_recharge") + plugin.utils.parseNum(map.get("artron_level"));
                             HashMap<String, Object> set = new HashMap<String, Object>();
                             set.put("artron_level", amount);
                             HashMap<String, Object> where = new HashMap<String, Object>();

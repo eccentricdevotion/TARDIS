@@ -98,7 +98,7 @@ public class TARDISFarmer {
             List<Entity> old_macd_had_a_mooshroom = new ArrayList<Entity>();
             // are we doing an achievement?
             TARDISAchievementFactory taf = null;
-            if (plugin.ayml.getBoolean("farm.enabled")) {
+            if (plugin.getAchivementConfig().getBoolean("farm.enabled")) {
                 taf = new TARDISAchievementFactory(plugin, p, "farm", 5);
             }
             // count total mobs

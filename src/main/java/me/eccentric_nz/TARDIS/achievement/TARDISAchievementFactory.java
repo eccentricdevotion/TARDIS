@@ -72,7 +72,7 @@ public class TARDISAchievementFactory {
                     achieved = true;
                 }
             } else {
-                int req = plugin.ayml.getInt(name + ".required");
+                int req = plugin.getAchivementConfig().getInt(name + ".required");
                 int have = plugin.utils.parseNum(rsa.getAmount());
                 int sum = have + (Integer) obj;
                 if (sum >= req) {
@@ -81,10 +81,10 @@ public class TARDISAchievementFactory {
             }
             if (achieved) {
                 // award achievement!
-                int reward_amount = plugin.ayml.getInt(name + ".reward_amount");
-                String reward_type = plugin.ayml.getString(name + ".reward_type");
+                int reward_amount = plugin.getAchivementConfig().getInt(name + ".reward_amount");
+                String reward_type = plugin.getAchivementConfig().getString(name + ".reward_type");
                 TARDISAchievementNotify tan = new TARDISAchievementNotify(plugin);
-                tan.sendAchievement(player, plugin.ayml.getString(name + ".message"), Material.valueOf(plugin.ayml.getString(name + ".icon")));
+                tan.sendAchievement(player, plugin.getAchivementConfig().getString(name + ".message"), Material.valueOf(plugin.getAchivementConfig().getString(name + ".icon")));
                 if (reward_type.equalsIgnoreCase("XP")) {
                     new TARDISXPRewarder(player).changeExp(reward_amount);
                 } else {
@@ -111,7 +111,7 @@ public class TARDISAchievementFactory {
             }
         } else {
             // is it an auto achievement?
-            if (plugin.ayml.getBoolean(name + ".auto")) {
+            if (plugin.getAchivementConfig().getBoolean(name + ".auto")) {
                 // insert a new record
                 seta.put("player", player.getName());
                 seta.put("name", name);

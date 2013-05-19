@@ -95,7 +95,7 @@ public class TARDISBookCommands implements CommandExecutor {
                     return true;
                 }
                 if (first.equals("start")) {
-                    if (plugin.ayml.getBoolean(bookname + ".auto")) {
+                    if (plugin.getAchivementConfig().getBoolean(bookname + ".auto")) {
                         sender.sendMessage(plugin.pluginName + "This achievement is awarded automatically!");
                         return true;
                     }
@@ -106,7 +106,7 @@ public class TARDISBookCommands implements CommandExecutor {
                     ResultSetAchievements rsa = new ResultSetAchievements(plugin, where, false);
                     if (rsa.resultSet()) {
                         if (rsa.isCompleted()) {
-                            if (!plugin.ayml.getBoolean(bookname + ".repeatable")) {
+                            if (!plugin.getAchivementConfig().getBoolean(bookname + ".repeatable")) {
                                 sender.sendMessage(plugin.pluginName + "This achievement can only be gained once!");
                                 return true;
                             }
@@ -130,10 +130,10 @@ public class TARDISBookCommands implements CommandExecutor {
 
     private LinkedHashMap<String, String> getAchievements() {
         LinkedHashMap<String, String> map = new LinkedHashMap<String, String>();
-        Set<String> aset = plugin.ayml.getRoot().getKeys(false);
+        Set<String> aset = plugin.getAchivementConfig().getRoot().getKeys(false);
         for (String a : aset) {
-            if (plugin.ayml.getBoolean(a + ".enabled")) {
-                String title_reward = plugin.ayml.getString(a + ".name") + " - " + plugin.ayml.getString(a + ".reward_type") + ":" + plugin.ayml.getString(a + ".reward_amount");
+            if (plugin.getAchivementConfig().getBoolean(a + ".enabled")) {
+                String title_reward = plugin.getAchivementConfig().getString(a + ".name") + " - " + plugin.getAchivementConfig().getString(a + ".reward_type") + ":" + plugin.getAchivementConfig().getString(a + ".reward_amount");
                 map.put(a, title_reward);
             }
         }

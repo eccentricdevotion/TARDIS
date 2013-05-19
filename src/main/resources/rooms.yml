@@ -63,7 +63,7 @@ rooms:
   ANTIGRAVITY:
     enabled: true
     cost: 625
-    offset: -2
+    offset: 0
     seed: SANDSTONE
     user: false
   HARMONY:

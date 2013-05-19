@@ -110,7 +110,7 @@ public class TARDISRoomSeeder implements Listener {
                 if (builder.build()) {
                     plugin.trackRoomSeed.remove(playerNameStr);
                     // ok they clicked it, so take their energy!
-                    int amount = plugin.getConfig().getInt("rooms." + r + ".cost");
+                    int amount = plugin.getRoomsConfig().getInt("rooms." + r + ".cost");
                     QueryFactory qf = new QueryFactory(plugin);
                     HashMap<String, Object> set = new HashMap<String, Object>();
                     set.put("owner", playerNameStr);
@@ -127,7 +127,7 @@ public class TARDISRoomSeeder implements Listener {
                         plugin.roomCondenserData.remove(playerNameStr);
                     }
                     // are we doing an achievement?
-                    if (plugin.ayml.getBoolean("rooms.enabled")) {
+                    if (plugin.getAchivementConfig().getBoolean("rooms.enabled")) {
                         TARDISAchievementFactory taf = new TARDISAchievementFactory(plugin, player, "rooms", plugin.seeds.size());
                         taf.doAchievement(r);
                     }

@@ -270,7 +270,7 @@ public class TARDISUtils {
 
     public boolean compareLocations(Location a, Location b) {
         if (a.getWorld().equals(b.getWorld())) {
-            double rd = plugin.getConfig().getDouble("recharge_distance");
+            double rd = plugin.getArtronConfig().getDouble("recharge_distance");
             double squared = rd * rd;
             return (a.distanceSquared(b) <= squared);
         }

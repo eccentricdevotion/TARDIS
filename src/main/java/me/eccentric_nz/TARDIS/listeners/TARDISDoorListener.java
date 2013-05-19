@@ -234,7 +234,7 @@ public class TARDISDoorListener implements Listener {
                                 ResultSetTardis rs = new ResultSetTardis(plugin, tid, "", false);
                                 if (rs.resultSet()) {
                                     int artron = rs.getArtron_level();
-                                    int required = plugin.getConfig().getInt("backdoor");
+                                    int required = plugin.getArtronConfig().getInt("backdoor");
                                     TARDISConstants.COMPASS d = rs.getDirection();
                                     String tl = rs.getOwner();
                                     String current = rs.getCurrent();
@@ -401,7 +401,7 @@ public class TARDISDoorListener implements Listener {
                                             }
                                             HashMap<String, Object> wheree = new HashMap<String, Object>();
                                             wheree.put("tardis_id", id);
-                                            int cost = (0 - plugin.getConfig().getInt("backdoor"));
+                                            int cost = (0 - plugin.getArtronConfig().getInt("backdoor"));
                                             qf.alterEnergyLevel("tardis", cost, wheree, player);
                                             break;
                                         case 3:
@@ -436,7 +436,7 @@ public class TARDISDoorListener implements Listener {
                                             // take energy
                                             HashMap<String, Object> wherea = new HashMap<String, Object>();
                                             wherea.put("tardis_id", id);
-                                            int costa = (0 - plugin.getConfig().getInt("backdoor"));
+                                            int costa = (0 - plugin.getArtronConfig().getInt("backdoor"));
                                             qf.alterEnergyLevel("tardis", costa, wherea, player);
                                             break;
                                         default:
@@ -506,7 +506,7 @@ public class TARDISDoorListener implements Listener {
                     // add energy to player
                     HashMap<String, Object> where = new HashMap<String, Object>();
                     where.put("player", name);
-                    int player_artron = (plugin.getConfig().getBoolean("create_worlds")) ? plugin.getConfig().getInt("player") : plugin.getConfig().getInt("player") * 10;
+                    int player_artron = (plugin.getConfig().getBoolean("create_worlds")) ? plugin.getArtronConfig().getInt("player") : plugin.getArtronConfig().getInt("player") * 10;
                     qf.alterEnergyLevel("player_prefs", player_artron, where, p);
                 }
                 // give a key

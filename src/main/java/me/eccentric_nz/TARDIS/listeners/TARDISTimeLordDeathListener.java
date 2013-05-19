@@ -149,7 +149,7 @@ public class TARDISTimeLordDeathListener implements Listener {
                             qf.doUpdate("tardis", set, tid);
                             HashMap<String, Object> wherea = new HashMap<String, Object>();
                             wherea.put("tardis_id", id);
-                            int amount = plugin.getConfig().getInt("autonomous") * -1;
+                            int amount = plugin.getArtronConfig().getInt("autonomous") * -1;
                             qf.alterEnergyLevel("tardis", amount, wherea, player);
                         }
                     }

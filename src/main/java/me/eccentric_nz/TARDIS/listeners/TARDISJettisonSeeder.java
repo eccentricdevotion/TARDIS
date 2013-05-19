@@ -80,7 +80,7 @@ public class TARDISJettisonSeeder implements Listener {
                 key = plugin.getConfig().getString("key");
             }
             // only proceed if they are clicking a seed block with the TARDIS key!
-            if (blockType.equals(Material.getMaterial(plugin.getConfig().getString("jettison_seed"))) && inhand.equals(Material.getMaterial(key))) {
+            if (blockType.equals(Material.getMaterial(plugin.getArtronConfig().getString("jettison_seed"))) && inhand.equals(Material.getMaterial(key))) {
                 String r = plugin.trackJettison.get(playerNameStr);
                 // get clicked block location
                 Location b = block.getLocation();
@@ -92,7 +92,7 @@ public class TARDISJettisonSeeder implements Listener {
                     block.setTypeIdAndData(0, (byte) 0, true);
                     b.getWorld().playEffect(b, Effect.POTION_BREAK, 9);
                     // ok they clicked it, so give them their energy!
-                    int amount = Math.round((plugin.getConfig().getInt("jettison") / 100F) * plugin.getConfig().getInt("rooms." + r + ".cost"));
+                    int amount = Math.round((plugin.getArtronConfig().getInt("jettison") / 100F) * plugin.getRoomsConfig().getInt("rooms." + r + ".cost"));
                     QueryFactory qf = new QueryFactory(plugin);
                     HashMap<String, Object> set = new HashMap<String, Object>();
                     set.put("owner", playerNameStr);
@@ -114,7 +114,7 @@ public class TARDISJettisonSeeder implements Listener {
                     }
                     if (plugin.getConfig().getBoolean("return_room_seed")) {
                         // give the player back the room seed block
-                        ItemStack is = new ItemStack(Material.getMaterial(plugin.getConfig().getString("rooms." + r + ".seed")));
+                        ItemStack is = new ItemStack(Material.getMaterial(plugin.getRoomsConfig().getString("rooms." + r + ".seed")));
                         Inventory inv = player.getInventory();
                         inv.addItem(is);
                         player.updateInventory();

@@ -62,8 +62,8 @@ public class TARDISMakeRoomCSV {
         reader = new TARDISRoomSchematicReader(plugin);
         String defaultbasepath = plugin.getDataFolder() + File.separator + "schematics" + File.separator;
         String userbasepath = plugin.getDataFolder() + File.separator + "user_schematics" + File.separator;
-        for (String r : plugin.getConfig().getConfigurationSection("rooms").getKeys(false)) {
-            boolean user = plugin.getConfig().getBoolean("rooms." + r + ".user");
+        for (String r : plugin.getRoomsConfig().getConfigurationSection("rooms").getKeys(false)) {
+            boolean user = plugin.getRoomsConfig().getBoolean("rooms." + r + ".user");
             String basepath = (user) ? userbasepath : defaultbasepath;
             String lower = r.toLowerCase(Locale.ENGLISH);
             File sch = new File(basepath + lower + ".schematic");
@@ -82,7 +82,7 @@ public class TARDISMakeRoomCSV {
                 }
             } else {
                 plugin.console.sendMessage(plugin.pluginName + ChatColor.RED + lower + ".schematic was not found in 'user_schematics' and was disabled!");
-                plugin.getConfig().set("rooms." + r + ".enabled", false);
+                plugin.getRoomsConfig().set("rooms." + r + ".enabled", false);
                 //plugin.tardisCommand.roomArgs.remove(r);
             }
         }

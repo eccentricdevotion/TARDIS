@@ -122,8 +122,8 @@ public class TARDISCommands implements CommandExecutor {
         firstArgs.add("version");
         firstArgs.add("inside");
         // rooms - only add if enabled in the config
-        for (String r : plugin.getConfig().getConfigurationSection("rooms").getKeys(false)) {
-            if (plugin.getConfig().getBoolean("rooms." + r + ".enabled")) {
+        for (String r : plugin.getRoomsConfig().getConfigurationSection("rooms").getKeys(false)) {
+            if (plugin.getRoomsConfig().getBoolean("rooms." + r + ".enabled")) {
                 roomArgs.add(r);
             }
         }
@@ -372,7 +372,7 @@ public class TARDISCommands implements CommandExecutor {
                         return true;
                     }
                     // check they have enough artron energy
-                    if (level < plugin.getConfig().getInt("rooms." + room + ".cost")) {
+                    if (level < plugin.getRoomsConfig().getInt("rooms." + room + ".cost")) {
                         player.sendMessage(plugin.pluginName + "The TARDIS does not have enough Artron Energy to grow this room!");
                         return true;
                     }
@@ -435,9 +435,9 @@ public class TARDISCommands implements CommandExecutor {
                     String message;
                     // if it is a gravity well
                     if (room.equals("GRAVITY") || room.equals("ANTIGRAVITY")) {
-                        message = "Place the GRAVITY WELL seed block (" + plugin.getConfig().getString("rooms." + room + ".seed") + ") into the centre of the floor in an empty room, then hit it with the TARDIS key to start growing your room!";
+                        message = "Place the GRAVITY WELL seed block (" + plugin.getRoomsConfig().getString("rooms." + room + ".seed") + ") into the centre of the floor in an empty room, then hit it with the TARDIS key to start growing your room!";
                     } else {
-                        message = "Place the " + room + " seed block (" + plugin.getConfig().getString("rooms." + room + ".seed") + ") where the door should be, then hit it with the TARDIS key to start growing your room!";
+                        message = "Place the " + room + " seed block (" + plugin.getRoomsConfig().getString("rooms." + room + ".seed") + ") where the door should be, then hit it with the TARDIS key to start growing your room!";
                     }
                     plugin.trackRoomSeed.put(player.getName(), room);
                     player.sendMessage(plugin.pluginName + message);
@@ -482,7 +482,7 @@ public class TARDISCommands implements CommandExecutor {
                             return true;
                         }
                         plugin.trackJettison.put(player.getName(), room);
-                        String seed = plugin.getConfig().getString("jettison_seed");
+                        String seed = plugin.getArtronConfig().getString("jettison_seed");
                         player.sendMessage(plugin.pluginName + "Stand in the doorway of the room you want to jettison and place a " + seed + " block directly in front of the door. Hit the " + seed + " with the TARDIS key to jettison the room!");
                         return true;
                     } else {
@@ -591,7 +591,7 @@ public class TARDISCommands implements CommandExecutor {
                             return true;
                         }
                         int level = rs.getArtron_level();
-                        int ch = plugin.getConfig().getInt("comehere");
+                        int ch = plugin.getArtronConfig().getInt("comehere");
                         if (level < ch) {
                             player.sendMessage(plugin.pluginName + ChatColor.RED + "The TARDIS does not have enough Artron Energy to make this trip!");
                             return true;
@@ -866,7 +866,7 @@ public class TARDISCommands implements CommandExecutor {
                         wheret.put("tardis_id", id);
                         QueryFactory qf = new QueryFactory(plugin);
                         if (args[0].equalsIgnoreCase("rebuild")) {
-                            int rebuild = plugin.getConfig().getInt("random");
+                            int rebuild = plugin.getArtronConfig().getInt("random");
                             if (level < rebuild) {
                                 player.sendMessage(plugin.pluginName + ChatColor.RED + "The TARDIS does not have enough Artron Energy to rebuild!");
                                 return false;
@@ -885,7 +885,7 @@ public class TARDISCommands implements CommandExecutor {
                             return true;
                         }
                         if (args[0].equalsIgnoreCase("hide")) {
-                            int hide = plugin.getConfig().getInt("hide");
+                            int hide = plugin.getArtronConfig().getInt("hide");
                             if (level < hide) {
                                 player.sendMessage(plugin.pluginName + ChatColor.RED + "The TARDIS does not have enough Artron Energy to hide!");
                                 return false;
@@ -986,7 +986,7 @@ public class TARDISCommands implements CommandExecutor {
                             qf.doUpdate("tardis", set, tid);
                             player.sendMessage(plugin.pluginName + "You added " + ChatColor.GREEN + args[1] + ChatColor.RESET + " as a TARDIS companion.");
                             // are we doing an achievement?
-                            if (plugin.ayml.getBoolean("friends.enabled")) {
+                            if (plugin.getAchivementConfig().getBoolean("friends.enabled")) {
                                 TARDISAchievementFactory taf = new TARDISAchievementFactory(plugin, player, "friends", 1);
                                 taf.doAchievement(1);
                             }
@@ -1225,7 +1225,7 @@ public class TARDISCommands implements CommandExecutor {
                         }
                         int id = rs.getTardis_id();
                         int level = rs.getArtron_level();
-                        int amount = plugin.getConfig().getInt("random");
+                        int amount = plugin.getArtronConfig().getInt("random");
                         if (level < amount) {
                             sender.sendMessage(plugin.pluginName + "The TARDIS does not have enough Artron Energy to change the Police Box direction!");
                             return true;

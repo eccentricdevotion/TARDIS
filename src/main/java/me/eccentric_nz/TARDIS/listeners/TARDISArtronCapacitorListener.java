@@ -105,9 +105,9 @@ public class TARDISArtronCapacitorListener implements Listener {
                             whereid.put("tardis_id", id);
                             int current_level = rs.getArtron_level();
                             boolean init = rs.isTardis_init();
-                            int fc = plugin.getConfig().getInt("full_charge");
+                            int fc = plugin.getArtronConfig().getInt("full_charge");
                             Material item = player.getItemInHand().getType();
-                            Material full = Material.valueOf(plugin.getConfig().getString("full_charge_item"));
+                            Material full = Material.valueOf(plugin.getArtronConfig().getString("full_charge_item"));
                             QueryFactory qf = new QueryFactory(plugin);
                             // determine key item
                             HashMap<String, Object> wherek = new HashMap<String, Object>();

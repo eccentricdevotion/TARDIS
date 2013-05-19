@@ -202,7 +202,7 @@ public class TARDISHandbrakeListener implements Listener {
                                                 now = System.currentTimeMillis();
                                             }
                                             set.put("lastuse", now);
-                                            if (plugin.ayml.getBoolean("travel.enabled")) {
+                                            if (plugin.getAchivementConfig().getBoolean("travel.enabled")) {
                                                 if (l.getWorld().equals(exit.getWorld())) {
                                                     dist = (int) l.distance(exit);
                                                 }
@@ -259,7 +259,7 @@ public class TARDISHandbrakeListener implements Listener {
                                 HashMap<String, Object> whereh = new HashMap<String, Object>();
                                 whereh.put("tardis_id", id);
                                 qf.doUpdate("tardis", set, whereh);
-                                if (dist > 0 && plugin.ayml.getBoolean("travel.enabled")) {
+                                if (dist > 0 && plugin.getAchivementConfig().getBoolean("travel.enabled")) {
                                     TARDISAchievementFactory taf = new TARDISAchievementFactory(plugin, player, "travel", 1);
                                     taf.doAchievement(dist);
                                 }

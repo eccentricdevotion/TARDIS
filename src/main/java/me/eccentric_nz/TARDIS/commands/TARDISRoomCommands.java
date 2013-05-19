@@ -67,7 +67,7 @@ public class TARDISRoomCommands implements CommandExecutor {
             if (args[0].toLowerCase(Locale.ENGLISH).equals("blocks")) {
                 TARDISCondensables tc = new TARDISCondensables();
                 String name = args[1].toUpperCase(Locale.ENGLISH);
-                Set<String> rooms = plugin.getConfig().getConfigurationSection("rooms").getKeys(false);
+                Set<String> rooms = plugin.getRoomsConfig().getConfigurationSection("rooms").getKeys(false);
                 if (name.equals("SAVE")) {
                     if (!sender.hasPermission("tardis.admin")) {
                         sender.sendMessage(plugin.pluginName + TARDISConstants.NO_PERMS_MESSAGE);
@@ -129,7 +129,7 @@ public class TARDISRoomCommands implements CommandExecutor {
                         } else {
                             mat = Material.getMaterial(bid).toString();
                         }
-                        int amount = Math.round((entry.getValue() / 100F) * plugin.getConfig().getInt("rooms_condenser_percent"));
+                        int amount = Math.round((entry.getValue() / 100F) * plugin.getRoomsConfig().getInt("rooms_condenser_percent"));
                         String line = mat + ", " + amount;
                         sender.sendMessage(line);
                     }
@@ -145,7 +145,7 @@ public class TARDISRoomCommands implements CommandExecutor {
                     sender.sendMessage(plugin.pluginName + "You cannot call your room '" + args[1] + "'!");
                     return false;
                 }
-                if (plugin.getConfig().contains("rooms." + name)) {
+                if (plugin.getRoomsConfig().contains("rooms." + name)) {
                     sender.sendMessage(plugin.pluginName + "That room name already exists!");
                     return true;
                 }
@@ -168,14 +168,18 @@ public class TARDISRoomCommands implements CommandExecutor {
                 short[] dimensions = plugin.room_dimensions.get(name);
                 String[][][] schem = TARDISSchematic.schematic(csvfile, dimensions[0], dimensions[1], dimensions[2]);
                 plugin.room_schematics.put(name, schem);
-                plugin.getConfig().set("rooms." + name + ".enabled", false);
-                plugin.saveConfig();
+                plugin.getRoomsConfig().set("rooms." + name + ".enabled", false);
+                try {
+                    plugin.getRoomsConfig().save(new File(plugin.getDataFolder(), "rooms.yml"));
+                } catch (IOException io) {
+                    plugin.debug("Could not save rooms.yml, " + io);
+                }
                 sender.sendMessage(plugin.pluginName + "Room added, please set the COST, SEED BLOCK and OFFSET, and then enable it!");
                 return true;
             } else {
                 // check they have specified a valid room
                 String name = args[0].toUpperCase(Locale.ENGLISH);
-                if (!plugin.getConfig().contains("rooms." + name)) {
+                if (!plugin.getRoomsConfig().contains("rooms." + name)) {
                     sender.sendMessage(plugin.pluginName + "Could not find a room by that name!");
                     return false;
                 }
@@ -183,13 +187,17 @@ public class TARDISRoomCommands implements CommandExecutor {
                 if (option.equals("true") || option.equals("false")) {
                     // boolean enable/disable
                     // check that the other options have been set first
-                    if (!plugin.getConfig().contains("rooms." + name + ".cost") || !plugin.getConfig().contains("rooms." + name + ".seed") || !plugin.getConfig().contains("rooms." + name + ".offset")) {
+                    if (!plugin.getRoomsConfig().contains("rooms." + name + ".cost") || !plugin.getRoomsConfig().contains("rooms." + name + ".seed") || !plugin.getRoomsConfig().contains("rooms." + name + ".offset")) {
                         sender.sendMessage(plugin.pluginName + "You must set the COST, SEED BLOCK and OFFSET before you can enable a room!");
                         return true;
                     }
                     boolean bool = Boolean.valueOf(args[1]);
-                    plugin.getConfig().set("rooms." + name + ".enabled", bool);
-                    plugin.saveConfig();
+                    plugin.getRoomsConfig().set("rooms." + name + ".enabled", bool);
+                    try {
+                        plugin.getRoomsConfig().save(new File(plugin.getDataFolder(), "rooms.yml"));
+                    } catch (IOException io) {
+                        plugin.debug("Could not save rooms.yml, " + io);
+                    }
                     // also add or remove the room from the TARDISCommands.roomArgs List
                     if (bool) {
                         plugin.tardisCommand.roomArgs.add(name);
@@ -204,13 +212,17 @@ public class TARDISRoomCommands implements CommandExecutor {
                         // cost
                         int num = Integer.parseInt(args[1]);
                         if (num > 0) {
-                            plugin.getConfig().set("rooms." + name + ".cost", num);
+                            plugin.getRoomsConfig().set("rooms." + name + ".cost", num);
                             sender.sendMessage(plugin.pluginName + "The " + name + " cost was set to " + num + "!");
                         } else {
-                            plugin.getConfig().set("rooms." + name + ".offset", num);
+                            plugin.getRoomsConfig().set("rooms." + name + ".offset", num);
                             sender.sendMessage(plugin.pluginName + "The " + name + " offset was set to " + num + "!");
                         }
-                        plugin.saveConfig();
+                        try {
+                            plugin.getRoomsConfig().save(new File(plugin.getDataFolder(), "rooms.yml"));
+                        } catch (IOException io) {
+                            plugin.debug("Could not save rooms.yml, " + io);
+                        }
                         return true;
                     } catch (NumberFormatException nfe) {
                         // string seed
@@ -220,15 +232,19 @@ public class TARDISRoomCommands implements CommandExecutor {
                             return false;
                         }
                         // check seed material is not already in use
-                        for (String m : plugin.getConfig().getConfigurationSection("rooms").getKeys(false)) {
-                            if (setMaterial.equalsIgnoreCase(plugin.getConfig().getString("rooms." + m + ".seed"))) {
+                        for (String m : plugin.getRoomsConfig().getConfigurationSection("rooms").getKeys(false)) {
+                            if (setMaterial.equalsIgnoreCase(plugin.getRoomsConfig().getString("rooms." + m + ".seed"))) {
                                 sender.sendMessage(plugin.pluginName + "Seed block material is already in use!");
                                 return true;
                             }
                         }
-                        plugin.getConfig().set("rooms." + name + ".seed", setMaterial);
+                        plugin.getRoomsConfig().set("rooms." + name + ".seed", setMaterial);
                         sender.sendMessage(plugin.pluginName + "The " + name + " seed block was set to " + setMaterial + "!");
-                        plugin.saveConfig();
+                        try {
+                            plugin.getRoomsConfig().save(new File(plugin.getDataFolder(), "rooms.yml"));
+                        } catch (IOException io) {
+                            plugin.debug("Could not save rooms.yml, " + io);
+                        }
                         // add the sedd block to plugin.seeds
                         Material m = Material.valueOf(setMaterial);
                         plugin.seeds.put(m, name);

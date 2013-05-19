@@ -185,9 +185,11 @@ public class TARDIS extends JavaPlugin {
     public String pluginName;
     public boolean myspawn = false;
     public HashMap<String, HashMap<String, Integer>> roomBlockCounts = new HashMap<String, HashMap<String, Integer>>();
-    private File afile;
-    public FileConfiguration ayml;
     public String tp;
+    public FileConfiguration achivement_config;
+    private FileConfiguration artron_config;
+    private FileConfiguration blocks_config;
+    private FileConfiguration rooms_config;
 
     @Override
     public void onEnable() {
@@ -197,13 +199,13 @@ public class TARDIS extends JavaPlugin {
         console = getServer().getConsoleSender();
 
         saveDefaultConfig();
+        loadCustomConfigs();
         TARDISConfiguration tc = new TARDISConfiguration(this);
         tc.checkConfig();
         checkTCG();
         seeds = getSeeds();
         loadDatabase();
         loadFiles();
-        loadAchievements();
         registerListeners();
         loadCommands();
         loadMetrics();
@@ -274,6 +276,20 @@ public class TARDIS extends JavaPlugin {
     }
 
     /**
+     * Loads the custom config files.
+     */
+    private void loadCustomConfigs() {
+        tardisCSV.copy(getDataFolder() + File.separator + "achievements.yml", getResource("achievements.yml"));
+        tardisCSV.copy(getDataFolder() + File.separator + "artron.yml", getResource("artron.yml"));
+        tardisCSV.copy(getDataFolder() + File.separator + "blocks.yml", getResource("blocks.yml"));
+        tardisCSV.copy(getDataFolder() + File.separator + "rooms.yml", getResource("rooms.yml"));
+        this.achivement_config = YamlConfiguration.loadConfiguration(new File(plugin.getDataFolder(), "achievements.yml"));
+        this.artron_config = YamlConfiguration.loadConfiguration(new File(plugin.getDataFolder(), "artron.yml"));
+        this.blocks_config = YamlConfiguration.loadConfiguration(new File(plugin.getDataFolder(), "blocks.yml"));
+        this.rooms_config = YamlConfiguration.loadConfiguration(new File(plugin.getDataFolder(), "rooms.yml"));
+    }
+
+    /**
      * Registers all the listeners for the various events required to use the
      * TARDIS.
      */
@@ -337,15 +353,6 @@ public class TARDIS extends JavaPlugin {
     }
 
     /**
-     * Loads the achievements.yml file for use with other classes.
-     */
-    private void loadAchievements() {
-        tardisCSV.copy(getDataFolder() + File.separator + "achievements.yml", getResource("achievements.yml"));
-        afile = new File(plugin.getDataFolder(), "achievements.yml");
-        ayml = YamlConfiguration.loadConfiguration(afile);
-    }
-
-    /**
      * Saves the default book files to the /plugins/TARDIS/books directory.
      */
     private void loadBooks() {
@@ -359,7 +366,7 @@ public class TARDIS extends JavaPlugin {
                 console.sendMessage(pluginName + "Created books directory.");
             }
         }
-        Set<String> booknames = ayml.getKeys(false);
+        Set<String> booknames = achivement_config.getKeys(false);
         for (String b : booknames) {
             tardisCSV.copy(getDataFolder() + File.separator + "books" + File.separator + b + ".txt", getResource(b + ".txt"));
         }
@@ -487,14 +494,14 @@ public class TARDIS extends JavaPlugin {
      */
     private HashMap<Material, String> getSeeds() {
         HashMap<Material, String> map = new HashMap<Material, String>();
-        Set<String> rooms = getConfig().getConfigurationSection("rooms").getKeys(false);
+        Set<String> rooms = getRoomsConfig().getConfigurationSection("rooms").getKeys(false);
         for (String s : rooms) {
-            if (!getConfig().contains("rooms." + s + ".user")) {
+            if (!getRoomsConfig().contains("rooms." + s + ".user")) {
                 // set user supplied rooms as `user: true`
-                getConfig().set("rooms." + s + ".user", true);
+                getRoomsConfig().set("rooms." + s + ".user", true);
             }
-            if (getConfig().getBoolean("rooms." + s + ".enabled")) {
-                Material m = Material.valueOf(getConfig().getString("rooms." + s + ".seed"));
+            if (getRoomsConfig().getBoolean("rooms." + s + ".enabled")) {
+                Material m = Material.valueOf(getRoomsConfig().getString("rooms." + s + ".seed"));
                 map.put(m, s);
             }
         }
@@ -627,5 +634,21 @@ public class TARDIS extends JavaPlugin {
         if (getConfig().getBoolean("debug") == true) {
             console.sendMessage(pluginName + "Debug: " + o);
         }
+    }
+
+    public FileConfiguration getAchivementConfig() {
+        return achivement_config;
+    }
+
+    public FileConfiguration getArtronConfig() {
+        return artron_config;
+    }
+
+    public FileConfiguration getBlocksConfig() {
+        return blocks_config;
+    }
+
+    public FileConfiguration getRoomsConfig() {
+        return rooms_config;
     }
 }

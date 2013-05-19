@@ -101,7 +101,7 @@ public class TARDISButtonListener implements Listener {
                                 return;
                             }
                             int level = rs.getArtron_level();
-                            if (level < plugin.getConfig().getInt("random")) {
+                            if (level < plugin.getArtronConfig().getInt("random")) {
                                 player.sendMessage(plugin.pluginName + ChatColor.RED + "The TARDIS does not have enough Artron Energy to make this trip!");
                                 return;
                             }
@@ -130,8 +130,8 @@ public class TARDISButtonListener implements Listener {
                                 ResultSetRepeaters rsr = new ResultSetRepeaters(plugin, id, rsc.getSecondary());
                                 if (rsr.resultSet()) {
                                     String environment = "NORMAL";
-                                    int nether_min = plugin.getConfig().getInt("nether_min");
-                                    int the_end_min = plugin.getConfig().getInt("the_end_min");
+                                    int nether_min = plugin.getArtronConfig().getInt("nether_min");
+                                    int the_end_min = plugin.getArtronConfig().getInt("the_end_min");
                                     byte[] repeaters = rsr.getRepeaters();
                                     if (repeaters[0] <= 3) { // first position
                                         if (!plugin.getConfig().getBoolean("nether") && !plugin.getConfig().getBoolean("the_end")) {
@@ -234,7 +234,7 @@ public class TARDISButtonListener implements Listener {
                                         HashMap<String, Object> wherel = new HashMap<String, Object>();
                                         wherel.put("tardis_id", id);
                                         qf.doUpdate("tardis", set, wherel);
-                                        plugin.tardisHasDestination.put(id, plugin.getConfig().getInt("random"));
+                                        plugin.tardisHasDestination.put(id, plugin.getArtronConfig().getInt("random"));
                                     } else {
                                         player.sendMessage(plugin.pluginName + "Could not find a suitable location within the current settings, the area may be protected.");
                                     }
