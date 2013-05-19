@@ -56,6 +56,7 @@ public class TARDISRoomSchematicReader {
         blockConversion.put(2, 3); // grass -> dirt
         blockConversion.put(18, 6); // leaves -> sapling
         blockConversion.put(31, 295); // long grass -> seeds
+        blockConversion.put(43, 44); // double stone slab -> stone slab
         blockConversion.put(55, 331); // redstone wire -> redstone dust
         blockConversion.put(59, 295); // crops -> seeds
         blockConversion.put(60, 3); // farmland -> dirt
