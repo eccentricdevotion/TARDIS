@@ -315,16 +315,18 @@ public class TARDISConfiguration {
                 i++;
             }
         }
-        // add any custom rooms
+        // copy old settings and add any custom rooms
         if (config.contains("rooms")) {
             for (String r : config.getConfigurationSection("rooms").getKeys(false)) {
-                if (!rooms_config.contains("rooms." + r)) {
-                    rooms_config.set("rooms." + r + ".enabled", config.getBoolean("rooms." + r + ".enabled"));
-                    rooms_config.set("rooms." + r + ".cost", config.getInt("rooms." + r + ".cost"));
+                //if (!rooms_config.contains("rooms." + r)) {
+                rooms_config.set("rooms." + r + ".enabled", config.getBoolean("rooms." + r + ".enabled"));
+                rooms_config.set("rooms." + r + ".cost", config.getInt("rooms." + r + ".cost"));
+                if (!r.equalsIgnoreCase("ANTIGRAVITY")) {
                     rooms_config.set("rooms." + r + ".offset", config.getInt("rooms." + r + ".offset"));
-                    rooms_config.set("rooms." + r + ".seed", config.getString("rooms." + r + ".seed"));
-                    rooms_config.set("rooms." + r + ".user", config.getBoolean("rooms." + r + ".user"));
                 }
+                rooms_config.set("rooms." + r + ".seed", config.getString("rooms." + r + ".seed"));
+                rooms_config.set("rooms." + r + ".user", config.getBoolean("rooms." + r + ".user"));
+                //}
             }
             // remove old rooms section
             plugin.getConfig().set("rooms", null);
