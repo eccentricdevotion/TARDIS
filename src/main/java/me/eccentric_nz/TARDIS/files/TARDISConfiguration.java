@@ -166,7 +166,7 @@ public class TARDISConfiguration {
         intOptions.put("rooms.EMPTY.offset", -1);
         intOptions.put("rooms.FARM.offset", -1);
         intOptions.put("rooms.GRAVITY.offset", -12);
-        intOptions.put("rooms.ANTIGRAVITY.offset", -2);
+        intOptions.put("rooms.ANTIGRAVITY.offset", 0);
         intOptions.put("rooms.GREENHOUSE.offset", -2);
         intOptions.put("rooms.HARMONY.offset", -1);
         intOptions.put("rooms.KITCHEN.offset", -1);
