@@ -41,8 +41,8 @@ import org.bukkit.entity.Player;
  * @author eccentric_nz
  */
 public class TARDISTimetravel {
-    private static int[] startLoc = new int[6];
 
+    private static int[] startLoc = new int[6];
     private Location dest;
     private TARDIS plugin;
     private List<Material> goodMaterials = new ArrayList<Material>();
@@ -110,16 +110,19 @@ public class TARDISTimetravel {
         } else {
             List<String> envOptions = Arrays.asList(e.split(":"));
             for (String o : worldlist) {
-                String env = plugin.getServer().getWorld(o).getEnvironment().toString();
-                if (envOptions.contains(env)) {
-                    if (plugin.getConfig().getBoolean("include_default_world") || !plugin.getConfig().getBoolean("default_world")) {
-                        if (plugin.getConfig().getBoolean("worlds." + o)) {
-                            allowedWorlds.add(plugin.getServer().getWorld(o));
-                        }
-                    } else {
-                        if (!o.equals(plugin.getConfig().getString("default_world_name"))) {
+                World ww = plugin.getServer().getWorld(o);
+                if (ww != null) {
+                    String env = ww.getEnvironment().toString();
+                    if (envOptions.contains(env)) {
+                        if (plugin.getConfig().getBoolean("include_default_world") || !plugin.getConfig().getBoolean("default_world")) {
                             if (plugin.getConfig().getBoolean("worlds." + o)) {
                                 allowedWorlds.add(plugin.getServer().getWorld(o));
+                            }
+                        } else {
+                            if (!o.equals(plugin.getConfig().getString("default_world_name"))) {
+                                if (plugin.getConfig().getBoolean("worlds." + o)) {
+                                    allowedWorlds.add(plugin.getServer().getWorld(o));
+                                }
                             }
                         }
                     }
