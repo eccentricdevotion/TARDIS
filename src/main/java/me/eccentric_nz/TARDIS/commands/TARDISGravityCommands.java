@@ -21,11 +21,16 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
+import me.eccentric_nz.tardischunkgenerator.TARDISChunkGenerator;
 import org.bukkit.ChatColor;
+import org.bukkit.World;
+import org.bukkit.WorldType;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.bukkit.generator.ChunkGenerator;
 
 /**
  * Command /tardisgravity [arguments].
@@ -75,6 +80,15 @@ public class TARDISGravityCommands implements CommandExecutor {
             }
             if (!player.hasPermission("tardis.gravity")) {
                 sender.sendMessage(plugin.pluginName + ChatColor.RED + "You do not have permission to use this command!");
+                return true;
+            }
+            // check they are still in the TARDIS world
+            World world = player.getLocation().getWorld();
+            String name = world.getName();
+            ChunkGenerator gen = world.getGenerator();
+            boolean special = name.contains("TARDIS_TimeVortex") && (world.getWorldType().equals(WorldType.FLAT) || gen instanceof TARDISChunkGenerator);
+            if (!name.equals("TARDIS_WORLD_" + player.getName()) && !special) {
+                player.sendMessage(plugin.pluginName + "You must be in a TARDIS world to make a gravity well!");
                 return true;
             }
             if (args.length < 1) {
