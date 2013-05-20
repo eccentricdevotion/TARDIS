@@ -362,7 +362,7 @@ public class TARDISDoorListener implements Listener {
                                                 set.put("player", playerNameStr);
                                                 qf.doInsert("travellers", set);
                                                 if (plugin.pm.getPlugin("Spout") != null && SpoutManager.getPlayer(player).isSpoutCraftEnabled()) {
-                                                    SpoutManager.getSoundManager().playCustomSoundEffect(plugin, SpoutManager.getPlayer(player), "https://dl.dropbox.com/u/53758864/tardis_hum.mp3", false, tardis_loc, 9, 25);
+                                                    SpoutManager.getSoundManager().playCustomSoundEffect(plugin, SpoutManager.getPlayer(player), "https://dl.dropboxusercontent.com/u/53758864/tardis_hum.mp3", false, tardis_loc, 9, 25);
                                                 }
                                             }
                                             break;
@@ -397,7 +397,7 @@ public class TARDISDoorListener implements Listener {
                                             set.put("player", playerNameStr);
                                             qf.doInsert("travellers", set);
                                             if (plugin.pm.getPlugin("Spout") != null && SpoutManager.getPlayer(player).isSpoutCraftEnabled()) {
-                                                SpoutManager.getSoundManager().playCustomSoundEffect(plugin, SpoutManager.getPlayer(player), "https://dl.dropbox.com/u/53758864/tardis_hum.mp3", false, inner_loc, 9, 25);
+                                                SpoutManager.getSoundManager().playCustomSoundEffect(plugin, SpoutManager.getPlayer(player), "https://dl.dropboxusercontent.com/u/53758864/tardis_hum.mp3", false, inner_loc, 9, 25);
                                             }
                                             HashMap<String, Object> wheree = new HashMap<String, Object>();
                                             wheree.put("tardis_id", id);

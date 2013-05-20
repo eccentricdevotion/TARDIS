@@ -63,7 +63,7 @@ public class TARDISSounds {
                     if (player != null) {
                         if (SpoutManager.getPlayer(player).isSpoutCraftEnabled() && userSFX) {
                             int i = rand.nextInt(12);
-                            final String sfx = "https://dl.dropbox.com/u/53758864/soundeffects/drwho" + i + ".mp3";
+                            final String sfx = "https://dl.dropboxusercontent.com/u/53758864/soundeffects/drwho" + i + ".mp3";
                             final Location location = player.getLocation();
                             SpoutManager.getSoundManager().playCustomSoundEffect(TARDIS.plugin, SpoutManager.getPlayer(player), sfx, false, location, 9, 75);
                         }
