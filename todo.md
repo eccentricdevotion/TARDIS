@@ -7,11 +7,10 @@
 4. Add `/tardis rescue [player]` command
 5. Add cloister bell SFX
 6. Add HADS
-7. Add player preference to jettison the whole room (including walls)
-8. Add `/tardis secondary door` for an alternative inner TARDIS door
 
 ## Next version `2.5+`
-1. TARDIS shield?
+1. Jettison the whole room (including walls), will require new room schematics...
+2. TARDIS shield?
 
 # Minecraft API when available `3.0?`
 1. Recreate everything with the new API :)

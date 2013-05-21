@@ -572,10 +572,16 @@ public class TARDISDoorListener implements Listener {
                 Wolf wolf = (Wolf) ent;
                 wolf.setCollarColor(pet.getColour());
                 wolf.setSitting(pet.getSitting());
+                if (pet.isBaby()) {
+                    wolf.setBaby();
+                }
             } else {
                 Ocelot cat = (Ocelot) ent;
                 cat.setCatType(pet.getCatType());
                 cat.setSitting(pet.getSitting());
+                if (pet.isBaby()) {
+                    cat.setBaby();
+                }
             }
         }
         p.clear();

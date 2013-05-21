@@ -183,11 +183,13 @@ public class TARDISFarmer {
                                 pet.setColour(((Wolf) e).getCollarColor());
                                 health = (((Wolf) e).getHealth() > 8) ? 8 : ((Wolf) e).getHealth();
                                 pet.setHealth(health);
+                                pet.setBaby(!((Wolf) e).isAdult());
                             } else {
                                 pet.setSitting(((Ocelot) e).isSitting());
                                 pet.setCatType(((Ocelot) e).getCatType());
                                 health = (((Ocelot) e).getHealth() > 8) ? 8 : ((Ocelot) e).getHealth();
                                 pet.setHealth(health);
+                                pet.setBaby(!((Ocelot) e).isAdult());
                             }
                             old_macd_had_a_pet.add(pet);
                             e.remove();
@@ -344,11 +346,13 @@ public class TARDISFarmer {
                             pet.setColour(((Wolf) e).getCollarColor());
                             health = (((Wolf) e).getHealth() > 8) ? 8 : ((Wolf) e).getHealth();
                             pet.setHealth(health);
+                            pet.setBaby(!((Wolf) e).isAdult());
                         } else {
                             pet.setSitting(((Ocelot) e).isSitting());
                             pet.setCatType(((Ocelot) e).getCatType());
                             health = (((Ocelot) e).getHealth() > 8) ? 8 : ((Ocelot) e).getHealth();
                             pet.setHealth(health);
+                            pet.setBaby(!((Ocelot) e).isAdult());
                         }
                         old_macd_had_a_pet.add(pet);
                         e.remove();
