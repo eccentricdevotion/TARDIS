@@ -24,7 +24,6 @@ import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetChunks;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
-import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.thirdparty.Version;
 import org.bukkit.Bukkit;
 import org.bukkit.Chunk;

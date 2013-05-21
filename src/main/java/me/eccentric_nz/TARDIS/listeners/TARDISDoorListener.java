@@ -645,7 +645,7 @@ public class TARDISDoorListener implements Listener {
      * @param id the unique TARDIS identifier i the database
      * @return an instance of the TARDISDoorLocation data class
      */
-    private TARDISDoorLocation getDoor(int doortype, int id) {
+    public TARDISDoorLocation getDoor(int doortype, int id) {
         TARDISDoorLocation tdl = new TARDISDoorLocation();
         // get door location
         HashMap<String, Object> wherei = new HashMap<String, Object>();

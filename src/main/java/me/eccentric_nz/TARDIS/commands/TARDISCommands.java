@@ -44,6 +44,7 @@ import me.eccentric_nz.TARDIS.rooms.TARDISCondenserData;
 import me.eccentric_nz.TARDIS.rooms.TARDISWalls;
 import me.eccentric_nz.TARDIS.thirdparty.Version;
 import me.eccentric_nz.TARDIS.travel.TARDISPluginRespect;
+import me.eccentric_nz.TARDIS.travel.TARDISRescue;
 import me.eccentric_nz.TARDIS.travel.TARDISTimetravel;
 import me.eccentric_nz.TARDIS.utility.TARDISItemRenamer;
 import me.eccentric_nz.TARDIS.utility.TARDISLampScanner;
@@ -112,6 +113,7 @@ public class TARDISCommands implements CommandExecutor {
         firstArgs.add("reload");
         firstArgs.add("remove");
         firstArgs.add("removesave");
+        firstArgs.add("rescue");
         firstArgs.add("gravity");
         firstArgs.add("room");
         firstArgs.add("save");
@@ -315,6 +317,32 @@ public class TARDISCommands implements CommandExecutor {
                     } else {
                         sender.sendMessage(plugin.pluginName + TARDISConstants.NO_PERMS_MESSAGE);
                         return false;
+                    }
+                }
+                if (args[0].equalsIgnoreCase("rescue")) {
+                    if (args.length < 2) {
+                        player.sendMessage(plugin.pluginName + "Too few command arguments!");
+                        return true;
+                    }
+                    if (player.hasPermission("tardis.timetravel.player")) {
+                        final String saved = args[1];
+                        Player destPlayer = plugin.getServer().getPlayer(saved);
+                        if (destPlayer == null) {
+                            player.sendMessage(plugin.pluginName + "That player is not online!");
+                            return true;
+                        }
+                        String playerNameStr = player.getName();
+                        destPlayer.sendMessage(plugin.pluginName + playerNameStr + "wants to rescue you! Type: " + ChatColor.AQUA + "tardis rescue accept" + ChatColor.RESET + " in chat within 30 seconds to accept the rescue.");
+                        plugin.trackChat.put(saved, playerNameStr);
+                        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
+                            @Override
+                            public void run() {
+                                plugin.trackChat.remove(saved);
+                            }
+                        }, 600L);
+                    } else {
+                        player.sendMessage(plugin.pluginName + "You do not have permission to time travel to a player!");
+                        return true;
                     }
                 }
                 if (args[0].equalsIgnoreCase("room")) {

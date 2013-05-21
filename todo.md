@@ -1,7 +1,7 @@
 # TODO
 
 ## Current version `2.4`
-1. Fix `/tardisromm add [name]` command?
+1. Fix `/tardisroom add [name]` command?
 2. Add video for books / achievements
 3. Add docs for new features / perms / commands
 4. Add `/tardis rescue [player]` command

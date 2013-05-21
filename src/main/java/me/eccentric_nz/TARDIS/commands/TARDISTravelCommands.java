@@ -26,6 +26,7 @@ import me.eccentric_nz.TARDIS.database.ResultSetDestinations;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.travel.TARDISPluginRespect;
+import me.eccentric_nz.TARDIS.travel.TARDISRescue;
 import me.eccentric_nz.TARDIS.travel.TARDISTimetravel;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -135,41 +136,48 @@ public class TARDISTravelCommands implements CommandExecutor {
                             return true;
                         } else {
                             if (player.hasPermission("tardis.timetravel.player")) {
-                                if (plugin.getServer().getPlayer(args[0]) == null) {
-                                    sender.sendMessage(plugin.pluginName + "That player is not online!");
-                                    return true;
-                                }
-                                Player destPlayer = plugin.getServer().getPlayer(args[0]);
-                                Location player_loc = destPlayer.getLocation();
-                                if (!plugin.ta.areaCheckInExisting(player_loc)) {
-                                    sender.sendMessage(plugin.pluginName + "The player is in a TARDIS area! Please use " + ChatColor.AQUA + "/tardistravel area [area name]");
-                                    return true;
-                                }
-                                World w = player_loc.getWorld();
-                                int[] start_loc = tt.getStartLocation(player_loc, d);
-                                int count = tt.safeLocation(start_loc[0] - 3, player_loc.getBlockY(), start_loc[2], start_loc[1] - 3, start_loc[3], w, d);
-                                if (count > 0) {
-                                    sender.sendMessage(plugin.pluginName + "The player's location would not be safe! Please tell the player to move!");
-                                    return true;
-                                }
-                                respect = new TARDISPluginRespect(plugin);
-                                if (!respect.getRespect(player, player_loc, true)) {
-                                    return true;
-                                }
-                                if (!plugin.getConfig().getBoolean("worlds." + player_loc.getWorld().getName())) {
-                                    sender.sendMessage(plugin.pluginName + "The server does not allow time travel to this world!");
-                                    return true;
-                                }
-                                String save_loc = player_loc.getWorld().getName() + ":" + (player_loc.getBlockX() - 3) + ":" + player_loc.getBlockY() + ":" + player_loc.getBlockZ();
-                                set.put("save", save_loc);
-                                qf.doUpdate("tardis", set, tid);
-                                sender.sendMessage(plugin.pluginName + "The player location was saved succesfully. Please release the handbrake!");
-                                plugin.tardisHasDestination.put(id, travel);
-                                return true;
+                                TARDISRescue to_player = new TARDISRescue(plugin);
+                                return to_player.rescue(player, args[0], id, tt, d, false);
                             } else {
-                                sender.sendMessage(plugin.pluginName + "You do not have permission to time travel to a player!");
+                                player.sendMessage(plugin.pluginName + "You do not have permission to time travel to a player!");
                                 return true;
                             }
+//                            if (player.hasPermission("tardis.timetravel.player")) {
+//                                if (plugin.getServer().getPlayer(args[0]) == null) {
+//                                    sender.sendMessage(plugin.pluginName + "That player is not online!");
+//                                    return true;
+//                                }
+//                                Player destPlayer = plugin.getServer().getPlayer(args[0]);
+//                                Location player_loc = destPlayer.getLocation();
+//                                if (!plugin.ta.areaCheckInExisting(player_loc)) {
+//                                    sender.sendMessage(plugin.pluginName + "The player is in a TARDIS area! Please use " + ChatColor.AQUA + "/tardistravel area [area name]");
+//                                    return true;
+//                                }
+//                                World w = player_loc.getWorld();
+//                                int[] start_loc = tt.getStartLocation(player_loc, d);
+//                                int count = tt.safeLocation(start_loc[0] - 3, player_loc.getBlockY(), start_loc[2], start_loc[1] - 3, start_loc[3], w, d);
+//                                if (count > 0) {
+//                                    sender.sendMessage(plugin.pluginName + "The player's location would not be safe! Please tell the player to move!");
+//                                    return true;
+//                                }
+//                                respect = new TARDISPluginRespect(plugin);
+//                                if (!respect.getRespect(player, player_loc, true)) {
+//                                    return true;
+//                                }
+//                                if (!plugin.getConfig().getBoolean("worlds." + player_loc.getWorld().getName())) {
+//                                    sender.sendMessage(plugin.pluginName + "The server does not allow time travel to this world!");
+//                                    return true;
+//                                }
+//                                String save_loc = player_loc.getWorld().getName() + ":" + (player_loc.getBlockX() - 3) + ":" + player_loc.getBlockY() + ":" + player_loc.getBlockZ();
+//                                set.put("save", save_loc);
+//                                qf.doUpdate("tardis", set, tid);
+//                                sender.sendMessage(plugin.pluginName + "The player location was saved succesfully. Please release the handbrake!");
+//                                plugin.tardisHasDestination.put(id, travel);
+//                                return true;
+//                            } else {
+//                                sender.sendMessage(plugin.pluginName + "You do not have permission to time travel to a player!");
+//                                return true;
+//                            }
                         }
                     }
                     if (args.length == 2 && args[0].equalsIgnoreCase("dest")) {

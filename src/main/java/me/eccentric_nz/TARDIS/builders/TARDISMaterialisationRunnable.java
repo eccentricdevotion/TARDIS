@@ -24,6 +24,8 @@ import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetDoors;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
+import me.eccentric_nz.TARDIS.listeners.TARDISDoorListener;
+import me.eccentric_nz.TARDIS.travel.TARDISDoorLocation;
 import org.bukkit.ChatColor;
 import org.bukkit.Effect;
 import org.bukkit.Location;
@@ -118,6 +120,23 @@ public class TARDISMaterialisationRunnable implements Runnable {
                 int south = id, west = id, north = id, east = id;
                 byte mds = b, mdw = b, mdn = b, mde = b, bds = b, bdw = b, bdn = b, bde = b;
                 String doorloc = "";
+                // rescue player?
+                if (i == 10 && plugin.trackRescue.containsKey(tid)) {
+                    String name = plugin.trackRescue.get(tid);
+                    Player saved = plugin.getServer().getPlayer(name);
+                    if (saved != null) {
+                        TARDISDoorListener dl = new TARDISDoorListener(plugin);
+                        TARDISDoorLocation idl = dl.getDoor(1, tid);
+                        Location l = idl.getL();
+                        dl.movePlayer(saved, l, false, world, false);
+                        // put player into travellers table
+                        HashMap<String, Object> set = new HashMap<String, Object>();
+                        set.put("tardis_id", id);
+                        set.put("player", name);
+                        QueryFactory qf = new QueryFactory(plugin);
+                        qf.doInsert("travellers", set);
+                    }
+                }
                 // first run - remember blocks
                 if (i == 1) {
                     plugin.buildPB.addPlatform(location, false, d, player.getName(), tid);

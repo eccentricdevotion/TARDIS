@@ -51,6 +51,7 @@ import me.eccentric_nz.TARDIS.listeners.TARDISBlockBreakListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISBlockDamageListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISBlockPlaceListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISButtonListener;
+import me.eccentric_nz.TARDIS.listeners.TARDISChatListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISChunkListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISCondenserListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISCreeperDeathListener;
@@ -150,6 +151,7 @@ public class TARDIS extends JavaPlugin {
     public PluginManager pm = Bukkit.getServer().getPluginManager();
     public HashMap<String, String> trackPlayers = new HashMap<String, String>();
     public HashMap<String, Integer> trackBinder = new HashMap<String, Integer>();
+    public HashMap<String, String> trackChat = new HashMap<String, String>();
     public HashMap<String, String> trackName = new HashMap<String, String>();
     public HashMap<String, String> trackBlock = new HashMap<String, String>();
     public HashMap<String, String> trackEnd = new HashMap<String, String>();
@@ -159,6 +161,7 @@ public class TARDIS extends JavaPlugin {
     public HashMap<String, String> trackJettison = new HashMap<String, String>();
     public HashMap<String, String> trackSecondary = new HashMap<String, String>();
     public HashMap<String, Double[]> trackGravity = new HashMap<String, Double[]>();
+    public HashMap<Integer, String> trackRescue = new HashMap<Integer, String>();
     public HashMap<Integer, Integer> tardisHasDestination = new HashMap<Integer, Integer>();
     public HashMap<String, Block> trackExterminate = new HashMap<String, Block>();
     public ArrayList<Integer> tardisMaterialising = new ArrayList<Integer>();
@@ -321,6 +324,7 @@ public class TARDIS extends JavaPlugin {
         pm.registerEvents(new TARDISTimeLordDeathListener(this), this);
         pm.registerEvents(new TARDISJoinListener(this), this);
         pm.registerEvents(new TARDISKeyboardListener(this), this);
+        pm.registerEvents(new TARDISChatListener(this), this);
         if (getNPCManager()) {
             pm.registerEvents(new TARDISNPCListener(this), this);
         }
