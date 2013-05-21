@@ -799,14 +799,14 @@ public class TARDISCommands implements CommandExecutor {
                 }
                 if (args[0].equalsIgnoreCase("secondary")) {
                     if (player.hasPermission("tardis.update")) {
-                        String[] validBlockNames = {"button", "world-repeater", "x-repeater", "z-repeater", "y-repeater", "artron", "handbrake"};
+                        String[] validBlockNames = {"button", "world-repeater", "x-repeater", "z-repeater", "y-repeater", "artron", "handbrake", "door"};
                         if (args.length < 2) {
                             sender.sendMessage(plugin.pluginName + "Too few command arguments!");
                             return false;
                         }
                         String tardis_block = args[1].toLowerCase(Locale.ENGLISH);
                         if (!Arrays.asList(validBlockNames).contains(tardis_block)) {
-                            player.sendMessage(plugin.pluginName + "That is not a valid TARDIS block name! Try one of : button|world-repeater|x-repeater|z-repeater|y-repeater|artron|handbrake");
+                            player.sendMessage(plugin.pluginName + "That is not a valid TARDIS block name! Try one of : button|world-repeater|x-repeater|z-repeater|y-repeater|artron|handbrake|door");
                             return false;
                         }
                         HashMap<String, Object> where = new HashMap<String, Object>();

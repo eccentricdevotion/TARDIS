@@ -139,7 +139,7 @@ public class TARDISUpdateListener implements Listener {
             } else {
                 plugin.trackPlayers.remove(playerNameStr);
             }
-            if (blockName.equalsIgnoreCase("door") && blockType == Material.IRON_DOOR_BLOCK) {
+            if (blockName.equalsIgnoreCase("door") && blockType == Material.IRON_DOOR_BLOCK && !secondary) {
                 // get door data this should let us determine the direction
                 String d = getDirection(blockData);
                 table = "doors";
@@ -147,7 +147,7 @@ public class TARDISUpdateListener implements Listener {
                 set.put("door_direction", d);
                 tid.put("door_type", 1);
             }
-            if (blockName.equalsIgnoreCase("backdoor") && blockType == Material.IRON_DOOR_BLOCK) {
+            if ((blockName.equalsIgnoreCase("backdoor") || (blockName.equalsIgnoreCase("door") && secondary)) && blockType == Material.IRON_DOOR_BLOCK) {
                 // get door data - this should let us determine the direction
                 String d = plugin.utils.getPlayersDirection(player, true);
                 table = "doors";
@@ -159,7 +159,7 @@ public class TARDISUpdateListener implements Listener {
                 ResultSetTravellers rst = new ResultSetTravellers(plugin, wheret, false);
                 int type;
                 if (rst.resultSet()) {
-                    type = 3;
+                    type = (secondary) ? 4 : 3;
                 } else {
                     type = 2;
                     // check the world

@@ -254,6 +254,7 @@ public class TARDISDoorListener implements Listener {
                                     List<TARDISMob> pets = null;
                                     switch (doortype) {
                                         case 1:
+                                        case 4:
                                             // player is in the TARDIS - always exit to current location
                                             Location exitLoc = plugin.utils.getLocationFromDB(current, yaw, pitch);
                                             if (rs.isHandbrake_on()) {
