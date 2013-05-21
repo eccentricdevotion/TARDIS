@@ -23,9 +23,11 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetDestinations;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
+import me.eccentric_nz.TARDIS.travel.TARDISPluginRespect;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.block.Sign;
 import org.bukkit.entity.Player;
@@ -123,6 +125,16 @@ public class TARDISSignListener implements Listener {
                                     String[] coords = s.getLine(3).split(",");
                                     String loc = s.getLine(2) + ":" + coords[0] + ":" + coords[1] + ":" + coords[2];
                                     sets.put("save", loc);
+                                    World w = plugin.getServer().getWorld(s.getLine(2));
+                                    int x, y, z;
+                                    x = plugin.utils.parseNum(coords[0]);
+                                    y = plugin.utils.parseNum(coords[1]);
+                                    z = plugin.utils.parseNum(coords[2]);
+                                    Location l = new Location(w, x, y, z);
+                                    TARDISPluginRespect respect = new TARDISPluginRespect(plugin);
+                                    if (!respect.getRespect(player, l, true)) {
+                                        return;
+                                    }
                                 }
                                 HashMap<String, Object> sid = new HashMap<String, Object>();
                                 sid.put("tardis_id", id);
