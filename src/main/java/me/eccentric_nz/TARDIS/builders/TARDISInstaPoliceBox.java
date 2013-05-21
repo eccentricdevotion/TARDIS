@@ -49,15 +49,17 @@ public class TARDISInstaPoliceBox {
     private int tid;
     private int mat;
     private byte data;
+    private String p;
     private boolean mal;
 
-    public TARDISInstaPoliceBox(TARDIS plugin, Location location, int mat, byte data, int tid, TARDISConstants.COMPASS d, boolean mal) {
+    public TARDISInstaPoliceBox(TARDIS plugin, Location location, int mat, byte data, int tid, TARDISConstants.COMPASS d, String p, boolean mal) {
         this.plugin = plugin;
         this.d = d;
         this.location = location;
         this.tid = tid;
         this.mat = mat;
         this.data = data;
+        this.p = p;
         this.mal = mal;
     }
 
@@ -88,7 +90,8 @@ public class TARDISInstaPoliceBox {
         world = location.getWorld();
         int south = mat, west = mat, north = mat, east = mat, signx = 0, signz = 0;
         String doorloc = "";
-
+        // platform
+        plugin.buildPB.addPlatform(location, false, d, p, tid);
         QueryFactory qf = new QueryFactory(plugin);
         HashMap<String, Object> ps = new HashMap<String, Object>();
         ps.put("tardis_id", tid);

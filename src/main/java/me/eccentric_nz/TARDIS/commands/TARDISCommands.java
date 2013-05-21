@@ -622,18 +622,25 @@ public class TARDISCommands implements CommandExecutor {
                             qf.doUpdate("tardis", set, tid);
                             // how many travellers are in the TARDIS?
                             sender.sendMessage(plugin.pluginName + "The TARDIS is coming...");
+                            long delay = (plugin.getConfig().getBoolean("materialise")) ? 1L : 180L;
                             Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
                                 @Override
                                 public void run() {
                                     if (!rs.isHidden()) {
-                                        plugin.destroyPB.destroyPlatform(rs.getPlatform(), id);
-                                        plugin.destroyPB.destroySign(oldSave, d);
-                                        plugin.destroyPB.destroyTorch(oldSave);
-                                        plugin.destroyPB.destroyPoliceBox(oldSave, d, id, false);
+                                        plugin.tardisDematerialising.add(id);
+                                        plugin.destroyPB.destroyPoliceBox(oldSave, d, id, false, plugin.getConfig().getBoolean("materialise"), cham, p);
+//                                        plugin.destroyPB.destroyPlatform(rs.getPlatform(), id);
+//                                        plugin.destroyPB.destroySign(oldSave, d);
+//                                        plugin.destroyPB.destroyTorch(oldSave);
                                     }
+                                }
+                            }, delay);
+                            Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
+                                @Override
+                                public void run() {
                                     plugin.buildPB.buildPoliceBox(id, eyeLocation, d, cham, p, false, false);
                                 }
-                            }, 100L);
+                            }, delay * 2);
                             // remove energy from TARDIS
                             HashMap<String, Object> wheret = new HashMap<String, Object>();
                             wheret.put("tardis_id", id);
@@ -890,12 +897,12 @@ public class TARDISCommands implements CommandExecutor {
                                 player.sendMessage(plugin.pluginName + ChatColor.RED + "The TARDIS does not have enough Artron Energy to hide!");
                                 return false;
                             }
-                            // remove torch
-                            plugin.destroyPB.destroyTorch(l);
-                            // remove sign
-                            plugin.destroyPB.destroySign(l, d);
+//                            // remove torch
+//                            plugin.destroyPB.destroyTorch(l);
+//                            // remove sign
+//                            plugin.destroyPB.destroySign(l, d);
                             // remove blue box
-                            plugin.destroyPB.destroyPoliceBox(l, d, id, true);
+                            plugin.destroyPB.destroyPoliceBox(l, d, id, true, false, false, null);
                             sender.sendMessage(plugin.pluginName + "The TARDIS Police Box was hidden! Use " + ChatColor.GREEN + "/tardis rebuild" + ChatColor.RESET + " to show it again.");
                             qf.alterEnergyLevel("tardis", -hide, wheret, player);
                             // set hidden to true

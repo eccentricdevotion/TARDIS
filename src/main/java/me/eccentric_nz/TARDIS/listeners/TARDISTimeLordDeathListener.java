@@ -131,14 +131,15 @@ public class TARDISTimeLordDeathListener implements Listener {
                             }
                             // destroy police box
                             COMPASS d = rs.getDirection();
+                            boolean cham = rs.isChamele_on();
                             if (!rs.isHidden()) {
-                                plugin.destroyPB.destroyPlatform(rs.getPlatform(), id);
-                                plugin.destroyPB.destroySign(sl, d);
-                                plugin.destroyPB.destroyTorch(sl);
-                                plugin.destroyPB.destroyPoliceBox(sl, d, id, false);
+                                plugin.destroyPB.destroyPoliceBox(sl, d, id, false, plugin.getConfig().getBoolean("materialise"), cham, player);
+                                //plugin.destroyPB.destroyPlatform(rs.getPlatform(), id);
+                                //plugin.destroyPB.destroySign(sl, d);
+                                //plugin.destroyPB.destroyTorch(sl);
                             }
                             // rebuild police box
-                            plugin.buildPB.buildPoliceBox(id, goto_loc, d, rs.isChamele_on(), player, false, false);
+                            plugin.buildPB.buildPoliceBox(id, goto_loc, d, cham, player, false, false);
                             String save_loc = goto_loc.getWorld().getName() + ":" + goto_loc.getBlockX() + ":" + goto_loc.getBlockY() + ":" + goto_loc.getBlockZ();
                             QueryFactory qf = new QueryFactory(plugin);
                             HashMap<String, Object> tid = new HashMap<String, Object>();

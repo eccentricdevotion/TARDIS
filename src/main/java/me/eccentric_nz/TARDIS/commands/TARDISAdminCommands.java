@@ -516,6 +516,7 @@ public class TARDISAdminCommands implements CommandExecutor {
                         String currentLoc = rs.getCurrent();
                         TARDISConstants.SCHEMATIC schm = rs.getSchematic();
                         TARDISConstants.COMPASS d = rs.getDirection();
+                        boolean cham = rs.isChamele_on();
                         String chunkLoc = rs.getChunk();
                         String[] cdata = chunkLoc.split(":");
                         String name = cdata[0];
@@ -577,9 +578,9 @@ public class TARDISAdminCommands implements CommandExecutor {
                             plugin.destroyI.destroyInner(schm, id, cw, restore, args[1]);
                         }
                         if (!rs.isHidden()) {
-                            plugin.destroyPB.destroyTorch(bb_loc);
-                            plugin.destroyPB.destroySign(bb_loc, d);
-                            plugin.destroyPB.destroyPoliceBox(bb_loc, d, id, false);
+//                            plugin.destroyPB.destroyTorch(bb_loc);
+//                            plugin.destroyPB.destroySign(bb_loc, d);
+                            plugin.destroyPB.destroyPoliceBox(bb_loc, d, id, false, false, false, null);
                         }
                         // delete the TARDIS from the db
                         HashMap<String, Object> wherec = new HashMap<String, Object>();

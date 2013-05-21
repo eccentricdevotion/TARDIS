@@ -69,7 +69,7 @@ public class TARDISHandbrakeListener implements Listener {
      */
     @EventHandler(priority = EventPriority.NORMAL)
     public void onInteract(PlayerInteractEvent event) {
-        Player player = event.getPlayer();
+        final Player player = event.getPlayer();
         Block block = event.getClickedBlock();
         if (block != null) {
             Material blockType = block.getType();
@@ -83,7 +83,7 @@ public class TARDISHandbrakeListener implements Listener {
                 where.put("location", hb_loc);
                 ResultSetControls rsc = new ResultSetControls(plugin, where, false);
                 if (rsc.resultSet()) {
-                    int id = rsc.getTardis_id();
+                    final int id = rsc.getTardis_id();
                     HashMap<String, Object> wherei = new HashMap<String, Object>();
                     wherei.put("tardis_id", id);
                     ResultSetTardis rs = new ResultSetTardis(plugin, wherei, "", false);
@@ -95,8 +95,8 @@ public class TARDISHandbrakeListener implements Listener {
                             player.sendMessage(plugin.pluginName + "The isomorphic security lockout has been engaged... Hands off the controls!");
                             return;
                         }
-                        COMPASS d = rs.getDirection();
-                        boolean cham = rs.isChamele_on();
+                        final COMPASS d = rs.getDirection();
+                        final boolean cham = rs.isChamele_on();
                         String save = rs.getSave();
                         String cl = rs.getCurrent();
                         String beacon = rs.getBeacon();
@@ -143,7 +143,7 @@ public class TARDISHandbrakeListener implements Listener {
                                                     }
                                                     // play tardis crash sound
                                                     if (plugin.pm.getPlugin("Spout") != null && SpoutManager.getPlayer(player).isSpoutCraftEnabled()) {
-                                                        SpoutManager.getSoundManager().playGlobalCustomSoundEffect(plugin, "https://dl.dropbox.com/u/53758864/tardis_emergency_land.mp3", false, handbrake_loc, 20, 75);
+                                                        SpoutManager.getSoundManager().playGlobalCustomSoundEffect(plugin, "https://dl.dropboxusercontent.com/u/53758864/tardis_emergency_land.mp3", false, handbrake_loc, 20, 75);
                                                     } else {
                                                         try {
                                                             Class.forName("org.bukkit.Sound");
@@ -167,7 +167,7 @@ public class TARDISHandbrakeListener implements Listener {
                                             set.put("handbrake_on", 0);
                                             player.sendMessage(plugin.pluginName + "Handbrake OFF! Entering the time vortex...");
                                             if (plugin.pm.getPlugin("Spout") != null && SpoutManager.getPlayer(player).isSpoutCraftEnabled()) {
-                                                SpoutManager.getSoundManager().playGlobalCustomSoundEffect(plugin, "https://dl.dropbox.com/u/53758864/tardis_land.mp3", false, handbrake_loc, 20, 75);
+                                                SpoutManager.getSoundManager().playGlobalCustomSoundEffect(plugin, "https://dl.dropboxusercontent.com/u/53758864/tardis_land.mp3", false, handbrake_loc, 20, 75);
                                             } else {
                                                 try {
                                                     Class.forName("org.bukkit.Sound");
@@ -185,11 +185,20 @@ public class TARDISHandbrakeListener implements Listener {
                                             exit.getWorld().refreshChunk(exit.getChunk().getX(), exit.getChunk().getZ());
                                             Location l = plugin.utils.getLocationFromDB(cl, 0, 0);
                                             if (!rs.isHidden()) {
-                                                plugin.destroyPB.destroyTorch(l);
-                                                plugin.destroyPB.destroySign(l, d);
-                                                plugin.destroyPB.destroyPoliceBox(l, d, id, false);
+                                                plugin.tardisDematerialising.add(id);
+                                                plugin.destroyPB.destroyPoliceBox(l, d, id, false, plugin.getConfig().getBoolean("materialise"), cham, player);
+//                                                plugin.destroyPB.destroyTorch(l);
+//                                                plugin.destroyPB.destroySign(l, d);
                                             }
-                                            plugin.buildPB.buildPoliceBox(id, exit, d, cham, player, false, malfunction);
+                                            long delay = (plugin.getConfig().getBoolean("materialise")) ? 200L : 1L;
+                                            final Location e = exit;
+                                            final boolean mal = malfunction;
+                                            plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
+                                                @Override
+                                                public void run() {
+                                                    plugin.buildPB.buildPoliceBox(id, e, d, cham, player, false, mal);
+                                                }
+                                            }, delay);
                                             Chunk oldChunk = l.getChunk();
                                             if (plugin.tardisChunkList.contains(oldChunk)) {
                                                 plugin.tardisChunkList.remove(oldChunk);

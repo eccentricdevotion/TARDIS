@@ -1,20 +1,20 @@
 # TODO
 
-## Current version `2.3`
-1. Add video for books / achievements
-2. Add docs for new features / perms / commands
+## Current version `2.4`
+1. Fix `/tardisromm add [name]` command (also should auto add `user: true`)
+2. Add video for books / achievements
+3. Add docs for new features / perms / commands
+4. Add `/tardis rescue [player]` command
+5. Add cloister bell SFX
+6. Add HADS
+7. Add player preference to jettison the whole room (including walls)
+8. Add `/tardis secondary door` for an alternative inner TARDIS door
+9. Save mob data when transferring into TARDIS
 
-## Next version `2.4+`
-1. Add `/tardis rescue [player]` command
-2. De-materialisation!
-3. TARDIS shield?
-4. Add cloister bell SFX
-5. Add HADS
-6. Add player preference to jettison the whole room (including walls)
-7. Add `/tardis secondary door` for an alternative inner TARDIS door
-8. Configurable chameleon blocks
+## Next version `2.5+`
+1. TARDIS shield?
 
-## Minecraft API when available `3.0?`
+# Minecraft API when available `3.0?`
 1. Recreate everything with the new API :)
 2. Create custom blocks for the TARDIS and console.
 3. If using the LAPIS block have the walls a special TARDIS wall block.
