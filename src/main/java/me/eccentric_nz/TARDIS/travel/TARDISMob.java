@@ -24,17 +24,18 @@ import org.bukkit.entity.Ocelot.Type;
  *
  * @author eccentric_nz
  */
-public class TARDISPet {
+public class TARDISMob {
 
-    EntityType type;
-    Type catType;
-    int age;
-    int health;
-    boolean sitting;
-    DyeColor collar;
-    String name;
+    private EntityType type;
+    private Type catType;
+    private int age;
+    private int health;
+    private boolean sitting;
+    private boolean baby;
+    private DyeColor colour;
+    private String name;
 
-    public TARDISPet() {
+    public TARDISMob() {
     }
 
     public EntityType getType() {
@@ -77,12 +78,20 @@ public class TARDISPet {
         this.sitting = sitting;
     }
 
-    public DyeColor getCollar() {
-        return collar;
+    public boolean isBaby() {
+        return baby;
     }
 
-    public void setCollar(DyeColor collar) {
-        this.collar = collar;
+    public void setBaby(boolean baby) {
+        this.baby = baby;
+    }
+
+    public DyeColor getColour() {
+        return colour;
+    }
+
+    public void setColour(DyeColor collar) {
+        this.colour = collar;
     }
 
     public String getName() {

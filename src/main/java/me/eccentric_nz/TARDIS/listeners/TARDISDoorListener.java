@@ -30,7 +30,7 @@ import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.thirdparty.Version;
 import me.eccentric_nz.TARDIS.travel.TARDISDoorLocation;
 import me.eccentric_nz.TARDIS.travel.TARDISFarmer;
-import me.eccentric_nz.TARDIS.travel.TARDISPet;
+import me.eccentric_nz.TARDIS.travel.TARDISMob;
 import me.eccentric_nz.TARDIS.utility.TARDISItemRenamer;
 import me.eccentric_nz.TARDIS.utility.TARDISTexturePackChanger;
 import multiworld.MultiWorldPlugin;
@@ -251,7 +251,7 @@ public class TARDISDoorListener implements Listener {
                                         userQuotes = true;
                                         userTP = false;
                                     }
-                                    List<TARDISPet> pets = null;
+                                    List<TARDISMob> pets = null;
                                     switch (doortype) {
                                         case 1:
                                             // player is in the TARDIS - always exit to current location
@@ -549,13 +549,13 @@ public class TARDISDoorListener implements Listener {
      * @param l the location to teleport pets to
      * @param player the player who owns the pets
      */
-    private void movePets(List<TARDISPet> p, Location l, Player player) {
+    private void movePets(List<TARDISMob> p, Location l, Player player) {
         Location pl = l.clone();
         World w = l.getWorld();
         // will need to adjust this depending on direction Police Box is facing
         pl.setX(l.getX() + 1);
         pl.setZ(l.getZ() + 1);
-        for (TARDISPet pet : p) {
+        for (TARDISMob pet : p) {
             plugin.myspawn = true;
             LivingEntity ent = (LivingEntity) w.spawnEntity(pl, pet.getType());
             ent.setTicksLived(pet.getAge());
@@ -569,7 +569,7 @@ public class TARDISDoorListener implements Listener {
             ((Tameable) ent).setOwner(player);
             if (pet.getType().equals(EntityType.WOLF)) {
                 Wolf wolf = (Wolf) ent;
-                wolf.setCollarColor(pet.getCollar());
+                wolf.setCollarColor(pet.getColour());
                 wolf.setSitting(pet.getSitting());
             } else {
                 Ocelot cat = (Ocelot) ent;

@@ -1,7 +1,7 @@
 # TODO
 
 ## Current version `2.4`
-1. Fix `/tardisromm add [name]` command (also should auto add `user: true`)
+1. Fix `/tardisromm add [name]` command?
 2. Add video for books / achievements
 3. Add docs for new features / perms / commands
 4. Add `/tardis rescue [player]` command
@@ -9,7 +9,6 @@
 6. Add HADS
 7. Add player preference to jettison the whole room (including walls)
 8. Add `/tardis secondary door` for an alternative inner TARDIS door
-9. Save mob data when transferring into TARDIS
 
 ## Next version `2.5+`
 1. TARDIS shield?
