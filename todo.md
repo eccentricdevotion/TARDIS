@@ -4,7 +4,6 @@
 1. Fix `/tardisroom add [name]` command?
 2. Add video for books / achievements
 3. Add docs for new features / perms / commands
-4. Add `/tardis rescue [player]` command
 5. Add cloister bell SFX
 6. Add HADS
 

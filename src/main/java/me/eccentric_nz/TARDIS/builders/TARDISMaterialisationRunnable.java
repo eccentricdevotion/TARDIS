@@ -136,6 +136,7 @@ public class TARDISMaterialisationRunnable implements Runnable {
                         QueryFactory qf = new QueryFactory(plugin);
                         qf.doInsert("travellers", set);
                     }
+                    plugin.trackRescue.remove(tid);
                 }
                 // first run - remember blocks
                 if (i == 1) {
