@@ -169,6 +169,7 @@ public class TARDISRoomCommands implements CommandExecutor {
                 String[][][] schem = TARDISSchematic.schematic(csvfile, dimensions[0], dimensions[1], dimensions[2]);
                 plugin.room_schematics.put(name, schem);
                 plugin.getRoomsConfig().set("rooms." + name + ".enabled", false);
+                plugin.getRoomsConfig().set("rooms." + name + ".user", true);
                 try {
                     plugin.getRoomsConfig().save(new File(plugin.getDataFolder(), "rooms.yml"));
                 } catch (IOException io) {
