@@ -244,6 +244,7 @@ public class TARDISCondensables {
         condensables.put("TRAPPED_CHEST", 30);
         condensables.put("TRIPWIRE", 2);
         condensables.put("TRIPWIRE_HOOK", 25);
+        condensables.put("VINE", 1);
         condensables.put("WALL_SIGN", 1);
         condensables.put("WATCH", 6);
         condensables.put("WATER_BUCKET", 40);
