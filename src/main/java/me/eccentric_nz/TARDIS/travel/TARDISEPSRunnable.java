@@ -50,7 +50,6 @@ public class TARDISEPSRunnable implements Runnable {
 
     @Override
     public void run() {
-        plugin.debug("Running Emergency Program One");
         Location l = getSpawnLocation(id);
         if (l != null) {
             l.setX(l.getX() + 0.5F);

@@ -319,7 +319,6 @@ public class TARDISDoorListener implements Listener {
                                                     // is the player in the comapnion list
                                                     String[] companionData = companions.split(":");
                                                     for (String c : companionData) {
-                                                        plugin.debug(c);
                                                         if (c.equalsIgnoreCase(playerNameStr)) {
                                                             chkCompanion = true;
                                                             break;

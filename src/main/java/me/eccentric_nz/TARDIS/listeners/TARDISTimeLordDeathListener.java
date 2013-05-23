@@ -76,16 +76,13 @@ public class TARDISTimeLordDeathListener implements Listener {
                         if (rsp.isAuto_on()) {
                             Location death_loc = player.getLocation();
                             if (plugin.pm.isPluginEnabled("Citizens") && plugin.getConfig().getBoolean("emergency_npc") && rsp.isEPS_on()) {
-                                plugin.debug("Starting Emergency Program One");
                                 // check if there are players in the TARDIS
                                 HashMap<String, Object> wherev = new HashMap<String, Object>();
                                 wherev.put("tardis_id", id);
                                 ResultSetTravellers rst = new ResultSetTravellers(plugin, wherev, true);
                                 if (rst.resultSet()) {
-                                    plugin.debug("Found travellers");
                                     List data = rst.getData();
                                     if (!data.contains(playerNameStr)) {
-                                        plugin.debug("Time Lord wasn't in TARDIS");
                                         // schedule the NPC to appear
                                         TARDISEPSRunnable EPS_runnable = new TARDISEPSRunnable(plugin, rsp.getEPS_message(), player, id);
                                         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, EPS_runnable, 20L);

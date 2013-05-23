@@ -98,7 +98,6 @@ public class TARDISDestroyerPoliceBox {
     }
 
     public void destroyPlatform(String plat, int id) {
-        plugin.debug("Destroying platform...");
         if (!plat.isEmpty()) {
             int px = 0, py = 0, pz = 0;
             String[] str_blocks = plat.split("~");

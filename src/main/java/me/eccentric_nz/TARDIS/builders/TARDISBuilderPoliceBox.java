@@ -118,7 +118,6 @@ public class TARDISBuilderPoliceBox {
     }
 
     public void addPlatform(Location l, boolean rebuild, TARDISConstants.COMPASS d, String p, int id) {
-        plugin.debug("Adding platform...");
         int plusx, minusx, x, y, plusz, minusz, z;
         byte grey = 8;
 
