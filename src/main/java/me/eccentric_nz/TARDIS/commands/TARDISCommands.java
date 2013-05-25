@@ -366,7 +366,7 @@ public class TARDISCommands implements CommandExecutor {
                         return true;
                     }
                     String perm = "tardis.room." + args[1].toLowerCase(Locale.ENGLISH);
-                    if (!player.hasPermission(perm)) {
+                    if (!player.hasPermission(perm) && !player.hasPermission("tardis.room")) {
                         String grammar = (TARDISConstants.vowels.contains(room.substring(0, 1))) ? "an" : "a";
                         sender.sendMessage(plugin.pluginName + "You do not have permission to grow " + grammar + " " + room);
                         return true;
