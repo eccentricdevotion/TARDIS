@@ -99,7 +99,7 @@
         <dependency>
             <groupId>com.wimbli.WorldBorder</groupId>
             <artifactId>WorldBorder</artifactId>
-            <version>1.7.2</version>
+            <version>1.7.2b</version>
             <type>jar</type>
             <scope>compile</scope>
         </dependency>
@@ -120,7 +120,7 @@
         <dependency>
             <groupId>multiworld</groupId>
             <artifactId>MultiWorld</artifactId>
-            <version>4.5.4</version>
+            <version>4.6.0</version>
             <type>jar</type>
             <scope>compile</scope>
         </dependency>
