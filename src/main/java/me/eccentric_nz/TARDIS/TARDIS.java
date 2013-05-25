@@ -453,7 +453,7 @@ public class TARDIS extends JavaPlugin {
      * bPermissions (as they have per world config files).
      */
     private void loadPerms() {
-        if (pm.getPlugin("GroupManager") != null || pm.getPlugin("bPermissions") != null) {
+        if (pm.getPlugin("GroupManager") != null || pm.getPlugin("bPermissions") != null || pm.getPlugin("PermissionsEx") != null) {
             // copy default permissions file if not present
             tardisCSV.copy(getDataFolder() + File.separator + "permissions.txt", getResource("permissions.txt"));
             console.sendMessage(pluginName + "World specific permissions plugin detected please edit plugins/TARDIS/permissions.txt");

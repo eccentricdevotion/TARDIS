@@ -22,6 +22,7 @@ import java.util.List;
 import java.util.Locale;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.perms.TARDISGroupManagerHandler;
+import me.eccentric_nz.TARDIS.perms.TARDISPermissionsExHandler;
 import me.eccentric_nz.TARDIS.perms.TARDISbPermissionsHandler;
 import me.eccentric_nz.tardischunkgenerator.TARDISChunkGenerator;
 import org.bukkit.World;
@@ -119,6 +120,11 @@ public class TARDISSpace {
                     TARDISbPermissionsHandler tbph = new TARDISbPermissionsHandler(plugin);
                     String player = name.substring(13);
                     tbph.addPerms(player);
+                }
+                if (plugin.pm.isPluginEnabled("PermissionsEx")) {
+                    TARDISPermissionsExHandler tpesxh = new TARDISPermissionsExHandler(plugin);
+                    String player = name.substring(13);
+                    tpesxh.addPerms(player);
                 }
             }
         }
