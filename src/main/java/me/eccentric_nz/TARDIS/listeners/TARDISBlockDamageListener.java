@@ -60,8 +60,8 @@ public class TARDISBlockDamageListener implements Listener {
         if (rs.resultSet()) {
             String message = "You cannot break the TARDIS blocks!";
             boolean m = false;
-            if (HADS) {
-                int id = rs.getTardis_id();
+            int id = rs.getTardis_id();
+            if (HADS && !plugin.tardisDematerialising.contains(id) && !plugin.tardisMaterialising.contains(id)) {
                 int damage = (plugin.trackDamage.containsKey(Integer.valueOf(id))) ? plugin.trackDamage.get(Integer.valueOf(id)) : 0;
                 plugin.trackDamage.put(Integer.valueOf(id), damage + 1);
                 if (damage == plugin.getConfig().getInt("hads_damage")) {

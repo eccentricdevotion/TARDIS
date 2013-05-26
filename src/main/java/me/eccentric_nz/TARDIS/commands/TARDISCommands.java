@@ -605,7 +605,7 @@ public class TARDISCommands implements CommandExecutor {
                             player.sendMessage(plugin.pluginName + "You cannot bring the Police Box here because you are inside a TARDIS!");
                             return true;
                         }
-                        if (plugin.tardisMaterialising.contains(id)) {
+                        if (plugin.tardisMaterialising.contains(id) || plugin.tardisDematerialising.contains(id)) {
                             sender.sendMessage(plugin.pluginName + "You cannot do that while the TARDIS is materialising!");
                             return true;
                         }
@@ -883,7 +883,7 @@ public class TARDISCommands implements CommandExecutor {
                         }
                         int level = rs.getArtron_level();
                         save = rs.getCurrent();
-                        if (plugin.tardisMaterialising.contains(id)) {
+                        if (plugin.tardisMaterialising.contains(id) || plugin.tardisDematerialising.contains(id)) {
                             sender.sendMessage(plugin.pluginName + "You cannot do that while the TARDIS is materialising!");
                             return true;
                         }
@@ -1267,7 +1267,7 @@ public class TARDISCommands implements CommandExecutor {
                         }
                         String save = rs.getCurrent();
                         String[] save_data = save.split(":");
-                        if (plugin.tardisMaterialising.contains(id)) {
+                        if (plugin.tardisMaterialising.contains(id) || plugin.tardisDematerialising.contains(id)) {
                             sender.sendMessage(plugin.pluginName + "You cannot do that while the TARDIS is materialising!");
                             return true;
                         }
