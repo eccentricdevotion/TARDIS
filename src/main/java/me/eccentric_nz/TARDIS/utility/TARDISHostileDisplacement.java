@@ -23,7 +23,7 @@ import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.travel.TARDISPluginRespect;
-import me.eccentric_nz.TARDIS.travel.TARDISTimeTravelRenamed;
+import me.eccentric_nz.TARDIS.travel.TARDISTimeTravel;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
@@ -57,7 +57,7 @@ public class TARDISHostileDisplacement {
             ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, wherep);
             if (rsp.resultSet()) {
                 if (rsp.isHads_on()) {
-                    TARDISTimeTravelRenamed tt = new TARDISTimeTravelRenamed(plugin);
+                    TARDISTimeTravel tt = new TARDISTimeTravel(plugin);
                     int r = plugin.getConfig().getInt("hads_distance");
                     final Location loc = plugin.utils.getLocationFromDB(current, 0, 0);
                     Location l = loc.clone();

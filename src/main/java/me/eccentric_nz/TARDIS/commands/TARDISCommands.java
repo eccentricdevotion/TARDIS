@@ -45,7 +45,7 @@ import me.eccentric_nz.TARDIS.rooms.TARDISWalls;
 import me.eccentric_nz.TARDIS.thirdparty.Version;
 import me.eccentric_nz.TARDIS.travel.TARDISPluginRespect;
 import me.eccentric_nz.TARDIS.travel.TARDISRescue;
-import me.eccentric_nz.TARDIS.travel.TARDISTimeTravelRenamed;
+import me.eccentric_nz.TARDIS.travel.TARDISTimeTravel;
 import me.eccentric_nz.TARDIS.utility.TARDISItemRenamer;
 import me.eccentric_nz.TARDIS.utility.TARDISLampScanner;
 import me.eccentric_nz.TARDIS.utility.TARDISLister;
@@ -610,7 +610,7 @@ public class TARDISCommands implements CommandExecutor {
                             return true;
                         }
                         final TARDISConstants.COMPASS d = rs.getDirection();
-                        TARDISTimeTravelRenamed tt = new TARDISTimeTravelRenamed(plugin);
+                        TARDISTimeTravel tt = new TARDISTimeTravel(plugin);
                         int[] start_loc = tt.getStartLocation(eyeLocation, d);
                         // safeLocation(int startx, int starty, int startz, int resetx, int resetz, World w, TARDISConstants.COMPASS d)
                         int count = tt.safeLocation(start_loc[0], eyeLocation.getBlockY(), start_loc[2], start_loc[1], start_loc[3], eyeLocation.getWorld(), d);
@@ -700,7 +700,7 @@ public class TARDISCommands implements CommandExecutor {
                         return true;
                     }
                     final TARDISConstants.COMPASS d = rs.getDirection();
-                    TARDISTimeTravelRenamed tt = new TARDISTimeTravelRenamed(plugin);
+                    TARDISTimeTravel tt = new TARDISTimeTravel(plugin);
                     tt.testSafeLocation(eyeLocation, d);
                     return true;
                 }

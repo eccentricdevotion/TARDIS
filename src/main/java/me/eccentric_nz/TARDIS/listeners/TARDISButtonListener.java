@@ -27,7 +27,7 @@ import me.eccentric_nz.TARDIS.database.ResultSetRepeaters;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.thirdparty.Version;
-import me.eccentric_nz.TARDIS.travel.TARDISTimeTravelRenamed;
+import me.eccentric_nz.TARDIS.travel.TARDISTimeTravel;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -196,7 +196,7 @@ public class TARDISButtonListener implements Listener {
                                         }
                                     }
                                     // create a random destination
-                                    TARDISTimeTravelRenamed tt = new TARDISTimeTravelRenamed(plugin);
+                                    TARDISTimeTravel tt = new TARDISTimeTravel(plugin);
                                     Location rand = tt.randomDestination(player, repeaters[1], repeaters[2], repeaters[3], dir, environment);
                                     if (rand != null) {
                                         String d = rand.getWorld().getName() + ":" + rand.getBlockX() + ":" + rand.getBlockY() + ":" + rand.getBlockZ();

@@ -27,7 +27,7 @@ import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.travel.TARDISPluginRespect;
 import me.eccentric_nz.TARDIS.travel.TARDISRescue;
-import me.eccentric_nz.TARDIS.travel.TARDISTimeTravelRenamed;
+import me.eccentric_nz.TARDIS.travel.TARDISTimeTravel;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.World;
@@ -73,7 +73,7 @@ public class TARDISTravelCommands implements CommandExecutor {
                     return false;
                 }
                 QueryFactory qf = new QueryFactory(plugin);
-                TARDISTimeTravelRenamed tt = new TARDISTimeTravelRenamed(plugin);
+                TARDISTimeTravel tt = new TARDISTimeTravel(plugin);
                 // get tardis data
                 HashMap<String, Object> where = new HashMap<String, Object>();
                 where.put("owner", player.getName());
