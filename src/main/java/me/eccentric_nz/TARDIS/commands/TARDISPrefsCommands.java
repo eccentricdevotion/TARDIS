@@ -63,6 +63,7 @@ public class TARDISPrefsCommands implements CommandExecutor {
         firstArgs.add("eps");
         firstArgs.add("eps_message");
         firstArgs.add("floor");
+        firstArgs.add("hads");
         firstArgs.add("isomorphic");
         firstArgs.add("key");
         firstArgs.add("platform");
@@ -198,7 +199,7 @@ public class TARDISPrefsCommands implements CommandExecutor {
                         sender.sendMessage(plugin.pluginName + "You need to specify if " + pref + " should be on or off!");
                         return false;
                     }
-                    List<String> was = Arrays.asList(new String[]{"auto", "beacon", "platform", "eps"});
+                    List<String> was = Arrays.asList(new String[]{"auto", "beacon", "platform", "eps", "hads"});
 
                     HashMap<String, Object> setp = new HashMap<String, Object>();
                     HashMap<String, Object> wherep = new HashMap<String, Object>();

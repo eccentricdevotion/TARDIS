@@ -55,6 +55,7 @@ public class TARDISDatabaseUpdater {
         prefsupdates.add("artron_level INTEGER DEFAULT 0");
         prefsupdates.add("auto_on INTEGER DEFAULT 0");
         prefsupdates.add("beacon_on INTEGER DEFAULT 1");
+        prefsupdates.add("hads_on INTEGER DEFAULT 1");
         prefsupdates.add("floor TEXT DEFAULT 'LIGHT_GREY_WOOL'");
         prefsupdates.add("key TEXT DEFAULT ''");
         prefsupdates.add("wall TEXT DEFAULT 'ORANGE_WOOL'");

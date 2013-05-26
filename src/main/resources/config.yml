@@ -41,6 +41,8 @@ add_perms: true
 allow_mob_farming: true
 spawn_eggs: true
 allow_autonomous: true
+allow_hads: true
+hads_damage: 10
 malfunction: 3
 malfunction_end: 3
 malfunction_nether: 3

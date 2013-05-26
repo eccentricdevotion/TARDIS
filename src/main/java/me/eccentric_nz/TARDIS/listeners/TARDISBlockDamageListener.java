@@ -19,6 +19,7 @@ package me.eccentric_nz.TARDIS.listeners;
 import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.ResultSetBlocks;
+import me.eccentric_nz.TARDIS.utility.TARDISHostileDisplacement;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -35,9 +36,11 @@ import org.bukkit.event.block.BlockDamageEvent;
 public class TARDISBlockDamageListener implements Listener {
 
     private final TARDIS plugin;
+    private boolean HADS;
 
     public TARDISBlockDamageListener(TARDIS plugin) {
         this.plugin = plugin;
+        this.HADS = this.plugin.getConfig().getBoolean("allow_hads");
     }
 
     /**
@@ -55,6 +58,12 @@ public class TARDISBlockDamageListener implements Listener {
         where.put("location", l);
         ResultSetBlocks rs = new ResultSetBlocks(plugin, where, false);
         if (rs.resultSet()) {
+            if (HADS) {
+                int damage = plugin.trackDamage.get(Integer.valueOf(rs.getTardis_id()));
+                if (damage == plugin.getConfig().getInt("hads_damage")) {
+                    new TARDISHostileDisplacement(plugin).moveTARDIS(rs.getTardis_id());
+                }
+            }
             event.setCancelled(true);
             if (b.getTypeId() != 71) {
                 p.sendMessage(plugin.pluginName + "You cannot break the TARDIS blocks!");

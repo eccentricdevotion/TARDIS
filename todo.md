@@ -4,7 +4,6 @@
 1. Add video for books / achievements
 2. Add docs for new features / perms / commands
 3. Add cloister bell SFX
-4. Add HADS
 
 ## Next version `2.5+`
 1. Jettison the whole room (including walls), will require new room schematics...

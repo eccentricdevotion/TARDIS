@@ -65,6 +65,7 @@ public class TARDISConfiguration {
         boolOptions.put("add_perms", true);
         boolOptions.put("all_blocks", false);
         boolOptions.put("allow_autonomous", true);
+        boolOptions.put("allow_hads", true);
         boolOptions.put("allow_mob_farming", true);
         boolOptions.put("allow_tp_switch", true);
         boolOptions.put("bonus_chest", true);
@@ -153,6 +154,7 @@ public class TARDISConfiguration {
         intOptions.put("count", 0);
         intOptions.put("gravity_max_distance", 15);
         intOptions.put("gravity_max_velocity", 5);
+        intOptions.put("hads_damage", 10);
         intOptions.put("inventory_group", 0);
         intOptions.put("malfunction", 3);
         intOptions.put("malfunction_end", 3);

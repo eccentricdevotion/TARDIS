@@ -162,6 +162,7 @@ public class TARDIS extends JavaPlugin {
     public HashMap<String, String> trackSecondary = new HashMap<String, String>();
     public HashMap<String, Double[]> trackGravity = new HashMap<String, Double[]>();
     public HashMap<Integer, String> trackRescue = new HashMap<Integer, String>();
+    public HashMap<Integer, Integer> trackDamage = new HashMap<Integer, Integer>();
     public HashMap<Integer, Integer> tardisHasDestination = new HashMap<Integer, Integer>();
     public HashMap<String, Block> trackExterminate = new HashMap<String, Block>();
     public ArrayList<Integer> tardisMaterialising = new ArrayList<Integer>();
