@@ -64,6 +64,8 @@ public class TARDISHostileDisplacement {
                     for (int a = 0; a < 360; a += 45) {
                         l.setX(l.getX() + r * Math.cos(a)); // x = cx + r * cos(a)
                         l.setZ(l.getZ() + r * Math.cos(a)); // z = cz + r * sin(a)
+                        int y = l.getWorld().getHighestBlockAt(l).getY();
+                        l.setY(y);
                         int[] start = tt.getStartLocation(l, d);
                         if (tt.safeLocation(start[0], start[1], start[2], start[3], start[4], l.getWorld(), d) < 1) {
                             final Location fl = l;
