@@ -12,7 +12,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program. If not, see <http://www.gnu.org/licenses/>.
+ * along with this program. If ChatColor.RESET, see <http://www.gnu.org/licenses/>.
  */
 package me.eccentric_nz.TARDIS.utility;
 
@@ -24,6 +24,7 @@ import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.travel.TARDISPluginRespect;
 import me.eccentric_nz.TARDIS.travel.TARDISTimeTravel;
+import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
@@ -44,7 +45,7 @@ public class TARDISHostileDisplacement {
         this.plugin = plugin;
     }
 
-    public void moveTARDIS(final int id) {
+    public void moveTARDIS(final int id, Player hostile) {
         HashMap<String, Object> where = new HashMap<String, Object>();
         where.put("tardis_id", id);
         ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
@@ -97,8 +98,17 @@ public class TARDISHostileDisplacement {
                                     }
                                 }, delay * 2);
                                 // message time lord
-                                player.sendMessage(plugin.pluginName + "HADS engaged, moving TARDIS!");
+                                String message = plugin.pluginName + ChatColor.RED + "H" + ChatColor.RESET + "ostile " + ChatColor.RED + "A" + ChatColor.RESET + "ction " + ChatColor.RED + "D" + ChatColor.RESET + "isplacement " + ChatColor.RED + "S" + ChatColor.RESET + "ystem engaged, moving TARDIS!";
+                                player.sendMessage(message);
+                                if (player != hostile) {
+                                    hostile.sendMessage(message);
+                                }
                                 break;
+                            } else {
+                                player.sendMessage(plugin.pluginName + "HADS could not be engaged because the area is protected!");
+                                if (player != hostile) {
+                                    hostile.sendMessage(plugin.pluginName + "HADS could not be engaged because the area is protected!");
+                                }
                             }
                         }
                     }

@@ -1,13 +1,14 @@
 # TODO
 
-## Current version `2.4`
+## Current version `2.4-beta`
 1. Add video for books / achievements
 2. Add docs for new features / perms / commands
 3. Add cloister bell SFX
+4. Make HADS more random
 
 ## Next version `2.5+`
 1. Jettison the whole room (including walls), will require new room schematics...
-2. TARDIS shield?
+2. TARDIS shield
 
 # Minecraft API when available `3.0?`
 1. Recreate everything with the new API :)
