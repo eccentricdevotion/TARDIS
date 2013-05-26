@@ -16,7 +16,10 @@
  */
 package me.eccentric_nz.TARDIS.utility;
 
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
@@ -40,6 +43,7 @@ import org.bukkit.entity.Player;
 public class TARDISHostileDisplacement {
 
     private final TARDIS plugin;
+    private List<Integer> angles = Arrays.asList(new Integer[]{0, 45, 90, 135, 180, 225, 270, 315});
 
     public TARDISHostileDisplacement(TARDIS plugin) {
         this.plugin = plugin;
@@ -62,7 +66,9 @@ public class TARDISHostileDisplacement {
                     int r = plugin.getConfig().getInt("hads_distance");
                     final Location loc = plugin.utils.getLocationFromDB(current, 0, 0);
                     Location l = loc.clone();
-                    for (int a = 0; a < 360; a += 45) {
+                    // randomise the direction
+                    Collections.shuffle(angles);
+                    for (Integer a : angles) {
                         l.setX(l.getX() + r * Math.cos(a)); // x = cx + r * cos(a)
                         l.setZ(l.getZ() + r * Math.sin(a)); // z = cz + r * sin(a)
                         int y = l.getWorld().getHighestBlockAt(l).getY();
