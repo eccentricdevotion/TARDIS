@@ -262,7 +262,7 @@ public class TARDISUtils {
         try {
             num = Integer.parseInt(i);
         } catch (NumberFormatException n) {
-            plugin.console.sendMessage("Could not convert to number");
+            plugin.debug("Could not convert to number");
         }
         return num;
     }
