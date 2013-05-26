@@ -39,7 +39,7 @@ public class TARDISRescue {
         this.plugin = plugin;
     }
 
-    public boolean rescue(Player player, String saved, int id, TARDISTimetravel tt, TARDISConstants.COMPASS d, boolean rescue) {
+    public boolean rescue(Player player, String saved, int id, TARDISTimeTravel tt, TARDISConstants.COMPASS d, boolean rescue) {
         if (plugin.getServer().getPlayer(saved) == null) {
             player.sendMessage(plugin.pluginName + "That player is not online!");
             return true;
@@ -83,7 +83,7 @@ public class TARDISRescue {
 
     public boolean tryRescue(Player player, String saved) {
         if (player.hasPermission("tardis.timetravel") && !(player.hasPermission("tardis.exile") && plugin.getConfig().getBoolean("exile"))) {
-            TARDISTimetravel tt = new TARDISTimetravel(plugin);
+            TARDISTimeTravel tt = new TARDISTimeTravel(plugin);
             // get tardis data
             HashMap<String, Object> where = new HashMap<String, Object>();
             where.put("owner", player.getName());
