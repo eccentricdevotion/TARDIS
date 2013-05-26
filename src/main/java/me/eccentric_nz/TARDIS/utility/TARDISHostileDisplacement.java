@@ -63,7 +63,7 @@ public class TARDISHostileDisplacement {
                     Location l = loc.clone();
                     for (int a = 0; a < 360; a += 45) {
                         l.setX(l.getX() + r * Math.cos(a)); // x = cx + r * cos(a)
-                        l.setZ(l.getZ() + r * Math.cos(a)); // z = cz + r * sin(a)
+                        l.setZ(l.getZ() + r * Math.sin(a)); // z = cz + r * sin(a)
                         int y = l.getWorld().getHighestBlockAt(l).getY();
                         l.setY(y);
                         int[] start = tt.getStartLocation(l, d);
@@ -82,19 +82,20 @@ public class TARDISHostileDisplacement {
                                 set.put("current", hads);
                                 qf.doUpdate("tardis", set, tid);
                                 plugin.trackDamage.remove(Integer.valueOf(id));
+                                long delay = (plugin.getConfig().getBoolean("materialise")) ? 1L : 180L;
                                 plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
                                     @Override
                                     public void run() {
                                         plugin.tardisDematerialising.add(id);
-                                        plugin.destroyPB.destroyPoliceBox(loc, d, id, false, false, cham, player);
+                                        plugin.destroyPB.destroyPoliceBox(loc, d, id, false, plugin.getConfig().getBoolean("materialise"), cham, player);
                                     }
-                                }, 1L);
+                                }, delay);
                                 plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
                                     @Override
                                     public void run() {
                                         plugin.buildPB.buildPoliceBox(id, fl, d, cham, player, false, false);
                                     }
-                                }, 2L);
+                                }, delay * 2);
                                 // message time lord
                                 player.sendMessage(plugin.pluginName + "HADS engaged, moving TARDIS!");
                                 break;
