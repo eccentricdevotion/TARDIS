@@ -59,9 +59,11 @@ public class TARDISBlockDamageListener implements Listener {
         ResultSetBlocks rs = new ResultSetBlocks(plugin, where, false);
         if (rs.resultSet()) {
             if (HADS) {
-                int damage = plugin.trackDamage.get(Integer.valueOf(rs.getTardis_id()));
+                int id = rs.getTardis_id();
+                int damage = (plugin.trackDamage.containsKey(Integer.valueOf(id))) ? plugin.trackDamage.get(Integer.valueOf(id)) : 0;
+                plugin.trackDamage.put(Integer.valueOf(id), damage + 1);
                 if (damage == plugin.getConfig().getInt("hads_damage")) {
-                    new TARDISHostileDisplacement(plugin).moveTARDIS(rs.getTardis_id());
+                    new TARDISHostileDisplacement(plugin).moveTARDIS(id);
                 }
             }
             event.setCancelled(true);
