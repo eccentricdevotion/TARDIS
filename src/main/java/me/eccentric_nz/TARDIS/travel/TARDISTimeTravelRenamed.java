@@ -40,7 +40,7 @@ import org.bukkit.entity.Player;
  *
  * @author eccentric_nz
  */
-public class TARDISTimeTravel {
+public class TARDISTimeTravelRenamed {
 
     private static int[] startLoc = new int[6];
     private Location dest;
@@ -48,7 +48,7 @@ public class TARDISTimeTravel {
     private List<Material> goodMaterials = new ArrayList<Material>();
     private TARDISPluginRespect respect;
 
-    public TARDISTimeTravel(TARDIS plugin) {
+    public TARDISTimeTravelRenamed(TARDIS plugin) {
         this.plugin = plugin;
         // add good materials
         goodMaterials.add(Material.AIR);
