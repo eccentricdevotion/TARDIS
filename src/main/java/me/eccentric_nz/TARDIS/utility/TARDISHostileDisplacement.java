@@ -29,6 +29,7 @@ import me.eccentric_nz.TARDIS.travel.TARDISPluginRespect;
 import me.eccentric_nz.TARDIS.travel.TARDISTimeTravel;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
+import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Player;
 
 /**
@@ -73,47 +74,54 @@ public class TARDISHostileDisplacement {
                         l.setZ(l.getZ() + r * Math.sin(a)); // z = cz + r * sin(a)
                         int y = l.getWorld().getHighestBlockAt(l).getY();
                         l.setY(y);
-                        int[] start = tt.getStartLocation(l, d);
-                        if (tt.safeLocation(start[0], start[1], start[2], start[3], start[4], l.getWorld(), d) < 1) {
-                            final Location fl = l;
-                            final Player player = plugin.getServer().getPlayer(rsp.getPlayer());
-                            TARDISPluginRespect pr = new TARDISPluginRespect(plugin);
-                            if (pr.getRespect(player, l, false)) {
-                                // move TARDIS
-                                String hads = l.getWorld().getName() + ":" + l.getBlockX() + ":" + l.getBlockY() + ":" + l.getBlockZ();
-                                QueryFactory qf = new QueryFactory(plugin);
-                                HashMap<String, Object> tid = new HashMap<String, Object>();
-                                HashMap<String, Object> set = new HashMap<String, Object>();
-                                tid.put("tardis_id", id);
-                                set.put("save", hads);
-                                set.put("current", hads);
-                                qf.doUpdate("tardis", set, tid);
-                                plugin.trackDamage.remove(Integer.valueOf(id));
-                                long delay = (plugin.getConfig().getBoolean("materialise")) ? 1L : 180L;
-                                plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        plugin.tardisDematerialising.add(id);
-                                        plugin.destroyPB.destroyPoliceBox(loc, d, id, false, plugin.getConfig().getBoolean("materialise"), cham, player);
+                        boolean bool = true;
+                        if (l.getBlock().getRelative(BlockFace.DOWN).isLiquid() && !plugin.getConfig().getBoolean("land_on_water")) {
+                            bool = false;
+                        }
+                        if (bool) {
+                            int[] start = tt.getStartLocation(l, d);
+                            if (tt.safeLocation(start[0], y, start[2], start[1], start[3], l.getWorld(), d) < 1) {
+                                final Location fl = l;
+                                final Player player = plugin.getServer().getPlayer(rsp.getPlayer());
+                                TARDISPluginRespect pr = new TARDISPluginRespect(plugin);
+                                if (pr.getRespect(player, l, false)) {
+                                    // move TARDIS
+                                    String hads = l.getWorld().getName() + ":" + l.getBlockX() + ":" + l.getBlockY() + ":" + l.getBlockZ();
+                                    QueryFactory qf = new QueryFactory(plugin);
+                                    HashMap<String, Object> tid = new HashMap<String, Object>();
+                                    HashMap<String, Object> set = new HashMap<String, Object>();
+                                    tid.put("tardis_id", id);
+                                    set.put("save", hads);
+                                    set.put("current", hads);
+                                    qf.doUpdate("tardis", set, tid);
+                                    plugin.trackDamage.remove(Integer.valueOf(id));
+                                    long delay = (plugin.getConfig().getBoolean("materialise")) ? 1L : 180L;
+                                    plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            plugin.tardisDematerialising.add(id);
+                                            plugin.destroyPB.destroyPoliceBox(loc, d, id, false, plugin.getConfig().getBoolean("materialise"), cham, player);
+                                        }
+                                    }, delay);
+                                    plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            plugin.buildPB.buildPoliceBox(id, fl, d, cham, player, false, false);
+                                        }
+                                    }, delay * 2);
+                                    // message time lord
+                                    String message = plugin.pluginName + ChatColor.RED + "H" + ChatColor.RESET + "ostile " + ChatColor.RED + "A" + ChatColor.RESET + "ction " + ChatColor.RED + "D" + ChatColor.RESET + "isplacement " + ChatColor.RED + "S" + ChatColor.RESET + "ystem engaged, moving TARDIS!";
+                                    player.sendMessage(message);
+                                    player.sendMessage(plugin.pluginName + "TARDIS moved to " + hads);
+                                    if (player != hostile) {
+                                        hostile.sendMessage(message);
                                     }
-                                }, delay);
-                                plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        plugin.buildPB.buildPoliceBox(id, fl, d, cham, player, false, false);
+                                    break;
+                                } else {
+                                    player.sendMessage(plugin.pluginName + "HADS could not be engaged because the area is protected!");
+                                    if (player != hostile) {
+                                        hostile.sendMessage(plugin.pluginName + "HADS could not be engaged because the area is protected!");
                                     }
-                                }, delay * 2);
-                                // message time lord
-                                String message = plugin.pluginName + ChatColor.RED + "H" + ChatColor.RESET + "ostile " + ChatColor.RED + "A" + ChatColor.RESET + "ction " + ChatColor.RED + "D" + ChatColor.RESET + "isplacement " + ChatColor.RED + "S" + ChatColor.RESET + "ystem engaged, moving TARDIS!";
-                                player.sendMessage(message);
-                                if (player != hostile) {
-                                    hostile.sendMessage(message);
-                                }
-                                break;
-                            } else {
-                                player.sendMessage(plugin.pluginName + "HADS could not be engaged because the area is protected!");
-                                if (player != hostile) {
-                                    hostile.sendMessage(plugin.pluginName + "HADS could not be engaged because the area is protected!");
                                 }
                             }
                         }
