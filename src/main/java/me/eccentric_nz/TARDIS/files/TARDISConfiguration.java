@@ -155,6 +155,7 @@ public class TARDISConfiguration {
         intOptions.put("gravity_max_distance", 15);
         intOptions.put("gravity_max_velocity", 5);
         intOptions.put("hads_damage", 10);
+        intOptions.put("hads_distance", 10);
         intOptions.put("inventory_group", 0);
         intOptions.put("malfunction", 3);
         intOptions.put("malfunction_end", 3);

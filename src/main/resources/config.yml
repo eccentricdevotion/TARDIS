@@ -43,6 +43,7 @@ spawn_eggs: true
 allow_autonomous: true
 allow_hads: true
 hads_damage: 10
+hads_distance: 10
 malfunction: 3
 malfunction_end: 3
 malfunction_nether: 3

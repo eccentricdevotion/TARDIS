@@ -144,6 +144,7 @@ public class TARDISAdminCommands implements CommandExecutor {
         firstsInt.add("gravity_max_distance");
         firstsInt.add("gravity_max_velocity");
         firstsInt.add("hads_damage");
+        firstsInt.add("hads_distance");
         firstsInt.add("hide");
         firstsInt.add("malfunction");
         firstsInt.add("malfunction_end");
