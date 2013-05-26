@@ -72,8 +72,10 @@ public class TARDISAdminCommands implements CommandExecutor {
 
     private TARDIS plugin;
     private List<String> firstsStr = new ArrayList<String>();
+    private List<String> firstsStrArtron = new ArrayList<String>();
     private List<String> firstsBool = new ArrayList<String>();
     private List<String> firstsInt = new ArrayList<String>();
+    private List<String> firstsIntArtron = new ArrayList<String>();
     HashSet<Byte> transparent = new HashSet<Byte>();
     private Material charger = Material.REDSTONE_LAMP_ON;
     Version bukkitversion;
@@ -84,27 +86,28 @@ public class TARDISAdminCommands implements CommandExecutor {
         // add first arguments
         firstsStr.add("chunks");
         firstsStr.add("config");
+        firstsStr.add("decharge");
         firstsStr.add("default_world_name");
         firstsStr.add("delete");
-        firstsStr.add("decharge");
         firstsStr.add("enter");
         firstsStr.add("exclude");
         firstsStr.add("find");
-        firstsStr.add("full_charge_item");
         firstsStr.add("gamemode");
         firstsStr.add("include");
         firstsStr.add("inventory_group");
-        firstsStr.add("jettison_seed");
         firstsStr.add("key");
         firstsStr.add("list");
-        firstsStr.add("prune");
         firstsStr.add("playercount");
+        firstsStr.add("prune");
         firstsStr.add("recharger");
         firstsStr.add("reload");
+        firstsStrArtron.add("full_charge_item");
+        firstsStrArtron.add("jettison_seed");
         // boolean
         firstsBool.add("add_perms");
         firstsBool.add("all_blocks");
         firstsBool.add("allow_autonomous");
+        firstsBool.add("allow_hads");
         firstsBool.add("allow_mob_farming");
         firstsBool.add("allow_tp_switch");
         firstsBool.add("bonus_chest");
@@ -135,32 +138,33 @@ public class TARDISAdminCommands implements CommandExecutor {
         firstsBool.add("the_end");
         firstsBool.add("use_worldguard");
         // integer
-        firstsInt.add("autonomous");
-        firstsInt.add("backdoor");
         firstsInt.add("border_radius");
-        firstsInt.add("comehere");
         firstsInt.add("confirm_timeout");
         firstsInt.add("count");
-        firstsInt.add("creeper_recharge");
-        firstsInt.add("full_charge");
-        firstsInt.add("hide");
         firstsInt.add("gravity_max_distance");
         firstsInt.add("gravity_max_velocity");
-        firstsInt.add("jettison");
-        firstsInt.add("lightning_recharge");
-        firstsInt.add("nether_min");
-        firstsInt.add("player");
-        firstsInt.add("random");
-        firstsInt.add("recharge_distance");
-        firstsInt.add("rooms_condenser_percent");
-        firstsInt.add("the_end_min");
-        firstsInt.add("timeout");
-        firstsInt.add("timeout_height");
-        firstsInt.add("tp_radius");
-        firstsInt.add("travel");
+        firstsInt.add("hads_damage");
+        firstsInt.add("hide");
         firstsInt.add("malfunction");
         firstsInt.add("malfunction_end");
         firstsInt.add("malfunction_nether");
+        firstsInt.add("recharge_distance");
+        firstsInt.add("rooms_condenser_percent");
+        firstsInt.add("timeout");
+        firstsInt.add("timeout_height");
+        firstsInt.add("tp_radius");
+        firstsIntArtron.add("autonomous");
+        firstsIntArtron.add("backdoor");
+        firstsIntArtron.add("comehere");
+        firstsIntArtron.add("creeper_recharge");
+        firstsIntArtron.add("full_charge");
+        firstsIntArtron.add("jettison");
+        firstsIntArtron.add("lightning_recharge");
+        firstsIntArtron.add("nether_min");
+        firstsIntArtron.add("player");
+        firstsIntArtron.add("random");
+        firstsIntArtron.add("the_end_min");
+        firstsIntArtron.add("travel");
 
         String[] v = Bukkit.getServer().getBukkitVersion().split("-");
         bukkitversion = (!v[0].equalsIgnoreCase("unknown")) ? new Version(v[0]) : new Version("1.4.7");
@@ -187,7 +191,7 @@ public class TARDISAdminCommands implements CommandExecutor {
                     return true;
                 }
                 String first = args[0].toLowerCase(Locale.ENGLISH);
-                if (!firstsStr.contains(first) && !firstsBool.contains(first) && !firstsInt.contains(first)) {
+                if (!firstsStr.contains(first) && !firstsBool.contains(first) && !firstsInt.contains(first) && !firstsIntArtron.contains(first) && !firstsStrArtron.contains(first)) {
                     sender.sendMessage(plugin.pluginName + "TARDIS does not recognise that command argument!");
                     return false;
                 }
@@ -617,7 +621,16 @@ public class TARDISAdminCommands implements CommandExecutor {
                         sender.sendMessage(plugin.pluginName + ChatColor.RED + "That is not a valid Material! Try checking http://jd.bukkit.org/apidocs/org/bukkit/Material.html");
                         return false;
                     } else {
-                        plugin.getConfig().set(first, setMaterial);
+                        if (first.equals("full_charge_item") || first.equals("jettison_seed")) {
+                            plugin.getArtronConfig().set(first, setMaterial);
+                            try {
+                                plugin.getArtronConfig().save(new File(plugin.getDataFolder(), "artron.yml"));
+                            } catch (IOException io) {
+                                plugin.debug("Could not save artron.yml, " + io);
+                            }
+                        } else {
+                            plugin.getConfig().set(first, setMaterial);
+                        }
                     }
                 }
                 if (first.equals("default_world_name")) {
@@ -665,7 +678,7 @@ public class TARDISAdminCommands implements CommandExecutor {
                         plugin.getConfig().set("worlds." + nodots, false);
                     }
                 }
-                //checks if its a boolean config option
+                // checks if its a boolean config option
                 if (firstsBool.contains(first)) {
                     // check they typed true of false
                     String tf = args[1].toLowerCase(Locale.ENGLISH);
@@ -675,8 +688,8 @@ public class TARDISAdminCommands implements CommandExecutor {
                     }
                     plugin.getConfig().set(first, Boolean.valueOf(tf));
                 }
-                //checks if its a number config option
-                if (firstsInt.contains(first)) {
+                // checks if its a number config option
+                if (firstsInt.contains(first) || firstsIntArtron.contains(first)) {
                     String a = args[1];
                     int val;
                     try {
@@ -686,7 +699,16 @@ public class TARDISAdminCommands implements CommandExecutor {
                         sender.sendMessage(plugin.pluginName + ChatColor.RED + " The last argument must be a number!");
                         return false;
                     }
-                    plugin.getConfig().set(first, val);
+                    if (firstsIntArtron.contains(first)) {
+                        plugin.getArtronConfig().set(first, val);
+                        try {
+                            plugin.getArtronConfig().save(new File(plugin.getDataFolder(), "artron.yml"));
+                        } catch (IOException io) {
+                            plugin.debug("Could not save artron.yml, " + io);
+                        }
+                    } else {
+                        plugin.getConfig().set(first, val);
+                    }
                 }
                 plugin.saveConfig();
                 sender.sendMessage(plugin.pluginName + "The config was updated!");
