@@ -255,6 +255,11 @@ public class TARDISDoorListener implements Listener {
                                     switch (doortype) {
                                         case 1:
                                         case 4:
+                                            // is the TARDIS materialising?
+                                            if (plugin.tardisMaterialising.contains(id) || plugin.tardisDematerialising.contains(id)) {
+                                                player.sendMessage(plugin.pluginName + "The TARDIS is still travelling... you would get lost in the time vortex!");
+                                                return;
+                                            }
                                             // player is in the TARDIS - always exit to current location
                                             Location exitLoc = plugin.utils.getLocationFromDB(current, yaw, pitch);
                                             if (rs.isHandbrake_on()) {
