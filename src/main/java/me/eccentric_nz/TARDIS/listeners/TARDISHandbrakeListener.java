@@ -187,8 +187,6 @@ public class TARDISHandbrakeListener implements Listener {
                                             if (!rs.isHidden()) {
                                                 plugin.tardisDematerialising.add(id);
                                                 plugin.destroyPB.destroyPoliceBox(l, d, id, false, plugin.getConfig().getBoolean("materialise"), cham, player);
-//                                                plugin.destroyPB.destroyTorch(l);
-//                                                plugin.destroyPB.destroySign(l, d);
                                             }
                                             long delay = (plugin.getConfig().getBoolean("materialise")) ? 200L : 1L;
                                             final Location e = exit;
@@ -202,6 +200,9 @@ public class TARDISHandbrakeListener implements Listener {
                                             Chunk oldChunk = l.getChunk();
                                             if (plugin.tardisChunkList.contains(oldChunk)) {
                                                 plugin.tardisChunkList.remove(oldChunk);
+                                            }
+                                            if (plugin.trackDamage.containsKey(id)) {
+                                                plugin.trackDamage.remove(id);
                                             }
                                             set.put("current", save);
                                             long now;
