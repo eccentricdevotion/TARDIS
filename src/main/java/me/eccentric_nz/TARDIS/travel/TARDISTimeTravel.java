@@ -78,7 +78,7 @@ public class TARDISTimeTravel {
      * travel to.
      * @return a random Location
      */
-    public Location randomDestination(Player p, byte rx, byte rz, byte ry, TARDISConstants.COMPASS d, String e) {
+    public Location randomDestination(Player p, byte rx, byte rz, byte ry, TARDISConstants.COMPASS d, String e, String this_world) {
         int startx, starty, startz, resetx, resetz, listlen, rw;
         World randworld = null;
         boolean danger = true;
@@ -93,27 +93,16 @@ public class TARDISTimeTravel {
         // get worlds
         Set<String> worldlist = plugin.getConfig().getConfigurationSection("worlds").getKeys(false);
         List<World> allowedWorlds = new ArrayList<World>();
-        if (e.equals("NORMAL:NETHER:THE_END")) {
-            for (String o : worldlist) {
-                if (plugin.getConfig().getBoolean("include_default_world") || !plugin.getConfig().getBoolean("default_world")) {
-                    if (plugin.getConfig().getBoolean("worlds." + o)) {
-                        allowedWorlds.add(plugin.getServer().getWorld(o));
-                    }
-                } else {
-                    if (!o.equals(plugin.getConfig().getString("default_world_name"))) {
-                        if (plugin.getConfig().getBoolean("worlds." + o)) {
-                            allowedWorlds.add(plugin.getServer().getWorld(o));
-                        }
-                    }
-                }
-            }
+
+        if (e.equals("THIS")) {
+            allowedWorlds.add(plugin.getServer().getWorld(this_world));
         } else {
-            List<String> envOptions = Arrays.asList(e.split(":"));
+            //List<String> envOptions = Arrays.asList(e.split(":"));
             for (String o : worldlist) {
                 World ww = plugin.getServer().getWorld(o);
                 if (ww != null) {
                     String env = ww.getEnvironment().toString();
-                    if (envOptions.contains(env)) {
+                    if (e.equalsIgnoreCase(env)) {
                         if (plugin.getConfig().getBoolean("include_default_world") || !plugin.getConfig().getBoolean("default_world")) {
                             if (plugin.getConfig().getBoolean("worlds." + o)) {
                                 allowedWorlds.add(plugin.getServer().getWorld(o));
@@ -125,6 +114,10 @@ public class TARDISTimeTravel {
                                 }
                             }
                         }
+                    }
+                    // remove the world the Police Box is in
+                    if (this_world != null && allowedWorlds.size() > 1 && allowedWorlds.contains(plugin.getServer().getWorld(this_world))) {
+                        allowedWorlds.remove(plugin.getServer().getWorld(this_world));
                     }
                 }
             }

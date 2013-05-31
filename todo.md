@@ -12,6 +12,7 @@
 3. Fast return switch
 4. Permission-based world creation - player's without permission use the default world, those with it get a TARDIS_WORLD
 5. Make the Police Box configurable via a schematic
+6. Architectural Reconfiguration System / Map room
 
 # Minecraft API when available `3.0?`
 1. Recreate everything with the new API :)

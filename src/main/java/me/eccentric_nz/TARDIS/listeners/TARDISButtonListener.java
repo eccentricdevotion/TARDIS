@@ -106,6 +106,7 @@ public class TARDISButtonListener implements Listener {
                                 return;
                             }
 
+                            String[] current = rs.getCurrent().split(":");
                             TARDISConstants.COMPASS dir = rs.getDirection();
 
                             QueryFactory qf = new QueryFactory(plugin);
@@ -129,40 +130,12 @@ public class TARDISButtonListener implements Listener {
                             } else {
                                 ResultSetRepeaters rsr = new ResultSetRepeaters(plugin, id, rsc.getSecondary());
                                 if (rsr.resultSet()) {
-                                    String environment = "NORMAL";
+                                    String environment = "THIS";
                                     int nether_min = plugin.getArtronConfig().getInt("nether_min");
                                     int the_end_min = plugin.getArtronConfig().getInt("the_end_min");
                                     byte[] repeaters = rsr.getRepeaters();
                                     if (repeaters[0] <= 3) { // first position
-                                        if (!plugin.getConfig().getBoolean("nether") && !plugin.getConfig().getBoolean("the_end")) {
-                                            environment = "NORMAL";
-                                        } else if (!plugin.getConfig().getBoolean("nether") || !plugin.getConfig().getBoolean("the_end")) {
-                                            if (plugin.getConfig().getBoolean("the_end") && player.hasPermission("tardis.end")) {
-                                                environment = (level >= the_end_min) ? "NORMAL:THE_END" : "NORMAL";
-                                            }
-                                            if (plugin.getConfig().getBoolean("nether") && player.hasPermission("tardis.nether")) {
-                                                environment = (level >= nether_min) ? "NORMAL:NETHER" : "NORMAL";
-                                            }
-                                        } else {
-                                            if (player.hasPermission("tardis.end") && player.hasPermission("tardis.nether")) {
-                                                // check they have enough artron energy to travel to the NETHER or THE_END
-                                                if (level < nether_min) {
-                                                    environment = "NORMAL";
-                                                } else if (level >= nether_min && level < the_end_min) {
-                                                    environment = "NORMAL:NETHER";
-                                                } else {
-                                                    environment = "NORMAL:NETHER:THE_END";
-                                                }
-                                            }
-                                            if (!player.hasPermission("tardis.end") && player.hasPermission("tardis.nether")) {
-                                                // check they have enough artron energy to travel to the NETHER
-                                                environment = (level >= nether_min) ? "NORMAL:NETHER" : "NORMAL";
-                                            }
-                                            if (player.hasPermission("tardis.end") && !player.hasPermission("tardis.nether")) {
-                                                // check they have enough artron energy to travel to THE_END
-                                                environment = (level >= the_end_min) ? "NORMAL:THE_END" : "NORMAL";
-                                            }
-                                        }
+                                        environment = "THIS";
                                     }
                                     if (repeaters[0] >= 4 && repeaters[0] <= 7) { // second position
                                         environment = "NORMAL";
@@ -197,7 +170,7 @@ public class TARDISButtonListener implements Listener {
                                     }
                                     // create a random destination
                                     TARDISTimeTravel tt = new TARDISTimeTravel(plugin);
-                                    Location rand = tt.randomDestination(player, repeaters[1], repeaters[2], repeaters[3], dir, environment);
+                                    Location rand = tt.randomDestination(player, repeaters[1], repeaters[2], repeaters[3], dir, environment, current[0]);
                                     if (rand != null) {
                                         String d = rand.getWorld().getName() + ":" + rand.getBlockX() + ":" + rand.getBlockY() + ":" + rand.getBlockZ();
                                         String dchat = rand.getWorld().getName() + " at x: " + rand.getBlockX() + " y: " + rand.getBlockY() + " z: " + rand.getBlockZ();

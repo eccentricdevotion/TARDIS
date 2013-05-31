@@ -75,13 +75,13 @@ public class TARDISMalfunction {
         byte x = (byte) 2;
         if (r > end) {
             // get random the_end location
-            l = tt.randomDestination(p, x, x, x, dir, "THE_END");
+            l = tt.randomDestination(p, x, x, x, dir, "THE_END", null);
         } else if (r > nether) {
             // get random nether location
-            l = tt.randomDestination(p, x, x, x, dir, "NETHER");
+            l = tt.randomDestination(p, x, x, x, dir, "NETHER", null);
         } else {
             // get random normal location
-            l = tt.randomDestination(p, x, x, x, dir, "NORMAL");
+            l = tt.randomDestination(p, x, x, x, dir, "NORMAL", null);
         }
         if (l != null) {
             doMalfunction(l);
