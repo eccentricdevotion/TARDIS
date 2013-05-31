@@ -4,7 +4,6 @@
 1. Add video for books / achievements
 2. Add docs for new features / perms / commands
 3. Add cloister bell SFX
-4. Change the behaviour of the World repeater, 1-tick: this world, 2-tick: other overworlds
 
 ## Next version `2.5+`
 1. Jettison the whole room (including walls), will require new room schematics...
