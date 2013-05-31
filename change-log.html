@@ -26,6 +26,83 @@
     <section>
         <h1>Change log</h1>
         <h2>What&rsquo;s been changed?</h2>
+        <h3>v2.4-beta-1</h3>
+        <h4>Additions</h4>
+        <ul>
+            <li>Added a config option to enable/disable the giving of spawn eggs when TARDIS mob farming</li>
+            <li>Added &lsquo;Emergency Program One&rsquo; &mdash; see: <a href="">https://vimeo.com/66056277</a>
+                <ul>
+                    <li>Emergency Program One appears after a malfunction, or when a Time Lord dies, and the autonomous function is enabled</li>
+                    <li>can be enabled/disabled in the config file &mdash; <code>emergency_npc: [true|false]</code></li>
+                    <li>can be turned off and on by the player &mdash; <code>/tardisprefs eps [on|off]</code></li>
+                    <li>players can set a custom NPC message &mdash; <code>/tardisprefs eps_message [message]</code></li>
+                    <li><strong>Requires</strong> the Citizens plugin!</li>
+                </ul>
+            </li>
+            <li>Added a permission for the <code>/tardisgravity</code> command &mdash; <code>tardis.gravity</code></li>
+            <li>Added two configurable gravity options: <code>gravity_max_distance</code> and <code>gravity_max_velocity</code></li>
+            <li>Added a TARDIS &lsquo;keyboard&rsquo; &mdash; see: <a href="">https://vimeo.com/66056277</a>
+                <ol>
+                    <li>Place a sign in the TARDIS control room</li>
+                    <li>Use the command <code>/tardis update keyboard</code>, then click the sign</li>
+                    <li>Right-click the &lsquo;keyboard&rsquo; with another sign</li>
+                    <li>Enter a save/area/player on the first line or coordinates (world,x,y,z) on four lines</li>
+                    <li>Click done and the destination will be set</li>
+                </ol>
+            </li>
+            <li>Added the ability to switch Texture Packs when entering/exiting the TARDIS &mdash; see: <a href="">https://vimeo.com/66056277</a>
+                <ul>
+                    <li><strong>Requires</strong> Server Textures be turned ON in Minecraft Options</li>
+                    <li>can be enabled/disabled in the config file &mdash; <code>allow_tp_switch: [true|false]</code></li>
+                    <li>change the texture pack preference: <code>/tardistexture [on|off]</code></li>
+                    <li>set the texture pack with: <code>/tardistexture [in|out] [url]</code> &mdash; where <code>in</code> is <em>inside</em> the TARDIS. <code>url</code> must be a valid internet link to the texture pack file e.g. <em>http://www.something.com/tp.zip</em></li>
+                </ul>
+            </li>
+            <li>Chameleon blocks are now configurable &mdash; edit the allowed block ID list (<code>chameleon_blocks</code>) in blocks.yml</li>
+            <li>Added Police Box de-materialisation :)</li>
+            <li>Added <code>/tardis secondary door</code> command to add an exit door to secondary control rooms</li>
+            <li>Added <code>/tardis rescue [player]</code> command &mdash; see: <a href="">https://vimeo.com/66633682</a>
+                <ul>
+                    <li>the player must accept the rescue attempt by typing <em>tardis rescue accept</em> in chat, and then stay in one spot</li>
+                    <li>the Police Box will materialise around the player and transport them inside the TARDIS</li>
+                </ul>
+            </li>
+            <li>Added basic support for PermissionsEx to the <code>add_perms</code> feature &mdash; TARDIS worlds will inherit the permissions from the main server world</li>
+            <li>Added &lsquo;Hostile Action Displacement System&rsquo; (HADS) &mdash; the Police Box will move itself if it takes damage &mdash; see: <a href="">https://vimeo.com/66992762</a>
+                <ul>
+                    <li>can be enabled/disabled in the config file &mdash; <code>allow_hads: [true|false]</code></li>
+                    <li>the displacement distance is configurable &mdash; <code>hads_distance [amount]</code></li>
+                    <li>the damage count is configurable &mdash; <code>hads_damage [amount]</code></li>
+                    <li>can be turned off and on by the player &mdash; <code>/tardisprefs hads [on|off]</code></li>
+                </ul>
+            </li>
+        </ul>
+        <h4>Changes</h4>
+        <ul>
+            <li>There are now separate config files for rooms, artron and blocks
+                <ul>
+                    <li><em>rooms.yml</em> has all the room settings</li>
+                    <li><em>artron.yml</em> has all the costs and items for travelling and energy</li>
+                    <li><em>blocks.yml</em> contains the lists of allowable blocks for the &lsquo;middle&rsquo; block and the chameleon circuit</li>
+                    <li>The old config is converted automatically</li>
+                </ul>
+            </li>
+            <li>The <code>/tardisgravity</code> command can only be used in a TARDIS world</li>
+            <li>The TARDIS console &lsquo;world-repeater&rsquo; now always travels within the <strong>current</strong> world when on the 1-tick setting &mdash; see this ticket: <a href="">http://dev.bukkit.org/bukkit-mods/tardis/tickets/171-world-repeater/</a></li>
+        </ul>
+        <h4>Fixes</h4>
+        <ul>
+            <li>Added jukebox and note block to the condensables list so the <em>bedroom</em> can be grown when <code>rooms_require_blocks</code> is true</li>
+            <li>Added wooden button to the condensables list so <em>secondary consoles</em> can be grown when <code>rooms_require_blocks</code> is true</li>
+            <li>Added vine to the condensables list so custom rooms requiring them can be grown when <code>rooms_require_blocks</code> is true</li>
+            <li>If a custom room uses WEB then the player needs to condense STRING when <code>rooms_require_blocks</code> is true</li>
+            <li>Fixed the <code>/tardis update repeater</code> command</li>
+            <li>Non-admins can no longer add TARDIS areas with the <code>/tardisarea</code> command</li>
+            <li>The default offset for the antigravity room is set properly when the plugin is started for the first time &mdash; the offset should be <code>0</code> &mdash; update you config if it is not!</li>
+            <li>TARDIS mob farming now remembers the animals age and colour</li>
+            <li>Saves made before config changes now respect those changes</li>
+            <li>Custom rooms can be grown if the player has <code>tardis.room</code> permission</li>
+        </ul>
         <h3>v2.3</h3>
         <ul>
             <li>If <code>rooms_require_blocks</code> was true and the <code>rooms_condenser_percentage</code> was low, there was a chance that you would be required to condense a zero amount of a block. The minimum will now always be at least 1.</li>
