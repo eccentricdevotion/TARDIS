@@ -29,6 +29,9 @@ import me.eccentric_nz.TARDIS.travel.TARDISPluginRespect;
 import me.eccentric_nz.TARDIS.travel.TARDISTimeTravel;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
+import org.bukkit.World;
+import org.bukkit.World.Environment;
+import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Player;
 
@@ -70,19 +73,26 @@ public class TARDISHostileDisplacement {
                     // randomise the direction
                     Collections.shuffle(angles);
                     for (Integer a : angles) {
-                        l.setX(l.getX() + r * Math.cos(a)); // x = cx + r * cos(a)
-                        l.setZ(l.getZ() + r * Math.sin(a)); // z = cz + r * sin(a)
-                        int y = l.getWorld().getHighestBlockAt(l).getY();
-                        l.setY(y);
+                        int wx = (int) (l.getX() + r * Math.cos(a)); // x = cx + r * cos(a)
+                        int wz = (int) (l.getZ() + r * Math.sin(a)); // z = cz + r * sin(a)
+                        l.setX(wx);
+                        l.setZ(wz);
                         boolean bool = true;
+                        int y;
+                        if (l.getWorld().getEnvironment().equals(Environment.NETHER)) {
+                            y = getHighestNetherBlock(l.getWorld(), wx, wz);
+                        } else {
+                            y = l.getWorld().getHighestBlockAt(l).getY();
+                        }
+                        l.setY(y);
                         if (l.getBlock().getRelative(BlockFace.DOWN).isLiquid() && !plugin.getConfig().getBoolean("land_on_water")) {
                             bool = false;
                         }
+                        final Player player = plugin.getServer().getPlayer(rsp.getPlayer());
                         if (bool) {
                             int[] start = tt.getStartLocation(l, d);
                             if (tt.safeLocation(start[0], y, start[2], start[1], start[3], l.getWorld(), d) < 1) {
                                 final Location fl = l;
-                                final Player player = plugin.getServer().getPlayer(rsp.getPlayer());
                                 TARDISPluginRespect pr = new TARDISPluginRespect(plugin);
                                 if (pr.getRespect(player, l, false)) {
                                     // move TARDIS
@@ -123,11 +133,32 @@ public class TARDISHostileDisplacement {
                                         hostile.sendMessage(plugin.pluginName + "HADS could not be engaged because the area is protected!");
                                     }
                                 }
+                            } else {
+                                //player.sendMessage(plugin.pluginName + "HADS could not be engaged! No safe location found.");
+                                plugin.trackDamage.remove(Integer.valueOf(id));
                             }
                         }
                     }
                 }
             }
         }
+    }
+
+    private int getHighestNetherBlock(World w, int wherex, int wherez) {
+        int y = 100;
+        Block startBlock = w.getBlockAt(wherex, y, wherez);
+        while (startBlock.getTypeId() != 0) {
+            startBlock = startBlock.getRelative(BlockFace.DOWN);
+        }
+        int air = 0;
+        while (startBlock.getTypeId() == 0 && startBlock.getLocation().getBlockY() > 30) {
+            startBlock = startBlock.getRelative(BlockFace.DOWN);
+            air++;
+        }
+        int id = startBlock.getTypeId();
+        if ((id == 87 || id == 88 || id == 89 || id == 112 || id == 113 || id == 114) && air >= 4) {
+            y = startBlock.getLocation().getBlockY() + 1;
+        }
+        return y;
     }
 }
