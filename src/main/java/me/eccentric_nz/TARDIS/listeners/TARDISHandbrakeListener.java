@@ -102,7 +102,7 @@ public class TARDISHandbrakeListener implements Listener {
                         String beacon = rs.getBeacon();
                         Location exit = null;
                         boolean error = false;
-                        if (!plugin.tardisMaterialising.contains(Integer.valueOf(id)) && !plugin.tardisDematerialising.contains(id)) {
+                        if (!plugin.tardisDematerialising.contains(Integer.valueOf(id)) && !plugin.tardisMaterialising.contains(id)) {
                             Action action = event.getAction();
                             BlockState state = block.getState();
                             Lever lever = (Lever) state.getData();
