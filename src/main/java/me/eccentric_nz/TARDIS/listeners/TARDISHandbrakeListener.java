@@ -75,7 +75,7 @@ public class TARDISHandbrakeListener implements Listener {
             Material blockType = block.getType();
             if (blockType == Material.LEVER) {
                 //Checks handbrake location against the database.
-                Location handbrake_loc = block.getLocation();
+                final Location handbrake_loc = block.getLocation();
                 World handbrake_locw = block.getWorld();
                 String hb_loc = block.getLocation().toString();
                 HashMap<String, Object> where = new HashMap<String, Object>();
@@ -166,16 +166,7 @@ public class TARDISHandbrakeListener implements Listener {
                                             // Sets database and sends the player/world message/sounds.
                                             set.put("handbrake_on", 0);
                                             player.sendMessage(plugin.pluginName + "Handbrake OFF! Entering the time vortex...");
-                                            if (plugin.pm.getPlugin("Spout") != null && SpoutManager.getPlayer(player).isSpoutCraftEnabled()) {
-                                                SpoutManager.getSoundManager().playGlobalCustomSoundEffect(plugin, "https://dl.dropboxusercontent.com/u/53758864/tardis_land.mp3", false, handbrake_loc, 20, 75);
-                                            } else {
-                                                try {
-                                                    Class.forName("org.bukkit.Sound");
-                                                    handbrake_locw.playSound(handbrake_loc, Sound.MINECART_INSIDE, 1, 0);
-                                                } catch (ClassNotFoundException e) {
-                                                    handbrake_locw.playEffect(handbrake_loc, Effect.BLAZE_SHOOT, 0);
-                                                }
-                                            }
+                                            playSound(handbrake_loc, player, "tardis_takeoff");
                                         }
                                         if (exit != null) {
                                             // Removes Blue Box and loads chunk if it unloaded somehow.
@@ -188,13 +179,14 @@ public class TARDISHandbrakeListener implements Listener {
                                                 plugin.tardisDematerialising.add(id);
                                                 plugin.destroyPB.destroyPoliceBox(l, d, id, false, plugin.getConfig().getBoolean("materialise"), cham, player);
                                             }
-                                            long delay = (plugin.getConfig().getBoolean("materialise")) ? 200L : 1L;
+                                            long delay = (plugin.getConfig().getBoolean("materialise")) ? ((plugin.pm.getPlugin("Spout") != null) ? 450L : 200L) : 1L;
                                             final Location e = exit;
                                             final boolean mal = malfunction;
                                             plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
                                                 @Override
                                                 public void run() {
                                                     plugin.buildPB.buildPoliceBox(id, e, d, cham, player, false, mal);
+                                                    playSound(handbrake_loc, player, "tardis_land");
                                                 }
                                             }, delay);
                                             Chunk oldChunk = l.getChunk();
@@ -297,5 +289,19 @@ public class TARDISHandbrakeListener implements Listener {
         Location bl = new Location(w, bx, by, bz);
         Block b = bl.getBlock();
         b.setTypeId((on) ? 20 : 7);
+    }
+
+    private void playSound(Location handbrake_loc, Player player, String sound) {
+        World handbrake_locw = handbrake_loc.getWorld();
+        if (plugin.pm.getPlugin("Spout") != null && SpoutManager.getPlayer(player).isSpoutCraftEnabled()) {
+            SpoutManager.getSoundManager().playGlobalCustomSoundEffect(plugin, "https://dl.dropboxusercontent.com/u/53758864/" + sound + ".mp3", false, handbrake_loc, 20, 75);
+        } else {
+            try {
+                Class.forName("org.bukkit.Sound");
+                handbrake_locw.playSound(handbrake_loc, Sound.MINECART_INSIDE, 1, 0);
+            } catch (ClassNotFoundException e) {
+                handbrake_locw.playEffect(handbrake_loc, Effect.BLAZE_SHOOT, 0);
+            }
+        }
     }
 }
