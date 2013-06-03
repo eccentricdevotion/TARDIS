@@ -383,6 +383,10 @@ public class TARDISMaterialisationRunnable implements Runnable {
                 plugin.tardisMaterialising.remove(Integer.valueOf(tid));
                 plugin.getServer().getScheduler().cancelTask(task);
                 task = 0;
+                // tardis has moved so remove HADS damage count
+                if (plugin.trackDamage.containsKey(Integer.valueOf(tid))) {
+                    plugin.trackDamage.remove(Integer.valueOf(tid));
+                }
                 // message travellers in tardis
                 HashMap<String, Object> where = new HashMap<String, Object>();
                 where.put("tardis_id", tid);
