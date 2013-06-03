@@ -332,7 +332,7 @@ public class TARDISBuilderInner {
                             postSaveBlock = world.getBlockAt(startx, starty, startz);
                         } else if (id == 19) {
                             int swap;
-                            if (world.getWorldType().equals(WorldType.FLAT) || own_world) {
+                            if (world.getWorldType().equals(WorldType.FLAT) || own_world || world.getName().equals("TARDIS_TimeVortex")) {
                                 swap = 0;
                             } else {
                                 swap = 1;
