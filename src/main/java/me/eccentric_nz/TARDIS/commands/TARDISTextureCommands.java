@@ -66,7 +66,7 @@ public class TARDISTextureCommands implements CommandExecutor {
                 sender.sendMessage(plugin.pluginName + ChatColor.RED + " This command can only be run by a player");
                 return false;
             }
-            if (player.hasPermission("tardis.texturepack")) {
+            if (player.hasPermission("tardis.texture")) {
                 // get the players preferences
                 String playerNameStr = player.getName();
                 HashMap<String, Object> wherepp = new HashMap<String, Object>();
