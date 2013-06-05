@@ -91,12 +91,16 @@ public class TARDISTextureCommands implements CommandExecutor {
                         return false;
                     }
                     try {
-                        new URL(args[1]);
+
                         if (pref.equals("in")) {
-                            upd.put("texture_in", args[1]);
+                            upd.put("texture_in", new URL(args[1]));
                         }
                         if (pref.equals("out")) {
-                            upd.put("texture_out", args[1]);
+                            if (args[1].equalsIgnoreCase("default")) {
+                                upd.put("texture_out", "default");
+                            } else {
+                                upd.put("texture_out", new URL(args[1]));
+                            }
                         }
                     } catch (MalformedURLException e) {
                         player.sendMessage(plugin.pluginName + "Not a valid URL! " + e.getMessage());
