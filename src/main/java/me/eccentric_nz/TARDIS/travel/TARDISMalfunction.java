@@ -24,6 +24,7 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.database.ResultSetLamps;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
+import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
@@ -109,7 +110,17 @@ public class TARDISMalfunction {
                 if (rsp.resultSet() && rsp.isEPS_on()) {
                     // schedule the NPC to appear
                     String message = "This is Emergency Programme One. Now listen, this is important. If this message is activated, then it can only mean one thing: we must be in danger, and I mean fatal. You're about to die any second with no chance of escape.";
-                    TARDISEPSRunnable EPS_runnable = new TARDISEPSRunnable(plugin, message, p, id);
+                    HashMap<String, Object> wherev = new HashMap<String, Object>();
+                    wherev.put("tardis_id", id);
+                    ResultSetTravellers rst = new ResultSetTravellers(plugin, wherev, true);
+                    List<String> players;
+                    if (rst.resultSet()) {
+                        players = rst.getData();
+                    } else {
+                        players = new ArrayList<String>();
+                        players.add(p.getName());
+                    }
+                    TARDISEPSRunnable EPS_runnable = new TARDISEPSRunnable(plugin, message, p, players, id);
                     plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, EPS_runnable, 220L);
                 }
             }

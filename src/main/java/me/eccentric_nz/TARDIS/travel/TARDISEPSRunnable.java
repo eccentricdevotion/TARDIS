@@ -17,6 +17,7 @@
 package me.eccentric_nz.TARDIS.travel;
 
 import java.util.HashMap;
+import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.ResultSetDoors;
 import net.citizensnpcs.api.CitizensAPI;
@@ -38,13 +39,15 @@ public class TARDISEPSRunnable implements Runnable {
 
     private TARDIS plugin;
     private String message;
-    private Player p;
+    private Player tl;
+    private List<String> players;
     private int id;
 
-    public TARDISEPSRunnable(TARDIS plugin, String message, Player p, int id) {
+    public TARDISEPSRunnable(TARDIS plugin, String message, Player tl, List<String> players, int id) {
         this.plugin = plugin;
         this.message = message;
-        this.p = p;
+        this.tl = tl;
+        this.players = players;
         this.id = id;
     }
 
@@ -52,19 +55,23 @@ public class TARDISEPSRunnable implements Runnable {
     public void run() {
         Location l = getSpawnLocation(id);
         if (l != null) {
-            l.setX(l.getX() + 0.5F);
-            l.setZ(l.getZ() + 1.5F);
-            // create NPC
-            NPCRegistry registry = CitizensAPI.getNPCRegistry();
-            NPC npc2 = registry.createNPC(EntityType.PLAYER, p.getName());
-            npc2.spawn(l);
-            int npcid = npc2.getId();
-            plugin.npcIDs.add(npcid);
-            p.sendMessage(ChatColor.RED + "[Emergency Program One] " + ChatColor.RESET + message);
-            p.sendMessage(ChatColor.RED + "[Emergency Program One] " + ChatColor.RESET + "Right-click me to make me go away.");
             try {
                 plugin.myspawn = true;
-                // set some behaviours
+                l.setX(l.getX() + 0.5F);
+                l.setZ(l.getZ() + 1.5F);
+                // create NPC
+                NPCRegistry registry = CitizensAPI.getNPCRegistry();
+                NPC npc2 = registry.createNPC(EntityType.PLAYER, tl.getName());
+                npc2.spawn(l);
+                int npcid = npc2.getId();
+                plugin.npcIDs.add(npcid);
+                for (String p : players) {
+                    Player pp = plugin.getServer().getPlayer(p);
+                    if (pp != null) {
+                        pp.sendMessage(ChatColor.RED + "[Emergency Program One] " + ChatColor.RESET + message);
+                        pp.sendMessage(ChatColor.RED + "[Emergency Program One] " + ChatColor.RESET + "Right-click me to make me go away.");
+                    }
+                }
             } catch (Exception e) {
                 plugin.debug(e);
             }
@@ -74,7 +81,7 @@ public class TARDISEPSRunnable implements Runnable {
     private Location getSpawnLocation(int id) {
         if (plugin.getConfig().getBoolean("create_worlds")) {
             // get world spawn location
-            return plugin.getServer().getWorld("TARDIS_WORLD_" + p.getName()).getSpawnLocation();
+            return plugin.getServer().getWorld("TARDIS_WORLD_" + tl.getName()).getSpawnLocation();
         } else {
             HashMap<String, Object> where = new HashMap<String, Object>();
             where.put("tardis_id", id);
