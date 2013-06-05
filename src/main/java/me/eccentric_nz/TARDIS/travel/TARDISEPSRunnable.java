@@ -74,7 +74,7 @@ public class TARDISEPSRunnable implements Runnable {
     private Location getSpawnLocation(int id) {
         if (plugin.getConfig().getBoolean("create_worlds")) {
             // get world spawn location
-            return plugin.getServer().getWorld("TARDIS_WORLD_" + p).getSpawnLocation();
+            return plugin.getServer().getWorld("TARDIS_WORLD_" + p.getName()).getSpawnLocation();
         } else {
             HashMap<String, Object> where = new HashMap<String, Object>();
             where.put("tardis_id", id);
