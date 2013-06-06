@@ -79,13 +79,28 @@
         <pre><code>all_blocks: [true|false]</code></pre>
         <p>The default is <code>false</code>.</p>
         <h2>Mob farming</h2>
-        <p>Whether you can bring farm animals into the TARDIS if they are captured in the Police Box.</p>
-        <pre><code>allow_mob_farming: [true|false]</code></pre>
-        <p>The default is <code>true</code>.</p>
+        <p>Whether you can bring farm animals into the TARDIS if they are captured in the Police Box, and whether spawn eggs are given if there is no &lsquo;farm&rsquo; room.</p>
+        <pre><code>allow_mob_farming: [true|false]
+spawn_eggs: [true|false]</code></pre>
+        <p>The defaults are <code>true</code>.</p>
+        <h2>Emergency Program One</h2>
+        <p>Whether Emergency Program One appears after a malfunction, or when a Time Lord dies (the autonomous function must be enabled).</p>
+        <pre><code>emergency_npc: [true|false]</code></pre>
+        <p>The default is are <code>true</code>.</p>
         <h2>Autonomous homing function</h2>
         <p>Whether players can use the autonomous homing function preference.</p>
         <pre><code>allow_autonomous: [true|false]</code></pre>
         <p>The default is <code>true</code>.</p>
+        <h2>HADS function</h2>
+        <p>Whether players can use the Hostile Action Displacement System.</p>
+        <pre><code>allow_hads: [true|false]</code></pre>
+        <p>The default is <code>true</code>.</p>
+        <p>How far away the HADS sends the Police Box.</p>
+        <pre><code>hads_distance: [blocks]</code></pre>
+        <p>The default is <code>10</code>.</p>
+        <p>How many hits the Police Box takes before HADS initiates.</p>
+        <pre><code>hads_damage: [hits]</code></pre>
+        <p>The default is <code>10</code>.</p>
         <h2>TARDIS deletion confirmation time</h2>
         <p>Set the time in seconds, that the delete TARDIS confimation command (<code>/tardis exterminate</code>) must be typed within.</p>
         <pre><code>confirm_timeout: [seconds]</code></pre>
@@ -95,6 +110,11 @@
         <pre><code>use_worldguard: [true|false]
 respect_worldguard: [true|false]</code></pre>
         <p>The default is <code>true</code>.</p>
+        <h2>Gravity</h2>
+        <p>Set limits for the <code>/tardisgravity</code> command.</p>
+        <pre><code>gravity_max_distance: [distance]
+gravity_max_velocity: [velocity]</code></pre>
+        <p>The defauls are <code>15</code> and <code>5</code>.</p>
         <h2>Towny</h2>
         <p>Whether travelling respects Towny regions (the TARDIS will only land in Wilderness)</p>
         <pre><code>respect_towny: [true|false]</code></pre>

@@ -25,8 +25,9 @@
         </ul>
     </header>
     <section>
-        <h1>Room configuration section</h1>
-        <p>The rooms configuration section sets the seed block and Artron Energy costs for growing rooms. Each room type has its own sub-section with two keys: the room <code>cost</code>, and the room <code>seed</code>.</p>
+        <h1>Room configuration</h1>
+        <p>These config options are found in the file: <code>rooms.yml</code></p>
+        <p>The rooms configuration sets the seed block and Artron Energy costs for growing rooms. Each room type has its own sub-section with two keys: the room <code>cost</code>, and the room <code>seed</code>.</p>
         <p>The format is:</p>
         <pre><code>rooms:
    [ROOMTYPE]:
@@ -158,6 +159,7 @@
             </tr>
         </table>
         <h2>Room jettisons</h2>
+        <p><strong>NB:</strong> These config options are found in the file: <code>artron.yml</code></p>
         <p>Set the percentage of energy the TARDIS gets back when a room is jettisoned.</p>
         <pre><code>jettison: [percentage]</code></pre>
         <p>The default is <code>75</code>.</p>
@@ -165,6 +167,7 @@
         <pre><code>jettison_seed: [material]</code></pre>
         <p>The default is <code>TNT</code>.</p>
         <h2>Rooms require blocks</h2>
+        <p><strong>NB:</strong> These config options are found in the file: <code>config.yml</code></p>
         <p>Set whether growing a room requires the player to have collected and condensed the materials required to grow the room. For more information see the <a href="rooms-and-economies.html">Rooms and server economies page</a>.</p>
         <pre><code>rooms_require_blocks: [true|false]</code></pre>
         <p>The default is <code>false</code>.</p>
