@@ -35,12 +35,7 @@
             <blockquote>
                 <p><code style="color:#900;">Your travel has been restricted to the [] area!</code></p>
             </blockquote>
-            <p>Then your permissions setup is not working properly and you will need to remove the <code>tardis.exile</code> permission node (how you do this depends on which permissions plugin you are using).</p>
-            <p>Try setting (PermissionsBukkit)</p>
-            <p><code>tardis.exile: false</code></p>
-            <p>or (Essentials GroupManager/PEX)</p>
-            <p><code>- -tardis.exile</code></p>
-            <p>As recommended by PEX, do not use <code>'*'</code> !</p>
+            <p>Update the plugin!</p>
         </blockquote>
         <h2>Setting permissions for TARDIS worlds</h2>
         <p>To automatically set permissions for TARDIS worlds when they are created go read the <a href="add-permissions.html">Add permissions page</a>.</p>
@@ -60,15 +55,17 @@ tardis.find
 tardis.update
 tardis.rebuild
 tardis.help
-tardis.book</code></pre>
+tardis.book
+tardis.gravity
+tardis.texture</code></pre>
         <h2>TARDIS build sizes</h2>
-        <p>In order to be able to create a &lsquo;bigger&rsquo;, &lsquo;deluxe&rsquo; or &lsquo;eleventh&rsquo; TARDIS, players will need:</p>
+        <p>In order to be able to create a &lsquo;bigger&rsquo;, &lsquo;deluxe&rsquo;, &lsquo;eleventh&rsquo; or &lsquo;redstone&rsquo; TARDIS, players will need:</p>
         <pre><code>tardis.bigger
 tardis.deluxe
 tardis.eleventh
 tardis.redstone</code></pre>
         <h2>TARDIS rooms</h2>
-        <p>To allow players to grow new TARDIS rooms, they will need the permission for each room type. To be able to grow all room types, use:</p>
+        <p>To allow players to grow new TARDIS rooms, they will need the permission for each room type. To be able to grow all room types (including custom ones), use:</p>
         <pre><code>tardis.room</code></pre>
         <p>Otherwise there are individual nodes for for each room:</p>
         <pre><code>tardis.room.antigravity
@@ -89,8 +86,7 @@ tardis.room.passage
 tardis.room.pool
 tardis.room.vault
 tardis.room.wood
-tardis.room.workshop
-      </code></pre>
+tardis.room.workshop</code></pre>
         <h2>Time travel</h2>
         <p>There are a couple of time travel specific nodes:</p>
         <p>Allow travel to player locations</p>
@@ -113,9 +109,18 @@ tardis.room.workshop
         <h2>TARDIS mob farming</h2>
         <p>To allow players to farm mobs:</p>
         <pre><code>tardis.farm</code></pre>
+        <h2>TARDIS back doors</h2>
+        <p>To allow players to to add a TARDIS back door:</p>
+        <pre><code>tardis.backdoor</code></pre>
         <h2>TARDIS books and achievements</h2>
         <p>To allow players to get books and gain achievements:</p>
         <pre><code>tardis.book</code></pre>
+        <h2>TARDIS texture pack switching</h2>
+        <p>To allow players to use the <code>/tardistexture</code> command and switch texture packs when entering/exiting the TARDIS:</p>
+        <pre><code>tardis.texture</code></pre>
+        <h2>TARDIS gravity wells</h2>
+        <p>To allow players to use the <code>/tardisgravity</code> command:</p>
+        <pre><code>tardis.gravity</code></pre>
         <h2>TARDIS areas</h2>
         <p>To allow access to TARDIS areas, users/groups must be given the permission:</p>
         <pre><code>tardis.area.[name_of_area]</code></pre>
