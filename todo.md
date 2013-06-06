@@ -1,6 +1,6 @@
 # TODO
 
-## Current version `2.4-beta`
+## Current version `2.4-beta-2`
 1. Add video for books / achievements
 2. Add docs for new features / perms / commands
 3. Add cloister bell SFX
@@ -12,6 +12,9 @@
 4. Permission-based world creation - player's without permission use the default world, those with it get a TARDIS_WORLD
 5. Make the Police Box configurable via a schematic
 6. Architectural Reconfiguration System / Map room
+7. Chameleon disable
+8. Add new Minecraft 1.6 items and blocks
+9. Add sounds with Resource packs?
 
 # Minecraft API when available `3.0?`
 1. Recreate everything with the new API :)

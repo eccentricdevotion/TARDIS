@@ -145,7 +145,6 @@ public class TARDISAdminCommands implements CommandExecutor {
         firstsInt.add("gravity_max_velocity");
         firstsInt.add("hads_damage");
         firstsInt.add("hads_distance");
-        firstsInt.add("hide");
         firstsInt.add("malfunction");
         firstsInt.add("malfunction_end");
         firstsInt.add("malfunction_nether");
@@ -159,6 +158,7 @@ public class TARDISAdminCommands implements CommandExecutor {
         firstsIntArtron.add("comehere");
         firstsIntArtron.add("creeper_recharge");
         firstsIntArtron.add("full_charge");
+        firstsIntArtron.add("hide");
         firstsIntArtron.add("jettison");
         firstsIntArtron.add("lightning_recharge");
         firstsIntArtron.add("nether_min");
