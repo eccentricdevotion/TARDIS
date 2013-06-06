@@ -648,18 +648,15 @@ public class TARDISCommands implements CommandExecutor {
                             set.put("save", comehere);
                             set.put("current", comehere);
                             qf.doUpdate("tardis", set, tid);
-                            // how many travellers are in the TARDIS?
                             sender.sendMessage(plugin.pluginName + "The TARDIS is coming...");
-                            long delay = (plugin.getConfig().getBoolean("materialise")) ? 1L : 180L;
+                            final boolean mat = plugin.getConfig().getBoolean("materialise");
+                            long delay = (mat) ? 1L : 180L;
                             Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
                                 @Override
                                 public void run() {
                                     if (!rs.isHidden()) {
                                         plugin.tardisDematerialising.add(id);
-                                        plugin.destroyPB.destroyPoliceBox(oldSave, d, id, false, plugin.getConfig().getBoolean("materialise"), cham, p);
-//                                        plugin.destroyPB.destroyPlatform(rs.getPlatform(), id);
-//                                        plugin.destroyPB.destroySign(oldSave, d);
-//                                        plugin.destroyPB.destroyTorch(oldSave);
+                                        plugin.destroyPB.destroyPoliceBox(oldSave, d, id, false, mat, cham, p);
                                     }
                                 }
                             }, delay);
