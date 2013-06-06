@@ -105,12 +105,13 @@ public class TARDISHostileDisplacement {
                                     set.put("current", hads);
                                     qf.doUpdate("tardis", set, tid);
                                     plugin.trackDamage.remove(Integer.valueOf(id));
-                                    long delay = (plugin.getConfig().getBoolean("materialise")) ? 1L : 180L;
+                                    final boolean mat = plugin.getConfig().getBoolean("materialise");
+                                    long delay = (mat) ? 1L : 180L;
                                     plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
                                         @Override
                                         public void run() {
                                             plugin.tardisDematerialising.add(id);
-                                            plugin.destroyPB.destroyPoliceBox(loc, d, id, false, plugin.getConfig().getBoolean("materialise"), cham, player);
+                                            plugin.destroyPB.destroyPoliceBox(loc, d, id, false, mat, cham, player);
                                         }
                                     }, delay);
                                     plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {

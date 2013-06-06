@@ -922,11 +922,6 @@ public class TARDISCommands implements CommandExecutor {
                                 player.sendMessage(plugin.pluginName + ChatColor.RED + "The TARDIS does not have enough Artron Energy to hide!");
                                 return false;
                             }
-//                            // remove torch
-//                            plugin.destroyPB.destroyTorch(l);
-//                            // remove sign
-//                            plugin.destroyPB.destroySign(l, d);
-                            // remove blue box
                             plugin.destroyPB.destroyPoliceBox(l, d, id, true, false, false, null);
                             sender.sendMessage(plugin.pluginName + "The TARDIS Police Box was hidden! Use " + ChatColor.GREEN + "/tardis rebuild" + ChatColor.RESET + " to show it again.");
                             qf.alterEnergyLevel("tardis", -hide, wheret, player);

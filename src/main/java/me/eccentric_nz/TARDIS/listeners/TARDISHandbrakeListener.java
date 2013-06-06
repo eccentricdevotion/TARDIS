@@ -175,11 +175,12 @@ public class TARDISHandbrakeListener implements Listener {
                                             }
                                             exit.getWorld().refreshChunk(exit.getChunk().getX(), exit.getChunk().getZ());
                                             Location l = plugin.utils.getLocationFromDB(cl, 0, 0);
+                                            boolean mat = plugin.getConfig().getBoolean("materialise");
                                             if (!rs.isHidden()) {
                                                 plugin.tardisDematerialising.add(id);
-                                                plugin.destroyPB.destroyPoliceBox(l, d, id, false, plugin.getConfig().getBoolean("materialise"), cham, player);
+                                                plugin.destroyPB.destroyPoliceBox(l, d, id, false, mat, cham, player);
                                             }
-                                            long delay = (plugin.getConfig().getBoolean("materialise")) ? ((plugin.pm.getPlugin("Spout") != null) ? 450L : 200L) : 1L;
+                                            long delay = (mat) ? ((plugin.pm.getPlugin("Spout") != null) ? 450L : 200L) : 1L;
                                             final Location e = exit;
                                             final boolean mal = malfunction;
                                             plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
