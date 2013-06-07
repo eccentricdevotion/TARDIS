@@ -64,6 +64,7 @@ public class TARDISConfiguration {
         // boolean
         boolOptions.put("add_perms", true);
         boolOptions.put("all_blocks", false);
+        boolOptions.put("allow_achievements", true);
         boolOptions.put("allow_autonomous", true);
         boolOptions.put("allow_hads", true);
         boolOptions.put("allow_mob_farming", true);

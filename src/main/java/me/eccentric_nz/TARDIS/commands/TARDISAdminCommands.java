@@ -106,6 +106,7 @@ public class TARDISAdminCommands implements CommandExecutor {
         // boolean
         firstsBool.add("add_perms");
         firstsBool.add("all_blocks");
+        firstsBool.add("allow_achievements");
         firstsBool.add("allow_autonomous");
         firstsBool.add("allow_hads");
         firstsBool.add("allow_mob_farming");

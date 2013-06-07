@@ -40,8 +40,10 @@ inventory_group: 0
 add_perms: true
 allow_mob_farming: true
 spawn_eggs: true
+allow_achievements: true
 allow_autonomous: true
 allow_hads: true
+allow_tp_switch: true
 hads_damage: 10
 hads_distance: 10
 malfunction: 3
