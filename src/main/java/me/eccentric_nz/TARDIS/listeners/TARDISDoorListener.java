@@ -666,7 +666,7 @@ public class TARDISDoorListener implements Listener {
             int cx = plugin.utils.parseNum(split[1]);
             int cy = plugin.utils.parseNum(split[2]);
             int cz = plugin.utils.parseNum(split[3]);
-            Location tmp_loc = cw.getBlockAt(cx, cy, cz).getLocation();
+            Location tmp_loc = new Location(cw, cx, cy, cz);
             int getx = tmp_loc.getBlockX();
             int getz = tmp_loc.getBlockZ();
             switch (d) {

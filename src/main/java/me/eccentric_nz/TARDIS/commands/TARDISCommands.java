@@ -135,7 +135,7 @@ public class TARDISCommands implements CommandExecutor {
     }
 
     @Override
-    public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
+    public boolean onCommand(final CommandSender sender, Command cmd, String label, String[] args) {
         // If the player typed /tardis then do the following...
         // check there is the right number of arguments
         if (cmd.getName().equalsIgnoreCase("tardis")) {
@@ -337,9 +337,12 @@ public class TARDISCommands implements CommandExecutor {
                         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
                             @Override
                             public void run() {
-                                plugin.trackChat.remove(saved);
+                                if (plugin.trackChat.containsKey(saved)) {
+                                    plugin.trackChat.remove(saved);
+                                    sender.sendMessage(plugin.pluginName + saved + " didn't respond with 60 seconds, aborting rescue!");
+                                }
                             }
-                        }, 600L);
+                        }, 1200L);
                     } else {
                         player.sendMessage(plugin.pluginName + "You do not have permission to time travel to a player!");
                         return true;
