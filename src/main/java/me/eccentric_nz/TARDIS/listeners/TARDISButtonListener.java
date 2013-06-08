@@ -208,6 +208,9 @@ public class TARDISButtonListener implements Listener {
                                         wherel.put("tardis_id", id);
                                         qf.doUpdate("tardis", set, wherel);
                                         plugin.tardisHasDestination.put(id, plugin.getArtronConfig().getInt("random"));
+                                        if (plugin.trackRescue.containsKey(Integer.valueOf(id))) {
+                                            plugin.trackRescue.remove(Integer.valueOf(id));
+                                        }
                                     } else {
                                         player.sendMessage(plugin.pluginName + "Could not find a suitable location within the current settings, the area may be protected.");
                                     }

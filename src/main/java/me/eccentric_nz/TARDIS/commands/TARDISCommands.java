@@ -674,6 +674,9 @@ public class TARDISCommands implements CommandExecutor {
                             wheret.put("tardis_id", id);
                             qf.alterEnergyLevel("tardis", -ch, wheret, player);
                             plugin.tardisHasDestination.remove(id);
+                            if (plugin.trackRescue.containsKey(Integer.valueOf(id))) {
+                                plugin.trackRescue.remove(Integer.valueOf(id));
+                            }
                             return true;
                         } else {
                             sender.sendMessage(plugin.pluginName + "Could not get the previous location of the TARDIS!");

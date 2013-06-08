@@ -140,6 +140,9 @@ public class TARDISSignListener implements Listener {
                                 sid.put("tardis_id", id);
                                 qf.doUpdate("tardis", sets, sid);
                                 plugin.tardisHasDestination.put(id, plugin.getArtronConfig().getInt("travel"));
+                                if (plugin.trackRescue.containsKey(Integer.valueOf(id))) {
+                                    plugin.trackRescue.remove(Integer.valueOf(id));
+                                }
                                 player.sendMessage(plugin.pluginName + "Exit location set to " + s.getLine(1));
                             }
                             if (event.getAction().equals(Action.RIGHT_CLICK_BLOCK) && !player.isSneaking()) {

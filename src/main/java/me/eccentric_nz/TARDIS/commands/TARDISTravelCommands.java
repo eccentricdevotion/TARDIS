@@ -124,6 +124,9 @@ public class TARDISTravelCommands implements CommandExecutor {
                     qf.doUpdate("tardis", set, tid);
                     player.sendMessage(plugin.pluginName + "Your TARDIS was approved for parking in [" + permArea + "]!");
                     plugin.tardisHasDestination.put(id, travel);
+                    if (plugin.trackRescue.containsKey(Integer.valueOf(id))) {
+                        plugin.trackRescue.remove(Integer.valueOf(id));
+                    }
                     return true;
                 } else {
                     if (args.length == 1) {
@@ -133,6 +136,9 @@ public class TARDISTravelCommands implements CommandExecutor {
                             qf.doUpdate("tardis", set, tid);
                             sender.sendMessage(plugin.pluginName + "Home location loaded succesfully. Please release the handbrake!");
                             plugin.tardisHasDestination.put(id, travel);
+                            if (plugin.trackRescue.containsKey(Integer.valueOf(id))) {
+                                plugin.trackRescue.remove(Integer.valueOf(id));
+                            }
                             return true;
                         } else {
                             if (player.hasPermission("tardis.timetravel.player")) {
@@ -142,42 +148,6 @@ public class TARDISTravelCommands implements CommandExecutor {
                                 player.sendMessage(plugin.pluginName + "You do not have permission to time travel to a player!");
                                 return true;
                             }
-//                            if (player.hasPermission("tardis.timetravel.player")) {
-//                                if (plugin.getServer().getPlayer(args[0]) == null) {
-//                                    sender.sendMessage(plugin.pluginName + "That player is not online!");
-//                                    return true;
-//                                }
-//                                Player destPlayer = plugin.getServer().getPlayer(args[0]);
-//                                Location player_loc = destPlayer.getLocation();
-//                                if (!plugin.ta.areaCheckInExisting(player_loc)) {
-//                                    sender.sendMessage(plugin.pluginName + "The player is in a TARDIS area! Please use " + ChatColor.AQUA + "/tardistravel area [area name]");
-//                                    return true;
-//                                }
-//                                World w = player_loc.getWorld();
-//                                int[] start_loc = tt.getStartLocation(player_loc, d);
-//                                int count = tt.safeLocation(start_loc[0] - 3, player_loc.getBlockY(), start_loc[2], start_loc[1] - 3, start_loc[3], w, d);
-//                                if (count > 0) {
-//                                    sender.sendMessage(plugin.pluginName + "The player's location would not be safe! Please tell the player to move!");
-//                                    return true;
-//                                }
-//                                respect = new TARDISPluginRespect(plugin);
-//                                if (!respect.getRespect(player, player_loc, true)) {
-//                                    return true;
-//                                }
-//                                if (!plugin.getConfig().getBoolean("worlds." + player_loc.getWorld().getName())) {
-//                                    sender.sendMessage(plugin.pluginName + "The server does not allow time travel to this world!");
-//                                    return true;
-//                                }
-//                                String save_loc = player_loc.getWorld().getName() + ":" + (player_loc.getBlockX() - 3) + ":" + player_loc.getBlockY() + ":" + player_loc.getBlockZ();
-//                                set.put("save", save_loc);
-//                                qf.doUpdate("tardis", set, tid);
-//                                sender.sendMessage(plugin.pluginName + "The player location was saved succesfully. Please release the handbrake!");
-//                                plugin.tardisHasDestination.put(id, travel);
-//                                return true;
-//                            } else {
-//                                sender.sendMessage(plugin.pluginName + "You do not have permission to time travel to a player!");
-//                                return true;
-//                            }
                         }
                     }
                     if (args.length == 2 && args[0].equalsIgnoreCase("dest")) {
@@ -215,6 +185,9 @@ public class TARDISTravelCommands implements CommandExecutor {
                             qf.doUpdate("tardis", set, tid);
                             sender.sendMessage(plugin.pluginName + "The specified location was set succesfully. Please release the handbrake!");
                             plugin.tardisHasDestination.put(id, travel);
+                            if (plugin.trackRescue.containsKey(Integer.valueOf(id))) {
+                                plugin.trackRescue.remove(Integer.valueOf(id));
+                            }
                             return true;
                         } else {
                             sender.sendMessage(plugin.pluginName + "Could not get the world for this save!");
@@ -244,6 +217,9 @@ public class TARDISTravelCommands implements CommandExecutor {
                         qf.doUpdate("tardis", set, tid);
                         sender.sendMessage(plugin.pluginName + "Your TARDIS was approved for parking in [" + args[1] + "]!");
                         plugin.tardisHasDestination.put(id, travel);
+                        if (plugin.trackRescue.containsKey(Integer.valueOf(id))) {
+                            plugin.trackRescue.remove(Integer.valueOf(id));
+                        }
                         return true;
                     }
                     if (args.length > 2 && args.length < 4) {
@@ -291,6 +267,9 @@ public class TARDISTravelCommands implements CommandExecutor {
                             qf.doUpdate("tardis", set, tid);
                             sender.sendMessage(plugin.pluginName + "The specified location was saved succesfully. Please release the handbrake!");
                             plugin.tardisHasDestination.put(id, travel);
+                            if (plugin.trackRescue.containsKey(Integer.valueOf(id))) {
+                                plugin.trackRescue.remove(Integer.valueOf(id));
+                            }
                             return true;
                         }
                     } else {
