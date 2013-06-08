@@ -48,6 +48,8 @@ public class TARDISChatListener implements Listener {
                 rescuer.sendMessage(plugin.pluginName + "Release the handbrake to start rescuing " + saved);
                 plugin.trackChat.remove(saved);
             }
+        } else {
+            event.getPlayer().sendMessage(plugin.pluginName + "Rescue request timed out! You need to respond within 60 seconds.");
         }
     }
 }
