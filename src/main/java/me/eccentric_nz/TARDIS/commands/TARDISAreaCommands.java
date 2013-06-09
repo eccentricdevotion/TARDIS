@@ -16,8 +16,11 @@
  */
 package me.eccentric_nz.TARDIS.commands;
 
+import com.google.common.collect.ImmutableList;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
+import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetAreas;
@@ -28,7 +31,9 @@ import org.bukkit.block.BlockFace;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
+import org.bukkit.util.StringUtil;
 
 /**
  * Command /tardisarea [arguments].
@@ -39,9 +44,10 @@ import org.bukkit.entity.Player;
  *
  * @author eccentric_nz
  */
-public class TARDISAreaCommands implements CommandExecutor {
+public class TARDISAreaCommands implements CommandExecutor, TabCompleter {
 
     private TARDIS plugin;
+    private final ImmutableList<String> ROOT_SUBS = ImmutableList.of("start", "end", "remove", "show");
 
     public TARDISAreaCommands(TARDIS plugin) {
         this.plugin = plugin;
@@ -146,5 +152,17 @@ public class TARDISAreaCommands implements CommandExecutor {
             }
         }
         return false;
+    }
+
+    @Override
+    public List<String> onTabComplete(CommandSender sender, Command command, String label, String[] args) {
+        if (args.length <= 1) {
+            return partial(args[0], ROOT_SUBS);
+        }
+        return ImmutableList.of();
+    }
+
+    private List<String> partial(String token, Collection<String> from) {
+        return StringUtil.copyPartialMatches(token, from, new ArrayList<String>(from.size()));
     }
 }

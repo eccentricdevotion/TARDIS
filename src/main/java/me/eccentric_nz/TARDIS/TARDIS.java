@@ -32,7 +32,9 @@ import me.eccentric_nz.TARDIS.commands.TARDISBookCommands;
 import me.eccentric_nz.TARDIS.commands.TARDISCommands;
 import me.eccentric_nz.TARDIS.commands.TARDISGravityCommands;
 import me.eccentric_nz.TARDIS.commands.TARDISPrefsCommands;
+import me.eccentric_nz.TARDIS.commands.TARDISPrefsTabComplete;
 import me.eccentric_nz.TARDIS.commands.TARDISRoomCommands;
+import me.eccentric_nz.TARDIS.commands.TARDISTabComplete;
 import me.eccentric_nz.TARDIS.commands.TARDISTextureCommands;
 import me.eccentric_nz.TARDIS.commands.TARDISTravelCommands;
 import me.eccentric_nz.TARDIS.database.TARDISControlsConverter;
@@ -337,15 +339,29 @@ public class TARDIS extends JavaPlugin {
     private void loadCommands() {
         tardisCommand = new TARDISCommands(this);
         getCommand("tardis").setExecutor(tardisCommand);
-        getCommand("tardisadmin").setExecutor(new TARDISAdminCommands(this));
+        getCommand("tardis").setTabCompleter(new TARDISTabComplete(this));
+        TARDISAdminCommands dc = new TARDISAdminCommands(this);
+        getCommand("tardisadmin").setExecutor(dc);
+        getCommand("tardisadmin").setTabCompleter(dc);
         getCommand("tardisprefs").setExecutor(new TARDISPrefsCommands(this));
-        getCommand("tardistravel").setExecutor(new TARDISTravelCommands(this));
-        getCommand("tardisarea").setExecutor(new TARDISAreaCommands(this));
-        getCommand("tardisbind").setExecutor(new TARDISBindCommands(this));
-        getCommand("tardisgravity").setExecutor(new TARDISGravityCommands(this));
+        getCommand("tardisprefs").setTabCompleter(new TARDISPrefsTabComplete(this));
+        TARDISTravelCommands tc = new TARDISTravelCommands(this);
+        getCommand("tardistravel").setExecutor(tc);
+        getCommand("tardistravel").setTabCompleter(tc);
+        TARDISAreaCommands ac = new TARDISAreaCommands(this);
+        getCommand("tardisarea").setExecutor(ac);
+        getCommand("tardisarea").setTabCompleter(ac);
+        TARDISBindCommands bc = new TARDISBindCommands(this);
+        getCommand("tardisbind").setExecutor(bc);
+        getCommand("tardisbind").setTabCompleter(bc);
+        TARDISGravityCommands gc = new TARDISGravityCommands(this);
+        getCommand("tardisgravity").setExecutor(gc);
+        getCommand("tardisgravity").setTabCompleter(gc);
         getCommand("tardisroom").setExecutor(new TARDISRoomCommands(this));
         getCommand("tardisbook").setExecutor(new TARDISBookCommands(this));
-        getCommand("tardistexture").setExecutor(new TARDISTextureCommands(this));
+        TARDISTextureCommands tt = new TARDISTextureCommands(this);
+        getCommand("tardistexture").setExecutor(tt);
+        getCommand("tardistexture").setTabCompleter(tt);
     }
 
     /**

@@ -16,12 +16,14 @@
  */
 package me.eccentric_nz.TARDIS.commands;
 
+import com.google.common.collect.ImmutableList;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -55,7 +57,9 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
+import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
+import org.bukkit.util.StringUtil;
 
 /**
  * Command /tardisadmin [arguments].
@@ -68,7 +72,7 @@ import org.bukkit.entity.Player;
  *
  * @author eccentric_nz
  */
-public class TARDISAdminCommands implements CommandExecutor {
+public class TARDISAdminCommands implements CommandExecutor, TabCompleter {
 
     private TARDIS plugin;
     private List<String> firstsStr = new ArrayList<String>();
@@ -584,8 +588,6 @@ public class TARDISAdminCommands implements CommandExecutor {
                             plugin.destroyI.destroyInner(schm, id, cw, restore, args[1]);
                         }
                         if (!rs.isHidden()) {
-//                            plugin.destroyPB.destroyTorch(bb_loc);
-//                            plugin.destroyPB.destroySign(bb_loc, d);
                             plugin.destroyPB.destroyPoliceBox(bb_loc, d, id, false, false, false, null);
                         }
                         // delete the TARDIS from the db
@@ -721,5 +723,28 @@ public class TARDISAdminCommands implements CommandExecutor {
             }
         }
         return false;
+    }
+
+    @Override
+    public List<String> onTabComplete(CommandSender sender, Command command, String label, String[] args) {
+
+        if (args.length <= 1) {
+            return partial(args[0], combineLists());
+        }
+        return ImmutableList.of();
+    }
+
+    private List<String> partial(String token, Collection<String> from) {
+        return StringUtil.copyPartialMatches(token, from, new ArrayList<String>(from.size()));
+    }
+
+    private List<String> combineLists() {
+        List<String> newList = new ArrayList<String>(firstsStr.size() + firstsBool.size() + firstsInt.size() + firstsStrArtron.size() + firstsIntArtron.size());
+        newList.addAll(firstsStr);
+        newList.addAll(firstsBool);
+        newList.addAll(firstsInt);
+        newList.addAll(firstsStrArtron);
+        newList.addAll(firstsIntArtron);
+        return newList;
     }
 }

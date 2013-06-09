@@ -16,12 +16,13 @@
  */
 package me.eccentric_nz.TARDIS.commands;
 
+import com.google.common.collect.ImmutableList;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
 import me.eccentric_nz.tardischunkgenerator.TARDISChunkGenerator;
 import org.bukkit.ChatColor;
 import org.bukkit.World;
@@ -29,8 +30,10 @@ import org.bukkit.WorldType;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
 import org.bukkit.generator.ChunkGenerator;
+import org.bukkit.util.StringUtil;
 
 /**
  * Command /tardisgravity [arguments].
@@ -41,11 +44,12 @@ import org.bukkit.generator.ChunkGenerator;
  *
  * @author eccentric_nz
  */
-public class TARDISGravityCommands implements CommandExecutor {
+public class TARDISGravityCommands implements CommandExecutor, TabCompleter {
 
     private TARDIS plugin;
     private List<String> directions = new ArrayList<String>();
     private HashMap<String, Double> gravityDirection = new HashMap<String, Double>();
+    private final ImmutableList<String> ROOT_SUBS;
 
     public TARDISGravityCommands(TARDIS plugin) {
         this.plugin = plugin;
@@ -56,6 +60,7 @@ public class TARDISGravityCommands implements CommandExecutor {
         directions.add("south");
         directions.add("east");
         directions.add("remove");
+        ROOT_SUBS = ImmutableList.copyOf(directions);
         gravityDirection.put("down", 0D);
         gravityDirection.put("up", 1D);
         gravityDirection.put("north", 2D);
@@ -131,5 +136,17 @@ public class TARDISGravityCommands implements CommandExecutor {
             }
         }
         return false;
+    }
+
+    @Override
+    public List<String> onTabComplete(CommandSender sender, Command command, String label, String[] args) {
+        if (args.length <= 1) {
+            return partial(args[0], ROOT_SUBS);
+        }
+        return ImmutableList.of();
+    }
+
+    private List<String> partial(String token, Collection<String> from) {
+        return StringUtil.copyPartialMatches(token, from, new ArrayList<String>(from.size()));
     }
 }

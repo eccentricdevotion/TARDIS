@@ -44,7 +44,6 @@ import me.eccentric_nz.TARDIS.rooms.TARDISCondenserData;
 import me.eccentric_nz.TARDIS.rooms.TARDISWalls;
 import me.eccentric_nz.TARDIS.thirdparty.Version;
 import me.eccentric_nz.TARDIS.travel.TARDISPluginRespect;
-import me.eccentric_nz.TARDIS.travel.TARDISRescue;
 import me.eccentric_nz.TARDIS.travel.TARDISTimeTravel;
 import me.eccentric_nz.TARDIS.utility.TARDISItemRenamer;
 import me.eccentric_nz.TARDIS.utility.TARDISLampScanner;
@@ -93,7 +92,6 @@ public class TARDISCommands implements CommandExecutor {
         transparent.add((byte) Material.VINE.getId());
         // add first arguments
         firstArgs.add("add");
-        firstArgs.add("bind");
         firstArgs.add("chameleon");
         firstArgs.add("check_loc");
         firstArgs.add("comehere");
@@ -104,25 +102,22 @@ public class TARDISCommands implements CommandExecutor {
         firstArgs.add("help");
         firstArgs.add("hide");
         firstArgs.add("home");
+        firstArgs.add("inside");
         firstArgs.add("jettison");
-        firstArgs.add("list");
         firstArgs.add("lamps");
+        firstArgs.add("list");
         firstArgs.add("namekey");
         firstArgs.add("occupy");
         firstArgs.add("rebuild");
-        firstArgs.add("reload");
         firstArgs.add("remove");
         firstArgs.add("removesave");
         firstArgs.add("rescue");
-        firstArgs.add("gravity");
         firstArgs.add("room");
         firstArgs.add("save");
         firstArgs.add("secondary");
         firstArgs.add("setdest");
-        firstArgs.add("unbind");
         firstArgs.add("update");
         firstArgs.add("version");
-        firstArgs.add("inside");
         // rooms - only add if enabled in the config
         for (String r : plugin.getRoomsConfig().getConfigurationSection("rooms").getKeys(false)) {
             if (plugin.getRoomsConfig().getBoolean("rooms." + r + ".enabled")) {
