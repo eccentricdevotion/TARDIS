@@ -21,6 +21,8 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
@@ -232,12 +234,16 @@ public class TARDISTravelCommands implements CommandExecutor, TabCompleter {
                         sender.sendMessage(plugin.pluginName + "Too few command arguments for co-ordinates travel!");
                         return false;
                     }
-                    if (args.length == 4 && player.hasPermission("tardis.timetravel.location")) {
+                    if (args.length >= 4 && player.hasPermission("tardis.timetravel.location")) {
+                        String w_str = args[0];
+                        if (w_str.contains("'")) {
+                            w_str = getQuotedString(args);
+                        }
                         // must be a location then
                         int x, y, z;
-                        World w = plugin.getServer().getWorld(args[0]);
+                        World w = plugin.getServer().getWorld(w_str);
                         if (w == null) {
-                            sender.sendMessage(plugin.pluginName + "Cannot find the specified world! Make sure you type it correctly.");
+                            sender.sendMessage(plugin.pluginName + "Cannot find the specified world! Make sure you typed it correctly.");
                             return true;
                         }
                         if (!plugin.getConfig().getBoolean("worlds." + w.getName())) {
@@ -248,9 +254,9 @@ public class TARDISTravelCommands implements CommandExecutor, TabCompleter {
                             sender.sendMessage(plugin.pluginName + "The server does not allow time travel to this world!");
                             return true;
                         }
-                        x = plugin.utils.parseNum(args[1]);
-                        y = plugin.utils.parseNum(args[2]);
-                        z = plugin.utils.parseNum(args[3]);
+                        x = plugin.utils.parseNum(args[args.length - 3]);
+                        y = plugin.utils.parseNum(args[args.length - 2]);
+                        z = plugin.utils.parseNum(args[args.length - 1]);
                         Block block = w.getBlockAt(x, y, z);
                         Location location = block.getLocation();
                         if (!plugin.ta.areaCheckInExisting(location)) {
@@ -321,5 +327,19 @@ public class TARDISTravelCommands implements CommandExecutor, TabCompleter {
             }
         }
         return areas;
+    }
+
+    private String getQuotedString(String[] args) {
+        String tmp = "";
+        String w_str = "";
+        for (String s : args) {
+            tmp += s + " ";
+        }
+        Pattern p = Pattern.compile("'([^']*)'");
+        Matcher m = p.matcher(tmp);
+        while (m.find()) {
+            w_str = m.group(1);
+        }
+        return w_str;
     }
 }

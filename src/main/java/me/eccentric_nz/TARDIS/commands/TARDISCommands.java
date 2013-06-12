@@ -623,13 +623,13 @@ public class TARDISCommands implements CommandExecutor {
                             return true;
                         }
                         final Player p = player;
-                        String badsave = rs.getCurrent();
+                        String current_str = rs.getCurrent();
                         boolean chamtmp = false;
                         if (plugin.getConfig().getBoolean("chameleon")) {
                             chamtmp = rs.isChamele_on();
                         }
                         final boolean cham = chamtmp;
-                        String[] saveData = badsave.split(":");
+                        String[] saveData = current_str.split(":");
                         World w = plugin.getServer().getWorld(saveData[0]);
                         if (w != null) {
                             int x, y, z;
