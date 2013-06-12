@@ -39,6 +39,7 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.entity.CreatureSpawnEvent;
+import org.bukkit.event.entity.CreatureSpawnEvent.SpawnReason;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 
@@ -239,7 +240,8 @@ public class TARDISArtronCapacitorListener implements Listener {
      */
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onEntitySpawn(CreatureSpawnEvent event) {
-        if (plugin.myspawn) {
+        boolean isTardisWorldBreeding = (event.getLocation().getWorld().getName().contains("TARDIS") && event.getSpawnReason().equals(SpawnReason.BREEDING)) ? true : false;
+        if (plugin.myspawn || isTardisWorldBreeding) {
             event.setCancelled(false);
             plugin.myspawn = false;
         }
