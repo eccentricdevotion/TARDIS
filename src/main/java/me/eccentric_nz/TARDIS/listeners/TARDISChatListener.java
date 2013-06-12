@@ -39,17 +39,17 @@ public class TARDISChatListener implements Listener {
     @EventHandler(priority = EventPriority.MONITOR)
     public void onChat(AsyncPlayerChatEvent event) {
         String saved = event.getPlayer().getName();
-        if (plugin.trackChat.containsKey(saved)) {
-            String chat = event.getMessage();
-            if (chat.equalsIgnoreCase("tardis rescue accept")) {
+        String chat = event.getMessage();
+        if (chat.equalsIgnoreCase("tardis rescue accept")) {
+            if (plugin.trackChat.containsKey(saved)) {
                 Player rescuer = plugin.getServer().getPlayer(plugin.trackChat.get(saved));
                 TARDISRescue res = new TARDISRescue(plugin);
                 res.tryRescue(rescuer, saved);
                 rescuer.sendMessage(plugin.pluginName + "Release the handbrake to start rescuing " + saved);
                 plugin.trackChat.remove(saved);
+            } else {
+                event.getPlayer().sendMessage(plugin.pluginName + "Rescue request timed out! You need to respond within 60 seconds.");
             }
-        } else {
-            event.getPlayer().sendMessage(plugin.pluginName + "Rescue request timed out! You need to respond within 60 seconds.");
         }
     }
 }
