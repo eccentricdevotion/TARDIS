@@ -59,10 +59,11 @@ public class TARDISHostileDisplacement {
         ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
         if (rs.resultSet()) {
             String current = rs.getCurrent();
+            String owner = rs.getOwner();
             final TARDISConstants.COMPASS d = rs.getDirection();
             final boolean cham = rs.isChamele_on();
             HashMap<String, Object> wherep = new HashMap<String, Object>();
-            wherep.put("player", rs.getOwner());
+            wherep.put("player", owner);
             ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, wherep);
             if (rsp.resultSet()) {
                 if (rsp.isHads_on()) {
@@ -88,8 +89,8 @@ public class TARDISHostileDisplacement {
                         if (l.getBlock().getRelative(BlockFace.DOWN).isLiquid() && !plugin.getConfig().getBoolean("land_on_water")) {
                             bool = false;
                         }
-                        final Player player = plugin.getServer().getPlayer(rsp.getPlayer());
-                        if (bool) {
+                        final Player player = plugin.getServer().getPlayer(owner);
+                        if (player != null && bool) {
                             int[] start = tt.getStartLocation(l, d);
                             if (tt.safeLocation(start[0], y, start[2], start[1], start[3], l.getWorld(), d) < 1) {
                                 final Location fl = l;
