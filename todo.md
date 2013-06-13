@@ -1,9 +1,10 @@
 # TODO
 
-## Current version `2.4-beta-2`
+## Current version `2.4-pre`
 1. Add video for books / achievements
 2. Add docs for new features / perms / commands
 3. Add cloister bell SFX
+4. Fix 'Life of the party'
 
 ## Next version `2.5+`
 1. Jettison the whole room (including walls), will require new room schematics...
