@@ -192,6 +192,7 @@ public class TARDISDematerialisationRunnable implements Runnable {
             new TARDISDeinstaPoliceBox(plugin).instaDestroyPB(location, d, tid, false);
             plugin.getServer().getScheduler().cancelTask(task);
             task = 0;
+            plugin.tardisChunkList.remove(location.getChunk());
         }
     }
 

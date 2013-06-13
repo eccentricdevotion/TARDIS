@@ -4,7 +4,8 @@
 1. Add video for books / achievements
 2. Add docs for new features / perms / commands
 3. Add cloister bell SFX
-4. Fix 'Life of the party'
+4. Fix Police box dupes
+5. Fix chunks.txt
 
 ## Next version `2.5+`
 1. Jettison the whole room (including walls), will require new room schematics...
