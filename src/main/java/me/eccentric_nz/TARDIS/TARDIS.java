@@ -291,6 +291,14 @@ public class TARDIS extends JavaPlugin {
         tardisCSV.copy(getDataFolder() + File.separator + "blocks.yml", getResource("blocks.yml"));
         tardisCSV.copy(getDataFolder() + File.separator + "rooms.yml", getResource("rooms.yml"));
         this.achivement_config = YamlConfiguration.loadConfiguration(new File(plugin.getDataFolder(), "achievements.yml"));
+        if (this.achivement_config.getString("travel.message").equals("Life of the party!")) {
+            this.achivement_config.set("travel.message", "There and back again!");
+            try {
+                this.achivement_config.save(getDataFolder() + File.separator + "achievements.yml");
+            } catch (IOException io) {
+                debug("Could not save achievements.yml " + io);
+            }
+        }
         this.artron_config = YamlConfiguration.loadConfiguration(new File(plugin.getDataFolder(), "artron.yml"));
         this.blocks_config = YamlConfiguration.loadConfiguration(new File(plugin.getDataFolder(), "blocks.yml"));
         this.rooms_config = YamlConfiguration.loadConfiguration(new File(plugin.getDataFolder(), "rooms.yml"));
