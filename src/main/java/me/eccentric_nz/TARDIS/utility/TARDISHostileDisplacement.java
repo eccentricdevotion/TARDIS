@@ -90,7 +90,7 @@ public class TARDISHostileDisplacement {
                             bool = false;
                         }
                         final Player player = plugin.getServer().getPlayer(owner);
-                        if (player != null && bool) {
+                        if (bool) {
                             int[] start = tt.getStartLocation(l, d);
                             if (tt.safeLocation(start[0], y, start[2], start[1], start[3], l.getWorld(), d) < 1) {
                                 final Location fl = l;
@@ -135,10 +135,11 @@ public class TARDISHostileDisplacement {
                                         hostile.sendMessage(plugin.pluginName + "HADS could not be engaged because the area is protected!");
                                     }
                                 }
-                            } else {
-                                //player.sendMessage(plugin.pluginName + "HADS could not be engaged! No safe location found.");
-                                //plugin.trackDamage.remove(Integer.valueOf(id));
                             }
+//                            else {
+//                                player.sendMessage(plugin.pluginName + "HADS could not be engaged! No safe location found.");
+//                                plugin.trackDamage.remove(Integer.valueOf(id));
+//                            }
                         }
                     }
                 }
