@@ -54,6 +54,9 @@ permissions:
   tardis.timetravel.location:
     description: Allow players to teleport to coordinates.
     default: op
+  tardis.timetravel.biome:
+    description: Allow players to teleport to coordinates.
+    default: op
   tardis.list:
     description: Allow players to list saved time travel destinations.
     default: op

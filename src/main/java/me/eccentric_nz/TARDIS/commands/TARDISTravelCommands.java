@@ -18,9 +18,12 @@ package me.eccentric_nz.TARDIS.commands;
 
 import com.google.common.collect.ImmutableList;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import me.eccentric_nz.TARDIS.TARDIS;
@@ -33,9 +36,12 @@ import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.travel.TARDISPluginRespect;
 import me.eccentric_nz.TARDIS.travel.TARDISRescue;
 import me.eccentric_nz.TARDIS.travel.TARDISTimeTravel;
+import me.eccentric_nz.TARDIS.utility.TARDISWorldBorderChecker;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.World;
+import org.bukkit.World.Environment;
+import org.bukkit.block.Biome;
 import org.bukkit.block.Block;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -56,10 +62,16 @@ public class TARDISTravelCommands implements CommandExecutor, TabCompleter {
 
     private TARDIS plugin;
     private TARDISPluginRespect respect;
-    private final List<String> ROOT_SUBS = ImmutableList.of("home", "dest", "area");
+    private final List<String> ROOT_SUBS = ImmutableList.of("home", "biome", "dest", "area");
+    private List<String> BIOME_SUBS = new ArrayList<String>();
 
     public TARDISTravelCommands(TARDIS plugin) {
         this.plugin = plugin;
+        for (Biome bi : org.bukkit.block.Biome.values()) {
+            if (!bi.equals(Biome.HELL) && !bi.equals(Biome.SKY)) {
+                BIOME_SUBS.add(bi.toString());
+            }
+        }
     }
 
     @Override
@@ -115,6 +127,7 @@ public class TARDISTravelCommands implements CommandExecutor, TabCompleter {
                 }
                 TARDISConstants.COMPASS d = rs.getDirection();
                 String home = rs.getHome();
+                String current = rs.getCurrent();
                 HashMap<String, Object> tid = new HashMap<String, Object>();
                 HashMap<String, Object> set = new HashMap<String, Object>();
                 tid.put("tardis_id", id);
@@ -156,6 +169,67 @@ public class TARDISTravelCommands implements CommandExecutor, TabCompleter {
                                 player.sendMessage(plugin.pluginName + "You do not have permission to time travel to a player!");
                                 return true;
                             }
+                        }
+                    }
+                    if (args.length == 2 && args[0].equalsIgnoreCase("biome")) {
+                        // we're thinking this is a biome search
+                        if (!player.hasPermission("tardis.timetravel.biome")) {
+                            player.sendMessage(plugin.pluginName + "You do not have permission to time travel to a biome!");
+                            return true;
+                        }
+                        String upper = args[1].toUpperCase(Locale.ENGLISH);
+                        if (upper.equals("LIST")) {
+                            String b = "";
+                            for (String bi : BIOME_SUBS) {
+                                b += bi + ", ";
+                            }
+                            b = b.substring(0, b.length() - 2);
+                            sender.sendMessage(plugin.pluginName + "Biomes: " + b);
+                            return true;
+                        } else {
+                            try {
+                                Biome biome = Biome.valueOf(upper);
+                                sender.sendMessage(plugin.pluginName + "Searching for biome, this may take some time!");
+                                String[] cw = current.split(":");
+                                Location nsob = searchBiome(player, biome, cw[0]);
+                                if (nsob == null) {
+                                    sender.sendMessage(plugin.pluginName + "Could not find biome!");
+                                    return true;
+                                } else {
+                                    respect = new TARDISPluginRespect(plugin);
+                                    if (!respect.getRespect(player, nsob, true)) {
+                                        return true;
+                                    }
+                                    World bw = nsob.getWorld();
+                                    // check location
+                                    bw.getChunkAt(nsob).load();
+                                    bw.getChunkAt(nsob).load(true);
+                                    while (!bw.getChunkAt(nsob).isLoaded()) {
+                                        bw.getChunkAt(nsob).load();
+                                    }
+                                    int[] start_loc = tt.getStartLocation(nsob, d);
+                                    int tmp_y = nsob.getBlockY();
+                                    for (int up = 0; up < 10; up++) {
+                                        int count = tt.safeLocation(start_loc[0], tmp_y + up, start_loc[2], start_loc[1], start_loc[3], nsob.getWorld(), d);
+                                        if (count == 0) {
+                                            nsob.setY(tmp_y + up);
+                                            break;
+                                        }
+                                    }
+                                    String save_loc = nsob.getWorld().getName() + ":" + nsob.getBlockX() + ":" + nsob.getBlockY() + ":" + nsob.getBlockZ();
+                                    set.put("save", save_loc);
+                                    qf.doUpdate("tardis", set, tid);
+                                    sender.sendMessage(plugin.pluginName + "The biome was set succesfully. Please release the handbrake!");
+                                    plugin.tardisHasDestination.put(id, travel);
+                                    if (plugin.trackRescue.containsKey(Integer.valueOf(id))) {
+                                        plugin.trackRescue.remove(Integer.valueOf(id));
+                                    }
+                                }
+                            } catch (IllegalArgumentException iae) {
+                                sender.sendMessage(plugin.pluginName + "Biome type not valid!");
+                                return true;
+                            }
+                            return true;
                         }
                     }
                     if (args.length == 2 && args[0].equalsIgnoreCase("dest")) {
@@ -309,6 +383,9 @@ public class TARDISTravelCommands implements CommandExecutor, TabCompleter {
             if (sub.equals("area")) {
                 return partial(lastArg, getAreas());
             }
+            if (sub.equals("biome")) {
+                return partial(lastArg, BIOME_SUBS);
+            }
         }
         return ImmutableList.of();
     }
@@ -341,5 +418,73 @@ public class TARDISTravelCommands implements CommandExecutor, TabCompleter {
             w_str = m.group(1);
         }
         return w_str;
+    }
+
+    private Location searchBiome(Player p, Biome b, String cw) {
+        Location l = null;
+        int startx = p.getLocation().getBlockX();
+        int startz = p.getLocation().getBlockZ();
+        // get a world
+        World w = plugin.getServer().getWorld(cw);
+        if (w != null && w.getEnvironment().equals(Environment.NORMAL)) {
+            int limitx = 30000;
+            int limitz = 30000;
+            if (plugin.pm.isPluginEnabled("WorldBorder")) {
+                // get the border limit for this world
+                TARDISWorldBorderChecker wb = new TARDISWorldBorderChecker(plugin);
+                int[] data = wb.getBorderDistance(w.getName());
+                limitx = data[0];
+                limitz = data[1];
+            }
+            int step = 10;
+            // search in a random direction
+            Integer[] directions = new Integer[]{0, 1, 2, 3};
+            Collections.shuffle(Arrays.asList(directions));
+            for (int i = 0; i < 4; i++) {
+                switch (directions[i]) {
+                    case 0:
+                        // east
+                        for (int east = startx; east < limitx; east += step) {
+                            Biome chkb = w.getBiome(east, startz);
+                            if (chkb.equals(b)) {
+                                p.sendMessage(plugin.pluginName + b.toString() + " biome found in an easterly direction!");
+                                return new Location(w, east, w.getHighestBlockYAt(east, startz), startz);
+                            }
+                        }
+                        break;
+                    case 1:
+                        // south
+                        for (int south = startz; south < limitz; south += step) {
+                            Biome chkb = w.getBiome(startx, south);
+                            if (chkb.equals(b)) {
+                                p.sendMessage(plugin.pluginName + b.toString() + " biome found in a southerly direction!");
+                                return new Location(w, startx, w.getHighestBlockYAt(startx, south), south);
+                            }
+                        }
+                        break;
+                    case 2:
+                        // west
+                        for (int west = startx; west > -limitx; west -= step) {
+                            Biome chkb = w.getBiome(west, startz);
+                            if (chkb.equals(b)) {
+                                p.sendMessage(plugin.pluginName + b.toString() + " biome found in a westerly direction!");
+                                return new Location(w, west, w.getHighestBlockYAt(west, startz), startz);
+                            }
+                        }
+                        break;
+                    case 3:
+                        // north
+                        for (int north = startz; north > -limitz; north -= step) {
+                            Biome chkb = w.getBiome(startx, north);
+                            if (chkb.equals(b)) {
+                                p.sendMessage(plugin.pluginName + b.toString() + " biome found in a northerly direction!");
+                                return new Location(w, startx, w.getHighestBlockYAt(startx, north), north);
+                            }
+                        }
+                        break;
+                }
+            }
+        }
+        return l;
     }
 }

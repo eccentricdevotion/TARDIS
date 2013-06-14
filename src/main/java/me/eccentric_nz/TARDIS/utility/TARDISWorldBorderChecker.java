@@ -55,4 +55,24 @@ public class TARDISWorldBorderChecker {
         }
         return bool;
     }
+
+    /**
+     * Gets the border radius for a specified world.
+     *
+     * @param world the world to get the radius for
+     */
+    public int[] getBorderDistance(String world) {
+        int[] distance = new int[2];
+        if (border != null) {
+            BorderData bd = border.GetWorldBorder(world);
+            if (bd != null) {
+                distance[0] = bd.getRadiusX();
+                distance[1] = bd.getRadiusZ();
+            } else {
+                distance[0] = 30000;
+                distance[1] = 30000;
+            }
+        }
+        return distance;
+    }
 }
