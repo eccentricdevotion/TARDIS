@@ -67,7 +67,7 @@ public class TARDISTimeLordDeathListener implements Listener {
                 ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
                 // are they a time lord?
                 if (rs.resultSet()) {
-                    int id = rs.getTardis_id();
+                    final int id = rs.getTardis_id();
                     HashMap<String, Object> wherep = new HashMap<String, Object>();
                     wherep.put("player", playerNameStr);
                     ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, wherep);
@@ -129,16 +129,19 @@ public class TARDISTimeLordDeathListener implements Listener {
                             // if the TARDIS is already at the home location, do nothing
                             if (!home.equals(save)) {
                                 // destroy police box
-                                COMPASS d = rs.getDirection();
-                                boolean cham = rs.isChamele_on();
+                                final COMPASS d = rs.getDirection();
+                                final boolean cham = rs.isChamele_on();
                                 if (!rs.isHidden()) {
                                     plugin.destroyPB.destroyPoliceBox(sl, d, id, false, plugin.getConfig().getBoolean("materialise"), cham, player);
-                                    //plugin.destroyPB.destroyPlatform(rs.getPlatform(), id);
-                                    //plugin.destroyPB.destroySign(sl, d);
-                                    //plugin.destroyPB.destroyTorch(sl);
                                 }
-                                // rebuild police box
-                                plugin.buildPB.buildPoliceBox(id, goto_loc, d, cham, player, false, false);
+                                final Location auto_loc = goto_loc;
+                                plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        // rebuild police box - needs to be a delay
+                                        plugin.buildPB.buildPoliceBox(id, auto_loc, d, cham, player, false, false);
+                                    }
+                                }, 200L);
                                 String save_loc = goto_loc.getWorld().getName() + ":" + goto_loc.getBlockX() + ":" + goto_loc.getBlockY() + ":" + goto_loc.getBlockZ();
                                 QueryFactory qf = new QueryFactory(plugin);
                                 HashMap<String, Object> tid = new HashMap<String, Object>();
