@@ -6,8 +6,10 @@
 3. Add cloister bell SFX
 4. Fix Police box dupes
 5. Fix chunks.txt
+6. Don't do HADS if owner is offline
 
-## Next version `2.5+`
+
+# Next version `2.5+`
 1. Jettison the whole room (including walls), will require new room schematics...
 2. TARDIS shield
 3. Fast return switch

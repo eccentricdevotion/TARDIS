@@ -57,12 +57,12 @@ public class TARDISBlockDamageListener implements Listener {
         String l = b.getLocation().toString();
         HashMap<String, Object> where = new HashMap<String, Object>();
         where.put("location", l);
-        ResultSetBlocks rs = new ResultSetBlocks(plugin, where, false);
-        if (rs.resultSet()) {
+        ResultSetBlocks rsb = new ResultSetBlocks(plugin, where, false);
+        if (rsb.resultSet()) {
             String message = "You cannot break the TARDIS blocks!";
             boolean m = false;
             boolean isDoor = false;
-            int id = rs.getTardis_id();
+            int id = rsb.getTardis_id();
             if (HADS && !plugin.tardisDematerialising.contains(id) && !plugin.tardisMaterialising.contains(id)) {
                 if (b.getTypeId() == 71) {
                     if (isOwner(id, p.getName())) {
@@ -75,6 +75,7 @@ public class TARDISBlockDamageListener implements Listener {
                     if (damage == plugin.getConfig().getInt("hads_damage")) {
                         new TARDISHostileDisplacement(plugin).moveTARDIS(id, p);
                         m = true;
+                        plugin.trackDamage.remove(Integer.valueOf(id));
                     }
                     message = "WARNING - HADS initiating in " + (plugin.getConfig().getInt("hads_damage") - damage);
                 }

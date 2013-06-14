@@ -137,7 +137,7 @@ public class TARDISHostileDisplacement {
                                 }
                             } else {
                                 //player.sendMessage(plugin.pluginName + "HADS could not be engaged! No safe location found.");
-                                plugin.trackDamage.remove(Integer.valueOf(id));
+                                //plugin.trackDamage.remove(Integer.valueOf(id));
                             }
                         }
                     }
