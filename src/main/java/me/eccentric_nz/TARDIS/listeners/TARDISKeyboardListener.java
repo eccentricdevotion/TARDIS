@@ -124,7 +124,7 @@ public class TARDISKeyboardListener implements Listener {
             Biome biome = Biome.valueOf(upper);
             if (!upper.equals("HELL") && !upper.equals("SKY")) {
                 p.performCommand("tardistravel biome " + upper);
-                plugin.console.sendMessage(p.getName() + " issued server command: /tardistravel home");
+                plugin.console.sendMessage(p.getName() + " issued server command: /tardistravel biome " + upper);
                 return;
             }
         } catch (IllegalArgumentException iae) {
