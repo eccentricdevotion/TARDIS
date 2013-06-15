@@ -17,12 +17,14 @@
 package me.eccentric_nz.TARDIS.listeners;
 
 import java.util.HashMap;
+import java.util.Locale;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.ResultSetAreas;
 import me.eccentric_nz.TARDIS.database.ResultSetControls;
 import me.eccentric_nz.TARDIS.database.ResultSetDestinations;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
+import org.bukkit.block.Biome;
 import org.bukkit.block.Block;
 import org.bukkit.block.Sign;
 import org.bukkit.entity.Player;
@@ -115,6 +117,18 @@ public class TARDISKeyboardListener implements Listener {
             p.performCommand("tardistravel home");
             plugin.console.sendMessage(p.getName() + " issued server command: /tardistravel home");
             return;
+        }
+        // biome ?
+        try {
+            String upper = event.getLine(0).toUpperCase(Locale.ENGLISH);
+            Biome biome = Biome.valueOf(upper);
+            if (!upper.equals("HELL") && !upper.equals("SKY")) {
+                p.performCommand("tardistravel biome " + upper);
+                plugin.console.sendMessage(p.getName() + " issued server command: /tardistravel home");
+                return;
+            }
+        } catch (IllegalArgumentException iae) {
+            plugin.debug("Biome type not valid!");
         }
         // dest?
         HashMap<String, Object> whered = new HashMap<String, Object>();
