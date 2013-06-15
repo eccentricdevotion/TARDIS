@@ -210,11 +210,13 @@ public class TARDISControlsConverter {
                 r[1] = data[0] + ":" + x + ":" + (y + 1) + ":" + (z - 1); // x
                 r[2] = data[0] + ":" + (x + 4) + ":" + (y + 1) + ":" + (z - 1); // z
                 r[3] = data[0] + ":" + (x + 2) + ":" + (y + 1) + ":" + (z + 1); // y
+                break;
             default:
                 r[0] = data[0] + ":" + (x - 1) + ":" + y + ":" + (z - 1);
                 r[1] = data[0] + ":" + (x - 3) + ":" + y + ":" + (z + 1);
                 r[2] = data[0] + ":" + (x + 1) + ":" + y + ":" + (z + 1);
                 r[3] = data[0] + ":" + (x - 1) + ":" + y + ":" + (z + 3);
+                break;
         }
         return r;
     }

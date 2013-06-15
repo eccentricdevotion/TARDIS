@@ -179,11 +179,11 @@ public class TARDISTravelCommands implements CommandExecutor, TabCompleter {
                         }
                         String upper = args[1].toUpperCase(Locale.ENGLISH);
                         if (upper.equals("LIST")) {
-                            String b = "";
+                            StringBuilder buf = new StringBuilder();
                             for (String bi : BIOME_SUBS) {
-                                b += bi + ", ";
+                                buf.append(bi).append(", ");
                             }
-                            b = b.substring(0, b.length() - 2);
+                            String b = buf.toString().substring(0, buf.length() - 2);
                             sender.sendMessage(plugin.pluginName + "Biomes: " + b);
                             return true;
                         } else {
@@ -407,11 +407,12 @@ public class TARDISTravelCommands implements CommandExecutor, TabCompleter {
     }
 
     private String getQuotedString(String[] args) {
-        String tmp = "";
+        StringBuilder buf = new StringBuilder();
         String w_str = "";
         for (String s : args) {
-            tmp += s + " ";
+            buf.append(s).append(" ");
         }
+        String tmp = buf.toString();
         Pattern p = Pattern.compile("'([^']*)'");
         Matcher m = p.matcher(tmp);
         while (m.find()) {

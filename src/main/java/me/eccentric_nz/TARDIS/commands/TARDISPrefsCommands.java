@@ -51,7 +51,7 @@ import org.bukkit.entity.Player;
 public class TARDISPrefsCommands implements CommandExecutor {
 
     public static String ucfirst(String str) {
-        return str.substring(0, 1).toUpperCase(Locale.ENGLISH) + str.substring(1).toLowerCase();
+        return str.substring(0, 1).toUpperCase(Locale.ENGLISH) + str.substring(1).toLowerCase(Locale.ENGLISH);
     }
     private final TARDIS plugin;
     private List<String> firstArgs = new ArrayList<String>();

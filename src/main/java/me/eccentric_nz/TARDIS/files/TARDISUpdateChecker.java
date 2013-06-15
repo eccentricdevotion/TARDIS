@@ -120,13 +120,19 @@ public class TARDISUpdateChecker {
      */
     public String URLReader(URL url) {
         String version = "";
-        BufferedReader in;
+        BufferedReader in = null;
         try {
             in = new BufferedReader(new InputStreamReader(url.openStream()));
             version = in.readLine();
-            in.close();
         } catch (IOException ex) {
             plugin.debug("" + ex);
+        } finally {
+            try {
+                if (in != null) {
+                    in.close();
+                }
+            } catch (Exception e) {
+            }
         }
         return version;
     }

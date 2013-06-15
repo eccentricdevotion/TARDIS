@@ -3,11 +3,7 @@
 ## Current version `2.4-pre`
 1. Add video for books / achievements
 2. Add docs for new features / perms / commands
-3. Add cloister bell SFX
-4. Fix Police box dupes
-5. Fix chunks.txt
-6. Don't do HADS if owner is offline
-
+3. Fix Police box dupes
 
 # Next version `2.5+`
 1. Jettison the whole room (including walls), will require new room schematics...

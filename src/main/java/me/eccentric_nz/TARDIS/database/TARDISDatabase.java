@@ -98,8 +98,11 @@ public class TARDISDatabase {
             TARDIS.plugin.console.sendMessage(TARDIS.plugin.pluginName + "Create table error: " + e);
         } finally {
             try {
-                statement.close();
+                if (statement != null) {
+                    statement.close();
+                }
             } catch (Exception e) {
+                TARDIS.plugin.console.sendMessage(TARDIS.plugin.pluginName + "Close statement error: " + e);
             }
         }
     }

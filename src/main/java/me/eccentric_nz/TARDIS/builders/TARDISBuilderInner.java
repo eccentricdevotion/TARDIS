@@ -363,7 +363,7 @@ public class TARDISBuilderInner {
         }
         for (Map.Entry<Block, Byte> entry : postSignBlocks.entrySet()) {
             final Block psb = entry.getKey();
-            byte psdata = Byte.valueOf(entry.getValue());
+            byte psdata = entry.getValue();
             psb.setTypeIdAndData(68, psdata, true);
             if (psb.getType().equals(Material.WALL_SIGN)) {
                 Sign cs = (Sign) psb.getState();

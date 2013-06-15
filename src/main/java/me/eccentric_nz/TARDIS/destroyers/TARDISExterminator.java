@@ -54,7 +54,9 @@ public class TARDISExterminator {
                 if (f.isDirectory()) {
                     deleteFolder(f);
                 } else {
-                    f.delete();
+                    if (!f.delete()) {
+                        System.out.println("Could not delete file");
+                    }
                 }
             }
         }

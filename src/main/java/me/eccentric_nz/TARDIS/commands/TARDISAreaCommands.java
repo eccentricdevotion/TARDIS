@@ -139,15 +139,7 @@ public class TARDISAreaCommands implements CommandExecutor, TabCompleter {
                 b3.setTypeId(80);
                 final Block b4 = w.getHighestBlockAt(max, maz).getRelative(BlockFace.UP);
                 b4.setTypeId(80);
-                plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
-                    @Override
-                    public void run() {
-                        b1.setTypeId(0);
-                        b2.setTypeId(0);
-                        b3.setTypeId(0);
-                        b4.setTypeId(0);
-                    }
-                }, 300L);
+                plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new SetAir(b1, b2, b3, b4), 300L);
                 return true;
             }
         }
@@ -164,5 +156,28 @@ public class TARDISAreaCommands implements CommandExecutor, TabCompleter {
 
     private List<String> partial(String token, Collection<String> from) {
         return StringUtil.copyPartialMatches(token, from, new ArrayList<String>(from.size()));
+    }
+
+    private static class SetAir implements Runnable {
+
+        private final Block b1;
+        private final Block b2;
+        private final Block b3;
+        private final Block b4;
+
+        public SetAir(Block b1, Block b2, Block b3, Block b4) {
+            this.b1 = b1;
+            this.b2 = b2;
+            this.b3 = b3;
+            this.b4 = b4;
+        }
+
+        @Override
+        public void run() {
+            b1.setTypeId(0);
+            b2.setTypeId(0);
+            b3.setTypeId(0);
+            b4.setTypeId(0);
+        }
     }
 }

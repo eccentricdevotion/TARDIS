@@ -130,7 +130,7 @@ public class TARDISPruner {
     }
 
     private long getTime(int day) {
-        long period = (long) (day * 86400000);
+        long period = (long) (day * 86400000L);
         long now = System.currentTimeMillis();
         long prune = now - period;
         return prune;
