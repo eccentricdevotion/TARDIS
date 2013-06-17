@@ -25,6 +25,7 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
+import java.util.regex.Pattern;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.artron.TARDISCondensables;
@@ -121,15 +122,16 @@ public class TARDISRoomCommands implements CommandExecutor {
                     }
                     sender.sendMessage(plugin.pluginName + name + " blocks:");
                     for (Map.Entry<String, Integer> entry : blockIDs.entrySet()) {
-                        String[] data = entry.getKey().split(":");
-                        int bid = plugin.utils.parseNum(data[0]);
+                        String[] block_data = entry.getKey().split(":");
+                        int bid = plugin.utils.parseNum(block_data[0]);
                         String mat;
-                        if (hasPrefs && data.length == 2 && (data[1].equals("1") || data[1].equals("8"))) {
-                            mat = (data[1].equals("1")) ? wall : floor;
+                        if (hasPrefs && block_data.length == 2 && (block_data[1].equals("1") || block_data[1].equals("8"))) {
+                            mat = (block_data[1].equals("1")) ? wall : floor;
                         } else {
                             mat = Material.getMaterial(bid).toString();
                         }
-                        int amount = Math.round((entry.getValue() / 100F) * plugin.getRoomsConfig().getInt("rooms_condenser_percent"));
+                        int tmp = Math.round((entry.getValue() / 100.0F) * plugin.getConfig().getInt("rooms_condenser_percent"));
+                        int amount = (tmp > 0) ? tmp : 1;
                         String line = mat + ", " + amount;
                         sender.sendMessage(line);
                     }
@@ -139,6 +141,11 @@ public class TARDISRoomCommands implements CommandExecutor {
                 if (!sender.hasPermission("tardis.admin")) {
                     sender.sendMessage(plugin.pluginName + TARDISConstants.NO_PERMS_MESSAGE);
                     return false;
+                }
+                Pattern regex = Pattern.compile(".*[A-Z].*");
+                if (regex.matcher(args[1]).matches()) {
+                    sender.sendMessage(plugin.pluginName + "Please make sure the file name is lowercase only!");
+                    return true;
                 }
                 String name = args[1].toUpperCase(Locale.ENGLISH);
                 if (name.equals("ADD") || name.equals("BLOCKS")) {
