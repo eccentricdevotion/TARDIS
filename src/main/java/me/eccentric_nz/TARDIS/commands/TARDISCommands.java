@@ -639,12 +639,16 @@ public class TARDISCommands implements CommandExecutor {
                             final Location oldSave = w.getBlockAt(x, y, z).getLocation();
                             //rs.close();
                             String comehere = eyeLocation.getWorld().getName() + ":" + eyeLocation.getBlockX() + ":" + eyeLocation.getBlockY() + ":" + eyeLocation.getBlockZ();
+                            final boolean hidden = rs.isHidden();
                             QueryFactory qf = new QueryFactory(plugin);
                             HashMap<String, Object> tid = new HashMap<String, Object>();
                             HashMap<String, Object> set = new HashMap<String, Object>();
                             tid.put("tardis_id", id);
                             set.put("save", comehere);
                             set.put("current", comehere);
+                            if (hidden) {
+                                set.put("hidden", 0);
+                            }
                             qf.doUpdate("tardis", set, tid);
                             sender.sendMessage(plugin.pluginName + "The TARDIS is coming...");
                             final boolean mat = plugin.getConfig().getBoolean("materialise");
@@ -652,7 +656,7 @@ public class TARDISCommands implements CommandExecutor {
                             Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
                                 @Override
                                 public void run() {
-                                    if (!rs.isHidden()) {
+                                    if (!hidden) {
                                         plugin.tardisDematerialising.add(id);
                                         plugin.destroyPB.destroyPoliceBox(oldSave, d, id, false, mat, cham, p);
                                     }

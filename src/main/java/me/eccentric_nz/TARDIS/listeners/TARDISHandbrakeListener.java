@@ -177,6 +177,9 @@ public class TARDISHandbrakeListener implements Listener {
                                             if (!rs.isHidden()) {
                                                 plugin.tardisDematerialising.add(id);
                                                 plugin.destroyPB.destroyPoliceBox(l, d, id, false, mat, cham, player);
+                                            } else {
+                                                // set hidden false!
+                                                set.put("hidden", 0);
                                             }
                                             long delay = (mat) ? ((plugin.pm.getPlugin("Spout") != null) ? 450L : 200L) : 1L;
                                             final Location e = exit;

@@ -131,8 +131,11 @@ public class TARDISTimeLordDeathListener implements Listener {
                                 // destroy police box
                                 final COMPASS d = rs.getDirection();
                                 final boolean cham = rs.isChamele_on();
+                                HashMap<String, Object> set = new HashMap<String, Object>();
                                 if (!rs.isHidden()) {
                                     plugin.destroyPB.destroyPoliceBox(sl, d, id, false, plugin.getConfig().getBoolean("materialise"), cham, player);
+                                } else {
+                                    set.put("hidden", 0);
                                 }
                                 final Location auto_loc = goto_loc;
                                 plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
@@ -143,12 +146,11 @@ public class TARDISTimeLordDeathListener implements Listener {
                                     }
                                 }, 200L);
                                 String save_loc = goto_loc.getWorld().getName() + ":" + goto_loc.getBlockX() + ":" + goto_loc.getBlockY() + ":" + goto_loc.getBlockZ();
-                                QueryFactory qf = new QueryFactory(plugin);
-                                HashMap<String, Object> tid = new HashMap<String, Object>();
-                                HashMap<String, Object> set = new HashMap<String, Object>();
-                                tid.put("tardis_id", id);
                                 set.put("save", save_loc);
                                 set.put("current", save_loc);
+                                HashMap<String, Object> tid = new HashMap<String, Object>();
+                                tid.put("tardis_id", id);
+                                QueryFactory qf = new QueryFactory(plugin);
                                 qf.doUpdate("tardis", set, tid);
                                 HashMap<String, Object> wherea = new HashMap<String, Object>();
                                 wherea.put("tardis_id", id);
