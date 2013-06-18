@@ -205,6 +205,10 @@ public class TARDISUpdateListener implements Listener {
             if (blockName.equalsIgnoreCase("condenser") && blockType == Material.CHEST) {
                 set.put("condenser", blockLocStr);
             }
+            if (blockName.equalsIgnoreCase("creeper") && blockType == Material.COMMAND) {
+                blockLocStr = bw.getName() + ":" + bx + ".5:" + by + ":" + bz + ".5";
+                set.put("creeper", blockLocStr);
+            }
             if (blockName.equalsIgnoreCase("world-repeater") && (blockType == Material.DIODE_BLOCK_OFF || blockType == Material.DIODE_BLOCK_ON)) {
                 if (secondary) {
                     qf.insertControl(id, 5, blockLocStr, 1);
