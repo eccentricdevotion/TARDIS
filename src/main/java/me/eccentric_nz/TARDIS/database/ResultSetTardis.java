@@ -73,6 +73,7 @@ public class ResultSetTardis {
     private boolean hidden;
     private long lastuse;
     private boolean iso_on;
+    private String eps;
     private ArrayList<HashMap<String, String>> data = new ArrayList<HashMap<String, String>>();
 
     /**
@@ -173,6 +174,7 @@ public class ResultSetTardis {
                     this.hidden = rs.getBoolean("hidden");
                     this.lastuse = rs.getLong("lastuse");
                     this.iso_on = rs.getBoolean("iso_on");
+                    this.eps = rs.getString("eps");
                 }
             } else {
                 return false;
@@ -317,6 +319,10 @@ public class ResultSetTardis {
 
     public boolean isIso_on() {
         return iso_on;
+    }
+
+    public String getEps() {
+        return eps;
     }
 
     public ArrayList<HashMap<String, String>> getData() {

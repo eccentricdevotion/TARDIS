@@ -68,6 +68,7 @@ public class TARDISTimeLordDeathListener implements Listener {
                 // are they a time lord?
                 if (rs.resultSet()) {
                     final int id = rs.getTardis_id();
+                    final String eps = rs.getEps();
                     HashMap<String, Object> wherep = new HashMap<String, Object>();
                     wherep.put("player", playerNameStr);
                     ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, wherep);
@@ -82,9 +83,9 @@ public class TARDISTimeLordDeathListener implements Listener {
                                 ResultSetTravellers rst = new ResultSetTravellers(plugin, wherev, true);
                                 if (rst.resultSet()) {
                                     List data = rst.getData();
-                                    if (!data.contains(playerNameStr)) {
+                                    if (data.size() > 0 && !data.contains(playerNameStr)) {
                                         // schedule the NPC to appear
-                                        TARDISEPSRunnable EPS_runnable = new TARDISEPSRunnable(plugin, rsp.getEPS_message(), player, data, id);
+                                        TARDISEPSRunnable EPS_runnable = new TARDISEPSRunnable(plugin, rsp.getEPS_message(), player, data, id, eps);
                                         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, EPS_runnable, 20L);
                                     }
                                 }

@@ -70,6 +70,7 @@ public class TARDISDatabaseUpdater {
         tardisupdates.add("chameleon_id INTEGER DEFAULT 35");
         tardisupdates.add("condenser TEXT DEFAULT ''");
         tardisupdates.add("creeper TEXT DEFAULT ''");
+        tardisupdates.add("eps TEXT DEFAULT ''");
         tardisupdates.add("farm TEXT DEFAULT ''");
         tardisupdates.add("handbrake_on INTEGER DEFAULT 1");
         tardisupdates.add("hidden INTEGER DEFAULT 0");

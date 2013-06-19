@@ -45,14 +45,16 @@ public class TARDISMalfunction {
     private Player p;
     private TARDISConstants.COMPASS dir;
     private Location handbrake_loc;
+    private String eps;
     private Random rand;
 
-    public TARDISMalfunction(TARDIS plugin, int id, Player p, TARDISConstants.COMPASS dir, Location handbrake_loc) {
+    public TARDISMalfunction(TARDIS plugin, int id, Player p, TARDISConstants.COMPASS dir, Location handbrake_loc, String eps) {
         this.plugin = plugin;
         this.id = id;
         this.p = p;
         this.dir = dir;
         this.handbrake_loc = handbrake_loc;
+        this.eps = eps;
         this.rand = new Random();
     }
 
@@ -123,7 +125,7 @@ public class TARDISMalfunction {
                         players = new ArrayList<String>();
                         players.add(p.getName());
                     }
-                    TARDISEPSRunnable EPS_runnable = new TARDISEPSRunnable(plugin, message, p, players, id);
+                    TARDISEPSRunnable EPS_runnable = new TARDISEPSRunnable(plugin, message, p, players, id, eps);
                     plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, EPS_runnable, 220L);
                 }
             }
