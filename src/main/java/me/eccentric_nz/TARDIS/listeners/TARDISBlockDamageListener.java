@@ -69,7 +69,7 @@ public class TARDISBlockDamageListener implements Listener {
                         isDoor = true;
                     }
                 }
-                if (!isDoor) {
+                if (!isDoor && rsb.isPolice_box()) {
                     int damage = (plugin.trackDamage.containsKey(Integer.valueOf(id))) ? plugin.trackDamage.get(Integer.valueOf(id)) : 0;
                     plugin.trackDamage.put(Integer.valueOf(id), damage + 1);
                     if (damage == plugin.getConfig().getInt("hads_damage")) {
