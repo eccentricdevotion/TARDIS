@@ -66,7 +66,7 @@ public class TARDISCondenserListener implements Listener {
     public void onChestClose(InventoryCloseEvent event) {
         Inventory inv = event.getInventory();
         InventoryHolder holder = inv.getHolder();
-        if (holder instanceof Chest && inv.getName().equals("Artron Energy Condenser")) {
+        if (holder instanceof Chest && inv.getName().equals("§4Artron Condenser")) {
             Chest chest = (Chest) holder;
             Location loc = chest.getLocation();
             String chest_loc = loc.getWorld().getName() + ":" + loc.getBlockX() + ":" + loc.getBlockY() + ":" + loc.getBlockZ();
@@ -151,7 +151,7 @@ public class TARDISCondenserListener implements Listener {
     @EventHandler(priority = EventPriority.NORMAL)
     public void onChestOpen(PlayerInteractEvent event) {
         Block b = event.getClickedBlock();
-        if (b.getType().equals(Material.CHEST) && event.getAction().equals(Action.RIGHT_CLICK_BLOCK)) {
+        if (b != null && b.getType().equals(Material.CHEST) && event.getAction().equals(Action.RIGHT_CLICK_BLOCK)) {
             Location loc = b.getLocation();
             String chest_loc = loc.getWorld().getName() + ":" + loc.getBlockX() + ":" + loc.getBlockY() + ":" + loc.getBlockZ();
             HashMap<String, Object> where = new HashMap<String, Object>();
@@ -160,7 +160,7 @@ public class TARDISCondenserListener implements Listener {
             if (rs.resultSet()) {
                 event.setCancelled(true);
                 InventoryHolder holder = (Chest) b.getState();
-                Inventory aec = plugin.getServer().createInventory(holder, 27, "Artron Energy Condenser");
+                Inventory aec = plugin.getServer().createInventory(holder, 27, "§4Artron Condenser");
                 Player p = event.getPlayer();
                 try {
                     Class.forName("org.bukkit.Sound");
