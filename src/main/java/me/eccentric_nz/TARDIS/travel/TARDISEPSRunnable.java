@@ -61,11 +61,14 @@ public class TARDISEPSRunnable implements Runnable {
                 plugin.myspawn = true;
                 l.setX(l.getX() + 0.5F);
                 l.setZ(l.getZ() + 1.5F);
+                // set yaw if TARDIS world
+                if (plugin.getConfig().getBoolean("create_worlds")) {
+                }
                 // create NPC
                 NPCRegistry registry = CitizensAPI.getNPCRegistry();
-                NPC npc2 = registry.createNPC(EntityType.PLAYER, tl.getName());
-                npc2.spawn(l);
-                int npcid = npc2.getId();
+                NPC npc = registry.createNPC(EntityType.PLAYER, tl.getName());
+                npc.spawn(l);
+                int npcid = npc.getId();
                 plugin.npcIDs.add(npcid);
                 for (String p : players) {
                     Player pp = plugin.getServer().getPlayer(p);
