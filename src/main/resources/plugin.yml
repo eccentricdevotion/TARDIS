@@ -4,8 +4,8 @@ main: me.eccentric_nz.TARDIS.TARDIS
 name: TARDIS
 startup: postworld
 softdepend: [Multiverse-Core,MultiWorld,My Worlds,WorldGuard,WorldBorder,Towny,Citizens]
-website: http://dev.bukkit.org/server-mods/TARDIS/
-dev-url: http://dev.bukkit.org/server-mods/TARDIS/
+website: http://dev.bukkit.org/bukkit-plugins/tardis/
+dev-url: http://dev.bukkit.org/bukkit-plugins/tardis/
 url: http://eccentricdevotion.github.io/TARDIS/
 version: '2.4'
 permissions:
