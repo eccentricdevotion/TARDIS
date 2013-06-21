@@ -27,4 +27,5 @@ CVS
 # other stuff
 .classpath
 .project
+.settings
 nb-configuration.xml
