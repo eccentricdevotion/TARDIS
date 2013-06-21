@@ -20,4 +20,12 @@ CVS
 /sounds/
 /lib/
 /psd/
+/nbproject/
+/bin/
 /movies/
+
+# other stuff
+.classpath
+.project
+.settings
+nb-configuration.xml

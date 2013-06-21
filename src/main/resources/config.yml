@@ -29,129 +29,26 @@ gamemode: survival
 materialise: true
 confirm_timeout: 15
 keep_night: true
-#rooms
-rooms:
-  PASSAGE:
-    enabled: true
-    cost: 200
-    offset: -2
-    seed: CLAY
-  ARBORETUM:
-    enabled: true
-    cost: 325
-    offset: -4
-    seed: LEAVES
-  BEDROOM:
-    enabled: true
-    cost: 475
-    offset: -1
-    seed: GLOWSTONE
-  KITCHEN:
-    enabled: true
-    cost: 450
-    offset: -1
-    seed: PUMPKIN
-  LIBRARY:
-    enabled: true
-    cost: 550
-    offset: -1
-    seed: BOOKSHELF
-  POOL:
-    enabled: true
-    cost: 450
-    offset: -3
-    seed: SNOW_BLOCK
-  VAULT:
-    enabled: true
-    cost: 350
-    offset: -1
-    seed: DISPENSER
-  WORKSHOP:
-    enabled: true
-    cost: 400
-    offset: -1
-    seed: NETHER_BRICK
-  EMPTY:
-    enabled: true
-    cost: 250
-    offset: -1
-    seed: GLASS
-  GRAVITY:
-    enabled: true
-    cost: 625
-    offset: -12
-    seed: MOSSY_COBBLESTONE
-  ANTIGRAVITY:
-    enabled: true
-    cost: 625
-    offset: -2
-    seed: SANDSTONE
-  HARMONY:
-    enabled: true
-    cost: 450
-    offset: -1
-    seed: SMOOTH_STAIRS
-  BAKER:
-    enabled: true
-    cost: 350
-    offset: -1
-    seed: ENDER_STONE
-  WOOD:
-    enabled: true
-    cost: 350
-    offset: -1
-    seed: WOOD
-  FARM:
-    enabled: true
-    cost: 350
-    offset: -1
-    seed: DIRT
-  CROSS:
-    enabled: true
-    cost: 350
-    offset: -1
-    seed: SOUL_SAND
-  GREENHOUSE:
-    enabled: true
-    cost: 450
-    offset: -2
-    seed: MELON_BLOCK
-  LONG:
-    enabled: true
-    cost: 300
-    offset: -2
-    seed: NOTE_BLOCK
-  MUSHROOM:
-    enabled: true
-    cost: 350
-    offset: -1
-    seed: GRAVEL
+count: 0
+emergency_npc: true
+gravity_max_distance: 15
+gravity_max_velocity: 5
+return_room_seed: true
 rooms_require_blocks: false
 rooms_condenser_percent: 100
-#artron energy
-player: 25
-random: 75
-travel: 100
-comehere: 400
-hide: 500
-nether_min: 4250
-the_end_min: 5500
-recharge_distance: 20
-lightning_recharge: 300
-creeper_recharge: 150
-full_charge: 5000
-full_charge_item: NETHER_STAR
-autonomous: 100
-backdoor: 100
-# jettison is a percentage of orginal room cost
-jettison: 75
-jettison_seed: TNT
 inventory_group: 0
 add_perms: true
 allow_mob_farming: true
+spawn_eggs: true
+allow_achievements: true
 allow_autonomous: true
+allow_hads: true
+allow_tp_switch: true
+hads_damage: 10
+hads_distance: 10
 malfunction: 3
 malfunction_end: 3
 malfunction_nether: 3
 exile: false
 per_world_perms: false
+conversion_done: true
