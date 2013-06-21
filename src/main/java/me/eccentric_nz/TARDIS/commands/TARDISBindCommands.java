@@ -32,6 +32,7 @@ import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
 import org.bukkit.ChatColor;
 import org.bukkit.OfflinePlayer;
+import org.bukkit.block.Biome;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -62,6 +63,7 @@ public class TARDISBindCommands implements CommandExecutor, TabCompleter {
         firstArgs.add("cmd"); // type 1
         firstArgs.add("player"); // type 2
         firstArgs.add("area"); // type 3
+        firstArgs.add("biome"); // type 4
         firstArgs.add("remove");
         firstArgs.add("update");
         type_1 = Arrays.asList(new String[]{"hide", "rebuild", "home"});
@@ -208,6 +210,21 @@ public class TARDISBindCommands implements CommandExecutor, TabCompleter {
                     set.put("dest_name", args[1].toLowerCase(Locale.ENGLISH));
                     set.put("type", 3);
                     did = qf.doInsert("destinations", set);
+                }
+                if (args[0].equalsIgnoreCase("biome")) { // type 4
+                    // check valid biome
+                    try {
+                        String upper = args[1].toUpperCase(Locale.ENGLISH);
+                        Biome biome = Biome.valueOf(upper);
+                        if (!upper.equals("HELL") && !upper.equals("SKY")) {
+                            set.put("dest_name", upper);
+                            set.put("type", 4);
+                            did = qf.doInsert("destinations", set);
+                        }
+                    } catch (IllegalArgumentException iae) {
+                        player.sendMessage(plugin.pluginName + "Biome type not valid!");
+                        return true;
+                    }
                 }
                 if (did != 0) {
                     plugin.trackBinder.put(player.getName(), did);
