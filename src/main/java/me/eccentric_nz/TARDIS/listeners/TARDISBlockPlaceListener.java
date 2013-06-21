@@ -16,9 +16,7 @@
  */
 package me.eccentric_nz.TARDIS.listeners;
 
-import java.util.Arrays;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
@@ -52,8 +50,6 @@ import org.bukkit.event.block.BlockPlaceEvent;
  * @author eccentric_nz
  */
 public class TARDISBlockPlaceListener implements Listener {
-
-    public static final List<String> MIDDLE_BLOCKS = Arrays.asList(new String[]{"LAPIS_BLOCK", "STONE", "DIRT", "WOOD", "SANDSTONE", "WOOL", "BRICK", "NETHERRACK", "SOUL_SAND", "SMOOTH_BRICK", "HUGE_MUSHROOM_1", "HUGE_MUSHROOM_2", "ENDER_STONE", "QUARTZ_BLOCK", "CLAY"});
 
     private static String getWallKey(int i, int d) {
         TARDISWalls tw = new TARDISWalls();
@@ -90,7 +86,7 @@ public class TARDISBlockPlaceListener implements Listener {
             final byte middle_data = blockBelow.getData();
             Block blockBottom = blockBelow.getRelative(BlockFace.DOWN);
             // only continue if the redstone torch is placed on top of [JUST ABOUT ANY] BLOCK on top of an IRON/GOLD/DIAMOND_BLOCK
-            if (MIDDLE_BLOCKS.contains(blockBelow.getType().toString()) && (blockBottom.getType() == Material.IRON_BLOCK || blockBottom.getType() == Material.GOLD_BLOCK || blockBottom.getType() == Material.DIAMOND_BLOCK || blockBottom.getType() == Material.EMERALD_BLOCK || blockBottom.getType() == Material.REDSTONE_BLOCK)) {
+            if (plugin.getBlocksConfig().getStringList("tardis_blocks").contains(blockBelow.getType().toString()) && (blockBottom.getType() == Material.IRON_BLOCK || blockBottom.getType() == Material.GOLD_BLOCK || blockBottom.getType() == Material.DIAMOND_BLOCK || blockBottom.getType() == Material.EMERALD_BLOCK || blockBottom.getType() == Material.REDSTONE_BLOCK)) {
                 final TARDISConstants.SCHEMATIC schm;
                 final Player player = event.getPlayer();
                 int max_count = plugin.getConfig().getInt("count");
@@ -241,7 +237,7 @@ public class TARDISBlockPlaceListener implements Listener {
                             wherea.put("name", "tardis");
                             qf.doUpdate("achievements", seta, wherea);
                             TARDISAchievementNotify tan = new TARDISAchievementNotify(plugin);
-                            tan.sendAchievement(player, plugin.ayml.getString("tardis.message"), Material.valueOf(plugin.ayml.getString("tardis.icon")));
+                            tan.sendAchievement(player, plugin.getAchivementConfig().getString("tardis.message"), Material.valueOf(plugin.getAchivementConfig().getString("tardis.icon")));
                         }
                         if (max_count > 0) {
                             player.sendMessage(plugin.pluginName + "You have used up " + (player_count + 1) + " of " + max_count + " TARDIS builds!");

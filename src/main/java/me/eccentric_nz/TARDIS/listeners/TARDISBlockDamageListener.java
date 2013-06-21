@@ -19,6 +19,8 @@ package me.eccentric_nz.TARDIS.listeners;
 import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.ResultSetBlocks;
+import me.eccentric_nz.TARDIS.database.ResultSetTardis;
+import me.eccentric_nz.TARDIS.utility.TARDISHostileDisplacement;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -35,9 +37,11 @@ import org.bukkit.event.block.BlockDamageEvent;
 public class TARDISBlockDamageListener implements Listener {
 
     private final TARDIS plugin;
+    private boolean HADS;
 
     public TARDISBlockDamageListener(TARDIS plugin) {
         this.plugin = plugin;
+        this.HADS = this.plugin.getConfig().getBoolean("allow_hads");
     }
 
     /**
@@ -53,12 +57,51 @@ public class TARDISBlockDamageListener implements Listener {
         String l = b.getLocation().toString();
         HashMap<String, Object> where = new HashMap<String, Object>();
         where.put("location", l);
-        ResultSetBlocks rs = new ResultSetBlocks(plugin, where, false);
-        if (rs.resultSet()) {
-            event.setCancelled(true);
-            if (b.getTypeId() != 71) {
-                p.sendMessage(plugin.pluginName + "You cannot break the TARDIS blocks!");
+        ResultSetBlocks rsb = new ResultSetBlocks(plugin, where, false);
+        if (rsb.resultSet()) {
+            String message = "You cannot break the TARDIS blocks!";
+            boolean m = false;
+            boolean isDoor = false;
+            int id = rsb.getTardis_id();
+            if (HADS && !plugin.tardisDematerialising.contains(id) && !plugin.tardisMaterialising.contains(id) && isOwnerOnline(id)) {
+                if (b.getTypeId() == 71) {
+                    if (isOwner(id, p.getName())) {
+                        isDoor = true;
+                    }
+                }
+                if (!isDoor && rsb.isPolice_box()) {
+                    int damage = (plugin.trackDamage.containsKey(Integer.valueOf(id))) ? plugin.trackDamage.get(Integer.valueOf(id)) : 0;
+                    plugin.trackDamage.put(Integer.valueOf(id), damage + 1);
+                    if (damage == plugin.getConfig().getInt("hads_damage")) {
+                        new TARDISHostileDisplacement(plugin).moveTARDIS(id, p);
+                        m = true;
+                    }
+                    message = "WARNING - HADS initiating in " + (plugin.getConfig().getInt("hads_damage") - damage);
+                }
             }
+            event.setCancelled(true);
+            if (b.getTypeId() != 71 && !m) {
+                p.sendMessage(plugin.pluginName + message);
+            }
+        }
+    }
+
+    private boolean isOwner(int id, String p) {
+        HashMap<String, Object> where = new HashMap<String, Object>();
+        where.put("tardis_id", id);
+        where.put("owner", p);
+        ResultSetTardis rst = new ResultSetTardis(plugin, where, "", false);
+        return rst.resultSet();
+    }
+
+    private boolean isOwnerOnline(int id) {
+        HashMap<String, Object> where = new HashMap<String, Object>();
+        where.put("tardis_id", id);
+        ResultSetTardis rst = new ResultSetTardis(plugin, where, "", false);
+        if (rst.resultSet()) {
+            return plugin.getServer().getOfflinePlayer(rst.getOwner()).isOnline();
+        } else {
+            return false;
         }
     }
 }

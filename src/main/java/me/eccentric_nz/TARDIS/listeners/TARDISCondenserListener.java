@@ -23,13 +23,19 @@ import me.eccentric_nz.TARDIS.artron.TARDISCondensables;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetCondenser;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
+import org.bukkit.Effect;
 import org.bukkit.Location;
+import org.bukkit.Material;
+import org.bukkit.Sound;
+import org.bukkit.block.Block;
 import org.bukkit.block.Chest;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
+import org.bukkit.event.block.Action;
 import org.bukkit.event.inventory.InventoryCloseEvent;
+import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
@@ -60,7 +66,7 @@ public class TARDISCondenserListener implements Listener {
     public void onChestClose(InventoryCloseEvent event) {
         Inventory inv = event.getInventory();
         InventoryHolder holder = inv.getHolder();
-        if (holder instanceof Chest) {
+        if (holder instanceof Chest && inv.getName().equals("§4Artron Condenser")) {
             Chest chest = (Chest) holder;
             Location loc = chest.getLocation();
             String chest_loc = loc.getWorld().getName() + ":" + loc.getBlockX() + ":" + loc.getBlockY() + ":" + loc.getBlockZ();
@@ -68,6 +74,13 @@ public class TARDISCondenserListener implements Listener {
             where.put("condenser", chest_loc);
             ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
             if (rs.resultSet()) {
+                final Player player = (Player) event.getPlayer();
+                try {
+                    Class.forName("org.bukkit.Sound");
+                    player.playSound(player.getLocation(), Sound.CHEST_CLOSE, 1, 1);
+                } catch (ClassNotFoundException e) {
+                    loc.getWorld().playEffect(loc, Effect.CLICK2, 0);
+                }
                 QueryFactory qf = new QueryFactory(plugin);
                 int amount = 0;
                 TARDISCondensables tc = new TARDISCondensables();
@@ -100,6 +113,9 @@ public class TARDISCondenserListener implements Listener {
                                     qf.doInsert("condenser", setc);
                                 }
                             }
+                        } else {
+                            // return items that can't be condensed
+                            player.getInventory().addItem(is);
                         }
                     }
                 }
@@ -107,19 +123,18 @@ public class TARDISCondenserListener implements Listener {
                 amount = Math.round(amount / 2.0F);
                 HashMap<String, Object> wheret = new HashMap<String, Object>();
                 wheret.put("tardis_id", rs.getTardis_id());
-                final Player player = (Player) event.getPlayer();
                 qf.alterEnergyLevel("tardis", amount, wheret, player);
                 String message;
                 if (amount > 0) {
                     message = "You condensed the molecules of the universe itself into " + amount + " artron energy!";
                     // are we doing an achievement?
-                    if (plugin.ayml.getBoolean("energy.enabled")) {
+                    if (plugin.getAchivementConfig().getBoolean("energy.enabled")) {
                         // determine the current percentage
                         int current_level = rs.getArtron_level() + amount;
-                        int fc = plugin.getConfig().getInt("full_charge");
+                        int fc = plugin.getArtronConfig().getInt("full_charge");
                         int percent = Math.round((current_level * 100F) / fc);
                         TARDISAchievementFactory taf = new TARDISAchievementFactory(plugin, player, "energy", 1);
-                        if (percent >= plugin.ayml.getInt("energy.required")) {
+                        if (percent >= plugin.getAchivementConfig().getInt("energy.required")) {
                             taf.doAchievement(percent);
                         } else {
                             taf.doAchievement(Math.round((amount * 100F) / fc));
@@ -129,6 +144,31 @@ public class TARDISCondenserListener implements Listener {
                     message = "There were no valid materials to condense!";
                 }
                 player.sendMessage(plugin.pluginName + message);
+            }
+        }
+    }
+
+    @EventHandler(priority = EventPriority.NORMAL)
+    public void onChestOpen(PlayerInteractEvent event) {
+        Block b = event.getClickedBlock();
+        if (b != null && b.getType().equals(Material.CHEST) && event.getAction().equals(Action.RIGHT_CLICK_BLOCK)) {
+            Location loc = b.getLocation();
+            String chest_loc = loc.getWorld().getName() + ":" + loc.getBlockX() + ":" + loc.getBlockY() + ":" + loc.getBlockZ();
+            HashMap<String, Object> where = new HashMap<String, Object>();
+            where.put("condenser", chest_loc);
+            ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
+            if (rs.resultSet()) {
+                event.setCancelled(true);
+                InventoryHolder holder = (Chest) b.getState();
+                Inventory aec = plugin.getServer().createInventory(holder, 27, "§4Artron Condenser");
+                Player p = event.getPlayer();
+                try {
+                    Class.forName("org.bukkit.Sound");
+                    p.playSound(p.getLocation(), Sound.CHEST_OPEN, 1, 1);
+                } catch (ClassNotFoundException e) {
+                    loc.getWorld().playEffect(loc, Effect.CLICK1, 0);
+                }
+                p.openInventory(aec);
             }
         }
     }

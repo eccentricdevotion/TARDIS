@@ -54,7 +54,9 @@ public class TARDISExterminator {
                 if (f.isDirectory()) {
                     deleteFolder(f);
                 } else {
-                    f.delete();
+                    if (!f.delete()) {
+                        System.out.println("Could not delete file");
+                    }
                 }
             }
         }
@@ -81,10 +83,10 @@ public class TARDISExterminator {
                 TARDISConstants.COMPASS d = rs.getDirection();
                 if (!rs.isHidden()) {
                     // clear the torch
-                    plugin.destroyPB.destroyPlatform(rs.getPlatform(), id);
-                    plugin.destroyPB.destroyTorch(bb_loc);
-                    plugin.destroyPB.destroySign(bb_loc, d);
-                    plugin.destroyPB.destroyPoliceBox(bb_loc, d, id, false);
+//                    plugin.destroyPB.destroyPlatform(rs.getPlatform(), id);
+//                    plugin.destroyPB.destroyTorch(bb_loc);
+//                    plugin.destroyPB.destroySign(bb_loc, d);
+                    plugin.destroyPB.destroyPoliceBox(bb_loc, d, id, false, false, false, null);
                 }
                 String[] chunkworld = chunkLoc.split(":");
                 World cw = plugin.getServer().getWorld(chunkworld[0]);
@@ -186,9 +188,9 @@ public class TARDISExterminator {
             if (sign_loc.getBlockX() == bb_loc.getBlockX() + signx && sign_loc.getBlockY() + signy == bb_loc.getBlockY() && sign_loc.getBlockZ() == bb_loc.getBlockZ() + signz) {
                 if (!rs.isHidden()) {
                     // remove Police Box
-                    plugin.destroyPB.destroyTorch(bb_loc);
-                    plugin.destroyPB.destroySign(bb_loc, d);
-                    plugin.destroyPB.destroyPoliceBox(bb_loc, d, id, false);
+//                    plugin.destroyPB.destroyTorch(bb_loc);
+//                    plugin.destroyPB.destroySign(bb_loc, d);
+                    plugin.destroyPB.destroyPoliceBox(bb_loc, d, id, false, false, false, null);
                 }
                 String[] chunkworld = chunkLoc.split(":");
                 World cw = plugin.getServer().getWorld(chunkworld[0]);
@@ -244,6 +246,10 @@ public class TARDISExterminator {
         HashMap<String, Object> did = new HashMap<String, Object>();
         did.put("tardis_id", id);
         qf.doDelete("doors", did);
+        // remove controls from controls table
+        HashMap<String, Object> oid = new HashMap<String, Object>();
+        oid.put("tardis_id", id);
+        qf.doDelete("controls", oid);
         // remove gravity wells
         HashMap<String, Object> gid = new HashMap<String, Object>();
         gid.put("tardis_id", id);
@@ -279,6 +285,9 @@ public class TARDISExterminator {
             }
             if (plugin.pm.isPluginEnabled("MultiWorld")) {
                 plugin.getServer().dispatchCommand(plugin.console, "mw unload " + name);
+            }
+            if (plugin.pm.isPluginEnabled("My Worlds")) {
+                plugin.getServer().dispatchCommand(plugin.console, "myworlds unload " + name);
             }
             if (plugin.pm.isPluginEnabled("WorldBorder")) {
                 // wb <world> clear

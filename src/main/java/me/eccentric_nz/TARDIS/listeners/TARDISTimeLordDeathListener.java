@@ -17,12 +17,15 @@
 package me.eccentric_nz.TARDIS.listeners;
 
 import java.util.HashMap;
+import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants.COMPASS;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetAreas;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
+import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
+import me.eccentric_nz.TARDIS.travel.TARDISEPSRunnable;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
@@ -64,6 +67,8 @@ public class TARDISTimeLordDeathListener implements Listener {
                 ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
                 // are they a time lord?
                 if (rs.resultSet()) {
+                    final int id = rs.getTardis_id();
+                    final String eps = rs.getEps();
                     HashMap<String, Object> wherep = new HashMap<String, Object>();
                     wherep.put("player", playerNameStr);
                     ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, wherep);
@@ -71,8 +76,21 @@ public class TARDISTimeLordDeathListener implements Listener {
                         // do they have the autonomous circuit on?
                         if (rsp.isAuto_on()) {
                             Location death_loc = player.getLocation();
+                            if (plugin.pm.isPluginEnabled("Citizens") && plugin.getConfig().getBoolean("emergency_npc") && rsp.isEPS_on()) {
+                                // check if there are players in the TARDIS
+                                HashMap<String, Object> wherev = new HashMap<String, Object>();
+                                wherev.put("tardis_id", id);
+                                ResultSetTravellers rst = new ResultSetTravellers(plugin, wherev, true);
+                                if (rst.resultSet()) {
+                                    List data = rst.getData();
+                                    if (data.size() > 0 && !data.contains(playerNameStr)) {
+                                        // schedule the NPC to appear
+                                        TARDISEPSRunnable EPS_runnable = new TARDISEPSRunnable(plugin, rsp.getEPS_message(), player, data, id, eps);
+                                        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, EPS_runnable, 20L);
+                                    }
+                                }
+                            }
                             String death_world = death_loc.getWorld().getName();
-                            int id = rs.getTardis_id();
                             // where is the TARDIS Police Box?
                             String save = rs.getCurrent();
                             String[] save_data = save.split(":");
@@ -109,27 +127,37 @@ public class TARDISTimeLordDeathListener implements Listener {
                                     goto_loc = home_loc;
                                 }
                             }
-                            // destroy police box
-                            COMPASS d = rs.getDirection();
-                            if (!rs.isHidden()) {
-                                plugin.destroyPB.destroyPlatform(rs.getPlatform(), id);
-                                plugin.destroyPB.destroySign(sl, d);
-                                plugin.destroyPB.destroyTorch(sl);
-                                plugin.destroyPB.destroyPoliceBox(sl, d, id, false);
+                            // if the TARDIS is already at the home location, do nothing
+                            if (!home.equals(save)) {
+                                // destroy police box
+                                final COMPASS d = rs.getDirection();
+                                final boolean cham = rs.isChamele_on();
+                                HashMap<String, Object> set = new HashMap<String, Object>();
+                                if (!rs.isHidden()) {
+                                    plugin.destroyPB.destroyPoliceBox(sl, d, id, false, plugin.getConfig().getBoolean("materialise"), cham, player);
+                                } else {
+                                    set.put("hidden", 0);
+                                }
+                                final Location auto_loc = goto_loc;
+                                plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        // rebuild police box - needs to be a delay
+                                        plugin.buildPB.buildPoliceBox(id, auto_loc, d, cham, player, false, false);
+                                    }
+                                }, 200L);
+                                String save_loc = goto_loc.getWorld().getName() + ":" + goto_loc.getBlockX() + ":" + goto_loc.getBlockY() + ":" + goto_loc.getBlockZ();
+                                set.put("save", save_loc);
+                                set.put("current", save_loc);
+                                HashMap<String, Object> tid = new HashMap<String, Object>();
+                                tid.put("tardis_id", id);
+                                QueryFactory qf = new QueryFactory(plugin);
+                                qf.doUpdate("tardis", set, tid);
+                                HashMap<String, Object> wherea = new HashMap<String, Object>();
+                                wherea.put("tardis_id", id);
+                                int amount = plugin.getArtronConfig().getInt("autonomous") * -1;
+                                qf.alterEnergyLevel("tardis", amount, wherea, player);
                             }
-                            // rebuild police box
-                            plugin.buildPB.buildPoliceBox(id, goto_loc, d, rs.isChamele_on(), player, false, false);
-                            String save_loc = goto_loc.getWorld().getName() + ":" + goto_loc.getBlockX() + ":" + goto_loc.getBlockY() + ":" + goto_loc.getBlockZ();
-                            QueryFactory qf = new QueryFactory(plugin);
-                            HashMap<String, Object> tid = new HashMap<String, Object>();
-                            HashMap<String, Object> set = new HashMap<String, Object>();
-                            tid.put("tardis_id", id);
-                            set.put("save", save_loc);
-                            qf.doUpdate("tardis", set, tid);
-                            HashMap<String, Object> wherea = new HashMap<String, Object>();
-                            wherea.put("tardis_id", id);
-                            int amount = plugin.getConfig().getInt("autonomous") * -1;
-                            qf.alterEnergyLevel("tardis", amount, wherea, player);
                         }
                     }
                 }

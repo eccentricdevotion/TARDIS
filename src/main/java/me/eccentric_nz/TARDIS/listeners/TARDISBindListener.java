@@ -100,7 +100,6 @@ public class TARDISBindListener implements Listener {
                     ResultSetTravellers rst = new ResultSetTravellers(plugin, where, false);
                     if (rst.resultSet()) {
                         int id = rst.getTardis_id();
-                        plugin.utils.updateTravellerCount(id);
                         HashMap<String, Object> wheret = new HashMap<String, Object>();
                         wheret.put("tardis_id", id);
                         ResultSetTardis rs = new ResultSetTardis(plugin, wheret, "", false);
@@ -144,6 +143,10 @@ public class TARDISBindListener implements Listener {
                                     case 3: // area
                                         player.performCommand("tardistravel area " + dest_name);
                                         plugin.console.sendMessage(player.getName() + " issued server command: /tardistravel area " + dest_name);
+                                        break;
+                                    case 4: // biome
+                                        player.performCommand("tardistravel biome " + dest_name);
+                                        plugin.console.sendMessage(player.getName() + " issued server command: /tardistravel biome " + dest_name);
                                         break;
                                     default: // (0) save
                                         player.performCommand("tardistravel dest " + dest_name);

@@ -136,7 +136,7 @@ public class TARDISScannerListener implements Listener {
                 if (rs.resultSet()) {
                     int id = rs.getTardis_id();
                     if (plugin.pm.getPlugin("Spout") != null && SpoutManager.getPlayer(player).isSpoutCraftEnabled()) {
-                        SpoutManager.getSoundManager().playGlobalCustomSoundEffect(plugin, "https://dl.dropbox.com/u/53758864/soundeffects/scanner.mp3", false, b, 20, 75);
+                        SpoutManager.getSoundManager().playGlobalCustomSoundEffect(plugin, "https://dl.dropboxusercontent.com/u/53758864/soundeffects/scanner.mp3", false, b, 20, 75);
                     } else {
                         try {
                             Class.forName("org.bukkit.Sound");

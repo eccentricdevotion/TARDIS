@@ -3,11 +3,11 @@ description: A plugin for all Doctor Who fans - create and use a TARDIS! Telepor
 main: me.eccentric_nz.TARDIS.TARDIS
 name: TARDIS
 startup: postworld
-softdepend: [Multiverse-Core,MultiWorld,WorldGuard,WorldBorder,Towny]
-website: http://dev.bukkit.org/server-mods/TARDIS/
-dev-url: http://dev.bukkit.org/server-mods/TARDIS/
+softdepend: [Multiverse-Core,MultiWorld,My Worlds,WorldGuard,WorldBorder,Towny,Citizens]
+website: http://dev.bukkit.org/bukkit-plugins/tardis/
+dev-url: http://dev.bukkit.org/bukkit-plugins/tardis/
 url: http://eccentricdevotion.github.io/TARDIS/
-version: '2.3-beta-1'
+version: '2.5-beta-1'
 permissions:
   tardis.admin:
     description: Allow players access to the TARDIS admin commands.
@@ -33,6 +33,8 @@ permissions:
       tardis.update: true
       tardis.rebuild: true
       tardis.book: true
+      tardis.gravity: true
+      tardis.texture: true
     default: op
   tardis.exile:
     description: Disallow players from travelling anywhere but to areas they have a permission node for.
@@ -50,6 +52,9 @@ permissions:
     description: Allow players to teleport to player locations.
     default: op
   tardis.timetravel.location:
+    description: Allow players to teleport to coordinates.
+    default: op
+  tardis.timetravel.biome:
     description: Allow players to teleport to coordinates.
     default: op
   tardis.list:
@@ -120,6 +125,9 @@ permissions:
       tardis.room.wood: true
       tardis.room.workshop: true
     default: op
+  tardis.gravity:
+    description: Allow players to use the /tardisgravity command.
+    default: op
   tardis.farm:
     description: Allow players to farm mobs.
     default: op
@@ -131,6 +139,9 @@ permissions:
     default: op
   tardis.backdoor:
     description: Allow players to add a TARDIS back door.
+    default: op
+  tardis.texture:
+    description: Allow players to switch texture packs.
     default: op
   tardis.prune.bypass:
     description: Ignore /tardisadmin prune [days] command to remove unused TARDISes.
@@ -186,7 +197,12 @@ commands:
       permission-message: You don't have the permission <permission> to use this command
     update:
       description: Modify the interior of the TARDIS.
-      usage: /<command> update [door|button|save-repeater|x-repeater|z-repeater|y-repeater]
+      usage: /<command> update [door|button|world-repeater|x-repeater|z-repeater|y-repeater|chameleon|save-sign|artron|handbrake|condenser|scanner|backdoor|keyboard|creeper|eps]
+      permission: tardis.update
+      permission-message: You don't have the permission <permission> to use this command
+    secondary:
+      description: Set secondary TARDIS controls.
+      usage: /<command> secondary [button|world-repeater|x-repeater|z-repeater|y-repeater|artron|handbrake|door]
       permission: tardis.update
       permission-message: You don't have the permission <permission> to use this command
     rebuild:
@@ -199,14 +215,53 @@ commands:
       usage: Hold the key in your hand, then type /<command> namekey [new name]
       permission: tardis.timetravel
       permission-message: You don't have the permission <permission> to use this command
-    reload:
-      description: Reloads the TARDIS configuration.
-      usage: /<command> reload
-      permission: tardis.admin
-      permission-message: You don't have the permission <permission> to use this command
     help:
       description: View TARDIS help pages.
       usage: /<command> help [command]
+    comehere:
+      description: Make the TARDIS come to the block you are looking at.
+      usage: /<command> comehere
+      permission: tardis.timetravel
+      permission-message: You don't have the permission <permission> to use this command
+    direction:
+      description: Change the direction the Police Box door is facing.
+      usage: /<command> direction [north|west|south|east]
+      permission: tardis.timetravel
+      permission-message: You don't have the permission <permission> to use this command
+    exterminate:
+      description: Delete your TARDIS.
+      usage: /<command> exterminate
+    hide:
+      description: Hide the TARDIS Police Box.
+      usage: /<command> hide
+      permission: tardis.rebuild
+      permission-message: You don't have the permission <permission> to use this command
+    inside:
+      description: List players inside your TARDIS.
+      usage: /<command> inside
+    jettison:
+      description: Remove a TARDIS room.
+      usage: /<command> jettison [room type]
+      permission: tardis.room
+      permission-message: You don't have the permission <permission> to use this command
+    occupy:
+      description: Toggle TARDIS occupation.
+      usage: /<command> occupy
+      permission: tardis.timetravel
+      permission-message: You don't have the permission <permission> to use this command
+    rescue:
+      description: Rescue a player in the TARDIS.
+      usage: /<command> rescue [player]
+      permission: tardis.timetravel.player
+      permission-message: You don't have the permission <permission> to use this command
+    room:
+      description: Grow a TARDIS room.
+      usage: /<command> room [room type|help]
+      permission: tardis.room
+      permission-message: You don't have the permission <permission> to use this command
+    version:
+      description: Display the TARDIS plugin and CraftBukkit version.
+      usage: /<command> version
   tardistravel:
     aliases: ttravel
     description: Travel to destinations in various ways.
@@ -319,11 +374,17 @@ commands:
     aliases: tgravity
     description: Add or remove gravity well blocks.
     usage: /<command> [up|down|north|west|south|east|remove] [distance] [velocity]
-    permission: tardis.update
+    permission: tardis.gravity
     permission-message: You don't have the permission <permission> to use this command
   tardisbook:
     aliases: tbook
     description: Get and read TARDIS books and start TARDIS achievements.
     usage: /<command> [list|get|start] [book name]
     permission: tardis.book
+    permission-message: You don't have the permission <permission> to use this command
+  tardistexture:
+    aliases: [ttexture,ttext,ttp]
+    description: Set texure pack preferences.
+    usage: /<command> [on|off|in|out] [url]
+    permission: tardis.texture
     permission-message: You don't have the permission <permission> to use this command

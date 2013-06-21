@@ -71,7 +71,7 @@ public class TARDISCreeperDeathListener implements Listener {
                         ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, wherep);
                         QueryFactory qf = new QueryFactory(plugin);
                         HashMap<String, Object> set = new HashMap<String, Object>();
-                        int amount = plugin.getConfig().getInt("creeper_recharge");
+                        int amount = plugin.getArtronConfig().getInt("creeper_recharge");
                         if (!rsp.resultSet()) {
                             set.put("player", killer);
                             set.put("artron_level", amount);
@@ -85,7 +85,7 @@ public class TARDISCreeperDeathListener implements Listener {
                         }
                         p.sendMessage(plugin.pluginName + "You received " + amount + " Artron Energy for killing a charged creeper!");
                         // are we doing an achievement?
-                        if (plugin.ayml.getBoolean("kill.enabled")) {
+                        if (plugin.getAchivementConfig().getBoolean("kill.enabled")) {
                             TARDISAchievementFactory taf = new TARDISAchievementFactory(plugin, p, "kill", 1);
                             taf.doAchievement(1);
                         }

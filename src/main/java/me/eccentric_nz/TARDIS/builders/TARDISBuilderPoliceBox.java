@@ -60,8 +60,8 @@ public class TARDISBuilderPoliceBox {
      * @param mal boolean determining whether a malfunction has occurred
      */
     public void buildPoliceBox(int id, Location l, TARDISConstants.COMPASS d, boolean c, Player p, boolean rebuild, boolean mal) {
-        int plusx, minusx, x, y, plusz, minusz, z, wall_block = 35;
-        byte grey = 8, chameleonData = 11;
+        int wall_block = 35;
+        byte chameleonData = 11;
         if (c) {
             Block chameleonBlock;
             // chameleon circuit is on - get block under TARDIS
@@ -111,10 +111,15 @@ public class TARDISBuilderPoliceBox {
                 runnable.setTask(taskID);
             } else {
                 plugin.tardisMaterialising.add(id);
-                TARDISInstaPoliceBox insta = new TARDISInstaPoliceBox(plugin, l, wall_block, chameleonData, id, d, mal);
+                TARDISInstaPoliceBox insta = new TARDISInstaPoliceBox(plugin, l, wall_block, chameleonData, id, d, p.getName(), mal);
                 insta.buildPoliceBox();
             }
         }
+    }
+
+    public void addPlatform(Location l, boolean rebuild, TARDISConstants.COMPASS d, String p, int id) {
+        int plusx, minusx, x, y, plusz, minusz, z;
+        byte grey = 8;
 
         // add platform if configured and necessary
         World world = l.getWorld();
@@ -133,7 +138,7 @@ public class TARDISBuilderPoliceBox {
         if (plugin.getConfig().getBoolean("platform")) {
             // check if user has platform pref
             HashMap<String, Object> wherep = new HashMap<String, Object>();
-            wherep.put("player", p.getName());
+            wherep.put("player", p);
             ResultSetPlayerPrefs pp = new ResultSetPlayerPrefs(plugin, wherep);
             boolean userPlatform;
             if (pp.resultSet()) {
@@ -142,7 +147,7 @@ public class TARDISBuilderPoliceBox {
                 userPlatform = true;
             }
             if (userPlatform) {
-                List<Block> platform_blocks = null;
+                List<Block> platform_blocks;
                 switch (d) {
                     case SOUTH:
                         platform_blocks = Arrays.asList(world.getBlockAt(x - 1, y, minusz - 1), world.getBlockAt(x, y, minusz - 1), world.getBlockAt(x + 1, y, minusz - 1), world.getBlockAt(x - 1, y, minusz - 2), world.getBlockAt(x, y, minusz - 2), world.getBlockAt(x + 1, y, minusz - 2));

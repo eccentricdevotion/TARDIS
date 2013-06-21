@@ -50,13 +50,9 @@ public class ResultSetTardis {
     private String home;
     private String save;
     private String current;
+    private String fast_return;
     private String replaced;
     private String chest;
-    private String button;
-    private String repeater0;
-    private String repeater1;
-    private String repeater2;
-    private String repeater3;
     private String companions;
     private String platform;
     private String save_sign;
@@ -65,12 +61,11 @@ public class ResultSetTardis {
     private int chameleon_id;
     private byte chameleon_data;
     private int artron_level;
-    private String artron_button;
     private int middle_id;
     private byte middle_data;
     private String creeper;
     private String condenser;
-    private String handbrake;
+    private String beacon;
     private boolean handbrake_on;
     private boolean tardis_init;
     private boolean recharging;
@@ -79,6 +74,7 @@ public class ResultSetTardis {
     private boolean hidden;
     private long lastuse;
     private boolean iso_on;
+    private String eps;
     private ArrayList<HashMap<String, String>> data = new ArrayList<HashMap<String, String>>();
 
     /**
@@ -122,7 +118,6 @@ public class ResultSetTardis {
             thelimit = " LIMIT " + limit;
         }
         String query = "SELECT * FROM tardis" + wheres + thelimit;
-        //plugin.debug(query);
         try {
             statement = connection.prepareStatement(query);
             if (where != null) {
@@ -157,13 +152,9 @@ public class ResultSetTardis {
                     this.home = rs.getString("home");
                     this.save = rs.getString("save");
                     this.current = rs.getString("current");
+                    this.fast_return = rs.getString("fast_return");
                     this.replaced = rs.getString("replaced");
                     this.chest = rs.getString("chest");
-                    this.button = rs.getString("button");
-                    this.repeater0 = rs.getString("repeater0");
-                    this.repeater1 = rs.getString("repeater1");
-                    this.repeater2 = rs.getString("repeater2");
-                    this.repeater3 = rs.getString("repeater3");
                     this.companions = rs.getString("companions");
                     this.platform = rs.getString("platform");
                     this.save_sign = rs.getString("save_sign");
@@ -172,12 +163,11 @@ public class ResultSetTardis {
                     this.chameleon_id = rs.getInt("chameleon_id");
                     this.chameleon_data = rs.getByte("chameleon_data");
                     this.artron_level = rs.getInt("artron_level");
-                    this.artron_button = rs.getString("artron_button");
                     this.middle_id = rs.getInt("middle_id");
                     this.middle_data = rs.getByte("middle_data");
                     this.creeper = rs.getString("creeper");
                     this.condenser = rs.getString("condenser");
-                    this.handbrake = rs.getString("handbrake");
+                    this.beacon = rs.getString("beacon");
                     this.handbrake_on = rs.getBoolean("handbrake_on");
                     this.tardis_init = rs.getBoolean("tardis_init");
                     this.recharging = rs.getBoolean("recharging");
@@ -186,6 +176,7 @@ public class ResultSetTardis {
                     this.hidden = rs.getBoolean("hidden");
                     this.lastuse = rs.getLong("lastuse");
                     this.iso_on = rs.getBoolean("iso_on");
+                    this.eps = rs.getString("eps");
                 }
             } else {
                 return false;
@@ -240,32 +231,16 @@ public class ResultSetTardis {
         return current;
     }
 
+    public String getFast_return() {
+        return fast_return;
+    }
+
     public String getReplaced() {
         return replaced;
     }
 
     public String getChest() {
         return chest;
-    }
-
-    public String getButton() {
-        return button;
-    }
-
-    public String getRepeater0() {
-        return repeater0;
-    }
-
-    public String getRepeater1() {
-        return repeater1;
-    }
-
-    public String getRepeater2() {
-        return repeater2;
-    }
-
-    public String getRepeater3() {
-        return repeater3;
     }
 
     public String getCompanions() {
@@ -300,10 +275,6 @@ public class ResultSetTardis {
         return artron_level;
     }
 
-    public String getArtron_button() {
-        return artron_button;
-    }
-
     public int getMiddle_id() {
         return middle_id;
     }
@@ -320,8 +291,8 @@ public class ResultSetTardis {
         return condenser;
     }
 
-    public String getHandbrake() {
-        return handbrake;
+    public String getBeacon() {
+        return beacon;
     }
 
     public boolean isHandbrake_on() {
@@ -354,6 +325,10 @@ public class ResultSetTardis {
 
     public boolean isIso_on() {
         return iso_on;
+    }
+
+    public String getEps() {
+        return eps;
     }
 
     public ArrayList<HashMap<String, String>> getData() {

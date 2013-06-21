@@ -16,8 +16,8 @@
  */
 package me.eccentric_nz.TARDIS.builders;
 
-import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
@@ -49,15 +49,17 @@ public class TARDISInstaPoliceBox {
     private int tid;
     private int mat;
     private byte data;
+    private String p;
     private boolean mal;
 
-    public TARDISInstaPoliceBox(TARDIS plugin, Location location, int mat, byte data, int tid, TARDISConstants.COMPASS d, boolean mal) {
+    public TARDISInstaPoliceBox(TARDIS plugin, Location location, int mat, byte data, int tid, TARDISConstants.COMPASS d, String p, boolean mal) {
         this.plugin = plugin;
         this.d = d;
         this.location = location;
         this.tid = tid;
         this.mat = mat;
         this.data = data;
+        this.p = p;
         this.mal = mal;
     }
 
@@ -88,7 +90,8 @@ public class TARDISInstaPoliceBox {
         world = location.getWorld();
         int south = mat, west = mat, north = mat, east = mat, signx = 0, signz = 0;
         String doorloc = "";
-
+        // platform
+        plugin.buildPB.addPlatform(location, false, d, p, tid);
         QueryFactory qf = new QueryFactory(plugin);
         HashMap<String, Object> ps = new HashMap<String, Object>();
         ps.put("tardis_id", tid);
@@ -249,15 +252,15 @@ public class TARDISInstaPoliceBox {
         where.put("tardis_id", tid);
         ResultSetTravellers rst = new ResultSetTravellers(plugin, where, true);
         if (rst.resultSet()) {
-            final ArrayList<HashMap<String, String>> travellers = rst.getData();
+            final List<String> travellers = rst.getData();
             plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
                 @Override
                 public void run() {
-                    for (HashMap<String, String> map : travellers) {
-                        Player p = plugin.getServer().getPlayer(map.get("player"));
+                    for (String s : travellers) {
+                        Player p = plugin.getServer().getPlayer(s);
                         if (p != null) {
-                            String message = (mal) ? "There was a malfunction and the emergency handrake was engaged! Scan location before exit!" : "LEFT-click the handbrake to exit!";
-                            plugin.getServer().getPlayer(map.get("player")).sendMessage(plugin.pluginName + message);
+                            String message = (mal) ? "There was a malfunction and the emergency handbrake was engaged! Scan location before exit!" : "LEFT-click the handbrake to exit!";
+                            p.sendMessage(plugin.pluginName + message);
                         }
                     }
                 }

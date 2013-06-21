@@ -294,4 +294,32 @@ public class QueryFactory {
             }
         }
     }
+
+    public void insertControl(int id, int type, String l, int s) {
+        Statement statement = null;
+        try {
+            statement = connection.createStatement();
+            String select = "SELECT c_id FROM controls WHERE tardis_id = " + id + " AND type = " + type + " AND secondary = " + s;
+            ResultSet rs = statement.executeQuery(select);
+            if (rs.isBeforeFirst()) {
+                // update
+                String update = "UPDATE controls SET location = '" + l + "' WHERE c_id = " + rs.getInt("c_id");
+                statement.executeUpdate(update);
+            } else {
+                // insert
+                String insert = "INSERT INTO controls (tardis_id, type, location, secondary) VALUES (" + id + ", " + type + ", '" + l + "', " + s + ")";
+                statement.executeUpdate(insert);
+            }
+        } catch (SQLException e) {
+            plugin.debug("Insert control error! " + e.getMessage());
+        } finally {
+            try {
+                if (statement != null) {
+                    statement.close();
+                }
+            } catch (Exception e) {
+                plugin.debug("Error closing insert control statement! " + e.getMessage());
+            }
+        }
+    }
 }

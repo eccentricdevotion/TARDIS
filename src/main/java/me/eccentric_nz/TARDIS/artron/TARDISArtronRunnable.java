@@ -56,7 +56,7 @@ public class TARDISArtronRunnable implements Runnable {
         HashMap<String, Object> where = new HashMap<String, Object>();
         where.put("tardis_id", id);
         boolean near = isNearCharger(id);
-        if (!near || level > (plugin.getConfig().getInt("full_charge") - 1)) {
+        if (!near || level > (plugin.getArtronConfig().getInt("full_charge") - 1)) {
             plugin.getServer().getScheduler().cancelTask(task);
             task = 0;
             HashMap<String, Object> set = new HashMap<String, Object>();
@@ -64,7 +64,7 @@ public class TARDISArtronRunnable implements Runnable {
             qf.doUpdate("tardis", set, where);
         } else if (near) {
             // calculate percentage
-            int onepercent = Math.round(plugin.getConfig().getInt("full_charge") / 100.0F);
+            int onepercent = Math.round(plugin.getArtronConfig().getInt("full_charge") / 100.0F);
             // update TARDIS artron_level
             qf.alterEnergyLevel("tardis", onepercent, where, null);
         }
@@ -126,7 +126,7 @@ public class TARDISArtronRunnable implements Runnable {
         HashMap<String, Object> where = new HashMap<String, Object>();
         where.put("tardis_id", id);
         ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
-        return (rs.resultSet()) ? rs.getArtron_level() : plugin.getConfig().getInt("full_charge");
+        return (rs.resultSet()) ? rs.getArtron_level() : plugin.getArtronConfig().getInt("full_charge");
     }
 
     public void setTask(int task) {

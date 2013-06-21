@@ -46,17 +46,18 @@ public class TARDISRoomSchematicReader {
         Tag tag = items.get(key);
         return tag;
     }
-
     private TARDIS plugin;
     private HashMap<Integer, Integer> blockConversion = new HashMap<Integer, Integer>();
-    private List<Byte> ignoreBlocks = Arrays.asList(new Byte[]{0, 14, 19, 52, 79});
+    private List<Byte> ignoreBlocks = Arrays.asList(new Byte[]{0, 8, 9, 10, 11, 14, 19, 52, 79});
 
     public TARDISRoomSchematicReader(TARDIS plugin) {
         this.plugin = plugin;
         blockConversion.put(1, 4); // stone -> cobblestone
         blockConversion.put(2, 3); // grass -> dirt
         blockConversion.put(18, 6); // leaves -> sapling
+        blockConversion.put(30, 287); // cobweb -> string
         blockConversion.put(31, 295); // long grass -> seeds
+        blockConversion.put(43, 44); // double stone slab -> stone slab
         blockConversion.put(55, 331); // redstone wire -> redstone dust
         blockConversion.put(59, 295); // crops -> seeds
         blockConversion.put(60, 3); // farmland -> dirt
@@ -64,6 +65,7 @@ public class TARDISRoomSchematicReader {
         blockConversion.put(68, 323); // wall sign -> sign
         blockConversion.put(76, 75); // restone torch on -> redstone torch off
         blockConversion.put(83, 338); // sugarcane block -> sugarcane item
+        blockConversion.put(92, 69); // cake block -> lever
         blockConversion.put(93, 356); // redstone repeater off -> redstone repeater item
         blockConversion.put(94, 356); // redstone repeater on -> redstone repeater item
         blockConversion.put(99, 39); // mushroom block -> brown mushroom

@@ -1,14 +1,16 @@
 # TODO
+
+## Current version `2.5`
+1. TARDIS shield
+2. Permission-based world creation - player's without permission use the default world, those with it get a TARDIS_WORLD
+3. Make the Police Box configurable via a schematic
+4. Chameleon disable
  
-## Current version `2.2-release`
-1. Add video for books/achievements
-
-## Next version `2.3-beta-1`
-1. Check what happens when companions steal the TARDIS
-2. Multiple controls spaces i.e. functional secondary consoles
-
-## Future version `2.4+`
-1. Add an Emergency Program system. If a Time Lord dies, the autonomous circuit is on, and there are companions inside the TARDIS, then a fake "player" will spawn near the console and give a prerecorded "message" to the TARDIS occupants through chat. Add a preference setting for it, as well as making the message configurable by the player.
+## Next version `2.6+`
+1. Jettison the whole room (including walls), will require new room schematics...
+2. Architectural Reconfiguration System / Map room
+3. Add new Minecraft 1.6 items and blocks
+4. Add sounds with Resource packs?
 
 ## Minecraft API when available `3.0?`
 1. Recreate everything with the new API :)

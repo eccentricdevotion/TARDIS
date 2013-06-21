@@ -16,16 +16,24 @@
  */
 package me.eccentric_nz.TARDIS.commands;
 
+import com.google.common.collect.ImmutableList;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.tardischunkgenerator.TARDISChunkGenerator;
 import org.bukkit.ChatColor;
+import org.bukkit.World;
+import org.bukkit.WorldType;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
+import org.bukkit.generator.ChunkGenerator;
+import org.bukkit.util.StringUtil;
 
 /**
  * Command /tardisgravity [arguments].
@@ -36,11 +44,12 @@ import org.bukkit.entity.Player;
  *
  * @author eccentric_nz
  */
-public class TARDISGravityCommands implements CommandExecutor {
+public class TARDISGravityCommands implements CommandExecutor, TabCompleter {
 
     private TARDIS plugin;
     private List<String> directions = new ArrayList<String>();
     private HashMap<String, Double> gravityDirection = new HashMap<String, Double>();
+    private final ImmutableList<String> ROOT_SUBS;
 
     public TARDISGravityCommands(TARDIS plugin) {
         this.plugin = plugin;
@@ -51,6 +60,7 @@ public class TARDISGravityCommands implements CommandExecutor {
         directions.add("south");
         directions.add("east");
         directions.add("remove");
+        ROOT_SUBS = ImmutableList.copyOf(directions);
         gravityDirection.put("down", 0D);
         gravityDirection.put("up", 1D);
         gravityDirection.put("north", 2D);
@@ -70,8 +80,21 @@ public class TARDISGravityCommands implements CommandExecutor {
                 player = (Player) sender;
             }
             if (player == null) {
-                sender.sendMessage(plugin.pluginName + ChatColor.RED + " This command can only be run by a player");
+                sender.sendMessage(plugin.pluginName + ChatColor.RED + "This command can only be run by a player");
                 return false;
+            }
+            if (!player.hasPermission("tardis.gravity")) {
+                sender.sendMessage(plugin.pluginName + ChatColor.RED + "You do not have permission to use this command!");
+                return true;
+            }
+            // check they are still in the TARDIS world
+            World world = player.getLocation().getWorld();
+            String name = world.getName();
+            ChunkGenerator gen = world.getGenerator();
+            boolean special = name.contains("TARDIS_TimeVortex") && (world.getWorldType().equals(WorldType.FLAT) || gen instanceof TARDISChunkGenerator);
+            if (!name.equals("TARDIS_WORLD_" + player.getName()) && !special) {
+                player.sendMessage(plugin.pluginName + "You must be in a TARDIS world to make a gravity well!");
+                return true;
             }
             if (args.length < 1) {
                 return false;
@@ -86,6 +109,10 @@ public class TARDISGravityCommands implements CommandExecutor {
                     }
                     try {
                         values[1] = Double.parseDouble(args[1]);
+                        if (values[1] > plugin.getConfig().getDouble("gravity_max_distance")) {
+                            player.sendMessage(plugin.pluginName + "That distance is too far!");
+                            return true;
+                        }
                     } catch (NumberFormatException e) {
                         player.sendMessage(plugin.pluginName + "Second argument must be a number!");
                         return false;
@@ -95,6 +122,10 @@ public class TARDISGravityCommands implements CommandExecutor {
                 }
                 if (args.length == 3) {
                     values[2] = Double.parseDouble(args[2]);
+                    if (values[2] > plugin.getConfig().getDouble("gravity_max_velocity")) {
+                        player.sendMessage(plugin.pluginName + "That velocity is too fast!");
+                        return true;
+                    }
                 } else {
                     values[2] = 0.5D;
                 }
@@ -105,5 +136,17 @@ public class TARDISGravityCommands implements CommandExecutor {
             }
         }
         return false;
+    }
+
+    @Override
+    public List<String> onTabComplete(CommandSender sender, Command command, String label, String[] args) {
+        if (args.length <= 1) {
+            return partial(args[0], ROOT_SUBS);
+        }
+        return ImmutableList.of();
+    }
+
+    private List<String> partial(String token, Collection<String> from) {
+        return StringUtil.copyPartialMatches(token, from, new ArrayList<String>(from.size()));
     }
 }

@@ -16,8 +16,10 @@
  */
 package me.eccentric_nz.TARDIS.commands;
 
+import com.google.common.collect.ImmutableList;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -30,10 +32,13 @@ import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
 import org.bukkit.ChatColor;
 import org.bukkit.OfflinePlayer;
+import org.bukkit.block.Biome;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
+import org.bukkit.util.StringUtil;
 
 /**
  * A Time Control Unit is a golden sphere about the size of a Cricket ball. It
@@ -44,11 +49,13 @@ import org.bukkit.entity.Player;
  *
  * @author eccentric_nz
  */
-public class TARDISBindCommands implements CommandExecutor {
+public class TARDISBindCommands implements CommandExecutor, TabCompleter {
 
     private final TARDIS plugin;
     private List<String> firstArgs = new ArrayList<String>();
     private List<String> type_1;
+    private final ImmutableList<String> ROOT_SUBS;
+    private final ImmutableList<String> T1_SUBS;
 
     public TARDISBindCommands(TARDIS plugin) {
         this.plugin = plugin;
@@ -56,9 +63,12 @@ public class TARDISBindCommands implements CommandExecutor {
         firstArgs.add("cmd"); // type 1
         firstArgs.add("player"); // type 2
         firstArgs.add("area"); // type 3
+        firstArgs.add("biome"); // type 4
         firstArgs.add("remove");
         firstArgs.add("update");
         type_1 = Arrays.asList(new String[]{"hide", "rebuild", "home"});
+        ROOT_SUBS = ImmutableList.copyOf(firstArgs);
+        T1_SUBS = ImmutableList.copyOf(type_1);
     }
 
     @Override
@@ -201,6 +211,21 @@ public class TARDISBindCommands implements CommandExecutor {
                     set.put("type", 3);
                     did = qf.doInsert("destinations", set);
                 }
+                if (args[0].equalsIgnoreCase("biome")) { // type 4
+                    // check valid biome
+                    try {
+                        String upper = args[1].toUpperCase(Locale.ENGLISH);
+                        Biome biome = Biome.valueOf(upper);
+                        if (!upper.equals("HELL") && !upper.equals("SKY")) {
+                            set.put("dest_name", upper);
+                            set.put("type", 4);
+                            did = qf.doInsert("destinations", set);
+                        }
+                    } catch (IllegalArgumentException iae) {
+                        player.sendMessage(plugin.pluginName + "Biome type not valid!");
+                        return true;
+                    }
+                }
                 if (did != 0) {
                     plugin.trackBinder.put(player.getName(), did);
                     player.sendMessage(plugin.pluginName + "Click the block you want to bind to this save location.");
@@ -209,5 +234,27 @@ public class TARDISBindCommands implements CommandExecutor {
             }
         }
         return false;
+    }
+
+    @Override
+    public List<String> onTabComplete(CommandSender sender, Command command, String label, String[] args) {
+        // Remember that we can return null to default to online player name matching
+        String lastArg = args[args.length - 1];
+
+        if (args.length <= 1) {
+            return partial(args[0], ROOT_SUBS);
+        } else if (args.length == 2) {
+            String sub = args[0];
+            if (sub.equals("player")) {
+                return null;
+            } else if (sub.equals("cmd")) {
+                return partial(lastArg, T1_SUBS);
+            }
+        }
+        return ImmutableList.of();
+    }
+
+    private List<String> partial(String token, Collection<String> from) {
+        return StringUtil.copyPartialMatches(token, from, new ArrayList<String>(from.size()));
     }
 }

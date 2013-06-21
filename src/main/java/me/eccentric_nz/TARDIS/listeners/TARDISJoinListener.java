@@ -21,7 +21,10 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.achievement.TARDISBook;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetAchievements;
+import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
+import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.thirdparty.Version;
+import me.eccentric_nz.TARDIS.utility.TARDISTexturePackChanger;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -58,10 +61,10 @@ public class TARDISJoinListener implements Listener {
      */
     @EventHandler(priority = EventPriority.MONITOR)
     public void onJoin(PlayerJoinEvent event) {
-        if (bukkitversion.compareTo(preIMversion) > 0 || (bukkitversion.compareTo(preIMversion) == 0 && SUBversion.compareTo(preSUBversion) > 0)) {
-            final Player player = event.getPlayer();
+        final Player player = event.getPlayer();
+        String playerNameStr = player.getName();
+        if ((bukkitversion.compareTo(preIMversion) > 0 || (bukkitversion.compareTo(preIMversion) == 0 && SUBversion.compareTo(preSUBversion) > 0)) && plugin.getConfig().getBoolean("allow_achievements")) {
             if (player.hasPermission("tardis.book")) {
-                String playerNameStr = player.getName();
                 // check if they have started building a TARDIS yet
                 HashMap<String, Object> where = new HashMap<String, Object>();
                 where.put("player", playerNameStr);
@@ -77,6 +80,29 @@ public class TARDISJoinListener implements Listener {
                     TARDISBook book = new TARDISBook(plugin);
                     // title, author, filename, player
                     book.writeBook("Get transport", "Rassilon", "tardis", player);
+                }
+            }
+        }
+        if (plugin.getConfig().getBoolean("allow_tp_switch") && player.hasPermission("tardis.texture")) {
+            // are they in the TARDIS?
+            HashMap<String, Object> where = new HashMap<String, Object>();
+            where.put("player", playerNameStr);
+            ResultSetTravellers rst = new ResultSetTravellers(plugin, where, false);
+            if (rst.resultSet()) {
+                // is texture switching on?
+                HashMap<String, Object> wherep = new HashMap<String, Object>();
+                wherep.put("player", playerNameStr);
+                final ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, wherep);
+                if (rsp.resultSet()) {
+                    if (rsp.isTexture_on()) {
+                        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
+                            @Override
+                            public void run() {
+                                new TARDISTexturePackChanger(plugin).changeTP(player, rsp.getTexture_in());
+
+                            }
+                        }, 50L);
+                    }
                 }
             }
         }

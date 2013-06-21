@@ -17,7 +17,6 @@
 package me.eccentric_nz.TARDIS.travel;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 import java.util.Set;
@@ -40,15 +39,15 @@ import org.bukkit.entity.Player;
  *
  * @author eccentric_nz
  */
-public class TARDISTimetravel {
-    private static int[] startLoc = new int[6];
+public class TARDISTimeTravel {
 
+    private static int[] startLoc = new int[6];
     private Location dest;
     private TARDIS plugin;
     private List<Material> goodMaterials = new ArrayList<Material>();
     private TARDISPluginRespect respect;
 
-    public TARDISTimetravel(TARDIS plugin) {
+    public TARDISTimeTravel(TARDIS plugin) {
         this.plugin = plugin;
         // add good materials
         goodMaterials.add(Material.AIR);
@@ -78,7 +77,7 @@ public class TARDISTimetravel {
      * travel to.
      * @return a random Location
      */
-    public Location randomDestination(Player p, byte rx, byte rz, byte ry, TARDISConstants.COMPASS d, String e) {
+    public Location randomDestination(Player p, byte rx, byte rz, byte ry, TARDISConstants.COMPASS d, String e, String this_world) {
         int startx, starty, startz, resetx, resetz, listlen, rw;
         World randworld = null;
         boolean danger = true;
@@ -93,35 +92,31 @@ public class TARDISTimetravel {
         // get worlds
         Set<String> worldlist = plugin.getConfig().getConfigurationSection("worlds").getKeys(false);
         List<World> allowedWorlds = new ArrayList<World>();
-        if (e.equals("NORMAL:NETHER:THE_END")) {
-            for (String o : worldlist) {
-                if (plugin.getConfig().getBoolean("include_default_world") || !plugin.getConfig().getBoolean("default_world")) {
-                    if (plugin.getConfig().getBoolean("worlds." + o)) {
-                        allowedWorlds.add(plugin.getServer().getWorld(o));
-                    }
-                } else {
-                    if (!o.equals(plugin.getConfig().getString("default_world_name"))) {
-                        if (plugin.getConfig().getBoolean("worlds." + o)) {
-                            allowedWorlds.add(plugin.getServer().getWorld(o));
-                        }
-                    }
-                }
-            }
+
+        if (e.equals("THIS")) {
+            allowedWorlds.add(plugin.getServer().getWorld(this_world));
         } else {
-            List<String> envOptions = Arrays.asList(e.split(":"));
+            //List<String> envOptions = Arrays.asList(e.split(":"));
             for (String o : worldlist) {
-                String env = plugin.getServer().getWorld(o).getEnvironment().toString();
-                if (envOptions.contains(env)) {
-                    if (plugin.getConfig().getBoolean("include_default_world") || !plugin.getConfig().getBoolean("default_world")) {
-                        if (plugin.getConfig().getBoolean("worlds." + o)) {
-                            allowedWorlds.add(plugin.getServer().getWorld(o));
-                        }
-                    } else {
-                        if (!o.equals(plugin.getConfig().getString("default_world_name"))) {
+                World ww = plugin.getServer().getWorld(o);
+                if (ww != null) {
+                    String env = ww.getEnvironment().toString();
+                    if (e.equalsIgnoreCase(env)) {
+                        if (plugin.getConfig().getBoolean("include_default_world") || !plugin.getConfig().getBoolean("default_world")) {
                             if (plugin.getConfig().getBoolean("worlds." + o)) {
                                 allowedWorlds.add(plugin.getServer().getWorld(o));
                             }
+                        } else {
+                            if (!o.equals(plugin.getConfig().getString("default_world_name"))) {
+                                if (plugin.getConfig().getBoolean("worlds." + o)) {
+                                    allowedWorlds.add(plugin.getServer().getWorld(o));
+                                }
+                            }
                         }
+                    }
+                    // remove the world the Police Box is in
+                    if (this_world != null && allowedWorlds.size() > 1 && allowedWorlds.contains(plugin.getServer().getWorld(this_world))) {
+                        allowedWorlds.remove(plugin.getServer().getWorld(this_world));
                     }
                 }
             }

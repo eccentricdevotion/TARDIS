@@ -30,6 +30,9 @@ import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.rooms.TARDISWalls;
 import me.eccentric_nz.TARDIS.utility.TARDISMaterials;
 import org.bukkit.ChatColor;
+import org.bukkit.Location;
+import org.bukkit.World;
+import org.bukkit.block.Block;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -48,7 +51,7 @@ import org.bukkit.entity.Player;
 public class TARDISPrefsCommands implements CommandExecutor {
 
     public static String ucfirst(String str) {
-        return str.substring(0, 1).toUpperCase(Locale.ENGLISH) + str.substring(1).toLowerCase();
+        return str.substring(0, 1).toUpperCase(Locale.ENGLISH) + str.substring(1).toLowerCase(Locale.ENGLISH);
     }
     private final TARDIS plugin;
     private List<String> firstArgs = new ArrayList<String>();
@@ -56,7 +59,11 @@ public class TARDISPrefsCommands implements CommandExecutor {
     public TARDISPrefsCommands(TARDIS plugin) {
         this.plugin = plugin;
         firstArgs.add("auto");
+        firstArgs.add("beacon");
+        firstArgs.add("eps");
+        firstArgs.add("eps_message");
         firstArgs.add("floor");
+        firstArgs.add("hads");
         firstArgs.add("isomorphic");
         firstArgs.add("key");
         firstArgs.add("platform");
@@ -84,6 +91,17 @@ public class TARDISPrefsCommands implements CommandExecutor {
             String pref = args[0].toLowerCase(Locale.ENGLISH);
             if (firstArgs.contains(pref)) {
                 if (player.hasPermission("tardis.timetravel")) {
+                    // get the players preferences
+                    HashMap<String, Object> wherepp = new HashMap<String, Object>();
+                    wherepp.put("player", player.getName());
+                    ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, wherepp);
+                    QueryFactory qf = new QueryFactory(plugin);
+                    HashMap<String, Object> set = new HashMap<String, Object>();
+                    // if no prefs record found, make one
+                    if (!rsp.resultSet()) {
+                        set.put("player", player.getName());
+                        qf.doInsert("player_prefs", set);
+                    }
                     if (pref.equals("key")) {
                         if (args.length < 2) {
                             sender.sendMessage(plugin.pluginName + "You need to specify a key item!");
@@ -94,12 +112,11 @@ public class TARDISPrefsCommands implements CommandExecutor {
                             sender.sendMessage(plugin.pluginName + ChatColor.RED + "That is not a valid Material! Try checking http://jd.bukkit.org/apidocs/org/bukkit/Material.html");
                             return false;
                         } else {
-                            QueryFactory qf = new QueryFactory(plugin);
-                            HashMap<String, Object> set = new HashMap<String, Object>();
-                            set.put("key", setMaterial);
+                            HashMap<String, Object> setk = new HashMap<String, Object>();
+                            setk.put("key", setMaterial);
                             HashMap<String, Object> where = new HashMap<String, Object>();
                             where.put("player", player.getName());
-                            qf.doUpdate("player_prefs", set, where);
+                            new QueryFactory(plugin).doUpdate("player_prefs", setk, where);
                             sender.sendMessage(plugin.pluginName + "Key preference saved.");
                             return true;
                         }
@@ -113,18 +130,33 @@ public class TARDISPrefsCommands implements CommandExecutor {
                             int iso = (rs.isIso_on()) ? 0 : 1;
                             String onoff = (rs.isIso_on()) ? "OFF" : "ON";
                             int id = rs.getTardis_id();
-                            HashMap<String, Object> set = new HashMap<String, Object>();
-                            set.put("iso_on", iso);
+                            HashMap<String, Object> seti = new HashMap<String, Object>();
+                            seti.put("iso_on", iso);
                             HashMap<String, Object> wheret = new HashMap<String, Object>();
                             wheret.put("tardis_id", id);
-                            QueryFactory qf = new QueryFactory(plugin);
-                            qf.doUpdate("tardis", set, wheret);
+                            new QueryFactory(plugin).doUpdate("tardis", seti, wheret);
                             sender.sendMessage(plugin.pluginName + "Isomorphic controls were turned " + onoff + "!");
                             return true;
                         } else {
                             sender.sendMessage(plugin.pluginName + "You don't have a TARDIS yet!");
                             return true;
                         }
+                    }
+                    if (pref.equals("eps_message")) {
+                        int count = args.length;
+                        StringBuilder buf = new StringBuilder();
+                        for (int i = 1; i < count; i++) {
+                            buf.append(args[i]).append(" ");
+                        }
+                        String tmp = buf.toString();
+                        String message = tmp.substring(0, tmp.length() - 1);
+                        HashMap<String, Object> sete = new HashMap<String, Object>();
+                        sete.put("eps_message", message);
+                        HashMap<String, Object> where = new HashMap<String, Object>();
+                        where.put("player", player.getName());
+                        new QueryFactory(plugin).doUpdate("player_prefs", sete, where);
+                        sender.sendMessage(plugin.pluginName + "The Emergency Program System message was set!");
+                        return true;
                     }
                     if (pref.equals("wall") || pref.equals("floor")) {
                         if (args.length < 2) {
@@ -155,12 +187,11 @@ public class TARDISPrefsCommands implements CommandExecutor {
                             }
                             return true;
                         }
-                        QueryFactory qf = new QueryFactory(plugin);
-                        HashMap<String, Object> set = new HashMap<String, Object>();
-                        set.put(pref, wall_mat);
+                        HashMap<String, Object> setw = new HashMap<String, Object>();
+                        setw.put(pref, wall_mat);
                         HashMap<String, Object> where = new HashMap<String, Object>();
                         where.put("player", player.getName());
-                        qf.doUpdate("player_prefs", set, where);
+                        new QueryFactory(plugin).doUpdate("player_prefs", setw, where);
                         sender.sendMessage(plugin.pluginName + ucfirst(pref) + " material saved.");
                         return true;
                     }
@@ -168,30 +199,27 @@ public class TARDISPrefsCommands implements CommandExecutor {
                         sender.sendMessage(plugin.pluginName + "You need to specify if " + pref + " should be on or off!");
                         return false;
                     }
-                    List<String> was = Arrays.asList(new String[]{"auto", "platform"});
-                    // get the players preferences
-                    HashMap<String, Object> where = new HashMap<String, Object>();
-                    where.put("player", player.getName());
-                    ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, where);
-                    QueryFactory qf = new QueryFactory(plugin);
-                    HashMap<String, Object> set = new HashMap<String, Object>();
-                    if (!rsp.resultSet()) {
-                        set.put("player", player.getName());
-                        qf.doInsert("player_prefs", set);
-                    }
+                    List<String> was = Arrays.asList(new String[]{"auto", "beacon", "platform", "eps", "hads"});
+
                     HashMap<String, Object> setp = new HashMap<String, Object>();
                     HashMap<String, Object> wherep = new HashMap<String, Object>();
                     wherep.put("player", player.getName());
                     String grammar = (was.contains(pref)) ? " was" : " were";
                     if (args[1].equalsIgnoreCase("on")) {
                         setp.put(pref + "_on", 1);
+                        if (pref.equals("beacon")) {
+                            toggleBeacon(player.getName(), true);
+                        }
                         sender.sendMessage(plugin.pluginName + pref + grammar + " turned ON!");
                     }
                     if (args[1].equalsIgnoreCase("off")) {
                         setp.put(pref + "_on", 0);
+                        if (pref.equals("beacon")) {
+                            toggleBeacon(player.getName(), false);
+                        }
                         sender.sendMessage(plugin.pluginName + pref + grammar + " turned OFF.");
                     }
-                    qf.doUpdate("player_prefs", setp, wherep);
+                    new QueryFactory(plugin).doUpdate("player_prefs", setp, wherep);
                     return true;
                 } else {
                     sender.sendMessage(plugin.pluginName + TARDISConstants.NO_PERMS_MESSAGE);
@@ -200,5 +228,62 @@ public class TARDISPrefsCommands implements CommandExecutor {
             }
         }
         return false;
+    }
+
+    private void toggleBeacon(String name, boolean on) {
+        HashMap<String, Object> whereb = new HashMap<String, Object>();
+        whereb.put("owner", name);
+        ResultSetTardis rs = new ResultSetTardis(plugin, whereb, "", false);
+        if (rs.resultSet()) {
+            // toggle beacon
+            String beacon = rs.getBeacon();
+            String[] beaconData;
+            int plusy = 0;
+            if (beacon.isEmpty()) {
+                // get the location from the TARDIS size and the creeper location
+                switch (rs.getSchematic()) {
+                    case REDSTONE:
+                        plusy = 18;
+                        break;
+                    case ELEVENTH:
+                        plusy = 17;
+                        break;
+                    case DELUXE:
+                        plusy = 16;
+                        break;
+                    case BIGGER:
+                        plusy = 13;
+                        break;
+                    default:
+                        plusy = 12;
+                        break;
+                }
+                String creeper = rs.getCreeper();
+                beaconData = creeper.split(":");
+            } else {
+                beaconData = beacon.split(":");
+            }
+            World w = plugin.getServer().getWorld(beaconData[0]);
+            float bx = 0, by = 0, bz = 0;
+            try {
+                bx = Float.parseFloat(beaconData[1]);
+                by = Float.parseFloat(beaconData[2]) + plusy;
+                bz = Float.parseFloat(beaconData[3]);
+            } catch (NumberFormatException nfe) {
+                plugin.debug("Couldn't convert to a float! " + nfe.getMessage());
+            }
+            if (beacon.isEmpty()) {
+                // update the tardis table so we don't have to do tnis again
+                String beacon_loc = beaconData[0] + ":" + beaconData[1] + ":" + by + ":" + beaconData[3];
+                HashMap<String, Object> set = new HashMap<String, Object>();
+                set.put("beacon", beacon_loc);
+                HashMap<String, Object> where = new HashMap<String, Object>();
+                where.put("tardis_id", rs.getTardis_id());
+                new QueryFactory(plugin).doUpdate("tardis", set, where);
+            }
+            Location bl = new Location(w, bx, by, bz);
+            Block b = bl.getBlock();
+            b.setTypeId((on) ? 20 : 7);
+        }
     }
 }

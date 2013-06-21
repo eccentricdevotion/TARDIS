@@ -14,14 +14,33 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.thirdparty;
+package me.eccentric_nz.TARDIS.utility;
 
-import org.bukkit.Location;
+import java.net.MalformedURLException;
+import java.net.URL;
+import me.eccentric_nz.TARDIS.TARDIS;
+import org.bukkit.entity.Player;
 
 /**
+ *
  * @author eccentric_nz
  */
-public interface ImprovedOfflinePlayer_api {
+public class TARDISTexturePackChanger {
 
-    public void setLocation(String name, Location location);
+    private final TARDIS plugin;
+
+    public TARDISTexturePackChanger(TARDIS plugin) {
+        this.plugin = plugin;
+    }
+
+    public void changeTP(Player p, String url) {
+        // check the URL
+        try {
+            new URL(url);
+            String player = p.getName();
+            plugin.getServer().getPlayer(player).setTexturePack(url);
+        } catch (MalformedURLException e) {
+            p.sendMessage(plugin.pluginName + "Could not access the URL! " + e.getMessage());
+        }
+    }
 }

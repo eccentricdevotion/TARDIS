@@ -23,9 +23,11 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetDestinations;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
+import me.eccentric_nz.TARDIS.travel.TARDISPluginRespect;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.block.Sign;
 import org.bukkit.entity.Player;
@@ -110,7 +112,7 @@ public class TARDISSignListener implements Listener {
                                 }
                                 // check they have enough artron energy to travel
                                 int level = rs.getArtron_level();
-                                if (level < plugin.getConfig().getInt("travel")) {
+                                if (level < plugin.getArtronConfig().getInt("travel")) {
                                     player.sendMessage(plugin.pluginName + ChatColor.RED + "The TARDIS does not have enough Artron Energy to make this trip!");
                                     return;
                                 }
@@ -123,12 +125,24 @@ public class TARDISSignListener implements Listener {
                                     String[] coords = s.getLine(3).split(",");
                                     String loc = s.getLine(2) + ":" + coords[0] + ":" + coords[1] + ":" + coords[2];
                                     sets.put("save", loc);
+                                    World w = plugin.getServer().getWorld(s.getLine(2));
+                                    int x, y, z;
+                                    x = plugin.utils.parseNum(coords[0]);
+                                    y = plugin.utils.parseNum(coords[1]);
+                                    z = plugin.utils.parseNum(coords[2]);
+                                    Location l = new Location(w, x, y, z);
+                                    TARDISPluginRespect respect = new TARDISPluginRespect(plugin);
+                                    if (!respect.getRespect(player, l, true)) {
+                                        return;
+                                    }
                                 }
                                 HashMap<String, Object> sid = new HashMap<String, Object>();
                                 sid.put("tardis_id", id);
                                 qf.doUpdate("tardis", sets, sid);
-                                plugin.utils.updateTravellerCount(id);
-                                plugin.tardisHasDestination.put(id, plugin.getConfig().getInt("travel"));
+                                plugin.tardisHasDestination.put(id, plugin.getArtronConfig().getInt("travel"));
+                                if (plugin.trackRescue.containsKey(Integer.valueOf(id))) {
+                                    plugin.trackRescue.remove(Integer.valueOf(id));
+                                }
                                 player.sendMessage(plugin.pluginName + "Exit location set to " + s.getLine(1));
                             }
                             if (event.getAction().equals(Action.RIGHT_CLICK_BLOCK) && !player.isSneaking()) {

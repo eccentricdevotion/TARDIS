@@ -1,0 +1,116 @@
+#rooms
+rooms:
+  PASSAGE:
+    enabled: true
+    cost: 200
+    offset: -2
+    seed: CLAY
+    user: false
+  ARBORETUM:
+    enabled: true
+    cost: 325
+    offset: -4
+    seed: LEAVES
+    user: false
+  BEDROOM:
+    enabled: true
+    cost: 475
+    offset: -1
+    seed: GLOWSTONE
+    user: false
+  KITCHEN:
+    enabled: true
+    cost: 450
+    offset: -1
+    seed: PUMPKIN
+    user: false
+  LIBRARY:
+    enabled: true
+    cost: 550
+    offset: -1
+    seed: BOOKSHELF
+    user: false
+  POOL:
+    enabled: true
+    cost: 450
+    offset: -3
+    seed: SNOW_BLOCK
+    user: false
+  VAULT:
+    enabled: true
+    cost: 350
+    offset: -1
+    seed: DISPENSER
+    user: false
+  WORKSHOP:
+    enabled: true
+    cost: 400
+    offset: -1
+    seed: NETHER_BRICK
+    user: false
+  EMPTY:
+    enabled: true
+    cost: 250
+    offset: -1
+    seed: GLASS
+    user: false
+  GRAVITY:
+    enabled: true
+    cost: 625
+    offset: -12
+    seed: MOSSY_COBBLESTONE
+    user: false
+  ANTIGRAVITY:
+    enabled: true
+    cost: 625
+    offset: 0
+    seed: SANDSTONE
+    user: false
+  HARMONY:
+    enabled: true
+    cost: 450
+    offset: -1
+    seed: SMOOTH_STAIRS
+    user: false
+  BAKER:
+    enabled: true
+    cost: 350
+    offset: -1
+    seed: ENDER_STONE
+    user: false
+  WOOD:
+    enabled: true
+    cost: 350
+    offset: -1
+    seed: WOOD
+    user: false
+  FARM:
+    enabled: true
+    cost: 350
+    offset: -1
+    seed: DIRT
+    user: false
+  CROSS:
+    enabled: true
+    cost: 350
+    offset: -1
+    seed: SOUL_SAND
+    user: false
+  GREENHOUSE:
+    enabled: true
+    cost: 450
+    offset: -2
+    seed: MELON_BLOCK
+    user: false
+  LONG:
+    enabled: true
+    cost: 300
+    offset: -2
+    seed: NOTE_BLOCK
+    user: false
+  MUSHROOM:
+    enabled: true
+    cost: 350
+    offset: -1
+    seed: GRAVEL
+    user: false

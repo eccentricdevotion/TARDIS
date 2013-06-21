@@ -23,6 +23,7 @@ import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import me.eccentric_nz.TARDIS.TARDIS;
@@ -47,7 +48,7 @@ public class ResultSetTravellers {
     private int traveller_id;
     private int tardis_id;
     private String player;
-    private ArrayList<HashMap<String, String>> data = new ArrayList<HashMap<String, String>>();
+    private List<String> data = new ArrayList<String>();
 
     /**
      * Creates a class instance that can be used to retrieve an SQL ResultSet
@@ -103,13 +104,7 @@ public class ResultSetTravellers {
             if (rs.isBeforeFirst()) {
                 while (rs.next()) {
                     if (multiple) {
-                        HashMap<String, String> row = new HashMap<String, String>();
-                        ResultSetMetaData rsmd = rs.getMetaData();
-                        int columns = rsmd.getColumnCount();
-                        for (int i = 1; i < columns + 1; i++) {
-                            row.put(rsmd.getColumnName(i).toLowerCase(Locale.ENGLISH), rs.getString(i));
-                        }
-                        data.add(row);
+                        data.add(rs.getString("player"));
                     }
                     this.traveller_id = rs.getInt("traveller_id");
                     this.tardis_id = rs.getInt("tardis_id");
@@ -148,7 +143,7 @@ public class ResultSetTravellers {
         return player;
     }
 
-    public ArrayList<HashMap<String, String>> getData() {
+    public List<String> getData() {
         return data;
     }
 }

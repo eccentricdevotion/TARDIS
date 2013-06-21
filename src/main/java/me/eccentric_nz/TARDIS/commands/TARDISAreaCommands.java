@@ -16,8 +16,11 @@
  */
 package me.eccentric_nz.TARDIS.commands;
 
+import com.google.common.collect.ImmutableList;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
+import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetAreas;
@@ -28,7 +31,9 @@ import org.bukkit.block.BlockFace;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
+import org.bukkit.util.StringUtil;
 
 /**
  * Command /tardisarea [arguments].
@@ -39,9 +44,10 @@ import org.bukkit.entity.Player;
  *
  * @author eccentric_nz
  */
-public class TARDISAreaCommands implements CommandExecutor {
+public class TARDISAreaCommands implements CommandExecutor, TabCompleter {
 
     private TARDIS plugin;
+    private final ImmutableList<String> ROOT_SUBS = ImmutableList.of("start", "end", "remove", "show");
 
     public TARDISAreaCommands(TARDIS plugin) {
         this.plugin = plugin;
@@ -49,6 +55,10 @@ public class TARDISAreaCommands implements CommandExecutor {
 
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
+        if (!sender.hasPermission("tardis.admin")) {
+            sender.sendMessage(plugin.pluginName + "You do not have permission to add TARDIS areas!");
+            return true;
+        }
         Player player = null;
         if (sender instanceof Player) {
             player = (Player) sender;
@@ -60,7 +70,7 @@ public class TARDISAreaCommands implements CommandExecutor {
                 return false;
             }
             if (player == null) {
-                sender.sendMessage(plugin.pluginName + ChatColor.RED + " This command can only be run by a player");
+                sender.sendMessage(plugin.pluginName + ChatColor.RED + "This command can only be run by a player");
                 return false;
             }
             if (args[0].equals("start")) {
@@ -85,7 +95,7 @@ public class TARDISAreaCommands implements CommandExecutor {
             }
             if (args[0].equals("end")) {
                 if (!plugin.trackBlock.containsKey(player.getName())) {
-                    player.sendMessage(plugin.pluginName + ChatColor.RED + " You haven't selected an area start block!");
+                    player.sendMessage(plugin.pluginName + ChatColor.RED + "You haven't selected an area start block!");
                     return false;
                 }
                 plugin.trackEnd.put(player.getName(), "end");
@@ -129,18 +139,45 @@ public class TARDISAreaCommands implements CommandExecutor {
                 b3.setTypeId(80);
                 final Block b4 = w.getHighestBlockAt(max, maz).getRelative(BlockFace.UP);
                 b4.setTypeId(80);
-                plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
-                    @Override
-                    public void run() {
-                        b1.setTypeId(0);
-                        b2.setTypeId(0);
-                        b3.setTypeId(0);
-                        b4.setTypeId(0);
-                    }
-                }, 300L);
+                plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new SetAir(b1, b2, b3, b4), 300L);
                 return true;
             }
         }
         return false;
+    }
+
+    @Override
+    public List<String> onTabComplete(CommandSender sender, Command command, String label, String[] args) {
+        if (args.length <= 1) {
+            return partial(args[0], ROOT_SUBS);
+        }
+        return ImmutableList.of();
+    }
+
+    private List<String> partial(String token, Collection<String> from) {
+        return StringUtil.copyPartialMatches(token, from, new ArrayList<String>(from.size()));
+    }
+
+    private static class SetAir implements Runnable {
+
+        private final Block b1;
+        private final Block b2;
+        private final Block b3;
+        private final Block b4;
+
+        public SetAir(Block b1, Block b2, Block b3, Block b4) {
+            this.b1 = b1;
+            this.b2 = b2;
+            this.b3 = b3;
+            this.b4 = b4;
+        }
+
+        @Override
+        public void run() {
+            b1.setTypeId(0);
+            b2.setTypeId(0);
+            b3.setTypeId(0);
+            b4.setTypeId(0);
+        }
     }
 }

@@ -99,7 +99,7 @@ public class TARDISBuilderInner {
         short h = d[0];
         short w = d[1];
         short l = d[2];
-        int level, row, col, id, x, z, startx, starty = 15, startz, resetx, resetz, cx, cy, cz, rid, multiplier = 1, j = 0;
+        int level, row, col, id, x, z, startx, starty = 15, startz, resetx, resetz, cx, cy, cz, rid, multiplier = 1, j = 2;
         byte data;
         short damage = 0;
         String tmp, replacedBlocks;
@@ -188,21 +188,13 @@ public class TARDISBuilderInner {
                             }
                             if (id == 77) { // stone button
                                 // remember the location of this button
-                                HashMap<String, Object> setb = new HashMap<String, Object>();
-                                HashMap<String, Object> whereb = new HashMap<String, Object>();
-                                String button = world.getName() + ":" + startx + ":" + starty + ":" + startz;
-                                setb.put("button", button);
-                                whereb.put("tardis_id", dbID);
-                                qf.doUpdate("tardis", setb, whereb);
+                                String button = plugin.utils.makeLocationStr(world, startx, starty, startz);
+                                qf.insertControl(dbID, 1, button, 0);
                             }
                             if (id == 93) { // remember the location of this redstone repeater
                                 // save repeater location
-                                HashMap<String, Object> setr = new HashMap<String, Object>();
-                                HashMap<String, Object> wherer = new HashMap<String, Object>();
                                 String repeater = world.getName() + ":" + startx + ":" + starty + ":" + startz;
-                                setr.put("repeater" + j, repeater);
-                                wherer.put("tardis_id", dbID);
-                                qf.doUpdate("tardis", setr, wherer);
+                                qf.insertControl(dbID, j, repeater, 0);
                                 j++;
                             }
                             if (id == 71 && data < (byte) 8) { // iron door bottom
@@ -268,42 +260,43 @@ public class TARDISBuilderInner {
                                 wherecreep.put("tardis_id", dbID);
                                 qf.doUpdate("tardis", setcreep, wherecreep);
                             }
-                            if (id == 124 && plugin.getConfig().getInt("malfunction") > 0) {
-                                // remember lamp block locations for malfunction
-                                HashMap<String, Object> setlb = new HashMap<String, Object>();
-                                String lloc = world.getName() + ":" + startx + ":" + starty + ":" + startz;
-                                setlb.put("tardis_id", dbID);
-                                setlb.put("location", lloc);
-                                qf.doInsert("lamps", setlb);
-                            }
                             if (id == 92) {
                                 /*
                                  * This block will be converted to a lever by
                                  * setBlock(), but remember it so we can use it as the handbrake!
                                  */
-                                HashMap<String, Object> sethandbrake = new HashMap<String, Object>();
-                                HashMap<String, Object> wherehandbrake = new HashMap<String, Object>();
-                                String handbrakeloc = world.getName() + ":" + startx + ":" + starty + ":" + startz;
-                                sethandbrake.put("handbrake", handbrakeloc);
-                                wherehandbrake.put("tardis_id", dbID);
-                                qf.doUpdate("tardis", sethandbrake, wherehandbrake);
+                                String handbrakeloc = plugin.utils.makeLocationStr(world, startx, starty, startz);
+                                qf.insertControl(dbID, 0, handbrakeloc, 0);
                             }
                             if (id == 143 || id == -113) {
                                 /*
                                  * wood button will be coverted to the correct id by
                                  * setBlock(), but remember it for the Artron Energy Capacitor.
                                  */
-                                HashMap<String, Object> setwb = new HashMap<String, Object>();
-                                HashMap<String, Object> wherewb = new HashMap<String, Object>();
-                                String woodbuttonloc = world.getName() + ":" + startx + ":" + starty + ":" + startz;
-                                setwb.put("artron_button", woodbuttonloc);
-                                wherewb.put("tardis_id", dbID);
-                                qf.doUpdate("tardis", setwb, wherewb);
+                                String woodbuttonloc = plugin.utils.makeLocationStr(world, startx, starty, startz);
+                                qf.insertControl(dbID, 6, woodbuttonloc, 0);
                             }
-                            // remember lamp blocks
+                            if (id == 7) {
+                                // remember bedrock location to block off the beacon light
+                                HashMap<String, Object> setbeac = new HashMap<String, Object>();
+                                HashMap<String, Object> wherebeac = new HashMap<String, Object>();
+                                String bedrocloc = world.getName() + ":" + startx + ":" + starty + ":" + startz;
+                                setbeac.put("beacon", bedrocloc);
+                                wherebeac.put("tardis_id", dbID);
+                                qf.doUpdate("tardis", setbeac, wherebeac);
+                            }
                             if (id == 124) {
+                                // remember lamp blocks
                                 Block lamp = world.getBlockAt(startx, starty, startz);
                                 lampblocks.add(lamp);
+                                if (plugin.getConfig().getInt("malfunction") > 0) {
+                                    // remember lamp block locations for malfunction
+                                    HashMap<String, Object> setlb = new HashMap<String, Object>();
+                                    String lloc = world.getName() + ":" + startx + ":" + starty + ":" + startz;
+                                    setlb.put("tardis_id", dbID);
+                                    setlb.put("location", lloc);
+                                    qf.doInsert("lamps", setlb);
+                                }
                             }
                             if (id == 35 && data == 1) {
                                 switch (middle_id) {
@@ -321,7 +314,7 @@ public class TARDISBuilderInner {
                         // if it's an iron/gold/diamond/emerald/beacon/redstone block put it in the blocks table
                         if (id == 41 || id == 42 || id == 57 || id == 133 || id == -123 || id == 138 || id == -118 || id == 152 || id == -104) {
                             HashMap<String, Object> setpb = new HashMap<String, Object>();
-                            String loc = new Location(world, startx, starty, startz).toString();
+                            String loc = plugin.utils.makeLocationStr(world, startx, starty, startz);
                             setpb.put("tardis_id", dbID);
                             setpb.put("location", loc);
                             setpb.put("police_box", 0);
@@ -339,7 +332,7 @@ public class TARDISBuilderInner {
                             postSaveBlock = world.getBlockAt(startx, starty, startz);
                         } else if (id == 19) {
                             int swap;
-                            if (world.getWorldType().equals(WorldType.FLAT) || own_world) {
+                            if (world.getWorldType().equals(WorldType.FLAT) || own_world || world.getName().equals("TARDIS_TimeVortex")) {
                                 swap = 0;
                             } else {
                                 swap = 1;
@@ -370,7 +363,7 @@ public class TARDISBuilderInner {
         }
         for (Map.Entry<Block, Byte> entry : postSignBlocks.entrySet()) {
             final Block psb = entry.getKey();
-            byte psdata = Byte.valueOf(entry.getValue());
+            byte psdata = entry.getValue();
             psb.setTypeIdAndData(68, psdata, true);
             if (psb.getType().equals(Material.WALL_SIGN)) {
                 Sign cs = (Sign) psb.getState();

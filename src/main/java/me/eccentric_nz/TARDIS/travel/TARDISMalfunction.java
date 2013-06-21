@@ -23,6 +23,8 @@ import java.util.Random;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.database.ResultSetLamps;
+import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
+import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
@@ -43,14 +45,16 @@ public class TARDISMalfunction {
     private Player p;
     private TARDISConstants.COMPASS dir;
     private Location handbrake_loc;
+    private String eps;
     private Random rand;
 
-    public TARDISMalfunction(TARDIS plugin, int id, Player p, TARDISConstants.COMPASS dir, Location handbrake_loc) {
+    public TARDISMalfunction(TARDIS plugin, int id, Player p, TARDISConstants.COMPASS dir, Location handbrake_loc, String eps) {
         this.plugin = plugin;
         this.id = id;
         this.p = p;
         this.dir = dir;
         this.handbrake_loc = handbrake_loc;
+        this.eps = eps;
         this.rand = new Random();
     }
 
@@ -60,6 +64,9 @@ public class TARDISMalfunction {
             int chance = 100 - plugin.getConfig().getInt("malfunction");
             if (rand.nextInt(100) > chance) {
                 mal = true;
+                if (plugin.trackRescue.containsKey(Integer.valueOf(id))) {
+                    plugin.trackRescue.remove(Integer.valueOf(id));
+                }
             }
         }
         return mal;
@@ -70,17 +77,17 @@ public class TARDISMalfunction {
         int end = 100 - plugin.getConfig().getInt("malfunction_end");
         int nether = end - plugin.getConfig().getInt("malfunction_nether");
         int r = rand.nextInt(100);
-        TARDISTimetravel tt = new TARDISTimetravel(plugin);
+        TARDISTimeTravel tt = new TARDISTimeTravel(plugin);
         byte x = (byte) 2;
         if (r > end) {
             // get random the_end location
-            l = tt.randomDestination(p, x, x, x, dir, "THE_END");
+            l = tt.randomDestination(p, x, x, x, dir, "THE_END", null);
         } else if (r > nether) {
             // get random nether location
-            l = tt.randomDestination(p, x, x, x, dir, "NETHER");
+            l = tt.randomDestination(p, x, x, x, dir, "NETHER", null);
         } else {
             // get random normal location
-            l = tt.randomDestination(p, x, x, x, dir, "NORMAL");
+            l = tt.randomDestination(p, x, x, x, dir, "NORMAL", null);
         }
         if (l != null) {
             doMalfunction(l);
@@ -99,6 +106,28 @@ public class TARDISMalfunction {
             for (HashMap<String, String> map : data) {
                 Location loc = plugin.utils.getLocationFromDB(map.get("location"), 0.0F, 0.0F);
                 lamps.add(loc.getBlock());
+            }
+            if (plugin.pm.isPluginEnabled("Citizens") && plugin.getConfig().getBoolean("emergency_npc")) {
+                // get player prefs
+                HashMap<String, Object> wherep = new HashMap<String, Object>();
+                wherep.put("player", p.getName());
+                ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, wherep);
+                if (rsp.resultSet() && rsp.isEPS_on()) {
+                    // schedule the NPC to appear
+                    String message = "This is Emergency Programme One. Now listen, this is important. If this message is activated, then it can only mean one thing: we must be in danger, and I mean fatal. You're about to die any second with no chance of escape.";
+                    HashMap<String, Object> wherev = new HashMap<String, Object>();
+                    wherev.put("tardis_id", id);
+                    ResultSetTravellers rst = new ResultSetTravellers(plugin, wherev, true);
+                    List<String> players;
+                    if (rst.resultSet()) {
+                        players = rst.getData();
+                    } else {
+                        players = new ArrayList<String>();
+                        players.add(p.getName());
+                    }
+                    TARDISEPSRunnable EPS_runnable = new TARDISEPSRunnable(plugin, message, p, players, id, eps);
+                    plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, EPS_runnable, 220L);
+                }
             }
             final long start = System.currentTimeMillis() + 10000;
             TARDISLampsRunnable runnable = new TARDISLampsRunnable(plugin, lamps, start);
