@@ -45,7 +45,6 @@ public class TARDISInteriorSchematicReader {
         Tag tag = items.get(key);
         return tag;
     }
-
     private TARDIS plugin;
 
     public TARDISInteriorSchematicReader(TARDIS plugin) {
@@ -142,7 +141,7 @@ public class TARDISInteriorSchematicReader {
                 }
                 bw.close();
             } catch (IOException io) {
-                plugin.console.sendMessage(plugin.pluginName + "Could not save the time lords file!");
+                plugin.console.sendMessage(plugin.pluginName + "Could not save the TARDIS csv file!");
             }
         } catch (IOException e) {
             plugin.console.sendMessage(plugin.pluginName + "Schematic read error: " + e);

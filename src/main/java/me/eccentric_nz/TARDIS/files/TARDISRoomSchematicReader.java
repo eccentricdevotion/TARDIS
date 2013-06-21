@@ -190,7 +190,7 @@ public class TARDISRoomSchematicReader {
                     bw.close();
 
                 } catch (IOException io) {
-                    plugin.console.sendMessage(plugin.pluginName + "Could not save the time lords file!");
+                    plugin.console.sendMessage(plugin.pluginName + "Could not save the room csv file!");
                 }
             }
         } catch (IOException e) {

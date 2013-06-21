@@ -1,6 +1,6 @@
 # TODO
 
-## Current version `2.5`
+## Current version `2.5-beta-1`
 1. TARDIS shield
 2. Permission-based world creation - player's without permission use the default world, those with it get a TARDIS_WORLD
 3. Make the Police Box configurable via a schematic

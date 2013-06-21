@@ -24,6 +24,7 @@ import java.util.Properties;
 import java.util.Set;
 import me.eccentric_nz.TARDIS.builders.TARDISBuilderInner;
 import me.eccentric_nz.TARDIS.builders.TARDISBuilderPoliceBox;
+import me.eccentric_nz.TARDIS.builders.TARDISPasteBox;
 import me.eccentric_nz.TARDIS.builders.TARDISSpace;
 import me.eccentric_nz.TARDIS.commands.TARDISAdminCommands;
 import me.eccentric_nz.TARDIS.commands.TARDISAreaCommands;
@@ -247,7 +248,7 @@ public class TARDIS extends JavaPlugin {
             new TARDISControlsConverter(this).convertControls();
         }
         tp = getServerTP();
-        debug(tp);
+        new TARDISPasteBox(this).loadBoxes();
     }
 
     @Override
@@ -556,13 +557,13 @@ public class TARDIS extends JavaPlugin {
 
     private boolean getNPCManager() {
         if (pm.getPlugin("Citizens") != null && getConfig().getBoolean("emergency_npc")) {
-            console.sendMessage(pluginName + ChatColor.GREEN + "Enabling Emergency Program One!");
+            debug("Enabling Emergency Program One!");
             return true;
         } else {
             // set emergency_npc false as Citizens not found
             getConfig().set("emergency_npc", false);
             saveConfig();
-            console.sendMessage(pluginName + ChatColor.RED + "Emergency Program One was disabled as it requires the Citizens plugin!");
+            debug("Emergency Program One was disabled as it requires the Citizens plugin!");
             return false;
         }
     }
