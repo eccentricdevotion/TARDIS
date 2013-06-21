@@ -192,14 +192,11 @@ public class TARDISHandbrakeListener implements Listener {
                                                     playSound(handbrake_loc, player, "tardis_land");
                                                 }
                                             }, delay);
-//                                            Chunk oldChunk = l.getChunk();
-//                                            if (plugin.tardisChunkList.contains(oldChunk)) {
-//                                                plugin.tardisChunkList.remove(oldChunk);
-//                                            }
                                             if (plugin.trackDamage.containsKey(id)) {
                                                 plugin.trackDamage.remove(id);
                                             }
                                             set.put("current", save);
+                                            set.put("fast_return", cl);
                                             long now;
                                             if (player.hasPermission("tardis.prune.bypass")) {
                                                 now = Long.MAX_VALUE;

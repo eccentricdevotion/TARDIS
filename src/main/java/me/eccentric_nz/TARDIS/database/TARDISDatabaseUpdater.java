@@ -72,6 +72,7 @@ public class TARDISDatabaseUpdater {
         tardisupdates.add("creeper TEXT DEFAULT ''");
         tardisupdates.add("eps TEXT DEFAULT ''");
         tardisupdates.add("farm TEXT DEFAULT ''");
+        tardisupdates.add("fast_return TEXT DEFAULT ''");
         tardisupdates.add("handbrake_on INTEGER DEFAULT 1");
         tardisupdates.add("hidden INTEGER DEFAULT 0");
         tardisupdates.add("iso_on INTEGER DEFAULT 0");

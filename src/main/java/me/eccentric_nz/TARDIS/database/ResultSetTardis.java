@@ -50,6 +50,7 @@ public class ResultSetTardis {
     private String home;
     private String save;
     private String current;
+    private String fast_return;
     private String replaced;
     private String chest;
     private String companions;
@@ -151,6 +152,7 @@ public class ResultSetTardis {
                     this.home = rs.getString("home");
                     this.save = rs.getString("save");
                     this.current = rs.getString("current");
+                    this.fast_return = rs.getString("fast_return");
                     this.replaced = rs.getString("replaced");
                     this.chest = rs.getString("chest");
                     this.companions = rs.getString("companions");
@@ -227,6 +229,10 @@ public class ResultSetTardis {
 
     public String getCurrent() {
         return current;
+    }
+
+    public String getFast_return() {
+        return fast_return;
     }
 
     public String getReplaced() {

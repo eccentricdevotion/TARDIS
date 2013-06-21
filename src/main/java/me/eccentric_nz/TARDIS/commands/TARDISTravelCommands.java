@@ -62,7 +62,7 @@ public class TARDISTravelCommands implements CommandExecutor, TabCompleter {
 
     private TARDIS plugin;
     private TARDISPluginRespect respect;
-    private final List<String> ROOT_SUBS = ImmutableList.of("home", "biome", "dest", "area");
+    private final List<String> ROOT_SUBS = ImmutableList.of("home", "biome", "dest", "area", "back");
     private List<String> BIOME_SUBS = new ArrayList<String>();
 
     public TARDISTravelCommands(TARDIS plugin) {
@@ -127,6 +127,7 @@ public class TARDISTravelCommands implements CommandExecutor, TabCompleter {
                 }
                 TARDISConstants.COMPASS d = rs.getDirection();
                 String home = rs.getHome();
+                String back = rs.getFast_return();
                 String current = rs.getCurrent();
                 HashMap<String, Object> tid = new HashMap<String, Object>();
                 HashMap<String, Object> set = new HashMap<String, Object>();
@@ -152,10 +153,17 @@ public class TARDISTravelCommands implements CommandExecutor, TabCompleter {
                 } else {
                     if (args.length == 1) {
                         // we're thinking this is a player's name or home
-                        if (args[0].equalsIgnoreCase("home")) {
-                            set.put("save", home);
+                        if (args[0].equalsIgnoreCase("home") || args[0].equalsIgnoreCase("back")) {
+                            String which;
+                            if (args[0].equalsIgnoreCase("home")) {
+                                set.put("save", home);
+                                which = "Home";
+                            } else {
+                                set.put("save", back);
+                                which = "Fast Return";
+                            }
                             qf.doUpdate("tardis", set, tid);
-                            sender.sendMessage(plugin.pluginName + "Home location loaded succesfully. Please release the handbrake!");
+                            sender.sendMessage(plugin.pluginName + which + " location loaded succesfully. Please release the handbrake!");
                             plugin.tardisHasDestination.put(id, travel);
                             if (plugin.trackRescue.containsKey(Integer.valueOf(id))) {
                                 plugin.trackRescue.remove(Integer.valueOf(id));

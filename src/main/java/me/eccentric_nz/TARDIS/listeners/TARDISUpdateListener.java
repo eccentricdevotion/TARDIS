@@ -74,6 +74,7 @@ public class TARDISUpdateListener implements Listener {
         controls.put("y-repeater", 5);
         controls.put("artron", 6);
         controls.put("keyboard", 7);
+        controls.put("back", 8);
     }
 
     /**
@@ -120,6 +121,7 @@ public class TARDISUpdateListener implements Listener {
             }
             int id = rs.getTardis_id();
             String home = rs.getHome();
+            String current = rs.getCurrent();
             QueryFactory qf = new QueryFactory(plugin);
             String table = "tardis";
             HashMap<String, Object> tid = new HashMap<String, Object>();
@@ -287,6 +289,25 @@ public class TARDISUpdateListener implements Listener {
                     s.setLine(i, "");
                 }
                 s.update();
+            }
+            if (blockName.equalsIgnoreCase("back") && (validBlocks.contains(blockType) || blockType == Material.LEVER)) {
+                HashMap<String, Object> wherec = new HashMap<String, Object>();
+                wherec.put("tardis_id", id);
+                wherec.put("type", 8);
+                ResultSetControls rsc = new ResultSetControls(plugin, wherec, false);
+                if (!rsc.resultSet()) {
+                    // insert current into fast_return
+                    HashMap<String, Object> wheref = new HashMap<String, Object>();
+                    wheref.put("tardis_id", id);
+                    HashMap<String, Object> setf = new HashMap<String, Object>();
+                    setf.put("fast_return", current);
+                    qf.doUpdate("tardis", setf, wheref);
+                    // insert control
+                    qf.insertControl(id, 8, blockLocStr, 0);
+                    secondary = true;
+                } else {
+                    set.put("location", blockLocStr);
+                }
             }
             if (set.size() > 0 || secondary) {
                 if (!secondary) {
