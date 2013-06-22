@@ -17,6 +17,7 @@
 package me.eccentric_nz.TARDIS.listeners;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
@@ -55,6 +56,7 @@ public class TARDISButtonListener implements Listener {
 
     private TARDIS plugin;
     List<Material> validBlocks = new ArrayList<Material>();
+    List<Integer> onlythese = Arrays.asList(new Integer[]{1, 8, 9});
     Version bukkitversion;
     Version prewoodbuttonversion = new Version("1.4.2");
     private ItemStack[] items;
@@ -70,6 +72,7 @@ public class TARDISButtonListener implements Listener {
         validBlocks.add(Material.LEVER);
         validBlocks.add(Material.WALL_SIGN);
         this.items = new TARDISTerminalInventory().getTerminal();
+
     }
 
     /**
@@ -99,15 +102,18 @@ public class TARDISButtonListener implements Listener {
                     if (rsc.resultSet()) {
                         int id = rsc.getTardis_id();
                         int type = rsc.getType();
+                        if (!onlythese.contains(Integer.valueOf(type))) {
+                            return;
+                        }
                         HashMap<String, Object> whereid = new HashMap<String, Object>();
                         whereid.put("tardis_id", id);
                         ResultSetTardis rs = new ResultSetTardis(plugin, whereid, "", false);
                         if (rs.resultSet()) {
+                            int level = rs.getArtron_level();
                             if (!rs.isHandbrake_on()) {
                                 player.sendMessage(plugin.pluginName + ChatColor.RED + "You cannot set a destination while the TARDIS is travelling!");
                                 return;
                             }
-                            int level = rs.getArtron_level();
                             if (level < plugin.getArtronConfig().getInt("random")) {
                                 player.sendMessage(plugin.pluginName + ChatColor.RED + "The TARDIS does not have enough Artron Energy to make this trip!");
                                 return;

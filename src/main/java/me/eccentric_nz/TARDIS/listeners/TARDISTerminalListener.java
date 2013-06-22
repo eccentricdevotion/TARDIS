@@ -24,6 +24,7 @@ import java.util.Random;
 import java.util.Set;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
+import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.travel.TARDISTimeTravel;
@@ -49,8 +50,10 @@ public class TARDISTerminalListener implements Listener {
 
     private final TARDIS plugin;
     private HashMap<String, String> terminalUsers = new HashMap<String, String>();
+    private HashMap<String, String> terminalDestination = new HashMap<String, String>();
     private HashMap<String, TARDISConstants.COMPASS> terminalDirection = new HashMap<String, TARDISConstants.COMPASS>();
     private HashMap<String, Integer> terminalStep = new HashMap<String, Integer>();
+    private HashMap<String, Integer> terminalIDs = new HashMap<String, Integer>();
 
     public TARDISTerminalListener(TARDIS plugin) {
         this.plugin = plugin;
@@ -113,10 +116,18 @@ public class TARDISTerminalListener implements Listener {
                         setCurrent(inv, playerNameStr, 43);
                         break;
                     case 45:
-                        player.sendMessage(plugin.pluginName + "Checking destination...");
                         checkSettings(inv, player);
                         break;
                     case 49:
+                        HashMap<String, Object> set = new HashMap<String, Object>();
+                        set.put("save", terminalDestination.get(playerNameStr));
+                        HashMap<String, Object> wheret = new HashMap<String, Object>();
+                        wheret.put("tardis_id", terminalIDs.get(playerNameStr));
+                        new QueryFactory(plugin).doUpdate("tardis", set, wheret);
+                        plugin.tardisHasDestination.put(terminalIDs.get(playerNameStr), plugin.getArtronConfig().getInt("random"));
+                        if (plugin.trackRescue.containsKey(terminalIDs.get(playerNameStr))) {
+                            plugin.trackRescue.remove(terminalIDs.get(playerNameStr));
+                        }
                         close(player);
                         player.sendMessage(plugin.pluginName + "Destination set. Please release the handbrake!");
                         break;
@@ -149,6 +160,7 @@ public class TARDISTerminalListener implements Listener {
                 if (rs.resultSet()) {
                     terminalUsers.put(name, rs.getCurrent());
                     terminalDirection.put(name, rs.getDirection());
+                    terminalIDs.put(name, id);
                 }
             }
         }
@@ -327,8 +339,10 @@ public class TARDISTerminalListener implements Listener {
         // what kind of world is it?
         Environment e;
         int[] slots = new int[]{37, 39, 41, 43};
+        boolean found = false;
         for (int i : slots) {
             if (inv.getItem(i).getItemMeta().hasLore()) {
+                found = true;
                 String world = inv.getItem(i).getItemMeta().getLore().get(0);
                 World w = plugin.getServer().getWorld(world);
                 e = w.getEnvironment();
@@ -348,7 +362,9 @@ public class TARDISTerminalListener implements Listener {
                             int[] estart = tt.getStartLocation(loc, d);
                             int esafe = tt.safeLocation(estart[0], endy, estart[2], estart[1], estart[3], w, d);
                             if (esafe == 0) {
-                                str = loc_str + " is a valid destination!";
+                                String save = world + ":" + slotx + ":" + endy + ":" + slotz;
+                                terminalDestination.put(name, save);
+                                str = save + " is a valid destination!";
                             } else {
                                 str = loc_str + " is not safe!";
                             }
@@ -358,7 +374,9 @@ public class TARDISTerminalListener implements Listener {
                         break;
                     case NETHER:
                         if (tt.safeNether(w, slotx, slotz, d, p)) {
-                            str = loc_str + " is a valid destination!";
+                            String save = world + ":" + slotx + ":" + w.getHighestBlockYAt(slotx, slotz) + ":" + slotz;
+                            terminalDestination.put(name, save);
+                            str = save + " is a valid destination!";
                         } else {
                             str = loc_str + " is not safe!";
                         }
@@ -369,13 +387,18 @@ public class TARDISTerminalListener implements Listener {
                         int starty = w.getHighestBlockYAt(slotx, slotz);
                         int safe = tt.safeLocation(start[0], starty, start[2], start[1], start[3], w, d);
                         if (safe == 0) {
-                            str = loc_str + " is a valid destination!";
+                            String save = world + ":" + slotx + ":" + starty + ":" + slotz;
+                            terminalDestination.put(name, save);
+                            str = save + " is a valid destination!";
                         } else {
                             str = loc_str + " is not safe!";
                         }
                         break;
                 }
             }
+        }
+        if (!found) {
+            str = "You need to select a world!";
         }
         ItemStack is = inv.getItem(45);
         ItemMeta im = is.getItemMeta();
@@ -385,11 +408,22 @@ public class TARDISTerminalListener implements Listener {
     }
 
     private void close(final Player p) {
+        final String n = p.getName();
         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
             @Override
             public void run() {
-                terminalUsers.remove(p.getName());
-                terminalDirection.remove(p.getName());
+                if (terminalUsers.containsKey(n)) {
+                    terminalUsers.remove(n);
+                }
+                if (terminalDirection.containsKey(n)) {
+                    terminalDirection.remove(n);
+                }
+                if (terminalStep.containsKey(n)) {
+                    terminalStep.remove(n);
+                }
+                if (terminalDestination.containsKey(n)) {
+                    terminalDestination.remove(n);
+                }
                 p.closeInventory();
             }
         }, 1L);
