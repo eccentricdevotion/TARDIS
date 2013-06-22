@@ -393,8 +393,10 @@ public class TARDISDoorListener implements Listener {
                                             final Location inner_loc = ibd_loc;
                                             playDoorSound(player, playerWorld, block_loc);
                                             movePlayer(player, inner_loc, false, playerWorld, userQuotes);
-                                            if (!rsp.getTexture_in().isEmpty()) {
-                                                new TARDISTexturePackChanger(plugin).changeTP(player, rsp.getTexture_in());
+                                            if (plugin.getConfig().getBoolean("allow_tp_switch") && userTP) {
+                                                if (!rsp.getTexture_in().isEmpty()) {
+                                                    new TARDISTexturePackChanger(plugin).changeTP(player, rsp.getTexture_in());
+                                                }
                                             }
                                             // put player into travellers table
                                             HashMap<String, Object> set = new HashMap<String, Object>();
