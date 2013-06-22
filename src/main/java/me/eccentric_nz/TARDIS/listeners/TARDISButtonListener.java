@@ -17,7 +17,6 @@
 package me.eccentric_nz.TARDIS.listeners;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
@@ -28,6 +27,7 @@ import me.eccentric_nz.TARDIS.database.ResultSetRepeaters;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.thirdparty.Version;
+import me.eccentric_nz.TARDIS.travel.TARDISTerminalInventory;
 import me.eccentric_nz.TARDIS.travel.TARDISTimeTravel;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -42,7 +42,6 @@ import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 
 /**
  * The various systems of the console room are fairly well-understood. According
@@ -70,7 +69,7 @@ public class TARDISButtonListener implements Listener {
         validBlocks.add(Material.STONE_BUTTON);
         validBlocks.add(Material.LEVER);
         validBlocks.add(Material.WALL_SIGN);
-        this.items = getItemStack();
+        this.items = new TARDISTerminalInventory().getTerminal();
     }
 
     /**
@@ -250,82 +249,5 @@ public class TARDISButtonListener implements Listener {
                 }
             }
         }
-    }
-
-    private ItemStack[] getItemStack() {
-        // -ve
-        ItemStack neg = new ItemStack(35, 1, (byte) 14);
-        ItemMeta nim = neg.getItemMeta();
-        nim.setDisplayName("-ve");
-        neg.setItemMeta(nim);
-        // +ve
-        ItemStack pos = new ItemStack(35, 1, (byte) 5);
-        ItemMeta pim = pos.getItemMeta();
-        pim.setDisplayName("+ve");
-        pos.setItemMeta(pim);
-        // x
-        ItemStack x = new ItemStack(35, 1, (byte) 3);
-        ItemMeta xim = x.getItemMeta();
-        xim.setDisplayName("X");
-        xim.setLore(Arrays.asList(new String[]{"0"}));
-        x.setItemMeta(xim);
-        // z
-        ItemStack z = new ItemStack(35, 1, (byte) 4);
-        ItemMeta zim = z.getItemMeta();
-        zim.setDisplayName("Z");
-        zim.setLore(Arrays.asList(new String[]{"0"}));
-        z.setItemMeta(zim);
-        // multiplier
-        ItemStack m = new ItemStack(35, 1, (byte) 10);
-        ItemMeta mim = m.getItemMeta();
-        mim.setDisplayName("Multiplier");
-        mim.setLore(Arrays.asList(new String[]{"x1"}));
-        m.setItemMeta(mim);
-        // environments
-        // current
-        ItemStack u = new ItemStack(18, 1, (byte) 0);
-        ItemMeta uim = u.getItemMeta();
-        uim.setDisplayName("Current world");
-        u.setItemMeta(uim);
-        // normal
-        ItemStack w = new ItemStack(3, 1);
-        ItemMeta wim = w.getItemMeta();
-        wim.setDisplayName("Normal world");
-        w.setItemMeta(wim);
-        // nether
-        ItemStack r = new ItemStack(87, 1);
-        ItemMeta rim = r.getItemMeta();
-        rim.setDisplayName("Nether");
-        r.setItemMeta(rim);
-        // the end
-        ItemStack e = new ItemStack(121, 1);
-        ItemMeta eim = e.getItemMeta();
-        eim.setDisplayName("The End");
-        e.setItemMeta(eim);
-        // test
-        ItemStack t = new ItemStack(33, 1);
-        ItemMeta tim = t.getItemMeta();
-        tim.setDisplayName("Check destination");
-        t.setItemMeta(tim);
-        // set
-        ItemStack s = new ItemStack(47, 1);
-        ItemMeta sim = s.getItemMeta();
-        sim.setDisplayName("Set destination");
-        s.setItemMeta(sim);
-        // cancel
-        ItemStack c = new ItemStack(46, 1);
-        ItemMeta cim = c.getItemMeta();
-        cim.setDisplayName("Cancel");
-        c.setItemMeta(cim);
-
-        ItemStack[] is = {
-            neg, null, null, null, x, null, null, null, pos,
-            neg, null, null, null, z, null, null, null, pos,
-            neg, m, null, null, null, null, null, null, pos,
-            null, u, null, w, null, r, null, e, null,
-            null, null, null, null, null, null, null, null, null,
-            t, null, null, null, s, null, null, null, c
-        };
-        return is;
     }
 }

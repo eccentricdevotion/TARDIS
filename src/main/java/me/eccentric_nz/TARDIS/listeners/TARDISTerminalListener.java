@@ -50,6 +50,7 @@ public class TARDISTerminalListener implements Listener {
     private final TARDIS plugin;
     private HashMap<String, String> terminalUsers = new HashMap<String, String>();
     private HashMap<String, TARDISConstants.COMPASS> terminalDirection = new HashMap<String, TARDISConstants.COMPASS>();
+    private HashMap<String, Integer> terminalStep = new HashMap<String, Integer>();
 
     public TARDISTerminalListener(TARDIS plugin) {
         this.plugin = plugin;
@@ -69,35 +70,47 @@ public class TARDISTerminalListener implements Listener {
             if (rst.resultSet()) {
                 int slot = event.getRawSlot();
                 switch (slot) {
-                    case 0:
-                        setSlots(inv, 1, 7, false, (byte) 3, "X", true);
+                    case 1:
+                        terminalStep.put(playerNameStr, 10);
                         break;
-                    case 8:
-                        setSlots(inv, 1, 7, true, (byte) 3, "X", true);
+                    case 3:
+                        terminalStep.put(playerNameStr, 25);
+                        break;
+                    case 5:
+                        terminalStep.put(playerNameStr, 50);
+                        break;
+                    case 7:
+                        terminalStep.put(playerNameStr, 100);
                         break;
                     case 9:
-                        setSlots(inv, 10, 16, false, (byte) 4, "Z", true);
+                        setSlots(inv, 10, 16, false, (byte) 3, "X", true, playerNameStr);
                         break;
                     case 17:
-                        setSlots(inv, 10, 16, true, (byte) 4, "Z", true);
+                        setSlots(inv, 10, 16, true, (byte) 3, "X", true, playerNameStr);
                         break;
                     case 18:
-                        setSlots(inv, 19, 25, false, (byte) 10, "Multiplier", false);
+                        setSlots(inv, 19, 25, false, (byte) 4, "Z", true, playerNameStr);
                         break;
                     case 26:
-                        setSlots(inv, 19, 25, true, (byte) 10, "Multiplier", false);
+                        setSlots(inv, 19, 25, true, (byte) 4, "Z", true, playerNameStr);
                         break;
-                    case 28:
-                        setCurrent(inv, playerNameStr, 28);
+                    case 27:
+                        setSlots(inv, 28, 34, false, (byte) 10, "Multiplier", false, playerNameStr);
                         break;
-                    case 30:
-                        setCurrent(inv, playerNameStr, 30);
+                    case 35:
+                        setSlots(inv, 28, 34, true, (byte) 10, "Multiplier", false, playerNameStr);
                         break;
-                    case 32:
-                        setCurrent(inv, playerNameStr, 32);
+                    case 37:
+                        setCurrent(inv, playerNameStr, 37);
                         break;
-                    case 34:
-                        setCurrent(inv, playerNameStr, 34);
+                    case 39:
+                        setCurrent(inv, playerNameStr, 39);
+                        break;
+                    case 41:
+                        setCurrent(inv, playerNameStr, 41);
+                        break;
+                    case 43:
+                        setCurrent(inv, playerNameStr, 43);
                         break;
                     case 45:
                         player.sendMessage(plugin.pluginName + "Checking destination...");
@@ -158,8 +171,8 @@ public class TARDISTerminalListener implements Listener {
         }
     }
 
-    private List<String> getLoreValue(int max, int slot, boolean signed) {
-        int step = plugin.getConfig().getInt("terminal_step");
+    private List<String> getLoreValue(int max, int slot, boolean signed, String name) {
+        int step = (terminalStep.containsKey(name)) ? terminalStep.get(name) : 50;
         int val = max - slot;
         String str;
         switch (val) {
@@ -188,8 +201,8 @@ public class TARDISTerminalListener implements Listener {
         return Arrays.asList(new String[]{str});
     }
 
-    private int getValue(int max, int slot, boolean signed) {
-        int step = plugin.getConfig().getInt("terminal_step");
+    private int getValue(int max, int slot, boolean signed, String name) {
+        int step = (terminalStep.containsKey(name)) ? terminalStep.get(name) : 50;
         int val = max - slot;
         int intval;
         switch (val) {
@@ -218,14 +231,14 @@ public class TARDISTerminalListener implements Listener {
         return intval;
     }
 
-    private void setSlots(Inventory inv, int min, int max, boolean pos, byte data, String row, boolean signed) {
+    private void setSlots(Inventory inv, int min, int max, boolean pos, byte data, String row, boolean signed, String name) {
         int affected_slot = getSlot(inv, min, max);
         int new_slot = getNewSlot(affected_slot, min, max, pos);
         inv.setItem(affected_slot, null);
         ItemStack is = new ItemStack(35, 1, data);
         ItemMeta im = is.getItemMeta();
         im.setDisplayName(row);
-        List<String> lore = getLoreValue(max, new_slot, signed);
+        List<String> lore = getLoreValue(max, new_slot, signed, name);
         im.setLore(lore);
         is.setItemMeta(im);
         inv.setItem(new_slot, is);
@@ -233,22 +246,22 @@ public class TARDISTerminalListener implements Listener {
 
     private void setCurrent(Inventory inv, String name, int slot) {
         String[] current = terminalUsers.get(name).split(":");
-        int[] slots = new int[]{28, 30, 32, 34};
+        int[] slots = new int[]{37, 39, 41, 43};
         for (int i : slots) {
             List<String> lore = null;
             ItemStack is = inv.getItem(i);
             ItemMeta im = is.getItemMeta();
             if (i == slot) {
                 switch (slot) {
-                    case 30:
+                    case 39:
                         // get a normal world
                         lore = Arrays.asList(new String[]{getWorld("NORMAL", current[0])});
                         break;
-                    case 32:
+                    case 41:
                         // get a nether world
                         lore = Arrays.asList(new String[]{getWorld("NETHER", current[0])});
                         break;
-                    case 34:
+                    case 43:
                         // get an end world
                         lore = Arrays.asList(new String[]{getWorld("THE_END", current[0])});
                         break;
@@ -305,15 +318,15 @@ public class TARDISTerminalListener implements Listener {
     private void checkSettings(Inventory inv, Player p) {
         String name = p.getName();
         // get x, z, m settings
-        int slotm = getValue(25, getSlot(inv, 19, 25), false);
-        int slotx = getValue(7, getSlot(inv, 1, 7), true) * slotm;
-        int slotz = getValue(16, getSlot(inv, 10, 16), true) * slotm;
+        int slotm = getValue(34, getSlot(inv, 28, 34), false, name) * plugin.getConfig().getInt("terminal_step");
+        int slotx = getValue(16, getSlot(inv, 10, 16), true, name) * slotm;
+        int slotz = getValue(25, getSlot(inv, 19, 25), true, name) * slotm;
         String str = "";
         String[] current = terminalUsers.get(name).split(":");
         TARDISConstants.COMPASS d = terminalDirection.get(name);
         // what kind of world is it?
         Environment e;
-        int[] slots = new int[]{28, 30, 32, 34};
+        int[] slots = new int[]{37, 39, 41, 43};
         for (int i : slots) {
             if (inv.getItem(i).getItemMeta().hasLore()) {
                 String world = inv.getItem(i).getItemMeta().getLore().get(0);

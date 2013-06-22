@@ -52,4 +52,4 @@ malfunction_nether: 3
 exile: false
 per_world_perms: false
 conversion_done: true
-terminal_step: 50
+terminal_step: 1

@@ -162,7 +162,7 @@ public class TARDISConfiguration {
         intOptions.put("malfunction_end", 3);
         intOptions.put("malfunction_nether", 3);
         intOptions.put("rooms_condenser_percent", 100);
-        intOptions.put("terminal_step", 50);
+        intOptions.put("terminal_step", 1);
         intOptions.put("timeout", 5);
         intOptions.put("timeout_height", 135);
         intOptions.put("tp_radius", 256);
