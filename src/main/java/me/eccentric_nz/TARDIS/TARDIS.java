@@ -24,7 +24,7 @@ import java.util.Properties;
 import java.util.Set;
 import me.eccentric_nz.TARDIS.builders.TARDISBuilderInner;
 import me.eccentric_nz.TARDIS.builders.TARDISBuilderPoliceBox;
-import me.eccentric_nz.TARDIS.builders.TARDISPasteBox;
+//import me.eccentric_nz.TARDIS.builders.TARDISPasteBox;
 import me.eccentric_nz.TARDIS.builders.TARDISSpace;
 import me.eccentric_nz.TARDIS.commands.TARDISAdminCommands;
 import me.eccentric_nz.TARDIS.commands.TARDISAreaCommands;
@@ -73,6 +73,7 @@ import me.eccentric_nz.TARDIS.listeners.TARDISNPCListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISRoomSeeder;
 import me.eccentric_nz.TARDIS.listeners.TARDISScannerListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISSignListener;
+import me.eccentric_nz.TARDIS.listeners.TARDISTerminalListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISTimeLordDeathListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISUpdateListener;
 import me.eccentric_nz.TARDIS.rooms.TARDISCondenserData;
@@ -248,7 +249,7 @@ public class TARDIS extends JavaPlugin {
             new TARDISControlsConverter(this).convertControls();
         }
         tp = getServerTP();
-        new TARDISPasteBox(this).loadBoxes();
+        //new TARDISPasteBox(this).loadBoxes();
     }
 
     @Override
@@ -337,6 +338,7 @@ public class TARDIS extends JavaPlugin {
         pm.registerEvents(new TARDISJoinListener(this), this);
         pm.registerEvents(new TARDISKeyboardListener(this), this);
         pm.registerEvents(new TARDISChatListener(this), this);
+        pm.registerEvents(new TARDISTerminalListener(this), this);
         if (getNPCManager()) {
             pm.registerEvents(new TARDISNPCListener(this), this);
         }

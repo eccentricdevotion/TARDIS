@@ -400,7 +400,7 @@ public class TARDISTimeTravel {
      * @param wherez a z co-ordinate.
      * @param d the direction the Police Box is facing.
      */
-    private boolean safeNether(World nether, int wherex, int wherez, TARDISConstants.COMPASS d, Player p) {
+    public boolean safeNether(World nether, int wherex, int wherez, TARDISConstants.COMPASS d, Player p) {
         boolean safe = false;
         int startx, starty, startz, resetx, resetz, count;
         int wherey = 100;

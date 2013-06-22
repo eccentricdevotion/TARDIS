@@ -3,8 +3,7 @@
 ## Current version `2.5-beta-1`
 1. TARDIS shield
 2. Permission-based world creation - player's without permission use the default world, those with it get a TARDIS_WORLD
-3. Make the Police Box configurable via a schematic
-4. Chameleon disable
+3. Chameleon disable
  
 ## Next version `2.6+`
 1. Jettison the whole room (including walls), will require new room schematics...

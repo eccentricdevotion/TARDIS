@@ -155,6 +155,7 @@ public class TARDISAdminCommands implements CommandExecutor, TabCompleter {
         firstsInt.add("malfunction_nether");
         firstsInt.add("recharge_distance");
         firstsInt.add("rooms_condenser_percent");
+        firstsInt.add("terminal_step");
         firstsInt.add("timeout");
         firstsInt.add("timeout_height");
         firstsInt.add("tp_radius");
