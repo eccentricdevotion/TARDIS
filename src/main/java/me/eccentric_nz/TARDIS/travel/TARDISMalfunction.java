@@ -46,15 +46,17 @@ public class TARDISMalfunction {
     private TARDISConstants.COMPASS dir;
     private Location handbrake_loc;
     private String eps;
+    private String creeper;
     private Random rand;
 
-    public TARDISMalfunction(TARDIS plugin, int id, Player p, TARDISConstants.COMPASS dir, Location handbrake_loc, String eps) {
+    public TARDISMalfunction(TARDIS plugin, int id, Player p, TARDISConstants.COMPASS dir, Location handbrake_loc, String eps, String creeper) {
         this.plugin = plugin;
         this.id = id;
         this.p = p;
         this.dir = dir;
         this.handbrake_loc = handbrake_loc;
         this.eps = eps;
+        this.creeper = creeper;
         this.rand = new Random();
     }
 
@@ -125,7 +127,7 @@ public class TARDISMalfunction {
                         players = new ArrayList<String>();
                         players.add(p.getName());
                     }
-                    TARDISEPSRunnable EPS_runnable = new TARDISEPSRunnable(plugin, message, p, players, id, eps);
+                    TARDISEPSRunnable EPS_runnable = new TARDISEPSRunnable(plugin, message, p, players, id, eps, creeper);
                     plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, EPS_runnable, 220L);
                 }
             }
