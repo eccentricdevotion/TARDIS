@@ -27,10 +27,13 @@ import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
+import me.eccentric_nz.TARDIS.travel.TARDISPluginRespect;
 import me.eccentric_nz.TARDIS.travel.TARDISTimeTravel;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.World.Environment;
+import org.bukkit.block.Block;
+import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -104,32 +107,41 @@ public class TARDISTerminalListener implements Listener {
                         setSlots(inv, 28, 34, true, (byte) 10, "Multiplier", false, playerNameStr);
                         break;
                     case 37:
-                        setCurrent(inv, playerNameStr, 37);
+                        setCurrent(inv, player, 37);
                         break;
                     case 39:
-                        setCurrent(inv, playerNameStr, 39);
+                        setCurrent(inv, player, 39);
                         break;
                     case 41:
-                        setCurrent(inv, playerNameStr, 41);
+                        setCurrent(inv, player, 41);
                         break;
                     case 43:
-                        setCurrent(inv, playerNameStr, 43);
+                        setCurrent(inv, player, 43);
                         break;
                     case 45:
                         checkSettings(inv, player);
                         break;
                     case 49:
-                        HashMap<String, Object> set = new HashMap<String, Object>();
-                        set.put("save", terminalDestination.get(playerNameStr));
-                        HashMap<String, Object> wheret = new HashMap<String, Object>();
-                        wheret.put("tardis_id", terminalIDs.get(playerNameStr));
-                        new QueryFactory(plugin).doUpdate("tardis", set, wheret);
-                        plugin.tardisHasDestination.put(terminalIDs.get(playerNameStr), plugin.getArtronConfig().getInt("random"));
-                        if (plugin.trackRescue.containsKey(terminalIDs.get(playerNameStr))) {
-                            plugin.trackRescue.remove(terminalIDs.get(playerNameStr));
+                        if (terminalDestination.containsKey(playerNameStr)) {
+                            HashMap<String, Object> set = new HashMap<String, Object>();
+                            set.put("save", terminalDestination.get(playerNameStr));
+                            HashMap<String, Object> wheret = new HashMap<String, Object>();
+                            wheret.put("tardis_id", terminalIDs.get(playerNameStr));
+                            new QueryFactory(plugin).doUpdate("tardis", set, wheret);
+                            plugin.tardisHasDestination.put(terminalIDs.get(playerNameStr), plugin.getArtronConfig().getInt("random"));
+                            if (plugin.trackRescue.containsKey(terminalIDs.get(playerNameStr))) {
+                                plugin.trackRescue.remove(terminalIDs.get(playerNameStr));
+                            }
+                            close(player);
+                            player.sendMessage(plugin.pluginName + "Destination set. Please release the handbrake!");
+                        } else {
+                            // set lore
+                            ItemStack is = inv.getItem(49);
+                            ItemMeta im = is.getItemMeta();
+                            List<String> lore = Arrays.asList(new String[]{"No valid destination has been set!"});
+                            im.setLore(lore);
+                            is.setItemMeta(im);
                         }
-                        close(player);
-                        player.sendMessage(plugin.pluginName + "Destination set. Please release the handbrake!");
                         break;
                     case 53:
                         close(player);
@@ -256,8 +268,8 @@ public class TARDISTerminalListener implements Listener {
         inv.setItem(new_slot, is);
     }
 
-    private void setCurrent(Inventory inv, String name, int slot) {
-        String[] current = terminalUsers.get(name).split(":");
+    private void setCurrent(Inventory inv, Player p, int slot) {
+        String[] current = terminalUsers.get(p.getName()).split(":");
         int[] slots = new int[]{37, 39, 41, 43};
         for (int i : slots) {
             List<String> lore = null;
@@ -315,14 +327,19 @@ public class TARDISTerminalListener implements Listener {
             }
         }
         // random world
-        Random rand = new Random();
-        int rw = rand.nextInt(allowedWorlds.size());
-        int i = 0;
-        for (String w : allowedWorlds) {
-            if (i == rw) {
-                world = w;
+        if (allowedWorlds.size() > 0) {
+            Random rand = new Random();
+            int rw = rand.nextInt(allowedWorlds.size());
+            int i = 0;
+            for (String w : allowedWorlds) {
+                if (i == rw) {
+                    world = w;
+                }
+                i += 1;
             }
-            i += 1;
+        } else {
+            // if all else fails return the current world
+            world = this_world;
         }
         return world;
     }
@@ -333,7 +350,7 @@ public class TARDISTerminalListener implements Listener {
         int slotm = getValue(34, getSlot(inv, 28, 34), false, name) * plugin.getConfig().getInt("terminal_step");
         int slotx = getValue(16, getSlot(inv, 10, 16), true, name) * slotm;
         int slotz = getValue(25, getSlot(inv, 19, 25), true, name) * slotm;
-        String str = "";
+        List<String> lore = new ArrayList<String>();
         String[] current = terminalUsers.get(name).split(":");
         TARDISConstants.COMPASS d = terminalDirection.get(name);
         // what kind of world is it?
@@ -342,69 +359,107 @@ public class TARDISTerminalListener implements Listener {
         boolean found = false;
         for (int i : slots) {
             if (inv.getItem(i).getItemMeta().hasLore()) {
-                found = true;
                 String world = inv.getItem(i).getItemMeta().getLore().get(0);
-                World w = plugin.getServer().getWorld(world);
-                e = w.getEnvironment();
-                TARDISTimeTravel tt = new TARDISTimeTravel(plugin);
-                if (world.equals(current[0])) {
-                    // add current co-ords
-                    slotx += plugin.utils.parseNum(current[1]);
-                    slotz += plugin.utils.parseNum(current[3]);
-                }
-                String loc_str = world + ":" + slotx + ":" + slotz;
-                switch (e) {
-                    case THE_END:
-                        int endy = w.getHighestBlockYAt(slotx, slotz);
-                        plugin.debug(endy);
-                        if (endy > 40) {
-                            Location loc = new Location(w, slotx, 0, slotz);
-                            int[] estart = tt.getStartLocation(loc, d);
-                            int esafe = tt.safeLocation(estart[0], endy, estart[2], estart[1], estart[3], w, d);
-                            if (esafe == 0) {
-                                String save = world + ":" + slotx + ":" + endy + ":" + slotz;
-                                terminalDestination.put(name, save);
-                                str = save + " is a valid destination!";
+                if (!world.equals("No permission")) {
+                    found = true;
+                    World w = plugin.getServer().getWorld(world);
+                    e = w.getEnvironment();
+                    TARDISTimeTravel tt = new TARDISTimeTravel(plugin);
+                    TARDISPluginRespect respect = new TARDISPluginRespect(plugin);
+                    if (world.equals(current[0])) {
+                        // add current co-ords
+                        slotx += plugin.utils.parseNum(current[1]);
+                        slotz += plugin.utils.parseNum(current[3]);
+                    }
+                    String loc_str = world + ":" + slotx + ":" + slotz;
+                    switch (e) {
+                        case THE_END:
+                            int endy = w.getHighestBlockYAt(slotx, slotz);
+                            if (endy > 40) {
+                                Location loc = new Location(w, slotx, 0, slotz);
+                                int[] estart = tt.getStartLocation(loc, d);
+                                int esafe = tt.safeLocation(estart[0], endy, estart[2], estart[1], estart[3], w, d);
+                                if (esafe == 0) {
+                                    String save = world + ":" + slotx + ":" + endy + ":" + slotz;
+                                    if (respect.getRespect(p, new Location(w, slotx, endy, slotz), false)) {
+                                        terminalDestination.put(name, save);
+                                        lore.add(save);
+                                        lore.add("is a valid destination!");
+                                    } else {
+                                        lore.add(save);
+                                        lore.add("is a protected location.");
+                                        lore.add("Try again!");
+                                    }
+                                } else {
+                                    lore.add(loc_str);
+                                    lore.add("is not safe!");
+                                }
                             } else {
-                                str = loc_str + " is not safe!";
+                                lore.add(loc_str);
+                                lore.add("is not safe!");
                             }
-                        } else {
-                            str = loc_str + " is not safe!";
-                        }
-                        break;
-                    case NETHER:
-                        if (tt.safeNether(w, slotx, slotz, d, p)) {
-                            String save = world + ":" + slotx + ":" + w.getHighestBlockYAt(slotx, slotz) + ":" + slotz;
-                            terminalDestination.put(name, save);
-                            str = save + " is a valid destination!";
-                        } else {
-                            str = loc_str + " is not safe!";
-                        }
-                        break;
-                    default:
-                        Location loc = new Location(w, slotx, 0, slotz);
-                        int[] start = tt.getStartLocation(loc, d);
-                        int starty = w.getHighestBlockYAt(slotx, slotz);
-                        int safe = tt.safeLocation(start[0], starty, start[2], start[1], start[3], w, d);
-                        if (safe == 0) {
-                            String save = world + ":" + slotx + ":" + starty + ":" + slotz;
-                            terminalDestination.put(name, save);
-                            str = save + " is a valid destination!";
-                        } else {
-                            str = loc_str + " is not safe!";
-                        }
-                        break;
+                            break;
+                        case NETHER:
+                            if (tt.safeNether(w, slotx, slotz, d, p)) {
+                                String save = world + ":" + slotx + ":" + getHighestNetherBlock(w, slotx, slotz) + ":" + slotz;
+                                terminalDestination.put(name, save);
+                                lore.add(save);
+                                lore.add("is a valid destination!");
+                            } else {
+                                lore.add(loc_str);
+                                lore.add("is not safe!");
+                            }
+                            break;
+                        default:
+                            Location loc = new Location(w, slotx, 0, slotz);
+                            int[] start = tt.getStartLocation(loc, d);
+                            int starty = w.getHighestBlockYAt(slotx, slotz);
+                            int safe = tt.safeLocation(start[0], starty, start[2], start[1], start[3], w, d);
+                            if (safe == 0) {
+                                String save = world + ":" + slotx + ":" + starty + ":" + slotz;
+                                if (respect.getRespect(p, new Location(w, slotx, starty, slotz), false)) {
+                                    terminalDestination.put(name, save);
+                                    lore.add(save);
+                                    lore.add("is a valid destination!");
+                                } else {
+                                    lore.add(save);
+                                    lore.add("is a protected location.");
+                                    lore.add("Try again!");
+                                }
+                            } else {
+                                lore.add(loc_str);
+                                lore.add("is not safe!");
+                            }
+                            break;
+                    }
                 }
             }
         }
         if (!found) {
-            str = "You need to select a world!";
+            lore.add("You need to select a world!");
         }
         ItemStack is = inv.getItem(45);
         ItemMeta im = is.getItemMeta();
-        List<String> lore = Arrays.asList(new String[]{str});
         im.setLore(lore);
         is.setItemMeta(im);
+    }
+
+    private int getHighestNetherBlock(World w, int wherex, int wherez) {
+        int y = 100;
+        Block startBlock = w.getBlockAt(wherex, y, wherez);
+        while (startBlock.getTypeId() != 0) {
+            startBlock = startBlock.getRelative(BlockFace.DOWN);
+        }
+        int air = 0;
+        while (startBlock.getTypeId() == 0 && startBlock.getLocation().getBlockY() > 30) {
+            startBlock = startBlock.getRelative(BlockFace.DOWN);
+            air++;
+        }
+        int id = startBlock.getTypeId();
+        if ((id == 87 || id == 88 || id == 89 || id == 112 || id == 113 || id == 114) && air >= 4) {
+            y = startBlock.getLocation().getBlockY() + 1;
+        }
+        return y;
     }
 
     private void close(final Player p) {
