@@ -93,7 +93,8 @@ public class TARDISGravityCommands implements CommandExecutor, TabCompleter {
             ChunkGenerator gen = world.getGenerator();
             boolean special = name.contains("TARDIS_TimeVortex") && (world.getWorldType().equals(WorldType.FLAT) || gen instanceof TARDISChunkGenerator);
             if (!name.equals("TARDIS_WORLD_" + player.getName()) && !special) {
-                player.sendMessage(plugin.pluginName + "You must be in a TARDIS world to make a gravity well!");
+                String mess_stub = (name.contains("TARDIS_WORLD_")) ? "your own" : "a";
+                player.sendMessage(plugin.pluginName + "You must be in " + mess_stub + " TARDIS world to make a gravity well!");
                 return true;
             }
             if (args.length < 1) {
