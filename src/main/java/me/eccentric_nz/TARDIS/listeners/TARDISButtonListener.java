@@ -27,6 +27,7 @@ import me.eccentric_nz.TARDIS.database.ResultSetControls;
 import me.eccentric_nz.TARDIS.database.ResultSetRepeaters;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
+import me.eccentric_nz.TARDIS.rooms.TARDISARSInventory;
 import me.eccentric_nz.TARDIS.thirdparty.Version;
 import me.eccentric_nz.TARDIS.travel.TARDISTerminalInventory;
 import me.eccentric_nz.TARDIS.travel.TARDISTimeTravel;
@@ -56,10 +57,12 @@ public class TARDISButtonListener implements Listener {
 
     private TARDIS plugin;
     List<Material> validBlocks = new ArrayList<Material>();
-    List<Integer> onlythese = Arrays.asList(new Integer[]{1, 8, 9});
+    List<Integer> onlythese = Arrays.asList(new Integer[]{1, 8, 9, 10});
     Version bukkitversion;
     Version prewoodbuttonversion = new Version("1.4.2");
+    Version precoparatorversion = new Version("1.5");
     private ItemStack[] items;
+    private ItemStack[] tars;
 
     public TARDISButtonListener(TARDIS plugin) {
         this.plugin = plugin;
@@ -68,10 +71,15 @@ public class TARDISButtonListener implements Listener {
         if (bukkitversion.compareTo(prewoodbuttonversion) >= 0) {
             validBlocks.add(Material.WOOD_BUTTON);
         }
+        if (bukkitversion.compareTo(precoparatorversion) >= 0) {
+            validBlocks.add(Material.REDSTONE_COMPARATOR_OFF);
+            validBlocks.add(Material.REDSTONE_COMPARATOR_ON);
+        }
         validBlocks.add(Material.STONE_BUTTON);
         validBlocks.add(Material.LEVER);
         validBlocks.add(Material.WALL_SIGN);
         this.items = new TARDISTerminalInventory().getTerminal();
+        this.tars = new TARDISARSInventory().getTerminal();
 
     }
 
@@ -94,6 +102,7 @@ public class TARDISButtonListener implements Listener {
                 if (validBlocks.contains(blockType)) {
                     // get clicked block location
                     String buttonloc = block.getLocation().toString();
+                    plugin.debug(buttonloc);
                     // get tardis from saved button location
                     HashMap<String, Object> where = new HashMap<String, Object>();
                     //where.put("type", 1);
@@ -231,10 +240,15 @@ public class TARDISButtonListener implements Listener {
                                     break;
                                 case 9:
                                     // terminal sign
-                                    // open custom inventory
                                     Inventory aec = plugin.getServer().createInventory(player, 54, "§4Destination Terminal");
                                     aec.setContents(items);
                                     player.openInventory(aec);
+                                    break;
+                                case 10:
+                                    // ARS sign
+                                    Inventory ars = plugin.getServer().createInventory(player, 54, "§4Architectural Reconfiguration");
+                                    ars.setContents(tars);
+                                    player.openInventory(ars);
                                     break;
                                 default:
                                     break;

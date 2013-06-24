@@ -55,6 +55,7 @@ public class TARDISArtronCapacitorListener implements Listener {
     List<Material> validBlocks = new ArrayList<Material>();
     Version bukkitversion;
     Version prewoodbuttonversion = new Version("1.4.2");
+    Version precoparatorversion = new Version("1.5");
 
     public TARDISArtronCapacitorListener(TARDIS plugin) {
         this.plugin = plugin;
@@ -63,7 +64,12 @@ public class TARDISArtronCapacitorListener implements Listener {
         if (bukkitversion.compareTo(prewoodbuttonversion) >= 0) {
             validBlocks.add(Material.WOOD_BUTTON);
         }
+        if (bukkitversion.compareTo(precoparatorversion) >= 0) {
+            validBlocks.add(Material.REDSTONE_COMPARATOR_OFF);
+            validBlocks.add(Material.REDSTONE_COMPARATOR_ON);
+        }
         validBlocks.add(Material.STONE_BUTTON);
+        validBlocks.add(Material.LEVER);
     }
 
     /**

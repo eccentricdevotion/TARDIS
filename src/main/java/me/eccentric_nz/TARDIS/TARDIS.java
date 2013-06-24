@@ -47,6 +47,7 @@ import me.eccentric_nz.TARDIS.files.TARDISConfiguration;
 import me.eccentric_nz.TARDIS.files.TARDISMakeRoomCSV;
 import me.eccentric_nz.TARDIS.files.TARDISMakeTardisCSV;
 import me.eccentric_nz.TARDIS.files.TARDISUpdateChecker;
+import me.eccentric_nz.TARDIS.listeners.TARDISARSListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISAreaListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISArtronCapacitorListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISBindListener;
@@ -339,6 +340,7 @@ public class TARDIS extends JavaPlugin {
         pm.registerEvents(new TARDISKeyboardListener(this), this);
         pm.registerEvents(new TARDISChatListener(this), this);
         pm.registerEvents(new TARDISTerminalListener(this), this);
+        pm.registerEvents(new TARDISARSListener(this), this);
         if (getNPCManager()) {
             pm.registerEvents(new TARDISNPCListener(this), this);
         }

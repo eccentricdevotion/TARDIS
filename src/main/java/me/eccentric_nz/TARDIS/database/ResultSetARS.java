@@ -19,48 +19,47 @@ package me.eccentric_nz.TARDIS.database;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Locale;
 import java.util.Map;
 import me.eccentric_nz.TARDIS.TARDIS;
 
 /**
- * A numerical Type designates each model of TARDIS. Every TARDIS that is
- * constructed follows the specifications of its specific "Type." For example
- * the Doctor usually operates a Type 40 TARDIS. Higher Type numbers indicated
- * later model TARDISes.
+ * Tricky van Baalen was the youngest and the smartest of the van Baalen
+ * brothers. Tricky worked for his brothers Gregor and Bram, finding and
+ * processing salvaged spaceships. Although made captain by their father, he
+ * suffered an accident in which he lost his eyes, his voice, and his memory. He
+ * was fitted with synthetic eyes and a partially electronic-sounding voice box;
+ * unable to replace his memory, his brothers instead convinced him that he was
+ * in fact an android.
  *
  * @author eccentric_nz
  */
-public class ResultSetCount {
+public class ResultSetARS {
 
     private TARDISDatabase service = TARDISDatabase.getInstance();
     private Connection connection = service.getConnection();
     private TARDIS plugin;
     private HashMap<String, Object> where;
-    private boolean multiple;
     private int id;
+    private int tardis_id;
     private String player;
-    private int count;
-    private ArrayList<HashMap<String, String>> data = new ArrayList<HashMap<String, String>>();
+    private int east;
+    private int south;
+    private int layer;
+    private String json;
 
     /**
      * Creates a class instance that can be used to retrieve an SQL ResultSet
-     * from the count table.
+     * from the ars table.
      *
      * @param plugin an instance of the main class.
      * @param where a HashMap<String, Object> of table fields and values to
      * refine the search.
-     * @param multiple a boolean indicating whether multiple rows should be
-     * fetched
      */
-    public ResultSetCount(TARDIS plugin, HashMap<String, Object> where, boolean multiple) {
+    public ResultSetARS(TARDIS plugin, HashMap<String, Object> where) {
         this.plugin = plugin;
         this.where = where;
-        this.multiple = multiple;
     }
 
     /**
@@ -81,7 +80,7 @@ public class ResultSetCount {
             }
             wheres = " WHERE " + sbw.toString().substring(0, sbw.length() - 5);
         }
-        String query = "SELECT * FROM t_count" + wheres;
+        String query = "SELECT * FROM ars" + wheres;
         try {
             statement = connection.prepareStatement(query);
             if (where != null) {
@@ -100,24 +99,19 @@ public class ResultSetCount {
             if (rs.isBeforeFirst()) {
                 //plugin.debug(query);
                 while (rs.next()) {
-                    if (multiple) {
-                        HashMap<String, String> row = new HashMap<String, String>();
-                        ResultSetMetaData rsmd = rs.getMetaData();
-                        int columns = rsmd.getColumnCount();
-                        for (int i = 1; i < columns + 1; i++) {
-                            row.put(rsmd.getColumnName(i).toLowerCase(Locale.ENGLISH), rs.getString(i));
-                        }
-                        data.add(row);
-                    }
-                    this.id = rs.getInt("t_id");
+                    this.id = rs.getInt("ars_id");
+                    this.tardis_id = rs.getInt("tardis_id");
                     this.player = rs.getString("player");
-                    this.count = rs.getInt("count");
+                    this.east = rs.getInt("ars_x_east");
+                    this.south = rs.getInt("ars_z_south");
+                    this.layer = rs.getInt("ars_y_layer");
+                    this.json = rs.getString("json");
                 }
             } else {
                 return false;
             }
         } catch (SQLException e) {
-            plugin.debug("ResultSet error for count table! " + e.getMessage());
+            plugin.debug("ResultSet error for ars table! " + e.getMessage());
             return false;
         } finally {
             try {
@@ -128,7 +122,7 @@ public class ResultSetCount {
                     statement.close();
                 }
             } catch (Exception e) {
-                plugin.debug("Error closing count table! " + e.getMessage());
+                plugin.debug("Error closing ars table! " + e.getMessage());
             }
         }
         return true;
@@ -138,15 +132,27 @@ public class ResultSetCount {
         return id;
     }
 
+    public int getTardis_id() {
+        return tardis_id;
+    }
+
     public String getPlayer() {
         return player;
     }
 
-    public int getCount() {
-        return count;
+    public int getEast() {
+        return east;
     }
 
-    public ArrayList<HashMap<String, String>> getData() {
-        return data;
+    public int getSouth() {
+        return south;
+    }
+
+    public int getLayer() {
+        return layer;
+    }
+
+    public String getJson() {
+        return json;
     }
 }
