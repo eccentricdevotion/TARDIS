@@ -119,19 +119,21 @@ public class TARDISButtonListener implements Listener {
                         ResultSetTardis rs = new ResultSetTardis(plugin, whereid, "", false);
                         if (rs.resultSet()) {
                             int level = rs.getArtron_level();
-                            if (!rs.isHandbrake_on()) {
-                                player.sendMessage(plugin.pluginName + ChatColor.RED + "You cannot set a destination while the TARDIS is travelling!");
-                                return;
-                            }
-                            if (level < plugin.getArtronConfig().getInt("random")) {
-                                player.sendMessage(plugin.pluginName + ChatColor.RED + "The TARDIS does not have enough Artron Energy to make this trip!");
-                                return;
-                            }
+                            boolean hb = rs.isHandbrake_on();
                             boolean set_dest = false;
                             String d = rs.getCurrent();
                             QueryFactory qf = new QueryFactory(plugin);
                             switch (type) {
                                 case 1:
+                                    if (!hb) {
+                                        player.sendMessage(plugin.pluginName + ChatColor.RED + "You cannot set a destination while the TARDIS is travelling!");
+                                        return;
+                                    }
+                                    if (level < plugin.getArtronConfig().getInt("random")) {
+                                        player.sendMessage(plugin.pluginName + ChatColor.RED + "The TARDIS does not have enough Artron Energy to make this trip!");
+                                        return;
+                                    }
+
                                     String[] current = d.split(":");
                                     TARDISConstants.COMPASS dir = rs.getDirection();
                                     if (player.hasPermission("tardis.exile") && plugin.getConfig().getBoolean("exile")) {
@@ -229,6 +231,14 @@ public class TARDISButtonListener implements Listener {
                                     }
                                     break;
                                 case 8:
+                                    if (!hb) {
+                                        player.sendMessage(plugin.pluginName + ChatColor.RED + "You cannot set a destination while the TARDIS is travelling!");
+                                        return;
+                                    }
+                                    if (level < plugin.getArtronConfig().getInt("random")) {
+                                        player.sendMessage(plugin.pluginName + ChatColor.RED + "The TARDIS does not have enough Artron Energy to make this trip!");
+                                        return;
+                                    }
                                     // fast return button
                                     if (!d.equals(rs.getFast_return())) {
                                         d = rs.getFast_return();
@@ -239,12 +249,24 @@ public class TARDISButtonListener implements Listener {
                                     }
                                     break;
                                 case 9:
+                                    if (!hb) {
+                                        player.sendMessage(plugin.pluginName + ChatColor.RED + "You cannot set a destination while the TARDIS is travelling!");
+                                        return;
+                                    }
+                                    if (level < plugin.getArtronConfig().getInt("random")) {
+                                        player.sendMessage(plugin.pluginName + ChatColor.RED + "The TARDIS does not have enough Artron Energy to make this trip!");
+                                        return;
+                                    }
                                     // terminal sign
                                     Inventory aec = plugin.getServer().createInventory(player, 54, "§4Destination Terminal");
                                     aec.setContents(items);
                                     player.openInventory(aec);
                                     break;
                                 case 10:
+                                    if (!hb) {
+                                        player.sendMessage(plugin.pluginName + ChatColor.RED + "You cannot reconfigure rooms while the TARDIS is travelling!");
+                                        return;
+                                    }
                                     // ARS sign
                                     Inventory ars = plugin.getServer().createInventory(player, 54, "§4Architectural Reconfiguration");
                                     ars.setContents(tars);
