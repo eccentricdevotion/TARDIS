@@ -285,6 +285,7 @@ public class TARDISExterminator {
             }
             if (plugin.pm.isPluginEnabled("MultiWorld")) {
                 plugin.getServer().dispatchCommand(plugin.console, "mw unload " + name);
+                plugin.getServer().dispatchCommand(plugin.console, "mw delete " + name);
             }
             if (plugin.pm.isPluginEnabled("My Worlds")) {
                 plugin.getServer().dispatchCommand(plugin.console, "myworlds unload " + name);
