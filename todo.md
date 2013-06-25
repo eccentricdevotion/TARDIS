@@ -1,15 +1,17 @@
 # TODO
 
 ## Current version `2.5-beta-1`
-1. TARDIS shield
-2. Permission-based world creation - player's without permission use the default world, those with it get a TARDIS_WORLD
-3. Chameleon disable
- 
-## Next version `2.6+`
+0. Add GUI to save-sign
 1. Jettison the whole room (including walls), will require new room schematics...
 2. Architectural Reconfiguration System / Map room
 3. Add new Minecraft 1.6 items and blocks
 4. Add sounds with Resource packs?
+5. Permission-based world creation - player's without permission use the default world, those with it get a TARDIS_WORLD
+
+## Next version `2.6+`
+1. TARDIS shield
+2. Chameleon disable
+3. ?
 
 ## Minecraft API when available `3.0?`
 1. Recreate everything with the new API :)
