@@ -273,12 +273,11 @@ public class TARDISUpdateListener implements Listener {
             if (blockName.equalsIgnoreCase("save-sign") && (blockType == Material.WALL_SIGN || blockType == Material.SIGN_POST)) {
                 set.put("save_sign", blockLocStr);
                 // add text to sign
-                String[] coords = home.split(":");
                 Sign s = (Sign) block.getState();
-                s.setLine(0, "Saves");
-                s.setLine(1, "Home");
-                s.setLine(2, coords[0]);
-                s.setLine(3, coords[1] + "," + coords[2] + "," + coords[3]);
+                s.setLine(0, "TARDIS");
+                s.setLine(1, "Saved");
+                s.setLine(2, "Locations");
+                s.setLine(3, "");
                 s.update();
             }
             if (blockName.equalsIgnoreCase("keyboard") && (blockType == Material.WALL_SIGN || blockType == Material.SIGN_POST)) {

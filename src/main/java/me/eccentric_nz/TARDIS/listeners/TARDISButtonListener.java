@@ -102,7 +102,6 @@ public class TARDISButtonListener implements Listener {
                 if (validBlocks.contains(blockType)) {
                     // get clicked block location
                     String buttonloc = block.getLocation().toString();
-                    plugin.debug(buttonloc);
                     // get tardis from saved button location
                     HashMap<String, Object> where = new HashMap<String, Object>();
                     //where.put("type", 1);

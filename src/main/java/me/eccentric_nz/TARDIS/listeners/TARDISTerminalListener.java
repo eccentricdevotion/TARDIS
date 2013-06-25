@@ -147,7 +147,6 @@ public class TARDISTerminalListener implements Listener {
                         close(player);
                         break;
                     default:
-                        plugin.debug("Not used");
                         break;
                 }
                 event.setCancelled(true);
