@@ -83,7 +83,7 @@ public class TARDISARSListener implements Listener {
     }
 
     @EventHandler(priority = EventPriority.NORMAL)
-    public void onTerminalClick(InventoryClickEvent event) {
+    public void onARSTerminalClick(InventoryClickEvent event) {
         Inventory inv = event.getInventory();
         String name = inv.getTitle();
         if (name.equals("§4Architectural Reconfiguration")) {
