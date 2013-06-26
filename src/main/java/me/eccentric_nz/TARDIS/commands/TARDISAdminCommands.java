@@ -41,6 +41,7 @@ import me.eccentric_nz.TARDIS.destroyers.TARDISPruner;
 import me.eccentric_nz.TARDIS.files.TARDISConfiguration;
 import me.eccentric_nz.TARDIS.listeners.TARDISDoorListener;
 import me.eccentric_nz.TARDIS.thirdparty.Version;
+import me.eccentric_nz.TARDIS.travel.TARDISTerminalInventory;
 import me.eccentric_nz.TARDIS.utility.TARDISMaterials;
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.Bukkit;
@@ -713,6 +714,10 @@ public class TARDISAdminCommands implements CommandExecutor, TabCompleter {
                         }
                     } else {
                         plugin.getConfig().set(first, val);
+                        if (first.equals("terminal_step")) {
+                            // reset the terminal inventory
+                            plugin.buttonListener.items = new TARDISTerminalInventory().getTerminal();
+                        }
                     }
                 }
                 plugin.saveConfig();

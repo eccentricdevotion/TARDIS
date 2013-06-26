@@ -61,7 +61,7 @@ public class TARDISButtonListener implements Listener {
     Version bukkitversion;
     Version prewoodbuttonversion = new Version("1.4.2");
     Version precoparatorversion = new Version("1.5");
-    private ItemStack[] items;
+    public ItemStack[] items;
     private ItemStack[] tars;
 
     public TARDISButtonListener(TARDIS plugin) {
@@ -80,7 +80,6 @@ public class TARDISButtonListener implements Listener {
         validBlocks.add(Material.WALL_SIGN);
         this.items = new TARDISTerminalInventory().getTerminal();
         this.tars = new TARDISARSInventory().getTerminal();
-
     }
 
     /**

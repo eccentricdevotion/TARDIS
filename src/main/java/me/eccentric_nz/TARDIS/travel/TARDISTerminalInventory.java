@@ -17,6 +17,7 @@
 package me.eccentric_nz.TARDIS.travel;
 
 import java.util.Arrays;
+import me.eccentric_nz.TARDIS.TARDIS;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
@@ -34,25 +35,26 @@ public class TARDISTerminalInventory {
 
     private ItemStack[] getItemStack() {
         // steps
+        int step = TARDIS.plugin.getConfig().getInt("terminal_step");
         // 10
         ItemStack ten = new ItemStack(35, 1, (byte) 0);
         ItemMeta im10 = ten.getItemMeta();
-        im10.setDisplayName("Step: 10");
+        im10.setDisplayName("Step: " + (10 * step));
         ten.setItemMeta(im10);
         // 10
         ItemStack twentyfive = new ItemStack(35, 1, (byte) 8);
         ItemMeta im25 = twentyfive.getItemMeta();
-        im25.setDisplayName("Step: 25");
+        im25.setDisplayName("Step: " + (25 * step));
         twentyfive.setItemMeta(im25);
         // 10
         ItemStack fifty = new ItemStack(35, 1, (byte) 7);
         ItemMeta im50 = fifty.getItemMeta();
-        im50.setDisplayName("Step: 50");
+        im50.setDisplayName("Step: " + (50 * step));
         fifty.setItemMeta(im50);
         // 10
         ItemStack onehundred = new ItemStack(35, 1, (byte) 15);
         ItemMeta im100 = onehundred.getItemMeta();
-        im100.setDisplayName("Step: 100");
+        im100.setDisplayName("Step: " + (100 * step));
         onehundred.setItemMeta(im100);
         // -ve
         ItemStack neg = new ItemStack(35, 1, (byte) 14);

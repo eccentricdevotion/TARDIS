@@ -201,6 +201,7 @@ public class TARDIS extends JavaPlugin {
     private FileConfiguration artron_config;
     private FileConfiguration blocks_config;
     private FileConfiguration rooms_config;
+    public TARDISButtonListener buttonListener;
 
     @Override
     public void onEnable() {
@@ -316,7 +317,8 @@ public class TARDIS extends JavaPlugin {
         pm.registerEvents(new TARDISBlockPlaceListener(this), this);
         pm.registerEvents(new TARDISBlockBreakListener(this), this);
         pm.registerEvents(new TARDISDoorListener(this), this);
-        pm.registerEvents(new TARDISButtonListener(this), this);
+        this.buttonListener = new TARDISButtonListener(this);
+        pm.registerEvents(buttonListener, this);
         pm.registerEvents(new TARDISSignListener(this), this);
         pm.registerEvents(new TARDISUpdateListener(this), this);
         pm.registerEvents(new TARDISAreaListener(this), this);
