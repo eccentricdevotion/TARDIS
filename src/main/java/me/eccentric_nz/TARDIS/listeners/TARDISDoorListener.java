@@ -298,7 +298,7 @@ public class TARDISDoorListener implements Listener {
                                                     TARDISFarmer tf = new TARDISFarmer(plugin);
                                                     pets = tf.exitPets(player);
                                                     if (pets != null && pets.size() > 0) {
-                                                        movePets(pets, exitTardis, player);
+                                                        movePets(pets, exitTardis, player, d);
                                                     }
                                                 }
                                                 if (plugin.getConfig().getBoolean("allow_tp_switch") && userTP) {
@@ -354,7 +354,7 @@ public class TARDISDoorListener implements Listener {
                                                 final Location tardis_loc = tmp_loc;
                                                 movePlayer(player, tardis_loc, false, playerWorld, userQuotes);
                                                 if (pets != null && pets.size() > 0) {
-                                                    movePets(pets, tardis_loc, player);
+                                                    movePets(pets, tardis_loc, player, d);
                                                 }
                                                 if (plugin.getConfig().getBoolean("allow_tp_switch") && userTP) {
                                                     if (!rsp.getTexture_in().isEmpty()) {
@@ -556,12 +556,28 @@ public class TARDISDoorListener implements Listener {
      * @param l the location to teleport pets to
      * @param player the player who owns the pets
      */
-    private void movePets(List<TARDISMob> p, Location l, Player player) {
+    private void movePets(List<TARDISMob> p, Location l, Player player, TARDISConstants.COMPASS d) {
         Location pl = l.clone();
         World w = l.getWorld();
         // will need to adjust this depending on direction Police Box is facing
-        pl.setX(l.getX() + 1);
-        pl.setZ(l.getZ() + 1);
+        switch (d) {
+            case NORTH:
+                pl.setX(l.getX() + 1);
+                pl.setZ(l.getZ() + 1);
+                break;
+            case WEST:
+                pl.setX(l.getX() + 1);
+                pl.setZ(l.getZ() - 1);
+                break;
+            case SOUTH:
+                pl.setX(l.getX() - 1);
+                pl.setZ(l.getZ() - 1);
+                break;
+            default:
+                pl.setX(l.getX() - 1);
+                pl.setZ(l.getZ() + 1);
+                break;
+        }
         for (TARDISMob pet : p) {
             plugin.myspawn = true;
             LivingEntity ent = (LivingEntity) w.spawnEntity(pl, pet.getType());
