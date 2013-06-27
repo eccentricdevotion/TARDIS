@@ -147,7 +147,7 @@ public class TARDISSignListener implements Listener {
                             if (event.getAction().equals(Action.RIGHT_CLICK_BLOCK) /*&& !player.isSneaking()*/) {
                                 TARDISSaveSignInventory sst = new TARDISSaveSignInventory(plugin, id, rs.getHome());
                                 ItemStack[] items = sst.getTerminal();
-                                Inventory inv = plugin.getServer().createInventory(player, 27, "§4TARDIS saves");
+                                Inventory inv = plugin.getServer().createInventory(player, 54, "§4TARDIS saves");
                                 inv.setContents(items);
                                 player.openInventory(inv);
 //                                List<String> dests = new ArrayList<String>();

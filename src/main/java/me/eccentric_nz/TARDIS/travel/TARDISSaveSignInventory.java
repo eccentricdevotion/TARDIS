@@ -17,6 +17,7 @@
 package me.eccentric_nz.TARDIS.travel;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
@@ -37,33 +38,7 @@ public class TARDISSaveSignInventory {
     String home;
 
     public TARDISSaveSignInventory(TARDIS plugin, int id, String home) {
-        ids.add(1);
-        ids.add(2);
-        ids.add(5);
-        ids.add(7);
-        ids.add(12);
-        ids.add(13);
-        ids.add(14);
-        ids.add(15);
-        ids.add(16);
-        ids.add(17);
-        ids.add(18);
-        ids.add(19);
-        ids.add(20);
-        ids.add(21);
-        ids.add(22);
-        ids.add(23);
-        ids.add(24);
-        ids.add(29);
-        ids.add(35);
-        ids.add(41);
-        ids.add(42);
-        ids.add(45);
-        ids.add(46);
-        ids.add(47);
-        ids.add(48);
-        ids.add(49);
-        ids.add(56);
+        ids.addAll(Arrays.asList(new Integer[]{1, 2, 5, 7, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 29, 35, 41, 42, 45, 46, 47, 48, 49, 52, 56, 57, 58, 61, 73, 79, 80, 81, 82, 84, 86, 87, 88, 89, 98, 99, 100, 103, 110, 112, 118, 121, 123, 129, 133, 153, 155}));
         this.plugin = plugin;
         this.id = id;
         this.home = home;
@@ -108,12 +83,11 @@ public class TARDISSaveSignInventory {
                     dests.add(is);
                     i++;
                 }
-
             }
         }
 
-        ItemStack[] stack = new ItemStack[27];
-        for (int s = 0; s < 27; s++) {
+        ItemStack[] stack = new ItemStack[54];
+        for (int s = 0; s < 54; s++) {
             if (s < dests.size()) {
                 stack[s] = dests.get(s);
             } else {
