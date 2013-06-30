@@ -327,7 +327,7 @@ public class TARDISCommands implements CommandExecutor {
                             return true;
                         }
                         String playerNameStr = player.getName();
-                        destPlayer.sendMessage(plugin.pluginName + playerNameStr + "wants to rescue you! Type: " + ChatColor.AQUA + "tardis rescue accept" + ChatColor.RESET + " in chat within 30 seconds to accept the rescue.");
+                        destPlayer.sendMessage(plugin.pluginName + playerNameStr + "wants to rescue you! Type: " + ChatColor.AQUA + "tardis rescue accept" + ChatColor.RESET + " in chat within 60 seconds to accept the rescue.");
                         plugin.trackChat.put(saved, playerNameStr);
                         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
                             @Override
