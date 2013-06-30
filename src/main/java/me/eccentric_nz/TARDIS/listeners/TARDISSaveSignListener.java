@@ -21,6 +21,7 @@ import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
+import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -50,34 +51,39 @@ public class TARDISSaveSignListener implements Listener {
             final Player player = (Player) event.getWhoClicked();
             String playerNameStr = player.getName();
             // get the TARDIS the player is in
-            HashMap<String, Object> where = new HashMap<String, Object>();
-            where.put("owner", playerNameStr);
-            ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
-            if (rs.resultSet()) {
-                int id = rs.getTardis_id();
-                int slot = event.getRawSlot();
-                ItemStack is = inv.getItem(slot);
-                ItemMeta im = is.getItemMeta();
-                List<String> lore = im.getLore();
-                String save = getDestination(lore);
-                if (!save.equals(rs.getCurrent())) {
-                    HashMap<String, Object> set = new HashMap<String, Object>();
-                    set.put("save", save);
-                    HashMap<String, Object> wheret = new HashMap<String, Object>();
-                    wheret.put("tardis_id", id);
-                    new QueryFactory(plugin).doUpdate("tardis", set, wheret);
-                    plugin.tardisHasDestination.put(id, plugin.getArtronConfig().getInt("random"));
-                    if (plugin.trackRescue.containsKey(Integer.valueOf(id))) {
-                        plugin.trackRescue.remove(Integer.valueOf(id));
+            HashMap<String, Object> wheres = new HashMap<String, Object>();
+            wheres.put("player", playerNameStr);
+            ResultSetTravellers rst = new ResultSetTravellers(plugin, wheres, false);
+            if (rst.resultSet()) {
+                HashMap<String, Object> where = new HashMap<String, Object>();
+                where.put("tardis_id", rst.getTardis_id());
+                ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
+                if (rs.resultSet()) {
+                    int id = rs.getTardis_id();
+                    int slot = event.getRawSlot();
+                    ItemStack is = inv.getItem(slot);
+                    ItemMeta im = is.getItemMeta();
+                    List<String> lore = im.getLore();
+                    String save = getDestination(lore);
+                    if (!save.equals(rs.getCurrent())) {
+                        HashMap<String, Object> set = new HashMap<String, Object>();
+                        set.put("save", save);
+                        HashMap<String, Object> wheret = new HashMap<String, Object>();
+                        wheret.put("tardis_id", id);
+                        new QueryFactory(plugin).doUpdate("tardis", set, wheret);
+                        plugin.tardisHasDestination.put(id, plugin.getArtronConfig().getInt("random"));
+                        if (plugin.trackRescue.containsKey(Integer.valueOf(id))) {
+                            plugin.trackRescue.remove(Integer.valueOf(id));
+                        }
+                        close(player);
+                        player.sendMessage(plugin.pluginName + im.getDisplayName() + " destination set. Please release the handbrake!");
+                    } else {
+                        lore.add("§6Current location");
+                        im.setLore(lore);
+                        is.setItemMeta(im);
                     }
-                    close(player);
-                    player.sendMessage(plugin.pluginName + im.getDisplayName() + " destination set. Please release the handbrake!");
-                } else {
-                    lore.add("§6Current location");
-                    im.setLore(lore);
-                    is.setItemMeta(im);
+                    event.setCancelled(true);
                 }
-                event.setCancelled(true);
             }
         }
     }

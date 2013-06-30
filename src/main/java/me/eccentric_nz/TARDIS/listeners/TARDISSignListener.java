@@ -87,6 +87,11 @@ public class TARDISSignListener implements Listener {
                     // get tardis from saved sign location
                     ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
                     if (rs.resultSet()) {
+                        event.setCancelled(true);
+                        if (rs.isIso_on() && !player.getName().equals(rs.getOwner()) && event.isCancelled()) {
+                            player.sendMessage(plugin.pluginName + "The isomorphic security lockout has been engaged... Hands off the controls!");
+                            return;
+                        }
                         QueryFactory qf = new QueryFactory(plugin);
                         int id = rs.getTardis_id();
                         HashMap<String, Object> tid = new HashMap<String, Object>();

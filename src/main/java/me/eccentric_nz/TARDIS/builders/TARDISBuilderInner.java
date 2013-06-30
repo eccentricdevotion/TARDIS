@@ -381,11 +381,10 @@ public class TARDISBuilderInner {
                 postSaveBlock.setTypeIdAndData(68, (byte) 3, true);
                 if (postSaveBlock.getType().equals(Material.WALL_SIGN)) {
                     Sign ss = (Sign) postSaveBlock.getState();
-                    String[] coords = rs.getHome().split(":");
-                    ss.setLine(0, "Saves");
-                    ss.setLine(1, "Home");
-                    ss.setLine(2, coords[0]);
-                    ss.setLine(3, coords[1] + "," + coords[2] + "," + coords[3]);
+                    ss.setLine(0, "TARDIS");
+                    ss.setLine(1, "Saved");
+                    ss.setLine(2, "Locations");
+                    ss.setLine(3, "");
                     ss.update();
                 }
             }
