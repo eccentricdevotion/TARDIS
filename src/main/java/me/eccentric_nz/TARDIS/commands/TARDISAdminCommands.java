@@ -144,6 +144,7 @@ public class TARDISAdminCommands implements CommandExecutor, TabCompleter {
         firstsBool.add("the_end");
         firstsBool.add("use_worldguard");
         // integer
+        firstsInt.add("admin_item");
         firstsInt.add("border_radius");
         firstsInt.add("confirm_timeout");
         firstsInt.add("count");

@@ -150,6 +150,7 @@ public class TARDISConfiguration {
         artronIntOptions.put("recharge_distance", 20);
         artronIntOptions.put("the_end_min", 5500);
         artronIntOptions.put("travel", 100);
+        intOptions.put("admin_item", 264);
         intOptions.put("border_radius", 64);
         intOptions.put("confirm_timeout", 15);
         intOptions.put("count", 0);
