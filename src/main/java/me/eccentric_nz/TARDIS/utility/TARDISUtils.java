@@ -30,6 +30,8 @@ import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.block.Block;
+import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 
 /**
@@ -175,9 +177,33 @@ public class TARDISUtils {
             cx = parseNum(split[1]);
             cz = parseNum(split[2]);
             Chunk chunk = w.getChunkAt(cx, cz);
-            startLoc[0] = chunk.getBlock(0, 15, 0).getX();
+            // adjust for TARDIS size
+            int adjust = 0;
+            FileConfiguration pluginYml = YamlConfiguration.loadConfiguration(plugin.pm.getPlugin("TARDIS").getResource("plugin.yml"));
+            String[] version = pluginYml.getString("version").split("-");
+            float v = Float.parseFloat(version[0]);
+            if (v >= 2.5F) {
+                switch (rs.getSchematic()) {
+                    case BIGGER:
+                        adjust = (15 - plugin.biggerdimensions[1]) / 2;
+                        break;
+                    case REDSTONE:
+                        adjust = (15 - plugin.redstonedimensions[1]) / 2;
+                        break;
+                    case DELUXE:
+                        adjust = (15 - plugin.deluxedimensions[1]) / 2;
+                        break;
+                    case ELEVENTH:
+                        adjust = (15 - plugin.eleventhdimensions[1]) / 2;
+                        break;
+                    default:
+                        adjust = (15 - plugin.budgetdimensions[1]) / 2;
+                        break;
+                }
+            }
+            startLoc[0] = (chunk.getBlock(0, 15, 0).getX()) + adjust;
             startLoc[1] = startLoc[0];
-            startLoc[2] = chunk.getBlock(0, 15, 0).getZ();
+            startLoc[2] = (chunk.getBlock(0, 15, 0).getZ()) + adjust;
             startLoc[3] = startLoc[2];
             startLoc[4] = 1;
             startLoc[5] = 1;
