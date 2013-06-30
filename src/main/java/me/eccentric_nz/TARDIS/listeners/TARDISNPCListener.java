@@ -39,9 +39,11 @@ public class TARDISNPCListener implements Listener {
     @EventHandler(priority = EventPriority.MONITOR)
     public void onNPCInteract(NPCRightClickEvent event) {
         NPC npc = event.getNPC();
-        if (plugin.npcIDs.contains(npc.getId())) {
+        Integer id = Integer.valueOf(npc.getId());
+        if (plugin.npcIDs.contains(id)) {
             npc.destroy();
             event.getClicker().sendMessage(ChatColor.RED + "[Emergency Program One] " + ChatColor.RESET + "Bye!");
+            plugin.npcIDs.remove(id);
         }
     }
 }
