@@ -28,6 +28,10 @@ import org.bukkit.World;
 import org.bukkit.entity.Player;
 
 /**
+ * Rescue Operational Security Module G723 (ROSM) was an artificial intelligence
+ * built into a spacecraft working around the Cimmerian System. It was designed
+ * by Professor Astrov to protect company interests and property, including
+ * rescue of company employees from danger.
  *
  * @author eccentric_nz
  */
@@ -39,6 +43,18 @@ public class TARDISRescue {
         this.plugin = plugin;
     }
 
+    /**
+     * Move the Police Box to a player's location, and potentially rescue the
+     * player.
+     *
+     * @param player The Timelord
+     * @param saved The player to be rescued
+     * @param id The TARDIS unique ID
+     * @param tt an instance of the TARDISTimeTravel class
+     * @param d the direction the Police Box is facing
+     * @param rescue whether to rescue the player
+     * @return
+     */
     public boolean rescue(Player player, String saved, int id, TARDISTimeTravel tt, TARDISConstants.COMPASS d, boolean rescue) {
         if (plugin.getServer().getPlayer(saved) == null) {
             player.sendMessage(plugin.pluginName + "That player is not online!");
@@ -81,6 +97,13 @@ public class TARDISRescue {
         return true;
     }
 
+    /**
+     * Check whether a Timelord can rescue a player, and then rescue them.
+     *
+     * @param player The Timelord
+     * @param saved The player to be rescued
+     * @return true if rescue was successful
+     */
     public boolean tryRescue(Player player, String saved) {
         if (player.hasPermission("tardis.timetravel") && !(player.hasPermission("tardis.exile") && plugin.getConfig().getBoolean("exile"))) {
             TARDISTimeTravel tt = new TARDISTimeTravel(plugin);

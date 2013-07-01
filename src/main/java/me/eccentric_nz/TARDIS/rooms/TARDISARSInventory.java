@@ -20,6 +20,9 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 /**
+ * During his exile on Earth, the Third Doctor altered the TARDIS' Architectural
+ * Configuration software to relocate the console outside the ship (as it was
+ * too big to go through the doors), allowing him to work on it in his lab.
  *
  * @author eccentric_nz
  */
@@ -31,6 +34,11 @@ public class TARDISARSInventory {
         this.terminal = getItemStack();
     }
 
+    /**
+     * Constructs an inventory for the Architectural Reconfiguration System GUI.
+     *
+     * @return an Array of itemStacks (an inventory)
+     */
     private ItemStack[] getItemStack() {
         // direction pad
         // up

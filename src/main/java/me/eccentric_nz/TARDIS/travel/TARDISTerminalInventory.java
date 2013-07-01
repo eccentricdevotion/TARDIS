@@ -22,6 +22,10 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 /**
+ * John Lumic was a business tycoon, owner of Cybus Industries and the creator
+ * of the Cybermen. Though he publicly denied rumours of ill health, Lumic
+ * suffered from a terminal illness and used a motorized wheelchair as
+ * transport.
  *
  * @author eccentric_nz
  */
@@ -33,6 +37,11 @@ public class TARDISTerminalInventory {
         this.terminal = getItemStack();
     }
 
+    /**
+     * Constructs an inventory for the Destination Terminal GUI.
+     *
+     * @return an Array of itemStacks (an inventory)
+     */
     private ItemStack[] getItemStack() {
         // steps
         int step = TARDIS.plugin.getConfig().getInt("terminal_step");

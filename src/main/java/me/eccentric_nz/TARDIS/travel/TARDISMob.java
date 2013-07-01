@@ -21,6 +21,10 @@ import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Ocelot.Type;
 
 /**
+ * Alien is a broad, subjective term. It can be applied as a noun or an
+ * adjective for any entity, object, place or practice which is not familiar.
+ * When referring to entities, it is used for sentient and non-sentient organic
+ * creatures, as well as robots.
  *
  * @author eccentric_nz
  */
@@ -35,6 +39,9 @@ public class TARDISMob {
     private DyeColor colour;
     private String name;
 
+    /**
+     * Data storage class for TARDIS mobs.
+     */
     public TARDISMob() {
     }
 

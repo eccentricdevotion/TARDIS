@@ -36,6 +36,8 @@ import org.bukkit.entity.Player;
 import org.bukkit.util.StringUtil;
 
 /**
+ * A trilanic activator is a device created and used by the Zygons to control
+ * their Skarasens. It is hand-sized and has a texture like wet skin.
  *
  * @author eccentric_nz
  */

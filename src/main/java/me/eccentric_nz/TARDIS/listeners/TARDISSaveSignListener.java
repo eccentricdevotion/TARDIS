@@ -43,6 +43,12 @@ public class TARDISSaveSignListener implements Listener {
         this.plugin = plugin;
     }
 
+    /**
+     * Listens for player clicking inside an inventory. If the inventory is a
+     * TARDIS GUI, then the click is processed accordingly.
+     *
+     * @param event a player clicking an inventory slot
+     */
     @EventHandler(priority = EventPriority.NORMAL)
     public void onSaveTerminalClick(InventoryClickEvent event) {
         Inventory inv = event.getInventory();
@@ -88,10 +94,22 @@ public class TARDISSaveSignListener implements Listener {
         }
     }
 
+    /**
+     * Converts an Item Stacks lore to a destination string in the correct
+     * format for entry into the database.
+     *
+     * @param lore the lore to read
+     * @return the destination string
+     */
     private String getDestination(List<String> lore) {
         return lore.get(0) + ":" + lore.get(1) + ":" + lore.get(2) + ":" + lore.get(3);
     }
 
+    /**
+     * Closes the inventory.
+     *
+     * @param p the player using the GUI
+     */
     private void close(final Player p) {
         final String n = p.getName();
         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {

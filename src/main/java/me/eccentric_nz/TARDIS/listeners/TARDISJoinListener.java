@@ -33,6 +33,9 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 
 /**
+ * Tylos was a member of Varsh's group of Outlers on Alzarius. When Adric asked
+ * to join them, Tylos challenged him to prove his worth by stealing some
+ * riverfruit.
  *
  * @author eccentric_nz
  */

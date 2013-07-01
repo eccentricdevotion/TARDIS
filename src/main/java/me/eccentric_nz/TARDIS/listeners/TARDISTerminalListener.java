@@ -46,6 +46,9 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 /**
+ * A control sphere is a device created by the Great Intelligence to control its
+ * Robot Yetis. It is a glass sphere that is fitted into the chest of a Yeti and
+ * serves as the brain. It emits a beeping noise.
  *
  * @author eccentric_nz
  */
@@ -62,6 +65,12 @@ public class TARDISTerminalListener implements Listener {
         this.plugin = plugin;
     }
 
+    /**
+     * Listens for player clicking inside an inventory. If the inventory is a
+     * TARDIS GUI, then the click is processed accordingly.
+     *
+     * @param event a player clicking an inventory slot
+     */
     @EventHandler(priority = EventPriority.NORMAL)
     public void onDestTerminalClick(InventoryClickEvent event) {
         Inventory inv = event.getInventory();

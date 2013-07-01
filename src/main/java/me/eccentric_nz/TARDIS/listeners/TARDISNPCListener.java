@@ -25,6 +25,9 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 
 /**
+ * Believing that he would die on the Game Station, the Ninth Doctor used
+ * Emergency Program One to play a message for the benefit of Rose Tyler before
+ * the TARDIS returned Rose to her home of Powell Estate in 2006.
  *
  * @author eccentric_nz
  */
@@ -36,6 +39,12 @@ public class TARDISNPCListener implements Listener {
         this.plugin = plugin;
     }
 
+    /**
+     * Listens for player clicking on an NPC. If the NPC is an Emergency Program
+     * One NPC then it is removed.
+     *
+     * @param event a player clicking an inventory slot
+     */
     @EventHandler(priority = EventPriority.MONITOR)
     public void onNPCInteract(NPCRightClickEvent event) {
         NPC npc = event.getNPC();

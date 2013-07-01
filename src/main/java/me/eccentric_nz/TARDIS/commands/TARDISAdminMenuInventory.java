@@ -26,6 +26,8 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 /**
+ * The Administrator of Solos is the Earth Empire's civilian overseer for that
+ * planet.
  *
  * @author eccentric_nz
  */
@@ -41,6 +43,11 @@ public class TARDISAdminMenuInventory {
         this.menu = getItemStack();
     }
 
+    /**
+     * Constructs an inventory for the Admin Menu GUI.
+     *
+     * @return an Array of itemStacks (an inventory)
+     */
     private ItemStack[] getItemStack() {
         List<ItemStack> options = new ArrayList<ItemStack>();
         int i = 0;

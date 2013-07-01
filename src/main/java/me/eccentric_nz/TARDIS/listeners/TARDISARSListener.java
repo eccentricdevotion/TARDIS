@@ -82,6 +82,12 @@ public class TARDISARSListener implements Listener {
         this.name_map.put(121, "Baker");
     }
 
+    /**
+     * Listens for player clicking inside an inventory. If the inventory is a
+     * TARDIS GUI, then the click is processed accordingly.
+     *
+     * @param event a player clicking an inventory slot
+     */
     @EventHandler(priority = EventPriority.NORMAL)
     public void onARSTerminalClick(InventoryClickEvent event) {
         Inventory inv = event.getInventory();
@@ -236,6 +242,11 @@ public class TARDISARSListener implements Listener {
         }
     }
 
+    /**
+     * Saves the current ARS data to the database.
+     *
+     * @param p the player who is using the ARS GUI
+     */
     private void saveAll(String p) {
         TARDISARSMapData md = map_data.get(p);
         JSONArray json = new JSONArray(md.getData());
@@ -249,6 +260,12 @@ public class TARDISARSListener implements Listener {
         new QueryFactory(plugin).doUpdate("ars", set, wherea);
     }
 
+    /**
+     * Converts the JSON data stored in the database to a 3D array.
+     *
+     * @param js the JSON from the database
+     * @return a 3D array of ints
+     */
     private int[][][] getGridFronJSON(String js) {
         int[][][] grid = new int[3][9][9];
         JSONArray json = new JSONArray(js);
@@ -264,6 +281,14 @@ public class TARDISARSListener implements Listener {
         return grid;
     }
 
+    /**
+     * Gets a 5x5 2D slice from a 3D array
+     *
+     * @param layer the level to to get
+     * @param x the x position of the slice
+     * @param z the z position of the slice
+     * @return
+     */
     private int[][] sliceGrid(int[][] layer, int x, int z) {
         int[][] slice = new int[5][5];
         int indexx = 0, indexz = 0;
@@ -278,6 +303,17 @@ public class TARDISARSListener implements Listener {
         return slice;
     }
 
+    /**
+     * Sets an ItemStack to the specified inventory slot updating the display
+     * name and removing any lore.
+     *
+     * @param inv the inventory to update
+     * @param slot the slot number to update
+     * @param id the item id to set the item stack to
+     * @param room the room type associated with the id
+     * @param p the player using the GUI
+     * @param update whether to update the grid display
+     */
     private void setSlot(Inventory inv, int slot, int id, String room, String p, boolean update) {
         ItemStack is = new ItemStack(id, 1);
         ItemMeta im = is.getItemMeta();
@@ -290,6 +326,15 @@ public class TARDISARSListener implements Listener {
         }
     }
 
+    /**
+     * Sets an ItemStack to the specified inventory slot.
+     *
+     * @param inv the inventory to update
+     * @param slot the slot number to update
+     * @param is the item stack to set
+     * @param p the player using the GUI
+     * @param update whether to update the grid display
+     */
     private void setSlot(Inventory inv, int slot, ItemStack is, String p, boolean update) {
         inv.setItem(slot, is);
         int id = is.getTypeId();
@@ -298,6 +343,14 @@ public class TARDISARSListener implements Listener {
         }
     }
 
+    /**
+     * Get the coordinates of the clicked slot in relation to the ARS map.
+     *
+     * @param slot the slot that was clicked
+     * @param md an instance of the TARDISARSMapData class from which to
+     * retrieve the map offset
+     * @return an array of ints
+     */
     private int[] getCoords(int slot, TARDISARSMapData md) {
         int[] coords = new int[2];
         if (slot <= 8) {
@@ -323,6 +376,14 @@ public class TARDISARSListener implements Listener {
         return coords;
     }
 
+    /**
+     * Saves the current map to the TARDISARSMapData instance associated with
+     * the player using the GUI.
+     *
+     * @param p the player using the GUI
+     * @param slot the slot that was clicked
+     * @param id the type id of the block in the slot
+     */
     private void updateGrid(String p, int slot, int id) {
         TARDISARSMapData md = map_data.get(p);
         int[][][] grid = md.getData();
@@ -335,6 +396,13 @@ public class TARDISARSListener implements Listener {
         map_data.put(p, md);
     }
 
+    /**
+     * Sets the lore of the ItemStack in the specified slot.
+     *
+     * @param inv the inventory to update
+     * @param slot the slot to update
+     * @param str the lore to set
+     */
     private void setLore(Inventory inv, int slot, String str) {
         List<String> lore = (str != null) ? Arrays.asList(new String[]{str}) : null;
         ItemStack is = inv.getItem(slot);
@@ -343,6 +411,13 @@ public class TARDISARSListener implements Listener {
         is.setItemMeta(im);
     }
 
+    /**
+     * Switches the indicator block for the map level.
+     *
+     * @param inv the inventory to update
+     * @param slot the slot to update
+     * @param p the player using the GUI
+     */
     private void switchLevel(Inventory inv, int slot, String p) {
         TARDISARSMapData md = map_data.get(p);
         for (int i = 27; i < 30; i++) {
@@ -360,6 +435,11 @@ public class TARDISARSListener implements Listener {
         }
     }
 
+    /**
+     * Closes the inventory.
+     *
+     * @param p the player using the GUI
+     */
     private void close(final Player p) {
         final String n = p.getName();
         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
@@ -381,6 +461,12 @@ public class TARDISARSListener implements Listener {
         }, 1L);
     }
 
+    /**
+     * Loads the map from the database ready for use in the GUI.
+     *
+     * @param inv the inventory to load the map into
+     * @param p the player using the GUI
+     */
     private void loadMap(Inventory inv, String player) {
         if (inv.getItem(10).getItemMeta().hasLore()) {
             setLore(inv, 10, "Map already loaded!");
@@ -423,6 +509,13 @@ public class TARDISARSListener implements Listener {
         }
     }
 
+    /**
+     * Move the map to a new position.
+     *
+     * @param p the player using the GUI
+     * @param inv the inventory to update
+     * @param slot the slot number to update
+     */
     private void moveMap(String p, Inventory inv, int slot) {
         if (map_data.containsKey(p)) {
             TARDISARSMapData md = map_data.get(p);

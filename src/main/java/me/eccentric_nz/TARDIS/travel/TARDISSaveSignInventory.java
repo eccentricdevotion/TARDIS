@@ -26,6 +26,9 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 /**
+ * The "Hollywood" sign was among the Earth cultural items the Threshold stole
+ * and moved to the town of Wormwood on the Moon. The moon was later destroyed;
+ * the sign likely was also.
  *
  * @author eccentric_nz
  */
@@ -45,6 +48,11 @@ public class TARDISSaveSignInventory {
         this.terminal = getItemStack();
     }
 
+    /**
+     * Constructs an inventory for the Save Sign GUI.
+     *
+     * @return an Array of itemStacks (an inventory)
+     */
     private ItemStack[] getItemStack() {
         List<ItemStack> dests = new ArrayList<ItemStack>();
         // home stack
