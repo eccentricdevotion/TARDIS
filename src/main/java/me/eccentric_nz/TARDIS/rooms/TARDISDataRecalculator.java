@@ -26,6 +26,9 @@ package me.eccentric_nz.TARDIS.rooms;
  */
 public class TARDISDataRecalculator {
 
+    private TARDISDataRecalculator() {
+    }
+
     /**
      * A method to calculate the data bit for a block based on the direction a
      * room is facing when grown.
@@ -49,6 +52,12 @@ public class TARDISDataRecalculator {
             case 134:
             case 135:
             case 136:
+            case 149:
+            case 150:
+            case 156:
+            case -100:
+            case -106:
+            case -107:
             case -120:
             case -121:
             case -122:
@@ -62,8 +71,44 @@ public class TARDISDataRecalculator {
                     case 2:
                         data = 3;
                         break;
-                    default:
+                    case 3:
                         data = 2;
+                        break;
+                    case 4:
+                        data = 5;
+                        break;
+                    case 5:
+                        data = 4;
+                        break;
+                    case 6:
+                        data = 7;
+                        break;
+                    case 7:
+                        data = 6;
+                        break;
+                    case 8:
+                        data = 9;
+                        break;
+                    case 9:
+                        data = 8;
+                        break;
+                    case 10:
+                        data = 11;
+                        break;
+                    case 11:
+                        data = 10;
+                        break;
+                    case 12:
+                        data = 13;
+                        break;
+                    case 13:
+                        data = 12;
+                        break;
+                    case 14:
+                        data = 15;
+                        break;
+                    default:
+                        data = 14;
                         break;
                 }
                 break;
@@ -160,8 +205,5 @@ public class TARDISDataRecalculator {
                 break;
         }
         return data;
-    }
-
-    private TARDISDataRecalculator() {
     }
 }
