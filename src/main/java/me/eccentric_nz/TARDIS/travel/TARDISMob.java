@@ -36,8 +36,11 @@ public class TARDISMob {
     private int health;
     private boolean sitting;
     private boolean baby;
+    private boolean tamed;
     private DyeColor colour;
     private String name;
+    private int horsetype;
+    private int horsevariant;
 
     /**
      * Data storage class for TARDIS mobs.
@@ -93,6 +96,14 @@ public class TARDISMob {
         this.baby = baby;
     }
 
+    public boolean isTamed() {
+        return tamed;
+    }
+
+    public void setTamed(boolean tamed) {
+        this.tamed = tamed;
+    }
+
     public DyeColor getColour() {
         return colour;
     }
@@ -107,5 +118,21 @@ public class TARDISMob {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public int getHorsetype() {
+        return horsetype;
+    }
+
+    public void setHorsetype(int horsetype) {
+        this.horsetype = horsetype;
+    }
+
+    public int getHorsevariant() {
+        return horsevariant;
+    }
+
+    public void setHorsevariant(int horsevariant) {
+        this.horsevariant = horsevariant;
     }
 }

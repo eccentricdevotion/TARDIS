@@ -135,9 +135,23 @@ public class TARDISFarmer {
                         total++;
                         break;
                     case HORSE:
+                        Tameable brokenin = (Tameable) e;
+                        // don't farm other player's tamed horses
+                        if (brokenin.isTamed() && !brokenin.getOwner().getName().equals(p.getName())) {
+                            break;
+                        }
                         TARDISMob tmhor = new TARDISMob();
                         tmhor.setAge(e.getTicksLived());
                         tmhor.setBaby(!((Horse) e).isAdult());
+                        // waiting on new API to be able to get horse type and variant
+                        tmhor.setHorsetype(0); // 0 = horse, 1 = donkey, 2 = mule, 3 = zombie, 4 = skeleton
+                        // See http://www.minecraftwiki.net/wiki/Item_id#Horse_Variants
+                        tmhor.setHorsevariant(772); // black with white dots
+                        if (brokenin.isTamed()) {
+                            tmhor.setTamed(true);
+                        } else {
+                            tmhor.setTamed(false);
+                        }
                         old_macd_had_a_horse.add(tmhor);
                         e.remove();
                         if (taf != null) {
@@ -321,6 +335,14 @@ public class TARDISFarmer {
                             equine.setAge(e.getAge());
                             if (e.isBaby()) {
                                 equine.setBaby();
+                            }
+                            // waiting on new API to be able to set horse type and variant
+                            // equine.setHorseType(e.getHorsetype());
+                            // equine.setHorseVariant(e.getHorsevariant());
+                            Tameable tamed = (Tameable) equine;
+                            if (e.isTamed()) {
+                                tamed.setTamed(true);
+                                tamed.setOwner(p);
                             }
                         }
                     }
