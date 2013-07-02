@@ -570,7 +570,7 @@ public class TARDIS extends JavaPlugin {
     }
 
     private boolean getNPCManager() {
-        if (pm.getPlugin("Citizens") != null && getConfig().getBoolean("emergency_npc")) {
+        if (pm.getPlugin("Citizens") != null && pm.getPlugin("Citizens").isEnabled() && getConfig().getBoolean("emergency_npc")) {
             debug("Enabling Emergency Program One!");
             return true;
         } else {
