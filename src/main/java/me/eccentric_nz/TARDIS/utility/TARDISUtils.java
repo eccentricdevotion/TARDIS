@@ -190,6 +190,9 @@ public class TARDISUtils {
                     case REDSTONE:
                         adjust = (15 - plugin.redstonedimensions[1]) / 2;
                         break;
+                    case STEAMPUNK:
+                        adjust = (15 - plugin.steampunkdimensions[1]) / 2;
+                        break;
                     case DELUXE:
                         adjust = (15 - plugin.deluxedimensions[1]) / 2;
                         break;
@@ -254,6 +257,15 @@ public class TARDISUtils {
                 break;
             case DELUXE:
                 d = plugin.deluxedimensions;
+                break;
+            case ELEVENTH:
+                d = plugin.eleventhdimensions;
+                break;
+            case REDSTONE:
+                d = plugin.redstonedimensions;
+                break;
+            case STEAMPUNK:
+                d = plugin.steampunkdimensions;
                 break;
             default:
                 d = plugin.budgetdimensions;

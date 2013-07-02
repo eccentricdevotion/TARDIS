@@ -369,6 +369,9 @@ public class TARDISUpdateListener implements Listener {
                         case REDSTONE:
                             control = 152;
                             break;
+                        case STEAMPUNK:
+                            control = 173;
+                            break;
                         default:
                             break;
                     }

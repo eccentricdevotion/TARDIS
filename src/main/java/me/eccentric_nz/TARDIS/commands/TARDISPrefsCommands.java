@@ -254,7 +254,7 @@ public class TARDISPrefsCommands implements CommandExecutor {
                     case BIGGER:
                         plusy = 13;
                         break;
-                    default:
+                    default: // BUDGET & STEAMPUNK
                         plusy = 12;
                         break;
                 }

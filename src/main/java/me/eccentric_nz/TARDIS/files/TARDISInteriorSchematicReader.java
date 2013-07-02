@@ -98,6 +98,11 @@ public class TARDISInteriorSchematicReader {
                     plugin.redstonedimensions[1] = width;
                     plugin.redstonedimensions[2] = length;
                     break;
+                case STEAMPUNK:
+                    plugin.redstonedimensions[0] = height;
+                    plugin.redstonedimensions[1] = width;
+                    plugin.redstonedimensions[2] = length;
+                    break;
             }
 
             byte[] blocks = (byte[]) getChildTag(tagCollection, "Blocks", ByteArrayTag.class).getValue();

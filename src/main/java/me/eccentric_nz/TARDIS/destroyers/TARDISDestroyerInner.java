@@ -20,6 +20,8 @@ import java.util.Collections;
 import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
+import static me.eccentric_nz.TARDIS.TARDISConstants.SCHEMATIC.BIGGER;
+import static me.eccentric_nz.TARDIS.TARDISConstants.SCHEMATIC.DELUXE;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -65,6 +67,15 @@ public class TARDISDestroyerInner {
                 break;
             case DELUXE:
                 d = plugin.deluxedimensions;
+                break;
+            case ELEVENTH:
+                d = plugin.eleventhdimensions;
+                break;
+            case REDSTONE:
+                d = plugin.redstonedimensions;
+                break;
+            case STEAMPUNK:
+                d = plugin.steampunkdimensions;
                 break;
             default:
                 d = plugin.budgetdimensions;

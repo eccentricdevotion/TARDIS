@@ -96,6 +96,9 @@ permissions:
   tardis.redstone:
     description: Allow players to build the 'redstone' TARDIS.
     default: op
+  tardis.steampunk:
+    description: Allow players to build the 'steampunk' TARDIS.
+    default: op
   tardis.end:
     description: Allow players to time travel to the END.
     default: op
