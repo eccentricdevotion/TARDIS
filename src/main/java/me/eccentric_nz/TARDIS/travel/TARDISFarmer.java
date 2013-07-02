@@ -218,6 +218,7 @@ public class TARDISFarmer {
             ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
             if (rs.resultSet()) {
                 String farm = rs.getFarm();
+                String stable = rs.getStable();
                 if (!farm.isEmpty()) {
                     // get location of farm room
                     String[] data = farm.split(":");
@@ -301,6 +302,28 @@ public class TARDISFarmer {
                             }
                         }
                     }
+                } else if (!stable.isEmpty()) {
+                    // get location of farm room
+                    String[] data = stable.split(":");
+                    World world = plugin.getServer().getWorld(data[0]);
+                    int x = plugin.utils.parseNum(data[1]);
+                    int y = plugin.utils.parseNum(data[2]) + 1;
+                    int z = plugin.utils.parseNum(data[3]);
+                    if (old_macd_had_a_horse.size() > 0) {
+                        Location horse_pen = new Location(world, x + 3, y, z + 3);
+                        while (!world.getChunkAt(horse_pen).isLoaded()) {
+                            world.getChunkAt(horse_pen).load();
+                        }
+                        for (TARDISMob e : old_macd_had_a_horse) {
+                            plugin.myspawn = true;
+                            Entity horse = world.spawnEntity(horse_pen, EntityType.HORSE);
+                            Horse equine = (Horse) horse;
+                            equine.setAge(e.getAge());
+                            if (e.isBaby()) {
+                                equine.setBaby();
+                            }
+                        }
+                    }
                 } else {
                     if (plugin.getConfig().getBoolean("spawn_eggs")) {
                         // no farm, give the player spawn eggs
@@ -323,6 +346,10 @@ public class TARDISFarmer {
                         }
                         if (old_macd_had_a_mooshroom.size() > 0) {
                             ItemStack is = new ItemStack(Material.MONSTER_EGG, old_macd_had_a_mooshroom.size(), (short) 96);
+                            inv.addItem(is);
+                        }
+                        if (old_macd_had_a_horse.size() > 0) {
+                            ItemStack is = new ItemStack(Material.MONSTER_EGG, old_macd_had_a_mooshroom.size(), (short) 100);
                             inv.addItem(is);
                         }
                         p.updateInventory();

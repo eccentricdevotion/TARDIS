@@ -71,6 +71,7 @@ public class ResultSetTardis {
     private boolean recharging;
     private String scanner;
     private String farm;
+    private String stable;
     private boolean hidden;
     private long lastuse;
     private boolean iso_on;
@@ -173,6 +174,7 @@ public class ResultSetTardis {
                     this.recharging = rs.getBoolean("recharging");
                     this.scanner = rs.getString("scanner");
                     this.farm = rs.getString("farm");
+                    this.stable = rs.getString("stable");
                     this.hidden = rs.getBoolean("hidden");
                     this.lastuse = rs.getLong("lastuse");
                     this.iso_on = rs.getBoolean("iso_on");
@@ -313,6 +315,10 @@ public class ResultSetTardis {
 
     public String getFarm() {
         return farm;
+    }
+
+    public String getStable() {
+        return stable;
     }
 
     public boolean isHidden() {
