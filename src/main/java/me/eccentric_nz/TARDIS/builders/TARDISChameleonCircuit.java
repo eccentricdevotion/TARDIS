@@ -139,6 +139,9 @@ public class TARDISChameleonCircuit {
                 case 152:
                     chameleonData = (byte) 14;
                     break;
+                case 173:
+                    chameleonData = (byte) 15;
+                    break;
                 default:
                     chameleonData = (byte) 0;
                     break;
