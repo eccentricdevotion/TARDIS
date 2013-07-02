@@ -26,7 +26,7 @@ import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
 
 /**
- * TThe Sex Gas was an intelligent cloud of gas. It inhabited the body of Carys
+ * The Sex Gas was an intelligent cloud of gas. It inhabited the body of Carys
  * Fletcher to have sex with other humans, killing them in the process. In its
  * natural form, the sex gas was a thick pink-purple gas with high
  * concentrations of vorax and ceranium, which could move about at will. It

@@ -43,6 +43,13 @@ public class TARDISLampScanner {
         this.plugin = plugin;
     }
 
+    /**
+     * Updates TARDISes from pre-malfunction plugin versions so that the lamps
+     * can flash.
+     *
+     * @param owner the Timelord of the TARDIS
+     * @return true if the TARDIS has not been updated, otherwise false
+     */
     public boolean addLampBlocks(Player owner) {
         // check they have permission
         if (!owner.hasPermission("tardis.update")) {

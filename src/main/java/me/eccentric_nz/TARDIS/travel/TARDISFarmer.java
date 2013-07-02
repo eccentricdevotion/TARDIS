@@ -32,6 +32,7 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import static org.bukkit.entity.EntityType.OCELOT;
 import static org.bukkit.entity.EntityType.WOLF;
+import org.bukkit.entity.Horse;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.MushroomCow;
 import org.bukkit.entity.Ocelot;
@@ -101,6 +102,7 @@ public class TARDISFarmer {
             List<TARDISMob> old_macd_had_a_pig = new ArrayList<TARDISMob>();
             List<TARDISMob> old_macd_had_a_sheep = new ArrayList<TARDISMob>();
             List<TARDISMob> old_macd_had_a_mooshroom = new ArrayList<TARDISMob>();
+            List<TARDISMob> old_macd_had_a_horse = new ArrayList<TARDISMob>();
             // are we doing an achievement?
             TARDISAchievementFactory taf = null;
             if (plugin.getAchivementConfig().getBoolean("farm.enabled")) {
@@ -129,6 +131,17 @@ public class TARDISFarmer {
                         e.remove();
                         if (taf != null) {
                             taf.doAchievement("COW");
+                        }
+                        total++;
+                        break;
+                    case HORSE:
+                        TARDISMob tmhor = new TARDISMob();
+                        tmhor.setAge(e.getTicksLived());
+                        tmhor.setBaby(!((Horse) e).isAdult());
+                        old_macd_had_a_horse.add(tmhor);
+                        e.remove();
+                        if (taf != null) {
+                            taf.doAchievement("HORSE");
                         }
                         total++;
                         break;
@@ -181,13 +194,13 @@ public class TARDISFarmer {
                             if (e.getType().equals(EntityType.WOLF)) {
                                 pet.setSitting(((Wolf) e).isSitting());
                                 pet.setColour(((Wolf) e).getCollarColor());
-                                health = (((Wolf) e).getHealth() > 8) ? 8 : ((Wolf) e).getHealth();
+                                health = (((Wolf) e).getHealth() > 8) ? 8 : (int) ((Wolf) e).getHealth();
                                 pet.setHealth(health);
                                 pet.setBaby(!((Wolf) e).isAdult());
                             } else {
                                 pet.setSitting(((Ocelot) e).isSitting());
                                 pet.setCatType(((Ocelot) e).getCatType());
-                                health = (((Ocelot) e).getHealth() > 8) ? 8 : ((Ocelot) e).getHealth();
+                                health = (((Ocelot) e).getHealth() > 8) ? 8 : (int) ((Ocelot) e).getHealth();
                                 pet.setHealth(health);
                                 pet.setBaby(!((Ocelot) e).isAdult());
                             }
@@ -344,13 +357,13 @@ public class TARDISFarmer {
                         if (e.getType().equals(EntityType.WOLF)) {
                             pet.setSitting(((Wolf) e).isSitting());
                             pet.setColour(((Wolf) e).getCollarColor());
-                            health = (((Wolf) e).getHealth() > 8) ? 8 : ((Wolf) e).getHealth();
+                            health = (((Wolf) e).getHealth() > 8) ? 8 : (int) ((Wolf) e).getHealth();
                             pet.setHealth(health);
                             pet.setBaby(!((Wolf) e).isAdult());
                         } else {
                             pet.setSitting(((Ocelot) e).isSitting());
                             pet.setCatType(((Ocelot) e).getCatType());
-                            health = (((Ocelot) e).getHealth() > 8) ? 8 : ((Ocelot) e).getHealth();
+                            health = (((Ocelot) e).getHealth() > 8) ? 8 : (int) ((Ocelot) e).getHealth();
                             pet.setHealth(health);
                             pet.setBaby(!((Ocelot) e).isAdult());
                         }
