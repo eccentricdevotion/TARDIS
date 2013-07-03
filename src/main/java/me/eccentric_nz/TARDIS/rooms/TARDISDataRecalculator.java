@@ -41,38 +41,6 @@ public class TARDISDataRecalculator {
     public static byte calculateData(int id, byte bit) {
         byte data;
         switch (id) {
-            // logs
-            case 17:
-                switch (bit) {
-                    case 4:
-                        data = 8;
-                        break;
-                    case 5:
-                        data = 9;
-                        break;
-                    case 6:
-                        data = 10;
-                        break;
-                    case 7:
-                        data = 11;
-                        break;
-                    case 8:
-                        data = 4;
-                        break;
-                    case 9:
-                        data = 5;
-                        break;
-                    case 10:
-                        data = 6;
-                        break;
-                    case 11:
-                        data = 7;
-                        break;
-                    default:
-                        data = bit;
-                        break;
-                }
-                break;
             // stairs
             case 53:
             case 67:
@@ -229,36 +197,6 @@ public class TARDISDataRecalculator {
                         break;
                     default:
                         data = 3;
-                        break;
-                }
-                break;
-            // quartz
-            case 155:
-            case -101:
-                switch (bit) {
-                    case 3:
-                        data = 4;
-                        break;
-                    case 4:
-                        data = 3;
-                        break;
-                    default:
-                        data = bit;
-                        break;
-                }
-                break;
-            // hay
-            case 170:
-            case -86:
-                switch (bit) {
-                    case 4:
-                        data = 8;
-                        break;
-                    case 8:
-                        data = 4;
-                        break;
-                    default:
-                        data = bit;
                         break;
                 }
                 break;
