@@ -178,6 +178,8 @@ public class TARDISCondensables {
         condensables.put("OBSIDIAN", 130);
         condensables.put("PAINTING", 25);
         condensables.put("PAPER", 10);
+        condensables.put("PISTON_BASE", 60);
+        condensables.put("PISTON_STICKY_BASE", 110);
         condensables.put("POISONOUS_POTATO", 1);
         condensables.put("PORK", 3);
         condensables.put("POTATO", 9);
@@ -246,6 +248,7 @@ public class TARDISCondensables {
         condensables.put("THIN_GLASS", 5);
         condensables.put("TNT", 100);
         condensables.put("TORCH", 4);
+        condensables.put("TRAP_DOOR", 6);
         condensables.put("TRAPPED_CHEST", 30);
         condensables.put("TRIPWIRE", 2);
         condensables.put("TRIPWIRE_HOOK", 25);
