@@ -54,6 +54,7 @@ public class TARDISConstants {
     public static final String SCHEMATIC_MUSHROOM = "mushroom.schematic";
     public static final String SCHEMATIC_PASSAGE = "passage.schematic";
     public static final String SCHEMATIC_POOL = "pool.schematic";
+    public static final String SCHEMATIC_STABLE = "stable.schematic";
     public static final String SCHEMATIC_VAULT = "vault.schematic";
     public static final String SCHEMATIC_WOOD = "wood.schematic";
     public static final String SCHEMATIC_WORKSHOP = "workshop.schematic";
@@ -141,7 +142,7 @@ public class TARDISConstants {
 
     public enum SCHEMATIC {
 
-        ANTIGRAVITY, ARBORETUM, BAKER, BEDROOM, BIGGER, BUDGET, CROSS, DELUXE, ELEVENTH, EMPTY, FARM, GRAVITY, GREENHOUSE, HARMONY, KITCHEN, LIBRARY, LONG, MUSHROOM, PASSAGE, POOL, REDSTONE, STEAMPUNK, VAULT, WOOD, WORKSHOP;
+        ANTIGRAVITY, ARBORETUM, BAKER, BEDROOM, BIGGER, BUDGET, CROSS, DELUXE, ELEVENTH, EMPTY, FARM, GRAVITY, GREENHOUSE, HARMONY, KITCHEN, LIBRARY, LONG, MUSHROOM, PASSAGE, POOL, REDSTONE, STABLE, STEAMPUNK, VAULT, WOOD, WORKSHOP;
     }
 
     public enum COMPASS {
@@ -151,7 +152,7 @@ public class TARDISConstants {
 
     public enum ROOM {
 
-        ANTIGRAVITY, ARBORETUM, BAKER, BEDROOM, CROSS, EMPTY, FARM, GRAVITY, GREENHOUSE, HARMONY, KITCHEN, LIBRARY, LONG, MUSHROOM, PASSAGE, POOL, VAULT, WOOD, WORKSHOP;
+        ANTIGRAVITY, ARBORETUM, BAKER, BEDROOM, CROSS, EMPTY, FARM, GRAVITY, GREENHOUSE, HARMONY, KITCHEN, LIBRARY, LONG, MUSHROOM, PASSAGE, POOL, STABLE, VAULT, WOOD, WORKSHOP;
     }
 
     public enum CMDS {

@@ -205,6 +205,17 @@ public class TARDISRoomRunnable implements Runnable {
                 id = floor_id;
                 data = floor_data;
             }
+            // set stable
+            if (id == 88 && room.equals("STABLE")) {
+                HashMap<String, Object> sets = new HashMap<String, Object>();
+                sets.put("stable", world.getName() + ":" + startx + ":" + starty + ":" + startz);
+                HashMap<String, Object> wheres = new HashMap<String, Object>();
+                wheres.put("tardis_id", tardis_id);
+                qf.doUpdate("tardis", sets, wheres);
+                // replace with grass
+                id = 2;
+                data = 0;
+            }
             // set farmland hydrated
             if (id == 60 && data == 0) {
                 data = (byte) 4;
