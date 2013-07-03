@@ -232,6 +232,7 @@ public class TARDISDataRecalculator {
                         break;
                 }
                 break;
+            // quartz
             case 155:
             case -101:
                 switch (bit) {
@@ -240,6 +241,21 @@ public class TARDISDataRecalculator {
                         break;
                     case 4:
                         data = 3;
+                        break;
+                    default:
+                        data = bit;
+                        break;
+                }
+                break;
+            // hay
+            case 170:
+            case -86:
+                switch (bit) {
+                    case 4:
+                        data = 8;
+                        break;
+                    case 8:
+                        data = 4;
                         break;
                     default:
                         data = bit;
