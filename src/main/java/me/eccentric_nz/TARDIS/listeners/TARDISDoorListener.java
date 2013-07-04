@@ -739,14 +739,18 @@ public class TARDISDoorListener implements Listener {
         }
     }
 
-    private void setTemporalLocation(final Player p, final long t) {
+    private void setTemporalLocation(final Player p, long t) {
         if (p.isOnline()) {
             if (t != -1) {
                 plugin.debug("Trying to set player time to: " + t);
+                long time = p.getPlayerTime();
+                time -= time % 24000L;
+                time += 24000L + t;
+                final long calculatedtime = time - p.getWorld().getTime();
                 plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
                     @Override
                     public void run() {
-                        p.setPlayerTime(t, true);
+                        p.setPlayerTime(calculatedtime, true);
                     }
                 }, 10L);
             } else {
