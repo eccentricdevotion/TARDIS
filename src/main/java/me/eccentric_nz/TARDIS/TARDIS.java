@@ -76,6 +76,7 @@ import me.eccentric_nz.TARDIS.listeners.TARDISRoomSeeder;
 import me.eccentric_nz.TARDIS.listeners.TARDISSaveSignListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISScannerListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISSignListener;
+import me.eccentric_nz.TARDIS.listeners.TARDISTemporalLocatorListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISTerminalListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISTimeLordDeathListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISUpdateListener;
@@ -176,6 +177,7 @@ public class TARDIS extends JavaPlugin {
     public HashMap<Integer, Integer> trackDamage = new HashMap<Integer, Integer>();
     public HashMap<Integer, Integer> tardisHasDestination = new HashMap<Integer, Integer>();
     public HashMap<String, Block> trackExterminate = new HashMap<String, Block>();
+    public HashMap<String, Long> trackSetTime = new HashMap<String, Long>();
     public ArrayList<Integer> tardisMaterialising = new ArrayList<Integer>();
     public ArrayList<Integer> tardisDematerialising = new ArrayList<Integer>();
     public List<Chunk> tardisChunkList = new ArrayList<Chunk>();
@@ -354,6 +356,7 @@ public class TARDIS extends JavaPlugin {
             pm.registerEvents(new TARDISNPCListener(this), this);
         }
         pm.registerEvents(new TARDISAdminMenuListener(this), this);
+        pm.registerEvents(new TARDISTemporalLocatorListener(this), this);
     }
 
     /**

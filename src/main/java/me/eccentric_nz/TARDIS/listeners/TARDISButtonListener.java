@@ -29,6 +29,7 @@ import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.rooms.TARDISARSInventory;
 import me.eccentric_nz.TARDIS.thirdparty.Version;
+import me.eccentric_nz.TARDIS.travel.TARDISTemporalLocatorInventory;
 import me.eccentric_nz.TARDIS.travel.TARDISTerminalInventory;
 import me.eccentric_nz.TARDIS.travel.TARDISTimeTravel;
 import org.bukkit.Bukkit;
@@ -57,12 +58,13 @@ public class TARDISButtonListener implements Listener {
 
     private TARDIS plugin;
     List<Material> validBlocks = new ArrayList<Material>();
-    List<Integer> onlythese = Arrays.asList(new Integer[]{1, 8, 9, 10});
+    List<Integer> onlythese = Arrays.asList(new Integer[]{1, 8, 9, 10, 11});
     Version bukkitversion;
     Version prewoodbuttonversion = new Version("1.4.2");
     Version precoparatorversion = new Version("1.5");
     public ItemStack[] items;
     private ItemStack[] tars;
+    private ItemStack[] clocks;
 
     public TARDISButtonListener(TARDIS plugin) {
         this.plugin = plugin;
@@ -80,6 +82,7 @@ public class TARDISButtonListener implements Listener {
         validBlocks.add(Material.WALL_SIGN);
         this.items = new TARDISTerminalInventory().getTerminal();
         this.tars = new TARDISARSInventory().getTerminal();
+        this.clocks = new TARDISTemporalLocatorInventory().getTerminal();
     }
 
     /**
@@ -269,6 +272,12 @@ public class TARDISButtonListener implements Listener {
                                     Inventory ars = plugin.getServer().createInventory(player, 54, "§4Architectural Reconfiguration");
                                     ars.setContents(tars);
                                     player.openInventory(ars);
+                                    break;
+                                case 11:
+                                    // Temporal Locator sign
+                                    Inventory tmpl = plugin.getServer().createInventory(player, 27, "§4Temporal Locator");
+                                    tmpl.setContents(clocks);
+                                    player.openInventory(tmpl);
                                     break;
                                 default:
                                     break;
