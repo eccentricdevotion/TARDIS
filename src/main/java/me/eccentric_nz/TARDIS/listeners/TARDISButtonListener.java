@@ -275,9 +275,11 @@ public class TARDISButtonListener implements Listener {
                                     break;
                                 case 11:
                                     // Temporal Locator sign
-                                    Inventory tmpl = plugin.getServer().createInventory(player, 27, "§4Temporal Locator");
-                                    tmpl.setContents(clocks);
-                                    player.openInventory(tmpl);
+                                    if (player.hasPermission("tardis.temporal")) {
+                                        Inventory tmpl = plugin.getServer().createInventory(player, 27, "§4Temporal Locator");
+                                        tmpl.setContents(clocks);
+                                        player.openInventory(tmpl);
+                                    }
                                     break;
                                 default:
                                     break;

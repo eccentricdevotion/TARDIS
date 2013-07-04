@@ -4,9 +4,7 @@
 1. Jettison the whole room (including walls), will require new room schematics...
 2. Architectural Reconfiguration System / Map room
 3. Add sounds with Resource packs?
-4. Permission-based world creation - player's without permission use the default world, those with it get a TARDIS_WORLD
-5. Travel to a specific Time with `setPlayerTime(long time, boolean relative)`
-       
+4. Permission-based world creation - player's without permission use the default world, those with it get a TARDIS_WORLD       
 
 ## Next version `2.6+`
 1. TARDIS shield

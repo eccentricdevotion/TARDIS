@@ -803,6 +803,10 @@ public class TARDISCommands implements CommandExecutor {
                             sender.sendMessage(plugin.pluginName + "You do not have permission to create a back door!");
                             return true;
                         }
+                        if (tardis_block.equals("temporal") && !player.hasPermission("tardis.temporal")) {
+                            sender.sendMessage(plugin.pluginName + "You do not have permission to create a Temporal Locator!");
+                            return true;
+                        }
                         HashMap<String, Object> where = new HashMap<String, Object>();
                         where.put("owner", player.getName());
                         ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);

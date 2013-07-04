@@ -59,7 +59,7 @@ public class TARDISAdminMenuListener implements Listener {
             menu.setContents(items);
             p.openInventory(menu);
         }
-        if (event.getAction().equals(Action.RIGHT_CLICK_AIR) && inhand == 347) {
+        if (event.getAction().equals(Action.RIGHT_CLICK_AIR) && inhand == 347 && p.hasPermission("tardis.temporal")) {
             p.resetPlayerTime();
             if (plugin.trackSetTime.containsKey(p.getName())) {
                 plugin.trackSetTime.remove(p.getName());
