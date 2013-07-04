@@ -59,6 +59,13 @@ public class TARDISAdminMenuListener implements Listener {
             menu.setContents(items);
             p.openInventory(menu);
         }
+        if (event.getAction().equals(Action.RIGHT_CLICK_AIR) && inhand == 347) {
+            p.resetPlayerTime();
+            if (plugin.trackSetTime.containsKey(p.getName())) {
+                plugin.trackSetTime.remove(p.getName());
+            }
+            p.sendMessage(plugin.pluginName + "Temporal Location reset to server time.");
+        }
     }
 
     @EventHandler(priority = EventPriority.NORMAL)
