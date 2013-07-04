@@ -162,10 +162,17 @@ public class TARDISScannerListener implements Listener {
                         EntityType et = k.getType();
                         if (entities.contains(et)) {
                             Integer entity_count = (scannedentities.containsKey(et)) ? scannedentities.get(et) : 0;
-                            scannedentities.put(et, entity_count + 1);
+                            boolean visible = true;
                             if (et.equals(EntityType.PLAYER)) {
                                 Player entPlayer = (Player) k;
-                                playernames.add(entPlayer.getName());
+                                if (player.canSee(entPlayer)) {
+                                    playernames.add(entPlayer.getName());
+                                } else {
+                                    visible = false;
+                                }
+                            }
+                            if (visible) {
+                                scannedentities.put(et, entity_count + 1);
                             }
                         }
                     }
