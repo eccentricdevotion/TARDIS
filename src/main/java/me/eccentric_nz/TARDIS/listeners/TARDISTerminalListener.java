@@ -76,89 +76,91 @@ public class TARDISTerminalListener implements Listener {
         Inventory inv = event.getInventory();
         String name = inv.getTitle();
         if (name.equals("§4Destination Terminal")) {
-            final Player player = (Player) event.getWhoClicked();
-            String playerNameStr = player.getName();
-            // get the TARDIS the player is in
-            HashMap<String, Object> where = new HashMap<String, Object>();
-            where.put("player", playerNameStr);
-            ResultSetTravellers rst = new ResultSetTravellers(plugin, where, false);
-            if (rst.resultSet()) {
-                int slot = event.getRawSlot();
-                switch (slot) {
-                    case 1:
-                        terminalStep.put(playerNameStr, 10);
-                        break;
-                    case 3:
-                        terminalStep.put(playerNameStr, 25);
-                        break;
-                    case 5:
-                        terminalStep.put(playerNameStr, 50);
-                        break;
-                    case 7:
-                        terminalStep.put(playerNameStr, 100);
-                        break;
-                    case 9:
-                        setSlots(inv, 10, 16, false, (byte) 3, "X", true, playerNameStr);
-                        break;
-                    case 17:
-                        setSlots(inv, 10, 16, true, (byte) 3, "X", true, playerNameStr);
-                        break;
-                    case 18:
-                        setSlots(inv, 19, 25, false, (byte) 4, "Z", true, playerNameStr);
-                        break;
-                    case 26:
-                        setSlots(inv, 19, 25, true, (byte) 4, "Z", true, playerNameStr);
-                        break;
-                    case 27:
-                        setSlots(inv, 28, 34, false, (byte) 10, "Multiplier", false, playerNameStr);
-                        break;
-                    case 35:
-                        setSlots(inv, 28, 34, true, (byte) 10, "Multiplier", false, playerNameStr);
-                        break;
-                    case 37:
-                        setCurrent(inv, player, 37);
-                        break;
-                    case 39:
-                        setCurrent(inv, player, 39);
-                        break;
-                    case 41:
-                        setCurrent(inv, player, 41);
-                        break;
-                    case 43:
-                        setCurrent(inv, player, 43);
-                        break;
-                    case 45:
-                        checkSettings(inv, player);
-                        break;
-                    case 49:
-                        if (terminalDestination.containsKey(playerNameStr)) {
-                            HashMap<String, Object> set = new HashMap<String, Object>();
-                            set.put("save", terminalDestination.get(playerNameStr));
-                            HashMap<String, Object> wheret = new HashMap<String, Object>();
-                            wheret.put("tardis_id", terminalIDs.get(playerNameStr));
-                            new QueryFactory(plugin).doUpdate("tardis", set, wheret);
-                            plugin.tardisHasDestination.put(terminalIDs.get(playerNameStr), plugin.getArtronConfig().getInt("random"));
-                            if (plugin.trackRescue.containsKey(terminalIDs.get(playerNameStr))) {
-                                plugin.trackRescue.remove(terminalIDs.get(playerNameStr));
+            event.setCancelled(true);
+            int slot = event.getRawSlot();
+            if (slot < 54) {
+                final Player player = (Player) event.getWhoClicked();
+                String playerNameStr = player.getName();
+                // get the TARDIS the player is in
+                HashMap<String, Object> where = new HashMap<String, Object>();
+                where.put("player", playerNameStr);
+                ResultSetTravellers rst = new ResultSetTravellers(plugin, where, false);
+                if (rst.resultSet()) {
+                    switch (slot) {
+                        case 1:
+                            terminalStep.put(playerNameStr, 10);
+                            break;
+                        case 3:
+                            terminalStep.put(playerNameStr, 25);
+                            break;
+                        case 5:
+                            terminalStep.put(playerNameStr, 50);
+                            break;
+                        case 7:
+                            terminalStep.put(playerNameStr, 100);
+                            break;
+                        case 9:
+                            setSlots(inv, 10, 16, false, (byte) 3, "X", true, playerNameStr);
+                            break;
+                        case 17:
+                            setSlots(inv, 10, 16, true, (byte) 3, "X", true, playerNameStr);
+                            break;
+                        case 18:
+                            setSlots(inv, 19, 25, false, (byte) 4, "Z", true, playerNameStr);
+                            break;
+                        case 26:
+                            setSlots(inv, 19, 25, true, (byte) 4, "Z", true, playerNameStr);
+                            break;
+                        case 27:
+                            setSlots(inv, 28, 34, false, (byte) 10, "Multiplier", false, playerNameStr);
+                            break;
+                        case 35:
+                            setSlots(inv, 28, 34, true, (byte) 10, "Multiplier", false, playerNameStr);
+                            break;
+                        case 37:
+                            setCurrent(inv, player, 37);
+                            break;
+                        case 39:
+                            setCurrent(inv, player, 39);
+                            break;
+                        case 41:
+                            setCurrent(inv, player, 41);
+                            break;
+                        case 43:
+                            setCurrent(inv, player, 43);
+                            break;
+                        case 45:
+                            checkSettings(inv, player);
+                            break;
+                        case 49:
+                            if (terminalDestination.containsKey(playerNameStr)) {
+                                HashMap<String, Object> set = new HashMap<String, Object>();
+                                set.put("save", terminalDestination.get(playerNameStr));
+                                HashMap<String, Object> wheret = new HashMap<String, Object>();
+                                wheret.put("tardis_id", terminalIDs.get(playerNameStr));
+                                new QueryFactory(plugin).doUpdate("tardis", set, wheret);
+                                plugin.tardisHasDestination.put(terminalIDs.get(playerNameStr), plugin.getArtronConfig().getInt("random"));
+                                if (plugin.trackRescue.containsKey(terminalIDs.get(playerNameStr))) {
+                                    plugin.trackRescue.remove(terminalIDs.get(playerNameStr));
+                                }
+                                close(player);
+                                player.sendMessage(plugin.pluginName + "Destination set. Please release the handbrake!");
+                            } else {
+                                // set lore
+                                ItemStack is = inv.getItem(49);
+                                ItemMeta im = is.getItemMeta();
+                                List<String> lore = Arrays.asList(new String[]{"No valid destination has been set!"});
+                                im.setLore(lore);
+                                is.setItemMeta(im);
                             }
+                            break;
+                        case 53:
                             close(player);
-                            player.sendMessage(plugin.pluginName + "Destination set. Please release the handbrake!");
-                        } else {
-                            // set lore
-                            ItemStack is = inv.getItem(49);
-                            ItemMeta im = is.getItemMeta();
-                            List<String> lore = Arrays.asList(new String[]{"No valid destination has been set!"});
-                            im.setLore(lore);
-                            is.setItemMeta(im);
-                        }
-                        break;
-                    case 53:
-                        close(player);
-                        break;
-                    default:
-                        break;
+                            break;
+                        default:
+                            break;
+                    }
                 }
-                event.setCancelled(true);
             }
         }
     }

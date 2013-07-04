@@ -84,6 +84,7 @@ public class TARDISUpdateListener implements Listener {
         controls.put("back", 8);
         controls.put("terminal", 9);
         controls.put("ars", 10);
+        controls.put("temporal", 11);
     }
 
     /**
@@ -393,6 +394,26 @@ public class TARDISUpdateListener implements Listener {
                 s.setLine(1, "Architectural");
                 s.setLine(2, "Reconfiguration");
                 s.setLine(3, "System");
+                s.update();
+            }
+            if (blockName.equalsIgnoreCase("temporal") && (blockType == Material.WALL_SIGN || blockType == Material.SIGN_POST)) {
+                HashMap<String, Object> wherec = new HashMap<String, Object>();
+                wherec.put("tardis_id", id);
+                wherec.put("type", 11);
+                ResultSetControls rsc = new ResultSetControls(plugin, wherec, false);
+                if (!rsc.resultSet()) {
+                    // insert control
+                    qf.insertControl(id, 11, blockLocStr, 0);
+                    secondary = true;
+                } else {
+                    set.put("location", blockLocStr);
+                }
+                // add text to sign
+                Sign s = (Sign) block.getState();
+                s.setLine(0, "");
+                s.setLine(1, "Temporal");
+                s.setLine(2, "Locator");
+                s.setLine(3, "");
                 s.update();
             }
             if (set.size() > 0 || secondary) {

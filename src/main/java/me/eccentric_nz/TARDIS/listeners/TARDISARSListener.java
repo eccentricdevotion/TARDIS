@@ -93,152 +93,154 @@ public class TARDISARSListener implements Listener {
         Inventory inv = event.getInventory();
         String name = inv.getTitle();
         if (name.equals("§4Architectural Reconfiguration")) {
+            event.setCancelled(true);
             final Player player = (Player) event.getWhoClicked();
             String playerNameStr = player.getName();
             int slot = event.getRawSlot();
-            switch (slot) {
-                case 1:
-                case 9:
-                case 11:
-                case 19:
-                    // up
-                    moveMap(playerNameStr, inv, slot);
-                    break;
-                case 4:
-                case 5:
-                case 6:
-                case 7:
-                case 8:
-                case 13:
-                case 14:
-                case 15:
-                case 16:
-                case 17:
-                case 22:
-                case 23:
-                case 24:
-                case 25:
-                case 26:
-                case 31:
-                case 32:
-                case 33:
-                case 34:
-                case 35:
-                case 40:
-                case 41:
-                case 42:
-                case 43:
-                case 44:
-                    // select slot
-                    selected_slot.put(playerNameStr, slot);
-                    break;
-                case 10:
-                    // load map
-                    loadMap(inv, playerNameStr);
-                    break;
-                case 12:
-                    // reconfigure
-                    close(player);
-                    break;
-                case 27:
-                case 28:
-                case 29:
-                    // top level
-                    if (map_data.containsKey(playerNameStr)) {
-                        switchLevel(inv, slot, playerNameStr);
-                        TARDISARSMapData md = map_data.get(playerNameStr);
-                        setMap(md.getY(), md.getE(), md.getS(), playerNameStr, inv);
-                        setLore(inv, slot, null);
-                    } else {
-                        setLore(inv, slot, "Load map data first!");
-                    }
-                    break;
-                case 30:
-                    // reset selected slot to empty
-                    if (selected_slot.containsKey(playerNameStr)) {
-                        ItemStack stone = new ItemStack(1, 1);
-                        ItemMeta s1 = stone.getItemMeta();
-                        s1.setDisplayName("Empty slot");
-                        stone.setItemMeta(s1);
-                        setSlot(inv, selected_slot.get(playerNameStr), stone, playerNameStr, true);
-                        setLore(inv, slot, null);
-                    } else {
-                        setLore(inv, slot, "No slot selected!");
-                    }
-                    break;
-                case 36:
-                    // scroll left
-                    int startl;
-                    int max = room_ids.length - 9;
-                    if (scroll_start.containsKey(playerNameStr)) {
-                        startl = scroll_start.get(playerNameStr) + 1;
-                        if (startl >= max) {
-                            startl = max;
+            if (slot < 54) {
+                switch (slot) {
+                    case 1:
+                    case 9:
+                    case 11:
+                    case 19:
+                        // up
+                        moveMap(playerNameStr, inv, slot);
+                        break;
+                    case 4:
+                    case 5:
+                    case 6:
+                    case 7:
+                    case 8:
+                    case 13:
+                    case 14:
+                    case 15:
+                    case 16:
+                    case 17:
+                    case 22:
+                    case 23:
+                    case 24:
+                    case 25:
+                    case 26:
+                    case 31:
+                    case 32:
+                    case 33:
+                    case 34:
+                    case 35:
+                    case 40:
+                    case 41:
+                    case 42:
+                    case 43:
+                    case 44:
+                        // select slot
+                        selected_slot.put(playerNameStr, slot);
+                        break;
+                    case 10:
+                        // load map
+                        loadMap(inv, playerNameStr);
+                        break;
+                    case 12:
+                        // reconfigure
+                        close(player);
+                        break;
+                    case 27:
+                    case 28:
+                    case 29:
+                        // top level
+                        if (map_data.containsKey(playerNameStr)) {
+                            switchLevel(inv, slot, playerNameStr);
+                            TARDISARSMapData md = map_data.get(playerNameStr);
+                            setMap(md.getY(), md.getE(), md.getS(), playerNameStr, inv);
+                            setLore(inv, slot, null);
+                        } else {
+                            setLore(inv, slot, "Load map data first!");
                         }
-                    } else {
-                        startl = 1;
-                    }
-                    scroll_start.put(playerNameStr, startl);
-                    for (int i = 0; i < 9; i++) {
-                        // setSlot(Inventory inv, int slot, int id, String room)
-                        setSlot(inv, (45 + i), room_ids[(startl + i)], room_names[(startl + i)], playerNameStr, false);
-                    }
-                    break;
-                case 38:
-                    // scroll right
-                    int startr;
-                    if (scroll_start.containsKey(playerNameStr)) {
-                        startr = scroll_start.get(playerNameStr) - 1;
-                        if (startr <= 0) {
+                        break;
+                    case 30:
+                        // reset selected slot to empty
+                        if (selected_slot.containsKey(playerNameStr)) {
+                            ItemStack stone = new ItemStack(1, 1);
+                            ItemMeta s1 = stone.getItemMeta();
+                            s1.setDisplayName("Empty slot");
+                            stone.setItemMeta(s1);
+                            setSlot(inv, selected_slot.get(playerNameStr), stone, playerNameStr, true);
+                            setLore(inv, slot, null);
+                        } else {
+                            setLore(inv, slot, "No slot selected!");
+                        }
+                        break;
+                    case 36:
+                        // scroll left
+                        int startl;
+                        int max = room_ids.length - 9;
+                        if (scroll_start.containsKey(playerNameStr)) {
+                            startl = scroll_start.get(playerNameStr) + 1;
+                            if (startl >= max) {
+                                startl = max;
+                            }
+                        } else {
+                            startl = 1;
+                        }
+                        scroll_start.put(playerNameStr, startl);
+                        for (int i = 0; i < 9; i++) {
+                            // setSlot(Inventory inv, int slot, int id, String room)
+                            setSlot(inv, (45 + i), room_ids[(startl + i)], room_names[(startl + i)], playerNameStr, false);
+                        }
+                        break;
+                    case 38:
+                        // scroll right
+                        int startr;
+                        if (scroll_start.containsKey(playerNameStr)) {
+                            startr = scroll_start.get(playerNameStr) - 1;
+                            if (startr <= 0) {
+                                startr = 0;
+                            }
+                        } else {
                             startr = 0;
                         }
-                    } else {
-                        startr = 0;
-                    }
-                    scroll_start.put(playerNameStr, startr);
+                        scroll_start.put(playerNameStr, startr);
 
-                    for (int i = 0; i < 9; i++) {
-                        // setSlot(Inventory inv, int slot, int id, String room)
-                        setSlot(inv, (45 + i), room_ids[(startr + i)], room_names[(startr + i)], playerNameStr, false);
-                    }
-                    break;
-                case 39:
-                    // jettison
-                    if (selected_slot.containsKey(playerNameStr)) {
-                        ItemStack tnt = new ItemStack(46, 1);
-                        ItemMeta j = tnt.getItemMeta();
-                        j.setDisplayName("Jettison");
-                        tnt.setItemMeta(j);
-                        setSlot(inv, selected_slot.get(playerNameStr), tnt, playerNameStr, true);
-                        setLore(inv, slot, null);
-                    } else {
-                        setLore(inv, slot, "No slot selected!");
-                    }
-                    break;
-                case 45:
-                case 46:
-                case 47:
-                case 48:
-                case 49:
-                case 50:
-                case 51:
-                case 52:
-                case 53:
-                    // put room in selected slot
-                    if (selected_slot.containsKey(playerNameStr)) {
-                        ItemStack ris = inv.getItem(slot);
-                        // setSlot(Inventory inv, int slot, ItemStack is)
-                        setSlot(inv, selected_slot.get(playerNameStr), ris, playerNameStr, true);
-                        setLore(inv, slot, null);
+                        for (int i = 0; i < 9; i++) {
+                            // setSlot(Inventory inv, int slot, int id, String room)
+                            setSlot(inv, (45 + i), room_ids[(startr + i)], room_names[(startr + i)], playerNameStr, false);
+                        }
+                        break;
+                    case 39:
+                        // jettison
+                        if (selected_slot.containsKey(playerNameStr)) {
+                            ItemStack tnt = new ItemStack(46, 1);
+                            ItemMeta j = tnt.getItemMeta();
+                            j.setDisplayName("Jettison");
+                            tnt.setItemMeta(j);
+                            setSlot(inv, selected_slot.get(playerNameStr), tnt, playerNameStr, true);
+                            setLore(inv, slot, null);
+                        } else {
+                            setLore(inv, slot, "No slot selected!");
+                        }
+                        break;
+                    case 45:
+                    case 46:
+                    case 47:
+                    case 48:
+                    case 49:
+                    case 50:
+                    case 51:
+                    case 52:
+                    case 53:
+                        // put room in selected slot
+                        if (selected_slot.containsKey(playerNameStr)) {
+                            ItemStack ris = inv.getItem(slot);
+                            // setSlot(Inventory inv, int slot, ItemStack is)
+                            setSlot(inv, selected_slot.get(playerNameStr), ris, playerNameStr, true);
+                            setLore(inv, slot, null);
 
-                    } else {
-                        setLore(inv, slot, "No slot selected!");
-                    }
-                    break;
-                default:
-                    break;
+                        } else {
+                            setLore(inv, slot, "No slot selected!");
+                        }
+                        break;
+                    default:
+                        break;
+                }
             }
-            event.setCancelled(true);
         }
     }
 

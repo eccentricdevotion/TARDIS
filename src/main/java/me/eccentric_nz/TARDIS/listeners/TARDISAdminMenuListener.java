@@ -66,14 +66,16 @@ public class TARDISAdminMenuListener implements Listener {
         Inventory inv = event.getInventory();
         String name = inv.getTitle();
         if (name.equals("§4Admin Menu")) {
-            int slot = event.getRawSlot();
-            String option = getDisplay(inv, slot);
-            boolean bool = plugin.getConfig().getBoolean(option);
-            plugin.getConfig().set(option, !bool);
-            String lore = (bool) ? "false" : "true";
-            setLore(inv, slot, lore);
-            plugin.saveConfig();
             event.setCancelled(true);
+            int slot = event.getRawSlot();
+            if (slot < 54) {
+                String option = getDisplay(inv, slot);
+                boolean bool = plugin.getConfig().getBoolean(option);
+                plugin.getConfig().set(option, !bool);
+                String lore = (bool) ? "false" : "true";
+                setLore(inv, slot, lore);
+                plugin.saveConfig();
+            }
         }
     }
 
