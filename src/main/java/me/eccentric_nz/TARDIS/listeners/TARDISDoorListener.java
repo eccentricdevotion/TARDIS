@@ -515,6 +515,15 @@ public class TARDISDoorListener implements Listener {
                     where.put("player", name);
                     int player_artron = (plugin.getConfig().getBoolean("create_worlds")) ? plugin.getArtronConfig().getInt("player") : plugin.getArtronConfig().getInt("player") * 10;
                     qf.alterEnergyLevel("player_prefs", player_artron, where, p);
+                    String pstr = p.getName();
+                    if (plugin.trackSetTime.containsKey(pstr)) {
+                        setTemporalLocation(p, plugin.trackSetTime.get(pstr));
+                        plugin.trackSetTime.remove(pstr);
+                    }
+                } else {
+                    if (p.isPlayerTimeRelative()) {
+                        setTemporalLocation(p, -1);
+                    }
                 }
                 // give a key
                 giveKey(p);
@@ -727,6 +736,23 @@ public class TARDISDoorListener implements Listener {
             p.playSound(p.getLocation(), Sound.DOOR_OPEN, 1, 1);
         } catch (ClassNotFoundException e) {
             w.playEffect(l, Effect.DOOR_TOGGLE, 0);
+        }
+    }
+
+    private void setTemporalLocation(final Player p, final long t) {
+        if (p.isOnline()) {
+            if (t != -1) {
+                plugin.debug("Trying to set player time to: " + t);
+                plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
+                    @Override
+                    public void run() {
+                        p.setPlayerTime(t, true);
+                    }
+                }, 10L);
+            } else {
+                plugin.debug("Reseting player time back to normal");
+                p.resetPlayerTime();
+            }
         }
     }
 }

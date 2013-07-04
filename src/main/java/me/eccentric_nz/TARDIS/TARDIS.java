@@ -20,6 +20,7 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
 import me.eccentric_nz.TARDIS.builders.TARDISBuilderInner;
@@ -100,6 +101,7 @@ import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.block.Sign;
+import org.bukkit.entity.Player;
 import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -268,6 +270,7 @@ public class TARDIS extends JavaPlugin {
         saveChunks();
         saveConfig();
         closeDatabase();
+        resetTime();
     }
 
     /**
@@ -669,6 +672,18 @@ public class TARDIS extends JavaPlugin {
                 }
             } catch (IOException ex) {
                 plugin.debug("Could not close server.properties!");
+            }
+        }
+    }
+
+    /**
+     * Resets any player who is 'Temporally Located' back to normal time.
+     */
+    private void resetTime() {
+        for (String key : trackSetTime.keySet()) {
+            Player p = this.getServer().getPlayer(key);
+            if (p != null) {
+                p.resetPlayerTime();
             }
         }
     }
