@@ -54,3 +54,7 @@ per_world_perms: false
 conversion_done: true
 terminal_step: 1
 admin_item: 264
+wall_id: 35
+wall_data: 11
+tardis_lamp: 50
+plain_on: false

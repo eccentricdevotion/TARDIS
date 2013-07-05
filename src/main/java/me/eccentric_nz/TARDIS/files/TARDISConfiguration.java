@@ -94,6 +94,7 @@ public class TARDISConfiguration {
         boolOptions.put("return_room_seed", true);
         boolOptions.put("rooms_require_blocks", false);
         boolOptions.put("sfx", true);
+        boolOptions.put("plain_on", false);
         boolOptions.put("spawn_eggs", true);
         boolOptions.put("the_end", false);
         boolOptions.put("use_worldguard", true);
@@ -169,6 +170,9 @@ public class TARDISConfiguration {
         intOptions.put("timeout", 5);
         intOptions.put("timeout_height", 135);
         intOptions.put("tp_radius", 256);
+        intOptions.put("wall_id", 35);
+        intOptions.put("wall_data", 11);
+        intOptions.put("tardis_lamp", 50);
         roomIntOptions.put("rooms.ANTIGRAVITY.cost", 625);
         roomIntOptions.put("rooms.ANTIGRAVITY.offset", 0);
         roomIntOptions.put("rooms.ARBORETUM.cost", 325);

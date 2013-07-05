@@ -45,7 +45,9 @@ public class ResultSetPlayerPrefs {
     private boolean auto_on;
     private boolean beacon_on;
     private boolean hads_on;
+    private boolean plain_on;
     private int artron_level;
+    private int lamp;
     private String wall;
     private String floor;
     private boolean EPS_on;
@@ -112,7 +114,15 @@ public class ResultSetPlayerPrefs {
                 this.auto_on = rs.getBoolean("auto_on");
                 this.beacon_on = rs.getBoolean("beacon_on");
                 this.hads_on = rs.getBoolean("hads_on");
+                this.plain_on = rs.getBoolean("plain_on");
+                if (rs.wasNull()) {
+                    this.plain_on = plugin.getConfig().getBoolean("plain_on");
+                }
                 this.artron_level = rs.getInt("artron_level");
+                this.lamp = rs.getInt("lamp");
+                if (rs.wasNull()) {
+                    this.lamp = plugin.getConfig().getInt("tardis_lamp");
+                }
                 this.wall = rs.getString("wall");
                 this.floor = rs.getString("floor");
                 this.EPS_on = rs.getBoolean("eps_on");
@@ -214,5 +224,13 @@ public class ResultSetPlayerPrefs {
 
     public String getTexture_out() {
         return texture_out;
+    }
+
+    public boolean isPlain_on() {
+        return plain_on;
+    }
+
+    public int getLamp() {
+        return lamp;
     }
 }

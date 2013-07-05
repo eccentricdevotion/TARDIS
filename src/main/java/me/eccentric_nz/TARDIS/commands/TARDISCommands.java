@@ -287,6 +287,8 @@ public class TARDISCommands implements CommandExecutor {
                                     cs.update();
                                 }
                             }
+                            int dwid = plugin.getConfig().getInt("wall_id");
+                            int dwd = plugin.getConfig().getInt("wall_data");
                             if (args[1].equalsIgnoreCase("short")) {
                                 // get the block the player is targeting
                                 Block target_block = player.getTargetBlock(transparent, 50).getLocation().getBlock();
@@ -296,14 +298,16 @@ public class TARDISCommands implements CommandExecutor {
                                 set.put("chameleon_id", c_id);
                                 set.put("chameleon_data", c_data);
                                 qf.doUpdate("tardis", set, tid);
-                                boolean bluewool = (c_id == 35 && c_data == (byte) 11);
+                                boolean bluewool = (c_id == dwid && c_data == (byte) dwd);
                                 if (!bluewool) {
                                     sender.sendMessage(plugin.pluginName + "The Chameleon Circuit was shorted out to: " + target_block.getType().toString() + ".");
                                 }
                             }
                             if (args[1].equalsIgnoreCase("reset")) {
-                                set.put("chameleon_id", 35);
-                                set.put("chameleon_data", 11);
+//                                set.put("chameleon_id", 35);
+//                                set.put("chameleon_data", 11);
+                                set.put("chameleon_id", dwid);
+                                set.put("chameleon_data", dwd);
                                 qf.doUpdate("tardis", set, tid);
                                 sender.sendMessage(plugin.pluginName + "The Chameleon Circuit was repaired.");
                             }

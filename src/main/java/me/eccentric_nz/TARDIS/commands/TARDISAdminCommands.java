@@ -140,6 +140,7 @@ public class TARDISAdminCommands implements CommandExecutor, TabCompleter {
         firstsBool.add("return_room_seed");
         firstsBool.add("rooms_require_blocks");
         firstsBool.add("sfx");
+        firstsBool.add("plain_on");
         firstsBool.add("spawn_eggs");
         firstsBool.add("the_end");
         firstsBool.add("use_worldguard");
@@ -161,6 +162,9 @@ public class TARDISAdminCommands implements CommandExecutor, TabCompleter {
         firstsInt.add("timeout");
         firstsInt.add("timeout_height");
         firstsInt.add("tp_radius");
+        firstsInt.add("wall_id");
+        firstsInt.add("wall_data");
+        firstsInt.add("tardis_lamp");
         firstsIntArtron.add("autonomous");
         firstsIntArtron.add("backdoor");
         firstsIntArtron.add("comehere");

@@ -45,8 +45,8 @@ public class TARDISDestroyerPoliceBox {
 
     public void destroyPoliceBox(Location l, TARDISConstants.COMPASS d, int id, boolean hide, boolean dematerialise, boolean c, Player player) {
         if (dematerialise && !hide) {
-            int mat = 35;
-            byte data = 11;
+            int mat = plugin.getConfig().getInt("wall_id");
+            byte data = (byte) plugin.getConfig().getInt("wall_data");
             if (c) {
                 // chameleon circuit is on - get chameleon_id/data
                 HashMap<String, Object> wherec = new HashMap<String, Object>();

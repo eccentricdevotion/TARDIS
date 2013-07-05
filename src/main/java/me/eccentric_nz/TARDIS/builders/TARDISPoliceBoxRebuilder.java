@@ -43,14 +43,18 @@ public class TARDISPoliceBoxRebuilder {
     private int tid;
     private int mat;
     private byte data;
+    private int lamp;
+    private boolean plain;
 
-    public TARDISPoliceBoxRebuilder(TARDIS plugin, Location location, int mat, byte data, int tid, TARDISConstants.COMPASS d) {
+    public TARDISPoliceBoxRebuilder(TARDIS plugin, Location location, int mat, byte data, int tid, TARDISConstants.COMPASS d, int lamp, boolean plain) {
         this.plugin = plugin;
         this.d = d;
         this.location = location;
         this.tid = tid;
         this.mat = mat;
         this.data = data;
+        this.lamp = lamp;
+        this.plain = plain;
     }
 
     /**
@@ -171,33 +175,35 @@ public class TARDISPoliceBoxRebuilder {
         plugin.utils.setBlock(world, minusx, y, minusz, mat, data);
         plugin.utils.setBlock(world, x, y, minusz, mat, data); // north
         plugin.utils.setBlock(world, plusx, y, minusz, mat, data);
-        // set sign
-        plugin.utils.setBlock(world, signx, y, signz, 68, sd);
-        Block sign = world.getBlockAt(signx, y, signz);
-        if (sign.getType().equals(Material.WALL_SIGN)) {
-            Sign s = (Sign) sign.getState();
-            if (plugin.getConfig().getBoolean("name_tardis")) {
-                HashMap<String, Object> wheret = new HashMap<String, Object>();
-                wheret.put("tardis_id", tid);
-                ResultSetTardis rst = new ResultSetTardis(plugin, wheret, "", false);
-                if (rst.resultSet()) {
-                    String owner = rst.getOwner();
-                    if (owner.length() > 14) {
-                        s.setLine(0, owner.substring(0, 12) + "'s");
-                    } else {
-                        s.setLine(0, owner + "'s");
+        if (!plain) {
+            // set sign
+            plugin.utils.setBlock(world, signx, y, signz, 68, sd);
+            Block sign = world.getBlockAt(signx, y, signz);
+            if (sign.getType().equals(Material.WALL_SIGN)) {
+                Sign s = (Sign) sign.getState();
+                if (plugin.getConfig().getBoolean("name_tardis")) {
+                    HashMap<String, Object> wheret = new HashMap<String, Object>();
+                    wheret.put("tardis_id", tid);
+                    ResultSetTardis rst = new ResultSetTardis(plugin, wheret, "", false);
+                    if (rst.resultSet()) {
+                        String owner = rst.getOwner();
+                        if (owner.length() > 14) {
+                            s.setLine(0, owner.substring(0, 12) + "'s");
+                        } else {
+                            s.setLine(0, owner + "'s");
+                        }
                     }
                 }
+                s.setLine(1, ChatColor.WHITE + "POLICE");
+                s.setLine(2, ChatColor.WHITE + "BOX");
+                s.update();
             }
-            s.setLine(1, ChatColor.WHITE + "POLICE");
-            s.setLine(2, ChatColor.WHITE + "BOX");
-            s.update();
-        }
-        // put torch on top
-        if (mat == 79) {
-            plugin.utils.setBlock(world, x, plusy, z, 76, (byte) 5);
-        } else {
-            plugin.utils.setBlock(world, x, plusy, z, 50, (byte) 5);
+            // put torch on top
+            if (mat == 79) {
+                plugin.utils.setBlock(world, x, plusy, z, 76, (byte) 5);
+            } else {
+                plugin.utils.setBlock(world, x, plusy, z, lamp, (byte) 5);
+            }
         }
         // bottom layer with door bottom
         plugin.utils.setBlock(world, plusx, down2y, z, west, bdw);
