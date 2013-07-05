@@ -69,7 +69,6 @@ public class TARDISEPSRunnable implements Runnable {
                     double cx = Double.parseDouble(creep[1]);
                     double cz = Double.parseDouble(creep[3]);
                     float yaw = getCorrectYaw(cx, cz, l.getX(), l.getZ());
-                    plugin.debug(yaw);
                     l.setYaw(yaw);
                 }
                 // create NPC

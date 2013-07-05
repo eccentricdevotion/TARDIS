@@ -111,7 +111,6 @@ public class TARDISFarmer {
             // count total mobs
             int total = 0;
             for (Entity e : mobs) {
-                plugin.debug(e.getType());
                 switch (e.getType()) {
                     case CHICKEN:
                         TARDISMob tmchk = new TARDISMob();
