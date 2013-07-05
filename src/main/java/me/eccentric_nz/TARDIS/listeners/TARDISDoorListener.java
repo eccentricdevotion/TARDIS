@@ -305,9 +305,7 @@ public class TARDISDoorListener implements Listener {
                                                     new TARDISTexturePackChanger(plugin).changeTP(player, rsp.getTexture_out());
                                                 }
                                                 // remove player from traveller table
-                                                HashMap<String, Object> wherd = new HashMap<String, Object>();
-                                                wherd.put("player", playerNameStr);
-                                                qf.doDelete("travellers", wherd);
+                                                removeTraveller(playerNameStr);
                                             } else {
                                                 player.sendMessage(plugin.pluginName + "The TARDIS is still travelling... you would get lost in the time vortex!");
                                             }
@@ -362,6 +360,8 @@ public class TARDISDoorListener implements Listener {
                                                     }
                                                 }
                                                 // put player into travellers table
+                                                // remove them first as they may have exited incorrectly and we only want them listed once
+                                                removeTraveller(playerNameStr);
                                                 HashMap<String, Object> set = new HashMap<String, Object>();
                                                 set.put("tardis_id", id);
                                                 set.put("player", playerNameStr);
@@ -399,6 +399,7 @@ public class TARDISDoorListener implements Listener {
                                                 }
                                             }
                                             // put player into travellers table
+                                            removeTraveller(playerNameStr);
                                             HashMap<String, Object> set = new HashMap<String, Object>();
                                             set.put("tardis_id", id);
                                             set.put("player", playerNameStr);
@@ -437,9 +438,7 @@ public class TARDISDoorListener implements Listener {
                                                 new TARDISTexturePackChanger(plugin).changeTP(player, rsp.getTexture_out());
                                             }
                                             // remove player from traveller table
-                                            HashMap<String, Object> wherd = new HashMap<String, Object>();
-                                            wherd.put("player", playerNameStr);
-                                            qf.doDelete("travellers", wherd);
+                                            removeTraveller(playerNameStr);
                                             // take energy
                                             HashMap<String, Object> wherea = new HashMap<String, Object>();
                                             wherea.put("tardis_id", id);
@@ -739,10 +738,16 @@ public class TARDISDoorListener implements Listener {
         }
     }
 
+    /**
+     * Set a player's time relative to the server time. Based on Essentials
+     * /ptime command.
+     *
+     * @param p the player to set the time for
+     * @param t the ticks to set the time to
+     */
     private void setTemporalLocation(final Player p, long t) {
         if (p.isOnline()) {
             if (t != -1) {
-                plugin.debug("Trying to set player time to: " + t);
                 long time = p.getPlayerTime();
                 time -= time % 24000L;
                 time += 24000L + t;
@@ -754,9 +759,19 @@ public class TARDISDoorListener implements Listener {
                     }
                 }, 10L);
             } else {
-                plugin.debug("Reseting player time back to normal");
                 p.resetPlayerTime();
             }
         }
+    }
+
+    /**
+     * Remove player from the travellers table.
+     *
+     * @param p the player to remove
+     */
+    private void removeTraveller(String p) {
+        HashMap<String, Object> where = new HashMap<String, Object>();
+        where.put("player", p);
+        new QueryFactory(plugin).doDelete("travellers", where);
     }
 }
