@@ -171,6 +171,10 @@ public class TARDISTravelCommands implements CommandExecutor, TabCompleter {
                             return true;
                         } else {
                             if (player.hasPermission("tardis.timetravel.player")) {
+                                if (player.getName().equalsIgnoreCase(args[0])) {
+                                    player.sendMessage(plugin.pluginName + "You cannot travel to yourself!");
+                                    return true;
+                                }
                                 TARDISRescue to_player = new TARDISRescue(plugin);
                                 return to_player.rescue(player, args[0], id, tt, d, false);
                             } else {
