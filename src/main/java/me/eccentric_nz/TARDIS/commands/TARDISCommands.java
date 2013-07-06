@@ -1065,7 +1065,7 @@ public class TARDISCommands implements CommandExecutor {
                         } else {
                             String[] split = comps.split(":");
                             StringBuilder buf = new StringBuilder();
-                            String newList;
+                            String newList = "";
                             if (split.length > 1) {
                                 // recompile string without the specified player
                                 for (String c : split) {
@@ -1075,9 +1075,9 @@ public class TARDISCommands implements CommandExecutor {
                                     }
                                 }
                                 // remove trailing colon
-                                newList = buf.toString().substring(0, buf.length() - 1);
-                            } else {
-                                newList = "";
+                                if (buf.length() > 0) {
+                                    newList = buf.toString().substring(0, buf.length() - 1);
+                                }
                             }
                             QueryFactory qf = new QueryFactory(plugin);
                             HashMap<String, Object> tid = new HashMap<String, Object>();
