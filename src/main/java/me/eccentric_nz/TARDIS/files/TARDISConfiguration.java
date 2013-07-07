@@ -130,6 +130,8 @@ public class TARDISConfiguration {
         roomBoolOptions.put("rooms.PASSAGE.user", false);
         roomBoolOptions.put("rooms.POOL.enabled", true);
         roomBoolOptions.put("rooms.POOL.user", false);
+        roomBoolOptions.put("rooms.RAIL.enabled", true);
+        roomBoolOptions.put("rooms.RAIL.user", false);
         roomBoolOptions.put("rooms.STABLE.enabled", true);
         roomBoolOptions.put("rooms.STABLE.user", false);
         roomBoolOptions.put("rooms.VAULT.enabled", true);
@@ -205,6 +207,8 @@ public class TARDISConfiguration {
         roomIntOptions.put("rooms.PASSAGE.offset", -2);
         roomIntOptions.put("rooms.POOL.cost", 450);
         roomIntOptions.put("rooms.POOL.offset", -3);
+        roomIntOptions.put("rooms.RAIL.cost", 650);
+        roomIntOptions.put("rooms.RAIL.offset", -1);
         roomIntOptions.put("rooms.STABLE.cost", 350);
         roomIntOptions.put("rooms.STABLE.offset", -1);
         roomIntOptions.put("rooms.VAULT.cost", 350);
@@ -235,6 +239,7 @@ public class TARDISConfiguration {
         roomStrOptions.put("rooms.MUSHROOM.seed", "GRAVEL");
         roomStrOptions.put("rooms.PASSAGE.seed", "CLAY");
         roomStrOptions.put("rooms.POOL.seed", "SNOW_BLOCK");
+        roomStrOptions.put("rooms.RAIL.seed", "HOPPER");
         roomStrOptions.put("rooms.STABLE.seed", "HAY_BLOCK");
         roomStrOptions.put("rooms.VAULT.seed", "DISPENSER");
         roomStrOptions.put("rooms.WOOD.seed", "WOOD");
@@ -375,9 +380,9 @@ public class TARDISConfiguration {
                 tblocs.add("STAINED_CLAY");
                 tblocs.add("HAY_BLOCK");
                 tblocs.add("HARD_CLAY");
+                blocks_config.set("tardis_blocks", tblocs);
+                i++;
             }
-            blocks_config.set("tardis_blocks", tblocs);
-            i++;
         }
         if (!blocks_config.contains("chameleon_blocks")) {
             List<Integer> CHAM_BLOCKS = Arrays.asList(new Integer[]{1, 3, 4, 5, 7, 14, 15, 16, 17, 18, 19, 20, 21, 22, 24, 25, 35, 41, 42, 43, 45, 46, 47, 48, 49, 56, 57, 58, 73, 74, 79, 80, 82, 84, 86, 87, 88, 89, 91, 98, 99, 100, 103, 110, 112, 121, 123, 124, 129, 133, 155, 159, 170, 172, 173});
@@ -390,9 +395,9 @@ public class TARDISConfiguration {
                 cblocs.add(170);
                 cblocs.add(172);
                 cblocs.add(173);
+                blocks_config.set("chameleon_blocks", cblocs);
+                i++;
             }
-            blocks_config.set("chameleon_blocks", cblocs);
-            i++;
         }
         // add lamp blocks
         if (!blocks_config.contains("lamp_blocks")) {

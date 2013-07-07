@@ -81,6 +81,7 @@ public class TARDISDatabaseUpdater {
         tardisupdates.add("lastuse INTEGER DEFAULT " + now);
         tardisupdates.add("middle_data INTEGER");
         tardisupdates.add("middle_id INTEGER");
+        tardisupdates.add("rail TEXT DEFAULT ''");
         tardisupdates.add("recharging INTEGER DEFAULT 0");
         tardisupdates.add("scanner TEXT DEFAULT ''");
         tardisupdates.add("stable TEXT DEFAULT ''");

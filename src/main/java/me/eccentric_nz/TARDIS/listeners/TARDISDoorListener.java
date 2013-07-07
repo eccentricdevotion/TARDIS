@@ -117,9 +117,6 @@ public class TARDISDoorListener implements Listener {
         QueryFactory qf = new QueryFactory(plugin);
         final Player player = event.getPlayer();
         final String playerNameStr = player.getName();
-        int cx = 0;
-        int cy = 0;
-        int cz = 0;
         Block block = event.getClickedBlock();
         if (block != null) {
             Material blockType = block.getType();
@@ -485,7 +482,6 @@ public class TARDISDoorListener implements Listener {
         final boolean crossWorlds = from != to;
         final boolean quotes = q;
         final String name = p.getName();
-        // try loading chunk
         World world = l.getWorld();
         final boolean isSurvival = checkSurvival(world);
 

@@ -1,15 +1,16 @@
 # TODO
 
 ## Current version `2.5-beta-1`
-1. Jettison the whole room (including walls), will require new room schematics...
-2. Architectural Reconfiguration System / Map room
-3. Add sounds with Resource packs?
-4. Permission-based world creation - player's without permission use the default world, those with it get a TARDIS_WORLD       
+1. Make Railway room work better
+2. Permission-based world creation - player's without permission use the default world, those with it get a TARDIS_WORLD
+3. Add switch to turn off the lamps  
 
 ## Next version `2.6+`
 1. TARDIS shield
-2. Railway room - run rail up to the TARDIS door and have carts teleported inside
-3. ?
+2. Jettison the whole room (including walls), will require new room schematics...
+3. Architectural Reconfiguration System / Map room
+4. Add sounds with Resource packs?
+5. ?
 
 ## Minecraft API when available `3.0?`
 1. Recreate everything with the new API :)

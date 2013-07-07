@@ -20,7 +20,6 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
 import me.eccentric_nz.TARDIS.builders.TARDISBuilderInner;
@@ -72,6 +71,7 @@ import me.eccentric_nz.TARDIS.listeners.TARDISJettisonSeeder;
 import me.eccentric_nz.TARDIS.listeners.TARDISJoinListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISKeyboardListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISLightningListener;
+import me.eccentric_nz.TARDIS.listeners.TARDISMinecartListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISNPCListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISRoomSeeder;
 import me.eccentric_nz.TARDIS.listeners.TARDISSaveSignListener;
@@ -360,6 +360,7 @@ public class TARDIS extends JavaPlugin {
         }
         pm.registerEvents(new TARDISAdminMenuListener(this), this);
         pm.registerEvents(new TARDISTemporalLocatorListener(this), this);
+        pm.registerEvents(new TARDISMinecartListener(this), this);
     }
 
     /**

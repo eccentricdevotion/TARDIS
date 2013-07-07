@@ -232,6 +232,15 @@ public class TARDISRoomRunnable implements Runnable {
                     cocoablocks.put(cocoa, data);
                 }
             }
+            if (room.equals("RAIL") && id == 85) {
+                // remember sign location so we can teleport the storage minecart
+                String loc = world.getName() + ":" + startx + ":" + starty + ":" + startz;
+                HashMap<String, Object> set = new HashMap<String, Object>();
+                set.put("rail", loc);
+                HashMap<String, Object> where = new HashMap<String, Object>();
+                where.put("tardis_id", tardis_id);
+                qf.doUpdate("tardis", set, where);
+            }
             // always remove sponge
             if (id == 19) {
                 id = 0;

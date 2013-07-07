@@ -120,3 +120,9 @@ rooms:
     offset: -1
     seed: HAY_BLOCK
     user: false
+  RAIL:
+    enabled: true
+    cost: 650
+    offset: -1
+    seed: HOPPER
+    user: false
