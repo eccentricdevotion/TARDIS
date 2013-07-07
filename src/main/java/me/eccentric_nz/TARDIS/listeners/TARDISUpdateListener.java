@@ -85,6 +85,7 @@ public class TARDISUpdateListener implements Listener {
         controls.put("terminal", 9);
         controls.put("ars", 10);
         controls.put("temporal", 11);
+        controls.put("light", 12);
     }
 
     /**
@@ -416,6 +417,20 @@ public class TARDISUpdateListener implements Listener {
                 s.setLine(3, "");
                 s.update();
             }
+            if (blockName.equalsIgnoreCase("light") && validBlocks.contains(blockType)) {
+                HashMap<String, Object> wherel = new HashMap<String, Object>();
+                wherel.put("tardis_id", id);
+                wherel.put("type", 12);
+                ResultSetControls rsc = new ResultSetControls(plugin, wherel, false);
+                if (!rsc.resultSet()) {
+                    // insert control
+                    qf.insertControl(id, 12, blockLocStr, 0);
+                    secondary = true;
+                } else {
+                    set.put("location", blockLocStr);
+                }
+            }
+
             if (set.size() > 0 || secondary) {
                 if (!secondary) {
                     qf.doUpdate(table, set, tid);

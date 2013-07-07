@@ -24,6 +24,7 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetControls;
+import me.eccentric_nz.TARDIS.database.ResultSetLamps;
 import me.eccentric_nz.TARDIS.database.ResultSetRepeaters;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
@@ -58,7 +59,7 @@ public class TARDISButtonListener implements Listener {
 
     private TARDIS plugin;
     List<Material> validBlocks = new ArrayList<Material>();
-    List<Integer> onlythese = Arrays.asList(new Integer[]{1, 8, 9, 10, 11});
+    List<Integer> onlythese = Arrays.asList(new Integer[]{1, 8, 9, 10, 11, 12});
     Version bukkitversion;
     Version prewoodbuttonversion = new Version("1.4.2");
     Version precoparatorversion = new Version("1.5");
@@ -279,6 +280,28 @@ public class TARDISButtonListener implements Listener {
                                         Inventory tmpl = plugin.getServer().createInventory(player, 27, "§4Temporal Locator");
                                         tmpl.setContents(clocks);
                                         player.openInventory(tmpl);
+                                    }
+                                    break;
+                                case 12:
+                                    // Control room light switch
+                                    HashMap<String, Object> wherel = new HashMap<String, Object>();
+                                    wherel.put("tardis_id", id);
+                                    ResultSetLamps rsl = new ResultSetLamps(plugin, wherel, true);
+                                    List<Block> lamps = new ArrayList<Block>();
+                                    if (rsl.resultSet()) {
+                                        // get lamp locations
+                                        ArrayList<HashMap<String, String>> data = rsl.getData();
+                                        for (HashMap<String, String> map : data) {
+                                            Location loc = plugin.utils.getLocationFromDB(map.get("location"), 0.0F, 0.0F);
+                                            lamps.add(loc.getBlock());
+                                        }
+                                    }
+                                    for (Block b : lamps) {
+                                        if (b.getTypeId() == 124) {
+                                            b.setTypeId(19);
+                                        } else {
+                                            b.setTypeId(124);
+                                        }
                                     }
                                     break;
                                 default:
