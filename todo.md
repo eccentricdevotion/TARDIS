@@ -4,14 +4,17 @@
 1. Make Railway room work better
 2. Permission-based world creation - player's without permission use the default world, those with it get a TARDIS_WORLD
 3. Add config to set whether wool blocks in schematics should be converted to hardened clay equivalent
-4. Add Advanced TARDIS Stattenheim Remote Control
 
 ## Next version `2.6+`
 1. TARDIS shield
 2. Jettison the whole room (including walls), will require new room schematics...
 3. Architectural Reconfiguration System / Map room
 4. Add sounds with Resource packs?
-5. Remove the TARDIS creation block stack, and make a special seed block that determines the type of TARDIS that will be grown TARDIS creation
+5. Remove the TARDIS creation block stack, and make a special seed block that determines the type of TARDIS that will be grown. Use custom configurable recipes - the recipes will still include precious block/lapis block/redstone torch, but 4 other blocks will set:
+    * TARDIS wall block
+    * TARDIS floor block
+    * Police Box wall block - if not specified then plain tardis
+    * Police Box lamp block - if not specified then plain tardis
 6. ?
 
 ## Minecraft API when available `3.0?`

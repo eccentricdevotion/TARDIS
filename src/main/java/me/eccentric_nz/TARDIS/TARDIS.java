@@ -27,23 +27,23 @@ import me.eccentric_nz.TARDIS.builders.TARDISBuilderPoliceBox;
 //import me.eccentric_nz.TARDIS.builders.TARDISPasteBox;
 import me.eccentric_nz.TARDIS.builders.TARDISSpace;
 import me.eccentric_nz.TARDIS.commands.TARDISAdminCommands;
-//import me.eccentric_nz.TARDIS.commands.TARDISAdminTabComplete;
+import me.eccentric_nz.TARDIS.commands.TARDISAdminTabComplete;
 import me.eccentric_nz.TARDIS.commands.TARDISAreaCommands;
-//import me.eccentric_nz.TARDIS.commands.TARDISAreaTabComplete;
+import me.eccentric_nz.TARDIS.commands.TARDISAreaTabComplete;
 import me.eccentric_nz.TARDIS.commands.TARDISBindCommands;
-//import me.eccentric_nz.TARDIS.commands.TARDISBindTabComplete;
+import me.eccentric_nz.TARDIS.commands.TARDISBindTabComplete;
 import me.eccentric_nz.TARDIS.commands.TARDISBookCommands;
 import me.eccentric_nz.TARDIS.commands.TARDISCommands;
 import me.eccentric_nz.TARDIS.commands.TARDISGravityCommands;
-//import me.eccentric_nz.TARDIS.commands.TARDISGravityTabComplete;
+import me.eccentric_nz.TARDIS.commands.TARDISGravityTabComplete;
 import me.eccentric_nz.TARDIS.commands.TARDISPrefsCommands;
-//import me.eccentric_nz.TARDIS.commands.TARDISPrefsTabComplete;
+import me.eccentric_nz.TARDIS.commands.TARDISPrefsTabComplete;
 import me.eccentric_nz.TARDIS.commands.TARDISRoomCommands;
-//import me.eccentric_nz.TARDIS.commands.TARDISTabComplete;
+import me.eccentric_nz.TARDIS.commands.TARDISTabComplete;
 import me.eccentric_nz.TARDIS.commands.TARDISTextureCommands;
-//import me.eccentric_nz.TARDIS.commands.TARDISTextureTabComplete;
+import me.eccentric_nz.TARDIS.commands.TARDISTextureTabComplete;
 import me.eccentric_nz.TARDIS.commands.TARDISTravelCommands;
-//import me.eccentric_nz.TARDIS.commands.TARDISTravelTabComplete;
+import me.eccentric_nz.TARDIS.commands.TARDISTravelTabComplete;
 import me.eccentric_nz.TARDIS.database.TARDISControlsConverter;
 import me.eccentric_nz.TARDIS.database.TARDISDatabase;
 import me.eccentric_nz.TARDIS.destroyers.TARDISDestroyerInner;
@@ -403,19 +403,15 @@ public class TARDIS extends JavaPlugin {
         getCommand("tardisroom").setExecutor(new TARDISRoomCommands(this));
         getCommand("tardistexture").setExecutor(new TARDISTextureCommands(this));
         getCommand("tardistravel").setExecutor(new TARDISTravelCommands(this));
-        try {
-            Class.forName("org.bukkit.command.TabCompleter");
-            debug("CraftBukkit version has Tab Completion");
-//            getCommand("tardistexture").setTabCompleter(new TARDISTextureTabComplete());
-//            getCommand("tardisadmin").setTabCompleter(new TARDISAdminTabComplete(this));
-//            getCommand("tardis").setTabCompleter(new TARDISTabComplete(this));
-//            getCommand("tardisarea").setTabCompleter(new TARDISAreaTabComplete());
-//            getCommand("tardisbind").setTabCompleter(new TARDISBindTabComplete());
-//            getCommand("tardisprefs").setTabCompleter(new TARDISPrefsTabComplete(this));
-//            getCommand("tardistravel").setTabCompleter(new TARDISTravelTabComplete(this));
-//            getCommand("tardisgravity").setTabCompleter(new TARDISGravityTabComplete());
-        } catch (ClassNotFoundException e) {
-            debug("CraftBukkit version does not support Tab Completion");
+        if (this.bukkitversion.compareTo(this.precomparatorversion) > 0) {
+            getCommand("tardistexture").setTabCompleter(new TARDISTextureTabComplete());
+            getCommand("tardisadmin").setTabCompleter(new TARDISAdminTabComplete(this));
+            getCommand("tardis").setTabCompleter(new TARDISTabComplete(this));
+            getCommand("tardisarea").setTabCompleter(new TARDISAreaTabComplete());
+            getCommand("tardisbind").setTabCompleter(new TARDISBindTabComplete());
+            getCommand("tardisprefs").setTabCompleter(new TARDISPrefsTabComplete(this));
+            getCommand("tardistravel").setTabCompleter(new TARDISTravelTabComplete(this));
+            getCommand("tardisgravity").setTabCompleter(new TARDISGravityTabComplete());
         }
     }
 
