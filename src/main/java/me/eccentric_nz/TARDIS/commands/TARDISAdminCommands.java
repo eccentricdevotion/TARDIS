@@ -71,14 +71,14 @@ import org.bukkit.util.StringUtil;
  *
  * @author eccentric_nz
  */
-public class TARDISAdminCommands implements CommandExecutor, TabCompleter {
+public class TARDISAdminCommands implements CommandExecutor {
 
     private TARDIS plugin;
-    private List<String> firstsStr = new ArrayList<String>();
-    private List<String> firstsStrArtron = new ArrayList<String>();
-    private List<String> firstsBool = new ArrayList<String>();
-    private List<String> firstsInt = new ArrayList<String>();
-    private List<String> firstsIntArtron = new ArrayList<String>();
+    public List<String> firstsStr = new ArrayList<String>();
+    public List<String> firstsStrArtron = new ArrayList<String>();
+    public List<String> firstsBool = new ArrayList<String>();
+    public List<String> firstsInt = new ArrayList<String>();
+    public List<String> firstsIntArtron = new ArrayList<String>();
     HashSet<Byte> transparent = new HashSet<Byte>();
     private Material charger = Material.REDSTONE_LAMP_ON;
 
@@ -729,28 +729,5 @@ public class TARDISAdminCommands implements CommandExecutor, TabCompleter {
             }
         }
         return false;
-    }
-
-    @Override
-    public List<String> onTabComplete(CommandSender sender, Command command, String label, String[] args) {
-
-        if (args.length <= 1) {
-            return partial(args[0], combineLists());
-        }
-        return ImmutableList.of();
-    }
-
-    private List<String> partial(String token, Collection<String> from) {
-        return StringUtil.copyPartialMatches(token, from, new ArrayList<String>(from.size()));
-    }
-
-    private List<String> combineLists() {
-        List<String> newList = new ArrayList<String>(firstsStr.size() + firstsBool.size() + firstsInt.size() + firstsStrArtron.size() + firstsIntArtron.size());
-        newList.addAll(firstsStr);
-        newList.addAll(firstsBool);
-        newList.addAll(firstsInt);
-        newList.addAll(firstsStrArtron);
-        newList.addAll(firstsIntArtron);
-        return newList;
     }
 }

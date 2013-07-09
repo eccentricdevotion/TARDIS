@@ -16,7 +16,9 @@
  */
 package me.eccentric_nz.TARDIS.listeners;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
@@ -63,10 +65,23 @@ public class TARDISBlockPlaceListener implements Listener {
     }
     private TARDIS plugin;
     private TARDISUtils utils;
+    private List<Material> blocks = new ArrayList<Material>();
 
     public TARDISBlockPlaceListener(TARDIS plugin) {
         this.plugin = plugin;
         this.utils = new TARDISUtils(plugin);
+        blocks.add(Material.IRON_BLOCK);
+        blocks.add(Material.GOLD_BLOCK);
+        blocks.add(Material.DIAMOND_BLOCK);
+        if (plugin.bukkitversion.compareTo(plugin.preemeraldversion) >= 0) {
+            blocks.add(Material.EMERALD_BLOCK);
+        }
+        if (plugin.bukkitversion.compareTo(plugin.precomparatorversion) >= 0) {
+            blocks.add(Material.REDSTONE_BLOCK);
+        }
+        if (plugin.bukkitversion.compareTo(plugin.precarpetversion) >= 0) {
+            blocks.add(Material.COAL_BLOCK);
+        }
     }
 
     /**
@@ -86,7 +101,7 @@ public class TARDISBlockPlaceListener implements Listener {
             final byte middle_data = blockBelow.getData();
             Block blockBottom = blockBelow.getRelative(BlockFace.DOWN);
             // only continue if the redstone torch is placed on top of [JUST ABOUT ANY] BLOCK on top of an IRON/GOLD/DIAMOND_BLOCK
-            if (plugin.getBlocksConfig().getStringList("tardis_blocks").contains(blockBelow.getType().toString()) && (blockBottom.getType() == Material.IRON_BLOCK || blockBottom.getType() == Material.GOLD_BLOCK || blockBottom.getType() == Material.DIAMOND_BLOCK || blockBottom.getType() == Material.EMERALD_BLOCK || blockBottom.getType() == Material.REDSTONE_BLOCK || blockBottom.getType() == Material.COAL_BLOCK)) {
+            if (plugin.getBlocksConfig().getStringList("tardis_blocks").contains(blockBelow.getType().toString()) && blocks.contains(blockBottom.getType())) {
                 final TARDISConstants.SCHEMATIC schm;
                 final Player player = event.getPlayer();
                 int max_count = plugin.getConfig().getInt("count");

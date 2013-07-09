@@ -16,10 +16,8 @@
  */
 package me.eccentric_nz.TARDIS.commands;
 
-import com.google.common.collect.ImmutableList;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -46,9 +44,7 @@ import org.bukkit.block.Block;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
-import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
-import org.bukkit.util.StringUtil;
 
 /**
  * Command /tardistravel [arguments].
@@ -58,11 +54,10 @@ import org.bukkit.util.StringUtil;
  *
  * @author eccentric_nz
  */
-public class TARDISTravelCommands implements CommandExecutor, TabCompleter {
+public class TARDISTravelCommands implements CommandExecutor {
 
     private TARDIS plugin;
     private TARDISPluginRespect respect;
-    private final List<String> ROOT_SUBS = ImmutableList.of("home", "biome", "dest", "area", "back");
     private List<String> BIOME_SUBS = new ArrayList<String>();
 
     public TARDISTravelCommands(TARDIS plugin) {
@@ -381,41 +376,6 @@ public class TARDISTravelCommands implements CommandExecutor, TabCompleter {
             }
         }
         return false;
-    }
-
-    @Override
-    public List<String> onTabComplete(CommandSender sender, Command command, String label, String[] args) {
-        // Remember that we can return null to default to online player name matching
-        String lastArg = args[args.length - 1];
-        if (args.length <= 1) {
-            List<String> part = partial(args[0], ROOT_SUBS);
-            return (part.size() > 0) ? part : null;
-        } else if (args.length == 2) {
-            String sub = args[0];
-            if (sub.equals("area")) {
-                return partial(lastArg, getAreas());
-            }
-            if (sub.equals("biome")) {
-                return partial(lastArg, BIOME_SUBS);
-            }
-        }
-        return ImmutableList.of();
-    }
-
-    private List<String> partial(String token, Collection<String> from) {
-        return StringUtil.copyPartialMatches(token, from, new ArrayList<String>(from.size()));
-    }
-
-    private List<String> getAreas() {
-        List<String> areas = new ArrayList<String>();
-        ResultSetAreas rsa = new ResultSetAreas(plugin, null, true);
-        if (rsa.resultSet()) {
-            ArrayList<HashMap<String, String>> data = rsa.getData();
-            for (HashMap<String, String> map : data) {
-                areas.add(map.get("area_name"));
-            }
-        }
-        return areas;
     }
 
     private String getQuotedString(String[] args) {
