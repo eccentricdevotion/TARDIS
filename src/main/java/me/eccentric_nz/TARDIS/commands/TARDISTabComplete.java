@@ -25,12 +25,13 @@ import org.bukkit.command.TabCompleter;
 import org.bukkit.util.StringUtil;
 
 /**
- * TabCompleter for /tardis
+ * TabCompleter for /tardis command
  */
 public class TARDISTabComplete implements TabCompleter {
 
     private TARDIS plugin;
-    private final List<String> ROOT_SUBS = ImmutableList.of("add", "chameleon", "comehere", "direction", "exterminate", "find", "help", "hide", "home", "inside", "jettison", "list", "namekey", "occupy", "rebuild", "remove", "removesave", "rescue", "room", "save", "secondary", "setdest", "update", "version");
+    //private final List<String> ROOT_SUBS = ImmutableList.of("add", "chameleon", "comehere", "direction", "exterminate", "find", "help", "hide", "home", "inside", "jettison", "list", "namekey", "occupy", "rebuild", "remove", "removesave", "rescue", "room", "save", "secondary", "setdest", "update", "version");
+    private final List<String> ROOT_SUBS = ImmutableList.of("add", "chameleon", "direction", "exterminate", "find", "help", "hide", "home", "inside", "jettison", "list", "namekey", "occupy", "rebuild", "remove", "removesave", "rescue", "room", "save", "secondary", "setdest", "update", "version");
     private final List<String> CHAM_SUBS = ImmutableList.of("on", "off", "short", "reset");
     private final List<String> DIR_SUBS = ImmutableList.of("north", "west", "south", "east");
     private final List<String> LIST_SUBS = ImmutableList.of("companions", "saves", "areas", "rechargers");

@@ -77,6 +77,7 @@ import me.eccentric_nz.TARDIS.listeners.TARDISRoomSeeder;
 import me.eccentric_nz.TARDIS.listeners.TARDISSaveSignListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISScannerListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISSignListener;
+import me.eccentric_nz.TARDIS.listeners.TARDISStattenheimListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISTemporalLocatorListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISTerminalListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISTimeLordDeathListener;
@@ -84,6 +85,7 @@ import me.eccentric_nz.TARDIS.listeners.TARDISUpdateListener;
 import me.eccentric_nz.TARDIS.rooms.TARDISCondenserData;
 import me.eccentric_nz.TARDIS.thirdparty.MetricsLite;
 import me.eccentric_nz.TARDIS.travel.TARDISArea;
+import me.eccentric_nz.TARDIS.travel.TARDISStattenheimRemote;
 import me.eccentric_nz.TARDIS.utility.TARDISCreeperChecker;
 import me.eccentric_nz.TARDIS.utility.TARDISFactionsChecker;
 import me.eccentric_nz.TARDIS.utility.TARDISSounds;
@@ -262,6 +264,8 @@ public class TARDIS extends JavaPlugin {
         }
         tp = getServerTP();
         //new TARDISPasteBox(this).loadBoxes();
+        // register Stattenheim Remote recipe
+        new TARDISStattenheimRemote(this).stattenheim();
     }
 
     @Override
@@ -361,6 +365,7 @@ public class TARDIS extends JavaPlugin {
         pm.registerEvents(new TARDISAdminMenuListener(this), this);
         pm.registerEvents(new TARDISTemporalLocatorListener(this), this);
         pm.registerEvents(new TARDISMinecartListener(this), this);
+        pm.registerEvents(new TARDISStattenheimListener(this), this);
     }
 
     /**

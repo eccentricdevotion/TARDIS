@@ -221,6 +221,7 @@ public class TARDISConfiguration {
         strOptions.put("default_world_name", "myridiculouslylongworldnameiscalledcuthbert");
         strOptions.put("gamemode", "survival");
         strOptions.put("key", "STICK");
+        strOptions.put("stattenheim", "FLINT");
         artronStrOptions.put("jettison_seed", "TNT");
         artronStrOptions.put("full_charge_item", "NETHER_STAR");
         roomStrOptions.put("rooms.ARBORETUM.seed", "LEAVES");
