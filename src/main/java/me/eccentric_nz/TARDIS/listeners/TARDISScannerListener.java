@@ -22,8 +22,6 @@ import java.util.List;
 import java.util.Map;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
-import me.eccentric_nz.TARDIS.thirdparty.Version;
-import org.bukkit.Bukkit;
 import org.bukkit.Effect;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -68,14 +66,10 @@ public class TARDISScannerListener implements Listener {
     private final TARDIS plugin;
     List<Material> validBlocks = new ArrayList<Material>();
     List<EntityType> entities = new ArrayList<EntityType>();
-    Version bukkitversion;
-    Version prewoodbuttonversion = new Version("1.4.2");
 
     public TARDISScannerListener(TARDIS plugin) {
         this.plugin = plugin;
-        String[] v = Bukkit.getServer().getBukkitVersion().split("-");
-        bukkitversion = (!v[0].equalsIgnoreCase("unknown")) ? new Version(v[0]) : new Version("1.4.7");
-        if (bukkitversion.compareTo(prewoodbuttonversion) >= 0) {
+        if (plugin.bukkitversion.compareTo(plugin.prewoodbuttonversion) >= 0) {
             validBlocks.add(Material.WOOD_BUTTON);
             entities.add(EntityType.WITCH);
             entities.add(EntityType.BAT);

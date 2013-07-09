@@ -29,11 +29,9 @@ import me.eccentric_nz.TARDIS.database.ResultSetRepeaters;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.rooms.TARDISARSInventory;
-import me.eccentric_nz.TARDIS.thirdparty.Version;
 import me.eccentric_nz.TARDIS.travel.TARDISTemporalLocatorInventory;
 import me.eccentric_nz.TARDIS.travel.TARDISTerminalInventory;
 import me.eccentric_nz.TARDIS.travel.TARDISTimeTravel;
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -60,21 +58,16 @@ public class TARDISButtonListener implements Listener {
     private TARDIS plugin;
     List<Material> validBlocks = new ArrayList<Material>();
     List<Integer> onlythese = Arrays.asList(new Integer[]{1, 8, 9, 10, 11, 12});
-    Version bukkitversion;
-    Version prewoodbuttonversion = new Version("1.4.2");
-    Version precoparatorversion = new Version("1.5");
     public ItemStack[] items;
     private ItemStack[] tars;
     private ItemStack[] clocks;
 
     public TARDISButtonListener(TARDIS plugin) {
         this.plugin = plugin;
-        String[] v = Bukkit.getServer().getBukkitVersion().split("-");
-        bukkitversion = (!v[0].equalsIgnoreCase("unknown")) ? new Version(v[0]) : new Version("1.4.7");
-        if (bukkitversion.compareTo(prewoodbuttonversion) >= 0) {
+        if (plugin.bukkitversion.compareTo(plugin.prewoodbuttonversion) >= 0) {
             validBlocks.add(Material.WOOD_BUTTON);
         }
-        if (bukkitversion.compareTo(precoparatorversion) >= 0) {
+        if (plugin.bukkitversion.compareTo(plugin.precomparatorversion) >= 0) {
             validBlocks.add(Material.REDSTONE_COMPARATOR_OFF);
             validBlocks.add(Material.REDSTONE_COMPARATOR_ON);
         }

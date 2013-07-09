@@ -23,9 +23,7 @@ import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetAchievements;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
-import me.eccentric_nz.TARDIS.thirdparty.Version;
 import me.eccentric_nz.TARDIS.utility.TARDISTexturePackChanger;
-import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -42,16 +40,9 @@ import org.bukkit.event.player.PlayerJoinEvent;
 public class TARDISJoinListener implements Listener {
 
     private final TARDIS plugin;
-    Version bukkitversion;
-    Version preIMversion = new Version("1.4.5");
-    Version SUBversion;
-    Version preSUBversion = new Version("1.0");
 
     public TARDISJoinListener(TARDIS plugin) {
         this.plugin = plugin;
-        String[] v = Bukkit.getServer().getBukkitVersion().split("-");
-        bukkitversion = (!v[0].equalsIgnoreCase("unknown")) ? new Version(v[0]) : new Version("1.4.7");
-        SUBversion = (!v[0].equalsIgnoreCase("unknown")) ? new Version(v[1].substring(1, v[1].length())) : new Version("4.7");
     }
 
     /**
@@ -66,7 +57,7 @@ public class TARDISJoinListener implements Listener {
     public void onJoin(PlayerJoinEvent event) {
         final Player player = event.getPlayer();
         String playerNameStr = player.getName();
-        if ((bukkitversion.compareTo(preIMversion) > 0 || (bukkitversion.compareTo(preIMversion) == 0 && SUBversion.compareTo(preSUBversion) > 0)) && plugin.getConfig().getBoolean("allow_achievements")) {
+        if ((plugin.bukkitversion.compareTo(plugin.preIMversion) > 0 || (plugin.bukkitversion.compareTo(plugin.preIMversion) == 0 && plugin.SUBversion.compareTo(plugin.preSUBversion) > 0)) && plugin.getConfig().getBoolean("allow_achievements")) {
             if (player.hasPermission("tardis.book")) {
                 // check if they have started building a TARDIS yet
                 HashMap<String, Object> where = new HashMap<String, Object>();

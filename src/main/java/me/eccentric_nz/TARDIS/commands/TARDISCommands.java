@@ -42,7 +42,6 @@ import me.eccentric_nz.TARDIS.destroyers.TARDISExterminator;
 import me.eccentric_nz.TARDIS.files.TARDISUpdateChecker;
 import me.eccentric_nz.TARDIS.rooms.TARDISCondenserData;
 import me.eccentric_nz.TARDIS.rooms.TARDISWalls;
-import me.eccentric_nz.TARDIS.thirdparty.Version;
 import me.eccentric_nz.TARDIS.travel.TARDISPluginRespect;
 import me.eccentric_nz.TARDIS.travel.TARDISTimeTravel;
 import me.eccentric_nz.TARDIS.utility.TARDISItemRenamer;
@@ -76,10 +75,6 @@ public class TARDISCommands implements CommandExecutor {
     HashSet<Byte> transparent = new HashSet<Byte>();
     private List<String> firstArgs = new ArrayList<String>();
     public List<String> roomArgs = new ArrayList<String>();
-    Version bukkitversion;
-    Version preIMversion = new Version("1.4.5");
-    Version SUBversion;
-    Version preSUBversion = new Version("1.0");
 
     public TARDISCommands(TARDIS plugin) {
         this.plugin = plugin;
@@ -124,9 +119,6 @@ public class TARDISCommands implements CommandExecutor {
                 roomArgs.add(r);
             }
         }
-        String[] v = Bukkit.getServer().getBukkitVersion().split("-");
-        bukkitversion = (!v[0].equalsIgnoreCase("unknown")) ? new Version(v[0]) : new Version("1.4.7");
-        SUBversion = (!v[0].equalsIgnoreCase("unknown")) ? new Version(v[1].substring(1, v[1].length())) : new Version("4.7");
     }
 
     @Override
@@ -1317,7 +1309,7 @@ public class TARDISCommands implements CommandExecutor {
                     }
                 }
                 if (args[0].equalsIgnoreCase("namekey")) {
-                    if (bukkitversion.compareTo(preIMversion) < 0 || (bukkitversion.compareTo(preIMversion) == 0 && SUBversion.compareTo(preSUBversion) < 0)) {
+                    if (plugin.bukkitversion.compareTo(plugin.preIMversion) < 0 || (plugin.bukkitversion.compareTo(plugin.preIMversion) == 0 && plugin.SUBversion.compareTo(plugin.preSUBversion) < 0)) {
                         sender.sendMessage(plugin.pluginName + "You cannot rename the TARDIS key with this version of Bukkit!");
                         return true;
                     }

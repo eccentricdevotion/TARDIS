@@ -40,11 +40,9 @@ import static me.eccentric_nz.TARDIS.destroyers.TARDISExterminator.deleteFolder;
 import me.eccentric_nz.TARDIS.destroyers.TARDISPruner;
 import me.eccentric_nz.TARDIS.files.TARDISConfiguration;
 import me.eccentric_nz.TARDIS.listeners.TARDISDoorListener;
-import me.eccentric_nz.TARDIS.thirdparty.Version;
 import me.eccentric_nz.TARDIS.travel.TARDISTerminalInventory;
 import me.eccentric_nz.TARDIS.utility.TARDISMaterials;
 import org.apache.commons.lang.StringUtils;
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Chunk;
 import org.bukkit.Effect;
@@ -83,8 +81,6 @@ public class TARDISAdminCommands implements CommandExecutor, TabCompleter {
     private List<String> firstsIntArtron = new ArrayList<String>();
     HashSet<Byte> transparent = new HashSet<Byte>();
     private Material charger = Material.REDSTONE_LAMP_ON;
-    Version bukkitversion;
-    Version prebeaconversion = new Version("1.4.2");
 
     public TARDISAdminCommands(TARDIS plugin) {
         this.plugin = plugin;
@@ -180,9 +176,7 @@ public class TARDISAdminCommands implements CommandExecutor, TabCompleter {
         firstsIntArtron.add("the_end_min");
         firstsIntArtron.add("travel");
 
-        String[] v = Bukkit.getServer().getBukkitVersion().split("-");
-        bukkitversion = (!v[0].equalsIgnoreCase("unknown")) ? new Version(v[0]) : new Version("1.4.7");
-        if (bukkitversion.compareTo(prebeaconversion) >= 0) {
+        if (plugin.bukkitversion.compareTo(plugin.prewoodbuttonversion) >= 0) {
             charger = Material.BEACON;
         }
         // add transparent blocks

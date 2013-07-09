@@ -24,7 +24,6 @@ import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
-import me.eccentric_nz.TARDIS.thirdparty.Version;
 import me.eccentric_nz.TARDIS.travel.TARDISPluginRespect;
 import me.eccentric_nz.TARDIS.travel.TARDISTimeTravel;
 import org.bukkit.Bukkit;
@@ -55,8 +54,6 @@ public class TARDISStattenheimListener implements Listener {
     private final TARDIS plugin;
     List<Material> useless = new ArrayList<Material>();
     List<Material> doors = new ArrayList<Material>();
-    Version bukkitversion;
-    Version preCarpetVersion = new Version("1.6");
     Material remote;
 
     public TARDISStattenheimListener(TARDIS plugin) {
@@ -72,9 +69,7 @@ public class TARDISStattenheimListener implements Listener {
         useless.add(Material.YELLOW_FLOWER);
         useless.add(Material.RED_MUSHROOM);
         useless.add(Material.BROWN_MUSHROOM);
-        String[] v = Bukkit.getServer().getBukkitVersion().split("-");
-        bukkitversion = (!v[0].equalsIgnoreCase("unknown")) ? new Version(v[0]) : new Version("1.4.7");
-        if (bukkitversion.compareTo(preCarpetVersion) >= 0) {
+        if (plugin.bukkitversion.compareTo(plugin.precarpetversion) >= 0) {
             useless.add(Material.CARPET);
         }
         remote = Material.valueOf(plugin.getConfig().getString("stattenheim"));

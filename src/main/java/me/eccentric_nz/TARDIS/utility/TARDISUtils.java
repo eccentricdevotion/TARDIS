@@ -24,7 +24,6 @@ import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetChunks;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
-import me.eccentric_nz.TARDIS.thirdparty.Version;
 import org.bukkit.Bukkit;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
@@ -55,13 +54,9 @@ public class TARDISUtils {
         return (num + divisor - 1) / divisor;
     }
     private final TARDIS plugin;
-    Version bukkitversion;
-    Version prewoodbuttonversion = new Version("1.4.2");
 
     public TARDISUtils(TARDIS plugin) {
         this.plugin = plugin;
-        String[] v = Bukkit.getServer().getBukkitVersion().split("-");
-        bukkitversion = (!v[0].equalsIgnoreCase("unknown")) ? new Version(v[0]) : new Version("1.4.7");
     }
 
     /**
@@ -77,7 +72,7 @@ public class TARDISUtils {
     public void setBlock(World w, int x, int y, int z, int m, byte d) {
         Block b = w.getBlockAt(x, y, z);
         if (m < 0) {
-            if (bukkitversion.compareTo(prewoodbuttonversion) < 0 && (m == 143 || m == -113)) {
+            if (plugin.bukkitversion.compareTo(plugin.prewoodbuttonversion) < 0 && (m == 143 || m == -113)) {
                 m = 77;
             } else {
                 m += 256;
@@ -88,7 +83,7 @@ public class TARDISUtils {
             d = (byte) 5;
         }
         if (m == 52) { //mob spawner -> scanner button
-            m = (bukkitversion.compareTo(prewoodbuttonversion) < 0) ? 77 : 143;
+            m = (plugin.bukkitversion.compareTo(plugin.prewoodbuttonversion) < 0) ? 77 : 143;
             d = (byte) 3;
         }
         b.setTypeIdAndData(m, d, true);

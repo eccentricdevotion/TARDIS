@@ -27,7 +27,6 @@ import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetDoors;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
-import me.eccentric_nz.TARDIS.thirdparty.Version;
 import me.eccentric_nz.TARDIS.travel.TARDISDoorLocation;
 import me.eccentric_nz.TARDIS.travel.TARDISFarmer;
 import me.eccentric_nz.TARDIS.travel.TARDISMob;
@@ -74,10 +73,6 @@ public class TARDISDoorListener implements Listener {
 
     private TARDIS plugin;
     public float[][] adjustYaw = new float[4][4];
-    Version bukkitversion;
-    Version preIMversion = new Version("1.4.5");
-    Version SUBversion;
-    Version preSUBversion = new Version("1.0");
     Random r = new Random();
 
     public TARDISDoorListener(TARDIS plugin) {
@@ -99,10 +94,6 @@ public class TARDISDoorListener implements Listener {
         adjustYaw[3][1] = 180;
         adjustYaw[3][2] = 90;
         adjustYaw[3][3] = 0;
-
-        String[] v = Bukkit.getServer().getBukkitVersion().split("-");
-        bukkitversion = (!v[0].equalsIgnoreCase("unknown")) ? new Version(v[0]) : new Version("1.4.7");
-        SUBversion = (!v[0].equalsIgnoreCase("unknown")) ? new Version(v[1].substring(1, v[1].length())) : new Version("4.7");
     }
 
     /**
@@ -630,7 +621,7 @@ public class TARDISDoorListener implements Listener {
         } else {
             key = plugin.getConfig().getString("key");
         }
-        if (plugin.getConfig().getBoolean("give_key") && (bukkitversion.compareTo(preIMversion) > 0 || (bukkitversion.compareTo(preIMversion) == 0 && SUBversion.compareTo(preSUBversion) >= 0)) && !key.equals("AIR")) {
+        if (plugin.getConfig().getBoolean("give_key") && (plugin.bukkitversion.compareTo(plugin.preIMversion) > 0 || (plugin.bukkitversion.compareTo(plugin.preIMversion) == 0 && plugin.SUBversion.compareTo(plugin.preSUBversion) >= 0)) && !key.equals("AIR")) {
             Inventory inv = p.getInventory();
             Material m = Material.valueOf(key);
             if (!inv.contains(m)) {

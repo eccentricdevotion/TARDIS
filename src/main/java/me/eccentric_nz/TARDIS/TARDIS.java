@@ -84,6 +84,7 @@ import me.eccentric_nz.TARDIS.listeners.TARDISTimeLordDeathListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISUpdateListener;
 import me.eccentric_nz.TARDIS.rooms.TARDISCondenserData;
 import me.eccentric_nz.TARDIS.thirdparty.MetricsLite;
+import me.eccentric_nz.TARDIS.thirdparty.Version;
 import me.eccentric_nz.TARDIS.travel.TARDISArea;
 import me.eccentric_nz.TARDIS.travel.TARDISStattenheimRemote;
 import me.eccentric_nz.TARDIS.utility.TARDISCreeperChecker;
@@ -213,6 +214,14 @@ public class TARDIS extends JavaPlugin {
     private FileConfiguration blocks_config;
     private FileConfiguration rooms_config;
     public TARDISButtonListener buttonListener;
+    public Version bukkitversion;
+    public Version preemeraldversion = new Version("1.3.1");
+    public Version prewoodbuttonversion = new Version("1.4.2");
+    public Version preIMversion = new Version("1.4.5");
+    public Version precomparatorversion = new Version("1.5");
+    public Version precarpetversion = new Version("1.6");
+    public Version SUBversion;
+    public Version preSUBversion = new Version("1.0");
 
     @Override
     public void onEnable() {
@@ -220,6 +229,9 @@ public class TARDIS extends JavaPlugin {
         pluginName = ChatColor.GOLD + "[" + pdfFile.getName() + "]" + ChatColor.RESET + " ";
         plugin = this;
         console = getServer().getConsoleSender();
+        String[] v = Bukkit.getServer().getBukkitVersion().split("-");
+        bukkitversion = (!v[0].equalsIgnoreCase("unknown")) ? new Version(v[0]) : new Version("1.4.7");
+        SUBversion = (!v[0].equalsIgnoreCase("unknown")) ? new Version(v[1].substring(1, v[1].length())) : new Version("4.7");
 
         saveDefaultConfig();
         loadCustomConfigs();

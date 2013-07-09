@@ -24,8 +24,6 @@ import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetControls;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
-import me.eccentric_nz.TARDIS.thirdparty.Version;
-import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -53,18 +51,13 @@ public class TARDISArtronCapacitorListener implements Listener {
 
     private final TARDIS plugin;
     List<Material> validBlocks = new ArrayList<Material>();
-    Version bukkitversion;
-    Version prewoodbuttonversion = new Version("1.4.2");
-    Version precoparatorversion = new Version("1.5");
 
     public TARDISArtronCapacitorListener(TARDIS plugin) {
         this.plugin = plugin;
-        String[] v = Bukkit.getServer().getBukkitVersion().split("-");
-        bukkitversion = (!v[0].equalsIgnoreCase("unknown")) ? new Version(v[0]) : new Version("1.4.7");
-        if (bukkitversion.compareTo(prewoodbuttonversion) >= 0) {
+        if (plugin.bukkitversion.compareTo(plugin.prewoodbuttonversion) >= 0) {
             validBlocks.add(Material.WOOD_BUTTON);
         }
-        if (bukkitversion.compareTo(precoparatorversion) >= 0) {
+        if (plugin.bukkitversion.compareTo(plugin.precomparatorversion) >= 0) {
             validBlocks.add(Material.REDSTONE_COMPARATOR_OFF);
             validBlocks.add(Material.REDSTONE_COMPARATOR_ON);
         }
