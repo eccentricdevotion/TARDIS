@@ -218,7 +218,7 @@ public class TARDISBlockPlaceListener implements Listener {
                         HashMap<String, Object> setpp = new HashMap<String, Object>();
                         if (middle_id == 22) {
                             set.put("middle_id", 35);
-                            if (blockBottom.getType().equals(Material.EMERALD_BLOCK)) {
+                            if (plugin.bukkitversion.compareTo(plugin.preemeraldversion) >= 0 && blockBottom.getType().equals(Material.EMERALD_BLOCK)) {
                                 set.put("middle_data", 8);
                                 setpp.put("wall", "LIGHT_GREY_WOOL");
                             } else {

@@ -27,23 +27,15 @@ import me.eccentric_nz.TARDIS.builders.TARDISBuilderPoliceBox;
 //import me.eccentric_nz.TARDIS.builders.TARDISPasteBox;
 import me.eccentric_nz.TARDIS.builders.TARDISSpace;
 import me.eccentric_nz.TARDIS.commands.TARDISAdminCommands;
-import me.eccentric_nz.TARDIS.commands.TARDISAdminTabComplete;
 import me.eccentric_nz.TARDIS.commands.TARDISAreaCommands;
-import me.eccentric_nz.TARDIS.commands.TARDISAreaTabComplete;
 import me.eccentric_nz.TARDIS.commands.TARDISBindCommands;
-import me.eccentric_nz.TARDIS.commands.TARDISBindTabComplete;
 import me.eccentric_nz.TARDIS.commands.TARDISBookCommands;
 import me.eccentric_nz.TARDIS.commands.TARDISCommands;
 import me.eccentric_nz.TARDIS.commands.TARDISGravityCommands;
-import me.eccentric_nz.TARDIS.commands.TARDISGravityTabComplete;
 import me.eccentric_nz.TARDIS.commands.TARDISPrefsCommands;
-import me.eccentric_nz.TARDIS.commands.TARDISPrefsTabComplete;
 import me.eccentric_nz.TARDIS.commands.TARDISRoomCommands;
-import me.eccentric_nz.TARDIS.commands.TARDISTabComplete;
 import me.eccentric_nz.TARDIS.commands.TARDISTextureCommands;
-import me.eccentric_nz.TARDIS.commands.TARDISTextureTabComplete;
 import me.eccentric_nz.TARDIS.commands.TARDISTravelCommands;
-import me.eccentric_nz.TARDIS.commands.TARDISTravelTabComplete;
 import me.eccentric_nz.TARDIS.database.TARDISControlsConverter;
 import me.eccentric_nz.TARDIS.database.TARDISDatabase;
 import me.eccentric_nz.TARDIS.destroyers.TARDISDestroyerInner;
@@ -229,6 +221,7 @@ public class TARDIS extends JavaPlugin {
     public Version precarpetversion = new Version("1.6");
     public Version SUBversion;
     public Version preSUBversion = new Version("1.0");
+    public TARDISTabCompleteAPI apiHandler;
 
     @Override
     public void onEnable() {
@@ -283,8 +276,10 @@ public class TARDIS extends JavaPlugin {
         }
         tp = getServerTP();
         //new TARDISPasteBox(this).loadBoxes();
-        // register Stattenheim Remote recipe
-        new TARDISStattenheimRemote(this).stattenheim();
+        if (bukkitversion.compareTo(preIMversion) >= 0) {
+            // register Stattenheim Remote recipe
+            new TARDISStattenheimRemote(this).stattenheim();
+        }
     }
 
     @Override
@@ -374,7 +369,6 @@ public class TARDIS extends JavaPlugin {
         pm.registerEvents(new TARDISTimeLordDeathListener(this), this);
         pm.registerEvents(new TARDISJoinListener(this), this);
         pm.registerEvents(new TARDISKeyboardListener(this), this);
-        pm.registerEvents(new TARDISChatListener(this), this);
         pm.registerEvents(new TARDISTerminalListener(this), this);
         pm.registerEvents(new TARDISARSListener(this), this);
         pm.registerEvents(new TARDISSaveSignListener(this), this);
@@ -383,7 +377,10 @@ public class TARDIS extends JavaPlugin {
         }
         pm.registerEvents(new TARDISAdminMenuListener(this), this);
         pm.registerEvents(new TARDISTemporalLocatorListener(this), this);
-        pm.registerEvents(new TARDISMinecartListener(this), this);
+        if (bukkitversion.compareTo(precomparatorversion) >= 0) {
+            pm.registerEvents(new TARDISChatListener(this), this);
+            pm.registerEvents(new TARDISMinecartListener(this), this);
+        }
         pm.registerEvents(new TARDISStattenheimListener(this), this);
     }
 
@@ -403,15 +400,17 @@ public class TARDIS extends JavaPlugin {
         getCommand("tardisroom").setExecutor(new TARDISRoomCommands(this));
         getCommand("tardistexture").setExecutor(new TARDISTextureCommands(this));
         getCommand("tardistravel").setExecutor(new TARDISTravelCommands(this));
-        if (this.bukkitversion.compareTo(this.precomparatorversion) > 0) {
-            getCommand("tardistexture").setTabCompleter(new TARDISTextureTabComplete());
-            getCommand("tardisadmin").setTabCompleter(new TARDISAdminTabComplete(this));
-            getCommand("tardis").setTabCompleter(new TARDISTabComplete(this));
-            getCommand("tardisarea").setTabCompleter(new TARDISAreaTabComplete());
-            getCommand("tardisbind").setTabCompleter(new TARDISBindTabComplete());
-            getCommand("tardisprefs").setTabCompleter(new TARDISPrefsTabComplete(this));
-            getCommand("tardistravel").setTabCompleter(new TARDISTravelTabComplete(this));
-            getCommand("tardisgravity").setTabCompleter(new TARDISGravityTabComplete());
+        if (this.bukkitversion.compareTo(this.preemeraldversion) > 0) {
+            // need to dynamically load these classes
+            try {
+                final Class<?> clazz = Class.forName("me.eccentric_nz.TARDIS.TARDISLoader_TabComplete");
+                if (TARDISTabCompleteAPI.class.isAssignableFrom(clazz)) { // Make sure it actually implements the API
+                    apiHandler = (TARDISTabCompleteAPI) clazz.getConstructor().newInstance(); // Set the handler
+                }
+                apiHandler.loadTabCompletion();
+            } catch (Exception e) {
+                debug("Could not load Tab Completion classes " + e.getMessage());
+            }
         }
     }
 
@@ -680,7 +679,7 @@ public class TARDIS extends JavaPlugin {
             in = new FileInputStream(path);
             properties.load(in);
             String texture_pack = properties.getProperty("texture-pack");
-            return (texture_pack.isEmpty()) ? link : texture_pack;
+            return (texture_pack != null && texture_pack.isEmpty()) ? link : texture_pack;
         } catch (FileNotFoundException ex) {
             plugin.debug("Could not find server.properties!");
             return link;

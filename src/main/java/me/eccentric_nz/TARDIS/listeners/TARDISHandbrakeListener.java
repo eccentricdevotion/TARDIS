@@ -76,6 +76,7 @@ public class TARDISHandbrakeListener implements Listener {
                 //Checks handbrake location against the database.
                 final Location handbrake_loc = block.getLocation();
                 String hb_loc = block.getLocation().toString();
+                plugin.debug(hb_loc);
                 HashMap<String, Object> where = new HashMap<String, Object>();
                 where.put("type", 0);
                 where.put("location", hb_loc);

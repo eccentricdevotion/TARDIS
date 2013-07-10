@@ -135,7 +135,8 @@ public class TARDISUpdateListener implements Listener {
             String blockLocStr = bw.getName() + ":" + bx + ":" + by + ":" + bz;
             if (controls.containsKey(blockName)) {
                 if (!blockName.contains("repeater")) {
-                    blockLocStr = plugin.utils.makeLocationStr(bw, bx, by, bz);
+                    //blockLocStr = plugin.utils.makeLocationStr(bw, bx, by, bz);
+                    blockLocStr = block_loc.toString();
                 }
                 table = "controls";
                 tid.put("type", controls.get(blockName));

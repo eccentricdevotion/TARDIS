@@ -714,7 +714,7 @@ public class TARDISAdminCommands implements CommandExecutor {
                         }
                     } else {
                         plugin.getConfig().set(first, val);
-                        if (first.equals("terminal_step")) {
+                        if (first.equals("terminal_step") && plugin.bukkitversion.compareTo(plugin.preIMversion) >= 0) {
                             // reset the terminal inventory
                             plugin.buttonListener.items = new TARDISTerminalInventory().getTerminal();
                         }

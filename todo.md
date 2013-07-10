@@ -1,7 +1,7 @@
 # TODO
 
 ## Current version `2.5-beta-1`
-1. Make Railway room work better
+1. Set correct Rail room offset, add condensable blocks
 2. Permission-based world creation - player's without permission use the default world, those with it get a TARDIS_WORLD
 3. Add config to set whether wool blocks in schematics should be converted to hardened clay equivalent
 

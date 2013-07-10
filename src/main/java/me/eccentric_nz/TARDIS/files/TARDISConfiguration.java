@@ -208,7 +208,7 @@ public class TARDISConfiguration {
         roomIntOptions.put("rooms.POOL.cost", 450);
         roomIntOptions.put("rooms.POOL.offset", -3);
         roomIntOptions.put("rooms.RAIL.cost", 650);
-        roomIntOptions.put("rooms.RAIL.offset", -1);
+        roomIntOptions.put("rooms.RAIL.offset", -2);
         roomIntOptions.put("rooms.STABLE.cost", 350);
         roomIntOptions.put("rooms.STABLE.offset", -1);
         roomIntOptions.put("rooms.VAULT.cost", 350);
@@ -331,7 +331,7 @@ public class TARDISConfiguration {
         }
         // string values
         for (Map.Entry<String, String> entry : roomStrOptions.entrySet()) {
-            if (!rooms_config.contains(entry.getKey())) {
+            if (!rooms_config.contains(entry.getKey()) || entry.getKey().equals("rooms.RAIL.offset")) {
                 rooms_config.set(entry.getKey(), entry.getValue());
                 i++;
             }

@@ -74,9 +74,11 @@ public class TARDISButtonListener implements Listener {
         validBlocks.add(Material.STONE_BUTTON);
         validBlocks.add(Material.LEVER);
         validBlocks.add(Material.WALL_SIGN);
-        this.items = new TARDISTerminalInventory().getTerminal();
-        this.tars = new TARDISARSInventory().getTerminal();
-        this.clocks = new TARDISTemporalLocatorInventory().getTerminal();
+        if (plugin.bukkitversion.compareTo(plugin.preIMversion) >= 0) {
+            this.items = new TARDISTerminalInventory().getTerminal();
+            this.tars = new TARDISARSInventory().getTerminal();
+            this.clocks = new TARDISTemporalLocatorInventory().getTerminal();
+        }
     }
 
     /**
@@ -244,6 +246,10 @@ public class TARDISButtonListener implements Listener {
                                     }
                                     break;
                                 case 9:
+                                    if (plugin.bukkitversion.compareTo(plugin.preIMversion) < 0) {
+                                        player.sendMessage(plugin.pluginName + ChatColor.RED + "This feature is not compatible with your server version!");
+                                        return;
+                                    }
                                     if (!hb) {
                                         player.sendMessage(plugin.pluginName + ChatColor.RED + "You cannot set a destination while the TARDIS is travelling!");
                                         return;
@@ -258,6 +264,10 @@ public class TARDISButtonListener implements Listener {
                                     player.openInventory(aec);
                                     break;
                                 case 10:
+                                    if (plugin.bukkitversion.compareTo(plugin.preIMversion) < 0) {
+                                        player.sendMessage(plugin.pluginName + ChatColor.RED + "This feature is not compatible with your server version!");
+                                        return;
+                                    }
                                     if (!hb) {
                                         player.sendMessage(plugin.pluginName + ChatColor.RED + "You cannot reconfigure rooms while the TARDIS is travelling!");
                                         return;
@@ -268,6 +278,10 @@ public class TARDISButtonListener implements Listener {
                                     player.openInventory(ars);
                                     break;
                                 case 11:
+                                    if (plugin.bukkitversion.compareTo(plugin.preIMversion) < 0) {
+                                        player.sendMessage(plugin.pluginName + ChatColor.RED + "This feature is not compatible with your server version!");
+                                        return;
+                                    }
                                     // Temporal Locator sign
                                     if (player.hasPermission("tardis.temporal")) {
                                         Inventory tmpl = plugin.getServer().createInventory(player, 27, "§4Temporal Locator");
