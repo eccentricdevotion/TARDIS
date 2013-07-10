@@ -91,6 +91,10 @@ public class TARDISBuilderInner {
                 s = plugin.redstoneschematic;
                 d = plugin.redstonedimensions;
                 break;
+            case STEAMPUNK:
+                s = plugin.steampunkschematic;
+                d = plugin.steampunkdimensions
+                break;
             default:
                 s = plugin.budgetschematic;
                 d = plugin.budgetdimensions;
