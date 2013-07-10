@@ -26,6 +26,7 @@ import me.eccentric_nz.TARDIS.commands.TARDISTextureTabComplete;
 import me.eccentric_nz.TARDIS.commands.TARDISTravelTabComplete;
 
 /**
+ * Load the tab completion classes.
  *
  * @author eccentric_nz
  */

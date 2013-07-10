@@ -17,6 +17,7 @@
 package me.eccentric_nz.TARDIS;
 
 /**
+ * So we can support Bukkit versions that don't have the TabCompletion API.
  *
  * @author eccentric_nz
  */

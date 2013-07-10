@@ -24,7 +24,6 @@ import java.util.Properties;
 import java.util.Set;
 import me.eccentric_nz.TARDIS.builders.TARDISBuilderInner;
 import me.eccentric_nz.TARDIS.builders.TARDISBuilderPoliceBox;
-//import me.eccentric_nz.TARDIS.builders.TARDISPasteBox;
 import me.eccentric_nz.TARDIS.builders.TARDISSpace;
 import me.eccentric_nz.TARDIS.commands.TARDISAdminCommands;
 import me.eccentric_nz.TARDIS.commands.TARDISAreaCommands;
