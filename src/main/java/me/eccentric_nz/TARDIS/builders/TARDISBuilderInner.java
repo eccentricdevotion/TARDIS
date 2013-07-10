@@ -93,7 +93,7 @@ public class TARDISBuilderInner {
                 break;
             case STEAMPUNK:
                 s = plugin.steampunkschematic;
-                d = plugin.steampunkdimensions
+                d = plugin.steampunkdimensions;
                 break;
             default:
                 s = plugin.budgetschematic;
