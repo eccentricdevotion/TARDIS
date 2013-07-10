@@ -63,7 +63,7 @@ public class TARDISRoomSchematicReader {
         blockConversion.put(60, 3); // farmland -> dirt
         blockConversion.put(63, 323); // sign post -> sign
         blockConversion.put(68, 323); // wall sign -> sign
-        blockConversion.put(76, 75); // restone torch on -> redstone torch off
+        blockConversion.put(75, 76); // restone torch off -> redstone torch on
         blockConversion.put(83, 338); // sugarcane block -> sugarcane item
         blockConversion.put(92, 69); // cake block -> lever
         blockConversion.put(93, 356); // redstone repeater off -> redstone repeater item
