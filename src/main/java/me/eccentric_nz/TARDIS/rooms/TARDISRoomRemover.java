@@ -93,7 +93,7 @@ public class TARDISRoomRemover {
             return false;
         }
         // loop through blocks and set them to air
-        for (int y = sy; y <= ey; y++) {
+        for (int y = ey; y >= sy; y--) {
             for (int x = sx; x <= ex; x++) {
                 for (int z = sz; z <= ez; z++) {
                     Block block = w.getBlockAt(x, y, z);
