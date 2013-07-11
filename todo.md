@@ -1,10 +1,10 @@
 # TODO
 
 ## Current version `2.5-beta-1`
-1. Redo RAIL room as the sorter is rubbish as too dependent on room direction
-2. Check it's sponge before turning it into a lamp
-3. Permission-based world creation - player's without permission use the default world, those with it get a TARDIS_WORLD
-4. Add config to set whether wool blocks in schematics should be converted to hardened clay equivalent
+1. Recalculate room data bits correctly when room is facing NORTH/WEST
+2. Permission-based world creation - player's without permission use the default world, those with it get a TARDIS_WORLD
+3. Add config to set whether wool blocks in schematics should be converted to hardened clay equivalent
+4. Jettison rooms from TOP down
 
 ## Next version `2.6+`
 1. TARDIS shield
