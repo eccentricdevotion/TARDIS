@@ -81,7 +81,8 @@ public class TARDISRoomSchematicReader {
         blockConversion.put(140, 390); // flower pot -> flower pot item
         blockConversion.put(141, 391); // carrot plant -> carrot
         blockConversion.put(142, 392); // potato plant -> potato
-        blockConversion.put(150, 149); // restone comparator on -> redstone comparator off
+        blockConversion.put(149, 404); // restone comparator on -> redstone comparator off
+        blockConversion.put(150, 404); // restone comparator on -> redstone comparator off
     }
 
     /**

@@ -88,6 +88,7 @@ public class TARDISCondenserListener implements Listener {
                 for (ItemStack is : inv.getContents()) {
                     if (is != null) {
                         String item = is.getType().name();
+                        //plugin.debug(is);
                         if (tc.condensables.containsKey(item)) {
                             int stack_size = is.getAmount();
                             amount += stack_size * tc.condensables.get(item);
