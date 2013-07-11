@@ -42,6 +42,7 @@ import org.bukkit.entity.Sheep;
 import org.bukkit.entity.Tameable;
 import org.bukkit.entity.Wolf;
 import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
 
 /**
@@ -102,7 +103,7 @@ public class TARDISFarmer {
             List<TARDISMob> old_macd_had_a_pig = new ArrayList<TARDISMob>();
             List<TARDISMob> old_macd_had_a_sheep = new ArrayList<TARDISMob>();
             List<TARDISMob> old_macd_had_a_mooshroom = new ArrayList<TARDISMob>();
-            List<TARDISMob> old_macd_had_a_horse = new ArrayList<TARDISMob>();
+            List<TARDISHorse> old_macd_had_a_horse = new ArrayList<TARDISHorse>();
             // are we doing an achievement?
             TARDISAchievementFactory taf = null;
             if (plugin.getAchivementConfig().getBoolean("farm.enabled")) {
@@ -136,22 +137,29 @@ public class TARDISFarmer {
                         break;
                     case HORSE:
                         Tameable brokenin = (Tameable) e;
+                        Horse horse = (Horse) e;
                         // don't farm other player's tamed horses
                         if (brokenin.isTamed() && !brokenin.getOwner().getName().equals(p.getName())) {
                             break;
                         }
-                        TARDISMob tmhor = new TARDISMob();
+                        TARDISHorse tmhor = new TARDISHorse();
                         tmhor.setAge(e.getTicksLived());
-                        tmhor.setBaby(!((Horse) e).isAdult());
-                        // waiting on new API to be able to get horse type and variant
-                        tmhor.setHorsetype(0); // 0 = horse, 1 = donkey, 2 = mule, 3 = zombie, 4 = skeleton
-                        // See http://www.minecraftwiki.net/wiki/Item_id#Horse_Variants
-                        tmhor.setHorsevariant(772); // black with white dots
+                        tmhor.setBaby(!horse.isAdult());
+                        // get horse colour, style and variant
+                        tmhor.setHorseColour(horse.getColor());
+                        tmhor.setHorseStyle(horse.getStyle());
+                        tmhor.setHorseVariant(horse.getVariant());
                         if (brokenin.isTamed()) {
                             tmhor.setTamed(true);
                         } else {
                             tmhor.setTamed(false);
                         }
+                        if (horse.isCarryingChest()) {
+                            tmhor.setHasChest(true);
+                            tmhor.setHorseInventory(horse.getInventory().getContents());
+                        }
+                        tmhor.setDomesticity(horse.getDomestication());
+                        tmhor.setJumpStrength(horse.getJumpStrength());
                         old_macd_had_a_horse.add(tmhor);
                         e.remove();
                         if (taf != null) {
@@ -328,7 +336,7 @@ public class TARDISFarmer {
                         while (!world.getChunkAt(horse_pen).isLoaded()) {
                             world.getChunkAt(horse_pen).load();
                         }
-                        for (TARDISMob e : old_macd_had_a_horse) {
+                        for (TARDISHorse e : old_macd_had_a_horse) {
                             plugin.myspawn = true;
                             Entity horse = world.spawnEntity(horse_pen, EntityType.HORSE);
                             Horse equine = (Horse) horse;
@@ -336,13 +344,20 @@ public class TARDISFarmer {
                             if (e.isBaby()) {
                                 equine.setBaby();
                             }
-                            // waiting on new API to be able to set horse type and variant
-                            // equine.setHorseType(e.getHorsetype());
-                            // equine.setHorseVariant(e.getHorsevariant());
+                            equine.setVariant(e.getHorseVariant());
+                            equine.setColor(e.getHorseColour());
+                            equine.setStyle(e.getHorseStyle());
                             Tameable tamed = (Tameable) equine;
                             if (e.isTamed()) {
                                 tamed.setTamed(true);
                                 tamed.setOwner(p);
+                            }
+                            equine.setDomestication(e.getDomesticity());
+                            equine.setJumpStrength(e.getJumpStrength());
+                            if (e.hasChest()) {
+                                equine.setCarryingChest(true);
+                                InventoryHolder ih = (InventoryHolder) equine;
+                                ih.getInventory().setContents(e.getHorseinventory());
                             }
                         }
                     }

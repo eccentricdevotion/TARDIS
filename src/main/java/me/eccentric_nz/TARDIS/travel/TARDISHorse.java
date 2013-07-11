@@ -16,9 +16,11 @@
  */
 package me.eccentric_nz.TARDIS.travel;
 
-import org.bukkit.DyeColor;
 import org.bukkit.entity.EntityType;
-import org.bukkit.entity.Ocelot.Type;
+import org.bukkit.entity.Horse.Color;
+import org.bukkit.entity.Horse.Style;
+import org.bukkit.entity.Horse.Variant;
+import org.bukkit.inventory.ItemStack;
 
 /**
  * Alien is a broad, subjective term. It can be applied as a noun or an
@@ -28,22 +30,26 @@ import org.bukkit.entity.Ocelot.Type;
  *
  * @author eccentric_nz
  */
-public class TARDISMob {
+public class TARDISHorse {
 
     private EntityType type;
-    private Type catType;
     private int age;
     private int health;
-    private boolean sitting;
     private boolean baby;
     private boolean tamed;
-    private DyeColor colour;
     private String name;
+    private Color horsecolor;
+    private Style horsestyle;
+    private Variant horsevariant;
+    private ItemStack[] horseinventory;
+    private boolean haschest;
+    private int domesticity;
+    private double jumpstrength;
 
     /**
      * Data storage class for TARDIS mobs.
      */
-    public TARDISMob() {
+    public TARDISHorse() {
     }
 
     public EntityType getType() {
@@ -52,14 +58,6 @@ public class TARDISMob {
 
     public void setType(EntityType type) {
         this.type = type;
-    }
-
-    public Type getCatType() {
-        return catType;
-    }
-
-    public void setCatType(Type catType) {
-        this.catType = catType;
     }
 
     public int getAge() {
@@ -78,14 +76,6 @@ public class TARDISMob {
         this.health = health;
     }
 
-    public boolean getSitting() {
-        return sitting;
-    }
-
-    public void setSitting(boolean sitting) {
-        this.sitting = sitting;
-    }
-
     public boolean isBaby() {
         return baby;
     }
@@ -102,19 +92,67 @@ public class TARDISMob {
         this.tamed = tamed;
     }
 
-    public DyeColor getColour() {
-        return colour;
-    }
-
-    public void setColour(DyeColor collar) {
-        this.colour = collar;
-    }
-
     public String getName() {
         return name;
     }
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public Color getHorseColour() {
+        return horsecolor;
+    }
+
+    public void setHorseColour(Color horsecolor) {
+        this.horsecolor = horsecolor;
+    }
+
+    public Style getHorseStyle() {
+        return horsestyle;
+    }
+
+    public void setHorseStyle(Style horsestyle) {
+        this.horsestyle = horsestyle;
+    }
+
+    public Variant getHorseVariant() {
+        return horsevariant;
+    }
+
+    public void setHorseVariant(Variant horsevariant) {
+        this.horsevariant = horsevariant;
+    }
+
+    public ItemStack[] getHorseinventory() {
+        return horseinventory;
+    }
+
+    public void setHorseInventory(ItemStack[] horseinventory) {
+        this.horseinventory = horseinventory;
+    }
+
+    public boolean hasChest() {
+        return haschest;
+    }
+
+    public void setHasChest(boolean haschest) {
+        this.haschest = haschest;
+    }
+
+    public int getDomesticity() {
+        return domesticity;
+    }
+
+    public void setDomesticity(int domesticity) {
+        this.domesticity = domesticity;
+    }
+
+    public double getJumpStrength() {
+        return jumpstrength;
+    }
+
+    public void setJumpStrength(double jumpstrength) {
+        this.jumpstrength = jumpstrength;
     }
 }
