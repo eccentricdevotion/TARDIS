@@ -306,7 +306,7 @@ public class TARDISButtonListener implements Listener {
                                     for (Block b : lamps) {
                                         if (b.getTypeId() == 124) {
                                             b.setTypeId(19);
-                                        } else {
+                                        } else if (b.getTypeId() == 19) {
                                             b.setTypeId(124);
                                         }
                                     }
