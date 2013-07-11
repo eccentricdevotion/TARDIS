@@ -58,6 +58,7 @@ import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.generator.ChunkGenerator;
+import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
 
 /**
@@ -89,7 +90,7 @@ public class TARDISCommands implements CommandExecutor {
         firstArgs.add("add");
         firstArgs.add("chameleon");
         firstArgs.add("check_loc");
-        //firstArgs.add("comehere");
+        firstArgs.add("comehere");
         firstArgs.add("direction");
         firstArgs.add("exterminate");
         firstArgs.add("find");
@@ -104,6 +105,7 @@ public class TARDISCommands implements CommandExecutor {
         firstArgs.add("namekey");
         firstArgs.add("occupy");
         firstArgs.add("rebuild");
+        firstArgs.add("recipe");
         firstArgs.add("remove");
         firstArgs.add("removesave");
         firstArgs.add("rescue");
@@ -220,6 +222,21 @@ public class TARDISCommands implements CommandExecutor {
                 sender.sendMessage(plugin.pluginName + ChatColor.RED + " This command can only be run by a player");
                 return false;
             } else {
+                if (args[0].equalsIgnoreCase("recipe")) {
+                    plugin.trackRecipeView.add(player.getName());
+                    ItemStack obs = new ItemStack(Material.OBSIDIAN, 1);
+                    ItemStack red = new ItemStack(Material.REDSTONE, 1);
+                    InventoryView view = player.openWorkbench(null, true);
+                    view.getTopInventory().setItem(1, obs);
+                    view.getTopInventory().setItem(2, new ItemStack(Material.STONE_BUTTON, 1));
+                    view.getTopInventory().setItem(3, obs);
+                    view.getTopInventory().setItem(4, obs);
+                    view.getTopInventory().setItem(5, new ItemStack(Material.INK_SACK, 1, (short) 4));
+                    view.getTopInventory().setItem(6, obs);
+                    view.getTopInventory().setItem(7, red);
+                    view.getTopInventory().setItem(8, red);
+                    view.getTopInventory().setItem(9, red);
+                }
                 if (args[0].equalsIgnoreCase("lamps")) {
                     TARDISLampScanner tls = new TARDISLampScanner(plugin);
                     return tls.addLampBlocks(player);
@@ -548,7 +565,7 @@ public class TARDISCommands implements CommandExecutor {
                         return false;
                     }
                 }
-//                if (args[0].equalsIgnoreCase("comehere")) {
+                if (args[0].equalsIgnoreCase("comehere")) {
 //                    if (player.hasPermission("tardis.timetravel")) {
 //                        final Location eyeLocation = player.getTargetBlock(transparent, 50).getLocation();
 //                        if (!plugin.getConfig().getBoolean("include_default_world") && plugin.getConfig().getBoolean("default_world") && eyeLocation.getWorld().getName().equals(plugin.getConfig().getString("default_world_name"))) {
@@ -680,8 +697,10 @@ public class TARDISCommands implements CommandExecutor {
 //                    } else {
 //                        sender.sendMessage(plugin.pluginName + TARDISConstants.NO_PERMS_MESSAGE);
 //                        return false;
+                    sender.sendMessage(plugin.pluginName + "You need to craft a Stattenheim Remote Control! Type /tardis recipe to see how to make it.");
+                    return true;
 //                    }
-//                }
+                }
                 if (args[0].equalsIgnoreCase("check_loc")) {
                     final Location eyeLocation = player.getTargetBlock(transparent, 50).getLocation();
                     Material m = player.getTargetBlock(transparent, 50).getType();

@@ -70,6 +70,7 @@ import me.eccentric_nz.TARDIS.listeners.TARDISKeyboardListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISLightningListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISMinecartListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISNPCListener;
+import me.eccentric_nz.TARDIS.listeners.TARDISRecipeListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISRoomSeeder;
 import me.eccentric_nz.TARDIS.listeners.TARDISSaveSignListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISScannerListener;
@@ -181,6 +182,7 @@ public class TARDIS extends JavaPlugin {
     public HashMap<Integer, Integer> tardisHasDestination = new HashMap<Integer, Integer>();
     public HashMap<String, Block> trackExterminate = new HashMap<String, Block>();
     public HashMap<String, Long> trackSetTime = new HashMap<String, Long>();
+    public List<String> trackRecipeView = new ArrayList<String>();
     public ArrayList<Integer> tardisMaterialising = new ArrayList<Integer>();
     public ArrayList<Integer> tardisDematerialising = new ArrayList<Integer>();
     public List<Chunk> tardisChunkList = new ArrayList<Chunk>();
@@ -381,6 +383,7 @@ public class TARDIS extends JavaPlugin {
             pm.registerEvents(new TARDISMinecartListener(this), this);
         }
         pm.registerEvents(new TARDISStattenheimListener(this), this);
+        pm.registerEvents(new TARDISRecipeListener(this), this);
     }
 
     /**
