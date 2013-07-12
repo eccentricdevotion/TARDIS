@@ -70,25 +70,27 @@ public class TARDISSaveSignListener implements Listener {
                     if (rs.resultSet()) {
                         int id = rs.getTardis_id();
                         ItemStack is = inv.getItem(slot);
-                        ItemMeta im = is.getItemMeta();
-                        List<String> lore = im.getLore();
-                        String save = getDestination(lore);
-                        if (!save.equals(rs.getCurrent())) {
-                            HashMap<String, Object> set = new HashMap<String, Object>();
-                            set.put("save", save);
-                            HashMap<String, Object> wheret = new HashMap<String, Object>();
-                            wheret.put("tardis_id", id);
-                            new QueryFactory(plugin).doUpdate("tardis", set, wheret);
-                            plugin.tardisHasDestination.put(id, plugin.getArtronConfig().getInt("random"));
-                            if (plugin.trackRescue.containsKey(Integer.valueOf(id))) {
-                                plugin.trackRescue.remove(Integer.valueOf(id));
+                        if (is != null) {
+                            ItemMeta im = is.getItemMeta();
+                            List<String> lore = im.getLore();
+                            String save = getDestination(lore);
+                            if (!save.equals(rs.getCurrent())) {
+                                HashMap<String, Object> set = new HashMap<String, Object>();
+                                set.put("save", save);
+                                HashMap<String, Object> wheret = new HashMap<String, Object>();
+                                wheret.put("tardis_id", id);
+                                new QueryFactory(plugin).doUpdate("tardis", set, wheret);
+                                plugin.tardisHasDestination.put(id, plugin.getArtronConfig().getInt("random"));
+                                if (plugin.trackRescue.containsKey(Integer.valueOf(id))) {
+                                    plugin.trackRescue.remove(Integer.valueOf(id));
+                                }
+                                close(player);
+                                player.sendMessage(plugin.pluginName + im.getDisplayName() + " destination set. Please release the handbrake!");
+                            } else if (!lore.contains("§6Current location")) {
+                                lore.add("§6Current location");
+                                im.setLore(lore);
+                                is.setItemMeta(im);
                             }
-                            close(player);
-                            player.sendMessage(plugin.pluginName + im.getDisplayName() + " destination set. Please release the handbrake!");
-                        } else {
-                            lore.add("§6Current location");
-                            im.setLore(lore);
-                            is.setItemMeta(im);
                         }
                     }
                 }
