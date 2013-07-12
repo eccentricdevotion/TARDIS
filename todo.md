@@ -4,10 +4,10 @@
 1. Recalculate room data bits correctly when room is facing NORTH/WEST
 2. Permission-based world creation - player's without permission use the default world, those with it get a TARDIS_WORLD
 3. Add config to set whether wool blocks in schematics should be converted to hardened clay equivalent
-4. Jettison rooms from TOP down
+4. RAIL room only accepts one minecart at a time
 
 ## Next version `2.6+`
-1. TARDIS shield
+1. TARDIS shield - this could be adapted, so that the TARDIS can land underwater
 2. Jettison the whole room (including walls), will require new room schematics...
 3. Architectural Reconfiguration System / Map room
 4. Add sounds with Resource packs?
