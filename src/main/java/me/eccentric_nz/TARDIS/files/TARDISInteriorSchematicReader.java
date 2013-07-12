@@ -99,9 +99,9 @@ public class TARDISInteriorSchematicReader {
                     plugin.redstonedimensions[2] = length;
                     break;
                 case STEAMPUNK:
-                    plugin.redstonedimensions[0] = height;
-                    plugin.redstonedimensions[1] = width;
-                    plugin.redstonedimensions[2] = length;
+                    plugin.steampunkdimensions[0] = height;
+                    plugin.steampunkdimensions[1] = width;
+                    plugin.steampunkdimensions[2] = length;
                     break;
             }
 
