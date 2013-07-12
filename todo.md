@@ -2,8 +2,6 @@
 
 ## Current version `2.5-beta-1`
 1. Permission-based world creation - player's without permission use the default world, those with it get a TARDIS_WORLD
-2. Add config to set whether wool blocks in schematics should be converted to hardened clay equivalent
-3. RAIL room only accepts one minecart at a time
 
 ## Next version `2.6+`
 1. TARDIS shield - this could be adapted, so that the TARDIS can land underwater

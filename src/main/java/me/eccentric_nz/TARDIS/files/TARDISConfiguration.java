@@ -97,6 +97,7 @@ public class TARDISConfiguration {
         boolOptions.put("plain_on", false);
         boolOptions.put("spawn_eggs", true);
         boolOptions.put("the_end", false);
+        boolOptions.put("use_clay", false);
         boolOptions.put("use_worldguard", true);
         roomBoolOptions.put("rooms.ANTIGRAVITY.enabled", true);
         roomBoolOptions.put("rooms.ANTIGRAVITY.user", false);

@@ -16,14 +16,12 @@
  */
 package me.eccentric_nz.TARDIS.commands;
 
-import com.google.common.collect.ImmutableList;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -56,9 +54,7 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
-import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
-import org.bukkit.util.StringUtil;
 
 /**
  * Command /tardisadmin [arguments].
@@ -140,6 +136,7 @@ public class TARDISAdminCommands implements CommandExecutor {
         firstsBool.add("plain_on");
         firstsBool.add("spawn_eggs");
         firstsBool.add("the_end");
+        firstsBool.add("use_clay");
         firstsBool.add("use_worldguard");
         // integer
         firstsInt.add("admin_item");

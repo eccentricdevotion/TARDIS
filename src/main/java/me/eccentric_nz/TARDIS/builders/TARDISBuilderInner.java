@@ -302,9 +302,15 @@ public class TARDISBuilderInner {
                                     qf.doInsert("lamps", setlb);
                                 }
                             }
+                            if (id == 35 && data != 1 && plugin.getConfig().getBoolean("use_clay")) {
+                                id = 159;
+                            }
                             if (id == 35 && data == 1) {
                                 switch (middle_id) {
                                     case 22:
+                                        if (plugin.getConfig().getBoolean("use_clay")) {
+                                            id = 159;
+                                        }
                                         break;
                                     default:
                                         id = middle_id;
