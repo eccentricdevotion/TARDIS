@@ -178,11 +178,19 @@ public class TARDISRoomRunnable implements Runnable {
                 data = Byte.parseByte(iddata[1]);
             }
             if (id == 35 && data == 1) {
-                id = middle_id;
+                if (middle_id == 35 && middle_data == 1 && plugin.getConfig().getBoolean("use_clay")) {
+                    id = 159;
+                } else {
+                    id = middle_id;
+                }
                 data = middle_data;
             }
             if (id == 35 && data == 8) {
-                id = floor_id;
+                if (floor_id == 35 && floor_data == 8 && plugin.getConfig().getBoolean("use_clay")) {
+                    id = 159;
+                } else {
+                    id = floor_id;
+                }
                 data = floor_data;
             }
             QueryFactory qf = new QueryFactory(plugin);
