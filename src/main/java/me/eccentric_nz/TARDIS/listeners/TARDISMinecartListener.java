@@ -90,8 +90,9 @@ public class TARDISMinecartListener implements Listener {
                             HashMap<String, Object> whereid = new HashMap<String, Object>();
                             whereid.put("tardis_id", id);
                             ResultSetTardis rs = new ResultSetTardis(plugin, whereid, "", false);
-                            if (rs.resultSet()) {
+                            if (rs.resultSet() && !plugin.trackMinecart.contains(Integer.valueOf(id))) {
                                 data = rs.getRail().split(":");
+                                plugin.trackMinecart.add(Integer.valueOf(id));
                             }
                         }
                         break;
@@ -109,6 +110,7 @@ public class TARDISMinecartListener implements Listener {
                             if (rspb.resultSet()) {
                                 data = rspb.getDoor_location().split(":");
                                 d = switchDirection(rspb.getDoor_direction());
+                                plugin.trackMinecart.remove(Integer.valueOf(id));
                             }
                         }
                         break;

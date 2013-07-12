@@ -183,6 +183,7 @@ public class TARDIS extends JavaPlugin {
     public HashMap<String, Block> trackExterminate = new HashMap<String, Block>();
     public HashMap<String, Long> trackSetTime = new HashMap<String, Long>();
     public List<String> trackRecipeView = new ArrayList<String>();
+    public List<Integer> trackMinecart = new ArrayList<Integer>();
     public ArrayList<Integer> tardisMaterialising = new ArrayList<Integer>();
     public ArrayList<Integer> tardisDematerialising = new ArrayList<Integer>();
     public List<Chunk> tardisChunkList = new ArrayList<Chunk>();
