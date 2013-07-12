@@ -1,14 +1,9 @@
 # TODO
 
 ## Current version `2.5-beta-1`
-1. Recalculate room data bits correctly when room is facing NORTH/WEST
-    * comparators, repeaters and hoppers are done :)
-2. Permission-based world creation - player's without permission use the default world, those with it get a TARDIS_WORLD
-3. Add config to set whether wool blocks in schematics should be converted to hardened clay equivalent
-<<<<<<< HEAD
-=======
-4. RAIL room only accepts one minecart at a time
->>>>>>> 47832e27af43354cf154152ccd0bd6cd3f60fdb4
+1. Permission-based world creation - player's without permission use the default world, those with it get a TARDIS_WORLD
+2. Add config to set whether wool blocks in schematics should be converted to hardened clay equivalent
+3. RAIL room only accepts one minecart at a time
 
 ## Next version `2.6+`
 1. TARDIS shield - this could be adapted, so that the TARDIS can land underwater
