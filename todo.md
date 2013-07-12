@@ -13,7 +13,9 @@
     * TARDIS floor block
     * Police Box wall block - if not specified then plain tardis
     * Police Box lamp block - if not specified then plain tardis
-6. ?
+6. TARDIS Locator (updated `/tardis find`) - get the coordinates of the Time Lord's TARDIS and point the compass at that location
+    * `player.setCompassTarget(location) `
+    * craftable TARDIS Locator
 
 ## Minecraft API when available `3.0?`
 1. Recreate everything with the new API :)

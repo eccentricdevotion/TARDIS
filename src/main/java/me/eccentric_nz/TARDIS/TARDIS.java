@@ -684,10 +684,10 @@ public class TARDIS extends JavaPlugin {
             String texture_pack = properties.getProperty("texture-pack");
             return (texture_pack != null && texture_pack.isEmpty()) ? link : texture_pack;
         } catch (FileNotFoundException ex) {
-            plugin.debug("Could not find server.properties!");
+            debug("Could not find server.properties!");
             return link;
         } catch (IOException ex) {
-            plugin.debug("Could not read server.properties!");
+            debug("Could not read server.properties!");
             return link;
         } finally {
             try {
@@ -695,7 +695,7 @@ public class TARDIS extends JavaPlugin {
                     in.close();
                 }
             } catch (IOException ex) {
-                plugin.debug("Could not close server.properties!");
+                debug("Could not close server.properties!");
             }
         }
     }
