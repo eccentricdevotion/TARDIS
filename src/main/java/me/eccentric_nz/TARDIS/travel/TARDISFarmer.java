@@ -160,6 +160,8 @@ public class TARDISFarmer {
                         }
                         tmhor.setDomesticity(horse.getDomestication());
                         tmhor.setJumpStrength(horse.getJumpStrength());
+//                        tmhor.setBarding(horse.getEquipment());
+                        plugin.debug(horse.getEquipment());
                         old_macd_had_a_horse.add(tmhor);
                         e.remove();
                         if (taf != null) {
@@ -386,7 +388,7 @@ public class TARDISFarmer {
                             inv.addItem(is);
                         }
                         if (old_macd_had_a_horse.size() > 0) {
-                            ItemStack is = new ItemStack(Material.MONSTER_EGG, old_macd_had_a_mooshroom.size(), (short) 100);
+                            ItemStack is = new ItemStack(Material.MONSTER_EGG, old_macd_had_a_horse.size(), (short) 100);
                             inv.addItem(is);
                         }
                         p.updateInventory();

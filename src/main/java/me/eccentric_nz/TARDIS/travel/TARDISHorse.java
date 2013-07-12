@@ -20,6 +20,7 @@ import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Horse.Color;
 import org.bukkit.entity.Horse.Style;
 import org.bukkit.entity.Horse.Variant;
+//import org.bukkit.inventory.EntityEquipment;
 import org.bukkit.inventory.ItemStack;
 
 /**
@@ -45,6 +46,7 @@ public class TARDISHorse {
     private boolean haschest;
     private int domesticity;
     private double jumpstrength;
+//    private EntityEquipment barding;
 
     /**
      * Data storage class for TARDIS mobs.
@@ -155,4 +157,11 @@ public class TARDISHorse {
     public void setJumpStrength(double jumpstrength) {
         this.jumpstrength = jumpstrength;
     }
+//    public EntityEquipment getBarding() {
+//        return barding;
+//    }
+//
+//    public void setBarding(EntityEquipment barding) {
+//        this.barding = barding;
+//    }
 }
