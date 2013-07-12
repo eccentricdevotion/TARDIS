@@ -156,12 +156,10 @@ public class TARDISFarmer {
                         }
                         if (horse.isCarryingChest()) {
                             tmhor.setHasChest(true);
-                            tmhor.setHorseInventory(horse.getInventory().getContents());
                         }
+                        tmhor.setHorseInventory(horse.getInventory().getContents());
                         tmhor.setDomesticity(horse.getDomestication());
                         tmhor.setJumpStrength(horse.getJumpStrength());
-//                        tmhor.setBarding(horse.getEquipment());
-                        plugin.debug(horse.getEquipment());
                         old_macd_had_a_horse.add(tmhor);
                         e.remove();
                         if (taf != null) {
@@ -358,9 +356,9 @@ public class TARDISFarmer {
                             equine.setJumpStrength(e.getJumpStrength());
                             if (e.hasChest()) {
                                 equine.setCarryingChest(true);
-                                InventoryHolder ih = (InventoryHolder) equine;
-                                ih.getInventory().setContents(e.getHorseinventory());
                             }
+                            InventoryHolder ih = (InventoryHolder) equine;
+                            ih.getInventory().setContents(e.getHorseinventory());
                         }
                     }
                 } else {
