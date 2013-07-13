@@ -32,6 +32,7 @@ import me.eccentric_nz.TARDIS.commands.TARDISBookCommands;
 import me.eccentric_nz.TARDIS.commands.TARDISCommands;
 import me.eccentric_nz.TARDIS.commands.TARDISGravityCommands;
 import me.eccentric_nz.TARDIS.commands.TARDISPrefsCommands;
+import me.eccentric_nz.TARDIS.commands.TARDISRecipeCommands;
 import me.eccentric_nz.TARDIS.commands.TARDISRoomCommands;
 import me.eccentric_nz.TARDIS.commands.TARDISTextureCommands;
 import me.eccentric_nz.TARDIS.commands.TARDISTravelCommands;
@@ -282,9 +283,11 @@ public class TARDIS extends JavaPlugin {
         if (bukkitversion.compareTo(preIMversion) >= 0) {
             // register recipes
             TARDISItemRecipes r = new TARDISItemRecipes(this);
-            r.stattenheim();
-            r.circuit();
             r.locator();
+            r.locatorCircuit();
+            r.materialisationCircuit();
+            r.stattenheim();
+            r.stattenheimCircuit();
         }
     }
 
@@ -408,6 +411,7 @@ public class TARDIS extends JavaPlugin {
         getCommand("tardisroom").setExecutor(new TARDISRoomCommands(this));
         getCommand("tardistexture").setExecutor(new TARDISTextureCommands(this));
         getCommand("tardistravel").setExecutor(new TARDISTravelCommands(this));
+        getCommand("tardisrecipe").setExecutor(new TARDISRecipeCommands(this));
         if (this.bukkitversion.compareTo(this.preemeraldversion) > 0) {
             // need to dynamically load these classes
             try {

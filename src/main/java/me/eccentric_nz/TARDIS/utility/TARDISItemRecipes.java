@@ -51,17 +51,20 @@ public class TARDISItemRecipes {
         recipe.shape("OBO", "OLO", "RRR");
         recipe.setIngredient('O', Material.OBSIDIAN);
         recipe.setIngredient('B', Material.STONE_BUTTON);
-        recipe.setIngredient('L', Material.INK_SACK, 4);
+        if (plugin.getConfig().getString("difficulty").equalsIgnoreCase("hard")) {
+            recipe.setIngredient('L', Material.MAP, 1963);
+        } else {
+            recipe.setIngredient('L', Material.INK_SACK, 4);
+        }
         recipe.setIngredient('R', Material.REDSTONE);
         plugin.getServer().addRecipe(recipe);
         return recipe;
     }
 
-    public ShapedRecipe circuit() {
-        ItemStack is = new ItemStack(Material.MAP, 1, (short) 1963);
+    public ShapedRecipe locatorCircuit() {
+        ItemStack is = new ItemStack(Material.MAP, 1, (short) 1965);
         ItemMeta im = is.getItemMeta();
         im.setDisplayName("TARDIS Locator Circuit");
-        //im.setLore(Arrays.asList(new String[]{"Right-click block", "to call TARDIS"}));
         is.setItemMeta(im);
         ShapedRecipe recipe = new ShapedRecipe(is);
         recipe.shape("RQR", "RIR", "DRL");
@@ -74,11 +77,46 @@ public class TARDISItemRecipes {
         return recipe;
     }
 
+    public ShapedRecipe materialisationCircuit() {
+        ItemStack is = new ItemStack(Material.MAP, 1, (short) 1964);
+        ItemMeta im = is.getItemMeta();
+        im.setDisplayName("TARDIS Materialisation Circuit");
+        is.setItemMeta(im);
+        ShapedRecipe recipe = new ShapedRecipe(is);
+        recipe.shape("IDI", "DLD", "QRQ");
+        if (plugin.getConfig().getString("difficulty").equalsIgnoreCase("hard")) {
+            recipe.setIngredient('L', Material.EYE_OF_ENDER);
+        } else {
+            recipe.setIngredient('I', Material.IRON_INGOT);
+        }
+        recipe.setIngredient('D', Material.DIODE);
+        recipe.setIngredient('R', Material.REDSTONE);
+        recipe.setIngredient('L', Material.INK_SACK, 4);
+        recipe.setIngredient('Q', Material.QUARTZ);
+        plugin.getServer().addRecipe(recipe);
+        return recipe;
+    }
+
+    public ShapedRecipe stattenheimCircuit() {
+        ItemStack is = new ItemStack(Material.MAP, 1, (short) 1963);
+        ItemMeta im = is.getItemMeta();
+        im.setDisplayName("TARDIS Stattenheim Circuit");
+        is.setItemMeta(im);
+        ShapedRecipe recipe = new ShapedRecipe(is);
+        recipe.shape("AAA", "LRM", "QQQ");
+        recipe.setIngredient('A', Material.AIR);
+        recipe.setIngredient('R', Material.REDSTONE);
+        recipe.setIngredient('Q', Material.QUARTZ);
+        recipe.setIngredient('L', Material.MAP, 1965);
+        recipe.setIngredient('M', Material.MAP, 1964);
+        plugin.getServer().addRecipe(recipe);
+        return recipe;
+    }
+
     public ShapedRecipe locator() {
         ItemStack is = new ItemStack(Material.COMPASS, 1);
         ItemMeta im = is.getItemMeta();
         im.setDisplayName("TARDIS Locator");
-        //im.setLore(Arrays.asList(new String[]{"Right-click block", "to call TARDIS"}));
         is.setItemMeta(im);
         ShapedRecipe recipe = new ShapedRecipe(is);
         recipe.shape("OIO", "ICI", "OIO");
