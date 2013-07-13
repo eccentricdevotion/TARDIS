@@ -7,7 +7,7 @@ softdepend: [Multiverse-Core,MultiWorld,My Worlds,WorldGuard,WorldBorder,Towny,C
 website: http://dev.bukkit.org/bukkit-plugins/tardis/
 dev-url: http://dev.bukkit.org/bukkit-plugins/tardis/
 url: http://eccentricdevotion.github.io/TARDIS/
-version: '2.5-beta-1'
+version: '2.5-beta-2'
 permissions:
   tardis.admin:
     description: Allow players access to the TARDIS admin commands.
