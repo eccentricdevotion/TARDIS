@@ -26,6 +26,205 @@
     <section>
         <h1>Change log</h1>
         <h2>What&rsquo;s been changed?</h2>
+        <h3>v2.5-beta-1</h3>
+        <p>First off a huge thank you to everyone who contributed ideas and caught bugs for this release &mdash; without your input the plugin wouldn &rsquo;t be where it is today. Special mention goes to <a href="http://dev.bukkit.org/profiles/bootthanoo/">bootthanoo</a> whose ideas seem to strike the right chord with me and the plugin, but to everyone equally &mdash; keep the ideas rolling in :)</p>
+        <h4>Additions</h4>
+        <ul>
+            <li>Added a &lsquo;fast return &rsquo; button to quickly set the destination to the last visited location
+                <ul>
+                    <li>Use the command <code>/tardis update back</code> or <code>/tardis secondary back</code> to add it</li>
+                    <li>You can also use the <code>/tardistravel back</code> command to set the destination</li>
+                </ul>
+            </li>
+            <li>Added biomes to the <code>/tardisbind</code> command &mdash; <code>/tardisbind biome [biome type]</code></li>
+            <li>Added a TARDIS Destination Terminal
+                <ul>
+                    <li>An inventory based GUI for choosing a random destination accessed by clicking a sign</li>
+                    <li>Use the <code>/tardis update terminal</code> command to add it</li>
+                    <li>See: <a href="">https://vimeo.com/68899459</a></li>
+                </ul>
+            </li>
+            <li>Added an inventory based GUI for boolean (true|false) config values
+                <ul>
+                    <li>To open the menu right-click air with a diamond in hand</li>
+                    <li>Menu is only available to players with <code>tardis.admin</code> permission</li>
+                    <li>Click an option to toggle its value</li>
+                </ul>
+            </li>
+            <li>Added all the new 1.6.* blocks and items</li>
+            <li>Added a new &lsquo;steampunk &rsquo; TARDIS
+                <ul>
+                    <li>Players require <code>tardis.steampunk</code> permission to create it</li>
+                    <li>Uses the new COAL BLOCK as the base block</li>
+                </ul>
+            </li>
+            <li>Added horses to the TARDIS mob farming feature
+                <ul>
+                    <li>All colours, styles and variants are supported</li>
+                    <li>Saddles, barding (armour), chests and chest inventories are retained</li>
+                    <li>You need to grow a stable room to house the horses (otherwise spawn eggs are given)</li>
+                    <li><strong>Still TODO</strong> a way to get the horses out of the TARDIS</li>
+                </ul>
+            </li>
+            <li>Added a new STABLE room for horses &mdash; <code>tardis room STABLE</code> &mdash; seed block is a HAY_BLOCK</li>
+            <li>Added a Temporal Locator sign
+                <ul>
+                    <li>Uses an inventory based GUI to set player time, no travel needed</li>
+                    <li>Time is set when exiting the TARDIS and reset back to server time when entering the TARDIS</li>
+                    <li>Player time can be reset at any time by right-clicking air with a clock</li>
+                    <li>Use the <code>/tardis update temporal</code> command to add it</li>
+                    <li>Players need <code>tardis.temporal</code> permission to use it</li>
+                </ul>
+            </li>
+            <li>The default Police Box wall block and lamp are now configurable items and the sign and lamp can be turned off.
+                <ul>
+                    <li>The default TARDIS exterior //wall// block can now be set in config.yml &mdash; change <code>wall_id</code> and <code>wall_data</code> e.g. for blue wool it would be <code>wall_id: 35</code> and <code>wall_data: 11</code> &mdash; for iron block it would be <code>wall_id: 42</code> and <code>wall_data: 0</code></li>
+                    <li>The default TARDIS exterior //lamp// block can now be set in config.yml &mdash; change <code>tardis_lamp</code> to the ID of your choice &mdash; e.g. for a torch use <code>50</code> and for a redstone torch use <code>76</code></li>
+                    <li>Whether the default TARDIS exterior has a sign and lamp can now be set in config.yml &mdash; change <code>plain_on: [true|false]</code> &mdash; true means there will be NO sign or lamp</li>
+                    <li>The TARDIS exterior //wall// block can be overridden by players by using the Chameleon Circuit i.e. using the <code>/tardis chameleon short</code> command while targeting the desired block</li>
+                    <li>The TARDIS exterior //lamp// block can be overridden by players by using the <code>/tardisprefs</code> command e.g. <code>/tardisprefs lamp [id]</code> &mdash; you can limit the blocks that are allowed to be used by editing the <code>lamp_blocks</code> list of id numbers in blocks.yml</li>
+                    <li>Whether the TARDIS exterior has a sign and lamp can be overridden by players by using the <code>tardisprefs</code> command e.g. <code>/tardisprefs plain [on|off]</code></li>
+                    <li>This should allow servers to set a plain TARDIS as default (as seen in DW Series 7 finale)</li>
+                    <li>If you don &rsquo;t care, just leave the settings at the defaults to have the plugin behave as it usually does</li>
+                </ul>
+            </li>
+            <li>Added a RAIL room
+                <ul>
+                    <li>After growing the room, run rails up to the Police Box door to have minecarts transported into the TARDIS</li>
+                    <li>Only one minecart is allowed through at a time</li>
+                    <li>Storage minecarts will deposit their contents into a chest via a hopper</li>
+                    <li>What else you do with them once they &rsquo;re there is up to you</li>
+                </ul>
+            </li>
+            <li>Added a switch to turn the lights in the main console room on and off
+                <ul>
+                    <li>Use the <code>/tardis update light</code> command to add it</li>
+                    <li>If you have moved any lamp blocks, use the <code>/tardis lamps</code> command to rescan the TARDIS for their new locations</li>
+                </ul>
+            </li>
+            <li>Added a new command &mdash; <code>tardisrecipe [item]</code> to show custom recipes for the new TARDIS items (see below)</li>
+            <li>Added a new config option &mdash; <code>difficulty: [easy|normal|hard]</code> &mdash; default is <code>normal</code>, for why see below</li>
+            <li>Added a craftable Stattenheim Remote Control
+                <ul>
+                    <li>To see the recipe type <code>/tardisrecipe remote</code></li>
+                    <li>This item replaces the <code>/tardis comehere</code> command when <code>difficulty</code> is set to normal or hard</li>
+                    <li>The item is harder to craft when <code>difficulty</code> is set to hard</li>
+                    <li>Right-click the block you want the TARDIS to come to</li>
+                </ul>
+            </li>
+            <li>Added  a craftable TARDIS Locator
+                <ul>
+                    <li>To see the recipe type <code>/tardisrecipe locator</code></li>
+                    <li>This item replaces the <code>/tardis find</code> command when <code>difficulty</code>is set to normal or hard</li>
+                    <li>The item is crafted with another custom item the TARDIS Locator Circuit, see below</li>
+                </ul>
+            </li>
+            <li>Added 3 craftable TARDIS circuits &mdash; Locator Circuit, Materialisation Circuit and Stattenheim Circuit
+                <ul>
+                    <li>The items are custom maps &mdash; three maps are supplied with in the ZIP download &mdash; put them in the main server world &rsquo;s //data// folder to use them (maps will probably change for final 2.5 release)</li>
+                    <li>To see the recipes type <code>/tardisrecipe [l-circuit|m-circuit|s-circuit]</code></li>
+                    <li>The Locator Circuit and Materialisation Circuit are required to craft the Stattenheim Circuit when <code>difficulty</code> is set to hard</li>
+                    <li>The Stattenheim Circuit is required to craft the Stattenheim Remote when <code>difficulty</code> is set to hard</li>
+                </ul>
+            </li>
+            <li>Added a config option <code>use_clay: [true|false]</code> &mdash; if true it will switch the WOOL blocks in TARDIS and room schematics to the equivalent coloured STAINED _CLAY blocks (for new TARDIS and rooms only)</li>
+            <li>Added the start of an Architectural Reconfiguration System, another sign with an inventory based GUI
+                <ul>
+                    <li>Use the <code>/tardis update ars</code> command to add it</li>
+                    <li>See: <a href="">https://vimeo.com/68938409</a></li>
+                </ul>
+            </li>
+        </ul>
+        <h4>Changes</h4>
+        <ul>
+            <li>The Emergency Program One NPC should now face the centre of the TARDIS and look at players</li>
+            <li>Comparator blocks can now be TARDIS console buttons</li>
+            <li>TARDIS now tells MultiWorld to delete the TARDIS world after the TARDIS has been deleted</li>
+            <li>The save-sign has been updated to a new inventory based GUI, all your saves are listed in one place
+                <ul>
+                    <li>Just click a save to set it as the destination</li>
+                    <li>To update the old save sign, just run the <code>/tardis update save-sign</code> command again</li>
+                </ul>
+            </li>
+            <li>You can now condense pistons, redstone torches and trapdoors</li>
+            <li>Rooms are now jettisoned from the top down</li>
+        </ul>
+        <h4>Fixes</h4>
+        <ul>
+            <li>The texture pack switch no longer switches when entering by the backdoor and texture pack switching is off</li>
+            <li>The pet teleport location has been fixed when pets exit the TARDIS</li>
+            <li>Fixed the rescue accept message saying you had 30 seconds, when really you had 60</li>
+            <li>Rooms are only processed if they are enabled and square (fixes a NPE)</li>
+            <li>The data values for directional blocks are set correctly for rooms grown in a NORTH or WEST direction</li>
+            <li>The NPC Listener is only registered if the Citizens plugin is enabled</li>
+            <li>Players are now always removed from the time traveller list before being added, this prevents the player being added more than once (if they exit the TARDIS by some other means than by the door) and receiving multiple messages when the handbrake is released</li>
+            <li>Fixed a NPE when trying to remove the last (or only) companion</li>
+            <li>You can no longer travel to yourself with the <code>/tardistravel [player]</code> command</li>
+            <li>This version is now compatible with Tekkit Classic (or any CraftBukkit 1.2.5 server) again</li>
+        </ul>
+        <h3>v2.4</h3>
+        <h4>Additions</h4>
+        <ul>
+            <li>Added <code>/tardis update eps</code> command to change the location where the Emergency Program One hologram appears</li>
+            <li>Added <code>/tardis update creeper</code> command to change the location where the Artron Creeper spawns</li>
+            <li></li>
+        </ul>
+        <h4>Changes</h4>
+        <ul>
+            <li>The Artron Condenser Chest now has its own title &mdash; &lsquo;Artron Condenser &rsquo;</li>
+            <li>HADS is only enabled for damage to Police Box blocks</li>
+            <li></li>
+        </ul>
+        <h4>Fixes</h4>
+        <ul>
+            <li>Fixed a critical Police Box duplication bug that occurred after using the <code>/tardis hide</code> command</li>
+            <li>Fixed <code>/tardisroom blocks [room]</code> command failing to show the correct number of blocks required to be condensed</li>
+            <li>Some missing commands were added to plugin.yml</li>
+        </ul>
+        <h3>v2.4-pre</h3>
+        <h4>Additions</h4>
+        <ul>
+            <li>Added Tab completion to almost all commands</li>
+            <li>Added <code>/tardistravel biome [biome|list]</code> command to set the TARDIS destination to the nearest biome that is specified (within the current Police Box world). To see a valid biome list type: <code>/tardistravel biome list</code>
+                <ul>
+                    <li>Requires the permission <code>tardis.timetravel.biome</code></li>
+                    <li>Added biomes to the TARDIS keyboard</li>
+                </ul>
+            </li>
+        </ul>
+        <h4>Changes</h4>
+        <ul>
+            <li>You can now breed mobs inside the TARDIS (even if WorldGuard is set to deny spawning)</li>
+            <li>HADS is only enabled for TARDIS owners who are currently online</li>
+        </ul>
+        <h4>Fixes</h4>
+        <ul>
+            <li>Fixed the <code>/tardistravel [world] [x y z]</code> command failing when there are spaces in the world name &mdash; to use worlds with spaces in their names, surround the name in single quotes e.g. <code>/tardistravel 'space in name' 239 66 -372</code></li>
+            <li>Fixed a TARDIS rescue message spamming the chat</li>
+            <li>Fixed a NPE in HADS when the TARDIS owner is offline</li>
+            <li>Various other minor fixes</li>
+        </ul>
+        <p>v2.4-beta-2</p>
+        <h4>Changes</h4>
+        <ul>
+            <li>The texture pack switcher now switches the TP when logging in and the player is inside the TARDIS</li>
+            <li>The &lsquo;out &rsquo; texture pack can be reset back to default with <code>/tardistexture out default</code></li>
+            <li>The HADS damage count is reset when the TARDIS is moved (by any means)</li>
+            <li>The TARDIS materialising sound effect should now play after the dematerialising one</li>
+            <li>The TARDIS only travels home autonomously if it is not already at the &lsquo;home &rsquo; location</li>
+            <li>Emergency Program One should now message ALL the players in the TARDIS</li>
+            <li>Players are now informed if there is no response to their rescue attempt request within 60 seconds</li>
+            <li>Added a config option to enable/disable achievements &mdash; <code>allow_achievements: [true|false]</code></li>
+        </ul>
+        <h4>Fixes</h4>
+        <ul>
+            <li>Fixed HADS not working in the Nether</li>
+            <li>Fixed the TARDIS being encased in stone if a TARDIS_TimeVortex world was not a FLAT world</li>
+            <li>Fixed being able to click the handbrake before the TARDIS has finished materialising</li>
+            <li>Fixed wrong permission node for the <code>/tardistexture</code> command</li>
+            <li>Fixed Emergency Program One not working when <code>create_worlds</code> was true</li>
+            <li>Fixed <code>hide</code> Artron Energy amount being added to the wrong config file</li>
+        </ul>
         <h3>v2.4-beta-1</h3>
         <h4>Additions</h4>
         <ul>
