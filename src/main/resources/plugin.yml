@@ -396,3 +396,9 @@ commands:
     usage: /<command> [on|off|in|out] [url]
     permission: tardis.texture
     permission-message: You don't have the permission <permission> to use this command
+  tardisrecipe:
+    aliases: [trecipe, trep]
+    description: View TARDIS item recipes.
+    usage: /<command> [remote|locator|l-circuit|m-circuit|s-circuit]
+    permission: tardis.use
+    permission-message: You don't have the permission <permission> to use this command
