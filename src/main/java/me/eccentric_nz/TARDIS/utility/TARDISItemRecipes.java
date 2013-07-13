@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.travel;
+package me.eccentric_nz.TARDIS.utility;
 
 import java.util.Arrays;
 import me.eccentric_nz.TARDIS.TARDIS;
@@ -24,7 +24,6 @@ import org.bukkit.inventory.ShapedRecipe;
 import org.bukkit.inventory.meta.ItemMeta;
 
 /**
- * A
  * The Stattenheim remote control is a remote control used by Time Lords to
  * control their TARDISes. The Rani and the Second Doctor each have used a
  * Stattenheim remote control for their TARDISes, which allowed them 'call' the
@@ -32,12 +31,12 @@ import org.bukkit.inventory.meta.ItemMeta;
  *
  * @author eccentric_nz
  */
-public class TARDISStattenheimRemote {
+public class TARDISItemRecipes {
 
     private final TARDIS plugin;
     Material mat;
 
-    public TARDISStattenheimRemote(TARDIS plugin) {
+    public TARDISItemRecipes(TARDIS plugin) {
         this.plugin = plugin;
         mat = Material.valueOf(plugin.getConfig().getString("stattenheim"));
     }
@@ -54,6 +53,38 @@ public class TARDISStattenheimRemote {
         recipe.setIngredient('B', Material.STONE_BUTTON);
         recipe.setIngredient('L', Material.INK_SACK, 4);
         recipe.setIngredient('R', Material.REDSTONE);
+        plugin.getServer().addRecipe(recipe);
+        return recipe;
+    }
+
+    public ShapedRecipe circuit() {
+        ItemStack is = new ItemStack(Material.MAP, 1, (short) 1963);
+        ItemMeta im = is.getItemMeta();
+        im.setDisplayName("TARDIS Locator Circuit");
+        //im.setLore(Arrays.asList(new String[]{"Right-click block", "to call TARDIS"}));
+        is.setItemMeta(im);
+        ShapedRecipe recipe = new ShapedRecipe(is);
+        recipe.shape("RQR", "RIR", "DRL");
+        recipe.setIngredient('R', Material.REDSTONE);
+        recipe.setIngredient('Q', Material.QUARTZ);
+        recipe.setIngredient('I', Material.IRON_INGOT);
+        recipe.setIngredient('D', Material.DIODE);
+        recipe.setIngredient('L', Material.INK_SACK, 4);
+        plugin.getServer().addRecipe(recipe);
+        return recipe;
+    }
+
+    public ShapedRecipe locator() {
+        ItemStack is = new ItemStack(Material.COMPASS, 1);
+        ItemMeta im = is.getItemMeta();
+        im.setDisplayName("TARDIS Locator");
+        //im.setLore(Arrays.asList(new String[]{"Right-click block", "to call TARDIS"}));
+        is.setItemMeta(im);
+        ShapedRecipe recipe = new ShapedRecipe(is);
+        recipe.shape("OIO", "ICI", "OIO");
+        recipe.setIngredient('O', Material.OBSIDIAN);
+        recipe.setIngredient('I', Material.IRON_INGOT);
+        recipe.setIngredient('C', Material.MAP, 1963);
         plugin.getServer().addRecipe(recipe);
         return recipe;
     }
