@@ -86,6 +86,7 @@ public class TARDISAdminCommands implements CommandExecutor {
         firstsStr.add("decharge");
         firstsStr.add("default_world_name");
         firstsStr.add("delete");
+        firstsStr.add("difficulty");
         firstsStr.add("enter");
         firstsStr.add("exclude");
         firstsStr.add("find");
@@ -648,6 +649,13 @@ public class TARDISAdminCommands implements CommandExecutor {
                     // need to make there are no periods(.) in the text
                     String nodots = StringUtils.replace(t, ".", "_");
                     plugin.getConfig().set("default_world_name", nodots);
+                }
+                if (first.equals("difficulty")) {
+                    if (!args[1].equalsIgnoreCase("easy") && !args[1].equalsIgnoreCase("normal") && !args[1].equalsIgnoreCase("hard")) {
+                        sender.sendMessage(plugin.pluginName + ChatColor.RED + "Difficulty must be easy, normal or hard!");
+                        return true;
+                    }
+                    plugin.getConfig().set("difficulty", args[1].toLowerCase(Locale.ENGLISH));
                 }
                 if (first.equals("gamemode")) {
                     if (!args[1].equalsIgnoreCase("creative") && !args[1].equalsIgnoreCase("survival")) {

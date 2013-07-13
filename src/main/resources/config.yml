@@ -60,3 +60,4 @@ tardis_lamp: 50
 plain_on: false
 stattenheim: FLINT
 use_clay: false
+difficulty: normal

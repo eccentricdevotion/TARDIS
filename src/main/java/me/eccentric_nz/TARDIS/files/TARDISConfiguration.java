@@ -220,6 +220,7 @@ public class TARDISConfiguration {
         roomIntOptions.put("rooms.WORKSHOP.offset", -1);
         // string
         strOptions.put("default_world_name", "myridiculouslylongworldnameiscalledcuthbert");
+        strOptions.put("difficulty", "normal");
         strOptions.put("gamemode", "survival");
         strOptions.put("key", "STICK");
         strOptions.put("stattenheim", "FLINT");
