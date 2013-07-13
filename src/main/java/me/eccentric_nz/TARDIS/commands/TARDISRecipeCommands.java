@@ -82,7 +82,6 @@ public class TARDISRecipeCommands implements CommandExecutor {
             ItemStack qtz = new ItemStack(Material.QUARTZ, 1);
             ItemStack ing = new ItemStack(Material.IRON_INGOT, 1);
             ItemStack dio = new ItemStack(Material.DIODE, 1);
-            ItemStack air = new ItemStack(Material.AIR, 1);
             ItemStack lap = new ItemStack(Material.INK_SACK, 1, (short) 4);
             if (args[0].equalsIgnoreCase("remote")) {
                 plugin.trackRecipeView.add(player.getName());
@@ -95,6 +94,7 @@ public class TARDISRecipeCommands implements CommandExecutor {
                     ItemStack circuit = new ItemStack(Material.MAP, 1, (short) 1963);
                     ItemMeta im = circuit.getItemMeta();
                     im.setDisplayName("TARDIS Stattenheim Circuit");
+                    im.setLore(Arrays.asList(new String[]{"/tardisrecipe s-circuit"}));
                     circuit.setItemMeta(im);
                     view.getTopInventory().setItem(5, circuit);
                 } else {
@@ -163,9 +163,6 @@ public class TARDISRecipeCommands implements CommandExecutor {
                 //recipe.shape("AAA", "LRM", "QQQ");
                 plugin.trackRecipeView.add(player.getName());
                 InventoryView view = player.openWorkbench(null, true);
-                view.getTopInventory().setItem(1, air);
-                view.getTopInventory().setItem(2, air);
-                view.getTopInventory().setItem(3, air);
                 ItemStack lcircuit = new ItemStack(Material.MAP, 1, (short) 1965);
                 ItemMeta lim = lcircuit.getItemMeta();
                 lim.setDisplayName("TARDIS Locator Circuit");

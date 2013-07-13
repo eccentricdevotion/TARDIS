@@ -103,12 +103,11 @@ public class TARDISItemRecipes {
         im.setDisplayName("TARDIS Stattenheim Circuit");
         is.setItemMeta(im);
         ShapedRecipe recipe = new ShapedRecipe(is);
-        recipe.shape("AAA", "LRM", "QQQ");
-        recipe.setIngredient('A', Material.AIR);
-        recipe.setIngredient('R', Material.REDSTONE);
-        recipe.setIngredient('Q', Material.QUARTZ);
+        recipe.shape("   ", "LRM", "QQQ");
         recipe.setIngredient('L', Material.MAP, 1965);
+        recipe.setIngredient('R', Material.REDSTONE);
         recipe.setIngredient('M', Material.MAP, 1964);
+        recipe.setIngredient('Q', Material.QUARTZ);
         plugin.getServer().addRecipe(recipe);
         return recipe;
     }
