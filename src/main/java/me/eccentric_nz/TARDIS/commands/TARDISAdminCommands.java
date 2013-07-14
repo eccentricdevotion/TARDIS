@@ -37,7 +37,6 @@ import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
 import static me.eccentric_nz.TARDIS.destroyers.TARDISExterminator.deleteFolder;
 import me.eccentric_nz.TARDIS.destroyers.TARDISPruner;
 import me.eccentric_nz.TARDIS.files.TARDISConfiguration;
-import me.eccentric_nz.TARDIS.listeners.TARDISDoorListener;
 import me.eccentric_nz.TARDIS.travel.TARDISTerminalInventory;
 import me.eccentric_nz.TARDIS.utility.TARDISMaterials;
 import org.apache.commons.lang.StringUtils;
@@ -478,27 +477,26 @@ public class TARDISAdminCommands implements CommandExecutor {
                             tmp_loc.setPitch(pitch);
                             // get players direction so we can adjust yaw if necessary
                             TARDISConstants.COMPASS d = TARDISConstants.COMPASS.valueOf(plugin.utils.getPlayersDirection(player, false));
-                            TARDISDoorListener tdl = new TARDISDoorListener(plugin);
                             if (!innerD.equals(d)) {
                                 switch (d) {
                                     case NORTH:
-                                        yaw += tdl.adjustYaw[0][innerD.ordinal()];
+                                        yaw += plugin.doorListener.adjustYaw[0][innerD.ordinal()];
                                         break;
                                     case WEST:
-                                        yaw += tdl.adjustYaw[1][innerD.ordinal()];
+                                        yaw += plugin.doorListener.adjustYaw[1][innerD.ordinal()];
                                         break;
                                     case SOUTH:
-                                        yaw += tdl.adjustYaw[2][innerD.ordinal()];
+                                        yaw += plugin.doorListener.adjustYaw[2][innerD.ordinal()];
                                         break;
                                     case EAST:
-                                        yaw += tdl.adjustYaw[3][innerD.ordinal()];
+                                        yaw += plugin.doorListener.adjustYaw[3][innerD.ordinal()];
                                         break;
                                 }
                             }
                             tmp_loc.setYaw(yaw);
                             final Location tardis_loc = tmp_loc;
                             World playerWorld = player.getLocation().getWorld();
-                            tdl.movePlayer(player, tardis_loc, false, playerWorld, false);
+                            plugin.doorListener.movePlayer(player, tardis_loc, false, playerWorld, false);
                             // put player into travellers table
                             QueryFactory qf = new QueryFactory(plugin);
                             HashMap<String, Object> set = new HashMap<String, Object>();

@@ -470,7 +470,7 @@ public class TARDISDoorListener implements Listener {
         final Location theLocation = l;
         final World to = theLocation.getWorld();
         final boolean allowFlight = p.getAllowFlight();
-        final boolean crossWorlds = from != to;
+        final boolean crossWorlds = (from != to);
         final boolean quotes = q;
         final String name = p.getName();
         World world = l.getWorld();
@@ -621,13 +621,15 @@ public class TARDISDoorListener implements Listener {
         } else {
             key = plugin.getConfig().getString("key");
         }
-        if (plugin.getConfig().getBoolean("give_key") && (plugin.bukkitversion.compareTo(plugin.preIMversion) > 0 || (plugin.bukkitversion.compareTo(plugin.preIMversion) == 0 && plugin.SUBversion.compareTo(plugin.preSUBversion) >= 0)) && !key.equals("AIR")) {
+        if (plugin.getConfig().getBoolean("give_key") && !key.equals("AIR")) {
             Inventory inv = p.getInventory();
             Material m = Material.valueOf(key);
             if (!inv.contains(m)) {
                 ItemStack is = new ItemStack(m, 1);
-                TARDISItemRenamer ir = new TARDISItemRenamer(is);
-                ir.setName("Sonic Screwdriver", true);
+                if (plugin.bukkitversion.compareTo(plugin.preIMversion) > 0 || (plugin.bukkitversion.compareTo(plugin.preIMversion) == 0 && plugin.SUBversion.compareTo(plugin.preSUBversion) >= 0)) {
+                    TARDISItemRenamer ir = new TARDISItemRenamer(is);
+                    ir.setName("Sonic Screwdriver", true);
+                }
                 inv.addItem(is);
                 p.updateInventory();
                 p.sendMessage(plugin.pluginName + "Don't forget your TARDIS key!");

@@ -64,6 +64,7 @@ import me.eccentric_nz.TARDIS.listeners.TARDISExplosionListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISFireListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISGravityWellListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISHandbrakeListener;
+import me.eccentric_nz.TARDIS.listeners.TARDISHorseListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISHotbarListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISIceMeltListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISJettisonSeeder;
@@ -217,6 +218,7 @@ public class TARDIS extends JavaPlugin {
     private FileConfiguration blocks_config;
     private FileConfiguration rooms_config;
     public TARDISButtonListener buttonListener;
+    public TARDISDoorListener doorListener;
     public Version bukkitversion;
     public Version preemeraldversion = new Version("1.3.1");
     public Version prewoodbuttonversion = new Version("1.4.2");
@@ -353,7 +355,8 @@ public class TARDIS extends JavaPlugin {
     private void registerListeners() {
         pm.registerEvents(new TARDISBlockPlaceListener(this), this);
         pm.registerEvents(new TARDISBlockBreakListener(this), this);
-        pm.registerEvents(new TARDISDoorListener(this), this);
+        this.doorListener = new TARDISDoorListener(this);
+        pm.registerEvents(doorListener, this);
         this.buttonListener = new TARDISButtonListener(this);
         pm.registerEvents(buttonListener, this);
         pm.registerEvents(new TARDISSignListener(this), this);
@@ -393,6 +396,7 @@ public class TARDIS extends JavaPlugin {
         pm.registerEvents(new TARDISStattenheimListener(this), this);
         pm.registerEvents(new TARDISRecipeListener(this), this);
         pm.registerEvents(new TARDISHotbarListener(this), this);
+        pm.registerEvents(new TARDISHorseListener(this), this);
     }
 
     /**

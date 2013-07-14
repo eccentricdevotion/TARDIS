@@ -139,8 +139,12 @@ public class TARDISFarmer {
                         Tameable brokenin = (Tameable) e;
                         Horse horse = (Horse) e;
                         // don't farm other player's tamed horses
-                        if (brokenin.isTamed() && !brokenin.getOwner().getName().equals(p.getName())) {
-                            break;
+                        if (brokenin.isTamed()) {
+//                            plugin.debug("Horse owner: " + brokenin.getOwner().getName());
+//                            plugin.debug("Timelord: " + p.getName());
+                            if (!brokenin.getOwner().getName().equals(p.getName())) {
+                                break;
+                            }
                         }
                         TARDISHorse tmhor = new TARDISHorse();
                         tmhor.setAge(e.getTicksLived());
@@ -332,7 +336,7 @@ public class TARDISFarmer {
                     int y = plugin.utils.parseNum(data[2]) + 1;
                     int z = plugin.utils.parseNum(data[3]);
                     if (old_macd_had_a_horse.size() > 0) {
-                        Location horse_pen = new Location(world, x + 3, y, z + 3);
+                        Location horse_pen = new Location(world, x + 0.5F, y, z + 0.5F);
                         while (!world.getChunkAt(horse_pen).isLoaded()) {
                             world.getChunkAt(horse_pen).load();
                         }

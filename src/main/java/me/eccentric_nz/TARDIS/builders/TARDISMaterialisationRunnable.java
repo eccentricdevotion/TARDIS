@@ -24,7 +24,6 @@ import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetDoors;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
-import me.eccentric_nz.TARDIS.listeners.TARDISDoorListener;
 import me.eccentric_nz.TARDIS.travel.TARDISDoorLocation;
 import org.bukkit.ChatColor;
 import org.bukkit.Effect;
@@ -129,10 +128,9 @@ public class TARDISMaterialisationRunnable implements Runnable {
                     String name = plugin.trackRescue.get(tid);
                     Player saved = plugin.getServer().getPlayer(name);
                     if (saved != null) {
-                        TARDISDoorListener dl = new TARDISDoorListener(plugin);
-                        TARDISDoorLocation idl = dl.getDoor(1, tid);
+                        TARDISDoorLocation idl = plugin.doorListener.getDoor(1, tid);
                         Location l = idl.getL();
-                        dl.movePlayer(saved, l, false, world, false);
+                        plugin.doorListener.movePlayer(saved, l, false, world, false);
                         // put player into travellers table
                         HashMap<String, Object> set = new HashMap<String, Object>();
                         set.put("tardis_id", id);
