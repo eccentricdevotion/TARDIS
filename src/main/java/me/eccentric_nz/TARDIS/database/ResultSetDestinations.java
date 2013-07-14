@@ -26,6 +26,7 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.TARDISConstants;
 
 /**
  * Many facts, figures, and formulas are contained within the Matrix,
@@ -47,6 +48,7 @@ public class ResultSetDestinations {
     private int x;
     private int y;
     private int z;
+    private String direction;
     private String bind;
     private int type;
     private ArrayList<HashMap<String, String>> data = new ArrayList<HashMap<String, String>>();
@@ -120,6 +122,7 @@ public class ResultSetDestinations {
                     this.x = rs.getInt("x");
                     this.y = rs.getInt("y");
                     this.z = rs.getInt("z");
+                    this.direction = rs.getString("direction");
                     this.bind = rs.getString("bind");
                     this.type = rs.getInt("type");
                 }
@@ -170,6 +173,10 @@ public class ResultSetDestinations {
 
     public int getZ() {
         return z;
+    }
+
+    public String getDirection() {
+        return direction;
     }
 
     public String getBind() {

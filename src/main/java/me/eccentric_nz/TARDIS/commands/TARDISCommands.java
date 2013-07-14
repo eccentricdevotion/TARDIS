@@ -766,6 +766,7 @@ public class TARDISCommands implements CommandExecutor {
                             return false;
                         }
                         int id = rs.getTardis_id();
+                        String direction = rs.getDirection().toString();
                         // check they are not in the tardis
                         HashMap<String, Object> wherettrav = new HashMap<String, Object>();
                         wherettrav.put("player", player.getName());
@@ -775,7 +776,7 @@ public class TARDISCommands implements CommandExecutor {
                             player.sendMessage(plugin.pluginName + "You cannot set the home location here because you are inside a TARDIS!");
                             return true;
                         }
-                        String sethome = eyeLocation.getWorld().getName() + ":" + eyeLocation.getBlockX() + ":" + eyeLocation.getBlockY() + ":" + eyeLocation.getBlockZ();
+                        String sethome = eyeLocation.getWorld().getName() + ":" + eyeLocation.getBlockX() + ":" + eyeLocation.getBlockY() + ":" + eyeLocation.getBlockZ() + ":" + direction;
                         QueryFactory qf = new QueryFactory(plugin);
                         HashMap<String, Object> tid = new HashMap<String, Object>();
                         HashMap<String, Object> set = new HashMap<String, Object>();
@@ -1125,6 +1126,7 @@ public class TARDISCommands implements CommandExecutor {
                             set.put("x", plugin.utils.parseNum(curDest[1]));
                             set.put("y", plugin.utils.parseNum(curDest[2]));
                             set.put("z", plugin.utils.parseNum(curDest[3]));
+                            set.put("direction", rs.getDirection().toString());
                             if (qf.doInsert("destinations", set) < 0) {
                                 return false;
                             } else {

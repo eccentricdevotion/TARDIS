@@ -151,6 +151,11 @@ public class TARDISTravelCommands implements CommandExecutor {
                         if (args[0].equalsIgnoreCase("home") || args[0].equalsIgnoreCase("back")) {
                             String which;
                             if (args[0].equalsIgnoreCase("home")) {
+                                // spilt home to get direction
+                                String[] split = home.split(":");
+                                if (split.length == 5) {
+                                    set.put("direction", split[4]);
+                                }
                                 set.put("save", home);
                                 which = "Home";
                             } else {
@@ -250,6 +255,7 @@ public class TARDISTravelCommands implements CommandExecutor {
                             return true;
                         }
                         String save_loc = rsd.getWorld() + ":" + rsd.getX() + ":" + rsd.getY() + ":" + rsd.getZ();
+                        String direction = rsd.getDirection();
                         World w = plugin.getServer().getWorld(rsd.getWorld());
                         if (w != null) {
                             Location save_dest = new Location(w, rsd.getX(), rsd.getY(), rsd.getZ());
@@ -271,6 +277,9 @@ public class TARDISTravelCommands implements CommandExecutor {
                                 }
                             }
                             set.put("save", save_loc);
+                            if (!direction.isEmpty()) {
+                                set.put("direction", back);
+                            }
                             qf.doUpdate("tardis", set, tid);
                             sender.sendMessage(plugin.pluginName + "The specified location was set succesfully. Please release the handbrake!");
                             plugin.tardisHasDestination.put(id, travel);
