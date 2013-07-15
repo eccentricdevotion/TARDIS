@@ -233,7 +233,7 @@ public class TARDISArtronCapacitorListener implements Listener {
     /**
      * Listens for entity spawn events. If WorldGuard is enabled it blocks
      * mob-spawning inside the TARDIS, so this checks to see if we are doing the
-     * spawning and un-cancels WorldGuards setCancelled(true).
+     * spawning and un-cancels WorldGuard's setCancelled(true).
      *
      * @param event
      */

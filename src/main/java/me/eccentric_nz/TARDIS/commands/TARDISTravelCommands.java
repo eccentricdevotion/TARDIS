@@ -278,7 +278,7 @@ public class TARDISTravelCommands implements CommandExecutor {
                             }
                             set.put("save", save_loc);
                             if (!direction.isEmpty()) {
-                                set.put("direction", back);
+                                set.put("direction", direction);
                             }
                             qf.doUpdate("tardis", set, tid);
                             sender.sendMessage(plugin.pluginName + "The specified location was set succesfully. Please release the handbrake!");

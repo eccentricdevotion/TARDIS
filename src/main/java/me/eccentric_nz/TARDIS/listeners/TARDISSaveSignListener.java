@@ -76,6 +76,9 @@ public class TARDISSaveSignListener implements Listener {
                             String save = getDestination(lore);
                             if (!save.equals(rs.getCurrent())) {
                                 HashMap<String, Object> set = new HashMap<String, Object>();
+                                if (lore.size() == 5 && !lore.get(4).isEmpty()) {
+                                    set.put("direction", lore.get(4));
+                                }
                                 set.put("save", save);
                                 HashMap<String, Object> wheret = new HashMap<String, Object>();
                                 wheret.put("tardis_id", id);

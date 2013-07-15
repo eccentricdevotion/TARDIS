@@ -65,6 +65,9 @@ public class TARDISSaveSignInventory {
         hlore.add(hh[1]);
         hlore.add(hh[2]);
         hlore.add(hh[3]);
+        if (hh.length > 4) {
+            hlore.add(hh[4]);
+        }
         him.setLore(hlore);
         his.setItemMeta(him);
         dests.add(his);
@@ -86,6 +89,7 @@ public class TARDISSaveSignInventory {
                     lore.add(map.get("x"));
                     lore.add(map.get("y"));
                     lore.add(map.get("z"));
+                    lore.add(map.get("direction"));
                     im.setLore(lore);
                     is.setItemMeta(im);
                     dests.add(is);
