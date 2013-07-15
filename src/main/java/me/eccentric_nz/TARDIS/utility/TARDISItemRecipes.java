@@ -121,7 +121,7 @@ public class TARDISItemRecipes {
         recipe.shape("OIO", "ICI", "OIO");
         recipe.setIngredient('O', Material.OBSIDIAN);
         recipe.setIngredient('I', Material.IRON_INGOT);
-        recipe.setIngredient('C', Material.MAP, 1963);
+        recipe.setIngredient('C', Material.MAP, 1965);
         plugin.getServer().addRecipe(recipe);
         return recipe;
     }

@@ -2,6 +2,7 @@
 
 ## Current version `2.5-beta-1`
 1. Permission-based world creation - player's without permission use the default world, those with it get a TARDIS_WORLD
+2. `/tardis update [farm|stable]`
 
 ## Next version `2.6+`
 1. TARDIS shield - this could be adapted, so that the TARDIS can land underwater
@@ -13,7 +14,6 @@
     * TARDIS floor block
     * Police Box wall block - if not specified then plain tardis
     * Police Box lamp block - if not specified then plain tardis
-6. Preserve the orientation of the TARDIS Police Box when saving a location
 7. HADS + explosions + fireballs + lava
 
 ## Minecraft API when available `3.0?`
