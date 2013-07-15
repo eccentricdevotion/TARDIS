@@ -74,6 +74,13 @@ public class TARDISScannerListener implements Listener {
             entities.add(EntityType.WITCH);
             entities.add(EntityType.BAT);
         }
+        if (plugin.bukkitversion.compareTo(plugin.precarpetversion) >= 0) {
+            validBlocks.add(Material.REDSTONE_COMPARATOR_OFF);
+            validBlocks.add(Material.REDSTONE_COMPARATOR_ON);
+        }
+        if (plugin.bukkitversion.compareTo(plugin.precarpetversion) >= 0) {
+            entities.add(EntityType.HORSE);
+        }
         validBlocks.add(Material.STONE_BUTTON);
         validBlocks.add(Material.LEVER);
         entities.add(EntityType.BLAZE);
