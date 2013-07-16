@@ -241,7 +241,7 @@ public class TARDISRoomRunnable implements Runnable {
                 }
             }
             if (room.equals("RAIL") && id == 85) {
-                // remember sign location so we can teleport the storage minecart
+                // remember fence location so we can teleport the storage minecart
                 String loc = world.getName() + ":" + startx + ":" + starty + ":" + startz;
                 HashMap<String, Object> set = new HashMap<String, Object>();
                 set.put("rail", loc);

@@ -19,6 +19,7 @@ package me.eccentric_nz.TARDIS.listeners;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
@@ -217,9 +218,17 @@ public class TARDISUpdateListener implements Listener {
                 blockLocStr = bw.getName() + ":" + bx + ":" + (by + 1) + ":" + (bz - 1);
                 set.put("eps", blockLocStr);
             }
+            if (blockName.equalsIgnoreCase("farm") || blockName.equalsIgnoreCase("stable")) {
+                blockLocStr = bw.getName() + ":" + bx + ":" + by + ":" + bz;
+                set.put(blockName.toLowerCase(Locale.ENGLISH), blockLocStr);
+            }
             if (blockName.equalsIgnoreCase("creeper") && blockType == Material.COMMAND) {
                 blockLocStr = bw.getName() + ":" + bx + ".5:" + by + ":" + bz + ".5";
                 set.put("creeper", blockLocStr);
+            }
+            if (blockName.equalsIgnoreCase("rail") && blockType == Material.FENCE) {
+                blockLocStr = bw.getName() + ":" + bx + ":" + by + ":" + bz;
+                set.put("rail", blockLocStr);
             }
             if (blockName.equalsIgnoreCase("world-repeater") && (blockType == Material.DIODE_BLOCK_OFF || blockType == Material.DIODE_BLOCK_ON)) {
                 if (secondary) {
