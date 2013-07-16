@@ -135,6 +135,7 @@ public class TARDISAdminCommands implements CommandExecutor {
         firstsBool.add("sfx");
         firstsBool.add("plain_on");
         firstsBool.add("spawn_eggs");
+        firstsBool.add("strike_lightning");
         firstsBool.add("the_end");
         firstsBool.add("use_clay");
         firstsBool.add("use_worldguard");

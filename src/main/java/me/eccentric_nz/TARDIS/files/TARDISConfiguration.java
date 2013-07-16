@@ -86,6 +86,7 @@ public class TARDISConfiguration {
         boolOptions.put("name_tardis", false);
         boolOptions.put("nether", false);
         boolOptions.put("per_world_perms", false);
+        boolOptions.put("plain_on", false);
         boolOptions.put("platform", false);
         boolOptions.put("respect_factions", true);
         boolOptions.put("respect_towny", true);
@@ -94,8 +95,8 @@ public class TARDISConfiguration {
         boolOptions.put("return_room_seed", true);
         boolOptions.put("rooms_require_blocks", false);
         boolOptions.put("sfx", true);
-        boolOptions.put("plain_on", false);
         boolOptions.put("spawn_eggs", true);
+        boolOptions.put("strike_lightning", true);
         boolOptions.put("the_end", false);
         boolOptions.put("use_clay", false);
         boolOptions.put("use_worldguard", true);
