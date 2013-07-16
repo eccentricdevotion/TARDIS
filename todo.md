@@ -2,8 +2,6 @@
 
 ## Current version `2.5-beta-1`
 1. Permission-based world creation - player's without permission use the default world, those with it get a TARDIS_WORLD
-2. `/tardis update [farm|stable]`
-3. Craftable TARDIS key / Sonic Screwdriver
 
 ## Next version `2.6+`
 1. TARDIS shield - this could be adapted, so that the TARDIS can land underwater

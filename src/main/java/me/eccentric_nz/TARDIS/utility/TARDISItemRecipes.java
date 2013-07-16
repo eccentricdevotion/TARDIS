@@ -47,18 +47,18 @@ public class TARDISItemRecipes {
         im.setDisplayName("Stattenheim Remote");
         im.setLore(Arrays.asList(new String[]{"Right-click block", "to call TARDIS"}));
         is.setItemMeta(im);
-        ShapedRecipe recipe = new ShapedRecipe(is);
-        recipe.shape("OBO", "OLO", "RRR");
-        recipe.setIngredient('O', Material.OBSIDIAN);
-        recipe.setIngredient('B', Material.STONE_BUTTON);
+        ShapedRecipe stattenheim = new ShapedRecipe(is);
+        stattenheim.shape("OBO", "OLO", "RRR");
+        stattenheim.setIngredient('O', Material.OBSIDIAN);
+        stattenheim.setIngredient('B', Material.STONE_BUTTON);
         if (plugin.getConfig().getString("difficulty").equalsIgnoreCase("hard")) {
-            recipe.setIngredient('L', Material.MAP, 1963);
+            stattenheim.setIngredient('L', Material.MAP, 1963);
         } else {
-            recipe.setIngredient('L', Material.INK_SACK, 4);
+            stattenheim.setIngredient('L', Material.INK_SACK, 4);
         }
-        recipe.setIngredient('R', Material.REDSTONE);
-        plugin.getServer().addRecipe(recipe);
-        return recipe;
+        stattenheim.setIngredient('R', Material.REDSTONE);
+        plugin.getServer().addRecipe(stattenheim);
+        return stattenheim;
     }
 
     public ShapedRecipe locatorCircuit() {
@@ -66,15 +66,15 @@ public class TARDISItemRecipes {
         ItemMeta im = is.getItemMeta();
         im.setDisplayName("TARDIS Locator Circuit");
         is.setItemMeta(im);
-        ShapedRecipe recipe = new ShapedRecipe(is);
-        recipe.shape("RQR", "RIR", "DRL");
-        recipe.setIngredient('R', Material.REDSTONE);
-        recipe.setIngredient('Q', Material.QUARTZ);
-        recipe.setIngredient('I', Material.IRON_INGOT);
-        recipe.setIngredient('D', Material.DIODE);
-        recipe.setIngredient('L', Material.INK_SACK, 4);
-        plugin.getServer().addRecipe(recipe);
-        return recipe;
+        ShapedRecipe loccircuit = new ShapedRecipe(is);
+        loccircuit.shape("RQR", "RIR", "DRL");
+        loccircuit.setIngredient('R', Material.REDSTONE);
+        loccircuit.setIngredient('Q', Material.QUARTZ);
+        loccircuit.setIngredient('I', Material.IRON_INGOT);
+        loccircuit.setIngredient('D', Material.DIODE);
+        loccircuit.setIngredient('L', Material.INK_SACK, 4);
+        plugin.getServer().addRecipe(loccircuit);
+        return loccircuit;
     }
 
     public ShapedRecipe materialisationCircuit() {
@@ -82,19 +82,19 @@ public class TARDISItemRecipes {
         ItemMeta im = is.getItemMeta();
         im.setDisplayName("TARDIS Materialisation Circuit");
         is.setItemMeta(im);
-        ShapedRecipe recipe = new ShapedRecipe(is);
-        recipe.shape("IDI", "DLD", "QRQ");
+        ShapedRecipe matcircuit = new ShapedRecipe(is);
+        matcircuit.shape("IDI", "DLD", "QRQ");
         if (plugin.getConfig().getString("difficulty").equalsIgnoreCase("hard")) {
-            recipe.setIngredient('L', Material.EYE_OF_ENDER);
+            matcircuit.setIngredient('L', Material.EYE_OF_ENDER);
         } else {
-            recipe.setIngredient('I', Material.IRON_INGOT);
+            matcircuit.setIngredient('I', Material.IRON_INGOT);
         }
-        recipe.setIngredient('D', Material.DIODE);
-        recipe.setIngredient('R', Material.REDSTONE);
-        recipe.setIngredient('L', Material.INK_SACK, 4);
-        recipe.setIngredient('Q', Material.QUARTZ);
-        plugin.getServer().addRecipe(recipe);
-        return recipe;
+        matcircuit.setIngredient('D', Material.DIODE);
+        matcircuit.setIngredient('R', Material.REDSTONE);
+        matcircuit.setIngredient('L', Material.INK_SACK, 4);
+        matcircuit.setIngredient('Q', Material.QUARTZ);
+        plugin.getServer().addRecipe(matcircuit);
+        return matcircuit;
     }
 
     public ShapedRecipe stattenheimCircuit() {
@@ -102,14 +102,14 @@ public class TARDISItemRecipes {
         ItemMeta im = is.getItemMeta();
         im.setDisplayName("TARDIS Stattenheim Circuit");
         is.setItemMeta(im);
-        ShapedRecipe recipe = new ShapedRecipe(is);
-        recipe.shape("   ", "LRM", "QQQ");
-        recipe.setIngredient('L', Material.MAP, 1965);
-        recipe.setIngredient('R', Material.REDSTONE);
-        recipe.setIngredient('M', Material.MAP, 1964);
-        recipe.setIngredient('Q', Material.QUARTZ);
-        plugin.getServer().addRecipe(recipe);
-        return recipe;
+        ShapedRecipe statcircuit = new ShapedRecipe(is);
+        statcircuit.shape("   ", "LRM", "QQQ");
+        statcircuit.setIngredient('L', Material.MAP, 1965);
+        statcircuit.setIngredient('R', Material.REDSTONE);
+        statcircuit.setIngredient('M', Material.MAP, 1964);
+        statcircuit.setIngredient('Q', Material.QUARTZ);
+        plugin.getServer().addRecipe(statcircuit);
+        return statcircuit;
     }
 
     public ShapedRecipe locator() {
@@ -117,12 +117,26 @@ public class TARDISItemRecipes {
         ItemMeta im = is.getItemMeta();
         im.setDisplayName("TARDIS Locator");
         is.setItemMeta(im);
-        ShapedRecipe recipe = new ShapedRecipe(is);
-        recipe.shape("OIO", "ICI", "OIO");
-        recipe.setIngredient('O', Material.OBSIDIAN);
-        recipe.setIngredient('I', Material.IRON_INGOT);
-        recipe.setIngredient('C', Material.MAP, 1965);
-        plugin.getServer().addRecipe(recipe);
-        return recipe;
+        ShapedRecipe locator = new ShapedRecipe(is);
+        locator.shape("OIO", "ICI", "OIO");
+        locator.setIngredient('O', Material.OBSIDIAN);
+        locator.setIngredient('I', Material.IRON_INGOT);
+        locator.setIngredient('C', Material.MAP, 1965);
+        plugin.getServer().addRecipe(locator);
+        return locator;
+    }
+
+    public ShapedRecipe sonic() {
+        ItemStack is = new ItemStack(Material.STICK, 1);
+        ItemMeta im = is.getItemMeta();
+        im.setDisplayName("Sonic Screwdriver");
+        im.setLore(Arrays.asList(new String[]{"Enter and exit your TARDIS"}));
+        is.setItemMeta(im);
+        ShapedRecipe sonic = new ShapedRecipe(is);
+        sonic.shape(" R ", " S ", " S ");
+        sonic.setIngredient('R', Material.REDSTONE);
+        sonic.setIngredient('S', Material.STICK);
+        plugin.getServer().addRecipe(sonic);
+        return sonic;
     }
 }

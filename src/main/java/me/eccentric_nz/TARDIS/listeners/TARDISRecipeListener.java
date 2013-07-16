@@ -16,15 +16,23 @@
  */
 package me.eccentric_nz.TARDIS.listeners;
 
+//import java.util.HashMap;
+//import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
+//import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
+//import me.eccentric_nz.TARDIS.utility.TARDISItemRenamer;
+//import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
+//import org.bukkit.event.inventory.CraftItemEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.inventory.Inventory;
+//import org.bukkit.inventory.ItemStack;
+//import org.bukkit.inventory.meta.ItemMeta;
 
 /**
  *
@@ -64,4 +72,38 @@ public class TARDISRecipeListener implements Listener {
             }
         }
     }
+    /**
+     * Changes the default crafted Sonic Screwdriver (TARDIS Key) to the
+     * Material type specified in the player's TARDIS preferences (if NOT a
+     * stick). Has huge potential for being a DIAMOND generator, as there is
+     * nothing stopping players from changing their key preference to a DIAMOND
+     * and crafting as many as they want! Could still be valid if a key material
+     * list is used and the items are of the same or lesser value that 2 sticks
+     * and a redstone, OR the recipe is changed to be really expensive.
+     */
+//    @EventHandler(priority = EventPriority.NORMAL)
+//    public void onRecipeResult(CraftItemEvent event) {
+//        ItemStack is = event.getRecipe().getResult();
+//        if (is.hasItemMeta()) {
+//            ItemMeta im = is.getItemMeta();
+//            if (im.hasLore()) {
+//                List<String> lore = im.getLore();
+//                if (im.getDisplayName().equals("Sonic Screwdriver") && lore.get(0).equals("Enter and exit your TARDIS")) {
+//                    String p = ((Player) event.getWhoClicked()).getName();
+//                    HashMap<String, Object> where = new HashMap<String, Object>();
+//                    where.put("player", p);
+//                    ResultSetPlayerPrefs rs = new ResultSetPlayerPrefs(plugin, where);
+//                    if (rs.resultSet()) {
+//                        Material m = Material.valueOf(rs.getKey());
+//                        if (!m.equals(Material.STICK)) {
+//                            ItemStack newis = new ItemStack(m, 1);
+//                            TARDISItemRenamer ir = new TARDISItemRenamer(newis);
+//                            ir.setName("Sonic Screwdriver", true);
+//                            event.setCurrentItem(newis);
+//                        }
+//                    }
+//                }
+//            }
+//        }
+//    }
 }

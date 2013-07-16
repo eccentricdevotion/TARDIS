@@ -288,6 +288,7 @@ public class TARDIS extends JavaPlugin {
             r.locator();
             r.locatorCircuit();
             r.materialisationCircuit();
+            r.sonic();
             r.stattenheim();
             r.stattenheimCircuit();
         }
