@@ -76,7 +76,7 @@ public class TARDISFarmer {
      * @param p the player to award achievements or give spawn eggs to
      * @return a List of the player's pets (if any are nearby)
      */
-    public List<TARDISMob> farmAnimals(Location l, COMPASS d, int id, Player p) {
+    public List<TARDISMob> farmAnimals(Location l, COMPASS d, int id, final Player p) {
         List<TARDISMob> old_macd_had_a_pet = new ArrayList<TARDISMob>();
         switch (d) {
             case NORTH:
@@ -401,6 +401,12 @@ public class TARDISFarmer {
             }
         }
         ent.remove();
+        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
+            @Override
+            public void run() {
+                plugin.trackFarming.remove(p.getName());
+            }
+        }, 20L);
         return old_macd_had_a_pet;
     }
 
