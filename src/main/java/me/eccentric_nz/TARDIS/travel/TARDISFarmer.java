@@ -149,6 +149,7 @@ public class TARDISFarmer {
                         TARDISHorse tmhor = new TARDISHorse();
                         tmhor.setAge(e.getTicksLived());
                         tmhor.setBaby(!horse.isAdult());
+                        tmhor.setHealth(horse.getHealth());
                         // get horse colour, style and variant
                         tmhor.setHorseColour(horse.getColor());
                         tmhor.setHorseStyle(horse.getStyle());
@@ -216,17 +217,17 @@ public class TARDISFarmer {
                             if (pet_name != null) {
                                 pet.setName(pet_name);
                             }
-                            int health;
+                            double health;
                             if (e.getType().equals(EntityType.WOLF)) {
                                 pet.setSitting(((Wolf) e).isSitting());
                                 pet.setColour(((Wolf) e).getCollarColor());
-                                health = (((Wolf) e).getHealth() > 8) ? 8 : (int) ((Wolf) e).getHealth();
+                                health = (((Wolf) e).getHealth() > 8D) ? 8D : ((Wolf) e).getHealth();
                                 pet.setHealth(health);
                                 pet.setBaby(!((Wolf) e).isAdult());
                             } else {
                                 pet.setSitting(((Ocelot) e).isSitting());
                                 pet.setCatType(((Ocelot) e).getCatType());
-                                health = (((Ocelot) e).getHealth() > 8) ? 8 : (int) ((Ocelot) e).getHealth();
+                                health = (((Ocelot) e).getHealth() > 8D) ? 8D : ((Ocelot) e).getHealth();
                                 pet.setHealth(health);
                                 pet.setBaby(!((Ocelot) e).isAdult());
                             }
@@ -328,7 +329,8 @@ public class TARDISFarmer {
                             }
                         }
                     }
-                } else if (!stable.isEmpty()) {
+                }
+                if (!stable.isEmpty()) {
                     // get location of farm room
                     String[] data = stable.split(":");
                     World world = plugin.getServer().getWorld(data[0]);
@@ -348,6 +350,7 @@ public class TARDISFarmer {
                             if (e.isBaby()) {
                                 equine.setBaby();
                             }
+                            equine.setHealth(e.getHealth());
                             equine.setVariant(e.getHorseVariant());
                             equine.setColor(e.getHorseColour());
                             equine.setStyle(e.getHorseStyle());
@@ -427,17 +430,17 @@ public class TARDISFarmer {
                         if (pet_name != null) {
                             pet.setName(pet_name);
                         }
-                        int health;
+                        double health;
                         if (e.getType().equals(EntityType.WOLF)) {
                             pet.setSitting(((Wolf) e).isSitting());
                             pet.setColour(((Wolf) e).getCollarColor());
-                            health = (((Wolf) e).getHealth() > 8) ? 8 : (int) ((Wolf) e).getHealth();
+                            health = (((Wolf) e).getHealth() > 8D) ? 8D : ((Wolf) e).getHealth();
                             pet.setHealth(health);
                             pet.setBaby(!((Wolf) e).isAdult());
                         } else {
                             pet.setSitting(((Ocelot) e).isSitting());
                             pet.setCatType(((Ocelot) e).getCatType());
-                            health = (((Ocelot) e).getHealth() > 8) ? 8 : (int) ((Ocelot) e).getHealth();
+                            health = (((Ocelot) e).getHealth() > 8D) ? 8D : ((Ocelot) e).getHealth();
                             pet.setHealth(health);
                             pet.setBaby(!((Ocelot) e).isAdult());
                         }

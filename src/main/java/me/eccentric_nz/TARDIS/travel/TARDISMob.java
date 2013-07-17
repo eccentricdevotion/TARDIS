@@ -33,7 +33,7 @@ public class TARDISMob {
     private EntityType type;
     private Type catType;
     private int age;
-    private int health;
+    private double health;
     private boolean sitting;
     private boolean baby;
     private boolean tamed;
@@ -70,11 +70,11 @@ public class TARDISMob {
         this.age = age;
     }
 
-    public int getHealth() {
+    public double getHealth() {
         return health;
     }
 
-    public void setHealth(int health) {
+    public void setHealth(double health) {
         this.health = health;
     }
 
