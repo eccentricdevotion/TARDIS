@@ -52,6 +52,7 @@ public class TARDISRecipeCommands implements CommandExecutor {
         firstArgs.add("l-circuit"); // Locator Circuit
         firstArgs.add("m-circuit"); // Materialisation Circuit
         firstArgs.add("s-circuit"); // Stattenheim Circuit
+        firstArgs.add("sonic"); // Sonic Screwdriver
     }
 
     @Override
@@ -82,6 +83,7 @@ public class TARDISRecipeCommands implements CommandExecutor {
             ItemStack qtz = new ItemStack(Material.QUARTZ, 1);
             ItemStack ing = new ItemStack(Material.IRON_INGOT, 1);
             ItemStack dio = new ItemStack(Material.DIODE, 1);
+            ItemStack sti = new ItemStack(Material.STICK, 1);
             ItemStack lap = new ItemStack(Material.INK_SACK, 1, (short) 4);
             if (args[0].equalsIgnoreCase("remote")) {
                 plugin.trackRecipeView.add(player.getName());
@@ -179,6 +181,15 @@ public class TARDISRecipeCommands implements CommandExecutor {
                 view.getTopInventory().setItem(7, qtz);
                 view.getTopInventory().setItem(8, qtz);
                 view.getTopInventory().setItem(9, qtz);
+                return true;
+            }
+            if (args[0].equalsIgnoreCase("sonic")) {
+                // recipe.shape(" R ", " S ", " S ");
+                plugin.trackRecipeView.add(player.getName());
+                InventoryView view = player.openWorkbench(null, true);
+                view.getTopInventory().setItem(2, red);
+                view.getTopInventory().setItem(5, sti);
+                view.getTopInventory().setItem(8, sti);
                 return true;
             }
         }
