@@ -1,8 +1,11 @@
 # TODO
 
 ## Current version `2.5-beta-1`
-1. Permission-based world creation - player's without permission use the default world, those with it get a TARDIS_WORLD
-2. Add Stattenheim Remote and TARDIS Locator to `give_key` feature
+1. Add Stattenheim Remote and TARDIS Locator to `give_key` feature
+
+### Waiting on Bukkit API
+1. Leashes
+2. Get/set horse speed (Attribute API)
 
 ## Next version `2.6+`
 1. TARDIS shield - this could be adapted, so that the TARDIS can land underwater
@@ -15,6 +18,7 @@
     * Police Box wall block - if not specified then plain tardis
     * Police Box lamp block - if not specified then plain tardis
 7. HADS + explosions + fireballs + lava
+8. Permission-based world creation - player's without permission use the default world, those with it get a TARDIS_WORLD
 
 ## Minecraft API when available `3.0?`
 1. Recreate everything with the new API :)

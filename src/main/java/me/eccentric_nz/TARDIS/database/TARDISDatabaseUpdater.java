@@ -188,7 +188,7 @@ public class TARDISDatabaseUpdater {
                     while (rst.next()) {
                         String home = rst.getString("home") + ":" + rst.getString("direction");
                         String update = String.format("UPDATE tardis SET home = '%s' WHERE tardis_id = %d", home, rst.getInt("tardis_id"));
-                        TARDIS.plugin.debug(update);
+                        // TARDIS.plugin.debug(update);
                         statement.executeUpdate(update);
                     }
                 }

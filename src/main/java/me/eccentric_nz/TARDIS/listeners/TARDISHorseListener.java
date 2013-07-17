@@ -79,7 +79,6 @@ public class TARDISHorseListener implements Listener {
                                 l.setX(l.getX() - 5);
                                 break;
                         }
-                        plugin.debug(l);
                         // save horse
                         TARDISHorse tmhor = new TARDISHorse();
                         tmhor.setAge(h.getTicksLived());
@@ -106,7 +105,6 @@ public class TARDISHorseListener implements Listener {
                                 world.getChunkAt(l).load();
                             }
                             Entity ent = world.spawnEntity(l, EntityType.HORSE);
-                            plugin.debug(ent.getLocation());
                             final Horse equine = (Horse) ent;
                             equine.setAge(tmhor.getAge());
                             equine.setVariant(tmhor.getHorseVariant());
