@@ -149,7 +149,7 @@ public class ResultSetTardis {
                     this.tardis_id = rs.getInt("tardis_id");
                     this.owner = rs.getString("owner");
                     this.chunk = rs.getString("chunk");
-                    this.direction = TARDISConstants.COMPASS.valueOf(rs.getString("direction"));
+                    this.direction = (!rs.getString("direction").isEmpty()) ? TARDISConstants.COMPASS.valueOf(rs.getString("direction")) : TARDISConstants.COMPASS.EAST;
                     this.schematic = TARDISConstants.SCHEMATIC.valueOf(rs.getString("size"));
                     this.home = rs.getString("home");
                     this.save = rs.getString("save");

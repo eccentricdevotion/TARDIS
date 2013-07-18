@@ -277,7 +277,7 @@ public class TARDISTravelCommands implements CommandExecutor {
                                 }
                             }
                             set.put("save", save_loc);
-                            if (!direction.isEmpty()) {
+                            if (!direction.isEmpty() && direction.length() < 6) {
                                 set.put("direction", direction);
                             }
                             qf.doUpdate("tardis", set, tid);

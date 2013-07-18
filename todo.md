@@ -2,6 +2,7 @@
 
 ## Current version `2.5-beta-1`
 1. Add Stattenheim Remote and TARDIS Locator to `give_key` feature
+2. Add areas to save-sign?
 
 ### Waiting on Bukkit API
 1. Leashes
