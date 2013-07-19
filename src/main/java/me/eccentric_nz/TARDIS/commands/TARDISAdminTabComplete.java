@@ -30,6 +30,8 @@ import org.bukkit.util.StringUtil;
 public class TARDISAdminTabComplete implements TabCompleter {
 
     private TARDIS plugin;
+    private final ImmutableList<String> DIFFICULTY_SUBS = ImmutableList.of("easy", "normal", "hard");
+    private final ImmutableList<String> BOOL_SUBS = ImmutableList.of("true", "false");
 
     public TARDISAdminTabComplete(TARDIS plugin) {
         this.plugin = plugin;
@@ -37,8 +39,16 @@ public class TARDISAdminTabComplete implements TabCompleter {
 
     @Override
     public List<String> onTabComplete(CommandSender sender, Command command, String label, String[] args) {
+        String lastArg = args[args.length - 1];
         if (args.length <= 1) {
             return partial(args[0], combineLists());
+        } else if (args.length == 2) {
+            String sub = args[0];
+            if (sub.equals("difficulty")) {
+                return partial(lastArg, DIFFICULTY_SUBS);
+            } else {
+                return partial(lastArg, BOOL_SUBS);
+            }
         }
         return ImmutableList.of();
     }
