@@ -100,6 +100,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Chunk;
 import org.bukkit.Material;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.command.ConsoleCommandSender;
@@ -285,6 +286,8 @@ public class TARDIS extends JavaPlugin {
         tp = getServerTP();
         //new TARDISPasteBox(this).loadBoxes();
         if (bukkitversion.compareTo(preIMversion) >= 0) {
+            // copy maps
+            checkMaps();
             // register recipes
             TARDISItemRecipes r = new TARDISItemRecipes(this);
             r.locator();
@@ -726,6 +729,38 @@ public class TARDIS extends JavaPlugin {
             if (p != null) {
                 p.resetPlayerTime();
             }
+        }
+    }
+
+    private void checkMaps() {
+        // get server's main world folder
+        String s_world = getServer().getWorlds().get(0).getName();
+        String server_world = s_world + File.separator + "data" + File.separator;
+        String map = "map_1963.dat";
+        String root = new File("." + File.separator + server_world).getAbsolutePath();
+        File file = new File(root, map);
+        if (!file.exists()) {
+            String map2 = "map_1964.dat";
+            String map3 = "map_1965.dat";
+            console.sendMessage(pluginName + ChatColor.RED + "Could not find TARDIS map files, some recipes will not work!");
+            console.sendMessage(pluginName + "Copying map files to the TARDIS folder...");
+            TARDISMakeTardisCSV copier = new TARDISMakeTardisCSV(plugin);
+            copier.copy(getDataFolder() + File.separator + map, getResource(map));
+            copier.copy(getDataFolder() + File.separator + map2, getResource(map2));
+            copier.copy(getDataFolder() + File.separator + map3, getResource(map3));
+            console.sendMessage(pluginName + "Please move the map files to the main world [" + s_world + "] data folder.");
+            getServer().getScheduler().scheduleSyncDelayedTask(this, new Runnable() {
+                @Override
+                public void run() {
+                    Set<OfflinePlayer> ops = getServer().getOperators();
+                    for (OfflinePlayer olp : ops) {
+                        if (olp.isOnline()) {
+                            Player p = (Player) olp;
+                            p.sendMessage(pluginName + ChatColor.RED + "Could not find TARDIS map files, some recipes will not work!");
+                        }
+                    }
+                }
+            }, 200L);
         }
     }
 
