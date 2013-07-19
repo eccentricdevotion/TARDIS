@@ -142,7 +142,7 @@ public class TARDISFarmer {
                         if (brokenin.isTamed()) {
 //                            plugin.debug("Horse owner: " + brokenin.getOwner().getName());
 //                            plugin.debug("Timelord: " + p.getName());
-                            if (!brokenin.getOwner().getName().equals(p.getName())) {
+                            if (brokenin.getOwner() != null && !brokenin.getOwner().getName().equals(p.getName())) {
                                 break;
                             }
                         }
