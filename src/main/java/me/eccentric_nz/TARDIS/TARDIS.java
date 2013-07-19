@@ -79,6 +79,7 @@ import me.eccentric_nz.TARDIS.listeners.TARDISSaveSignListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISScannerListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISSignListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISStattenheimListener;
+import me.eccentric_nz.TARDIS.listeners.TARDISTeleportListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISTemporalLocatorListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISTerminalListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISTimeLordDeathListener;
@@ -399,6 +400,7 @@ public class TARDIS extends JavaPlugin {
         pm.registerEvents(new TARDISRecipeListener(this), this);
         pm.registerEvents(new TARDISHotbarListener(this), this);
         pm.registerEvents(new TARDISHorseListener(this), this);
+        pm.registerEvents(new TARDISTeleportListener(this), this);
     }
 
     /**
