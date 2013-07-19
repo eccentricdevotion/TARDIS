@@ -58,10 +58,11 @@ public class TARDISHorseListener implements Listener {
             if (passenger != null && m.equals(Material.WOOD_PLATE)) {
                 if (passenger instanceof Player) {
                     final Player p = (Player) passenger;
+                    String pworld = p.getLocation().getWorld().getName();
                     HashMap<String, Object> wherep = new HashMap<String, Object>();
                     wherep.put("player", p.getName());
                     ResultSetTravellers rst = new ResultSetTravellers(plugin, wherep, false);
-                    if (rst.resultSet()) {
+                    if (rst.resultSet() && pworld.contains("TARDIS")) {
                         // get spawn location
                         TARDISDoorLocation dl = plugin.doorListener.getDoor(0, rst.getTardis_id());
                         Location l = dl.getL();
