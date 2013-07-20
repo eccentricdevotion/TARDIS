@@ -47,6 +47,7 @@ import me.eccentric_nz.TARDIS.files.TARDISMakeTardisCSV;
 import me.eccentric_nz.TARDIS.files.TARDISUpdateChecker;
 import me.eccentric_nz.TARDIS.listeners.TARDISARSListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISAdminMenuListener;
+import me.eccentric_nz.TARDIS.listeners.TARDISAnvilListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISAreaListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISArtronCapacitorListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISBindListener;
@@ -404,6 +405,7 @@ public class TARDIS extends JavaPlugin {
         pm.registerEvents(new TARDISHotbarListener(this), this);
         pm.registerEvents(new TARDISHorseListener(this), this);
         pm.registerEvents(new TARDISTeleportListener(this), this);
+        pm.registerEvents(new TARDISAnvilListener(this), this);
     }
 
     /**
