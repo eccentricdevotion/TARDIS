@@ -222,7 +222,7 @@ public class TARDISUpdateListener implements Listener {
                 blockLocStr = bw.getName() + ":" + bx + ":" + by + ":" + bz;
                 set.put(blockName.toLowerCase(Locale.ENGLISH), blockLocStr);
             }
-            if (blockName.equalsIgnoreCase("creeper") && blockType == Material.COMMAND) {
+            if (blockName.equalsIgnoreCase("creeper")) {
                 blockLocStr = bw.getName() + ":" + bx + ".5:" + by + ":" + bz + ".5";
                 set.put("creeper", blockLocStr);
             }
