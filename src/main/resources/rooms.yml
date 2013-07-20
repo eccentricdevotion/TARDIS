@@ -123,6 +123,6 @@ rooms:
   RAIL:
     enabled: true
     cost: 650
-    offset: -2
+    offset: -1
     seed: HOPPER
     user: false
