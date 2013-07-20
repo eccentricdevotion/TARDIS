@@ -77,19 +77,25 @@ public class TARDISAdminMenuListener implements Listener {
             int slot = event.getRawSlot();
             if (slot < 54) {
                 String option = getDisplay(inv, slot);
-                boolean bool = plugin.getConfig().getBoolean(option);
-                plugin.getConfig().set(option, !bool);
-                String lore = (bool) ? "false" : "true";
-                setLore(inv, slot, lore);
-                plugin.saveConfig();
+                if (!option.isEmpty()) {
+                    boolean bool = plugin.getConfig().getBoolean(option);
+                    plugin.getConfig().set(option, !bool);
+                    String lore = (bool) ? "false" : "true";
+                    setLore(inv, slot, lore);
+                    plugin.saveConfig();
+                }
             }
         }
     }
 
     private String getDisplay(Inventory inv, int slot) {
         ItemStack is = inv.getItem(slot);
-        ItemMeta im = is.getItemMeta();
-        return im.getDisplayName();
+        if (is != null) {
+            ItemMeta im = is.getItemMeta();
+            return im.getDisplayName();
+        } else {
+            return "";
+        }
     }
 
     private void setLore(Inventory inv, int slot, String str) {
