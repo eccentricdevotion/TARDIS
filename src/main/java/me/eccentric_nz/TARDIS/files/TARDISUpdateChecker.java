@@ -123,7 +123,11 @@ public class TARDISUpdateChecker {
         BufferedReader in = null;
         try {
             in = new BufferedReader(new InputStreamReader(url.openStream()));
-            version = in.readLine();
+            try {
+                version = in.readLine();
+            } catch (IllegalArgumentException e) {
+                version = "2";
+            }
         } catch (IOException ex) {
             plugin.debug("" + ex);
         } finally {

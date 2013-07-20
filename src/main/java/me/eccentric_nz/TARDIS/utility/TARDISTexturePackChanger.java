@@ -46,8 +46,10 @@ public class TARDISTexturePackChanger {
         // check the URL
         try {
             new URL(url);
-            String player = p.getName();
-            plugin.getServer().getPlayer(player).setTexturePack(url);
+            if (p.isOnline()) {
+                String player = p.getName();
+                plugin.getServer().getPlayer(player).setTexturePack(url);
+            }
         } catch (MalformedURLException e) {
             p.sendMessage(plugin.pluginName + "Could not access the URL! " + e.getMessage());
         }
