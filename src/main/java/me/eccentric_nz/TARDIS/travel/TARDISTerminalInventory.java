@@ -50,17 +50,17 @@ public class TARDISTerminalInventory {
         ItemMeta im10 = ten.getItemMeta();
         im10.setDisplayName("Step: " + (10 * step));
         ten.setItemMeta(im10);
-        // 10
+        // 25
         ItemStack twentyfive = new ItemStack(35, 1, (byte) 8);
         ItemMeta im25 = twentyfive.getItemMeta();
         im25.setDisplayName("Step: " + (25 * step));
         twentyfive.setItemMeta(im25);
-        // 10
+        // 50
         ItemStack fifty = new ItemStack(35, 1, (byte) 7);
         ItemMeta im50 = fifty.getItemMeta();
         im50.setDisplayName("Step: " + (50 * step));
         fifty.setItemMeta(im50);
-        // 10
+        // 100
         ItemStack onehundred = new ItemStack(35, 1, (byte) 15);
         ItemMeta im100 = onehundred.getItemMeta();
         im100.setDisplayName("Step: " + (100 * step));
