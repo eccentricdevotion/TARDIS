@@ -390,7 +390,7 @@ public class TARDISTerminalListener implements Listener {
                                 int[] estart = tt.getStartLocation(loc, d);
                                 int esafe = tt.safeLocation(estart[0], endy, estart[2], estart[1], estart[3], w, d);
                                 if (esafe == 0) {
-                                    String save = world + ":" + slotx + ":" + endy + ":" + slotz;
+                                    String save = world + ":" + slotx + ":" + endy + ":" + slotz + ":" + d.toString();
                                     if (respect.getRespect(p, new Location(w, slotx, endy, slotz), false)) {
                                         terminalDestination.put(name, save);
                                         lore.add(save);
@@ -411,7 +411,7 @@ public class TARDISTerminalListener implements Listener {
                             break;
                         case NETHER:
                             if (tt.safeNether(w, slotx, slotz, d, p)) {
-                                String save = world + ":" + slotx + ":" + getHighestNetherBlock(w, slotx, slotz) + ":" + slotz;
+                                String save = world + ":" + slotx + ":" + getHighestNetherBlock(w, slotx, slotz) + ":" + slotz + ":" + d.toString();
                                 terminalDestination.put(name, save);
                                 lore.add(save);
                                 lore.add("is a valid destination!");
@@ -426,7 +426,7 @@ public class TARDISTerminalListener implements Listener {
                             int starty = w.getHighestBlockYAt(slotx, slotz);
                             int safe = tt.safeLocation(start[0], starty, start[2], start[1], start[3], w, d);
                             if (safe == 0) {
-                                String save = world + ":" + slotx + ":" + starty + ":" + slotz;
+                                String save = world + ":" + slotx + ":" + starty + ":" + slotz + ":" + d.toString();
                                 if (respect.getRespect(p, new Location(w, slotx, starty, slotz), false)) {
                                     terminalDestination.put(name, save);
                                     lore.add(save);

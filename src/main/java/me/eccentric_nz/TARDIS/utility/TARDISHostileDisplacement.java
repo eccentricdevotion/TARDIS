@@ -136,6 +136,9 @@ public class TARDISHostileDisplacement {
                                     }
                                 }
                             }
+                        } else {
+                            plugin.trackDamage.remove(Integer.valueOf(id));
+                            player.sendMessage(plugin.pluginName + "HADS could not be engaged because the TARDIS cannot land on water!");
                         }
                     }
                 }

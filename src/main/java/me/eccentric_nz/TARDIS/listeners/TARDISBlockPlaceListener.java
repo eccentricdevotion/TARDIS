@@ -204,14 +204,14 @@ public class TARDISBlockPlaceListener implements Listener {
                         // save data to database (tardis table)
                         final Location block_loc = blockBottom.getLocation();
                         String chun = cw + ":" + cx + ":" + cz;
-                        String home = block_loc.getWorld().getName() + ":" + block_loc.getBlockX() + ":" + block_loc.getBlockY() + ":" + block_loc.getBlockZ() + ":" + d;
-                        String save = block_loc.getWorld().getName() + ":" + block_loc.getBlockX() + ":" + block_loc.getBlockY() + ":" + block_loc.getBlockZ();
+                        //String home = block_loc.getWorld().getName() + ":" + block_loc.getBlockX() + ":" + block_loc.getBlockY() + ":" + block_loc.getBlockZ() + ":" + d;
+                        String save = block_loc.getWorld().getName() + ":" + block_loc.getBlockX() + ":" + block_loc.getBlockY() + ":" + block_loc.getBlockZ() + ":" + d;
                         QueryFactory qf = new QueryFactory(plugin);
                         HashMap<String, Object> set = new HashMap<String, Object>();
                         set.put("owner", playerNameStr);
                         set.put("chunk", chun);
                         set.put("direction", d);
-                        set.put("home", home);
+                        set.put("home", save);
                         set.put("save", save);
                         set.put("current", save);
                         set.put("size", schm.name());

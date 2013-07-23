@@ -141,7 +141,7 @@ public class TARDISButtonListener implements Listener {
                                         if (l == null) {
                                             player.sendMessage(plugin.pluginName + "All available parking spots are taken in this area!");
                                         } else {
-                                            d = l.getWorld().getName() + ":" + l.getBlockX() + ":" + l.getBlockY() + ":" + l.getBlockZ();
+                                            d = l.getWorld().getName() + ":" + l.getBlockX() + ":" + l.getBlockY() + ":" + l.getBlockZ() + ":" + dir.toString();
                                             player.sendMessage(plugin.pluginName + "Your TARDIS was approved for parking in [" + permArea + "]!");
                                             set_dest = true;
                                         }
@@ -190,7 +190,7 @@ public class TARDISButtonListener implements Listener {
                                             TARDISTimeTravel tt = new TARDISTimeTravel(plugin);
                                             Location rand = tt.randomDestination(player, repeaters[1], repeaters[2], repeaters[3], dir, environment, current[0]);
                                             if (rand != null) {
-                                                d = rand.getWorld().getName() + ":" + rand.getBlockX() + ":" + rand.getBlockY() + ":" + rand.getBlockZ();
+                                                d = rand.getWorld().getName() + ":" + rand.getBlockX() + ":" + rand.getBlockY() + ":" + rand.getBlockZ() + ":" + dir.toString();
                                                 set_dest = true;
                                                 String dchat = rand.getWorld().getName() + " at x: " + rand.getBlockX() + " y: " + rand.getBlockY() + " z: " + rand.getBlockZ();
                                                 boolean isTL = true;

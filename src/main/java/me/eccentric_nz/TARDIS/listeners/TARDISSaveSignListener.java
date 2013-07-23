@@ -69,11 +69,12 @@ public class TARDISSaveSignListener implements Listener {
                     ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
                     if (rs.resultSet()) {
                         int id = rs.getTardis_id();
+                        String d = rs.getDirection().toString();
                         ItemStack is = inv.getItem(slot);
                         if (is != null) {
                             ItemMeta im = is.getItemMeta();
                             List<String> lore = im.getLore();
-                            String save = getDestination(lore);
+                            String save = getDestination(lore, d);
                             if (!save.equals(rs.getCurrent())) {
                                 HashMap<String, Object> set = new HashMap<String, Object>();
                                 if (lore.size() == 5 && !lore.get(4).isEmpty()) {
@@ -108,8 +109,12 @@ public class TARDISSaveSignListener implements Listener {
      * @param lore the lore to read
      * @return the destination string
      */
-    private String getDestination(List<String> lore) {
-        return lore.get(0) + ":" + lore.get(1) + ":" + lore.get(2) + ":" + lore.get(3);
+    private String getDestination(List<String> lore, String d) {
+        if (lore.size() > 4) {
+            return lore.get(0) + ":" + lore.get(1) + ":" + lore.get(2) + ":" + lore.get(3) + ":" + lore.get(3);
+        } else {
+            return lore.get(0) + ":" + lore.get(1) + ":" + lore.get(2) + ":" + lore.get(3) + ":" + d;
+        }
     }
 
     /**

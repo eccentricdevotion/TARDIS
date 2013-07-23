@@ -171,7 +171,7 @@ public class TARDISStattenheimListener implements Listener {
                         z = plugin.utils.parseNum(saveData[3]);
                         final Location oldSave = w.getBlockAt(x, y, z).getLocation();
                         //rs.close();
-                        String comehere = remoteLocation.getWorld().getName() + ":" + remoteLocation.getBlockX() + ":" + remoteLocation.getBlockY() + ":" + remoteLocation.getBlockZ();
+                        String comehere = remoteLocation.getWorld().getName() + ":" + remoteLocation.getBlockX() + ":" + remoteLocation.getBlockY() + ":" + remoteLocation.getBlockZ() + ":" + d.toString();
                         final boolean hidden = rs.isHidden();
                         QueryFactory qf = new QueryFactory(plugin);
                         HashMap<String, Object> tid = new HashMap<String, Object>();

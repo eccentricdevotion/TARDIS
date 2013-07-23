@@ -147,7 +147,7 @@ public class TARDISTimeLordDeathListener implements Listener {
                                         plugin.buildPB.buildPoliceBox(id, auto_loc, d, cham, player, false, false);
                                     }
                                 }, 200L);
-                                String save_loc = goto_loc.getWorld().getName() + ":" + goto_loc.getBlockX() + ":" + goto_loc.getBlockY() + ":" + goto_loc.getBlockZ();
+                                String save_loc = goto_loc.getWorld().getName() + ":" + goto_loc.getBlockX() + ":" + goto_loc.getBlockY() + ":" + goto_loc.getBlockZ() + ":" + d.toString();
                                 set.put("save", save_loc);
                                 set.put("current", save_loc);
                                 HashMap<String, Object> tid = new HashMap<String, Object>();

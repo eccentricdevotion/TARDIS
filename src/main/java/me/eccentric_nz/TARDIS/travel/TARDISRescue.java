@@ -82,7 +82,7 @@ public class TARDISRescue {
             player.sendMessage(plugin.pluginName + "The server does not allow time travel to this world!");
             return true;
         }
-        String save_loc = player_loc.getWorld().getName() + ":" + (player_loc.getBlockX() - move) + ":" + player_loc.getBlockY() + ":" + player_loc.getBlockZ();
+        String save_loc = player_loc.getWorld().getName() + ":" + (player_loc.getBlockX() - move) + ":" + player_loc.getBlockY() + ":" + player_loc.getBlockZ() + ":" + d.toString();
         HashMap<String, Object> set = new HashMap<String, Object>();
         HashMap<String, Object> where = new HashMap<String, Object>();
         where.put("tardis_id", id);
