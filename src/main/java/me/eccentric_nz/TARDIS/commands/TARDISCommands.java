@@ -524,14 +524,14 @@ public class TARDISCommands implements CommandExecutor {
                         }
                         int id = rs.getTardis_id();
                         HashMap<String, Object> wheret = new HashMap<String, Object>();
-                        wheret.put("tardis_id", id);
+                        //wheret.put("tardis_id", id);
                         wheret.put("player", player.getName());
                         ResultSetTravellers rst = new ResultSetTravellers(plugin, wheret, false);
                         String occupied;
                         QueryFactory qf = new QueryFactory(plugin);
                         if (rst.resultSet()) {
                             HashMap<String, Object> whered = new HashMap<String, Object>();
-                            whered.put("tardis_id", id);
+                            //whered.put("tardis_id", id);
                             whered.put("player", player.getName());
                             qf.doDelete("travellers", whered);
                             occupied = ChatColor.RED + "UNOCCUPIED";
