@@ -22,6 +22,7 @@ import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.travel.TARDISDoorLocation;
 import me.eccentric_nz.TARDIS.travel.TARDISHorse;
+import me.eccentric_nz.tardishorsespeed.TardisHorseSpeed;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -94,6 +95,12 @@ public class TARDISHorseListener implements Listener {
                         tmhor.setHorseInventory(h.getInventory().getContents());
                         tmhor.setDomesticity(h.getDomestication());
                         tmhor.setJumpStrength(h.getJumpStrength());
+                        tmhor.setHealth(h.getHealth());
+                        if (plugin.pm.isPluginEnabled("TardisHorseSpeed")) {
+                            TardisHorseSpeed ths = (TardisHorseSpeed) plugin.pm.getPlugin("TardisHorseSpeed");
+                            double speed = ths.getHorseSpeed(h);
+                            tmhor.setSpeed(speed);
+                        }
                         // eject player
                         // if (p.leaveVehicle()) {
                         if (h.eject()) {
@@ -116,8 +123,13 @@ public class TARDISHorseListener implements Listener {
                             if (tmhor.hasChest()) {
                                 equine.setCarryingChest(true);
                             }
+                            equine.setHealth(tmhor.getHealth());
                             InventoryHolder ih = (InventoryHolder) equine;
                             ih.getInventory().setContents(tmhor.getHorseinventory());
+                            if (plugin.pm.isPluginEnabled("TardisHorseSpeed")) {
+                                TardisHorseSpeed ths = (TardisHorseSpeed) plugin.pm.getPlugin("TardisHorseSpeed");
+                                ths.setHorseSpeed(equine, tmhor.getSpeed());
+                            }
                             Tameable tamed = (Tameable) equine;
                             tamed.setTamed(true);
                             tamed.setOwner(p);
