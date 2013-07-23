@@ -86,13 +86,20 @@ public class TARDISHostileDisplacement {
                             y = l.getWorld().getHighestBlockAt(l).getY();
                         }
                         l.setY(y);
-                        if (l.getBlock().getRelative(BlockFace.DOWN).isLiquid() && !plugin.getConfig().getBoolean("land_on_water")) {
+                        if (l.getBlock().getRelative(BlockFace.DOWN).isLiquid() && !plugin.getConfig().getBoolean("land_on_water") && !plugin.trackSubmarine.contains(id)) {
                             bool = false;
                         }
                         final Player player = plugin.getServer().getPlayer(owner);
                         if (bool) {
-                            int[] start = tt.getStartLocation(l, d);
-                            if (tt.safeLocation(start[0], y, start[2], start[1], start[3], l.getWorld(), d) < 1) {
+                            boolean safe;
+                            if (plugin.trackSubmarine.contains(id)) {
+                                Location sub = tt.submarine(l.getBlock(), d);
+                                safe = tt.isSafeSubmarine(sub, d);
+                            } else {
+                                int[] start = tt.getStartLocation(l, d);
+                                safe = (tt.safeLocation(start[0], y, start[2], start[1], start[3], l.getWorld(), d) < 1);
+                            }
+                            if (safe) {
                                 final Location fl = l;
                                 TARDISPluginRespect pr = new TARDISPluginRespect(plugin);
                                 if (pr.getRespect(player, l, false)) {
@@ -136,6 +143,9 @@ public class TARDISHostileDisplacement {
                                     }
                                 }
                             }
+                        } else {
+                            plugin.trackDamage.remove(Integer.valueOf(id));
+                            player.sendMessage(plugin.pluginName + "HADS could not be engaged because the TARDIS cannot land on water!");
                         }
                     }
                 }

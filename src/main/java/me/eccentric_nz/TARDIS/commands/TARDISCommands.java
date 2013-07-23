@@ -50,6 +50,7 @@ import me.eccentric_nz.TARDIS.utility.TARDISLister;
 import me.eccentric_nz.tardischunkgenerator.TARDISChunkGenerator;
 import org.bukkit.*;
 import org.bukkit.block.Block;
+import org.bukkit.block.BlockFace;
 import org.bukkit.block.Sign;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -79,12 +80,14 @@ public class TARDISCommands implements CommandExecutor {
     public TARDISCommands(TARDIS plugin) {
         this.plugin = plugin;
         // add transparent blocks
-        transparent.add((byte) Material.AIR.getId());
-        transparent.add((byte) Material.DEAD_BUSH.getId());
-        transparent.add((byte) Material.IRON_FENCE.getId());
-        transparent.add((byte) Material.LONG_GRASS.getId());
-        transparent.add((byte) Material.SNOW.getId());
-        transparent.add((byte) Material.VINE.getId());
+        transparent.add((byte) 0); // AIR
+        transparent.add((byte) 8); // WATER
+        transparent.add((byte) 9); // STATIONARY_WATER
+        transparent.add((byte) 31); // LONG_GRASS
+        transparent.add((byte) 32); //DEAD_BUSH
+        transparent.add((byte) 78); // SNOW
+        transparent.add((byte) 101); // IRON_FENCE
+        transparent.add((byte) 106); // VINE
         // add first arguments
         firstArgs.add("add");
         firstArgs.add("chameleon");
@@ -531,7 +534,7 @@ public class TARDISCommands implements CommandExecutor {
                         QueryFactory qf = new QueryFactory(plugin);
                         if (rst.resultSet()) {
                             HashMap<String, Object> whered = new HashMap<String, Object>();
-                            whered.put("tardis_id", id);
+                            //whered.put("tardis_id", id);
                             whered.put("player", player.getName());
                             qf.doDelete("travellers", whered);
                             occupied = ChatColor.RED + "UNOCCUPIED";
@@ -607,9 +610,23 @@ public class TARDISCommands implements CommandExecutor {
                             }
                             final TARDISConstants.COMPASS d = rs.getDirection();
                             TARDISTimeTravel tt = new TARDISTimeTravel(plugin);
-                            int[] start_loc = tt.getStartLocation(eyeLocation, d);
-                            // safeLocation(int startx, int starty, int startz, int resetx, int resetz, World w, TARDISConstants.COMPASS d)
-                            int count = tt.safeLocation(start_loc[0], eyeLocation.getBlockY(), start_loc[2], start_loc[1], start_loc[3], eyeLocation.getWorld(), d);
+                            int count;
+                            String sub = "false";
+                            Block b = eyeLocation.getBlock();
+                            if (b.getRelative(BlockFace.UP).getTypeId() == 8 || b.getRelative(BlockFace.UP).getTypeId() == 9) {
+                                count = (tt.isSafeSubmarine(eyeLocation, d)) ? 0 : 1;
+                                if (count == 0) {
+                                    plugin.trackSubmarine.add(id);
+                                    sub = "true";
+                                }
+                            } else {
+                                if (plugin.trackSubmarine.contains(Integer.valueOf(id))) {
+                                    plugin.trackSubmarine.remove(Integer.valueOf(id));
+                                }
+                                int[] start_loc = tt.getStartLocation(eyeLocation, d);
+                                // safeLocation(int startx, int starty, int startz, int resetx, int resetz, World w, TARDISConstants.COMPASS d)
+                                count = tt.safeLocation(start_loc[0], eyeLocation.getBlockY(), start_loc[2], start_loc[1], start_loc[3], eyeLocation.getWorld(), d);
+                            }
                             if (count > 0) {
                                 sender.sendMessage(plugin.pluginName + "That location would grief existing blocks! Try somewhere else!");
                                 return true;
@@ -635,8 +652,7 @@ public class TARDISCommands implements CommandExecutor {
                                 y = plugin.utils.parseNum(saveData[2]);
                                 z = plugin.utils.parseNum(saveData[3]);
                                 final Location oldSave = w.getBlockAt(x, y, z).getLocation();
-                                //rs.close();
-                                String comehere = eyeLocation.getWorld().getName() + ":" + eyeLocation.getBlockX() + ":" + eyeLocation.getBlockY() + ":" + eyeLocation.getBlockZ();
+                                String comehere = eyeLocation.getWorld().getName() + ":" + eyeLocation.getBlockX() + ":" + eyeLocation.getBlockY() + ":" + eyeLocation.getBlockZ() + ":" + d.toString() + ":" + sub;
                                 final boolean hidden = rs.isHidden();
                                 QueryFactory qf = new QueryFactory(plugin);
                                 HashMap<String, Object> tid = new HashMap<String, Object>();

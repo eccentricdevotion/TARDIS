@@ -66,12 +66,14 @@ public class TARDISPrefsCommands implements CommandExecutor {
         firstArgs.add("hads");
         firstArgs.add("isomorphic");
         firstArgs.add("key");
+        firstArgs.add("lamp");
+        firstArgs.add("plain");
         firstArgs.add("platform");
         firstArgs.add("quotes");
         firstArgs.add("sfx");
-        firstArgs.add("wall");
-        firstArgs.add("lamp");
         firstArgs.add("sign");
+        firstArgs.add("submarine");
+        firstArgs.add("wall");
     }
 
     @Override
@@ -230,7 +232,7 @@ public class TARDISPrefsCommands implements CommandExecutor {
                         sender.sendMessage(plugin.pluginName + "You need to specify if " + pref + " should be on or off!");
                         return false;
                     }
-                    List<String> was = Arrays.asList(new String[]{"auto", "beacon", "platform", "eps", "hads", "plain"});
+                    List<String> was = Arrays.asList(new String[]{"auto", "beacon", "platform", "eps", "hads", "plain", "submarine"});
 
                     HashMap<String, Object> setp = new HashMap<String, Object>();
                     HashMap<String, Object> wherep = new HashMap<String, Object>();

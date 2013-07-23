@@ -17,15 +17,20 @@
 package me.eccentric_nz.TARDIS.travel;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
 import java.util.Set;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
+import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
+import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.World.Environment;
+import org.bukkit.block.Biome;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Player;
@@ -193,7 +198,29 @@ public class TARDISTimeTravel {
                     if (highest > 3) {
                         Block currentBlock = randworld.getBlockAt(wherex, highest, wherez);
                         if ((currentBlock.getRelative(BlockFace.DOWN).getTypeId() == 8 || currentBlock.getRelative(BlockFace.DOWN).getTypeId() == 9) && plugin.getConfig().getBoolean("land_on_water") == false) {
-                            count = 1;
+                            // check if submarine is on
+                            HashMap<String, Object> wheres = new HashMap<String, Object>();
+                            wheres.put("player", p.getName());
+                            ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, wheres);
+                            if (rsp.resultSet() && rsp.isSubmarine_on() && currentBlock.getBiome().equals(Biome.OCEAN)) {
+                                // get submarine location
+                                p.sendMessage(plugin.pluginName + "Searching for underwater location...");
+                                Location underwater = submarine(currentBlock, d);
+                                if (underwater != null) {
+                                    // get TARDIS id
+                                    HashMap<String, Object> wherep = new HashMap<String, Object>();
+                                    wherep.put("player", p.getName());
+                                    ResultSetTravellers rst = new ResultSetTravellers(plugin, wherep, false);
+                                    if (rst.resultSet()) {
+                                        plugin.trackSubmarine.add(Integer.valueOf(rst.getTardis_id()));
+                                    }
+                                    return underwater;
+                                } else {
+                                    count = 1;
+                                }
+                            } else {
+                                count = 1;
+                            }
                         } else {
                             if (goodMaterials.contains(currentBlock.getType())) {
                                 currentBlock = currentBlock.getRelative(BlockFace.DOWN);
@@ -464,12 +491,10 @@ public class TARDISTimeTravel {
         if (rx >= 12 && rx <= 15) {
             wherex += (quarter * 4);
         }
-
         // add chance of negative values
         if (rand.nextInt(2) == 1) {
             wherex = 0 - wherex;
         }
-
         // use multiplier based on position of third (y) repeater
         if (ry >= 4 && ry <= 7) {
             wherex *= 2;
@@ -509,13 +534,10 @@ public class TARDISTimeTravel {
         if (rz >= 12 && rz <= 15) {
             wherez += (quarter * 4);
         }
-
         // add chance of negative values
         if (rand.nextInt(2) == 1) {
             wherez = 0 - wherez;
         }
-
-
         // use multiplier based on position of third (y) repeater
         if (ry >= 4 && ry <= 7) {
             wherez *= 2;
@@ -527,5 +549,61 @@ public class TARDISTimeTravel {
             wherez *= 4;
         }
         return wherez;
+    }
+    private List<BlockFace> marine_faces = Arrays.asList(new BlockFace[]{BlockFace.EAST, BlockFace.NORTH, BlockFace.NORTH_EAST, BlockFace.NORTH_WEST, BlockFace.SOUTH, BlockFace.SOUTH_EAST, BlockFace.SOUTH_WEST, BlockFace.WEST});
+
+    public Location submarine(Block b, TARDISConstants.COMPASS d) {
+        Block block = b;
+        boolean bottom = false;
+        while (bottom == false) {
+            block = block.getRelative(BlockFace.DOWN);
+            if (block.getTypeId() != 8 && block.getTypeId() != 9) {
+                bottom = true;
+                break;
+            }
+        }
+        Location loc = block.getRelative(BlockFace.UP).getLocation();
+        return (isSafeSubmarine(loc, d)) ? loc : null;
+    }
+
+    public boolean isSafeSubmarine(Location l, TARDISConstants.COMPASS d) {
+        int[] s = getStartLocation(l, d);
+        int level, row, col, rowcount, colcount, count = 0;
+        int starty = l.getBlockY();
+        switch (d) {
+            case EAST:
+            case WEST:
+                rowcount = 3;
+                colcount = 4;
+                break;
+            default:
+                rowcount = 4;
+                colcount = 3;
+                break;
+        }
+        for (level = 0; level < 4; level++) {
+            for (row = 0; row < rowcount; row++) {
+                for (col = 0; col < colcount; col++) {
+                    int id = l.getWorld().getBlockAt(s[0], starty, s[2]).getTypeId();
+                    if (!isItWaterSafe(id)) {
+                        count++;
+                    }
+                    s[0] += 1;
+                }
+                s[0] = s[1];
+                s[2] += 1;
+            }
+            s[2] = s[3];
+            starty += 1;
+        }
+        return (count == 0) ? true : false;
+    }
+
+    private boolean isItWaterSafe(int id) {
+        boolean safe = false;
+        if (id == 8 || id == 9 || id == 0) {
+            safe = true;
+        }
+        return safe;
     }
 }

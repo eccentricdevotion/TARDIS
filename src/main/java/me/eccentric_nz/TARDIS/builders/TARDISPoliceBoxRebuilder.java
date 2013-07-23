@@ -45,8 +45,10 @@ public class TARDISPoliceBoxRebuilder {
     private byte data;
     private int lamp;
     private boolean plain;
+    private boolean sub;
+    private Block sponge;
 
-    public TARDISPoliceBoxRebuilder(TARDIS plugin, Location location, int mat, byte data, int tid, TARDISConstants.COMPASS d, int lamp, boolean plain) {
+    public TARDISPoliceBoxRebuilder(TARDIS plugin, Location location, int mat, byte data, int tid, TARDISConstants.COMPASS d, int lamp, boolean plain, boolean sub) {
         this.plugin = plugin;
         this.d = d;
         this.location = location;
@@ -55,6 +57,7 @@ public class TARDISPoliceBoxRebuilder {
         this.data = data;
         this.lamp = lamp;
         this.plain = plain;
+        this.sub = sub;
     }
 
     /**
@@ -88,7 +91,12 @@ public class TARDISPoliceBoxRebuilder {
         switch (d) {
             case SOUTH:
                 //if (yaw >= 315 || yaw < 45)
-                plugin.utils.setBlockCheck(world, x, down3y, minusz, 35, grey, tid); // door is here if player facing south
+                if (sub) {
+                    plugin.utils.setBlockCheck(world, x, down3y, minusz, 19, (byte) 0, tid, true); // door is here if player facing south
+                    sponge = world.getBlockAt(x, down3y, minusz);
+                } else {
+                    plugin.utils.setBlockCheck(world, x, down3y, minusz, 35, grey, tid, false); // door is here if player facing south
+                }
                 sd = 2;
                 signx = x;
                 signz = (minusz - 1);
@@ -99,7 +107,12 @@ public class TARDISPoliceBoxRebuilder {
                 break;
             case EAST:
                 //if (yaw >= 225 && yaw < 315)
-                plugin.utils.setBlockCheck(world, minusx, down3y, z, 35, grey, tid); // door is here if player facing east
+                if (sub) {
+                    plugin.utils.setBlockCheck(world, minusx, down3y, z, 19, (byte) 0, tid, true); // door is here if player facing east
+                    sponge = world.getBlockAt(minusx, down3y, z);
+                } else {
+                    plugin.utils.setBlockCheck(world, minusx, down3y, z, 35, grey, tid, false); // door is here if player facing east
+                }
                 sd = 4;
                 signx = (minusx - 1);
                 signz = z;
@@ -110,7 +123,12 @@ public class TARDISPoliceBoxRebuilder {
                 break;
             case NORTH:
                 //if (yaw >= 135 && yaw < 225)
-                plugin.utils.setBlockCheck(world, x, down3y, plusz, 35, grey, tid); // door is here if player facing north
+                if (sub) {
+                    plugin.utils.setBlockCheck(world, x, down3y, plusz, 19, (byte) 0, tid, true); // door is here if player facing north
+                    sponge = world.getBlockAt(x, down3y, plusz);
+                } else {
+                    plugin.utils.setBlockCheck(world, x, down3y, plusz, 35, grey, tid, false); // door is here if player facing north
+                }
                 sd = 3;
                 signx = x;
                 signz = (plusz + 1);
@@ -121,7 +139,12 @@ public class TARDISPoliceBoxRebuilder {
                 break;
             case WEST:
                 //if (yaw >= 45 && yaw < 135)
-                plugin.utils.setBlockCheck(world, plusx, down3y, z, 35, grey, tid); // door is here if player facing west
+                if (sub) {
+                    plugin.utils.setBlockCheck(world, plusx, down3y, z, 19, (byte) 0, tid, true); // door is here if player facing west
+                    sponge = world.getBlockAt(plusx, down3y, z);
+                } else {
+                    plugin.utils.setBlockCheck(world, plusx, down3y, z, 35, grey, tid, false); // door is here if player facing west
+                }
                 sd = 5;
                 signx = (plusx + 1);
                 signz = z;
@@ -201,6 +224,9 @@ public class TARDISPoliceBoxRebuilder {
             // put torch on top
             if (mat == 79) {
                 plugin.utils.setBlock(world, x, plusy, z, 76, (byte) 5);
+            } else if (sub) {
+                // lamp should be glowstone
+                plugin.utils.setBlock(world, x, plusy, z, 89, (byte) 0);
             } else {
                 plugin.utils.setBlock(world, x, plusy, z, lamp, (byte) 5);
             }
@@ -215,5 +241,9 @@ public class TARDISPoliceBoxRebuilder {
         plugin.utils.setBlock(world, x, minusy, plusz, north, mdn);
         plugin.utils.setBlock(world, minusx, minusy, z, east, mde);
         plugin.utils.setBlock(world, x, minusy, minusz, south, mds);
+        // set sheild if submarine
+        if (sub && plugin.worldGuardOnServer) {
+            plugin.wgchk.sponge(sponge, true);
+        }
     }
 }

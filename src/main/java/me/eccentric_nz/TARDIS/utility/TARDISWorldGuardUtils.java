@@ -17,6 +17,7 @@
 package me.eccentric_nz.TARDIS.utility;
 
 import com.sk89q.worldedit.BlockVector;
+import com.sk89q.worldguard.bukkit.SpongeUtil;
 import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
 import com.sk89q.worldguard.domains.DefaultDomain;
 import com.sk89q.worldguard.protection.databases.ProtectionDatabaseException;
@@ -30,6 +31,7 @@ import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import org.bukkit.Location;
 import org.bukkit.World;
+import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 
 /**
@@ -39,7 +41,7 @@ import org.bukkit.entity.Player;
  *
  * @author eccentric_nz
  */
-public class TARDISWorldGuardChecker {
+public class TARDISWorldGuardUtils {
 
     private TARDIS plugin;
     private WorldGuardPlugin wg;
@@ -49,7 +51,7 @@ public class TARDISWorldGuardChecker {
      *
      * @param plugin an instance of the TARDIS plugin
      */
-    public TARDISWorldGuardChecker(TARDIS plugin) {
+    public TARDISWorldGuardUtils(TARDIS plugin) {
         this.plugin = plugin;
         if (plugin.worldGuardOnServer) {
             wg = (WorldGuardPlugin) plugin.pm.getPlugin("WorldGuard");
@@ -189,5 +191,16 @@ public class TARDISWorldGuardChecker {
      */
     public BlockVector makeBlockVector(Location location) {
         return new BlockVector(location.getX(), location.getY(), location.getZ());
+    }
+
+    /**
+     * Sets a block with the properties of a sponge
+     */
+    public void sponge(Block b, boolean clear) {
+        if (clear) {
+            SpongeUtil.clearSpongeWater(wg, b.getWorld(), b.getX(), b.getY(), b.getZ());
+        } else {
+            SpongeUtil.addSpongeWater(wg, b.getWorld(), b.getX(), b.getY(), b.getZ());
+        }
     }
 }

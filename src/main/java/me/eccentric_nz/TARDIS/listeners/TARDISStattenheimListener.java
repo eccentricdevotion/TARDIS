@@ -32,6 +32,7 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
+import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -142,9 +143,22 @@ public class TARDISStattenheimListener implements Listener {
                     }
                     final TARDISConstants.COMPASS d = rs.getDirection();
                     TARDISTimeTravel tt = new TARDISTimeTravel(plugin);
-                    int[] start_loc = tt.getStartLocation(remoteLocation, d);
-                    // safeLocation(int startx, int starty, int startz, int resetx, int resetz, World w, TARDISConstants.COMPASS d)
-                    int count = tt.safeLocation(start_loc[0], remoteLocation.getBlockY(), start_loc[2], start_loc[1], start_loc[3], remoteLocation.getWorld(), d);
+                    int count;
+                    String sub = "false";
+                    if (plugin.trackSubmarine.contains(Integer.valueOf(id))) {
+                        plugin.trackSubmarine.remove(Integer.valueOf(id));
+                    }
+                    if (b.getRelative(BlockFace.UP).getTypeId() == 8 || b.getRelative(BlockFace.UP).getTypeId() == 9) {
+                        count = (tt.isSafeSubmarine(remoteLocation, d)) ? 0 : 1;
+                        if (count == 0) {
+                            plugin.trackSubmarine.add(id);
+                            sub = "true";
+                        }
+                    } else {
+                        int[] start_loc = tt.getStartLocation(remoteLocation, d);
+                        // safeLocation(int startx, int starty, int startz, int resetx, int resetz, World w, TARDISConstants.COMPASS d)
+                        count = tt.safeLocation(start_loc[0], remoteLocation.getBlockY(), start_loc[2], start_loc[1], start_loc[3], remoteLocation.getWorld(), d);
+                    }
                     if (count > 0) {
                         player.sendMessage(plugin.pluginName + "That location would grief existing blocks! Try somewhere else!");
                         return;
@@ -171,7 +185,7 @@ public class TARDISStattenheimListener implements Listener {
                         z = plugin.utils.parseNum(saveData[3]);
                         final Location oldSave = w.getBlockAt(x, y, z).getLocation();
                         //rs.close();
-                        String comehere = remoteLocation.getWorld().getName() + ":" + remoteLocation.getBlockX() + ":" + remoteLocation.getBlockY() + ":" + remoteLocation.getBlockZ();
+                        String comehere = remoteLocation.getWorld().getName() + ":" + remoteLocation.getBlockX() + ":" + remoteLocation.getBlockY() + ":" + remoteLocation.getBlockZ() + ":" + d.toString() + ":" + sub;
                         final boolean hidden = rs.isHidden();
                         QueryFactory qf = new QueryFactory(plugin);
                         HashMap<String, Object> tid = new HashMap<String, Object>();

@@ -50,6 +50,7 @@ public class TARDISDatabaseUpdater {
         destupdates.add("bind TEXT DEFAULT ''");
         destupdates.add("type INTEGER DEFAULT 0");
         destupdates.add("direction TEXT DEFAULT ''");
+        destupdates.add("submarine INTEGER DEFAULT 0");
         doorupdates.add("locked INTEGER DEFAULT 0");
         gravityupdates.add("distance INTEGER DEFAULT 11");
         gravityupdates.add("velocity REAL DEFAULT 0.5");
@@ -64,6 +65,7 @@ public class TARDISDatabaseUpdater {
         prefsupdates.add("eps_message TEXT DEFAULT ''");
         prefsupdates.add("plain_on INTEGER");
         prefsupdates.add("lamp INTEGER");
+        prefsupdates.add("submarine_on INTEGER DEFAULT 0");
         prefsupdates.add("texture_on INTEGER DEFAULT 0");
         prefsupdates.add("texture_in TEXT DEFAULT ''");
         prefsupdates.add("texture_out TEXT DEFAULT 'default'");

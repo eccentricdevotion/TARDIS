@@ -46,6 +46,7 @@ public class ResultSetPlayerPrefs {
     private boolean beacon_on;
     private boolean hads_on;
     private boolean plain_on;
+    private boolean submarine_on;
     private int artron_level;
     private int lamp;
     private String wall;
@@ -118,6 +119,7 @@ public class ResultSetPlayerPrefs {
                 if (rs.wasNull()) {
                     this.plain_on = plugin.getConfig().getBoolean("plain_on");
                 }
+                this.submarine_on = rs.getBoolean("submarine_on");
                 this.artron_level = rs.getInt("artron_level");
                 this.lamp = rs.getInt("lamp");
                 if (rs.wasNull()) {
@@ -232,5 +234,9 @@ public class ResultSetPlayerPrefs {
 
     public int getLamp() {
         return lamp;
+    }
+
+    public boolean isSubmarine_on() {
+        return submarine_on;
     }
 }

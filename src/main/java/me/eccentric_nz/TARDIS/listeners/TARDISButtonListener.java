@@ -130,7 +130,9 @@ public class TARDISButtonListener implements Listener {
                                         player.sendMessage(plugin.pluginName + ChatColor.RED + "The TARDIS does not have enough Artron Energy to make this trip!");
                                         return;
                                     }
-
+                                    if (plugin.trackSubmarine.contains(Integer.valueOf(id))) {
+                                        plugin.trackSubmarine.remove(Integer.valueOf(id));
+                                    }
                                     String[] current = d.split(":");
                                     TARDISConstants.COMPASS dir = rs.getDirection();
                                     if (player.hasPermission("tardis.exile") && plugin.getConfig().getBoolean("exile")) {
@@ -141,7 +143,7 @@ public class TARDISButtonListener implements Listener {
                                         if (l == null) {
                                             player.sendMessage(plugin.pluginName + "All available parking spots are taken in this area!");
                                         } else {
-                                            d = l.getWorld().getName() + ":" + l.getBlockX() + ":" + l.getBlockY() + ":" + l.getBlockZ();
+                                            d = l.getWorld().getName() + ":" + l.getBlockX() + ":" + l.getBlockY() + ":" + l.getBlockZ() + ":" + dir.toString() + ":false";
                                             player.sendMessage(plugin.pluginName + "Your TARDIS was approved for parking in [" + permArea + "]!");
                                             set_dest = true;
                                         }
@@ -190,7 +192,8 @@ public class TARDISButtonListener implements Listener {
                                             TARDISTimeTravel tt = new TARDISTimeTravel(plugin);
                                             Location rand = tt.randomDestination(player, repeaters[1], repeaters[2], repeaters[3], dir, environment, current[0]);
                                             if (rand != null) {
-                                                d = rand.getWorld().getName() + ":" + rand.getBlockX() + ":" + rand.getBlockY() + ":" + rand.getBlockZ();
+                                                String sub = (plugin.trackSubmarine.contains(Integer.valueOf(id))) ? "true" : "false";
+                                                d = rand.getWorld().getName() + ":" + rand.getBlockX() + ":" + rand.getBlockY() + ":" + rand.getBlockZ() + ":" + dir.toString() + ":" + sub;
                                                 set_dest = true;
                                                 String dchat = rand.getWorld().getName() + " at x: " + rand.getBlockX() + " y: " + rand.getBlockY() + " z: " + rand.getBlockZ();
                                                 boolean isTL = true;

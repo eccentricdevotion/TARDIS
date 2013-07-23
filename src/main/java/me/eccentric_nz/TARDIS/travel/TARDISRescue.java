@@ -66,14 +66,6 @@ public class TARDISRescue {
             player.sendMessage(plugin.pluginName + "The player is in a TARDIS area! Please use " + ChatColor.AQUA + "/tardistravel area [area name]");
             return true;
         }
-        World w = player_loc.getWorld();
-        int[] start_loc = tt.getStartLocation(player_loc, d);
-        int move = (rescue) ? 0 : 3;
-        int count = tt.safeLocation(start_loc[0] - move, player_loc.getBlockY(), start_loc[2], start_loc[1] - move, start_loc[3], w, d);
-        if (count > 0) {
-            player.sendMessage(plugin.pluginName + "The player's location would not be safe! Please tell the player to move!");
-            return true;
-        }
         TARDISPluginRespect respect = new TARDISPluginRespect(plugin);
         if (!respect.getRespect(player, player_loc, true)) {
             return true;
@@ -82,7 +74,15 @@ public class TARDISRescue {
             player.sendMessage(plugin.pluginName + "The server does not allow time travel to this world!");
             return true;
         }
-        String save_loc = player_loc.getWorld().getName() + ":" + (player_loc.getBlockX() - move) + ":" + player_loc.getBlockY() + ":" + player_loc.getBlockZ();
+        World w = player_loc.getWorld();
+        int[] start_loc = tt.getStartLocation(player_loc, d);
+        int move = (rescue) ? 0 : 3;
+        int count = tt.safeLocation(start_loc[0] - move, player_loc.getBlockY(), start_loc[2], start_loc[1] - move, start_loc[3], w, d);
+        if (count > 0) {
+            player.sendMessage(plugin.pluginName + "The player's location would not be safe! Please tell the player to move!");
+            return true;
+        }
+        String save_loc = player_loc.getWorld().getName() + ":" + (player_loc.getBlockX() - move) + ":" + player_loc.getBlockY() + ":" + player_loc.getBlockZ() + ":" + d.toString() + ":false";
         HashMap<String, Object> set = new HashMap<String, Object>();
         HashMap<String, Object> where = new HashMap<String, Object>();
         where.put("tardis_id", id);

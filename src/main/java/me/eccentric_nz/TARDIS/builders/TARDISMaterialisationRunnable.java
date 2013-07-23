@@ -58,6 +58,8 @@ public class TARDISMaterialisationRunnable implements Runnable {
     private boolean mal;
     private int lamp;
     private boolean plain;
+    private boolean sub;
+    private Block sponge;
 
     /**
      * Runnable method to materialise the TARDIS Police Box. Tries to mimic the
@@ -75,7 +77,7 @@ public class TARDISMaterialisationRunnable implements Runnable {
      * @param mal a boolean determining whether there has been a TARDIS
      * malfunction
      */
-    public TARDISMaterialisationRunnable(TARDIS plugin, Location location, int mat, byte data, int tid, COMPASS d, Player player, boolean mal, int lamp, boolean plain) {
+    public TARDISMaterialisationRunnable(TARDIS plugin, Location location, int mat, byte data, int tid, COMPASS d, Player player, boolean mal, int lamp, boolean plain, boolean sub) {
         this.plugin = plugin;
         this.d = d;
         this.loops = 12;
@@ -88,6 +90,7 @@ public class TARDISMaterialisationRunnable implements Runnable {
         this.mal = mal;
         this.lamp = lamp;
         this.plain = plain;
+        this.sub = sub;
     }
 
     @Override
@@ -95,6 +98,7 @@ public class TARDISMaterialisationRunnable implements Runnable {
         if (!plugin.tardisDematerialising.contains(tid)) {
             int id;
             byte b;
+            Location sub_loc = location.clone();
             // get relative locations
             int x = location.getBlockX(), plusx = location.getBlockX() + 1, minusx = location.getBlockX() - 1;
             int y = location.getBlockY() + 2, plusy = location.getBlockY() + 3, minusy = location.getBlockY() + 1;
@@ -163,7 +167,12 @@ public class TARDISMaterialisationRunnable implements Runnable {
                     switch (d) {
                         case SOUTH:
                             //if (yaw >= 315 || yaw < 45)
-                            plugin.utils.setBlockCheck(world, x, down3y, minusz, 35, grey, tid); // door is here if player facing south
+                            if (sub) {
+                                plugin.utils.setBlockCheck(world, x, down3y, minusz, 19, (byte) 0, tid, true); // door is here if player facing south
+                                sponge = world.getBlockAt(x, down3y, minusz);
+                            } else {
+                                plugin.utils.setBlockCheck(world, x, down3y, minusz, 35, grey, tid, false); // door is here if player facing south
+                            }
                             loc = world.getBlockAt(x, down3y, minusz).getLocation().toString();
                             ps.put("location", loc);
                             doorloc = world.getName() + ":" + x + ":" + down2y + ":" + minusz;
@@ -176,7 +185,12 @@ public class TARDISMaterialisationRunnable implements Runnable {
                             break;
                         case EAST:
                             //if (yaw >= 225 && yaw < 315)
-                            plugin.utils.setBlockCheck(world, minusx, down3y, z, 35, grey, tid); // door is here if player facing east
+                            if (sub) {
+                                plugin.utils.setBlockCheck(world, minusx, down3y, z, 19, (byte) 0, tid, true); // door is here if player facing east
+                                sponge = world.getBlockAt(minusx, down3y, z);
+                            } else {
+                                plugin.utils.setBlockCheck(world, minusx, down3y, z, 35, grey, tid, false); // door is here if player facing east
+                            }
                             loc = world.getBlockAt(minusx, down3y, z).getLocation().toString();
                             ps.put("location", loc);
                             doorloc = world.getName() + ":" + minusx + ":" + down2y + ":" + z;
@@ -189,7 +203,12 @@ public class TARDISMaterialisationRunnable implements Runnable {
                             break;
                         case NORTH:
                             //if (yaw >= 135 && yaw < 225)
-                            plugin.utils.setBlockCheck(world, x, down3y, plusz, 35, grey, tid); // door is here if player facing north
+                            if (sub) {
+                                plugin.utils.setBlockCheck(world, x, down3y, plusz, 19, (byte) 0, tid, true); // door is here if player facing north
+                                sponge = world.getBlockAt(x, down3y, plusz);
+                            } else {
+                                plugin.utils.setBlockCheck(world, x, down3y, plusz, 35, grey, tid, false); // door is here if player facing north
+                            }
                             loc = world.getBlockAt(x, down3y, plusz).getLocation().toString();
                             ps.put("location", loc);
                             doorloc = world.getName() + ":" + x + ":" + down2y + ":" + plusz;
@@ -202,7 +221,12 @@ public class TARDISMaterialisationRunnable implements Runnable {
                             break;
                         case WEST:
                             //if (yaw >= 45 && yaw < 135)
-                            plugin.utils.setBlockCheck(world, plusx, down3y, z, 35, grey, tid); // door is here if player facing west
+                            if (sub) {
+                                plugin.utils.setBlockCheck(world, plusx, down3y, z, 19, (byte) 0, tid, true); // door is here if player facing west
+                                sponge = world.getBlockAt(plusx, down3y, z);
+                            } else {
+                                plugin.utils.setBlockCheck(world, plusx, down3y, z, 35, grey, tid, false); // door is here if player facing west
+                            }
                             loc = world.getBlockAt(plusx, down3y, z).getLocation().toString();
                             ps.put("location", loc);
                             doorloc = world.getName() + ":" + plusx + ":" + down2y + ":" + z;
@@ -298,6 +322,9 @@ public class TARDISMaterialisationRunnable implements Runnable {
                         // put torch on top
                         if (id == 79) {
                             plugin.utils.setBlockAndRemember(world, x, plusy, z, 76, (byte) 5, tid);
+                        } else if (sub) {
+                            // lamp should be glowstone
+                            plugin.utils.setBlockAndRemember(world, x, plusy, z, 89, (byte) 0, tid);
                         } else {
                             plugin.utils.setBlockAndRemember(world, x, plusy, z, lamp, (byte) 5, tid);
                         }
@@ -312,6 +339,7 @@ public class TARDISMaterialisationRunnable implements Runnable {
                     plugin.utils.setBlockAndRemember(world, x, minusy, plusz, north, mdn, tid);
                     plugin.utils.setBlockAndRemember(world, minusx, minusy, z, east, mde, tid);
                     plugin.utils.setBlockAndRemember(world, x, minusy, minusz, south, mds, tid);
+
                 } else {
                     // just change the walls
                     // bottom layer corners
@@ -384,6 +412,12 @@ public class TARDISMaterialisationRunnable implements Runnable {
                     plugin.utils.setBlock(world, x, minusy, minusz, south, mds);
                 }
             } else {
+                // set sheild if submarine
+                if (sub && plugin.worldGuardOnServer) {
+//                    Block sponge = sub_loc.getBlock().getRelative(BlockFace.DOWN);
+//                    sponge.setTypeId(19);
+                    plugin.wgchk.sponge(sponge, true);
+                }
                 plugin.tardisMaterialising.remove(Integer.valueOf(tid));
                 plugin.getServer().getScheduler().cancelTask(task);
                 task = 0;

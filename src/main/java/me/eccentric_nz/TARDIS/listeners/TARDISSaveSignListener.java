@@ -69,15 +69,25 @@ public class TARDISSaveSignListener implements Listener {
                     ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
                     if (rs.resultSet()) {
                         int id = rs.getTardis_id();
+                        String d = rs.getDirection().toString();
                         ItemStack is = inv.getItem(slot);
                         if (is != null) {
+                            if (plugin.trackSubmarine.contains(Integer.valueOf(id))) {
+                                plugin.trackSubmarine.remove(Integer.valueOf(id));
+                            }
                             ItemMeta im = is.getItemMeta();
                             List<String> lore = im.getLore();
-                            String save = getDestination(lore);
+                            String save = getDestination(lore, d);
                             if (!save.equals(rs.getCurrent())) {
                                 HashMap<String, Object> set = new HashMap<String, Object>();
-                                if (lore.size() == 5 && !lore.get(4).isEmpty()) {
-                                    set.put("direction", lore.get(4));
+                                int l_size = lore.size();
+                                if (l_size >= 5) {
+                                    if (!lore.get(4).isEmpty()) {
+                                        set.put("direction", lore.get(4));
+                                    }
+                                    if (l_size > 5 && !lore.get(5).isEmpty() && lore.get(5).equals("true")) {
+                                        plugin.trackSubmarine.add(id);
+                                    }
                                 }
                                 set.put("save", save);
                                 HashMap<String, Object> wheret = new HashMap<String, Object>();
@@ -108,8 +118,16 @@ public class TARDISSaveSignListener implements Listener {
      * @param lore the lore to read
      * @return the destination string
      */
-    private String getDestination(List<String> lore) {
-        return lore.get(0) + ":" + lore.get(1) + ":" + lore.get(2) + ":" + lore.get(3);
+    private String getDestination(List<String> lore, String d) {
+        int size = lore.size();
+        switch (size) {
+            case 5:
+                return lore.get(0) + ":" + lore.get(1) + ":" + lore.get(2) + ":" + lore.get(3) + ":" + lore.get(4) + ":false";
+            case 6:
+                return lore.get(0) + ":" + lore.get(1) + ":" + lore.get(2) + ":" + lore.get(3) + ":" + lore.get(4) + ":" + lore.get(5);
+            default:
+                return lore.get(0) + ":" + lore.get(1) + ":" + lore.get(2) + ":" + lore.get(3) + ":" + d + ":false";
+        }
     }
 
     /**

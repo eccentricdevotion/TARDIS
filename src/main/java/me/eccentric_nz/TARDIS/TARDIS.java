@@ -96,7 +96,7 @@ import me.eccentric_nz.TARDIS.utility.TARDISSounds;
 import me.eccentric_nz.TARDIS.utility.TARDISTownyChecker;
 import me.eccentric_nz.TARDIS.utility.TARDISUtils;
 import me.eccentric_nz.TARDIS.utility.TARDISWorldBorderChecker;
-import me.eccentric_nz.TARDIS.utility.TARDISWorldGuardChecker;
+import me.eccentric_nz.TARDIS.utility.TARDISWorldGuardUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Chunk;
@@ -166,7 +166,7 @@ public class TARDIS extends JavaPlugin {
     public TARDISDestroyerInner destroyI = new TARDISDestroyerInner(this);
     public TARDISDestroyerPoliceBox destroyPB = new TARDISDestroyerPoliceBox(this);
     public TARDISArea ta = new TARDISArea(this);
-    public TARDISWorldGuardChecker wgchk;
+    public TARDISWorldGuardUtils wgchk;
     public TARDISTownyChecker tychk;
     public TARDISWorldBorderChecker borderchk;
     public TARDISFactionsChecker factionschk;
@@ -191,6 +191,7 @@ public class TARDIS extends JavaPlugin {
     public List<String> trackRecipeView = new ArrayList<String>();
     public List<String> trackFarming = new ArrayList<String>();
     public List<Integer> trackMinecart = new ArrayList<Integer>();
+    public List<Integer> trackSubmarine = new ArrayList<Integer>();
     public ArrayList<Integer> tardisMaterialising = new ArrayList<Integer>();
     public ArrayList<Integer> tardisDematerialising = new ArrayList<Integer>();
     public List<Chunk> tardisChunkList = new ArrayList<Chunk>();
@@ -504,7 +505,7 @@ public class TARDIS extends JavaPlugin {
     private void loadWorldGuard() {
         if (pm.getPlugin("WorldGuard") != null) {
             worldGuardOnServer = true;
-            wgchk = new TARDISWorldGuardChecker(this);
+            wgchk = new TARDISWorldGuardUtils(this);
         }
     }
 

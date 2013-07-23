@@ -95,10 +95,14 @@ public class TARDISTimeLordDeathListener implements Listener {
                             // where is the TARDIS Police Box?
                             String save = rs.getCurrent();
                             String[] save_data = save.split(":");
+                            String sub = "false";
                             World sw = plugin.getServer().getWorld(save_data[0]);
                             int sx = plugin.utils.parseNum(save_data[1]);
                             int sy = plugin.utils.parseNum(save_data[2]);
                             int sz = plugin.utils.parseNum(save_data[3]);
+                            if (save_data.length > 5) {
+                                sub = save_data[5];
+                            }
                             Location sl = new Location(sw, sx, sy, sz);
                             // where is home?
                             String home = rs.getHome();
@@ -109,6 +113,7 @@ public class TARDISTimeLordDeathListener implements Listener {
                             int hz = plugin.utils.parseNum(home_data[3]);
                             Location home_loc = new Location(hw, hx, hy, hz);
                             Location goto_loc;
+                            boolean going_home = false;
                             // if home world is NOT the death world
                             if (!home_data[0].equals(death_world)) {
                                 // look for a recharge location
@@ -116,16 +121,22 @@ public class TARDISTimeLordDeathListener implements Listener {
                                 if (goto_loc == null) {
                                     // no parking spots - default to TARDIS home location
                                     goto_loc = home_loc;
+                                    going_home = true;
                                 }
                             } else {
                                 // died in home world get closest location
                                 Location recharger = getRecharger(death_world, player);
                                 if (recharger != null) {
                                     // which is closer?
-                                    goto_loc = (death_loc.distanceSquared(home_loc) > death_loc.distanceSquared(recharger)) ? recharger : home_loc;
+                                    boolean closer = death_loc.distanceSquared(home_loc) > death_loc.distanceSquared(recharger);
+                                    goto_loc = (closer) ? recharger : home_loc;
+                                    if (!closer) {
+                                        going_home = true;
+                                    }
                                 } else {
                                     // no parking spots - set to TARDIS home location
                                     goto_loc = home_loc;
+                                    going_home = true;
                                 }
                             }
                             // if the TARDIS is already at the home location, do nothing
@@ -140,6 +151,13 @@ public class TARDISTimeLordDeathListener implements Listener {
                                     set.put("hidden", 0);
                                 }
                                 final Location auto_loc = goto_loc;
+                                if (sub.equals("true") && going_home) {
+                                    plugin.trackSubmarine.add(id);
+                                } else {
+                                    if (plugin.trackSubmarine.contains(Integer.valueOf(id))) {
+                                        plugin.trackSubmarine.remove(Integer.valueOf(id));
+                                    }
+                                }
                                 plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
                                     @Override
                                     public void run() {
@@ -147,7 +165,7 @@ public class TARDISTimeLordDeathListener implements Listener {
                                         plugin.buildPB.buildPoliceBox(id, auto_loc, d, cham, player, false, false);
                                     }
                                 }, 200L);
-                                String save_loc = goto_loc.getWorld().getName() + ":" + goto_loc.getBlockX() + ":" + goto_loc.getBlockY() + ":" + goto_loc.getBlockZ();
+                                String save_loc = goto_loc.getWorld().getName() + ":" + goto_loc.getBlockX() + ":" + goto_loc.getBlockY() + ":" + goto_loc.getBlockZ() + ":" + d.toString() + ":" + sub;
                                 set.put("save", save_loc);
                                 set.put("current", save_loc);
                                 HashMap<String, Object> tid = new HashMap<String, Object>();

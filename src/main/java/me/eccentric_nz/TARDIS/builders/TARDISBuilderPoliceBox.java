@@ -92,12 +92,14 @@ public class TARDISBuilderPoliceBox {
         // get sign and torch preferences
         int lamp = plugin.getConfig().getInt("tardis_lamp");
         boolean plain = plugin.getConfig().getBoolean("plain_on");
+        boolean sub = false;
         HashMap<String, Object> wherepp = new HashMap<String, Object>();
         wherepp.put("player", p.getName());
         ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, wherepp);
         if (rsp.resultSet()) {
             lamp = rsp.getLamp();
             plain = rsp.isPlain_on();
+            sub = (rsp.isSubmarine_on() && plugin.trackSubmarine.contains(Integer.valueOf(id)));
         }
         // keep the chunk this Police box is in loaded
         Chunk thisChunk = l.getChunk();
@@ -111,17 +113,17 @@ public class TARDISBuilderPoliceBox {
          */
         plugin.tardisChunkList.add(thisChunk);
         if (rebuild) {
-            TARDISPoliceBoxRebuilder rebuilder = new TARDISPoliceBoxRebuilder(plugin, l, wall_block, chameleonData, id, d, lamp, plain);
+            TARDISPoliceBoxRebuilder rebuilder = new TARDISPoliceBoxRebuilder(plugin, l, wall_block, chameleonData, id, d, lamp, plain, sub);
             rebuilder.rebuildPoliceBox();
         } else {
             if (plugin.getConfig().getBoolean("materialise")) {
                 plugin.tardisMaterialising.add(id);
-                TARDISMaterialisationRunnable runnable = new TARDISMaterialisationRunnable(plugin, l, wall_block, chameleonData, id, d, p, mal, lamp, plain);
+                TARDISMaterialisationRunnable runnable = new TARDISMaterialisationRunnable(plugin, l, wall_block, chameleonData, id, d, p, mal, lamp, plain, sub);
                 int taskID = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, runnable, 10L, 20L);
                 runnable.setTask(taskID);
             } else {
                 plugin.tardisMaterialising.add(id);
-                TARDISInstaPoliceBox insta = new TARDISInstaPoliceBox(plugin, l, wall_block, chameleonData, id, d, p.getName(), mal, lamp, plain);
+                TARDISInstaPoliceBox insta = new TARDISInstaPoliceBox(plugin, l, wall_block, chameleonData, id, d, p.getName(), mal, lamp, plain, sub);
                 insta.buildPoliceBox();
             }
         }
