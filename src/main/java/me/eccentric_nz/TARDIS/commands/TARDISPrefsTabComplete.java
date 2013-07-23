@@ -31,7 +31,7 @@ import org.bukkit.util.StringUtil;
  */
 public class TARDISPrefsTabComplete implements TabCompleter {
 
-    private final List<String> ROOT_SUBS = ImmutableList.of("auto", "beacon", "eps", "eps_message", "floor", "hads", "isomorphic", "key", "platform", "quotes", "sfx", "wall");
+    private final List<String> ROOT_SUBS = ImmutableList.of("auto", "beacon", "eps", "eps_message", "floor", "hads", "isomorphic", "key", "lamp", "plain", "platform", "quotes", "sfx", "sign", "wall");
     private final List<String> ONOFF_SUBS = ImmutableList.of("on", "off");
     private final ImmutableList<String> KEY_SUBS;
     private final ImmutableList<String> MAT_SUBS;

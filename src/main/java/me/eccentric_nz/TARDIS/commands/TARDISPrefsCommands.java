@@ -66,12 +66,13 @@ public class TARDISPrefsCommands implements CommandExecutor {
         firstArgs.add("hads");
         firstArgs.add("isomorphic");
         firstArgs.add("key");
+        firstArgs.add("lamp");
+        firstArgs.add("plain");
         firstArgs.add("platform");
         firstArgs.add("quotes");
         firstArgs.add("sfx");
-        firstArgs.add("wall");
-        firstArgs.add("lamp");
         firstArgs.add("sign");
+        firstArgs.add("wall");
     }
 
     @Override
