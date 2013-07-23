@@ -1,13 +1,6 @@
 # TODO
 
-## Current version `2.5-beta-1`
-1. Fix bugs
-
-### Waiting on Bukkit API
-1. Leashes
-2. Get/set horse speed (Attribute API)
-
-## Next version `2.6+`
+## Current version `2.6-beta-1`
 1. TARDIS shield - this could be adapted, so that the TARDIS can land underwater
 2. Jettison the whole room (including walls), will require new room schematics...
 3. Architectural Reconfiguration System / Map room
@@ -21,7 +14,15 @@
 8. Permission-based world creation - player's without permission use the default world, those with it get a TARDIS_WORLD
 9. Put crops, buttons, levers and signs on last when growing rooms
 10. Add areas to save-sign?
-11. Sonic Screwdriver
+11. Sonic Screwdrivers
+12. TARDIS Information System
+
+### Waiting on Bukkit API
+1. Leashes
+2. Get/set horse speed (Attribute API)
+
+## Next version `2.7+`
+1. TARDIS invisiblity
 
 ## Minecraft API when available `3.0?`
 1. Recreate everything with the new API :)
