@@ -46,7 +46,7 @@ public class TARDISHorse {
     private boolean haschest;
     private int domesticity;
     private double jumpstrength;
-//    private EntityEquipment barding;
+    private double speed;
 
     /**
      * Data storage class for TARDIS mobs.
@@ -157,11 +157,12 @@ public class TARDISHorse {
     public void setJumpStrength(double jumpstrength) {
         this.jumpstrength = jumpstrength;
     }
-//    public EntityEquipment getBarding() {
-//        return barding;
-//    }
-//
-//    public void setBarding(EntityEquipment barding) {
-//        this.barding = barding;
-//    }
+
+    public double getSpeed() {
+        return speed;
+    }
+
+    public void setSpeed(double speed) {
+        this.speed = speed;
+    }
 }

@@ -23,6 +23,7 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants.COMPASS;
 import me.eccentric_nz.TARDIS.achievement.TARDISAchievementFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
+import me.eccentric_nz.tardishorsespeed.TardisHorseSpeed;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -140,8 +141,6 @@ public class TARDISFarmer {
                         Horse horse = (Horse) e;
                         // don't farm other player's tamed horses
                         if (brokenin.isTamed()) {
-//                            plugin.debug("Horse owner: " + brokenin.getOwner().getName());
-//                            plugin.debug("Timelord: " + p.getName());
                             if (brokenin.getOwner() != null && !brokenin.getOwner().getName().equals(p.getName())) {
                                 break;
                             }
@@ -165,6 +164,11 @@ public class TARDISFarmer {
                         tmhor.setHorseInventory(horse.getInventory().getContents());
                         tmhor.setDomesticity(horse.getDomestication());
                         tmhor.setJumpStrength(horse.getJumpStrength());
+                        if (plugin.pm.isPluginEnabled("TardisHorseSpeed")) {
+                            TardisHorseSpeed ths = (TardisHorseSpeed) plugin.pm.getPlugin("TardisHorseSpeed");
+                            double speed = ths.getHorseSpeed(horse);
+                            tmhor.setSpeed(speed);
+                        }
                         old_macd_had_a_horse.add(tmhor);
                         e.remove();
                         if (taf != null) {
@@ -366,6 +370,10 @@ public class TARDISFarmer {
                             }
                             InventoryHolder ih = (InventoryHolder) equine;
                             ih.getInventory().setContents(e.getHorseinventory());
+                            if (plugin.pm.isPluginEnabled("TardisHorseSpeed")) {
+                                TardisHorseSpeed ths = (TardisHorseSpeed) plugin.pm.getPlugin("TardisHorseSpeed");
+                                ths.setHorseSpeed(equine, e.getSpeed());
+                            }
                         }
                     }
                 } else {
