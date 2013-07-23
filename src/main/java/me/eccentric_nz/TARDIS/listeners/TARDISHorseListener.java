@@ -22,6 +22,7 @@ import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.travel.TARDISDoorLocation;
 import me.eccentric_nz.TARDIS.travel.TARDISHorse;
+import me.eccentric_nz.tardishorsespeed.TardisHorseSpeed;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -94,6 +95,12 @@ public class TARDISHorseListener implements Listener {
                         tmhor.setHorseInventory(h.getInventory().getContents());
                         tmhor.setDomesticity(h.getDomestication());
                         tmhor.setJumpStrength(h.getJumpStrength());
+                        tmhor.setHealth(h.getHealth());
+                        if (plugin.pm.isPluginEnabled("TardisHorseSpeed")) {
+                            TardisHorseSpeed ths = (TardisHorseSpeed) plugin.pm.getPlugin("TardisHorseSpeed");
+                            double speed = ths.getHorseSpeed(h);
+                            tmhor.setSpeed(speed);
+                        }
                         // eject player
                         // if (p.leaveVehicle()) {
                         if (h.eject()) {
@@ -113,6 +120,11 @@ public class TARDISHorseListener implements Listener {
                             equine.setStyle(tmhor.getHorseStyle());
                             equine.setDomestication(tmhor.getDomesticity());
                             equine.setJumpStrength(tmhor.getJumpStrength());
+                            equine.setHealth(tmhor.getHealth());
+                            if (plugin.pm.isPluginEnabled("TardisHorseSpeed")) {
+                                TardisHorseSpeed ths = (TardisHorseSpeed) plugin.pm.getPlugin("TardisHorseSpeed");
+                                ths.setHorseSpeed(equine, tmhor.getSpeed());
+                            }
                             if (tmhor.hasChest()) {
                                 equine.setCarryingChest(true);
                             }

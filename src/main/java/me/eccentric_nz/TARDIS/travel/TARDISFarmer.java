@@ -23,6 +23,7 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants.COMPASS;
 import me.eccentric_nz.TARDIS.achievement.TARDISAchievementFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
+import me.eccentric_nz.tardishorsespeed.TardisHorseSpeed;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -165,6 +166,11 @@ public class TARDISFarmer {
                         tmhor.setHorseInventory(horse.getInventory().getContents());
                         tmhor.setDomesticity(horse.getDomestication());
                         tmhor.setJumpStrength(horse.getJumpStrength());
+                        if (plugin.pm.isPluginEnabled("TardisHorseSpeed")) {
+                            TardisHorseSpeed ths = (TardisHorseSpeed) plugin.pm.getPlugin("TardisHorseSpeed");
+                            double speed = ths.getHorseSpeed(horse);
+                            tmhor.setSpeed(speed);
+                        }
                         old_macd_had_a_horse.add(tmhor);
                         e.remove();
                         if (taf != null) {
@@ -363,6 +369,10 @@ public class TARDISFarmer {
                             equine.setJumpStrength(e.getJumpStrength());
                             if (e.hasChest()) {
                                 equine.setCarryingChest(true);
+                            }
+                            if (plugin.pm.isPluginEnabled("TardisHorseSpeed")) {
+                                TardisHorseSpeed ths = (TardisHorseSpeed) plugin.pm.getPlugin("TardisHorseSpeed");
+                                ths.setHorseSpeed(equine, e.getSpeed());
                             }
                             InventoryHolder ih = (InventoryHolder) equine;
                             ih.getInventory().setContents(e.getHorseinventory());
