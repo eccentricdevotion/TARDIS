@@ -142,6 +142,8 @@ public class TARDISFarmer {
                     case HORSE:
                         Tameable brokenin = (Tameable) e;
                         Horse horse = (Horse) e;
+                        // if horse has a passenger, eject them!
+                        horse.eject();
                         // don't farm other player's tamed horses
                         if (brokenin.isTamed()) {
 //                            plugin.debug("Horse owner: " + brokenin.getOwner().getName());
