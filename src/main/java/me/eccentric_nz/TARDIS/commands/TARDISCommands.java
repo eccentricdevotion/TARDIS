@@ -527,7 +527,7 @@ public class TARDISCommands implements CommandExecutor {
                         }
                         int id = rs.getTardis_id();
                         HashMap<String, Object> wheret = new HashMap<String, Object>();
-                        wheret.put("tardis_id", id);
+                        //wheret.put("tardis_id", id);
                         wheret.put("player", player.getName());
                         ResultSetTravellers rst = new ResultSetTravellers(plugin, wheret, false);
                         String occupied;
