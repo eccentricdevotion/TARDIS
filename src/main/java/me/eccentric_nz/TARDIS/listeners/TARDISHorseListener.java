@@ -16,7 +16,9 @@
  */
 package me.eccentric_nz.TARDIS.listeners;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
@@ -35,7 +37,8 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityInteractEvent;
-import org.bukkit.inventory.InventoryHolder;
+import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.ItemStack;
 
 /**
  *
@@ -44,9 +47,13 @@ import org.bukkit.inventory.InventoryHolder;
 public class TARDISHorseListener implements Listener {
 
     private final TARDIS plugin;
+    private List<Material> barding = new ArrayList<Material>();
 
     public TARDISHorseListener(TARDIS plugin) {
         this.plugin = plugin;
+        this.barding.add(Material.IRON_BARDING);
+        this.barding.add(Material.GOLD_BARDING);
+        this.barding.add(Material.DIAMOND_BARDING);
     }
 
     @EventHandler(priority = EventPriority.MONITOR)
@@ -128,8 +135,20 @@ public class TARDISHorseListener implements Listener {
                             if (tmhor.hasChest()) {
                                 equine.setCarryingChest(true);
                             }
-                            InventoryHolder ih = (InventoryHolder) equine;
-                            ih.getInventory().setContents(tmhor.getHorseinventory());
+                            Inventory inv = equine.getInventory();
+                            inv.setContents(tmhor.getHorseinventory());
+                            if (inv.contains(Material.SADDLE)) {
+                                int saddle_slot = inv.first(Material.SADDLE);
+                                ItemStack saddle = inv.getItem(saddle_slot);
+                                equine.getInventory().setSaddle(saddle);
+                            }
+                            for (Material mat : barding) {
+                                if (inv.contains(mat)) {
+                                    int armour_slot = inv.first(mat);
+                                    ItemStack bard = inv.getItem(armour_slot);
+                                    equine.getInventory().setArmor(bard);
+                                }
+                            }
                             Tameable tamed = (Tameable) equine;
                             tamed.setTamed(true);
                             tamed.setOwner(p);
