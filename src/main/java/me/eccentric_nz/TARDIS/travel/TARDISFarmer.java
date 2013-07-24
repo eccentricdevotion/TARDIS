@@ -142,6 +142,8 @@ public class TARDISFarmer {
                     case HORSE:
                         Tameable brokenin = (Tameable) e;
                         Horse horse = (Horse) e;
+                        // if horse has a passenger, eject them!
+                        horse.eject();
                         // don't farm other player's tamed horses
                         if (brokenin.isTamed()) {
                             if (brokenin.getOwner() != null && !brokenin.getOwner().getName().equals(p.getName())) {
@@ -183,6 +185,8 @@ public class TARDISFarmer {
                         TARDISMob tmpig = new TARDISMob();
                         tmpig.setAge(e.getTicksLived());
                         tmpig.setBaby(!((Pig) e).isAdult());
+                        // eject any passengers
+                        ((Pig) e).eject();
                         old_macd_had_a_pig.add(tmpig);
                         e.remove();
                         if (taf != null) {
