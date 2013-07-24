@@ -55,8 +55,11 @@ public class TARDISChatListener implements Listener {
             if (plugin.trackChat.containsKey(saved)) {
                 Player rescuer = plugin.getServer().getPlayer(plugin.trackChat.get(saved));
                 TARDISRescue res = new TARDISRescue(plugin);
-                res.tryRescue(rescuer, saved);
-                rescuer.sendMessage(plugin.pluginName + "Release the handbrake to start rescuing " + saved);
+                if (res.tryRescue(rescuer, saved)) {
+                    rescuer.sendMessage(plugin.pluginName + "Release the handbrake to start rescuing " + saved);
+                } else {
+                    rescuer.sendMessage(plugin.pluginName + "There was a problem trying to rescue " + saved + ", they probably need to move.");
+                }
                 plugin.trackChat.remove(saved);
             } else {
                 event.getPlayer().sendMessage(plugin.pluginName + "Rescue request timed out! You need to respond within 60 seconds.");
