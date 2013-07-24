@@ -184,6 +184,8 @@ public class TARDISFarmer {
                         total++;
                         break;
                     case PIG:
+                        // eject any passengers
+                        ((Pig) e).eject();
                         TARDISMob tmpig = new TARDISMob();
                         tmpig.setAge(e.getTicksLived());
                         tmpig.setBaby(!((Pig) e).isAdult());
