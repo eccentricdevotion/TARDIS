@@ -43,7 +43,6 @@ import org.bukkit.entity.Sheep;
 import org.bukkit.entity.Tameable;
 import org.bukkit.entity.Wolf;
 import org.bukkit.inventory.Inventory;
-import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
 
 /**
@@ -55,9 +54,13 @@ import org.bukkit.inventory.ItemStack;
 public class TARDISFarmer {
 
     private final TARDIS plugin;
+    private List<Material> barding = new ArrayList<Material>();
 
     public TARDISFarmer(TARDIS plugin) {
         this.plugin = plugin;
+        this.barding.add(Material.IRON_BARDING);
+        this.barding.add(Material.GOLD_BARDING);
+        this.barding.add(Material.DIAMOND_BARDING);
     }
 
     /**
@@ -368,8 +371,20 @@ public class TARDISFarmer {
                             if (e.hasChest()) {
                                 equine.setCarryingChest(true);
                             }
-                            InventoryHolder ih = (InventoryHolder) equine;
-                            ih.getInventory().setContents(e.getHorseinventory());
+                            Inventory inv = equine.getInventory();
+                            inv.setContents(e.getHorseinventory());
+                            if (inv.contains(Material.SADDLE)) {
+                                int saddle_slot = inv.first(Material.SADDLE);
+                                ItemStack saddle = inv.getItem(saddle_slot);
+                                equine.getInventory().setSaddle(saddle);
+                            }
+                            for (Material m : barding) {
+                                if (inv.contains(m)) {
+                                    int armour_slot = inv.first(m);
+                                    ItemStack bard = inv.getItem(armour_slot);
+                                    equine.getInventory().setArmor(bard);
+                                }
+                            }
                             if (plugin.pm.isPluginEnabled("TardisHorseSpeed")) {
                                 TardisHorseSpeed ths = (TardisHorseSpeed) plugin.pm.getPlugin("TardisHorseSpeed");
                                 ths.setHorseSpeed(equine, e.getSpeed());
