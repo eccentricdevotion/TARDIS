@@ -1,7 +1,7 @@
 # TODO
 
 ## Current version `2.6-beta-1`
-1. TARDIS shield - this could be adapted, so that the TARDIS can land underwater
+1. Test landing underwater
 2. Jettison the whole room (including walls), will require new room schematics...
 3. Architectural Reconfiguration System / Map room
 4. Add sounds with Resource packs?

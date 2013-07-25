@@ -24,6 +24,7 @@ import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetChunks;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
+import me.eccentric_nz.TARDIS.thirdparty.Version;
 import org.bukkit.Bukkit;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
@@ -176,8 +177,9 @@ public class TARDISUtils {
             int adjust = 0;
             FileConfiguration pluginYml = YamlConfiguration.loadConfiguration(plugin.pm.getPlugin("TARDIS").getResource("plugin.yml"));
             String[] version = pluginYml.getString("version").split("-");
-            float v = Float.parseFloat(version[0]);
-            if (v >= 2.5F) {
+            Version this_version = new Version(version[0]);
+            Version min_version = new Version("2.5");
+            if (this_version.compareTo(min_version) >= 0) {
                 switch (rs.getSchematic()) {
                     case BIGGER:
                         adjust = (15 - plugin.biggerdimensions[1]) / 2;
