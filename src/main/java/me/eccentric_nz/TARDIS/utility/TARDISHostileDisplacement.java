@@ -94,7 +94,7 @@ public class TARDISHostileDisplacement {
                             boolean safe;
                             if (plugin.trackSubmarine.contains(id)) {
                                 Location sub = tt.submarine(l.getBlock(), d);
-                                safe = tt.isSafeSubmarine(sub, d);
+                                safe = (sub != null);
                             } else {
                                 int[] start = tt.getStartLocation(l, d);
                                 safe = (tt.safeLocation(start[0], y, start[2], start[1], start[3], l.getWorld(), d) < 1);
@@ -142,6 +142,8 @@ public class TARDISHostileDisplacement {
                                         hostile.sendMessage(plugin.pluginName + "HADS could not be engaged because the area is protected!");
                                     }
                                 }
+                            } else {
+                                player.sendMessage(plugin.pluginName + "HADS could not be engaged because the we couldn't find a safe area!");
                             }
                         } else {
                             plugin.trackDamage.remove(Integer.valueOf(id));

@@ -16,6 +16,7 @@
 10. Add areas to save-sign?
 11. Sonic Screwdrivers
 12. TARDIS Information System
+13. Chameleon presets
 
 ### Waiting on Bukkit API
 1. Leashes

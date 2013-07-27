@@ -467,12 +467,14 @@ public class TARDISTerminalListener implements Listener {
                             loc.setY(starty);
                             if (subim.hasLore() && subim.getLore().get(0).equals("true") && loc.getBlock().getBiome().equals(Biome.OCEAN)) {
                                 Location subloc = tt.submarine(loc.getBlock(), d);
-                                starty = subloc.getBlockY();
-                                safe = (tt.isSafeSubmarine(subloc, d)) ? 0 : 1;
-                                if (safe == 0) {
+                                if (subloc != null) {
+                                    safe = 0;
+                                    starty = subloc.getBlockY();
                                     data5 = "true";
                                     plugin.debug("ID: " + terminalIDs.get(name));
                                     plugin.trackSubmarine.add(Integer.valueOf(terminalIDs.get(name)));
+                                } else {
+                                    safe = 1;
                                 }
                             } else {
                                 safe = tt.safeLocation(start[0], starty, start[2], start[1], start[3], w, d);
