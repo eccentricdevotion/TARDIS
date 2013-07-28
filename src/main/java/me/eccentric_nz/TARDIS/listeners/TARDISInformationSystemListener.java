@@ -59,7 +59,7 @@ public class TARDISInformationSystemListener implements Listener {
             if (chat.equalsIgnoreCase("E")) {
                 p.sendMessage("---");
                 p.sendMessage("§4You have been logged out of the TARDIS Information System");
-                plugin.trackChat.remove(name);
+                plugin.trackInfoMenu.remove(name);
             }
             switch (plugin.trackInfoMenu.get(name)) {
                 // TOP level menu
@@ -70,7 +70,7 @@ public class TARDISInformationSystemListener implements Listener {
                         p.sendMessage("§6[TIS/TARDIS Manual] is not yet available in your current timestream");
                         p.sendMessage("§6---");
                         p.sendMessage("§4You have been logged out of the TARDIS Information System");
-                        plugin.trackChat.remove(name);
+                        plugin.trackInfoMenu.remove(name);
                     }
                     if (chat.equalsIgnoreCase("I")) {
                         processKey(p, TARDISInfoMenu.ITEMS);
