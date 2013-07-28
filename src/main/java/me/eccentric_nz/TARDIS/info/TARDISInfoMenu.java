@@ -114,7 +114,6 @@ public enum TARDISInfoMenu {
     private final String parent;
     private final String key;
     private final static Map<String, TARDISInfoMenu> BY_NAME = Maps.newHashMap();
-    //private final static Map<String, TARDISInfoMenu> BY_NAME = Maps.newHashMap();
 
     private TARDISInfoMenu(String name, String parent, String key) {
         this.name = name;
@@ -164,7 +163,7 @@ public enum TARDISInfoMenu {
      * Attempts to get the children of the parent menu.
      *
      * @param parent the parent menu TARDISInfoMenu.toString();
-     * @return a List<String> of child menu items
+     * @return a HashMap<String, String> of child menu items, and their (ALT)key
      */
     public static HashMap<String, String> getChildren(String parent) {
         HashMap<String, String> children = new HashMap<String, String>();
