@@ -31,7 +31,7 @@ import org.bukkit.event.player.AsyncPlayerChatEvent;
  * TARDIS materialisation is heard. The TARDIS materialises around them,
  * shocking Brian in place.
  *
- * @author eccentric_nz
+ * @author bootthanoo, eccentric_nz
  */
 public class TARDISInformationSystemListener implements Listener {
 
