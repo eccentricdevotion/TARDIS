@@ -28,6 +28,7 @@ import me.eccentric_nz.TARDIS.database.ResultSetLamps;
 import me.eccentric_nz.TARDIS.database.ResultSetRepeaters;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
+import me.eccentric_nz.TARDIS.info.TARDISInfoMenu;
 import me.eccentric_nz.TARDIS.rooms.TARDISARSInventory;
 import me.eccentric_nz.TARDIS.travel.TARDISTemporalLocatorInventory;
 import me.eccentric_nz.TARDIS.travel.TARDISTerminalInventory;
@@ -57,7 +58,7 @@ public class TARDISButtonListener implements Listener {
 
     private TARDIS plugin;
     List<Material> validBlocks = new ArrayList<Material>();
-    List<Integer> onlythese = Arrays.asList(new Integer[]{1, 8, 9, 10, 11, 12});
+    List<Integer> onlythese = Arrays.asList(new Integer[]{1, 8, 9, 10, 11, 12, 13});
     public ItemStack[] items;
     private ItemStack[] tars;
     private ItemStack[] clocks;
@@ -313,6 +314,18 @@ public class TARDISButtonListener implements Listener {
                                             b.setTypeId(124);
                                         }
                                     }
+                                    break;
+                                case 13:
+                                    plugin.trackInfoMenu.put(player.getName(), TARDISInfoMenu.TIS);
+                                    player.sendMessage(ChatColor.GOLD + "-----------TARDIS Information System-----------");
+                                    player.sendMessage(ChatColor.GOLD + "---*Please type a white letter to proceed*---");
+                                    player.sendMessage("§6> TARDIS §fM§6anual");
+                                    player.sendMessage("§6> §fI§6tems");
+                                    player.sendMessage("§6> §fC§6omponents");
+                                    player.sendMessage("§6> C§fo§6mmands");
+                                    player.sendMessage("§6> §fT§6ARDIS Types");
+                                    player.sendMessage("§6> §fR§6ooms");
+                                    player.sendMessage("§6> §fE§6xit");
                                     break;
                                 default:
                                     break;

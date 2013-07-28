@@ -45,6 +45,7 @@ import me.eccentric_nz.TARDIS.files.TARDISConfiguration;
 import me.eccentric_nz.TARDIS.files.TARDISMakeRoomCSV;
 import me.eccentric_nz.TARDIS.files.TARDISMakeTardisCSV;
 import me.eccentric_nz.TARDIS.files.TARDISUpdateChecker;
+import me.eccentric_nz.TARDIS.info.TARDISInfoMenu;
 import me.eccentric_nz.TARDIS.listeners.TARDISARSListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISAdminMenuListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISAnvilListener;
@@ -68,6 +69,7 @@ import me.eccentric_nz.TARDIS.listeners.TARDISHandbrakeListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISHorseListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISHotbarListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISIceMeltListener;
+import me.eccentric_nz.TARDIS.listeners.TARDISInformationSystemListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISJettisonSeeder;
 import me.eccentric_nz.TARDIS.listeners.TARDISJoinListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISKeyboardListener;
@@ -188,6 +190,7 @@ public class TARDIS extends JavaPlugin {
     public HashMap<Integer, Integer> tardisHasDestination = new HashMap<Integer, Integer>();
     public HashMap<String, Block> trackExterminate = new HashMap<String, Block>();
     public HashMap<String, Long> trackSetTime = new HashMap<String, Long>();
+    public HashMap<String, TARDISInfoMenu> trackInfoMenu = new HashMap<String, TARDISInfoMenu>();
     public List<String> trackRecipeView = new ArrayList<String>();
     public List<String> trackFarming = new ArrayList<String>();
     public List<Integer> trackMinecart = new ArrayList<Integer>();
@@ -407,6 +410,7 @@ public class TARDIS extends JavaPlugin {
         pm.registerEvents(new TARDISHorseListener(this), this);
         pm.registerEvents(new TARDISTeleportListener(this), this);
         pm.registerEvents(new TARDISAnvilListener(this), this);
+        pm.registerEvents(new TARDISInformationSystemListener(this), this);
     }
 
     /**
