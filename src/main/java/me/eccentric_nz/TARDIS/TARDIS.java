@@ -69,7 +69,7 @@ import me.eccentric_nz.TARDIS.listeners.TARDISHandbrakeListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISHorseListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISHotbarListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISIceMeltListener;
-import me.eccentric_nz.TARDIS.listeners.TARDISInformationSystemListener;
+import me.eccentric_nz.TARDIS.info.TARDISInformationSystemListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISJettisonSeeder;
 import me.eccentric_nz.TARDIS.listeners.TARDISJoinListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISKeyboardListener;

@@ -17,11 +17,13 @@
 package me.eccentric_nz.TARDIS.info;
 
 import com.google.common.collect.Maps;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.TreeMap;
 
 /**
+ * Articles in the TARDIS Information System were accessed by typing in an
+ * initialism for the subject. Entering IF, for example, brought up the
+ * database's index file.
  *
  * @author bootthanoo, eccentric_nz
  */

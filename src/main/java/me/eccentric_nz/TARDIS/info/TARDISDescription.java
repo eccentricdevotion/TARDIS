@@ -18,9 +18,14 @@ package me.eccentric_nz.TARDIS.info;
 
 /**
  *
+ * The Master had modified the Doctor's TARDIS using Block Transfer Computation
+ * as part of his plan to ensnare the Doctor in Castrovalva. At least some of
+ * the TIS's contents, such as the entry on Castrovalva, would not otherwise
+ * have existed.
+ *
  * @author bootthanoo, eccentric_nz
  */
-public enum TARDISDescriptions {
+public enum TARDISDescription {
 
     KEY_INFO("The TARDIS key allows you to enter and exit the TARDIS."),
     SONIC_INFO("The Sonic Screwdriver comes in 5 diffrent flavours, and each has its own special uses. Check out the Sonic Screwdriver types for further information."),
@@ -65,14 +70,14 @@ public enum TARDISDescriptions {
     WORKSHOP("Craft, smelt, brew, enchant and repair.");
     private final String desc;
 
-    private TARDISDescriptions(String desc) {
+    private TARDISDescription(String desc) {
         this.desc = desc;
     }
 
     /**
-     * Gets the menu name of this TARDISInfoMenu
+     * Gets the text of this TARDISDescription
      *
-     * @return name of this TARDISInfoMenu
+     * @return name of this TARDISDescription
      */
     public String getDesc() {
         return this.desc;

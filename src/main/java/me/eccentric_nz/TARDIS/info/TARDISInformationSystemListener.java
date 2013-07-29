@@ -14,13 +14,11 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.listeners;
+package me.eccentric_nz.TARDIS.info;
 
 import java.util.Locale;
 import java.util.Map;
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.info.TARDISDescriptions;
-import me.eccentric_nz.TARDIS.info.TARDISInfoMenu;
 import static me.eccentric_nz.TARDIS.info.TARDISInfoMenu.L_CIRCUIT;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -31,10 +29,9 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 
 /**
- * In 21st century London, Rory has his father, Brian Williams, over to help fix
- * a light bulb. After saying the fixture may be the problem, the sound of the
- * TARDIS materialisation is heard. The TARDIS materialises around them,
- * shocking Brian in place.
+ * The TARDIS information system is a searchable database which was discovered
+ * by the Fifth Doctor's companions Nyssa and Tegan from a readout in the
+ * control room. The Fifth Doctor called it the TARDIS databank.
  *
  * @author bootthanoo, eccentric_nz
  */
@@ -585,7 +582,7 @@ public class TARDISInformationSystemListener implements Listener {
     private void showRoomInfo(Player p, TARDISInfoMenu item) {
         p.sendMessage("---");
         p.sendMessage("[" + item.getName() + "]");
-        p.sendMessage("§6" + TARDISDescriptions.valueOf(item.toString()).getDesc());
+        p.sendMessage("§6" + TARDISDescription.valueOf(item.toString()).getDesc());
         String r = item.toString();
         // get room details from rooms config
         p.sendMessage("§6Seed Block: " + plugin.getRoomsConfig().getString("rooms." + r + ".seed"));
@@ -598,7 +595,7 @@ public class TARDISInformationSystemListener implements Listener {
     private void showInfo(Player p, TARDISInfoMenu item) {
         p.sendMessage("---");
         p.sendMessage("[" + item.getName() + "]");
-        p.sendMessage("§6" + TARDISDescriptions.valueOf(item.toString()).getDesc());
+        p.sendMessage("§6" + TARDISDescription.valueOf(item.toString()).getDesc());
         exit(p);
     }
 
