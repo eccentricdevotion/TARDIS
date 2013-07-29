@@ -303,8 +303,77 @@ public class TARDISInformationSystemListener implements Listener {
                     }
                     break;
                 case TARDIS:
-                    if (chat.equalsIgnoreCase("A")) {
+                    if (chat.equalsIgnoreCase("a")) {
                         showCommand(p, TARDISInfoMenu.TARDIS_ADD);
+                    }
+                    if (chat.equalsIgnoreCase("c")) {
+                        showCommand(p, TARDISInfoMenu.TARDIS_CHAMELEON);
+                    }
+                    if (chat.equalsIgnoreCase("com")) {
+                        showCommand(p, TARDISInfoMenu.TARDIS_COMEHERE);
+                    }
+                    if (chat.equalsIgnoreCase("d")) {
+                        showCommand(p, TARDISInfoMenu.TARDIS_DIRECTION);
+                    }
+                    if (chat.equalsIgnoreCase("x")) {
+                        showCommand(p, TARDISInfoMenu.TARDIS_EXTERMINATE);
+                    }
+                    if (chat.equalsIgnoreCase("f")) {
+                        showCommand(p, TARDISInfoMenu.TARDIS_FIND);
+                    }
+                    if (chat.equalsIgnoreCase("h")) {
+                        showCommand(p, TARDISInfoMenu.TARDIS_HIDE);
+                    }
+                    if (chat.equalsIgnoreCase("m")) {
+                        showCommand(p, TARDISInfoMenu.TARDIS_HOME);
+                    }
+                    if (chat.equalsIgnoreCase("i")) {
+                        showCommand(p, TARDISInfoMenu.TARDIS_INSIDE);
+                    }
+                    if (chat.equalsIgnoreCase("a")) {
+                        showCommand(p, TARDISInfoMenu.TARDIS_JETTISON);
+                    }
+                    if (chat.equalsIgnoreCase("la")) {
+                        showCommand(p, TARDISInfoMenu.TARDIS_LAMPS);
+                    }
+                    if (chat.equalsIgnoreCase("l")) {
+                        showCommand(p, TARDISInfoMenu.TARDIS_LIST);
+                    }
+                    if (chat.equalsIgnoreCase("k")) {
+                        showCommand(p, TARDISInfoMenu.TARDIS_NAMEKEY);
+                    }
+                    if (chat.equalsIgnoreCase("o")) {
+                        showCommand(p, TARDISInfoMenu.TARDIS_OCCUPY);
+                    }
+                    if (chat.equalsIgnoreCase("b")) {
+                        showCommand(p, TARDISInfoMenu.TARDIS_REBUILD);
+                    }
+                    if (chat.equalsIgnoreCase("r")) {
+                        showCommand(p, TARDISInfoMenu.TARDIS_REMOVE);
+                    }
+                    if (chat.equalsIgnoreCase("rem")) {
+                        showCommand(p, TARDISInfoMenu.TARDIS_REMOVESAVE);
+                    }
+                    if (chat.equalsIgnoreCase("u")) {
+                        showCommand(p, TARDISInfoMenu.TARDIS_RESCUE);
+                    }
+                    if (chat.equalsIgnoreCase("roo")) {
+                        showCommand(p, TARDISInfoMenu.TARDIS_ROOM);
+                    }
+                    if (chat.equalsIgnoreCase("s")) {
+                        showCommand(p, TARDISInfoMenu.TARDIS_SAVE);
+                    }
+                    if (chat.equalsIgnoreCase("n")) {
+                        showCommand(p, TARDISInfoMenu.TARDIS_SECONDARY);
+                    }
+                    if (chat.equalsIgnoreCase("t")) {
+                        showCommand(p, TARDISInfoMenu.TARDIS_SETDEST);
+                    }
+                    if (chat.equalsIgnoreCase("p")) {
+                        showCommand(p, TARDISInfoMenu.TARDIS_UPDATE);
+                    }
+                    if (chat.equalsIgnoreCase("v")) {
+                        showCommand(p, TARDISInfoMenu.TARDIS_VERSION);
                     }
                     break;
                 // FOURTH level menus
