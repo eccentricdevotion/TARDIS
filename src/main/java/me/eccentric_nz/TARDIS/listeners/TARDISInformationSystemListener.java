@@ -605,7 +605,7 @@ public class TARDISInformationSystemListener implements Listener {
     private void showRecipe(Player p, TARDISInfoMenu item) {
         // do stuff
         String[] r = item.toString().split("_");
-        String recipe = (r.length > 2) ? r[0] + "_" + r[1] : r[0];
+        String recipe = (r.length > 2) ? r[0] + "-" + r[1] : r[0];
         p.performCommand("tardisrecipe " + recipe);
         exit(p);
     }
