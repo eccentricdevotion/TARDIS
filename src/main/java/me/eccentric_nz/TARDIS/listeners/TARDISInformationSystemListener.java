@@ -19,6 +19,7 @@ package me.eccentric_nz.TARDIS.listeners;
 import java.util.Locale;
 import java.util.Map;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.info.TARDISDescriptions;
 import me.eccentric_nz.TARDIS.info.TARDISInfoMenu;
 import static me.eccentric_nz.TARDIS.info.TARDISInfoMenu.L_CIRCUIT;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -217,31 +218,31 @@ public class TARDISInformationSystemListener implements Listener {
                     break;
                 case TYPES:
                     if (chat.equalsIgnoreCase("B")) {
-                        showTARDISInfo(p, TARDISInfoMenu.BUDGET);
+                        showInfo(p, TARDISInfoMenu.BUDGET);
                     }
                     if (chat.equalsIgnoreCase("i")) {
-                        showTARDISInfo(p, TARDISInfoMenu.BIGGER);
+                        showInfo(p, TARDISInfoMenu.BIGGER);
                     }
                     if (chat.equalsIgnoreCase("D")) {
-                        showTARDISInfo(p, TARDISInfoMenu.DELUXE);
+                        showInfo(p, TARDISInfoMenu.DELUXE);
                     }
                     if (chat.equalsIgnoreCase("l")) {
-                        showTARDISInfo(p, TARDISInfoMenu.ELEVENTH);
+                        showInfo(p, TARDISInfoMenu.ELEVENTH);
                     }
                     if (chat.equalsIgnoreCase("R")) {
-                        showTARDISInfo(p, TARDISInfoMenu.REDSTONE);
+                        showInfo(p, TARDISInfoMenu.REDSTONE);
                     }
                     if (chat.equalsIgnoreCase("S")) {
-                        showTARDISInfo(p, TARDISInfoMenu.STEAMPUNK);
+                        showInfo(p, TARDISInfoMenu.STEAMPUNK);
                     }
                     if (chat.equalsIgnoreCase("P")) {
-                        showTARDISInfo(p, TARDISInfoMenu.PLANK);
+                        showInfo(p, TARDISInfoMenu.PLANK);
                     }
                     if (chat.equalsIgnoreCase("T")) {
-                        showTARDISInfo(p, TARDISInfoMenu.TOM);
+                        showInfo(p, TARDISInfoMenu.TOM);
                     }
                     if (chat.equalsIgnoreCase("A")) {
-                        showTARDISInfo(p, TARDISInfoMenu.ARS);
+                        showInfo(p, TARDISInfoMenu.ARS);
                     }
                     break;
                 // THIRD level menus
@@ -383,8 +384,7 @@ public class TARDISInformationSystemListener implements Listener {
     private void showRoomInfo(Player p, TARDISInfoMenu item) {
         p.sendMessage("---");
         p.sendMessage("[" + item.getName() + "]");
-        // send room details ie what this room is for - need some way to look this up - maybe a ROOM enum class or a HashMap
-        p.sendMessage("§6What this room is about...");
+        p.sendMessage("§6" + TARDISDescriptions.valueOf(item.toString()).getDesc());
         String r = item.toString();
         // get room details from rooms config
         p.sendMessage("§6Seed Block: " + plugin.getRoomsConfig().getString("rooms." + r + ".seed"));
@@ -394,14 +394,10 @@ public class TARDISInformationSystemListener implements Listener {
         exit(p);
     }
 
-    private void showTARDISInfo(Player p, TARDISInfoMenu item) {
-        // do stuff
-        p.sendMessage("§6A description of this TARDIS...");
-        exit(p);
-    }
-
     private void showInfo(Player p, TARDISInfoMenu item) {
-        // do stuff
+        p.sendMessage("---");
+        p.sendMessage("[" + item.getName() + "]");
+        p.sendMessage("§6" + TARDISDescriptions.valueOf(item.toString()).getDesc());
         exit(p);
     }
 
