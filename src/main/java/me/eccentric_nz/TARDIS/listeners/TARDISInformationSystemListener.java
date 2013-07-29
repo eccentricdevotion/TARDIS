@@ -474,6 +474,20 @@ public class TARDISInformationSystemListener implements Listener {
                         showCommand(p, TARDISInfoMenu.TARDISTEXTURE_OUT);
                     }
                     break;
+                case TARDISAREA:
+                    if (chat.equalsIgnoreCase("s")) {
+                        showCommand(p, TARDISInfoMenu.TARDISAREA_START);
+                    }
+                    if (chat.equalsIgnoreCase("n")) {
+                        showCommand(p, TARDISInfoMenu.TARDISAREA_END);
+                    }
+                    if (chat.equalsIgnoreCase("h")) {
+                        showCommand(p, TARDISInfoMenu.TARDISAREA_SHOW);
+                    }
+                    if (chat.equalsIgnoreCase("r")) {
+                        showCommand(p, TARDISInfoMenu.TARDISAREA_REMOVE);
+                    }
+                    break;
                 case TARDISROOM:
                     if (chat.equalsIgnoreCase("a")) {
                         showCommand(p, TARDISInfoMenu.TARDISROOM_ADD);
