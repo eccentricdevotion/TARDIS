@@ -16,9 +16,13 @@
  */
 package me.eccentric_nz.TARDIS.listeners;
 
+import java.util.Locale;
 import java.util.Map;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.info.TARDISInfoMenu;
+import static me.eccentric_nz.TARDIS.info.TARDISInfoMenu.L_CIRCUIT;
+import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -36,9 +40,11 @@ import org.bukkit.event.player.AsyncPlayerChatEvent;
 public class TARDISInformationSystemListener implements Listener {
 
     private final TARDIS plugin;
+    FileConfiguration pluginYml;
 
     public TARDISInformationSystemListener(TARDIS plugin) {
         this.plugin = plugin;
+        this.pluginYml = YamlConfiguration.loadConfiguration(this.plugin.pm.getPlugin("TARDIS").getResource("plugin.yml"));
     }
 
     /**
@@ -57,9 +63,7 @@ public class TARDISInformationSystemListener implements Listener {
             String chat = event.getMessage();
             // always exit if 'e' is pressed
             if (chat.equalsIgnoreCase("E")) {
-                p.sendMessage("---");
-                p.sendMessage("§4You have been logged out of the TARDIS Information System");
-                plugin.trackInfoMenu.remove(name);
+                exit(p);
             }
             switch (plugin.trackInfoMenu.get(name)) {
                 // TOP level menu
@@ -68,9 +72,7 @@ public class TARDISInformationSystemListener implements Listener {
                         //processKey(p, TARDISInfoMenu.MANUAL);
                         p.sendMessage("---");
                         p.sendMessage("§6[TIS/TARDIS Manual] is not yet available in your current timestream");
-                        p.sendMessage("§6---");
-                        p.sendMessage("§4You have been logged out of the TARDIS Information System");
-                        plugin.trackInfoMenu.remove(name);
+                        exit(p);
                     }
                     if (chat.equalsIgnoreCase("I")) {
                         processKey(p, TARDISInfoMenu.ITEMS);
@@ -121,41 +123,249 @@ public class TARDISInformationSystemListener implements Listener {
                         processKey(p, TARDISInfoMenu.TARDIS);
                     }
                     if (chat.equalsIgnoreCase("A")) {
-                        processKey(p, TARDISInfoMenu.T_ADMIN);
+                        processKey(p, TARDISInfoMenu.TARDISADMIN);
                     }
                     if (chat.equalsIgnoreCase("C")) {
-                        processKey(p, TARDISInfoMenu.T_AREA);
+                        processKey(p, TARDISInfoMenu.TARDISAREA);
                     }
                     if (chat.equalsIgnoreCase("B")) {
-                        processKey(p, TARDISInfoMenu.T_BIND);
+                        processKey(p, TARDISInfoMenu.TARDISBIND);
                     }
                     if (chat.equalsIgnoreCase("k")) {
-                        processKey(p, TARDISInfoMenu.T_BOOK);
+                        processKey(p, TARDISInfoMenu.TARDISBOOK);
                     }
                     if (chat.equalsIgnoreCase("G")) {
-                        processKey(p, TARDISInfoMenu.T_GRAVITY);
+                        processKey(p, TARDISInfoMenu.TARDISGRAVITY);
                     }
                     if (chat.equalsIgnoreCase("P")) {
-                        processKey(p, TARDISInfoMenu.T_PREFS);
+                        processKey(p, TARDISInfoMenu.TARDISPREFS);
                     }
                     if (chat.equalsIgnoreCase("R")) {
-                        processKey(p, TARDISInfoMenu.T_RECIPE);
+                        processKey(p, TARDISInfoMenu.TARDISRECIPE);
                     }
                     if (chat.equalsIgnoreCase("o")) {
-                        processKey(p, TARDISInfoMenu.T_ROOM);
+                        processKey(p, TARDISInfoMenu.TARDISROOM);
                     }
                     if (chat.equalsIgnoreCase("T")) {
-                        processKey(p, TARDISInfoMenu.T_TEXTURE);
+                        processKey(p, TARDISInfoMenu.TARDISTEXTURE);
                     }
                     if (chat.equalsIgnoreCase("v")) {
-                        processKey(p, TARDISInfoMenu.T_TRAVEL);
+                        processKey(p, TARDISInfoMenu.TARDISTRAVEL);
                     }
                     break;
                 case ROOMS:
-
+                    if (chat.equalsIgnoreCase("A")) {
+                        showRoomInfo(p, TARDISInfoMenu.ANTIGRAVITY);
+                    }
+                    if (chat.equalsIgnoreCase("u")) {
+                        showRoomInfo(p, TARDISInfoMenu.ARBORETUM);
+                    }
+                    if (chat.equalsIgnoreCase("B")) {
+                        showRoomInfo(p, TARDISInfoMenu.BAKER);
+                    }
+                    if (chat.equalsIgnoreCase("d")) {
+                        showRoomInfo(p, TARDISInfoMenu.BEDROOM);
+                    }
+                    if (chat.equalsIgnoreCase("y")) {
+                        showRoomInfo(p, TARDISInfoMenu.EMPTY);
+                    }
+                    if (chat.equalsIgnoreCase("F")) {
+                        showRoomInfo(p, TARDISInfoMenu.FARM);
+                    }
+                    if (chat.equalsIgnoreCase("G")) {
+                        showRoomInfo(p, TARDISInfoMenu.GRAVITY);
+                    }
+                    if (chat.equalsIgnoreCase("n")) {
+                        showRoomInfo(p, TARDISInfoMenu.GREENHOUSE);
+                    }
+                    if (chat.equalsIgnoreCase("H")) {
+                        showRoomInfo(p, TARDISInfoMenu.HARMONY);
+                    }
+                    if (chat.equalsIgnoreCase("K")) {
+                        showRoomInfo(p, TARDISInfoMenu.KITCHEN);
+                    }
+                    if (chat.equalsIgnoreCase("L")) {
+                        showRoomInfo(p, TARDISInfoMenu.LIBRARY);
+                    }
+                    if (chat.equalsIgnoreCase("M")) {
+                        showRoomInfo(p, TARDISInfoMenu.MUSHROOM);
+                    }
+                    if (chat.equalsIgnoreCase("P")) {
+                        showRoomInfo(p, TARDISInfoMenu.PASSAGE);
+                    }
+                    if (chat.equalsIgnoreCase("o")) {
+                        showRoomInfo(p, TARDISInfoMenu.POOL);
+                    }
+                    if (chat.equalsIgnoreCase("R")) {
+                        showRoomInfo(p, TARDISInfoMenu.RAIL);
+                    }
+                    if (chat.equalsIgnoreCase("S")) {
+                        showRoomInfo(p, TARDISInfoMenu.STABLE);
+                    }
+                    if (chat.equalsIgnoreCase("T")) {
+                        showRoomInfo(p, TARDISInfoMenu.TRENZALORE);
+                    }
+                    if (chat.equalsIgnoreCase("V")) {
+                        showRoomInfo(p, TARDISInfoMenu.VAULT);
+                    }
+                    if (chat.equalsIgnoreCase("W")) {
+                        showRoomInfo(p, TARDISInfoMenu.WOOD);
+                    }
+                    if (chat.equalsIgnoreCase("h")) {
+                        showRoomInfo(p, TARDISInfoMenu.WORKSHOP);
+                    }
+                    break;
+                case TYPES:
+                    if (chat.equalsIgnoreCase("B")) {
+                        showTARDISInfo(p, TARDISInfoMenu.BUDGET);
+                    }
+                    if (chat.equalsIgnoreCase("i")) {
+                        showTARDISInfo(p, TARDISInfoMenu.BIGGER);
+                    }
+                    if (chat.equalsIgnoreCase("D")) {
+                        showTARDISInfo(p, TARDISInfoMenu.DELUXE);
+                    }
+                    if (chat.equalsIgnoreCase("l")) {
+                        showTARDISInfo(p, TARDISInfoMenu.ELEVENTH);
+                    }
+                    if (chat.equalsIgnoreCase("R")) {
+                        showTARDISInfo(p, TARDISInfoMenu.REDSTONE);
+                    }
+                    if (chat.equalsIgnoreCase("S")) {
+                        showTARDISInfo(p, TARDISInfoMenu.STEAMPUNK);
+                    }
+                    if (chat.equalsIgnoreCase("P")) {
+                        showTARDISInfo(p, TARDISInfoMenu.PLANK);
+                    }
+                    if (chat.equalsIgnoreCase("T")) {
+                        showTARDISInfo(p, TARDISInfoMenu.TOM);
+                    }
+                    if (chat.equalsIgnoreCase("A")) {
+                        showTARDISInfo(p, TARDISInfoMenu.ARS);
+                    }
+                    break;
+                // THIRD level menus
+                case KEY:
+                    if (chat.equalsIgnoreCase("I")) {
+                        showInfo(p, TARDISInfoMenu.KEY_INFO);
+                    }
+                    if (chat.equalsIgnoreCase("R")) {
+                        showRecipe(p, TARDISInfoMenu.KEY_RECIPE);
+                    }
+                    break;
+                case SONIC:
+                    if (chat.equalsIgnoreCase("I")) {
+                        showInfo(p, TARDISInfoMenu.SONIC_INFO);
+                    }
+                    if (chat.equalsIgnoreCase("T")) {
+                        processKey(p, TARDISInfoMenu.SONIC_TYPES);
+                    }
+                    break;
+                case LOCATOR:
+                    if (chat.equalsIgnoreCase("I")) {
+                        showInfo(p, TARDISInfoMenu.LOCATOR_INFO);
+                    }
+                    if (chat.equalsIgnoreCase("R")) {
+                        showRecipe(p, TARDISInfoMenu.LOCATOR_RECIPE);
+                    }
+                    break;
+                case REMOTE:
+                    if (chat.equalsIgnoreCase("I")) {
+                        showInfo(p, TARDISInfoMenu.REMOTE_INFO);
+                    }
+                    if (chat.equalsIgnoreCase("R")) {
+                        showRecipe(p, TARDISInfoMenu.REMOTE_RECIPE);
+                    }
+                    break;
+                case L_CIRCUIT:
+                    if (chat.equalsIgnoreCase("I")) {
+                        showInfo(p, TARDISInfoMenu.L_CIRCUIT_INFO);
+                    }
+                    if (chat.equalsIgnoreCase("R")) {
+                        showRecipe(p, TARDISInfoMenu.L_CIRCUIT_RECIPE);
+                    }
+                    break;
+                case M_CIRCUIT:
+                    if (chat.equalsIgnoreCase("I")) {
+                        showInfo(p, TARDISInfoMenu.M_CIRCUIT_INFO);
+                    }
+                    if (chat.equalsIgnoreCase("R")) {
+                        showRecipe(p, TARDISInfoMenu.M_CIRCUIT_RECIPE);
+                    }
+                    break;
+                case S_CIRCUIT:
+                    if (chat.equalsIgnoreCase("I")) {
+                        showInfo(p, TARDISInfoMenu.S_CIRCUIT_INFO);
+                    }
+                    if (chat.equalsIgnoreCase("R")) {
+                        showRecipe(p, TARDISInfoMenu.S_CIRCUIT_RECIPE);
+                    }
+                    break;
+                case TARDIS:
+                    if (chat.equalsIgnoreCase("A")) {
+                        showCommand(p, TARDISInfoMenu.TARDIS_ADD);
+                    }
+                    break;
+                // FOURTH level menus
+                case SONIC_TYPES:
+                    if (chat.equalsIgnoreCase("Q")) {
+                        processKey(p, TARDISInfoMenu.SONIC_Q);
+                    }
+                    if (chat.equalsIgnoreCase("R")) {
+                        processKey(p, TARDISInfoMenu.SONIC_R);
+                    }
+                    if (chat.equalsIgnoreCase("D")) {
+                        processKey(p, TARDISInfoMenu.SONIC_D);
+                    }
+                    if (chat.equalsIgnoreCase("m")) {
+                        processKey(p, TARDISInfoMenu.SONIC_E);
+                    }
+                    if (chat.equalsIgnoreCase("A")) {
+                        processKey(p, TARDISInfoMenu.SONIC_A);
+                    }
+                    break;
+                // FIFTH level menus - I've a feeling this is too deep!
+                case SONIC_Q:
+                    if (chat.equalsIgnoreCase("I")) {
+                        showInfo(p, TARDISInfoMenu.SONIC_Q_INFO);
+                    }
+                    if (chat.equalsIgnoreCase("R")) {
+                        showRecipe(p, TARDISInfoMenu.SONIC_Q_RECIPE);
+                    }
+                    break;
+                case SONIC_R:
+                    if (chat.equalsIgnoreCase("I")) {
+                        showInfo(p, TARDISInfoMenu.SONIC_R_INFO);
+                    }
+                    if (chat.equalsIgnoreCase("R")) {
+                        showRecipe(p, TARDISInfoMenu.SONIC_R_RECIPE);
+                    }
+                    break;
+                case SONIC_D:
+                    if (chat.equalsIgnoreCase("I")) {
+                        showInfo(p, TARDISInfoMenu.SONIC_D_INFO);
+                    }
+                    if (chat.equalsIgnoreCase("R")) {
+                        showRecipe(p, TARDISInfoMenu.SONIC_D_RECIPE);
+                    }
+                    break;
+                case SONIC_E:
+                    if (chat.equalsIgnoreCase("I")) {
+                        showInfo(p, TARDISInfoMenu.SONIC_E_INFO);
+                    }
+                    if (chat.equalsIgnoreCase("R")) {
+                        showRecipe(p, TARDISInfoMenu.SONIC_E_RECIPE);
+                    }
+                    break;
+                case SONIC_A:
+                    if (chat.equalsIgnoreCase("I")) {
+                        showInfo(p, TARDISInfoMenu.SONIC_A_INFO);
+                    }
+                    if (chat.equalsIgnoreCase("R")) {
+                        showRecipe(p, TARDISInfoMenu.SONIC_A_RECIPE);
+                    }
                     break;
             }
-
         }
     }
 
@@ -168,5 +378,56 @@ public class TARDISInformationSystemListener implements Listener {
             p.sendMessage("§6> " + menu);
         }
         p.sendMessage("§6> §fE§6xit");
+    }
+
+    private void showRoomInfo(Player p, TARDISInfoMenu item) {
+        p.sendMessage("---");
+        p.sendMessage("[" + item.getName() + "]");
+        // send room details ie what this room is for - need some way to look this up - maybe a ROOM enum class or a HashMap
+        p.sendMessage("§6What this room is about...");
+        String r = item.toString();
+        // get room details from rooms config
+        p.sendMessage("§6Seed Block: " + plugin.getRoomsConfig().getString("rooms." + r + ".seed"));
+        p.sendMessage("§6Offset: " + plugin.getRoomsConfig().getString("rooms." + r + ".offset"));
+        p.sendMessage("§6Cost: " + plugin.getRoomsConfig().getString("rooms." + r + ".cost"));
+        p.sendMessage("§6Enabled: " + plugin.getRoomsConfig().getString("rooms." + r + ".enabled"));
+        exit(p);
+    }
+
+    private void showTARDISInfo(Player p, TARDISInfoMenu item) {
+        // do stuff
+        p.sendMessage("§6A description of this TARDIS...");
+        exit(p);
+    }
+
+    private void showInfo(Player p, TARDISInfoMenu item) {
+        // do stuff
+        exit(p);
+    }
+
+    private void showRecipe(Player p, TARDISInfoMenu item) {
+        // do stuff
+        String[] r = item.toString().split("_");
+        String recipe = (r.length > 2) ? r[0] + "_" + r[1] : r[0];
+        p.performCommand("tardisrecipe " + recipe);
+        exit(p);
+    }
+
+    private void showCommand(Player p, TARDISInfoMenu item) {
+        String[] c = item.toString().toLowerCase(Locale.ENGLISH).split("_");
+        // read plugin.yml and get the command description and usage -- need to make sure all command arguments are in plugin.yml!
+        String desc = pluginYml.getString("commands." + c[0] + "." + c[1] + ".description");
+        String usage = pluginYml.getString("commands." + c[0] + "." + c[1] + ".usage");
+        p.sendMessage("---");
+        p.sendMessage("[" + item.getName() + "]");
+        p.sendMessage("§6Description: " + desc);
+        p.sendMessage("§6Usage: " + usage);
+        exit(p);
+    }
+
+    private void exit(Player p) {
+        plugin.trackInfoMenu.remove(p.getName());
+        p.sendMessage("§6---");
+        p.sendMessage("§4You have been logged out of the TARDIS Information System");
     }
 }
