@@ -396,6 +396,50 @@ public class TARDISInformationSystemListener implements Listener {
                         showCommand(p, TARDISInfoMenu.TARDISTRAVEL_AREA);
                     }
                     break;
+                case TARDISPREFS:
+                    if (chat.equalsIgnoreCase("a")) {
+                        showCommand(p, TARDISInfoMenu.TARDISPREFS_AUTO);
+                    }
+                    if (chat.equalsIgnoreCase("p")) {
+                        showCommand(p, TARDISInfoMenu.TARDISPREFS_EPS);
+                    }
+                    if (chat.equalsIgnoreCase("f")) {
+                        showCommand(p, TARDISInfoMenu.TARDISPREFS_FLOOR);
+                    }
+                    if (chat.equalsIgnoreCase("h")) {
+                        showCommand(p, TARDISInfoMenu.TARDISPREFS_HADS);
+                    }
+                    if (chat.equalsIgnoreCase("i")) {
+                        showCommand(p, TARDISInfoMenu.TARDISPREFS_ISOMORPHIC);
+                    }
+                    if (chat.equalsIgnoreCase("k")) {
+                        showCommand(p, TARDISInfoMenu.TARDISPREFS_KEY);
+                    }
+                    if (chat.equalsIgnoreCase("l")) {
+                        showCommand(p, TARDISInfoMenu.TARDISPREFS_LAMP);
+                    }
+                    if (chat.equalsIgnoreCase("m")) {
+                        showCommand(p, TARDISInfoMenu.TARDISPREFS_MESSAGE);
+                    }
+                    if (chat.equalsIgnoreCase("n")) {
+                        showCommand(p, TARDISInfoMenu.TARDISPREFS_PLAIN);
+                    }
+                    if (chat.equalsIgnoreCase("t")) {
+                        showCommand(p, TARDISInfoMenu.TARDISPREFS_PLATFORM);
+                    }
+                    if (chat.equalsIgnoreCase("q")) {
+                        showCommand(p, TARDISInfoMenu.TARDISPREFS_QUOTES);
+                    }
+                    if (chat.equalsIgnoreCase("s")) {
+                        showCommand(p, TARDISInfoMenu.TARDISPREFS_SFX);
+                    }
+                    if (chat.equalsIgnoreCase("u")) {
+                        showCommand(p, TARDISInfoMenu.TARDISPREFS_SUBMARINE);
+                    }
+                    if (chat.equalsIgnoreCase("w")) {
+                        showCommand(p, TARDISInfoMenu.TARDISPREFS_WALL);
+                    }
+                    break;
                 case TARDISBIND:
                     if (chat.equalsIgnoreCase("s")) {
                         showCommand(p, TARDISInfoMenu.TARDISBIND_SAVE);
@@ -557,8 +601,7 @@ public class TARDISInformationSystemListener implements Listener {
         String desc;
         String usage;
         if (c.length > 1) {
-            // read plugin.yml and get the command description and usage -- need to make sure all command arguments are in plugin.yml!
-            plugin.debug("commands." + c[0] + "." + c[1] + ".description");
+            // read plugin.yml and get the command description and usage
             desc = pluginYml.getString("commands." + c[0] + "." + c[1] + ".description");
             usage = pluginYml.getString("commands." + c[0] + "." + c[1] + ".usage").replace("<command>", c[0]);
         } else {
