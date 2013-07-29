@@ -147,7 +147,7 @@ public class TARDISInformationSystemListener implements Listener {
                     if (chat.equalsIgnoreCase("o")) {
                         processKey(p, TARDISInfoMenu.TARDISROOM);
                     }
-                    if (chat.equalsIgnoreCase("T")) {
+                    if (chat.equalsIgnoreCase("x")) {
                         processKey(p, TARDISInfoMenu.TARDISTEXTURE);
                     }
                     if (chat.equalsIgnoreCase("v")) {
@@ -366,6 +366,9 @@ public class TARDISInformationSystemListener implements Listener {
                         showRecipe(p, TARDISInfoMenu.SONIC_A_RECIPE);
                     }
                     break;
+                default:
+                    exit(p);
+                    break;
             }
         }
     }
@@ -413,7 +416,7 @@ public class TARDISInformationSystemListener implements Listener {
         String[] c = item.toString().toLowerCase(Locale.ENGLISH).split("_");
         // read plugin.yml and get the command description and usage -- need to make sure all command arguments are in plugin.yml!
         String desc = pluginYml.getString("commands." + c[0] + "." + c[1] + ".description");
-        String usage = pluginYml.getString("commands." + c[0] + "." + c[1] + ".usage");
+        String usage = pluginYml.getString("commands." + c[0] + "." + c[1] + ".usage").replace("<command>", c[0]);
         p.sendMessage("---");
         p.sendMessage("[" + item.getName() + "]");
         p.sendMessage("§6Description: " + desc);
