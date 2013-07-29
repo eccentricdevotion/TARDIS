@@ -328,7 +328,6 @@ commands:
       description: Set the custom room as active/inactive.
       usage: /<command> [schematic name] [true|false]
   tardisprefs:
-    ## "auto", "beacon", "eps", "eps_message", "floor", "hads", "isomorphic", "key", "lamp", "plain", "platform", "quotes", "sfx", "sign", "submarine", "wall"
     aliases: tprefs
     description: Set player preferences.
     usage: /<command> [preference] [on|off]
@@ -440,10 +439,10 @@ commands:
     usage: /<command> [on|off|in|out] [url]
     permission: tardis.texture
     permission-message: You don't have the permission <permission> to use this command
-    on:
+    'on':
       description: Turns texture pack switching on.
       usage: /<command> on
-    off:
+    'off':
       description: Turns texture pack switching off.
       usage: /<command> off
     in:
