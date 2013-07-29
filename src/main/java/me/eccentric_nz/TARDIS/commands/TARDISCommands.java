@@ -107,7 +107,6 @@ public class TARDISCommands implements CommandExecutor {
         firstArgs.add("namekey");
         firstArgs.add("occupy");
         firstArgs.add("rebuild");
-        firstArgs.add("recipe");
         firstArgs.add("remove");
         firstArgs.add("removesave");
         firstArgs.add("rescue");
