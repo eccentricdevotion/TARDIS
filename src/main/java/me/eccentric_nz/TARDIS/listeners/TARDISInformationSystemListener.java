@@ -124,7 +124,7 @@ public class TARDISInformationSystemListener implements Listener {
                         processKey(p, TARDISInfoMenu.TARDIS);
                     }
                     if (chat.equalsIgnoreCase("A")) {
-                        processKey(p, TARDISInfoMenu.TARDISADMIN);
+                        showCommand(p, TARDISInfoMenu.TARDISADMIN);
                     }
                     if (chat.equalsIgnoreCase("C")) {
                         processKey(p, TARDISInfoMenu.TARDISAREA);
@@ -133,16 +133,16 @@ public class TARDISInformationSystemListener implements Listener {
                         processKey(p, TARDISInfoMenu.TARDISBIND);
                     }
                     if (chat.equalsIgnoreCase("k")) {
-                        processKey(p, TARDISInfoMenu.TARDISBOOK);
+                        showCommand(p, TARDISInfoMenu.TARDISBOOK);
                     }
                     if (chat.equalsIgnoreCase("G")) {
-                        processKey(p, TARDISInfoMenu.TARDISGRAVITY);
+                        showCommand(p, TARDISInfoMenu.TARDISGRAVITY);
                     }
                     if (chat.equalsIgnoreCase("P")) {
                         processKey(p, TARDISInfoMenu.TARDISPREFS);
                     }
                     if (chat.equalsIgnoreCase("R")) {
-                        processKey(p, TARDISInfoMenu.TARDISRECIPE);
+                        showCommand(p, TARDISInfoMenu.TARDISRECIPE);
                     }
                     if (chat.equalsIgnoreCase("o")) {
                         processKey(p, TARDISInfoMenu.TARDISROOM);
@@ -376,6 +376,77 @@ public class TARDISInformationSystemListener implements Listener {
                         showCommand(p, TARDISInfoMenu.TARDIS_VERSION);
                     }
                     break;
+                case TARDISTRAVEL:
+                    if (chat.equalsIgnoreCase("h")) {
+                        showCommand(p, TARDISInfoMenu.TARDISTRAVEL_HOME);
+                    }
+                    if (chat.equalsIgnoreCase("p")) {
+                        showCommand(p, TARDISInfoMenu.TARDISTRAVEL_PLAYER);
+                    }
+                    if (chat.equalsIgnoreCase("c")) {
+                        showCommand(p, TARDISInfoMenu.TARDISTRAVEL_COORDS);
+                    }
+                    if (chat.equalsIgnoreCase("d")) {
+                        showCommand(p, TARDISInfoMenu.TARDISTRAVEL_DEST);
+                    }
+                    if (chat.equalsIgnoreCase("b")) {
+                        showCommand(p, TARDISInfoMenu.TARDISTRAVEL_BIOME);
+                    }
+                    if (chat.equalsIgnoreCase("a")) {
+                        showCommand(p, TARDISInfoMenu.TARDISTRAVEL_AREA);
+                    }
+                    break;
+                case TARDISBIND:
+                    if (chat.equalsIgnoreCase("s")) {
+                        showCommand(p, TARDISInfoMenu.TARDISBIND_SAVE);
+                    }
+                    if (chat.equalsIgnoreCase("c")) {
+                        showCommand(p, TARDISInfoMenu.TARDISBIND_CMD);
+                    }
+                    if (chat.equalsIgnoreCase("p")) {
+                        showCommand(p, TARDISInfoMenu.TARDISBIND_PLAYER);
+                    }
+                    if (chat.equalsIgnoreCase("a")) {
+                        showCommand(p, TARDISInfoMenu.TARDISBIND_AREA);
+                    }
+                    if (chat.equalsIgnoreCase("b")) {
+                        showCommand(p, TARDISInfoMenu.TARDISBIND_BIOME);
+                    }
+                    if (chat.equalsIgnoreCase("r")) {
+                        showCommand(p, TARDISInfoMenu.TARDISBIND_REMOVE);
+                    }
+                    break;
+                case TARDISTEXTURE:
+                    if (chat.equalsIgnoreCase("o")) {
+                        showCommand(p, TARDISInfoMenu.TARDISTEXTURE_ON);
+                    }
+                    if (chat.equalsIgnoreCase("f")) {
+                        showCommand(p, TARDISInfoMenu.TARDISTEXTURE_OFF);
+                    }
+                    if (chat.equalsIgnoreCase("i")) {
+                        showCommand(p, TARDISInfoMenu.TARDISTEXTURE_IN);
+                    }
+                    if (chat.equalsIgnoreCase("u")) {
+                        showCommand(p, TARDISInfoMenu.TARDISTEXTURE_OUT);
+                    }
+                    break;
+                case TARDISROOM:
+                    if (chat.equalsIgnoreCase("a")) {
+                        showCommand(p, TARDISInfoMenu.TARDISROOM_ADD);
+                    }
+                    if (chat.equalsIgnoreCase("s")) {
+                        showCommand(p, TARDISInfoMenu.TARDISROOM_SEED);
+                    }
+                    if (chat.equalsIgnoreCase("c")) {
+                        showCommand(p, TARDISInfoMenu.TARDISROOM_COST);
+                    }
+                    if (chat.equalsIgnoreCase("o")) {
+                        showCommand(p, TARDISInfoMenu.TARDISROOM_OFFSET);
+                    }
+                    if (chat.equalsIgnoreCase("n")) {
+                        showCommand(p, TARDISInfoMenu.TARDISROOM_ENABLED);
+                    }
+                    break;
                 // FOURTH level menus
                 case SONIC_TYPES:
                     if (chat.equalsIgnoreCase("Q")) {
@@ -483,9 +554,17 @@ public class TARDISInformationSystemListener implements Listener {
 
     private void showCommand(Player p, TARDISInfoMenu item) {
         String[] c = item.toString().toLowerCase(Locale.ENGLISH).split("_");
-        // read plugin.yml and get the command description and usage -- need to make sure all command arguments are in plugin.yml!
-        String desc = pluginYml.getString("commands." + c[0] + "." + c[1] + ".description");
-        String usage = pluginYml.getString("commands." + c[0] + "." + c[1] + ".usage").replace("<command>", c[0]);
+        String desc;
+        String usage;
+        if (c.length > 1) {
+            // read plugin.yml and get the command description and usage -- need to make sure all command arguments are in plugin.yml!
+            plugin.debug("commands." + c[0] + "." + c[1] + ".description");
+            desc = pluginYml.getString("commands." + c[0] + "." + c[1] + ".description");
+            usage = pluginYml.getString("commands." + c[0] + "." + c[1] + ".usage").replace("<command>", c[0]);
+        } else {
+            desc = pluginYml.getString("commands." + c[0] + ".description");
+            usage = pluginYml.getString("commands." + c[0] + ".usage").replace("<command>", c[0]);
+        }
         p.sendMessage("---");
         p.sendMessage("[" + item.getName() + "]");
         p.sendMessage("§6Description: " + desc);

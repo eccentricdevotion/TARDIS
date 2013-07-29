@@ -19,6 +19,7 @@ package me.eccentric_nz.TARDIS.info;
 import com.google.common.collect.Maps;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.TreeMap;
 
 /**
  *
@@ -125,15 +126,54 @@ public enum TARDISInfoMenu {
     TARDIS_VERSION("TIS|Commands|TARDIS Commands|version", "TARDIS", "v"),
     TARDISADMIN("TIS|Commands|Admin Commands", "COMMANDS", "A"),
     TARDISAREA("TIS|Commands|Area Commands", "COMMANDS", "C"),
+    TARDISAREA_START("TIS|Commands|Area Commands|start", "TARDISAREA", "s"),
+    TARDISAREA_END("TIS|Commands|Area Commands|end", "TARDISAREA", "n"),
+    TARDISAREA_SHOW("TIS|Commands|Area Commands|show", "TARDISAREA", "h"),
+    TARDISAREA_REMOVE("TIS|Commands|Area Commands|remove", "TARDISAREA", "r"),
     TARDISBIND("TIS|Commands|Bind Commands", "COMMANDS", "B"),
+    TARDISBIND_SAVE("TIS|Commands|Bind Commands|save", "TARDISBIND", "s"),
+    TARDISBIND_CMD("TIS|Commands|Bind Commands|cmd", "TARDISBIND", "c"),
+    TARDISBIND_PLAYER("TIS|Commands|Bind Commands|player", "TARDISBIND", "p"),
+    TARDISBIND_COORDS("TIS|Commands|Bind Commands|coordinates", "TARDISBIND", "o"),
+    TARDISBIND_AREA("TIS|Commands|Bind Commands|area", "TARDISBIND", "a"),
+    TARDISBIND_BIOME("TIS|Commands|Bind Commands|biome", "TARDISBIND", "b"),
+    TARDISBIND_REMOVE("TIS|Commands|Bind Commands|remove", "TARDISBIND", "r"),
     TARDISBOOK("TIS|Commands|Book Commands", "COMMANDS", "k"),
     TARDISGRAVITY("TIS|Commands|Gravity Commands", "COMMANDS", "G"),
     TARDISPREFS("TIS|Commands|Player Preference Commands", "COMMANDS", "P"),
+    TARDISPREFS_AUTO("TIS|Commands|Player Preference Commands|auto", "TARDISPREFS", "a"),
+    TARDISPREFS_EPS("TIS|Commands|Player Preference Commands|eps", "TARDISPREFS", "p"),
+    TARDISPREFS_FLOOR("TIS|Commands|Player Preference Commands|floor", "TARDISPREFS", "f"),
+    TARDISPREFS_HADS("TIS|Commands|Player Preference Commands|hads", "TARDISPREFS", "h"),
+    TARDISPREFS_ISOMORPHIC("TIS|Commands|Player Preference Commands|isomorphic", "TARDISPREFS", "i"),
+    TARDISPREFS_KEY("TIS|Commands|Player Preference Commands|key", "TARDISPREFS", "k"),
+    TARDISPREFS_LAMP("TIS|Commands|Player Preference Commands|lamp", "TARDISPREFS", "l"),
+    TARDISPREFS_MESSAGE("TIS|Commands|Player Preference Commands|eps_message", "TARDISPREFS", "m"),
+    TARDISPREFS_PLAIN("TIS|Commands|Player Preference Commands|plain", "TARDISPREFS", "a"),
+    TARDISPREFS_PLATFORM("TIS|Commands|Player Preference Commands|platform", "TARDISPREFS", "t"),
+    TARDISPREFS_QUOTES("TIS|Commands|Player Preference Commands|quotes", "TARDISPREFS", "q"),
+    TARDISPREFS_SFX("TIS|Commands|Player Preference Commands|sfx", "TARDISPREFS", "s"),
+    TARDISPREFS_SUBMARINE("TIS|Commands|Player Preference Commands|submarine", "TARDISPREFS", "u"),
+    TARDISPREFS_WALL("TIS|Commands|Player Preference Commands|wall", "TARDISPREFS", "w"),
     TARDISRECIPE("TIS|Commands|Recipe Commands", "COMMANDS", "R"),
     TARDISROOM("TIS|Commands|Room Commands", "COMMANDS", "o"),
-    TARDISTEXTURE("TIS|Commands|TextureCommands", "COMMANDS", "T"),
-    TARDISTRAVEL("TIS|Commands|Travel Commands", "COMMANDS", "v"),//
-    ;
+    TARDISROOM_ADD("TIS|Commands|Room Commands|add", "TARDISROOM", "a"),
+    TARDISROOM_SEED("TIS|Commands|Room Commands|seed", "TARDISROOM", "s"),
+    TARDISROOM_COST("TIS|Commands|Room Commands|cost", "TARDISROOM", "c"),
+    TARDISROOM_OFFSET("TIS|Commands|Room Commands|offset", "TARDISROOM", "o"),
+    TARDISROOM_ENABLED("TIS|Commands|Room Commands|enabled", "TARDISROOM", "n"),
+    TARDISTEXTURE("TIS|Commands|Texture Commands", "COMMANDS", "x"),
+    TARDISTEXTURE_ON("TIS|Commands|Texture Commands|on", "TARDISTEXTURE", "o"),
+    TARDISTEXTURE_OFF("TIS|Commands|Texture Commands|off", "TARDISTEXTURE", "f"),
+    TARDISTEXTURE_IN("TIS|Commands|Texture Commands|in", "TARDISTEXTURE", "i"),
+    TARDISTEXTURE_OUT("TIS|Commands|Texture Commands|out", "TARDISTEXTURE", "u"),
+    TARDISTRAVEL("TIS|Commands|Travel Commands", "COMMANDS", "v"),
+    TARDISTRAVEL_HOME("TIS|Commands|Travel Commands|home", "TARDISTRAVEL", "h"),
+    TARDISTRAVEL_PLAYER("TIS|Commands|Travel Commands|player", "TARDISTRAVEL", "p"),
+    TARDISTRAVEL_COORDS("TIS|Commands|Travel Commands|coordinates", "TARDISTRAVEL", "c"),
+    TARDISTRAVEL_DEST("TIS|Commands|Travel Commands|dest", "TARDISTRAVEL", "d"),
+    TARDISTRAVEL_AREA("TIS|Commands|Travel Commands|area", "TARDISTRAVEL", "a"),
+    TARDISTRAVEL_BIOME("TIS|Commands|Travel Commands|biome", "TARDISTRAVEL", "b"),;
     private final String name;
     private final String parent;
     private final String key;
@@ -189,8 +229,8 @@ public enum TARDISInfoMenu {
      * @param parent the parent menu TARDISInfoMenu.toString();
      * @return a HashMap<String, String> of child menu items, and their (ALT)key
      */
-    public static HashMap<String, String> getChildren(String parent) {
-        HashMap<String, String> children = new HashMap<String, String>();
+    public static TreeMap<String, String> getChildren(String parent) {
+        TreeMap<String, String> children = new TreeMap<String, String>();
         for (TARDISInfoMenu tim : values()) {
             if (tim.getParent().equals(parent)) {
                 String[] crumbs = tim.getName().split("[|]");
