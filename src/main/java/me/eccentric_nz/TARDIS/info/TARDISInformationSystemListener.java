@@ -46,9 +46,9 @@ public class TARDISInformationSystemListener implements Listener {
     }
 
     /**
-     * Listens for player typing "tardis rescue accept". If the player types it
-     * within 60 seconds of a Timelord sending a rescue request, a player rescue
-     * attempt is made.
+     * Listens for player typing a TARDIS Information System key code. The
+     * player must be found in the trackInfoMenu HashMap, where their position
+     * in the TIS is stored. The key code is then processed.
      *
      * @param event a player typing in chat
      */
@@ -568,6 +568,13 @@ public class TARDISInformationSystemListener implements Listener {
         }
     }
 
+    /**
+     * Displays the next menu level based on the parent menu item that was
+     * selected. Automatically pulls the key code and highlights it.
+     *
+     * @param p the player to show the menu to
+     * @param item the parent menu item to get the children of
+     */
     private void processKey(Player p, TARDISInfoMenu item) {
         plugin.trackInfoMenu.put(p.getName(), item);
         p.sendMessage("---");
@@ -579,12 +586,19 @@ public class TARDISInformationSystemListener implements Listener {
         p.sendMessage("§6> §fE§6xit");
     }
 
+    /**
+     * Displays information about a TARDIS room. Descriptions are stored in the
+     * TARDISDescription enum. Other values are pulled directly from the
+     * rooms.yml configuration file.
+     *
+     * @param p the player to show the room information to
+     * @param item the room to display
+     */
     private void showRoomInfo(Player p, TARDISInfoMenu item) {
         p.sendMessage("---");
         p.sendMessage("[" + item.getName() + "]");
         p.sendMessage("§6" + TARDISDescription.valueOf(item.toString()).getDesc());
         String r = item.toString();
-        // get room details from rooms config
         p.sendMessage("§6Seed Block: " + plugin.getRoomsConfig().getString("rooms." + r + ".seed"));
         p.sendMessage("§6Offset: " + plugin.getRoomsConfig().getString("rooms." + r + ".offset"));
         p.sendMessage("§6Cost: " + plugin.getRoomsConfig().getString("rooms." + r + ".cost"));
@@ -592,6 +606,13 @@ public class TARDISInformationSystemListener implements Listener {
         exit(p);
     }
 
+    /**
+     * Displays information about an item or TARDIS type. Descriptions are
+     * stored in the TARDISDescription enum.
+     *
+     * @param p the player to show the information to
+     * @param item the item or TARDIS type to display
+     */
     private void showInfo(Player p, TARDISInfoMenu item) {
         p.sendMessage("---");
         p.sendMessage("[" + item.getName() + "]");
@@ -599,6 +620,12 @@ public class TARDISInformationSystemListener implements Listener {
         exit(p);
     }
 
+    /**
+     * Displays the workbench recipe for an item or component.
+     *
+     * @param p the player to show the recipe to
+     * @param item the recipe to display
+     */
     private void showRecipe(Player p, TARDISInfoMenu item) {
         // do stuff
         String[] r = item.toString().split("_");
@@ -607,12 +634,18 @@ public class TARDISInformationSystemListener implements Listener {
         exit(p);
     }
 
+    /**
+     * Displays the description and usage of a command. Values are pulled
+     * directly from the plugin.yml configuration file.
+     *
+     * @param p the player to show the command information to
+     * @param item the command to display
+     */
     private void showCommand(Player p, TARDISInfoMenu item) {
         String[] c = item.toString().toLowerCase(Locale.ENGLISH).split("_");
         String desc;
         String usage;
         if (c.length > 1) {
-            // read plugin.yml and get the command description and usage
             desc = pluginYml.getString("commands." + c[0] + "." + c[1] + ".description");
             usage = pluginYml.getString("commands." + c[0] + "." + c[1] + ".usage").replace("<command>", c[0]);
         } else {
@@ -626,6 +659,11 @@ public class TARDISInformationSystemListener implements Listener {
         exit(p);
     }
 
+    /**
+     * Exits the TARDIS Information System menu
+     *
+     * @param p the player to exit
+     */
     private void exit(Player p) {
         plugin.trackInfoMenu.remove(p.getName());
         p.sendMessage("§6---");
