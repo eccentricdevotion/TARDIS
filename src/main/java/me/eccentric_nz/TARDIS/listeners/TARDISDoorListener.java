@@ -746,11 +746,25 @@ public class TARDISDoorListener implements Listener {
                     @Override
                     public void run() {
                         p.setPlayerTime(calculatedtime, true);
+                        enableInvisiblity(p);
                     }
                 }, 10L);
             } else {
                 p.resetPlayerTime();
+                disableInvisiblity(p);
             }
+        }
+    }
+
+    public void enableInvisiblity(Player player) {
+        for (Player p : plugin.getServer().getOnlinePlayers()) {
+            p.hidePlayer(player);
+        }
+    }
+
+    public void disableInvisiblity(Player player) {
+        for (Player p : plugin.getServer().getOnlinePlayers()) {
+            p.showPlayer(player);
         }
     }
 

@@ -93,7 +93,6 @@ public class TARDISJoinListener implements Listener {
                             @Override
                             public void run() {
                                 new TARDISTexturePackChanger(plugin).changeTP(player, rsp.getTexture_in());
-
                             }
                         }, 50L);
                     }
