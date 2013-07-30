@@ -745,7 +745,7 @@ public class TARDIS extends JavaPlugin {
         String server_world = s_world + File.separator + "data" + File.separator;
         String map = "map_1963.dat";
         String root = new File("." + File.separator + server_world).getAbsolutePath();
-        File file = new File(root, map);
+        File file = new File(root.replace("." + File.separator, ""), map);
         if (!file.exists()) {
             String map2 = "map_1964.dat";
             String map3 = "map_1965.dat";
