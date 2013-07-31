@@ -62,3 +62,5 @@ stattenheim: FLINT
 use_clay: false
 difficulty: normal
 strike_lightning: true
+custom_schematic: false
+custom_schematic_seed: OBSIDIAN

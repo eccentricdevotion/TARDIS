@@ -100,6 +100,18 @@ permissions:
   tardis.steampunk:
     description: Allow players to build the 'steampunk' TARDIS.
     default: op
+  tardis.ars:
+    description: Allow players to build the 'Architectural Reconfiguration System' TARDIS.
+    default: op
+  tardis.plank:
+    description: Allow players to build the 'wood' TARDIS.
+    default: op
+  tardis.tom:
+    description: Allow players to build the '4th Doctor's' TARDIS.
+    default: op
+  tardis.custom:
+    description: Allow players to build the server's 'custom' TARDIS.
+    default: op
   tardis.end:
     description: Allow players to time travel to the END.
     default: op

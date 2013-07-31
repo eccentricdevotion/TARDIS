@@ -53,19 +53,10 @@ import org.bukkit.event.block.BlockPlaceEvent;
  */
 public class TARDISBlockPlaceListener implements Listener {
 
-    private static String getWallKey(int i, int d) {
-        TARDISWalls tw = new TARDISWalls();
-        for (Map.Entry<String, Integer[]> entry : tw.blocks.entrySet()) {
-            Integer[] value = entry.getValue();
-            if (value[0].equals(Integer.valueOf(i)) && value[1].equals(Integer.valueOf(d))) {
-                return entry.getKey();
-            }
-        }
-        return "ORANGE_WOOL";
-    }
     private TARDIS plugin;
     private TARDISUtils utils;
     private List<Material> blocks = new ArrayList<Material>();
+    private Material custom;
 
     public TARDISBlockPlaceListener(TARDIS plugin) {
         this.plugin = plugin;
@@ -84,6 +75,10 @@ public class TARDISBlockPlaceListener implements Listener {
         }
         if (plugin.bukkitversion.compareTo(plugin.precarpetversion) >= 0) {
             blocks.add(Material.COAL_BLOCK);
+        }
+        if (plugin.getConfig().getBoolean("custom_schematic")) {
+            custom = Material.valueOf(plugin.getConfig().getString("custom_schematic_seed"));
+            blocks.add(custom);
         }
     }
 
@@ -122,6 +117,9 @@ public class TARDISBlockPlaceListener implements Listener {
                     }
                 }
                 switch (blockBottom.getType()) {
+                    case IRON_BLOCK:
+                        schm = TARDISConstants.SCHEMATIC.BUDGET;
+                        break;
                     case GOLD_BLOCK:
                         if (player.hasPermission("tardis.bigger")) {
                             schm = TARDISConstants.SCHEMATIC.BIGGER;
@@ -162,8 +160,33 @@ public class TARDISBlockPlaceListener implements Listener {
                             return;
                         }
                         break;
+                    case QUARTZ_BLOCK:
+                        if (player.hasPermission("tardis.tom")) {
+                            schm = TARDISConstants.SCHEMATIC.TOM;
+                        } else {
+                            player.sendMessage(plugin.pluginName + "You don't have permission to create a '4th Doctor's' TARDIS!");
+                            return;
+                        }
+                        break;
+                    case BOOKSHELF:
+                        if (player.hasPermission("tardis.plank")) {
+                            schm = TARDISConstants.SCHEMATIC.PLANK;
+                        } else {
+                            player.sendMessage(plugin.pluginName + "You don't have permission to create a 'wood' TARDIS!");
+                            return;
+                        }
+                        break;
                     default:
-                        schm = TARDISConstants.SCHEMATIC.BUDGET;
+                        if (plugin.getConfig().getBoolean("custom_schematic")) {
+                            if (player.hasPermission("tardis.custom") && blockBottom.getType().equals(custom)) {
+                                schm = TARDISConstants.SCHEMATIC.CUSTOM;
+                            } else {
+                                player.sendMessage(plugin.pluginName + "You don't have permission to create the server's custom' TARDIS!");
+                                return;
+                            }
+                        } else {
+                            schm = TARDISConstants.SCHEMATIC.BUDGET;
+                        }
                         break;
                 }
                 if (player.hasPermission("tardis.create")) {
@@ -290,5 +313,16 @@ public class TARDISBlockPlaceListener implements Listener {
                 }
             }
         }
+    }
+
+    private static String getWallKey(int i, int d) {
+        TARDISWalls tw = new TARDISWalls();
+        for (Map.Entry<String, Integer[]> entry : tw.blocks.entrySet()) {
+            Integer[] value = entry.getValue();
+            if (value[0].equals(Integer.valueOf(i)) && value[1].equals(Integer.valueOf(d))) {
+                return entry.getKey();
+            }
+        }
+        return "ORANGE_WOOL";
     }
 }
