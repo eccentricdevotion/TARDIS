@@ -324,17 +324,20 @@ public class TARDISConfiguration {
                 rooms_config.set(entry.getKey(), entry.getValue());
                 i++;
             }
+            if (entry.getKey().equals("rooms.STABLE.enabled") && plugin.bukkitversion.compareTo(plugin.precarpetversion) < 0) {
+                rooms_config.set(entry.getKey(), false);
+            }
         }
         // int values
         for (Map.Entry<String, Integer> entry : roomIntOptions.entrySet()) {
-            if (!rooms_config.contains(entry.getKey())) {
+            if (!rooms_config.contains(entry.getKey()) || entry.getKey().equals("rooms.RAIL.offset")) {
                 rooms_config.set(entry.getKey(), entry.getValue());
                 i++;
             }
         }
         // string values
         for (Map.Entry<String, String> entry : roomStrOptions.entrySet()) {
-            if (!rooms_config.contains(entry.getKey()) || entry.getKey().equals("rooms.RAIL.offset")) {
+            if (!rooms_config.contains(entry.getKey())) {
                 rooms_config.set(entry.getKey(), entry.getValue());
                 i++;
             }
