@@ -392,24 +392,30 @@ public class TARDIS extends JavaPlugin {
         pm.registerEvents(new TARDISTimeLordDeathListener(this), this);
         pm.registerEvents(new TARDISJoinListener(this), this);
         pm.registerEvents(new TARDISKeyboardListener(this), this);
-        pm.registerEvents(new TARDISTerminalListener(this), this);
-        pm.registerEvents(new TARDISARSListener(this), this);
-        pm.registerEvents(new TARDISSaveSignListener(this), this);
+        if (bukkitversion.compareTo(preIMversion) >= 0) {
+            pm.registerEvents(new TARDISTerminalListener(this), this);
+            pm.registerEvents(new TARDISARSListener(this), this);
+            pm.registerEvents(new TARDISSaveSignListener(this), this);
+            pm.registerEvents(new TARDISStattenheimListener(this), this);
+            pm.registerEvents(new TARDISHotbarListener(this), this);
+            pm.registerEvents(new TARDISAdminMenuListener(this), this);
+            pm.registerEvents(new TARDISTemporalLocatorListener(this), this);
+            pm.registerEvents(new TARDISRecipeListener(this), this);
+        }
         if (getNPCManager()) {
             pm.registerEvents(new TARDISNPCListener(this), this);
         }
-        pm.registerEvents(new TARDISAdminMenuListener(this), this);
-        pm.registerEvents(new TARDISTemporalLocatorListener(this), this);
         if (bukkitversion.compareTo(precomparatorversion) >= 0) {
             pm.registerEvents(new TARDISChatListener(this), this);
             pm.registerEvents(new TARDISMinecartListener(this), this);
         }
-        pm.registerEvents(new TARDISStattenheimListener(this), this);
-        pm.registerEvents(new TARDISRecipeListener(this), this);
-        pm.registerEvents(new TARDISHotbarListener(this), this);
-        pm.registerEvents(new TARDISHorseListener(this), this);
+        if (bukkitversion.compareTo(precarpetversion) >= 0) {
+            pm.registerEvents(new TARDISHorseListener(this), this);
+        }
         pm.registerEvents(new TARDISTeleportListener(this), this);
-        pm.registerEvents(new TARDISAnvilListener(this), this);
+        if (bukkitversion.compareTo(prewoodbuttonversion) >= 0) {
+            pm.registerEvents(new TARDISAnvilListener(this), this);
+        }
         pm.registerEvents(new TARDISInformationSystemListener(this), this);
     }
 
