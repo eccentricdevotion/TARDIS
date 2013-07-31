@@ -32,12 +32,16 @@ import org.bukkit.ChatColor;
 public class TARDISConstants {
 
     // TARDIS schematics supplied by ewized http://dev.bukkit.org/profiles/ewized/
+    public static final String SCHEMATIC_ARS = "ars.schematic";
     public static final String SCHEMATIC_BUDGET = "budget.schematic";
     public static final String SCHEMATIC_BIGGER = "bigger.schematic";
     public static final String SCHEMATIC_DELUXE = "deluxe.schematic";
     public static final String SCHEMATIC_ELEVENTH = "eleventh.schematic";
     public static final String SCHEMATIC_REDSTONE = "redstone.schematic";
     public static final String SCHEMATIC_STEAMPUNK = "steampunk.schematic";
+    public static final String SCHEMATIC_PLANK = "plank.schematic";
+    public static final String SCHEMATIC_TOM = "tom.schematic";
+    public static final String SCHEMATIC_CUSTOM = "custom.schematic";
     public static final String SCHEMATIC_ANTIGRAVITY = "antigravity.schematic";
     public static final String SCHEMATIC_ARBORETUM = "arboretum.schematic";
     public static final String SCHEMATIC_BAKER = "baker.schematic";
@@ -143,7 +147,7 @@ public class TARDISConstants {
 
     public enum SCHEMATIC {
 
-        ANTIGRAVITY, ARBORETUM, BAKER, BEDROOM, BIGGER, BUDGET, CROSS, DELUXE, ELEVENTH, EMPTY, FARM, GRAVITY, GREENHOUSE, HARMONY, KITCHEN, LIBRARY, LONG, MUSHROOM, PASSAGE, POOL, RAIL, REDSTONE, STABLE, STEAMPUNK, VAULT, WOOD, WORKSHOP;
+        ANTIGRAVITY, ARBORETUM, ARS, BAKER, BEDROOM, BIGGER, BUDGET, CROSS, CUSTOM, DELUXE, ELEVENTH, EMPTY, FARM, GRAVITY, GREENHOUSE, HARMONY, KITCHEN, LIBRARY, LONG, MUSHROOM, PASSAGE, PLANK, POOL, RAIL, REDSTONE, STABLE, STEAMPUNK, TOM, VAULT, WOOD, WORKSHOP;
     }
 
     public enum COMPASS {

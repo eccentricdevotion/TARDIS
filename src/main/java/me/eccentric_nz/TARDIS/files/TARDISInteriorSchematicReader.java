@@ -73,6 +73,11 @@ public class TARDISInteriorSchematicReader {
             short height = (Short) getChildTag(tagCollection, "Height", ShortTag.class).getValue();
             short length = (Short) getChildTag(tagCollection, "Length", ShortTag.class).getValue();
             switch (s) {
+                case ARS:
+                    plugin.arsdimensions[0] = height;
+                    plugin.arsdimensions[1] = width;
+                    plugin.arsdimensions[2] = length;
+                    break;
                 case BUDGET:
                     plugin.budgetdimensions[0] = height;
                     plugin.budgetdimensions[1] = width;
@@ -102,6 +107,21 @@ public class TARDISInteriorSchematicReader {
                     plugin.steampunkdimensions[0] = height;
                     plugin.steampunkdimensions[1] = width;
                     plugin.steampunkdimensions[2] = length;
+                    break;
+                case PLANK:
+                    plugin.plankdimensions[0] = height;
+                    plugin.plankdimensions[1] = width;
+                    plugin.plankdimensions[2] = length;
+                    break;
+                case TOM:
+                    plugin.tomdimensions[0] = height;
+                    plugin.tomdimensions[1] = width;
+                    plugin.tomdimensions[2] = length;
+                    break;
+                case CUSTOM:
+                    plugin.customdimensions[0] = height;
+                    plugin.customdimensions[1] = width;
+                    plugin.customdimensions[2] = length;
                     break;
             }
 

@@ -73,11 +73,14 @@ public class TARDISBlockPlaceListener implements Listener {
         blocks.add(Material.IRON_BLOCK);
         blocks.add(Material.GOLD_BLOCK);
         blocks.add(Material.DIAMOND_BLOCK);
+        blocks.add(Material.LAPIS_BLOCK);
+        blocks.add(Material.BOOKSHELF);
         if (plugin.bukkitversion.compareTo(plugin.preemeraldversion) >= 0) {
             blocks.add(Material.EMERALD_BLOCK);
         }
         if (plugin.bukkitversion.compareTo(plugin.precomparatorversion) >= 0) {
             blocks.add(Material.REDSTONE_BLOCK);
+            blocks.add(Material.QUARTZ_BLOCK);
         }
         if (plugin.bukkitversion.compareTo(plugin.precarpetversion) >= 0) {
             blocks.add(Material.COAL_BLOCK);
