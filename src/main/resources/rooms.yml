@@ -126,3 +126,9 @@ rooms:
     offset: -1
     seed: HOPPER
     user: false
+  VILLAGE:
+    enabled: true
+    cost: 550
+    offset: -1
+    seed: BRICK
+    user: false

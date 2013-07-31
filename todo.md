@@ -9,7 +9,7 @@
     * TARDIS floor block
     * Police Box wall block - if not specified then plain tardis
     * Police Box lamp block - if not specified then plain tardis
-4. While doing [4], add one slot for custom a custom console
+4. While doing [4], add one slot for a custom console
 5. HADS + explosions + fireballs + lava
 6. Permission-based world creation - player's without permission use the default world, those with it get a TARDIS_WORLD
 7. Put crops, buttons, levers and signs on last when growing rooms

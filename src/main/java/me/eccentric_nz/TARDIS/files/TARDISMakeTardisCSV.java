@@ -109,6 +109,7 @@ public class TARDISMakeTardisCSV {
         String railnstr = basepath + TARDISConstants.SCHEMATIC_RAIL;
         String stbnstr = basepath + TARDISConstants.SCHEMATIC_STABLE;
         String vaunstr = basepath + TARDISConstants.SCHEMATIC_VAULT;
+        String vilnstr = basepath + TARDISConstants.SCHEMATIC_VILLAGE;
         String woonstr = basepath + TARDISConstants.SCHEMATIC_WOOD;
         String wornstr = basepath + TARDISConstants.SCHEMATIC_WORKSHOP;
         copy(antnstr, plugin.getResource(TARDISConstants.SCHEMATIC_ANTIGRAVITY));
@@ -130,6 +131,7 @@ public class TARDISMakeTardisCSV {
         copy(railnstr, plugin.getResource(TARDISConstants.SCHEMATIC_RAIL));
         copy(stbnstr, plugin.getResource(TARDISConstants.SCHEMATIC_STABLE));
         copy(vaunstr, plugin.getResource(TARDISConstants.SCHEMATIC_VAULT));
+        copy(vilnstr, plugin.getResource(TARDISConstants.SCHEMATIC_VILLAGE));
         copy(woonstr, plugin.getResource(TARDISConstants.SCHEMATIC_WOOD));
         copy(wornstr, plugin.getResource(TARDISConstants.SCHEMATIC_WORKSHOP));
 

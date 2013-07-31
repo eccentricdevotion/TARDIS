@@ -74,6 +74,7 @@ public class TARDISConfiguration {
         boolOptions.put("check_for_updates", true);
         boolOptions.put("conversion_done", false);
         boolOptions.put("create_worlds", true);
+        boolOptions.put("custom_schematic", false);
         boolOptions.put("debug", false);
         boolOptions.put("default_world", false);
         boolOptions.put("emergency_npc", true);
@@ -138,6 +139,8 @@ public class TARDISConfiguration {
         roomBoolOptions.put("rooms.STABLE.user", false);
         roomBoolOptions.put("rooms.VAULT.enabled", true);
         roomBoolOptions.put("rooms.VAULT.user", false);
+        roomBoolOptions.put("rooms.VILLAGE.enabled", true);
+        roomBoolOptions.put("rooms.VILLAGE.user", false);
         roomBoolOptions.put("rooms.WOOD.enabled", true);
         roomBoolOptions.put("rooms.WOOD.user", false);
         roomBoolOptions.put("rooms.WORKSHOP.enabled", true);
@@ -215,11 +218,14 @@ public class TARDISConfiguration {
         roomIntOptions.put("rooms.STABLE.offset", -1);
         roomIntOptions.put("rooms.VAULT.cost", 350);
         roomIntOptions.put("rooms.VAULT.offset", -1);
+        roomIntOptions.put("rooms.VAULT.cost", 550);
+        roomIntOptions.put("rooms.VAULT.offset", -1);
         roomIntOptions.put("rooms.WOOD.cost", 350);
         roomIntOptions.put("rooms.WOOD.offset", -1);
         roomIntOptions.put("rooms.WORKSHOP.cost", 400);
         roomIntOptions.put("rooms.WORKSHOP.offset", -1);
         // string
+        strOptions.put("custom_schematic_seed", "OBSIDIAN");
         strOptions.put("default_world_name", "myridiculouslylongworldnameiscalledcuthbert");
         strOptions.put("difficulty", "normal");
         strOptions.put("gamemode", "survival");
@@ -246,6 +252,7 @@ public class TARDISConfiguration {
         roomStrOptions.put("rooms.RAIL.seed", "HOPPER");
         roomStrOptions.put("rooms.STABLE.seed", "HAY_BLOCK");
         roomStrOptions.put("rooms.VAULT.seed", "DISPENSER");
+        roomStrOptions.put("rooms.VILLAGE.seed", "BRICK");
         roomStrOptions.put("rooms.WOOD.seed", "WOOD");
         roomStrOptions.put("rooms.WORKSHOP.seed", "NETHER_BRICK");
     }
