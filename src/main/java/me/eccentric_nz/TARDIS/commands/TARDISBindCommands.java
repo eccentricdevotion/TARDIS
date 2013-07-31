@@ -16,10 +16,8 @@
  */
 package me.eccentric_nz.TARDIS.commands;
 
-import com.google.common.collect.ImmutableList;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -36,9 +34,7 @@ import org.bukkit.block.Biome;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
-import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
-import org.bukkit.util.StringUtil;
 
 /**
  * A Time Control Unit is a golden sphere about the size of a Cricket ball. It
@@ -49,13 +45,11 @@ import org.bukkit.util.StringUtil;
  *
  * @author eccentric_nz
  */
-public class TARDISBindCommands implements CommandExecutor, TabCompleter {
+public class TARDISBindCommands implements CommandExecutor {
 
     private final TARDIS plugin;
     private List<String> firstArgs = new ArrayList<String>();
     private List<String> type_1;
-    private final ImmutableList<String> ROOT_SUBS;
-    private final ImmutableList<String> T1_SUBS;
 
     public TARDISBindCommands(TARDIS plugin) {
         this.plugin = plugin;
@@ -67,8 +61,6 @@ public class TARDISBindCommands implements CommandExecutor, TabCompleter {
         firstArgs.add("remove");
         firstArgs.add("update");
         type_1 = Arrays.asList(new String[]{"hide", "rebuild", "home"});
-        ROOT_SUBS = ImmutableList.copyOf(firstArgs);
-        T1_SUBS = ImmutableList.copyOf(type_1);
     }
 
     @Override
@@ -234,27 +226,5 @@ public class TARDISBindCommands implements CommandExecutor, TabCompleter {
             }
         }
         return false;
-    }
-
-    @Override
-    public List<String> onTabComplete(CommandSender sender, Command command, String label, String[] args) {
-        // Remember that we can return null to default to online player name matching
-        String lastArg = args[args.length - 1];
-
-        if (args.length <= 1) {
-            return partial(args[0], ROOT_SUBS);
-        } else if (args.length == 2) {
-            String sub = args[0];
-            if (sub.equals("player")) {
-                return null;
-            } else if (sub.equals("cmd")) {
-                return partial(lastArg, T1_SUBS);
-            }
-        }
-        return ImmutableList.of();
-    }
-
-    private List<String> partial(String token, Collection<String> from) {
-        return StringUtil.copyPartialMatches(token, from, new ArrayList<String>(from.size()));
     }
 }

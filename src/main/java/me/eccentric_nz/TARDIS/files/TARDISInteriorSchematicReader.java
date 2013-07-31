@@ -45,7 +45,6 @@ public class TARDISInteriorSchematicReader {
         Tag tag = items.get(key);
         return tag;
     }
-
     private TARDIS plugin;
 
     public TARDISInteriorSchematicReader(TARDIS plugin) {
@@ -99,6 +98,11 @@ public class TARDISInteriorSchematicReader {
                     plugin.redstonedimensions[1] = width;
                     plugin.redstonedimensions[2] = length;
                     break;
+                case STEAMPUNK:
+                    plugin.steampunkdimensions[0] = height;
+                    plugin.steampunkdimensions[1] = width;
+                    plugin.steampunkdimensions[2] = length;
+                    break;
             }
 
             byte[] blocks = (byte[]) getChildTag(tagCollection, "Blocks", ByteArrayTag.class).getValue();
@@ -142,7 +146,7 @@ public class TARDISInteriorSchematicReader {
                 }
                 bw.close();
             } catch (IOException io) {
-                plugin.console.sendMessage(plugin.pluginName + "Could not save the time lords file!");
+                plugin.console.sendMessage(plugin.pluginName + "Could not save the TARDIS csv file!");
             }
         } catch (IOException e) {
             plugin.console.sendMessage(plugin.pluginName + "Schematic read error: " + e);

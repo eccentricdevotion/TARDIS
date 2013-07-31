@@ -92,8 +92,10 @@ public class TARDISArtronRunnable implements Runnable {
         for (Location l : rechargers) {
             if (plugin.utils.compareLocations(pb_loc, l)) {
                 // strike lightning to the Police Box torch location
-                pb_loc.setY(pb_loc.getY() + 3);
-                w.strikeLightningEffect(pb_loc);
+                if (plugin.getConfig().getBoolean("strike_lightning")) {
+                    pb_loc.setY(pb_loc.getY() + 3);
+                    w.strikeLightningEffect(pb_loc);
+                }
                 return true;
             }
         }

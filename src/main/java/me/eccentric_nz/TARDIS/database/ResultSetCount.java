@@ -49,7 +49,7 @@ public class ResultSetCount {
 
     /**
      * Creates a class instance that can be used to retrieve an SQL ResultSet
-     * from the blocks table.
+     * from the count table.
      *
      * @param plugin an instance of the main class.
      * @param where a HashMap<String, Object> of table fields and values to
@@ -117,7 +117,7 @@ public class ResultSetCount {
                 return false;
             }
         } catch (SQLException e) {
-            plugin.debug("ResultSet error for blocks table! " + e.getMessage());
+            plugin.debug("ResultSet error for count table! " + e.getMessage());
             return false;
         } finally {
             try {
@@ -128,7 +128,7 @@ public class ResultSetCount {
                     statement.close();
                 }
             } catch (Exception e) {
-                plugin.debug("Error closing blocks table! " + e.getMessage());
+                plugin.debug("Error closing count table! " + e.getMessage());
             }
         }
         return true;

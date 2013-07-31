@@ -178,11 +178,19 @@ public class TARDISRoomRunnable implements Runnable {
                 data = Byte.parseByte(iddata[1]);
             }
             if (id == 35 && data == 1) {
-                id = middle_id;
+                if (middle_id == 35 && middle_data == 1 && plugin.getConfig().getBoolean("use_clay")) {
+                    id = 159;
+                } else {
+                    id = middle_id;
+                }
                 data = middle_data;
             }
             if (id == 35 && data == 8) {
-                id = floor_id;
+                if (floor_id == 35 && floor_data == 8 && plugin.getConfig().getBoolean("use_clay")) {
+                    id = 159;
+                } else {
+                    id = floor_id;
+                }
                 data = floor_data;
             }
             QueryFactory qf = new QueryFactory(plugin);
@@ -205,6 +213,17 @@ public class TARDISRoomRunnable implements Runnable {
                 id = floor_id;
                 data = floor_data;
             }
+            // set stable
+            if (id == 88 && room.equals("STABLE")) {
+                HashMap<String, Object> sets = new HashMap<String, Object>();
+                sets.put("stable", world.getName() + ":" + startx + ":" + starty + ":" + startz);
+                HashMap<String, Object> wheres = new HashMap<String, Object>();
+                wheres.put("tardis_id", tardis_id);
+                qf.doUpdate("tardis", sets, wheres);
+                // replace with grass
+                id = 2;
+                data = 0;
+            }
             // set farmland hydrated
             if (id == 60 && data == 0) {
                 data = (byte) 4;
@@ -220,6 +239,15 @@ public class TARDISRoomRunnable implements Runnable {
                     Block cocoa = world.getBlockAt(startx, starty, startz);
                     cocoablocks.put(cocoa, data);
                 }
+            }
+            if (room.equals("RAIL") && id == 85) {
+                // remember fence location so we can teleport the storage minecart
+                String loc = world.getName() + ":" + startx + ":" + starty + ":" + startz;
+                HashMap<String, Object> set = new HashMap<String, Object>();
+                set.put("rail", loc);
+                HashMap<String, Object> where = new HashMap<String, Object>();
+                where.put("tardis_id", tardis_id);
+                qf.doUpdate("tardis", set, where);
             }
             // always remove sponge
             if (id == 19) {

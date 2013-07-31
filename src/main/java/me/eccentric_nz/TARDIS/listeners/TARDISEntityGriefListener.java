@@ -19,8 +19,6 @@ package me.eccentric_nz.TARDIS.listeners;
 import java.util.ArrayList;
 import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.thirdparty.Version;
-import org.bukkit.Bukkit;
 import org.bukkit.block.Block;
 import org.bukkit.entity.EntityType;
 import org.bukkit.event.EventHandler;
@@ -41,16 +39,12 @@ public class TARDISEntityGriefListener implements Listener {
 
     private final TARDIS plugin;
     List<EntityType> ents = new ArrayList<EntityType>();
-    Version bukkitversion;
-    Version prewitherversion = new Version("1.4.2");
 
     public TARDISEntityGriefListener(TARDIS plugin) {
         this.plugin = plugin;
-        String[] v = Bukkit.getServer().getBukkitVersion().split("-");
-        bukkitversion = (!v[0].equalsIgnoreCase("unknown")) ? new Version(v[0]) : new Version("1.4.7");
         ents.add(EntityType.ENDER_DRAGON);
         ents.add(EntityType.FIREBALL);
-        if (bukkitversion.compareTo(prewitherversion) >= 0) {
+        if (plugin.bukkitversion.compareTo(plugin.prewoodbuttonversion) >= 0) {
             ents.add(EntityType.WITHER);
         }
     }

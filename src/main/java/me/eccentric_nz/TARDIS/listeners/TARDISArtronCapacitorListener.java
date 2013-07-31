@@ -24,8 +24,6 @@ import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetControls;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
-import me.eccentric_nz.TARDIS.thirdparty.Version;
-import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -53,17 +51,18 @@ public class TARDISArtronCapacitorListener implements Listener {
 
     private final TARDIS plugin;
     List<Material> validBlocks = new ArrayList<Material>();
-    Version bukkitversion;
-    Version prewoodbuttonversion = new Version("1.4.2");
 
     public TARDISArtronCapacitorListener(TARDIS plugin) {
         this.plugin = plugin;
-        String[] v = Bukkit.getServer().getBukkitVersion().split("-");
-        bukkitversion = (!v[0].equalsIgnoreCase("unknown")) ? new Version(v[0]) : new Version("1.4.7");
-        if (bukkitversion.compareTo(prewoodbuttonversion) >= 0) {
+        if (plugin.bukkitversion.compareTo(plugin.prewoodbuttonversion) >= 0) {
             validBlocks.add(Material.WOOD_BUTTON);
         }
+        if (plugin.bukkitversion.compareTo(plugin.precomparatorversion) >= 0) {
+            validBlocks.add(Material.REDSTONE_COMPARATOR_OFF);
+            validBlocks.add(Material.REDSTONE_COMPARATOR_ON);
+        }
         validBlocks.add(Material.STONE_BUTTON);
+        validBlocks.add(Material.LEVER);
     }
 
     /**
@@ -234,16 +233,18 @@ public class TARDISArtronCapacitorListener implements Listener {
     /**
      * Listens for entity spawn events. If WorldGuard is enabled it blocks
      * mob-spawning inside the TARDIS, so this checks to see if we are doing the
-     * spawning and un-cancels WorldGuards setCancelled(true).
+     * spawning and un-cancels WorldGuard's setCancelled(true).
      *
      * @param event
      */
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onEntitySpawn(CreatureSpawnEvent event) {
-        boolean isTardisWorldBreeding = (event.getLocation().getWorld().getName().contains("TARDIS") && event.getSpawnReason().equals(SpawnReason.BREEDING)) ? true : false;
-        if (plugin.myspawn || isTardisWorldBreeding) {
+        boolean isTardisWorldBreeding = (event.getLocation().getWorld().getName().contains("TARDIS") && (event.getSpawnReason().equals(SpawnReason.BREEDING))) ? true : false;
+        if (isTardisWorldBreeding || plugin.myspawn) {
             event.setCancelled(false);
-            plugin.myspawn = false;
+            if (plugin.myspawn == true) {
+                plugin.myspawn = false;
+            }
         }
     }
 }

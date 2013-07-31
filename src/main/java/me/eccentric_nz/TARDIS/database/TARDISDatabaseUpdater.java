@@ -49,6 +49,7 @@ public class TARDISDatabaseUpdater {
         blockupdates.add("police_box INTEGER DEFAULT 0");
         destupdates.add("bind TEXT DEFAULT ''");
         destupdates.add("type INTEGER DEFAULT 0");
+        destupdates.add("direction TEXT DEFAULT ''");
         doorupdates.add("locked INTEGER DEFAULT 0");
         gravityupdates.add("distance INTEGER DEFAULT 11");
         gravityupdates.add("velocity REAL DEFAULT 0.5");
@@ -61,6 +62,8 @@ public class TARDISDatabaseUpdater {
         prefsupdates.add("wall TEXT DEFAULT 'ORANGE_WOOL'");
         prefsupdates.add("eps_on INTEGER DEFAULT 0");
         prefsupdates.add("eps_message TEXT DEFAULT ''");
+        prefsupdates.add("plain_on INTEGER");
+        prefsupdates.add("lamp INTEGER");
         prefsupdates.add("texture_on INTEGER DEFAULT 0");
         prefsupdates.add("texture_in TEXT DEFAULT ''");
         prefsupdates.add("texture_out TEXT DEFAULT 'default'");
@@ -79,8 +82,10 @@ public class TARDISDatabaseUpdater {
         tardisupdates.add("lastuse INTEGER DEFAULT " + now);
         tardisupdates.add("middle_data INTEGER");
         tardisupdates.add("middle_id INTEGER");
+        tardisupdates.add("rail TEXT DEFAULT ''");
         tardisupdates.add("recharging INTEGER DEFAULT 0");
         tardisupdates.add("scanner TEXT DEFAULT ''");
+        tardisupdates.add("stable TEXT DEFAULT ''");
         tardisupdates.add("tardis_init INTEGER DEFAULT 0");
     }
 
@@ -167,6 +172,29 @@ public class TARDISDatabaseUpdater {
         }
         if (i > 0) {
             TARDIS.plugin.console.sendMessage(TARDIS.plugin.pluginName + "Added " + ChatColor.AQUA + i + ChatColor.RESET + " fields to the database!");
+        }
+    }
+
+    public void updateHomes() {
+        // check the tardis database to see whether the homes have already been updated
+        String home_query = "SELECT home FROM tardis ORDER BY tardis_id ASC";
+        try {
+            ResultSet rs = statement.executeQuery(home_query);
+            if (rs.next()) {
+                String[] split = rs.getString("home").split(":");
+                if (split.length < 5) {
+                    String h_query = "SELECT tardis_id, direction, home FROM tardis";
+                    ResultSet rst = statement.executeQuery(h_query);
+                    while (rst.next()) {
+                        String home = rst.getString("home") + ":" + rst.getString("direction");
+                        String update = String.format("UPDATE tardis SET home = '%s' WHERE tardis_id = %d", home, rst.getInt("tardis_id"));
+                        // TARDIS.plugin.debug(update);
+                        statement.executeUpdate(update);
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            TARDIS.plugin.debug("Database add fields error: " + e.getMessage() + e.getErrorCode());
         }
     }
 }

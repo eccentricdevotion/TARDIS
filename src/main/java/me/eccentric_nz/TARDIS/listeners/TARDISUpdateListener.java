@@ -19,6 +19,7 @@ package me.eccentric_nz.TARDIS.listeners;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
@@ -26,8 +27,6 @@ import me.eccentric_nz.TARDIS.database.ResultSetControls;
 import me.eccentric_nz.TARDIS.database.ResultSetDoors;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
-import me.eccentric_nz.TARDIS.thirdparty.Version;
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -40,6 +39,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.json.JSONArray;
 
 /**
  * The TARDIS interior goes through occasional metamorphoses, sometimes by
@@ -55,17 +55,18 @@ public class TARDISUpdateListener implements Listener {
     private TARDIS plugin;
     List<Material> validBlocks = new ArrayList<Material>();
     HashMap<String, Integer> controls = new HashMap<String, Integer>();
-    Version bukkitversion;
-    Version prewoodbuttonversion = new Version("1.4.2");
 
     public TARDISUpdateListener(TARDIS plugin) {
         this.plugin = plugin;
-        String[] v = Bukkit.getServer().getBukkitVersion().split("-");
-        bukkitversion = (!v[0].equalsIgnoreCase("unknown")) ? new Version(v[0]) : new Version("1.4.7");
-        if (bukkitversion.compareTo(prewoodbuttonversion) >= 0) {
+        if (plugin.bukkitversion.compareTo(plugin.prewoodbuttonversion) >= 0) {
             validBlocks.add(Material.WOOD_BUTTON);
         }
+        if (plugin.bukkitversion.compareTo(plugin.precomparatorversion) >= 0) {
+            validBlocks.add(Material.REDSTONE_COMPARATOR_OFF);
+            validBlocks.add(Material.REDSTONE_COMPARATOR_ON);
+        }
         validBlocks.add(Material.STONE_BUTTON);
+        validBlocks.add(Material.LEVER);
         controls.put("handbrake", 0);
         controls.put("button", 1);
         controls.put("world-repeater", 2);
@@ -75,6 +76,10 @@ public class TARDISUpdateListener implements Listener {
         controls.put("artron", 6);
         controls.put("keyboard", 7);
         controls.put("back", 8);
+        controls.put("terminal", 9);
+        controls.put("ars", 10);
+        controls.put("temporal", 11);
+        controls.put("light", 12);
     }
 
     /**
@@ -120,6 +125,7 @@ public class TARDISUpdateListener implements Listener {
                 return;
             }
             int id = rs.getTardis_id();
+            TARDISConstants.SCHEMATIC schm = rs.getSchematic();
             String home = rs.getHome();
             String current = rs.getCurrent();
             QueryFactory qf = new QueryFactory(plugin);
@@ -130,7 +136,8 @@ public class TARDISUpdateListener implements Listener {
             String blockLocStr = bw.getName() + ":" + bx + ":" + by + ":" + bz;
             if (controls.containsKey(blockName)) {
                 if (!blockName.contains("repeater")) {
-                    blockLocStr = plugin.utils.makeLocationStr(bw, bx, by, bz);
+                    //blockLocStr = plugin.utils.makeLocationStr(bw, bx, by, bz);
+                    blockLocStr = block_loc.toString();
                 }
                 table = "controls";
                 tid.put("type", controls.get(blockName));
@@ -187,14 +194,14 @@ public class TARDISUpdateListener implements Listener {
                     qf.doInsert("doors", setd);
                 }
             }
-            if (blockName.equalsIgnoreCase("button") && (validBlocks.contains(blockType) || blockType == Material.LEVER)) {
+            if (blockName.equalsIgnoreCase("button") && validBlocks.contains(blockType)) {
                 if (secondary) {
                     qf.insertControl(id, 1, blockLocStr, 1);
                 } else {
                     set.put("location", blockLocStr);
                 }
             }
-            if (blockName.equalsIgnoreCase("scanner") && (validBlocks.contains(blockType) || blockType == Material.LEVER)) {
+            if (blockName.equalsIgnoreCase("scanner") && validBlocks.contains(blockType)) {
                 set.put("scanner", blockLocStr);
             }
             if (blockName.equalsIgnoreCase("handbrake") && blockType == Material.LEVER) {
@@ -211,9 +218,17 @@ public class TARDISUpdateListener implements Listener {
                 blockLocStr = bw.getName() + ":" + bx + ":" + (by + 1) + ":" + (bz - 1);
                 set.put("eps", blockLocStr);
             }
-            if (blockName.equalsIgnoreCase("creeper") && blockType == Material.COMMAND) {
+            if (blockName.equalsIgnoreCase("farm") || blockName.equalsIgnoreCase("stable")) {
+                blockLocStr = bw.getName() + ":" + bx + ":" + by + ":" + bz;
+                set.put(blockName.toLowerCase(Locale.ENGLISH), blockLocStr);
+            }
+            if (blockName.equalsIgnoreCase("creeper")) {
                 blockLocStr = bw.getName() + ":" + bx + ".5:" + by + ":" + bz + ".5";
                 set.put("creeper", blockLocStr);
+            }
+            if (blockName.equalsIgnoreCase("rail") && blockType == Material.FENCE) {
+                blockLocStr = bw.getName() + ":" + bx + ":" + by + ":" + bz;
+                set.put("rail", blockLocStr);
             }
             if (blockName.equalsIgnoreCase("world-repeater") && (blockType == Material.DIODE_BLOCK_OFF || blockType == Material.DIODE_BLOCK_ON)) {
                 if (secondary) {
@@ -263,12 +278,11 @@ public class TARDISUpdateListener implements Listener {
             if (blockName.equalsIgnoreCase("save-sign") && (blockType == Material.WALL_SIGN || blockType == Material.SIGN_POST)) {
                 set.put("save_sign", blockLocStr);
                 // add text to sign
-                String[] coords = home.split(":");
                 Sign s = (Sign) block.getState();
-                s.setLine(0, "Saves");
-                s.setLine(1, "Home");
-                s.setLine(2, coords[0]);
-                s.setLine(3, coords[1] + "," + coords[2] + "," + coords[3]);
+                s.setLine(0, "TARDIS");
+                s.setLine(1, "Saved");
+                s.setLine(2, "Locations");
+                s.setLine(3, "");
                 s.update();
             }
             if (blockName.equalsIgnoreCase("keyboard") && (blockType == Material.WALL_SIGN || blockType == Material.SIGN_POST)) {
@@ -290,7 +304,7 @@ public class TARDISUpdateListener implements Listener {
                 }
                 s.update();
             }
-            if (blockName.equalsIgnoreCase("back") && (validBlocks.contains(blockType) || blockType == Material.LEVER)) {
+            if (blockName.equalsIgnoreCase("back") && validBlocks.contains(blockType)) {
                 HashMap<String, Object> wherec = new HashMap<String, Object>();
                 wherec.put("tardis_id", id);
                 wherec.put("type", 8);
@@ -309,6 +323,117 @@ public class TARDISUpdateListener implements Listener {
                     set.put("location", blockLocStr);
                 }
             }
+            if (blockName.equalsIgnoreCase("terminal") && (blockType == Material.WALL_SIGN || blockType == Material.SIGN_POST)) {
+                HashMap<String, Object> wherec = new HashMap<String, Object>();
+                wherec.put("tardis_id", id);
+                wherec.put("type", 9);
+                ResultSetControls rsc = new ResultSetControls(plugin, wherec, false);
+                if (!rsc.resultSet()) {
+                    // insert control
+                    qf.insertControl(id, 9, blockLocStr, 0);
+                    secondary = true;
+                } else {
+                    set.put("location", blockLocStr);
+                }
+                // add text to sign
+                Sign s = (Sign) block.getState();
+                s.setLine(0, "");
+                s.setLine(1, "Destination");
+                s.setLine(2, "Terminal");
+                s.setLine(3, "");
+                s.update();
+            }
+            if (blockName.equalsIgnoreCase("ars") && (blockType == Material.WALL_SIGN || blockType == Material.SIGN_POST)) {
+                HashMap<String, Object> wherec = new HashMap<String, Object>();
+                wherec.put("tardis_id", id);
+                wherec.put("type", 10);
+                ResultSetControls rsc = new ResultSetControls(plugin, wherec, false);
+                if (!rsc.resultSet()) {
+                    // insert control
+                    qf.insertControl(id, 10, blockLocStr, 0);
+                    // create default json
+                    int[][][] empty = new int[3][9][9];
+                    for (int y = 0; y < 3; y++) {
+                        for (int x = 0; x < 9; x++) {
+                            for (int z = 0; z < 9; z++) {
+                                empty[y][x][z] = 1;
+                            }
+                        }
+                    }
+                    int control = 42;
+                    switch (schm) {
+                        case BIGGER:
+                            control = 41;
+                            break;
+                        case DELUXE:
+                            control = 57;
+                            break;
+                        case ELEVENTH:
+                            control = 133;
+                            break;
+                        case REDSTONE:
+                            control = 152;
+                            break;
+                        case STEAMPUNK:
+                            control = 173;
+                            break;
+                        default:
+                            break;
+                    }
+                    empty[1][4][4] = control;
+                    JSONArray json = new JSONArray(empty);
+
+                    HashMap<String, Object> seta = new HashMap<String, Object>();
+                    seta.put("tardis_id", id);
+                    seta.put("player", playerNameStr);
+                    seta.put("json", json.toString());
+                    qf.doInsert("ars", seta);
+                    secondary = true;
+                } else {
+                    set.put("location", blockLocStr);
+                }
+                // add text to sign
+                Sign s = (Sign) block.getState();
+                s.setLine(0, "TARDIS");
+                s.setLine(1, "Architectural");
+                s.setLine(2, "Reconfiguration");
+                s.setLine(3, "System");
+                s.update();
+            }
+            if (blockName.equalsIgnoreCase("temporal") && (blockType == Material.WALL_SIGN || blockType == Material.SIGN_POST)) {
+                HashMap<String, Object> wherec = new HashMap<String, Object>();
+                wherec.put("tardis_id", id);
+                wherec.put("type", 11);
+                ResultSetControls rsc = new ResultSetControls(plugin, wherec, false);
+                if (!rsc.resultSet()) {
+                    // insert control
+                    qf.insertControl(id, 11, blockLocStr, 0);
+                    secondary = true;
+                } else {
+                    set.put("location", blockLocStr);
+                }
+                // add text to sign
+                Sign s = (Sign) block.getState();
+                s.setLine(0, "");
+                s.setLine(1, "Temporal");
+                s.setLine(2, "Locator");
+                s.setLine(3, "");
+                s.update();
+            }
+            if (blockName.equalsIgnoreCase("light") && validBlocks.contains(blockType)) {
+                HashMap<String, Object> wherel = new HashMap<String, Object>();
+                wherel.put("tardis_id", id);
+                wherel.put("type", 12);
+                ResultSetControls rsc = new ResultSetControls(plugin, wherel, false);
+                if (!rsc.resultSet()) {
+                    // insert control
+                    qf.insertControl(id, 12, blockLocStr, 0);
+                    secondary = true;
+                } else {
+                    set.put("location", blockLocStr);
+                }
+            }
+
             if (set.size() > 0 || secondary) {
                 if (!secondary) {
                     qf.doUpdate(table, set, tid);

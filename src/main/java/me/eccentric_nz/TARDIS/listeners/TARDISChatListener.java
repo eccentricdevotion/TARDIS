@@ -25,6 +25,10 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 
 /**
+ * In 21st century London, Rory has his father, Brian Williams, over to help fix
+ * a light bulb. After saying the fixture may be the problem, the sound of the
+ * TARDIS materialisation is heard. The TARDIS materialises around them,
+ * shocking Brian in place.
  *
  * @author eccentric_nz
  */
@@ -36,6 +40,13 @@ public class TARDISChatListener implements Listener {
         this.plugin = plugin;
     }
 
+    /**
+     * Listens for player typing "tardis rescue accept". If the player types it
+     * within 60 seconds of a Timelord sending a rescue request, a player rescue
+     * attempt is made.
+     *
+     * @param event a player typing in chat
+     */
     @EventHandler(priority = EventPriority.MONITOR)
     public void onChat(AsyncPlayerChatEvent event) {
         String saved = event.getPlayer().getName();
@@ -44,8 +55,11 @@ public class TARDISChatListener implements Listener {
             if (plugin.trackChat.containsKey(saved)) {
                 Player rescuer = plugin.getServer().getPlayer(plugin.trackChat.get(saved));
                 TARDISRescue res = new TARDISRescue(plugin);
-                res.tryRescue(rescuer, saved);
-                rescuer.sendMessage(plugin.pluginName + "Release the handbrake to start rescuing " + saved);
+                if (res.tryRescue(rescuer, saved)) {
+                    rescuer.sendMessage(plugin.pluginName + "Release the handbrake to start rescuing " + saved);
+                } else {
+                    rescuer.sendMessage(plugin.pluginName + "There was a problem trying to rescue " + saved + ", they probably need to move.");
+                }
                 plugin.trackChat.remove(saved);
             } else {
                 event.getPlayer().sendMessage(plugin.pluginName + "Rescue request timed out! You need to respond within 60 seconds.");

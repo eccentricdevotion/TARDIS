@@ -23,6 +23,7 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants.COMPASS;
 import me.eccentric_nz.TARDIS.achievement.TARDISAchievementFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
+import me.eccentric_nz.tardishorsespeed.TardisHorseSpeed;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -32,6 +33,7 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import static org.bukkit.entity.EntityType.OCELOT;
 import static org.bukkit.entity.EntityType.WOLF;
+import org.bukkit.entity.Horse;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.MushroomCow;
 import org.bukkit.entity.Ocelot;
@@ -52,9 +54,13 @@ import org.bukkit.inventory.ItemStack;
 public class TARDISFarmer {
 
     private final TARDIS plugin;
+    private List<Material> barding = new ArrayList<Material>();
 
     public TARDISFarmer(TARDIS plugin) {
         this.plugin = plugin;
+        this.barding.add(Material.IRON_BARDING);
+        this.barding.add(Material.GOLD_BARDING);
+        this.barding.add(Material.DIAMOND_BARDING);
     }
 
     /**
@@ -74,7 +80,7 @@ public class TARDISFarmer {
      * @param p the player to award achievements or give spawn eggs to
      * @return a List of the player's pets (if any are nearby)
      */
-    public List<TARDISMob> farmAnimals(Location l, COMPASS d, int id, Player p) {
+    public List<TARDISMob> farmAnimals(Location l, COMPASS d, int id, final Player p) {
         List<TARDISMob> old_macd_had_a_pet = new ArrayList<TARDISMob>();
         switch (d) {
             case NORTH:
@@ -101,6 +107,7 @@ public class TARDISFarmer {
             List<TARDISMob> old_macd_had_a_pig = new ArrayList<TARDISMob>();
             List<TARDISMob> old_macd_had_a_sheep = new ArrayList<TARDISMob>();
             List<TARDISMob> old_macd_had_a_mooshroom = new ArrayList<TARDISMob>();
+            List<TARDISHorse> old_macd_had_a_horse = new ArrayList<TARDISHorse>();
             // are we doing an achievement?
             TARDISAchievementFactory taf = null;
             if (plugin.getAchivementConfig().getBoolean("farm.enabled")) {
@@ -132,7 +139,53 @@ public class TARDISFarmer {
                         }
                         total++;
                         break;
+                    case HORSE:
+                        Tameable brokenin = (Tameable) e;
+                        Horse horse = (Horse) e;
+                        // if horse has a passenger, eject them!
+                        horse.eject();
+                        // don't farm other player's tamed horses
+                        if (brokenin.isTamed()) {
+//                            plugin.debug("Horse owner: " + brokenin.getOwner().getName());
+//                            plugin.debug("Timelord: " + p.getName());
+                            if (brokenin.getOwner() != null && !brokenin.getOwner().getName().equals(p.getName())) {
+                                break;
+                            }
+                        }
+                        TARDISHorse tmhor = new TARDISHorse();
+                        tmhor.setAge(e.getTicksLived());
+                        tmhor.setBaby(!horse.isAdult());
+                        tmhor.setHealth(horse.getHealth());
+                        // get horse colour, style and variant
+                        tmhor.setHorseColour(horse.getColor());
+                        tmhor.setHorseStyle(horse.getStyle());
+                        tmhor.setHorseVariant(horse.getVariant());
+                        if (brokenin.isTamed()) {
+                            tmhor.setTamed(true);
+                        } else {
+                            tmhor.setTamed(false);
+                        }
+                        if (horse.isCarryingChest()) {
+                            tmhor.setHasChest(true);
+                        }
+                        tmhor.setHorseInventory(horse.getInventory().getContents());
+                        tmhor.setDomesticity(horse.getDomestication());
+                        tmhor.setJumpStrength(horse.getJumpStrength());
+                        if (plugin.pm.isPluginEnabled("TardisHorseSpeed")) {
+                            TardisHorseSpeed ths = (TardisHorseSpeed) plugin.pm.getPlugin("TardisHorseSpeed");
+                            double speed = ths.getHorseSpeed(horse);
+                            tmhor.setSpeed(speed);
+                        }
+                        old_macd_had_a_horse.add(tmhor);
+                        e.remove();
+                        if (taf != null) {
+                            taf.doAchievement("HORSE");
+                        }
+                        total++;
+                        break;
                     case PIG:
+                        // eject any passengers
+                        ((Pig) e).eject();
                         TARDISMob tmpig = new TARDISMob();
                         tmpig.setAge(e.getTicksLived());
                         tmpig.setBaby(!((Pig) e).isAdult());
@@ -177,17 +230,17 @@ public class TARDISFarmer {
                             if (pet_name != null) {
                                 pet.setName(pet_name);
                             }
-                            int health;
+                            double health;
                             if (e.getType().equals(EntityType.WOLF)) {
                                 pet.setSitting(((Wolf) e).isSitting());
                                 pet.setColour(((Wolf) e).getCollarColor());
-                                health = (((Wolf) e).getHealth() > 8) ? 8 : ((Wolf) e).getHealth();
+                                health = (((Wolf) e).getHealth() > 8D) ? 8D : ((Wolf) e).getHealth();
                                 pet.setHealth(health);
                                 pet.setBaby(!((Wolf) e).isAdult());
                             } else {
                                 pet.setSitting(((Ocelot) e).isSitting());
                                 pet.setCatType(((Ocelot) e).getCatType());
-                                health = (((Ocelot) e).getHealth() > 8) ? 8 : ((Ocelot) e).getHealth();
+                                health = (((Ocelot) e).getHealth() > 8D) ? 8D : ((Ocelot) e).getHealth();
                                 pet.setHealth(health);
                                 pet.setBaby(!((Ocelot) e).isAdult());
                             }
@@ -205,6 +258,7 @@ public class TARDISFarmer {
             ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
             if (rs.resultSet()) {
                 String farm = rs.getFarm();
+                String stable = rs.getStable();
                 if (!farm.isEmpty()) {
                     // get location of farm room
                     String[] data = farm.split(":");
@@ -288,6 +342,61 @@ public class TARDISFarmer {
                             }
                         }
                     }
+                }
+                if (!stable.isEmpty()) {
+                    // get location of farm room
+                    String[] data = stable.split(":");
+                    World world = plugin.getServer().getWorld(data[0]);
+                    int x = plugin.utils.parseNum(data[1]);
+                    int y = plugin.utils.parseNum(data[2]) + 1;
+                    int z = plugin.utils.parseNum(data[3]);
+                    if (old_macd_had_a_horse.size() > 0) {
+                        Location horse_pen = new Location(world, x + 0.5F, y, z + 0.5F);
+                        while (!world.getChunkAt(horse_pen).isLoaded()) {
+                            world.getChunkAt(horse_pen).load();
+                        }
+                        for (TARDISHorse e : old_macd_had_a_horse) {
+                            plugin.myspawn = true;
+                            Entity horse = world.spawnEntity(horse_pen, EntityType.HORSE);
+                            Horse equine = (Horse) horse;
+                            equine.setAge(e.getAge());
+                            if (e.isBaby()) {
+                                equine.setBaby();
+                            }
+                            equine.setHealth(e.getHealth());
+                            equine.setVariant(e.getHorseVariant());
+                            equine.setColor(e.getHorseColour());
+                            equine.setStyle(e.getHorseStyle());
+                            Tameable tamed = (Tameable) equine;
+                            if (e.isTamed()) {
+                                tamed.setTamed(true);
+                                tamed.setOwner(p);
+                            }
+                            equine.setDomestication(e.getDomesticity());
+                            equine.setJumpStrength(e.getJumpStrength());
+                            if (e.hasChest()) {
+                                equine.setCarryingChest(true);
+                            }
+                            if (plugin.pm.isPluginEnabled("TardisHorseSpeed")) {
+                                TardisHorseSpeed ths = (TardisHorseSpeed) plugin.pm.getPlugin("TardisHorseSpeed");
+                                ths.setHorseSpeed(equine, e.getSpeed());
+                            }
+                            Inventory inv = equine.getInventory();
+                            inv.setContents(e.getHorseinventory());
+                            if (inv.contains(Material.SADDLE)) {
+                                int saddle_slot = inv.first(Material.SADDLE);
+                                ItemStack saddle = inv.getItem(saddle_slot);
+                                equine.getInventory().setSaddle(saddle);
+                            }
+                            for (Material m : barding) {
+                                if (inv.contains(m)) {
+                                    int armour_slot = inv.first(m);
+                                    ItemStack bard = inv.getItem(armour_slot);
+                                    equine.getInventory().setArmor(bard);
+                                }
+                            }
+                        }
+                    }
                 } else {
                     if (plugin.getConfig().getBoolean("spawn_eggs")) {
                         // no farm, give the player spawn eggs
@@ -312,6 +421,10 @@ public class TARDISFarmer {
                             ItemStack is = new ItemStack(Material.MONSTER_EGG, old_macd_had_a_mooshroom.size(), (short) 96);
                             inv.addItem(is);
                         }
+                        if (old_macd_had_a_horse.size() > 0) {
+                            ItemStack is = new ItemStack(Material.MONSTER_EGG, old_macd_had_a_horse.size(), (short) 100);
+                            inv.addItem(is);
+                        }
                         p.updateInventory();
                     } else if (total > 0) {
                         p.sendMessage(plugin.pluginName + "You need to grow a farm room before you can farm mobs!");
@@ -320,6 +433,12 @@ public class TARDISFarmer {
             }
         }
         ent.remove();
+        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
+            @Override
+            public void run() {
+                plugin.trackFarming.remove(p.getName());
+            }
+        }, 20L);
         return old_macd_had_a_pet;
     }
 
@@ -340,17 +459,17 @@ public class TARDISFarmer {
                         if (pet_name != null) {
                             pet.setName(pet_name);
                         }
-                        int health;
+                        double health;
                         if (e.getType().equals(EntityType.WOLF)) {
                             pet.setSitting(((Wolf) e).isSitting());
                             pet.setColour(((Wolf) e).getCollarColor());
-                            health = (((Wolf) e).getHealth() > 8) ? 8 : ((Wolf) e).getHealth();
+                            health = (((Wolf) e).getHealth() > 8D) ? 8D : ((Wolf) e).getHealth();
                             pet.setHealth(health);
                             pet.setBaby(!((Wolf) e).isAdult());
                         } else {
                             pet.setSitting(((Ocelot) e).isSitting());
                             pet.setCatType(((Ocelot) e).getCatType());
-                            health = (((Ocelot) e).getHealth() > 8) ? 8 : ((Ocelot) e).getHealth();
+                            health = (((Ocelot) e).getHealth() > 8D) ? 8D : ((Ocelot) e).getHealth();
                             pet.setHealth(health);
                             pet.setBaby(!((Ocelot) e).isAdult());
                         }

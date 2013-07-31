@@ -60,8 +60,8 @@ public class TARDISBuilderPoliceBox {
      * @param mal boolean determining whether a malfunction has occurred
      */
     public void buildPoliceBox(int id, Location l, TARDISConstants.COMPASS d, boolean c, Player p, boolean rebuild, boolean mal) {
-        int wall_block = 35;
-        byte chameleonData = 11;
+        int wall_block = plugin.getConfig().getInt("wall_id");
+        byte chameleonData = (byte) plugin.getConfig().getInt("wall_data");
         if (c) {
             Block chameleonBlock;
             // chameleon circuit is on - get block under TARDIS
@@ -77,7 +77,7 @@ public class TARDISBuilderPoliceBox {
             rsc.resultSet();
             int c_id = rsc.getChameleon_id();
             byte c_data = rsc.getChameleon_data();
-            boolean bluewool = (c_id == 35 && c_data == (byte) 11);
+            boolean bluewool = (c_id == wall_block && c_data == chameleonData);
             if (!bluewool) {
                 wall_block = c_id;
                 chameleonData = c_data;
@@ -88,6 +88,16 @@ public class TARDISBuilderPoliceBox {
                 wall_block = b_data[0];
                 chameleonData = (byte) b_data[1];
             }
+        }
+        // get sign and torch preferences
+        int lamp = plugin.getConfig().getInt("tardis_lamp");
+        boolean plain = plugin.getConfig().getBoolean("plain_on");
+        HashMap<String, Object> wherepp = new HashMap<String, Object>();
+        wherepp.put("player", p.getName());
+        ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, wherepp);
+        if (rsp.resultSet()) {
+            lamp = rsp.getLamp();
+            plain = rsp.isPlain_on();
         }
         // keep the chunk this Police box is in loaded
         Chunk thisChunk = l.getChunk();
@@ -101,17 +111,17 @@ public class TARDISBuilderPoliceBox {
          */
         plugin.tardisChunkList.add(thisChunk);
         if (rebuild) {
-            TARDISPoliceBoxRebuilder rebuilder = new TARDISPoliceBoxRebuilder(plugin, l, wall_block, chameleonData, id, d);
+            TARDISPoliceBoxRebuilder rebuilder = new TARDISPoliceBoxRebuilder(plugin, l, wall_block, chameleonData, id, d, lamp, plain);
             rebuilder.rebuildPoliceBox();
         } else {
             if (plugin.getConfig().getBoolean("materialise")) {
                 plugin.tardisMaterialising.add(id);
-                TARDISMaterialisationRunnable runnable = new TARDISMaterialisationRunnable(plugin, l, wall_block, chameleonData, id, d, p, mal);
+                TARDISMaterialisationRunnable runnable = new TARDISMaterialisationRunnable(plugin, l, wall_block, chameleonData, id, d, p, mal, lamp, plain);
                 int taskID = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, runnable, 10L, 20L);
                 runnable.setTask(taskID);
             } else {
                 plugin.tardisMaterialising.add(id);
-                TARDISInstaPoliceBox insta = new TARDISInstaPoliceBox(plugin, l, wall_block, chameleonData, id, d, p.getName(), mal);
+                TARDISInstaPoliceBox insta = new TARDISInstaPoliceBox(plugin, l, wall_block, chameleonData, id, d, p.getName(), mal, lamp, plain);
                 insta.buildPoliceBox();
             }
         }

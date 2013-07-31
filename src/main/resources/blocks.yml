@@ -15,6 +15,9 @@ tardis_blocks:
   - ENDER_STONE
   - QUARTZ_BLOCK
   - CLAY
+  - STAINED_CLAY
+  - HAY_BLOCK
+  - HARD_CLAY
 # TARDIS Police Box blocks - these are allowed block IDs
 chameleon_blocks:
   - 1
@@ -68,3 +71,13 @@ chameleon_blocks:
   - 129
   - 133
   - 155
+  - 159
+  - 170
+  - 172
+  - 173
+lamp_blocks:
+  - 50
+  - 76
+  - 89
+  - 91
+  - 123

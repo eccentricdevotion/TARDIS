@@ -60,8 +60,8 @@ public class TARDISBuilderInner {
     /**
      * Builds the inside of the TARDIS.
      *
-     * @param schm the name of the schematic file to use can be DEFAULT, BIGGER
-     * or DELUXE.
+     * @param schm the name of the schematic file to use can be DEFAULT, BIGGER,
+     * ELEVENTH, REDSTONE, COAL or DELUXE.
      * @param world the world where the TARDIS is to be built.
      * @param dbID the unique key of the record for this TARDIS in the database.
      * @param p an instance of the player who owns the TARDIS.
@@ -90,6 +90,10 @@ public class TARDISBuilderInner {
             case REDSTONE:
                 s = plugin.redstoneschematic;
                 d = plugin.redstonedimensions;
+                break;
+            case STEAMPUNK:
+                s = plugin.steampunkschematic;
+                d = plugin.steampunkdimensions;
                 break;
             default:
                 s = plugin.budgetschematic;
@@ -298,9 +302,15 @@ public class TARDISBuilderInner {
                                     qf.doInsert("lamps", setlb);
                                 }
                             }
+                            if (id == 35 && data != 1 && plugin.getConfig().getBoolean("use_clay")) {
+                                id = 159;
+                            }
                             if (id == 35 && data == 1) {
                                 switch (middle_id) {
                                     case 22:
+                                        if (plugin.getConfig().getBoolean("use_clay")) {
+                                            id = 159;
+                                        }
                                         break;
                                     default:
                                         id = middle_id;
@@ -381,11 +391,10 @@ public class TARDISBuilderInner {
                 postSaveBlock.setTypeIdAndData(68, (byte) 3, true);
                 if (postSaveBlock.getType().equals(Material.WALL_SIGN)) {
                     Sign ss = (Sign) postSaveBlock.getState();
-                    String[] coords = rs.getHome().split(":");
-                    ss.setLine(0, "Saves");
-                    ss.setLine(1, "Home");
-                    ss.setLine(2, coords[0]);
-                    ss.setLine(3, coords[1] + "," + coords[2] + "," + coords[3]);
+                    ss.setLine(0, "TARDIS");
+                    ss.setLine(1, "Saved");
+                    ss.setLine(2, "Locations");
+                    ss.setLine(3, "");
                     ss.update();
                 }
             }

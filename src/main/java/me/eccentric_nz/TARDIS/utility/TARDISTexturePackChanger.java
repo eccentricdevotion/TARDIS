@@ -22,6 +22,9 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import org.bukkit.entity.Player;
 
 /**
+ * Krakenites ware swamp-living aliens with a cylindrical body covered in a
+ * thick, grey shell with the texture of barnacle. They have approximately ten
+ * tentacles that protrude from the top of their shell.
  *
  * @author eccentric_nz
  */
@@ -33,12 +36,20 @@ public class TARDISTexturePackChanger {
         this.plugin = plugin;
     }
 
+    /**
+     * Sets a player's texture pack.
+     *
+     * @param p The player
+     * @param url The URL of the texture pack file
+     */
     public void changeTP(Player p, String url) {
         // check the URL
         try {
             new URL(url);
-            String player = p.getName();
-            plugin.getServer().getPlayer(player).setTexturePack(url);
+            if (p.isOnline()) {
+                String player = p.getName();
+                plugin.getServer().getPlayer(player).setTexturePack(url);
+            }
         } catch (MalformedURLException e) {
             p.sendMessage(plugin.pluginName + "Could not access the URL! " + e.getMessage());
         }

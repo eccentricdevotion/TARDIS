@@ -43,6 +43,13 @@ public class TARDISLampScanner {
         this.plugin = plugin;
     }
 
+    /**
+     * Updates TARDISes from pre-malfunction plugin versions so that the lamps
+     * can flash.
+     *
+     * @param owner the Timelord of the TARDIS
+     * @return true if the TARDIS has not been updated, otherwise false
+     */
     public boolean addLampBlocks(Player owner) {
         // check they have permission
         if (!owner.hasPermission("tardis.update")) {
@@ -58,9 +65,12 @@ public class TARDISLampScanner {
             HashMap<String, Object> wherel = new HashMap<String, Object>();
             wherel.put("tardis_id", id);
             ResultSetLamps rsl = new ResultSetLamps(plugin, wherel, false);
+            QueryFactory qf = new QueryFactory(plugin);
             if (rsl.resultSet()) {
-                owner.sendMessage(plugin.pluginName + "You have already scanned the TARDIS for lamps!");
-                return false;
+                owner.sendMessage(plugin.pluginName + "Deleting previously stored TARDIS lamps!");
+                HashMap<String, Object> wheredel = new HashMap<String, Object>();
+                wheredel.put("tardis_id", id);
+                qf.doDelete("lamps", wheredel);
             }
             // get the TARDIS console chunks
             HashMap<String, Object> wherec = new HashMap<String, Object>();
@@ -90,7 +100,6 @@ public class TARDISLampScanner {
                         endy = 28;
                         break;
                 }
-                QueryFactory qf = new QueryFactory(plugin);
                 ArrayList<HashMap<String, String>> data = rsc.getData();
                 // loop through the chunks
                 for (HashMap<String, String> map : data) {

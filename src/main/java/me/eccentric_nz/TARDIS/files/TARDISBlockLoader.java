@@ -23,6 +23,10 @@ import me.eccentric_nz.TARDIS.database.ResultSetBlocks;
 import me.eccentric_nz.TARDIS.database.ResultSetGravity;
 
 /**
+ * An anti-gravity spiral is a projectable beam used for removing gravity from
+ * an object. The Seventh Doctor used his TARDIS to project a beam around a bus
+ * in space after it crashed. He manoeuvred it down to Earth and dropped it
+ * outside Shangri-La camp in southern Wales.
  *
  * @author eccentric_nz
  */
@@ -32,10 +36,13 @@ public class TARDISBlockLoader {
 
     public TARDISBlockLoader(TARDIS plugin) {
         this.plugin = plugin;
-
-
     }
 
+    /**
+     * Loads Police Box and precious TARDIS blocks for protection from griefing
+     * and harvesting. This speeds the looking up of block locations, as no
+     * database interaction is required.
+     */
     public void loadProtectBlocks() {
         ResultSetBlocks rsb = new ResultSetBlocks(plugin, null, true);
         if (rsb.resultSet()) {
@@ -47,6 +54,10 @@ public class TARDISBlockLoader {
         }
     }
 
+    /**
+     * Loads Gravity Well blocks to speed up block lookups (no database
+     * interaction is required).
+     */
     public void loadGravityWells() {
         ResultSetGravity rsg = new ResultSetGravity(plugin, null, true);
         if (rsg.resultSet()) {

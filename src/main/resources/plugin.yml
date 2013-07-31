@@ -1,4 +1,4 @@
-authors: [eccentric_nz, ewized]
+authors: [eccentric_nz]
 description: A plugin for all Doctor Who fans - create and use a TARDIS! Teleport to random destinations - it's bigger on the inside!
 main: me.eccentric_nz.TARDIS.TARDIS
 name: TARDIS
@@ -7,7 +7,7 @@ softdepend: [Multiverse-Core,MultiWorld,My Worlds,WorldGuard,WorldBorder,Towny,C
 website: http://dev.bukkit.org/bukkit-plugins/tardis/
 dev-url: http://dev.bukkit.org/bukkit-plugins/tardis/
 url: http://eccentricdevotion.github.io/TARDIS/
-version: '2.5-beta-1'
+version: '2.5.3'
 permissions:
   tardis.admin:
     description: Allow players access to the TARDIS admin commands.
@@ -35,6 +35,7 @@ permissions:
       tardis.book: true
       tardis.gravity: true
       tardis.texture: true
+      tardis.temporal: true
     default: op
   tardis.exile:
     description: Disallow players from travelling anywhere but to areas they have a permission node for.
@@ -96,6 +97,9 @@ permissions:
   tardis.redstone:
     description: Allow players to build the 'redstone' TARDIS.
     default: op
+  tardis.steampunk:
+    description: Allow players to build the 'steampunk' TARDIS.
+    default: op
   tardis.end:
     description: Allow players to time travel to the END.
     default: op
@@ -121,6 +125,7 @@ permissions:
       tardis.room.mushroom: true
       tardis.room.passage: true
       tardis.room.pool: true
+      tardis.room.stable: true
       tardis.room.vault: true
       tardis.room.wood: true
       tardis.room.workshop: true
@@ -142,6 +147,9 @@ permissions:
     default: op
   tardis.texture:
     description: Allow players to switch texture packs.
+    default: op
+  tardis.temporal:
+    description: Allow players to set their player time (Temporal Location).
     default: op
   tardis.prune.bypass:
     description: Ignore /tardisadmin prune [days] command to remove unused TARDISes.
@@ -387,4 +395,10 @@ commands:
     description: Set texure pack preferences.
     usage: /<command> [on|off|in|out] [url]
     permission: tardis.texture
+    permission-message: You don't have the permission <permission> to use this command
+  tardisrecipe:
+    aliases: [trecipe, trep]
+    description: View TARDIS item recipes.
+    usage: /<command> [remote|locator|l-circuit|m-circuit|s-circuit]
+    permission: tardis.use
     permission-message: You don't have the permission <permission> to use this command

@@ -16,14 +16,12 @@
  */
 package me.eccentric_nz.TARDIS.commands;
 
-import com.google.common.collect.ImmutableList;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -39,11 +37,9 @@ import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
 import static me.eccentric_nz.TARDIS.destroyers.TARDISExterminator.deleteFolder;
 import me.eccentric_nz.TARDIS.destroyers.TARDISPruner;
 import me.eccentric_nz.TARDIS.files.TARDISConfiguration;
-import me.eccentric_nz.TARDIS.listeners.TARDISDoorListener;
-import me.eccentric_nz.TARDIS.thirdparty.Version;
+import me.eccentric_nz.TARDIS.travel.TARDISTerminalInventory;
 import me.eccentric_nz.TARDIS.utility.TARDISMaterials;
 import org.apache.commons.lang.StringUtils;
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Chunk;
 import org.bukkit.Effect;
@@ -57,9 +53,7 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
-import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
-import org.bukkit.util.StringUtil;
 
 /**
  * Command /tardisadmin [arguments].
@@ -72,18 +66,16 @@ import org.bukkit.util.StringUtil;
  *
  * @author eccentric_nz
  */
-public class TARDISAdminCommands implements CommandExecutor, TabCompleter {
+public class TARDISAdminCommands implements CommandExecutor {
 
     private TARDIS plugin;
-    private List<String> firstsStr = new ArrayList<String>();
-    private List<String> firstsStrArtron = new ArrayList<String>();
-    private List<String> firstsBool = new ArrayList<String>();
-    private List<String> firstsInt = new ArrayList<String>();
-    private List<String> firstsIntArtron = new ArrayList<String>();
+    public List<String> firstsStr = new ArrayList<String>();
+    public List<String> firstsStrArtron = new ArrayList<String>();
+    public List<String> firstsBool = new ArrayList<String>();
+    public List<String> firstsInt = new ArrayList<String>();
+    public List<String> firstsIntArtron = new ArrayList<String>();
     HashSet<Byte> transparent = new HashSet<Byte>();
     private Material charger = Material.REDSTONE_LAMP_ON;
-    Version bukkitversion;
-    Version prebeaconversion = new Version("1.4.2");
 
     public TARDISAdminCommands(TARDIS plugin) {
         this.plugin = plugin;
@@ -93,6 +85,7 @@ public class TARDISAdminCommands implements CommandExecutor, TabCompleter {
         firstsStr.add("decharge");
         firstsStr.add("default_world_name");
         firstsStr.add("delete");
+        firstsStr.add("difficulty");
         firstsStr.add("enter");
         firstsStr.add("exclude");
         firstsStr.add("find");
@@ -105,6 +98,7 @@ public class TARDISAdminCommands implements CommandExecutor, TabCompleter {
         firstsStr.add("prune");
         firstsStr.add("recharger");
         firstsStr.add("reload");
+        firstsStr.add("stattenheim");
         firstsStrArtron.add("full_charge_item");
         firstsStrArtron.add("jettison_seed");
         // boolean
@@ -139,10 +133,14 @@ public class TARDISAdminCommands implements CommandExecutor, TabCompleter {
         firstsBool.add("return_room_seed");
         firstsBool.add("rooms_require_blocks");
         firstsBool.add("sfx");
+        firstsBool.add("plain_on");
         firstsBool.add("spawn_eggs");
+        firstsBool.add("strike_lightning");
         firstsBool.add("the_end");
+        firstsBool.add("use_clay");
         firstsBool.add("use_worldguard");
         // integer
+        firstsInt.add("admin_item");
         firstsInt.add("border_radius");
         firstsInt.add("confirm_timeout");
         firstsInt.add("count");
@@ -155,9 +153,13 @@ public class TARDISAdminCommands implements CommandExecutor, TabCompleter {
         firstsInt.add("malfunction_nether");
         firstsInt.add("recharge_distance");
         firstsInt.add("rooms_condenser_percent");
+        firstsInt.add("terminal_step");
         firstsInt.add("timeout");
         firstsInt.add("timeout_height");
         firstsInt.add("tp_radius");
+        firstsInt.add("wall_id");
+        firstsInt.add("wall_data");
+        firstsInt.add("tardis_lamp");
         firstsIntArtron.add("autonomous");
         firstsIntArtron.add("backdoor");
         firstsIntArtron.add("comehere");
@@ -172,9 +174,7 @@ public class TARDISAdminCommands implements CommandExecutor, TabCompleter {
         firstsIntArtron.add("the_end_min");
         firstsIntArtron.add("travel");
 
-        String[] v = Bukkit.getServer().getBukkitVersion().split("-");
-        bukkitversion = (!v[0].equalsIgnoreCase("unknown")) ? new Version(v[0]) : new Version("1.4.7");
-        if (bukkitversion.compareTo(prebeaconversion) >= 0) {
+        if (plugin.bukkitversion.compareTo(plugin.prewoodbuttonversion) >= 0) {
             charger = Material.BEACON;
         }
         // add transparent blocks
@@ -478,27 +478,26 @@ public class TARDISAdminCommands implements CommandExecutor, TabCompleter {
                             tmp_loc.setPitch(pitch);
                             // get players direction so we can adjust yaw if necessary
                             TARDISConstants.COMPASS d = TARDISConstants.COMPASS.valueOf(plugin.utils.getPlayersDirection(player, false));
-                            TARDISDoorListener tdl = new TARDISDoorListener(plugin);
                             if (!innerD.equals(d)) {
                                 switch (d) {
                                     case NORTH:
-                                        yaw += tdl.adjustYaw[0][innerD.ordinal()];
+                                        yaw += plugin.doorListener.adjustYaw[0][innerD.ordinal()];
                                         break;
                                     case WEST:
-                                        yaw += tdl.adjustYaw[1][innerD.ordinal()];
+                                        yaw += plugin.doorListener.adjustYaw[1][innerD.ordinal()];
                                         break;
                                     case SOUTH:
-                                        yaw += tdl.adjustYaw[2][innerD.ordinal()];
+                                        yaw += plugin.doorListener.adjustYaw[2][innerD.ordinal()];
                                         break;
                                     case EAST:
-                                        yaw += tdl.adjustYaw[3][innerD.ordinal()];
+                                        yaw += plugin.doorListener.adjustYaw[3][innerD.ordinal()];
                                         break;
                                 }
                             }
                             tmp_loc.setYaw(yaw);
                             final Location tardis_loc = tmp_loc;
                             World playerWorld = player.getLocation().getWorld();
-                            tdl.movePlayer(player, tardis_loc, false, playerWorld, false);
+                            plugin.doorListener.movePlayer(player, tardis_loc, false, playerWorld, false);
                             // put player into travellers table
                             QueryFactory qf = new QueryFactory(plugin);
                             HashMap<String, Object> set = new HashMap<String, Object>();
@@ -619,7 +618,7 @@ public class TARDISAdminCommands implements CommandExecutor, TabCompleter {
                     }
                     return true;
                 }
-                if (first.equals("key") || first.equals("full_charge_item") || first.equals("jettison_seed")) {
+                if (first.equals("key") || first.equals("stattenheim") || first.equals("full_charge_item") || first.equals("jettison_seed")) {
                     String setMaterial = args[1].toUpperCase(Locale.ENGLISH);
                     if (!Arrays.asList(TARDISMaterials.MATERIAL_LIST).contains(setMaterial)) {
                         sender.sendMessage(plugin.pluginName + ChatColor.RED + "That is not a valid Material! Try checking http://jd.bukkit.org/apidocs/org/bukkit/Material.html");
@@ -649,6 +648,13 @@ public class TARDISAdminCommands implements CommandExecutor, TabCompleter {
                     // need to make there are no periods(.) in the text
                     String nodots = StringUtils.replace(t, ".", "_");
                     plugin.getConfig().set("default_world_name", nodots);
+                }
+                if (first.equals("difficulty")) {
+                    if (!args[1].equalsIgnoreCase("easy") && !args[1].equalsIgnoreCase("normal") && !args[1].equalsIgnoreCase("hard")) {
+                        sender.sendMessage(plugin.pluginName + ChatColor.RED + "Difficulty must be easy, normal or hard!");
+                        return true;
+                    }
+                    plugin.getConfig().set("difficulty", args[1].toLowerCase(Locale.ENGLISH));
                 }
                 if (first.equals("gamemode")) {
                     if (!args[1].equalsIgnoreCase("creative") && !args[1].equalsIgnoreCase("survival")) {
@@ -712,6 +718,10 @@ public class TARDISAdminCommands implements CommandExecutor, TabCompleter {
                         }
                     } else {
                         plugin.getConfig().set(first, val);
+                        if (first.equals("terminal_step") && plugin.bukkitversion.compareTo(plugin.preIMversion) >= 0) {
+                            // reset the terminal inventory
+                            plugin.buttonListener.items = new TARDISTerminalInventory().getTerminal();
+                        }
                     }
                 }
                 plugin.saveConfig();
@@ -723,28 +733,5 @@ public class TARDISAdminCommands implements CommandExecutor, TabCompleter {
             }
         }
         return false;
-    }
-
-    @Override
-    public List<String> onTabComplete(CommandSender sender, Command command, String label, String[] args) {
-
-        if (args.length <= 1) {
-            return partial(args[0], combineLists());
-        }
-        return ImmutableList.of();
-    }
-
-    private List<String> partial(String token, Collection<String> from) {
-        return StringUtil.copyPartialMatches(token, from, new ArrayList<String>(from.size()));
-    }
-
-    private List<String> combineLists() {
-        List<String> newList = new ArrayList<String>(firstsStr.size() + firstsBool.size() + firstsInt.size() + firstsStrArtron.size() + firstsIntArtron.size());
-        newList.addAll(firstsStr);
-        newList.addAll(firstsBool);
-        newList.addAll(firstsInt);
-        newList.addAll(firstsStrArtron);
-        newList.addAll(firstsIntArtron);
-        return newList;
     }
 }

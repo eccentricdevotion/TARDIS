@@ -24,7 +24,6 @@ import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetDoors;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
-import me.eccentric_nz.TARDIS.listeners.TARDISDoorListener;
 import me.eccentric_nz.TARDIS.travel.TARDISDoorLocation;
 import org.bukkit.ChatColor;
 import org.bukkit.Effect;
@@ -57,6 +56,8 @@ public class TARDISMaterialisationRunnable implements Runnable {
     private byte data;
     private Player player;
     private boolean mal;
+    private int lamp;
+    private boolean plain;
 
     /**
      * Runnable method to materialise the TARDIS Police Box. Tries to mimic the
@@ -74,7 +75,7 @@ public class TARDISMaterialisationRunnable implements Runnable {
      * @param mal a boolean determining whether there has been a TARDIS
      * malfunction
      */
-    public TARDISMaterialisationRunnable(TARDIS plugin, Location location, int mat, byte data, int tid, COMPASS d, Player player, boolean mal) {
+    public TARDISMaterialisationRunnable(TARDIS plugin, Location location, int mat, byte data, int tid, COMPASS d, Player player, boolean mal, int lamp, boolean plain) {
         this.plugin = plugin;
         this.d = d;
         this.loops = 12;
@@ -85,6 +86,8 @@ public class TARDISMaterialisationRunnable implements Runnable {
         this.data = data;
         this.player = player;
         this.mal = mal;
+        this.lamp = lamp;
+        this.plain = plain;
     }
 
     @Override
@@ -125,10 +128,9 @@ public class TARDISMaterialisationRunnable implements Runnable {
                     String name = plugin.trackRescue.get(tid);
                     Player saved = plugin.getServer().getPlayer(name);
                     if (saved != null) {
-                        TARDISDoorListener dl = new TARDISDoorListener(plugin);
-                        TARDISDoorLocation idl = dl.getDoor(1, tid);
+                        TARDISDoorLocation idl = plugin.doorListener.getDoor(1, tid);
                         Location l = idl.getL();
-                        dl.movePlayer(saved, l, false, world, false);
+                        plugin.doorListener.movePlayer(saved, l, false, world, false);
                         // put player into travellers table
                         HashMap<String, Object> set = new HashMap<String, Object>();
                         set.put("tardis_id", id);
@@ -270,33 +272,35 @@ public class TARDISMaterialisationRunnable implements Runnable {
                     plugin.utils.setBlockAndRemember(world, minusx, y, minusz, id, b, tid);
                     plugin.utils.setBlockAndRemember(world, x, y, minusz, id, b, tid); // north
                     plugin.utils.setBlockAndRemember(world, plusx, y, minusz, id, b, tid);
-                    // set sign
-                    plugin.utils.setBlock(world, signx, y, signz, 68, sd);
-                    Block sign = world.getBlockAt(signx, y, signz);
-                    if (sign.getType().equals(Material.WALL_SIGN)) {
-                        Sign s = (Sign) sign.getState();
-                        if (plugin.getConfig().getBoolean("name_tardis")) {
-                            HashMap<String, Object> wheret = new HashMap<String, Object>();
-                            wheret.put("tardis_id", tid);
-                            ResultSetTardis rstard = new ResultSetTardis(plugin, wheret, "", false);
-                            if (rstard.resultSet()) {
-                                String owner = rstard.getOwner();
-                                if (owner.length() > 14) {
-                                    s.setLine(0, owner.substring(0, 12) + "'s");
-                                } else {
-                                    s.setLine(0, owner + "'s");
+                    if (!plain) {
+                        // set sign
+                        plugin.utils.setBlock(world, signx, y, signz, 68, sd);
+                        Block sign = world.getBlockAt(signx, y, signz);
+                        if (sign.getType().equals(Material.WALL_SIGN)) {
+                            Sign s = (Sign) sign.getState();
+                            if (plugin.getConfig().getBoolean("name_tardis")) {
+                                HashMap<String, Object> wheret = new HashMap<String, Object>();
+                                wheret.put("tardis_id", tid);
+                                ResultSetTardis rstard = new ResultSetTardis(plugin, wheret, "", false);
+                                if (rstard.resultSet()) {
+                                    String owner = rstard.getOwner();
+                                    if (owner.length() > 14) {
+                                        s.setLine(0, owner.substring(0, 12) + "'s");
+                                    } else {
+                                        s.setLine(0, owner + "'s");
+                                    }
                                 }
                             }
+                            s.setLine(1, ChatColor.WHITE + "POLICE");
+                            s.setLine(2, ChatColor.WHITE + "BOX");
+                            s.update();
                         }
-                        s.setLine(1, ChatColor.WHITE + "POLICE");
-                        s.setLine(2, ChatColor.WHITE + "BOX");
-                        s.update();
-                    }
-                    // put torch on top
-                    if (id == 79) {
-                        plugin.utils.setBlockAndRemember(world, x, plusy, z, 76, (byte) 5, tid);
-                    } else {
-                        plugin.utils.setBlockAndRemember(world, x, plusy, z, 50, (byte) 5, tid);
+                        // put torch on top
+                        if (id == 79) {
+                            plugin.utils.setBlockAndRemember(world, x, plusy, z, 76, (byte) 5, tid);
+                        } else {
+                            plugin.utils.setBlockAndRemember(world, x, plusy, z, lamp, (byte) 5, tid);
+                        }
                     }
                     // bottom layer with door bottom
                     plugin.utils.setBlockAndRemember(world, plusx, down2y, z, west, bdw, tid);

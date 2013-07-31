@@ -16,7 +16,9 @@
  */
 package me.eccentric_nz.TARDIS.listeners;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
@@ -63,10 +65,23 @@ public class TARDISBlockPlaceListener implements Listener {
     }
     private TARDIS plugin;
     private TARDISUtils utils;
+    private List<Material> blocks = new ArrayList<Material>();
 
     public TARDISBlockPlaceListener(TARDIS plugin) {
         this.plugin = plugin;
         this.utils = new TARDISUtils(plugin);
+        blocks.add(Material.IRON_BLOCK);
+        blocks.add(Material.GOLD_BLOCK);
+        blocks.add(Material.DIAMOND_BLOCK);
+        if (plugin.bukkitversion.compareTo(plugin.preemeraldversion) >= 0) {
+            blocks.add(Material.EMERALD_BLOCK);
+        }
+        if (plugin.bukkitversion.compareTo(plugin.precomparatorversion) >= 0) {
+            blocks.add(Material.REDSTONE_BLOCK);
+        }
+        if (plugin.bukkitversion.compareTo(plugin.precarpetversion) >= 0) {
+            blocks.add(Material.COAL_BLOCK);
+        }
     }
 
     /**
@@ -86,7 +101,7 @@ public class TARDISBlockPlaceListener implements Listener {
             final byte middle_data = blockBelow.getData();
             Block blockBottom = blockBelow.getRelative(BlockFace.DOWN);
             // only continue if the redstone torch is placed on top of [JUST ABOUT ANY] BLOCK on top of an IRON/GOLD/DIAMOND_BLOCK
-            if (plugin.getBlocksConfig().getStringList("tardis_blocks").contains(blockBelow.getType().toString()) && (blockBottom.getType() == Material.IRON_BLOCK || blockBottom.getType() == Material.GOLD_BLOCK || blockBottom.getType() == Material.DIAMOND_BLOCK || blockBottom.getType() == Material.EMERALD_BLOCK || blockBottom.getType() == Material.REDSTONE_BLOCK)) {
+            if (plugin.getBlocksConfig().getStringList("tardis_blocks").contains(blockBelow.getType().toString()) && blocks.contains(blockBottom.getType())) {
                 final TARDISConstants.SCHEMATIC schm;
                 final Player player = event.getPlayer();
                 int max_count = plugin.getConfig().getInt("count");
@@ -136,6 +151,14 @@ public class TARDISBlockPlaceListener implements Listener {
                             return;
                         }
                         break;
+                    case COAL_BLOCK:
+                        if (player.hasPermission("tardis.steampunk")) {
+                            schm = TARDISConstants.SCHEMATIC.STEAMPUNK;
+                        } else {
+                            player.sendMessage(plugin.pluginName + "You don't have permission to create a 'steampunk' TARDIS!");
+                            return;
+                        }
+                        break;
                     default:
                         schm = TARDISConstants.SCHEMATIC.BUDGET;
                         break;
@@ -181,21 +204,21 @@ public class TARDISBlockPlaceListener implements Listener {
                         // save data to database (tardis table)
                         final Location block_loc = blockBottom.getLocation();
                         String chun = cw + ":" + cx + ":" + cz;
-                        String home = block_loc.getWorld().getName() + ":" + block_loc.getBlockX() + ":" + block_loc.getBlockY() + ":" + block_loc.getBlockZ();
-                        String save = block_loc.getWorld().getName() + ":" + block_loc.getBlockX() + ":" + block_loc.getBlockY() + ":" + block_loc.getBlockZ();
+                        //String home = block_loc.getWorld().getName() + ":" + block_loc.getBlockX() + ":" + block_loc.getBlockY() + ":" + block_loc.getBlockZ() + ":" + d;
+                        String save = block_loc.getWorld().getName() + ":" + block_loc.getBlockX() + ":" + block_loc.getBlockY() + ":" + block_loc.getBlockZ() + ":" + d;
                         QueryFactory qf = new QueryFactory(plugin);
                         HashMap<String, Object> set = new HashMap<String, Object>();
                         set.put("owner", playerNameStr);
                         set.put("chunk", chun);
                         set.put("direction", d);
-                        set.put("home", home);
+                        set.put("home", save);
                         set.put("save", save);
                         set.put("current", save);
                         set.put("size", schm.name());
                         HashMap<String, Object> setpp = new HashMap<String, Object>();
                         if (middle_id == 22) {
                             set.put("middle_id", 35);
-                            if (blockBottom.getType().equals(Material.EMERALD_BLOCK)) {
+                            if (plugin.bukkitversion.compareTo(plugin.preemeraldversion) >= 0 && blockBottom.getType().equals(Material.EMERALD_BLOCK)) {
                                 set.put("middle_data", 8);
                                 setpp.put("wall", "LIGHT_GREY_WOOL");
                             } else {

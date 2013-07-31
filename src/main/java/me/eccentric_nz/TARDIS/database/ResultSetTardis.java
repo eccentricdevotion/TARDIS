@@ -71,10 +71,12 @@ public class ResultSetTardis {
     private boolean recharging;
     private String scanner;
     private String farm;
+    private String stable;
     private boolean hidden;
     private long lastuse;
     private boolean iso_on;
     private String eps;
+    private String rail;
     private ArrayList<HashMap<String, String>> data = new ArrayList<HashMap<String, String>>();
 
     /**
@@ -147,7 +149,7 @@ public class ResultSetTardis {
                     this.tardis_id = rs.getInt("tardis_id");
                     this.owner = rs.getString("owner");
                     this.chunk = rs.getString("chunk");
-                    this.direction = TARDISConstants.COMPASS.valueOf(rs.getString("direction"));
+                    this.direction = (!rs.getString("direction").isEmpty()) ? TARDISConstants.COMPASS.valueOf(rs.getString("direction")) : TARDISConstants.COMPASS.EAST;
                     this.schematic = TARDISConstants.SCHEMATIC.valueOf(rs.getString("size"));
                     this.home = rs.getString("home");
                     this.save = rs.getString("save");
@@ -173,10 +175,12 @@ public class ResultSetTardis {
                     this.recharging = rs.getBoolean("recharging");
                     this.scanner = rs.getString("scanner");
                     this.farm = rs.getString("farm");
+                    this.stable = rs.getString("stable");
                     this.hidden = rs.getBoolean("hidden");
                     this.lastuse = rs.getLong("lastuse");
                     this.iso_on = rs.getBoolean("iso_on");
                     this.eps = rs.getString("eps");
+                    this.rail = rs.getString("rail");
                 }
             } else {
                 return false;
@@ -315,6 +319,10 @@ public class ResultSetTardis {
         return farm;
     }
 
+    public String getStable() {
+        return stable;
+    }
+
     public boolean isHidden() {
         return hidden;
     }
@@ -329,6 +337,10 @@ public class ResultSetTardis {
 
     public String getEps() {
         return eps;
+    }
+
+    public String getRail() {
+        return rail;
     }
 
     public ArrayList<HashMap<String, String>> getData() {

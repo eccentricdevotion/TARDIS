@@ -27,7 +27,6 @@ import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetDoors;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
-import me.eccentric_nz.TARDIS.thirdparty.Version;
 import me.eccentric_nz.TARDIS.travel.TARDISDoorLocation;
 import me.eccentric_nz.TARDIS.travel.TARDISFarmer;
 import me.eccentric_nz.TARDIS.travel.TARDISMob;
@@ -74,10 +73,6 @@ public class TARDISDoorListener implements Listener {
 
     private TARDIS plugin;
     public float[][] adjustYaw = new float[4][4];
-    Version bukkitversion;
-    Version preIMversion = new Version("1.4.5");
-    Version SUBversion;
-    Version preSUBversion = new Version("1.0");
     Random r = new Random();
 
     public TARDISDoorListener(TARDIS plugin) {
@@ -99,10 +94,6 @@ public class TARDISDoorListener implements Listener {
         adjustYaw[3][1] = 180;
         adjustYaw[3][2] = 90;
         adjustYaw[3][3] = 0;
-
-        String[] v = Bukkit.getServer().getBukkitVersion().split("-");
-        bukkitversion = (!v[0].equalsIgnoreCase("unknown")) ? new Version(v[0]) : new Version("1.4.7");
-        SUBversion = (!v[0].equalsIgnoreCase("unknown")) ? new Version(v[1].substring(1, v[1].length())) : new Version("4.7");
     }
 
     /**
@@ -117,9 +108,6 @@ public class TARDISDoorListener implements Listener {
         QueryFactory qf = new QueryFactory(plugin);
         final Player player = event.getPlayer();
         final String playerNameStr = player.getName();
-        int cx = 0;
-        int cy = 0;
-        int cz = 0;
         Block block = event.getClickedBlock();
         if (block != null) {
             Material blockType = block.getType();
@@ -298,16 +286,14 @@ public class TARDISDoorListener implements Listener {
                                                     TARDISFarmer tf = new TARDISFarmer(plugin);
                                                     pets = tf.exitPets(player);
                                                     if (pets != null && pets.size() > 0) {
-                                                        movePets(pets, exitTardis, player);
+                                                        movePets(pets, exitTardis, player, d);
                                                     }
                                                 }
                                                 if (plugin.getConfig().getBoolean("allow_tp_switch") && userTP) {
                                                     new TARDISTexturePackChanger(plugin).changeTP(player, rsp.getTexture_out());
                                                 }
                                                 // remove player from traveller table
-                                                HashMap<String, Object> wherd = new HashMap<String, Object>();
-                                                wherd.put("player", playerNameStr);
-                                                qf.doDelete("travellers", wherd);
+                                                removeTraveller(playerNameStr);
                                             } else {
                                                 player.sendMessage(plugin.pluginName + "The TARDIS is still travelling... you would get lost in the time vortex!");
                                             }
@@ -338,7 +324,8 @@ public class TARDISDoorListener implements Listener {
                                                 World cw = idl.getW();
                                                 TARDISConstants.COMPASS innerD = idl.getD();
                                                 // check for entities in the police box
-                                                if (plugin.getConfig().getBoolean("allow_mob_farming") && player.hasPermission("tardis.farm")) {
+                                                if (plugin.getConfig().getBoolean("allow_mob_farming") && player.hasPermission("tardis.farm") && !plugin.trackFarming.contains(playerNameStr)) {
+                                                    plugin.trackFarming.add(playerNameStr);
                                                     TARDISFarmer tf = new TARDISFarmer(plugin);
                                                     pets = tf.farmAnimals(block_loc, d, id, player);
                                                 }
@@ -354,7 +341,7 @@ public class TARDISDoorListener implements Listener {
                                                 final Location tardis_loc = tmp_loc;
                                                 movePlayer(player, tardis_loc, false, playerWorld, userQuotes);
                                                 if (pets != null && pets.size() > 0) {
-                                                    movePets(pets, tardis_loc, player);
+                                                    movePets(pets, tardis_loc, player, d);
                                                 }
                                                 if (plugin.getConfig().getBoolean("allow_tp_switch") && userTP) {
                                                     if (!rsp.getTexture_in().isEmpty()) {
@@ -362,6 +349,8 @@ public class TARDISDoorListener implements Listener {
                                                     }
                                                 }
                                                 // put player into travellers table
+                                                // remove them first as they may have exited incorrectly and we only want them listed once
+                                                removeTraveller(playerNameStr);
                                                 HashMap<String, Object> set = new HashMap<String, Object>();
                                                 set.put("tardis_id", id);
                                                 set.put("player", playerNameStr);
@@ -393,10 +382,13 @@ public class TARDISDoorListener implements Listener {
                                             final Location inner_loc = ibd_loc;
                                             playDoorSound(player, playerWorld, block_loc);
                                             movePlayer(player, inner_loc, false, playerWorld, userQuotes);
-                                            if (!rsp.getTexture_in().isEmpty()) {
-                                                new TARDISTexturePackChanger(plugin).changeTP(player, rsp.getTexture_in());
+                                            if (plugin.getConfig().getBoolean("allow_tp_switch") && userTP) {
+                                                if (!rsp.getTexture_in().isEmpty()) {
+                                                    new TARDISTexturePackChanger(plugin).changeTP(player, rsp.getTexture_in());
+                                                }
                                             }
                                             // put player into travellers table
+                                            removeTraveller(playerNameStr);
                                             HashMap<String, Object> set = new HashMap<String, Object>();
                                             set.put("tardis_id", id);
                                             set.put("player", playerNameStr);
@@ -435,9 +427,7 @@ public class TARDISDoorListener implements Listener {
                                                 new TARDISTexturePackChanger(plugin).changeTP(player, rsp.getTexture_out());
                                             }
                                             // remove player from traveller table
-                                            HashMap<String, Object> wherd = new HashMap<String, Object>();
-                                            wherd.put("player", playerNameStr);
-                                            qf.doDelete("travellers", wherd);
+                                            removeTraveller(playerNameStr);
                                             // take energy
                                             HashMap<String, Object> wherea = new HashMap<String, Object>();
                                             wherea.put("tardis_id", id);
@@ -481,10 +471,9 @@ public class TARDISDoorListener implements Listener {
         final Location theLocation = l;
         final World to = theLocation.getWorld();
         final boolean allowFlight = p.getAllowFlight();
-        final boolean crossWorlds = from != to;
+        final boolean crossWorlds = (from != to);
         final boolean quotes = q;
         final String name = p.getName();
-        // try loading chunk
         World world = l.getWorld();
         final boolean isSurvival = checkSurvival(world);
 
@@ -513,6 +502,15 @@ public class TARDISDoorListener implements Listener {
                     where.put("player", name);
                     int player_artron = (plugin.getConfig().getBoolean("create_worlds")) ? plugin.getArtronConfig().getInt("player") : plugin.getArtronConfig().getInt("player") * 10;
                     qf.alterEnergyLevel("player_prefs", player_artron, where, p);
+                    String pstr = p.getName();
+                    if (plugin.trackSetTime.containsKey(pstr)) {
+                        setTemporalLocation(p, plugin.trackSetTime.get(pstr));
+                        plugin.trackSetTime.remove(pstr);
+                    }
+                } else {
+                    if (p.isPlayerTimeRelative()) {
+                        setTemporalLocation(p, -1);
+                    }
                 }
                 // give a key
                 giveKey(p);
@@ -554,12 +552,28 @@ public class TARDISDoorListener implements Listener {
      * @param l the location to teleport pets to
      * @param player the player who owns the pets
      */
-    private void movePets(List<TARDISMob> p, Location l, Player player) {
+    private void movePets(List<TARDISMob> p, Location l, Player player, TARDISConstants.COMPASS d) {
         Location pl = l.clone();
         World w = l.getWorld();
         // will need to adjust this depending on direction Police Box is facing
-        pl.setX(l.getX() + 1);
-        pl.setZ(l.getZ() + 1);
+        switch (d) {
+            case NORTH:
+                pl.setX(l.getX() + 1);
+                pl.setZ(l.getZ() + 1);
+                break;
+            case WEST:
+                pl.setX(l.getX() + 1);
+                pl.setZ(l.getZ() - 1);
+                break;
+            case SOUTH:
+                pl.setX(l.getX() - 1);
+                pl.setZ(l.getZ() - 1);
+                break;
+            default:
+                pl.setX(l.getX() - 1);
+                pl.setZ(l.getZ() + 1);
+                break;
+        }
         for (TARDISMob pet : p) {
             plugin.myspawn = true;
             LivingEntity ent = (LivingEntity) w.spawnEntity(pl, pet.getType());
@@ -608,13 +622,15 @@ public class TARDISDoorListener implements Listener {
         } else {
             key = plugin.getConfig().getString("key");
         }
-        if (plugin.getConfig().getBoolean("give_key") && (bukkitversion.compareTo(preIMversion) > 0 || (bukkitversion.compareTo(preIMversion) == 0 && SUBversion.compareTo(preSUBversion) >= 0)) && !key.equals("AIR")) {
+        if (plugin.getConfig().getBoolean("give_key") && !key.equals("AIR")) {
             Inventory inv = p.getInventory();
             Material m = Material.valueOf(key);
             if (!inv.contains(m)) {
                 ItemStack is = new ItemStack(m, 1);
-                TARDISItemRenamer ir = new TARDISItemRenamer(is);
-                ir.setName("Sonic Screwdriver", true);
+                if (plugin.bukkitversion.compareTo(plugin.preIMversion) > 0 || (plugin.bukkitversion.compareTo(plugin.preIMversion) == 0 && plugin.SUBversion.compareTo(plugin.preSUBversion) >= 0)) {
+                    TARDISItemRenamer ir = new TARDISItemRenamer(is);
+                    ir.setName("Sonic Screwdriver", true);
+                }
                 inv.addItem(is);
                 p.updateInventory();
                 p.sendMessage(plugin.pluginName + "Don't forget your TARDIS key!");
@@ -710,5 +726,42 @@ public class TARDISDoorListener implements Listener {
         } catch (ClassNotFoundException e) {
             w.playEffect(l, Effect.DOOR_TOGGLE, 0);
         }
+    }
+
+    /**
+     * Set a player's time relative to the server time. Based on Essentials
+     * /ptime command.
+     *
+     * @param p the player to set the time for
+     * @param t the ticks to set the time to
+     */
+    private void setTemporalLocation(final Player p, long t) {
+        if (p.isOnline()) {
+            if (t != -1) {
+                long time = p.getPlayerTime();
+                time -= time % 24000L;
+                time += 24000L + t;
+                final long calculatedtime = time - p.getWorld().getTime();
+                plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
+                    @Override
+                    public void run() {
+                        p.setPlayerTime(calculatedtime, true);
+                    }
+                }, 10L);
+            } else {
+                p.resetPlayerTime();
+            }
+        }
+    }
+
+    /**
+     * Remove player from the travellers table.
+     *
+     * @param p the player to remove
+     */
+    private void removeTraveller(String p) {
+        HashMap<String, Object> where = new HashMap<String, Object>();
+        where.put("player", p);
+        new QueryFactory(plugin).doDelete("travellers", where);
     }
 }

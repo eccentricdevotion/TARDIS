@@ -99,6 +99,7 @@ public class TARDISHandbrakeListener implements Listener {
                         String cl = rs.getCurrent();
                         String beacon = rs.getBeacon();
                         String eps = rs.getEps();
+                        String creeper = rs.getCreeper();
                         Location exit = null;
                         boolean error = false;
                         if (!plugin.tardisDematerialising.contains(Integer.valueOf(id)) && !plugin.tardisMaterialising.contains(id)) {
@@ -125,7 +126,7 @@ public class TARDISHandbrakeListener implements Listener {
                                         boolean malfunction = false;
                                         if (plugin.getConfig().getInt("malfunction") > 0) {
                                             // check for a malfunction
-                                            TARDISMalfunction m = new TARDISMalfunction(plugin, id, player, d, handbrake_loc, eps);
+                                            TARDISMalfunction m = new TARDISMalfunction(plugin, id, player, d, handbrake_loc, eps, creeper);
                                             malfunction = m.isMalfunction();
                                             if (malfunction) {
                                                 exit = m.getMalfunction();

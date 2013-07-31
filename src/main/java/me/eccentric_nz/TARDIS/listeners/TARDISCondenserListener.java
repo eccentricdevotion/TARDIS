@@ -88,6 +88,7 @@ public class TARDISCondenserListener implements Listener {
                 for (ItemStack is : inv.getContents()) {
                     if (is != null) {
                         String item = is.getType().name();
+                        //plugin.debug(is);
                         if (tc.condensables.containsKey(item)) {
                             int stack_size = is.getAmount();
                             amount += stack_size * tc.condensables.get(item);
@@ -160,7 +161,12 @@ public class TARDISCondenserListener implements Listener {
             if (rs.resultSet()) {
                 event.setCancelled(true);
                 InventoryHolder holder = (Chest) b.getState();
+                // the chest may have been filled by a hopper so get its contents and then clear it
+                ItemStack[] is = holder.getInventory().getContents();
+                holder.getInventory().clear();
                 Inventory aec = plugin.getServer().createInventory(holder, 27, "§4Artron Condenser");
+                // set the contents to what was in the chest
+                aec.setContents(is);
                 Player p = event.getPlayer();
                 try {
                     Class.forName("org.bukkit.Sound");

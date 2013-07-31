@@ -16,11 +16,9 @@
  */
 package me.eccentric_nz.TARDIS.commands;
 
-import com.google.common.collect.ImmutableList;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -31,20 +29,18 @@ import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
-import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
-import org.bukkit.util.StringUtil;
 
 /**
+ * A trilanic activator is a device created and used by the Zygons to control
+ * their Skarasens. It is hand-sized and has a texture like wet skin.
  *
  * @author eccentric_nz
  */
-public class TARDISTextureCommands implements CommandExecutor, TabCompleter {
+public class TARDISTextureCommands implements CommandExecutor {
 
     private final TARDIS plugin;
     private List<String> firstArgs = new ArrayList<String>();
-    private final ImmutableList<String> ROOT_SUBS = ImmutableList.of("in", "out", "on", "off");
-    private final ImmutableList<String> OFF_SUB = ImmutableList.of("default");
 
     public TARDISTextureCommands(TARDIS plugin) {
         this.plugin = plugin;
@@ -123,25 +119,5 @@ public class TARDISTextureCommands implements CommandExecutor, TabCompleter {
             }
         }
         return false;
-    }
-
-    @Override
-    public List<String> onTabComplete(CommandSender sender, Command command, String label, String[] args) {
-        // Remember that we can return null to default to online player name matching
-        String lastArg = args[args.length - 1];
-
-        if (args.length <= 1) {
-            return partial(args[0], ROOT_SUBS);
-        } else if (args.length == 2) {
-            String sub = args[0];
-            if (sub.equals("off")) {
-                return partial(lastArg, OFF_SUB);
-            }
-        }
-        return ImmutableList.of();
-    }
-
-    private List<String> partial(String token, Collection<String> from) {
-        return StringUtil.copyPartialMatches(token, from, new ArrayList<String>(from.size()));
     }
 }

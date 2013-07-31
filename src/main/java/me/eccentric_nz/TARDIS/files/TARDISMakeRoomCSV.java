@@ -63,27 +63,29 @@ public class TARDISMakeRoomCSV {
         String defaultbasepath = plugin.getDataFolder() + File.separator + "schematics" + File.separator;
         String userbasepath = plugin.getDataFolder() + File.separator + "user_schematics" + File.separator;
         for (String r : plugin.getRoomsConfig().getConfigurationSection("rooms").getKeys(false)) {
-            boolean user = plugin.getRoomsConfig().getBoolean("rooms." + r + ".user");
-            String basepath = (user) ? userbasepath : defaultbasepath;
-            String lower = r.toLowerCase(Locale.ENGLISH);
-            File sch = new File(basepath + lower + ".schematic");
-            if (sch.exists()) {
-                File file = createFile(lower + ".csv", basepath);
-                reader.readAndMakeRoomCSV(basepath + lower, r, false);
-                short[] dimensions = plugin.room_dimensions.get(r);
-                String[][][] schem = TARDISSchematic.schematic(file, dimensions[0], dimensions[1], dimensions[2]);
-                plugin.room_schematics.put(r, schem);
-                if (r.equals("PASSAGE") || r.equals("LONG")) {
-                    // repeat for EW
-                    File file_EW = createFile(lower + "_EW.csv", defaultbasepath);
-                    reader.readAndMakeRoomCSV(basepath + lower, r + "_EW", true);
-                    String[][][] schem_EW = TARDISSchematic.schematic(file_EW, dimensions[0], dimensions[1], dimensions[2]);
-                    plugin.room_schematics.put(r + "_EW", schem_EW);
+            if (plugin.getRoomsConfig().getBoolean("rooms." + r + ".enabled")) {
+                boolean user = plugin.getRoomsConfig().getBoolean("rooms." + r + ".user");
+                String basepath = (user) ? userbasepath : defaultbasepath;
+                String lower = r.toLowerCase(Locale.ENGLISH);
+                File sch = new File(basepath + lower + ".schematic");
+                if (sch.exists()) {
+                    File file = createFile(lower + ".csv", basepath);
+                    if (reader.readAndMakeRoomCSV(basepath + lower, r, false)) {
+                        short[] dimensions = plugin.room_dimensions.get(r);
+                        String[][][] schem = TARDISSchematic.schematic(file, dimensions[0], dimensions[1], dimensions[2]);
+                        plugin.room_schematics.put(r, schem);
+                        if (r.equals("PASSAGE") || r.equals("LONG")) {
+                            // repeat for EW
+                            File file_EW = createFile(lower + "_EW.csv", defaultbasepath);
+                            reader.readAndMakeRoomCSV(basepath + lower, r + "_EW", true);
+                            String[][][] schem_EW = TARDISSchematic.schematic(file_EW, dimensions[0], dimensions[1], dimensions[2]);
+                            plugin.room_schematics.put(r + "_EW", schem_EW);
+                        }
+                    }
+                } else {
+                    plugin.console.sendMessage(plugin.pluginName + ChatColor.RED + lower + ".schematic was not found in 'user_schematics' and was disabled!");
+                    plugin.getRoomsConfig().set("rooms." + r + ".enabled", false);
                 }
-            } else {
-                plugin.console.sendMessage(plugin.pluginName + ChatColor.RED + lower + ".schematic was not found in 'user_schematics' and was disabled!");
-                plugin.getRoomsConfig().set("rooms." + r + ".enabled", false);
-                //plugin.tardisCommand.roomArgs.remove(r);
             }
         }
     }

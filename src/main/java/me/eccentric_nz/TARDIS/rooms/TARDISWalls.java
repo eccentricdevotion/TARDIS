@@ -71,6 +71,25 @@ public class TARDISWalls {
         blocks.put("BLACK_WOOL", new Integer[]{35, 15});
         blocks.put("BRICK", new Integer[]{45, 0});
         blocks.put("CLAY", new Integer[]{82, 0});
+        blocks.put("HARD_CLAY", new Integer[]{172, 0});
+        blocks.put("WHITE_CLAY", new Integer[]{159, 0});
+        blocks.put("ORANGE_CLAY", new Integer[]{159, 1});
+        blocks.put("MAGENTA_CLAY", new Integer[]{159, 2});
+        blocks.put("LIGHT_BLUE_CLAY", new Integer[]{159, 3});
+        blocks.put("YELLOW_CLAY", new Integer[]{159, 4});
+        blocks.put("LIGHT_GREEN_CLAY", new Integer[]{159, 5});
+        blocks.put("PINK_CLAY", new Integer[]{159, 6});
+        blocks.put("GREY_CLAY", new Integer[]{159, 7});
+        blocks.put("LIGHT_GREY_CLAY", new Integer[]{159, 8});
+        blocks.put("GRAY_CLAY", new Integer[]{159, 7});
+        blocks.put("LIGHT_GRAY_CLAY", new Integer[]{159, 8});
+        blocks.put("CYAN_CLAY", new Integer[]{159, 9});
+        blocks.put("PURPLE_CLAY", new Integer[]{159, 10});
+        blocks.put("BLUE_CLAY", new Integer[]{159, 11});
+        blocks.put("BROWN_CLAY", new Integer[]{159, 12});
+        blocks.put("GREEN_CLAY", new Integer[]{159, 13});
+        blocks.put("RED_CLAY", new Integer[]{159, 14});
+        blocks.put("BLACK_CLAY", new Integer[]{159, 15});
         blocks.put("STONE_BRICK", new Integer[]{98, 0});
         blocks.put("SMOOTH_BRICK", new Integer[]{98, 0});
         blocks.put("MOSSY_BRICK", new Integer[]{98, 1});
@@ -85,6 +104,7 @@ public class TARDISWalls {
         blocks.put("QUARTZ", new Integer[]{155, 0});
         blocks.put("CHISELED_QUARTZ", new Integer[]{155, 1});
         blocks.put("QUARTZ_PILLAR", new Integer[]{155, 2});
+        blocks.put("HAY", new Integer[]{170, 0});
         if (TARDIS.plugin.getConfig().getBoolean("all_blocks")) {
             blocks.put("BEDROCK", new Integer[]{7, 0});
             blocks.put("COAL_ORE", new Integer[]{16, 0});

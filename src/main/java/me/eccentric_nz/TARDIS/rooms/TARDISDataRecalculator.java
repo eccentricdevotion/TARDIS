@@ -26,6 +26,9 @@ package me.eccentric_nz.TARDIS.rooms;
  */
 public class TARDISDataRecalculator {
 
+    private TARDISDataRecalculator() {
+    }
+
     /**
      * A method to calculate the data bit for a block based on the direction a
      * room is facing when grown.
@@ -36,12 +39,52 @@ public class TARDISDataRecalculator {
      * @return the new Data value based on the direction the room is facing
      */
     public static byte calculateData(int id, byte bit) {
+        //System.out.println("Original: " + id + ", " + bit);
         byte data;
         switch (id) {
+            // pistons
+            case 29: // sticky base
+            case 33: // piston base
+            case 34: // piston extension
+                switch (bit) {
+                    case 2:
+                        data = 3;
+                        break;
+                    case 3:
+                        data = 2;
+                        break;
+                    case 4:
+                        data = 5;
+                        break;
+                    case 5:
+                        data = 4;
+                        break;
+                    case 6:
+                        data = 7;
+                        break;
+                    case 7:
+                        data = 6;
+                        break;
+                    case 10:
+                        data = 11;
+                        break;
+                    case 11:
+                        data = 10;
+                        break;
+                    case 12:
+                        data = 13;
+                        break;
+                    case 13:
+                        data = 12;
+                        break;
+                    default:
+                        data = bit;
+                        break;
+                }
+                break;
             // stairs
             case 53:
             case 67:
-            case 93: // repeater
             case 108:
             case 109:
             case 114:
@@ -49,6 +92,8 @@ public class TARDISDataRecalculator {
             case 134:
             case 135:
             case 136:
+            case 156:
+            case -100:
             case -120:
             case -121:
             case -122:
@@ -62,15 +107,58 @@ public class TARDISDataRecalculator {
                     case 2:
                         data = 3;
                         break;
-                    default:
+                    case 3:
                         data = 2;
+                        break;
+                    case 4:
+                        data = 5;
+                        break;
+                    case 5:
+                        data = 4;
+                        break;
+                    case 6:
+                        data = 7;
+                        break;
+                    case 7:
+                        data = 6;
+                        break;
+                    case 8:
+                        data = 9;
+                        break;
+                    case 9:
+                        data = 8;
+                        break;
+                    case 10:
+                        data = 11;
+                        break;
+                    case 11:
+                        data = 10;
+                        break;
+                    case 12:
+                        data = 13;
+                        break;
+                    case 13:
+                        data = 12;
+                        break;
+                    case 14:
+                        data = 15;
+                        break;
+                    default:
+                        data = 14;
                         break;
                 }
                 break;
+            case 23: // dispenser
             case 54: // chest
             case 61: // furnace
             case 65: // ladder
             case 68: // wall sign
+            case 130: // ender chest
+            case 146: // trapped chest
+            case 158: // dropper
+            case -98: // dropper
+            case -110: // trapped chest
+            case -126: // ender chest
                 switch (bit) {
                     case 2:
                         data = 3;
@@ -83,6 +171,112 @@ public class TARDISDataRecalculator {
                         break;
                     default:
                         data = 4;
+                        break;
+                }
+                break;
+            // beds
+            case 26:
+            // repeaters
+            case 93:
+            case 94:
+            // trapdoor
+            case 96:
+            // cocoa
+            case 127:
+            // tripwire hooks
+            case 131:
+            case -125:
+            // anvils
+            case 145:
+            case -111:
+            // comparators
+            case 149:
+            case 150:
+            case -106:
+            case -107:
+                switch (bit) {
+                    case 0:
+                        data = 2;
+                        break;
+                    case 1:
+                        data = 3;
+                        break;
+                    case 2:
+                        data = 0;
+                        break;
+                    case 3:
+                        data = 1;
+                        break;
+                    case 4:
+                        data = 6;
+                        break;
+                    case 5:
+                        data = 7;
+                        break;
+                    case 6:
+                        data = 4;
+                        break;
+                    case 7:
+                        data = 5;
+                        break;
+                    case 8:
+                        data = 10;
+                        break;
+                    case 9:
+                        data = 11;
+                        break;
+                    case 10:
+                        data = 8;
+                        break;
+                    case 11:
+                        data = 9;
+                        break;
+                    case 12:
+                        data = 14;
+                        break;
+                    case 13:
+                        data = 15;
+                        break;
+                    case 14:
+                        data = 12;
+                        break;
+                    case 15:
+                        data = 13;
+                        break;
+                    default:
+                        data = bit;
+                        break;
+                }
+                break;
+            // levers - only switch wall mounted ones
+            case 69:
+                switch (bit) {
+                    case 1:
+                        data = 2;
+                        break;
+                    case 2:
+                        data = 1;
+                        break;
+                    case 3:
+                        data = 4;
+                        break;
+                    case 4:
+                        data = 3;
+                        break;
+                    case 9:
+                        data = 10;
+                        break;
+                    case 10:
+                        data = 9;
+                        break;
+                    case 11:
+                        data = 12;
+                        break;
+                    case 12:
+                        data = 11;
+                        break;
+                    default:
+                        data = bit;
                         break;
                 }
                 break;
@@ -119,23 +313,10 @@ public class TARDISDataRecalculator {
                         break;
                 }
                 break;
-            // cocoa
-            case 127:
-                switch (bit) {
-                    case 1:
-                        data = 3;
-                        break;
-                    case 2:
-                        data = 0;
-                        break;
-                    case 3:
-                        data = 1;
-                        break;
-                    default:
-                        data = 2;
-                        break;
-                }
-                break;
+            // torches
+            case 50:
+            case 75:
+            case 76:
             // buttons
             case 77:
             case 143:
@@ -150,18 +331,70 @@ public class TARDISDataRecalculator {
                     case 3:
                         data = 4;
                         break;
-                    default:
+                    case 4:
                         data = 3;
+                        break;
+                    default:
+                        data = bit;
+                        break;
+                }
+                break;
+            // hoppers
+            case 154:
+            case -102:
+                switch (bit) {
+                    case 2:
+                        data = 3;
+                        break;
+                    case 3:
+                        data = 2;
+                        break;
+                    case 4:
+                        data = 5;
+                        break;
+                    case 5:
+                        data = 4;
+                        break;
+                    case 6:
+                        data = 7;
+                        break;
+                    case 7:
+                        data = 6;
+                        break;
+                    case 8:
+                        data = 9;
+                        break;
+                    case 9:
+                        data = 8;
+                        break;
+                    case 10:
+                        data = 11;
+                        break;
+                    case 11:
+                        data = 10;
+                        break;
+                    case 12:
+                        data = 13;
+                        break;
+                    case 13:
+                        data = 12;
+                        break;
+                    case 14:
+                        data = 15;
+                        break;
+                    case 15:
+                        data = 14;
+                        break;
+                    default:
+                        data = bit;
                         break;
                 }
                 break;
             default:
-                data = 0;
+                data = bit;
                 break;
         }
+        //System.out.println("Calculated: " + id + ", " + data);
         return data;
-    }
-
-    private TARDISDataRecalculator() {
     }
 }

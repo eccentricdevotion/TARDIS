@@ -66,9 +66,12 @@ public class TARDISPrefsCommands implements CommandExecutor {
         firstArgs.add("hads");
         firstArgs.add("isomorphic");
         firstArgs.add("key");
+        firstArgs.add("lamp");
+        firstArgs.add("plain");
         firstArgs.add("platform");
         firstArgs.add("quotes");
         firstArgs.add("sfx");
+        firstArgs.add("sign");
         firstArgs.add("wall");
     }
 
@@ -100,6 +103,9 @@ public class TARDISPrefsCommands implements CommandExecutor {
                     // if no prefs record found, make one
                     if (!rsp.resultSet()) {
                         set.put("player", player.getName());
+                        int plain = (plugin.getConfig().getBoolean("plain_on")) ? 1 : 0;
+                        set.put("plain_on", plain);
+                        set.put("lamp", plugin.getConfig().getInt("tardis_lamp"));
                         qf.doInsert("player_prefs", set);
                     }
                     if (pref.equals("key")) {
@@ -116,10 +122,36 @@ public class TARDISPrefsCommands implements CommandExecutor {
                             setk.put("key", setMaterial);
                             HashMap<String, Object> where = new HashMap<String, Object>();
                             where.put("player", player.getName());
-                            new QueryFactory(plugin).doUpdate("player_prefs", setk, where);
+                            qf.doUpdate("player_prefs", setk, where);
                             sender.sendMessage(plugin.pluginName + "Key preference saved.");
                             return true;
                         }
+                    }
+                    if (pref.equals("lamp")) {
+                        if (args.length < 2) {
+                            sender.sendMessage(plugin.pluginName + "You need to specify a lamp item ID!");
+                            return false;
+                        }
+                        int lamp;
+                        try {
+                            lamp = Integer.parseInt(args[1]);
+                        } catch (NumberFormatException nfe) {
+                            sender.sendMessage(plugin.pluginName + "The lamp item ID was not a number!");
+                            return true;
+                        }
+                        // check it's an allowed block
+                        List<Integer> allowed_ids = plugin.getBlocksConfig().getIntegerList("lamp_blocks");
+                        if (!allowed_ids.contains(lamp)) {
+                            sender.sendMessage(plugin.pluginName + "You cannot set the lamp item to that ID!");
+                            return true;
+                        }
+                        HashMap<String, Object> setl = new HashMap<String, Object>();
+                        setl.put("lamp", lamp);
+                        HashMap<String, Object> where = new HashMap<String, Object>();
+                        where.put("player", player.getName());
+                        qf.doUpdate("player_prefs", setl, where);
+                        sender.sendMessage(plugin.pluginName + "Lamp preference saved.");
+                        return true;
                     }
                     if (pref.equals("isomorphic")) {
                         HashMap<String, Object> where = new HashMap<String, Object>();
@@ -134,7 +166,7 @@ public class TARDISPrefsCommands implements CommandExecutor {
                             seti.put("iso_on", iso);
                             HashMap<String, Object> wheret = new HashMap<String, Object>();
                             wheret.put("tardis_id", id);
-                            new QueryFactory(plugin).doUpdate("tardis", seti, wheret);
+                            qf.doUpdate("tardis", seti, wheret);
                             sender.sendMessage(plugin.pluginName + "Isomorphic controls were turned " + onoff + "!");
                             return true;
                         } else {
@@ -154,7 +186,7 @@ public class TARDISPrefsCommands implements CommandExecutor {
                         sete.put("eps_message", message);
                         HashMap<String, Object> where = new HashMap<String, Object>();
                         where.put("player", player.getName());
-                        new QueryFactory(plugin).doUpdate("player_prefs", sete, where);
+                        qf.doUpdate("player_prefs", sete, where);
                         sender.sendMessage(plugin.pluginName + "The Emergency Program System message was set!");
                         return true;
                     }
@@ -191,7 +223,7 @@ public class TARDISPrefsCommands implements CommandExecutor {
                         setw.put(pref, wall_mat);
                         HashMap<String, Object> where = new HashMap<String, Object>();
                         where.put("player", player.getName());
-                        new QueryFactory(plugin).doUpdate("player_prefs", setw, where);
+                        qf.doUpdate("player_prefs", setw, where);
                         sender.sendMessage(plugin.pluginName + ucfirst(pref) + " material saved.");
                         return true;
                     }
@@ -199,7 +231,7 @@ public class TARDISPrefsCommands implements CommandExecutor {
                         sender.sendMessage(plugin.pluginName + "You need to specify if " + pref + " should be on or off!");
                         return false;
                     }
-                    List<String> was = Arrays.asList(new String[]{"auto", "beacon", "platform", "eps", "hads"});
+                    List<String> was = Arrays.asList(new String[]{"auto", "beacon", "platform", "eps", "hads", "plain"});
 
                     HashMap<String, Object> setp = new HashMap<String, Object>();
                     HashMap<String, Object> wherep = new HashMap<String, Object>();
@@ -219,7 +251,7 @@ public class TARDISPrefsCommands implements CommandExecutor {
                         }
                         sender.sendMessage(plugin.pluginName + pref + grammar + " turned OFF.");
                     }
-                    new QueryFactory(plugin).doUpdate("player_prefs", setp, wherep);
+                    qf.doUpdate("player_prefs", setp, wherep);
                     return true;
                 } else {
                     sender.sendMessage(plugin.pluginName + TARDISConstants.NO_PERMS_MESSAGE);
@@ -254,7 +286,7 @@ public class TARDISPrefsCommands implements CommandExecutor {
                     case BIGGER:
                         plusy = 13;
                         break;
-                    default:
+                    default: // BUDGET & STEAMPUNK
                         plusy = 12;
                         break;
                 }

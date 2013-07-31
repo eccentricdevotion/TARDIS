@@ -43,32 +43,44 @@ public class TARDISEPSRunnable implements Runnable {
     private List<String> players;
     private int id;
     private String eps;
+    private String creeper;
 
-    public TARDISEPSRunnable(TARDIS plugin, String message, Player tl, List<String> players, int id, String eps) {
+    public TARDISEPSRunnable(TARDIS plugin, String message, Player tl, List<String> players, int id, String eps, String creeper) {
         this.plugin = plugin;
         this.message = message;
         this.tl = tl;
         this.players = players;
         this.id = id;
         this.eps = eps;
+        this.creeper = creeper;
     }
 
     @Override
     public void run() {
-        Location l = getSpawnLocation(id, eps);
+        Location l = getSpawnLocation(id);
         if (l != null) {
             try {
                 plugin.myspawn = true;
                 l.setX(l.getX() + 0.5F);
                 l.setZ(l.getZ() + 1.5F);
-                // set yaw if TARDIS world
-                if (plugin.getConfig().getBoolean("create_worlds")) {
+                // set yaw if npc spawn location has been changed
+                if (!eps.isEmpty()) {
+                    String[] creep = creeper.split(":");
+                    double cx = Double.parseDouble(creep[1]);
+                    double cz = Double.parseDouble(creep[3]);
+                    float yaw = getCorrectYaw(cx, cz, l.getX(), l.getZ());
+                    l.setYaw(yaw);
                 }
                 // create NPC
                 NPCRegistry registry = CitizensAPI.getNPCRegistry();
                 NPC npc = registry.createNPC(EntityType.PLAYER, tl.getName());
                 npc.spawn(l);
                 int npcid = npc.getId();
+                if (npc.isSpawned()) {
+                    // set the lookclose trait
+                    plugin.getServer().dispatchCommand(plugin.console, "npc select " + npcid);
+                    plugin.getServer().dispatchCommand(plugin.console, "npc lookclose");
+                }
                 plugin.npcIDs.add(npcid);
                 for (String p : players) {
                     Player pp = plugin.getServer().getPlayer(p);
@@ -83,7 +95,7 @@ public class TARDISEPSRunnable implements Runnable {
         }
     }
 
-    private Location getSpawnLocation(int id, String eps) {
+    private Location getSpawnLocation(int id) {
         if (!eps.isEmpty()) {
             String[] npc = eps.split(":");
             World w = plugin.getServer().getWorld(npc[0]);
@@ -127,5 +139,17 @@ public class TARDISEPSRunnable implements Runnable {
                 }
             }
         }
+    }
+
+    /**
+     * Determines the angle of a straight line drawn between point one and two.
+     * The number returned, which is a double in degrees, tells us how much we
+     * have to rotate a horizontal line clockwise for it to match the line
+     * between the two points.
+     */
+    public static float getCorrectYaw(double px1, double pz1, double px2, double pz2) {
+        double xDiff = px2 - px1;
+        double zDiff = pz2 - pz1;
+        return (float) Math.toDegrees(Math.atan2(zDiff, xDiff)) + 90F;
     }
 }

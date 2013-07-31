@@ -30,6 +30,8 @@ import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.block.Block;
+import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 
 /**
@@ -53,13 +55,9 @@ public class TARDISUtils {
         return (num + divisor - 1) / divisor;
     }
     private final TARDIS plugin;
-    Version bukkitversion;
-    Version prewoodbuttonversion = new Version("1.4.2");
 
     public TARDISUtils(TARDIS plugin) {
         this.plugin = plugin;
-        String[] v = Bukkit.getServer().getBukkitVersion().split("-");
-        bukkitversion = (!v[0].equalsIgnoreCase("unknown")) ? new Version(v[0]) : new Version("1.4.7");
     }
 
     /**
@@ -75,7 +73,7 @@ public class TARDISUtils {
     public void setBlock(World w, int x, int y, int z, int m, byte d) {
         Block b = w.getBlockAt(x, y, z);
         if (m < 0) {
-            if (bukkitversion.compareTo(prewoodbuttonversion) < 0 && (m == 143 || m == -113)) {
+            if (plugin.bukkitversion.compareTo(plugin.prewoodbuttonversion) < 0 && (m == 143 || m == -113)) {
                 m = 77;
             } else {
                 m += 256;
@@ -86,7 +84,7 @@ public class TARDISUtils {
             d = (byte) 5;
         }
         if (m == 52) { //mob spawner -> scanner button
-            m = (bukkitversion.compareTo(prewoodbuttonversion) < 0) ? 77 : 143;
+            m = (plugin.bukkitversion.compareTo(plugin.prewoodbuttonversion) < 0) ? 77 : 143;
             d = (byte) 3;
         }
         b.setTypeIdAndData(m, d, true);
@@ -175,9 +173,37 @@ public class TARDISUtils {
             cx = parseNum(split[1]);
             cz = parseNum(split[2]);
             Chunk chunk = w.getChunkAt(cx, cz);
-            startLoc[0] = chunk.getBlock(0, 15, 0).getX();
+            // adjust for TARDIS size
+            int adjust = 0;
+            FileConfiguration pluginYml = YamlConfiguration.loadConfiguration(plugin.pm.getPlugin("TARDIS").getResource("plugin.yml"));
+            String[] version = pluginYml.getString("version").split("-");
+            Version this_version = new Version(version[0]);
+            Version min_version = new Version("2.5");
+            if (this_version.compareTo(min_version) >= 0) {
+                switch (rs.getSchematic()) {
+                    case BIGGER:
+                        adjust = (15 - plugin.biggerdimensions[1]) / 2;
+                        break;
+                    case REDSTONE:
+                        adjust = (15 - plugin.redstonedimensions[1]) / 2;
+                        break;
+                    case STEAMPUNK:
+                        adjust = (15 - plugin.steampunkdimensions[1]) / 2;
+                        break;
+                    case DELUXE:
+                        adjust = (15 - plugin.deluxedimensions[1]) / 2;
+                        break;
+                    case ELEVENTH:
+                        adjust = (15 - plugin.eleventhdimensions[1]) / 2;
+                        break;
+                    default:
+                        adjust = (15 - plugin.budgetdimensions[1]) / 2;
+                        break;
+                }
+            }
+            startLoc[0] = (chunk.getBlock(0, 15, 0).getX()) + adjust;
             startLoc[1] = startLoc[0];
-            startLoc[2] = chunk.getBlock(0, 15, 0).getZ();
+            startLoc[2] = (chunk.getBlock(0, 15, 0).getZ()) + adjust;
             startLoc[3] = startLoc[2];
             startLoc[4] = 1;
             startLoc[5] = 1;
@@ -228,6 +254,15 @@ public class TARDISUtils {
                 break;
             case DELUXE:
                 d = plugin.deluxedimensions;
+                break;
+            case ELEVENTH:
+                d = plugin.eleventhdimensions;
+                break;
+            case REDSTONE:
+                d = plugin.redstonedimensions;
+                break;
+            case STEAMPUNK:
+                d = plugin.steampunkdimensions;
                 break;
             default:
                 d = plugin.budgetdimensions;
