@@ -62,6 +62,7 @@ public class TARDISInformationSystemListener implements Listener {
             // always exit if 'e' is pressed
             if (chat.equalsIgnoreCase("E")) {
                 exit(p);
+                return;
             }
             switch (plugin.trackInfoMenu.get(name)) {
                 // TOP level menu
