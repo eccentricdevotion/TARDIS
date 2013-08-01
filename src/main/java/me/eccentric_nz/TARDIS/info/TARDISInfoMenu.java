@@ -175,7 +175,17 @@ public enum TARDISInfoMenu {
     TARDISTRAVEL_COORDS("TIS|Commands|Travel Commands|coordinates", "TARDISTRAVEL", "c"),
     TARDISTRAVEL_DEST("TIS|Commands|Travel Commands|dest", "TARDISTRAVEL", "d"),
     TARDISTRAVEL_AREA("TIS|Commands|Travel Commands|area", "TARDISTRAVEL", "a"),
-    TARDISTRAVEL_BIOME("TIS|Commands|Travel Commands|biome", "TARDISTRAVEL", "b"),;
+    TARDISTRAVEL_BIOME("TIS|Commands|Travel Commands|biome", "TARDISTRAVEL", "b"),
+    TIME_TRAVEL("TIS|Manual|Time Travel", "MANUAL", "T"),
+    CONSOLE_BLOCKS("TIS|Manual|Console Blocks", "MANUAL", "C"),
+    TARDIS_CONTROLS("TIS|Manual|TARDIS Controls", "MANUAL", "S"),
+    KEYBOARD("TIS|Manual|TARDIS Controls|Alternative Controls", "ALT_CONTROLS", "K"),
+    SAVE_SIGN("TIS|Manual|TARDIS Controls|Alternative Controls", "ALT_CONTROLS", "S"),
+    MALFUNCTIONS("TIS|Manual|TARDIS Controls", "TARDIS_CONTROLS", "M"),
+    ALT_CONTROLS("TIS|Manual|TARDIS Controls|Alternative Controls", "TARDIS_CONTROLS", "l"),
+    ARTRON("TIS|Manual|TARDIS Controls|Artron Energy Capacitor", "TARDIS_CONTROLS", "A"),
+    DOOR("TIS|Manual|Console Blocks", "CONSOLE_BLOCKS", "D"),
+    ;
     private final String name;
     private final String parent;
     private final String key;

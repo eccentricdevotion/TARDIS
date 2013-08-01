@@ -67,10 +67,7 @@ public class TARDISInformationSystemListener implements Listener {
                 // TOP level menu
                 case TIS:
                     if (chat.equalsIgnoreCase("M")) {
-                        //processKey(p, TARDISInfoMenu.MANUAL);
-                        p.sendMessage("---");
-                        p.sendMessage("§6[TIS/TARDIS Manual] is not yet available in your current timestream");
-                        exit(p);
+                        processKey(p, TARDISInfoMenu.MANUAL);
                     }
                     if (chat.equalsIgnoreCase("I")) {
                         processKey(p, TARDISInfoMenu.ITEMS);
@@ -115,6 +112,43 @@ public class TARDISInformationSystemListener implements Listener {
                     }
                     break;
                 case MANUAL:
+                    if (chat.equalsIgnoreCase("T")) {
+                        processKey(p, TARDISInfoMenu.TIME_TRAVEL);
+                    }
+                    if (chat.equalsIgnoreCase("C")) {
+                        processKey(p, TARDISInfoMenu.CONSOLE_BLOCKS);
+                    }
+                    if (chat.equalsIgnoreCase("S")) {
+                        processKey(p, TARDISInfoMenu.TARDIS_CONTROLS);
+                    }                   
+                    break;
+                case TARDIS_CONTROLS:
+                    if (chat.equalsIgnoreCase("A")) {
+                        processKey(p, TARDISInfoMenu.ARTRON);
+                    }
+                    if (chat.equalsIgnoreCase("T")) {
+                        processKey(p, TARDISInfoMenu.TIME_TRAVEL);
+                    }
+                    if (chat.equalsIgnoreCase("M")) {
+                        showInfo(p, TARDISInfoMenu.MALFUNCTIONS);
+                    }
+                    if (chat.equalsIgnoreCase("l")) {
+                        processKey(p, TARDISInfoMenu.ALT_CONTROLS);
+                    }
+                    break;
+                case TIME_TRAVEL:
+                    
+                    break;
+                case ALT_CONTROLS:
+                    if (chat.equalsIgnoreCase("S")){ 
+                        processKey(p, TARDISInfoMenu.SAVE_SIGN);
+                    }
+                    if (chat.equalsIgnoreCase("K")) {
+                        showInfo(p, TARDISInfoMenu.KEYBOARD);
+                    }
+                    break;
+                case DOOR:
+                    showInfo(p, TARDISInfoMenu.KEYBOARD);
                     break;
                 case COMMANDS:
                     if (chat.equalsIgnoreCase("T")) {

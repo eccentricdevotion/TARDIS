@@ -67,7 +67,61 @@ public enum TARDISDescription {
     TRENZALORE("The final resting place of the Doctor."),
     VAULT("Some extra storage space."),
     WOOD("A secondary console room made of wood."),
-    WORKSHOP("Craft, smelt, brew, enchant and repair.");
+    WORKSHOP("Craft, smelt, brew, enchant and repair."),
+    MALFUNCTIONS("When the TARDIS travels, there is a chance of a malfunctioning happening that deposits the TARDIS in an unexpected location."),
+    KEYBOARD("You can use the TARDIS keyboard to set destinations\n"
+            + "\n" 
+            + "To use it: \n" 
+            + "1. Place a sign in the TARDIS console room\n" 
+            + "2. Use the command /tardis update keyboard, then click the sign\n" 
+            + "3. Right-click the keyboard with another sign \n" 
+            + "4. "),
+    SAVE_SIGN("The save sign can be used to quickly set the TARDIS destination. When right clicked, it opens up a GUI that allows the player to select a saved location to travel to."),
+    DOOR("This is the door used to enter and exit the TARDIS.\n" + 
+            "Updating: /tardis update door\n" + 
+            "Right click an IRON_DOOR"),
+    BUTTON("This button is used to select a random destination.\n"
+            + "Updating: /tarids update button\n"
+            + "Right click a STONE_BUTTON or WOOD_BUTTON"),
+    WORLD_REPEATER("The World Repater controls the enviroment type of the world you will travel to.\n"
+            + "The 1-tick positionwill select a world with a random enviroment.\n"
+            + "The 2-tick position will only select (Normal) Overworlds.\n"
+            + "The 3-tick position will select from Nether Worlds.\n"
+            + "The 4-tick position will select from The End Worlds.\n"
+            + "Updating: /tardis update world-repeater\n"
+            + "Right click a REPEATER"),
+    X_REPEATER("The X Repeater controls the X coordinate. The more ticks, the greater distance travelled on the X axis.\n"
+            + "Updating: /tardis update x-repeater\n"
+            + "Right click a REPEATER"),
+    Y_REPEATER("The Y Repeater controls the Y coordinate. The more ticks, the greater distance travelled on teh Y axis.\n"
+            + "Updating: /tardis update y-repeater\n"
+            + "Right click a REPEATER"),
+    Z_REPEATER("The Z Repeater controls the Z coordinate. The more ticks, the greater distance travelled on teh Z axis.\n"
+            + "Updating: /tardis update Z-repeater\n"
+            + "Right click a REPEATER"),
+    CHAMELEON("The Chameleon sign allows the Chameleon Circuit to be turned on or off. The Chameleon Circuit makes the TARDIS exterior become the block it lands on."),
+    ARTRON(""),
+    HANDBRAKE("This Handbrake is used to start the dematerialization and rematerialization of the TARDIS.\n"
+            + "Usage: Flip the handbrake to make the TARDIS travel.\n"
+            + "Updating: /tardis update lever"
+            + "Right click a LEVER"),
+    CONDENSER(""),
+    SCANNER(""),
+    BACKDOOR(""),
+    CREEPER(""),
+    EPS(""),
+    BACK(""),
+    TERMINAL(""),
+    CONSOLE_ARS(""),
+    TEMPORAL(""),
+    LIGHT(""),
+    CONSOLE_FARM(""),
+    CONSOLE_STABLE(""),
+    CONSOLE_RAIL(""),
+    INFO("The TARDIS Information System is a computer that contains information and instructions on controlling the TARDIS and using the TARDIS plugin.\n"
+            + "Usage: Right click the sign.\n"
+            + "Updating: /tardis update info\n"
+            + "Right click a SIGN");
     private final String desc;
 
     private TARDISDescription(String desc) {
