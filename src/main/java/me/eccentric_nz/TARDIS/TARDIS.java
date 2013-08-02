@@ -24,6 +24,7 @@ import java.util.Properties;
 import java.util.Set;
 import me.eccentric_nz.TARDIS.builders.TARDISBuilderInner;
 import me.eccentric_nz.TARDIS.builders.TARDISBuilderPoliceBox;
+import me.eccentric_nz.TARDIS.builders.TARDISChameleonPreset;
 import me.eccentric_nz.TARDIS.builders.TARDISSpace;
 import me.eccentric_nz.TARDIS.commands.TARDISAdminCommands;
 import me.eccentric_nz.TARDIS.commands.TARDISAreaCommands;
@@ -252,6 +253,7 @@ public class TARDIS extends JavaPlugin {
     public Version SUBversion;
     public Version preSUBversion = new Version("1.0");
     public TARDISTabCompleteAPI apiHandler;
+    public TARDISChameleonPreset presets;
 
     @Override
     public void onEnable() {
@@ -318,6 +320,8 @@ public class TARDIS extends JavaPlugin {
             r.stattenheim();
             r.stattenheimCircuit();
         }
+        presets = new TARDISChameleonPreset();
+        presets.makePresets();
     }
 
     @Override

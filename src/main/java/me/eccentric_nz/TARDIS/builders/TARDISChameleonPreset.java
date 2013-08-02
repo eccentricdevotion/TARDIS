@@ -19,7 +19,6 @@ package me.eccentric_nz.TARDIS.builders;
 import java.util.Arrays;
 import java.util.EnumMap;
 import java.util.List;
-import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import static me.eccentric_nz.TARDIS.TARDISConstants.COMPASS.SOUTH;
 import static me.eccentric_nz.TARDIS.TARDISConstants.COMPASS.WEST;
@@ -31,14 +30,13 @@ import org.json.JSONArray;
  */
 public class TARDISChameleonPreset {
 
-    private final TARDIS plugin;
     private String column_id = "[[109,109,109,44],[109,109,109,44],[109,109,109,44],[109,109,109,44],[109,109,109,44],[109,109,109,44],[109,109,109,44],[71,71,109,44],[0,0,0,44],[0,0,68,0]]";
     private String column_data = "[[2,6,2,5],[2,6,2,5],[2,6,2,5],[1,5,1,5],[3,7,3,5],[3,7,3,5],[3,7,3,5],[0,8,0,5],[0,0,0,5],[0,0,4,0]]";
     private EnumMap<TARDISConstants.COMPASS, TARDISChameleonColumn> column = new EnumMap<TARDISConstants.COMPASS, TARDISChameleonColumn>(TARDISConstants.COMPASS.class);
     private String desert_id = "[[24,35,24,44],[35,24,35,128],[24,35,24,44],[35,24,35,128],[24,35,24,44],[35,24,35,128],[24,35,24,44],[71,71,24,44],[0,0,0,24],[0,0,0,0]]";
     private String desert_data = "[[0,1,0,1],[1,1,1,2],[0,1,0,1],[1,1,1,1],[0,1,0,1],[1,1,1,3],[0,1,0,1],[71,71,1,2],[0,0,0,0],[0,0,0,0]]";
     private EnumMap<TARDISConstants.COMPASS, TARDISChameleonColumn> desert = new EnumMap<TARDISConstants.COMPASS, TARDISChameleonColumn>(TARDISConstants.COMPASS.class);
-    private String jungle_id = "[[48,48,4,0],[48,4,48,67],[4,4,48,0],[4,48,4,67],[48,4,48,0],[48,4,48,67],[4,4,48,0],[71,71,4.67],[0,0,0,4],[0,0,106,0]]";
+    private String jungle_id = "[[48,48,4,0],[48,4,48,67],[4,4,48,0],[4,48,4,67],[48,4,48,0],[48,4,48,67],[4,4,48,0],[71,71,4,67],[0,0,0,4],[0,0,106,0]]";
     private String jungle_data = "[[0,0,0,0],[0,0,0,2],[0,0,0,0],[0,0,0,1],[0,0,0,0],[0,0,0,3],[0,0,0,0],[0,8,0,0],[0,0,0,0],[0,0,8,0]]";
     private EnumMap<TARDISConstants.COMPASS, TARDISChameleonColumn> jungle = new EnumMap<TARDISConstants.COMPASS, TARDISChameleonColumn>(TARDISConstants.COMPASS.class);
     private String nether_id = "[[114,114,114,0],[114,114,114,0],[114,114,114,0],[114,114,114,0],[114,114,114,0],[114,114,114,0],[114,114,114,0],[71,71,114,0],[0,0,112,89],[0,0,0,0]]";
@@ -48,7 +46,7 @@ public class TARDISChameleonPreset {
     private String plain_data = "[[8,8,8,0],[8,8,8,0],[8,8,8,0],[8,8,8,0],[8,8,8,0],[8,8,8,0],[8,8,8,0],[0,8,8,0],[0,0,8,0],[0,0,0,0]]";
     private EnumMap<TARDISConstants.COMPASS, TARDISChameleonColumn> plain = new EnumMap<TARDISConstants.COMPASS, TARDISChameleonColumn>(TARDISConstants.COMPASS.class);
     private String police_id = "[[35,35,35,0],[35,35,35,0],[35,35,35,0],[35,35,35,0],[35,35,35,0],[35,35,35,0],[35,35,35,0],[71,71,35,0],[0,0,35,50],[0,0,68,0]]";
-    private String police_data = "[11,11,11,0],[11,11,11,0],[11,11,11,0],[11,11,11,0],[11,11,11,0],[11,11,11,0],[11,11,11,0],[0,8,11,0],[0,0,11,5],[0,0,4,0]]";
+    private String police_data = "[[11,11,11,0],[11,11,11,0],[11,11,11,0],[11,11,11,0],[11,11,11,0],[11,11,11,0],[11,11,11,0],[0,8,11,0],[0,0,11,5],[0,0,4,0]]";
     private EnumMap<TARDISConstants.COMPASS, TARDISChameleonColumn> police = new EnumMap<TARDISConstants.COMPASS, TARDISChameleonColumn>(TARDISConstants.COMPASS.class);
     private String swamp_id = "[[17,17,17,126],[5,5,5,126],[17,17,17,126],[5,5,5,126],[17,17,17,126],[5,5,5,126],[17,17,17,126],[64,64,5,126],[0,0,5,50],[0,0,0,0]]";
     private String swamp_data = "[[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,8,0,0],[0,0,0,5],[0,0,0,0]]";
@@ -66,13 +64,10 @@ public class TARDISChameleonPreset {
     private String yellowsub_data = "[[4,4,4,0],[4,0,4,0],[4,4,4,0],[4,0,4,0],[4,4,4,0],[4,0,4,0],[4,4,4,0],[0,8,4,0],[0,0,4,0],[0,0,4,0]]";
     private EnumMap<TARDISConstants.COMPASS, TARDISChameleonColumn> yellowsub = new EnumMap<TARDISConstants.COMPASS, TARDISChameleonColumn>(TARDISConstants.COMPASS.class);
 
-    public TARDISChameleonPreset(TARDIS plugin) {
-        this.plugin = plugin;
-        // init presets
-        makePresets();
+    public TARDISChameleonPreset() {
     }
 
-    private void makePresets() {
+    public void makePresets() {
         for (TARDISConstants.COMPASS d : TARDISConstants.COMPASS.values()) {
             column.put(d, buildTARDISChameleonColumn(d, column_id, column_data));
             desert.put(d, buildTARDISChameleonColumn(d, desert_id, desert_data));
