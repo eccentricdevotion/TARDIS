@@ -216,6 +216,9 @@ public class TARDISInstaPoliceBox {
             case 18:
                 plugin.utils.setBlockAndRemember(world, x, y, z, 17, data, tid);
                 break;
+            case 20:
+                plugin.utils.setBlockAndRemember(world, x, y, z, 20, (byte) 0, tid);
+                break;
             case 46:
                 plugin.utils.setBlockAndRemember(world, x, y, z, 35, (byte) 14, tid);
                 break;

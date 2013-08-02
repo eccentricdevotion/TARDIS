@@ -42,6 +42,7 @@ public class TARDISDematerialisationRunnable implements Runnable {
     private int tid;
     public int task;
     private int i;
+    private int lamp;
     private int mat;
     private byte data;
     private Player player;
@@ -62,13 +63,14 @@ public class TARDISDematerialisationRunnable implements Runnable {
      * @param mal a boolean determining whether there has been a TARDIS
      * malfunction
      */
-    public TARDISDematerialisationRunnable(TARDIS plugin, Location location, int mat, byte data, int tid, COMPASS d, Player player) {
+    public TARDISDematerialisationRunnable(TARDIS plugin, Location location, int lamp, int mat, byte data, int tid, COMPASS d, Player player) {
         this.plugin = plugin;
         this.d = d;
         this.loops = 12;
         this.location = location;
         this.i = 0;
         this.tid = tid;
+        this.lamp = lamp;
         this.mat = mat;
         this.data = data;
         this.player = player;
@@ -134,6 +136,9 @@ public class TARDISDematerialisationRunnable implements Runnable {
                     case 18:
                         plugin.utils.setBlock(world, x, y, z, 17, b);
                         break;
+                    case 20:
+                        plugin.utils.setBlock(world, x, y, z, 20, (byte) 0);
+                        break;
                     case 46:
                         plugin.utils.setBlock(world, x, y, z, 35, (byte) 14);
                         break;
@@ -144,7 +149,11 @@ public class TARDISDematerialisationRunnable implements Runnable {
                         plugin.utils.setBlock(world, x, y, z, 35, (byte) 4);
                         break;
                     default:
-                        plugin.utils.setBlock(world, x, y, z, id, b);
+                        if (lamp == 123 && plugin.bukkitversion.compareTo(plugin.precomparatorversion) >= 0) {
+                            plugin.utils.setBlock(world, x, y, z, 152, b);
+                        } else {
+                            plugin.utils.setBlock(world, x, y, z, id, b);
+                        }
                         break;
                 }
                 plugin.utils.setBlock(world, plusx, y, z, id, b); // east

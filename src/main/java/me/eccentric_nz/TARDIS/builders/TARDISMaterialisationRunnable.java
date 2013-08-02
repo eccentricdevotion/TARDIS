@@ -274,6 +274,9 @@ public class TARDISMaterialisationRunnable implements Runnable {
                         case 18:
                             plugin.utils.setBlockAndRemember(world, x, y, z, 17, b, tid);
                             break;
+                        case 20:
+                            plugin.utils.setBlockAndRemember(world, x, y, z, 20, (byte) 0, tid);
+                            break;
                         case 46:
                             plugin.utils.setBlockAndRemember(world, x, y, z, 35, (byte) 14, tid);
                             break;
@@ -359,6 +362,9 @@ public class TARDISMaterialisationRunnable implements Runnable {
                     switch (id) {
                         case 18: //leaves
                             plugin.utils.setBlock(world, x, y, z, 17, b);
+                            break;
+                        case 20: //glass
+                            plugin.utils.setBlock(world, x, y, z, 20, (byte) 0);
                             break;
                         case 46: //tnt
                             plugin.utils.setBlock(world, x, y, z, 35, (byte) 14);

@@ -20,6 +20,7 @@ import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
+import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -45,6 +46,13 @@ public class TARDISDestroyerPoliceBox {
 
     public void destroyPoliceBox(Location l, TARDISConstants.COMPASS d, int id, boolean hide, boolean dematerialise, boolean c, Player player) {
         if (dematerialise && !hide) {
+            int lamp = plugin.getConfig().getInt("tardis_lamp");
+            HashMap<String, Object> wherepp = new HashMap<String, Object>();
+            wherepp.put("player", player.getName());
+            ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, wherepp);
+            if (rsp.resultSet()) {
+                lamp = rsp.getLamp();
+            }
             int mat = plugin.getConfig().getInt("wall_id");
             byte data = (byte) plugin.getConfig().getInt("wall_data");
             if (c) {
@@ -56,7 +64,7 @@ public class TARDISDestroyerPoliceBox {
                 mat = rsc.getChameleon_id();
                 data = rsc.getChameleon_data();
             }
-            TARDISDematerialisationRunnable runnable = new TARDISDematerialisationRunnable(plugin, l, mat, data, id, d, player);
+            TARDISDematerialisationRunnable runnable = new TARDISDematerialisationRunnable(plugin, l, lamp, mat, data, id, d, player);
             int taskID = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, runnable, 10L, 20L);
             runnable.setTask(taskID);
         } else {
