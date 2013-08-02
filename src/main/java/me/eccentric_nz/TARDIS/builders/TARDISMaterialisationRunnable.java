@@ -98,7 +98,6 @@ public class TARDISMaterialisationRunnable implements Runnable {
         if (!plugin.tardisDematerialising.contains(tid)) {
             int id;
             byte b;
-            Location sub_loc = location.clone();
             // get relative locations
             int x = location.getBlockX(), plusx = location.getBlockX() + 1, minusx = location.getBlockX() - 1;
             int y = location.getBlockY() + 2, plusy = location.getBlockY() + 3, minusy = location.getBlockY() + 1;
@@ -285,7 +284,11 @@ public class TARDISMaterialisationRunnable implements Runnable {
                             plugin.utils.setBlockAndRemember(world, x, y, z, 35, (byte) 4, tid);
                             break;
                         default:
-                            plugin.utils.setBlockAndRemember(world, x, y, z, id, b, tid);
+                            if (lamp == 123 && plugin.bukkitversion.compareTo(plugin.precomparatorversion) >= 0) {
+                                plugin.utils.setBlockAndRemember(world, x, y, z, 152, (byte) 0, tid);
+                            } else {
+                                plugin.utils.setBlockAndRemember(world, x, y, z, mat, data, tid);
+                            }
                             break;
                     }
                     plugin.utils.setBlockAndRemember(world, plusx, y, z, id, b, tid); // east
@@ -354,20 +357,24 @@ public class TARDISMaterialisationRunnable implements Runnable {
                     plugin.utils.setBlock(world, plusx, minusy, minusz, id, b);
                     // top layer
                     switch (id) {
-                        case 18:
+                        case 18: //leaves
                             plugin.utils.setBlock(world, x, y, z, 17, b);
                             break;
-                        case 46:
+                        case 46: //tnt
                             plugin.utils.setBlock(world, x, y, z, 35, (byte) 14);
                             break;
-                        case 79:
+                        case 79: //ice
                             plugin.utils.setBlock(world, x, y, z, 35, (byte) 3);
                             break;
-                        case 89:
+                        case 89: //glowstone
                             plugin.utils.setBlock(world, x, y, z, 35, (byte) 4);
                             break;
                         default:
-                            plugin.utils.setBlock(world, x, y, z, id, b);
+                            if (lamp == 123 && plugin.bukkitversion.compareTo(plugin.precomparatorversion) >= 0) {
+                                plugin.utils.setBlock(world, x, y, z, 152, b);
+                            } else {
+                                plugin.utils.setBlock(world, x, y, z, id, b);
+                            }
                             break;
                     }
                     plugin.utils.setBlock(world, plusx, y, z, id, b); // east
@@ -414,8 +421,6 @@ public class TARDISMaterialisationRunnable implements Runnable {
             } else {
                 // set sheild if submarine
                 if (sub && plugin.worldGuardOnServer) {
-//                    Block sponge = sub_loc.getBlock().getRelative(BlockFace.DOWN);
-//                    sponge.setTypeId(19);
                     plugin.wgchk.sponge(sponge, true);
                 }
                 plugin.tardisMaterialising.remove(Integer.valueOf(tid));

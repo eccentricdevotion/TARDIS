@@ -226,7 +226,11 @@ public class TARDISInstaPoliceBox {
                 plugin.utils.setBlockAndRemember(world, x, y, z, 35, (byte) 4, tid);
                 break;
             default:
-                plugin.utils.setBlockAndRemember(world, x, y, z, mat, data, tid);
+                if (lamp == 123 && plugin.bukkitversion.compareTo(plugin.precomparatorversion) >= 0) {
+                    plugin.utils.setBlockAndRemember(world, x, y, z, 152, (byte) 0, tid);
+                } else {
+                    plugin.utils.setBlockAndRemember(world, x, y, z, mat, data, tid);
+                }
                 break;
         }
         plugin.utils.setBlockAndRemember(world, plusx, y, z, mat, data, tid); // east
@@ -282,8 +286,6 @@ public class TARDISInstaPoliceBox {
         plugin.utils.setBlockAndRemember(world, x, minusy, minusz, south, mds, tid);
         // set sheild if submarine
         if (sub && plugin.worldGuardOnServer) {
-//            Block sponge = sub_loc.getBlock().getRelative(BlockFace.DOWN);
-//            sponge.setTypeId(19);
             plugin.wgchk.sponge(sponge, true);
         }
         // message travellers in tardis
