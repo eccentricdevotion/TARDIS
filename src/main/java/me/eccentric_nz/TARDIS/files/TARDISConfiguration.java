@@ -337,7 +337,7 @@ public class TARDISConfiguration {
         }
         // int values
         for (Map.Entry<String, Integer> entry : roomIntOptions.entrySet()) {
-            if (!rooms_config.contains(entry.getKey()) || entry.getKey().equals("rooms.RAIL.offset")) {
+            if (!rooms_config.contains(entry.getKey()) || (entry.getKey().equals("rooms.RAIL.offset")) && rooms_config.getInt("rooms.RAIL.offset") == -2) {
                 rooms_config.set(entry.getKey(), entry.getValue());
                 i++;
             }
