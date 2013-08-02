@@ -153,7 +153,7 @@ public class TARDISConstants {
 
     public enum COMPASS {
 
-        NORTH, WEST, SOUTH, EAST;
+        EAST, SOUTH, WEST, NORTH;
     }
 
     public enum ROOM {
