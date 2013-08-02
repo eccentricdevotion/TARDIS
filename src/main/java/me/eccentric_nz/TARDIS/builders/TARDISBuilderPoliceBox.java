@@ -16,6 +16,7 @@
  */
 package me.eccentric_nz.TARDIS.builders;
 
+import me.eccentric_nz.TARDIS.chameleon.TARDISChameleonCircuit;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
