@@ -268,7 +268,7 @@ public class TARDISARSListener implements Listener {
      * @param js the JSON from the database
      * @return a 3D array of ints
      */
-    private int[][][] getGridFronJSON(String js) {
+    private int[][][] getGridFromJSON(String js) {
         int[][][] grid = new int[3][9][9];
         JSONArray json = new JSONArray(js);
         for (int y = 0; y < 3; y++) {
@@ -480,7 +480,7 @@ public class TARDISARSListener implements Listener {
         ResultSetARS rs = new ResultSetARS(plugin, where);
         if (rs.resultSet()) {
             TARDISARSMapData md = new TARDISARSMapData();
-            md.setData(getGridFronJSON(rs.getJson()));
+            md.setData(getGridFromJSON(rs.getJson()));
             md.setE(rs.getEast());
             md.setS(rs.getSouth());
             md.setY(rs.getLayer());
