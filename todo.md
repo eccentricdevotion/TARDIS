@@ -18,7 +18,7 @@
 10. TARDIS Information System (in progress)
 11. Chameleon presets (in progress)
     * Grass mound
-12. Make the wood and baker secondary console rooms into fully fledged TARDISes
+12. Make the wood and baker secondary console rooms into fully fledged TARDISes, build ARS TARDIS
 13. Temporal Invisibility (in progress)
 14. Village room and villager farming
 
