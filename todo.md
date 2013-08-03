@@ -19,7 +19,6 @@
 11. Chameleon presets (in progress)
     * Add presets for ice and glass TARDIS for materialisation
     * Grass mound
-    * Add lamp/redstone combo to TARDIS rebuilder
 12. Make the wood and baker secondary console rooms into fully fledged TARDISes
 13. Temporal Invisibility (in progress)
 14. Village room and villager farming

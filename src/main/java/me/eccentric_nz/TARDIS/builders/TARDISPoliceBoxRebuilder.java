@@ -187,7 +187,11 @@ public class TARDISPoliceBoxRebuilder {
                 plugin.utils.setBlock(world, x, y, z, 35, (byte) 4);
                 break;
             default:
-                plugin.utils.setBlock(world, x, y, z, mat, data);
+                if (lamp == 123 && plugin.bukkitversion.compareTo(plugin.precomparatorversion) >= 0) {
+                    plugin.utils.setBlock(world, x, y, z, 152, (byte) 0);
+                } else {
+                    plugin.utils.setBlock(world, x, y, z, mat, data);
+                }
                 break;
         }
         plugin.utils.setBlock(world, plusx, y, z, mat, data); // east
