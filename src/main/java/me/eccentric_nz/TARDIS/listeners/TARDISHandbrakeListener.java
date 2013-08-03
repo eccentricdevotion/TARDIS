@@ -97,6 +97,7 @@ public class TARDISHandbrakeListener implements Listener {
                         final boolean cham = rs.isChamele_on();
                         String save = rs.getSave();
                         String cl = rs.getCurrent();
+                        String[] cl_data = cl.split(":");
                         String beacon = rs.getBeacon();
                         String eps = rs.getEps();
                         String creeper = rs.getCreeper();
@@ -176,7 +177,7 @@ public class TARDISHandbrakeListener implements Listener {
                                             exit.getWorld().refreshChunk(exit.getChunk().getX(), exit.getChunk().getZ());
                                             Location l = plugin.utils.getLocationFromDB(cl, 0, 0);
                                             boolean mat = plugin.getConfig().getBoolean("materialise");
-                                            if (!rs.isHidden() && !plugin.trackReset.contains(l.getWorld().getName())) {
+                                            if (!rs.isHidden() && !plugin.trackReset.contains(cl_data[0])) {
                                                 plugin.tardisDematerialising.add(id);
                                                 plugin.destroyPB.destroyPoliceBox(l, d, id, false, mat, cham, player);
                                             } else {
