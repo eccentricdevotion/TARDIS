@@ -85,7 +85,7 @@ public class TARDISItemRecipes {
         ShapedRecipe matcircuit = new ShapedRecipe(is);
         matcircuit.shape("IDI", "DLD", "QRQ");
         if (plugin.getConfig().getString("difficulty").equalsIgnoreCase("hard")) {
-            matcircuit.setIngredient('L', Material.EYE_OF_ENDER);
+            matcircuit.setIngredient('I', Material.EYE_OF_ENDER);
         } else {
             matcircuit.setIngredient('I', Material.IRON_INGOT);
         }
