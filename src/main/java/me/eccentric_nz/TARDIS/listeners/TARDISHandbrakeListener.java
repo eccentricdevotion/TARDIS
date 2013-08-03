@@ -206,7 +206,7 @@ public class TARDISHandbrakeListener implements Listener {
                                                 now = System.currentTimeMillis();
                                             }
                                             set.put("lastuse", now);
-                                            if (plugin.getAchivementConfig().getBoolean("travel.enabled")) {
+                                            if (plugin.getAchivementConfig().getBoolean("travel.enabled") && !plugin.trackReset.contains(cl_data[0])) {
                                                 if (l.getWorld().equals(exit.getWorld())) {
                                                     dist = (int) l.distance(exit);
                                                 }
