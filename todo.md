@@ -2,8 +2,8 @@
 
 ## Current version `2.6-beta-1`
 1. Test landing underwater
-2. Jettison the whole room (including walls), will require new room schematics... *(in progress)*
-3. Architectural Reconfiguration System / Map room *(in progress)*
+2. Jettison the whole room (including walls), will require new room schematics... (in progress)
+3. Architectural Reconfiguration System / Map room (in progress)
 4. Remove the TARDIS creation block stack, and make a special seed block that determines the type of TARDIS that will be grown. Use custom configurable recipes - the recipes will still include precious block/lapis block/redstone torch, but 4 other blocks will set:
     * TARDIS wall block
     * TARDIS floor block
@@ -15,10 +15,13 @@
 7. Put farmland, crops, buttons, levers and signs on last when growing rooms
 8. Add areas to save-sign?
 9. Sonic Screwdrivers
-10. TARDIS Information System *(in progress)*
-11. Chameleon presets *(in progress)*
+10. TARDIS Information System (in progress)
+11. Chameleon presets (in progress)
+    * Add presets for ice and glass TARDIS for materialisation
+    * Grass mound
+    * Add lamp/redstone combo to TARDIS rebuilder
 12. Make the wood and baker secondary console rooms into fully fledged TARDISes
-13. Temporal Invisibility *(in progress)*
+13. Temporal Invisibility (in progress)
 14. Village room and villager farming
 
 ### Waiting on Bukkit API
