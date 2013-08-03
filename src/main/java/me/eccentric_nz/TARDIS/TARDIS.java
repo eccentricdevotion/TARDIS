@@ -88,6 +88,7 @@ import me.eccentric_nz.TARDIS.listeners.TARDISTemporalLocatorListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISTerminalListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISTimeLordDeathListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISUpdateListener;
+import me.eccentric_nz.TARDIS.listeners.TARDISWorldResetListener;
 import me.eccentric_nz.TARDIS.rooms.TARDISCondenserData;
 import me.eccentric_nz.TARDIS.thirdparty.MetricsLite;
 import me.eccentric_nz.TARDIS.thirdparty.Version;
@@ -209,6 +210,7 @@ public class TARDIS extends JavaPlugin {
     public HashMap<String, Long> trackSetTime = new HashMap<String, Long>();
     public HashMap<String, TARDISInfoMenu> trackInfoMenu = new HashMap<String, TARDISInfoMenu>();
     public List<String> trackRecipeView = new ArrayList<String>();
+    public List<String> trackReset = new ArrayList<String>();
     public List<String> trackFarming = new ArrayList<String>();
     public List<Integer> trackMinecart = new ArrayList<Integer>();
     public List<Integer> trackSubmarine = new ArrayList<Integer>();
@@ -437,6 +439,9 @@ public class TARDIS extends JavaPlugin {
             pm.registerEvents(new TARDISAnvilListener(this), this);
         }
         pm.registerEvents(new TARDISInformationSystemListener(this), this);
+        if (pm.isPluginEnabled("Multiverse-Adventure")) {
+            pm.registerEvents(new TARDISWorldResetListener(this), this);
+        }
     }
 
     /**

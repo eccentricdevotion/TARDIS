@@ -176,7 +176,7 @@ public class TARDISHandbrakeListener implements Listener {
                                             exit.getWorld().refreshChunk(exit.getChunk().getX(), exit.getChunk().getZ());
                                             Location l = plugin.utils.getLocationFromDB(cl, 0, 0);
                                             boolean mat = plugin.getConfig().getBoolean("materialise");
-                                            if (!rs.isHidden()) {
+                                            if (!rs.isHidden() && !plugin.trackReset.contains(l.getWorld().getName())) {
                                                 plugin.tardisDematerialising.add(id);
                                                 plugin.destroyPB.destroyPoliceBox(l, d, id, false, mat, cham, player);
                                             } else {
