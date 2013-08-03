@@ -17,7 +17,6 @@
 9. Sonic Screwdrivers
 10. TARDIS Information System (in progress)
 11. Chameleon presets (in progress)
-    * Add presets for ice and glass TARDIS for materialisation
     * Grass mound
 12. Make the wood and baker secondary console rooms into fully fledged TARDISes
 13. Temporal Invisibility (in progress)
