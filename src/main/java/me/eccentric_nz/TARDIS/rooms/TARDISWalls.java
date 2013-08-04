@@ -101,6 +101,7 @@ public class TARDISWalls {
         blocks.put("SOUL_SAND", new Integer[]{88, 0});
         blocks.put("HUGE_MUSHROOM_1", new Integer[]{99, 14});
         blocks.put("HUGE_MUSHROOM_2", new Integer[]{100, 14});
+        blocks.put("HUGE_MUSHROOM_STEM", new Integer[]{100, 15});
         blocks.put("QUARTZ", new Integer[]{155, 0});
         blocks.put("CHISELED_QUARTZ", new Integer[]{155, 1});
         blocks.put("QUARTZ_PILLAR", new Integer[]{155, 2});
