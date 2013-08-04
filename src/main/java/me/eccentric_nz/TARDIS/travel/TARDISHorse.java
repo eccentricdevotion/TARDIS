@@ -44,6 +44,7 @@ public class TARDISHorse {
     private Variant horsevariant;
     private ItemStack[] horseinventory;
     private boolean haschest;
+    private boolean leashed;
     private int domesticity;
     private double jumpstrength;
     private double speed;
@@ -140,6 +141,14 @@ public class TARDISHorse {
 
     public void setHasChest(boolean haschest) {
         this.haschest = haschest;
+    }
+
+    public boolean isLeashed() {
+        return leashed;
+    }
+
+    public void setLeashed(boolean leashed) {
+        this.leashed = leashed;
     }
 
     public int getDomesticity() {

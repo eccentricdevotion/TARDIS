@@ -34,6 +34,7 @@ import org.bukkit.entity.EntityType;
 import static org.bukkit.entity.EntityType.OCELOT;
 import static org.bukkit.entity.EntityType.WOLF;
 import org.bukkit.entity.Horse;
+import org.bukkit.entity.LeashHitch;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.MushroomCow;
 import org.bukkit.entity.Ocelot;
@@ -175,6 +176,12 @@ public class TARDISFarmer {
                             TardisHorseSpeed ths = (TardisHorseSpeed) plugin.pm.getPlugin("TardisHorseSpeed");
                             double speed = ths.getHorseSpeed(horse);
                             tmhor.setSpeed(speed);
+                        }
+                        // check the leash
+                        if (horse.isLeashed()) {
+                            LeashHitch lh = (LeashHitch) horse.getLeashHolder();
+                            tmhor.setLeashed(true);
+                            lh.remove();
                         }
                         old_macd_had_a_horse.add(tmhor);
                         e.remove();
@@ -390,6 +397,12 @@ public class TARDISFarmer {
                                     ItemStack bard = inv.getItem(armour_slot);
                                     equine.getInventory().setArmor(bard);
                                 }
+                            }
+                            if (e.isLeashed()) {
+                                Inventory pinv = p.getInventory();
+                                ItemStack leash = new ItemStack(Material.LEASH, 1);
+                                pinv.addItem(leash);
+                                p.updateInventory();
                             }
                             if (plugin.pm.isPluginEnabled("TardisHorseSpeed")) {
                                 TardisHorseSpeed ths = (TardisHorseSpeed) plugin.pm.getPlugin("TardisHorseSpeed");
