@@ -79,20 +79,20 @@ public class TARDISDoorListener implements Listener {
         this.plugin = plugin;
         // yaw adjustments if inner and outer door directions are different
         adjustYaw[0][0] = 0;
-        adjustYaw[0][1] = -90;
+        adjustYaw[0][1] = 90;
         adjustYaw[0][2] = 180;
-        adjustYaw[0][3] = 90;
-        adjustYaw[1][0] = 90;
+        adjustYaw[0][3] = -90;
+        adjustYaw[1][0] = -90;
         adjustYaw[1][1] = 0;
-        adjustYaw[1][2] = -90;
+        adjustYaw[1][2] = 90;
         adjustYaw[1][3] = 180;
         adjustYaw[2][0] = 180;
-        adjustYaw[2][1] = 90;
+        adjustYaw[2][1] = -90;
         adjustYaw[2][2] = 0;
-        adjustYaw[2][3] = -90;
-        adjustYaw[3][0] = -90;
+        adjustYaw[2][3] = 90;
+        adjustYaw[3][0] = 90;
         adjustYaw[3][1] = 180;
-        adjustYaw[3][2] = 90;
+        adjustYaw[3][2] = -90;
         adjustYaw[3][3] = 0;
     }
 
@@ -148,6 +148,21 @@ public class TARDISDoorListener implements Listener {
                         if (material.equals(m)) {
                             TARDISConstants.COMPASS dd = rsd.getDoor_direction();
                             int doortype = rsd.getDoor_type();
+                            int end_doortype;
+                            switch (doortype) {
+                                case 0:
+                                    end_doortype = 1;
+                                    break;
+                                case 2:
+                                    end_doortype = 3;
+                                    break;
+                                case 3:
+                                    end_doortype = 2;
+                                    break;
+                                default:
+                                    end_doortype = 0;
+                                    break;
+                            }
                             if (action == Action.LEFT_CLICK_BLOCK) {
                                 // must be the owner
                                 int id = rsd.getTardis_id();
@@ -223,12 +238,12 @@ public class TARDISDoorListener implements Listener {
                                 if (rs.resultSet()) {
                                     int artron = rs.getArtron_level();
                                     int required = plugin.getArtronConfig().getInt("backdoor");
-                                    TARDISConstants.COMPASS d = rs.getDirection();
                                     String tl = rs.getOwner();
                                     String current = rs.getCurrent();
                                     float yaw = player.getLocation().getYaw();
                                     float pitch = player.getLocation().getPitch();
                                     String companions = rs.getCompanions();
+                                    TARDISConstants.COMPASS d_backup = rs.getDirection();
                                     // get quotes player prefs
                                     boolean userQuotes;
                                     boolean userTP;
@@ -240,6 +255,19 @@ public class TARDISDoorListener implements Listener {
                                         userTP = false;
                                     }
                                     List<TARDISMob> pets = null;
+                                    // get players direction
+                                    TARDISConstants.COMPASS pd = TARDISConstants.COMPASS.valueOf(plugin.utils.getPlayersDirection(player, false));                                    // get the other door direction
+                                    TARDISConstants.COMPASS d;
+                                    HashMap<String, Object> other = new HashMap<String, Object>();
+                                    other.put("tardis_id", id);
+                                    other.put("door_type", end_doortype);
+                                    ResultSetDoors rse = new ResultSetDoors(plugin, other, false);
+                                    if (rse.resultSet()) {
+                                        d = rse.getDoor_direction();
+                                    } else {
+                                        d = d_backup;
+                                    }
+                                    plugin.debug("this door direction: " + dd + ", end door direction: " + d);
                                     switch (doortype) {
                                         case 1:
                                         case 4:
@@ -334,8 +362,8 @@ public class TARDISDoorListener implements Listener {
                                                 cw.getChunkAt(tmp_loc).load();
                                                 tmp_loc.setPitch(pitch);
                                                 // get inner door direction so we can adjust yaw if necessary
-                                                if (!innerD.equals(d)) {
-                                                    yaw += adjustYaw(d, innerD);
+                                                if (!innerD.equals(pd)) {
+                                                    yaw += adjustYaw(pd, innerD);
                                                 }
                                                 tmp_loc.setYaw(yaw);
                                                 final Location tardis_loc = tmp_loc;
@@ -373,7 +401,7 @@ public class TARDISDoorListener implements Listener {
                                                 return;
                                             }
                                             TARDISConstants.COMPASS ibdd = ibdl.getD();
-                                            TARDISConstants.COMPASS ipd = TARDISConstants.COMPASS.valueOf(plugin.utils.getPlayersDirection(player, false));
+                                            TARDISConstants.COMPASS ipd = TARDISConstants.COMPASS.valueOf(plugin.utils.getPlayersDirection(player, true));
                                             if (!ibdd.equals(ipd)) {
                                                 yaw += adjustYaw(ipd, ibdd);
                                             }
@@ -647,11 +675,11 @@ public class TARDISDoorListener implements Listener {
      */
     private float adjustYaw(TARDISConstants.COMPASS d1, TARDISConstants.COMPASS d2) {
         switch (d1) {
-            case NORTH:
+            case EAST:
                 return adjustYaw[0][d2.ordinal()];
-            case WEST:
-                return adjustYaw[1][d2.ordinal()];
             case SOUTH:
+                return adjustYaw[1][d2.ordinal()];
+            case WEST:
                 return adjustYaw[2][d2.ordinal()];
             default:
                 return adjustYaw[3][d2.ordinal()];
