@@ -179,9 +179,11 @@ public class TARDISFarmer {
                         }
                         // check the leash
                         if (horse.isLeashed()) {
-                            LeashHitch lh = (LeashHitch) horse.getLeashHolder();
+                            Entity leash = horse.getLeashHolder();
                             tmhor.setLeashed(true);
-                            lh.remove();
+                            if (leash instanceof LeashHitch) {
+                                leash.remove();
+                            }
                         }
                         old_macd_had_a_horse.add(tmhor);
                         e.remove();
