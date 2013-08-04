@@ -210,7 +210,7 @@ public class TARDISRoomRunnable implements Runnable {
                 wheref.put("tardis_id", tardis_id);
                 qf.doUpdate("tardis", setf, wheref);
                 // replace with floor material
-                id = floor_id;
+                id = (floor_id == 35 && floor_data == 8 && plugin.getConfig().getBoolean("use_clay")) ? 159 : floor_id;
                 data = floor_data;
             }
             // set stable
