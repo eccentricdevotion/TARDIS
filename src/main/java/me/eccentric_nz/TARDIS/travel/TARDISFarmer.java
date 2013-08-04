@@ -19,6 +19,8 @@ package me.eccentric_nz.TARDIS.travel;
 import com.onarandombox.multiverseinventories.MultiverseInventories;
 import com.onarandombox.multiverseinventories.api.GroupManager;
 import com.onarandombox.multiverseinventories.api.profile.WorldGroupProfile;
+import com.onarandombox.multiverseinventories.api.share.Sharables;
+import com.onarandombox.multiverseinventories.api.share.Shares;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -94,7 +96,12 @@ public class TARDISFarmer {
             if (gm.hasGroup(from)) {
                 List<WorldGroupProfile> profiles = gm.getGroupsForWorld(from);
                 for (WorldGroupProfile wgp : profiles) {
-                    if (!wgp.containsWorld(to)) {
+                    if (wgp.containsWorld(to)) {
+                        Shares shares = wgp.getShares();
+                        if (!shares.isSharing(Sharables.INVENTORY) && !shares.isSharing(Sharables.ALL_INVENTORY) && !shares.isSharing(Sharables.ALL_DEFAULT)) {
+                            allow = false;
+                        }
+                    } else {
                         allow = false;
                     }
                 }
