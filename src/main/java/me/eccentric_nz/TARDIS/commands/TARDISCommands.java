@@ -832,6 +832,7 @@ public class TARDISCommands implements CommandExecutor {
                         HashMap<String, Object> where = new HashMap<String, Object>();
                         where.put("owner", player.getName());
                         ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
+                        String rail = rs.getRail();
                         if (!rs.resultSet()) {
                             sender.sendMessage(plugin.pluginName + "You are not a Timelord. You need to create a TARDIS first before using this command!");
                             return false;
@@ -844,6 +845,10 @@ public class TARDISCommands implements CommandExecutor {
                                 sender.sendMessage(plugin.pluginName + "You are not inside your TARDIS. You need to be to run this command!");
                                 return false;
                             }
+                        }
+                        if (tardis_block.equals("rail") && rail.isEmpty()) {
+                            player.sendMessage(plugin.pluginName + "You need to grow a rail room before you can update its position.");
+                            return true;
                         }
                         plugin.trackPlayers.put(player.getName(), tardis_block);
                         player.sendMessage(plugin.pluginName + "Click the TARDIS " + tardis_block + " to update its position.");
