@@ -351,11 +351,11 @@ public class TARDISDoorListener implements Listener {
                                                 Location tmp_loc = idl.getL();
                                                 World cw = idl.getW();
                                                 TARDISConstants.COMPASS innerD = idl.getD();
-                                                // check for entities in the police box
+                                                // check for entities near the police box
                                                 if (plugin.getConfig().getBoolean("allow_mob_farming") && player.hasPermission("tardis.farm") && !plugin.trackFarming.contains(playerNameStr)) {
                                                     plugin.trackFarming.add(playerNameStr);
                                                     TARDISFarmer tf = new TARDISFarmer(plugin);
-                                                    pets = tf.farmAnimals(block_loc, d, id, player);
+                                                    pets = tf.farmAnimals(block_loc, d, id, player, tmp_loc.getWorld().getName(), playerWorld.getName());
                                                 }
                                                 // enter TARDIS!
                                                 playDoorSound(player, playerWorld, block_loc);

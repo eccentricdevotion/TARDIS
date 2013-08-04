@@ -16,6 +16,9 @@
  */
 package me.eccentric_nz.TARDIS.travel;
 
+import com.onarandombox.multiverseinventories.MultiverseInventories;
+import com.onarandombox.multiverseinventories.api.GroupManager;
+import com.onarandombox.multiverseinventories.api.profile.WorldGroupProfile;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -83,7 +86,26 @@ public class TARDISFarmer {
      * @param p the player to award achievements or give spawn eggs to
      * @return a List of the player's pets (if any are nearby)
      */
-    public List<TARDISMob> farmAnimals(Location l, COMPASS d, int id, final Player p) {
+    public List<TARDISMob> farmAnimals(Location l, COMPASS d, int id, final Player p, String to, String from) {
+        if (plugin.pm.isPluginEnabled("Multiverse-Inventories")) {
+            MultiverseInventories mvi = (MultiverseInventories) plugin.pm.getPlugin("Multiverse-Inventories");
+            GroupManager gm = mvi.getGroupManager();
+            boolean allow = true;
+            if (gm.hasGroup(from)) {
+                List<WorldGroupProfile> profiles = gm.getGroupsForWorld(from);
+                for (WorldGroupProfile wgp : profiles) {
+                    if (!wgp.containsWorld(to)) {
+                        allow = false;
+                    }
+                }
+            } else {
+                allow = false;
+            }
+            if (!allow) {
+                p.sendMessage(plugin.pluginName + "You cannot farm mobs from worlds that do not share your TARDIS world's inventory!");
+                return null;
+            }
+        }
         List<TARDISMob> old_macd_had_a_pet = new ArrayList<TARDISMob>();
         switch (d) {
             case NORTH:
