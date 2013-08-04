@@ -16,11 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.travel;
 
-import com.onarandombox.multiverseinventories.MultiverseInventories;
-import com.onarandombox.multiverseinventories.api.GroupManager;
-import com.onarandombox.multiverseinventories.api.profile.WorldGroupProfile;
-import com.onarandombox.multiverseinventories.api.share.Sharables;
-import com.onarandombox.multiverseinventories.api.share.Shares;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -28,6 +23,7 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants.COMPASS;
 import me.eccentric_nz.TARDIS.achievement.TARDISAchievementFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
+import me.eccentric_nz.TARDIS.utility.TARDISMultiverseInventoriesChecker;
 import me.eccentric_nz.tardishorsespeed.TardisHorseSpeed;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -90,25 +86,8 @@ public class TARDISFarmer {
      */
     public List<TARDISMob> farmAnimals(Location l, COMPASS d, int id, final Player p, String to, String from) {
         if (plugin.pm.isPluginEnabled("Multiverse-Inventories")) {
-            MultiverseInventories mvi = (MultiverseInventories) plugin.pm.getPlugin("Multiverse-Inventories");
-            GroupManager gm = mvi.getGroupManager();
-            boolean allow = true;
-            if (gm.hasGroup(from)) {
-                List<WorldGroupProfile> profiles = gm.getGroupsForWorld(from);
-                for (WorldGroupProfile wgp : profiles) {
-                    if (wgp.containsWorld(to)) {
-                        Shares shares = wgp.getShares();
-                        if (!shares.isSharing(Sharables.INVENTORY) && !shares.isSharing(Sharables.ALL_INVENTORY) && !shares.isSharing(Sharables.ALL_DEFAULT)) {
-                            allow = false;
-                        }
-                    } else {
-                        allow = false;
-                    }
-                }
-            } else {
-                allow = false;
-            }
-            if (!allow) {
+            TARDISMultiverseInventoriesChecker tmic = new TARDISMultiverseInventoriesChecker(plugin);
+            if (!tmic.checkMVI(from, to)) {
                 p.sendMessage(plugin.pluginName + "You cannot farm mobs from worlds that do not share your TARDIS world's inventory!");
                 return null;
             }
