@@ -301,6 +301,9 @@ public class TARDISInformationSystemListener implements Listener {
                     }
                     break;
                 case TARDIS:
+                    if (chat.equalsIgnoreCase("ab")) {
+                        showCommand(p, TARDISInfoMenu.TARDIS_ABORT);
+                    }
                     if (chat.equalsIgnoreCase("a")) {
                         showCommand(p, TARDISInfoMenu.TARDIS_ADD);
                     }

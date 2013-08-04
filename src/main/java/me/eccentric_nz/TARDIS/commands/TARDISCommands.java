@@ -89,6 +89,7 @@ public class TARDISCommands implements CommandExecutor {
         transparent.add((byte) 101); // IRON_FENCE
         transparent.add((byte) 106); // VINE
         // add first arguments
+        firstArgs.add("abort");
         firstArgs.add("add");
         firstArgs.add("chameleon");
         firstArgs.add("check_loc");
@@ -512,6 +513,21 @@ public class TARDISCommands implements CommandExecutor {
                         return true;
                     } else {
                         sender.sendMessage(plugin.pluginName + TARDISConstants.NO_PERMS_MESSAGE);
+                        return false;
+                    }
+                }
+                if (args[0].equalsIgnoreCase("abort")) {
+                    if (args.length < 2) {
+                        player.sendMessage(plugin.pluginName + "You must specify the task ID number!");
+                        return false;
+                    }
+                    try {
+                        int task = Integer.parseInt(args[1]);
+                        plugin.getServer().getScheduler().cancelTask(task);
+                        player.sendMessage(plugin.pluginName + "Task aborted!");
+                        return true;
+                    } catch (NumberFormatException nfe) {
+                        player.sendMessage(plugin.pluginName + "Task ID is not a number!");
                         return false;
                     }
                 }

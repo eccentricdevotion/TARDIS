@@ -102,6 +102,7 @@ public enum TARDISInfoMenu {
     MANUAL("TIS|Manual", "TIS", "M"),
     COMMANDS("TIS|Commands", "TIS", "o"),
     TARDIS("TIS|Commands|TARDIS Commands", "COMMANDS", "T"),
+    TARDIS_ABORT("TIS|Commands|TARDIS Commands|abort", "TARDIS", "ab"),
     TARDIS_ADD("TIS|Commands|TARDIS Commands|add", "TARDIS", "a"),
     TARDIS_CHAMELEON("TIS|Commands|TARDIS Commands|chameleon", "TARDIS", "c"),
     TARDIS_COMEHERE("TIS|Commands|TARDIS Commands|comehere", "TARDIS", "com"),

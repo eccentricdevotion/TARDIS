@@ -144,6 +144,7 @@ public class TARDISRoomBuilder {
             TARDISRoomRunnable runnable = new TARDISRoomRunnable(plugin, roomData, p);
             int taskID = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, runnable, delay, delay);
             runnable.setTask(taskID);
+            p.sendMessage(plugin.pluginName + "To cancel growing this room use the command /tardis abort " + taskID);
         }
         return true;
     }

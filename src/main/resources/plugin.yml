@@ -137,8 +137,10 @@ permissions:
       tardis.room.mushroom: true
       tardis.room.passage: true
       tardis.room.pool: true
+      tardis.room.rail: true
       tardis.room.stable: true
       tardis.room.vault: true
+      tardis.room.village: true
       tardis.room.wood: true
       tardis.room.workshop: true
     default: op
@@ -277,6 +279,11 @@ commands:
     room:
       description: Grow a TARDIS room.
       usage: /<command> room [room type|help]
+      permission: tardis.room
+      permission-message: You don't have the permission <permission> to use this command
+    abort:
+      description: Stop growing a TARDIS room.
+      usage: /<command> abort [task ID number]
       permission: tardis.room
       permission-message: You don't have the permission <permission> to use this command
     version:
