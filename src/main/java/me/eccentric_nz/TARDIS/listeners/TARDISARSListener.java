@@ -97,7 +97,7 @@ public class TARDISARSListener implements Listener {
             final Player player = (Player) event.getWhoClicked();
             String playerNameStr = player.getName();
             int slot = event.getRawSlot();
-            if (slot < 54) {
+            if (slot >= 0 && slot < 54) {
                 switch (slot) {
                     case 1:
                     case 9:

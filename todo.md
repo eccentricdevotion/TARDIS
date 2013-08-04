@@ -4,6 +4,7 @@
 1. Test landing underwater
 2. Jettison the whole room (including walls), will require new room schematics... (in progress)
 3. Architectural Reconfiguration System (in progress)
+    * If `rooms_require_blocks` is `true`, only allow one room to be configured at a time?
 4. Remove the TARDIS creation block stack, and make a special seed block that determines the type of TARDIS that will be grown. Use custom configurable recipes - the recipes will still include precious block/lapis block/redstone torch, but 4 other blocks will set:
     * TARDIS wall block
     * TARDIS floor block

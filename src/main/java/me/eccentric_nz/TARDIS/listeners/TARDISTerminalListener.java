@@ -81,7 +81,7 @@ public class TARDISTerminalListener implements Listener {
         if (name.equals("§4Destination Terminal")) {
             event.setCancelled(true);
             int slot = event.getRawSlot();
-            if (slot < 54) {
+            if (slot >= 0 && slot < 54) {
                 final Player player = (Player) event.getWhoClicked();
                 String playerNameStr = player.getName();
                 // get the TARDIS the player is in
