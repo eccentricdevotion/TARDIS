@@ -178,14 +178,35 @@ public enum TARDISInfoMenu {
     TARDISTRAVEL_BIOME("TIS|Commands|Travel Commands|biome", "TARDISTRAVEL", "b"),
     TIME_TRAVEL("TIS|Manual|Time Travel", "MANUAL", "T"),
     CONSOLE_BLOCKS("TIS|Manual|Console Blocks", "MANUAL", "C"),
-    TARDIS_CONTROLS("TIS|Manual|TARDIS Controls", "MANUAL", "S"),
-    KEYBOARD("TIS|Manual|TARDIS Controls|Alternative Controls", "ALT_CONTROLS", "K"),
-    SAVE_SIGN("TIS|Manual|TARDIS Controls|Alternative Controls", "ALT_CONTROLS", "S"),
-    MALFUNCTIONS("TIS|Manual|TARDIS Controls", "TARDIS_CONTROLS", "M"),
-    ALT_CONTROLS("TIS|Manual|TARDIS Controls|Alternative Controls", "TARDIS_CONTROLS", "l"),
-    ARTRON("TIS|Manual|TARDIS Controls|Artron Energy Capacitor", "TARDIS_CONTROLS", "A"),
-    DOOR("TIS|Manual|Console Blocks", "CONSOLE_BLOCKS", "D"),
-    ;
+        CONSOLE_ARS("TIS|Manual|Console Blocks|ARS", "CONSOLE_BLOCKS", "A"),                    //A
+        ARTRON("TIS|Manual|Console Blocks|Artron Energy Compacitator", "CONSOLE_BLOCKS", "r"),  //r
+        BACKDOOR("TIS|Manual|Console Blocks|Backdoor", "CONSOLE_BLOCKS", "B"),                  //B
+        BUTTON("TIS|Manual|Console Blocks|Button", "CONSOLE_BLOCKS", "u"),                      //u
+        CHAMELEON("TIS|Manual|Console Blocks|Chameleon", "CONSOLE_BLOCKS", "C"),                //C
+        CONDENSER("TIS|Manual|Console Blocks|Condenser", "CONSOLE_BLOCKS", "o"),                //o
+        CREEPER("TIS|Manual|Console Blocks|Creeper", "CONSOLE_BLOCKS", "p"),                    //p
+        DOOR("TIS|Manual|Console Blocks|Door", "CONSOLE_BLOCKS", "D"),                          //D
+        EPS("TIS|Manual|Console Blocks|EPS", "CONSOLE_BLOCKS", "P"),                            //P
+        CONSOLE_FARM("TIS|Manual|Console Blocks|Farm", "CONSOLE_BLOCKS", "m"),                  //m
+        HANDBRAKE("TIS|Manual|Console Blocks|Handbrake", "CONSOLE_BLOCKS", "b"),                //a
+        INFO("TIS|Manual|Console Blocks|Information System", "CONSOLE_BLOCKS", "I"),            //I
+        KEYBOARD("TIS|Manual|Console Blocks|Keyboard", "CONSOLE_BLOCKS", "K"),                  //K
+   CONSOLE_BLOCKS_2("TIS|Manual|Console Blocks 2", "MANUAL", "o"),
+        LIGHT("TIS|Manual|Console Blocks 2|Light", "CONSOLE_BLOCKS_2", "L"),                    //L
+        CONSOLE_RAIL("TIS|Manual|Console Blocks 2|Rails", "CONSOLE_BLOCKS_2", "R"),             //R
+        SAVE_SIGN("TIS|Manual|Console Blocks 2|Save Sign", "CONSOLE_BLOCKS_2", "S"),            //S
+        SCANNER("TIS|Manual|Console Blocks 2|Scanner", "CONSOLE_BLOCKS_2", "c"),                //c
+        CONSOLE_STABLE("TIS|Manual|Console Blocks 2|Stable", "CONSOLE_BLOCKS_2", "t"),          //t
+        TERMINAL("TIS|Manual|Console Blocks 2|Terminal", "CONSOLE_BLOCKS_2", "T"),              //T
+        TEMPORAL("TIS|Manual|Console Blocks 2|Temporal Locator", "CONSOLE_BLOCKS_2", "m"),      //m
+        WORLD_REPEATER("TIS|Manual|Console Blocks 2|World Repeater", "CONSOLE_BLOCKS_2", "W"),  //W
+        X_REPEATER("TIS|Manual|Console Blocks 2|X Repeater", "CONSOLE_BLOCKS_2", "X"),          //X
+        Y_REPEATER("TIS|Manual|Console Blocks 2|Y Repeater", "CONSOLE_BLOCKS_2", "Y"),          //Y
+        Z_REPEATER("TIS|Manual|Console Blocks 2|Z Repeater", "CONSOLE_BLOCKS_2", "Z"),          //Z
+   TARDIS_CONTROLS("TIS|Manual|TARDIS Controls", "MANUAL", "S"),
+   MALFUNCTIONS("TIS|Manual|TARDIS Controls", "TARDIS_CONTROLS", "M"),
+   ALT_CONTROLS("TIS|Manual|TARDIS Controls|Alternative Controls", "TARDIS_CONTROLS", "l"),
+   ;
     private final String name;
     private final String parent;
     private final String key;

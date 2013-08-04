@@ -86,6 +86,82 @@ public class TARDISInformationSystemListener implements Listener {
                     }
                     break;
                 // SECOND level menu
+                case CONSOLE_BLOCKS:
+                    if (chat.equalsIgnoreCase("A")) {
+                        showInfo(p, TARDISInfoMenu.CONSOLE_ARS);
+                    }
+                    if (chat.equalsIgnoreCase("r")) {
+                        showInfo(p, TARDISInfoMenu.ARTRON);
+                    }
+                    if (chat.equalsIgnoreCase("B")) {
+                        showInfo(p, TARDISInfoMenu.BACKDOOR);
+                    }
+                    if (chat.equalsIgnoreCase("u")) {
+                        showInfo(p, TARDISInfoMenu.BUTTON);
+                    }
+                    if (chat.equalsIgnoreCase("C")) {
+                        showInfo(p, TARDISInfoMenu.CHAMELEON);
+                    }
+                    if (chat.equalsIgnoreCase("o")) {
+                        showInfo(p, TARDISInfoMenu.CONDENSER);
+                    }
+                    if (chat.equalsIgnoreCase("p")) {
+                        showInfo(p, TARDISInfoMenu.CREEPER);
+                    }
+                    if (chat.equalsIgnoreCase("D")) {
+                        showInfo(p, TARDISInfoMenu.DOOR);
+                    }
+                    if (chat.equalsIgnoreCase("P")) {
+                        showInfo(p, TARDISInfoMenu.EPS);
+                    }
+                    if (chat.equalsIgnoreCase("m")) {
+                        showInfo(p, TARDISInfoMenu.CONSOLE_FARM);
+                    }
+                    if (chat.equalsIgnoreCase("b`")) {
+                        showInfo(p, TARDISInfoMenu.HANDBRAKE);
+                    }
+                    if (chat.equalsIgnoreCase("I")) {
+                        showInfo(p, TARDISInfoMenu.INFO);
+                    }
+                    if (chat.equalsIgnoreCase("K")) {
+                        showInfo(p, TARDISInfoMenu.KEYBOARD);
+                    }
+                    break;
+                case CONSOLE_BLOCKS_2:
+                    if (chat.equalsIgnoreCase("L")) {
+                        showInfo(p, TARDISInfoMenu.LIGHT);
+                    }
+                    if (chat.equalsIgnoreCase("R")) {
+                        showInfo(p, TARDISInfoMenu.CONSOLE_RAIL);
+                    }
+                    if (chat.equalsIgnoreCase("S")) {
+                        showInfo(p, TARDISInfoMenu.SAVE_SIGN);
+                    }
+                    if (chat.equalsIgnoreCase("c")) {
+                        showInfo(p, TARDISInfoMenu.SCANNER);
+                    }
+                    if (chat.equalsIgnoreCase("t")) {
+                        showInfo(p, TARDISInfoMenu.CONSOLE_STABLE);
+                    }
+                    if (chat.equalsIgnoreCase("T")) {
+                        showInfo(p, TARDISInfoMenu.TERMINAL);
+                    }
+                    if (chat.equalsIgnoreCase("m")) {
+                        showInfo(p, TARDISInfoMenu.TEMPORAL);
+                    }
+                    if (chat.equalsIgnoreCase("W")) {
+                        showInfo(p, TARDISInfoMenu.WORLD_REPEATER);
+                    }
+                    if (chat.equalsIgnoreCase("X")) {
+                        showInfo(p, TARDISInfoMenu.X_REPEATER);
+                    }
+                    if (chat.equalsIgnoreCase("Y")) {
+                        showInfo(p, TARDISInfoMenu.Y_REPEATER);
+                    }
+                    if (chat.equalsIgnoreCase("Z")) {
+                        showInfo(p, TARDISInfoMenu.Z_REPEATER);
+                    }
+                    break;
                 case ITEMS:
                     if (chat.equalsIgnoreCase("K")) {
                         processKey(p, TARDISInfoMenu.KEY);
@@ -117,6 +193,9 @@ public class TARDISInformationSystemListener implements Listener {
                     }
                     if (chat.equalsIgnoreCase("C")) {
                         processKey(p, TARDISInfoMenu.CONSOLE_BLOCKS);
+                    }
+                    if (chat.equalsIgnoreCase("o")) {
+                        processKey(p, TARDISInfoMenu.CONSOLE_BLOCKS_2);
                     }
                     if (chat.equalsIgnoreCase("S")) {
                         processKey(p, TARDISInfoMenu.TARDIS_CONTROLS);
