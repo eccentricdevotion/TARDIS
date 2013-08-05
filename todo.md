@@ -10,9 +10,8 @@
     * TARDIS floor block
     * Police Box wall block - if not specified then plain tardis
     * Police Box lamp block - if not specified then plain tardis
-4. While doing [4], add one slot for a custom console
-5. HADS + explosions + fireballs + lava
-6. Permission-based world creation - player's without permission use the default world, those with it get a TARDIS_WORLD
+5. While doing [4], add one slot for a custom console
+6. HADS + explosions + fireballs + lava
 7. Put farmland, crops, buttons, levers and signs on last when growing rooms
 8. Add areas to save-sign?
 9. Sonic Screwdrivers
@@ -20,7 +19,7 @@
 11. Chameleon presets (in progress)
     * Grass mound
     * Allow wood doors to be exterior TARDIS doors
-12. Make the wood and baker secondary console rooms into fully fledged TARDISes, build ARS TARDIS
+12. Make the wood and baker secondary console rooms into fully fledged TARDISes, build ARS TARDIS (in progress)
 13. Temporal Invisibility (in progress)
 14. Village room and villager farming
 
