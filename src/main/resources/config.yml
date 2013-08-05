@@ -57,6 +57,7 @@ admin_item: 264
 wall_id: 35
 wall_data: 11
 tardis_lamp: 50
+platform_ID: 35
 plain_on: false
 stattenheim: FLINT
 use_clay: false
