@@ -133,7 +133,7 @@ public class TARDISBuilderPoliceBox {
     public void addPlatform(Location l, boolean rebuild, TARDISConstants.COMPASS d, String p, int id) {
         int plusx, minusx, x, y, plusz, minusz, z;
         byte grey = 8;
-        int platform_id = plugin.getConfig().getInt("platform_ID");
+        int platform_id = plugin.getConfig().getInt("platform_id");
         // add platform if configured and necessary
         World world = l.getWorld();
         x = l.getBlockX();
