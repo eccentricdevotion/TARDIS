@@ -180,13 +180,13 @@ public class TARDISScannerListener implements Listener {
                     }
                     long time = scan_loc.getWorld().getTime();
                     String daynight = getTime(time);
-                                        //get TARDIS direction
+                    //get TARDIS direction
                     TARDISConstants.COMPASS tardisDirection = rs.getDirection();
                     // message the player
                     player.sendMessage(plugin.pluginName + "Scanner results for the TARDIS's " + whereisit);
                     player.sendMessage("World: " + scan_loc.getWorld().getName());
                     player.sendMessage("Co-ordinates: " + scan_loc.getBlockX() + ":" + scan_loc.getBlockY() + ":" + scan_loc.getBlockZ());
-                    player.sendMessage("TARDIS Direction: "+ tardisDirection);
+                    player.sendMessage("TARDIS Direction: " + tardisDirection);
                     // get biome
                     Biome biome = scan_loc.getBlock().getBiome();
                     player.sendMessage("Biome type: " + biome);

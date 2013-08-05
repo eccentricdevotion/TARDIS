@@ -200,7 +200,7 @@ public class TARDISInformationSystemListener implements Listener {
                     }
                     if (chat.equalsIgnoreCase("S")) {
                         processKey(p, TARDISInfoMenu.TARDIS_CONTROLS);
-                    }                   
+                    }
                     break;
                 case TARDIS_CONTROLS:
                     if (chat.equalsIgnoreCase("A")) {
@@ -217,10 +217,10 @@ public class TARDISInformationSystemListener implements Listener {
                     }
                     break;
                 case TIME_TRAVEL:
-                    
+
                     break;
                 case ALT_CONTROLS:
-                    if (chat.equalsIgnoreCase("S")){ 
+                    if (chat.equalsIgnoreCase("S")) {
                         processKey(p, TARDISInfoMenu.SAVE_SIGN);
                     }
                     if (chat.equalsIgnoreCase("K")) {
@@ -228,7 +228,7 @@ public class TARDISInformationSystemListener implements Listener {
                     }
                     break;
                 case DOOR:
-                    showInfo(p, TARDISInfoMenu.KEYBOARD);
+                    showInfo(p, TARDISInfoMenu.DOOR);
                     break;
                 case COMMANDS:
                     if (chat.equalsIgnoreCase("T")) {
