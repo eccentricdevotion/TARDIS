@@ -180,6 +180,7 @@ public class TARDISConfiguration {
         intOptions.put("wall_id", 35);
         intOptions.put("wall_data", 11);
         intOptions.put("tardis_lamp", 50);
+        intOptions.put("platform_id", 35);
         roomIntOptions.put("rooms.ANTIGRAVITY.cost", 625);
         roomIntOptions.put("rooms.ANTIGRAVITY.offset", 0);
         roomIntOptions.put("rooms.ARBORETUM.cost", 325);
