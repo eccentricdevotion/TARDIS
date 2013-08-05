@@ -74,6 +74,7 @@ public class TARDISConfiguration {
         boolOptions.put("check_for_updates", true);
         boolOptions.put("conversion_done", false);
         boolOptions.put("create_worlds", true);
+        boolOptions.put("create_worlds_with_perms", false);
         boolOptions.put("custom_schematic", false);
         boolOptions.put("debug", false);
         boolOptions.put("default_world", false);

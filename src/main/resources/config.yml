@@ -25,6 +25,7 @@ timeout_height: 135
 name_tardis: false
 border_radius: 64
 create_worlds: true
+create_worlds_with_perms: false
 gamemode: survival
 materialise: true
 confirm_timeout: 15

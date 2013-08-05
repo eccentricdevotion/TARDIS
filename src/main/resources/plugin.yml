@@ -43,6 +43,9 @@ permissions:
   tardis.create:
     description: Allow players to create a TARDIS.
     default: op
+  tardis.create_world:
+    description: Allow players to create a TARDIS in it's own world. This is only used in conjuction with the create_worlds_with_perms config option.
+    default: op
   tardis.exterminate:
     description: Allow players to delete their own TARDIS.
     default: op

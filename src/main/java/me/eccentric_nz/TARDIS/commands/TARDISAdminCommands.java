@@ -113,6 +113,7 @@ public class TARDISAdminCommands implements CommandExecutor {
         firstsBool.add("chameleon");
         firstsBool.add("check_for_updates");
         firstsBool.add("create_worlds");
+        firstsBool.add("create_worlds_with_perms");
         firstsBool.add("debug");
         firstsBool.add("default_world");
         firstsBool.add("emergency_npc");

@@ -209,6 +209,13 @@ public class TARDISBlockPlaceListener implements Listener {
                             chunkworld = space.getTardisWorld(cw);
                             cx = 0;
                             cz = 0;
+                        } else if (plugin.getConfig().getBoolean("default_world") && plugin.getConfig().getBoolean("create_worlds_with_perms") && player.hasPermission("tardis.create_world")) {
+                            // create a new world to store this TARDIS
+                            cw = "TARDIS_WORLD_" + playerNameStr;
+                            TARDISSpace space = new TARDISSpace(plugin);
+                            chunkworld = space.getTardisWorld(cw);
+                            cx = 0;
+                            cz = 0;
                         } else {
                             // check config to see whether we are using a default world to store TARDISes
                             if (plugin.getConfig().getBoolean("default_world")) {
