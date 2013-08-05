@@ -29,3 +29,5 @@ CVS
 .project
 .settings
 nb-configuration.xml
+
+.idea/

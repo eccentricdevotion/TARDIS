@@ -133,7 +133,7 @@ public class TARDISBuilderPoliceBox {
     public void addPlatform(Location l, boolean rebuild, TARDISConstants.COMPASS d, String p, int id) {
         int plusx, minusx, x, y, plusz, minusz, z;
         byte grey = 8;
-
+        int platform_id = plugin.getConfig().getInt("platform_ID");
         // add platform if configured and necessary
         World world = l.getWorld();
         x = l.getBlockX();
@@ -180,9 +180,9 @@ public class TARDISBuilderPoliceBox {
                     Material mat = pb.getType();
                     if (mat == Material.AIR || mat == Material.STATIONARY_WATER || mat == Material.WATER || mat == Material.VINE || mat == Material.RED_MUSHROOM || mat == Material.BROWN_MUSHROOM || mat == Material.LONG_GRASS || mat == Material.SAPLING || mat == Material.DEAD_BUSH || mat == Material.RED_ROSE || mat == Material.YELLOW_FLOWER || mat == Material.SNOW) {
                         if (rebuild) {
-                            plugin.utils.setBlockAndRemember(world, pb.getX(), pb.getY(), pb.getZ(), 35, grey, id);
+                            plugin.utils.setBlockAndRemember(world, pb.getX(), pb.getY(), pb.getZ(), platform_id, grey, id);
                         } else {
-                            plugin.utils.setBlock(world, pb.getX(), pb.getY(), pb.getZ(), 35, grey);
+                            plugin.utils.setBlock(world, pb.getX(), pb.getY(), pb.getZ(), platform_id, grey);
                         }
                         String p_tmp = world.getName() + ":" + pb.getX() + ":" + pb.getY() + ":" + pb.getZ() + ":" + mat.toString();
                         sb.append(p_tmp).append("~");

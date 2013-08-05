@@ -91,9 +91,8 @@
         <dependency>
             <groupId>org.getspout</groupId>
             <artifactId>spoutplugin</artifactId>
-            <version>1.6.2-R0.1-SNAPSHOT</version>
+            <version>1.5.2-R0.2-SNAPSHOT</version>
             <type>jar</type>
-            <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>com.sk89q</groupId>
@@ -154,9 +153,8 @@
         <dependency>
             <groupId>com.massivecraft</groupId>
             <artifactId>factions</artifactId>
-            <version>2.0.3</version>
+            <version>1.8.2</version>
             <type>jar</type>
-            <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>com.massivecraft</groupId>
@@ -170,6 +168,12 @@
             <artifactId>citizensapi</artifactId>
             <version>2.0.9-SNAPSHOT</version>
             <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.getspout</groupId>
+            <artifactId>spoutpluginapi</artifactId>
+            <version>dev-SNAPSHOT</version>
+            <type>jar</type>
         </dependency>
     </dependencies>
     <properties>
