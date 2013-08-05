@@ -69,18 +69,21 @@ public enum TARDISDescription {
     WOOD("A secondary console room made of wood."),
     WORKSHOP("Craft, smelt, brew, enchant and repair."),
     MALFUNCTIONS("When the TARDIS travels, there is a chance of a malfunctioning happening that deposits the TARDIS in an unexpected location."),
-    CONSOLE_ARS("INFO:The Architectural Reconfiguration System allows the player to add and remove rooms in the TARDIS\n"
+    CONSOLE_ARS("INFO: The Architectural Reconfiguration System allows the player to add and remove rooms in the TARDIS\n"
     + "USAGE: Right-click.\n"
     + "UPDATING: /tardis update ARS\n"
     + "BLOCK: SIGN"),
-    ARTRON("INFO: When pressed, the current percentage of Artron Energy in the reserves is displayed.\n"
-    + "USAGE: Right-click with any item other than the TARDIS key.\n"
+    ARTRON("INFO: When pressed, it performs various Artron Energy functions.\n"
+    + "USAGE: Right-click with the TARDIS key to initialise the Artron Energy Capacitor.\n"
+    + "USAGE: Right-click while sneaking to transfer Time Lord energy.\n"
+    + "USAGE: Right-click with the full charge item (default: NETHER_STAR) to boost the Artron Energy Capacitor to 100%.\n"
+    + "USAGE: Right-click with any item other than the TARDIS key to view the reserve percentage.\n"
     + "UPDATING: /tardis update artron\n"
     + "BLOCK: LEVER, STONE_BUTTON or WOOD_BUTTON"),
-    BACKDOOR("INFO: The backdoor allows an extra point of entry/exit in the TARDIS>\n"
+    BACKDOOR("INFO: The backdoor allows an extra point of entry/exit in the TARDIS\n"
     + "USAGE: Place an IRON_DOOR inside the TARDIS and another IRON_DOOR outside the TARDIS. Right-click to enter/exit.\n"
     + "UPDATING: /tardis update backdoor (on both IRON_DOORs)\n"
-    + "BLOCK: IRONDOOR"),
+    + "BLOCK: IRON_DOOR"),
     BUTTON("INFO: The button calculates a random destination to travel to based on the coordinate repeaters.\n"
     + "USAGE: Right-click.\n"
     + "UPDATING: /tardis update button\n"
