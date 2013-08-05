@@ -267,7 +267,6 @@ public class TARDISDoorListener implements Listener {
                                     } else {
                                         d = d_backup;
                                     }
-                                    plugin.debug("this door direction: " + dd + ", end door direction: " + d);
                                     switch (doortype) {
                                         case 1:
                                         case 4:
