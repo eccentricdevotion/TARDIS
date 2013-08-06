@@ -1,7 +1,7 @@
 # TODO
 
 ## Current version `2.6-beta-1`
-1. Test landing underwater
+1. Test landing underwater, platform_id, scanner direction
 2. Jettison the whole room (including walls), will require new room schematics... (in progress)
 3. Architectural Reconfiguration System (in progress)
     * If `rooms_require_blocks` is `true`, only allow one room to be configured at a time?

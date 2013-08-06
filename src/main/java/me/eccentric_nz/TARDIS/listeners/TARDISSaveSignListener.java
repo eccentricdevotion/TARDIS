@@ -82,10 +82,10 @@ public class TARDISSaveSignListener implements Listener {
                                 HashMap<String, Object> set = new HashMap<String, Object>();
                                 int l_size = lore.size();
                                 if (l_size >= 5) {
-                                    if (!lore.get(4).isEmpty()) {
+                                    if (!lore.get(4).isEmpty() && !lore.get(4).equals("§6Current location")) {
                                         set.put("direction", lore.get(4));
                                     }
-                                    if (l_size > 5 && !lore.get(5).isEmpty() && lore.get(5).equals("true")) {
+                                    if (l_size > 5 && !lore.get(5).isEmpty() && lore.get(5).equals("true") && !lore.get(5).equals("§6Current location")) {
                                         plugin.trackSubmarine.add(id);
                                     }
                                 }
