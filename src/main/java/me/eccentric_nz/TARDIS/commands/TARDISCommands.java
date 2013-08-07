@@ -848,11 +848,11 @@ public class TARDISCommands implements CommandExecutor {
                         HashMap<String, Object> where = new HashMap<String, Object>();
                         where.put("owner", player.getName());
                         ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
-                        String rail = rs.getRail();
                         if (!rs.resultSet()) {
                             sender.sendMessage(plugin.pluginName + "You are not a Timelord. You need to create a TARDIS first before using this command!");
                             return false;
                         }
+                        String rail = rs.getRail();
                         if (!tardis_block.equals("backdoor")) {
                             HashMap<String, Object> wheret = new HashMap<String, Object>();
                             wheret.put("player", player.getName());
