@@ -1,7 +1,7 @@
 # TODO
 
 ## Current version `2.6-beta-1`
-1. Test landing underwater, platform_id, scanner direction, TARDIS rescue
+1. Test landing underwater, platform_id, scanner direction
 2. Jettison the whole room (including walls), will require new room schematics... (in progress)
 3. Architectural Reconfiguration System (in progress)
     * If `rooms_require_blocks` is `true`, only allow one room to be configured at a time?
@@ -22,7 +22,6 @@
 12. Make the wood and baker secondary console rooms into fully fledged TARDISes, build ARS TARDIS (in progress)
 13. Temporal Invisibility (in progress)
 14. Village room and villager farming
-15. When creating / deleting TARDIS replace with AIR if world uses TARDISChunkGenerator
 
 ### Waiting on Bukkit API
 2. Get/set horse speed (Attribute API)

@@ -27,11 +27,8 @@ import me.eccentric_nz.TARDIS.TARDIS;
  * incarnations of the Doctor. The Doctor modified and ostensibly upgraded it
  * over the years, giving it an increasing number of applications.
  *
- * Control types:
- * 2 = environment-repeater
- * 3 = x-repeater
- * 4 = z-repeater
- * 5 = y-repeater
+ * Control types: 2 = environment-repeater 3 = x-repeater 4 = z-repeater 5 =
+ * y-repeater
  *
  * @author eccentric_nz
  */
@@ -107,7 +104,12 @@ public class ResultSetRepeaters {
         diodes[0] = plugin.utils.getLocationFromDB(str[0], 0, 0).getBlock().getData();
         diodes[1] = plugin.utils.getLocationFromDB(str[1], 0, 0).getBlock().getData();
         diodes[2] = plugin.utils.getLocationFromDB(str[2], 0, 0).getBlock().getData();
-        diodes[3] = plugin.utils.getLocationFromDB(str[3], 0, 0).getBlock().getData();
+        // temporary fix for NPE on Castrovalva - someone is missing a y-repeater record
+        if (str[3] != null) {
+            diodes[3] = plugin.utils.getLocationFromDB(str[3], 0, 0).getBlock().getData();
+        } else {
+            diodes[3] = plugin.utils.getLocationFromDB(str[2], 0, 0).getBlock().getData();
+        }
         return diodes;
     }
 }
