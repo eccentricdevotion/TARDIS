@@ -28,6 +28,7 @@ import static me.eccentric_nz.TARDIS.TARDISConstants.COMPASS.WEST;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
+import me.eccentric_nz.tardischunkgenerator.TARDISChunkGenerator;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.World;
@@ -82,8 +83,6 @@ public class TARDISExterminator {
                 TARDISConstants.SCHEMATIC schm = rs.getSchematic();
                 TARDISConstants.COMPASS d = rs.getDirection();
                 if (!rs.isHidden()) {
-                    // clear the torch
-//                    plugin.destroyPB.destroyPlatform(rs.getPlatform(), id);
                     plugin.destroyPB.destroyPoliceBox(bb_loc, d, id, false, false, false, null);
                 }
                 String[] chunkworld = chunkLoc.split(":");
@@ -216,7 +215,7 @@ public class TARDISExterminator {
 
     private int getRestore(World w) {
         World.Environment env = w.getEnvironment();
-        if (w.getWorldType() == WorldType.FLAT || w.getName().equals("TARDIS_TimeVortex")) {
+        if (w.getWorldType() == WorldType.FLAT || w.getName().equals("TARDIS_TimeVortex") || w.getGenerator() instanceof TARDISChunkGenerator) {
             return 0;
         }
         switch (env) {
