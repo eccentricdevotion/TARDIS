@@ -159,7 +159,7 @@
         <dependency>
             <groupId>com.massivecraft</groupId>
             <artifactId>mcore</artifactId>
-            <version>6.5.0</version>
+            <version>6.5.2</version>
             <type>jar</type>
             <scope>compile</scope>
         </dependency>

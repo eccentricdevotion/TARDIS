@@ -118,22 +118,27 @@ public class TARDISExterminator {
         if (player.hasPermission("tardis.delete")) {
             Block blockbehind = null;
             byte data = block.getData();
+            String direction = "";
             if (data == 4) {
                 blockbehind = block.getRelative(BlockFace.EAST, 2);
+                direction = "EAST";
             }
             if (data == 5) {
                 blockbehind = block.getRelative(BlockFace.WEST, 2);
+                direction = "WEST";
             }
             if (data == 3) {
                 blockbehind = block.getRelative(BlockFace.NORTH, 2);
+                direction = "NORTH";
             }
             if (data == 2) {
                 blockbehind = block.getRelative(BlockFace.SOUTH, 2);
+                direction = "SOUTH";
             }
             if (blockbehind != null) {
                 Block blockDown = blockbehind.getRelative(BlockFace.DOWN, 2);
                 Location bd_loc = blockDown.getLocation();
-                String bd_str = bd_loc.getWorld().getName() + ":" + bd_loc.getBlockX() + ":" + bd_loc.getBlockY() + ":" + bd_loc.getBlockZ();
+                String bd_str = bd_loc.getWorld().getName() + ":" + bd_loc.getBlockX() + ":" + bd_loc.getBlockY() + ":" + bd_loc.getBlockZ() + ":" + direction;
                 where.put("current", bd_str);
             } else {
                 player.sendMessage(plugin.pluginName + ChatColor.RED + "Could not get TARDIS save location!");
