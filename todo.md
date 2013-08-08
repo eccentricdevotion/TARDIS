@@ -21,8 +21,7 @@
     * Allow wood doors to be exterior TARDIS doors
 12. Make the wood and baker secondary console rooms into fully fledged TARDISes, build ARS TARDIS (in progress)
 13. Village room and villager farming
-14. Don't farm mobs, transfer horses or minecarts if door is locked
-15. Fix Multiverse-Inventory exploits
+14. Fix Multiverse-Inventory exploits for minecarts
 
 ### Waiting on Bukkit API
 2. Get/set horse speed (Attribute API)

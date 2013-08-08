@@ -206,6 +206,14 @@ public class TARDISUpdateListener implements Listener {
                 set.put("scanner", blockLocStr);
             }
             if (blockName.equalsIgnoreCase("handbrake") && blockType == Material.LEVER) {
+                // check for existing handbrake - there may not be one, as custom schematic may not have CAKE block
+                HashMap<String, Object> whereh = new HashMap<String, Object>();
+                whereh.put("tardis_id", id);
+                whereh.put("type", 0);
+                ResultSetControls rsc = new ResultSetControls(plugin, whereh, false);
+                if (!rsc.resultSet()) {
+                    qf.insertControl(id, 0, blockLocStr, 0);
+                }
                 if (secondary) {
                     qf.insertControl(id, 0, blockLocStr, 1);
                 } else {
