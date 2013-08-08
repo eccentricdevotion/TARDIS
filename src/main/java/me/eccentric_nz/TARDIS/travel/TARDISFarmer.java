@@ -23,7 +23,6 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants.COMPASS;
 import me.eccentric_nz.TARDIS.achievement.TARDISAchievementFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
-import me.eccentric_nz.TARDIS.utility.TARDISMultiverseInventoriesChecker;
 import me.eccentric_nz.tardishorsespeed.TardisHorseSpeed;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -86,9 +85,10 @@ public class TARDISFarmer {
      */
     public List<TARDISMob> farmAnimals(Location l, COMPASS d, int id, final Player p, String to, String from) {
         if (plugin.pm.isPluginEnabled("Multiverse-Inventories")) {
-            TARDISMultiverseInventoriesChecker tmic = new TARDISMultiverseInventoriesChecker(plugin);
-            if (!tmic.checkMVI(from, to)) {
-                p.sendMessage(plugin.pluginName + "You cannot farm mobs from worlds that do not share your TARDIS world's inventory!");
+            boolean canfarm = plugin.tmic.checkMVI(from, to);
+            if (!canfarm) {
+                p.sendMessage(plugin.pluginName + "You cannot farm mobs from this world.");
+                plugin.trackFarming.remove(p.getName());
                 return null;
             }
         }

@@ -96,6 +96,7 @@ import me.eccentric_nz.TARDIS.travel.TARDISArea;
 import me.eccentric_nz.TARDIS.utility.TARDISItemRecipes;
 import me.eccentric_nz.TARDIS.utility.TARDISCreeperChecker;
 import me.eccentric_nz.TARDIS.utility.TARDISFactionsChecker;
+import me.eccentric_nz.TARDIS.utility.TARDISMultiverseInventoriesChecker;
 import me.eccentric_nz.TARDIS.utility.TARDISSounds;
 import me.eccentric_nz.TARDIS.utility.TARDISTownyChecker;
 import me.eccentric_nz.TARDIS.utility.TARDISUtils;
@@ -256,6 +257,7 @@ public class TARDIS extends JavaPlugin {
     public Version preSUBversion = new Version("1.0");
     public TARDISTabCompleteAPI apiHandler;
     public TARDISChameleonPreset presets;
+    public TARDISMultiverseInventoriesChecker tmic;
 
     @Override
     public void onEnable() {
@@ -324,6 +326,9 @@ public class TARDIS extends JavaPlugin {
         }
         presets = new TARDISChameleonPreset();
         presets.makePresets();
+        if (pm.isPluginEnabled("Multiverse-Inventories")) {
+            tmic = new TARDISMultiverseInventoriesChecker(this);
+        }
     }
 
     @Override
