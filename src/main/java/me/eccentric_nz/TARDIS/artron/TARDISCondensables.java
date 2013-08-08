@@ -153,6 +153,7 @@ public class TARDISCondensables {
         condensables.put("LADDER", 1);
         condensables.put("LAPIS_BLOCK", 950);
         condensables.put("LAVA_BUCKET", 40);
+        condensables.put("LEASH", 70);
         condensables.put("LEATHER", 10);
         condensables.put("LEATHER_BOOTS", 42);
         condensables.put("LEATHER_CHESTPLATE", 85);
