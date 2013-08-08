@@ -21,6 +21,7 @@ import java.util.HashMap;
 import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
+import me.eccentric_nz.TARDIS.database.ResultSetDoors;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.travel.TARDISDoorLocation;
 import me.eccentric_nz.TARDIS.travel.TARDISHorse;
@@ -71,8 +72,17 @@ public class TARDISHorseListener implements Listener {
                     wherep.put("player", p.getName());
                     ResultSetTravellers rst = new ResultSetTravellers(plugin, wherep, false);
                     if (rst.resultSet() && pworld.contains("TARDIS")) {
+                        int id = rst.getTardis_id();
+                        HashMap<String, Object> whered = new HashMap<String, Object>();
+                        whered.put("tardis_id", id);
+                        whered.put("door_type", 1);
+                        ResultSetDoors rsd = new ResultSetDoors(plugin, whered, false);
+                        if (rsd.resultSet() && rsd.isLocked()) {
+                            p.sendMessage(plugin.pluginName + "You need to unlock the door!");
+                            return;
+                        }
                         // get spawn location
-                        TARDISDoorLocation dl = plugin.doorListener.getDoor(0, rst.getTardis_id());
+                        TARDISDoorLocation dl = plugin.doorListener.getDoor(0, id);
                         Location l = dl.getL();
                         switch (dl.getD()) {
                             case NORTH:

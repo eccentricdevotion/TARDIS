@@ -1,7 +1,7 @@
 # TODO
 
 ## Current version `2.6-beta-1`
-1. Test landing underwater, platform_id, scanner direction
+1. Test landing underwater, `platform_id`, Temporal Invisibility
 2. Jettison the whole room (including walls), will require new room schematics... (in progress)
 3. Architectural Reconfiguration System (in progress)
     * If `rooms_require_blocks` is `true`, only allow one room to be configured at a time?
@@ -20,8 +20,9 @@
     * Grass mound
     * Allow wood doors to be exterior TARDIS doors
 12. Make the wood and baker secondary console rooms into fully fledged TARDISes, build ARS TARDIS (in progress)
-13. Temporal Invisibility (in progress)
-14. Village room and villager farming
+13. Village room and villager farming
+14. Don't farm mobs, transfer horses or minecarts if door is locked
+15. Fix Multiverse-Inventory exploits
 
 ### Waiting on Bukkit API
 2. Get/set horse speed (Attribute API)

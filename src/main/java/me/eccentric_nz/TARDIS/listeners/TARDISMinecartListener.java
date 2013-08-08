@@ -85,6 +85,9 @@ public class TARDISMinecartListener implements Listener {
                         where.put("door_type", 0);
                         ResultSetDoors rsd = new ResultSetDoors(plugin, where, false);
                         if (rsd.resultSet()) {
+                            if (rsd.isLocked()) {
+                                return;
+                            }
                             // get RAIL room location
                             int id = rsd.getTardis_id();
                             HashMap<String, Object> whereid = new HashMap<String, Object>();
@@ -103,6 +106,13 @@ public class TARDISMinecartListener implements Listener {
                         ResultSetTardis rsp = new ResultSetTardis(plugin, wherep, "", false);
                         if (rsp.resultSet()) {
                             int id = rsp.getTardis_id();
+                            HashMap<String, Object> whereinner = new HashMap<String, Object>();
+                            whereinner.put("tardis_id", id);
+                            whereinner.put("door_type", 1);
+                            ResultSetDoors rsdinner = new ResultSetDoors(plugin, whereinner, false);
+                            if (rsdinner.resultSet() && rsdinner.isLocked()) {
+                                return;
+                            }
                             HashMap<String, Object> whered = new HashMap<String, Object>();
                             whered.put("tardis_id", id);
                             whered.put("door_type", 0);
