@@ -89,6 +89,7 @@ public class TARDISDatabaseUpdater {
         tardisupdates.add("scanner TEXT DEFAULT ''");
         tardisupdates.add("stable TEXT DEFAULT ''");
         tardisupdates.add("tardis_init INTEGER DEFAULT 0");
+        tardisupdates.add("village TEXT DEFAULT ''");
     }
 
     /**

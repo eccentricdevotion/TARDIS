@@ -42,6 +42,7 @@ import org.bukkit.entity.Pig;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Sheep;
 import org.bukkit.entity.Tameable;
+import org.bukkit.entity.Villager;
 import org.bukkit.entity.Wolf;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
@@ -119,6 +120,7 @@ public class TARDISFarmer {
             List<TARDISMob> old_macd_had_a_sheep = new ArrayList<TARDISMob>();
             List<TARDISMob> old_macd_had_a_mooshroom = new ArrayList<TARDISMob>();
             List<TARDISHorse> old_macd_had_a_horse = new ArrayList<TARDISHorse>();
+            List<TARDISVillager> old_macd_had_a_villager = new ArrayList<TARDISVillager>();
             // are we doing an achievement?
             TARDISAchievementFactory taf = null;
             if (plugin.getAchivementConfig().getBoolean("farm.enabled")) {
@@ -236,6 +238,16 @@ public class TARDISFarmer {
                         }
                         total++;
                         break;
+                    case VILLAGER:
+                        TARDISVillager tv = new TARDISVillager();
+                        Villager v = (Villager) e;
+                        tv.setProfession(v.getProfession());
+                        tv.setAge(v.getAge());
+                        tv.setHealth(v.getHealth());
+                        tv.setBaby(!v.isAdult());
+                        old_macd_had_a_villager.add(tv);
+                        e.remove();
+                        break;
                     case WOLF:
                     case OCELOT:
                         Tameable tamed = (Tameable) e;
@@ -276,6 +288,7 @@ public class TARDISFarmer {
             if (rs.resultSet()) {
                 String farm = rs.getFarm();
                 String stable = rs.getStable();
+                String village = rs.getVillage();
                 if (!farm.isEmpty()) {
                     // get location of farm room
                     String[] data = farm.split(":");
@@ -361,7 +374,7 @@ public class TARDISFarmer {
                     }
                 }
                 if (!stable.isEmpty()) {
-                    // get location of farm room
+                    // get location of stable room
                     String[] data = stable.split(":");
                     World world = plugin.getServer().getWorld(data[0]);
                     int x = plugin.utils.parseNum(data[1]);
@@ -420,6 +433,31 @@ public class TARDISFarmer {
                             }
                         }
                     }
+                }
+                if (!village.isEmpty()) {
+                    // get location of village room
+                    String[] data = village.split(":");
+                    World world = plugin.getServer().getWorld(data[0]);
+                    int x = plugin.utils.parseNum(data[1]);
+                    int y = plugin.utils.parseNum(data[2]) + 1;
+                    int z = plugin.utils.parseNum(data[3]);
+                    if (old_macd_had_a_villager.size() > 0) {
+                        Location v_room = new Location(world, x + 0.5F, y, z + 0.5F);
+                        while (!world.getChunkAt(v_room).isLoaded()) {
+                            world.getChunkAt(v_room).load();
+                        }
+                        for (TARDISVillager e : old_macd_had_a_villager) {
+                            plugin.myspawn = true;
+                            Entity vill = world.spawnEntity(v_room, EntityType.VILLAGER);
+                            Villager npc = (Villager) vill;
+                            npc.setProfession(e.getProfession());
+                            npc.setAge(e.getAge());
+                            if (e.isBaby()) {
+                                npc.setBaby();
+                            }
+                            npc.setHealth(e.getHealth());
+                        }
+                    }
                 } else {
                     if (plugin.getConfig().getBoolean("spawn_eggs")) {
                         // no farm, give the player spawn eggs
@@ -446,6 +484,10 @@ public class TARDISFarmer {
                         }
                         if (old_macd_had_a_horse.size() > 0) {
                             ItemStack is = new ItemStack(Material.MONSTER_EGG, old_macd_had_a_horse.size(), (short) 100);
+                            inv.addItem(is);
+                        }
+                        if (old_macd_had_a_villager.size() > 0) {
+                            ItemStack is = new ItemStack(Material.MONSTER_EGG, old_macd_had_a_villager.size(), (short) 120);
                             inv.addItem(is);
                         }
                         p.updateInventory();

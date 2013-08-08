@@ -77,6 +77,7 @@ public class ResultSetTardis {
     private boolean iso_on;
     private String eps;
     private String rail;
+    private String village;
     private ArrayList<HashMap<String, String>> data = new ArrayList<HashMap<String, String>>();
 
     /**
@@ -181,6 +182,7 @@ public class ResultSetTardis {
                     this.iso_on = rs.getBoolean("iso_on");
                     this.eps = rs.getString("eps");
                     this.rail = rs.getString("rail");
+                    this.village = rs.getString("village");
                 }
             } else {
                 return false;
@@ -341,6 +343,10 @@ public class ResultSetTardis {
 
     public String getRail() {
         return rail;
+    }
+
+    public String getVillage() {
+        return village;
     }
 
     public ArrayList<HashMap<String, String>> getData() {
