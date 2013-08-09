@@ -71,6 +71,7 @@ public class TARDISMinecartListener implements Listener {
                 Vehicle minecart = event.getVehicle();
                 ItemStack[] inv = ((StorageMinecart) minecart).getInventory().getContents();
                 String[] data = null;
+                String p = "";
                 TARDISConstants.COMPASS d = TARDISConstants.COMPASS.SOUTH;
                 Location block_loc = b.getLocation();
                 String bw = block_loc.getWorld().getName();
@@ -95,6 +96,7 @@ public class TARDISMinecartListener implements Listener {
                             ResultSetTardis rs = new ResultSetTardis(plugin, whereid, "", false);
                             if (rs.resultSet() && !plugin.trackMinecart.contains(Integer.valueOf(id))) {
                                 data = rs.getRail().split(":");
+                                p = rs.getOwner();
                                 plugin.trackMinecart.add(Integer.valueOf(id));
                             }
                         }
@@ -105,6 +107,7 @@ public class TARDISMinecartListener implements Listener {
                         wherep.put("rail", db_loc);
                         ResultSetTardis rsp = new ResultSetTardis(plugin, wherep, "", false);
                         if (rsp.resultSet()) {
+                            p = rsp.getOwner();
                             int id = rsp.getTardis_id();
                             HashMap<String, Object> whereinner = new HashMap<String, Object>();
                             whereinner.put("tardis_id", id);
@@ -128,6 +131,14 @@ public class TARDISMinecartListener implements Listener {
                         break;
                 }
                 if (data != null) {
+                    if (plugin.pm.isPluginEnabled("Multiverse-Inventories")) {
+                        if (!plugin.tmic.checkMVI(bw, data[0])) {
+                            if (!p.isEmpty() && plugin.getServer().getPlayer(p).isOnline()) {
+                                plugin.getServer().getPlayer(p).sendMessage(plugin.pluginName + "You cannot use minecarts from " + bw + " to " + data[0] + ".");
+                            }
+                            return;
+                        }
+                    }
                     World w = plugin.getServer().getWorld(data[0]);
                     int x = plugin.utils.parseNum(data[1]);
                     int y = plugin.utils.parseNum(data[2]);
