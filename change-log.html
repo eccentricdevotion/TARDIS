@@ -26,6 +26,103 @@
     <section>
         <h1>Change log</h1>
         <h2>What&rsquo;s been changed?</h2>
+        <h3>v2.5.6</h3>
+        <ul>
+            <li>Fixed a bug where when using the save sign the TARDIS direction could be incorrectly set</li>
+            <li>Fixed other miscellaneous issues with the save sign</li>
+        </ul>
+        <h3>v2.5.5</h3>
+        <ul>
+            <li>Added a config option, and permission node to allow servers to set up TARDIS to both use a default world and have players with TARDIS worlds
+                <ul>
+                    <li>set <code>create_worlds: false</code></li>
+                    <li>set <code>default_world: true</code> (and other relevant default world config options)</li>
+                    <li>set <code>create_worlds_with_perms: true</code></li>
+                    <li>give players who will get TARDIS worlds the permission: <code>tardis.create_world</code> &mdash; default is OP</li>
+                </ul>
+            </li>
+            <li>Fixed farm room using wool in the floor even if<code>use_clay## is</code>true##</li>
+            <li>Fixed an m-circuit recipe typo, the circuit can now be crafted when<code>difficulty## is set to</code>hard`</li>
+            <li>Added <code>/tardis abort [task ID number]</code> command to stop a room growing
+                <ul>
+                    <li>When starting to grow the room, players are messaged the task ID number to use with the command</li>
+                </ul>
+            </li>
+            <li>If a player&rsquo;s TARDIS lamp preference is a redstone lamp, then the plugin sets the block under it to a redstone block, so that it is lit.
+                <ul>
+                    <li>There is an added benefit to this &mdash; the lamp will now flash on and off when the TARDIS de/re-materialises :)</li>
+                </ul>
+            </li>
+        </ul>
+        <h3>v2.5.4</h3>
+        <p><strong style="color:#f00;">CAUTION:</strong> if running CraftBukkit 1.6.2, you must have the CraftBukkit <strong>Beta</strong> Build or greater!</p>
+        <ul>
+            <li>Fixed further incompatibilities with CraftBukkit versions prior to 1.6.2</li>
+            <li>Added HUGE<em>MUSHROOM</em>STEM to wall and floor blocks</li>
+            <li>Fixed NPE in Temporal Locator GUI when clicking outside the inventory screen</li>
+            <li>When transferring horses into the TARDIS, if the horse is leashed, then the leash hitch is removed and the player has a leash added to their inventory</li>
+            <li>Better check to see if the recipe map files are in the appropriate place</li>
+        </ul>
+        <h3>v2.5.3</h3>
+        <ul>
+            <li>Fixed compatibility with CraftBukkit versions prior to 1.6.2</li>
+        </ul>
+        <h3>v2.5.2</h3>
+        <ul>
+            <li>Fixed a critical bug preventing new TARDISes from being created properly</li>
+            <li>Horses now have their armour and saddles set correctly when entering and exiting the TARDIS</li>
+            <li>Horse health is set properly when exiting the TARDIS</li>
+            <li>Player&rsquo;s are ejected from horses and pigs when TARDIS mob farming</li>
+            <li>Horse speed can now be set when entering and exiting the TARDIS &mdash; this is a temporary fix until an Attributes API is added Bukkit &mdash; <em><strong>REQUIRES</strong></em> the <strong>TARDISHorseSpeed.jar</strong> plugin to be installed on the server (included in the ZIP download) &mdash; if you don&rsquo;t care about setting horse speed, you don&rsquo;t need to install it</li>
+            <li>Better messaging when attempting to rescue a player</li>
+            <li>The <code>/tardis occupy</code> command now sets the player UNOCCUPIED from any TARDIS (not just their own)</li>
+            <li>Added some missing arguments to the <code>/tardisprefs</code> command</li>
+        </ul>
+        <h3>v2.5.1</h3>
+        <ul>
+            <li>Has been deleted as it was broken :(</li>
+        </ul>
+        <h3>v2.5</h3>
+        <ul>
+            <li>The map files required for the TARDIS item recipes are now copied to the <em>plugins/TARDIS</em> folder &mdash; these <strong>MUST</strong> be put in the main server world&rsquo;s <em>data</em> folder in order for the recipes to work.</li>
+            <li>You can no longer make a TARDIS Locator by renaming a regular Compass in an Anvil</li>
+            <li>The plugin now tries to automatically set TARDIS occupation to false when a player leaves the TARDIS by means other than the door</li>
+            <li>The &lsquo;creeper&rsquo; block no longer needs to be a command block when using the <code>/tardis update creeper</code> command</li>
+            <li>Fixed Horses teleporting to the Police Box when ridden over a wood pressure plate in a non-TARDIS world</li>
+            <li>Fixed various potential NPEs, including one when clicking an empty slot in the Admin Menu inventory GUI, and another in the Texture Pack changer if the player disconnected while switching</li>
+            <li>Fixed the RAIL room offset (again)</li>
+        </ul>
+        <h3>v2.5-beta-2</h3>
+        <h4>Additions</h4>
+        <ul>
+            <li>Added a recipe to craft the Sonic Screwdriver (a stick) &mdash; view the recipe with <code>/tardisrecipe sonic</code></li>
+            <li>Horses can now be moved out of the TARDIS if they are ridden over a wood pressure plate</li>
+            <li>Updated the STABLE schematic and moved the horse spawn point &mdash; delete the old schematic!</li>
+            <li>Added a config option to turn of lightning strikes when the TARDIS is recharging
+                <ul>
+                    <li><code>strike_lightning: [true|false]</code></li>
+                </ul>
+            </li>
+            <li>Added the farm, stable and rail spawn locations to the<code>/tardis update</code> command
+                <ul>
+                    <li>The four individual farm mob spawn locations are calculated from the one farm location, so your farm layout needs to pretty similar to the farm room  &mdash; each spawn point is 3 x 3 blocks away &mdash; see <a href="http://">https://dl.dropboxusercontent.com/u/53758864/farmspawns.jpg</a></li>
+                    <li>You need to click a fence post to set the RAIL room spawn point</li>
+                </ul>
+            </li>
+        </ul>
+        <h4>Changes</h4>
+        <ul>
+            <li>The Police Box orientation is now preserved when saving the location</li>
+            <li>The TARDIS scanner now scans for horses</li>
+        </ul>
+        <h4>Fixes</h4>
+        <ul>
+            <li>Fixed hoppers not working with the Artron Energy Condenser</li>
+            <li>Fixed the TARDIS Locator recipe requiring the Stattenheim circuit instead of the Locator Circuit</li>
+            <li>Fixed double ups of mobs appearing after TARDIS mob farming</li>
+            <li>Horse health is now set properly</li>
+            <li>Fixed horses being ignored when trying to transfer them into the TARDIS</li>
+        </ul>
         <h3>v2.5-beta-1</h3>
         <p>First off a huge thank you to everyone who contributed ideas and caught bugs for this release &mdash; without your input the plugin wouldn &rsquo;t be where it is today. Special mention goes to <a href="http://dev.bukkit.org/profiles/bootthanoo/">bootthanoo</a> whose ideas seem to strike the right chord with me and the plugin, but to everyone equally &mdash; keep the ideas rolling in :)</p>
         <h4>Additions</h4>
@@ -199,12 +296,12 @@
         </ul>
         <h4>Fixes</h4>
         <ul>
-            <li>Fixed the <code>/tardistravel [world] [x y z]</code> command failing when there are spaces in the world name &mdash; to use worlds with spaces in their names, surround the name in single quotes e.g. <code>/tardistravel 'space in name' 239 66 -372</code></li>
+            <li>Fixed the <code>/tardistravel [world] [x y z]</code> command failing when there are spaces in the world name &mdash; to use worlds with spaces in their names, surround the name in single quotes e.g. <code>/tardistravel &lsquo;space in name&rsquo; 239 66 -372</code></li>
             <li>Fixed a TARDIS rescue message spamming the chat</li>
             <li>Fixed a NPE in HADS when the TARDIS owner is offline</li>
             <li>Various other minor fixes</li>
         </ul>
-        <p>v2.4-beta-2</p>
+        <h3>v2.4-beta-2</h3>
         <h4>Changes</h4>
         <ul>
             <li>The texture pack switcher now switches the TP when logging in and the player is inside the TARDIS</li>
