@@ -37,6 +37,7 @@ gravity_max_velocity: 5
 return_room_seed: true
 rooms_require_blocks: false
 rooms_condenser_percent: 100
+room_speed: 4
 inventory_group: 0
 add_perms: true
 allow_mob_farming: true

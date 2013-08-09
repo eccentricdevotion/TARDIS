@@ -154,6 +154,7 @@ public class TARDISAdminCommands implements CommandExecutor {
         firstsInt.add("malfunction_nether");
         firstsInt.add("platform_id");
         firstsInt.add("recharge_distance");
+        firstsInt.add("room_speed");
         firstsInt.add("rooms_condenser_percent");
         firstsInt.add("terminal_step");
         firstsInt.add("timeout");

@@ -20,8 +20,8 @@
     * Grass mound
     * Allow wood doors to be exterior TARDIS doors
 12. Make the wood and baker secondary console rooms into fully fledged TARDISes, build ARS TARDIS (in progress)
-13. Village room and villager farming
-14. Fix Multiverse-Inventory exploits for minecarts
+13. Village room and villager farming (in progress)
+14. Fix Multiverse-Inventory exploits for minecarts (in progress)
 
 ### Waiting on Bukkit API
 2. Get/set horse speed (Attribute API)
