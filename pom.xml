@@ -32,7 +32,7 @@
         <url>http://keetley.servegame.com:8080</url>
     </ciManagement>
     <build>
-        <finalName>TARDIS</finalName>
+        <finalName>${project.artifactId}-${project.version}-${buildNumber}</finalName>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
