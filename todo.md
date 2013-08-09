@@ -29,6 +29,7 @@
 ## Next version `2.7+`
 1. TARDIS invisiblity
 2. Advanced TARDIS console
+3. Artron storage blocks
 
 ## Minecraft API when available `3.0?`
 1. Recreate everything with the new API :)

@@ -72,6 +72,7 @@ public class TARDISMinecartListener implements Listener {
                 ItemStack[] inv = ((StorageMinecart) minecart).getInventory().getContents();
                 String[] data = null;
                 String p = "";
+                int id = 0;
                 TARDISConstants.COMPASS d = TARDISConstants.COMPASS.SOUTH;
                 Location block_loc = b.getLocation();
                 String bw = block_loc.getWorld().getName();
@@ -90,7 +91,7 @@ public class TARDISMinecartListener implements Listener {
                                 return;
                             }
                             // get RAIL room location
-                            int id = rsd.getTardis_id();
+                            id = rsd.getTardis_id();
                             HashMap<String, Object> whereid = new HashMap<String, Object>();
                             whereid.put("tardis_id", id);
                             ResultSetTardis rs = new ResultSetTardis(plugin, whereid, "", false);
@@ -108,7 +109,7 @@ public class TARDISMinecartListener implements Listener {
                         ResultSetTardis rsp = new ResultSetTardis(plugin, wherep, "", false);
                         if (rsp.resultSet()) {
                             p = rsp.getOwner();
-                            int id = rsp.getTardis_id();
+                            id = rsp.getTardis_id();
                             HashMap<String, Object> whereinner = new HashMap<String, Object>();
                             whereinner.put("tardis_id", id);
                             whereinner.put("door_type", 1);
@@ -136,6 +137,7 @@ public class TARDISMinecartListener implements Listener {
                             if (!p.isEmpty() && plugin.getServer().getPlayer(p).isOnline()) {
                                 plugin.getServer().getPlayer(p).sendMessage(plugin.pluginName + "You cannot use minecarts from " + bw + " to " + data[0] + ".");
                             }
+                            plugin.trackMinecart.remove(Integer.valueOf(id));
                             return;
                         }
                     }
