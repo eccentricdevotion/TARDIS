@@ -147,7 +147,7 @@ public class TARDISTravelCommands implements CommandExecutor {
                     return true;
                 } else {
                     if (args.length == 1) {
-                        // we're thinking this is a player's name or home
+                        // we're thinking this is a player's name or home / back
                         if (args[0].equalsIgnoreCase("home") || args[0].equalsIgnoreCase("back")) {
                             String which;
                             if (args[0].equalsIgnoreCase("home")) {

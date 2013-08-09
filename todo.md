@@ -21,7 +21,6 @@
     * Allow wood doors to be exterior TARDIS doors
 12. Make the wood and baker secondary console rooms into fully fledged TARDISes, build ARS TARDIS (in progress)
 13. Village room and villager farming (in progress)
-14. Fix Multiverse-Inventory exploits for minecarts (in progress)
 
 ### Waiting on Bukkit API
 2. Get/set horse speed (Attribute API)
@@ -30,6 +29,7 @@
 1. TARDIS invisiblity
 2. Advanced TARDIS console
 3. Artron storage blocks
+4. T.I.P.S.- TARDIS Interior Positioning System
 
 ## Minecraft API when available `3.0?`
 1. Recreate everything with the new API :)

@@ -141,7 +141,6 @@ public class TARDISRoomBuilder {
             b.getRelative(BlockFace.UP).setTypeId(0);
             // determine how often to place a block (in ticks) - `room_speed` is the number of blocks to place in a second (20 ticks)
             long delay = Math.round(20 / plugin.getConfig().getDouble("room_speed"));
-            plugin.debug("delay: " + delay);
             TARDISRoomRunnable runnable = new TARDISRoomRunnable(plugin, roomData, p);
             int taskID = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, runnable, delay, delay);
             runnable.setTask(taskID);
