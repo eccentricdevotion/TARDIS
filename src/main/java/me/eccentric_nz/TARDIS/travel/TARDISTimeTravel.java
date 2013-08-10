@@ -82,7 +82,7 @@ public class TARDISTimeTravel {
      * travel to.
      * @return a random Location
      */
-    public Location randomDestination(Player p, byte rx, byte rz, byte ry, TARDISConstants.COMPASS d, String e, String this_world) {
+    public Location randomDestination(Player p, byte rx, byte rz, byte ry, TARDISConstants.COMPASS d, String e, String this_world, boolean malfunction) {
         int startx, starty, startz, resetx, resetz, listlen, rw;
         World randworld = null;
         boolean danger = true;
@@ -108,12 +108,12 @@ public class TARDISTimeTravel {
                     String env = ww.getEnvironment().toString();
                     if (e.equalsIgnoreCase(env)) {
                         if (plugin.getConfig().getBoolean("include_default_world") || !plugin.getConfig().getBoolean("default_world")) {
-                            if (plugin.getConfig().getBoolean("worlds." + o)) {
+                            if (plugin.getConfig().getBoolean("worlds." + o) || malfunction) {
                                 allowedWorlds.add(plugin.getServer().getWorld(o));
                             }
                         } else {
                             if (!o.equals(plugin.getConfig().getString("default_world_name"))) {
-                                if (plugin.getConfig().getBoolean("worlds." + o)) {
+                                if (plugin.getConfig().getBoolean("worlds." + o) || malfunction) {
                                     allowedWorlds.add(plugin.getServer().getWorld(o));
                                 }
                             }
@@ -127,6 +127,8 @@ public class TARDISTimeTravel {
             }
         }
         listlen = allowedWorlds.size();
+        if (listlen < 1) {
+        }
         // random world
         rw = rand.nextInt(listlen);
         int i = 0;
