@@ -13,14 +13,13 @@
 5. While doing [4], add one slot for a custom console
 6. HADS + explosions + fireballs + lava
 7. Put farmland, crops, buttons, levers and signs on last when growing rooms
-8. Add areas to save-sign?
-9. Sonic Screwdrivers
-10. TARDIS Information System (in progress)
-11. Chameleon presets (in progress)
+8. Sonic Screwdrivers
+9. TARDIS Information System (in progress)
+10. Chameleon presets (in progress)
     * Grass mound
     * Allow wood doors to be exterior TARDIS doors
-12. Make the wood and baker secondary console rooms into fully fledged TARDISes, build ARS TARDIS (in progress)
-13. Village room and villager farming (in progress)
+11. Make the wood and baker secondary console rooms into fully fledged TARDISes, build ARS TARDIS (in progress)
+12. Village room and villager farming (in progress)
 
 ### Waiting on Bukkit API
 2. Get/set horse speed (Attribute API)

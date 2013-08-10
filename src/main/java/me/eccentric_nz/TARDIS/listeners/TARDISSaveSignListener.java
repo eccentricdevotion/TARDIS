@@ -23,6 +23,7 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
+import me.eccentric_nz.TARDIS.travel.TARDISAreasInventory;
 import me.eccentric_nz.TARDIS.travel.TARDISPluginRespect;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -61,8 +62,8 @@ public class TARDISSaveSignListener implements Listener {
         if (name.equals("§4TARDIS saves")) {
             event.setCancelled(true);
             int slot = event.getRawSlot();
-            if (slot >= 0 && slot < 54) {
-                final Player player = (Player) event.getWhoClicked();
+            final Player player = (Player) event.getWhoClicked();
+            if (slot >= 0 && slot < 45) {
                 String playerNameStr = player.getName();
                 // get the TARDIS the player is in
                 HashMap<String, Object> wheres = new HashMap<String, Object>();
@@ -138,6 +139,20 @@ public class TARDISSaveSignListener implements Listener {
                         }
                     }
                 }
+            }
+            if (slot == 49) {
+                // load TARDIS areas
+                close(player);
+                plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
+                    @Override
+                    public void run() {
+                        TARDISAreasInventory sst = new TARDISAreasInventory(plugin, player);
+                        ItemStack[] items = sst.getTerminal();
+                        Inventory areainv = plugin.getServer().createInventory(player, 54, "§4TARDIS areas");
+                        areainv.setContents(items);
+                        player.openInventory(areainv);
+                    }
+                }, 2L);
             }
         }
     }

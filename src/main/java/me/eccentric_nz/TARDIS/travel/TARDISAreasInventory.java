@@ -21,7 +21,8 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.database.ResultSetDestinations;
+import me.eccentric_nz.TARDIS.database.ResultSetAreas;
+import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
@@ -32,71 +33,44 @@ import org.bukkit.inventory.meta.ItemMeta;
  *
  * @author eccentric_nz
  */
-public class TARDISSaveSignInventory {
+public class TARDISAreasInventory {
 
     private TARDIS plugin;
     private ItemStack[] terminal;
     private List<Integer> ids = new ArrayList<Integer>();
-    int id;
-    String home;
+    Player p;
 
-    public TARDISSaveSignInventory(TARDIS plugin, int id, String home) {
+    public TARDISAreasInventory(TARDIS plugin, Player p) {
         ids.addAll(Arrays.asList(new Integer[]{1, 2, 5, 7, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 29, 35, 41, 42, 45, 46, 47, 48, 49, 52, 56, 57, 58, 61, 73, 79, 80, 81, 82, 84, 86, 87, 88, 89, 98, 99, 100, 103, 110, 112, 118, 121, 123, 129, 133, 153, 155}));
         this.plugin = plugin;
-        this.id = id;
-        this.home = home;
+        this.p = p;
         this.terminal = getItemStack();
     }
 
     /**
-     * Constructs an inventory for the Save Sign GUI.
+     * Constructs an inventory for the Areas GUI.
      *
      * @return an Array of itemStacks (an inventory)
      */
     private ItemStack[] getItemStack() {
-        List<ItemStack> dests = new ArrayList<ItemStack>();
-        // home stack
-        String[] hh = home.split(":");
-        ItemStack his = new ItemStack(ids.get(0), 1);
-        ItemMeta him = his.getItemMeta();
-        him.setDisplayName("Home");
-        List<String> hlore = new ArrayList<String>();
-        hlore.add(hh[0]);
-        hlore.add(hh[1]);
-        hlore.add(hh[2]);
-        hlore.add(hh[3]);
-        if (hh.length > 4) {
-            hlore.add(hh[4]);
-        }
-        if (hh.length > 5) {
-            hlore.add(hh[5]);
-        }
-        him.setLore(hlore);
-        his.setItemMeta(him);
-        dests.add(his);
+        List<ItemStack> areas = new ArrayList<ItemStack>();
         // saved destinations
-        HashMap<String, Object> did = new HashMap<String, Object>();
-        did.put("tardis_id", id);
-        ResultSetDestinations rsd = new ResultSetDestinations(plugin, did, true);
-        int i = 1;
-        if (rsd.resultSet()) {
-            ArrayList<HashMap<String, String>> data = rsd.getData();
-            // cycle through saves
+        ResultSetAreas rsa = new ResultSetAreas(plugin, null, true);
+        int i = 0;
+        if (rsa.resultSet()) {
+            ArrayList<HashMap<String, String>> data = rsa.getData();
+            // cycle through areas
             for (HashMap<String, String> map : data) {
-                if (map.get("type").equals("0")) {
+                String name = map.get("area_name");
+                if (p.hasPermission("tardis.area." + name)) {
                     ItemStack is = new ItemStack(ids.get(i), 1);
                     ItemMeta im = is.getItemMeta();
-                    im.setDisplayName(map.get("dest_name"));
+                    im.setDisplayName(name);
                     List<String> lore = new ArrayList<String>();
                     lore.add(map.get("world"));
-                    lore.add(map.get("x"));
-                    lore.add(map.get("y"));
-                    lore.add(map.get("z"));
-                    lore.add(map.get("direction"));
-                    lore.add((map.get("submarine").equals("1")) ? "true" : "false");
                     im.setLore(lore);
                     is.setItemMeta(im);
-                    dests.add(is);
+                    areas.add(is);
                     i++;
                 }
             }
@@ -104,8 +78,8 @@ public class TARDISSaveSignInventory {
 
         ItemStack[] stack = new ItemStack[54];
         for (int s = 0; s < 45; s++) {
-            if (s < dests.size()) {
-                stack[s] = dests.get(s);
+            if (s < areas.size()) {
+                stack[s] = areas.get(s);
             } else {
                 stack[s] = null;
             }
@@ -113,7 +87,7 @@ public class TARDISSaveSignInventory {
         // add button to load TARDIS areas
         ItemStack map = new ItemStack(358, 1);
         ItemMeta switchto = map.getItemMeta();
-        switchto.setDisplayName("Load TARDIS areas");
+        switchto.setDisplayName("Load TARDIS saves");
         map.setItemMeta(switchto);
         for (int m = 45; m < 54; m++) {
             if (m == 49) {

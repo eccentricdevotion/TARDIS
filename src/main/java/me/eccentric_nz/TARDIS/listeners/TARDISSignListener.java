@@ -109,83 +109,12 @@ public class TARDISSignListener implements Listener {
                             }
                             qf.doUpdate("tardis", set, tid);
                         } else {
-//                            if (event.getAction().equals(Action.RIGHT_CLICK_BLOCK) && player.isSneaking()) {
-//                                if (!rs.isHandbrake_on()) {
-//                                    player.sendMessage(plugin.pluginName + ChatColor.RED + "You cannot set a destination while the TARDIS is travelling!");
-//                                    return;
-//                                }
-//                                // check they have enough artron energy to travel
-//                                int level = rs.getArtron_level();
-//                                if (level < plugin.getArtronConfig().getInt("travel")) {
-//                                    player.sendMessage(plugin.pluginName + ChatColor.RED + "The TARDIS does not have enough Artron Energy to make this trip!");
-//                                    return;
-//                                }
-//                                // set destination to currently displayed save
-//                                HashMap<String, Object> sets = new HashMap<String, Object>();
-//                                if (s.getLine(1).equals("Home")) {
-//                                    sets.put("save", rs.getHome());
-//                                } else {
-//                                    // get location from sign
-//                                    String[] coords = s.getLine(3).split(",");
-//                                    String loc = s.getLine(2) + ":" + coords[0] + ":" + coords[1] + ":" + coords[2];
-//                                    sets.put("save", loc);
-//                                    World w = plugin.getServer().getWorld(s.getLine(2));
-//                                    int x, y, z;
-//                                    x = plugin.utils.parseNum(coords[0]);
-//                                    y = plugin.utils.parseNum(coords[1]);
-//                                    z = plugin.utils.parseNum(coords[2]);
-//                                    Location l = new Location(w, x, y, z);
-//                                    TARDISPluginRespect respect = new TARDISPluginRespect(plugin);
-//                                    if (!respect.getRespect(player, l, true)) {
-//                                        return;
-//                                    }
-//                                }
-//                                HashMap<String, Object> sid = new HashMap<String, Object>();
-//                                sid.put("tardis_id", id);
-//                                qf.doUpdate("tardis", sets, sid);
-//                                plugin.tardisHasDestination.put(id, plugin.getArtronConfig().getInt("travel"));
-//                                if (plugin.trackRescue.containsKey(Integer.valueOf(id))) {
-//                                    plugin.trackRescue.remove(Integer.valueOf(id));
-//                                }
-//                                player.sendMessage(plugin.pluginName + "Exit location set to " + s.getLine(1));
-//                            }
                             if (event.getAction().equals(Action.RIGHT_CLICK_BLOCK) && plugin.bukkitversion.compareTo(plugin.preIMversion) >= 0) {
                                 TARDISSaveSignInventory sst = new TARDISSaveSignInventory(plugin, id, rs.getHome());
                                 ItemStack[] items = sst.getTerminal();
                                 Inventory inv = plugin.getServer().createInventory(player, 54, "§4TARDIS saves");
                                 inv.setContents(items);
                                 player.openInventory(inv);
-//                                List<String> dests = new ArrayList<String>();
-//                                HashMap<String, Object> did = new HashMap<String, Object>();
-//                                did.put("tardis_id", id);
-//                                ResultSetDestinations rsd = new ResultSetDestinations(plugin, did, true);
-//                                if (rsd.resultSet()) {
-//                                    ArrayList<HashMap<String, String>> data = rsd.getData();
-//                                    String home = "";
-//                                    // cycle through saves
-//                                    for (HashMap<String, String> map : data) {
-//                                        if (home.isEmpty()) {
-//                                            home = "Home:" + rs.getHome();
-//                                        }
-//                                        if (map.get("type").equals("0")) {
-//                                            dests.add(map.get("dest_name") + ":" + map.get("world") + ":" + map.get("x") + ":" + map.get("y") + ":" + map.get("z"));
-//                                        }
-//                                    }
-//                                    dests.add(home);
-//                                    String[] display;
-//                                    if (plugin.trackDest.containsKey(player.getName()) && dests.size() > 1) {
-//                                        reOrder(dests, plugin.trackDest.get(player.getName()));
-//                                        plugin.trackDest.put(player.getName(), dests.get(1));
-//                                        display = dests.get(1).split(":");
-//                                    } else {
-//                                        display = dests.get(dests.size() - 1).split(":");
-//                                        plugin.trackDest.put(player.getName(), dests.get(dests.size() - 1));
-//                                    }
-//                                    s.setLine(1, display[0]);
-//                                    s.setLine(2, display[1]);
-//                                    s.setLine(3, display[2] + "," + display[3] + "," + display[4]);
-//                                    s.update();
-//                                }
                             }
                         }
                     }
