@@ -163,8 +163,10 @@ public class TARDISCondenserListener implements Listener {
                 InventoryHolder holder = (Chest) b.getState();
                 // the chest may have been filled by a hopper so get its contents and then clear it
                 ItemStack[] is = holder.getInventory().getContents();
+                // check inv size
+                int inv_size = (is.length > 27) ? 54 : 27;
                 holder.getInventory().clear();
-                Inventory aec = plugin.getServer().createInventory(holder, 27, "§4Artron Condenser");
+                Inventory aec = plugin.getServer().createInventory(holder, inv_size, "§4Artron Condenser");
                 // set the contents to what was in the chest
                 aec.setContents(is);
                 Player p = event.getPlayer();
