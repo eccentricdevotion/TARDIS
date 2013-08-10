@@ -1155,8 +1155,19 @@ public class TARDISCommands implements CommandExecutor {
                             return false;
                         } else {
                             int id = rs.getTardis_id();
-                            // get current destination
                             String cur = rs.getCurrent();
+                            String dir = rs.getDirection().toString();
+                            // check has unique name
+                            HashMap<String, Object> wherename = new HashMap<String, Object>();
+                            wherename.put("tardis_id", id);
+                            wherename.put("dest_name", args[1]);
+                            wherename.put("type", 0);
+                            ResultSetDestinations rsd = new ResultSetDestinations(plugin, wherename, false);
+                            if (rsd.resultSet()) {
+                                sender.sendMessage(plugin.pluginName + "You already have a save with that name!");
+                                return true;
+                            }
+                            // get current destination
                             String[] curDest = cur.split(":");
                             QueryFactory qf = new QueryFactory(plugin);
                             HashMap<String, Object> set = new HashMap<String, Object>();
@@ -1166,7 +1177,7 @@ public class TARDISCommands implements CommandExecutor {
                             set.put("x", plugin.utils.parseNum(curDest[1]));
                             set.put("y", plugin.utils.parseNum(curDest[2]));
                             set.put("z", plugin.utils.parseNum(curDest[3]));
-                            set.put("direction", rs.getDirection().toString());
+                            set.put("direction", dir);
                             if (qf.doInsert("destinations", set) < 0) {
                                 return false;
                             } else {
