@@ -176,6 +176,14 @@ public class TARDISBlockPlaceListener implements Listener {
                             return;
                         }
                         break;
+                    case STAINED_CLAY:
+                        if (player.hasPermission("tardis.ars")) {
+                            schm = TARDISConstants.SCHEMATIC.ARS;
+                        } else {
+                            player.sendMessage(plugin.pluginName + "You don't have permission to create an 'ARS' TARDIS!");
+                            return;
+                        }
+                        break;
                     default:
                         if (plugin.getConfig().getBoolean("custom_schematic")) {
                             if (player.hasPermission("tardis.custom") && blockBottom.getType().equals(custom)) {

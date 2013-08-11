@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.rooms;
+package me.eccentric_nz.TARDIS.ARS;
 
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -134,7 +134,7 @@ public class TARDISARSInventory {
         // vault
         ItemStack vault = new ItemStack(23, 1);
         ItemMeta dispenser = vault.getItemMeta();
-        dispenser.setDisplayName("Vault");
+        dispenser.setDisplayName("Storage Vault");
         vault.setItemMeta(dispenser);
         // workshop
         ItemStack workshop = new ItemStack(112, 1);

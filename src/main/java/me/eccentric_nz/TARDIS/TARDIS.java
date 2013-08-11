@@ -47,7 +47,7 @@ import me.eccentric_nz.TARDIS.files.TARDISMakeRoomCSV;
 import me.eccentric_nz.TARDIS.files.TARDISMakeTardisCSV;
 import me.eccentric_nz.TARDIS.files.TARDISUpdateChecker;
 import me.eccentric_nz.TARDIS.info.TARDISInfoMenu;
-import me.eccentric_nz.TARDIS.listeners.TARDISARSListener;
+import me.eccentric_nz.TARDIS.ARS.TARDISARSListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISAdminMenuListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISAnvilListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISAreaListener;
@@ -216,6 +216,7 @@ public class TARDIS extends JavaPlugin {
     public List<String> trackFarming = new ArrayList<String>();
     public List<Integer> trackMinecart = new ArrayList<Integer>();
     public List<Integer> trackSubmarine = new ArrayList<Integer>();
+    public List<Integer> trackARS = new ArrayList<Integer>();
     public ArrayList<Integer> tardisMaterialising = new ArrayList<Integer>();
     public ArrayList<Integer> tardisDematerialising = new ArrayList<Integer>();
     public List<Chunk> tardisChunkList = new ArrayList<Chunk>();

@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.rooms;
+package me.eccentric_nz.TARDIS.ARS;
 
 /**
  * Architectural Configuration is the ability a TARDIS has to move rooms around
@@ -23,13 +23,9 @@ package me.eccentric_nz.TARDIS.rooms;
  *
  * @author eccentric_nz
  */
-public class TARDISARSMapData {
+public class TARDISARSSaveData {
 
     private int[][][] data;
-    private int e;
-    private int s;
-    private int y;
-    private int id;
 
     public int[][][] getData() {
         return data;
@@ -37,37 +33,5 @@ public class TARDISARSMapData {
 
     public void setData(int[][][] data) {
         this.data = data;
-    }
-
-    public int getE() {
-        return e;
-    }
-
-    public void setE(int e) {
-        this.e = e;
-    }
-
-    public int getS() {
-        return s;
-    }
-
-    public void setS(int s) {
-        this.s = s;
-    }
-
-    public int getY() {
-        return y;
-    }
-
-    public void setY(int y) {
-        this.y = y;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 }

@@ -4,7 +4,7 @@
 1. Test landing underwater, `platform_id`, Temporal Invisibility
 2. Jettison the whole room (including walls), will require new room schematics... (in progress)
 3. Architectural Reconfiguration System (in progress)
-    * If `rooms_require_blocks` is `true`, only allow one room to be configured at a time?
+    * If `rooms_require_blocks` is `true`, check room cannot be added to map
 4. Remove the TARDIS creation block stack, and make a special seed block that determines the type of TARDIS that will be grown. Use custom configurable recipes - the recipes will still include precious block/lapis block/redstone torch, but 4 other blocks will set:
     * TARDIS wall block
     * TARDIS floor block
@@ -18,7 +18,7 @@
 10. Chameleon presets (in progress)
     * Grass mound
     * Allow wood doors to be exterior TARDIS doors
-11. Make the wood and baker secondary console rooms into fully fledged TARDISes, build ARS TARDIS (in progress)
+11. Build ARS TARDIS
 12. Village room and villager farming (in progress)
 
 ### Waiting on Bukkit API
@@ -28,7 +28,7 @@
 1. TARDIS invisiblity
 2. Advanced TARDIS console
 3. Artron storage blocks
-4. T.I.P.S.- TARDIS Interior Positioning System
+4. T.I.P.S. - TARDIS Interior Positioning System
 
 ## Minecraft API when available `3.0?`
 1. Recreate everything with the new API :)

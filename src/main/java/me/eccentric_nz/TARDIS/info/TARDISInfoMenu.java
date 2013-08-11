@@ -210,7 +210,6 @@ public enum TARDISInfoMenu {
     private final String name;
     private final String parent;
     private final String key;
-    private final static Map<String, TARDISInfoMenu> BY_NAME = Maps.newHashMap();
 
     private TARDISInfoMenu(String name, String parent, String key) {
         this.name = name;
@@ -243,17 +242,6 @@ public enum TARDISInfoMenu {
      */
     public String getKey() {
         return this.key;
-    }
-
-    /**
-     * Attempts to get the Menu with the given name. This is a normal lookup,
-     * names must be the precise name they are given in the enum.
-     *
-     * @param name Name of the TARDISInfoMenu to get
-     * @return TARDISInfoMenu if found, or null
-     */
-    public static TARDISInfoMenu getMenu(final String name) {
-        return BY_NAME.get(name);
     }
 
     /**
