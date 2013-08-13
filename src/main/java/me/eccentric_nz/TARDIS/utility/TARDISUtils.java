@@ -196,6 +196,10 @@ public class TARDISUtils {
                     case ELEVENTH:
                         adjust = (15 - plugin.eleventhdimensions[1]) / 2;
                         break;
+                    case PLANK:
+                    case TOM:
+                        adjust = (15 - plugin.tomdimensions[1]) / 2;
+                        break;
                     default:
                         adjust = (15 - plugin.budgetdimensions[1]) / 2;
                         break;
@@ -263,6 +267,12 @@ public class TARDISUtils {
                 break;
             case STEAMPUNK:
                 d = plugin.steampunkdimensions;
+                break;
+            case PLANK:
+                d = plugin.plankdimensions;
+                break;
+            case TOM:
+                d = plugin.tomdimensions;
                 break;
             default:
                 d = plugin.budgetdimensions;

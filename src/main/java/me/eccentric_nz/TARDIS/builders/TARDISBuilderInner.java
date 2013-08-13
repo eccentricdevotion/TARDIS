@@ -96,6 +96,14 @@ public class TARDISBuilderInner {
                 s = plugin.steampunkschematic;
                 d = plugin.steampunkdimensions;
                 break;
+            case PLANK:
+                s = plugin.plankschematic;
+                d = plugin.plankdimensions;
+                break;
+            case TOM:
+                s = plugin.tomschematic;
+                d = plugin.tomdimensions;
+                break;
             default:
                 s = plugin.budgetschematic;
                 d = plugin.budgetdimensions;
@@ -264,6 +272,7 @@ public class TARDISBuilderInner {
                                 setcreep.put("creeper", creeploc);
                                 wherecreep.put("tardis_id", dbID);
                                 qf.doUpdate("tardis", setcreep, wherecreep);
+                                id = 98;
                             }
                             if (id == 92) {
                                 /*

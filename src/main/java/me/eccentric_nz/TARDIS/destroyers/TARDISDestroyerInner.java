@@ -77,6 +77,12 @@ public class TARDISDestroyerInner {
             case STEAMPUNK:
                 d = plugin.steampunkdimensions;
                 break;
+            case PLANK:
+                d = plugin.plankdimensions;
+                break;
+            case TOM:
+                d = plugin.tomdimensions;
+                break;
             default:
                 d = plugin.budgetdimensions;
                 break;
