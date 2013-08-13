@@ -26,6 +26,7 @@ import static me.eccentric_nz.TARDIS.TARDISConstants.COMPASS.NORTH;
 import static me.eccentric_nz.TARDIS.TARDISConstants.COMPASS.SOUTH;
 import static me.eccentric_nz.TARDIS.TARDISConstants.COMPASS.WEST;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
+import me.eccentric_nz.TARDIS.database.ResultSetDeleteTardis;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
 import me.eccentric_nz.tardischunkgenerator.TARDISChunkGenerator;
@@ -48,22 +49,6 @@ import org.bukkit.entity.Player;
  */
 public class TARDISExterminator {
 
-    public static boolean deleteFolder(File folder) {
-        File[] files = folder.listFiles();
-        if (files != null) { //some JVMs return null for empty dirs
-            for (File f : files) {
-                if (f.isDirectory()) {
-                    deleteFolder(f);
-                } else {
-                    if (!f.delete()) {
-                        System.out.println("Could not delete file");
-                    }
-                }
-            }
-        }
-        folder.delete();
-        return true;
-    }
     private TARDIS plugin;
 
     public TARDISExterminator(TARDIS plugin) {
@@ -137,7 +122,7 @@ public class TARDISExterminator {
             if (blockbehind != null) {
                 Block blockDown = blockbehind.getRelative(BlockFace.DOWN, 2);
                 Location bd_loc = blockDown.getLocation();
-                String bd_str = bd_loc.getWorld().getName() + ":" + bd_loc.getBlockX() + ":" + bd_loc.getBlockY() + ":" + bd_loc.getBlockZ() + ":" + direction;
+                String bd_str = bd_loc.getWorld().getName() + ":" + bd_loc.getBlockX() + ":" + bd_loc.getBlockY() + ":" + bd_loc.getBlockZ() + "%";
                 where.put("current", bd_str);
             } else {
                 player.sendMessage(plugin.pluginName + ChatColor.RED + "Could not get TARDIS save location!");
@@ -146,7 +131,7 @@ public class TARDISExterminator {
         } else {
             where.put("owner", playerNameStr);
         }
-        ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
+        ResultSetDeleteTardis rs = new ResultSetDeleteTardis(plugin, where);
         if (rs.resultSet()) {
             int id = rs.getTardis_id();
             String saveLoc = rs.getCurrent();
@@ -300,5 +285,22 @@ public class TARDISExterminator {
                 plugin.debug("Could not delete world <" + name + ">");
             }
         }
+    }
+
+    public static boolean deleteFolder(File folder) {
+        File[] files = folder.listFiles();
+        if (files != null) { //some JVMs return null for empty dirs
+            for (File f : files) {
+                if (f.isDirectory()) {
+                    deleteFolder(f);
+                } else {
+                    if (!f.delete()) {
+                        System.out.println("Could not delete file");
+                    }
+                }
+            }
+        }
+        folder.delete();
+        return true;
     }
 }
