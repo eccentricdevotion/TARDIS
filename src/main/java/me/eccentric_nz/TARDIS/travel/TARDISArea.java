@@ -159,7 +159,7 @@ public class TARDISArea {
             String wStr = rsa.getWorld();
             boolean chk = false;
             while (chk == false) {
-                String queryLoc = wStr + ":" + x + ":%:" + z;
+                String queryLoc = wStr + ":" + x + ":%:" + z + "%";
                 ResultSetSave rs = new ResultSetSave(plugin, queryLoc);
                 if (rs.resultSet()) {
                     if (x + 5 <= maxx) {

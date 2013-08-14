@@ -56,7 +56,7 @@ public class ResultSetSave {
     public boolean resultSet() {
         PreparedStatement statement = null;
         ResultSet rs = null;
-        String query = "SELECT save FROM tardis WHERE save LIKE ?";
+        String query = "SELECT current FROM tardis WHERE save LIKE ?";
         //plugin.debug(query);
         try {
             statement = connection.prepareStatement(query);
