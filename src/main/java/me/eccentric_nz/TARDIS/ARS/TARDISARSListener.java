@@ -59,7 +59,7 @@ public class TARDISARSListener implements Listener {
     private String[] room_names;
     private HashMap<String, Integer> scroll_start = new HashMap<String, Integer>();
     private HashMap<String, Integer> selected_slot = new HashMap<String, Integer>();
-    private HashMap<String, TARDISARSMapData> save_map_data = new HashMap<String, TARDISARSMapData>();
+    private HashMap<String, TARDISARSSaveData> save_map_data = new HashMap<String, TARDISARSSaveData>();
     private HashMap<String, TARDISARSMapData> map_data = new HashMap<String, TARDISARSMapData>();
     private String[] levels = new String[]{"Bottom level", "Main level", "Top level"};
     private List<TARDISARS> notrooms;
@@ -388,7 +388,7 @@ public class TARDISARSListener implements Listener {
      */
     private boolean checkSavedGrid(String p, int slot) {
         TARDISARSMapData md = map_data.get(p);
-        TARDISARSMapData sd = save_map_data.get(p);
+        TARDISARSSaveData sd = save_map_data.get(p);
         int[][][] grid = sd.getData();
         int yy = md.getY();
         int[] coords = getCoords(slot, md);
@@ -537,7 +537,7 @@ public class TARDISARSListener implements Listener {
         where.put("player", player);
         ResultSetARS rs = new ResultSetARS(plugin, where);
         if (rs.resultSet()) {
-            TARDISARSMapData sd = new TARDISARSMapData();
+            TARDISARSSaveData sd = new TARDISARSSaveData();
             TARDISARSMapData md = new TARDISARSMapData();
             int[][][] json = getGridFromJSON(rs.getJson());
             int[][][] json2 = getGridFromJSON(rs.getJson());
