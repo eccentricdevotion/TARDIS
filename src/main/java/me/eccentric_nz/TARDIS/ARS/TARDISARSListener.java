@@ -59,7 +59,7 @@ public class TARDISARSListener implements Listener {
     private String[] room_names;
     private HashMap<String, Integer> scroll_start = new HashMap<String, Integer>();
     private HashMap<String, Integer> selected_slot = new HashMap<String, Integer>();
-    private HashMap<String, TARDISARSSaveData> save_map_data = new HashMap<String, TARDISARSSaveData>();
+    private HashMap<String, TARDISARSMapData> save_map_data = new HashMap<String, TARDISARSMapData>();
     private HashMap<String, TARDISARSMapData> map_data = new HashMap<String, TARDISARSMapData>();
     private String[] levels = new String[]{"Bottom level", "Main level", "Top level"};
     private List<TARDISARS> notrooms;
@@ -148,12 +148,17 @@ public class TARDISARSListener implements Listener {
                     case 30:
                         // reset selected slot to empty
                         if (selected_slot.containsKey(playerNameStr)) {
-                            ItemStack stone = new ItemStack(1, 1);
-                            ItemMeta s1 = stone.getItemMeta();
-                            s1.setDisplayName("Empty slot");
-                            stone.setItemMeta(s1);
-                            setSlot(inv, selected_slot.get(playerNameStr), stone, playerNameStr, true);
-                            setLore(inv, slot, null);
+                            // check whether original loaded slot was a room - as it will need to be jettisoned, not reset
+                            if (checkSavedGrid(playerNameStr, selected_slot.get(playerNameStr))) {
+                                setLore(inv, slot, "You cannot reset the selected slot!");
+                            } else {
+                                ItemStack stone = new ItemStack(1, 1);
+                                ItemMeta s1 = stone.getItemMeta();
+                                s1.setDisplayName("Empty slot");
+                                stone.setItemMeta(s1);
+                                setSlot(inv, selected_slot.get(playerNameStr), stone, playerNameStr, true);
+                                setLore(inv, slot, null);
+                            }
                         } else {
                             setLore(inv, slot, "No slot selected!");
                         }
@@ -375,6 +380,30 @@ public class TARDISARSListener implements Listener {
     }
 
     /**
+     * Checks the saved map to see whether the selected slot can be reset.
+     *
+     * @param p the player using the GUI
+     * @param slot the slot that was clicked
+     * @param id the type id of the block in the slot
+     */
+    private boolean checkSavedGrid(String p, int slot) {
+        TARDISARSMapData md = map_data.get(p);
+        TARDISARSMapData sd = save_map_data.get(p);
+        int[][][] grid = sd.getData();
+        int yy = md.getY();
+        int[] coords = getCoords(slot, md);
+        int xx = coords[0];
+        int zz = coords[1];
+        int prior = grid[yy][xx][zz];
+        for (int i : room_ids) {
+            if (prior == i) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
      * Saves the current map to the TARDISARSMapData instance associated with
      * the player using the GUI.
      *
@@ -508,7 +537,7 @@ public class TARDISARSListener implements Listener {
         where.put("player", player);
         ResultSetARS rs = new ResultSetARS(plugin, where);
         if (rs.resultSet()) {
-            TARDISARSSaveData sd = new TARDISARSSaveData();
+            TARDISARSMapData sd = new TARDISARSMapData();
             TARDISARSMapData md = new TARDISARSMapData();
             int[][][] json = getGridFromJSON(rs.getJson());
             int[][][] json2 = getGridFromJSON(rs.getJson());
