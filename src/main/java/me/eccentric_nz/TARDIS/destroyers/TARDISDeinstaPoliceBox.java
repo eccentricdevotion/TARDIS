@@ -23,6 +23,7 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetBlocks;
+import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
@@ -92,7 +93,10 @@ public class TARDISDeinstaPoliceBox {
         where.put("tardis_id", id);
         ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
         QueryFactory qf = new QueryFactory(plugin);
+        String owner;
+        Block b;
         if (rs.resultSet()) {
+            owner = rs.getOwner();
             String replacedData = rs.getReplaced();
             if (!replacedData.isEmpty()) {
                 String[] parts = replacedData.split(":");
@@ -108,8 +112,18 @@ public class TARDISDeinstaPoliceBox {
                 } catch (NumberFormatException nfe) {
                     plugin.console.sendMessage(plugin.pluginName + "Could not convert to number!");
                 }
-                Block b = rw.getBlockAt(rx, ry, rz);
+                b = rw.getBlockAt(rx, ry, rz);
                 b.setTypeIdAndData(rID, rb, true);
+                HashMap<String, Object> wherepp = new HashMap<String, Object>();
+                wherepp.put("player", owner);
+                ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, wherepp);
+                if (rsp.resultSet()) {
+                    boolean sub = (rsp.isSubmarine_on() && plugin.trackSubmarine.contains(Integer.valueOf(id)));
+                    if (sub && plugin.worldGuardOnServer) {
+                        plugin.wgchk.sponge(b, true);
+                    }
+                    plugin.trackSubmarine.remove(Integer.valueOf(id));
+                }
             }
         }
         // finally forget the replaced block

@@ -20,6 +20,7 @@
     * Allow wood doors to be exterior TARDIS doors
 11. Build ARS TARDIS
 12. Village room and villager farming (in progress)
+13. Add water back when moving the TARDIS in submarine mode. When engaging HADS in submarine mode - don't go to the surface. 
 
 ### Waiting on Bukkit API
 2. Get/set horse speed (Attribute API)
