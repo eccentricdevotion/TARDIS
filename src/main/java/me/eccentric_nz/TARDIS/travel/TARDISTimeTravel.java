@@ -565,6 +565,15 @@ public class TARDISTimeTravel {
             }
         }
         Location loc = block.getRelative(BlockFace.UP).getLocation();
+        boolean safe = false;
+        while (!safe) {
+            if (isSafeSubmarine(loc, d)) {
+                safe = true;
+                return loc;
+            } else {
+                loc.setY(loc.getY() + 1);
+            }
+        }
         return (isSafeSubmarine(loc, d)) ? loc : null;
     }
 

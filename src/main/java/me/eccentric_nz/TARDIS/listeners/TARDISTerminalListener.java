@@ -471,7 +471,6 @@ public class TARDISTerminalListener implements Listener {
                                     safe = 0;
                                     starty = subloc.getBlockY();
                                     data5 = "true";
-                                    plugin.debug("ID: " + terminalIDs.get(name));
                                     plugin.trackSubmarine.add(Integer.valueOf(terminalIDs.get(name)));
                                 } else {
                                     safe = 1;

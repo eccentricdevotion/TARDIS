@@ -122,7 +122,6 @@ public class TARDISDeinstaPoliceBox {
                     if (sub && plugin.worldGuardOnServer) {
                         plugin.wgchk.sponge(b, true);
                     }
-                    plugin.trackSubmarine.remove(Integer.valueOf(id));
                 }
             }
         }

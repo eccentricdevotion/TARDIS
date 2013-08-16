@@ -87,20 +87,25 @@ public class TARDISHostileDisplacement {
                         }
                         l.setY(y);
                         if (l.getBlock().getRelative(BlockFace.DOWN).isLiquid() && !plugin.getConfig().getBoolean("land_on_water") && !plugin.trackSubmarine.contains(id)) {
+                            plugin.debug("bool: false");
                             bool = false;
                         }
                         final Player player = plugin.getServer().getPlayer(owner);
                         if (bool) {
+                            Location sub = null;
                             boolean safe;
                             if (plugin.trackSubmarine.contains(id)) {
-                                Location sub = tt.submarine(l.getBlock(), d);
+                                sub = tt.submarine(l.getBlock(), d);
                                 safe = (sub != null);
                             } else {
                                 int[] start = tt.getStartLocation(l, d);
                                 safe = (tt.safeLocation(start[0], y, start[2], start[1], start[3], l.getWorld(), d) < 1);
+                                if (plugin.trackSubmarine.contains(id)) {
+                                    plugin.trackSubmarine.remove(id);
+                                }
                             }
                             if (safe) {
-                                final Location fl = l;
+                                final Location fl = (plugin.trackSubmarine.contains(id)) ? sub : l;
                                 TARDISPluginRespect pr = new TARDISPluginRespect(plugin);
                                 if (pr.getRespect(player, l, false)) {
                                     // move TARDIS
