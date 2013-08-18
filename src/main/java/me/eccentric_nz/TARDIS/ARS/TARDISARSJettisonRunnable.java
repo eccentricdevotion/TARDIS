@@ -19,6 +19,8 @@ package me.eccentric_nz.TARDIS.ARS;
 import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
+import org.bukkit.Location;
+import org.bukkit.World;
 
 /**
  *
@@ -42,21 +44,33 @@ public class TARDISARSJettisonRunnable implements Runnable {
     public void run() {
         String r = room.toString();
         // remove the room
-
+        World w = slot.getChunk().getWorld();
+        int x = slot.getX();
+        int y = slot.getY();
+        int z = slot.getZ();
+        for (int yy = y; yy < (y + 16); yy++) {
+            for (int xx = x; xx < (x + 16); xx++) {
+                for (int zz = z; zz < (z + 16); zz++) {
+                    w.getBlockAt(xx, yy, zz).setTypeId(0);
+                }
+            }
+        }
         // give them their energy!
-        int amount = Math.round((plugin.getArtronConfig().getInt("jettison") / 100F) * plugin.getRoomsConfig().getInt("rooms." + r + ".cost"));
-        QueryFactory qf = new QueryFactory(plugin);
-        HashMap<String, Object> set = new HashMap<String, Object>();
-        set.put("tardis_id", id);
-        qf.alterEnergyLevel("tardis", amount, set, null);
-        // if it is a secondary console room remove the controls
-        if (r.equals("BAKER") || r.equals("WOOD")) {
-            // get tardis_id
-            int secondary = (r.equals("BAKER")) ? 1 : 2;
-            HashMap<String, Object> del = new HashMap<String, Object>();
-            del.put("tardis_id", id);
-            del.put("secondary", secondary);
-            qf.doDelete("controls", del);
+        if (room != null) {
+            int amount = Math.round((plugin.getArtronConfig().getInt("jettison") / 100F) * plugin.getRoomsConfig().getInt("rooms." + r + ".cost"));
+            QueryFactory qf = new QueryFactory(plugin);
+            HashMap<String, Object> set = new HashMap<String, Object>();
+            set.put("tardis_id", id);
+            qf.alterEnergyLevel("tardis", amount, set, null);
+            // if it is a secondary console room remove the controls
+            if (r.equals("BAKER") || r.equals("WOOD")) {
+                // get tardis_id
+                int secondary = (r.equals("BAKER")) ? 1 : 2;
+                HashMap<String, Object> del = new HashMap<String, Object>();
+                del.put("tardis_id", id);
+                del.put("secondary", secondary);
+                qf.doDelete("controls", del);
+            }
         }
     }
 }

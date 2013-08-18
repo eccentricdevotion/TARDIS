@@ -149,8 +149,9 @@ public class TARDISARSListener implements Listener {
                         // reset selected slot to empty
                         if (selected_slot.containsKey(playerNameStr)) {
                             // check whether original loaded slot was a room - as it will need to be jettisoned, not reset
-                            if (checkSavedGrid(playerNameStr, selected_slot.get(playerNameStr))) {
+                            if (checkSavedGrid(playerNameStr, selected_slot.get(playerNameStr), 0)) {
                                 setLore(inv, slot, "You cannot reset the selected slot!");
+                                break;
                             } else {
                                 ItemStack stone = new ItemStack(1, 1);
                                 ItemMeta s1 = stone.getItemMeta();
@@ -202,6 +203,7 @@ public class TARDISARSListener implements Listener {
                     case 39:
                         // jettison
                         if (selected_slot.containsKey(playerNameStr)) {
+                            // need to check for gravity wells, and jettison both layers...
                             ItemStack tnt = new ItemStack(46, 1);
                             ItemMeta j = tnt.getItemMeta();
                             j.setDisplayName("Jettison");
@@ -223,17 +225,30 @@ public class TARDISARSListener implements Listener {
                     case 53:
                         // put room in selected slot
                         if (selected_slot.containsKey(playerNameStr)) {
-                            ItemStack ris = inv.getItem(slot);
-                            String room = TARDISARS.getARS(ris.getItemMeta().getDisplayName()).toString();
-                            if (plugin.getConfig().getBoolean("rooms_require_blocks")) {
-                                if (!hasCondensables(playerNameStr, room)) {
-                                    setLore(inv, slot, "You haven't condensed enough blocks for this room!");
-                                    break;
+                            // check whether original loaded slot was a room - as it will need to be jettisoned, not reset
+                            if (checkSavedGrid(playerNameStr, selected_slot.get(playerNameStr), 0)) {
+                                setLore(inv, slot, "Jettison existing room first!");
+                                break;
+                            } else {
+                                ItemStack ris = inv.getItem(slot);
+                                String room = TARDISARS.getARS(ris.getItemMeta().getDisplayName()).toString();
+                                if (room.equals("Gravity Well") || room.equals("Anti-gravity Well")) {
+                                    int updown = (room.equals("Gravity Well")) ? -1 : 1;
+                                    if (checkSavedGrid(playerNameStr, selected_slot.get(playerNameStr), updown)) {
+                                        setLore(inv, slot, "Using a gravity well here would overwrite an existing room!");
+                                        break;
+                                    }
                                 }
+                                if (plugin.getConfig().getBoolean("rooms_require_blocks")) {
+                                    if (!hasCondensables(playerNameStr, room)) {
+                                        setLore(inv, slot, "You haven't condensed enough blocks for this room!");
+                                        break;
+                                    }
+                                }
+                                // setSlot(Inventory inv, int slot, ItemStack is, String player, boolean update)
+                                setSlot(inv, selected_slot.get(playerNameStr), ris, playerNameStr, true);
+                                setLore(inv, slot, null);
                             }
-                            // setSlot(Inventory inv, int slot, ItemStack is, String player, boolean update)
-                            setSlot(inv, selected_slot.get(playerNameStr), ris, playerNameStr, true);
-                            setLore(inv, slot, null);
                         } else {
                             setLore(inv, slot, "No slot selected!");
                         }
@@ -386,11 +401,15 @@ public class TARDISARSListener implements Listener {
      * @param slot the slot that was clicked
      * @param id the type id of the block in the slot
      */
-    private boolean checkSavedGrid(String p, int slot) {
+    private boolean checkSavedGrid(String p, int slot, int updown) {
         TARDISARSMapData md = map_data.get(p);
         TARDISARSSaveData sd = save_map_data.get(p);
         int[][][] grid = sd.getData();
-        int yy = md.getY();
+        int yy = md.getY() + updown;
+        // avoid ArrayIndexOutOfBoundsException if gravity well extends beyond ARS area
+        if (yy < 0 || yy > 2) {
+            return true;
+        }
         int[] coords = getCoords(slot, md);
         int xx = coords[0];
         int zz = coords[1];
@@ -495,19 +514,21 @@ public class TARDISARSListener implements Listener {
                         p.sendMessage(plugin.pluginName + "Architectural reconfiguration starting...");
                         plugin.trackARS.add(ids.get(n));
                         // do all jettisons first
-                        long del = 5L;
-                        for (Map.Entry<TARDISARSJettison, TARDISARS> map : tap.getJettison().entrySet()) {
-//                            TARDISARSJettisonRunnable jr = new TARDISARSJettisonRunnable(plugin, map.getKey(), map.getValue(), ids.get(p.getName()));
-//                            plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, jr, del);
-                            del += 5L;
-
+                        if (tap.getJettison().size() > 0) {
+                            p.sendMessage(plugin.pluginName + "Jettisoning " + tap.getJettison().size() + " rooms...");
+                            long del = 5L;
+                            for (Map.Entry<TARDISARSJettison, TARDISARS> map : tap.getJettison().entrySet()) {
+                                TARDISARSJettisonRunnable jr = new TARDISARSJettisonRunnable(plugin, map.getKey(), map.getValue(), ids.get(p.getName()));
+                                plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, jr, del);
+                                del += 5L;
+                            }
                         }
                         // one every 40 seconds at default room_speed
                         long period = 200L * (Math.round(20 / plugin.getConfig().getDouble("room_speed")));
                         long delay = 20L;
                         for (Map.Entry<TARDISARSSlot, TARDISARS> map : tap.getChanged().entrySet()) {
-//                            TARDISARSRunnable ar = new TARDISARSRunnable(plugin, map.getKey(), map.getValue(), p);
-//                            plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, ar, delay);
+                            TARDISARSRunnable ar = new TARDISARSRunnable(plugin, map.getKey(), map.getValue(), p);
+                            plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, ar, delay);
                             delay += period;
                         }
                     } else {

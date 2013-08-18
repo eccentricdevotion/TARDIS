@@ -24,7 +24,8 @@ import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.rooms.TARDISRoomData;
 import me.eccentric_nz.TARDIS.rooms.TARDISRoomRunnable;
 import me.eccentric_nz.TARDIS.rooms.TARDISWalls;
-import org.bukkit.block.Block;
+import org.bukkit.Location;
+import org.bukkit.World;
 import org.bukkit.entity.Player;
 
 /**
@@ -53,6 +54,8 @@ public class TARDISARSRunnable implements Runnable {
         where.put("owner", p.getName());
         ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
         if (rs.resultSet()) {
+            String[] chunk_data = rs.getChunk().split(":");
+            World w = plugin.getServer().getWorld(chunk_data[0]);
             HashMap<String, Object> wherepp = new HashMap<String, Object>();
             wherepp.put("player", p.getName());
             ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, wherepp);
@@ -80,21 +83,13 @@ public class TARDISARSRunnable implements Runnable {
             roomData.setFloor_id(floor_id);
             roomData.setFloor_data(floor_data);
             // get start locations
-//            Block b = l.getBlock();
-//            roomData.setBlock(b);
+            Location l = new Location(w, slot.getX(), slot.getY(), slot.getZ());
             roomData.setDirection(TARDISConstants.COMPASS.SOUTH);
             short[] dimensions = plugin.room_dimensions.get(whichroom);
-//            if (room.equals(TARDISARS.GRAVITY) || room.equals(TARDISARS.ANTIGRAVITY)) {
-//                l.setX(l.getX() - 6);
-//                l.setZ(l.getZ() - 6);
-//            } else {
-//                int xzoffset = (dimensions[1] / 2);
-//                l.setX(l.getX() - xzoffset);
-//            }
-//            // set y offset
-//            int offset = Math.abs(room.getOffset());
-//            l.setY(l.getY() - offset);
-//            roomData.setLocation(l);
+            // set y offset
+            int offset = Math.abs(TARDISARS.valueOf(whichroom).getOffset());
+            l.setY(l.getY() + offset);
+            roomData.setLocation(l);
             roomData.setX(1);
             roomData.setZ(1);
             roomData.setRoom(whichroom);

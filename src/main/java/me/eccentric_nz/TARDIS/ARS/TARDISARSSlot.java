@@ -16,22 +16,35 @@
  */
 package me.eccentric_nz.TARDIS.ARS;
 
+import org.bukkit.Chunk;
+
 /**
  *
  * @author eccentric_nz
  */
 public class TARDISARSSlot {
 
-    private int l;
+    private Chunk chunk;
+    private int y;
     private int x;
     private int z;
 
-    public int getL() {
-        return l;
+    public Chunk getChunk() {
+        return chunk;
     }
 
-    public void setL(int l) {
-        this.l = l;
+    public void setChunk(Chunk chunk) {
+        this.chunk = chunk;
+    }
+
+    public int getY() {
+        return y;
+    }
+
+    public void setY(int y) {
+        // convert to the actual y coordinate of the start of the chunk
+        int sl = getChunkY(y);
+        this.y = sl;
     }
 
     public int getX() {
@@ -40,7 +53,9 @@ public class TARDISARSSlot {
 
     public void setX(int x) {
         // convert to the actual x coordinate of the start of the chunk
-        this.x = x;
+        int sx = getChunkX(x, this.chunk);
+        this.x = sx;
+        System.out.println("X:" + sx);
     }
 
     public int getZ() {
@@ -49,6 +64,71 @@ public class TARDISARSSlot {
 
     public void setZ(int z) {
         // convert to the actual z coordinate of the start of the chunk
-        this.z = z;
+        int sz = getChunkZ(z, this.chunk);
+        this.z = sz;
+        System.out.println("Z:" + sz);
+    }
+
+    private int getChunkX(int xx, Chunk c) {
+        int cx = c.getX();
+        int cz = c.getZ();
+        switch (xx) {
+            case 0:
+                return c.getWorld().getChunkAt(cx - 4, cz).getBlock(0, 64, 0).getX();
+            case 1:
+                return c.getWorld().getChunkAt(cx - 3, cz).getBlock(0, 64, 0).getX();
+            case 2:
+                return c.getWorld().getChunkAt(cx - 2, cz).getBlock(0, 64, 0).getX();
+            case 3:
+                return c.getWorld().getChunkAt(cx - 1, cz).getBlock(0, 64, 0).getX();
+            case 5:
+                return c.getWorld().getChunkAt(cx + 1, cz).getBlock(0, 64, 0).getX();
+            case 6:
+                return c.getWorld().getChunkAt(cx + 2, cz).getBlock(0, 64, 0).getX();
+            case 7:
+                return c.getWorld().getChunkAt(cx + 3, cz).getBlock(0, 64, 0).getX();
+            case 8:
+                return c.getWorld().getChunkAt(cx + 4, cz).getBlock(0, 64, 0).getX();
+            default:
+                return cx;
+        }
+    }
+
+    private int getChunkZ(int zz, Chunk c) {
+        int cx = c.getX();
+        int cz = c.getZ();
+        switch (zz) {
+            case 0:
+                return c.getWorld().getChunkAt(cz, cz - 4).getBlock(0, 64, 0).getZ();
+            case 1:
+                return c.getWorld().getChunkAt(cx, cz - 3).getBlock(0, 64, 0).getZ();
+            case 2:
+                return c.getWorld().getChunkAt(cx, cz - 2).getBlock(0, 64, 0).getZ();
+            case 3:
+                return c.getWorld().getChunkAt(cx, cz - 1).getBlock(0, 64, 0).getZ();
+            case 5:
+                return c.getWorld().getChunkAt(cx, cz + 1).getBlock(0, 64, 0).getZ();
+            case 6:
+                return c.getWorld().getChunkAt(cx, cz + 2).getBlock(0, 64, 0).getZ();
+            case 7:
+                return c.getWorld().getChunkAt(cx, cz + 3).getBlock(0, 64, 0).getZ();
+            case 8:
+                return c.getWorld().getChunkAt(cx, cz + 4).getBlock(0, 64, 0).getZ();
+            default:
+                return cz;
+        }
+    }
+
+    private int getChunkY(int yy) {
+        switch (yy) {
+            case -1:
+                return 32;
+            case 0:
+                return 48;
+            case 2:
+                return 80;
+            default:
+                return 64;
+        }
     }
 }

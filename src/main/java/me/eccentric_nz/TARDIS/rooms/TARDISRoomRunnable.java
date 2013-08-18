@@ -127,8 +127,10 @@ public class TARDISRoomRunnable implements Runnable {
                         break;
                 }
                 // put door on
-                b.setTypeIdAndData(64, door_data, true);
-                b.getRelative(BlockFace.UP).setTypeIdAndData(64, (byte) 8, true);
+                if (b != null) {
+                    b.setTypeIdAndData(64, door_data, true);
+                    b.getRelative(BlockFace.UP).setTypeIdAndData(64, (byte) 8, true);
+                }
             }
             if (iceblocks.size() > 0) {
                 p.sendMessage(plugin.pluginName + "Melting the ice!");

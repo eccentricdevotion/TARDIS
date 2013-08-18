@@ -184,9 +184,9 @@ public class TARDISWorldGuardUtils {
     }
 
     /**
-     * Turns a location object into a vector.
+     * Turns a location object into a BlockVector.
      *
-     * @param location the Location to convert to Vector
+     * @param location the Location to convert to BlockVector
      * @return a BlockVector
      */
     public BlockVector makeBlockVector(Location location) {
