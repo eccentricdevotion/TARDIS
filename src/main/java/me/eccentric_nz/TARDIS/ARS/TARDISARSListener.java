@@ -522,7 +522,7 @@ public class TARDISARSListener implements Listener {
                             p.sendMessage(plugin.pluginName + "Jettisoning " + tap.getJettison().size() + " rooms...");
                             long del = 5L;
                             for (Map.Entry<TARDISARSJettison, TARDISARS> map : tap.getJettison().entrySet()) {
-                                TARDISARSJettisonRunnable jr = new TARDISARSJettisonRunnable(plugin, map.getKey(), map.getValue(), ids.get(p.getName()));
+                                TARDISARSJettisonRunnable jr = new TARDISARSJettisonRunnable(plugin, map.getKey(), map.getValue(), ids.get(p.getName()), p);
                                 plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, jr, del);
                                 del += 5L;
                             }

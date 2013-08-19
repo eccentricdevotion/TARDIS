@@ -28,7 +28,6 @@ public class TARDISARSJettison {
     private int y;
     private int x;
     private int z;
-    private String prior;
 
     public Chunk getChunk() {
         return chunk;
@@ -66,14 +65,6 @@ public class TARDISARSJettison {
         // convert to the actual z coordinate of the start of the chunk
         int sz = getChunkZ(z, this.chunk);
         this.z = sz;
-    }
-
-    public String getPrior() {
-        return prior;
-    }
-
-    public void setPrior(int block) {
-        this.prior = TARDISARS.getARS(block).toString();
     }
 
     private int getChunkX(int xx, Chunk c) {

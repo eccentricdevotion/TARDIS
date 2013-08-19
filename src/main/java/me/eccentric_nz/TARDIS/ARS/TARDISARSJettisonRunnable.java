@@ -19,7 +19,9 @@ package me.eccentric_nz.TARDIS.ARS;
 import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
+import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import org.bukkit.World;
+import org.bukkit.entity.Player;
 
 /**
  *
@@ -31,12 +33,14 @@ public class TARDISARSJettisonRunnable implements Runnable {
     private TARDISARSJettison slot;
     private TARDISARS room;
     private int id;
+    private Player p;
 
-    public TARDISARSJettisonRunnable(TARDIS plugin, TARDISARSJettison slot, TARDISARS room, int id) {
+    public TARDISARSJettisonRunnable(TARDIS plugin, TARDISARSJettison slot, TARDISARS room, int id, Player p) {
         this.plugin = plugin;
         this.slot = slot;
         this.room = room;
         this.id = id;
+        this.p = p;
     }
 
     @Override
@@ -61,6 +65,9 @@ public class TARDISARSJettisonRunnable implements Runnable {
             HashMap<String, Object> set = new HashMap<String, Object>();
             set.put("tardis_id", id);
             qf.alterEnergyLevel("tardis", amount, set, null);
+            if (p.isOnline()) {
+                p.sendMessage(plugin.pluginName + amount + " Artron Energy recovered.");
+            }
             // if it is a secondary console room remove the controls
             if (r.equals("BAKER") || r.equals("WOOD")) {
                 // get tardis_id

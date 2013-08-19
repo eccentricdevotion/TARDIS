@@ -105,7 +105,9 @@ public class TARDISARSRunnable implements Runnable {
             HashMap<String, Object> set = new HashMap<String, Object>();
             set.put("owner", p.getName());
             qf.alterEnergyLevel("tardis", -amount, set, p);
-            p.sendMessage(plugin.pluginName + "To cancel growing this [" + whichroom + "] room use the command /tardis abort " + taskID);
+            if (p.isOnline()) {
+                p.sendMessage(plugin.pluginName + "To cancel growing this [" + whichroom + "] room use the command /tardis abort " + taskID);
+            }
         }
     }
 

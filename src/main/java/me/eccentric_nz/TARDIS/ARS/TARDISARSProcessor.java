@@ -51,13 +51,14 @@ public class TARDISARSProcessor {
                         if (end[l][x][z] == 46) {
                             if (start[l][x][z] == 48) {
                                 if (l == 2 || ((l + 1) < 3 && start[l + 1][x][z] == 48)) {
+                                    plugin.debug("Found an anti-gravity slot above this one");
                                     // set both layers of the gravity well
                                     TARDISARSJettison slot = new TARDISARSJettison();
                                     slot.setChunk(c);
                                     slot.setY(l);
                                     slot.setX(x);
                                     slot.setZ(z);
-                                    jettison.put(slot, TARDISARS.getARS(end[l][x][z]));
+                                    jettison.put(slot, TARDISARS.getARS(start[l][x][z]));
                                     TARDISARSJettison slot2 = new TARDISARSJettison();
                                     slot2.setChunk(c);
                                     slot2.setY(l + 1);
@@ -67,13 +68,14 @@ public class TARDISARSProcessor {
                                 }
                             } else if (start[l][x][z] == 24) {
                                 if (l == 0 || ((l - 1) > 0 && start[l - 1][x][z] == 24)) {
+                                    plugin.debug("Found a gravity slot below this one");
                                     // set both layers of the gravity well
                                     TARDISARSJettison slot = new TARDISARSJettison();
                                     slot.setChunk(c);
                                     slot.setY(l);
                                     slot.setX(x);
                                     slot.setZ(z);
-                                    jettison.put(slot, TARDISARS.getARS(end[l][x][z]));
+                                    jettison.put(slot, TARDISARS.getARS(start[l][x][z]));
                                     TARDISARSJettison slot2 = new TARDISARSJettison();
                                     slot2.setChunk(c);
                                     slot2.setY(l - 1);
@@ -87,8 +89,7 @@ public class TARDISARSProcessor {
                                 slot.setY(l);
                                 slot.setX(x);
                                 slot.setZ(z);
-                                slot.setPrior(start[l][x][z]);
-                                jettison.put(slot, TARDISARS.getARS(end[l][x][z]));
+                                jettison.put(slot, TARDISARS.getARS(start[l][x][z]));
                             }
                         } else {
                             if (end[l][x][z] == 48) {
@@ -135,7 +136,7 @@ public class TARDISARSProcessor {
         int recoveredcost = 0;
         // calculate energy gained by jettisons
         for (Map.Entry<TARDISARSJettison, TARDISARS> c : jettison.entrySet()) {
-            recoveredcost += Math.round((plugin.getArtronConfig().getInt("jettison") / 100F) * plugin.getRoomsConfig().getInt("rooms." + c.getKey().getPrior() + ".cost"));
+            recoveredcost += Math.round((plugin.getArtronConfig().getInt("jettison") / 100F) * plugin.getRoomsConfig().getInt("rooms." + c.getValue().toString() + ".cost"));
         }
         for (Map.Entry<TARDISARSSlot, TARDISARS> c : changed.entrySet()) {
             totalcost += plugin.getRoomsConfig().getInt("rooms." + c.getValue().toString() + ".cost");
