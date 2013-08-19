@@ -6,7 +6,6 @@
 3. Architectural Reconfiguration System (in progress)
     * Test all room types
     * Fix jettisoning gravity wells
-    * Set a proper delay for ARS room growing - a passage takes ~2 minutes at 20 blocks per second
     * Set the door access (remove blocks where appropriate)
     * Prevent manual room growing within ARS area
 4. Remove the TARDIS creation block stack, and make a special seed block that determines the type of TARDIS that will be grown. Use custom configurable recipes - the recipes will still include precious block/lapis block/redstone torch, but 4 other blocks will set:

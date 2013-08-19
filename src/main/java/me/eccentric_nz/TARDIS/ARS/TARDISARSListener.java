@@ -528,7 +528,7 @@ public class TARDISARSListener implements Listener {
                             }
                         }
                         // one every 40 seconds at default room_speed
-                        long period = 200L * (Math.round(20 / plugin.getConfig().getDouble("room_speed")));
+                        long period = 2400L * (Math.round(20 / plugin.getConfig().getDouble("room_speed")));
                         long delay = 20L;
                         for (Map.Entry<TARDISARSSlot, TARDISARS> map : tap.getChanged().entrySet()) {
                             TARDISARSRunnable ar = new TARDISARSRunnable(plugin, map.getKey(), map.getValue(), p);
