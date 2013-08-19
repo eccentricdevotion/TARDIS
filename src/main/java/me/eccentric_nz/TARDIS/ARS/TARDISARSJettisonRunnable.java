@@ -41,7 +41,6 @@ public class TARDISARSJettisonRunnable implements Runnable {
 
     @Override
     public void run() {
-        String r = room.toString();
         // remove the room
         World w = slot.getChunk().getWorld();
         int x = slot.getX();
@@ -56,6 +55,7 @@ public class TARDISARSJettisonRunnable implements Runnable {
         }
         // give them their energy!
         if (room != null) {
+            String r = room.toString();
             int amount = Math.round((plugin.getArtronConfig().getInt("jettison") / 100F) * plugin.getRoomsConfig().getInt("rooms." + r + ".cost"));
             QueryFactory qf = new QueryFactory(plugin);
             HashMap<String, Object> set = new HashMap<String, Object>();

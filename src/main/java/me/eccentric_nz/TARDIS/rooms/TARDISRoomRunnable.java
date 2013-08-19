@@ -266,6 +266,7 @@ public class TARDISRoomRunnable implements Runnable {
                             case 20:
                             case 35:
                             case 98:
+                            case 159:
                                 break;
                             default:
                                 id = existing.getTypeId();
@@ -299,7 +300,7 @@ public class TARDISRoomRunnable implements Runnable {
             }
             if (room.equals("GRAVITY") || room.equals("ANTIGRAVITY")) {
                 String loc;
-                if (id == 35 && data == 6) {
+                if ((id == 35 || id == 159) && data == 6) {
                     // pink wool - gravity well down
                     loc = new Location(world, startx, starty, startz).toString();
                     HashMap<String, Object> setd = new HashMap<String, Object>();
@@ -311,7 +312,7 @@ public class TARDISRoomRunnable implements Runnable {
                     qf.doInsert("gravity_well", setd);
                     plugin.gravityDownList.add(loc);
                 }
-                if (id == 35 && data == 5) {
+                if ((id == 35 || id == 159) && data == 5) {
                     // light green wool - gravity well up
                     loc = new Location(world, startx, starty, startz).toString();
                     HashMap<String, Object> setu = new HashMap<String, Object>();

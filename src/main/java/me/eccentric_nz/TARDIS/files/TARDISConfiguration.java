@@ -167,7 +167,7 @@ public class TARDISConfiguration {
         intOptions.put("border_radius", 64);
         intOptions.put("confirm_timeout", 15);
         intOptions.put("count", 0);
-        intOptions.put("gravity_max_distance", 15);
+        intOptions.put("gravity_max_distance", 16);
         intOptions.put("gravity_max_velocity", 5);
         intOptions.put("hads_damage", 10);
         intOptions.put("hads_distance", 10);
