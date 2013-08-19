@@ -55,7 +55,6 @@ public class TARDISARSSlot {
         // convert to the actual x coordinate of the start of the chunk
         int sx = getChunkX(x, this.chunk);
         this.x = sx;
-        System.out.println("X:" + sx);
     }
 
     public int getZ() {
@@ -66,7 +65,6 @@ public class TARDISARSSlot {
         // convert to the actual z coordinate of the start of the chunk
         int sz = getChunkZ(z, this.chunk);
         this.z = sz;
-        System.out.println("Z:" + sz);
     }
 
     private int getChunkX(int xx, Chunk c) {

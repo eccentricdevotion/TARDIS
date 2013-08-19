@@ -179,6 +179,9 @@ public class TARDISRoomRunnable implements Runnable {
             } else {
                 data = Byte.parseByte(iddata[1]);
             }
+            if (id == 35 && (data != 1 && data != 8) && plugin.getConfig().getBoolean("use_clay")) {
+                id = 159;
+            }
             if (id == 35 && data == 1) {
                 if (middle_id == 35 && middle_data == 1 && plugin.getConfig().getBoolean("use_clay")) {
                     id = 159;
@@ -315,7 +318,7 @@ public class TARDISRoomRunnable implements Runnable {
                     setu.put("tardis_id", tardis_id);
                     setu.put("location", loc);
                     setu.put("direction", 1);
-                    setu.put("distance", 11);
+                    setu.put("distance", 16);
                     setu.put("velocity", 0.5);
                     qf.doInsert("gravity_well", setu);
                     Double[] values = new Double[]{1D, 11D, 0.5D};

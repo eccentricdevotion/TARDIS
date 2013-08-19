@@ -9,6 +9,7 @@
     * Set the door access (remove blocks where appropriate)
     * Make sure piston doors use clay if `use_clay: true`
     * Restrict ARS use to ARS, BUDGET, STEAMPUNK, PLANK and TOM main consoles
+    * Prevent manual room growing within ARS area
 4. Remove the TARDIS creation block stack, and make a special seed block that determines the type of TARDIS that will be grown. Use custom configurable recipes - the recipes will still include precious block/lapis block/redstone torch, but 4 other blocks will set:
     * TARDIS wall block
     * TARDIS floor block

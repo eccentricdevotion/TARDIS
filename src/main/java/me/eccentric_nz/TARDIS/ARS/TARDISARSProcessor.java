@@ -44,7 +44,6 @@ public class TARDISARSProcessor {
         changed = new HashMap<TARDISARSSlot, TARDISARS>();
         jettison = new HashMap<TARDISARSJettison, TARDISARS>();
         Chunk c = getTARDISChunk(id);
-        plugin.debug("Chunk: " + c);
         for (int l = 0; l < 3; l++) {
             for (int x = 0; x < 9; x++) {
                 for (int z = 0; z < 9; z++) {
