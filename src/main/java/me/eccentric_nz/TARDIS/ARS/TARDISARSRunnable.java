@@ -86,9 +86,8 @@ public class TARDISARSRunnable implements Runnable {
             Location l = new Location(w, slot.getX(), slot.getY(), slot.getZ());
             roomData.setDirection(TARDISConstants.COMPASS.SOUTH);
             short[] dimensions = plugin.room_dimensions.get(whichroom);
-            // set y offset
-            int offset = Math.abs(TARDISARS.valueOf(whichroom).getOffset());
-            l.setY(l.getY() + offset);
+            // set y offset - this needs to be how many blocks above ground 0 of the 16x16x16 chunk the room starts
+            l.setY(l.getY() + TARDISARS.valueOf(whichroom).getOffset());
             roomData.setLocation(l);
             roomData.setX(1);
             roomData.setZ(1);

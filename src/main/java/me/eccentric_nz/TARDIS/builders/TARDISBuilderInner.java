@@ -96,22 +96,18 @@ public class TARDISBuilderInner {
             case STEAMPUNK:
                 s = plugin.steampunkschematic;
                 d = plugin.steampunkdimensions;
-                starty += 2;
                 break;
             case PLANK:
                 s = plugin.plankschematic;
                 d = plugin.plankdimensions;
-                starty += 2;
                 break;
             case TOM:
                 s = plugin.tomschematic;
                 d = plugin.tomdimensions;
-                starty += 2;
                 break;
             default:
                 s = plugin.budgetschematic;
                 d = plugin.budgetdimensions;
-                starty += 2;
                 break;
         }
         short h = d[0];
@@ -128,7 +124,6 @@ public class TARDISBuilderInner {
         int gsl[] = plugin.utils.getStartLocation(dbID);
         startx = gsl[0];
         resetx = gsl[1];
-        resety = starty;
         startz = gsl[2];
         resetz = gsl[3];
         x = gsl[4];
@@ -181,7 +176,7 @@ public class TARDISBuilderInner {
         }
         // reset start positions and do over
         startx = resetx;
-        starty = resety;
+        starty = 64;
         startz = resetz;
 
         for (level = 0; level < h; level++) {

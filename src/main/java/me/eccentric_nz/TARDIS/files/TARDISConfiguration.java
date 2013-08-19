@@ -221,7 +221,7 @@ public class TARDISConfiguration {
         roomIntOptions.put("rooms.RAIL.offset", -1);
         roomIntOptions.put("rooms.STABLE.cost", 350);
         roomIntOptions.put("rooms.STABLE.offset", -1);
-        roomIntOptions.put("rooms.TRENZALORE.cost", 450);
+        roomIntOptions.put("rooms.TRENZALORE.cost", 550);
         roomIntOptions.put("rooms.TRENZALORE.offset", -2);
         roomIntOptions.put("rooms.VAULT.cost", 350);
         roomIntOptions.put("rooms.VAULT.offset", -1);

@@ -130,5 +130,11 @@ rooms:
     enabled: true
     cost: 550
     offset: -1
+    seed: LOG
+    user: false
+  TRENZALORE:
+    enabled: true
+    cost: 550
+    offset: -1
     seed: BRICK
     user: false
