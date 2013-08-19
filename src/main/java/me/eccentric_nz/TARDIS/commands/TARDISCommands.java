@@ -853,6 +853,17 @@ public class TARDISCommands implements CommandExecutor {
                             return false;
                         }
                         String rail = rs.getRail();
+                        if (tardis_block.equals("ars")) {
+                            if (!player.hasPermission("tardis.ars")) {
+                                sender.sendMessage(plugin.pluginName + "You do not have permission to create an Architectural Reconfiguration System!");
+                                return true;
+                            }
+                            TARDISConstants.SCHEMATIC schm = rs.getSchematic();
+                            if (!schm.equals(TARDISConstants.SCHEMATIC.ARS) && !schm.equals(TARDISConstants.SCHEMATIC.BUDGET) && !schm.equals(TARDISConstants.SCHEMATIC.PLANK) && !schm.equals(TARDISConstants.SCHEMATIC.STEAMPUNK) && !schm.equals(TARDISConstants.SCHEMATIC.TOM)) {
+                                sender.sendMessage(plugin.pluginName + "You cannot use the Architectural Reconfiguration System with this type of TARDIS!");
+                                return true;
+                            }
+                        }
                         if (!tardis_block.equals("backdoor")) {
                             HashMap<String, Object> wheret = new HashMap<String, Object>();
                             wheret.put("player", player.getName());
