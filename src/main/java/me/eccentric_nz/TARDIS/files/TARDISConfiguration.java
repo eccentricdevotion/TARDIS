@@ -138,6 +138,8 @@ public class TARDISConfiguration {
         roomBoolOptions.put("rooms.RAIL.user", false);
         roomBoolOptions.put("rooms.STABLE.enabled", true);
         roomBoolOptions.put("rooms.STABLE.user", false);
+        roomBoolOptions.put("rooms.TRENZALORE.enabled", true);
+        roomBoolOptions.put("rooms.TRENZALORE.user", false);
         roomBoolOptions.put("rooms.VAULT.enabled", true);
         roomBoolOptions.put("rooms.VAULT.user", false);
         roomBoolOptions.put("rooms.VILLAGE.enabled", true);
@@ -219,6 +221,8 @@ public class TARDISConfiguration {
         roomIntOptions.put("rooms.RAIL.offset", -1);
         roomIntOptions.put("rooms.STABLE.cost", 350);
         roomIntOptions.put("rooms.STABLE.offset", -1);
+        roomIntOptions.put("rooms.TRENZALORE.cost", 450);
+        roomIntOptions.put("rooms.TRENZALORE.offset", -2);
         roomIntOptions.put("rooms.VAULT.cost", 350);
         roomIntOptions.put("rooms.VAULT.offset", -1);
         roomIntOptions.put("rooms.VILLAGE.cost", 550);
@@ -254,8 +258,9 @@ public class TARDISConfiguration {
         roomStrOptions.put("rooms.POOL.seed", "SNOW_BLOCK");
         roomStrOptions.put("rooms.RAIL.seed", "HOPPER");
         roomStrOptions.put("rooms.STABLE.seed", "HAY_BLOCK");
+        roomStrOptions.put("rooms.TRENZALORE.seed", "BRICK");
         roomStrOptions.put("rooms.VAULT.seed", "DISPENSER");
-        roomStrOptions.put("rooms.VILLAGE.seed", "BRICK");
+        roomStrOptions.put("rooms.VILLAGE.seed", "LOG");
         roomStrOptions.put("rooms.WOOD.seed", "WOOD");
         roomStrOptions.put("rooms.WORKSHOP.seed", "NETHER_BRICK");
     }
