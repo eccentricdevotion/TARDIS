@@ -53,34 +53,34 @@ public class TARDISARSProcessor {
                             if (start[l][x][z] == 48) {
                                 if (l == 2 || ((l + 1) < 3 && start[l + 1][x][z] == 48)) {
                                     // set both layers of the gravity well
-                                    TARDISARSSlot slot = new TARDISARSSlot();
+                                    TARDISARSJettison slot = new TARDISARSJettison();
                                     slot.setChunk(c);
                                     slot.setY(l);
                                     slot.setX(x);
                                     slot.setZ(z);
-                                    changed.put(slot, TARDISARS.getARS(end[l][x][z]));
-                                    TARDISARSSlot slot2 = new TARDISARSSlot();
+                                    jettison.put(slot, TARDISARS.getARS(end[l][x][z]));
+                                    TARDISARSJettison slot2 = new TARDISARSJettison();
                                     slot2.setChunk(c);
                                     slot2.setY(l + 1);
                                     slot2.setX(x);
                                     slot2.setZ(z);
-                                    changed.put(slot, null);
+                                    jettison.put(slot, null);
                                 }
                             } else if (start[l][x][z] == 24) {
                                 if (l == 0 || ((l - 1) > 0 && start[l - 1][x][z] == 24)) {
                                     // set both layers of the gravity well
-                                    TARDISARSSlot slot = new TARDISARSSlot();
+                                    TARDISARSJettison slot = new TARDISARSJettison();
                                     slot.setChunk(c);
                                     slot.setY(l);
                                     slot.setX(x);
                                     slot.setZ(z);
-                                    changed.put(slot, TARDISARS.getARS(end[l][x][z]));
-                                    TARDISARSSlot slot2 = new TARDISARSSlot();
+                                    jettison.put(slot, TARDISARS.getARS(end[l][x][z]));
+                                    TARDISARSJettison slot2 = new TARDISARSJettison();
                                     slot2.setChunk(c);
                                     slot2.setY(l - 1);
                                     slot2.setX(x);
                                     slot2.setZ(z);
-                                    changed.put(slot, null);
+                                    jettison.put(slot, null);
                                 }
                             } else {
                                 TARDISARSJettison slot = new TARDISARSJettison();
