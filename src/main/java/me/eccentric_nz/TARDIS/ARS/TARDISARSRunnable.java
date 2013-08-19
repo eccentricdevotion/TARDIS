@@ -19,6 +19,7 @@ package me.eccentric_nz.TARDIS.ARS;
 import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
+import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.rooms.TARDISRoomData;
@@ -98,6 +99,12 @@ public class TARDISARSRunnable implements Runnable {
             TARDISRoomRunnable runnable = new TARDISRoomRunnable(plugin, roomData, p);
             int taskID = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, runnable, delay, delay);
             runnable.setTask(taskID);
+            // take their energy!
+            int amount = plugin.getRoomsConfig().getInt("rooms." + whichroom + ".cost");
+            QueryFactory qf = new QueryFactory(plugin);
+            HashMap<String, Object> set = new HashMap<String, Object>();
+            set.put("owner", p.getName());
+            qf.alterEnergyLevel("tardis", -amount, set, p);
             p.sendMessage(plugin.pluginName + "To cancel growing this [" + whichroom + "] room use the command /tardis abort " + taskID);
         }
     }
