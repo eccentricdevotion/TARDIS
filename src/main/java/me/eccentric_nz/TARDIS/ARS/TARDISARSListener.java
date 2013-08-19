@@ -292,7 +292,11 @@ public class TARDISARSListener implements Listener {
             for (int x = 0; x < 9; x++) {
                 JSONArray jsonz = jsonx.getJSONArray(x);
                 for (int z = 0; z < 9; z++) {
-                    grid[y][x][z] = jsonz.getInt(z);
+                    if (jsonz.getInt(z) == 46) {
+                        grid[y][x][z] = 1;
+                    } else {
+                        grid[y][x][z] = jsonz.getInt(z);
+                    }
                 }
             }
         }

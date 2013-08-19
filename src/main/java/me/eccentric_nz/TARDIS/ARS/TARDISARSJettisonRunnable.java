@@ -19,7 +19,6 @@ package me.eccentric_nz.TARDIS.ARS;
 import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
-import org.bukkit.Location;
 import org.bukkit.World;
 
 /**
