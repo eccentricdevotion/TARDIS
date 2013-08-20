@@ -376,13 +376,7 @@ public class TARDISCommands implements CommandExecutor {
                         player.sendMessage(plugin.pluginName + "You are not a Timelord. You need to create a TARDIS first before using this command!");
                         return true;
                     }
-                    String chunk = rs.getChunk();
-                    String[] data = chunk.split(":");
-                    World room_world = plugin.getServer().getWorld(data[0]);
-                    ChunkGenerator gen = room_world.getGenerator();
-                    WorldType wt = room_world.getWorldType();
-                    boolean special = (data[0].contains("TARDIS_TimeVortex") && (wt.equals(WorldType.FLAT) || gen instanceof TARDISChunkGenerator));
-                    if (!data[0].contains("TARDIS_WORLD_") && !special) {
+                    if (!canGrowRooms(rs.getChunk())) {
                         player.sendMessage(plugin.pluginName + "You cannot grow rooms unless your TARDIS was created in its own world!");
                         return true;
                     }
@@ -856,6 +850,10 @@ public class TARDISCommands implements CommandExecutor {
                         if (tardis_block.equals("ars")) {
                             if (!player.hasPermission("tardis.ars")) {
                                 sender.sendMessage(plugin.pluginName + "You do not have permission to create an Architectural Reconfiguration System!");
+                                return true;
+                            }
+                            if (!canGrowRooms(rs.getChunk())) {
+                                player.sendMessage(plugin.pluginName + "You cannot use the Architectural Reconfiguration System unless your TARDIS was created in its own world!");
                                 return true;
                             }
                             TARDISConstants.SCHEMATIC schm = rs.getSchematic();
@@ -1522,5 +1520,17 @@ public class TARDISCommands implements CommandExecutor {
         // If the above has happened the function will break and return true. if this hasn't happened then value of false will be returned.
 
         return false;
+    }
+
+    private boolean canGrowRooms(String chunk) {
+        String[] data = chunk.split(":");
+        World room_world = plugin.getServer().getWorld(data[0]);
+        ChunkGenerator gen = room_world.getGenerator();
+        WorldType wt = room_world.getWorldType();
+        boolean special = (data[0].contains("TARDIS_TimeVortex") && (wt.equals(WorldType.FLAT) || gen instanceof TARDISChunkGenerator));
+        if (!data[0].contains("TARDIS_WORLD_") && !special) {
+            return false;
+        }
+        return true;
     }
 }
