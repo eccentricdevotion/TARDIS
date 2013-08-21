@@ -279,6 +279,21 @@ public class TARDISARSListener implements Listener {
     }
 
     /**
+     * Saves the current ARS data to the database.
+     *
+     * @param p the player who is using the ARS GUI
+     */
+    private void revert(String p) {
+        TARDISARSSaveData sd = save_map_data.get(p);
+        JSONArray json = new JSONArray(sd.getData());
+        HashMap<String, Object> set = new HashMap<String, Object>();
+        set.put("json", json.toString());
+        HashMap<String, Object> wherea = new HashMap<String, Object>();
+        wherea.put("ars_id", sd.getId());
+        new QueryFactory(plugin).doUpdate("ars", set, wherea);
+    }
+
+    /**
      * Converts the JSON data stored in the database to a 3D array.
      *
      * @param js the JSON from the database
@@ -537,6 +552,8 @@ public class TARDISARSListener implements Listener {
                         }
                     } else {
                         p.sendMessage(plugin.pluginName + tap.getError());
+                        // reset map to the previous version
+                        revert(n);
                     }
                     map_data.remove(n);
                     save_map_data.remove(n);
@@ -567,6 +584,7 @@ public class TARDISARSListener implements Listener {
             int[][][] json = getGridFromJSON(rs.getJson());
             int[][][] json2 = getGridFromJSON(rs.getJson());
             sd.setData(json);
+            sd.setId(rs.getId());
             md.setData(json2);
             md.setE(rs.getEast());
             md.setS(rs.getSouth());
@@ -575,6 +593,7 @@ public class TARDISARSListener implements Listener {
             save_map_data.put(player, sd);
             map_data.put(player, md);
             setMap(rs.getLayer(), rs.getEast(), rs.getSouth(), player, inv);
+            saveAll(player);
             setLore(inv, 10, "Map LOADED");
             switchLevel(inv, (27 + rs.getLayer()), player);
         }

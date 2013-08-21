@@ -26,6 +26,7 @@ package me.eccentric_nz.TARDIS.ARS;
 public class TARDISARSSaveData {
 
     private int[][][] data;
+    private int id;
 
     public int[][][] getData() {
         return data;
@@ -33,5 +34,13 @@ public class TARDISARSSaveData {
 
     public void setData(int[][][] data) {
         this.data = data;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 }

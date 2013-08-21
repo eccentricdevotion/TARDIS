@@ -49,7 +49,9 @@ public class TARDISARSProcessor {
                 for (int z = 0; z < 9; z++) {
                     if (start[l][x][z] != end[l][x][z]) {
                         if (end[l][x][z] == 46) {
+                            plugin.debug("Found TNT in this slot");
                             if (start[l][x][z] == 48) {
+                                plugin.debug("Found an anti-gravity room here previously");
                                 if (l == 2 || ((l + 1) < 3 && start[l + 1][x][z] == 48)) {
                                     plugin.debug("Found an anti-gravity slot above this one");
                                     // set both layers of the gravity well
@@ -67,6 +69,7 @@ public class TARDISARSProcessor {
                                     jettison.put(slot, null);
                                 }
                             } else if (start[l][x][z] == 24) {
+                                plugin.debug("Found a gravity room here previously");
                                 if (l == 0 || ((l - 1) > 0 && start[l - 1][x][z] == 24)) {
                                     plugin.debug("Found a gravity slot below this one");
                                     // set both layers of the gravity well
