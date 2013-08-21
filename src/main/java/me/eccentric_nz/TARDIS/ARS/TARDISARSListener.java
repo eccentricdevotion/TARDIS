@@ -16,6 +16,7 @@
  */
 package me.eccentric_nz.TARDIS.ARS;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
@@ -64,6 +65,7 @@ public class TARDISARSListener implements Listener {
     private String[] levels = new String[]{"Bottom level", "Main level", "Top level"};
     private List<TARDISARS> notrooms;
     private HashMap<String, Integer> ids = new HashMap<String, Integer>();
+    private List<String> hasLoadedMap = new ArrayList<String>();
 
     public TARDISARSListener(TARDIS plugin) {
         this.plugin = plugin;
@@ -87,6 +89,10 @@ public class TARDISARSListener implements Listener {
             String playerNameStr = player.getName();
             ids.put(playerNameStr, getTardisId(playerNameStr));
             int slot = event.getRawSlot();
+            if (slot != 10 && !hasLoadedMap.contains(playerNameStr)) {
+                player.sendMessage(plugin.pluginName + "You need to load the map first!");
+                return;
+            }
             if (slot >= 0 && slot < 54) {
                 switch (slot) {
                     case 1:
@@ -525,6 +531,9 @@ public class TARDISARSListener implements Listener {
                 if (selected_slot.containsKey(n)) {
                     selected_slot.remove(n);
                 }
+                if (hasLoadedMap.contains(n)) {
+                    hasLoadedMap.remove(n);
+                }
                 if (map_data.containsKey(n)) {
                     saveAll(n);
                     TARDISARSProcessor tap = new TARDISARSProcessor(plugin, ids.get(n));
@@ -594,6 +603,7 @@ public class TARDISARSListener implements Listener {
             map_data.put(player, md);
             setMap(rs.getLayer(), rs.getEast(), rs.getSouth(), player, inv);
             saveAll(player);
+            hasLoadedMap.add(player);
             setLore(inv, 10, "Map LOADED");
             switchLevel(inv, (27 + rs.getLayer()), player);
         }
