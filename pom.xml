@@ -4,6 +4,15 @@
     <artifactId>TARDIS</artifactId>
     <version>2.6-beta-1</version>
     <name>TARDIS</name>
+    <description>A Doctor Who Plugin</description>
+    <properties>
+        <netbeans.hint.license>gpl30</netbeans.hint.license>
+        <netbeans.hint.organisation>The Nose Fairy</netbeans.hint.organisation>
+        <netbeans.hint.company>The Nose Fairy</netbeans.hint.company>
+        <netbeans.hint.user>eccentric_nz</netbeans.hint.user>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.build.number>UNKNOWN</project.build.number>
+    </properties>
     <url>http://eccentricdevotion.github.com/TARDIS/</url>
     <repositories>
         <repository>
@@ -22,6 +31,10 @@
             <id>citizensnpcs</id>
             <url>http://repo.citizensnpcs.com</url>
         </repository>
+        <repository>
+            <id>onarandombox</id>
+            <url>http://repo.onarandombox.com/content/groups/public</url>
+        </repository>
     </repositories>
     <scm>
         <connection>scm:git:ssh://github.com/eccentricdevotion/TARDIS</connection>
@@ -31,7 +44,23 @@
         <system>jenkins</system>
         <url>http://keetley.servegame.com:8080</url>
     </ciManagement>
+    <!-- Profiles are used to detect whether this is a local or Jenkins build
+    and adjust the build number accordingly -->
+    <profiles>
+        <profile>
+            <id>jenkins</id>
+            <activation>
+                <property>
+                    <name>env.BUILD_NUMBER</name>
+                </property>
+            </activation>
+            <properties>
+                <project.build.number>${env.BUILD_NUMBER}</project.build.number>
+            </properties>
+        </profile>
+    </profiles>
     <build>
+        <defaultGoal>clean package</defaultGoal>
         <finalName>TARDIS</finalName>
         <plugins>
             <plugin>
@@ -45,12 +74,59 @@
                 </configuration>
             </plugin>
             <plugin>
+                <groupId>com.google.code.maven-replacer-plugin</groupId>
+                <artifactId>maven-replacer-plugin</artifactId>
+                <version>1.3.8</version>
+                <executions>
+                    <execution>
+                        <phase>prepare-package</phase>
+                        <goals>
+                            <goal>replace</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <file>target/classes/plugin.yml</file>
+                    <replacements>
+                        <replacement>
+                            <token>maven-version-number</token>
+                            <value>${project.version}-b${project.build.number}</value>
+                        </replacement>
+                    </replacements>
+                </configuration>
+            </plugin>
+            <!-- Jar Plugin -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>2.3.1</version>
+                <configuration>
+                    <archive>
+                        <manifestEntries>
+                        </manifestEntries>
+                    </archive>
+                </configuration>
+            </plugin>
+            <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-resources-plugin</artifactId>
                 <version>2.4.3</version>
                 <configuration>
                     <encoding>${project.build.sourceEncoding}</encoding>
                 </configuration>
+            </plugin>
+            <plugin>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <version>2.8.1</version>
+                <executions>
+                    <execution>
+                        <id>javadoc-jar</id>
+                        <phase>verify</phase>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
             <plugin>
                 <artifactId>maven-clean-plugin</artifactId>
@@ -109,8 +185,8 @@
             <scope>compile</scope>
         </dependency>
         <dependency>
-            <groupId>com.palmergames.bukkit.towny</groupId>
-            <artifactId>towny</artifactId>
+            <groupId>com.palmergames.bukkit</groupId>
+            <artifactId>Towny</artifactId>
             <version>0.83.0.0</version>
             <type>jar</type>
             <scope>compile</scope>
@@ -123,21 +199,21 @@
             <scope>compile</scope>
         </dependency>
         <dependency>
-            <groupId>com.onarandombox</groupId>
+            <groupId>com.onarandombox.multiversecore</groupId>
             <artifactId>Multiverse-Core</artifactId>
             <version>2.5</version>
             <type>jar</type>
             <scope>compile</scope>
         </dependency>
         <dependency>
-            <groupId>com.onarandombox</groupId>
+            <groupId>com.onarandombox.multiverseinventories</groupId>
             <artifactId>Multiverse-Inventories</artifactId>
             <version>2.5</version>
             <type>jar</type>
             <scope>compile</scope>
         </dependency>
         <dependency>
-            <groupId>com.onarandombox</groupId>
+            <groupId>com.onarandombox.multiverseadventure</groupId>
             <artifactId>Multiverse-Adventure</artifactId>
             <version>2.5</version>
             <type>jar</type>
@@ -170,11 +246,4 @@
             <scope>compile</scope>
         </dependency>
     </dependencies>
-    <properties>
-        <netbeans.hint.license>gpl30</netbeans.hint.license>
-        <netbeans.hint.organisation>The Nose Fairy</netbeans.hint.organisation>
-        <netbeans.hint.company>The Nose Fairy</netbeans.hint.company>
-        <netbeans.hint.user>eccentric_nz</netbeans.hint.user>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    </properties>
 </project>

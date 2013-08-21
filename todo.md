@@ -4,7 +4,6 @@
 1. Test `platform_id`, Temporal Invisibility
 2. Jettison the whole room (including walls), will require new room schematics... (in progress - working with ARS :)
 3. Architectural Reconfiguration System (in progress)
-    * Test all room types
     * Fix jettisoning gravity wells
     * Set the door access (remove blocks where appropriate)
     * Prevent manual room growing within ARS area
