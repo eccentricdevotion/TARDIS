@@ -107,9 +107,9 @@ public class TARDISHostileDisplacement {
                             if (safe) {
                                 final Location fl = (plugin.trackSubmarine.contains(id)) ? sub : l;
                                 TARDISPluginRespect pr = new TARDISPluginRespect(plugin);
-                                if (pr.getRespect(player, l, false)) {
+                                if (pr.getRespect(player, fl, false)) {
                                     // move TARDIS
-                                    String hads = l.getWorld().getName() + ":" + l.getBlockX() + ":" + l.getBlockY() + ":" + l.getBlockZ();
+                                    String hads = fl.getWorld().getName() + ":" + fl.getBlockX() + ":" + fl.getBlockY() + ":" + fl.getBlockZ();
                                     QueryFactory qf = new QueryFactory(plugin);
                                     HashMap<String, Object> tid = new HashMap<String, Object>();
                                     HashMap<String, Object> set = new HashMap<String, Object>();

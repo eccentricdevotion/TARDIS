@@ -19,9 +19,8 @@
 8. Sonic Screwdrivers
 9. TARDIS Information System (in progress)
 10. Chameleon presets (in progress)
-    * Grass mound
+    * Grass mound?
     * Allow wood doors to be exterior TARDIS doors
-11. Build ARS TARDIS
 12. Village room and villager farming (in progress)
 
 ### Waiting on Bukkit API
