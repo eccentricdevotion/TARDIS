@@ -53,7 +53,7 @@ public class TARDISRescue {
      * @param tt an instance of the TARDISTimeTravel class
      * @param d the direction the Police Box is facing
      * @param rescue whether to rescue the player
-     * @return
+     * @return true or false
      */
     public boolean rescue(Player player, String saved, int id, TARDISTimeTravel tt, TARDISConstants.COMPASS d, boolean rescue) {
         if (plugin.getServer().getPlayer(saved) == null) {

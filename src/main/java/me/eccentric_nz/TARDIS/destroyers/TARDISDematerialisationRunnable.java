@@ -60,8 +60,6 @@ public class TARDISDematerialisationRunnable implements Runnable {
      * @param tid the tardis_id this Police Box belongs to
      * @param d the COMPASS direction the Police Box is facing
      * @param player a player
-     * @param mal a boolean determining whether there has been a TARDIS
-     * malfunction
      */
     public TARDISDematerialisationRunnable(TARDIS plugin, Location location, int lamp, int mat, byte data, int tid, COMPASS d, Player player) {
         this.plugin = plugin;

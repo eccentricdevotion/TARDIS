@@ -47,8 +47,8 @@ public class ResultSetRepeaters {
      * from the controls table.
      *
      * @param plugin an instance of the main class.
-     * @param where a HashMap<String, Object> of table fields and values to
-     * refine the search.
+     * @param id the TARDIS id to search for.
+     * @param secondary the level of control to look for.
      */
     public ResultSetRepeaters(TARDIS plugin, int id, int secondary) {
         this.plugin = plugin;

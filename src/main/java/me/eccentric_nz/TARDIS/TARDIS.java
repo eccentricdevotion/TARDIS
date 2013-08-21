@@ -599,7 +599,7 @@ public class TARDIS extends JavaPlugin {
     /**
      * Loads the quotes from a text file.
      *
-     * @return
+     * @return an ArrayList of quotes
      */
     public ArrayList<String> quotes() {
         if (quotesfile != null) {

@@ -52,9 +52,6 @@ public class ResultSetDeleteTardis {
      * @param plugin an instance of the main class.
      * @param where a HashMap<String, Object> of table fields and values to
      * refine the search.
-     * @param limit
-     * @param multiple a boolean indicating whether multiple rows should be
-     * fetched
      */
     public ResultSetDeleteTardis(TARDIS plugin, HashMap<String, Object> where) {
         this.plugin = plugin;
