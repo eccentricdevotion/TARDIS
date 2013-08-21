@@ -292,6 +292,9 @@ commands:
     version:
       description: Display the TARDIS plugin and CraftBukkit version.
       usage: /<command> version
+    lamps:
+      description: Scan the main control room for new or moved lamp blocks.
+      usage: /<command> lamps
   tardistravel:
     aliases: ttravel
     description: Travel to destinations in various ways.
