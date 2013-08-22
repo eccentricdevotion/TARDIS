@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
@@ -219,14 +220,14 @@ public class TARDISRoomRunnable implements Runnable {
                 data = floor_data;
             }
             // set stable
-            if (id == 88 && room.equals("STABLE")) {
+            if (id == 88 && (room.equals("STABLE") || room.equals("VILLAGE"))) {
                 HashMap<String, Object> sets = new HashMap<String, Object>();
-                sets.put("stable", world.getName() + ":" + startx + ":" + starty + ":" + startz);
+                sets.put(room.toLowerCase(Locale.ENGLISH), world.getName() + ":" + startx + ":" + starty + ":" + startz);
                 HashMap<String, Object> wheres = new HashMap<String, Object>();
                 wheres.put("tardis_id", tardis_id);
                 qf.doUpdate("tardis", sets, wheres);
                 // replace with grass
-                id = 2;
+                id = (room.equals("VILLAGE")) ? 4 : 2;
                 data = 0;
             }
             // set farmland hydrated

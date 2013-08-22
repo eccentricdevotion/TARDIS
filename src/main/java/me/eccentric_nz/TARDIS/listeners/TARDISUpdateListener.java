@@ -232,7 +232,7 @@ public class TARDISUpdateListener implements Listener {
                 blockLocStr = bw.getName() + ":" + bx + ":" + (by + 1) + ":" + (bz - 1);
                 set.put("eps", blockLocStr);
             }
-            if (blockName.equalsIgnoreCase("farm") || blockName.equalsIgnoreCase("stable")) {
+            if (blockName.equalsIgnoreCase("farm") || blockName.equalsIgnoreCase("stable") || blockName.equalsIgnoreCase("village")) {
                 blockLocStr = bw.getName() + ":" + bx + ":" + by + ":" + bz;
                 set.put(blockName.toLowerCase(Locale.ENGLISH), blockLocStr);
             }
