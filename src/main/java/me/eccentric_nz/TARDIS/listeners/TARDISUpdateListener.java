@@ -54,6 +54,7 @@ public class TARDISUpdateListener implements Listener {
 
     private TARDIS plugin;
     List<Material> validBlocks = new ArrayList<Material>();
+    List<Material> validSigns = new ArrayList<Material>();
     HashMap<String, Integer> controls = new HashMap<String, Integer>();
 
     public TARDISUpdateListener(TARDIS plugin) {
@@ -64,9 +65,13 @@ public class TARDISUpdateListener implements Listener {
         if (plugin.bukkitversion.compareTo(plugin.precomparatorversion) >= 0) {
             validBlocks.add(Material.REDSTONE_COMPARATOR_OFF);
             validBlocks.add(Material.REDSTONE_COMPARATOR_ON);
+            validSigns.add(Material.REDSTONE_COMPARATOR_OFF);
+            validSigns.add(Material.REDSTONE_COMPARATOR_ON);
         }
         validBlocks.add(Material.STONE_BUTTON);
         validBlocks.add(Material.LEVER);
+        validSigns.add(Material.WALL_SIGN);
+        validSigns.add(Material.SIGN_POST);
         controls.put("handbrake", 0);
         controls.put("button", 1);
         controls.put("world-repeater", 2);
@@ -274,25 +279,29 @@ public class TARDISUpdateListener implements Listener {
                     set.put("location", blockLocStr);
                 }
             }
-            if (blockName.equalsIgnoreCase("chameleon") && (blockType == Material.WALL_SIGN || blockType == Material.SIGN_POST)) {
+            if (blockName.equalsIgnoreCase("chameleon") && validSigns.contains(blockType)) {
                 set.put("chameleon", blockLocStr);
                 set.put("chamele_on", 0);
-                // add text to sign
-                Sign s = (Sign) block.getState();
-                s.setLine(0, "Chameleon");
-                s.setLine(1, "Circuit");
-                s.setLine(3, ChatColor.RED + "OFF");
-                s.update();
+                if (blockType == Material.WALL_SIGN || blockType == Material.SIGN_POST) {
+                    // add text to sign
+                    Sign s = (Sign) block.getState();
+                    s.setLine(0, "Chameleon");
+                    s.setLine(1, "Circuit");
+                    s.setLine(3, ChatColor.RED + "OFF");
+                    s.update();
+                }
             }
-            if (blockName.equalsIgnoreCase("save-sign") && (blockType == Material.WALL_SIGN || blockType == Material.SIGN_POST)) {
+            if (blockName.equalsIgnoreCase("save-sign") && validSigns.contains(blockType)) {
                 set.put("save_sign", blockLocStr);
-                // add text to sign
-                Sign s = (Sign) block.getState();
-                s.setLine(0, "TARDIS");
-                s.setLine(1, "Saved");
-                s.setLine(2, "Locations");
-                s.setLine(3, "");
-                s.update();
+                if (blockType == Material.WALL_SIGN || blockType == Material.SIGN_POST) {
+                    // add text to sign
+                    Sign s = (Sign) block.getState();
+                    s.setLine(0, "TARDIS");
+                    s.setLine(1, "Saved");
+                    s.setLine(2, "Locations");
+                    s.setLine(3, "");
+                    s.update();
+                }
             }
             if (blockName.equalsIgnoreCase("keyboard") && (blockType == Material.WALL_SIGN || blockType == Material.SIGN_POST)) {
                 HashMap<String, Object> wherec = new HashMap<String, Object>();
@@ -332,7 +341,7 @@ public class TARDISUpdateListener implements Listener {
                     set.put("location", blockLocStr);
                 }
             }
-            if (blockName.equalsIgnoreCase("terminal") && (blockType == Material.WALL_SIGN || blockType == Material.SIGN_POST)) {
+            if (blockName.equalsIgnoreCase("terminal") && validSigns.contains(blockType)) {
                 HashMap<String, Object> wherec = new HashMap<String, Object>();
                 wherec.put("tardis_id", id);
                 wherec.put("type", 9);
@@ -344,15 +353,17 @@ public class TARDISUpdateListener implements Listener {
                 } else {
                     set.put("location", blockLocStr);
                 }
-                // add text to sign
-                Sign s = (Sign) block.getState();
-                s.setLine(0, "");
-                s.setLine(1, "Destination");
-                s.setLine(2, "Terminal");
-                s.setLine(3, "");
-                s.update();
+                if (blockType == Material.WALL_SIGN || blockType == Material.SIGN_POST) {
+                    // add text to sign
+                    Sign s = (Sign) block.getState();
+                    s.setLine(0, "");
+                    s.setLine(1, "Destination");
+                    s.setLine(2, "Terminal");
+                    s.setLine(3, "");
+                    s.update();
+                }
             }
-            if (blockName.equalsIgnoreCase("ars") && (blockType == Material.WALL_SIGN || blockType == Material.SIGN_POST)) {
+            if (blockName.equalsIgnoreCase("ars") && validSigns.contains(blockType)) {
                 HashMap<String, Object> wherec = new HashMap<String, Object>();
                 wherec.put("tardis_id", id);
                 wherec.put("type", 10);
@@ -410,15 +421,17 @@ public class TARDISUpdateListener implements Listener {
                 } else {
                     set.put("location", blockLocStr);
                 }
-                // add text to sign
-                Sign s = (Sign) block.getState();
-                s.setLine(0, "TARDIS");
-                s.setLine(1, "Architectural");
-                s.setLine(2, "Reconfiguration");
-                s.setLine(3, "System");
-                s.update();
+                if (blockType == Material.WALL_SIGN || blockType == Material.SIGN_POST) {
+                    // add text to sign
+                    Sign s = (Sign) block.getState();
+                    s.setLine(0, "TARDIS");
+                    s.setLine(1, "Architectural");
+                    s.setLine(2, "Reconfiguration");
+                    s.setLine(3, "System");
+                    s.update();
+                }
             }
-            if (blockName.equalsIgnoreCase("temporal") && (blockType == Material.WALL_SIGN || blockType == Material.SIGN_POST)) {
+            if (blockName.equalsIgnoreCase("temporal") && validSigns.contains(blockType)) {
                 HashMap<String, Object> wherec = new HashMap<String, Object>();
                 wherec.put("tardis_id", id);
                 wherec.put("type", 11);
@@ -430,13 +443,15 @@ public class TARDISUpdateListener implements Listener {
                 } else {
                     set.put("location", blockLocStr);
                 }
-                // add text to sign
-                Sign s = (Sign) block.getState();
-                s.setLine(0, "");
-                s.setLine(1, "Temporal");
-                s.setLine(2, "Locator");
-                s.setLine(3, "");
-                s.update();
+                if (blockType == Material.WALL_SIGN || blockType == Material.SIGN_POST) {
+                    // add text to sign
+                    Sign s = (Sign) block.getState();
+                    s.setLine(0, "");
+                    s.setLine(1, "Temporal");
+                    s.setLine(2, "Locator");
+                    s.setLine(3, "");
+                    s.update();
+                }
             }
             if (blockName.equalsIgnoreCase("light") && validBlocks.contains(blockType)) {
                 HashMap<String, Object> wherel = new HashMap<String, Object>();
@@ -451,7 +466,7 @@ public class TARDISUpdateListener implements Listener {
                     set.put("location", blockLocStr);
                 }
             }
-            if (blockName.equalsIgnoreCase("info") && (blockType == Material.WALL_SIGN || blockType == Material.SIGN_POST)) {
+            if (blockName.equalsIgnoreCase("info") && validSigns.contains(blockType)) {
                 HashMap<String, Object> wherec = new HashMap<String, Object>();
                 wherec.put("tardis_id", id);
                 wherec.put("type", 13);
@@ -462,13 +477,15 @@ public class TARDISUpdateListener implements Listener {
                 } else {
                     set.put("location", blockLocStr);
                 }
-                // add text to sign
-                Sign s = (Sign) block.getState();
-                s.setLine(0, "-----");
-                s.setLine(1, "TARDIS");
-                s.setLine(2, "Information");
-                s.setLine(3, "System");
-                s.update();
+                if (blockType == Material.WALL_SIGN || blockType == Material.SIGN_POST) {
+                    // add text to sign
+                    Sign s = (Sign) block.getState();
+                    s.setLine(0, "-----");
+                    s.setLine(1, "TARDIS");
+                    s.setLine(2, "Information");
+                    s.setLine(3, "System");
+                    s.update();
+                }
             }
 
             if (set.size() > 0 || secondary) {

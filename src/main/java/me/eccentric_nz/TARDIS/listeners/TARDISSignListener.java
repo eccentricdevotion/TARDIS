@@ -16,11 +16,12 @@
  */
 package me.eccentric_nz.TARDIS.listeners;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
-import me.eccentric_nz.TARDIS.database.ResultSetTardis;
+import me.eccentric_nz.TARDIS.database.ResultSetTardisSign;
 import me.eccentric_nz.TARDIS.travel.TARDISSaveSignInventory;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -46,9 +47,16 @@ import org.bukkit.inventory.ItemStack;
 public class TARDISSignListener implements Listener {
 
     private TARDIS plugin;
+    List<Material> validSigns = new ArrayList<Material>();
 
     public TARDISSignListener(TARDIS plugin) {
         this.plugin = plugin;
+        if (plugin.bukkitversion.compareTo(plugin.precomparatorversion) >= 0) {
+            validSigns.add(Material.REDSTONE_COMPARATOR_OFF);
+            validSigns.add(Material.REDSTONE_COMPARATOR_ON);
+        }
+        validSigns.add(Material.WALL_SIGN);
+        validSigns.add(Material.SIGN_POST);
     }
 
     /**
@@ -64,75 +72,67 @@ public class TARDISSignListener implements Listener {
         Block block = event.getClickedBlock();
         if (block != null) {
             Material blockType = block.getType();
-
             Action action = event.getAction();
-            if (action == Action.RIGHT_CLICK_BLOCK) {
-                // only proceed if they are clicking a sign!
-                if (blockType == Material.WALL_SIGN || blockType == Material.SIGN_POST) {
-                    // get clicked block location
-                    Location b = block.getLocation();
-                    Sign s = (Sign) block.getState();
-                    String line1 = s.getLine(0);
-                    String bw = b.getWorld().getName();
-                    int bx = b.getBlockX();
-                    int by = b.getBlockY();
-                    int bz = b.getBlockZ();
-                    String signloc = bw + ":" + bx + ":" + by + ":" + bz;
-                    HashMap<String, Object> where = new HashMap<String, Object>();
-                    if (line1.equals("Chameleon")) {
-                        where.put("chameleon", signloc);
-                    } else {
-                        where.put("save_sign", signloc);
+            // only proceed if they are right-clicking a valid sign block!
+            if (action == Action.RIGHT_CLICK_BLOCK && validSigns.contains(blockType)) {
+                // get clicked block location
+                Location b = block.getLocation();
+                String bw = b.getWorld().getName();
+                int bx = b.getBlockX();
+                int by = b.getBlockY();
+                int bz = b.getBlockZ();
+                String signloc = bw + ":" + bx + ":" + by + ":" + bz;
+                // get tardis from saved sign location
+                ResultSetTardisSign rs = new ResultSetTardisSign(plugin, signloc);
+                if (rs.resultSet()) {
+                    event.setCancelled(true);
+                    if (rs.isIso_on() && !player.getName().equals(rs.getOwner()) && event.isCancelled()) {
+                        player.sendMessage(plugin.pluginName + "The isomorphic security lockout has been engaged... Hands off the controls!");
+                        return;
                     }
-                    // get tardis from saved sign location
-                    ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
-                    if (rs.resultSet()) {
-                        event.setCancelled(true);
-                        if (rs.isIso_on() && !player.getName().equals(rs.getOwner()) && event.isCancelled()) {
-                            player.sendMessage(plugin.pluginName + "The isomorphic security lockout has been engaged... Hands off the controls!");
-                            return;
-                        }
-                        QueryFactory qf = new QueryFactory(plugin);
-                        int id = rs.getTardis_id();
-                        HashMap<String, Object> tid = new HashMap<String, Object>();
-                        tid.put("tardis_id", id);
-                        if (line1.equals("Chameleon")) {
-                            HashMap<String, Object> set = new HashMap<String, Object>();
-                            if (rs.isChamele_on()) {
-                                set.put("chamele_on", 0);
+                    String line1;
+                    Sign s = null;
+                    if (blockType == Material.WALL_SIGN || blockType == Material.SIGN_POST) {
+                        s = (Sign) block.getState();
+                        line1 = s.getLine(0);
+                    } else {
+                        line1 = (signloc.equals(rs.getChameleon())) ? "Chameleon" : "Save Sign";
+                    }
+                    QueryFactory qf = new QueryFactory(plugin);
+                    int id = rs.getTardis_id();
+                    HashMap<String, Object> tid = new HashMap<String, Object>();
+                    tid.put("tardis_id", id);
+                    if (line1.equals("Chameleon")) {
+                        HashMap<String, Object> set = new HashMap<String, Object>();
+                        if (rs.isChamele_on()) {
+                            set.put("chamele_on", 0);
+                            if ((blockType == Material.WALL_SIGN || blockType == Material.SIGN_POST) && s != null) {
                                 s.setLine(3, ChatColor.RED + "OFF");
                                 s.update();
                             } else {
-                                set.put("chamele_on", 1);
+                                player.sendMessage(plugin.pluginName + "Chameleon Circuit OFF");
+                            }
+                        } else {
+                            set.put("chamele_on", 1);
+                            if ((blockType == Material.WALL_SIGN || blockType == Material.SIGN_POST) && s != null) {
                                 s.setLine(3, ChatColor.GREEN + "ON");
                                 s.update();
+                            } else {
+                                player.sendMessage(plugin.pluginName + "Chameleon Circuit ON");
                             }
-                            qf.doUpdate("tardis", set, tid);
-                        } else {
-                            if (event.getAction().equals(Action.RIGHT_CLICK_BLOCK) && plugin.bukkitversion.compareTo(plugin.preIMversion) >= 0) {
-                                TARDISSaveSignInventory sst = new TARDISSaveSignInventory(plugin, id, rs.getHome());
-                                ItemStack[] items = sst.getTerminal();
-                                Inventory inv = plugin.getServer().createInventory(player, 54, "§4TARDIS saves");
-                                inv.setContents(items);
-                                player.openInventory(inv);
-                            }
+                        }
+                        qf.doUpdate("tardis", set, tid);
+                    } else {
+                        if (event.getAction().equals(Action.RIGHT_CLICK_BLOCK) && plugin.bukkitversion.compareTo(plugin.preIMversion) >= 0) {
+                            TARDISSaveSignInventory sst = new TARDISSaveSignInventory(plugin, id, rs.getHome());
+                            ItemStack[] items = sst.getTerminal();
+                            Inventory inv = plugin.getServer().createInventory(player, 54, "§4TARDIS saves");
+                            inv.setContents(items);
+                            player.openInventory(inv);
                         }
                     }
                 }
             }
-        }
-    }
-
-    /**
-     * Reorders a list so the the first item is moved to the end.
-     *
-     * @param list
-     * @param current
-     */
-    public void reOrder(List<String> list, String current) {
-        int i = list.size();
-        while (i-- > 0 && !list.get(0).equals(current)) {
-            list.add(list.remove(0));
         }
     }
 }
