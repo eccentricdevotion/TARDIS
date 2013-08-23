@@ -42,11 +42,6 @@ public class ResultSetPoliceBox {
      * from the tardis table.
      *
      * @param plugin an instance of the main class.
-     * @param where a HashMap<String, Object> of table fields and values to
-     * refine the search.
-     * @param limit
-     * @param multiple a boolean indicating whether multiple rows should be
-     * fetched
      */
     public ResultSetPoliceBox(TARDIS plugin) {
         this.plugin = plugin;
