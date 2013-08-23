@@ -27,10 +27,10 @@
             <id>sk89q-repo</id>
             <url>http://maven.sk89q.com/repo/</url>
         </repository>
-        <repository>
+        <!--<repository>
             <id>citizensnpcs</id>
             <url>http://repo.citizensnpcs.com</url>
-        </repository>
+        </repository>-->
         <repository>
             <id>onarandombox</id>
             <url>http://repo.onarandombox.com/content/groups/public</url>

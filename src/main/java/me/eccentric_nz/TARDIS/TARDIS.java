@@ -48,6 +48,7 @@ import me.eccentric_nz.TARDIS.files.TARDISMakeTardisCSV;
 import me.eccentric_nz.TARDIS.files.TARDISUpdateChecker;
 import me.eccentric_nz.TARDIS.info.TARDISInfoMenu;
 import me.eccentric_nz.TARDIS.ARS.TARDISARSListener;
+import me.eccentric_nz.TARDIS.database.ResultSetPoliceBox;
 import me.eccentric_nz.TARDIS.listeners.TARDISAdminMenuListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISAnvilListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISAreaListener;
@@ -108,7 +109,6 @@ import org.bukkit.ChatColor;
 import org.bukkit.Chunk;
 import org.bukkit.Material;
 import org.bukkit.OfflinePlayer;
-import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -335,8 +335,6 @@ public class TARDIS extends JavaPlugin {
 
     @Override
     public void onDisable() {
-        // save chunks to file so we can reload them onenable next server startup
-        saveChunks();
         saveConfig();
         closeDatabase();
         resetTime();
@@ -679,59 +677,11 @@ public class TARDIS extends JavaPlugin {
     }
 
     /**
-     * Saves the list of chunks that are being stopped from unloading. Chunk
-     * locations are either rooms being grown or Police Box locations. The file
-     * is read onEnable() and the tardisChunkList is re-populated.
-     */
-    public void saveChunks() {
-        debug("Saving Police Box chunks to file!");
-        if (tardisChunkList.size() > 0) {
-            String file = getDataFolder() + File.separator + "chunks.txt";
-            try {
-                BufferedWriter bw = new BufferedWriter(new FileWriter(file, false));
-                for (Chunk c : tardisChunkList) {
-                    String line = c.getWorld().getName() + ":" + c.getX() + ":" + c.getZ();
-                    bw.write(line);
-                    bw.newLine();
-                }
-                bw.close();
-            } catch (IOException e) {
-                debug("Could not create and write to chunks.txt! " + e.getMessage());
-            }
-        }
-    }
-
-    /**
-     * Loads chunks from file to stop them from being unloaded. Chunk locations
-     * are either rooms being grown or Police Box locations.
+     * Loads chunks from the database to stop them from being unloaded. Chunk
+     * locations are in Police Box locations.
      */
     public void loadChunks() {
-        File file = new File(getDataFolder() + File.separator + "chunks.txt");
-        if (file.exists()) {
-            try {
-                BufferedReader br = new BufferedReader(new FileReader(file));
-                String line;
-                while ((line = br.readLine()) != null) {
-                    String[] split = line.split(":");
-                    if (split.length == 3) {
-                        World w = getServer().getWorld(split[0]);
-                        int x = 0, z = 0;
-                        try {
-                            x = Integer.parseInt(split[1]);
-                            z = Integer.parseInt(split[2]);
-                        } catch (NumberFormatException nfe) {
-                        }
-                        Chunk c = w.getChunkAt(x, z);
-                        tardisChunkList.add(c);
-                        c.load();
-                    }
-                }
-                br.close();
-                debug("Loading chunks from chunks.txt!");
-            } catch (IOException e) {
-                debug("Could not create and write to chunks.txt! " + e.getMessage());
-            }
-        }
+        new ResultSetPoliceBox(this).loadChunks();
     }
 
     /**

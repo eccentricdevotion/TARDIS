@@ -172,5 +172,6 @@ public class TARDISDeinstaPoliceBox {
             plugin.protectBlockMap.values().removeAll(Collections.singleton(Integer.valueOf(id)));
         }
         plugin.tardisDematerialising.remove(Integer.valueOf(id));
+        plugin.tardisChunkList.remove(l.getChunk());
     }
 }

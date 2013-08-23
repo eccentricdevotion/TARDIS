@@ -14,13 +14,12 @@
     * Police Box lamp block - if not specified then plain tardis
 5. While doing [4], add one slot for a custom console
 6. HADS + explosions + fireballs + lava
-7. Put farmland, crops, buttons, levers and signs on last when growing rooms
+7. Put farmland, crops, buttons, levers, doors and signs on last when growing rooms
 8. Sonic Screwdrivers
 9. TARDIS Information System (in progress)
 10. Chameleon presets (in progress)
     * Grass mound?
     * Allow wood doors to be exterior TARDIS doors
-12. Village room and villager farming (in progress)
 
 ### Waiting on Bukkit API
 2. Get/set horse speed (Attribute API)
