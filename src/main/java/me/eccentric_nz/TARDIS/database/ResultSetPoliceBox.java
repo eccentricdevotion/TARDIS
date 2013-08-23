@@ -49,11 +49,10 @@ public class ResultSetPoliceBox {
 
     /**
      * Retrieves records from the tardis table. This method builds a list of
-     * Chunks around Police Box locations to stop them .
+     * Chunks around Police Box locations to stop them unloading.
      *
-     * @return true or false depending on whether any data matches the query
      */
-    public boolean loadChunks() {
+    public void loadChunks() {
         PreparedStatement statement = null;
         ResultSet rs = null;
         String query = "SELECT current FROM tardis";
@@ -80,7 +79,6 @@ public class ResultSetPoliceBox {
             }
         } catch (SQLException e) {
             plugin.debug("ResultSet error for tardis table (loading Police Box chunks)! " + e.getMessage());
-            return false;
         } finally {
             try {
                 if (rs != null) {
@@ -93,6 +91,5 @@ public class ResultSetPoliceBox {
                 plugin.debug("Error closing tardis table (loading Police Box chunks)! " + e.getMessage());
             }
         }
-        return true;
     }
 }
