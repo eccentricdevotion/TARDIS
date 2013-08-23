@@ -62,6 +62,8 @@ public class TARDISRoomRunnable implements Runnable {
     List<Block> lampblocks = new ArrayList<Block>();
     List<Block> caneblocks = new ArrayList<Block>();
     HashMap<Block, Byte> cocoablocks = new HashMap<Block, Byte>();
+    HashMap<Block, Byte> doorblocks = new HashMap<Block, Byte>();
+    HashMap<Block, Byte> torchblocks = new HashMap<Block, Byte>();
 
     public TARDISRoomRunnable(TARDIS plugin, TARDISRoomData roomData, Player p) {
         this.plugin = plugin;
@@ -153,12 +155,24 @@ public class TARDISRoomRunnable implements Runnable {
                 }
                 cocoablocks.clear();
             }
+            if (room.equals("VILLAGE")) {
+                // put doors on
+                for (Map.Entry<Block, Byte> entry : doorblocks.entrySet()) {
+                    entry.getKey().setTypeIdAndData(64, entry.getValue(), true);
+                }
+                doorblocks.clear();
+            }
             // update lamp block states
             p.sendMessage(plugin.pluginName + "Turning on the lights!");
             for (Block lamp : lampblocks) {
                 lamp.setType(Material.REDSTONE_LAMP_ON);
             }
             lampblocks.clear();
+            // put torches on
+            for (Map.Entry<Block, Byte> entry : torchblocks.entrySet()) {
+                entry.getKey().setTypeIdAndData(50, entry.getValue(), true);
+            }
+            torchblocks.clear();
             // remove the chunks, so they can unload as normal again
             if (chunkList.size() > 0) {
                 for (Chunk ch : chunkList) {
@@ -230,6 +244,16 @@ public class TARDISRoomRunnable implements Runnable {
                 id = (room.equals("VILLAGE")) ? 4 : 2;
                 data = 0;
             }
+            // remember village doors
+            if (id == 64 && room.equals("VILLAGE")) {
+                Block door = world.getBlockAt(startx, starty, startz);
+                doorblocks.put(door, data);
+            }
+            // remember torches
+            if (id == 50) {
+                Block torch = world.getBlockAt(startx, starty, startz);
+                torchblocks.put(torch, data);
+            }
             // set farmland hydrated
             if (id == 60 && data == 0) {
                 data = (byte) 4;
@@ -254,6 +278,16 @@ public class TARDISRoomRunnable implements Runnable {
                 HashMap<String, Object> where = new HashMap<String, Object>();
                 where.put("tardis_id", tardis_id);
                 qf.doUpdate("tardis", set, where);
+            }
+            // always replace bedrock (the door space in ARS rooms)
+            if (id == 7) {
+                if (checkRoomNextDoor(world.getBlockAt(startx, starty, startz))) {
+                    id = 0;
+                    data = (byte) 0;
+                } else {
+                    id = middle_id;
+                    data = middle_data;
+                }
             }
             // always remove sponge
             if (id == 19) {
@@ -285,7 +319,7 @@ public class TARDISRoomRunnable implements Runnable {
                 plugin.roomChunkList.add(thisChunk);
                 chunkList.add(thisChunk);
             }
-            if (id != 83 && id != 127) {
+            if (id != 83 && id != 127 && id != 64 && id != 50) {
                 plugin.utils.setBlock(world, startx, starty, startz, id, data);
             }
             // remember ice blocks
@@ -373,6 +407,15 @@ public class TARDISRoomRunnable implements Runnable {
                 level++;
             }
         }
+    }
+
+    private boolean checkRoomNextDoor(Block b) {
+        if (b.getLocation().getBlockX() > (resetx + 10) && b.getRelative(BlockFace.EAST).getTypeId() != 0) {
+            return true;
+        } else if (b.getRelative(BlockFace.SOUTH).getTypeId() != 0) {
+            return true;
+        }
+        return false;
     }
 
     public void setTask(int task) {
