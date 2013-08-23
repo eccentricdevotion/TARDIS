@@ -56,7 +56,7 @@ public class ResultSetSave {
     public boolean resultSet() {
         PreparedStatement statement = null;
         ResultSet rs = null;
-        String query = "SELECT current FROM tardis WHERE save LIKE ?";
+        String query = "SELECT current FROM tardis WHERE current LIKE ?";
         //plugin.debug(query);
         try {
             statement = connection.prepareStatement(query);
@@ -68,7 +68,7 @@ public class ResultSetSave {
                 return false;
             }
         } catch (SQLException e) {
-            plugin.debug("ResultSet error for (save) tardis table! " + e.getMessage());
+            plugin.debug("ResultSet error for (current) tardis table! " + e.getMessage());
             return false;
         } finally {
             try {
@@ -79,7 +79,7 @@ public class ResultSetSave {
                     statement.close();
                 }
             } catch (Exception e) {
-                plugin.debug("Error closing (save) tardis table! " + e.getMessage());
+                plugin.debug("Error closing (current) tardis table! " + e.getMessage());
             }
         }
     }
