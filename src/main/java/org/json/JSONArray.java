@@ -179,8 +179,7 @@ public class JSONArray {
                 this.put(JSONObject.wrap(Array.get(array, i)));
             }
         } else {
-            throw new JSONException(
-                    "JSONArray initial value should be a string or collection or array.");
+            throw new JSONException("JSONArray initial value should be a string or collection or array.");
         }
     }
 
@@ -809,6 +808,7 @@ public class JSONArray {
      * @return a printable, displayable, transmittable representation of the
      * array.
      */
+    @Override
     public String toString() {
         try {
             return this.toString(0);

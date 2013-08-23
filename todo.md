@@ -5,7 +5,6 @@
 2. Jettison the whole room (including walls), will require new room schematics... (in progress - working with ARS :)
 3. Architectural Reconfiguration System (in progress)
     * Fix jettisoning gravity wells
-    * Set the door access (remove blocks where appropriate)
     * Prevent manual room growing within ARS area
 4. Remove the TARDIS creation block stack, and make a special seed block that determines the type of TARDIS that will be grown. Use custom configurable recipes - the recipes will still include precious block/lapis block/redstone torch, but 4 other blocks will set:
     * TARDIS wall block
@@ -14,7 +13,7 @@
     * Police Box lamp block - if not specified then plain tardis
 5. While doing [4], add one slot for a custom console
 6. HADS + explosions + fireballs + lava
-7. Put farmland, crops, buttons, levers, doors and signs on last when growing rooms
+7. Put farmland, crops, buttons, levers and signs on last when growing rooms
 8. Sonic Screwdrivers
 9. TARDIS Information System (in progress)
 10. Chameleon presets (in progress)

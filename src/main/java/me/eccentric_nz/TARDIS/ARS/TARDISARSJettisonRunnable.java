@@ -19,7 +19,6 @@ package me.eccentric_nz.TARDIS.ARS;
 import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
-import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
 
@@ -58,7 +57,7 @@ public class TARDISARSJettisonRunnable implements Runnable {
             }
         }
         // give them their energy!
-        if (room != null) {
+        if (room != TARDISARS.SLOT) {
             String r = room.toString();
             int amount = Math.round((plugin.getArtronConfig().getInt("jettison") / 100F) * plugin.getRoomsConfig().getInt("rooms." + r + ".cost"));
             QueryFactory qf = new QueryFactory(plugin);

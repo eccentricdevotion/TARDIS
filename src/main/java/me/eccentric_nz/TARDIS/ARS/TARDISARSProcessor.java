@@ -19,9 +19,12 @@ package me.eccentric_nz.TARDIS.ARS;
 import java.util.Map;
 import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.database.QueryFactory;
+import me.eccentric_nz.TARDIS.database.ResultSetARS;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import org.bukkit.Chunk;
 import org.bukkit.World;
+import org.json.JSONArray;
 
 /**
  *
@@ -51,26 +54,8 @@ public class TARDISARSProcessor {
                         if (end[l][x][z] == 46) {
                             plugin.debug("Found TNT in this slot");
                             if (start[l][x][z] == 48) {
-                                plugin.debug("Found an anti-gravity room here previously");
-                                if (l == 2 || ((l + 1) < 3 && start[l + 1][x][z] == 48)) {
-                                    plugin.debug("Found an anti-gravity slot above this one");
-                                    // set both layers of the gravity well
-                                    TARDISARSJettison slot = new TARDISARSJettison();
-                                    slot.setChunk(c);
-                                    slot.setY(l);
-                                    slot.setX(x);
-                                    slot.setZ(z);
-                                    jettison.put(slot, TARDISARS.getARS(start[l][x][z]));
-                                    TARDISARSJettison slot2 = new TARDISARSJettison();
-                                    slot2.setChunk(c);
-                                    slot2.setY(l + 1);
-                                    slot2.setX(x);
-                                    slot2.setZ(z);
-                                    jettison.put(slot, null);
-                                }
-                            } else if (start[l][x][z] == 24) {
                                 plugin.debug("Found a gravity room here previously");
-                                if (l == 0 || ((l - 1) > 0 && start[l - 1][x][z] == 24)) {
+                                if (l == 0 || (l > 0 && start[l - 1][x][z] == 48)) {
                                     plugin.debug("Found a gravity slot below this one");
                                     // set both layers of the gravity well
                                     TARDISARSJettison slot = new TARDISARSJettison();
@@ -84,7 +69,29 @@ public class TARDISARSProcessor {
                                     slot2.setY(l - 1);
                                     slot2.setX(x);
                                     slot2.setZ(z);
-                                    jettison.put(slot, null);
+                                    jettison.put(slot2, TARDISARS.SLOT);
+                                    // need to update the slot in the DB
+                                    resetSlot(l - 1, x, z);
+                                }
+                            } else if (start[l][x][z] == 24) {
+                                plugin.debug("Found an anti-gravity room here previously");
+                                if (l == 2 || (l < 2 && start[l + 1][x][z] == 24)) {
+                                    plugin.debug("Found an anti-gravity slot above this one");
+                                    // set both layers of the gravity well
+                                    TARDISARSJettison slot = new TARDISARSJettison();
+                                    slot.setChunk(c);
+                                    slot.setY(l);
+                                    slot.setX(x);
+                                    slot.setZ(z);
+                                    jettison.put(slot, TARDISARS.getARS(start[l][x][z]));
+                                    TARDISARSJettison slot2 = new TARDISARSJettison();
+                                    slot2.setChunk(c);
+                                    slot2.setY(l + 1);
+                                    slot2.setX(x);
+                                    slot2.setZ(z);
+                                    jettison.put(slot2, TARDISARS.SLOT);
+                                    // need to update the slot in the DB
+                                    resetSlot(l + 1, x, z);
                                 }
                             } else {
                                 TARDISARSJettison slot = new TARDISARSJettison();
@@ -135,24 +142,28 @@ public class TARDISARSProcessor {
     }
 
     public boolean checkCosts(HashMap<TARDISARSSlot, TARDISARS> changed, HashMap<TARDISARSJettison, TARDISARS> jettison) {
-        int totalcost = 0;
-        int recoveredcost = 0;
-        // calculate energy gained by jettisons
-        for (Map.Entry<TARDISARSJettison, TARDISARS> c : jettison.entrySet()) {
-            recoveredcost += Math.round((plugin.getArtronConfig().getInt("jettison") / 100F) * plugin.getRoomsConfig().getInt("rooms." + c.getValue().toString() + ".cost"));
-        }
-        for (Map.Entry<TARDISARSSlot, TARDISARS> c : changed.entrySet()) {
-            totalcost += plugin.getRoomsConfig().getInt("rooms." + c.getValue().toString() + ".cost");
-        }
-        HashMap<String, Object> where = new HashMap<String, Object>();
-        where.put("tardis_id", id);
-        ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
-        if (rs.resultSet()) {
-            int energy = rs.getArtron_level();
-            // check available energy vs cost
-            if (totalcost - recoveredcost > energy) {
-                this.error = "Insufficient Artron Energy";
-                return false;
+        if (changed.size() > 0) {
+            int totalcost = 0;
+            int recoveredcost = 0;
+            // calculate energy gained by jettisons
+            for (Map.Entry<TARDISARSJettison, TARDISARS> c : jettison.entrySet()) {
+                if (c.getValue() != null) {
+                    recoveredcost += Math.round((plugin.getArtronConfig().getInt("jettison") / 100F) * plugin.getRoomsConfig().getInt("rooms." + c.getValue().toString() + ".cost"));
+                }
+            }
+            for (Map.Entry<TARDISARSSlot, TARDISARS> c : changed.entrySet()) {
+                totalcost += plugin.getRoomsConfig().getInt("rooms." + c.getValue().toString() + ".cost");
+            }
+            HashMap<String, Object> where = new HashMap<String, Object>();
+            where.put("tardis_id", id);
+            ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
+            if (rs.resultSet()) {
+                int energy = rs.getArtron_level();
+                // check available energy vs cost
+                if (totalcost - recoveredcost > energy) {
+                    this.error = "Insufficient Artron Energy";
+                    return false;
+                }
             }
         }
         return true;
@@ -183,5 +194,35 @@ public class TARDISARSProcessor {
             return w.getChunkAt(cx, cz);
         }
         return null;
+    }
+
+    private void resetSlot(int l, int x, int z) {
+        HashMap<String, Object> where = new HashMap<String, Object>();
+        where.put("tardis_id", id);
+        ResultSetARS rs = new ResultSetARS(plugin, where);
+        if (rs.resultSet()) {
+            int[][][] grid = new int[3][9][9];
+            JSONArray json = new JSONArray(rs.getJson());
+            for (int yy = 0; yy < 3; yy++) {
+                JSONArray jsonx = json.getJSONArray(yy);
+                for (int xx = 0; xx < 9; xx++) {
+                    JSONArray jsonz = jsonx.getJSONArray(xx);
+                    for (int zz = 0; zz < 9; zz++) {
+                        if (jsonz.getInt(zz) == 46) {
+                            grid[yy][xx][zz] = 1;
+                        } else {
+                            grid[yy][xx][zz] = jsonz.getInt(zz);
+                        }
+                    }
+                }
+            }
+            grid[l][x][z] = 1;
+            JSONArray newJSON = new JSONArray(grid);
+            HashMap<String, Object> set = new HashMap<String, Object>();
+            set.put("json", newJSON.toString());
+            HashMap<String, Object> wherea = new HashMap<String, Object>();
+            wherea.put("tardis_id", id);
+            new QueryFactory(plugin).doUpdate("ars", set, wherea);
+        }
     }
 }
