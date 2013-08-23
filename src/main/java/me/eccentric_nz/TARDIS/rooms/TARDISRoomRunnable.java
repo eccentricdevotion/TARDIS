@@ -356,7 +356,7 @@ public class TARDISRoomRunnable implements Runnable {
                     setu.put("distance", 16);
                     setu.put("velocity", 0.5);
                     qf.doInsert("gravity_well", setu);
-                    Double[] values = new Double[]{1D, 11D, 0.5D};
+                    Double[] values = new Double[]{1D, 16D, 0.5D};
                     plugin.gravityUpList.put(loc, values);
                 }
             }
