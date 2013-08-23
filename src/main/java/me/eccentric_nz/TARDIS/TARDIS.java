@@ -303,7 +303,7 @@ public class TARDIS extends JavaPlugin {
                 alwaysNight.keepNight();
             }
         }
-        loadChunks();
+        new ResultSetPoliceBox(this).loadChunks();
         TARDISBlockLoader bl = new TARDISBlockLoader(this);
         bl.loadProtectBlocks();
         bl.loadGravityWells();
@@ -590,7 +590,9 @@ public class TARDIS extends JavaPlugin {
         if (pm.getPlugin("GroupManager") != null || pm.getPlugin("bPermissions") != null || pm.getPlugin("PermissionsEx") != null) {
             // copy default permissions file if not present
             tardisCSV.copy(getDataFolder() + File.separator + "permissions.txt", getResource("permissions.txt"));
-            console.sendMessage(pluginName + "World specific permissions plugin detected please edit plugins/TARDIS/permissions.txt");
+            if (getConfig().getBoolean("create_worlds")) {
+                console.sendMessage(pluginName + "World specific permissions plugin detected please edit plugins/TARDIS/permissions.txt");
+            }
         }
     }
 
@@ -674,14 +676,6 @@ public class TARDIS extends JavaPlugin {
             debug("Emergency Program One was disabled as it requires the Citizens plugin!");
             return false;
         }
-    }
-
-    /**
-     * Loads chunks from the database to stop them from being unloaded. Chunk
-     * locations are in Police Box locations.
-     */
-    public void loadChunks() {
-        new ResultSetPoliceBox(this).loadChunks();
     }
 
     /**
