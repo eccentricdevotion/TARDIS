@@ -74,7 +74,9 @@ public class TARDISBuilderInner {
     public void buildInner(TARDISConstants.SCHEMATIC schm, World world, int dbID, Player p, int middle_id, byte middle_data) {
         String[][][] s;
         short[] d;
-        int level, row, col, id, x, z, startx, starty = 64, resety, startz, resetx, resetz, cx, cy, cz, rid, multiplier = 1, j = 2;
+        int level, row, col, id, x, z, startx, startz, resetx, resetz, cx, cy, cz, rid, multiplier = 1, j = 2;
+        boolean below = (!plugin.getConfig().getBoolean("create_worlds") && !plugin.getConfig().getBoolean("default_world"));
+        int starty = (below) ? 15 : 64;
         switch (schm) {
             // some TARDIS schematics supplied by ewized http://dev.bukkit.org/profiles/ewized/
             case BIGGER:
@@ -176,7 +178,7 @@ public class TARDISBuilderInner {
         }
         // reset start positions and do over
         startx = resetx;
-        starty = 64;
+        starty = (below) ? 15 : 64;
         startz = resetz;
 
         for (level = 0; level < h; level++) {
