@@ -16,13 +16,7 @@
  */
 package me.eccentric_nz.TARDIS.database;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.HashMap;
-import java.util.Map;
 import me.eccentric_nz.TARDIS.TARDIS;
 import org.bukkit.entity.Player;
 
@@ -34,16 +28,14 @@ import org.bukkit.entity.Player;
 public class QueryFactory {
 
     private TARDIS plugin;
-    TARDISDatabase service = TARDISDatabase.getInstance();
-    Connection connection = service.getConnection();
 
     public QueryFactory(TARDIS plugin) {
         this.plugin = plugin;
     }
 
     /**
-     * Inserts data into an SQLite database table. This method builds a prepared
-     * SQL statement from the parameters supplied and then executes the insert.
+     * Inserts data into an SQLite database table. This method executes the SQL
+     * in a separate thread.
      *
      * @param table the database table name to insert the data into.
      * @param data a HashMap<String, Object> of table fields and values to
@@ -51,57 +43,14 @@ public class QueryFactory {
      * @return the number of records that were inserted
      */
     public int doInsert(String table, HashMap<String, Object> data) {
-        PreparedStatement ps = null;
-        ResultSet idRS = null;
-        String fields;
-        String questions;
-        StringBuilder sbf = new StringBuilder();
-        StringBuilder sbq = new StringBuilder();
-        for (Map.Entry<String, Object> entry : data.entrySet()) {
-            sbf.append(entry.getKey()).append(",");
-            sbq.append("?,");
-        }
-        fields = sbf.toString().substring(0, sbf.length() - 1);
-        questions = sbq.toString().substring(0, sbq.length() - 1);
-        try {
-            ps = connection.prepareStatement("INSERT INTO " + table + " (" + fields + ") VALUES (" + questions + ")");
-            int i = 1;
-            for (Map.Entry<String, Object> entry : data.entrySet()) {
-                if (entry.getValue().getClass().equals(String.class)) {
-                    ps.setString(i, entry.getValue().toString());
-                } else {
-                    if (entry.getValue().getClass().getName().contains("Double")) {
-                        ps.setDouble(i, Double.parseDouble(entry.getValue().toString()));
-                    } else {
-                        ps.setInt(i, plugin.utils.parseNum(entry.getValue().toString()));
-                    }
-                }
-                i++;
-            }
-            data.clear();
-            ps.executeUpdate();
-            idRS = ps.getGeneratedKeys();
-            return (idRS.next()) ? idRS.getInt(1) : -1;
-        } catch (SQLException e) {
-            plugin.debug("Update error for " + table + "! " + e.getMessage());
-            return -1;
-        } finally {
-            try {
-                if (idRS != null) {
-                    idRS.close();
-                }
-                if (ps != null) {
-                    ps.close();
-                }
-            } catch (Exception e) {
-                plugin.debug("Error closing " + table + "! " + e.getMessage());
-            }
-        }
+        TARDISSQLInsert insert = new TARDISSQLInsert(plugin, table, data);
+        plugin.getServer().getScheduler().runTaskAsynchronously(plugin, insert);
+        return insert.getNum();
     }
 
     /**
-     * Updates data in an SQLite database table. This method builds an SQL query
-     * string from the parameters supplied and then executes the update.
+     * Updates data in an SQLite database table. This method executes the SQL in
+     * a separate thread.
      *
      * @param table the database table name to update.
      * @param data a HashMap<String, Object> of table fields and values update.
@@ -110,62 +59,14 @@ public class QueryFactory {
      * @return true or false depending on whether the database update was
      * successful
      */
-    public boolean doUpdate(String table, HashMap<String, Object> data, HashMap<String, Object> where) {
-        PreparedStatement statement = null;
-        String updates;
-        String wheres;
-        StringBuilder sbu = new StringBuilder();
-        StringBuilder sbw = new StringBuilder();
-        for (Map.Entry<String, Object> entry : data.entrySet()) {
-            sbu.append(entry.getKey()).append(" = ?,");
-        }
-        for (Map.Entry<String, Object> entry : where.entrySet()) {
-            sbw.append(entry.getKey()).append(" = ");
-            if (entry.getValue().getClass().equals(String.class)) {
-                sbw.append("'").append(entry.getValue()).append("' AND ");
-            } else {
-                sbw.append(entry.getValue()).append(" AND ");
-            }
-        }
-        where.clear();
-        updates = sbu.toString().substring(0, sbu.length() - 1);
-        wheres = sbw.toString().substring(0, sbw.length() - 5);
-        String query = "UPDATE " + table + " SET " + updates + " WHERE " + wheres;
-        //plugin.debug(query);
-        try {
-            statement = connection.prepareStatement(query);
-            int s = 1;
-            for (Map.Entry<String, Object> entry : data.entrySet()) {
-                if (entry.getValue().getClass().equals(String.class)) {
-                    statement.setString(s, entry.getValue().toString());
-                }
-                if (entry.getValue() instanceof Integer) {
-                    statement.setInt(s, (Integer) entry.getValue());
-                }
-                if (entry.getValue() instanceof Long) {
-                    statement.setLong(s, (Long) entry.getValue());
-                }
-                s++;
-            }
-            data.clear();
-            return (statement.executeUpdate() > 0);
-        } catch (SQLException e) {
-            plugin.debug("Update error for " + table + "! " + e.getMessage());
-            return false;
-        } finally {
-            try {
-                if (statement != null) {
-                    statement.close();
-                }
-            } catch (Exception e) {
-                plugin.debug("Error closing " + table + "! " + e.getMessage());
-            }
-        }
+    public void doUpdate(String table, HashMap<String, Object> data, HashMap<String, Object> where) {
+        TARDISSQLUpdate update = new TARDISSQLUpdate(plugin, table, data, where);
+        plugin.getServer().getScheduler().runTaskAsynchronously(plugin, update);
     }
 
     /**
-     * Deletes rows from an SQLite database table. This method builds an SQL
-     * query string from the parameters supplied and then executes the delete.
+     * Deletes rows from an SQLite database table. This method executes the SQL
+     * in a separate thread.
      *
      * @param table the database table name to insert the data into.
      * @param where a HashMap<String, Object> of table fields and values to
@@ -174,42 +75,14 @@ public class QueryFactory {
      * successfully
      */
     public boolean doDelete(String table, HashMap<String, Object> where) {
-        Statement statement = null;
-        String values;
-        StringBuilder sbw = new StringBuilder();
-        for (Map.Entry<String, Object> entry : where.entrySet()) {
-            sbw.append(entry.getKey()).append(" = ");
-            if (entry.getValue().getClass().equals(String.class)) {
-                sbw.append("'").append(entry.getValue()).append("' AND ");
-            } else {
-                sbw.append(entry.getValue()).append(" AND ");
-            }
-        }
-        where.clear();
-        values = sbw.toString().substring(0, sbw.length() - 5);
-        String query = "DELETE FROM " + table + " WHERE " + values;
-        //plugin.debug(query);
-        try {
-            statement = connection.createStatement();
-            return (statement.executeUpdate(query) > 0);
-        } catch (SQLException e) {
-            plugin.debug("Delete error for " + table + "! " + e.getMessage());
-            return false;
-        } finally {
-            try {
-                if (statement != null) {
-                    statement.close();
-                }
-            } catch (Exception e) {
-                plugin.debug("Error closing " + table + "! " + e.getMessage());
-            }
-        }
+        TARDISSQLDelete delete = new TARDISSQLDelete(plugin, table, where);
+        plugin.getServer().getScheduler().runTaskAsynchronously(plugin, delete);
+        return delete.success();
     }
 
     /**
      * Adds or removes Artron Energy from an SQLite database table. This method
-     * builds an SQL query string from the parameters supplied and then executes
-     * the query.
+     * executes the SQL in a separate thread.
      *
      * @param table the database table name to insert the data into.
      * @param amount the amount of energy to add or remove (use a negative
@@ -220,147 +93,47 @@ public class QueryFactory {
      * @return true or false depending on whether the database update was
      * successful
      */
-    public boolean alterEnergyLevel(String table, int amount, HashMap<String, Object> where, Player p) {
-        Statement statement = null;
-        String wheres;
-        StringBuilder sbw = new StringBuilder();
-        for (Map.Entry<String, Object> entry : where.entrySet()) {
-            sbw.append(entry.getKey()).append(" = ");
-            if (entry.getValue().getClass().equals(String.class)) {
-                sbw.append("'").append(entry.getValue()).append("' AND ");
-            } else {
-                sbw.append(entry.getValue()).append(" AND ");
-            }
-        }
-        where.clear();
-        wheres = sbw.toString().substring(0, sbw.length() - 5);
-        String query = "UPDATE " + table + " SET artron_level = artron_level + " + amount + " WHERE " + wheres;
-        if (amount < 0) {
-            p.sendMessage(plugin.pluginName + "You used " + Math.abs(amount) + " Artron Energy.");
-        }
-        try {
-            statement = connection.createStatement();
-            return (statement.executeUpdate(query) > 0);
-        } catch (SQLException e) {
-            plugin.debug("Artron Energy update error for " + table + "! " + e.getMessage());
-            return false;
-        } finally {
-            try {
-                if (statement != null) {
-                    statement.close();
-                }
-            } catch (Exception e) {
-                plugin.debug("Artron Energy error closing " + table + "! " + e.getMessage());
-            }
-        }
+    public void alterEnergyLevel(String table, int amount, HashMap<String, Object> where, Player p) {
+        TARDISSQLAlterEnergy alter = new TARDISSQLAlterEnergy(plugin, table, amount, where, p);
+        plugin.getServer().getScheduler().runTaskAsynchronously(plugin, alter);
     }
 
     /**
      * Removes condenser block counts from an SQLite database table. This method
-     * builds an SQL query string from the parameters supplied and then executes
-     * the query.
+     * executes the SQL in a separate thread.
      *
      * @param amount the amount of blocks to remove
      * @param where a HashMap<String, Object> of table fields and values to
      * select the records to alter.
      */
     public void alterCondenserBlockCount(int amount, HashMap<String, Object> where) {
-        Statement statement = null;
-        String wheres;
-        StringBuilder sbw = new StringBuilder();
-        for (Map.Entry<String, Object> entry : where.entrySet()) {
-            sbw.append(entry.getKey()).append(" = ");
-            if (entry.getValue().getClass().equals(String.class)) {
-                sbw.append("'").append(entry.getValue()).append("' AND ");
-            } else {
-                sbw.append(entry.getValue()).append(" AND ");
-            }
-        }
-        where.clear();
-        wheres = sbw.toString().substring(0, sbw.length() - 5);
-        String query = "UPDATE condenser SET block_count = block_count - " + amount + " WHERE " + wheres;
-        try {
-            statement = connection.createStatement();
-            statement.executeUpdate(query);
-        } catch (SQLException e) {
-            plugin.debug("Block count update error for condenser! " + e.getMessage());
-        } finally {
-            try {
-                if (statement != null) {
-                    statement.close();
-                }
-            } catch (Exception e) {
-                plugin.debug("Error closing condenser table! " + e.getMessage());
-            }
-        }
+        TARDISSQLCondenserUpdate condense = new TARDISSQLCondenserUpdate(plugin, amount, where);
+        plugin.getServer().getScheduler().runTaskAsynchronously(plugin, condense);
     }
 
+    /**
+     * Inserts data into an SQLite database table. This method executes the SQL
+     * in a separate thread.
+     *
+     * @param id the database table name to insert the data into.
+     * @param type the type of control to insert.
+     * @param l the string location of the control
+     * @param s what level the control is (1 primary, 2 secondary, 3 tertiary)
+     */
     public void insertControl(int id, int type, String l, int s) {
-        Statement statement = null;
-        try {
-            statement = connection.createStatement();
-            String select = "SELECT c_id FROM controls WHERE tardis_id = " + id + " AND type = " + type + " AND secondary = " + s;
-            ResultSet rs = statement.executeQuery(select);
-            if (rs.isBeforeFirst()) {
-                // update
-                String update = "UPDATE controls SET location = '" + l + "' WHERE c_id = " + rs.getInt("c_id");
-                statement.executeUpdate(update);
-            } else {
-                // insert
-                String insert = "INSERT INTO controls (tardis_id, type, location, secondary) VALUES (" + id + ", " + type + ", '" + l + "', " + s + ")";
-                statement.executeUpdate(insert);
-            }
-        } catch (SQLException e) {
-            plugin.debug("Insert control error! " + e.getMessage());
-        } finally {
-            try {
-                if (statement != null) {
-                    statement.close();
-                }
-            } catch (Exception e) {
-                plugin.debug("Error closing insert control statement! " + e.getMessage());
-            }
-        }
+        TARDISSQLInsertControl control = new TARDISSQLInsertControl(plugin, id, type, l, s);
+        plugin.getServer().getScheduler().runTaskAsynchronously(plugin, control);
     }
 
+    /**
+     * Inserts data into an SQLite database table. This method executes the SQL
+     * in a separate thread.
+     *
+     * @param data a HashMap<String, Object> of table fields and values to
+     * insert.
+     */
     public void insertLocations(HashMap<String, Object> data) {
-        String[] tables = {"homes", "current", "next", "back"};
-        PreparedStatement ps = null;
-        String fields;
-        String questions;
-        StringBuilder sbf = new StringBuilder();
-        StringBuilder sbq = new StringBuilder();
-        for (Map.Entry<String, Object> entry : data.entrySet()) {
-            sbf.append(entry.getKey()).append(",");
-            sbq.append("?,");
-        }
-        fields = sbf.toString().substring(0, sbf.length() - 1);
-        questions = sbq.toString().substring(0, sbq.length() - 1);
-        try {
-            for (String s : tables) {
-                ps = connection.prepareStatement("INSERT INTO " + s + " (" + fields + ") VALUES (" + questions + ")");
-                int i = 1;
-                for (Map.Entry<String, Object> entry : data.entrySet()) {
-                    if (entry.getValue().getClass().equals(String.class)) {
-                        ps.setString(i, entry.getValue().toString());
-                    } else {
-                        ps.setInt(i, plugin.utils.parseNum(entry.getValue().toString()));
-                    }
-                    i++;
-                }
-                ps.executeUpdate();
-            }
-            data.clear();
-        } catch (SQLException e) {
-            plugin.debug("Insert error for starting locations! " + e.getMessage());
-        } finally {
-            try {
-                if (ps != null) {
-                    ps.close();
-                }
-            } catch (Exception e) {
-                plugin.debug("Error closing location tables! " + e.getMessage());
-            }
-        }
+        TARDISSQLInsertLocations locate = new TARDISSQLInsertLocations(plugin, data);
+        plugin.getServer().getScheduler().runTaskAsynchronously(plugin, locate);
     }
 }
