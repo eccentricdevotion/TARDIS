@@ -20,6 +20,7 @@ import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
+import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
 import org.bukkit.ChatColor;
@@ -82,13 +83,17 @@ public class TARDISRescue {
             player.sendMessage(plugin.pluginName + "The player's location would not be safe! Please tell the player to move!");
             return true;
         }
-        String save_loc = player_loc.getWorld().getName() + ":" + (player_loc.getBlockX() - move) + ":" + player_loc.getBlockY() + ":" + player_loc.getBlockZ() + ":" + d.toString() + ":false";
         HashMap<String, Object> set = new HashMap<String, Object>();
+        set.put("world", player_loc.getWorld().getName());
+        set.put("x", (player_loc.getBlockX() - move));
+        set.put("y", player_loc.getBlockY());
+        set.put("z", player_loc.getBlockZ());
+        set.put("direction", d.toString());
+        set.put("submarine", 0);
         HashMap<String, Object> where = new HashMap<String, Object>();
         where.put("tardis_id", id);
-        set.put("save", save_loc);
         QueryFactory qf = new QueryFactory(plugin);
-        qf.doUpdate("tardis", set, where);
+        qf.doUpdate("next", set, where);
         player.sendMessage(plugin.pluginName + "The player location was saved succesfully. Please release the handbrake!");
         plugin.tardisHasDestination.put(id, plugin.getArtronConfig().getInt("travel"));
         if (rescue) {
@@ -138,8 +143,15 @@ public class TARDISRescue {
                 player.sendMessage(plugin.pluginName + ChatColor.RED + "The TARDIS does not have enough Artron Energy to make this trip!");
                 return true;
             }
-            TARDISConstants.COMPASS d = rs.getDirection();
-            return rescue(player, saved, id, tt, d, true);
+            // get direction
+            HashMap<String, Object> wherecl = new HashMap<String, Object>();
+            wherecl.put("tardis_id", id);
+            ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
+            if (!rsc.resultSet()) {
+                player.sendMessage(plugin.pluginName + ChatColor.RED + "Could not get current TARDIS location!");
+                return true;
+            }
+            return rescue(player, saved, id, tt, rsc.getDirection(), true);
         } else {
             return false;
         }

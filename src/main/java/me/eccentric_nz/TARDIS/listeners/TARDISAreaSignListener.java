@@ -64,35 +64,28 @@ public class TARDISAreaSignListener implements Listener {
                 wheres.put("player", playerNameStr);
                 ResultSetTravellers rst = new ResultSetTravellers(plugin, wheres, false);
                 if (rst.resultSet()) {
-                    HashMap<String, Object> where = new HashMap<String, Object>();
-                    where.put("tardis_id", rst.getTardis_id());
-                    ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
-                    if (rs.resultSet()) {
-                        int id = rs.getTardis_id();
-                        String d = rs.getDirection().toString();
-                        ItemStack is = inv.getItem(slot);
-                        if (is != null) {
-                            if (plugin.trackSubmarine.contains(Integer.valueOf(id))) {
-                                plugin.trackSubmarine.remove(Integer.valueOf(id));
-                            }
-                            ItemMeta im = is.getItemMeta();
-                            String area = im.getDisplayName();
-                            Location l = plugin.ta.getNextSpot(area);
-                            if (l == null) {
-                                player.sendMessage(plugin.pluginName + "All available parking spots are taken in this area!");
-                                close(player);
-                                return;
-                            }
-                            // check the player is not already in the area!
-                            if (plugin.ta.areaCheckInExisting(l)) {
-                                player.sendMessage(plugin.pluginName + "You are already in this area!");
-                                close(player);
-                                return;
-                            }
-                            player.performCommand("tardistravel area " + area);
+                    ItemStack is = inv.getItem(slot);
+                    if (is != null) {
+                        if (plugin.trackSubmarine.contains(Integer.valueOf(rst.getTardis_id()))) {
+                            plugin.trackSubmarine.remove(Integer.valueOf(rst.getTardis_id()));
+                        }
+                        ItemMeta im = is.getItemMeta();
+                        String area = im.getDisplayName();
+                        Location l = plugin.ta.getNextSpot(area);
+                        if (l == null) {
+                            player.sendMessage(plugin.pluginName + "All available parking spots are taken in this area!");
                             close(player);
                             return;
                         }
+                        // check the player is not already in the area!
+                        if (plugin.ta.areaCheckInExisting(l)) {
+                            player.sendMessage(plugin.pluginName + "You are already in this area!");
+                            close(player);
+                            return;
+                        }
+                        player.performCommand("tardistravel area " + area);
+                        close(player);
+                        return;
                     }
                 }
             }
@@ -106,7 +99,7 @@ public class TARDISAreaSignListener implements Listener {
                         where.put("owner", player.getName());
                         ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
                         if (rs.resultSet()) {
-                            TARDISSaveSignInventory sst = new TARDISSaveSignInventory(plugin, rs.getTardis_id(), rs.getHome());
+                            TARDISSaveSignInventory sst = new TARDISSaveSignInventory(plugin, rs.getTardis_id());
                             ItemStack[] items = sst.getTerminal();
                             Inventory saveinv = plugin.getServer().createInventory(player, 54, "§4TARDIS saves");
                             saveinv.setContents(items);

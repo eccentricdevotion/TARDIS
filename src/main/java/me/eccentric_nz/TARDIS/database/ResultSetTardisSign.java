@@ -19,14 +19,8 @@ package me.eccentric_nz.TARDIS.database;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Locale;
-import java.util.Map;
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.TARDISConstants;
 
 /**
  * Many facts, figures, and formulas are contained within the Matrix,
@@ -42,7 +36,6 @@ public class ResultSetTardisSign {
     private String where;
     private int tardis_id;
     private String owner;
-    private String home;
     private String save_sign;
     private String chameleon;
     private boolean chamele_on;
@@ -79,7 +72,6 @@ public class ResultSetTardisSign {
             if (rs.next()) {
                 this.tardis_id = rs.getInt("tardis_id");
                 this.owner = rs.getString("owner");
-                this.home = rs.getString("home");
                 this.save_sign = rs.getString("save_sign");
                 this.chameleon = rs.getString("chameleon");
                 this.chamele_on = rs.getBoolean("chamele_on");
@@ -111,10 +103,6 @@ public class ResultSetTardisSign {
 
     public String getOwner() {
         return owner;
-    }
-
-    public String getHome() {
-        return home;
     }
 
     public String getSave_sign() {

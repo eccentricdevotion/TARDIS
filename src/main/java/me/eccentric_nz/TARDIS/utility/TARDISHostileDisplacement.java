@@ -21,8 +21,9 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.TARDISConstants;
+import me.eccentric_nz.TARDIS.TARDISConstants.COMPASS;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
+import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.travel.TARDISPluginRespect;
@@ -58,9 +59,8 @@ public class TARDISHostileDisplacement {
         where.put("tardis_id", id);
         ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
         if (rs.resultSet()) {
-            String current = rs.getCurrent();
+            //String current = rs.getCurrent();
             String owner = rs.getOwner();
-            final TARDISConstants.COMPASS d = rs.getDirection();
             final boolean cham = rs.isChamele_on();
             HashMap<String, Object> wherep = new HashMap<String, Object>();
             wherep.put("player", owner);
@@ -69,7 +69,14 @@ public class TARDISHostileDisplacement {
                 if (rsp.isHads_on()) {
                     TARDISTimeTravel tt = new TARDISTimeTravel(plugin);
                     int r = plugin.getConfig().getInt("hads_distance");
-                    final Location loc = plugin.utils.getLocationFromDB(current, 0, 0);
+                    HashMap<String, Object> wherecl = new HashMap<String, Object>();
+                    wherecl.put("tardis_id", id);
+                    ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
+                    if (!rsc.resultSet()) {
+                        plugin.debug("Could not get current TARDIS location for HADS!");
+                    }
+                    final Location loc = new Location(rsc.getWorld(), rsc.getX(), rsc.getY(), rsc.getZ());
+                    final COMPASS d = rsc.getDirection();
                     Location l = loc.clone();
                     // randomise the direction
                     Collections.shuffle(angles);
@@ -108,18 +115,21 @@ public class TARDISHostileDisplacement {
                                 final Location fl = (plugin.trackSubmarine.contains(id)) ? sub : l;
                                 TARDISPluginRespect pr = new TARDISPluginRespect(plugin);
                                 if (pr.getRespect(player, fl, false)) {
-                                    // move TARDIS
-                                    String hads = fl.getWorld().getName() + ":" + fl.getBlockX() + ":" + fl.getBlockY() + ":" + fl.getBlockZ();
+                                    // set current
                                     QueryFactory qf = new QueryFactory(plugin);
                                     HashMap<String, Object> tid = new HashMap<String, Object>();
-                                    HashMap<String, Object> set = new HashMap<String, Object>();
                                     tid.put("tardis_id", id);
-                                    set.put("save", hads);
-                                    set.put("current", hads);
-                                    qf.doUpdate("tardis", set, tid);
+                                    HashMap<String, Object> set = new HashMap<String, Object>();
+                                    set.put("world", fl.getWorld().getName());
+                                    set.put("x", fl.getBlockX());
+                                    set.put("y", fl.getBlockY());
+                                    set.put("z", fl.getBlockZ());
+                                    set.put("submarine", (plugin.trackSubmarine.contains(id)) ? 1 : 0);
+                                    qf.doUpdate("current", set, tid);
                                     plugin.trackDamage.remove(Integer.valueOf(id));
                                     final boolean mat = plugin.getConfig().getBoolean("materialise");
                                     long delay = (mat) ? 1L : 180L;
+                                    // move TARDIS
                                     plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
                                         @Override
                                         public void run() {
@@ -136,6 +146,7 @@ public class TARDISHostileDisplacement {
                                     // message time lord
                                     String message = plugin.pluginName + ChatColor.RED + "H" + ChatColor.RESET + "ostile " + ChatColor.RED + "A" + ChatColor.RESET + "ction " + ChatColor.RED + "D" + ChatColor.RESET + "isplacement " + ChatColor.RED + "S" + ChatColor.RESET + "ystem engaged, moving TARDIS!";
                                     player.sendMessage(message);
+                                    String hads = fl.getWorld().getName() + ":" + fl.getBlockX() + ":" + fl.getBlockY() + ":" + fl.getBlockZ();
                                     player.sendMessage(plugin.pluginName + "TARDIS moved to " + hads);
                                     if (player != hostile) {
                                         hostile.sendMessage(message);

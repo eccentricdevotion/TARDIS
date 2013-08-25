@@ -49,6 +49,7 @@ import me.eccentric_nz.TARDIS.files.TARDISUpdateChecker;
 import me.eccentric_nz.TARDIS.info.TARDISInfoMenu;
 import me.eccentric_nz.TARDIS.ARS.TARDISARSListener;
 import me.eccentric_nz.TARDIS.database.ResultSetPoliceBox;
+import me.eccentric_nz.TARDIS.database.TARDISLocationsConverter;
 import me.eccentric_nz.TARDIS.listeners.TARDISAdminMenuListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISAnvilListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISAreaListener;
@@ -311,6 +312,9 @@ public class TARDIS extends JavaPlugin {
         loadBooks();
         if (!getConfig().getBoolean("conversion_done")) {
             new TARDISControlsConverter(this).convertControls();
+        }
+        if (!getConfig().getBoolean("location_conversion_done")) {
+            new TARDISLocationsConverter(this).convert();
         }
         tp = getServerTP();
         //new TARDISPasteBox(this).loadBoxes();

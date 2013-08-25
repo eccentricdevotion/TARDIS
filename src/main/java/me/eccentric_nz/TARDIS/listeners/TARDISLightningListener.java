@@ -67,7 +67,7 @@ public class TARDISLightningListener implements Listener {
                     if (map.get("recharging").equals("0")) {
                         charging = false;
                     }
-                    String[] loc = map.get("save").split(":");
+                    String[] loc = map.get("current").split(":");
                     World w = plugin.getServer().getWorld(loc[0]);
                     // only if the tardis is in the same world as the lightning strike and is not at a beacon recharger!
                     if (strikeworld.equals(w) && !charging) {

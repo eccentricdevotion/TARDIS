@@ -45,12 +45,7 @@ public class ResultSetTardis {
     private int tardis_id;
     private String owner;
     private String chunk;
-    private TARDISConstants.COMPASS direction;
     private TARDISConstants.SCHEMATIC schematic;
-    private String home;
-    private String save;
-    private String current;
-    private String fast_return;
     private String replaced;
     private String chest;
     private String companions;
@@ -150,12 +145,7 @@ public class ResultSetTardis {
                     this.tardis_id = rs.getInt("tardis_id");
                     this.owner = rs.getString("owner");
                     this.chunk = rs.getString("chunk");
-                    this.direction = (!rs.getString("direction").isEmpty()) ? TARDISConstants.COMPASS.valueOf(rs.getString("direction")) : TARDISConstants.COMPASS.EAST;
                     this.schematic = TARDISConstants.SCHEMATIC.valueOf(rs.getString("size"));
-                    this.home = rs.getString("home");
-                    this.save = rs.getString("save");
-                    this.current = rs.getString("current");
-                    this.fast_return = rs.getString("fast_return");
                     this.replaced = rs.getString("replaced");
                     this.chest = rs.getString("chest");
                     this.companions = rs.getString("companions");
@@ -217,28 +207,8 @@ public class ResultSetTardis {
         return chunk;
     }
 
-    public TARDISConstants.COMPASS getDirection() {
-        return direction;
-    }
-
     public TARDISConstants.SCHEMATIC getSchematic() {
         return schematic;
-    }
-
-    public String getHome() {
-        return home;
-    }
-
-    public String getSave() {
-        return save;
-    }
-
-    public String getCurrent() {
-        return current;
-    }
-
-    public String getFast_return() {
-        return fast_return;
     }
 
     public String getReplaced() {

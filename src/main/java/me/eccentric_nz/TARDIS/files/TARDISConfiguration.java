@@ -84,6 +84,7 @@ public class TARDISConfiguration {
         boolOptions.put("include_default_world", false);
         boolOptions.put("keep_night", true);
         boolOptions.put("land_on_water", true);
+        boolOptions.put("location_conversion_done", false);
         boolOptions.put("materialise", true);
         boolOptions.put("name_tardis", false);
         boolOptions.put("nether", false);

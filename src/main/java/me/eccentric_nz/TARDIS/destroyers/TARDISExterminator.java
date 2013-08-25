@@ -21,12 +21,8 @@ import java.util.HashMap;
 import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
-import static me.eccentric_nz.TARDIS.TARDISConstants.COMPASS.EAST;
-import static me.eccentric_nz.TARDIS.TARDISConstants.COMPASS.NORTH;
-import static me.eccentric_nz.TARDIS.TARDISConstants.COMPASS.SOUTH;
-import static me.eccentric_nz.TARDIS.TARDISConstants.COMPASS.WEST;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
-import me.eccentric_nz.TARDIS.database.ResultSetDeleteTardis;
+import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
 import me.eccentric_nz.tardischunkgenerator.TARDISChunkGenerator;
@@ -61,13 +57,19 @@ public class TARDISExterminator {
         ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
         try {
             if (rs.resultSet()) {
-                String saveLoc = rs.getCurrent();
-                Location bb_loc = plugin.utils.getLocationFromDB(saveLoc, 0F, 0F);
+                boolean hid = rs.isHidden();
                 String chunkLoc = rs.getChunk();
                 String owner = rs.getOwner();
                 TARDISConstants.SCHEMATIC schm = rs.getSchematic();
-                TARDISConstants.COMPASS d = rs.getDirection();
-                if (!rs.isHidden()) {
+                HashMap<String, Object> wherecl = new HashMap<String, Object>();
+                wherecl.put("tardis_id", id);
+                ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
+                if (!rsc.resultSet()) {
+                    return false;
+                }
+                Location bb_loc = new Location(rsc.getWorld(), rsc.getX(), rsc.getY(), rsc.getZ());
+                TARDISConstants.COMPASS d = rsc.getDirection();
+                if (!hid) {
                     plugin.destroyPB.destroyPoliceBox(bb_loc, d, id, false, false, false, null);
                 }
                 String[] chunkworld = chunkLoc.split(":");
@@ -81,7 +83,7 @@ public class TARDISExterminator {
                 return true;
             }
         } catch (Exception e) {
-            plugin.console.sendMessage(plugin.pluginName + "TARDIS prune by id error: " + e);
+            plugin.console.sendMessage(plugin.pluginName + "TARDIS exterminate by id error: " + e);
         } finally {
             return false;
         }
@@ -102,28 +104,32 @@ public class TARDISExterminator {
         if (player.hasPermission("tardis.delete")) {
             Block blockbehind = null;
             byte data = block.getData();
-            String direction = "";
             if (data == 4) {
                 blockbehind = block.getRelative(BlockFace.EAST, 2);
-                direction = "EAST";
             }
             if (data == 5) {
                 blockbehind = block.getRelative(BlockFace.WEST, 2);
-                direction = "WEST";
             }
             if (data == 3) {
                 blockbehind = block.getRelative(BlockFace.NORTH, 2);
-                direction = "NORTH";
             }
             if (data == 2) {
                 blockbehind = block.getRelative(BlockFace.SOUTH, 2);
-                direction = "SOUTH";
             }
             if (blockbehind != null) {
                 Block blockDown = blockbehind.getRelative(BlockFace.DOWN, 2);
                 Location bd_loc = blockDown.getLocation();
-                String bd_str = bd_loc.getWorld().getName() + ":" + bd_loc.getBlockX() + ":" + bd_loc.getBlockY() + ":" + bd_loc.getBlockZ() + "%";
-                where.put("current", bd_str);
+                HashMap<String, Object> wherecl = new HashMap<String, Object>();
+                wherecl.put("world", bd_loc.getWorld().getName());
+                wherecl.put("x", bd_loc.getBlockX());
+                wherecl.put("y", bd_loc.getBlockY());
+                wherecl.put("z", bd_loc.getBlockZ());
+                ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
+                if (!rsc.resultSet()) {
+                    player.sendMessage(plugin.pluginName + ChatColor.RED + "Could not get TARDIS save location!");
+                    return false;
+                }
+                where.put("tardis_id", rsc.getTardis_id());
             } else {
                 player.sendMessage(plugin.pluginName + ChatColor.RED + "Could not get TARDIS save location!");
                 return false;
@@ -131,14 +137,13 @@ public class TARDISExterminator {
         } else {
             where.put("owner", playerNameStr);
         }
-        ResultSetDeleteTardis rs = new ResultSetDeleteTardis(plugin, where);
+        ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
         if (rs.resultSet()) {
             int id = rs.getTardis_id();
-            String saveLoc = rs.getCurrent();
+            //String saveLoc = rs.getCurrent();
             String chunkLoc = rs.getChunk();
             String owner = rs.getOwner();
             TARDISConstants.SCHEMATIC schm = rs.getSchematic();
-            TARDISConstants.COMPASS d = rs.getDirection();
             // need to check that a player is not currently in the TARDIS
             if (player.hasPermission("tardis.delete")) {
                 HashMap<String, Object> travid = new HashMap<String, Object>();
@@ -150,8 +155,16 @@ public class TARDISExterminator {
                 }
             }
             // check the sign location
-            Location bb_loc = plugin.utils.getLocationFromDB(saveLoc, 0F, 0F);
+            HashMap<String, Object> wherecl = new HashMap<String, Object>();
+            wherecl.put("tardis_id", id);
+            ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
+            if (!rsc.resultSet()) {
+                player.sendMessage(plugin.pluginName + ChatColor.RED + "Could not get TARDIS location from sign!");
+                return false;
+            }
+            Location bb_loc = new Location(rsc.getWorld(), rsc.getX(), rsc.getY(), rsc.getZ());
             // get TARDIS direction
+            TARDISConstants.COMPASS d = rsc.getDirection();
             switch (d) {
                 case EAST:
                     signx = -2;
@@ -243,12 +256,30 @@ public class TARDISExterminator {
         HashMap<String, Object> lid = new HashMap<String, Object>();
         lid.put("tardis_id", id);
         qf.doDelete("destinations", lid);
+        // remove home location
+        HashMap<String, Object> hid = new HashMap<String, Object>();
+        hid.put("tardis_id", id);
+        qf.doDelete("homes", hid);
+        // remove current location
+        HashMap<String, Object> cid = new HashMap<String, Object>();
+        cid.put("tardis_id", id);
+        qf.doDelete("current", cid);
+        // remove next location
+        HashMap<String, Object> nid = new HashMap<String, Object>();
+        nid.put("tardis_id", id);
+        qf.doDelete("next", nid);
+        // remove back location
+        HashMap<String, Object> fid = new HashMap<String, Object>();
+        fid.put("tardis_id", id);
+        qf.doDelete("back", fid);
+        // remove travellers
         HashMap<String, Object> vid = new HashMap<String, Object>();
         vid.put("tardis_id", id);
         qf.doDelete("travellers", vid);
-        HashMap<String, Object> cid = new HashMap<String, Object>();
-        cid.put("tardis_id", id);
-        qf.doDelete("chunks", cid);
+        // remove chunks
+        HashMap<String, Object> uid = new HashMap<String, Object>();
+        uid.put("tardis_id", id);
+        qf.doDelete("chunks", uid);
     }
 
     private void cleanWorlds(World w, String owner) {

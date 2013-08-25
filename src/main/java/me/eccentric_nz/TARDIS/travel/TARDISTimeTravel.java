@@ -82,7 +82,7 @@ public class TARDISTimeTravel {
      * travel to.
      * @return a random Location
      */
-    public Location randomDestination(Player p, byte rx, byte rz, byte ry, TARDISConstants.COMPASS d, String e, String this_world, boolean malfunction) {
+    public Location randomDestination(Player p, byte rx, byte rz, byte ry, TARDISConstants.COMPASS d, String e, World this_world, boolean malfunction) {
         int startx, starty, startz, resetx, resetz, listlen, rw;
         World randworld = null;
         boolean danger = true;
@@ -99,7 +99,7 @@ public class TARDISTimeTravel {
         List<World> allowedWorlds = new ArrayList<World>();
 
         if (e.equals("THIS")) {
-            allowedWorlds.add(plugin.getServer().getWorld(this_world));
+            allowedWorlds.add(this_world);
         } else {
             //List<String> envOptions = Arrays.asList(e.split(":"));
             for (String o : worldlist) {
@@ -120,8 +120,8 @@ public class TARDISTimeTravel {
                         }
                     }
                     // remove the world the Police Box is in
-                    if (this_world != null && allowedWorlds.size() > 1 && allowedWorlds.contains(plugin.getServer().getWorld(this_world))) {
-                        allowedWorlds.remove(plugin.getServer().getWorld(this_world));
+                    if (allowedWorlds.size() > 1 && allowedWorlds.contains(this_world)) {
+                        allowedWorlds.remove(this_world);
                     }
                 }
             }

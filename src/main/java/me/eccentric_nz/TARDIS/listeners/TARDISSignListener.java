@@ -124,7 +124,7 @@ public class TARDISSignListener implements Listener {
                         qf.doUpdate("tardis", set, tid);
                     } else {
                         if (event.getAction().equals(Action.RIGHT_CLICK_BLOCK) && plugin.bukkitversion.compareTo(plugin.preIMversion) >= 0) {
-                            TARDISSaveSignInventory sst = new TARDISSaveSignInventory(plugin, id, rs.getHome());
+                            TARDISSaveSignInventory sst = new TARDISSaveSignInventory(plugin, id);
                             ItemStack[] items = sst.getTerminal();
                             Inventory inv = plugin.getServer().createInventory(player, 54, "§4TARDIS saves");
                             inv.setContents(items);

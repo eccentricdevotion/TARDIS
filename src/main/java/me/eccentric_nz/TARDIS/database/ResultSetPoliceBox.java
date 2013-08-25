@@ -55,30 +55,24 @@ public class ResultSetPoliceBox {
     public void loadChunks() {
         PreparedStatement statement = null;
         ResultSet rs = null;
-        String query = "SELECT current FROM tardis";
+        String query = "SELECT * FROM current";
         try {
             statement = connection.prepareStatement(query);
             rs = statement.executeQuery();
             if (rs.isBeforeFirst()) {
                 while (rs.next()) {
-                    String[] split = rs.getString("current").split(":");
-                    World w = plugin.getServer().getWorld(split[0]);
-                    int x = 0, y = 0, z = 0;
-                    try {
-                        x = Integer.parseInt(split[1]);
-                        y = Integer.parseInt(split[2]);
-                        z = Integer.parseInt(split[3]);
-                    } catch (NumberFormatException nfe) {
-                    }
-                    Chunk c = w.getChunkAt(new Location(w, x, y, z));
-                    if (!plugin.tardisChunkList.contains(c)) {
-                        plugin.tardisChunkList.add(c);
-                        c.load();
+                    World w = plugin.getServer().getWorld(rs.getString("world"));
+                    if (w != null) {
+                        Chunk c = w.getChunkAt(new Location(w, rs.getInt("x"), rs.getInt("y"), rs.getInt("z")));
+                        if (!plugin.tardisChunkList.contains(c)) {
+                            plugin.tardisChunkList.add(c);
+                            c.load();
+                        }
                     }
                 }
             }
         } catch (SQLException e) {
-            plugin.debug("ResultSet error for tardis table (loading Police Box chunks)! " + e.getMessage());
+            plugin.debug("ResultSet error for current table (loading Police Box chunks)! " + e.getMessage());
         } finally {
             try {
                 if (rs != null) {
@@ -88,7 +82,7 @@ public class ResultSetPoliceBox {
                     statement.close();
                 }
             } catch (Exception e) {
-                plugin.debug("Error closing tardis table (loading Police Box chunks)! " + e.getMessage());
+                plugin.debug("Error closing current table (loading Police Box chunks)! " + e.getMessage());
             }
         }
     }

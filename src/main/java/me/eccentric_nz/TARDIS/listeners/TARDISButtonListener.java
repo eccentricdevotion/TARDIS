@@ -30,6 +30,8 @@ import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.info.TARDISInfoMenu;
 import me.eccentric_nz.TARDIS.ARS.TARDISARSInventory;
+import me.eccentric_nz.TARDIS.database.ResultSetBackLocation;
+import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.travel.TARDISTemporalLocatorInventory;
 import me.eccentric_nz.TARDIS.travel.TARDISTerminalInventory;
 import me.eccentric_nz.TARDIS.travel.TARDISTimeTravel;
@@ -119,8 +121,10 @@ public class TARDISButtonListener implements Listener {
                             int level = rs.getArtron_level();
                             boolean hb = rs.isHandbrake_on();
                             boolean set_dest = false;
-                            String d = rs.getCurrent();
+                            String comps = rs.getCompanions();
+                            String owner = rs.getOwner();
                             QueryFactory qf = new QueryFactory(plugin);
+                            HashMap<String, Object> set = new HashMap<String, Object>();
                             switch (type) {
                                 case 1:
                                     if (!hb) {
@@ -134,8 +138,14 @@ public class TARDISButtonListener implements Listener {
                                     if (plugin.trackSubmarine.contains(Integer.valueOf(id))) {
                                         plugin.trackSubmarine.remove(Integer.valueOf(id));
                                     }
-                                    String[] current = d.split(":");
-                                    TARDISConstants.COMPASS dir = rs.getDirection();
+                                    HashMap<String, Object> wherecl = new HashMap<String, Object>();
+                                    wherecl.put("tardis_id", rs.getTardis_id());
+                                    ResultSetCurrentLocation rscl = new ResultSetCurrentLocation(plugin, wherecl);
+                                    if (!rscl.resultSet()) {
+                                        player.sendMessage(plugin.pluginName + ChatColor.RED + "Could not get current TARDIS location!");
+                                        return;
+                                    }
+                                    TARDISConstants.COMPASS dir = rscl.getDirection();
                                     if (player.hasPermission("tardis.exile") && plugin.getConfig().getBoolean("exile")) {
                                         // get the exile area
                                         String permArea = plugin.ta.getExileArea(player);
@@ -144,7 +154,12 @@ public class TARDISButtonListener implements Listener {
                                         if (l == null) {
                                             player.sendMessage(plugin.pluginName + "All available parking spots are taken in this area!");
                                         } else {
-                                            d = l.getWorld().getName() + ":" + l.getBlockX() + ":" + l.getBlockY() + ":" + l.getBlockZ() + ":" + dir.toString() + ":false";
+                                            set.put("world", l.getWorld().getName());
+                                            set.put("x", l.getBlockX());
+                                            set.put("y", l.getBlockY());
+                                            set.put("z", l.getBlockZ());
+                                            set.put("direction", dir.toString());
+                                            set.put("submarine", 0);
                                             player.sendMessage(plugin.pluginName + "Your TARDIS was approved for parking in [" + permArea + "]!");
                                             set_dest = true;
                                         }
@@ -191,14 +206,18 @@ public class TARDISButtonListener implements Listener {
                                             }
                                             // create a random destination
                                             TARDISTimeTravel tt = new TARDISTimeTravel(plugin);
-                                            Location rand = tt.randomDestination(player, repeaters[1], repeaters[2], repeaters[3], dir, environment, current[0], false);
+                                            Location rand = tt.randomDestination(player, repeaters[1], repeaters[2], repeaters[3], dir, environment, rscl.getWorld(), false);
                                             if (rand != null) {
                                                 String sub = (plugin.trackSubmarine.contains(Integer.valueOf(id))) ? "true" : "false";
-                                                d = rand.getWorld().getName() + ":" + rand.getBlockX() + ":" + rand.getBlockY() + ":" + rand.getBlockZ() + ":" + dir.toString() + ":" + sub;
+                                                set.put("world", rand.getWorld().getName());
+                                                set.put("x", rand.getBlockX());
+                                                set.put("y", rand.getBlockY());
+                                                set.put("z", rand.getBlockZ());
+                                                set.put("direction", dir.toString());
+                                                set.put("submarine", (plugin.trackSubmarine.contains(Integer.valueOf(id))) ? 1 : 0);
                                                 set_dest = true;
                                                 String dchat = rand.getWorld().getName() + " at x: " + rand.getBlockX() + " y: " + rand.getBlockY() + " z: " + rand.getBlockZ();
                                                 boolean isTL = true;
-                                                String comps = rs.getCompanions();
                                                 if (comps != null && !comps.isEmpty()) {
                                                     String[] companions = comps.split(":");
                                                     for (String c : companions) {
@@ -221,8 +240,8 @@ public class TARDISButtonListener implements Listener {
                                                 if (isTL == true) {
                                                     player.sendMessage(plugin.pluginName + "Destination: " + dchat);
                                                 } else {
-                                                    if (plugin.getServer().getPlayer(rs.getOwner()) != null) {
-                                                        plugin.getServer().getPlayer(rs.getOwner()).sendMessage(plugin.pluginName + "Destination: " + dchat);
+                                                    if (plugin.getServer().getPlayer(owner) != null) {
+                                                        plugin.getServer().getPlayer(owner).sendMessage(plugin.pluginName + "Destination: " + dchat);
                                                     }
                                                 }
                                             } else {
@@ -241,12 +260,27 @@ public class TARDISButtonListener implements Listener {
                                         return;
                                     }
                                     // fast return button
-                                    if (!d.equals(rs.getFast_return())) {
-                                        d = rs.getFast_return();
-                                        set_dest = true;
-                                        player.sendMessage(plugin.pluginName + "Previous location selected. Please release the handbrake!");
-                                    } else {
-                                        player.sendMessage(plugin.pluginName + "You are already at the previous location. You need to travel somewhere else first!");
+                                    HashMap<String, Object> wherebl = new HashMap<String, Object>();
+                                    wherebl.put("tardis_id", rs.getTardis_id());
+                                    ResultSetBackLocation rsb = new ResultSetBackLocation(plugin, wherebl);
+                                    if (rsb.resultSet()) {
+                                        HashMap<String, Object> wherecu = new HashMap<String, Object>();
+                                        wherecu.put("tardis_id", rs.getTardis_id());
+                                        ResultSetCurrentLocation rscu = new ResultSetCurrentLocation(plugin, wherecu);
+                                        if (rscu.resultSet()) {
+                                            if (!compareCurrentToBack(rscu, rsb)) {
+                                                set.put("world", rsb.getWorld().getName());
+                                                set.put("x", rsb.getX());
+                                                set.put("y", rsb.getY());
+                                                set.put("z", rsb.getZ());
+                                                set.put("direction", rsb.getDirection().toString());
+                                                set.put("submarine", (rsb.isSubmarine()) ? 1 : 0);
+                                                set_dest = true;
+                                                player.sendMessage(plugin.pluginName + "Previous location selected. Please release the handbrake!");
+                                            } else {
+                                                player.sendMessage(plugin.pluginName + "You are already at the previous location. You need to travel somewhere else first!");
+                                            }
+                                        }
                                     }
                                     break;
                                 case 9:
@@ -331,11 +365,9 @@ public class TARDISButtonListener implements Listener {
                                     break;
                             }
                             if (set_dest) {
-                                HashMap<String, Object> set = new HashMap<String, Object>();
-                                set.put("save", d);
                                 HashMap<String, Object> wherel = new HashMap<String, Object>();
                                 wherel.put("tardis_id", id);
-                                qf.doUpdate("tardis", set, wherel);
+                                qf.doUpdate("next", set, wherel);
                                 plugin.tardisHasDestination.put(id, plugin.getArtronConfig().getInt("random"));
                                 if (plugin.trackRescue.containsKey(Integer.valueOf(id))) {
                                     plugin.trackRescue.remove(Integer.valueOf(id));
@@ -346,5 +378,12 @@ public class TARDISButtonListener implements Listener {
                 }
             }
         }
+    }
+
+    private boolean compareCurrentToBack(ResultSetCurrentLocation c, ResultSetBackLocation b) {
+        return (c.getWorld().equals(b.getWorld())
+                && c.getX() == b.getX()
+                && c.getY() == b.getY()
+                && c.getZ() == b.getZ());
     }
 }

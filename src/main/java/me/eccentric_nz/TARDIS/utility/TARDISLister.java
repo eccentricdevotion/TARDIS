@@ -22,6 +22,7 @@ import java.util.Set;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.ResultSetAreas;
 import me.eccentric_nz.TARDIS.database.ResultSetDestinations;
+import me.eccentric_nz.TARDIS.database.ResultSetHomeLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
@@ -86,11 +87,13 @@ public class TARDISLister {
                 int id = rst.getTardis_id();
                 // list TARDIS saves
                 if (l.equalsIgnoreCase("saves")) {
-                    // construct home string
-                    String h = rst.getHome();
-                    String[] h_data = h.split(":");
+                    // get home
+                    HashMap<String, Object> wherehl = new HashMap<String, Object>();
+                    wherehl.put("tardis_id", id);
+                    ResultSetHomeLocation rsh = new ResultSetHomeLocation(TARDIS.plugin, wherehl);
+                    rsh.resultSet();
                     p.sendMessage(ChatColor.GRAY + "Saves");
-                    p.sendMessage(ChatColor.GREEN + "HOME: " + h_data[0] + " at x:" + h_data[1] + " y:" + h_data[2] + " z:" + h_data[3]);
+                    p.sendMessage(ChatColor.GREEN + "HOME: " + rsh.getWorld().getName() + " at x:" + rsh.getX() + " y:" + rsh.getY() + " z:" + rsh.getZ());
                     // list other saved destinations
                     HashMap<String, Object> whered = new HashMap<String, Object>();
                     whered.put("tardis_id", id);
@@ -126,8 +129,5 @@ public class TARDISLister {
                 }
             }
         }
-    }
-
-    private TARDISLister() {
     }
 }

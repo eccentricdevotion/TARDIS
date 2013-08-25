@@ -24,6 +24,7 @@ import java.util.Random;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
+import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetDoors;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
@@ -239,11 +240,19 @@ public class TARDISDoorListener implements Listener {
                                     int artron = rs.getArtron_level();
                                     int required = plugin.getArtronConfig().getInt("backdoor");
                                     String tl = rs.getOwner();
-                                    String current = rs.getCurrent();
+                                    //String current = rs.getCurrent();
                                     float yaw = player.getLocation().getYaw();
                                     float pitch = player.getLocation().getPitch();
                                     String companions = rs.getCompanions();
-                                    TARDISConstants.COMPASS d_backup = rs.getDirection();
+                                    boolean hb = rs.isHandbrake_on();
+                                    HashMap<String, Object> wherecl = new HashMap<String, Object>();
+                                    wherecl.put("tardis_id", rs.getTardis_id());
+                                    ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
+                                    if (!rsc.resultSet()) {
+                                        player.sendMessage(plugin.pluginName + "Could not get current TARDIS location!");
+                                        return;
+                                    }
+                                    TARDISConstants.COMPASS d_backup = rsc.getDirection();
                                     // get quotes player prefs
                                     boolean userQuotes;
                                     boolean userTP;
@@ -276,8 +285,8 @@ public class TARDISDoorListener implements Listener {
                                                 return;
                                             }
                                             // player is in the TARDIS - always exit to current location
-                                            Location exitLoc = plugin.utils.getLocationFromDB(current, yaw, pitch);
-                                            if (rs.isHandbrake_on()) {
+                                            Location exitLoc = new Location(rsc.getWorld(), rsc.getX(), rsc.getY(), rsc.getZ(), yaw, pitch);
+                                            if (hb) {
                                                 // change the yaw if the door directions are different
                                                 if (!dd.equals(d)) {
                                                     yaw += adjustYaw(dd, d);

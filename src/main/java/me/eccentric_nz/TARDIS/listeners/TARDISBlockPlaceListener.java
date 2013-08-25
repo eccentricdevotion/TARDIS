@@ -26,6 +26,7 @@ import me.eccentric_nz.TARDIS.achievement.TARDISAchievementNotify;
 import me.eccentric_nz.TARDIS.builders.TARDISSpace;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetCount;
+import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.rooms.TARDISWalls;
@@ -245,16 +246,10 @@ public class TARDISBlockPlaceListener implements Listener {
                         // save data to database (tardis table)
                         final Location block_loc = blockBottom.getLocation();
                         String chun = cw + ":" + cx + ":" + cz;
-                        //String home = block_loc.getWorld().getName() + ":" + block_loc.getBlockX() + ":" + block_loc.getBlockY() + ":" + block_loc.getBlockZ() + ":" + d + ":false";
-                        String save = block_loc.getWorld().getName() + ":" + block_loc.getBlockX() + ":" + block_loc.getBlockY() + ":" + block_loc.getBlockZ() + ":" + d + ":false";
                         QueryFactory qf = new QueryFactory(plugin);
                         HashMap<String, Object> set = new HashMap<String, Object>();
                         set.put("owner", playerNameStr);
                         set.put("chunk", chun);
-                        set.put("direction", d);
-                        set.put("home", save);
-                        set.put("save", save);
-                        set.put("current", save);
                         set.put("size", schm.name());
                         HashMap<String, Object> setpp = new HashMap<String, Object>();
                         if (middle_id == 22) {
@@ -285,6 +280,15 @@ public class TARDISBlockPlaceListener implements Listener {
                             wherepp.put("player", player.getName());
                             qf.doUpdate("player_prefs", setpp, wherepp);
                         }
+                        // populate home, current, next and back tables
+                        HashMap<String, Object> setlocs = new HashMap<String, Object>();
+                        setlocs.put("tardis_id", lastInsertId);
+                        setlocs.put("world", block_loc.getWorld().getName());
+                        setlocs.put("x", block_loc.getBlockX());
+                        setlocs.put("y", block_loc.getBlockY());
+                        setlocs.put("z", block_loc.getBlockZ());
+                        setlocs.put("direction", d);
+                        qf.insertLocations(setlocs);
                         // remove redstone torch/lapis and iron blocks
                         block.setTypeId(0);
                         blockBelow.setTypeId(0);
@@ -319,9 +323,12 @@ public class TARDISBlockPlaceListener implements Listener {
                             }
                         }
                     } else {
-                        String leftLoc = rs.getCurrent();
-                        String[] leftData = leftLoc.split(":");
-                        player.sendMessage(plugin.pluginName + "You already have a TARDIS, you left it in " + leftData[0] + " at x:" + leftData[1] + " y:" + leftData[2] + " z:" + leftData[3]);
+                        HashMap<String, Object> wherecl = new HashMap<String, Object>();
+                        wherecl.put("tardis_id", rs.getTardis_id());
+                        ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
+                        if (rsc.resultSet()) {
+                            player.sendMessage(plugin.pluginName + "You already have a TARDIS, you left it in " + rsc.getWorld().getName() + " at x:" + rsc.getX() + " y:" + rsc.getY() + " z:" + rsc.getZ());
+                        }
                     }
                 } else {
                     player.sendMessage(plugin.pluginName + "You don't have permission to build a TARDIS!");

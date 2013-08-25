@@ -24,6 +24,7 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetControls;
+import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetDoors;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
@@ -132,8 +133,6 @@ public class TARDISUpdateListener implements Listener {
             }
             int id = rs.getTardis_id();
             TARDISConstants.SCHEMATIC schm = rs.getSchematic();
-            String home = rs.getHome();
-            String current = rs.getCurrent();
             QueryFactory qf = new QueryFactory(plugin);
             String table = "tardis";
             HashMap<String, Object> tid = new HashMap<String, Object>();
@@ -328,12 +327,22 @@ public class TARDISUpdateListener implements Listener {
                 wherec.put("type", 8);
                 ResultSetControls rsc = new ResultSetControls(plugin, wherec, false);
                 if (!rsc.resultSet()) {
-                    // insert current into fast_return
-                    HashMap<String, Object> wheref = new HashMap<String, Object>();
-                    wheref.put("tardis_id", id);
-                    HashMap<String, Object> setf = new HashMap<String, Object>();
-                    setf.put("fast_return", current);
-                    qf.doUpdate("tardis", setf, wheref);
+                    // insert current into back
+                    HashMap<String, Object> wherecl = new HashMap<String, Object>();
+                    wherecl.put("tardis_id", id);
+                    ResultSetCurrentLocation rscl = new ResultSetCurrentLocation(plugin, wherecl);
+                    if (rscl.resultSet()) {
+                        HashMap<String, Object> setb = new HashMap<String, Object>();
+                        setb.put("world", rscl.getWorld().getName());
+                        setb.put("x", rscl.getX());
+                        setb.put("y", rscl.getY());
+                        setb.put("z", rscl.getZ());
+                        setb.put("direction", rscl.getDirection().toString());
+                        setb.put("submarine", (rscl.isSubmarine()) ? 1 : 0);
+                        HashMap<String, Object> whereb = new HashMap<String, Object>();
+                        whereb.put("tardis_id", id);
+                        qf.doUpdate("back", setb, whereb);
+                    }
                     // insert control
                     qf.insertControl(id, 8, blockLocStr, 0);
                     secondary = true;

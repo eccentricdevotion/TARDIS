@@ -25,8 +25,8 @@ import java.util.Set;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
+import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
-import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.travel.TARDISPluginRespect;
 import me.eccentric_nz.TARDIS.travel.TARDISTimeTravel;
@@ -57,12 +57,11 @@ import org.bukkit.inventory.meta.ItemMeta;
 public class TARDISTerminalListener implements Listener {
 
     private final TARDIS plugin;
-    private HashMap<String, String> terminalUsers = new HashMap<String, String>();
-    private HashMap<String, String> terminalSubmarine = new HashMap<String, String>();
+    private HashMap<String, ResultSetCurrentLocation> terminalUsers = new HashMap<String, ResultSetCurrentLocation>();
     private HashMap<String, String> terminalDestination = new HashMap<String, String>();
-    private HashMap<String, TARDISConstants.COMPASS> terminalDirection = new HashMap<String, TARDISConstants.COMPASS>();
     private HashMap<String, Integer> terminalStep = new HashMap<String, Integer>();
     private HashMap<String, Integer> terminalIDs = new HashMap<String, Integer>();
+    private HashMap<String, Boolean> terminalSub = new HashMap<String, Boolean>();
 
     public TARDISTerminalListener(TARDIS plugin) {
         this.plugin = plugin;
@@ -142,10 +141,16 @@ public class TARDISTerminalListener implements Listener {
                         case 49:
                             if (terminalDestination.containsKey(playerNameStr)) {
                                 HashMap<String, Object> set = new HashMap<String, Object>();
-                                set.put("save", terminalDestination.get(playerNameStr));
+                                String[] data = terminalDestination.get(playerNameStr).split(":");
+                                set.put("world", data[0]);
+                                set.put("x", data[1]);
+                                set.put("y", data[2]);
+                                set.put("z", data[3]);
+                                set.put("direction", terminalUsers.get(playerNameStr).getDirection().toString());
+                                set.put("submarine", (terminalSub.containsKey(playerNameStr)) ? 1 : 0);
                                 HashMap<String, Object> wheret = new HashMap<String, Object>();
                                 wheret.put("tardis_id", terminalIDs.get(playerNameStr));
-                                new QueryFactory(plugin).doUpdate("tardis", set, wheret);
+                                new QueryFactory(plugin).doUpdate("next", set, wheret);
                                 plugin.tardisHasDestination.put(terminalIDs.get(playerNameStr), plugin.getArtronConfig().getInt("random"));
                                 if (plugin.trackRescue.containsKey(terminalIDs.get(playerNameStr))) {
                                     plugin.trackRescue.remove(terminalIDs.get(playerNameStr));
@@ -185,10 +190,9 @@ public class TARDISTerminalListener implements Listener {
                 int id = rst.getTardis_id();
                 HashMap<String, Object> wheret = new HashMap<String, Object>();
                 wheret.put("tardis_id", id);
-                ResultSetTardis rs = new ResultSetTardis(plugin, wheret, "", false);
-                if (rs.resultSet()) {
-                    terminalUsers.put(name, rs.getCurrent());
-                    terminalDirection.put(name, rs.getDirection());
+                ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wheret);
+                if (rsc.resultSet()) {
+                    terminalUsers.put(name, rsc);
                     terminalIDs.put(name, id);
                 }
             }
@@ -296,7 +300,7 @@ public class TARDISTerminalListener implements Listener {
     }
 
     private void setCurrent(Inventory inv, Player p, int slot) {
-        String[] current = terminalUsers.get(p.getName()).split(":");
+        String current = terminalUsers.get(p.getName()).getWorld().getName();
         int[] slots = new int[]{36, 38, 40, 42};
         for (int i : slots) {
             List<String> lore = null;
@@ -306,18 +310,18 @@ public class TARDISTerminalListener implements Listener {
                 switch (slot) {
                     case 38:
                         // get a normal world
-                        lore = Arrays.asList(new String[]{getWorld("NORMAL", current[0])});
+                        lore = Arrays.asList(new String[]{getWorld("NORMAL", current)});
                         break;
                     case 40:
                         // get a nether world
-                        lore = Arrays.asList(new String[]{getWorld("NETHER", current[0])});
+                        lore = Arrays.asList(new String[]{getWorld("NETHER", current)});
                         break;
                     case 42:
                         // get an end world
-                        lore = Arrays.asList(new String[]{getWorld("THE_END", current[0])});
+                        lore = Arrays.asList(new String[]{getWorld("THE_END", current)});
                         break;
                     default:
-                        lore = Arrays.asList(new String[]{current[0]});
+                        lore = Arrays.asList(new String[]{current});
                         break;
                 }
             }
@@ -397,8 +401,7 @@ public class TARDISTerminalListener implements Listener {
         int slotx = getValue(16, getSlot(inv, 10, 16), true, name) * slotm;
         int slotz = getValue(25, getSlot(inv, 19, 25), true, name) * slotm;
         List<String> lore = new ArrayList<String>();
-        String[] current = terminalUsers.get(name).split(":");
-        TARDISConstants.COMPASS d = terminalDirection.get(name);
+        TARDISConstants.COMPASS d = terminalUsers.get(name).getDirection();
         // what kind of world is it?
         Environment e;
         int[] slots = new int[]{36, 38, 40, 42};
@@ -412,10 +415,10 @@ public class TARDISTerminalListener implements Listener {
                     e = w.getEnvironment();
                     TARDISTimeTravel tt = new TARDISTimeTravel(plugin);
                     TARDISPluginRespect respect = new TARDISPluginRespect(plugin);
-                    if (world.equals(current[0])) {
+                    if (world.equals(terminalUsers.get(name).getWorld().getName())) {
                         // add current co-ords
-                        slotx += plugin.utils.parseNum(current[1]);
-                        slotz += plugin.utils.parseNum(current[3]);
+                        slotx += terminalUsers.get(name).getX();
+                        slotz += terminalUsers.get(name).getZ();
                     }
                     String loc_str = world + ":" + slotx + ":" + slotz;
                     switch (e) {
@@ -426,7 +429,7 @@ public class TARDISTerminalListener implements Listener {
                                 int[] estart = tt.getStartLocation(loc, d);
                                 int esafe = tt.safeLocation(estart[0], endy, estart[2], estart[1], estart[3], w, d);
                                 if (esafe == 0) {
-                                    String save = world + ":" + slotx + ":" + endy + ":" + slotz + ":" + d.toString() + ":false";
+                                    String save = world + ":" + slotx + ":" + endy + ":" + slotz;
                                     if (respect.getRespect(p, new Location(w, slotx, endy, slotz), false)) {
                                         terminalDestination.put(name, save);
                                         lore.add(save);
@@ -447,7 +450,7 @@ public class TARDISTerminalListener implements Listener {
                             break;
                         case NETHER:
                             if (tt.safeNether(w, slotx, slotz, d, p)) {
-                                String save = world + ":" + slotx + ":" + getHighestNetherBlock(w, slotx, slotz) + ":" + slotz + ":" + d.toString() + ":false";
+                                String save = world + ":" + slotx + ":" + getHighestNetherBlock(w, slotx, slotz) + ":" + slotz;
                                 terminalDestination.put(name, save);
                                 lore.add(save);
                                 lore.add("is a valid destination!");
@@ -461,7 +464,6 @@ public class TARDISTerminalListener implements Listener {
                             int[] start = tt.getStartLocation(loc, d);
                             int starty = w.getHighestBlockYAt(slotx, slotz);
                             int safe;
-                            String data5 = "false";
                             // check submarine
                             ItemMeta subim = inv.getItem(44).getItemMeta();
                             loc.setY(starty);
@@ -470,7 +472,7 @@ public class TARDISTerminalListener implements Listener {
                                 if (subloc != null) {
                                     safe = 0;
                                     starty = subloc.getBlockY();
-                                    data5 = "true";
+                                    terminalSub.put(name, true);
                                     plugin.trackSubmarine.add(Integer.valueOf(terminalIDs.get(name)));
                                 } else {
                                     safe = 1;
@@ -482,7 +484,7 @@ public class TARDISTerminalListener implements Listener {
                                 }
                             }
                             if (safe == 0) {
-                                String save = world + ":" + slotx + ":" + starty + ":" + slotz + ":" + d.toString() + ":" + data5;
+                                String save = world + ":" + slotx + ":" + starty + ":" + slotz;
                                 if (respect.getRespect(p, new Location(w, slotx, starty, slotz), false)) {
                                     terminalDestination.put(name, save);
                                     lore.add(save);
@@ -536,14 +538,14 @@ public class TARDISTerminalListener implements Listener {
                 if (terminalUsers.containsKey(n)) {
                     terminalUsers.remove(n);
                 }
-                if (terminalDirection.containsKey(n)) {
-                    terminalDirection.remove(n);
-                }
                 if (terminalStep.containsKey(n)) {
                     terminalStep.remove(n);
                 }
                 if (terminalDestination.containsKey(n)) {
                     terminalDestination.remove(n);
+                }
+                if (terminalSub.containsKey(n)) {
+                    terminalSub.remove(n);
                 }
                 p.closeInventory();
             }

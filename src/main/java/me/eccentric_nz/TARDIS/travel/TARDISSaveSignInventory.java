@@ -22,6 +22,7 @@ import java.util.HashMap;
 import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.ResultSetDestinations;
+import me.eccentric_nz.TARDIS.database.ResultSetHomeLocation;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
@@ -38,13 +39,11 @@ public class TARDISSaveSignInventory {
     private ItemStack[] terminal;
     private List<Integer> ids = new ArrayList<Integer>();
     int id;
-    String home;
 
-    public TARDISSaveSignInventory(TARDIS plugin, int id, String home) {
+    public TARDISSaveSignInventory(TARDIS plugin, int id) {
         ids.addAll(Arrays.asList(new Integer[]{1, 2, 5, 7, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 29, 35, 41, 42, 45, 46, 47, 48, 49, 52, 56, 57, 58, 61, 73, 79, 80, 81, 82, 84, 86, 87, 88, 89, 98, 99, 100, 103, 110, 112, 118, 121, 123, 129, 133, 153, 155}));
         this.plugin = plugin;
         this.id = id;
-        this.home = home;
         this.terminal = getItemStack();
     }
 
@@ -56,20 +55,24 @@ public class TARDISSaveSignInventory {
     private ItemStack[] getItemStack() {
         List<ItemStack> dests = new ArrayList<ItemStack>();
         // home stack
-        String[] hh = home.split(":");
         ItemStack his = new ItemStack(ids.get(0), 1);
         ItemMeta him = his.getItemMeta();
-        him.setDisplayName("Home");
         List<String> hlore = new ArrayList<String>();
-        hlore.add(hh[0]);
-        hlore.add(hh[1]);
-        hlore.add(hh[2]);
-        hlore.add(hh[3]);
-        if (hh.length > 4) {
-            hlore.add(hh[4]);
-        }
-        if (hh.length > 5) {
-            hlore.add(hh[5]);
+        HashMap<String, Object> wherehl = new HashMap<String, Object>();
+        wherehl.put("tardis_id", id);
+        ResultSetHomeLocation rsh = new ResultSetHomeLocation(plugin, wherehl);
+        if (rsh.resultSet()) {
+            him.setDisplayName("Home");
+            hlore.add(rsh.getWorld().getName());
+            hlore.add("" + rsh.getX());
+            hlore.add("" + rsh.getY());
+            hlore.add("" + rsh.getZ());
+            hlore.add(rsh.getDirection().toString());
+            if (rsh.isSubmarine()) {
+                hlore.add("true");
+            }
+        } else {
+            hlore.add("Not found!");
         }
         him.setLore(hlore);
         his.setItemMeta(him);

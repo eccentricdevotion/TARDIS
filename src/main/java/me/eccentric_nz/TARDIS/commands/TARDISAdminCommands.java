@@ -31,6 +31,7 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetCount;
+import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetDoors;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
@@ -245,7 +246,14 @@ public class TARDISAdminCommands implements CommandExecutor {
                             try {
                                 BufferedWriter bw = new BufferedWriter(new FileWriter(file, false));
                                 for (HashMap<String, String> map : data) {
-                                    String line = "Timelord: " + map.get("owner") + ", Location: " + map.get("current");
+                                    HashMap<String, Object> wherecl = new HashMap<String, Object>();
+                                    wherecl.put("tardis_id", plugin.utils.parseNum(map.get("tardis_id")));
+                                    ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
+                                    if (!rsc.resultSet()) {
+                                        sender.sendMessage(plugin.pluginName + "Could not get current TARDIS location!");
+                                        return true;
+                                    }
+                                    String line = "Timelord: " + map.get("owner") + ", Location: " + rsc.getWorld().getName() + ":" + rsc.getX() + ":" + rsc.getY() + ":" + rsc.getZ();
                                     bw.write(line);
                                     bw.newLine();
                                 }
@@ -270,7 +278,14 @@ public class TARDISAdminCommands implements CommandExecutor {
                             sender.sendMessage(plugin.pluginName + "TARDIS locations.");
                             ArrayList<HashMap<String, String>> data = rsl.getData();
                             for (HashMap<String, String> map : data) {
-                                sender.sendMessage("Timelord: " + map.get("owner") + ", Location: " + map.get("current"));
+                                HashMap<String, Object> wherecl = new HashMap<String, Object>();
+                                wherecl.put("tardis_id", plugin.utils.parseNum(map.get("tardis_id")));
+                                ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
+                                if (!rsc.resultSet()) {
+                                    sender.sendMessage(plugin.pluginName + "Could not get current TARDIS location!");
+                                    return true;
+                                }
+                                sender.sendMessage("Timelord: " + map.get("owner") + ", Location: " + rsc.getWorld().getName() + ":" + rsc.getX() + ":" + rsc.getY() + ":" + rsc.getZ());
                             }
                             sender.sendMessage(plugin.pluginName + "To see more locations, type: /tardisadmin list 2,  /tardisadmin list 3 etc.");
                         } else {
@@ -525,9 +540,7 @@ public class TARDISAdminCommands implements CommandExecutor {
                     ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
                     if (rs.resultSet()) {
                         int id = rs.getTardis_id();
-                        String currentLoc = rs.getCurrent();
                         TARDISConstants.SCHEMATIC schm = rs.getSchematic();
-                        TARDISConstants.COMPASS d = rs.getDirection();
                         boolean cham = rs.isChamele_on();
                         String chunkLoc = rs.getChunk();
                         String[] cdata = chunkLoc.split(":");
@@ -559,7 +572,15 @@ public class TARDISAdminCommands implements CommandExecutor {
                             qf.doDelete("travellers", whered);
                         }
                         // get the current location
-                        Location bb_loc = plugin.utils.getLocationFromDB(currentLoc, 0, 0);
+                        Location bb_loc = null;
+                        TARDISConstants.COMPASS d = TARDISConstants.COMPASS.EAST;
+                        HashMap<String, Object> wherecl = new HashMap<String, Object>();
+                        wherecl.put("tardis_id", id);
+                        ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
+                        if (rsc.resultSet()) {
+                            bb_loc = new Location(rsc.getWorld(), rsc.getX(), rsc.getY(), rsc.getZ());
+                            d = rsc.getDirection();
+                        }
                         if (bb_loc == null) {
                             sender.sendMessage(plugin.pluginName + "Could not get the location of the TARDIS!");
                             return true;

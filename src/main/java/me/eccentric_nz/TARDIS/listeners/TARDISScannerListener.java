@@ -22,6 +22,8 @@ import java.util.List;
 import java.util.Map;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
+import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
+import me.eccentric_nz.TARDIS.database.ResultSetNextLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import org.bukkit.Effect;
 import org.bukkit.Location;
@@ -147,16 +149,30 @@ public class TARDISScannerListener implements Listener {
                             w.playEffect(b, Effect.BOW_FIRE, 0);
                         }
                     }
-                    String policebox;
+                    Location scan_loc;
                     String whereisit;
+                    TARDISConstants.COMPASS tardisDirection;
+                    HashMap<String, Object> wherenl = new HashMap<String, Object>();
+                    wherenl.put("tardis_id", id);
                     if (plugin.tardisHasDestination.containsKey(Integer.valueOf(id))) {
-                        policebox = rs.getSave();
+                        ResultSetNextLocation rsn = new ResultSetNextLocation(plugin, wherenl);
+                        if (!rsn.resultSet()) {
+                            player.sendMessage(plugin.pluginName + "Could not get TARDIS's next destination!");
+                            return;
+                        }
+                        scan_loc = new Location(rsn.getWorld(), rsn.getX(), rsn.getY(), rsn.getZ());
+                        tardisDirection = rsn.getDirection();
                         whereisit = "next destination";
                     } else {
-                        policebox = rs.getCurrent();
+                        ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherenl);
+                        if (!rsc.resultSet()) {
+                            player.sendMessage(plugin.pluginName + "Could not get TARDIS's current destination!");
+                            return;
+                        }
+                        scan_loc = new Location(rsc.getWorld(), rsc.getX(), rsc.getY(), rsc.getZ());
+                        tardisDirection = rsc.getDirection();
                         whereisit = "current location";
                     }
-                    Location scan_loc = plugin.utils.getLocationFromDB(policebox, 0, 0);
                     // record nearby entities
                     HashMap<EntityType, Integer> scannedentities = new HashMap<EntityType, Integer>();
                     List<String> playernames = new ArrayList<String>();
@@ -180,8 +196,6 @@ public class TARDISScannerListener implements Listener {
                     }
                     long time = scan_loc.getWorld().getTime();
                     String daynight = getTime(time);
-                    //get TARDIS direction
-                    TARDISConstants.COMPASS tardisDirection = rs.getDirection();
                     // message the player
                     player.sendMessage(plugin.pluginName + "Scanner results for the TARDIS's " + whereisit);
                     player.sendMessage("World: " + scan_loc.getWorld().getName());

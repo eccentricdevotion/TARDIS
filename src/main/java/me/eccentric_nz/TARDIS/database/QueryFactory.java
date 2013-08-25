@@ -322,4 +322,45 @@ public class QueryFactory {
             }
         }
     }
+
+    public void insertLocations(HashMap<String, Object> data) {
+        String[] tables = {"homes", "current", "next", "back"};
+        PreparedStatement ps = null;
+        String fields;
+        String questions;
+        StringBuilder sbf = new StringBuilder();
+        StringBuilder sbq = new StringBuilder();
+        for (Map.Entry<String, Object> entry : data.entrySet()) {
+            sbf.append(entry.getKey()).append(",");
+            sbq.append("?,");
+        }
+        fields = sbf.toString().substring(0, sbf.length() - 1);
+        questions = sbq.toString().substring(0, sbq.length() - 1);
+        try {
+            for (String s : tables) {
+                ps = connection.prepareStatement("INSERT INTO " + s + " (" + fields + ") VALUES (" + questions + ")");
+                int i = 1;
+                for (Map.Entry<String, Object> entry : data.entrySet()) {
+                    if (entry.getValue().getClass().equals(String.class)) {
+                        ps.setString(i, entry.getValue().toString());
+                    } else {
+                        ps.setInt(i, plugin.utils.parseNum(entry.getValue().toString()));
+                    }
+                    i++;
+                }
+                ps.executeUpdate();
+            }
+            data.clear();
+        } catch (SQLException e) {
+            plugin.debug("Insert error for starting locations! " + e.getMessage());
+        } finally {
+            try {
+                if (ps != null) {
+                    ps.close();
+                }
+            } catch (Exception e) {
+                plugin.debug("Error closing location tables! " + e.getMessage());
+            }
+        }
+    }
 }

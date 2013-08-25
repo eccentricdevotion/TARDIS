@@ -18,6 +18,7 @@ package me.eccentric_nz.TARDIS.listeners;
 
 import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
@@ -52,10 +53,14 @@ public class TARDISHotbarListener implements Listener {
                 where.put("owner", player.getName());
                 ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
                 if (rs.resultSet()) {
-                    Location pb = plugin.utils.getLocationFromDB(rs.getCurrent(), 0F, 0F);
-                    if (pb != null) {
-                        player.setCompassTarget(pb);
+                    HashMap<String, Object> wherecl = new HashMap<String, Object>();
+                    wherecl.put("tardis_id", rs.getTardis_id());
+                    ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
+                    if (!rsc.resultSet()) {
+                        return;
                     }
+                    Location pb = new Location(rsc.getWorld(), rsc.getX(), rsc.getY(), rsc.getZ());
+                    player.setCompassTarget(pb);
                 }
             } else {
                 Location bedspawn = player.getBedSpawnLocation();

@@ -21,7 +21,7 @@ import java.util.HashMap;
 import java.util.Set;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.ResultSetAreas;
-import me.eccentric_nz.TARDIS.database.ResultSetSave;
+import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
@@ -159,9 +159,12 @@ public class TARDISArea {
             String wStr = rsa.getWorld();
             boolean chk = false;
             while (chk == false) {
-                String queryLoc = wStr + ":" + x + ":%:" + z + "%";
-                ResultSetSave rs = new ResultSetSave(plugin, queryLoc);
-                if (rs.resultSet()) {
+                HashMap<String, Object> wherec = new HashMap<String, Object>();
+                wherec.put("world", wStr);
+                wherec.put("x", x);
+                wherec.put("z", z);
+                ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherec);
+                if (rsc.resultSet()) {
                     if (x + 5 <= maxx) {
                         x += 5;
                     } else {

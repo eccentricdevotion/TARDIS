@@ -24,44 +24,48 @@ import java.util.HashMap;
 import java.util.Map;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
+import org.bukkit.World;
 
 /**
  * Many facts, figures, and formulas are contained within the Matrix,
- * including... everything about the construction of the TARDIS itself.
+ * including... a list of locations the TARDIS can travel to.
  *
  * @author eccentric_nz
  */
-public class ResultSetDeleteTardis {
+public class ResultSetNextLocation {
 
     private TARDISDatabase service = TARDISDatabase.getInstance();
     private Connection connection = service.getConnection();
     private TARDIS plugin;
     private HashMap<String, Object> where;
+    private int next_id;
     private int tardis_id;
-    private String owner;
-    private String chunk;
+    private World world;
+    private int x;
+    private int y;
+    private int z;
     private TARDISConstants.COMPASS direction;
-    private TARDISConstants.SCHEMATIC schematic;
-    private String current;
-    private boolean hidden;
+    private boolean submarine;
 
     /**
      * Creates a class instance that can be used to retrieve an SQL ResultSet
-     * from the tardis table.
+     * from the next locations table.
      *
      * @param plugin an instance of the main class.
      * @param where a HashMap<String, Object> of table fields and values to
      * refine the search.
+     * @param multiple a boolean indicating whether multiple rows should be
+     * fetched
      */
-    public ResultSetDeleteTardis(TARDIS plugin, HashMap<String, Object> where) {
+    public ResultSetNextLocation(TARDIS plugin, HashMap<String, Object> where) {
         this.plugin = plugin;
         this.where = where;
     }
 
     /**
-     * Retrieves an SQL ResultSet from the tardis table. This method builds an
-     * SQL query string from the parameters supplied and then executes the
-     * query. Use the getters to retrieve the results.
+     * Retrieves an SQL ResultSet from the destinations table. This method
+     * builds an SQL query string from the parameters supplied and then executes
+     * the query. Use the getters to retrieve the results.
      *
      * @return true or false depending on whether any data matches the query
      */
@@ -72,15 +76,11 @@ public class ResultSetDeleteTardis {
         if (where != null) {
             StringBuilder sbw = new StringBuilder();
             for (Map.Entry<String, Object> entry : where.entrySet()) {
-                if (entry.getKey().equals("current")) {
-                    sbw.append(entry.getKey()).append(" LIKE ? AND ");
-                } else {
-                    sbw.append(entry.getKey()).append(" = ? AND ");
-                }
+                sbw.append(entry.getKey()).append(" = ? AND ");
             }
             wheres = " WHERE " + sbw.toString().substring(0, sbw.length() - 5);
         }
-        String query = "SELECT * FROM tardis" + wheres;
+        String query = "SELECT * FROM next" + wheres;
         try {
             statement = connection.prepareStatement(query);
             if (where != null) {
@@ -98,19 +98,20 @@ public class ResultSetDeleteTardis {
             rs = statement.executeQuery();
             if (rs.isBeforeFirst()) {
                 while (rs.next()) {
+                    this.next_id = rs.getInt("next_id");
                     this.tardis_id = rs.getInt("tardis_id");
-                    this.owner = rs.getString("owner");
-                    this.chunk = rs.getString("chunk");
-                    this.direction = (!rs.getString("direction").isEmpty()) ? TARDISConstants.COMPASS.valueOf(rs.getString("direction")) : TARDISConstants.COMPASS.EAST;
-                    this.schematic = TARDISConstants.SCHEMATIC.valueOf(rs.getString("size"));
-                    this.current = rs.getString("current");
-                    this.hidden = rs.getBoolean("hidden");
+                    this.world = plugin.getServer().getWorld(rs.getString("world"));
+                    this.x = rs.getInt("x");
+                    this.y = rs.getInt("y");
+                    this.z = rs.getInt("z");
+                    this.direction = TARDISConstants.COMPASS.valueOf(rs.getString("direction"));
+                    this.submarine = rs.getBoolean("submarine");
                 }
             } else {
                 return false;
             }
         } catch (SQLException e) {
-            plugin.debug("ResultSet error for tardis (delete) table! " + e.getMessage());
+            plugin.debug("ResultSet error for destinations table! " + e.getMessage());
             return false;
         } finally {
             try {
@@ -121,37 +122,41 @@ public class ResultSetDeleteTardis {
                     statement.close();
                 }
             } catch (Exception e) {
-                plugin.debug("Error closing tardis (delete) table! " + e.getMessage());
+                plugin.debug("Error closing destinations table! " + e.getMessage());
             }
         }
         return true;
+    }
+
+    public int getNext_id() {
+        return next_id;
     }
 
     public int getTardis_id() {
         return tardis_id;
     }
 
-    public String getOwner() {
-        return owner;
+    public World getWorld() {
+        return world;
     }
 
-    public String getChunk() {
-        return chunk;
+    public int getX() {
+        return x;
+    }
+
+    public int getY() {
+        return y;
+    }
+
+    public int getZ() {
+        return z;
     }
 
     public TARDISConstants.COMPASS getDirection() {
         return direction;
     }
 
-    public TARDISConstants.SCHEMATIC getSchematic() {
-        return schematic;
-    }
-
-    public String getCurrent() {
-        return current;
-    }
-
-    public boolean isHidden() {
-        return hidden;
+    public boolean isSubmarine() {
+        return submarine;
     }
 }
