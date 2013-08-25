@@ -204,20 +204,24 @@ public class TARDISTimeTravel {
                             HashMap<String, Object> wheres = new HashMap<String, Object>();
                             wheres.put("player", p.getName());
                             ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, wheres);
-                            if (rsp.resultSet() && rsp.isSubmarine_on() && currentBlock.getBiome().equals(Biome.OCEAN)) {
-                                // get submarine location
-                                p.sendMessage(plugin.pluginName + "Searching for underwater location...");
-                                Location underwater = submarine(currentBlock, d);
-                                if (underwater != null) {
-                                    // get TARDIS id
-                                    HashMap<String, Object> wherep = new HashMap<String, Object>();
-                                    wherep.put("player", p.getName());
-                                    ResultSetTravellers rst = new ResultSetTravellers(plugin, wherep, false);
-                                    if (rst.resultSet()) {
-                                        plugin.trackSubmarine.add(Integer.valueOf(rst.getTardis_id()));
+                            if (rsp.resultSet()) {
+                                if (rsp.isSubmarine_on() && currentBlock.getBiome().equals(Biome.OCEAN)) {
+                                    // get submarine location
+                                    p.sendMessage(plugin.pluginName + "Searching for underwater location...");
+                                    Location underwater = submarine(currentBlock, d);
+                                    if (underwater != null) {
+                                        // get TARDIS id
+                                        HashMap<String, Object> wherep = new HashMap<String, Object>();
+                                        wherep.put("player", p.getName());
+                                        ResultSetTravellers rst = new ResultSetTravellers(plugin, wherep, false);
+                                        if (rst.resultSet()) {
+                                            plugin.trackSubmarine.add(Integer.valueOf(rst.getTardis_id()));
+                                        }
+                                        return underwater;
+                                    } else {
+                                        count = 1;
                                     }
-                                    return underwater;
-                                } else {
+                                } else if (!rsp.isSubmarine_on()) {
                                     count = 1;
                                 }
                             } else {
