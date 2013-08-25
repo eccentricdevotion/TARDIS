@@ -304,7 +304,7 @@ public class TARDIS extends JavaPlugin {
                 alwaysNight.keepNight();
             }
         }
-        new ResultSetPoliceBox(this).loadChunks();
+        // new ResultSetPoliceBox(this).loadChunks();
         TARDISBlockLoader bl = new TARDISBlockLoader(this);
         bl.loadProtectBlocks();
         bl.loadGravityWells();

@@ -21,9 +21,14 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.achievement.TARDISBook;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetAchievements;
+import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
+import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.utility.TARDISTexturePackChanger;
+import org.bukkit.Chunk;
+import org.bukkit.Location;
+import org.bukkit.World;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -96,6 +101,25 @@ public class TARDISJoinListener implements Listener {
                             }
                         }, 50L);
                     }
+                }
+            }
+        }
+        // load and remember the players Police Box chunk
+        HashMap<String, Object> wherep = new HashMap<String, Object>();
+        wherep.put("owner", playerNameStr);
+        ResultSetTardis rs = new ResultSetTardis(plugin, wherep, "", false);
+        if (rs.resultSet()) {
+            HashMap<String, Object> wherecl = new HashMap<String, Object>();
+            wherecl.put("tardis_id", rs.getTardis_id());
+            ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
+            if (rsc.resultSet()) {
+                World w = rsc.getWorld();
+                if (w != null) {
+                    Chunk chunk = w.getChunkAt(new Location(w, rsc.getX(), rsc.getY(), rsc.getZ()));
+                    while (!chunk.isLoaded()) {
+                        chunk.load();
+                    }
+                    plugin.tardisChunkList.add(chunk);
                 }
             }
         }
