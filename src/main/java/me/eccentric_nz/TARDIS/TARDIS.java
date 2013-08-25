@@ -48,7 +48,6 @@ import me.eccentric_nz.TARDIS.files.TARDISMakeTardisCSV;
 import me.eccentric_nz.TARDIS.files.TARDISUpdateChecker;
 import me.eccentric_nz.TARDIS.info.TARDISInfoMenu;
 import me.eccentric_nz.TARDIS.ARS.TARDISARSListener;
-import me.eccentric_nz.TARDIS.database.ResultSetPoliceBox;
 import me.eccentric_nz.TARDIS.database.TARDISLocationsConverter;
 import me.eccentric_nz.TARDIS.listeners.TARDISAdminMenuListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISAnvilListener;
@@ -80,6 +79,7 @@ import me.eccentric_nz.TARDIS.listeners.TARDISKeyboardListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISLightningListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISMinecartListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISNPCListener;
+import me.eccentric_nz.TARDIS.listeners.TARDISQuitListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISRecipeListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISRoomSeeder;
 import me.eccentric_nz.TARDIS.listeners.TARDISSaveSignListener;
@@ -422,6 +422,7 @@ public class TARDIS extends JavaPlugin {
         pm.registerEvents(new TARDISScannerListener(this), this);
         pm.registerEvents(new TARDISTimeLordDeathListener(this), this);
         pm.registerEvents(new TARDISJoinListener(this), this);
+        pm.registerEvents(new TARDISQuitListener(this), this);
         pm.registerEvents(new TARDISKeyboardListener(this), this);
         if (bukkitversion.compareTo(preIMversion) >= 0) {
             pm.registerEvents(new TARDISTerminalListener(this), this);
