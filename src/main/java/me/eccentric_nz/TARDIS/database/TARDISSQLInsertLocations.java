@@ -29,7 +29,6 @@ import me.eccentric_nz.TARDIS.TARDIS;
  *
  * @param table the database table name to insert the data into.
  * @param data a HashMap<String, Object> of table fields and values to insert.
- * @return the number of records that were inserted
  * @author eccentric_nz
  */
 public class TARDISSQLInsertLocations implements Runnable {

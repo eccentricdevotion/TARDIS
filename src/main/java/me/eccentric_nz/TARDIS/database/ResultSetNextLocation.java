@@ -54,8 +54,6 @@ public class ResultSetNextLocation {
      * @param plugin an instance of the main class.
      * @param where a HashMap<String, Object> of table fields and values to
      * refine the search.
-     * @param multiple a boolean indicating whether multiple rows should be
-     * fetched
      */
     public ResultSetNextLocation(TARDIS plugin, HashMap<String, Object> where) {
         this.plugin = plugin;

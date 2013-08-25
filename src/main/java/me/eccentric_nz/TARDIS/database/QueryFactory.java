@@ -56,8 +56,6 @@ public class QueryFactory {
      * @param data a HashMap<String, Object> of table fields and values update.
      * @param where a HashMap<String, Object> of table fields and values to
      * select the records to update.
-     * @return true or false depending on whether the database update was
-     * successful
      */
     public void doUpdate(String table, HashMap<String, Object> data, HashMap<String, Object> where) {
         TARDISSQLUpdate update = new TARDISSQLUpdate(plugin, table, data, where);
@@ -90,8 +88,6 @@ public class QueryFactory {
      * @param where a HashMap<String, Object> of table fields and values to
      * select the records to alter.
      * @param p the player who receives the success message.
-     * @return true or false depending on whether the database update was
-     * successful
      */
     public void alterEnergyLevel(String table, int amount, HashMap<String, Object> where, Player p) {
         TARDISSQLAlterEnergy alter = new TARDISSQLAlterEnergy(plugin, table, amount, where, p);
