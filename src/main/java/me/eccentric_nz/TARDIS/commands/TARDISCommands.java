@@ -661,8 +661,8 @@ public class TARDISCommands implements CommandExecutor {
                                     final Location oldSave = new Location(w, rsc.getX(), rsc.getY(), rsc.getZ());
                                     QueryFactory qf = new QueryFactory(plugin);
                                     HashMap<String, Object> tid = new HashMap<String, Object>();
-                                    HashMap<String, Object> set = new HashMap<String, Object>();
                                     tid.put("tardis_id", id);
+                                    HashMap<String, Object> set = new HashMap<String, Object>();
                                     set.put("world", eyeLocation.getWorld().getName());
                                     set.put("x", eyeLocation.getBlockX());
                                     set.put("y", eyeLocation.getBlockY());
@@ -675,7 +675,18 @@ public class TARDISCommands implements CommandExecutor {
                                         ttid.put("tardis_id", id);
                                         qf.doUpdate("tardis", sett, ttid);
                                     }
-                                    qf.doUpdate("next", set, tid);
+                                    qf.doUpdate("current", set, tid);
+                                    // set fast return location
+                                    HashMap<String, Object> bid = new HashMap<String, Object>();
+                                    bid.put("tardis_id", id);
+                                    HashMap<String, Object> bset = new HashMap<String, Object>();
+                                    bset.put("world", rsc.getWorld().getName());
+                                    bset.put("x", rsc.getX());
+                                    bset.put("y", rsc.getY());
+                                    bset.put("z", rsc.getZ());
+                                    bset.put("direction", rsc.getDirection().toString());
+                                    bset.put("submarine", rsc.isSubmarine());
+                                    qf.doUpdate("back", bset, bid);
                                     sender.sendMessage(plugin.pluginName + "The TARDIS is coming...");
                                     final boolean mat = plugin.getConfig().getBoolean("materialise");
                                     long delay = (mat) ? 1L : 180L;
@@ -951,7 +962,6 @@ public class TARDISCommands implements CommandExecutor {
                             return true;
                         }
                         int level = rs.getArtron_level();
-                        //save = rs.getCurrent();
                         if (plugin.tardisMaterialising.contains(id) || plugin.tardisDematerialising.contains(id)) {
                             sender.sendMessage(plugin.pluginName + "You cannot do that while the TARDIS is materialising!");
                             return true;

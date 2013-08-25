@@ -116,6 +116,7 @@ public class TARDISAchievementFactory {
                 seta.put("player", player.getName());
                 seta.put("name", name);
                 seta.put("amount", obj);
+                seta.put("completed", 0);
                 qf.doInsert("achievements", seta);
             }
         }

@@ -183,12 +183,10 @@ public class TARDISStattenheimListener implements Listener {
                     if (rsc.getWorld() != null) {
                         final Location oldSave = new Location(rsc.getWorld(), rsc.getX(), rsc.getY(), rsc.getZ());
                         QueryFactory qf = new QueryFactory(plugin);
-                        HashMap<String, Object> cid = new HashMap<String, Object>();
-                        HashMap<String, Object> cset = new HashMap<String, Object>();
-                        HashMap<String, Object> bid = new HashMap<String, Object>();
-                        HashMap<String, Object> bset = new HashMap<String, Object>();
                         // set current location
+                        HashMap<String, Object> cid = new HashMap<String, Object>();
                         cid.put("tardis_id", id);
+                        HashMap<String, Object> cset = new HashMap<String, Object>();
                         cset.put("world", remoteLocation.getWorld().getName());
                         cset.put("x", remoteLocation.getBlockX());
                         cset.put("y", remoteLocation.getBlockY());
@@ -196,7 +194,9 @@ public class TARDISStattenheimListener implements Listener {
                         cset.put("submarine", (sub) ? 1 : 0);
                         qf.doUpdate("current", cset, cid);
                         // set fast return location
+                        HashMap<String, Object> bid = new HashMap<String, Object>();
                         bid.put("tardis_id", id);
+                        HashMap<String, Object> bset = new HashMap<String, Object>();
                         bset.put("world", rsc.getWorld().getName());
                         bset.put("x", rsc.getX());
                         bset.put("y", rsc.getY());
