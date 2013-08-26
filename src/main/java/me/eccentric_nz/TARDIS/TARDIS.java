@@ -84,6 +84,7 @@ import me.eccentric_nz.TARDIS.listeners.TARDISRecipeListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISRoomSeeder;
 import me.eccentric_nz.TARDIS.listeners.TARDISSaveSignListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISScannerListener;
+import me.eccentric_nz.TARDIS.listeners.TARDISSeedBlockListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISSignListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISStattenheimListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISTeleportListener;
@@ -330,6 +331,7 @@ public class TARDIS extends JavaPlugin {
             r.sonic();
             r.stattenheim();
             r.stattenheimCircuit();
+            r.tardisSeed();
         }
         presets = new TARDISChameleonPreset();
         presets.makePresets();
@@ -435,6 +437,7 @@ public class TARDIS extends JavaPlugin {
             pm.registerEvents(new TARDISAdminMenuListener(this), this);
             pm.registerEvents(new TARDISTemporalLocatorListener(this), this);
             pm.registerEvents(new TARDISRecipeListener(this), this);
+            pm.registerEvents(new TARDISSeedBlockListener(this), this);
         }
         if (getNPCManager()) {
             pm.registerEvents(new TARDISNPCListener(this), this);

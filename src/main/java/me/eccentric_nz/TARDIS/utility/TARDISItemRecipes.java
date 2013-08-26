@@ -139,4 +139,21 @@ public class TARDISItemRecipes {
         plugin.getServer().addRecipe(sonic);
         return sonic;
     }
+
+    public ShapedRecipe tardisSeed() {
+        ItemStack is = new ItemStack(Material.IRON_BLOCK, 1);
+        ItemMeta im = is.getItemMeta();
+        im.setDisplayName("§6TARDIS Seed Block");
+        im.setLore(Arrays.asList(new String[]{"BUDGET", "Wool", "Green"}));
+        is.setItemMeta(im);
+        ShapedRecipe seed = new ShapedRecipe(is);
+        seed.shape("R  ", "L K", "I W");
+        seed.setIngredient('I', Material.IRON_BLOCK);
+        seed.setIngredient('W', Material.WOOL);
+        seed.setIngredient('L', Material.LAPIS_BLOCK);
+        seed.setIngredient('K', Material.INK_SACK);
+        seed.setIngredient('R', Material.REDSTONE_TORCH_ON);
+        plugin.getServer().addRecipe(seed);
+        return seed;
+    }
 }
