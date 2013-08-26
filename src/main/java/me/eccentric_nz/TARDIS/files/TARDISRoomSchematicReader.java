@@ -48,7 +48,7 @@ public class TARDISRoomSchematicReader {
     }
     private TARDIS plugin;
     private HashMap<Integer, Integer> blockConversion = new HashMap<Integer, Integer>();
-    private List<Byte> ignoreBlocks = Arrays.asList(new Byte[]{0, 8, 9, 10, 11, 14, 19, 52, 79});
+    private List<Byte> ignoreBlocks = Arrays.asList(new Byte[]{0, 7, 8, 9, 10, 11, 14, 19, 34, 52, 79});
 
     public TARDISRoomSchematicReader(TARDIS plugin) {
         this.plugin = plugin;
