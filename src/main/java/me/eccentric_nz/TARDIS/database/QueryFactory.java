@@ -16,7 +16,12 @@
  */
 package me.eccentric_nz.TARDIS.database;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.HashMap;
+import java.util.Map;
 import me.eccentric_nz.TARDIS.TARDIS;
 import org.bukkit.entity.Player;
 
@@ -28,6 +33,8 @@ import org.bukkit.entity.Player;
 public class QueryFactory {
 
     private TARDIS plugin;
+    TARDISDatabase service = TARDISDatabase.getInstance();
+    Connection connection = service.getConnection();
 
     public QueryFactory(TARDIS plugin) {
         this.plugin = plugin;
@@ -43,9 +50,58 @@ public class QueryFactory {
      * @return the number of records that were inserted
      */
     public int doInsert(String table, HashMap<String, Object> data) {
-        TARDISSQLInsert insert = new TARDISSQLInsert(plugin, table, data);
-        plugin.getServer().getScheduler().runTaskAsynchronously(plugin, insert);
-        return insert.getNum();
+//        TARDISSQLInsert insert = new TARDISSQLInsert(plugin, table, data);
+//        plugin.getServer().getScheduler().runTaskAsynchronously(plugin, insert);
+//        if (table.equals("tardis")) {
+//            plugin.debug("Last Insert ID: " + insert.getNum());
+//        }
+//        return insert.getNum();
+        PreparedStatement ps = null;
+        ResultSet idRS = null;
+        String fields;
+        String questions;
+        StringBuilder sbf = new StringBuilder();
+        StringBuilder sbq = new StringBuilder();
+        for (Map.Entry<String, Object> entry : data.entrySet()) {
+            sbf.append(entry.getKey()).append(",");
+            sbq.append("?,");
+        }
+        fields = sbf.toString().substring(0, sbf.length() - 1);
+        questions = sbq.toString().substring(0, sbq.length() - 1);
+        try {
+            ps = connection.prepareStatement("INSERT INTO " + table + " (" + fields + ") VALUES (" + questions + ")");
+            int i = 1;
+            for (Map.Entry<String, Object> entry : data.entrySet()) {
+                if (entry.getValue().getClass().equals(String.class)) {
+                    ps.setString(i, entry.getValue().toString());
+                } else {
+                    if (entry.getValue().getClass().getName().contains("Double")) {
+                        ps.setDouble(i, Double.parseDouble(entry.getValue().toString()));
+                    } else {
+                        ps.setInt(i, plugin.utils.parseNum(entry.getValue().toString()));
+                    }
+                }
+                i++;
+            }
+            data.clear();
+            ps.executeUpdate();
+            idRS = ps.getGeneratedKeys();
+            return (idRS.next()) ? idRS.getInt(1) : -1;
+        } catch (SQLException e) {
+            plugin.debug("Update error for " + table + "! " + e.getMessage());
+            return -1;
+        } finally {
+            try {
+                if (idRS != null) {
+                    idRS.close();
+                }
+                if (ps != null) {
+                    ps.close();
+                }
+            } catch (Exception e) {
+                plugin.debug("Error closing " + table + "! " + e.getMessage());
+            }
+        }
     }
 
     /**
