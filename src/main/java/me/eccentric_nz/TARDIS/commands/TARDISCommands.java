@@ -42,6 +42,7 @@ import me.eccentric_nz.TARDIS.database.TARDISDatabase;
 import me.eccentric_nz.TARDIS.destroyers.TARDISExterminator;
 import me.eccentric_nz.TARDIS.files.TARDISUpdateChecker;
 import me.eccentric_nz.TARDIS.rooms.TARDISCondenserData;
+import me.eccentric_nz.TARDIS.rooms.TARDISSeedData;
 import me.eccentric_nz.TARDIS.rooms.TARDISWalls;
 import me.eccentric_nz.TARDIS.travel.TARDISPluginRespect;
 import me.eccentric_nz.TARDIS.travel.TARDISTimeTravel;
@@ -380,6 +381,8 @@ public class TARDISCommands implements CommandExecutor {
                     }
                     int id = rs.getTardis_id();
                     int level = rs.getArtron_level();
+                    String chunk = rs.getChunk();
+                    TARDISConstants.SCHEMATIC schm = rs.getSchematic();
                     // check they are in the tardis
                     HashMap<String, Object> wheret = new HashMap<String, Object>();
                     wheret.put("player", player.getName());
@@ -450,6 +453,11 @@ public class TARDISCommands implements CommandExecutor {
                         c_data.setTardis_id(id);
                         plugin.roomCondenserData.put(player.getName(), c_data);
                     }
+                    TARDISSeedData sd = new TARDISSeedData(plugin);
+                    sd.setId(id);
+                    sd.setRoom(room);
+                    sd.setSchematic(schm);
+                    sd.setChunkMinMax(chunk);
                     String message;
                     // if it is a gravity well
                     if (room.equals("GRAVITY") || room.equals("ANTIGRAVITY")) {
@@ -457,7 +465,7 @@ public class TARDISCommands implements CommandExecutor {
                     } else {
                         message = "Place the " + room + " seed block (" + plugin.getRoomsConfig().getString("rooms." + room + ".seed") + ") where the door should be, then hit it with the TARDIS key to start growing your room!";
                     }
-                    plugin.trackRoomSeed.put(player.getName(), room);
+                    plugin.trackRoomSeed.put(player.getName(), sd);
                     player.sendMessage(plugin.pluginName + message);
                     return true;
 

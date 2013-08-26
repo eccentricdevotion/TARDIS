@@ -50,11 +50,11 @@ public enum TARDISARS {
     STABLE(170, "Horse Stable", 2),
     JETTISON(46, "Jettison", 0),
     SLOT(1, "Empty slot", 0),
+    ARS(159, "ARS Console", 0),
     BUDGET(42, "Default Console", 0),
-    STEAMPUNK(173, "Steampunk Console", 0),
     PLANK(22, "Wood Console", 0),
-    TOM(155, "4th Doctor's Console", 0),
-    ARS(159, "ARS Console", 0);
+    STEAMPUNK(173, "Steampunk Console", 0),
+    TOM(155, "4th Doctor's Console", 0);
     private final int id;
     private final String name;
     private final int offset;

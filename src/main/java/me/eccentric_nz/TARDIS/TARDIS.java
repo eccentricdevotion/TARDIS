@@ -93,6 +93,7 @@ import me.eccentric_nz.TARDIS.listeners.TARDISTimeLordDeathListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISUpdateListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISWorldResetListener;
 import me.eccentric_nz.TARDIS.rooms.TARDISCondenserData;
+import me.eccentric_nz.TARDIS.rooms.TARDISSeedData;
 import me.eccentric_nz.TARDIS.thirdparty.MetricsLite;
 import me.eccentric_nz.TARDIS.thirdparty.Version;
 import me.eccentric_nz.TARDIS.travel.TARDISArea;
@@ -202,7 +203,7 @@ public class TARDIS extends JavaPlugin {
     public HashMap<String, String> trackEnd = new HashMap<String, String>();
     public HashMap<String, String> trackPerm = new HashMap<String, String>();
     public HashMap<String, String> trackDest = new HashMap<String, String>();
-    public HashMap<String, String> trackRoomSeed = new HashMap<String, String>();
+    public HashMap<String, TARDISSeedData> trackRoomSeed = new HashMap<String, TARDISSeedData>();
     public HashMap<String, String> trackJettison = new HashMap<String, String>();
     public HashMap<String, String> trackSecondary = new HashMap<String, String>();
     public HashMap<String, Double[]> trackGravity = new HashMap<String, Double[]>();
