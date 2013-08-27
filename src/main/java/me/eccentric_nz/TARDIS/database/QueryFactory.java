@@ -20,6 +20,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.HashMap;
 import java.util.Map;
 import me.eccentric_nz.TARDIS.TARDIS;
@@ -47,15 +48,22 @@ public class QueryFactory {
      * @param table the database table name to insert the data into.
      * @param data a HashMap<String, Object> of table fields and values to
      * insert.
+     */
+    public void doInsert(String table, HashMap<String, Object> data) {
+        TARDISSQLInsert insert = new TARDISSQLInsert(plugin, table, data);
+        plugin.getServer().getScheduler().runTaskAsynchronously(plugin, insert);
+    }
+
+    /**
+     * Inserts data into an SQLite database table. This method builds a prepared
+     * SQL statement from the parameters supplied and then executes the insert.
+     *
+     * @param table the database table name to insert the data into.
+     * @param data a HashMap<String, Object> of table fields and values to
+     * insert.
      * @return the number of records that were inserted
      */
-    public int doInsert(String table, HashMap<String, Object> data) {
-//        TARDISSQLInsert insert = new TARDISSQLInsert(plugin, table, data);
-//        plugin.getServer().getScheduler().runTaskAsynchronously(plugin, insert);
-//        if (table.equals("tardis")) {
-//            plugin.debug("Last Insert ID: " + insert.getNum());
-//        }
-//        return insert.getNum();
+    public int doSyncInsert(String table, HashMap<String, Object> data) {
         PreparedStatement ps = null;
         ResultSet idRS = null;
         String fields;
@@ -125,13 +133,52 @@ public class QueryFactory {
      * @param table the database table name to insert the data into.
      * @param where a HashMap<String, Object> of table fields and values to
      * select the records to delete.
+     */
+    public void doDelete(String table, HashMap<String, Object> where) {
+        TARDISSQLDelete delete = new TARDISSQLDelete(plugin, table, where);
+        plugin.getServer().getScheduler().runTaskAsynchronously(plugin, delete);
+    }
+
+    /**
+     * Deletes rows from an SQLite database table. This method executes the SQL
+     * in a separate thread.
+     *
+     * @param table the database table name to insert the data into.
+     * @param where a HashMap<String, Object> of table fields and values to
+     * select the records to delete.
      * @return true or false depending on whether the data was deleted
      * successfully
      */
-    public boolean doDelete(String table, HashMap<String, Object> where) {
-        TARDISSQLDelete delete = new TARDISSQLDelete(plugin, table, where);
-        plugin.getServer().getScheduler().runTaskAsynchronously(plugin, delete);
-        return delete.success();
+    public boolean doSyncDelete(String table, HashMap<String, Object> where) {
+        Statement statement = null;
+        String values;
+        StringBuilder sbw = new StringBuilder();
+        for (Map.Entry<String, Object> entry : where.entrySet()) {
+            sbw.append(entry.getKey()).append(" = ");
+            if (entry.getValue().getClass().equals(String.class)) {
+                sbw.append("'").append(entry.getValue()).append("' AND ");
+            } else {
+                sbw.append(entry.getValue()).append(" AND ");
+            }
+        }
+        where.clear();
+        values = sbw.toString().substring(0, sbw.length() - 5);
+        String query = "DELETE FROM " + table + " WHERE " + values;
+        try {
+            statement = connection.createStatement();
+            return (statement.executeUpdate(query) > 0);
+        } catch (SQLException e) {
+            plugin.debug("Delete error for " + table + "! " + e.getMessage());
+            return false;
+        } finally {
+            try {
+                if (statement != null) {
+                    statement.close();
+                }
+            } catch (Exception e) {
+                plugin.debug("Error closing " + table + "! " + e.getMessage());
+            }
+        }
     }
 
     /**

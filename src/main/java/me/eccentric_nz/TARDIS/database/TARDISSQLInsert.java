@@ -18,7 +18,6 @@ package me.eccentric_nz.TARDIS.database;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
@@ -37,7 +36,6 @@ public class TARDISSQLInsert implements Runnable {
     private final TARDIS plugin;
     TARDISDatabase service = TARDISDatabase.getInstance();
     Connection connection = service.getConnection();
-    private int num;
     private String table;
     private HashMap<String, Object> data;
 
@@ -50,7 +48,6 @@ public class TARDISSQLInsert implements Runnable {
     @Override
     public void run() {
         PreparedStatement ps = null;
-        ResultSet idRS = null;
         String fields;
         String questions;
         StringBuilder sbf = new StringBuilder();
@@ -77,17 +74,10 @@ public class TARDISSQLInsert implements Runnable {
                 i++;
             }
             data.clear();
-            ps.executeUpdate();
-            idRS = ps.getGeneratedKeys();
-            this.num = (idRS.next()) ? idRS.getInt(1) : -1;
         } catch (SQLException e) {
             plugin.debug("Update error for " + table + "! " + e.getMessage());
-            this.num = -1;
         } finally {
             try {
-                if (idRS != null) {
-                    idRS.close();
-                }
                 if (ps != null) {
                     ps.close();
                 }
@@ -95,9 +85,5 @@ public class TARDISSQLInsert implements Runnable {
                 plugin.debug("Error closing " + table + "! " + e.getMessage());
             }
         }
-    }
-
-    public int getNum() {
-        return num;
     }
 }

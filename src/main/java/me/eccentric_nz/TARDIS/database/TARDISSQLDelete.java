@@ -37,7 +37,6 @@ public class TARDISSQLDelete implements Runnable {
     private final TARDIS plugin;
     TARDISDatabase service = TARDISDatabase.getInstance();
     Connection connection = service.getConnection();
-    private boolean bool;
     private String table;
     private HashMap<String, Object> where;
 
@@ -65,10 +64,8 @@ public class TARDISSQLDelete implements Runnable {
         String query = "DELETE FROM " + table + " WHERE " + values;
         try {
             statement = connection.createStatement();
-            this.bool = (statement.executeUpdate(query) > 0);
         } catch (SQLException e) {
             plugin.debug("Delete error for " + table + "! " + e.getMessage());
-            this.bool = false;
         } finally {
             try {
                 if (statement != null) {
@@ -78,9 +75,5 @@ public class TARDISSQLDelete implements Runnable {
                 plugin.debug("Error closing " + table + "! " + e.getMessage());
             }
         }
-    }
-
-    public boolean success() {
-        return bool;
     }
 }
