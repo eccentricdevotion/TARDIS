@@ -74,6 +74,7 @@ public class TARDISSQLInsert implements Runnable {
                 i++;
             }
             data.clear();
+            ps.executeUpdate();
         } catch (SQLException e) {
             plugin.debug("Update error for " + table + "! " + e.getMessage());
         } finally {

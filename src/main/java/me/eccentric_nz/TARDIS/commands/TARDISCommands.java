@@ -1228,7 +1228,7 @@ public class TARDISCommands implements CommandExecutor {
                             set.put("z", rsc.getZ());
                             set.put("direction", rsc.getDirection().toString());
                             set.put("submarine", (plugin.trackSubmarine.contains(id)) ? 1 : 0);
-                            if (qf.doInsert("destinations", set) < 0) {
+                            if (qf.doSyncInsert("destinations", set) < 0) {
                                 return false;
                             } else {
                                 sender.sendMessage(plugin.pluginName + "The location '" + args[1] + "' was saved successfully.");
@@ -1344,7 +1344,7 @@ public class TARDISCommands implements CommandExecutor {
                             set.put("x", dx);
                             set.put("y", dy);
                             set.put("z", dz);
-                            if (qf.doInsert("destinations", set) < 0) {
+                            if (qf.doSyncInsert("destinations", set) < 0) {
                                 return false;
                             } else {
                                 sender.sendMessage(plugin.pluginName + "The destination '" + args[1] + "' was saved successfully.");
