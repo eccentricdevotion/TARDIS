@@ -204,7 +204,7 @@ public class TARDISGravityWellListener implements Listener {
                     if (rsg.resultSet()) {
                         HashMap<String, Object> whered = new HashMap<String, Object>();
                         whered.put("g_id", rsg.getGravity_id());
-                        if (qf.doSyncDelete("gravity_well", whered)) {
+                        if (qf.doDelete("gravity_well", whered)) {
                             switch (rsg.getDirection()) {
                                 case 1:
                                     plugin.gravityUpList.remove(loc);

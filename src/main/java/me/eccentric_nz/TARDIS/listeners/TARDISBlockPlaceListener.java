@@ -267,7 +267,7 @@ public class TARDISBlockPlaceListener implements Listener {
                             // determine wall block material from HashMap
                             setpp.put("wall", getWallKey(middle_id, (int) middle_data));
                         }
-                        final int lastInsertId = qf.doSyncInsert("tardis", set);
+                        final int lastInsertId = qf.doInsert("tardis", set);
                         // insert/update  player prefs
                         HashMap<String, Object> wherep = new HashMap<String, Object>();
                         wherep.put("player", player.getName());

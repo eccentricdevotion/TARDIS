@@ -171,7 +171,7 @@ public class TARDISBindCommands implements CommandExecutor {
                     }
                     set.put("dest_name", args[1].toLowerCase(Locale.ENGLISH));
                     set.put("type", 1);
-                    did = qf.doSyncInsert("destinations", set);
+                    did = qf.doInsert("destinations", set);
                 }
                 if (args[0].equalsIgnoreCase("player")) { // type 2
                     // get player online or offline
@@ -185,7 +185,7 @@ public class TARDISBindCommands implements CommandExecutor {
                     }
                     set.put("dest_name", args[1]);
                     set.put("type", 2);
-                    did = qf.doSyncInsert("destinations", set);
+                    did = qf.doInsert("destinations", set);
                 }
                 if (args[0].equalsIgnoreCase("area")) { // type 3
                     HashMap<String, Object> wherea = new HashMap<String, Object>();
@@ -201,7 +201,7 @@ public class TARDISBindCommands implements CommandExecutor {
                     }
                     set.put("dest_name", args[1].toLowerCase(Locale.ENGLISH));
                     set.put("type", 3);
-                    did = qf.doSyncInsert("destinations", set);
+                    did = qf.doInsert("destinations", set);
                 }
                 if (args[0].equalsIgnoreCase("biome")) { // type 4
                     // check valid biome
@@ -211,7 +211,7 @@ public class TARDISBindCommands implements CommandExecutor {
                         if (!upper.equals("HELL") && !upper.equals("SKY")) {
                             set.put("dest_name", upper);
                             set.put("type", 4);
-                            did = qf.doSyncInsert("destinations", set);
+                            did = qf.doInsert("destinations", set);
                         }
                     } catch (IllegalArgumentException iae) {
                         player.sendMessage(plugin.pluginName + "Biome type not valid!");

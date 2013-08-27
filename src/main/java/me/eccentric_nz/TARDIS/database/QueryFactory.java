@@ -49,7 +49,7 @@ public class QueryFactory {
      * @param data a HashMap<String, Object> of table fields and values to
      * insert.
      */
-    public void doInsert(String table, HashMap<String, Object> data) {
+    public void doAsyncInsert(String table, HashMap<String, Object> data) {
         TARDISSQLInsert insert = new TARDISSQLInsert(plugin, table, data);
         plugin.getServer().getScheduler().runTaskAsynchronously(plugin, insert);
     }
@@ -63,7 +63,7 @@ public class QueryFactory {
      * insert.
      * @return the number of records that were inserted
      */
-    public int doSyncInsert(String table, HashMap<String, Object> data) {
+    public int doInsert(String table, HashMap<String, Object> data) {
         PreparedStatement ps = null;
         ResultSet idRS = null;
         String fields;
@@ -134,7 +134,7 @@ public class QueryFactory {
      * @param where a HashMap<String, Object> of table fields and values to
      * select the records to delete.
      */
-    public void doDelete(String table, HashMap<String, Object> where) {
+    public void doAsyncDelete(String table, HashMap<String, Object> where) {
         TARDISSQLDelete delete = new TARDISSQLDelete(plugin, table, where);
         plugin.getServer().getScheduler().runTaskAsynchronously(plugin, delete);
     }
@@ -149,7 +149,7 @@ public class QueryFactory {
      * @return true or false depending on whether the data was deleted
      * successfully
      */
-    public boolean doSyncDelete(String table, HashMap<String, Object> where) {
+    public boolean doDelete(String table, HashMap<String, Object> where) {
         Statement statement = null;
         String values;
         StringBuilder sbw = new StringBuilder();
