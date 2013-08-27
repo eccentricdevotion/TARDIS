@@ -136,7 +136,7 @@ public class TARDISMaterialisationRunnable implements Runnable {
                         plugin.doorListener.movePlayer(saved, l, false, world, false);
                         // put player into travellers table
                         HashMap<String, Object> set = new HashMap<String, Object>();
-                        set.put("tardis_id", id);
+                        set.put("tardis_id", tid);
                         set.put("player", name);
                         QueryFactory qf = new QueryFactory(plugin);
                         qf.doInsert("travellers", set);
