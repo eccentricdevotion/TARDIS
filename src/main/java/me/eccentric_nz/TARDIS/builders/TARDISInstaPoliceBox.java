@@ -24,6 +24,7 @@ import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetDoors;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
+import me.eccentric_nz.TARDIS.travel.TARDISDoorLocation;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -98,7 +99,23 @@ public class TARDISInstaPoliceBox {
         world = location.getWorld();
         int south = mat, west = mat, north = mat, east = mat, signx = 0, signz = 0;
         String doorloc = "";
-        // platform
+        // rescue player?
+        if (plugin.trackRescue.containsKey(tid)) {
+            String name = plugin.trackRescue.get(tid);
+            Player saved = plugin.getServer().getPlayer(name);
+            if (saved != null) {
+                TARDISDoorLocation idl = plugin.doorListener.getDoor(1, tid);
+                Location l = idl.getL();
+                plugin.doorListener.movePlayer(saved, l, false, world, false);
+                // put player into travellers table
+                HashMap<String, Object> set = new HashMap<String, Object>();
+                set.put("tardis_id", tid);
+                set.put("player", name);
+                QueryFactory qf = new QueryFactory(plugin);
+                qf.doInsert("travellers", set);
+            }
+            plugin.trackRescue.remove(tid);
+        }        // platform
         plugin.buildPB.addPlatform(location, false, d, p, tid);
         QueryFactory qf = new QueryFactory(plugin);
         HashMap<String, Object> ps = new HashMap<String, Object>();
