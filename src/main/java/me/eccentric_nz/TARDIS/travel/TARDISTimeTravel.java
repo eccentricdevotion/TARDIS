@@ -106,6 +106,10 @@ public class TARDISTimeTravel {
                 World ww = plugin.getServer().getWorld(o);
                 if (ww != null) {
                     String env = ww.getEnvironment().toString();
+                    // Catch all non-nether and non-end ENVIRONMENT types and assume they're normal
+                    if (env != "NETHER" && env != "THE_END") {
+                        env = "NORMAL";
+                    }
                     if (e.equalsIgnoreCase(env)) {
                         if (plugin.getConfig().getBoolean("include_default_world") || !plugin.getConfig().getBoolean("default_world")) {
                             if (plugin.getConfig().getBoolean("worlds." + o) || malfunction) {
@@ -187,7 +191,8 @@ public class TARDISTimeTravel {
             }
             dest = new Location(randworld, wherex, highest, wherez);
         }
-        if (randworld != null && randworld.getEnvironment().equals(Environment.NORMAL)) {
+        // Assume every non-nether/non-END world qualifies as NORMAL.  Ideally this could be a config file option, you could put your MCPC+ environments (Tropicraft, twilightforest) as appropriate environment types.
+        if (randworld != null && !randworld.getEnvironment().equals(Environment.NETHER) && !randworld.getEnvironment().equals(Environment.THE_END)) {
             long timeout = System.currentTimeMillis() + (plugin.getConfig().getLong("timeout") * 1000);
             while (danger == true) {
                 if (System.currentTimeMillis() < timeout) {

@@ -472,7 +472,8 @@ public class TARDISTravelCommands implements CommandExecutor {
         int startx = p.getLocation().getBlockX();
         int startz = p.getLocation().getBlockZ();
         // get a world
-        if (w != null && w.getEnvironment().equals(Environment.NORMAL)) {
+        // Assume all non-nether/non-end world environments are NORMAL
+        if (w != null && !w.getEnvironment().equals(Environment.NETHER) && !w.getEnvironment().equals(Environment.NETHER)) {
             int limitx = 30000;
             int limitz = 30000;
             if (plugin.pm.isPluginEnabled("WorldBorder")) {
