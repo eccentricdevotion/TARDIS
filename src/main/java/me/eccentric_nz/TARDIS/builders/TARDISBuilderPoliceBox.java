@@ -178,7 +178,8 @@ public class TARDISBuilderPoliceBox {
                 StringBuilder sb = new StringBuilder();
                 for (Block pb : platform_blocks) {
                     Material mat = pb.getType();
-                    if (mat == Material.AIR || mat == Material.STATIONARY_WATER || mat == Material.WATER || mat == Material.VINE || mat == Material.RED_MUSHROOM || mat == Material.BROWN_MUSHROOM || mat == Material.LONG_GRASS || mat == Material.SAPLING || mat == Material.DEAD_BUSH || mat == Material.RED_ROSE || mat == Material.YELLOW_FLOWER || mat == Material.SNOW) {
+                    int matint = pb.getTypeId();
+                    if (matint == 0 || matint == 9 || matint == 8 || matint == 106 || matint == 40 || matint == 39 || matint== 31 || matint== 6 || matint== 32 || matint== 38 || matint== 37 || matint== 78 || matint== 3019 || matint== 3020) {
                         if (rebuild) {
                             plugin.utils.setBlockAndRemember(world, pb.getX(), pb.getY(), pb.getZ(), platform_id, grey, id);
                         } else {
