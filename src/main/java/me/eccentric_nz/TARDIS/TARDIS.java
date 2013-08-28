@@ -73,6 +73,7 @@ import me.eccentric_nz.TARDIS.listeners.TARDISHotbarListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISIceMeltListener;
 import me.eccentric_nz.TARDIS.info.TARDISInformationSystemListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISAreaSignListener;
+import me.eccentric_nz.TARDIS.listeners.TARDISCraftListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISJettisonSeeder;
 import me.eccentric_nz.TARDIS.listeners.TARDISJoinListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISKeyboardListener;
@@ -331,7 +332,6 @@ public class TARDIS extends JavaPlugin {
             r.sonic();
             r.stattenheim();
             r.stattenheimCircuit();
-            r.tardisSeed();
         }
         presets = new TARDISChameleonPreset();
         presets.makePresets();
@@ -438,6 +438,7 @@ public class TARDIS extends JavaPlugin {
             pm.registerEvents(new TARDISTemporalLocatorListener(this), this);
             pm.registerEvents(new TARDISRecipeListener(this), this);
             pm.registerEvents(new TARDISSeedBlockListener(this), this);
+            pm.registerEvents(new TARDISCraftListener(this), this);
         }
         if (getNPCManager()) {
             pm.registerEvents(new TARDISNPCListener(this), this);
@@ -585,8 +586,14 @@ public class TARDIS extends JavaPlugin {
      */
     private void loadFactions() {
         if (pm.getPlugin("Factions") != null) {
-            factionsOnServer = true;
-            factionschk = new TARDISFactionsChecker(this);
+            Version version = new Version(getServer().getPluginManager().getPlugin("Factions").getDescription().getVersion());
+            Version min_version = new Version("2.0");
+            if (version.compareTo(min_version) >= 0) {
+                factionsOnServer = true;
+                factionschk = new TARDISFactionsChecker(this);
+            } else {
+                console.sendMessage(pluginName + "This version of TARDIS is not compatible with Factions " + version.toString() + ", please update to Factions 2.0 or higher.");
+            }
         }
     }
 
