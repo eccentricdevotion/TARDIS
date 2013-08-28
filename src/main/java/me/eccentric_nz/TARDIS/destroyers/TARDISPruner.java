@@ -25,7 +25,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Timestamp;
+import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.TARDISDatabase;
 import org.bukkit.command.CommandSender;
 
@@ -62,15 +64,23 @@ public class TARDISPruner {
                     sender.sendMessage(plugin.pluginName + "Prune List:");
                 }
                 while (rs.next()) {
-                    // double check that this is an unused TARDIS
-                    Timestamp lastuse = new Timestamp(rs.getLong("lastuse"));
-                    if (lastuse.before(prune)) {
-                        String line = "Timelord: " + rs.getString("owner") + ", Location: " + rs.getString("current");
-                        // write line to file
-                        bw.write(line);
-                        bw.newLine();
-                        // display the TARDIS prune list
-                        sender.sendMessage(line);
+                    HashMap<String, Object> wherecl = new HashMap<String, Object>();
+                    wherecl.put("tardis_id", rs.getInt("tardis_id"));
+                    ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
+                    if (rsc.resultSet()) {
+
+                        // double check that this is an unused TARDIS
+                        Timestamp lastuse = new Timestamp(rs.getLong("lastuse"));
+                        if (lastuse.before(prune)) {
+                            String line = "Timelord: " + rs.getString("owner") + ", Location: " + rsc.getWorld().getName() + ":" + rsc.getX() + ":" + rsc.getY() + ":" + rsc.getZ();
+                            // write line to file
+                            bw.write(line);
+                            bw.newLine();
+                            // display the TARDIS prune list
+                            sender.sendMessage(line);
+                        }
+                    } else {
+                        plugin.debug("Could not get current TARDIS location!");
                     }
                 }
                 bw.close();
