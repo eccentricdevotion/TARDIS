@@ -62,24 +62,24 @@ public class TARDISBlockPlaceListener implements Listener {
     public TARDISBlockPlaceListener(TARDIS plugin) {
         this.plugin = plugin;
         this.utils = new TARDISUtils(plugin);
-        blocks.add(Material.IRON_BLOCK);
-        blocks.add(Material.GOLD_BLOCK);
-        blocks.add(Material.DIAMOND_BLOCK);
-        blocks.add(Material.LAPIS_BLOCK);
-        blocks.add(Material.BOOKSHELF);
+        blocks.add(Material.IRON_BLOCK); // budget
+        blocks.add(Material.GOLD_BLOCK); // bigger
+        blocks.add(Material.DIAMOND_BLOCK); // deluxe
+        blocks.add(Material.LAPIS_BLOCK); // tom baker
+        blocks.add(Material.BOOKSHELF); // wood plank
         if (plugin.bukkitversion.compareTo(plugin.preemeraldversion) >= 0) {
-            blocks.add(Material.EMERALD_BLOCK);
+            blocks.add(Material.EMERALD_BLOCK); // eleventh
         }
         if (plugin.bukkitversion.compareTo(plugin.precomparatorversion) >= 0) {
-            blocks.add(Material.REDSTONE_BLOCK);
-            blocks.add(Material.QUARTZ_BLOCK);
+            blocks.add(Material.REDSTONE_BLOCK); // redstone
+            blocks.add(Material.QUARTZ_BLOCK); // ARS
         }
         if (plugin.bukkitversion.compareTo(plugin.precarpetversion) >= 0) {
-            blocks.add(Material.COAL_BLOCK);
+            blocks.add(Material.COAL_BLOCK); // steampunk
         }
         if (plugin.getConfig().getBoolean("custom_schematic")) {
             custom = Material.valueOf(plugin.getConfig().getString("custom_schematic_seed"));
-            blocks.add(custom);
+            blocks.add(custom); // custom
         }
     }
 
@@ -161,7 +161,7 @@ public class TARDISBlockPlaceListener implements Listener {
                             return;
                         }
                         break;
-                    case QUARTZ_BLOCK:
+                    case LAPIS_BLOCK:
                         if (player.hasPermission("tardis.tom")) {
                             schm = TARDISConstants.SCHEMATIC.TOM;
                         } else {
@@ -177,7 +177,7 @@ public class TARDISBlockPlaceListener implements Listener {
                             return;
                         }
                         break;
-                    case STAINED_CLAY:
+                    case QUARTZ_BLOCK:
                         if (player.hasPermission("tardis.ars")) {
                             schm = TARDISConstants.SCHEMATIC.ARS;
                         } else {
