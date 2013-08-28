@@ -134,7 +134,7 @@ public class TARDISUtils {
      */
     public void setBlockCheck(World w, int x, int y, int z, int m, byte d, int id, boolean sub) {
         // List of blocks that a door cannot be placed on
-        List<Integer> ids = Arrays.asList(0, 6, 8, 9, 10, 11, 18, 20, 26, 27, 28, 29, 30, 31, 32, 33, 34, 37, 38, 39, 40, 44, 46, 50, 51, 53, 54, 55, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 75, 76, 77, 78, 79, 81, 83, 85, 89, 92, 93, 94, 96, 101, 102, 104, 105, 106, 107, 108, 109, 111, 113, 114, 115, 116, 117, 118, 119, 120, 122, 126, 128, 130, 131, 132, 134, 135, 136);
+        List<Integer> ids = plugin.getBlocksConfig().getIntegerList("under_door_blocks");
         Block b = w.getBlockAt(x, y, z);
         Integer bId = Integer.valueOf(b.getTypeId());
         byte bData = b.getData();
