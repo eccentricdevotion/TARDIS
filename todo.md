@@ -28,6 +28,7 @@
 2. Advanced TARDIS console
 3. Artron storage blocks
 4. T.I.P.S. - TARDIS Interior Positioning System
+5. Add command to make EP1 appear
 
 ## Minecraft API when available `3.0?`
 1. Recreate everything with the new API :)
