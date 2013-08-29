@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
+import org.bukkit.DyeColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -29,6 +30,7 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 
 /**
  *
@@ -72,16 +74,25 @@ public class TARDISCraftListener implements Listener {
         if (inv.getType().equals(InventoryType.WORKBENCH) && slot == 0 && checkSlots(inv)) {
 
             // get the materials in crafting slots
-//        Material m1 = inv.getItem(1).getType();
-//        Material m4 = inv.getItem(4).getType();
-//        Material m5 = inv.getItem(5).getType();
-//        Material m6 = inv.getItem(6).getType();
-//        Material m7 = inv.getItem(7).getType();
-//        Material m8 = inv.getItem(8).getType();
-//        Material m9 = inv.getItem(9).getType();
+            Material m5 = inv.getItem(5).getType(); // lamp
+            Material m6 = inv.getItem(6).getType(); // wall
+            Material m7 = inv.getItem(7).getType(); // tardis type
+            Material m8 = inv.getItem(8).getType(); // chameleon
+            Material m9 = inv.getItem(9).getType(); // floor
+            ItemStack is = new ItemStack(m7, 1);
+            ItemMeta im = is.getItemMeta();
+            im.setDisplayName("§6TARDIS Seed Block");
+            List<String> lore = new ArrayList<String>();
+            lore.add(t.get(m7));
+            lore.add("Walls: " + ((m6.equals(Material.WOOL) || m6.equals(Material.STAINED_CLAY)) ? DyeColor.getByWoolData(inv.getItem(6).getData().getData()) + " " : "") + m6.toString());
+            lore.add("Floors: " + ((m9.equals(Material.WOOL) || m9.equals(Material.STAINED_CLAY)) ? DyeColor.getByWoolData(inv.getItem(9).getData().getData()) + " " : "") + m9.toString());
+            lore.add("Chameleon block: " + ((m8.equals(Material.WOOL) || m8.equals(Material.STAINED_CLAY)) ? DyeColor.getByWoolData(inv.getItem(8).getData().getData()) + " " : "") + m8.toString());
+            lore.add("Lamp: " + m5.toString());
+            im.setLore(lore);
+            is.setItemMeta(im);
             final Player player = (Player) event.getWhoClicked();
-            player.sendMessage("Valid combo :)");
-            inv.setItem(0, new ItemStack(inv.getItem(7).getType(), 1));
+            player.sendMessage("Valid seed block :)");
+            inv.setItem(0, is);
         }
     }
 
