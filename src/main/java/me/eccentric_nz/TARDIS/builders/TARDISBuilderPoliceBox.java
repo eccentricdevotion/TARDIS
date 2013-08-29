@@ -43,6 +43,7 @@ import org.bukkit.entity.Player;
 public class TARDISBuilderPoliceBox {
 
     private final TARDIS plugin;
+    List<Integer> plat_blocks = Arrays.asList(new Integer[]{0, 6, 9, 8, 31, 32, 37, 38, 39, 40, 78, 106, 3019, 3020});
 
     public TARDISBuilderPoliceBox(TARDIS plugin) {
         this.plugin = plugin;
@@ -179,7 +180,7 @@ public class TARDISBuilderPoliceBox {
                 for (Block pb : platform_blocks) {
                     Material mat = pb.getType();
                     int matint = pb.getTypeId();
-                    if (matint == 0 || matint == 9 || matint == 8 || matint == 106 || matint == 40 || matint == 39 || matint== 31 || matint== 6 || matint== 32 || matint== 38 || matint== 37 || matint== 78 || matint== 3019 || matint== 3020) {
+                    if (plat_blocks.contains(matint)) {
                         if (rebuild) {
                             plugin.utils.setBlockAndRemember(world, pb.getX(), pb.getY(), pb.getZ(), platform_id, grey, id);
                         } else {
