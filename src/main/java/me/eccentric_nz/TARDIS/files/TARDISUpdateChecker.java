@@ -40,7 +40,7 @@ public class TARDISUpdateChecker {
     public TARDISUpdateChecker(TARDIS plugin) {
         this.plugin = plugin;
         try {
-            this.tardisURL = new URL("https://raw.github.com/eccentricdevotion/TARDIS/v2/tardis.txt");
+            this.tardisURL = new URL("https://raw.github.com/eccentricdevotion/TARDIS/v2.6/tardis.txt");
         } catch (Exception e) {
             plugin.debug("Could create new URL! " + e.getMessage());
         }
