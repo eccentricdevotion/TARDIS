@@ -57,8 +57,8 @@ public class TARDISSeedBlockListener implements Listener {
         if (im.getDisplayName().equals("§6TARDIS Seed Block")) {
             List<String> lore = im.getLore();
             SCHEMATIC schm = SCHEMATIC.valueOf(lore.get(0));
-            int middle_id = Material.valueOf(lore.get(1).toUpperCase(Locale.ENGLISH)).getId();
-            byte middle_data = DyeColor.valueOf(lore.get(2).toUpperCase(Locale.ENGLISH)).getDyeData();
+//            int middle_id = Material.valueOf(lore.get(1).toUpperCase(Locale.ENGLISH)).getId();
+//            byte middle_data = DyeColor.valueOf(lore.get(2).toUpperCase(Locale.ENGLISH)).getDyeData();
             player.sendMessage(plugin.pluginName + "You placed a TARDIS seed block!");
         }
     }
