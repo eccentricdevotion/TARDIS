@@ -16,8 +16,8 @@
  */
 package me.eccentric_nz.TARDIS.ARS;
 
-import java.util.Map;
 import java.util.HashMap;
+import java.util.Map;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetARS;

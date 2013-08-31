@@ -22,7 +22,6 @@ import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ShapedRecipe;
 import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.material.MaterialData;
 
 /**
  * The Stattenheim remote control is a remote control used by Time Lords to
@@ -43,7 +42,7 @@ public class TARDISItemRecipes {
     }
 
     public ShapedRecipe stattenheim() {
-        ItemStack is = new ItemStack(Material.FLINT, 1);
+        ItemStack is = new ItemStack(mat, 1);
         ItemMeta im = is.getItemMeta();
         im.setDisplayName("Stattenheim Remote");
         im.setLore(Arrays.asList(new String[]{"Right-click block", "to call TARDIS"}));

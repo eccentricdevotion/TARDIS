@@ -130,4 +130,7 @@ public class TARDISLister {
             }
         }
     }
+
+    private TARDISLister() {
+    }
 }

@@ -207,7 +207,7 @@ public class TARDISBindCommands implements CommandExecutor {
                     // check valid biome
                     try {
                         String upper = args[1].toUpperCase(Locale.ENGLISH);
-                        Biome biome = Biome.valueOf(upper);
+//                        Biome biome = Biome.valueOf(upper);
                         if (!upper.equals("HELL") && !upper.equals("SKY")) {
                             set.put("dest_name", upper);
                             set.put("type", 4);

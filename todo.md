@@ -5,13 +5,13 @@
 2. Jettison the whole room (including walls), will require new room schematics... (in progress - working with ARS :)
 3. Architectural Reconfiguration System (almost there)
     * Doorways still. If a room is growing and there isn't one next to it - _but there will be_ - the doorway blocks will need to be removed. Could do a check right at the end, but it might just be easier to leave the doorway open…
-4. Remove the TARDIS creation block stack, and make a special seed block that determines the type of TARDIS that will be grown. Use custom configurable recipes - the recipes will still include precious block/lapis block/redstone torch, but 3 other blocks will set:
+4. Remove the TARDIS creation block stack, and make a special seed block that determines the type of TARDIS that will be grown. Use custom configurable recipes - the recipes will still include precious block/lapis block/redstone torch, but 4 other blocks will set:
     * TARDIS wall block
     * TARDIS floor block
-    * Police Box preset block
+    * Police Box wall block (chameleon)
+    * Police Box lamp block
     * Seed blocks when broken, should drop themselves
-    * Use dyes, wool, and stained clay in recipes - each data value represents a different block type, but brings down the number of recipes needed, _the data value determines the seed_ (or just restrict it blocks of those colours? _Does it matter? There are 20,846,397,359,932,200 unique rocket combinations..._)
-5. While doing [4], add one slot for a custom console (slot added, just need a command)
+5. While doing [4], add one slot for a custom console
 6. HADS + explosions + fireballs + lava
 7. Put farmland, crops, buttons, levers and signs on last when growing rooms
 8. Sonic Screwdrivers
@@ -29,6 +29,7 @@
 3. Artron storage blocks
 4. T.I.P.S. - TARDIS Interior Positioning System
 5. Add command to make EP1 appear
+6. Reload TARDIS recipes when difficulty level is changed
 
 ## Minecraft API when available `3.0?`
 1. Recreate everything with the new API :)

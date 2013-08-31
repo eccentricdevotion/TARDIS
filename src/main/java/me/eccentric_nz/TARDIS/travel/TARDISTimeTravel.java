@@ -131,8 +131,8 @@ public class TARDISTimeTravel {
             }
         }
         listlen = allowedWorlds.size();
-        if (listlen < 1) {
-        }
+//        if (listlen < 1) {
+//        }
         // random world
         rw = rand.nextInt(listlen);
         int i = 0;
@@ -561,7 +561,7 @@ public class TARDISTimeTravel {
         }
         return wherez;
     }
-    private List<BlockFace> marine_faces = Arrays.asList(new BlockFace[]{BlockFace.EAST, BlockFace.NORTH, BlockFace.NORTH_EAST, BlockFace.NORTH_WEST, BlockFace.SOUTH, BlockFace.SOUTH_EAST, BlockFace.SOUTH_WEST, BlockFace.WEST});
+//    private List<BlockFace> marine_faces = Arrays.asList(new BlockFace[]{BlockFace.EAST, BlockFace.NORTH, BlockFace.NORTH_EAST, BlockFace.NORTH_WEST, BlockFace.SOUTH, BlockFace.SOUTH_EAST, BlockFace.SOUTH_WEST, BlockFace.WEST});
 
     public Location submarine(Block b, TARDISConstants.COMPASS d) {
         Block block = b;

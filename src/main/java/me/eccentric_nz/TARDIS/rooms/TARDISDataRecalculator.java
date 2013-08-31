@@ -39,7 +39,6 @@ public class TARDISDataRecalculator {
      * @return the new Data value based on the direction the room is facing
      */
     public static byte calculateData(int id, byte bit) {
-        //System.out.println("Original: " + id + ", " + bit);
         byte data;
         switch (id) {
             // pistons
@@ -394,7 +393,6 @@ public class TARDISDataRecalculator {
                 data = bit;
                 break;
         }
-        //System.out.println("Calculated: " + id + ", " + data);
         return data;
     }
 }

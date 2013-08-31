@@ -211,7 +211,7 @@ public class TARDISMinecartListener implements Listener {
     }
 
     private TARDISConstants.COMPASS getDirection(Location l) {
-        TARDISConstants.COMPASS d = TARDISConstants.COMPASS.SOUTH;
+//        TARDISConstants.COMPASS d = TARDISConstants.COMPASS.SOUTH;
         Block centerBlock = l.getBlock();
         Block block;
         for (BlockFace f : faces) {

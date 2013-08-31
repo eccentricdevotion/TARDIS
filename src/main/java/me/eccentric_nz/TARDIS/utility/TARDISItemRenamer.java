@@ -17,6 +17,7 @@
 package me.eccentric_nz.TARDIS.utility;
 
 import java.util.ArrayList;
+import me.eccentric_nz.TARDIS.TARDIS;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
@@ -45,7 +46,7 @@ public class TARDISItemRenamer {
     public void setName(String name, boolean setlore) {
         ItemMeta im = this.itemStack.getItemMeta();
         if (im == null) {
-            System.out.println("[TARDIS] Debug: ItemMeta was null for ItemStack: " + itemStack.toString());
+            TARDIS.plugin.debug("ItemMeta was null for ItemStack: " + itemStack.toString());
         } else {
             im.setDisplayName(name);
             if (setlore) {

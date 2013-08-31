@@ -71,6 +71,7 @@ public class TARDISChameleonPreset {
     private String yellowsub_id = "[[35,35,35,171],[35,20,35,171],[35,35,35,171],[35,20,35,171],[35,35,35,171],[35,20,35,171],[35,35,35,171],[71,71,35,171],[0,0,35,89],[0,0,68,0]]";
     private String yellowsub_data = "[[4,4,4,0],[4,0,4,0],[4,4,4,0],[4,0,4,0],[4,4,4,0],[4,0,4,0],[4,4,4,0],[0,8,4,0],[0,0,4,0],[0,0,4,0]]";
     private EnumMap<TARDISConstants.COMPASS, TARDISChameleonColumn> yellowsub = new EnumMap<TARDISConstants.COMPASS, TARDISChameleonColumn>(TARDISConstants.COMPASS.class);
+    private List<Integer> problemBlocks = Arrays.asList(new Integer[]{64, 67, 68, 71, 106, 109, 114, 128});
 
     public TARDISChameleonPreset() {
     }
@@ -234,7 +235,6 @@ public class TARDISChameleonPreset {
                 return id;
         }
     }
-    private List<Integer> problemBlocks = Arrays.asList(new Integer[]{64, 67, 68, 71, 106, 109, 114, 128});
 
     private byte[][] convertData(int[][] id, byte[][] data, TARDISConstants.COMPASS d) {
         for (int col = 0; col < 10; col++) {

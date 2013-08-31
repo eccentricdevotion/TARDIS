@@ -19,12 +19,11 @@ package me.eccentric_nz.TARDIS.database;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 import me.eccentric_nz.TARDIS.TARDIS;
 
@@ -144,6 +143,6 @@ public class ResultSetTravellers {
     }
 
     public List<String> getData() {
-        return data;
+        return Collections.unmodifiableList(data);
     }
 }

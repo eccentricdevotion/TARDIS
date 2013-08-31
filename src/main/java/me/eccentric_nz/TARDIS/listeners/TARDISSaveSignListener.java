@@ -82,7 +82,7 @@ public class TARDISSaveSignListener implements Listener {
                             }
                             ItemMeta im = is.getItemMeta();
                             List<String> lore = im.getLore();
-                            String save = getDestination(lore);
+//                            String save = getDestination(lore);
                             // check the player is allowed!
                             Location save_dest = getLocation(lore);
                             if (save_dest != null) {
@@ -192,7 +192,7 @@ public class TARDISSaveSignListener implements Listener {
      * @param p the player using the GUI
      */
     private void close(final Player p) {
-        final String n = p.getName();
+//        final String n = p.getName();
         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
             @Override
             public void run() {

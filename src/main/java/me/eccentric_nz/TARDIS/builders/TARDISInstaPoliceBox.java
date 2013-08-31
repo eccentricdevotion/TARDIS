@@ -75,7 +75,7 @@ public class TARDISInstaPoliceBox {
      * Builds the TARDIS Police Box.
      */
     public void buildPoliceBox() {
-        Location sub_loc = location.clone();
+//        Location sub_loc = location.clone();
         int plusx, minusx, x, plusz, minusz, z;
         byte sd = 0, grey = 8;
         byte mds = data, mdw = data, mdn = data, mde = data, bds = data, bdw = data, bdn = data, bde = data;

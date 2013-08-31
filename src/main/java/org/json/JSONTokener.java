@@ -242,7 +242,7 @@ public class JSONTokener {
      */
     public String nextString(char quote) throws JSONException {
         char c;
-        StringBuffer sb = new StringBuffer();
+        StringBuilder sb = new StringBuilder();
         for (;;) {
             c = this.next();
             switch (c) {
@@ -298,7 +298,7 @@ public class JSONTokener {
      * @return A string.
      */
     public String nextTo(char delimiter) throws JSONException {
-        StringBuffer sb = new StringBuffer();
+        StringBuilder sb = new StringBuilder();
         for (;;) {
             char c = this.next();
             if (c == delimiter || c == 0 || c == '\n' || c == '\r') {
@@ -320,7 +320,7 @@ public class JSONTokener {
      */
     public String nextTo(String delimiters) throws JSONException {
         char c;
-        StringBuffer sb = new StringBuffer();
+        StringBuilder sb = new StringBuilder();
         for (;;) {
             c = this.next();
             if (delimiters.indexOf(c) >= 0 || c == 0
@@ -345,7 +345,6 @@ public class JSONTokener {
     public Object nextValue() throws JSONException {
         char c = this.nextClean();
         String string;
-
         switch (c) {
             case '"':
             case '\'':
@@ -357,23 +356,12 @@ public class JSONTokener {
                 this.back();
                 return new JSONArray(this);
         }
-
-        /*
-         * Handle unquoted text. This could be the values true, false, or
-         * null, or it can be a number. An implementation (such as this one)
-         * is allowed to also accept non-standard forms.
-         *
-         * Accumulate characters until we reach the end of the text or a
-         * formatting character.
-         */
-
-        StringBuffer sb = new StringBuffer();
+        StringBuilder sb = new StringBuilder();
         while (c >= ' ' && ",:]}/\\\"[{;=#".indexOf(c) < 0) {
             sb.append(c);
             c = this.next();
         }
         this.back();
-
         string = sb.toString().trim();
         if ("".equals(string)) {
             throw this.syntaxError("Missing value");
@@ -429,6 +417,7 @@ public class JSONTokener {
      *
      * @return " at {index} [character {character} line {line}]"
      */
+    @Override
     public String toString() {
         return " at " + this.index + " [character " + this.character + " line "
                 + this.line + "]";

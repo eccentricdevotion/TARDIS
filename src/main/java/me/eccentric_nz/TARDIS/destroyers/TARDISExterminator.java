@@ -326,7 +326,7 @@ public class TARDISExterminator {
                     deleteFolder(f);
                 } else {
                     if (!f.delete()) {
-                        System.out.println("Could not delete file");
+                        TARDIS.plugin.debug("Could not delete file");
                     }
                 }
             }

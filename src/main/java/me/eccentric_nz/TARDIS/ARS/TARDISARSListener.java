@@ -18,9 +18,9 @@ package me.eccentric_nz.TARDIS.ARS;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetARS;
@@ -52,8 +52,8 @@ import org.json.JSONArray;
 public class TARDISARSListener implements Listener {
 
     private final TARDIS plugin;
-    HashMap<String, Block> trackPosi = new HashMap<String, Block>();
-    private ItemStack[] items;
+//    HashMap<String, Block> trackPosi = new HashMap<String, Block>();
+//    private ItemStack[] items;
 //    private int[] room_ids = new int[]{82, 18, 89, 86, 47, 80, 23, 112, 20, 48, 24, 109, 121, 5, 3, 88, 103, 25, 13};
 //    private String[] room_names = new String[]{"Passage", "Arboretum", "Bedroom", "Kitchen", "Library", "Pool", "Vault", "Workshop", "Empty", "Gravity", "Antigravity", "Harmony", "Baker", "Wood", "Farm", "Cross", "Greenhouse", "Long", "Mushroom"};
     private int[] room_ids;

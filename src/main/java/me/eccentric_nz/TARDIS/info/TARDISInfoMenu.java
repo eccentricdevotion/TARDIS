@@ -16,8 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.info;
 
-import com.google.common.collect.Maps;
-import java.util.Map;
 import java.util.TreeMap;
 
 /**
