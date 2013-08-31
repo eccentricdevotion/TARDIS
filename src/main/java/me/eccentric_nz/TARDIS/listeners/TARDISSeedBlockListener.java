@@ -48,6 +48,12 @@ public class TARDISSeedBlockListener implements Listener {
         this.plugin = plugin;
     }
 
+    /**
+     * Store the TARDIS Seed block's values for use when clicked with the TARDIS
+     * key to activate growing, or to return the block if broken.
+     *
+     * @param event
+     */
     @EventHandler(priority = EventPriority.MONITOR)
     public void onSeedBlockPlace(BlockPlaceEvent event) {
         final Player player = event.getPlayer();
@@ -82,8 +88,13 @@ public class TARDISSeedBlockListener implements Listener {
         }
     }
 
+    /**
+     * Return the TARDIS seed block to the player after it is broken.
+     *
+     * @param event a block break event
+     */
     @EventHandler(priority = EventPriority.MONITOR)
-    public void onseedBlockBreak(BlockBreakEvent event) {
+    public void onSeedBlockBreak(BlockBreakEvent event) {
         Location l = event.getBlock().getLocation();
         if (trackTARDISSeed.containsKey(l)) {
             // get the Seed block data
@@ -107,6 +118,13 @@ public class TARDISSeedBlockListener implements Listener {
         }
     }
 
+    /**
+     * Determines the id and data values of the block. Values are calculated by
+     * converting the string values stored in a TARDIS Seed block.
+     *
+     * @param str the lore stored in the TARDIS Seed block's Item Meta
+     * @return an int and a byte stored in a simple data class
+     */
     private TwoValues getValuesFromString(String str) {
         TwoValues data = new TwoValues();
         String[] split1 = str.split(": ");
@@ -121,6 +139,10 @@ public class TARDISSeedBlockListener implements Listener {
         return data;
     }
 
+    /**
+     * Simple inner class to store two variables returned by the
+     * getValuesFromString() method.
+     */
     public class TwoValues {
 
         public TwoValues() {

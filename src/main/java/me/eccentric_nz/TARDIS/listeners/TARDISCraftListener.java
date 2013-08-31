@@ -67,6 +67,11 @@ public class TARDISCraftListener implements Listener {
         }
     }
 
+    /**
+     * Places a configured TARDIS Seed block in the crafting result slot.
+     *
+     * @param event the player clicking the crafting result slot.
+     */
     @EventHandler(priority = EventPriority.MONITOR)
     public void onInteract(InventoryClickEvent event) {
         Inventory inv = event.getInventory();
@@ -96,6 +101,13 @@ public class TARDISCraftListener implements Listener {
         }
     }
 
+    /**
+     * Checks the craft inventory slots contain the correct materials to craft a
+     * TARDIS Seed block.
+     *
+     * @param inv
+     * @return
+     */
     private boolean checkSlots(Inventory inv) {
         for (int j = 1; j < 10; j++) {
             ItemStack is = inv.getItem(j);
