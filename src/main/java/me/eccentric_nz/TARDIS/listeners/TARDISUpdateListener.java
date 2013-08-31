@@ -205,7 +205,7 @@ public class TARDISUpdateListener implements Listener {
             // check they are still in the TARDIS world
             if (!inTARDISWorld(player)) {
                 player.sendMessage(plugin.pluginName + "You must be in a TARDIS world to update this block!");
-                secondary = false;
+                return;
             } else {
                 if (blockName.equalsIgnoreCase("button") && validBlocks.contains(blockType)) {
                     if (secondary) {
@@ -536,9 +536,9 @@ public class TARDISUpdateListener implements Listener {
         ChunkGenerator gen = world.getGenerator();
         boolean special = name.contains("TARDIS_TimeVortex") && (world.getWorldType().equals(WorldType.FLAT) || gen instanceof TARDISChunkGenerator);
         if (!name.equals("TARDIS_WORLD_" + player.getName()) && !special) {
-            return true;
-        } else {
             return false;
+        } else {
+            return true;
         }
     }
 }
