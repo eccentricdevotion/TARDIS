@@ -35,6 +35,7 @@ public class TARDISCondensables {
         condensables.put("APPLE", 10);
         condensables.put("ARROW", 4);
         condensables.put("BED", 68);
+        condensables.put("BEACON", 700);
         condensables.put("BEDROCK", 100);
         condensables.put("BEEF", 3);
         condensables.put("BIRCH_WOOD_STAIRS", 1);
