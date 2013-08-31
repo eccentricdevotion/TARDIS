@@ -867,7 +867,7 @@ public class TARDISCommands implements CommandExecutor {
                             sender.sendMessage(plugin.pluginName + "You do not have permission to create a Temporal Locator!");
                             return true;
                         }
-                        if ((tardis_block.equals("farm") || tardis_block.equals("stable")) && !player.hasPermission("tardis.farm")) {
+                        if ((tardis_block.equals("farm") || tardis_block.equals("stable") || tardis_block.equals("village")) && !player.hasPermission("tardis.farm")) {
                             sender.sendMessage(plugin.pluginName + "You do not have permission to update the " + tardis_block + "!");
                             return true;
                         }
@@ -878,7 +878,25 @@ public class TARDISCommands implements CommandExecutor {
                             sender.sendMessage(plugin.pluginName + "You are not a Timelord. You need to create a TARDIS first before using this command!");
                             return false;
                         }
-                        String rail = rs.getRail();
+                        // must grow a room first
+                        if (tardis_block.equals("farm") || tardis_block.equals("stable") || tardis_block.equals("village") || tardis_block.equals("rail")) {
+                            if (tardis_block.equals("farm") && rs.getFarm().isEmpty()) {
+                                sender.sendMessage(plugin.pluginName + "You must grow a farm room before you can update its position!");
+                                return true;
+                            }
+                            if (tardis_block.equals("stable") && rs.getStable().isEmpty()) {
+                                sender.sendMessage(plugin.pluginName + "You must grow a stable room before you can update its position!");
+                                return true;
+                            }
+                            if (tardis_block.equals("village") && rs.getVillage().isEmpty()) {
+                                sender.sendMessage(plugin.pluginName + "You must grow a village room before you can update its position!");
+                                return true;
+                            }
+                            if (tardis_block.equals("rail") && rs.getRail().isEmpty()) {
+                                player.sendMessage(plugin.pluginName + "You need to grow a rail room before you can update its position.");
+                                return true;
+                            }
+                        }
                         if (tardis_block.equals("ars")) {
                             if (!player.hasPermission("tardis.ars")) {
                                 sender.sendMessage(plugin.pluginName + "You do not have permission to create an Architectural Reconfiguration System!");
@@ -902,10 +920,6 @@ public class TARDISCommands implements CommandExecutor {
                                 sender.sendMessage(plugin.pluginName + "You are not inside your TARDIS. You need to be to run this command!");
                                 return false;
                             }
-                        }
-                        if (tardis_block.equals("rail") && rail.isEmpty()) {
-                            player.sendMessage(plugin.pluginName + "You need to grow a rail room before you can update its position.");
-                            return true;
                         }
                         plugin.trackPlayers.put(player.getName(), tardis_block);
                         player.sendMessage(plugin.pluginName + "Click the TARDIS " + tardis_block + " to update its position.");
