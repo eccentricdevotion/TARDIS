@@ -30,6 +30,8 @@
 4. T.I.P.S. - TARDIS Interior Positioning System
 5. Add command to make EP1 appear
 6. Reload TARDIS recipes when difficulty level is changed
+7. Configurable option to allow Gravity Wells outside of the TARDIS
+8. Make condensables list configurable
 
 ## Minecraft API when available `3.0?`
 1. Recreate everything with the new API :)

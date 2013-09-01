@@ -49,7 +49,6 @@ import me.eccentric_nz.TARDIS.travel.TARDISTimeTravel;
 import me.eccentric_nz.TARDIS.utility.TARDISItemRenamer;
 import me.eccentric_nz.TARDIS.utility.TARDISLampScanner;
 import me.eccentric_nz.TARDIS.utility.TARDISLister;
-import me.eccentric_nz.tardischunkgenerator.TARDISChunkGenerator;
 import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
@@ -60,7 +59,6 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
-import org.bukkit.generator.ChunkGenerator;
 import org.bukkit.inventory.ItemStack;
 
 /**
@@ -1583,9 +1581,10 @@ public class TARDISCommands implements CommandExecutor {
     private boolean canGrowRooms(String chunk) {
         String[] data = chunk.split(":");
         World room_world = plugin.getServer().getWorld(data[0]);
-        ChunkGenerator gen = room_world.getGenerator();
+        // get the generator class name as instanceof seems to not work with a server reload
+        String gen = room_world.getGenerator().getClass().getSimpleName();
         WorldType wt = room_world.getWorldType();
-        boolean special = (data[0].contains("TARDIS_TimeVortex") && (wt.equals(WorldType.FLAT) || gen instanceof TARDISChunkGenerator));
+        boolean special = (data[0].contains("TARDIS_TimeVortex") && (gen.equals("TARDISChunkGenerator") || wt.equals(WorldType.FLAT)));
         if (!data[0].contains("TARDIS_WORLD_") && !special) {
             return false;
         }

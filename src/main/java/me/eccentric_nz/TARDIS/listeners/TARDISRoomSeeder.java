@@ -29,7 +29,6 @@ import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.rooms.TARDISCondenserData;
 import me.eccentric_nz.TARDIS.rooms.TARDISRoomBuilder;
 import me.eccentric_nz.TARDIS.rooms.TARDISSeedData;
-import me.eccentric_nz.tardischunkgenerator.TARDISChunkGenerator;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -42,7 +41,6 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractEvent;
-import org.bukkit.generator.ChunkGenerator;
 
 /**
  * The Doctor kept some of the clothes from his previous regenerations, as well
@@ -101,8 +99,8 @@ public class TARDISRoomSeeder implements Listener {
                 // check they are still in the TARDIS world
                 World world = block.getLocation().getWorld();
                 String name = world.getName();
-                ChunkGenerator gen = world.getGenerator();
-                boolean special = name.contains("TARDIS_TimeVortex") && (world.getWorldType().equals(WorldType.FLAT) || gen instanceof TARDISChunkGenerator);
+                String gen = world.getGenerator().getClass().getSimpleName();
+                boolean special = name.contains("TARDIS_TimeVortex") && (gen.equals("TARDISChunkGenerator") || world.getWorldType().equals(WorldType.FLAT));
                 if (!name.equals("TARDIS_WORLD_" + playerNameStr) && !special) {
                     player.sendMessage(plugin.pluginName + "You must be in a TARDIS world to grow a room!");
                     return;
