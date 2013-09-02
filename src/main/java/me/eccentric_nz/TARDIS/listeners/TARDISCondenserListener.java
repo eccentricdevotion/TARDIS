@@ -16,7 +16,9 @@
  */
 package me.eccentric_nz.TARDIS.listeners;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.achievement.TARDISAchievementFactory;
 import me.eccentric_nz.TARDIS.artron.TARDISCondensables;
@@ -50,9 +52,11 @@ import org.bukkit.inventory.ItemStack;
 public class TARDISCondenserListener implements Listener {
 
     private final TARDIS plugin;
+    private List<String> zero = new ArrayList<String>();
 
     public TARDISCondenserListener(TARDIS plugin) {
         this.plugin = plugin;
+        zero = this.plugin.getBlocksConfig().getStringList("no_artron_value");
     }
 
     /**
@@ -91,7 +95,9 @@ public class TARDISCondenserListener implements Listener {
                         //plugin.debug(is);
                         if (tc.condensables.containsKey(item)) {
                             int stack_size = is.getAmount();
-                            amount += stack_size * tc.condensables.get(item);
+                            if (!zero.contains(item)) {
+                                amount += stack_size * tc.condensables.get(item);
+                            }
                             inv.remove(is);
                             if (plugin.getConfig().getBoolean("rooms_require_blocks")) {
                                 String block_data = String.format("%s", is.getTypeId());
