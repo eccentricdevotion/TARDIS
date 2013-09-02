@@ -107,7 +107,7 @@ public class TARDISTimeTravel {
                 if (ww != null) {
                     String env = ww.getEnvironment().toString();
                     // Catch all non-nether and non-end ENVIRONMENT types and assume they're normal
-                    if (!env.equals("NETHER") && env.equals("THE_END")) {
+                    if (!env.equals("NETHER") && !env.equals("THE_END")) {
                         env = "NORMAL";
                     }
                     if (e.equalsIgnoreCase(env)) {
