@@ -158,28 +158,42 @@ public class TARDISArea {
             int maxz = rsa.getMaxz();
             String wStr = rsa.getWorld();
             boolean chk = false;
-            while (chk == false) {
-                HashMap<String, Object> wherec = new HashMap<String, Object>();
-                wherec.put("world", wStr);
-                wherec.put("x", x);
-                wherec.put("z", z);
-                ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherec);
-                if (rsc.resultSet()) {
-                    if (x + 5 <= maxx) {
-                        x += 5;
-                    } else {
-                        x = minx + 2;
-                        if (z + 5 <= maxz) {
-                            z += 5;
-                        } else {
-                            z = minz + 2;
-                        }
+            // only loop for the size of the TARDIS area
+            for (int xx = x; xx <= maxx; xx += 5) {
+                for (int zz = z; zz <= maxz; zz += 5) {
+                    HashMap<String, Object> wherec = new HashMap<String, Object>();
+                    wherec.put("world", wStr);
+                    wherec.put("x", x);
+                    wherec.put("z", z);
+                    ResultSetCurrentLocation rs = new ResultSetCurrentLocation(plugin, wherec);
+                    if (!rs.resultSet()) {
+                        chk = true;
+                        break;
                     }
-                } else {
-                    chk = true;
-                    break;
                 }
             }
+//            while (chk == false) {
+//                HashMap<String, Object> wherec = new HashMap<String, Object>();
+//                wherec.put("world", wStr);
+//                wherec.put("x", x);
+//                wherec.put("z", z);
+//                ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherec);
+//                if (rsc.resultSet()) {
+//                    if (x + 5 <= maxx) {
+//                        x += 5;
+//                    } else {
+//                        x = minx + 2;
+//                        if (z + 5 <= maxz) {
+//                            z += 5;
+//                        } else {
+//                            z = minz + 2;
+//                        }
+//                    }
+//                } else {
+//                    chk = true;
+//                    break;
+//                }
+//            }
             if (chk == true) {
                 World w = plugin.getServer().getWorld(wStr);
                 int y = rsa.getY();
