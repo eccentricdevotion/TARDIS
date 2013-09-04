@@ -115,6 +115,7 @@ public class TARDISSeedBlockListener implements Listener {
             im.setLore(lore);
             is.setItemMeta(im);
             w.dropItemNaturally(l, is);
+            trackTARDISSeed.remove(l);
         }
     }
 
