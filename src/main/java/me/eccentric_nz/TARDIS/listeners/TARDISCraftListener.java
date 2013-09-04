@@ -95,7 +95,7 @@ public class TARDISCraftListener implements Listener {
             lore.add("Lamp: " + m5.toString());
             im.setLore(lore);
             is.setItemMeta(im);
-            final Player player = (Player) event.getWhoClicked();
+            Player player = (Player) event.getWhoClicked();
             player.sendMessage("Valid seed block :)");
             inv.setItem(0, is);
         }
