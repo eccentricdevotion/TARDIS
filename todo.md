@@ -10,7 +10,6 @@
     * TARDIS floor block
     * Police Box wall block (chameleon)
     * Police Box lamp block
-    * Seed blocks when broken, should drop themselves
 5. While doing [4], add one slot for a custom console
 6. HADS + explosions + fireballs + lava
 7. Put farmland, crops, buttons, levers and signs on last when growing rooms

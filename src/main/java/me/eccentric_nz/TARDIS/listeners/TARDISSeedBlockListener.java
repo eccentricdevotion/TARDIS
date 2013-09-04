@@ -106,9 +106,9 @@ public class TARDISSeedBlockListener implements Listener {
             im.setDisplayName("§6TARDIS Seed Block");
             List<String> lore = new ArrayList<String>();
             lore.add(data.getSchematic().toString());
-            lore.add("Walls: " + ((data.getWall_id() == 35 || data.getWall_id() == 170) ? DyeColor.getByWoolData(data.getWall_data()) + " " : "") + Material.getMaterial(data.getWall_id()).toString());
-            lore.add("Floors: " + ((data.getFloor_id() == 35 || data.getFloor_id() == 170) ? DyeColor.getByWoolData(data.getFloor_data()) + " " : "") + Material.getMaterial(data.getFloor_id()).toString());
-            lore.add("Chameleon block: " + ((data.getBox_id() == 35 || data.getBox_id() == 170) ? DyeColor.getByWoolData(data.getBox_data()) + " " : "") + Material.getMaterial(data.getBox_id()).toString());
+            lore.add("Walls: " + ((data.getWall_id() == 35 || data.getWall_id() == 159) ? DyeColor.getByWoolData(data.getWall_data()) + " " : "") + Material.getMaterial(data.getWall_id()).toString());
+            lore.add("Floors: " + ((data.getFloor_id() == 35 || data.getFloor_id() == 159) ? DyeColor.getByWoolData(data.getFloor_data()) + " " : "") + Material.getMaterial(data.getFloor_id()).toString());
+            lore.add("Chameleon block: " + ((data.getBox_id() == 35 || data.getBox_id() == 159) ? DyeColor.getByWoolData(data.getBox_data()) + " " : "") + Material.getMaterial(data.getBox_id()).toString());
             lore.add("Lamp: " + Material.getMaterial(data.getLamp()).toString());
             im.setLore(lore);
             is.setItemMeta(im);
