@@ -124,7 +124,7 @@ public class TARDISStattenheimListener implements Listener {
                     where.put("owner", player.getName());
                     final ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
                     if (!rs.resultSet()) {
-                        player.sendMessage(plugin.pluginName + "You must be the Timelord of the TARDIS to use this command!");
+                        player.sendMessage(plugin.pluginName + "You don't have a TARDIS!");
                         return;
                     }
                     final int id = rs.getTardis_id();
