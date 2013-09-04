@@ -99,8 +99,6 @@ public class TARDISSeedBlockListener implements Listener {
         if (trackTARDISSeed.containsKey(l)) {
             // get the Seed block data
             TARDISBuildData data = trackTARDISSeed.get(l);
-            // set the sign block to AIR
-            event.getBlock().setType(Material.AIR);
             // drop a TARDIS Seed Block
             World w = l.getWorld();
             ItemStack is = new ItemStack(event.getBlock().getType(), 1);
@@ -114,6 +112,8 @@ public class TARDISSeedBlockListener implements Listener {
             lore.add("Lamp: " + Material.getMaterial(data.getLamp()).toString());
             im.setLore(lore);
             is.setItemMeta(im);
+            // set the block to AIR
+            event.getBlock().setType(Material.AIR);
             w.dropItemNaturally(l, is);
             trackTARDISSeed.remove(l);
         }
@@ -131,10 +131,10 @@ public class TARDISSeedBlockListener implements Listener {
         String[] split1 = str.split(": ");
         String[] split2 = split1[1].split(" ");
         if (split2.length > 1) {
-            data.setId(Material.getMaterial(plugin.utils.parseNum(split2[1])).getId());
+            data.setId(Material.getMaterial(split2[1]).getId());
             data.setData(DyeColor.valueOf(split2[0]).getWoolData());
         } else {
-            data.setId(Material.getMaterial(plugin.utils.parseNum(split1[1])).getId());
+            data.setId(Material.getMaterial(split1[1]).getId());
             data.setData((byte) 0);
         }
         return data;
