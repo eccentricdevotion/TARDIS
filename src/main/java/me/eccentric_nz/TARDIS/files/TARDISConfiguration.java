@@ -394,7 +394,7 @@ public class TARDISConfiguration {
                 // remove old tardis_blocks section
                 plugin.getConfig().set("tardis_blocks", null);
             } else {
-                MIDDLE_BLOCKS = Arrays.asList(new String[]{"LAPIS_BLOCK", "STONE", "DIRT", "WOOD", "SANDSTONE", "WOOL", "BRICK", "NETHERRACK", "SOUL_SAND", "SMOOTH_BRICK", "HUGE_MUSHROOM_1", "HUGE_MUSHROOM_2", "ENDER_STONE", "QUARTZ_BLOCK", "CLAY", "STAINED_CLAY", "HAY_BLOCK", "HARD_CLAY"});
+                MIDDLE_BLOCKS = Arrays.asList(new String[]{"STONE", "DIRT", "WOOD", "SANDSTONE", "WOOL", "BRICK", "NETHERRACK", "SOUL_SAND", "SMOOTH_BRICK", "HUGE_MUSHROOM_1", "HUGE_MUSHROOM_2", "ENDER_STONE", "QUARTZ_BLOCK", "CLAY", "STAINED_CLAY", "HAY_BLOCK", "HARD_CLAY"});
             }
             blocks_config.set("tardis_blocks", MIDDLE_BLOCKS);
             i++;

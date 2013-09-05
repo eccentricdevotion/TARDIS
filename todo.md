@@ -5,12 +5,12 @@
 2. Jettison the whole room (including walls), will require new room schematics... (in progress - working with ARS :)
 3. Architectural Reconfiguration System (almost there)
     * Doorways still. If a room is growing and there isn't one next to it - _but there will be_ - the doorway blocks will need to be removed. Could do a check right at the end, but it might just be easier to leave the doorway open…
-4. Remove the TARDIS creation block stack, and make a special seed block that determines the type of TARDIS that will be grown. Use custom configurable recipes - the recipes will still include precious block/lapis block/redstone torch, but 4 other blocks will set:
+4. Remove the TARDIS creation block stack, and make a special seed block that determines the type of TARDIS that will be grown. Use craftable recipes - the recipes will still include precious block/lapis block/redstone torch, but 4 other blocks will set:
     * TARDIS wall block
     * TARDIS floor block
     * Police Box wall block (chameleon)
     * Police Box lamp block
-5. While doing [4], add one slot for a custom console
+5. While doing [4], add one slot for a custom console (slot added, command needed)
 6. HADS + explosions + fireballs + lava
 7. Put farmland, crops, buttons, levers and signs on last when growing rooms
 8. Sonic Screwdrivers

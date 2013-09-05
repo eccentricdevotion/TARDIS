@@ -22,6 +22,8 @@ import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants.SCHEMATIC;
 import me.eccentric_nz.TARDIS.builders.TARDISBuildData;
+import me.eccentric_nz.TARDIS.builders.TARDISSeedBlockProcessor;
+import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import org.bukkit.DyeColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -32,6 +34,7 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
+import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
@@ -81,10 +84,10 @@ public class TARDISSeedBlockListener implements Listener {
             seed.setBox_id(cham_data.getId());
             seed.setBox_data(cham_data.getData());
             seed.setLamp(lamp_data.getId());
-//            String playerNameStr = player.getName();
             Location l = event.getBlockPlaced().getLocation();
             trackTARDISSeed.put(l, seed);
             player.sendMessage(plugin.pluginName + "You placed a TARDIS seed block!");
+            // now the player has to click the block with the TARDIS key
         }
     }
 
@@ -94,6 +97,7 @@ public class TARDISSeedBlockListener implements Listener {
      * @param event a block break event
      */
     @EventHandler(priority = EventPriority.MONITOR)
+    @SuppressWarnings("deprecation")
     public void onSeedBlockBreak(BlockBreakEvent event) {
         Location l = event.getBlock().getLocation();
         if (trackTARDISSeed.containsKey(l)) {
@@ -116,6 +120,34 @@ public class TARDISSeedBlockListener implements Listener {
             event.getBlock().setType(Material.AIR);
             w.dropItemNaturally(l, is);
             trackTARDISSeed.remove(l);
+        }
+    }
+
+    @EventHandler(priority = EventPriority.MONITOR)
+    public void onSeedInteract(PlayerInteractEvent event) {
+        Location l = event.getClickedBlock().getLocation();
+        if (trackTARDISSeed.containsKey(l)) {
+            Player player = event.getPlayer();
+            String key;
+            HashMap<String, Object> where = new HashMap<String, Object>();
+            where.put("player", player.getName());
+            ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, where);
+            if (rsp.resultSet()) {
+                key = (!rsp.getKey().isEmpty()) ? rsp.getKey() : plugin.getConfig().getString("key");
+            } else {
+                key = plugin.getConfig().getString("key");
+            }
+            if (player.getItemInHand().getType().equals(Material.getMaterial(key))) {
+                // grow a TARDIS
+                TARDISBuildData seed = trackTARDISSeed.get(l);
+                // process seed data
+                if (new TARDISSeedBlockProcessor(plugin).processBlock(seed, l, player)) {
+                    // remove seed data
+                    trackTARDISSeed.remove(l);
+                    // remove seed block
+                    event.getClickedBlock().setType(Material.AIR);
+                }
+            }
         }
     }
 
