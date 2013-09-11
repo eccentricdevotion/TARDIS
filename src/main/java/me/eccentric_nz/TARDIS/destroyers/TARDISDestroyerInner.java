@@ -58,6 +58,7 @@ public class TARDISDestroyerInner {
      * be 0 (AIR) or 1 (STONE).
      * @param p an instance of the player who owns the TARDIS.
      */
+    @SuppressWarnings("deprecation")
     public void destroyInner(TARDISConstants.SCHEMATIC schm, int id, World w, int i, String p) {
         // get dimensions
         short[] d;
@@ -151,6 +152,7 @@ public class TARDISDestroyerInner {
     }
     //Originally stolen from Babarix. Thank you :)
 
+    @SuppressWarnings("deprecation")
     public Chest getDoubleChest(Block block) {
         Chest chest = null;
         if (block.getRelative(BlockFace.NORTH).getTypeId() == 54) {

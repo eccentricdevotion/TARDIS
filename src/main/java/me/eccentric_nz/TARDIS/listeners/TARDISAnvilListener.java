@@ -46,6 +46,7 @@ public class TARDISAnvilListener implements Listener {
         disallow.put("Stattenheim Remote", 318);
     }
 
+    @SuppressWarnings("deprecation")
     @EventHandler(priority = EventPriority.HIGH)
     public void onInteract(InventoryClickEvent event) {
         Inventory inv = event.getView().getTopInventory();

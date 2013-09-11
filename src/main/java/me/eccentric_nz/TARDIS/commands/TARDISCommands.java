@@ -126,6 +126,7 @@ public class TARDISCommands implements CommandExecutor {
     }
 
     @Override
+    @SuppressWarnings("deprecation")
     public boolean onCommand(final CommandSender sender, Command cmd, String label, String[] args) {
         // If the player typed /tardis then do the following...
         // check there is the right number of arguments

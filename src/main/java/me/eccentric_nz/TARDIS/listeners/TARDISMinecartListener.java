@@ -202,6 +202,7 @@ public class TARDISMinecartListener implements Listener {
         return null;
     }
 
+    @SuppressWarnings("deprecation")
     public boolean isTrack(Block block) {
         return isTrack(block.getTypeId());
     }

@@ -98,6 +98,7 @@ public class TARDISUtils {
      * @param d the data bit to set the block to.
      * @param id the TARDIS this block belongs to.
      */
+    @SuppressWarnings("deprecation")
     public void setBlockAndRemember(World w, int x, int y, int z, int m, byte d, int id) {
         Block b = w.getBlockAt(x, y, z);
         // save the block location so that we can protect it from damage and restore it (if it wasn't air)!
@@ -131,6 +132,7 @@ public class TARDISUtils {
      * @param d the data bit to set the block to.
      * @param id the TARDIS this block belongs to.
      */
+    @SuppressWarnings("deprecation")
     public void setBlockCheck(World w, int x, int y, int z, int m, byte d, int id, boolean sub) {
         // List of blocks that a door cannot be placed on
         List<Integer> ids = plugin.getBlocksConfig().getIntegerList("under_door_blocks");

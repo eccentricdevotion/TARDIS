@@ -56,6 +56,7 @@ public class TARDISDeinstaPoliceBox {
      * @param hide boolean determining whether to forget the protected Police
      * Box blocks.
      */
+    @SuppressWarnings("deprecation")
     public void instaDestroyPB(Location l, TARDISConstants.COMPASS d, int id, boolean hide) {
         World w = l.getWorld();
         // make sure chunk is loaded

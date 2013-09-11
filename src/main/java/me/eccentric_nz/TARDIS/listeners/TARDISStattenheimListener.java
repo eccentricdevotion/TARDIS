@@ -76,6 +76,7 @@ public class TARDISStattenheimListener implements Listener {
         remote = Material.valueOf(plugin.getConfig().getString("stattenheim"));
     }
 
+    @SuppressWarnings("deprecation")
     @EventHandler(priority = EventPriority.MONITOR)
     public void onStattenheimInteract(PlayerInteractEvent event) {
         final Player player = event.getPlayer();

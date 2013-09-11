@@ -42,6 +42,7 @@ public class TARDISLampsRunnable implements Runnable {
         this.start = start;
     }
 
+    @SuppressWarnings("deprecation")
     @Override
     public void run() {
         // play smoke effect

@@ -171,6 +171,7 @@ public class TARDISHostileDisplacement {
         }
     }
 
+    @SuppressWarnings("deprecation")
     private int getHighestNetherBlock(World w, int wherex, int wherez) {
         int y = 100;
         Block startBlock = w.getBlockAt(wherex, y, wherez);

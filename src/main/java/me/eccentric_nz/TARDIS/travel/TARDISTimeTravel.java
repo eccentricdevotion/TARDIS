@@ -17,7 +17,6 @@
 package me.eccentric_nz.TARDIS.travel;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
@@ -82,6 +81,7 @@ public class TARDISTimeTravel {
      * travel to.
      * @return a random Location
      */
+    @SuppressWarnings("deprecation")
     public Location randomDestination(Player p, byte rx, byte rz, byte ry, TARDISConstants.COMPASS d, String e, World this_world, boolean malfunction) {
         int startx, starty, startz, resetx, resetz, listlen, rw;
         World randworld = null;
@@ -288,6 +288,7 @@ public class TARDISTimeTravel {
      * @param d the direction the Police Box is facing.
      * @return the number of unsafe blocks
      */
+    @SuppressWarnings("deprecation")
     public int safeLocation(int startx, int starty, int startz, int resetx, int resetz, World w, TARDISConstants.COMPASS d) {
         int level, row, col, rowcount, colcount, count = 0;
         switch (d) {
@@ -438,6 +439,7 @@ public class TARDISTimeTravel {
      * @param wherez a z co-ordinate.
      * @param d the direction the Police Box is facing.
      */
+    @SuppressWarnings("deprecation")
     public boolean safeNether(World nether, int wherex, int wherez, TARDISConstants.COMPASS d, Player p) {
         boolean safe = false;
         int startx, starty, startz, resetx, resetz, count;
@@ -561,8 +563,8 @@ public class TARDISTimeTravel {
         }
         return wherez;
     }
-//    private List<BlockFace> marine_faces = Arrays.asList(new BlockFace[]{BlockFace.EAST, BlockFace.NORTH, BlockFace.NORTH_EAST, BlockFace.NORTH_WEST, BlockFace.SOUTH, BlockFace.SOUTH_EAST, BlockFace.SOUTH_WEST, BlockFace.WEST});
 
+    @SuppressWarnings("deprecation")
     public Location submarine(Block b, TARDISConstants.COMPASS d) {
         Block block = b;
         boolean bottom = false;
@@ -586,6 +588,7 @@ public class TARDISTimeTravel {
         return (isSafeSubmarine(loc, d)) ? loc : null;
     }
 
+    @SuppressWarnings("deprecation")
     public boolean isSafeSubmarine(Location l, TARDISConstants.COMPASS d) {
         int[] s = getStartLocation(l, d);
         int level, row, col, rowcount, colcount, count = 0;

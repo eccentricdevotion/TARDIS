@@ -49,6 +49,7 @@ public class TARDISAdminMenuListener implements Listener {
         this.plugin = plugin;
     }
 
+    @SuppressWarnings("deprecation")
     @EventHandler(priority = EventPriority.NORMAL)
     public void onPlayerInteract(PlayerInteractEvent event) {
         Player p = event.getPlayer();

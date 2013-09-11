@@ -108,6 +108,7 @@ public class TARDISCraftListener implements Listener {
      * @param inv
      * @return
      */
+    @SuppressWarnings("deprecation")
     private boolean checkSlots(Inventory inv) {
         for (int j = 1; j < 10; j++) {
             ItemStack is = inv.getItem(j);

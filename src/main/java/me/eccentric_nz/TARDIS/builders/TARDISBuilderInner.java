@@ -70,6 +70,7 @@ public class TARDISBuilderInner {
      * TARDIS walls.
      * @param middle_data the data bit associated with the middle_id parameter.
      */
+    @SuppressWarnings("deprecation")
     public void buildInner(TARDISConstants.SCHEMATIC schm, World world, int dbID, Player p, int middle_id, byte middle_data) {
         String[][][] s;
         short[] d;

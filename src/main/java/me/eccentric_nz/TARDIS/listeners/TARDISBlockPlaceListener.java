@@ -90,6 +90,7 @@ public class TARDISBlockPlaceListener implements Listener {
      *
      * @param event a player placing a block
      */
+    @SuppressWarnings("deprecation")
     @EventHandler(priority = EventPriority.MONITOR)
     public void onPlayerBlockPlace(BlockPlaceEvent event) {
         Block block = event.getBlockPlaced();

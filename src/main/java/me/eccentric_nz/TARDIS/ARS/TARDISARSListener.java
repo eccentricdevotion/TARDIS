@@ -378,6 +378,7 @@ public class TARDISARSListener implements Listener {
      * @param p the player using the GUI
      * @param update whether to update the grid display
      */
+    @SuppressWarnings("deprecation")
     private void setSlot(Inventory inv, int slot, ItemStack is, String p, boolean update) {
         inv.setItem(slot, is);
         int id = is.getTypeId();

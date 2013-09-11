@@ -40,6 +40,7 @@ public class TARDISChameleonCircuit {
         this.plugin = plugin;
     }
 
+    @SuppressWarnings("deprecation")
     public int[] getChameleonBlock(Block b, Player p, boolean short_out) {
         int[] data = new int[2];
         int chameleonType = b.getTypeId();

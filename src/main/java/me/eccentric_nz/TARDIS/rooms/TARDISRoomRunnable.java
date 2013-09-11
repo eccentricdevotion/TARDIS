@@ -87,6 +87,7 @@ public class TARDISRoomRunnable implements Runnable {
     /**
      * A runnable task that builds TARDIS rooms block by block.
      */
+    @SuppressWarnings("deprecation")
     @Override
     public void run() {
         // initialise
@@ -409,6 +410,7 @@ public class TARDISRoomRunnable implements Runnable {
         }
     }
 
+    @SuppressWarnings("deprecation")
     private boolean checkRoomNextDoor(Block b) {
         if (b.getLocation().getBlockX() > (resetx + 10) && b.getRelative(BlockFace.EAST).getTypeId() != 0) {
             return true;
