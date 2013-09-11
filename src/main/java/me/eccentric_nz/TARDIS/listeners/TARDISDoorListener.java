@@ -104,6 +104,7 @@ public class TARDISDoorListener implements Listener {
      *
      * @param event a player clicking a block
      */
+    @SuppressWarnings("deprecation")
     @EventHandler(priority = EventPriority.MONITOR)
     public void onDoorInteract(PlayerInteractEvent event) {
         QueryFactory qf = new QueryFactory(plugin);
@@ -181,7 +182,8 @@ public class TARDISDoorListener implements Listener {
                                     setl.put("locked", locked);
                                     HashMap<String, Object> wherel = new HashMap<String, Object>();
                                     wherel.put("tardis_id", rsd.getTardis_id());
-                                    wherel.put("door_type", rsd.getDoor_type());
+                                    // always lock / unlock both doors?
+                                    //wherel.put("door_type", rsd.getDoor_type());
                                     qf.doUpdate("doors", setl, wherel);
                                     player.sendMessage(plugin.pluginName + "The door was " + message);
                                 }
