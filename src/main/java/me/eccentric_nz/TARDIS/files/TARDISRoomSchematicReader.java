@@ -62,7 +62,9 @@ public class TARDISRoomSchematicReader {
         blockConversion.put(59, 295); // crops -> seeds
         blockConversion.put(60, 3); // farmland -> dirt
         blockConversion.put(63, 323); // sign post -> sign
+        blockConversion.put(64, 324); // wooden door -> wood door item
         blockConversion.put(68, 323); // wall sign -> sign
+        blockConversion.put(71, 330); // iron door -> iron door item
         blockConversion.put(75, 76); // restone torch off -> redstone torch on
         blockConversion.put(83, 338); // sugarcane block -> sugarcane item
         blockConversion.put(92, 69); // cake block -> lever
