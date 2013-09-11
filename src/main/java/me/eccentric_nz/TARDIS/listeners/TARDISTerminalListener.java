@@ -463,6 +463,10 @@ public class TARDISTerminalListener implements Listener {
                             Location loc = new Location(w, slotx, 0, slotz);
                             int[] start = tt.getStartLocation(loc, d);
                             int starty = w.getHighestBlockYAt(slotx, slotz);
+                            // allow room for under door block / platform if necessary
+                            if (starty <= 0) {
+                                starty = 1;
+                            }
                             int safe;
                             // check submarine
                             ItemMeta subim = inv.getItem(44).getItemMeta();
@@ -512,6 +516,7 @@ public class TARDISTerminalListener implements Listener {
         is.setItemMeta(im);
     }
 
+    @SuppressWarnings("deprecation")
     private int getHighestNetherBlock(World w, int wherex, int wherez) {
         int y = 100;
         Block startBlock = w.getBlockAt(wherex, y, wherez);

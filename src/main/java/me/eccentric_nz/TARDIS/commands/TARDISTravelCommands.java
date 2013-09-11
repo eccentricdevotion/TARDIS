@@ -401,6 +401,10 @@ public class TARDISTravelCommands implements CommandExecutor {
                         }
                         x = plugin.utils.parseNum(args[args.length - 3]);
                         y = plugin.utils.parseNum(args[args.length - 2]);
+                        if (y == 0) {
+                            sender.sendMessage(plugin.pluginName + "Y coordinate must be > 0!");
+                            return true;
+                        }
                         z = plugin.utils.parseNum(args[args.length - 1]);
                         Block block = w.getBlockAt(x, y, z);
                         Location location = block.getLocation();
