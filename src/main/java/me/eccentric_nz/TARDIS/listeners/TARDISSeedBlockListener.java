@@ -125,27 +125,29 @@ public class TARDISSeedBlockListener implements Listener {
 
     @EventHandler(priority = EventPriority.MONITOR)
     public void onSeedInteract(PlayerInteractEvent event) {
-        Location l = event.getClickedBlock().getLocation();
-        if (trackTARDISSeed.containsKey(l)) {
-            Player player = event.getPlayer();
-            String key;
-            HashMap<String, Object> where = new HashMap<String, Object>();
-            where.put("player", player.getName());
-            ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, where);
-            if (rsp.resultSet()) {
-                key = (!rsp.getKey().isEmpty()) ? rsp.getKey() : plugin.getConfig().getString("key");
-            } else {
-                key = plugin.getConfig().getString("key");
-            }
-            if (player.getItemInHand().getType().equals(Material.getMaterial(key))) {
-                // grow a TARDIS
-                TARDISBuildData seed = trackTARDISSeed.get(l);
-                // process seed data
-                if (new TARDISSeedBlockProcessor(plugin).processBlock(seed, l, player)) {
-                    // remove seed data
-                    trackTARDISSeed.remove(l);
-                    // remove seed block
-                    event.getClickedBlock().setType(Material.AIR);
+        if (event.getClickedBlock() != null) {
+            Location l = event.getClickedBlock().getLocation();
+            if (trackTARDISSeed.containsKey(l)) {
+                Player player = event.getPlayer();
+                String key;
+                HashMap<String, Object> where = new HashMap<String, Object>();
+                where.put("player", player.getName());
+                ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, where);
+                if (rsp.resultSet()) {
+                    key = (!rsp.getKey().isEmpty()) ? rsp.getKey() : plugin.getConfig().getString("key");
+                } else {
+                    key = plugin.getConfig().getString("key");
+                }
+                if (player.getItemInHand().getType().equals(Material.getMaterial(key))) {
+                    // grow a TARDIS
+                    TARDISBuildData seed = trackTARDISSeed.get(l);
+                    // process seed data
+                    if (new TARDISSeedBlockProcessor(plugin).processBlock(seed, l, player)) {
+                        // remove seed data
+                        trackTARDISSeed.remove(l);
+                        // remove seed block
+                        event.getClickedBlock().setType(Material.AIR);
+                    }
                 }
             }
         }

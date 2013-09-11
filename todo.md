@@ -1,15 +1,12 @@
 # TODO
 
 ## Current version `2.6-beta-1`
+0. Remove `while` loops that have the potential to crash the server!
 1. Test `platform_id`, Temporal Invisibility
 2. Jettison the whole room (including walls), will require new room schematics... (in progress - working with ARS :)
 3. Architectural Reconfiguration System (almost there)
     * Doorways still. If a room is growing and there isn't one next to it - _but there will be_ - the doorway blocks will need to be removed. Could do a check right at the end, but it might just be easier to leave the doorway open…
-4. Remove the TARDIS creation block stack, and make a special seed block that determines the type of TARDIS that will be grown. Use craftable recipes - the recipes will still include precious block/lapis block/redstone torch, but 4 other blocks will set:
-    * TARDIS wall block
-    * TARDIS floor block
-    * Police Box wall block (chameleon)
-    * Police Box lamp block
+4. Remove the TARDIS creation block stack by default, make the choice between seed block and stack configurable
 5. While doing [4], add one slot for a custom console (slot added, command needed)
 6. HADS + explosions + fireballs + lava
 7. Put farmland, crops, buttons, levers and signs on last when growing rooms
@@ -31,6 +28,7 @@
 6. Reload TARDIS recipes when difficulty level is changed
 7. Configurable option to allow Gravity Wells outside of the TARDIS
 8. Make condensables list configurable
+9. TARDIS direction sign
 
 ## Minecraft API when available `3.0?`
 1. Recreate everything with the new API :)
