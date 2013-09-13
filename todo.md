@@ -29,6 +29,7 @@
 7. Configurable option to allow Gravity Wells outside of the TARDIS
 8. Make condensables list configurable
 9. TARDIS direction sign
+10. TARDIS exterior rendering / scanner room
 
 ## Minecraft API when available `3.0?`
 1. Recreate everything with the new API :)

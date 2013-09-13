@@ -123,6 +123,11 @@ public class TARDISSeedBlockListener implements Listener {
         }
     }
 
+    /**
+     * Process the TARDIS seed block and turn it into a TARDIS!
+     *
+     * @param event a block interact event
+     */
     @EventHandler(priority = EventPriority.MONITOR)
     public void onSeedInteract(PlayerInteractEvent event) {
         if (event.getClickedBlock() != null) {
