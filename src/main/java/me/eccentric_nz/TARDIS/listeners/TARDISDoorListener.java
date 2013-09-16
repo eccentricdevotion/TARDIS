@@ -392,7 +392,7 @@ public class TARDISDoorListener implements Listener {
                                                 HashMap<String, Object> set = new HashMap<String, Object>();
                                                 set.put("tardis_id", id);
                                                 set.put("player", playerNameStr);
-                                                qf.doInsert("travellers", set);
+                                                qf.doSyncInsert("travellers", set);
                                                 if (plugin.pm.getPlugin("Spout") != null && SpoutManager.getPlayer(player).isSpoutCraftEnabled()) {
                                                     SpoutManager.getSoundManager().playCustomSoundEffect(plugin, SpoutManager.getPlayer(player), "https://dl.dropboxusercontent.com/u/53758864/tardis_hum.mp3", false, tardis_loc, 9, 25);
                                                 }
@@ -430,7 +430,7 @@ public class TARDISDoorListener implements Listener {
                                             HashMap<String, Object> set = new HashMap<String, Object>();
                                             set.put("tardis_id", id);
                                             set.put("player", playerNameStr);
-                                            qf.doInsert("travellers", set);
+                                            qf.doSyncInsert("travellers", set);
                                             if (plugin.pm.getPlugin("Spout") != null && SpoutManager.getPlayer(player).isSpoutCraftEnabled()) {
                                                 SpoutManager.getSoundManager().playCustomSoundEffect(plugin, SpoutManager.getPlayer(player), "https://dl.dropboxusercontent.com/u/53758864/tardis_hum.mp3", false, inner_loc, 9, 25);
                                             }

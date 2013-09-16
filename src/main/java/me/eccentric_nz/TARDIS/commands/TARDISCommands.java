@@ -1577,7 +1577,6 @@ public class TARDISCommands implements CommandExecutor {
             }
         }
         // If the above has happened the function will break and return true. if this hasn't happened then value of false will be returned.
-
         return false;
     }
 
