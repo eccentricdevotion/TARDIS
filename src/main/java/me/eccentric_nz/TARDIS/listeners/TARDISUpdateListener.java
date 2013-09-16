@@ -28,6 +28,7 @@ import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetDoors;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
+import me.eccentric_nz.tardischunkgenerator.TARDISChunkGenerator;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -41,6 +42,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.generator.ChunkGenerator;
 import org.json.JSONArray;
 
 /**
@@ -537,8 +539,8 @@ public class TARDISUpdateListener implements Listener {
         // check they are still in the TARDIS world
         World world = player.getLocation().getWorld();
         String name = world.getName();
-        String gen = world.getGenerator().getClass().getSimpleName();
-        boolean special = name.contains("TARDIS_TimeVortex") && (gen.equals("TARDISChunkGenerator") || world.getWorldType().equals(WorldType.FLAT));
+        ChunkGenerator gen = world.getGenerator();
+        boolean special = name.contains("TARDIS_TimeVortex") && (world.getWorldType().equals(WorldType.FLAT) || gen instanceof TARDISChunkGenerator);
         if (!name.equals("TARDIS_WORLD_" + player.getName()) && !special) {
             return false;
         } else {
