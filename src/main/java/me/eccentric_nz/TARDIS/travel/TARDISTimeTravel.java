@@ -131,8 +131,6 @@ public class TARDISTimeTravel {
             }
         }
         listlen = allowedWorlds.size();
-//        if (listlen < 1) {
-//        }
         // random world
         rw = rand.nextInt(listlen);
         int i = 0;
@@ -143,6 +141,7 @@ public class TARDISTimeTravel {
             i += 1;
         }
         if (randworld != null && randworld.getEnvironment().equals(Environment.NETHER)) {
+            // change while loop for a non-potential endless loop solution
             while (danger == true) {
                 wherex = randomX(rand, range, quarter, rx, ry, max);
                 wherez = randomZ(rand, range, quarter, rz, ry, max);
@@ -153,6 +152,7 @@ public class TARDISTimeTravel {
             }
         }
         if (randworld != null && randworld.getEnvironment().equals(Environment.THE_END)) {
+            // change while loop for a non-potential endless loop solution
             while (danger == true) {
                 wherex = rand.nextInt(240);
                 wherez = rand.nextInt(240);
@@ -194,6 +194,7 @@ public class TARDISTimeTravel {
         // Assume every non-nether/non-END world qualifies as NORMAL.
         if (randworld != null && !randworld.getEnvironment().equals(Environment.NETHER) && !randworld.getEnvironment().equals(Environment.THE_END)) {
             long timeout = System.currentTimeMillis() + (plugin.getConfig().getLong("timeout") * 1000);
+            // change while loop for a non-potential endless loop solution
             while (danger == true) {
                 if (System.currentTimeMillis() < timeout) {
                     // reset count
