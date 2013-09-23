@@ -410,7 +410,7 @@ public class TARDISAdminCommands implements CommandExecutor {
                         int maxz = l.getBlockZ() + 2;
                         Location wg1 = new Location(l.getWorld(), minx, l.getBlockY() + 2, minz);
                         Location wg2 = new Location(l.getWorld(), maxx, l.getBlockY() - 2, maxz);
-                        plugin.wgchk.addRechargerProtection(player, args[1], wg1, wg2);
+                        plugin.wgutils.addRechargerProtection(player, args[1], wg1, wg2);
                     }
                 }
                 if (first.equals("decharge")) {
@@ -419,7 +419,7 @@ public class TARDISAdminCommands implements CommandExecutor {
                         return true;
                     }
                     if (plugin.worldGuardOnServer && plugin.getConfig().getBoolean("use_worldguard")) {
-                        plugin.wgchk.removeRechargerRegion(args[1]);
+                        plugin.wgutils.removeRechargerRegion(args[1]);
                     }
                     plugin.getConfig().set("rechargers." + args[1], null);
                 }

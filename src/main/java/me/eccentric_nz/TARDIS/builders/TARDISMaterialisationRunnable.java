@@ -427,7 +427,7 @@ public class TARDISMaterialisationRunnable implements Runnable {
             } else {
                 // set sheild if submarine
                 if (sub && plugin.worldGuardOnServer) {
-                    plugin.wgchk.sponge(sponge, true);
+                    plugin.wgutils.sponge(sponge, true);
                 }
                 plugin.tardisMaterialising.remove(Integer.valueOf(tid));
                 plugin.getServer().getScheduler().cancelTask(task);

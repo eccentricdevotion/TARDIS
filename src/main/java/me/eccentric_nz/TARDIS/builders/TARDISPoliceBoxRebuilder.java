@@ -247,7 +247,7 @@ public class TARDISPoliceBoxRebuilder {
         plugin.utils.setBlock(world, x, minusy, minusz, south, mds);
         // set sheild if submarine
         if (sub && plugin.worldGuardOnServer) {
-            plugin.wgchk.sponge(sponge, true);
+            plugin.wgutils.sponge(sponge, true);
         }
     }
 }

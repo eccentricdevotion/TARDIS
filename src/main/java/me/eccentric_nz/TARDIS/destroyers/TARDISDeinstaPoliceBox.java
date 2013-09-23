@@ -121,7 +121,7 @@ public class TARDISDeinstaPoliceBox {
                 if (rsp.resultSet()) {
                     boolean sub = (rsp.isSubmarine_on() && plugin.trackSubmarine.contains(Integer.valueOf(id)));
                     if (sub && plugin.worldGuardOnServer) {
-                        plugin.wgchk.sponge(b, true);
+                        plugin.wgutils.sponge(b, true);
                     }
                 }
             }

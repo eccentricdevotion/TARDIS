@@ -472,7 +472,7 @@ public class TARDISBuilderInner {
         }
         lampblocks.clear();
         if (plugin.worldGuardOnServer && plugin.getConfig().getBoolean("use_worldguard")) {
-            plugin.wgchk.addWGProtection(p, wg1, wg2);
+            plugin.wgutils.addWGProtection(p, wg1, wg2);
         }
     }
 }

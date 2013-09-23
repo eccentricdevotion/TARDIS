@@ -36,7 +36,7 @@ public class TARDISSubmarine {
         if (plugin.worldGuardOnServer) {
             Block sponge = l.getBlock();
             sponge.setTypeId(19);
-            plugin.wgchk.sponge(sponge, true);
+            plugin.wgutils.sponge(sponge, true);
         }
     }
 }

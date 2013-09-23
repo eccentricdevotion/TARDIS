@@ -306,7 +306,7 @@ public class TARDISInstaPoliceBox {
         plugin.utils.setBlockAndRemember(world, x, minusy, minusz, south, mds, tid);
         // set sheild if submarine
         if (sub && plugin.worldGuardOnServer) {
-            plugin.wgchk.sponge(sponge, true);
+            plugin.wgutils.sponge(sponge, true);
         }
         // message travellers in tardis
         HashMap<String, Object> where = new HashMap<String, Object>();

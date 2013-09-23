@@ -192,7 +192,7 @@ public class TARDIS extends JavaPlugin {
     public TARDISDestroyerInner destroyI = new TARDISDestroyerInner(this);
     public TARDISDestroyerPoliceBox destroyPB = new TARDISDestroyerPoliceBox(this);
     public TARDISArea ta = new TARDISArea(this);
-    public TARDISWorldGuardUtils wgchk;
+    public TARDISWorldGuardUtils wgutils;
     public TARDISTownyChecker tychk;
     public TARDISWorldBorderChecker borderchk;
     public TARDISFactionsChecker factionschk;
@@ -556,7 +556,7 @@ public class TARDIS extends JavaPlugin {
     private void loadWorldGuard() {
         if (pm.getPlugin("WorldGuard") != null) {
             worldGuardOnServer = true;
-            wgchk = new TARDISWorldGuardUtils(this);
+            wgutils = new TARDISWorldGuardUtils(this);
         }
     }
 

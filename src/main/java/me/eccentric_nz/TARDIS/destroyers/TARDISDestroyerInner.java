@@ -56,7 +56,7 @@ public class TARDISDestroyerInner {
      * @param w the world where the TARDIS is to be built.
      * @param i the Material type id of the replacement block, this will either
      * be 0 (AIR) or 1 (STONE).
-     * @param p an instance of the player who owns the TARDIS.
+     * @param p the name of the player who owns the TARDIS.
      */
     @SuppressWarnings("deprecation")
     public void destroyInner(TARDISConstants.SCHEMATIC schm, int id, World w, int i, String p) {
@@ -147,7 +147,7 @@ public class TARDISDestroyerInner {
         // remove from protectBlockMap - remove(Integer.valueOf(id)) would only remove the first one
         plugin.protectBlockMap.values().removeAll(Collections.singleton(Integer.valueOf(id)));
         if (plugin.worldGuardOnServer) {
-            plugin.wgchk.removeRegion(w, p);
+            plugin.wgutils.removeRegion(w, p);
         }
     }
     //Originally stolen from Babarix. Thank you :)
