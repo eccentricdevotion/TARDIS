@@ -101,7 +101,6 @@ public class TARDISTimeTravel {
         if (e.equals("THIS")) {
             allowedWorlds.add(this_world);
         } else {
-            //List<String> envOptions = Arrays.asList(e.split(":"));
             for (String o : worldlist) {
                 World ww = plugin.getServer().getWorld(o);
                 if (ww != null) {
@@ -125,6 +124,10 @@ public class TARDISTimeTravel {
                     }
                     // remove the world the Police Box is in
                     if (allowedWorlds.size() > 1 && allowedWorlds.contains(this_world)) {
+                        allowedWorlds.remove(this_world);
+                    }
+                    // remove the world if the player doesn't have permission
+                    if (allowedWorlds.size() > 1 && plugin.getConfig().getBoolean("per_world_perms") && !p.hasPermission("tardis.travel." + o)) {
                         allowedWorlds.remove(this_world);
                     }
                 }

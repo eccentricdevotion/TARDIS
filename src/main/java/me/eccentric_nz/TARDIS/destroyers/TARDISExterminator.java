@@ -142,7 +142,7 @@ public class TARDISExterminator {
             int id = rs.getTardis_id();
             //String saveLoc = rs.getCurrent();
             String chunkLoc = rs.getChunk();
-            String owner = rs.getOwner();
+            //String owner = rs.getOwner();
             TARDISConstants.SCHEMATIC schm = rs.getSchematic();
             // need to check that a player is not currently in the TARDIS
             if (player.hasPermission("tardis.delete")) {

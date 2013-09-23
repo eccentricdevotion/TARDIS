@@ -310,15 +310,15 @@ public class TARDISTerminalListener implements Listener {
                 switch (slot) {
                     case 38:
                         // get a normal world
-                        lore = Arrays.asList(new String[]{getWorld("NORMAL", current)});
+                        lore = Arrays.asList(new String[]{getWorld("NORMAL", current, p)});
                         break;
                     case 40:
                         // get a nether world
-                        lore = Arrays.asList(new String[]{getWorld("NETHER", current)});
+                        lore = Arrays.asList(new String[]{getWorld("NETHER", current, p)});
                         break;
                     case 42:
                         // get an end world
-                        lore = Arrays.asList(new String[]{getWorld("THE_END", current)});
+                        lore = Arrays.asList(new String[]{getWorld("THE_END", current, p)});
                         break;
                     default:
                         lore = Arrays.asList(new String[]{current});
@@ -349,7 +349,7 @@ public class TARDISTerminalListener implements Listener {
         }
     }
 
-    private String getWorld(String e, String this_world) {
+    private String getWorld(String e, String this_world, Player p) {
         List<String> allowedWorlds = new ArrayList<String>();
         String world = "";
         Set<String> worldlist = plugin.getConfig().getConfigurationSection("worlds").getKeys(false);
@@ -372,6 +372,10 @@ public class TARDISTerminalListener implements Listener {
                 }
                 // remove the world the Police Box is in
                 if (this_world != null && allowedWorlds.size() > 1 && allowedWorlds.contains(this_world)) {
+                    allowedWorlds.remove(this_world);
+                }
+                // remove the world if the player doesn't have permission
+                if (allowedWorlds.size() > 1 && plugin.getConfig().getBoolean("per_world_perms") && !p.hasPermission("tardis.travel." + o)) {
                     allowedWorlds.remove(this_world);
                 }
             }
