@@ -197,7 +197,7 @@ public class TARDISExterminator {
                     plugin.destroyI.destroyInner(schm, id, cw, restore, playerNameStr);
                 }
                 cleanDatabase(id);
-                cleanWorlds(cw, owner);
+                cleanWorlds(cw, playerNameStr);
                 player.sendMessage(plugin.pluginName + "The TARDIS was removed from the world and database successfully.");
                 return true;
             } else {
@@ -285,7 +285,7 @@ public class TARDISExterminator {
     private void cleanWorlds(World w, String owner) {
         // remove world guard region protection
         if (plugin.worldGuardOnServer && plugin.getConfig().getBoolean("use_worldguard")) {
-            plugin.wgchk.removeRegion(w, owner);
+            plugin.wgutils.removeRegion(w, owner);
         }
         // unload and remove the world if it's a TARDIS_WORLD_ world
         if (w.getName().contains("TARDIS_WORLD_")) {
