@@ -159,16 +159,19 @@ public class TARDISArea {
             String wStr = rsa.getWorld();
             boolean chk = false;
             // only loop for the size of the TARDIS area
+            outerloop:
             for (int xx = x; xx <= maxx; xx += 5) {
                 for (int zz = z; zz <= maxz; zz += 5) {
                     HashMap<String, Object> wherec = new HashMap<String, Object>();
                     wherec.put("world", wStr);
-                    wherec.put("x", x);
-                    wherec.put("z", z);
+                    wherec.put("x", xx);
+                    wherec.put("z", zz);
                     ResultSetCurrentLocation rs = new ResultSetCurrentLocation(plugin, wherec);
                     if (!rs.resultSet()) {
                         chk = true;
-                        break;
+                        break outerloop;
+                    } else {
+                        plugin.debug("Location " + wStr + ":" + xx + ":" + zz + " occupied");
                     }
                 }
             }
