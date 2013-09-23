@@ -814,6 +814,6 @@ public class TARDISDoorListener implements Listener {
     private void removeTraveller(String p) {
         HashMap<String, Object> where = new HashMap<String, Object>();
         where.put("player", p);
-        new QueryFactory(plugin).doDelete("travellers", where);
+        new QueryFactory(plugin).doSyncDelete("travellers", where);
     }
 }
