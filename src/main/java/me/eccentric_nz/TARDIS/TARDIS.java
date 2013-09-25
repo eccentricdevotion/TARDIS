@@ -96,7 +96,7 @@ import me.eccentric_nz.TARDIS.listeners.TARDISUpdateListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISWorldResetListener;
 import me.eccentric_nz.TARDIS.rooms.TARDISCondenserData;
 import me.eccentric_nz.TARDIS.rooms.TARDISSeedData;
-import me.eccentric_nz.TARDIS.thirdparty.MetricsLite;
+//import me.eccentric_nz.TARDIS.thirdparty.MetricsLite;
 import me.eccentric_nz.TARDIS.thirdparty.Version;
 import me.eccentric_nz.TARDIS.travel.TARDISArea;
 import me.eccentric_nz.TARDIS.utility.TARDISCreeperChecker;
@@ -285,7 +285,7 @@ public class TARDIS extends JavaPlugin {
         loadFiles();
         registerListeners();
         loadCommands();
-        loadMetrics();
+        //loadMetrics();
         startSound();
         loadWorldGuard();
         loadTowny();
@@ -525,15 +525,15 @@ public class TARDIS extends JavaPlugin {
      * Starts the sending of plugin statistics. To stop TARDIS sending metrics
      * data, edit plugins/PluginMetrics/config.yml and set opt-out to true.
      */
-    private void loadMetrics() {
-        try {
-            MetricsLite metrics = new MetricsLite(this);
-            metrics.start();
-        } catch (IOException e) {
-            // Failed to submit the stats :-(
-        }
-    }
-
+//    private void loadMetrics() {
+//        try {
+//            MetricsLite metrics = new MetricsLite(this);
+//            metrics.start();
+//        } catch (IOException e) {
+//            // Failed to submit the stats :-(
+//        }
+//    }
+//    
     /**
      * Starts a repeating tasks that plays TARDIS sound effects to players while
      * they are inside the TARDIS. Requires the Spout plugin to be installed on
