@@ -6,13 +6,13 @@
 2. Jettison the whole room (including walls), will require new room schematics... (in progress - working with ARS :)
 3. Architectural Reconfiguration System (almost there)
     * Doorways still. If a room is growing and there isn't one next to it - _but there will be_ - the doorway blocks will need to be removed. Could do a check right at the end, but it might just be easier to leave the doorway open…
-4. Remove the TARDIS creation block stack by default, make the choice between seed block and stack configurable
-5. While doing [4], add one slot for a custom console (slot added, command needed)
-6. HADS + explosions + fireballs + lava
-7. Put farmland, crops, buttons, levers and signs on last when growing rooms
-8. Sonic Screwdrivers
-9. TARDIS Information System (in progress)
-10. Chameleon presets (in progress)
+4. Add one slot for a custom console (slot added, command needed)
+5. HADS + explosions + fireballs + lava
+6. Put farmland, crops, buttons, levers and signs on last when growing rooms
+7. Sonic Screwdrivers
+8. TARDIS Information System (in progress)
+9. Chameleon presets (in progress)
+    * Add Chameleon GUI - turn Chameleon Circuit on/off, choose chameleon preset
     * Grass mound?
     * Allow wood doors to be exterior TARDIS doors
 
@@ -30,6 +30,7 @@
 8. Make condensables list configurable
 9. TARDIS direction sign
 10. TARDIS exterior rendering / scanner room
+11. Underground materialisation
 
 ## Minecraft API when available `3.0?`
 1. Recreate everything with the new API :)
@@ -37,6 +38,6 @@
 3. If using the LAPIS block have the walls a special TARDIS wall block.
 4. A TARDIS key and a crafting recipe for that item.
 5. A Sonic Screwdriver and a crafting recipe for that item.
-6. GUI (if allowed)
-7. Add sounds
+6. GUIs (if allowed)
+7. Add proper TARDIS sounds
 8. Make the TARDIS Police Box an entity (if allowed)

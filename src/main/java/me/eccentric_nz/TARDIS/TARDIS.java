@@ -398,7 +398,9 @@ public class TARDIS extends JavaPlugin {
      * TARDIS.
      */
     private void registerListeners() {
-        pm.registerEvents(new TARDISBlockPlaceListener(this), this);
+        if (getConfig().getBoolean("use_block_stack")) {
+            pm.registerEvents(new TARDISBlockPlaceListener(this), this);
+        }
         pm.registerEvents(new TARDISBlockBreakListener(this), this);
         this.doorListener = new TARDISDoorListener(this);
         pm.registerEvents(doorListener, this);
@@ -533,7 +535,7 @@ public class TARDIS extends JavaPlugin {
 //            // Failed to submit the stats :-(
 //        }
 //    }
-//    
+//
     /**
      * Starts a repeating tasks that plays TARDIS sound effects to players while
      * they are inside the TARDIS. Requires the Spout plugin to be installed on

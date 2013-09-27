@@ -103,6 +103,7 @@ public class TARDISConfiguration {
         boolOptions.put("strike_lightning", true);
         boolOptions.put("the_end", false);
         boolOptions.put("use_clay", false);
+        boolOptions.put("use_block_stack", false);
         boolOptions.put("use_worldguard", true);
         roomBoolOptions.put("rooms.ANTIGRAVITY.enabled", true);
         roomBoolOptions.put("rooms.ANTIGRAVITY.user", false);

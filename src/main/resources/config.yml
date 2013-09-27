@@ -68,3 +68,4 @@ difficulty: normal
 strike_lightning: true
 custom_schematic: false
 custom_schematic_seed: OBSIDIAN
+use_block_stack: false
