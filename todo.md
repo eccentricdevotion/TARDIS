@@ -13,11 +13,12 @@
 8. TARDIS Information System (in progress)
 9. Chameleon presets (in progress)
     * Add Chameleon GUI - turn Chameleon Circuit on/off, choose chameleon preset
+    * Need database field to store selected preset
     * Grass mound?
     * Allow wood doors to be exterior TARDIS doors
 
 ### Waiting on Bukkit API
-2. Get/set horse speed (Attribute API)
+1. Get/set horse speed (Attribute API)
 
 ## Next version `2.7+`
 1. TARDIS invisiblity

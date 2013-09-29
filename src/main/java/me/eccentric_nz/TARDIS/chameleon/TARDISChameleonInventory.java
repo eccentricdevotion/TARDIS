@@ -17,6 +17,7 @@
 package me.eccentric_nz.TARDIS.chameleon;
 
 import java.util.Arrays;
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -49,7 +50,7 @@ public class TARDISChameleonInventory {
         ItemStack con = new ItemStack(Material.REDSTONE_COMPARATOR, 1);
         ItemMeta ing = con.getItemMeta();
         ing.setDisplayName("Circuit");
-        String on_off = (bool) ? "ON" : "OFF";
+        String on_off = (bool) ? ChatColor.GREEN + "ON" : ChatColor.RED + "OFF";
         ing.setLore(Arrays.asList(new String[]{on_off}));
         con.setItemMeta(ing);
         // New Police Box
@@ -107,11 +108,16 @@ public class TARDISChameleonInventory {
         ItemMeta sme = yellow.getItemMeta();
         sme.setDisplayName("Yellow Submarine");
         yellow.setItemMeta(sme);
+        // Cancel / close
+        ItemStack close = new ItemStack(Material.WOOL, 1, (short) 15);
+        ItemMeta can = close.getItemMeta();
+        can.setDisplayName("Close");
+        close.setItemMeta(can);
 
         ItemStack[] is = {
-            null, null, con, null, box, null, off, null, null,
-            stone, null, desert, null, jungle, null, nether, null, def,
-            null, swamp, null, tent, null, village, null, yellow, null
+            con, null, box, null, off, null, null, null, close,
+            null, stone, null, desert, null, jungle, null, nether, null,
+            def, null, swamp, null, tent, null, village, null, yellow
         };
         return is;
     }
