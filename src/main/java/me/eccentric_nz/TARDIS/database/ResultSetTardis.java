@@ -55,6 +55,7 @@ public class ResultSetTardis {
     private boolean chamele_on;
     private int chameleon_id;
     private byte chameleon_data;
+    private TARDISConstants.PRESET preset;
     private int artron_level;
     private int middle_id;
     private byte middle_data;
@@ -155,6 +156,7 @@ public class ResultSetTardis {
                     this.chamele_on = rs.getBoolean("chamele_on");
                     this.chameleon_id = rs.getInt("chameleon_id");
                     this.chameleon_data = rs.getByte("chameleon_data");
+                    this.preset = TARDISConstants.PRESET.valueOf(rs.getString("chameleon_preset"));
                     this.artron_level = rs.getInt("artron_level");
                     this.middle_id = rs.getInt("middle_id");
                     this.middle_data = rs.getByte("middle_data");
@@ -245,6 +247,10 @@ public class ResultSetTardis {
 
     public byte getChameleon_data() {
         return chameleon_data;
+    }
+
+    public TARDISConstants.PRESET getPreset() {
+        return preset;
     }
 
     public int getArtron_level() {

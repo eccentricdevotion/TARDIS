@@ -73,6 +73,7 @@ public class TARDISDatabaseUpdater {
         tardisupdates.add("beacon TEXT DEFAULT ''");
         tardisupdates.add("chameleon_data INTEGER DEFAULT 11");
         tardisupdates.add("chameleon_id INTEGER DEFAULT 35");
+        tardisupdates.add("chameleon_preset TEXT DEFAULT 'NEW'");
         tardisupdates.add("condenser TEXT DEFAULT ''");
         tardisupdates.add("creeper TEXT DEFAULT ''");
         tardisupdates.add("eps TEXT DEFAULT ''");

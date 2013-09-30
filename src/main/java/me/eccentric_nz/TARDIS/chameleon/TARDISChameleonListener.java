@@ -18,7 +18,6 @@ package me.eccentric_nz.TARDIS.chameleon;
 
 import java.util.Arrays;
 import java.util.HashMap;
-import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
@@ -75,13 +74,15 @@ public class TARDISChameleonListener implements Listener {
                         int id = rst.getTardis_id();
                         HashMap<String, Object> where = new HashMap<String, Object>();
                         where.put("tardis_id", id);
-                        HashMap<String, Object> set = new HashMap<String, Object>();
-                        QueryFactory qf = new QueryFactory(plugin);
-                        switch (slot) {
-                            case 0:
-                                // toggle chameleon circuit
-                                ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
-                                if (rs.resultSet()) {
+                        ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
+                        if (rs.resultSet()) {
+                            HashMap<String, Object> set = new HashMap<String, Object>();
+                            QueryFactory qf = new QueryFactory(plugin);
+                            HashMap<String, Object> wherec = new HashMap<String, Object>();
+                            wherec.put("tardis_id", id);
+                            switch (slot) {
+                                case 0:
+                                    // toggle chameleon circuit
                                     String onoff;
                                     int oo;
                                     if (rs.isChamele_on()) {
@@ -94,56 +95,93 @@ public class TARDISChameleonListener implements Listener {
                                     ItemMeta im = is.getItemMeta();
                                     im.setLore(Arrays.asList(new String[]{onoff}));
                                     is.setItemMeta(im);
-                                    // get sign block so we can update it
-                                    Block cc = plugin.utils.getLocationFromDB(rs.getChameleon(), 0, 0).getBlock();
-                                    if (cc.getType() == Material.WALL_SIGN || cc.getType() == Material.SIGN_POST) {
-                                        Sign sign = (Sign) cc.getState();
-                                        sign.setLine(3, onoff);
-                                        sign.update();
-                                    } else {
-                                        player.sendMessage(plugin.pluginName + "Chameleon Circuit " + onoff);
-                                    }
-                                    HashMap<String, Object> wherec = new HashMap<String, Object>();
-                                    wherec.put("tardis_id", id);
+                                    // set sign text
+                                    setSign(rs.getChameleon(), 2, onoff, player);
                                     set.put("chamele_on", oo);
-                                    qf.doUpdate("tardis", set, wherec);
-                                }
-                                break;
-                            case 3:
-                                // new Police Box
-                                break;
-                            case 5:
-                                // disengaged
-                                break;
-                            case 10:
-                                // stone column
-                                break;
-                            case 12:
-                                // desert temple
-                                break;
-                            case 14:
-                                // jungle temple
-                                break;
-                            case 16:
-                                // nether fortress
-                                break;
-                            case 18:
-                                // old police box
-                                break;
-                            case 20:
-                                // swamp hut
-                                break;
-                            case 22:
-                                // party tent
-                                break;
-                            case 24:
-                                // village house
-                                break;
-                            case 26:
-                                // yellow submarine
-                                break;
-                            default:
-                                close(player);
+                                    break;
+                                case 2:
+                                    // new Police Box
+                                    set.put("chameleon_preset", "NEW");
+                                    setSign(rs.getChameleon(), 3, "NEW", player);
+                                    close(player);
+                                    player.sendMessage(plugin.pluginName + "Chameleon Preset set to " + ChatColor.AQUA + "New Police Box");
+                                    break;
+                                case 4:
+                                    // factory
+                                    set.put("chameleon_preset", "FACTORY");
+                                    setSign(rs.getChameleon(), 3, "FACTORY", player);
+                                    close(player);
+                                    player.sendMessage(plugin.pluginName + "Chameleon Preset set to " + ChatColor.AQUA + "Factory Fresh");
+                                    break;
+                                case 10:
+                                    // stone brick column
+                                    set.put("chameleon_preset", "STONE");
+                                    setSign(rs.getChameleon(), 3, "STONE", player);
+                                    close(player);
+                                    player.sendMessage(plugin.pluginName + "Chameleon Preset set to " + ChatColor.AQUA + "Stone Brick Column");
+                                    break;
+                                case 12:
+                                    // desert temple
+                                    set.put("chameleon_preset", "DESERT");
+                                    setSign(rs.getChameleon(), 3, "DESERT", player);
+                                    close(player);
+                                    player.sendMessage(plugin.pluginName + "Chameleon Preset set to " + ChatColor.AQUA + "Desert Temple");
+                                    break;
+                                case 14:
+                                    // jungle temple
+                                    set.put("chameleon_preset", "JUNGLE");
+                                    setSign(rs.getChameleon(), 3, "JUNGLE", player);
+                                    close(player);
+                                    player.sendMessage(plugin.pluginName + "Chameleon Preset set to " + ChatColor.AQUA + "Jungle Temple");
+                                    break;
+                                case 16:
+                                    // nether fortress
+                                    set.put("chameleon_preset", "NETHER");
+                                    setSign(rs.getChameleon(), 3, "NETHER", player);
+                                    close(player);
+                                    player.sendMessage(plugin.pluginName + "Chameleon Preset set to " + ChatColor.AQUA + "Nether Fortress");
+                                    break;
+                                case 18:
+                                    // old police box
+                                    set.put("chameleon_preset", "OLD");
+                                    setSign(rs.getChameleon(), 3, "OLD", player);
+                                    close(player);
+                                    player.sendMessage(plugin.pluginName + "Chameleon Preset set to " + ChatColor.AQUA + "Old Police Box");
+                                    break;
+                                case 20:
+                                    // swamp hut
+                                    set.put("chameleon_preset", "SWAMP");
+                                    setSign(rs.getChameleon(), 3, "SWAMP", player);
+                                    close(player);
+                                    player.sendMessage(plugin.pluginName + "Chameleon Preset set to " + ChatColor.AQUA + "Swamp Hut");
+                                    break;
+                                case 22:
+                                    // party tent
+                                    set.put("chameleon_preset", "PARTY");
+                                    setSign(rs.getChameleon(), 3, "PARTY", player);
+                                    close(player);
+                                    player.sendMessage(plugin.pluginName + "Chameleon Preset set to " + ChatColor.AQUA + "Party Tent");
+                                    break;
+                                case 24:
+                                    // village house
+                                    set.put("chameleon_preset", "VILLAGE");
+                                    setSign(rs.getChameleon(), 3, "VILLAGE", player);
+                                    close(player);
+                                    player.sendMessage(plugin.pluginName + "Chameleon Preset set to " + ChatColor.AQUA + "Village House");
+                                    break;
+                                case 26:
+                                    // yellow submarine
+                                    set.put("chameleon_preset", "YELLOW");
+                                    setSign(rs.getChameleon(), 3, "YELLOW", player);
+                                    close(player);
+                                    player.sendMessage(plugin.pluginName + "Chameleon Preset set to " + ChatColor.AQUA + "Yellow Submarine");
+                                    break;
+                                default:
+                                    close(player);
+                            }
+                            if (set.size() > 0) {
+                                qf.doUpdate("tardis", set, wherec);
+                            }
                         }
                     }
                 }
@@ -166,13 +204,24 @@ public class TARDISChameleonListener implements Listener {
     }
 
     /**
-     * Converts an Item Stacks lore to a destination string.
+     * Sets the Chameleon Sign text or messages the player.
      *
-     * @param lore the lore to read
+     * @param loc the location string retrieved from the database
+     * @param line the line number to set
+     * @param text the text to write
+     * @param p the player to message (if the Chameleon control is not a sign)
      * @return the destination string
      */
-    private String getDestination(List<String> lore) {
-        return lore.get(0) + ":" + lore.get(1) + ":" + lore.get(2) + ":" + lore.get(3);
+    private void setSign(String loc, int line, String text, Player p) {
+        // get sign block so we can update it
+        Block cc = plugin.utils.getLocationFromDB(loc, 0, 0).getBlock();
+        if (cc.getType() == Material.WALL_SIGN || cc.getType() == Material.SIGN_POST) {
+            Sign sign = (Sign) cc.getState();
+            sign.setLine(line, text);
+            sign.update();
+        } else {
+            p.sendMessage(plugin.pluginName + "Chameleon Circuit " + text);
+        }
     }
 
     /**

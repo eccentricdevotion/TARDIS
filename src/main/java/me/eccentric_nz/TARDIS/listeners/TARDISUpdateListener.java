@@ -142,6 +142,7 @@ public class TARDISUpdateListener implements Listener {
                 return;
             }
             int id = rs.getTardis_id();
+            String preset = rs.getPreset().toString();
             TARDISConstants.SCHEMATIC schm = rs.getSchematic();
             QueryFactory qf = new QueryFactory(plugin);
             String table = "tardis";
@@ -301,7 +302,8 @@ public class TARDISUpdateListener implements Listener {
                     Sign s = (Sign) block.getState();
                     s.setLine(0, "Chameleon");
                     s.setLine(1, "Circuit");
-                    s.setLine(3, ChatColor.RED + "OFF");
+                    s.setLine(2, ChatColor.RED + "OFF");
+                    s.setLine(3, preset);
                     s.update();
                 }
             }

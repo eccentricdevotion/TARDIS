@@ -61,7 +61,7 @@ public class TARDISChameleonInventory {
         // disengaged
         ItemStack off = new ItemStack(Material.WOOL, 1, (short) 8);
         ItemMeta ht = off.getItemMeta();
-        ht.setDisplayName("Disable Circuit");
+        ht.setDisplayName("Factory Fresh");
         off.setItemMeta(ht);
         // Stone Brick Column
         ItemStack stone = new ItemStack(Material.SMOOTH_BRICK, 1);

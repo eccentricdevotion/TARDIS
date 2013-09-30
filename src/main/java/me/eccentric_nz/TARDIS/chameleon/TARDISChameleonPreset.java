@@ -51,8 +51,8 @@ public class TARDISChameleonPreset {
     private String nether_data = "[[2,6,2,0],[2,6,2,0],[2,6,2,0],[1,5,1,0],[3,7,3,0],[3,7,3,0],[3,7,3,0],[0,8,0,0],[0,0,0,0],[0,0,0,0]]";
     private EnumMap<TARDISConstants.COMPASS, TARDISChameleonColumn> nether = new EnumMap<TARDISConstants.COMPASS, TARDISChameleonColumn>(TARDISConstants.COMPASS.class);
     private String plain_id = "[[159,159,159,0],[159,159,159,0],[159,159,159,0],[159,159,159,0],[159,159,159,0],[159,159,159,0],[159,159,159,0],[71,71,159,0],[0,0,159,0],[0,0,0,0]]";
-    private String plain_data = "[[8,8,8,0],[8,8,8,0],[8,8,8,0],[8,8,8,0],[8,8,8,0],[8,8,8,0],[8,8,8,0],[0,8,8,0],[0,0,8,0],[0,0,0,0]]";
-    private EnumMap<TARDISConstants.COMPASS, TARDISChameleonColumn> plain = new EnumMap<TARDISConstants.COMPASS, TARDISChameleonColumn>(TARDISConstants.COMPASS.class);
+    private String factory_data = "[[8,8,8,0],[8,8,8,0],[8,8,8,0],[8,8,8,0],[8,8,8,0],[8,8,8,0],[8,8,8,0],[0,8,8,0],[0,0,8,0],[0,0,0,0]]";
+    private EnumMap<TARDISConstants.COMPASS, TARDISChameleonColumn> factory = new EnumMap<TARDISConstants.COMPASS, TARDISChameleonColumn>(TARDISConstants.COMPASS.class);
     private String police_id = "[[35,35,35,0],[35,35,35,0],[35,35,35,0],[35,35,35,0],[35,35,35,0],[35,35,35,0],[35,35,35,0],[71,71,35,0],[0,0,35,50],[0,0,68,0]]";
     private String police_data = "[[11,11,11,0],[11,11,11,0],[11,11,11,0],[11,11,11,0],[11,11,11,0],[11,11,11,0],[11,11,11,0],[0,8,11,0],[0,0,11,5],[0,0,4,0]]";
     private EnumMap<TARDISConstants.COMPASS, TARDISChameleonColumn> police = new EnumMap<TARDISConstants.COMPASS, TARDISChameleonColumn>(TARDISConstants.COMPASS.class);
@@ -84,7 +84,7 @@ public class TARDISChameleonPreset {
             ice.put(d, buildTARDISChameleonColumn(d, ice_id, ice_data));
             jungle.put(d, buildTARDISChameleonColumn(d, jungle_id, jungle_data));
             nether.put(d, buildTARDISChameleonColumn(d, nether_id, nether_data));
-            plain.put(d, buildTARDISChameleonColumn(d, plain_id, plain_data));
+            factory.put(d, buildTARDISChameleonColumn(d, plain_id, factory_data));
             police.put(d, buildTARDISChameleonColumn(d, police_id, police_data));
             swamp.put(d, buildTARDISChameleonColumn(d, swamp_id, swamp_data));
             taller.put(d, buildTARDISChameleonColumn(d, taller_id, taller_data));
@@ -407,8 +407,8 @@ public class TARDISChameleonPreset {
         return nether;
     }
 
-    public EnumMap<TARDISConstants.COMPASS, TARDISChameleonColumn> getPlain() {
-        return plain;
+    public EnumMap<TARDISConstants.COMPASS, TARDISChameleonColumn> getFactory() {
+        return factory;
     }
 
     public EnumMap<TARDISConstants.COMPASS, TARDISChameleonColumn> getSwamp() {
