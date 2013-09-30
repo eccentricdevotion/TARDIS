@@ -22,6 +22,7 @@ respect_factions: true
 land_on_water: true
 timeout: 5
 timeout_height: 135
+random_attempts: 30
 name_tardis: false
 border_radius: 64
 create_worlds: true

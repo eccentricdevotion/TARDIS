@@ -209,7 +209,6 @@ public class TARDISButtonListener implements Listener {
                                             TARDISTimeTravel tt = new TARDISTimeTravel(plugin);
                                             Location rand = tt.randomDestination(player, repeaters[1], repeaters[2], repeaters[3], dir, environment, rscl.getWorld(), false);
                                             if (rand != null) {
-                                                String sub = (plugin.trackSubmarine.contains(Integer.valueOf(id))) ? "true" : "false";
                                                 set.put("world", rand.getWorld().getName());
                                                 set.put("x", rand.getBlockX());
                                                 set.put("y", rand.getBlockY());

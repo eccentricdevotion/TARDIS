@@ -250,8 +250,6 @@ public class TARDISTravelCommands implements CommandExecutor {
                                     }
                                     World bw = nsob.getWorld();
                                     // check location
-                                    bw.getChunkAt(nsob).load();
-                                    bw.getChunkAt(nsob).load(true);
                                     while (!bw.getChunkAt(nsob).isLoaded()) {
                                         bw.getChunkAt(nsob).load();
                                     }

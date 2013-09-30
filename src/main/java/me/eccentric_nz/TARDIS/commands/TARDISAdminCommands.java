@@ -139,6 +139,7 @@ public class TARDISAdminCommands implements CommandExecutor {
         firstsBool.add("spawn_eggs");
         firstsBool.add("strike_lightning");
         firstsBool.add("the_end");
+        firstsBool.add("use_block_stack");
         firstsBool.add("use_clay");
         firstsBool.add("use_worldguard");
         // integer
@@ -154,6 +155,7 @@ public class TARDISAdminCommands implements CommandExecutor {
         firstsInt.add("malfunction_end");
         firstsInt.add("malfunction_nether");
         firstsInt.add("platform_id");
+        firstsInt.add("random_attempts");
         firstsInt.add("recharge_distance");
         firstsInt.add("room_speed");
         firstsInt.add("rooms_condenser_percent");

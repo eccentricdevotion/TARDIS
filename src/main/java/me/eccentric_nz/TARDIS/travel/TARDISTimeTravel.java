@@ -50,6 +50,7 @@ public class TARDISTimeTravel {
     private TARDIS plugin;
     private List<Material> goodMaterials = new ArrayList<Material>();
     private TARDISPluginRespect respect;
+    private int attempts;
 
     public TARDISTimeTravel(TARDIS plugin) {
         this.plugin = plugin;
@@ -64,17 +65,19 @@ public class TARDISTimeTravel {
         goodMaterials.add(Material.SAPLING);
         goodMaterials.add(Material.SNOW);
         respect = new TARDISPluginRespect(plugin);
+        this.attempts = plugin.getConfig().getInt("random_attempts");
     }
 
     /**
-     * Checks if a location is contained within a defined TARDIS area.
+     * Retrieves a random location determined from the TARDIS repeater or
+     * terminal settings.
      *
      * @param p a player object used to check permissions against.
      * @param rx the data bit setting of the x-repeater, this determines the
      * distance in the x direction.
      * @param rz the data bit setting of the z-repeater, this determines the
      * distance in the z direction.
-     * @param ry the data bit setting of the Y-repeater, this determines the
+     * @param ry the data bit setting of the y-repeater, this determines the
      * multiplier for both the x and z directions.
      * @param d the direction the TARDIS Police Box faces.
      * @param e the environment(s) the player has chosen (or is allowed) to
@@ -85,9 +88,7 @@ public class TARDISTimeTravel {
     public Location randomDestination(Player p, byte rx, byte rz, byte ry, TARDISConstants.COMPASS d, String e, World this_world, boolean malfunction) {
         int startx, starty, startz, resetx, resetz, listlen, rw;
         World randworld = null;
-        boolean danger = true;
         int count;
-        // there needs to be room for the TARDIS and the player!
         Random rand = new Random();
         // get max_radius from config
         int max = plugin.getConfig().getInt("tp_radius");
@@ -144,19 +145,16 @@ public class TARDISTimeTravel {
             i += 1;
         }
         if (randworld != null && randworld.getEnvironment().equals(Environment.NETHER)) {
-            // change while loop for a non-potential endless loop solution
-            while (danger == true) {
+            for (int n = 0; n < attempts; n++) {
                 wherex = randomX(rand, range, quarter, rx, ry, max);
                 wherez = randomZ(rand, range, quarter, rz, ry, max);
                 if (safeNether(randworld, wherex, wherez, d, p)) {
-                    danger = false;
                     break;
                 }
             }
         }
         if (randworld != null && randworld.getEnvironment().equals(Environment.THE_END)) {
-            // change while loop for a non-potential endless loop solution
-            while (danger == true) {
+            for (int n = 0; n < attempts; n++) {
                 wherex = rand.nextInt(240);
                 wherez = rand.nextInt(240);
                 wherex -= 120;
@@ -168,8 +166,6 @@ public class TARDISTimeTravel {
                     Block currentBlock = randworld.getBlockAt(wherex, highest, wherez);
                     Location chunk_loc = currentBlock.getLocation();
                     if (respect.getRespect(p, chunk_loc, false)) {
-                        randworld.getChunkAt(chunk_loc).load();
-                        randworld.getChunkAt(chunk_loc).load(true);
                         while (!randworld.getChunkAt(chunk_loc).isLoaded()) {
                             randworld.getChunkAt(chunk_loc).load();
                         }
@@ -188,7 +184,6 @@ public class TARDISTimeTravel {
                     count = 1;
                 }
                 if (count == 0) {
-                    danger = false;
                     break;
                 }
             }
@@ -197,8 +192,8 @@ public class TARDISTimeTravel {
         // Assume every non-nether/non-END world qualifies as NORMAL.
         if (randworld != null && !randworld.getEnvironment().equals(Environment.NETHER) && !randworld.getEnvironment().equals(Environment.THE_END)) {
             long timeout = System.currentTimeMillis() + (plugin.getConfig().getLong("timeout") * 1000);
-            // change while loop for a non-potential endless loop solution
-            while (danger == true) {
+            break_normal:
+            while (true) {
                 if (System.currentTimeMillis() < timeout) {
                     // reset count
                     count = 0;
@@ -242,8 +237,6 @@ public class TARDISTimeTravel {
                             }
                             Location chunk_loc = currentBlock.getLocation();
                             if (respect.getRespect(p, chunk_loc, false)) {
-                                randworld.getChunkAt(chunk_loc).load();
-                                randworld.getChunkAt(chunk_loc).load(true);
                                 while (!randworld.getChunkAt(chunk_loc).isLoaded()) {
                                     randworld.getChunkAt(chunk_loc).load();
                                 }
@@ -263,14 +256,14 @@ public class TARDISTimeTravel {
                         count = 1;
                     }
                     if (count == 0) {
-                        break;
+                        break break_normal;
                     }
                 } else {
                     if (!respect.getRespect(p, new Location(randworld, wherex, highest, wherez), false)) {
                         return null;
                     } else {
                         highest = plugin.getConfig().getInt("timeout_height");
-                        break;
+                        break break_normal;
                     }
                 }
             }
@@ -424,8 +417,7 @@ public class TARDISTimeTravel {
                 startLoc[2] = loc.getBlockZ() - 2;
                 startLoc[3] = startLoc[2];
                 break;
-            case WEST:
-            case NORTH:
+            default:
                 startLoc[0] = loc.getBlockX() - 1;
                 startLoc[1] = startLoc[0];
                 startLoc[2] = loc.getBlockZ() - 1;
@@ -449,11 +441,11 @@ public class TARDISTimeTravel {
         int startx, starty, startz, resetx, resetz, count;
         int wherey = 100;
         Block startBlock = nether.getBlockAt(wherex, wherey, wherez);
-        while (startBlock.getTypeId() != 0) {
+        while (!startBlock.getType().equals(Material.AIR)) {
             startBlock = startBlock.getRelative(BlockFace.DOWN);
         }
         int air = 0;
-        while (startBlock.getTypeId() == 0 && startBlock.getLocation().getBlockY() > 30) {
+        while (startBlock.getType().equals(Material.AIR) && startBlock.getLocation().getBlockY() > 30) {
             startBlock = startBlock.getRelative(BlockFace.DOWN);
             air++;
         }
@@ -571,19 +563,15 @@ public class TARDISTimeTravel {
     @SuppressWarnings("deprecation")
     public Location submarine(Block b, TARDISConstants.COMPASS d) {
         Block block = b;
-        boolean bottom = false;
-        while (bottom == false) {
+        while (true) {
             block = block.getRelative(BlockFace.DOWN);
-            if (block.getTypeId() != 8 && block.getTypeId() != 9) {
-                bottom = true;
+            if (!block.getType().equals(Material.STATIONARY_WATER) && !block.getType().equals(Material.WATER)) {
                 break;
             }
         }
         Location loc = block.getRelative(BlockFace.UP).getLocation();
-        boolean safe = false;
-        while (!safe) {
+        for (int n = 0; n < attempts; n++) {
             if (isSafeSubmarine(loc, d)) {
-                safe = true;
                 return loc;
             } else {
                 loc.setY(loc.getY() + 1);
