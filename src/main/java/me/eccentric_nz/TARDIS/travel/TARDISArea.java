@@ -150,6 +150,7 @@ public class TARDISArea {
         where.put("area_name", a);
         ResultSetAreas rsa = new ResultSetAreas(plugin, where, false);
         if (rsa.resultSet()) {
+            int xx, zz = 0;
             int minx = rsa.getMinx();
             int x = minx + 2;
             int minz = rsa.getMinz();
@@ -160,8 +161,8 @@ public class TARDISArea {
             boolean chk = false;
             // only loop for the size of the TARDIS area
             outerloop:
-            for (int xx = x; xx <= maxx; xx += 5) {
-                for (int zz = z; zz <= maxz; zz += 5) {
+            for (xx = x; xx <= maxx; xx += 5) {
+                for (zz = z; zz <= maxz; zz += 5) {
                     HashMap<String, Object> wherec = new HashMap<String, Object>();
                     wherec.put("world", wStr);
                     wherec.put("x", xx);
@@ -179,9 +180,9 @@ public class TARDISArea {
                 World w = plugin.getServer().getWorld(wStr);
                 int y = rsa.getY();
                 if (y == 0) {
-                    y = w.getHighestBlockYAt(x, z);
+                    y = w.getHighestBlockYAt(xx, zz);
                 }
-                location = w.getBlockAt(x, y, z).getLocation();
+                location = w.getBlockAt(xx, y, zz).getLocation();
             }
         }
         return location;
