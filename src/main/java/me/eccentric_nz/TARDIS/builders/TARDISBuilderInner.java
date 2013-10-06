@@ -108,6 +108,14 @@ public class TARDISBuilderInner {
                 s = plugin.tomschematic;
                 d = plugin.tomdimensions;
                 break;
+            case ARS:
+                s = plugin.arsschematic;
+                d = plugin.arsdimensions;
+                break;
+            case CUSTOM:
+                s = plugin.customschematic;
+                d = plugin.customdimensions;
+                break;
             default:
                 s = plugin.budgetschematic;
                 d = plugin.budgetdimensions;
