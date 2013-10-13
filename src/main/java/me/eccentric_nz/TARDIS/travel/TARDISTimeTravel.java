@@ -187,7 +187,7 @@ public class TARDISTimeTravel {
                     break;
                 }
             }
-            dest = new Location(randworld, wherex, highest, wherez);
+            dest = (highest > 0) ? new Location(randworld, wherex, highest, wherez) : null;
         }
         // Assume every non-nether/non-END world qualifies as NORMAL.
         if (randworld != null && !randworld.getEnvironment().equals(Environment.NETHER) && !randworld.getEnvironment().equals(Environment.THE_END)) {
