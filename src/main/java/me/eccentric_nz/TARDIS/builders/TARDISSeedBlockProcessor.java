@@ -51,11 +51,13 @@ public class TARDISSeedBlockProcessor {
     }
 
     /**
-     * Listens for player block placing. If the player place a stack of blocks
-     * in a certain pattern for example (but not limited to): IRON_BLOCK,
-     * LAPIS_BLOCK, RESTONE_TORCH the pattern of blocks is turned into a TARDIS.
+     * Turns a seed block, that has been right-clicked by a player into a
+     * TARDIS.
      *
-     * @param event a player placing a block
+     * @param seed the build data for this seed block
+     * @param l the location of the placed seed block
+     * @param player the player who placed the seed block
+     * @return true or false
      */
     public boolean processBlock(TARDISBuildData seed, Location l, Player player) {
         if (player.hasPermission("tardis.create")) {
