@@ -51,7 +51,7 @@ public class TARDISChatListener implements Listener {
     public void onChat(AsyncPlayerChatEvent event) {
         final String saved = event.getPlayer().getName();
         String chat = event.getMessage();
-        if (chat.equalsIgnoreCase("tardis rescue accept")) {
+        if (chat != null && chat.equalsIgnoreCase("tardis rescue accept")) {
             if (plugin.trackChat.containsKey(saved)) {
                 final Player rescuer = plugin.getServer().getPlayer(plugin.trackChat.get(saved));
                 final TARDISRescue res = new TARDISRescue(plugin);

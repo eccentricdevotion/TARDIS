@@ -1,11 +1,10 @@
 # TODO
 
 ## Current version `2.6-beta-1`
-0. Remove `while` loops that have the potential to crash the server!
 1. Test `platform_id`, Temporal Invisibility
 2. Jettison the whole room (including walls), will require new room schematics... (in progress - working with ARS :)
 3. Architectural Reconfiguration System (almost there)
-    * Doorways still. If a room is growing and there isn't one next to it - _but there will be_ - the doorway blocks will need to be removed. Could do a check right at the end, but it might just be easier to leave the doorway open…
+    * Doorways - leave the doorway open…
 4. Add one slot for a custom console (slot added, command needed)
 5. HADS + explosions + fireballs + lava
 6. Put farmland, crops, buttons, levers and signs on last when growing rooms
@@ -14,10 +13,13 @@
 9. Chameleon presets (in progress)
     * Add Chameleon GUI - turn Chameleon Circuit on/off, choose chameleon preset
     * Need database field to store selected preset
-    * Grass mound?
     * Allow wood doors to be exterior TARDIS doors
+10. `tardis.skeletonkey` overrides isomorphic controls
 
-### Waiting on Bukkit API
+###Bugs to fix
+1. add bugs here!
+
+## Waiting on Bukkit API
 1. Get/set horse speed (Attribute API)
 
 ## Next version `2.7+`
