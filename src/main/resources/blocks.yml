@@ -164,6 +164,7 @@ under_door_blocks:
 - 134
 - 135
 - 136
+- 171
 # Add MATERIAL names here for blocks that should have zero Artron value when condensed
 no_artron_value:
 #- STONE
