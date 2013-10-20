@@ -60,6 +60,7 @@ public class TARDISWorldBorderChecker {
      * Gets the border radius for a specified world.
      *
      * @param world the world to get the radius for
+     * @return the world radius
      */
     public int[] getBorderDistance(String world) {
         int[] distance = new int[2];

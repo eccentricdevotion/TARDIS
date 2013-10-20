@@ -210,11 +210,9 @@ public class TARDISMakeTardisCSV {
                 } catch (IOException io) {
                     plugin.console.sendMessage(plugin.pluginName + "Could not save the file (" + file.toString() + ").");
                 } finally {
-                    if (out != null) {
-                        try {
-                            out.close();
-                        } catch (Exception e) {
-                        }
+                    try {
+                        out.close();
+                    } catch (IOException e) {
                     }
                 }
             } catch (FileNotFoundException e) {
@@ -223,7 +221,7 @@ public class TARDISMakeTardisCSV {
                 if (in != null) {
                     try {
                         in.close();
-                    } catch (Exception e) {
+                    } catch (IOException e) {
                     }
                 }
             }

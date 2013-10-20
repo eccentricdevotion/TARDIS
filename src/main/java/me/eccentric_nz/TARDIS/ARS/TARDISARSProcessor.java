@@ -135,10 +135,7 @@ public class TARDISARSProcessor {
                 }
             }
         }
-        if (jettison.size() > 0 || changed.size() > 0) {
-            return true;
-        }
-        return false;
+        return jettison.size() > 0 || changed.size() > 0;
     }
 
     public boolean checkCosts(HashMap<TARDISARSSlot, TARDISARS> changed, HashMap<TARDISARSJettison, TARDISARS> jettison) {

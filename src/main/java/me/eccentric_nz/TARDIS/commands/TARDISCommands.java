@@ -73,10 +73,10 @@ import org.bukkit.inventory.ItemStack;
  */
 public class TARDISCommands implements CommandExecutor {
 
-    private TARDIS plugin;
+    private final TARDIS plugin;
     private TARDISPluginRespect respect;
     HashSet<Byte> transparent = new HashSet<Byte>();
-    private List<String> firstArgs = new ArrayList<String>();
+    private final List<String> firstArgs = new ArrayList<String>();
     public List<String> roomArgs = new ArrayList<String>();
 
     public TARDISCommands(TARDIS plugin) {

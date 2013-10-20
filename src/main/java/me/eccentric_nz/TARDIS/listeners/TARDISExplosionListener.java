@@ -38,7 +38,7 @@ import org.bukkit.event.entity.EntityExplodeEvent;
  */
 public class TARDISExplosionListener implements Listener {
 
-    private TARDIS plugin;
+    private final TARDIS plugin;
 
     public TARDISExplosionListener(TARDIS plugin) {
         this.plugin = plugin;

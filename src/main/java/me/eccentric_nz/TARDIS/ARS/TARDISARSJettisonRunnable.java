@@ -29,10 +29,10 @@ import org.bukkit.entity.Player;
 public class TARDISARSJettisonRunnable implements Runnable {
 
     private final TARDIS plugin;
-    private TARDISARSJettison slot;
-    private TARDISARS room;
-    private int id;
-    private Player p;
+    private final TARDISARSJettison slot;
+    private final TARDISARS room;
+    private final int id;
+    private final Player p;
 
     public TARDISARSJettisonRunnable(TARDIS plugin, TARDISARSJettison slot, TARDISARS room, int id, Player p) {
         this.plugin = plugin;

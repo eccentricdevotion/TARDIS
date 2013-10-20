@@ -29,7 +29,7 @@ import org.bukkit.entity.Player;
  */
 public class TARDISPluginRespect {
 
-    private TARDIS plugin;
+    private final TARDIS plugin;
 
     public TARDISPluginRespect(TARDIS plugin) {
         this.plugin = plugin;

@@ -45,16 +45,16 @@ import org.bukkit.entity.Player;
 public class TARDISInstaPoliceBox {
 
     private final TARDIS plugin;
-    private TARDISConstants.COMPASS d;
-    private Location location;
-    private int tid;
-    private int mat;
-    private byte data;
-    private String p;
-    private boolean mal;
-    private int lamp;
-    private boolean plain;
-    private boolean sub;
+    private final TARDISConstants.COMPASS d;
+    private final Location location;
+    private final int tid;
+    private final int mat;
+    private final byte data;
+    private final String p;
+    private final boolean mal;
+    private final int lamp;
+    private final boolean plain;
+    private final boolean sub;
     private Block sponge;
 
     public TARDISInstaPoliceBox(TARDIS plugin, Location location, int mat, byte data, int tid, TARDISConstants.COMPASS d, String p, boolean mal, int lamp, boolean plain, boolean sub) {

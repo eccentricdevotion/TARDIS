@@ -131,6 +131,7 @@ public class TARDISUtils {
      * @param m the typeId to set the block to.
      * @param d the data bit to set the block to.
      * @param id the TARDIS this block belongs to.
+     * @param sub whether the TARDIS is in submarine mode
      */
     @SuppressWarnings("deprecation")
     public void setBlockCheck(World w, int x, int y, int z, int m, byte d, int id, boolean sub) {

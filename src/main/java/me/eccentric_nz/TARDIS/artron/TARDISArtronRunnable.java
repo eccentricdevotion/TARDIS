@@ -36,7 +36,7 @@ import org.bukkit.World;
 public class TARDISArtronRunnable implements Runnable {
 
     private final TARDIS plugin;
-    private int id;
+    private final int id;
     private int task;
     List<Location> rechargers;
     QueryFactory qf;

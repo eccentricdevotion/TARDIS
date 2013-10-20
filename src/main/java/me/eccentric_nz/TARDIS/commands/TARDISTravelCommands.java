@@ -59,9 +59,9 @@ import org.bukkit.entity.Player;
  */
 public class TARDISTravelCommands implements CommandExecutor {
 
-    private TARDIS plugin;
+    private final TARDIS plugin;
     private TARDISPluginRespect respect;
-    private List<String> BIOME_SUBS = new ArrayList<String>();
+    private final List<String> BIOME_SUBS = new ArrayList<String>();
 
     public TARDISTravelCommands(TARDIS plugin) {
         this.plugin = plugin;

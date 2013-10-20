@@ -41,7 +41,7 @@ import org.bukkit.entity.Player;
  */
 public class TARDISAreaCommands implements CommandExecutor {
 
-    private TARDIS plugin;
+    private final TARDIS plugin;
 
     public TARDISAreaCommands(TARDIS plugin) {
         this.plugin = plugin;

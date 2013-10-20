@@ -47,8 +47,8 @@ import org.bukkit.entity.Player;
 public class TARDISBindCommands implements CommandExecutor {
 
     private final TARDIS plugin;
-    private List<String> firstArgs = new ArrayList<String>();
-    private List<String> type_1;
+    private final List<String> firstArgs = new ArrayList<String>();
+    private final List<String> type_1;
 
     public TARDISBindCommands(TARDIS plugin) {
         this.plugin = plugin;

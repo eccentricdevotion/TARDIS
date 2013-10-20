@@ -36,9 +36,9 @@ import org.bukkit.entity.Player;
 public class TARDISARSRunnable implements Runnable {
 
     private final TARDIS plugin;
-    private TARDISARSSlot slot;
-    private TARDISARS room;
-    private Player p;
+    private final TARDISARSSlot slot;
+    private final TARDISARS room;
+    private final Player p;
     private int id;
 
     public TARDISARSRunnable(TARDIS plugin, TARDISARSSlot slot, TARDISARS room, Player p) {

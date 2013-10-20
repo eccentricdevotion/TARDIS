@@ -130,6 +130,10 @@ public class TARDISConstants {
      * Creates a HashMap from two arrays. The resulting map is used by the
      * chameleon circuit to change unsuitable blocks into more aesthetically
      * pleasing or robust ones i.e. GRASS -> DIRT, SAND -> SANDSTONE
+     *
+     * @param keys an array of block types to change
+     * @param values an array of block types to change to
+     * @return the combined arrays as a HashMap
      */
     public static HashMap toMap(Object[] keys, Object[] values) {
         int keysSize = (keys != null) ? keys.length : 0;

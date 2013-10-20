@@ -45,20 +45,20 @@ import org.getspout.spoutapi.SpoutManager;
  */
 public class TARDISMaterialisationRunnable implements Runnable {
 
-    private TARDIS plugin;
-    private COMPASS d;
-    private int loops;
-    private Location location;
-    private int tid;
+    private final TARDIS plugin;
+    private final COMPASS d;
+    private final int loops;
+    private final Location location;
+    private final int tid;
     public int task;
     private int i;
-    private int mat;
-    private byte data;
-    private Player player;
-    private boolean mal;
-    private int lamp;
-    private boolean plain;
-    private boolean sub;
+    private final int mat;
+    private final byte data;
+    private final Player player;
+    private final boolean mal;
+    private final int lamp;
+    private final boolean plain;
+    private final boolean sub;
     private Block sponge;
 
     /**
@@ -76,6 +76,9 @@ public class TARDISMaterialisationRunnable implements Runnable {
      * @param player a player
      * @param mal a boolean determining whether there has been a TARDIS
      * malfunction
+     * @param lamp a boolean determining whether there should be a lamp
+     * @param plain a boolean determining whether it should be a plain a TARDIS
+     * @param sub a boolean determining whether the TARDIS is in submarine mode
      */
     public TARDISMaterialisationRunnable(TARDIS plugin, Location location, int mat, byte data, int tid, COMPASS d, Player player, boolean mal, int lamp, boolean plain, boolean sub) {
         this.plugin = plugin;

@@ -25,7 +25,7 @@ import me.eccentric_nz.TARDIS.TARDISConstants.SCHEMATIC;
  */
 public class TARDISSeedData {
 
-    private TARDIS plugin;
+    private final TARDIS plugin;
     private int id;
     private SCHEMATIC schematic;
     private String room;

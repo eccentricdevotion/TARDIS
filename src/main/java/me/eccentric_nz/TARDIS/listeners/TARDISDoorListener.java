@@ -72,7 +72,7 @@ import org.getspout.spoutapi.SpoutManager;
  */
 public class TARDISDoorListener implements Listener {
 
-    private TARDIS plugin;
+    private final TARDIS plugin;
     public float[][] adjustYaw = new float[4][4];
     Random r = new Random();
 

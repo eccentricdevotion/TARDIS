@@ -32,10 +32,10 @@ import org.bukkit.block.Block;
  */
 public class TARDISRoomRemover {
 
-    private TARDIS plugin;
-    private String r;
-    private Location l;
-    private COMPASS d;
+    private final TARDIS plugin;
+    private final String r;
+    private final Location l;
+    private final COMPASS d;
 
     public TARDISRoomRemover(TARDIS plugin, String r, Location l, COMPASS d) {
         this.plugin = plugin;

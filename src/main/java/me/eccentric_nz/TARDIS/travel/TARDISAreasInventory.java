@@ -35,9 +35,9 @@ import org.bukkit.inventory.meta.ItemMeta;
  */
 public class TARDISAreasInventory {
 
-    private TARDIS plugin;
-    private ItemStack[] terminal;
-    private List<Integer> ids = new ArrayList<Integer>();
+    private final TARDIS plugin;
+    private final ItemStack[] terminal;
+    private final List<Integer> ids = new ArrayList<Integer>();
     Player p;
 
     public TARDISAreasInventory(TARDIS plugin, Player p) {

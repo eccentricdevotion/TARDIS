@@ -47,8 +47,8 @@ import org.bukkit.util.Vector;
 public class TARDISMinecartListener implements Listener {
 
     private final TARDIS plugin;
-    private List<Integer> rails = new ArrayList<Integer>();
-    private List<BlockFace> faces = new ArrayList<BlockFace>();
+    private final List<Integer> rails = new ArrayList<Integer>();
+    private final List<BlockFace> faces = new ArrayList<BlockFace>();
 
     public TARDISMinecartListener(TARDIS plugin) {
         this.plugin = plugin;

@@ -65,7 +65,8 @@ public final class MetricsLite {
     private final static int PING_INTERVAL = 10;
 
     /**
-     * <p>Encode a key/value data pair to be used in a HTTP post request. This
+     * <p>
+     * Encode a key/value data pair to be used in a HTTP post request. This
      * INCLUDES a & so the first key/value pair MUST be included manually,
      * e.g:</p>
      * <code>

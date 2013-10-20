@@ -44,7 +44,7 @@ import org.bukkit.entity.Player;
  */
 public class TARDISSeedBlockProcessor {
 
-    private TARDIS plugin;
+    private final TARDIS plugin;
 
     public TARDISSeedBlockProcessor(TARDIS plugin) {
         this.plugin = plugin;

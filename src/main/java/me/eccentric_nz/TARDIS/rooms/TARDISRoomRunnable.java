@@ -45,10 +45,11 @@ import org.bukkit.entity.Player;
 public class TARDISRoomRunnable implements Runnable {
 
     private final TARDIS plugin;
-    private Location l;
+    private final Location l;
     String[][][] s;
     short[] dim;
-    private int id, task, level, row, col, h, w, c, middle_id, floor_id, startx, starty, startz, resetx, resetz, x, z, tardis_id;
+    private int id, task, level, row, col, h, w, c, startx, starty, startz, resetx, resetz;
+    private final int middle_id, floor_id, x, z, tardis_id;
     byte data, middle_data, floor_data;
     Block b;
     COMPASS d;

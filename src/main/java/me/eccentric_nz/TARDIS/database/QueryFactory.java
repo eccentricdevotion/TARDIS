@@ -33,7 +33,7 @@ import org.bukkit.entity.Player;
  */
 public class QueryFactory {
 
-    private TARDIS plugin;
+    private final TARDIS plugin;
     TARDISDatabase service = TARDISDatabase.getInstance();
     Connection connection = service.getConnection();
 
@@ -106,7 +106,7 @@ public class QueryFactory {
                 if (ps != null) {
                     ps.close();
                 }
-            } catch (Exception e) {
+            } catch (SQLException e) {
                 plugin.debug("Error closing " + table + "! " + e.getMessage());
             }
         }
@@ -175,7 +175,7 @@ public class QueryFactory {
                 if (statement != null) {
                     statement.close();
                 }
-            } catch (Exception e) {
+            } catch (SQLException e) {
                 plugin.debug("Error closing " + table + "! " + e.getMessage());
             }
         }

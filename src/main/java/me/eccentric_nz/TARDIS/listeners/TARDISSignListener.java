@@ -47,7 +47,7 @@ import org.bukkit.inventory.ItemStack;
  */
 public class TARDISSignListener implements Listener {
 
-    private TARDIS plugin;
+    private final TARDIS plugin;
     List<Material> validSigns = new ArrayList<Material>();
 
     public TARDISSignListener(TARDIS plugin) {

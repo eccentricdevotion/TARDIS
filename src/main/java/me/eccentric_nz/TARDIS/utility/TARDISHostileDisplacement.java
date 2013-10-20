@@ -48,9 +48,10 @@ import org.bukkit.entity.Player;
 public class TARDISHostileDisplacement {
 
     private final TARDIS plugin;
-    private List<Integer> angles = Arrays.asList(new Integer[]{0, 45, 90, 135, 180, 225, 270, 315});
+    private final List<Integer> angles;
 
     public TARDISHostileDisplacement(TARDIS plugin) {
+        this.angles = Arrays.asList(new Integer[]{0, 45, 90, 135, 180, 225, 270, 315});
         this.plugin = plugin;
     }
 

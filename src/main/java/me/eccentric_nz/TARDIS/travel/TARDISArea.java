@@ -36,7 +36,7 @@ import org.bukkit.permissions.PermissionAttachmentInfo;
  */
 public class TARDISArea {
 
-    private TARDIS plugin;
+    private final TARDIS plugin;
 
     public TARDISArea(TARDIS plugin) {
         this.plugin = plugin;

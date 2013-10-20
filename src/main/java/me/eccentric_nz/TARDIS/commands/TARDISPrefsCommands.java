@@ -54,7 +54,7 @@ public class TARDISPrefsCommands implements CommandExecutor {
         return str.substring(0, 1).toUpperCase(Locale.ENGLISH) + str.substring(1).toLowerCase(Locale.ENGLISH);
     }
     private final TARDIS plugin;
-    private List<String> firstArgs = new ArrayList<String>();
+    private final List<String> firstArgs = new ArrayList<String>();
 
     public TARDISPrefsCommands(TARDIS plugin) {
         this.plugin = plugin;

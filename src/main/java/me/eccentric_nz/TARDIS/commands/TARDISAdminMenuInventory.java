@@ -33,9 +33,9 @@ import org.bukkit.inventory.meta.ItemMeta;
  */
 public class TARDISAdminMenuInventory {
 
-    private TARDIS plugin;
-    private List<Integer> ids = new ArrayList<Integer>();
-    private ItemStack[] menu;
+    private final TARDIS plugin;
+    private final List<Integer> ids = new ArrayList<Integer>();
+    private final ItemStack[] menu;
 
     public TARDISAdminMenuInventory(TARDIS plugin) {
         this.plugin = plugin;

@@ -39,10 +39,10 @@ import org.bukkit.inventory.meta.ItemMeta;
 public class TARDISCraftListener implements Listener {
 
     private final TARDIS plugin;
-    private List<Material> b = new ArrayList<Material>();
-    private List<Integer> c = new ArrayList<Integer>();
-    private List<Integer> l = new ArrayList<Integer>();
-    private HashMap<Material, String> t = new HashMap<Material, String>();
+    private final List<Material> b = new ArrayList<Material>();
+    private final List<Integer> c = new ArrayList<Integer>();
+    private final List<Integer> l = new ArrayList<Integer>();
+    private final HashMap<Material, String> t = new HashMap<Material, String>();
 
     public TARDISCraftListener(TARDIS plugin) {
         this.plugin = plugin;

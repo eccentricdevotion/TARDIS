@@ -69,7 +69,7 @@ import org.bukkit.entity.Player;
  */
 public class TARDISAdminCommands implements CommandExecutor {
 
-    private TARDIS plugin;
+    private final TARDIS plugin;
     public List<String> firstsStr = new ArrayList<String>();
     public List<String> firstsStrArtron = new ArrayList<String>();
     public List<String> firstsBool = new ArrayList<String>();

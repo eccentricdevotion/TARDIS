@@ -46,9 +46,9 @@ public class TARDISRoomSchematicReader {
         Tag tag = items.get(key);
         return tag;
     }
-    private TARDIS plugin;
-    private HashMap<Integer, Integer> blockConversion = new HashMap<Integer, Integer>();
-    private List<Byte> ignoreBlocks = Arrays.asList(new Byte[]{0, 7, 8, 9, 10, 11, 14, 19, 34, 52, 79});
+    private final TARDIS plugin;
+    private final HashMap<Integer, Integer> blockConversion = new HashMap<Integer, Integer>();
+    private final List<Byte> ignoreBlocks = Arrays.asList(new Byte[]{0, 7, 8, 9, 10, 11, 14, 19, 34, 52, 79});
 
     public TARDISRoomSchematicReader(TARDIS plugin) {
         this.plugin = plugin;
@@ -202,7 +202,7 @@ public class TARDISRoomSchematicReader {
             if (fis != null) {
                 try {
                     fis.close();
-                } catch (Exception e) {
+                } catch (IOException e) {
                 }
             }
         }

@@ -43,7 +43,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 public class TARDISRecipeCommands implements CommandExecutor {
 
     private final TARDIS plugin;
-    private List<String> firstArgs = new ArrayList<String>();
+    private final List<String> firstArgs = new ArrayList<String>();
 
     public TARDISRecipeCommands(TARDIS plugin) {
         this.plugin = plugin;

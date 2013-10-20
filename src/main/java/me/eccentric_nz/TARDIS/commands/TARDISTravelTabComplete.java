@@ -33,7 +33,7 @@ public class TARDISTravelTabComplete implements TabCompleter {
 
     TARDIS plugin;
     private final List<String> ROOT_SUBS = ImmutableList.of("home", "biome", "dest", "area", "back");
-    private List<String> BIOME_SUBS = new ArrayList<String>();
+    private final List<String> BIOME_SUBS = new ArrayList<String>();
 
     public TARDISTravelTabComplete(TARDIS plugin) {
         for (Biome bi : org.bukkit.block.Biome.values()) {

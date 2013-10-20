@@ -43,7 +43,7 @@ import org.bukkit.entity.Player;
  */
 public class TARDISWorldGuardUtils {
 
-    private TARDIS plugin;
+    private final TARDIS plugin;
     private WorldGuardPlugin wg;
 
     /**

@@ -54,9 +54,9 @@ import org.bukkit.event.block.BlockPlaceEvent;
  */
 public class TARDISBlockPlaceListener implements Listener {
 
-    private TARDIS plugin;
-    private TARDISUtils utils;
-    private List<Material> blocks = new ArrayList<Material>();
+    private final TARDIS plugin;
+    private final TARDISUtils utils;
+    private final List<Material> blocks = new ArrayList<Material>();
     private Material custom;
 
     public TARDISBlockPlaceListener(TARDIS plugin) {

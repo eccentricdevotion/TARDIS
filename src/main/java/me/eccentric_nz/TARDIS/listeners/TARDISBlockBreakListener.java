@@ -36,7 +36,7 @@ import org.bukkit.event.block.BlockBreakEvent;
  */
 public class TARDISBlockBreakListener implements Listener {
 
-    private TARDIS plugin;
+    private final TARDIS plugin;
 
     public TARDISBlockBreakListener(TARDIS plugin) {
         this.plugin = plugin;

@@ -32,8 +32,8 @@ import org.bukkit.inventory.meta.ItemMeta;
  */
 public class TARDISChameleonInventory {
 
-    private ItemStack[] terminal;
-    private boolean bool;
+    private final ItemStack[] terminal;
+    private final boolean bool;
 
     public TARDISChameleonInventory(boolean bool) {
         this.terminal = getItemStack();

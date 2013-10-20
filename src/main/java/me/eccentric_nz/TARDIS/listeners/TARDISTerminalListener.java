@@ -57,11 +57,11 @@ import org.bukkit.inventory.meta.ItemMeta;
 public class TARDISTerminalListener implements Listener {
 
     private final TARDIS plugin;
-    private HashMap<String, ResultSetCurrentLocation> terminalUsers = new HashMap<String, ResultSetCurrentLocation>();
-    private HashMap<String, String> terminalDestination = new HashMap<String, String>();
-    private HashMap<String, Integer> terminalStep = new HashMap<String, Integer>();
-    private HashMap<String, Integer> terminalIDs = new HashMap<String, Integer>();
-    private HashMap<String, Boolean> terminalSub = new HashMap<String, Boolean>();
+    private final HashMap<String, ResultSetCurrentLocation> terminalUsers = new HashMap<String, ResultSetCurrentLocation>();
+    private final HashMap<String, String> terminalDestination = new HashMap<String, String>();
+    private final HashMap<String, Integer> terminalStep = new HashMap<String, Integer>();
+    private final HashMap<String, Integer> terminalIDs = new HashMap<String, Integer>();
+    private final HashMap<String, Boolean> terminalSub = new HashMap<String, Boolean>();
 
     public TARDISTerminalListener(TARDIS plugin) {
         this.plugin = plugin;

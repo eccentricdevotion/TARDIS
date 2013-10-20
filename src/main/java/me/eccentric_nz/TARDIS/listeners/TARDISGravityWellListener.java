@@ -44,8 +44,8 @@ import org.bukkit.event.player.PlayerMoveEvent;
 public class TARDISGravityWellListener implements Listener {
 
     private final TARDIS plugin;
-    private HashMap<Double, Byte> woolData = new HashMap<Double, Byte>();
-    private HashMap<Double, String> woolColour = new HashMap<Double, String>();
+    private final HashMap<Double, Byte> woolData = new HashMap<Double, Byte>();
+    private final HashMap<Double, String> woolColour = new HashMap<Double, String>();
 
     public TARDISGravityWellListener(TARDIS plugin) {
         this.plugin = plugin;

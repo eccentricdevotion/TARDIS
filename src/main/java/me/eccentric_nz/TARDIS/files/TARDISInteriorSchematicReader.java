@@ -45,7 +45,7 @@ public class TARDISInteriorSchematicReader {
         Tag tag = items.get(key);
         return tag;
     }
-    private TARDIS plugin;
+    private final TARDIS plugin;
 
     public TARDISInteriorSchematicReader(TARDIS plugin) {
         this.plugin = plugin;
@@ -174,7 +174,7 @@ public class TARDISInteriorSchematicReader {
             if (fis != null) {
                 try {
                     fis.close();
-                } catch (Exception e) {
+                } catch (IOException e) {
                 }
             }
         }

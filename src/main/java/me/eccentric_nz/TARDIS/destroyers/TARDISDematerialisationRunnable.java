@@ -35,17 +35,17 @@ import org.getspout.spoutapi.SpoutManager;
  */
 public class TARDISDematerialisationRunnable implements Runnable {
 
-    private TARDIS plugin;
-    private COMPASS d;
-    private int loops;
-    private Location location;
-    private int tid;
+    private final TARDIS plugin;
+    private final COMPASS d;
+    private final int loops;
+    private final Location location;
+    private final int tid;
     public int task;
     private int i;
-    private int lamp;
-    private int mat;
-    private byte data;
-    private Player player;
+    private final int lamp;
+    private final int mat;
+    private final byte data;
+    private final Player player;
 
     /**
      * Runnable method to materialise the TARDIS Police Box. Tries to mimic the

@@ -17,6 +17,8 @@
 package me.eccentric_nz.TARDIS;
 
 import java.io.*;
+import java.lang.reflect.InvocationTargetException;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -137,7 +139,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 public class TARDIS extends JavaPlugin {
 
     public static TARDIS plugin;
-    private static ArrayList<String> quotes = new ArrayList<String>();
+    private static final ArrayList<String> quotes = new ArrayList<String>();
     TARDISDatabase service = TARDISDatabase.getInstance();
     public TARDISMakeTardisCSV tardisCSV = new TARDISMakeTardisCSV(this);
     public TARDISMakeRoomCSV roomCSV = new TARDISMakeRoomCSV(this);
@@ -367,7 +369,7 @@ public class TARDIS extends JavaPlugin {
     private void closeDatabase() {
         try {
             service.connection.close();
-        } catch (Exception e) {
+        } catch (SQLException e) {
             console.sendMessage(pluginName + "Could not close database connection: " + e);
         }
     }
@@ -489,7 +491,19 @@ public class TARDIS extends JavaPlugin {
                     apiHandler = (TARDISTabCompleteAPI) clazz.getConstructor().newInstance(); // Set the handler
                 }
                 apiHandler.loadTabCompletion();
-            } catch (Exception e) {
+            } catch (ClassNotFoundException e) {
+                debug("Could not load Tab Completion classes " + e.getMessage());
+            } catch (IllegalAccessException e) {
+                debug("Could not load Tab Completion classes " + e.getMessage());
+            } catch (IllegalArgumentException e) {
+                debug("Could not load Tab Completion classes " + e.getMessage());
+            } catch (InstantiationException e) {
+                debug("Could not load Tab Completion classes " + e.getMessage());
+            } catch (NoSuchMethodException e) {
+                debug("Could not load Tab Completion classes " + e.getMessage());
+            } catch (SecurityException e) {
+                debug("Could not load Tab Completion classes " + e.getMessage());
+            } catch (InvocationTargetException e) {
                 debug("Could not load Tab Completion classes " + e.getMessage());
             }
         }
@@ -640,7 +654,7 @@ public class TARDIS extends JavaPlugin {
                 if (bufRdr != null) {
                     try {
                         bufRdr.close();
-                    } catch (Exception e) {
+                    } catch (IOException e) {
                         debug("Error closing quotes reader! " + e.getMessage());
                     }
                 }
@@ -701,7 +715,9 @@ public class TARDIS extends JavaPlugin {
     /**
      * Gets the server default texture pack. Will use the Minecraft default pack
      * if none is specified. Until Minecraft/Bukkit lets us set the TP back to
-     * Default, we'll have to host it on DropBox.
+     * Default, we'll have to host it on DropBo
+     *
+     * @return The server specified texture pack.
      */
     public String getServerTP() {
         String link = "https://dl.dropboxusercontent.com/u/53758864/Minecraft_Default.zip";

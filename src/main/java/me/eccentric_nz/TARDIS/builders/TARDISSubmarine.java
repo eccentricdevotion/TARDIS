@@ -26,7 +26,7 @@ import org.bukkit.block.Block;
  */
 public class TARDISSubmarine {
 
-    private TARDIS plugin;
+    private final TARDIS plugin;
 
     public TARDISSubmarine(TARDIS plugin) {
         this.plugin = plugin;

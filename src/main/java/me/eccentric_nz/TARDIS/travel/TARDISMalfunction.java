@@ -41,13 +41,13 @@ import org.bukkit.entity.Player;
 public class TARDISMalfunction {
 
     private final TARDIS plugin;
-    private int id;
-    private Player p;
-    private TARDISConstants.COMPASS dir;
-    private Location handbrake_loc;
-    private String eps;
-    private String creeper;
-    private Random rand;
+    private final int id;
+    private final Player p;
+    private final TARDISConstants.COMPASS dir;
+    private final Location handbrake_loc;
+    private final String eps;
+    private final String creeper;
+    private final Random rand;
 
     public TARDISMalfunction(TARDIS plugin, int id, Player p, TARDISConstants.COMPASS dir, Location handbrake_loc, String eps, String creeper) {
         this.plugin = plugin;

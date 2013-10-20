@@ -37,10 +37,10 @@ import org.bukkit.entity.Player;
 public class TARDISRoomBuilder {
 
     private final TARDIS plugin;
-    private String r;
-    private Location l;
-    private COMPASS d;
-    private Player p;
+    private final String r;
+    private final Location l;
+    private final COMPASS d;
+    private final Player p;
 
     public TARDISRoomBuilder(TARDIS plugin, String r, Location l, COMPASS d, Player p) {
         this.plugin = plugin;

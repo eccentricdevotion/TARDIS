@@ -38,7 +38,7 @@ import org.getspout.spoutapi.SpoutManager;
  */
 public class TARDISSounds {
 
-    private static Random rand = new Random();
+    private static final Random rand = new Random();
 
     /**
      * Plays a random TARDIS sound to players who are inside the TARDIS and

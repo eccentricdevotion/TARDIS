@@ -45,7 +45,7 @@ import org.bukkit.entity.Player;
  */
 public class TARDISExterminator {
 
-    private TARDIS plugin;
+    private final TARDIS plugin;
 
     public TARDISExterminator(TARDIS plugin) {
         this.plugin = plugin;
@@ -84,6 +84,7 @@ public class TARDISExterminator {
             }
         } catch (Exception e) {
             plugin.console.sendMessage(plugin.pluginName + "TARDIS exterminate by id error: " + e);
+            return false;
         } finally {
             return false;
         }

@@ -40,8 +40,8 @@ import org.bukkit.command.CommandSender;
  */
 public class TARDISPruner {
 
-    private TARDISDatabase service = TARDISDatabase.getInstance();
-    private Connection connection = service.getConnection();
+    private final TARDISDatabase service = TARDISDatabase.getInstance();
+    private final Connection connection = service.getConnection();
     private final TARDIS plugin;
 
     public TARDISPruner(TARDIS plugin) {
@@ -97,7 +97,7 @@ public class TARDISPruner {
                 if (statement != null) {
                     statement.close();
                 }
-            } catch (Exception e) {
+            } catch (SQLException e) {
                 plugin.debug(e.getMessage());
             }
         }
@@ -133,7 +133,7 @@ public class TARDISPruner {
                 if (statement != null) {
                     statement.close();
                 }
-            } catch (Exception e) {
+            } catch (SQLException e) {
                 plugin.debug(e.getMessage());
             }
         }

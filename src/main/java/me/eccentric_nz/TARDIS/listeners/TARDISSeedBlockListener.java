@@ -45,7 +45,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 public class TARDISSeedBlockListener implements Listener {
 
     private final TARDIS plugin;
-    private HashMap<Location, TARDISBuildData> trackTARDISSeed = new HashMap<Location, TARDISBuildData>();
+    private final HashMap<Location, TARDISBuildData> trackTARDISSeed = new HashMap<Location, TARDISBuildData>();
 
     public TARDISSeedBlockListener(TARDIS plugin) {
         this.plugin = plugin;

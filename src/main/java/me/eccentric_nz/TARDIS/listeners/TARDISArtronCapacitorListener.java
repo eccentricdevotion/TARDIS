@@ -239,7 +239,7 @@ public class TARDISArtronCapacitorListener implements Listener {
      */
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onEntitySpawn(CreatureSpawnEvent event) {
-        boolean isTardisWorldBreeding = (event.getLocation().getWorld().getName().contains("TARDIS") && (event.getSpawnReason().equals(SpawnReason.BREEDING))) ? true : false;
+        boolean isTardisWorldBreeding = (event.getLocation().getWorld().getName().contains("TARDIS") && (event.getSpawnReason().equals(SpawnReason.BREEDING)));
         if (isTardisWorldBreeding || plugin.myspawn) {
             event.setCancelled(false);
             if (plugin.myspawn == true) {

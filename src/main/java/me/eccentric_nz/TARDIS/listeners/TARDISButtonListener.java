@@ -58,7 +58,7 @@ import org.bukkit.inventory.ItemStack;
  */
 public class TARDISButtonListener implements Listener {
 
-    private TARDIS plugin;
+    private final TARDIS plugin;
     List<Material> validBlocks = new ArrayList<Material>();
     List<Integer> onlythese = Arrays.asList(new Integer[]{1, 8, 9, 10, 11, 12, 13});
     public ItemStack[] items;

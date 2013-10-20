@@ -56,7 +56,7 @@ import org.json.JSONArray;
  */
 public class TARDISUpdateListener implements Listener {
 
-    private TARDIS plugin;
+    private final TARDIS plugin;
     List<Material> validBlocks = new ArrayList<Material>();
     List<Material> validSigns = new ArrayList<Material>();
     HashMap<String, Integer> controls = new HashMap<String, Integer>();
@@ -542,11 +542,7 @@ public class TARDISUpdateListener implements Listener {
         World world = player.getLocation().getWorld();
         String name = world.getName();
         ChunkGenerator gen = world.getGenerator();
-        boolean special = name.contains("TARDIS_TimeVortex") && (world.getWorldType().equals(WorldType.FLAT) || gen instanceof TARDISChunkGenerator);
-        if (!name.equals("TARDIS_WORLD_" + player.getName()) && !special) {
-            return false;
-        } else {
-            return true;
-        }
+        boolean special = (name.contains("TARDIS_TimeVortex") && (world.getWorldType().equals(WorldType.FLAT) || gen instanceof TARDISChunkGenerator));
+        return name.equals("TARDIS_WORLD_" + player.getName()) || special;
     }
 }

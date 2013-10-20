@@ -45,12 +45,12 @@ import org.bukkit.entity.Player;
  */
 public class TARDISTimeTravel {
 
-    private static int[] startLoc = new int[6];
+    private static final int[] startLoc = new int[6];
     private Location dest;
-    private TARDIS plugin;
-    private List<Material> goodMaterials = new ArrayList<Material>();
-    private TARDISPluginRespect respect;
-    private int attempts;
+    private final TARDIS plugin;
+    private final List<Material> goodMaterials = new ArrayList<Material>();
+    private final TARDISPluginRespect respect;
+    private final int attempts;
 
     public TARDISTimeTravel(TARDIS plugin) {
         this.plugin = plugin;
@@ -82,6 +82,8 @@ public class TARDISTimeTravel {
      * @param d the direction the TARDIS Police Box faces.
      * @param e the environment(s) the player has chosen (or is allowed) to
      * travel to.
+     * @param this_world the world the Police Box is currently in
+     * @param malfunction whether there should be a malfunction
      * @return a random Location
      */
     @SuppressWarnings("deprecation")
@@ -192,7 +194,6 @@ public class TARDISTimeTravel {
         // Assume every non-nether/non-END world qualifies as NORMAL.
         if (randworld != null && !randworld.getEnvironment().equals(Environment.NETHER) && !randworld.getEnvironment().equals(Environment.THE_END)) {
             long timeout = System.currentTimeMillis() + (plugin.getConfig().getLong("timeout") * 1000);
-            break_normal:
             while (true) {
                 if (System.currentTimeMillis() < timeout) {
                     // reset count
@@ -256,14 +257,14 @@ public class TARDISTimeTravel {
                         count = 1;
                     }
                     if (count == 0) {
-                        break break_normal;
+                        break;
                     }
                 } else {
                     if (!respect.getRespect(p, new Location(randworld, wherex, highest, wherez), false)) {
                         return null;
                     } else {
                         highest = plugin.getConfig().getInt("timeout_height");
-                        break break_normal;
+                        break;
                     }
                 }
             }
@@ -434,6 +435,8 @@ public class TARDISTimeTravel {
      * @param wherex an x co-ordinate.
      * @param wherez a z co-ordinate.
      * @param d the direction the Police Box is facing.
+     * @param p the player to check permissions for
+     * @return true or false
      */
     @SuppressWarnings("deprecation")
     public boolean safeNether(World nether, int wherex, int wherez, TARDISConstants.COMPASS d, Player p) {
@@ -611,7 +614,7 @@ public class TARDISTimeTravel {
             s[2] = s[3];
             starty += 1;
         }
-        return (count == 0) ? true : false;
+        return (count == 0);
     }
 
     private boolean isItWaterSafe(int id) {

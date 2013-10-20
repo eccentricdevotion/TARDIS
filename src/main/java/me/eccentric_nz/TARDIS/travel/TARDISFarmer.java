@@ -56,7 +56,7 @@ import org.bukkit.inventory.ItemStack;
 public class TARDISFarmer {
 
     private final TARDIS plugin;
-    private List<Material> barding = new ArrayList<Material>();
+    private final List<Material> barding = new ArrayList<Material>();
 
     public TARDISFarmer(TARDIS plugin) {
         this.plugin = plugin;
@@ -82,6 +82,8 @@ public class TARDISFarmer {
      * @param d the direction the Police Box is facing
      * @param id The database key of the TARDIS.
      * @param p the player to award achievements or give spawn eggs to
+     * @param to the world to
+     * @param from the world from
      * @return a List of the player's pets (if any are nearby)
      */
     public List<TARDISMob> farmAnimals(Location l, COMPASS d, int id, final Player p, String to, String from) {

@@ -19,6 +19,7 @@ package me.eccentric_nz.TARDIS.files;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.net.MalformedURLException;
 import java.net.URL;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.thirdparty.Version;
@@ -41,7 +42,7 @@ public class TARDISUpdateChecker {
         this.plugin = plugin;
         try {
             this.tardisURL = new URL("https://raw.github.com/eccentricdevotion/TARDIS/v2.6/tardis.txt");
-        } catch (Exception e) {
+        } catch (MalformedURLException e) {
             plugin.debug("Could create new URL! " + e.getMessage());
         }
     }
@@ -103,7 +104,7 @@ public class TARDISUpdateChecker {
     public boolean exists(URL url) {
         try {
             url.openStream();
-        } catch (Exception e) {
+        } catch (IOException e) {
             plugin.console.sendMessage("Could not open URL! " + e.getMessage());
             return false;
         }
@@ -135,7 +136,7 @@ public class TARDISUpdateChecker {
                 if (in != null) {
                     in.close();
                 }
-            } catch (Exception e) {
+            } catch (IOException e) {
             }
         }
         return version;

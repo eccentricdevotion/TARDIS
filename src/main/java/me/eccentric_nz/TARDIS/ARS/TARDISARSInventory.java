@@ -28,7 +28,7 @@ import org.bukkit.inventory.meta.ItemMeta;
  */
 public class TARDISARSInventory {
 
-    private ItemStack[] terminal;
+    private final ItemStack[] terminal;
 
     public TARDISARSInventory() {
         this.terminal = getItemStack();

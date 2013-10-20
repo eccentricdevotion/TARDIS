@@ -57,14 +57,14 @@ public class TARDISARSListener implements Listener {
 //    private String[] room_names = new String[]{"Passage", "Arboretum", "Bedroom", "Kitchen", "Library", "Pool", "Vault", "Workshop", "Empty", "Gravity", "Antigravity", "Harmony", "Baker", "Wood", "Farm", "Cross", "Greenhouse", "Long", "Mushroom"};
     private int[] room_ids;
     private String[] room_names;
-    private HashMap<String, Integer> scroll_start = new HashMap<String, Integer>();
-    private HashMap<String, Integer> selected_slot = new HashMap<String, Integer>();
-    private HashMap<String, TARDISARSSaveData> save_map_data = new HashMap<String, TARDISARSSaveData>();
-    private HashMap<String, TARDISARSMapData> map_data = new HashMap<String, TARDISARSMapData>();
-    private String[] levels = new String[]{"Bottom level", "Main level", "Top level"};
-    private List<TARDISARS> notrooms;
-    private HashMap<String, Integer> ids = new HashMap<String, Integer>();
-    private List<String> hasLoadedMap = new ArrayList<String>();
+    private final HashMap<String, Integer> scroll_start = new HashMap<String, Integer>();
+    private final HashMap<String, Integer> selected_slot = new HashMap<String, Integer>();
+    private final HashMap<String, TARDISARSSaveData> save_map_data = new HashMap<String, TARDISARSSaveData>();
+    private final HashMap<String, TARDISARSMapData> map_data = new HashMap<String, TARDISARSMapData>();
+    private final String[] levels = new String[]{"Bottom level", "Main level", "Top level"};
+    private final List<TARDISARS> notrooms;
+    private final HashMap<String, Integer> ids = new HashMap<String, Integer>();
+    private final List<String> hasLoadedMap = new ArrayList<String>();
 
     public TARDISARSListener(TARDIS plugin) {
         this.plugin = plugin;

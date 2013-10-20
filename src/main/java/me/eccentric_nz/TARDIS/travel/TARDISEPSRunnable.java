@@ -26,6 +26,7 @@ import net.citizensnpcs.api.npc.NPCRegistry;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.World;
+import org.bukkit.command.CommandException;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 
@@ -37,13 +38,13 @@ import org.bukkit.entity.Player;
  */
 public class TARDISEPSRunnable implements Runnable {
 
-    private TARDIS plugin;
-    private String message;
-    private Player tl;
-    private List<String> players;
-    private int id;
-    private String eps;
-    private String creeper;
+    private final TARDIS plugin;
+    private final String message;
+    private final Player tl;
+    private final List<String> players;
+    private final int id;
+    private final String eps;
+    private final String creeper;
 
     public TARDISEPSRunnable(TARDIS plugin, String message, Player tl, List<String> players, int id, String eps, String creeper) {
         this.plugin = plugin;
@@ -89,7 +90,9 @@ public class TARDISEPSRunnable implements Runnable {
                         pp.sendMessage(ChatColor.RED + "[Emergency Program One] " + ChatColor.RESET + "Right-click me to make me go away.");
                     }
                 }
-            } catch (Exception e) {
+            } catch (NumberFormatException e) {
+                plugin.debug(e);
+            } catch (CommandException e) {
                 plugin.debug(e);
             }
         }
@@ -146,6 +149,12 @@ public class TARDISEPSRunnable implements Runnable {
      * The number returned, which is a double in degrees, tells us how much we
      * have to rotate a horizontal line clockwise for it to match the line
      * between the two points.
+     *
+     * @param px1
+     * @param pz1
+     * @param px2
+     * @param pz2
+     * @return
      */
     public static float getCorrectYaw(double px1, double pz1, double px2, double pz2) {
         double xDiff = px2 - px1;

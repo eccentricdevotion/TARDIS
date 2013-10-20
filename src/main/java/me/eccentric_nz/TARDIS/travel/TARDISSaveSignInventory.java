@@ -35,9 +35,9 @@ import org.bukkit.inventory.meta.ItemMeta;
  */
 public class TARDISSaveSignInventory {
 
-    private TARDIS plugin;
-    private ItemStack[] terminal;
-    private List<Integer> ids = new ArrayList<Integer>();
+    private final TARDIS plugin;
+    private final ItemStack[] terminal;
+    private final List<Integer> ids = new ArrayList<Integer>();
     int id;
 
     public TARDISSaveSignInventory(TARDIS plugin, int id) {

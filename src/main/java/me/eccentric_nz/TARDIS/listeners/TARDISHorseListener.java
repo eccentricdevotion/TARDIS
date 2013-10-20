@@ -48,7 +48,7 @@ import org.bukkit.inventory.ItemStack;
 public class TARDISHorseListener implements Listener {
 
     private final TARDIS plugin;
-    private List<Material> barding = new ArrayList<Material>();
+    private final List<Material> barding = new ArrayList<Material>();
 
     public TARDISHorseListener(TARDIS plugin) {
         this.plugin = plugin;

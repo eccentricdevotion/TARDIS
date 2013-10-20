@@ -95,6 +95,7 @@ public class TARDISMakeRoomCSV {
      * is created.
      *
      * @param filename the file to find/create
+     * @param folder the folder to look in
      * @return a File
      */
     public File createFile(String filename, String folder) {
