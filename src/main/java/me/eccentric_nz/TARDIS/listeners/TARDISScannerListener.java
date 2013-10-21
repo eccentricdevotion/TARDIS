@@ -39,7 +39,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractEvent;
-import org.getspout.spoutapi.SpoutManager;
+//import org.getspout.spoutapi.SpoutManager;
 
 /**
  * The Scanner consists of a collection of thousands of instruments designed to
@@ -139,16 +139,16 @@ public class TARDISScannerListener implements Listener {
                 ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
                 if (rs.resultSet()) {
                     int id = rs.getTardis_id();
-                    if (plugin.pm.getPlugin("Spout") != null && SpoutManager.getPlayer(player).isSpoutCraftEnabled()) {
-                        SpoutManager.getSoundManager().playGlobalCustomSoundEffect(plugin, "https://dl.dropboxusercontent.com/u/53758864/soundeffects/scanner.mp3", false, b, 20, 75);
-                    } else {
-                        try {
-                            Class.forName("org.bukkit.Sound");
-                            w.playSound(b, Sound.ORB_PICKUP, 1, 0);
-                        } catch (ClassNotFoundException e) {
-                            w.playEffect(b, Effect.BOW_FIRE, 0);
-                        }
+//                    if (plugin.pm.getPlugin("Spout") != null && SpoutManager.getPlayer(player).isSpoutCraftEnabled()) {
+//                        SpoutManager.getSoundManager().playGlobalCustomSoundEffect(plugin, "https://dl.dropboxusercontent.com/u/53758864/soundeffects/scanner.mp3", false, b, 20, 75);
+//                    } else {
+                    try {
+                        Class.forName("org.bukkit.Sound");
+                        w.playSound(b, Sound.ORB_PICKUP, 1, 0);
+                    } catch (ClassNotFoundException e) {
+                        w.playEffect(b, Effect.BOW_FIRE, 0);
                     }
+//                    }
                     Location scan_loc;
                     String whereisit;
                     TARDISConstants.COMPASS tardisDirection;

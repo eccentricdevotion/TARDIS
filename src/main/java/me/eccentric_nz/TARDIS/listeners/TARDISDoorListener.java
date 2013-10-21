@@ -60,7 +60,7 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.material.Door;
-import org.getspout.spoutapi.SpoutManager;
+//import org.getspout.spoutapi.SpoutManager;
 
 /**
  * During TARDIS operation, a distinctive grinding and whirring sound is usually
@@ -393,9 +393,9 @@ public class TARDISDoorListener implements Listener {
                                                 set.put("tardis_id", id);
                                                 set.put("player", playerNameStr);
                                                 qf.doSyncInsert("travellers", set);
-                                                if (plugin.pm.getPlugin("Spout") != null && SpoutManager.getPlayer(player).isSpoutCraftEnabled()) {
-                                                    SpoutManager.getSoundManager().playCustomSoundEffect(plugin, SpoutManager.getPlayer(player), "https://dl.dropboxusercontent.com/u/53758864/tardis_hum.mp3", false, tardis_loc, 9, 25);
-                                                }
+//                                                if (plugin.pm.getPlugin("Spout") != null && SpoutManager.getPlayer(player).isSpoutCraftEnabled()) {
+//                                                    SpoutManager.getSoundManager().playCustomSoundEffect(plugin, SpoutManager.getPlayer(player), "https://dl.dropboxusercontent.com/u/53758864/tardis_hum.mp3", false, tardis_loc, 9, 25);
+//                                                }
                                             }
                                             break;
                                         case 2:
@@ -431,9 +431,9 @@ public class TARDISDoorListener implements Listener {
                                             set.put("tardis_id", id);
                                             set.put("player", playerNameStr);
                                             qf.doSyncInsert("travellers", set);
-                                            if (plugin.pm.getPlugin("Spout") != null && SpoutManager.getPlayer(player).isSpoutCraftEnabled()) {
-                                                SpoutManager.getSoundManager().playCustomSoundEffect(plugin, SpoutManager.getPlayer(player), "https://dl.dropboxusercontent.com/u/53758864/tardis_hum.mp3", false, inner_loc, 9, 25);
-                                            }
+//                                            if (plugin.pm.getPlugin("Spout") != null && SpoutManager.getPlayer(player).isSpoutCraftEnabled()) {
+//                                                SpoutManager.getSoundManager().playCustomSoundEffect(plugin, SpoutManager.getPlayer(player), "https://dl.dropboxusercontent.com/u/53758864/tardis_hum.mp3", false, inner_loc, 9, 25);
+//                                            }
                                             HashMap<String, Object> wheree = new HashMap<String, Object>();
                                             wheree.put("tardis_id", id);
                                             int cost = (0 - plugin.getArtronConfig().getInt("backdoor"));

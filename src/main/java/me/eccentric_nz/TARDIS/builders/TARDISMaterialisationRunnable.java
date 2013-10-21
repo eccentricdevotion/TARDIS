@@ -34,7 +34,7 @@ import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.block.Sign;
 import org.bukkit.entity.Player;
-import org.getspout.spoutapi.SpoutManager;
+//import org.getspout.spoutapi.SpoutManager;
 
 /**
  * A dematerialisation circuit was an essential part of a Type 40 TARDIS which
@@ -151,16 +151,16 @@ public class TARDISMaterialisationRunnable implements Runnable {
                     plugin.buildPB.addPlatform(location, false, d, player.getName(), tid);
                     HashMap<String, Object> where = new HashMap<String, Object>();
                     where.put("tardis_id", tid);
-                    if (plugin.pm.getPlugin("Spout") != null && SpoutManager.getPlayer(player).isSpoutCraftEnabled()) {
-                        SpoutManager.getSoundManager().playGlobalCustomSoundEffect(plugin, "https://dl.dropboxusercontent.com/u/53758864/tardis_land.mp3", false, location, 9, 75);
-                    } else {
-                        try {
-                            Class.forName("org.bukkit.Sound");
-                            world.playSound(location, Sound.MINECART_INSIDE, 1, 0);
-                        } catch (ClassNotFoundException e) {
-                            world.playEffect(location, Effect.BLAZE_SHOOT, 0);
-                        }
+//                    if (plugin.pm.getPlugin("Spout") != null && SpoutManager.getPlayer(player).isSpoutCraftEnabled()) {
+//                        SpoutManager.getSoundManager().playGlobalCustomSoundEffect(plugin, "https://dl.dropboxusercontent.com/u/53758864/tardis_land.mp3", false, location, 9, 75);
+//                    } else {
+                    try {
+                        Class.forName("org.bukkit.Sound");
+                        world.playSound(location, Sound.MINECART_INSIDE, 1, 0);
+                    } catch (ClassNotFoundException e) {
+                        world.playEffect(location, Effect.BLAZE_SHOOT, 0);
                     }
+//                    }
                     QueryFactory qf = new QueryFactory(plugin);
                     HashMap<String, Object> ps = new HashMap<String, Object>();
                     ps.put("tardis_id", tid);

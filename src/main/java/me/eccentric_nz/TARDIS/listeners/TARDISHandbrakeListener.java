@@ -44,7 +44,7 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.material.Lever;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
-import org.getspout.spoutapi.SpoutManager;
+//import org.getspout.spoutapi.SpoutManager;
 
 /**
  * The handbrake was a utensil on the TARDIS used for quick stops. River song
@@ -163,16 +163,16 @@ public class TARDISHandbrakeListener implements Listener {
                                                         plugin.tardisHasDestination.remove(Integer.valueOf(id));
                                                     }
                                                     // play tardis crash sound
-                                                    if (plugin.pm.getPlugin("Spout") != null && SpoutManager.getPlayer(player).isSpoutCraftEnabled()) {
-                                                        SpoutManager.getSoundManager().playGlobalCustomSoundEffect(plugin, "https://dl.dropboxusercontent.com/u/53758864/tardis_emergency_land.mp3", false, handbrake_loc, 20, 75);
-                                                    } else {
-                                                        try {
-                                                            Class.forName("org.bukkit.Sound");
-                                                            handbrake_loc.getWorld().playSound(handbrake_loc, Sound.MINECART_INSIDE, 1, 0);
-                                                        } catch (ClassNotFoundException e) {
-                                                            handbrake_loc.getWorld().playEffect(handbrake_loc, Effect.BLAZE_SHOOT, 0);
-                                                        }
+//                                                    if (plugin.pm.getPlugin("Spout") != null && SpoutManager.getPlayer(player).isSpoutCraftEnabled()) {
+//                                                        SpoutManager.getSoundManager().playGlobalCustomSoundEffect(plugin, "https://dl.dropboxusercontent.com/u/53758864/tardis_emergency_land.mp3", false, handbrake_loc, 20, 75);
+//                                                    } else {
+                                                    try {
+                                                        Class.forName("org.bukkit.Sound");
+                                                        handbrake_loc.getWorld().playSound(handbrake_loc, Sound.MINECART_INSIDE, 1, 0);
+                                                    } catch (ClassNotFoundException e) {
+                                                        handbrake_loc.getWorld().playEffect(handbrake_loc, Effect.BLAZE_SHOOT, 0);
                                                     }
+//                                                    }
                                                     // add a potion effect to the player
                                                     player.addPotionEffect(new PotionEffect(PotionEffectType.CONFUSION, 150, 5));
                                                 } else {
@@ -347,15 +347,15 @@ public class TARDISHandbrakeListener implements Listener {
 
     private void playSound(Location handbrake_loc, Player player, String sound) {
         World handbrake_locw = handbrake_loc.getWorld();
-        if (plugin.pm.getPlugin("Spout") != null && SpoutManager.getPlayer(player).isSpoutCraftEnabled()) {
-            SpoutManager.getSoundManager().playGlobalCustomSoundEffect(plugin, "https://dl.dropboxusercontent.com/u/53758864/" + sound + ".mp3", false, handbrake_loc, 20, 75);
-        } else {
-            try {
-                Class.forName("org.bukkit.Sound");
-                handbrake_locw.playSound(handbrake_loc, Sound.MINECART_INSIDE, 1, 0);
-            } catch (ClassNotFoundException e) {
-                handbrake_locw.playEffect(handbrake_loc, Effect.BLAZE_SHOOT, 0);
-            }
+//        if (plugin.pm.getPlugin("Spout") != null && SpoutManager.getPlayer(player).isSpoutCraftEnabled()) {
+//            SpoutManager.getSoundManager().playGlobalCustomSoundEffect(plugin, "https://dl.dropboxusercontent.com/u/53758864/" + sound + ".mp3", false, handbrake_loc, 20, 75);
+//        } else {
+        try {
+            Class.forName("org.bukkit.Sound");
+            handbrake_locw.playSound(handbrake_loc, Sound.MINECART_INSIDE, 1, 0);
+        } catch (ClassNotFoundException e) {
+            handbrake_locw.playEffect(handbrake_loc, Effect.BLAZE_SHOOT, 0);
         }
+//        }
     }
 }

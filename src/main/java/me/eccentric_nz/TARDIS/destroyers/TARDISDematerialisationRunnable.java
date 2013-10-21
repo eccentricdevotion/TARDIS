@@ -24,7 +24,7 @@ import org.bukkit.Location;
 import org.bukkit.Sound;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
-import org.getspout.spoutapi.SpoutManager;
+//import org.getspout.spoutapi.SpoutManager;
 
 /**
  * A dematerialisation circuit was an essential part of a Type 40 TARDIS which
@@ -55,6 +55,7 @@ public class TARDISDematerialisationRunnable implements Runnable {
      *
      * @param plugin instance of the TARDIS plugin
      * @param location the location to build the Police Box at
+     * @param lamp
      * @param mat the material ID to construct the final walls
      * @param data the material data to construct the final walls
      * @param tid the tardis_id this Police Box belongs to
@@ -107,16 +108,16 @@ public class TARDISDematerialisationRunnable implements Runnable {
             if (i == 1) {
                 HashMap<String, Object> where = new HashMap<String, Object>();
                 where.put("tardis_id", tid);
-                if (plugin.pm.getPlugin("Spout") != null && SpoutManager.getPlayer(player).isSpoutCraftEnabled()) {
-                    SpoutManager.getSoundManager().playGlobalCustomSoundEffect(plugin, "https://dl.dropboxusercontent.com/u/53758864/tardis_takeoff.mp3", false, location, 9, 75);
-                } else {
-                    try {
-                        Class.forName("org.bukkit.Sound");
-                        world.playSound(location, Sound.MINECART_INSIDE, 1, 0);
-                    } catch (ClassNotFoundException e) {
-                        world.playEffect(location, Effect.BLAZE_SHOOT, 0);
-                    }
+//                if (plugin.pm.getPlugin("Spout") != null && SpoutManager.getPlayer(player).isSpoutCraftEnabled()) {
+//                    SpoutManager.getSoundManager().playGlobalCustomSoundEffect(plugin, "https://dl.dropboxusercontent.com/u/53758864/tardis_takeoff.mp3", false, location, 9, 75);
+//                } else {
+                try {
+                    Class.forName("org.bukkit.Sound");
+                    world.playSound(location, Sound.MINECART_INSIDE, 1, 0);
+                } catch (ClassNotFoundException e) {
+                    world.playEffect(location, Effect.BLAZE_SHOOT, 0);
                 }
+//                }
             } else {
                 // just change the walls
                 // bottom layer corners
