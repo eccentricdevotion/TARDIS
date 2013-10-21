@@ -14,7 +14,6 @@
     * Add Chameleon GUI - turn Chameleon Circuit on/off, choose chameleon preset
     * Need database field to store selected preset
     * Allow wood doors to be exterior TARDIS doors
-10. `tardis.skeletonkey` overrides isomorphic controls
 
 ###Bugs to fix
 1. add bugs here!

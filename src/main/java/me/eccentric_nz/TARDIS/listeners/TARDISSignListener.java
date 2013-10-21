@@ -87,7 +87,7 @@ public class TARDISSignListener implements Listener {
                 ResultSetTardisSign rs = new ResultSetTardisSign(plugin, signloc);
                 if (rs.resultSet()) {
                     event.setCancelled(true);
-                    if (rs.isIso_on() && !player.getName().equals(rs.getOwner()) && event.isCancelled()) {
+                    if (rs.isIso_on() && !player.getName().equals(rs.getOwner()) && event.isCancelled() && !player.hasPermission("tardis.skeletonkey")) {
                         player.sendMessage(plugin.pluginName + "The isomorphic security lockout has been engaged... Hands off the controls!");
                         return;
                     }

@@ -95,7 +95,7 @@ public class TARDISHandbrakeListener implements Listener {
                     if (rs.resultSet()) {
                         event.setCancelled(true);
                         String owner = rs.getOwner();
-                        if (rs.isIso_on() && !player.getName().equals(owner) && event.isCancelled()) { // check if cancelled so we don't get double messages from the bind listener
+                        if (rs.isIso_on() && !player.getName().equals(owner) && event.isCancelled() && !player.hasPermission("tardis.skeletonkey")) { // check if cancelled so we don't get double messages from the bind listener
                             player.sendMessage(plugin.pluginName + "The isomorphic security lockout has been engaged... Hands off the controls!");
                             return;
                         }
