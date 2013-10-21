@@ -141,18 +141,16 @@
     </build>
     <dependencies>
         <dependency>
-            <groupId>me.eccentric_nz</groupId>
-            <artifactId>tardischunkgenerator</artifactId>
-            <version>1.0</version>
+            <groupId>me.eccentric_nz.tardischunkgenerator</groupId>
+            <artifactId>TARDISChunkGenerator</artifactId>
+            <version>1.0g</version>
             <type>jar</type>
-            <scope>compile</scope>
         </dependency>
         <dependency>
-            <groupId>me.eccentric_nz</groupId>
-            <artifactId>tardishorsespeed</artifactId>
-            <version>1.0</version>
+            <groupId>me.eccentric_nz.tardishorsespeed</groupId>
+            <artifactId>TARDISHorseSpeed</artifactId>
+            <version>1.0a</version>
             <type>jar</type>
-            <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>org.bukkit</groupId>
@@ -161,66 +159,52 @@
             <type>jar</type>
         </dependency>
         <dependency>
-            <groupId>org.getspout</groupId>
-            <artifactId>spoutplugin</artifactId>
-            <version>1.6.2-R0.1-SNAPSHOT</version>
-            <type>jar</type>
-        </dependency>
-        <dependency>
             <groupId>com.sk89q</groupId>
             <artifactId>worldguard</artifactId>
-            <version>5.8-SNAPSHOT</version>
+            <version>5.8.1-SNAPSHOT</version>
             <type>jar</type>
-            <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>com.sk89q</groupId>
             <artifactId>worldedit</artifactId>
             <version>5.5.9-SNAPSHOT</version>
             <type>jar</type>
-            <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>com.palmergames.bukkit</groupId>
             <artifactId>Towny</artifactId>
             <version>0.83.0.0</version>
             <type>jar</type>
-            <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>com.wimbli.WorldBorder</groupId>
             <artifactId>WorldBorder</artifactId>
             <version>1.7.2b</version>
             <type>jar</type>
-            <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>com.onarandombox.multiversecore</groupId>
             <artifactId>Multiverse-Core</artifactId>
             <version>2.5</version>
             <type>jar</type>
-            <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>com.onarandombox.multiverseinventories</groupId>
             <artifactId>Multiverse-Inventories</artifactId>
             <version>2.5</version>
             <type>jar</type>
-            <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>com.onarandombox.multiverseadventure</groupId>
             <artifactId>Multiverse-Adventure</artifactId>
             <version>2.5</version>
             <type>jar</type>
-            <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>multiworld</groupId>
             <artifactId>MultiWorld</artifactId>
             <version>4.7.1</version>
             <type>jar</type>
-            <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>com.massivecraft</groupId>
@@ -233,13 +217,11 @@
             <artifactId>mcore</artifactId>
             <version>6.8.0</version>
             <type>jar</type>
-            <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>net.citizensnpcs</groupId>
             <artifactId>citizensapi</artifactId>
             <version>2.0.9-beta-1</version>
-            <scope>compile</scope>
         </dependency>
     </dependencies>
 </project>
