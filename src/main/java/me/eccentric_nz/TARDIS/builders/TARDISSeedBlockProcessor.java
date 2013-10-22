@@ -196,6 +196,7 @@ public class TARDISSeedBlockProcessor {
                 set.put("chameleon_data", seed.getBox_data());
                 // determine wall block material from HashMap
                 setpp.put("wall", getWallKey(middle_id, (int) middle_data));
+                setpp.put("lamp", seed.getLamp());
                 final int lastInsertId = qf.doSyncInsert("tardis", set);
                 // insert/update  player prefs
                 HashMap<String, Object> wherep = new HashMap<String, Object>();
