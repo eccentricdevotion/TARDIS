@@ -33,10 +33,10 @@ import me.eccentric_nz.TARDIS.TARDIS;
  */
 public class TARDISLocationsConverter {
 
-    private TARDISDatabase service = TARDISDatabase.getInstance();
-    private Connection connection = service.getConnection();
-    private TARDIS plugin;
-    private List<String> directions = Arrays.asList(new String[]{"NORTH", "SOUTH", "EAST", "WEST"});
+    private final TARDISDatabase service = TARDISDatabase.getInstance();
+    private final Connection connection = service.getConnection();
+    private final TARDIS plugin;
+    private final List<String> directions = Arrays.asList(new String[]{"NORTH", "SOUTH", "EAST", "WEST"});
 
     ;
 
@@ -93,7 +93,7 @@ public class TARDISLocationsConverter {
                 if (statement != null) {
                     statement.close();
                 }
-            } catch (Exception e) {
+            } catch (SQLException e) {
                 plugin.debug("Error closing current table (loading Police Box chunks)! " + e.getMessage());
             }
         }

@@ -35,11 +35,11 @@ import me.eccentric_nz.TARDIS.TARDIS;
  */
 public class ResultSetDestinations {
 
-    private TARDISDatabase service = TARDISDatabase.getInstance();
-    private Connection connection = service.getConnection();
-    private TARDIS plugin;
-    private HashMap<String, Object> where;
-    private boolean multiple;
+    private final TARDISDatabase service = TARDISDatabase.getInstance();
+    private final Connection connection = service.getConnection();
+    private final TARDIS plugin;
+    private final HashMap<String, Object> where;
+    private final boolean multiple;
     private int dest_id;
     private int tardis_id;
     private String dest_name;
@@ -51,7 +51,7 @@ public class ResultSetDestinations {
     private String bind;
     private int type;
     private boolean submarine;
-    private ArrayList<HashMap<String, String>> data = new ArrayList<HashMap<String, String>>();
+    private final ArrayList<HashMap<String, String>> data = new ArrayList<HashMap<String, String>>();
 
     /**
      * Creates a class instance that can be used to retrieve an SQL ResultSet
@@ -141,7 +141,7 @@ public class ResultSetDestinations {
                 if (statement != null) {
                     statement.close();
                 }
-            } catch (Exception e) {
+            } catch (SQLException e) {
                 plugin.debug("Error closing destinations table! " + e.getMessage());
             }
         }

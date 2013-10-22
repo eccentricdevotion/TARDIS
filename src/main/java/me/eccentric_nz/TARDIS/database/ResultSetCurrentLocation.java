@@ -34,10 +34,10 @@ import org.bukkit.World;
  */
 public class ResultSetCurrentLocation {
 
-    private TARDISDatabase service = TARDISDatabase.getInstance();
-    private Connection connection = service.getConnection();
-    private TARDIS plugin;
-    private HashMap<String, Object> where;
+    private final TARDISDatabase service = TARDISDatabase.getInstance();
+    private final Connection connection = service.getConnection();
+    private final TARDIS plugin;
+    private final HashMap<String, Object> where;
     private int current_id;
     private int tardis_id;
     private World world;
@@ -120,7 +120,7 @@ public class ResultSetCurrentLocation {
                 if (statement != null) {
                     statement.close();
                 }
-            } catch (Exception e) {
+            } catch (SQLException e) {
                 plugin.debug("Error closing destinations table! " + e.getMessage());
             }
         }

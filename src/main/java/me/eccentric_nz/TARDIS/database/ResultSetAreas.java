@@ -35,11 +35,11 @@ import me.eccentric_nz.TARDIS.TARDIS;
  */
 public class ResultSetAreas {
 
-    private TARDISDatabase service = TARDISDatabase.getInstance();
-    private Connection connection = service.getConnection();
-    private TARDIS plugin;
-    private HashMap<String, Object> where;
-    private boolean multiple;
+    private final TARDISDatabase service = TARDISDatabase.getInstance();
+    private final Connection connection = service.getConnection();
+    private final TARDIS plugin;
+    private final HashMap<String, Object> where;
+    private final boolean multiple;
     private int area_id;
     private String area_name;
     private String world;
@@ -48,7 +48,7 @@ public class ResultSetAreas {
     private int maxx;
     private int maxz;
     private int y;
-    private ArrayList<HashMap<String, String>> data = new ArrayList<HashMap<String, String>>();
+    private final ArrayList<HashMap<String, String>> data = new ArrayList<HashMap<String, String>>();
 
     /**
      * Creates a class instance that can be used to retrieve an SQL ResultSet
@@ -135,7 +135,7 @@ public class ResultSetAreas {
                 if (statement != null) {
                     statement.close();
                 }
-            } catch (Exception e) {
+            } catch (SQLException e) {
                 plugin.debug("Error closing areas table! " + e.getMessage());
             }
         }

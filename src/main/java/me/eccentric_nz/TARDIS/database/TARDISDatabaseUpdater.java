@@ -33,15 +33,15 @@ import org.bukkit.ChatColor;
  */
 public class TARDISDatabaseUpdater {
 
-    private List<String> areaupdates = new ArrayList<String>();
-    private List<String> blockupdates = new ArrayList<String>();
-    private List<String> destupdates = new ArrayList<String>();
-    private List<String> doorupdates = new ArrayList<String>();
-    private List<String> gravityupdates = new ArrayList<String>();
-    private List<String> prefsupdates = new ArrayList<String>();
-    private List<String> tardisupdates = new ArrayList<String>();
-    private long now = System.currentTimeMillis();
-    private Statement statement;
+    private final List<String> areaupdates = new ArrayList<String>();
+    private final List<String> blockupdates = new ArrayList<String>();
+    private final List<String> destupdates = new ArrayList<String>();
+    private final List<String> doorupdates = new ArrayList<String>();
+    private final List<String> gravityupdates = new ArrayList<String>();
+    private final List<String> prefsupdates = new ArrayList<String>();
+    private final List<String> tardisupdates = new ArrayList<String>();
+    private final long now = System.currentTimeMillis();
+    private final Statement statement;
 
     public TARDISDatabaseUpdater(Statement statement) {
         this.statement = statement;

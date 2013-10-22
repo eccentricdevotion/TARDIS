@@ -24,21 +24,26 @@ import java.util.Map;
 import me.eccentric_nz.TARDIS.TARDIS;
 
 /**
- * Inserts data into an SQLite database table. This method builds a prepared SQL
- * statement from the parameters supplied and then executes the insert.
  *
- * @param table the database table name to insert the data into.
- * @param data a HashMap<String, Object> of table fields and values to insert.
  * @author eccentric_nz
  */
 public class TARDISSQLInsert implements Runnable {
 
     private final TARDIS plugin;
-    TARDISDatabase service = TARDISDatabase.getInstance();
-    Connection connection = service.getConnection();
-    private String table;
-    private HashMap<String, Object> data;
+    private final TARDISDatabase service = TARDISDatabase.getInstance();
+    private final Connection connection = service.getConnection();
+    private final String table;
+    private final HashMap<String, Object> data;
 
+    /**
+     * Inserts data into an SQLite database table. This method builds a prepared
+     * SQL statement from the parameters supplied and then executes the insert.
+     *
+     * @param plugin an instance of the main plugin class
+     * @param table the database table name to insert the data into.
+     * @param data a HashMap<String, Object> of table fields and values to
+     * insert.
+     */
     public TARDISSQLInsert(TARDIS plugin, String table, HashMap<String, Object> data) {
         this.plugin = plugin;
         this.table = table;
@@ -82,7 +87,7 @@ public class TARDISSQLInsert implements Runnable {
                 if (ps != null) {
                     ps.close();
                 }
-            } catch (Exception e) {
+            } catch (SQLException e) {
                 plugin.debug("Error closing " + table + "! " + e.getMessage());
             }
         }

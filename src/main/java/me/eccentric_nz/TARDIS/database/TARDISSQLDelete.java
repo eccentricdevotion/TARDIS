@@ -24,22 +24,26 @@ import java.util.Map;
 import me.eccentric_nz.TARDIS.TARDIS;
 
 /**
- * Deletes rows from an SQLite database table. This method builds an SQL query
- * string from the parameters supplied and then executes the delete.
  *
- * @param table the database table name to insert the data into.
- * @param where a HashMap<String, Object> of table fields and values to select
- * the records to delete.
  * @author eccentric_nz
  */
 public class TARDISSQLDelete implements Runnable {
 
     private final TARDIS plugin;
-    TARDISDatabase service = TARDISDatabase.getInstance();
-    Connection connection = service.getConnection();
-    private String table;
-    private HashMap<String, Object> where;
+    private final TARDISDatabase service = TARDISDatabase.getInstance();
+    private final Connection connection = service.getConnection();
+    private final String table;
+    private final HashMap<String, Object> where;
 
+    /**
+     * Deletes rows from an SQLite database table. This method builds an SQL
+     * query string from the parameters supplied and then executes the delete.
+     *
+     * @param plugin an instance of the main plugin class
+     * @param table the database table name to insert the data into.
+     * @param where a HashMap<String, Object> of table fields and values to
+     * select the records to delete.
+     */
     public TARDISSQLDelete(TARDIS plugin, String table, HashMap<String, Object> where) {
         this.plugin = plugin;
         this.table = table;
@@ -72,7 +76,7 @@ public class TARDISSQLDelete implements Runnable {
                 if (statement != null) {
                     statement.close();
                 }
-            } catch (Exception e) {
+            } catch (SQLException e) {
                 plugin.debug("Error closing " + table + "! " + e.getMessage());
             }
         }

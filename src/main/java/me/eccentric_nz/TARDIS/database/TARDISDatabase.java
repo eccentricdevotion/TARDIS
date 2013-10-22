@@ -33,7 +33,7 @@ import me.eccentric_nz.TARDIS.TARDIS;
  */
 public class TARDISDatabase {
 
-    private static TARDISDatabase instance = new TARDISDatabase();
+    private static final TARDISDatabase instance = new TARDISDatabase();
 
     public static synchronized TARDISDatabase getInstance() {
         return instance;
@@ -111,12 +111,17 @@ public class TARDISDatabase {
                 if (statement != null) {
                     statement.close();
                 }
-            } catch (Exception e) {
+            } catch (SQLException e) {
                 TARDIS.plugin.console.sendMessage(TARDIS.plugin.pluginName + "Close statement error: " + e);
             }
         }
     }
 
+    /**
+     *
+     * @return an exception
+     * @throws CloneNotSupportedException
+     */
     @Override
     protected Object clone() throws CloneNotSupportedException {
         throw new CloneNotSupportedException("Clone is not allowed.");

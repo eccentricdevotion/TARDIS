@@ -36,12 +36,12 @@ import me.eccentric_nz.TARDIS.TARDISConstants;
  */
 public class ResultSetTardis {
 
-    private TARDISDatabase service = TARDISDatabase.getInstance();
-    private Connection connection = service.getConnection();
-    private TARDIS plugin;
-    private HashMap<String, Object> where;
-    private String limit;
-    private boolean multiple;
+    private final TARDISDatabase service = TARDISDatabase.getInstance();
+    private final Connection connection = service.getConnection();
+    private final TARDIS plugin;
+    private final HashMap<String, Object> where;
+    private final String limit;
+    private final boolean multiple;
     private int tardis_id;
     private String owner;
     private String chunk;
@@ -74,7 +74,7 @@ public class ResultSetTardis {
     private String eps;
     private String rail;
     private String village;
-    private ArrayList<HashMap<String, String>> data = new ArrayList<HashMap<String, String>>();
+    private final ArrayList<HashMap<String, String>> data = new ArrayList<HashMap<String, String>>();
 
     /**
      * Creates a class instance that can be used to retrieve an SQL ResultSet
@@ -190,7 +190,7 @@ public class ResultSetTardis {
                 if (statement != null) {
                     statement.close();
                 }
-            } catch (Exception e) {
+            } catch (SQLException e) {
                 plugin.debug("Error closing tardis table! " + e.getMessage());
             }
         }

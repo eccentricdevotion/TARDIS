@@ -34,12 +34,12 @@ import me.eccentric_nz.TARDIS.TARDIS;
  */
 public class ResultSetRepeaters {
 
-    private TARDISDatabase service = TARDISDatabase.getInstance();
-    private Connection connection = service.getConnection();
-    private TARDIS plugin;
-    private int id;
-    private int secondary;
-    private byte[] diodes = new byte[4];
+    private final TARDISDatabase service = TARDISDatabase.getInstance();
+    private final Connection connection = service.getConnection();
+    private final TARDIS plugin;
+    private final int id;
+    private final int secondary;
+    private final byte[] diodes = new byte[4];
     String[] str = new String[4];
 
     /**
@@ -92,7 +92,7 @@ public class ResultSetRepeaters {
                 if (statement != null) {
                     statement.close();
                 }
-            } catch (Exception e) {
+            } catch (SQLException e) {
                 plugin.debug("Error closing controls table! " + e.getMessage());
             }
         }

@@ -24,23 +24,27 @@ import java.util.Map;
 import me.eccentric_nz.TARDIS.TARDIS;
 
 /**
- * Removes condenser block counts from an SQLite database table. This method
- * builds an SQL query string from the parameters supplied and then executes the
- * query.
  *
- * @param amount the amount of blocks to remove
- * @param where a HashMap<String, Object> of table fields and values to select
- * the records to alter.
  * @author eccentric_nz
  */
 public class TARDISSQLCondenserUpdate implements Runnable {
 
     private final TARDIS plugin;
-    TARDISDatabase service = TARDISDatabase.getInstance();
-    Connection connection = service.getConnection();
-    private int amount;
-    private HashMap<String, Object> where;
+    private final TARDISDatabase service = TARDISDatabase.getInstance();
+    private final Connection connection = service.getConnection();
+    private final int amount;
+    private final HashMap<String, Object> where;
 
+    /**
+     * Removes condenser block counts from an SQLite database table. This method
+     * builds an SQL query string from the parameters supplied and then executes
+     * the query.
+     *
+     * @param plugin an instance of the main plugin class
+     * @param amount the amount of blocks to remove
+     * @param where a HashMap<String, Object> of table fields and values to
+     * select the records to alter.
+     */
     public TARDISSQLCondenserUpdate(TARDIS plugin, int amount, HashMap<String, Object> where) {
         this.plugin = plugin;
         this.amount = amount;
@@ -73,7 +77,7 @@ public class TARDISSQLCondenserUpdate implements Runnable {
                 if (statement != null) {
                     statement.close();
                 }
-            } catch (Exception e) {
+            } catch (SQLException e) {
                 plugin.debug("Error closing condenser table! " + e.getMessage());
             }
         }

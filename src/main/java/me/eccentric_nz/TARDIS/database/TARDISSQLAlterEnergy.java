@@ -26,27 +26,32 @@ import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
 /**
- * Adds or removes Artron Energy from an SQLite database table. This method
- * builds an SQL query string from the parameters supplied and then executes the
- * query.
  *
- * @param table the database table name to insert the data into.
- * @param amount the amount of energy to add or remove (use a negative value)
- * @param where a HashMap<String, Object> of table fields and values to select
- * the records to alter.
- * @param p the player who receives the success message.
  * @author eccentric_nz
  */
 public class TARDISSQLAlterEnergy implements Runnable {
 
     private final TARDIS plugin;
-    TARDISDatabase service = TARDISDatabase.getInstance();
-    Connection connection = service.getConnection();
-    private String table;
-    private int amount;
-    private HashMap<String, Object> where;
-    private Player p;
+    private final TARDISDatabase service = TARDISDatabase.getInstance();
+    private final Connection connection = service.getConnection();
+    private final String table;
+    private final int amount;
+    private final HashMap<String, Object> where;
+    private final Player p;
 
+    /**
+     * Adds or removes Artron Energy from an SQLite database table. This method
+     * builds an SQL query string from the parameters supplied and then executes
+     * the query.
+     *
+     * @param plugin an instance of the main plugin class
+     * @param table the database table name to insert the data into.
+     * @param amount the amount of energy to add or remove (use a negative
+     * value)
+     * @param where a HashMap<String, Object> of table fields and values to
+     * select the records to alter.
+     * @param p the player who receives the success message.
+     */
     public TARDISSQLAlterEnergy(TARDIS plugin, String table, int amount, HashMap<String, Object> where, Player p) {
         this.plugin = plugin;
         this.table = table;
@@ -89,7 +94,7 @@ public class TARDISSQLAlterEnergy implements Runnable {
                 if (statement != null) {
                     statement.close();
                 }
-            } catch (Exception e) {
+            } catch (SQLException e) {
                 plugin.debug("Artron Energy error closing " + table + "! " + e.getMessage());
             }
         }

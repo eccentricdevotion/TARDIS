@@ -33,9 +33,9 @@ import org.bukkit.World;
  */
 public class ResultSetPoliceBox {
 
-    private TARDISDatabase service = TARDISDatabase.getInstance();
-    private Connection connection = service.getConnection();
-    private TARDIS plugin;
+    private final TARDISDatabase service = TARDISDatabase.getInstance();
+    private final Connection connection = service.getConnection();
+    private final TARDIS plugin;
 
     /**
      * Creates a class instance that can be used to retrieve an SQL ResultSet
@@ -81,7 +81,7 @@ public class ResultSetPoliceBox {
                 if (statement != null) {
                     statement.close();
                 }
-            } catch (Exception e) {
+            } catch (SQLException e) {
                 plugin.debug("Error closing current table (loading Police Box chunks)! " + e.getMessage());
             }
         }

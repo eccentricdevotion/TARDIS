@@ -30,10 +30,10 @@ import me.eccentric_nz.TARDIS.TARDIS;
  */
 public class ResultSetTardisSign {
 
-    private TARDISDatabase service = TARDISDatabase.getInstance();
-    private Connection connection = service.getConnection();
-    private TARDIS plugin;
-    private String where;
+    private final TARDISDatabase service = TARDISDatabase.getInstance();
+    private final Connection connection = service.getConnection();
+    private final TARDIS plugin;
+    private final String where;
     private int tardis_id;
     private String owner;
     private String save_sign;
@@ -90,7 +90,7 @@ public class ResultSetTardisSign {
                 if (statement != null) {
                     statement.close();
                 }
-            } catch (Exception e) {
+            } catch (SQLException e) {
                 plugin.debug("Error closing tardis table (SIGN)! " + e.getMessage());
             }
         }

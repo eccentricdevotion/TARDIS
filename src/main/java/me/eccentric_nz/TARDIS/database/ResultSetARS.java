@@ -37,10 +37,10 @@ import me.eccentric_nz.TARDIS.TARDIS;
  */
 public class ResultSetARS {
 
-    private TARDISDatabase service = TARDISDatabase.getInstance();
-    private Connection connection = service.getConnection();
-    private TARDIS plugin;
-    private HashMap<String, Object> where;
+    private final TARDISDatabase service = TARDISDatabase.getInstance();
+    private final Connection connection = service.getConnection();
+    private final TARDIS plugin;
+    private final HashMap<String, Object> where;
     private int id;
     private int tardis_id;
     private String player;
@@ -121,7 +121,7 @@ public class ResultSetARS {
                 if (statement != null) {
                     statement.close();
                 }
-            } catch (Exception e) {
+            } catch (SQLException e) {
                 plugin.debug("Error closing ars table! " + e.getMessage());
             }
         }

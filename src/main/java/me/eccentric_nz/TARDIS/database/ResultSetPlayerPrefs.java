@@ -32,10 +32,10 @@ import me.eccentric_nz.TARDIS.TARDIS;
  */
 public class ResultSetPlayerPrefs {
 
-    private TARDISDatabase service = TARDISDatabase.getInstance();
-    private Connection connection = service.getConnection();
-    private TARDIS plugin;
-    private HashMap<String, Object> where;
+    private final TARDISDatabase service = TARDISDatabase.getInstance();
+    private final Connection connection = service.getConnection();
+    private final TARDIS plugin;
+    private final HashMap<String, Object> where;
     private int pp_id;
     private String player;
     private String key;

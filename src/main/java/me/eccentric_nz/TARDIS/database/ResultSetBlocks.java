@@ -35,18 +35,18 @@ import me.eccentric_nz.TARDIS.TARDIS;
  */
 public class ResultSetBlocks {
 
-    private TARDISDatabase service = TARDISDatabase.getInstance();
-    private Connection connection = service.getConnection();
-    private TARDIS plugin;
-    private HashMap<String, Object> where;
-    private boolean multiple;
+    private final TARDISDatabase service = TARDISDatabase.getInstance();
+    private final Connection connection = service.getConnection();
+    private final TARDIS plugin;
+    private final HashMap<String, Object> where;
+    private final boolean multiple;
     private int id;
     private int tardis_id;
     private String location;
     private int blockId;
     private byte blockData;
     private boolean police_box;
-    private ArrayList<HashMap<String, String>> data = new ArrayList<HashMap<String, String>>();
+    private final ArrayList<HashMap<String, String>> data = new ArrayList<HashMap<String, String>>();
 
     /**
      * Creates a class instance that can be used to retrieve an SQL ResultSet
@@ -131,7 +131,7 @@ public class ResultSetBlocks {
                 if (statement != null) {
                     statement.close();
                 }
-            } catch (Exception e) {
+            } catch (SQLException e) {
                 plugin.debug("Error closing blocks table! " + e.getMessage());
             }
         }

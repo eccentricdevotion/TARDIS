@@ -31,30 +31,24 @@ import me.eccentric_nz.TARDIS.TARDIS;
  * Many facts, figures, and formulas are contained within the Matrix,
  * including... the locations of the TARDIS controls.
  *
- * Control types:
- * 0 = handbrake
- * 1 = random button
- * 2 = x-repeater
- * 3 = z-repeater
- * 4 = multiplier-repeater
- * 5 = environment-repeater
- * 6 = artron button
+ * Control types: 0 = handbrake 1 = random button 2 = x-repeater 3 = z-repeater
+ * 4 = multiplier-repeater 5 = environment-repeater 6 = artron button
  *
  * @author eccentric_nz
  */
 public class ResultSetControls {
 
-    private TARDISDatabase service = TARDISDatabase.getInstance();
-    private Connection connection = service.getConnection();
-    private TARDIS plugin;
-    private HashMap<String, Object> where;
-    private boolean multiple;
+    private final TARDISDatabase service = TARDISDatabase.getInstance();
+    private final Connection connection = service.getConnection();
+    private final TARDIS plugin;
+    private final HashMap<String, Object> where;
+    private final boolean multiple;
     private int c_id;
     private int tardis_id;
     private int type;
     private String location;
     private int secondary;
-    private ArrayList<HashMap<String, String>> data = new ArrayList<HashMap<String, String>>();
+    private final ArrayList<HashMap<String, String>> data = new ArrayList<HashMap<String, String>>();
 
     /**
      * Creates a class instance that can be used to retrieve an SQL ResultSet
@@ -138,7 +132,7 @@ public class ResultSetControls {
                 if (statement != null) {
                     statement.close();
                 }
-            } catch (Exception e) {
+            } catch (SQLException e) {
                 plugin.debug("Error closing controls table! " + e.getMessage());
             }
         }

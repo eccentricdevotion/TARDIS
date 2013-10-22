@@ -23,25 +23,29 @@ import java.sql.Statement;
 import me.eccentric_nz.TARDIS.TARDIS;
 
 /**
- * Updates data in an SQLite database table. This method builds an SQL query
- * string from the parameters supplied and then executes the update.
  *
- * @param table the database table name to update.
- * @param data a HashMap<String, Object> of table fields and values update.
- * @param where a HashMap<String, Object> of table fields and values to select
- * the records to update.
  * @author eccentric_nz
  */
 public class TARDISSQLInsertControl implements Runnable {
 
     private final TARDIS plugin;
-    TARDISDatabase service = TARDISDatabase.getInstance();
-    Connection connection = service.getConnection();
-    private int id;
-    private int type;
-    private String l;
-    private int s;
+    private final TARDISDatabase service = TARDISDatabase.getInstance();
+    private final Connection connection = service.getConnection();
+    private final int id;
+    private final int type;
+    private final String l;
+    private final int s;
 
+    /**
+     * Updates data in an SQLite database table. This method builds an SQL query
+     * string from the parameters supplied and then executes the update.
+     *
+     * @param plugin an instance of the main plugin class
+     * @param id the unique TARDIS identifier
+     * @param type the type of control to insert
+     * @param l the location of the control
+     * @param s whether the control is a secondary control
+     */
     public TARDISSQLInsertControl(TARDIS plugin, int id, int type, String l, int s) {
         this.plugin = plugin;
         this.id = id;
@@ -73,7 +77,7 @@ public class TARDISSQLInsertControl implements Runnable {
                 if (statement != null) {
                     statement.close();
                 }
-            } catch (Exception e) {
+            } catch (SQLException e) {
                 plugin.debug("Error closing insert control statement! " + e.getMessage());
             }
         }
