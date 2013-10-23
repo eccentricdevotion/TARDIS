@@ -92,6 +92,8 @@ public class TARDISHandbrakeListener implements Listener {
                     HashMap<String, Object> wherecurrent = new HashMap<String, Object>();
                     HashMap<String, Object> setback = new HashMap<String, Object>();
                     HashMap<String, Object> whereback = new HashMap<String, Object>();
+                    HashMap<String, Object> setdoor = new HashMap<String, Object>();
+                    HashMap<String, Object> wheredoor = new HashMap<String, Object>();
                     if (rs.resultSet()) {
                         event.setCancelled(true);
                         String owner = rs.getOwner();
@@ -133,13 +135,14 @@ public class TARDISHandbrakeListener implements Listener {
                                             player.sendMessage(plugin.pluginName + "Could not get current TARDIS location!");
                                             return;
                                         }
-                                        final TARDISConstants.COMPASS d = rscl.getDirection();
+                                        final TARDISConstants.COMPASS cd = rscl.getDirection();
+                                        TARDISConstants.COMPASS tmpd = cd;
                                         Location l = new Location(rscl.getWorld(), rscl.getX(), rscl.getY(), rscl.getZ());
                                         String resetw = rscl.getWorld().getName();
                                         boolean malfunction = false;
                                         if (plugin.getConfig().getInt("malfunction") > 0) {
                                             // check for a malfunction
-                                            TARDISMalfunction m = new TARDISMalfunction(plugin, id, player, d, handbrake_loc, eps, creeper);
+                                            TARDISMalfunction m = new TARDISMalfunction(plugin, id, player, cd, handbrake_loc, eps, creeper);
                                             malfunction = m.isMalfunction();
                                             if (malfunction) {
                                                 exit = m.getMalfunction();
@@ -189,6 +192,7 @@ public class TARDISHandbrakeListener implements Listener {
                                                 return;
                                             }
                                             exit = new Location(rsn.getWorld(), rsn.getX(), rsn.getY(), rsn.getZ());
+                                            tmpd = rsn.getDirection();
                                             // Changes the lever to off
                                             lever.setPowered(false);
                                             state.setData(lever);
@@ -206,7 +210,7 @@ public class TARDISHandbrakeListener implements Listener {
                                             boolean mat = plugin.getConfig().getBoolean("materialise");
                                             if (!rs.isHidden() && !plugin.trackReset.contains(resetw)) {
                                                 plugin.tardisDematerialising.add(id);
-                                                plugin.destroyPB.destroyPoliceBox(l, d, id, false, mat, cham, player);
+                                                plugin.destroyPB.destroyPoliceBox(l, cd, id, false, mat, cham, player);
                                             } else {
                                                 // set hidden false!
                                                 set.put("hidden", 0);
@@ -214,10 +218,11 @@ public class TARDISHandbrakeListener implements Listener {
                                             long delay = (mat) ? ((plugin.pm.getPlugin("Spout") != null) ? 450L : 200L) : 1L;
                                             final Location e = exit;
                                             final boolean mal = malfunction;
+                                            final TARDISConstants.COMPASS sd = tmpd;
                                             plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
                                                 @Override
                                                 public void run() {
-                                                    plugin.buildPB.buildPoliceBox(id, e, d, cham, player, false, mal);
+                                                    plugin.buildPB.buildPoliceBox(id, e, sd, cham, player, false, mal);
                                                     playSound(handbrake_loc, player, "tardis_land");
                                                 }
                                             }, delay);
@@ -229,6 +234,7 @@ public class TARDISHandbrakeListener implements Listener {
                                             setcurrent.put("x", exit.getBlockX());
                                             setcurrent.put("y", exit.getBlockY());
                                             setcurrent.put("z", exit.getBlockZ());
+                                            setcurrent.put("direction", sd.toString());
                                             setcurrent.put("submarine", 0);
                                             wherecurrent.put("tardis_id", id);
                                             // get current location for back
@@ -247,6 +253,10 @@ public class TARDISHandbrakeListener implements Listener {
                                             setback.put("direction", rscu.getDirection().toString());
                                             setback.put("submarine", (rscu.isSubmarine()) ? 1 : 0);
                                             whereback.put("tardis_id", id);
+                                            // update Police Box door direction
+                                            setdoor.put("door_direction", sd.toString());
+                                            wheredoor.put("tardis_id", id);
+                                            wheredoor.put("door_type", 0);
                                             long now;
                                             if (player.hasPermission("tardis.prune.bypass")) {
                                                 now = Long.MAX_VALUE;
@@ -314,6 +324,7 @@ public class TARDISHandbrakeListener implements Listener {
                                 if (setcurrent.size() > 0) {
                                     qf.doUpdate("current", setcurrent, wherecurrent);
                                     qf.doUpdate("back", setback, whereback);
+                                    qf.doUpdate("doors", setdoor, wheredoor);
                                 }
                                 if (dist > 0 && plugin.getAchivementConfig().getBoolean("travel.enabled")) {
                                     TARDISAchievementFactory taf = new TARDISAchievementFactory(plugin, player, "travel", 1);
