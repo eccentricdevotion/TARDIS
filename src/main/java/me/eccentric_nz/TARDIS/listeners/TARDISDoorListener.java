@@ -115,7 +115,7 @@ public class TARDISDoorListener implements Listener {
             Material blockType = block.getType();
             Action action = event.getAction();
             // only proceed if they are clicking an iron door with a TARDIS key!
-            if (blockType == Material.IRON_DOOR_BLOCK) {
+            if (blockType == Material.IRON_DOOR_BLOCK || blockType == Material.WOOD_DOOR) {
                 if (player.hasPermission("tardis.enter")) {
                     World playerWorld = player.getLocation().getWorld();
                     Location block_loc = block.getLocation();
