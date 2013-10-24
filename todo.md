@@ -5,16 +5,15 @@
 2. Jettison the whole room (including walls), will require new room schematics... (in progress - working with ARS :)
 3. Architectural Reconfiguration System (almost there)
     * Doorways - leave the doorway open…
-4. Add one slot for a custom console (slot added, command needed)
-5. HADS + explosions + fireballs + lava
-6. Put farmland, crops, buttons, levers and signs on last when growing rooms
-7. Sonic Screwdrivers
-8. TARDIS Information System (in progress)
-9. Chameleon presets (in progress)
+4. HADS + explosions + fireballs + lava
+5. Put farmland, crops, buttons, levers and signs on last when growing rooms
+6. Sonic Screwdrivers
+7. TARDIS Information System (in progress)
+8. Chameleon presets (in progress)
     * Add Chameleon GUI - turn Chameleon Circuit on/off, choose chameleon preset
-    * Need database field to store selected preset
-    * Allow wood doors to be exterior TARDIS doors
-10. Fix TARDIS Police Box rotation (use saved directions)
+    * Change Police Box building to use presets!
+9. Check/fix sponge in TARDIS submarine mode
+10. Add command to remove all companions
 
 ###Bugs to fix
 1. add bugs here!
@@ -34,6 +33,7 @@
 9. TARDIS direction sign
 10. TARDIS exterior rendering / scanner room
 11. Underground materialisation
+12. Update the malfunction location finder to have a greater range
 
 ## Minecraft API when available `3.0?`
 1. Recreate everything with the new API :)

@@ -83,6 +83,7 @@ public class TARDISAdminCommands implements CommandExecutor {
         // add first arguments
         firstsStr.add("chunks");
         firstsStr.add("config");
+        firstsStr.add("custom_schematic_seed");
         firstsStr.add("decharge");
         firstsStr.add("default_world_name");
         firstsStr.add("delete");
@@ -115,6 +116,7 @@ public class TARDISAdminCommands implements CommandExecutor {
         firstsBool.add("check_for_updates");
         firstsBool.add("create_worlds");
         firstsBool.add("create_worlds_with_perms");
+        firstsBool.add("custom_schematic");
         firstsBool.add("debug");
         firstsBool.add("default_world");
         firstsBool.add("emergency_npc");
@@ -644,7 +646,7 @@ public class TARDISAdminCommands implements CommandExecutor {
                     }
                     return true;
                 }
-                if (first.equals("key") || first.equals("stattenheim") || first.equals("full_charge_item") || first.equals("jettison_seed")) {
+                if (first.equals("key") || first.equals("stattenheim") || first.equals("full_charge_item") || first.equals("jettison_seed") || first.equals("custom_schematic_seed")) {
                     String setMaterial = args[1].toUpperCase(Locale.ENGLISH);
                     if (!Arrays.asList(TARDISMaterials.MATERIAL_LIST).contains(setMaterial)) {
                         sender.sendMessage(plugin.pluginName + ChatColor.RED + "That is not a valid Material! Try checking http://jd.bukkit.org/apidocs/org/bukkit/Material.html");
