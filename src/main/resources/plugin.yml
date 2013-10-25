@@ -217,7 +217,7 @@ commands:
       permission-message: You don't have the permission <permission> to use this command
     remove:
       description: Remove a companion from your TARDIS.
-      usage: /<command> remove [player name]
+      usage: /<command> remove [player name|all]
       permission: tardis.add
       permission-message: You don't have the permission <permission> to use this command
     update:

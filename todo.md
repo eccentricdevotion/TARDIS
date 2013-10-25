@@ -4,27 +4,23 @@
 1. Test `platform_id`, Temporal Invisibility
 2. Jettison the whole room (including walls), will require new room schematics... (in progress - working with ARS :)
 3. Architectural Reconfiguration System (almost there)
-    * Doorways - leave the doorway open…
+    * Doorways - leave the doorway open (remove piston doors)
     * Change default offsets for rooms
     * Remove cross and long rooms (all passages are now long crosses)
     * Can you manually grow a gravity or antigravity well?
 4. HADS + explosions + fireballs + lava
 5. Put farmland, crops, buttons, levers and signs on last when growing rooms
-6. Sonic Screwdrivers
-7. TARDIS Information System (in progress)
-8. Chameleon presets (in progress)
+6. TARDIS Information System (in progress)
+7. Chameleon presets (in progress)
     * Add Chameleon GUI - turn Chameleon Circuit on/off, choose chameleon preset
     * Change Police Box building to use presets!
-9. Check/fix sponge in TARDIS submarine mode
-10. Add command to remove all companions
-
-###Bugs to fix
-1. add bugs here!
 
 ## Waiting on Bukkit API
 1. Get/set horse speed (Attribute API)
+2. Use Resource Pack sounds
 
 ## Next version `2.7+`
+0. Sonic Screwdrivers
 1. TARDIS invisiblity
 2. Advanced TARDIS console
 3. Artron storage blocks
@@ -38,12 +34,11 @@
 11. Underground materialisation
 12. Update the malfunction location finder to have a greater range
 
-## Minecraft API when available `3.0?`
+## Minecraft API when available
 1. Recreate everything with the new API :)
 2. Create custom blocks for the TARDIS and console.
 3. If using the LAPIS block have the walls a special TARDIS wall block.
 4. A TARDIS key and a crafting recipe for that item.
 5. A Sonic Screwdriver and a crafting recipe for that item.
 6. GUIs (if allowed)
-7. Add proper TARDIS sounds
-8. Make the TARDIS Police Box an entity (if allowed)
+7. Make the TARDIS Police Box an entity (if allowed)
