@@ -82,10 +82,9 @@ public class TARDISSaveSignListener implements Listener {
                             }
                             ItemMeta im = is.getItemMeta();
                             List<String> lore = im.getLore();
-//                            String save = getDestination(lore);
-                            // check the player is allowed!
                             Location save_dest = getLocation(lore);
                             if (save_dest != null) {
+                                // check the player is allowed!
                                 TARDISPluginRespect respect = new TARDISPluginRespect(plugin);
                                 if (!respect.getRespect(player, save_dest, true)) {
                                     close(player);

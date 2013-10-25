@@ -136,10 +136,12 @@ public class TARDISHandbrakeListener implements Listener {
                                             return;
                                         }
                                         final TARDISConstants.COMPASS cd = rscl.getDirection();
+                                        boolean sub = rscl.isSubmarine();
                                         TARDISConstants.COMPASS tmpd = cd;
                                         Location l = new Location(rscl.getWorld(), rscl.getX(), rscl.getY(), rscl.getZ());
                                         String resetw = rscl.getWorld().getName();
                                         boolean malfunction = false;
+                                        boolean is_next_sub = false;
                                         if (plugin.getConfig().getInt("malfunction") > 0) {
                                             // check for a malfunction
                                             TARDISMalfunction m = new TARDISMalfunction(plugin, id, player, cd, handbrake_loc, eps, creeper);
@@ -166,16 +168,12 @@ public class TARDISHandbrakeListener implements Listener {
                                                         plugin.tardisHasDestination.remove(Integer.valueOf(id));
                                                     }
                                                     // play tardis crash sound
-//                                                    if (plugin.pm.getPlugin("Spout") != null && SpoutManager.getPlayer(player).isSpoutCraftEnabled()) {
-//                                                        SpoutManager.getSoundManager().playGlobalCustomSoundEffect(plugin, "https://dl.dropboxusercontent.com/u/53758864/tardis_emergency_land.mp3", false, handbrake_loc, 20, 75);
-//                                                    } else {
                                                     try {
                                                         Class.forName("org.bukkit.Sound");
                                                         handbrake_loc.getWorld().playSound(handbrake_loc, Sound.MINECART_INSIDE, 1, 0);
                                                     } catch (ClassNotFoundException e) {
                                                         handbrake_loc.getWorld().playEffect(handbrake_loc, Effect.BLAZE_SHOOT, 0);
                                                     }
-//                                                    }
                                                     // add a potion effect to the player
                                                     player.addPotionEffect(new PotionEffect(PotionEffectType.CONFUSION, 150, 5));
                                                 } else {
@@ -191,6 +189,7 @@ public class TARDISHandbrakeListener implements Listener {
                                                 player.sendMessage(plugin.pluginName + "Could not load destination!");
                                                 return;
                                             }
+                                            is_next_sub = rsn.isSubmarine();
                                             exit = new Location(rsn.getWorld(), rsn.getX(), rsn.getY(), rsn.getZ());
                                             tmpd = rsn.getDirection();
                                             // Changes the lever to off
@@ -209,7 +208,10 @@ public class TARDISHandbrakeListener implements Listener {
                                             }
                                             boolean mat = plugin.getConfig().getBoolean("materialise");
                                             if (!rs.isHidden() && !plugin.trackReset.contains(resetw)) {
-                                                plugin.tardisDematerialising.add(id);
+                                                plugin.tardisDematerialising.add(Integer.valueOf(id));
+                                                if (sub) {
+                                                    plugin.trackSubmarine.add(Integer.valueOf(id));
+                                                }
                                                 plugin.destroyPB.destroyPoliceBox(l, cd, id, false, mat, cham, player);
                                             } else {
                                                 // set hidden false!
@@ -219,6 +221,9 @@ public class TARDISHandbrakeListener implements Listener {
                                             final Location e = exit;
                                             final boolean mal = malfunction;
                                             final TARDISConstants.COMPASS sd = tmpd;
+                                            if (!is_next_sub && plugin.trackSubmarine.contains(Integer.valueOf(id))) {
+                                                plugin.trackSubmarine.remove(Integer.valueOf(id));
+                                            }
                                             plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
                                                 @Override
                                                 public void run() {
@@ -226,8 +231,8 @@ public class TARDISHandbrakeListener implements Listener {
                                                     playSound(handbrake_loc, player, "tardis_land");
                                                 }
                                             }, delay);
-                                            if (plugin.trackDamage.containsKey(id)) {
-                                                plugin.trackDamage.remove(id);
+                                            if (plugin.trackDamage.containsKey(Integer.valueOf(id))) {
+                                                plugin.trackDamage.remove(Integer.valueOf(id));
                                             }
                                             // current
                                             setcurrent.put("world", exit.getWorld().getName());
@@ -235,7 +240,7 @@ public class TARDISHandbrakeListener implements Listener {
                                             setcurrent.put("y", exit.getBlockY());
                                             setcurrent.put("z", exit.getBlockZ());
                                             setcurrent.put("direction", sd.toString());
-                                            setcurrent.put("submarine", 0);
+                                            setcurrent.put("submarine", (is_next_sub) ? 1 : 0);
                                             wherecurrent.put("tardis_id", id);
                                             // get current location for back
                                             HashMap<String, Object> wherecu = new HashMap<String, Object>();

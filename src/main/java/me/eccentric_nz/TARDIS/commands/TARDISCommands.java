@@ -1586,9 +1586,6 @@ public class TARDISCommands implements CommandExecutor {
         ChunkGenerator gen = room_world.getGenerator();
         WorldType wt = room_world.getWorldType();
         boolean special = (data[0].contains("TARDIS_TimeVortex") && (wt.equals(WorldType.FLAT) || gen instanceof TARDISChunkGenerator));
-        if (!data[0].contains("TARDIS_WORLD_") && !special) {
-            return false;
-        }
-        return true;
+        return (data[0].contains("TARDIS_WORLD_") || special);
     }
 }
