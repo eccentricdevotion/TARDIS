@@ -44,6 +44,7 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.World;
+import org.bukkit.World.Environment;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.entity.EntityType;
@@ -431,9 +432,6 @@ public class TARDISDoorListener implements Listener {
                                             set.put("tardis_id", id);
                                             set.put("player", playerNameStr);
                                             qf.doSyncInsert("travellers", set);
-//                                            if (plugin.pm.getPlugin("Spout") != null && SpoutManager.getPlayer(player).isSpoutCraftEnabled()) {
-//                                                SpoutManager.getSoundManager().playCustomSoundEffect(plugin, SpoutManager.getPlayer(player), "https://dl.dropboxusercontent.com/u/53758864/tardis_hum.mp3", false, inner_loc, 9, 25);
-//                                            }
                                             HashMap<String, Object> wheree = new HashMap<String, Object>();
                                             wheree.put("tardis_id", id);
                                             int cost = (0 - plugin.getArtronConfig().getInt("backdoor"));
@@ -449,6 +447,16 @@ public class TARDISDoorListener implements Listener {
                                             Location obd_loc = obdl.getL();
                                             if (obd_loc == null) {
                                                 player.sendMessage(plugin.pluginName + "You need to add a back door outside the TARDIS!");
+                                                return;
+                                            }
+                                            if (obd_loc.getWorld().getEnvironment().equals(Environment.THE_END) && (!player.hasPermission("tardis.end") || !plugin.getConfig().getBoolean("the_end"))) {
+                                                String message = (!player.hasPermission("tardis.end")) ? "You don't have permission to use a back door to The End!" : "TARDIS travel to The End is disabled!";
+                                                player.sendMessage(plugin.pluginName + message);
+                                                return;
+                                            }
+                                            if (obd_loc.getWorld().getEnvironment().equals(Environment.NETHER) && (!player.hasPermission("tardis.nether") || !plugin.getConfig().getBoolean("nether"))) {
+                                                String message = (!player.hasPermission("tardis.end")) ? "You don't have permission to use a back door to the Nether!" : "TARDIS travel to the Nether is disabled!";
+                                                player.sendMessage(plugin.pluginName + message);
                                                 return;
                                             }
                                             TARDISConstants.COMPASS obdd = obdl.getD();
