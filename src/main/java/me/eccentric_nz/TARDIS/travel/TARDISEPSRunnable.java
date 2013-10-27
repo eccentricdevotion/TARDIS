@@ -98,6 +98,11 @@ public class TARDISEPSRunnable implements Runnable {
         }
     }
 
+    /**
+     *
+     * @param id the TARDIS to look up
+     * @return the EP1 spawn location
+     */
     private Location getSpawnLocation(int id) {
         if (!eps.isEmpty()) {
             String[] npc = eps.split(":");
@@ -154,7 +159,7 @@ public class TARDISEPSRunnable implements Runnable {
      * @param pz1
      * @param px2
      * @param pz2
-     * @return
+     * @return the head angle of EP1
      */
     public static float getCorrectYaw(double px1, double pz1, double px2, double pz2) {
         double xDiff = px2 - px1;

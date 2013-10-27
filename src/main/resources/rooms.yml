@@ -57,7 +57,7 @@ rooms:
   GRAVITY:
     enabled: true
     cost: 625
-    offset: -3
+    offset: -19
     seed: MOSSY_COBBLESTONE
     user: false
   ANTIGRAVITY:

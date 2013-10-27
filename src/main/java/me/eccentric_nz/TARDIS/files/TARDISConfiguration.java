@@ -190,7 +190,7 @@ public class TARDISConfiguration {
         intOptions.put("tardis_lamp", 50);
         intOptions.put("platform_id", 35);
         roomIntOptions.put("rooms.ANTIGRAVITY.cost", 625);
-        roomIntOptions.put("rooms.ANTIGRAVITY.offset", -20); // need to calculate this!
+        roomIntOptions.put("rooms.ANTIGRAVITY.offset", -3);
         roomIntOptions.put("rooms.ARBORETUM.cost", 325);
         roomIntOptions.put("rooms.ARBORETUM.offset", -4);
         roomIntOptions.put("rooms.BAKER.cost", 350);
@@ -202,7 +202,7 @@ public class TARDISConfiguration {
         roomIntOptions.put("rooms.FARM.cost", 350);
         roomIntOptions.put("rooms.FARM.offset", -3);
         roomIntOptions.put("rooms.GRAVITY.cost", 625);
-        roomIntOptions.put("rooms.GRAVITY.offset", -3);
+        roomIntOptions.put("rooms.GRAVITY.offset", -19);
         roomIntOptions.put("rooms.GREENHOUSE.cost", 450);
         roomIntOptions.put("rooms.GREENHOUSE.offset", -3);
         roomIntOptions.put("rooms.HARMONY.cost", 450);
