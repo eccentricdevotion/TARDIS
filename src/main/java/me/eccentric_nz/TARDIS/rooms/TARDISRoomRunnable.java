@@ -65,6 +65,7 @@ public class TARDISRoomRunnable implements Runnable {
     HashMap<Block, Byte> cocoablocks = new HashMap<Block, Byte>();
     HashMap<Block, Byte> doorblocks = new HashMap<Block, Byte>();
     HashMap<Block, Byte> torchblocks = new HashMap<Block, Byte>();
+    HashMap<Block, Byte> redstoneTorchblocks = new HashMap<Block, Byte>();
 
     public TARDISRoomRunnable(TARDIS plugin, TARDISRoomData roomData, Player p) {
         this.plugin = plugin;
@@ -175,6 +176,11 @@ public class TARDISRoomRunnable implements Runnable {
                 entry.getKey().setTypeIdAndData(50, entry.getValue(), true);
             }
             torchblocks.clear();
+            // put redstone torches on
+            for (Map.Entry<Block, Byte> entry : redstoneTorchblocks.entrySet()) {
+                entry.getKey().setTypeIdAndData(76, entry.getValue(), true);
+            }
+            torchblocks.clear();
             // remove the chunks, so they can unload as normal again
             if (chunkList.size() > 0) {
                 for (Chunk ch : chunkList) {
@@ -256,6 +262,11 @@ public class TARDISRoomRunnable implements Runnable {
                 Block torch = world.getBlockAt(startx, starty, startz);
                 torchblocks.put(torch, data);
             }
+            // remember redstone torches
+            if (id == 76) {
+                Block torch = world.getBlockAt(startx, starty, startz);
+                redstoneTorchblocks.put(torch, data);
+            }
             // set farmland hydrated
             if (id == 60 && data == 0) {
                 data = (byte) 4;
@@ -321,7 +332,7 @@ public class TARDISRoomRunnable implements Runnable {
                 plugin.roomChunkList.add(thisChunk);
                 chunkList.add(thisChunk);
             }
-            if (id != 83 && id != 127 && id != 64 && id != 50) {
+            if (id != 83 && id != 127 && id != 64 && id != 50 && id != 76 && id != 34) {
                 plugin.utils.setBlock(world, startx, starty, startz, id, data);
             }
             // remember ice blocks
