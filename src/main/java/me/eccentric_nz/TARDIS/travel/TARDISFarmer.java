@@ -128,8 +128,12 @@ public class TARDISFarmer {
             if (plugin.getAchivementConfig().getBoolean("farm.enabled")) {
                 taf = new TARDISAchievementFactory(plugin, p, "farm", 5);
             }
-            // count total mobs
-            int total = 0;
+            // count total farm mobs
+            int farmtotal = 0;
+            // count total horses
+            int horsetotal = 0;
+            // count total villagers
+            int villagertotal = 0;
             // is there a farm room?
             HashMap<String, Object> where = new HashMap<String, Object>();
             where.put("tardis_id", id);
@@ -152,7 +156,7 @@ public class TARDISFarmer {
                             if (taf != null) {
                                 taf.doAchievement("CHICKEN");
                             }
-                            total++;
+                            farmtotal++;
                             break;
                         case COW:
                             TARDISMob tmcow = new TARDISMob();
@@ -165,7 +169,7 @@ public class TARDISFarmer {
                             if (taf != null) {
                                 taf.doAchievement("COW");
                             }
-                            total++;
+                            farmtotal++;
                             break;
                         case HORSE:
                             Tameable brokenin = (Tameable) e;
@@ -217,7 +221,7 @@ public class TARDISFarmer {
                             if (taf != null) {
                                 taf.doAchievement("HORSE");
                             }
-                            total++;
+                            horsetotal++;
                             break;
                         case PIG:
                             TARDISMob tmpig = new TARDISMob();
@@ -232,7 +236,7 @@ public class TARDISFarmer {
                             if (taf != null) {
                                 taf.doAchievement("PIG");
                             }
-                            total++;
+                            farmtotal++;
                             break;
                         case SHEEP:
                             TARDISMob tmshp = new TARDISMob();
@@ -246,7 +250,7 @@ public class TARDISFarmer {
                             if (taf != null) {
                                 taf.doAchievement("SHEEP");
                             }
-                            total++;
+                            farmtotal++;
                             break;
                         case MUSHROOM_COW:
                             TARDISMob tmshr = new TARDISMob();
@@ -259,7 +263,7 @@ public class TARDISFarmer {
                             if (taf != null) {
                                 taf.doAchievement("MUSHROOM_COW");
                             }
-                            total++;
+                            farmtotal++;
                             break;
                         case VILLAGER:
                             TARDISVillager tv = new TARDISVillager();
@@ -272,6 +276,7 @@ public class TARDISFarmer {
                             if (!village.isEmpty() || (village.isEmpty() && plugin.getConfig().getBoolean("spawn_eggs"))) {
                                 e.remove();
                             }
+                            villagertotal++;
                             break;
                         case WOLF:
                         case OCELOT:
@@ -389,6 +394,34 @@ public class TARDISFarmer {
                             }
                         }
                     }
+                } else {
+                    if (plugin.getConfig().getBoolean("spawn_eggs")) {
+                        // no farm, give the player spawn eggs
+                        Inventory inv = p.getInventory();
+                        if (old_macd_had_a_chicken.size() > 0) {
+                            ItemStack is = new ItemStack(Material.MONSTER_EGG, old_macd_had_a_chicken.size(), (short) 93);
+                            inv.addItem(is);
+                        }
+                        if (old_macd_had_a_cow.size() > 0) {
+                            ItemStack is = new ItemStack(Material.MONSTER_EGG, old_macd_had_a_cow.size(), (short) 92);
+                            inv.addItem(is);
+                        }
+                        if (old_macd_had_a_pig.size() > 0) {
+                            ItemStack is = new ItemStack(Material.MONSTER_EGG, old_macd_had_a_pig.size(), (short) 90);
+                            inv.addItem(is);
+                        }
+                        if (old_macd_had_a_sheep.size() > 0) {
+                            ItemStack is = new ItemStack(Material.MONSTER_EGG, old_macd_had_a_sheep.size(), (short) 91);
+                            inv.addItem(is);
+                        }
+                        if (old_macd_had_a_mooshroom.size() > 0) {
+                            ItemStack is = new ItemStack(Material.MONSTER_EGG, old_macd_had_a_mooshroom.size(), (short) 96);
+                            inv.addItem(is);
+                        }
+                        p.updateInventory();
+                    } else if (farmtotal > 0) {
+                        p.sendMessage(plugin.pluginName + "You need to grow a farm room before you can farm mobs!");
+                    }
                 }
                 if (!stable.isEmpty()) {
                     // get location of stable room
@@ -450,6 +483,17 @@ public class TARDISFarmer {
                             }
                         }
                     }
+                } else {
+                    if (plugin.getConfig().getBoolean("spawn_eggs")) {
+                        Inventory inv = p.getInventory();
+                        if (old_macd_had_a_horse.size() > 0) {
+                            ItemStack is = new ItemStack(Material.MONSTER_EGG, old_macd_had_a_horse.size(), (short) 100);
+                            inv.addItem(is);
+                            p.updateInventory();
+                        }
+                    } else if (horsetotal > 0) {
+                        p.sendMessage(plugin.pluginName + "You need to grow a stable room before you can farm horses!");
+                    }
                 }
                 if (!village.isEmpty()) {
                     // get location of village room
@@ -475,53 +519,17 @@ public class TARDISFarmer {
                             npc.setHealth(e.getHealth());
                         }
                     }
-                }
-                if (farm.isEmpty() && plugin.getConfig().getBoolean("spawn_eggs")) {
-                    // no farm, give the player spawn eggs
-                    Inventory inv = p.getInventory();
-                    if (old_macd_had_a_chicken.size() > 0) {
-                        ItemStack is = new ItemStack(Material.MONSTER_EGG, old_macd_had_a_chicken.size(), (short) 93);
-                        inv.addItem(is);
+                } else {
+                    if (plugin.getConfig().getBoolean("spawn_eggs")) {
+                        Inventory inv = p.getInventory();
+                        if (old_macd_had_a_villager.size() > 0) {
+                            ItemStack is = new ItemStack(Material.MONSTER_EGG, old_macd_had_a_villager.size(), (short) 120);
+                            inv.addItem(is);
+                            p.updateInventory();
+                        }
+                    } else if (villagertotal > 0) {
+                        p.sendMessage(plugin.pluginName + "You need to grow a village room before you can farm villagers!");
                     }
-                    if (old_macd_had_a_cow.size() > 0) {
-                        ItemStack is = new ItemStack(Material.MONSTER_EGG, old_macd_had_a_cow.size(), (short) 92);
-                        inv.addItem(is);
-                    }
-                    if (old_macd_had_a_pig.size() > 0) {
-                        ItemStack is = new ItemStack(Material.MONSTER_EGG, old_macd_had_a_pig.size(), (short) 90);
-                        inv.addItem(is);
-                    }
-                    if (old_macd_had_a_sheep.size() > 0) {
-                        ItemStack is = new ItemStack(Material.MONSTER_EGG, old_macd_had_a_sheep.size(), (short) 91);
-                        inv.addItem(is);
-                    }
-                    if (old_macd_had_a_mooshroom.size() > 0) {
-                        ItemStack is = new ItemStack(Material.MONSTER_EGG, old_macd_had_a_mooshroom.size(), (short) 96);
-                        inv.addItem(is);
-                    }
-                    p.updateInventory();
-                } else if (total > 0) {
-                    p.sendMessage(plugin.pluginName + "You need to grow a farm room before you can farm mobs!");
-                }
-                if (stable.isEmpty() && plugin.getConfig().getBoolean("spawn_eggs")) {
-                    Inventory inv = p.getInventory();
-                    if (old_macd_had_a_horse.size() > 0) {
-                        ItemStack is = new ItemStack(Material.MONSTER_EGG, old_macd_had_a_horse.size(), (short) 100);
-                        inv.addItem(is);
-                        p.updateInventory();
-                    }
-                } else if (total > 0) {
-                    p.sendMessage(plugin.pluginName + "You need to grow a stable room before you can farm horses!");
-                }
-                if (village.isEmpty() && plugin.getConfig().getBoolean("spawn_eggs")) {
-                    Inventory inv = p.getInventory();
-                    if (old_macd_had_a_villager.size() > 0) {
-                        ItemStack is = new ItemStack(Material.MONSTER_EGG, old_macd_had_a_villager.size(), (short) 120);
-                        inv.addItem(is);
-                        p.updateInventory();
-                    }
-                } else if (total > 0) {
-                    p.sendMessage(plugin.pluginName + "You need to grow a village room before you can farm villagers!");
                 }
             }
         }
