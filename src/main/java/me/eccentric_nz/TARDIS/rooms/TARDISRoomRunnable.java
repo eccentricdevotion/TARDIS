@@ -166,7 +166,7 @@ public class TARDISRoomRunnable implements Runnable {
                 doorblocks.clear();
             }
             // update lamp block states
-            p.sendMessage(plugin.pluginName + "Turning on the lights!");
+            p.sendMessage(plugin.pluginName + "Turning on the power!");
             for (Block lamp : lampblocks) {
                 lamp.setType(Material.REDSTONE_LAMP_ON);
             }
