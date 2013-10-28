@@ -94,7 +94,6 @@ public class TARDISMakeTardisCSV {
         String arbornstr = basepath + TARDISConstants.SCHEMATIC_ARBORETUM;
         String baknstr = basepath + TARDISConstants.SCHEMATIC_BAKER;
         String bednstr = basepath + TARDISConstants.SCHEMATIC_BEDROOM;
-        String cronstr = basepath + TARDISConstants.SCHEMATIC_CROSS;
         String empnstr = basepath + TARDISConstants.SCHEMATIC_EMPTY;
         String farnstr = basepath + TARDISConstants.SCHEMATIC_FARM;
         String granstr = basepath + TARDISConstants.SCHEMATIC_GRAVITY;
@@ -102,7 +101,6 @@ public class TARDISMakeTardisCSV {
         String harnstr = basepath + TARDISConstants.SCHEMATIC_HARMONY;
         String kitnstr = basepath + TARDISConstants.SCHEMATIC_KITCHEN;
         String libnstr = basepath + TARDISConstants.SCHEMATIC_LIBRARY;
-        String lonnstr = basepath + TARDISConstants.SCHEMATIC_LONG;
         String musnstr = basepath + TARDISConstants.SCHEMATIC_MUSHROOM;
         String passnstr = basepath + TARDISConstants.SCHEMATIC_PASSAGE;
         String poolnstr = basepath + TARDISConstants.SCHEMATIC_POOL;
@@ -117,7 +115,6 @@ public class TARDISMakeTardisCSV {
         copy(arbornstr, plugin.getResource(TARDISConstants.SCHEMATIC_ARBORETUM));
         copy(baknstr, plugin.getResource(TARDISConstants.SCHEMATIC_BAKER));
         copy(bednstr, plugin.getResource(TARDISConstants.SCHEMATIC_BEDROOM));
-        copy(cronstr, plugin.getResource(TARDISConstants.SCHEMATIC_CROSS));
         copy(empnstr, plugin.getResource(TARDISConstants.SCHEMATIC_EMPTY));
         copy(farnstr, plugin.getResource(TARDISConstants.SCHEMATIC_FARM));
         copy(granstr, plugin.getResource(TARDISConstants.SCHEMATIC_GRAVITY));
@@ -125,7 +122,6 @@ public class TARDISMakeTardisCSV {
         copy(harnstr, plugin.getResource(TARDISConstants.SCHEMATIC_HARMONY));
         copy(kitnstr, plugin.getResource(TARDISConstants.SCHEMATIC_KITCHEN));
         copy(libnstr, plugin.getResource(TARDISConstants.SCHEMATIC_LIBRARY));
-        copy(lonnstr, plugin.getResource(TARDISConstants.SCHEMATIC_LONG));
         copy(musnstr, plugin.getResource(TARDISConstants.SCHEMATIC_MUSHROOM));
         copy(passnstr, plugin.getResource(TARDISConstants.SCHEMATIC_PASSAGE));
         copy(poolnstr, plugin.getResource(TARDISConstants.SCHEMATIC_POOL));
@@ -158,14 +154,15 @@ public class TARDISMakeTardisCSV {
         plugin.plankschematic = TARDISSchematic.schematic(plugin.plankSchematicCSV, plugin.plankdimensions[0], plugin.plankdimensions[1], plugin.plankdimensions[2]);
         plugin.tomschematic = TARDISSchematic.schematic(plugin.tomSchematicCSV, plugin.tomdimensions[0], plugin.tomdimensions[1], plugin.tomdimensions[2]);
         // do custom schematic last
-        if (plugin.getConfig().getBoolean("custom_schematic")) {
+        File c_file = new File(basepath + TARDISConstants.SCHEMATIC_CUSTOM);
+        //new File(plugin.getDataFolder() + File.separator + "schematics" + File.separator, TARDISConstants.SCHEMATIC_CUSTOM);
+        if (plugin.getConfig().getBoolean("custom_schematic") && c_file.exists()) {
             plugin.customSchematicCSV = createFile(TARDISConstants.SCHEMATIC_CUSTOM + ".csv");
             String cusnstr = basepath + TARDISConstants.SCHEMATIC_CUSTOM;
-            plugin.customSchematicFile = copy(cusnstr, plugin.getResource(TARDISConstants.SCHEMATIC_CUSTOM));
+            //plugin.customSchematicFile = copy(cusnstr, plugin.getResource(TARDISConstants.SCHEMATIC_CUSTOM));
             reader.readAndMakeInteriorCSV(cusnstr, TARDISConstants.SCHEMATIC.CUSTOM);
             plugin.customschematic = TARDISSchematic.schematic(plugin.customSchematicCSV, plugin.customdimensions[0], plugin.customdimensions[1], plugin.customdimensions[2]);
         }
-
     }
 
     /**

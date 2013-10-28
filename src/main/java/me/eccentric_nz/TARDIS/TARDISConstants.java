@@ -46,7 +46,6 @@ public class TARDISConstants {
     public static final String SCHEMATIC_ARBORETUM = "arboretum.schematic";
     public static final String SCHEMATIC_BAKER = "baker.schematic";
     public static final String SCHEMATIC_BEDROOM = "bedroom.schematic";
-    public static final String SCHEMATIC_CROSS = "cross.schematic";
     public static final String SCHEMATIC_EMPTY = "empty.schematic";
     public static final String SCHEMATIC_FARM = "farm.schematic";
     public static final String SCHEMATIC_GRAVITY = "gravity.schematic";
@@ -54,7 +53,6 @@ public class TARDISConstants {
     public static final String SCHEMATIC_HARMONY = "harmony.schematic";
     public static final String SCHEMATIC_KITCHEN = "kitchen.schematic";
     public static final String SCHEMATIC_LIBRARY = "library.schematic";
-    public static final String SCHEMATIC_LONG = "long.schematic";
     public static final String SCHEMATIC_MUSHROOM = "mushroom.schematic";
     public static final String SCHEMATIC_PASSAGE = "passage.schematic";
     public static final String SCHEMATIC_POOL = "pool.schematic";
@@ -153,7 +151,7 @@ public class TARDISConstants {
 
     public enum SCHEMATIC {
 
-        ANTIGRAVITY, ARBORETUM, ARS, BAKER, BEDROOM, BIGGER, BUDGET, CROSS, CUSTOM, DELUXE, ELEVENTH, EMPTY, FARM, GRAVITY, GREENHOUSE, HARMONY, KITCHEN, LIBRARY, LONG, MUSHROOM, PASSAGE, PLANK, POOL, RAIL, REDSTONE, STABLE, STEAMPUNK, TOM, TRENZALORE, VAULT, VILLAGE, WOOD, WORKSHOP;
+        ANTIGRAVITY, ARBORETUM, ARS, BAKER, BEDROOM, BIGGER, BUDGET, CUSTOM, DELUXE, ELEVENTH, EMPTY, FARM, GRAVITY, GREENHOUSE, HARMONY, KITCHEN, LIBRARY, MUSHROOM, PASSAGE, PLANK, POOL, RAIL, REDSTONE, STABLE, STEAMPUNK, TOM, TRENZALORE, VAULT, VILLAGE, WOOD, WORKSHOP;
     }
 
     public enum COMPASS {
@@ -163,7 +161,7 @@ public class TARDISConstants {
 
     public enum ROOM {
 
-        ANTIGRAVITY, ARBORETUM, BAKER, BEDROOM, CROSS, EMPTY, FARM, GRAVITY, GREENHOUSE, HARMONY, KITCHEN, LIBRARY, LONG, MUSHROOM, PASSAGE, POOL, RAIL, STABLE, TRENZALORE, VAULT, VILLAGE, WOOD, WORKSHOP;
+        ANTIGRAVITY, ARBORETUM, BAKER, BEDROOM, EMPTY, FARM, GRAVITY, GREENHOUSE, HARMONY, KITCHEN, LIBRARY, MUSHROOM, PASSAGE, POOL, RAIL, STABLE, TRENZALORE, VAULT, VILLAGE, WOOD, WORKSHOP;
     }
 
     public enum CMDS {

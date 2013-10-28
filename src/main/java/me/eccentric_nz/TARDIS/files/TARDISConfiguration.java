@@ -113,8 +113,6 @@ public class TARDISConfiguration {
         roomBoolOptions.put("rooms.BAKER.user", false);
         roomBoolOptions.put("rooms.BEDROOM.enabled", true);
         roomBoolOptions.put("rooms.BEDROOM.user", false);
-        roomBoolOptions.put("rooms.CROSS.enabled", true);
-        roomBoolOptions.put("rooms.CROSS.user", false);
         roomBoolOptions.put("rooms.EMPTY.enabled", true);
         roomBoolOptions.put("rooms.EMPTY.user", false);
         roomBoolOptions.put("rooms.FARM.enabled", true);
@@ -129,8 +127,6 @@ public class TARDISConfiguration {
         roomBoolOptions.put("rooms.KITCHEN.user", false);
         roomBoolOptions.put("rooms.LIBRARY.enabled", true);
         roomBoolOptions.put("rooms.LIBRARY.user", false);
-        roomBoolOptions.put("rooms.LONG.enabled", true);
-        roomBoolOptions.put("rooms.LONG.user", false);
         roomBoolOptions.put("rooms.MUSHROOM.enabled", true);
         roomBoolOptions.put("rooms.MUSHROOM.user", false);
         roomBoolOptions.put("rooms.PASSAGE.enabled", true);
@@ -243,7 +239,6 @@ public class TARDISConfiguration {
         roomStrOptions.put("rooms.ARBORETUM.seed", "LEAVES");
         roomStrOptions.put("rooms.BAKER.seed", "ENDER_STONE");
         roomStrOptions.put("rooms.BEDROOM.seed", "GLOWSTONE");
-        roomStrOptions.put("rooms.CROSS.seed", "SOUL_SAND");
         roomStrOptions.put("rooms.EMPTY.seed", "GLASS");
         roomStrOptions.put("rooms.FARM.seed", "DIRT");
         roomStrOptions.put("rooms.GRAVITY.seed", "MOSSY_COBBLESTONE");
@@ -252,7 +247,6 @@ public class TARDISConfiguration {
         roomStrOptions.put("rooms.HARMONY.seed", "BRICK_STAIRS");
         roomStrOptions.put("rooms.KITCHEN.seed", "PUMPKIN");
         roomStrOptions.put("rooms.LIBRARY.seed", "BOOKSHELF");
-        roomStrOptions.put("rooms.LONG.seed", "NOTE_BLOCK");
         roomStrOptions.put("rooms.MUSHROOM.seed", "GRAVEL");
         roomStrOptions.put("rooms.PASSAGE.seed", "CLAY");
         roomStrOptions.put("rooms.POOL.seed", "SNOW_BLOCK");
