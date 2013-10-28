@@ -4,9 +4,6 @@
 1. Test `platform_id`, Temporal Invisibility
 2. Jettison the whole room (including walls), will require new room schematics... (in progress - working with ARS :)
 3. Architectural Reconfiguration System (almost there)
-    * Doorways - leave the doorway open (change piston doors to vertical ones)
-    * Change default offsets for rooms
-    * Remove cross and long rooms (all passages are now long crosses)
     * Can you manually grow a gravity or antigravity well?
 4. HADS + explosions + fireballs + lava
 5. Put farmland, crops, buttons, levers and signs on last when growing rooms

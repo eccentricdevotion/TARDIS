@@ -241,6 +241,10 @@ public class TARDISExterminator {
         HashMap<String, Object> eid = new HashMap<String, Object>();
         eid.put("tardis_id", id);
         qf.doDelete("lamps", eid);
+        // remove ARS data
+        HashMap<String, Object> aid = new HashMap<String, Object>();
+        aid.put("tardis_id", id);
+        qf.doDelete("ars", aid);
         // remove doors from doors table
         HashMap<String, Object> did = new HashMap<String, Object>();
         did.put("tardis_id", id);
