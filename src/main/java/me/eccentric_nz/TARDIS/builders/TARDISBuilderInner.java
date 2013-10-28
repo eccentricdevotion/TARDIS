@@ -130,7 +130,12 @@ public class TARDISBuilderInner {
         HashMap<Block, Byte> postDoorBlocks = new HashMap<Block, Byte>();
         HashMap<Block, Byte> postTorchBlocks = new HashMap<Block, Byte>();
         HashMap<Block, Byte> postSignBlocks = new HashMap<Block, Byte>();
-        Block postSaveBlock = null;
+        Block postSaveSignBlock = null;
+        Block postTerminalBlock = null;
+        Block postARSBlock = null;
+        Block postTISBlock = null;
+        Block postTemporalBlock = null;
+        Block postKeyboardBlock = null;
         // calculate startx, starty, startz
         int gsl[] = plugin.utils.getStartLocation(dbID);
         startx = gsl[0];
@@ -265,13 +270,35 @@ public class TARDISBuilderInner {
                                 wherescan.put("tardis_id", dbID);
                                 qf.doUpdate("tardis", setscan, wherescan);
                             }
-                            if (id == 97) { // silverfish stone -> save sign
-                                HashMap<String, Object> setss = new HashMap<String, Object>();
-                                HashMap<String, Object> wheress = new HashMap<String, Object>();
-                                String ssloc = world.getName() + ":" + startx + ":" + starty + ":" + startz;
-                                setss.put("save_sign", ssloc);
-                                wheress.put("tardis_id", dbID);
-                                qf.doUpdate("tardis", setss, wheress);
+                            if (id == 97) { // silverfish stone
+                                String blockLocStr = (new Location(world, startx, starty, startz)).toString();
+                                switch (data) {
+                                    case 0: // Save Sign
+                                        String save_loc = world.getName() + ":" + startx + ":" + starty + ":" + startz;
+                                        HashMap<String, Object> setss = new HashMap<String, Object>();
+                                        HashMap<String, Object> wheress = new HashMap<String, Object>();
+                                        wheress.put("tardis_id", dbID);
+                                        setss.put("save_sign", save_loc);
+                                        qf.doUpdate("tardis", setss, wheress);
+                                        break;
+                                    case 1: // Destination Terminal
+                                        qf.insertControl(dbID, 9, blockLocStr, 0);
+                                        break;
+                                    case 2: // Architectural Reconfiguration System
+                                        qf.insertControl(dbID, 10, blockLocStr, 0);
+                                        break;
+                                    case 3: // TARDIS Information System
+                                        qf.insertControl(dbID, 13, blockLocStr, 0);
+                                        break;
+                                    case 4: // Temporal Circuit
+                                        qf.insertControl(dbID, 11, blockLocStr, 0);
+                                        break;
+                                    case 5: // Keyboard
+                                        qf.insertControl(dbID, 7, blockLocStr, 0);
+                                        break;
+                                    default:
+                                        break;
+                                }
                             }
                             if (id == 137 || id == -119) {
                                 /*
@@ -360,7 +387,28 @@ public class TARDISBuilderInner {
                         } else if (id == 68) {
                             postSignBlocks.put(world.getBlockAt(startx, starty, startz), data);
                         } else if (id == 97) {
-                            postSaveBlock = world.getBlockAt(startx, starty, startz);
+                            switch (data) {
+                                case 0:
+                                    postSaveSignBlock = world.getBlockAt(startx, starty, startz);
+                                    break;
+                                case 1:
+                                    postTerminalBlock = world.getBlockAt(startx, starty, startz);
+                                    break;
+                                case 2:
+                                    postARSBlock = world.getBlockAt(startx, starty, startz);
+                                    break;
+                                case 3:
+                                    postTISBlock = world.getBlockAt(startx, starty, startz);
+                                    break;
+                                case 4:
+                                    postTemporalBlock = world.getBlockAt(startx, starty, startz);
+                                    break;
+                                case 5:
+                                    postKeyboardBlock = world.getBlockAt(startx, starty, startz);
+                                    break;
+                                default:
+                                    break;
+                            }
                         } else if (id == 19) {
                             int swap;
                             if (world.getWorldType().equals(WorldType.FLAT) || own_world || world.getName().equals("TARDIS_TimeVortex") || world.getGenerator() instanceof TARDISChunkGenerator) {
@@ -408,15 +456,70 @@ public class TARDISBuilderInner {
         where.put("tardis_id", dbID);
         ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
         if (rs.resultSet()) {
-            if (postSaveBlock != null) {
-                postSaveBlock.setTypeIdAndData(68, (byte) 3, true);
-                if (postSaveBlock.getType().equals(Material.WALL_SIGN)) {
-                    Sign ss = (Sign) postSaveBlock.getState();
+            if (postSaveSignBlock != null) {
+                postSaveSignBlock.setTypeIdAndData(68, (byte) 3, true);
+                if (postSaveSignBlock.getType().equals(Material.WALL_SIGN)) {
+                    Sign ss = (Sign) postSaveSignBlock.getState();
                     ss.setLine(0, "TARDIS");
                     ss.setLine(1, "Saved");
                     ss.setLine(2, "Locations");
                     ss.setLine(3, "");
                     ss.update();
+                }
+            }
+            if (postTerminalBlock != null) {
+                postTerminalBlock.setTypeIdAndData(68, (byte) 3, true);
+                if (postTerminalBlock.getType().equals(Material.WALL_SIGN)) {
+                    Sign ts = (Sign) postTerminalBlock.getState();
+                    ts.setLine(0, "");
+                    ts.setLine(1, "Destination");
+                    ts.setLine(2, "Terminal");
+                    ts.setLine(3, "");
+                    ts.update();
+                }
+            }
+            if (postARSBlock != null) {
+                postARSBlock.setTypeIdAndData(68, (byte) 3, true);
+                if (postARSBlock.getType().equals(Material.WALL_SIGN)) {
+                    Sign as = (Sign) postARSBlock.getState();
+                    as.setLine(0, "TARDIS");
+                    as.setLine(1, "Architectural");
+                    as.setLine(2, "Reconfiguration");
+                    as.setLine(3, "System");
+                    as.update();
+                }
+            }
+            if (postTISBlock != null) {
+                postTISBlock.setTypeIdAndData(68, (byte) 3, true);
+                if (postTISBlock.getType().equals(Material.WALL_SIGN)) {
+                    Sign is = (Sign) postTISBlock.getState();
+                    is.setLine(0, "-----");
+                    is.setLine(1, "TARDIS");
+                    is.setLine(2, "Information");
+                    is.setLine(3, "System");
+                    is.update();
+                }
+            }
+            if (postTemporalBlock != null) {
+                postTemporalBlock.setTypeIdAndData(68, (byte) 3, true);
+                if (postTemporalBlock.getType().equals(Material.WALL_SIGN)) {
+                    Sign ms = (Sign) postTemporalBlock.getState();
+                    ms.setLine(0, "");
+                    ms.setLine(1, "Temporal");
+                    ms.setLine(2, "Locator");
+                    ms.setLine(3, "");
+                    ms.update();
+                }
+            }
+            if (postKeyboardBlock != null) {
+                postKeyboardBlock.setTypeIdAndData(68, (byte) 3, true);
+                if (postKeyboardBlock.getType().equals(Material.WALL_SIGN)) {
+                    Sign ks = (Sign) postKeyboardBlock.getState();
+                    ks.setLine(0, "Keyboard");
+                    for (int i = 1; i < 4; i++) {
+                        ks.setLine(i, "");
+                    }
+                    ks.update();
                 }
             }
             if (schematicHasChest && bonus_chest && !own_world) {
