@@ -40,6 +40,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.Plugin;
+import org.json.JSONArray;
 
 /**
  * The TARDIS was prone to a number of technical faults, ranging from depleted
@@ -286,6 +287,40 @@ public class TARDISBuilderInner {
                                         break;
                                     case 2: // Architectural Reconfiguration System
                                         qf.insertControl(dbID, 10, blockLocStr, 0);
+                                        // create default json
+                                        int[][][] empty = new int[3][9][9];
+                                        for (int y = 0; y < 3; y++) {
+                                            for (int ars_x = 0; ars_x < 9; ars_x++) {
+                                                for (int ars_z = 0; ars_z < 9; ars_z++) {
+                                                    empty[y][ars_x][ars_z] = 1;
+                                                }
+                                            }
+                                        }
+                                        int control = 42;
+                                        switch (schm) {
+                                            case STEAMPUNK:
+                                                control = 173;
+                                                break;
+                                            case ARS:
+                                                control = 159;
+                                                break;
+                                            case PLANK:
+                                                control = 22;
+                                                break;
+                                            case TOM:
+                                                control = 155;
+                                                break;
+                                            default:
+                                                break;
+                                        }
+                                        empty[1][4][4] = control;
+                                        JSONArray json = new JSONArray(empty);
+
+                                        HashMap<String, Object> seta = new HashMap<String, Object>();
+                                        seta.put("tardis_id", dbID);
+                                        seta.put("player", p.getName());
+                                        seta.put("json", json.toString());
+                                        qf.doInsert("ars", seta);
                                         break;
                                     case 3: // TARDIS Information System
                                         qf.insertControl(dbID, 13, blockLocStr, 0);
