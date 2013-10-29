@@ -99,6 +99,7 @@ import me.eccentric_nz.TARDIS.listeners.TARDISUpdateListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISWorldResetListener;
 import me.eccentric_nz.TARDIS.rooms.TARDISCondenserData;
 import me.eccentric_nz.TARDIS.rooms.TARDISSeedData;
+import me.eccentric_nz.TARDIS.rooms.TARDISWalls;
 import me.eccentric_nz.TARDIS.utility.Version;
 import me.eccentric_nz.TARDIS.travel.TARDISArea;
 import me.eccentric_nz.TARDIS.utility.TARDISCreeperChecker;
@@ -266,6 +267,7 @@ public class TARDIS extends JavaPlugin {
     public TARDISTabCompleteAPI apiHandler;
     public TARDISChameleonPreset presets;
     public TARDISMultiverseInventoriesChecker tmic;
+    public TARDISWalls tw;
 
     @Override
     public void onEnable() {
@@ -283,6 +285,7 @@ public class TARDIS extends JavaPlugin {
         tc.checkConfig();
         checkTCG();
         seeds = getSeeds();
+        tw = new TARDISWalls();
         loadDatabase();
         loadFiles();
         registerListeners();

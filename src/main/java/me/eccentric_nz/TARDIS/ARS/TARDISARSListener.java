@@ -27,7 +27,6 @@ import me.eccentric_nz.TARDIS.database.ResultSetARS;
 import me.eccentric_nz.TARDIS.database.ResultSetCondenser;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
-import me.eccentric_nz.TARDIS.rooms.TARDISWalls;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -704,8 +703,8 @@ public class TARDISARSListener implements Listener {
             String bdata;
             if (hasPrefs && block_data.length == 2 && (block_data[1].equals("1") || block_data[1].equals("8"))) {
                 mat = (block_data[1].equals("1")) ? wall : floor;
-                TARDISWalls tw = new TARDISWalls();
-                Integer[] iddata = tw.blocks.get(mat);
+                //TARDISWalls tw = new TARDISWalls();
+                int[] iddata = plugin.tw.blocks.get(mat);
                 bdata = String.format("%d", iddata[0]);
             } else {
                 bdata = String.format("%d", bid);

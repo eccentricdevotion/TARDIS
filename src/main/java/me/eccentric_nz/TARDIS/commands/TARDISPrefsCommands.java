@@ -27,7 +27,6 @@ import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
-import me.eccentric_nz.TARDIS.rooms.TARDISWalls;
 import me.eccentric_nz.TARDIS.utility.TARDISMaterials;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -212,11 +211,11 @@ public class TARDISPrefsCommands implements CommandExecutor {
                         } else {
                             wall_mat = args[1].toUpperCase(Locale.ENGLISH);
                         }
-                        TARDISWalls tw = new TARDISWalls();
-                        if (!tw.blocks.containsKey(wall_mat)) {
+                        //TARDISWalls tw = new TARDISWalls();
+                        if (!plugin.tw.blocks.containsKey(wall_mat)) {
                             String message = (wall_mat.equals("HELP")) ? "Here is a list of valid " + pref + " materials:" : "That is not a valid " + pref + " material! Try:";
                             sender.sendMessage(plugin.pluginName + message);
-                            List<String> sortedKeys = new ArrayList(tw.blocks.keySet());
+                            List<String> sortedKeys = new ArrayList(plugin.tw.blocks.keySet());
                             Collections.sort(sortedKeys);
                             for (String w : sortedKeys) {
                                 sender.sendMessage(w);

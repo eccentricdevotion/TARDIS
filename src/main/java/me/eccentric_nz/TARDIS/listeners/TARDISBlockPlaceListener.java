@@ -29,7 +29,6 @@ import me.eccentric_nz.TARDIS.database.ResultSetCount;
 import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
-import me.eccentric_nz.TARDIS.rooms.TARDISWalls;
 import me.eccentric_nz.TARDIS.utility.TARDISUtils;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
@@ -338,11 +337,11 @@ public class TARDISBlockPlaceListener implements Listener {
         }
     }
 
-    private static String getWallKey(int i, int d) {
-        TARDISWalls tw = new TARDISWalls();
-        for (Map.Entry<String, Integer[]> entry : tw.blocks.entrySet()) {
-            Integer[] value = entry.getValue();
-            if (value[0].equals(Integer.valueOf(i)) && value[1].equals(Integer.valueOf(d))) {
+    private String getWallKey(int i, int d) {
+        //TARDISWalls tw = new TARDISWalls();
+        for (Map.Entry<String, int[]> entry : plugin.tw.blocks.entrySet()) {
+            int[] value = entry.getValue();
+            if (value[0] == i && value[1] == d) {
                 return entry.getKey();
             }
         }

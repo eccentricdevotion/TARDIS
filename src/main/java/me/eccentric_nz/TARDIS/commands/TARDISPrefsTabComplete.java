@@ -18,7 +18,6 @@ package me.eccentric_nz.TARDIS.commands;
 
 import com.google.common.collect.ImmutableList;
 import java.util.*;
-import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.rooms.TARDISWalls;
 import me.eccentric_nz.TARDIS.utility.TARDISMaterials;
 import org.bukkit.command.Command;
@@ -36,8 +35,8 @@ public class TARDISPrefsTabComplete implements TabCompleter {
     private final ImmutableList<String> KEY_SUBS;
     private final ImmutableList<String> MAT_SUBS;
 
-    public TARDISPrefsTabComplete(TARDIS plugin) {
-        HashMap<String, Integer[]> map = new TARDISWalls().blocks;
+    public TARDISPrefsTabComplete() {
+        HashMap<String, int[]> map = new TARDISWalls().blocks;
         List<String> mats = new ArrayList<String>();
         for (String key : map.keySet()) {
             mats.add(key);

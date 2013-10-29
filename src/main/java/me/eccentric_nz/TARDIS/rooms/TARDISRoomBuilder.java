@@ -73,13 +73,13 @@ public class TARDISRoomBuilder {
             int middle_id, floor_id;
             byte middle_data, floor_data;
             if (rsp.resultSet()) {
-                TARDISWalls tw = new TARDISWalls();
-                Integer[] wid_data = tw.blocks.get(rsp.getWall());
-                middle_id = wid_data[0].intValue();
-                middle_data = wid_data[1].byteValue();
-                Integer[] fid_data = tw.blocks.get(rsp.getFloor());
-                floor_id = fid_data[0].intValue();
-                floor_data = fid_data[1].byteValue();
+                //TARDISWalls tw = new TARDISWalls();
+                int[] wid_data = plugin.tw.blocks.get(rsp.getWall());
+                middle_id = wid_data[0];
+                middle_data = (byte) wid_data[1];
+                int[] fid_data = plugin.tw.blocks.get(rsp.getFloor());
+                floor_id = fid_data[0];
+                floor_data = (byte) fid_data[1];
             } else {
                 middle_id = 35;
                 middle_data = 1;

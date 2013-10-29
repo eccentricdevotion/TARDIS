@@ -45,10 +45,12 @@ import org.bukkit.inventory.meta.ItemMeta;
 public class TARDISSeedBlockListener implements Listener {
 
     private final TARDIS plugin;
+    //private final TARDISWalls tw;
     private final HashMap<Location, TARDISBuildData> trackTARDISSeed = new HashMap<Location, TARDISBuildData>();
 
     public TARDISSeedBlockListener(TARDIS plugin) {
         this.plugin = plugin;
+        //this.tw = new TARDISWalls();
     }
 
     /**
@@ -71,8 +73,8 @@ public class TARDISSeedBlockListener implements Listener {
         if (im.getDisplayName().equals("§6TARDIS Seed Block")) {
             List<String> lore = im.getLore();
             SCHEMATIC schm = SCHEMATIC.valueOf(lore.get(0));
-            TwoValues wall_data = getValuesFromString(lore.get(1));
-            TwoValues floor_data = getValuesFromString(lore.get(2));
+            TwoValues wall_data = getValuesFromWallString(lore.get(1));
+            TwoValues floor_data = getValuesFromWallString(lore.get(2));
             TwoValues cham_data = getValuesFromString(lore.get(3));
             TwoValues lamp_data = getValuesFromString(lore.get(4));
             TARDISBuildData seed = new TARDISBuildData();
@@ -176,6 +178,22 @@ public class TARDISSeedBlockListener implements Listener {
             data.setId(Material.getMaterial(split1[1]).getId());
             data.setData((byte) 0);
         }
+        return data;
+    }
+
+    /**
+     * Determines the id and data values of the block. Values are calculated by
+     * converting the string values stored in a TARDIS Seed block.
+     *
+     * @param str the lore stored in the TARDIS Seed block's Item Meta
+     * @return an int and a byte stored in a simple data class
+     */
+    private TwoValues getValuesFromWallString(String str) {
+        TwoValues data = new TwoValues();
+        String[] split = str.split(": ");
+        int[] values = plugin.tw.blocks.get(split[1]);
+        data.setId(values[0]);
+        data.setData((byte) values[1]);
         return data;
     }
 

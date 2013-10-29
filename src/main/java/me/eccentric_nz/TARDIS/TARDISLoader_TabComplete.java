@@ -42,7 +42,7 @@ public class TARDISLoader_TabComplete implements TARDISTabCompleteAPI {
         plugin.getCommand("tardis").setTabCompleter(new TARDISTabComplete(plugin));
         plugin.getCommand("tardisarea").setTabCompleter(new TARDISAreaTabComplete());
         plugin.getCommand("tardisbind").setTabCompleter(new TARDISBindTabComplete());
-        plugin.getCommand("tardisprefs").setTabCompleter(new TARDISPrefsTabComplete(plugin));
+        plugin.getCommand("tardisprefs").setTabCompleter(new TARDISPrefsTabComplete());
         plugin.getCommand("tardistravel").setTabCompleter(new TARDISTravelTabComplete(plugin));
         plugin.getCommand("tardisgravity").setTabCompleter(new TARDISGravityTabComplete());
         plugin.getCommand("tardisrecipe").setTabCompleter(new TARDISRecipeTabComplete());

@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.rooms.TARDISWallsLookup;
 import org.bukkit.DyeColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -43,6 +44,7 @@ public class TARDISCraftListener implements Listener {
     private final List<Integer> c = new ArrayList<Integer>();
     private final List<Integer> l = new ArrayList<Integer>();
     private final HashMap<Material, String> t = new HashMap<Material, String>();
+    private final TARDISWallsLookup twl;
 
     public TARDISCraftListener(TARDIS plugin) {
         this.plugin = plugin;
@@ -56,15 +58,16 @@ public class TARDISCraftListener implements Listener {
         t.put(Material.LAPIS_BLOCK, "TOM"); // tom baker
         t.put(Material.BOOKSHELF, "PLANK"); // plank
         t.put(Material.valueOf(this.plugin.getConfig().getString("custom_schematic_seed")), "CUSTOM"); // custom
-        for (String m : plugin.getBlocksConfig().getStringList("tardis_blocks")) {
-            b.add(Material.valueOf(m));
-        }
+//        for (String m : plugin.getBlocksConfig().getStringList("tardis_blocks")) {
+//            b.add(Material.valueOf(m));
+//        }
         for (Integer i : plugin.getBlocksConfig().getIntegerList("chameleon_blocks")) {
             c.add(i);
         }
         for (Integer a : plugin.getBlocksConfig().getIntegerList("lamp_blocks")) {
             l.add(a);
         }
+        twl = new TARDISWallsLookup(plugin);
     }
 
     /**
@@ -80,17 +83,17 @@ public class TARDISCraftListener implements Listener {
 
             // get the materials in crafting slots
             Material m5 = inv.getItem(5).getType(); // lamp
-            Material m6 = inv.getItem(6).getType(); // wall
+            //Material m6 = inv.getItem(6).getType(); // wall
             Material m7 = inv.getItem(7).getType(); // tardis type
             Material m8 = inv.getItem(8).getType(); // chameleon
-            Material m9 = inv.getItem(9).getType(); // floor
+            //Material m9 = inv.getItem(9).getType(); // floor
             ItemStack is = new ItemStack(m7, 1);
             ItemMeta im = is.getItemMeta();
             im.setDisplayName("§6TARDIS Seed Block");
             List<String> lore = new ArrayList<String>();
             lore.add(t.get(m7));
-            lore.add("Walls: " + ((m6.equals(Material.WOOL) || m6.equals(Material.STAINED_CLAY)) ? DyeColor.getByWoolData(inv.getItem(6).getData().getData()) + " " : "") + m6.toString());
-            lore.add("Floors: " + ((m9.equals(Material.WOOL) || m9.equals(Material.STAINED_CLAY)) ? DyeColor.getByWoolData(inv.getItem(9).getData().getData()) + " " : "") + m9.toString());
+            lore.add("Walls: " + twl.wall_lookup.get(inv.getItem(6).getTypeId() + ":" + inv.getItem(6).getData().getData()));
+            lore.add("Floors: " + twl.wall_lookup.get(inv.getItem(9).getTypeId() + ":" + inv.getItem(9).getData().getData()));
             lore.add("Chameleon block: " + ((m8.equals(Material.WOOL) || m8.equals(Material.STAINED_CLAY)) ? DyeColor.getByWoolData(inv.getItem(8).getData().getData()) + " " : "") + m8.toString());
             lore.add("Lamp: " + m5.toString());
             im.setLore(lore);
@@ -157,7 +160,7 @@ public class TARDISCraftListener implements Listener {
                         break;
                     default:
                         // must be a valid wall / floor block
-                        if (!b.contains(m)) {
+                        if (!twl.wall_lookup.containsKey(id + ":" + is.getData().getData())) {
                             return false;
                         }
                         break;
