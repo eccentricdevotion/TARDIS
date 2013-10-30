@@ -50,7 +50,6 @@ public class TARDISSeedBlockListener implements Listener {
 
     public TARDISSeedBlockListener(TARDIS plugin) {
         this.plugin = plugin;
-        //this.tw = new TARDISWalls();
     }
 
     /**

@@ -65,7 +65,6 @@ public class TARDISARSRunnable implements Runnable {
             int middle_id, floor_id;
             byte middle_data, floor_data;
             if (rsp.resultSet()) {
-                //TARDISWalls tw = new TARDISWalls();
                 int[] wid_data = plugin.tw.blocks.get(rsp.getWall());
                 middle_id = wid_data[0];
                 middle_data = (byte) wid_data[1];

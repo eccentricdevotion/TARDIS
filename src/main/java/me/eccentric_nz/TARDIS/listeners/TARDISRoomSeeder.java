@@ -54,7 +54,7 @@ import org.bukkit.generator.ChunkGenerator;
 public class TARDISRoomSeeder implements Listener {
 
     private final TARDIS plugin;
-    private List<SCHEMATIC> ars = new ArrayList<SCHEMATIC>();
+    private final List<SCHEMATIC> ars = new ArrayList<SCHEMATIC>();
 
     public TARDISRoomSeeder(TARDIS plugin) {
         this.plugin = plugin;

@@ -338,7 +338,6 @@ public class TARDISBlockPlaceListener implements Listener {
     }
 
     private String getWallKey(int i, int d) {
-        //TARDISWalls tw = new TARDISWalls();
         for (Map.Entry<String, int[]> entry : plugin.tw.blocks.entrySet()) {
             int[] value = entry.getValue();
             if (value[0] == i && value[1] == d) {

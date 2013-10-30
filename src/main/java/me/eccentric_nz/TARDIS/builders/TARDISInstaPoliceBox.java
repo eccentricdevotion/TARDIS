@@ -75,7 +75,6 @@ public class TARDISInstaPoliceBox {
      * Builds the TARDIS Police Box.
      */
     public void buildPoliceBox() {
-//        Location sub_loc = location.clone();
         int plusx, minusx, x, plusz, minusz, z;
         byte sd = 0, grey = 8;
         byte mds = data, mdw = data, mdn = data, mde = data, bds = data, bdw = data, bdn = data, bde = data;
@@ -115,7 +114,8 @@ public class TARDISInstaPoliceBox {
                 qf.doInsert("travellers", set);
             }
             plugin.trackRescue.remove(tid);
-        }        // platform
+        }
+        // platform
         plugin.buildPB.addPlatform(location, false, d, p, tid);
         QueryFactory qf = new QueryFactory(plugin);
         HashMap<String, Object> ps = new HashMap<String, Object>();
@@ -124,7 +124,7 @@ public class TARDISInstaPoliceBox {
         // get direction player is facing from yaw place block under door if block is in list of blocks an iron door cannot go on
         switch (d) {
             case SOUTH:
-                //if (yaw >= 315 || yaw < 45)
+                // if (yaw >= 315 || yaw < 45)
                 if (sub) {
                     plugin.utils.setBlockCheck(world, x, down3y, minusz, 19, (byte) 0, tid, true); // door is here if player facing south
                     sponge = world.getBlockAt(x, down3y, minusz);
@@ -142,7 +142,7 @@ public class TARDISInstaPoliceBox {
                 bds = 1;
                 break;
             case EAST:
-                //if (yaw >= 225 && yaw < 315)
+                // if (yaw >= 225 && yaw < 315)
                 if (sub) {
                     plugin.utils.setBlockCheck(world, minusx, down3y, z, 19, (byte) 0, tid, true); // door is here if player facing east
                     sponge = world.getBlockAt(minusx, down3y, z);
@@ -160,7 +160,7 @@ public class TARDISInstaPoliceBox {
                 bde = 0;
                 break;
             case NORTH:
-                //if (yaw >= 135 && yaw < 225)
+                // if (yaw >= 135 && yaw < 225)
                 if (sub) {
                     plugin.utils.setBlockCheck(world, x, down3y, plusz, 19, (byte) 0, tid, true); // door is here if player facing north
                     sponge = world.getBlockAt(x, down3y, plusz);
@@ -178,7 +178,7 @@ public class TARDISInstaPoliceBox {
                 bdn = 3;
                 break;
             case WEST:
-                //if (yaw >= 45 && yaw < 135)
+                // if (yaw >= 45 && yaw < 135)
                 if (sub) {
                     plugin.utils.setBlockCheck(world, plusx, down3y, z, 19, (byte) 0, tid, true); // door is here if player facing west
                     sponge = world.getBlockAt(plusx, down3y, z);

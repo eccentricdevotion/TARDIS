@@ -211,7 +211,6 @@ public class TARDISPrefsCommands implements CommandExecutor {
                         } else {
                             wall_mat = args[1].toUpperCase(Locale.ENGLISH);
                         }
-                        //TARDISWalls tw = new TARDISWalls();
                         if (!plugin.tw.blocks.containsKey(wall_mat)) {
                             String message = (wall_mat.equals("HELP")) ? "Here is a list of valid " + pref + " materials:" : "That is not a valid " + pref + " material! Try:";
                             sender.sendMessage(plugin.pluginName + message);

@@ -419,7 +419,6 @@ public class TARDISCommands implements CommandExecutor {
                             String bdata;
                             if (hasPrefs && block_data.length == 2 && (block_data[1].equals("1") || block_data[1].equals("8"))) {
                                 mat = (block_data[1].equals("1")) ? wall : floor;
-                                //TARDISWalls tw = new TARDISWalls();
                                 int[] iddata = plugin.tw.blocks.get(mat);
                                 bdata = String.format("%d", iddata[0]);
                             } else {
