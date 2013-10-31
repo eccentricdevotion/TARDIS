@@ -116,7 +116,7 @@ public class TARDISDoorListener implements Listener {
             Material blockType = block.getType();
             Action action = event.getAction();
             // only proceed if they are clicking an iron door with a TARDIS key!
-            if (blockType == Material.IRON_DOOR_BLOCK || blockType == Material.WOOD_DOOR) {
+            if (blockType == Material.IRON_DOOR_BLOCK || blockType == Material.WOODEN_DOOR) {
                 if (player.hasPermission("tardis.enter")) {
                     World playerWorld = player.getLocation().getWorld();
                     Location block_loc = block.getLocation();
@@ -148,6 +148,7 @@ public class TARDISDoorListener implements Listener {
                     where.put("door_location", doorloc);
                     ResultSetDoors rsd = new ResultSetDoors(plugin, where, false);
                     if (rsd.resultSet()) {
+                        event.setCancelled(true);
                         if (material.equals(m)) {
                             TARDISConstants.COMPASS dd = rsd.getDoor_direction();
                             int doortype = rsd.getDoor_type();
