@@ -2,17 +2,22 @@
 
 ## Current version `2.6-beta-1`
 1. Test `platform_id`, Temporal Invisibility
-2. Jettison the whole room (including walls), will require new room schematics... (in progress - working with ARS :)
+2. Rooms
+   * Jettison the whole room (including walls)
+   * Grow rooms one block further out than current, so walls aren't shared
+   * do a quick check to make sure the player is facing the right direction
+   * add more instructions to make sure they are facing the void!
 3. Architectural Reconfiguration System (almost there)
     * Can you manually grow a gravity or antigravity well?
 4. HADS + explosions + fireballs + lava
 5. Put farmland, crops, buttons, levers and signs on last when growing rooms
 6. TARDIS Information System (in progress)
 7. Chameleon presets (in progress)
-    * Allow the NEW and OLD police boxes to be shorted out to a specific block
-    * Allow lamp preference to be used
+    * Allow the NEW and OLD police boxes to be shorted out to a specific block - either through `/tardis chameleon short` or via TARDIS seed block
+    * Allow lamp preference to be used (where preset has lamp)
     * Fix doors popping off when preset changes to door of the other type
     * Set sign text e.g. Party tent, Yellow Submarine etc
+    * Add a 'Change now' button to the Chameleon GUI
 
 ## Waiting on Bukkit API
 1. Get/set horse speed (Attribute API)

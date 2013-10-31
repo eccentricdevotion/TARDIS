@@ -77,7 +77,6 @@ public class TARDISDeinstaPoliceBox {
             for (int xx = 0; xx < 3; xx++) {
                 for (int zz = 0; zz < 3; zz++) {
                     Block b = w.getBlockAt((sbx + xx), (sby + yy), (sbz + zz));
-                    plugin.debug("Block type = " + b.getType().toString());
                     if (!b.getType().equals(Material.AIR)) {
                         b.setType(Material.AIR);
                     }

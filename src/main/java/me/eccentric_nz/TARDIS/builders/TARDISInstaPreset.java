@@ -241,7 +241,7 @@ public class TARDISInstaPreset {
                     break;
             }
             for (int yy = 0; yy < 4; yy++) {
-                if (colids[yy] != 0 && colids[yy] != 68) {
+                if (colids[yy] != 68) {
                     plugin.utils.setBlockAndRemember(world, xx, (y + yy), zz, colids[yy], coldatas[yy], tid);
                 }
                 if (yy == 2 && colids[yy] == 68) {
