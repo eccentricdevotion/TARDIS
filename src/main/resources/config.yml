@@ -62,6 +62,7 @@ wall_id: 35
 wall_data: 11
 tardis_lamp: 50
 platform_id: 35
+platform_data: 8
 plain_on: false
 stattenheim: FLINT
 use_clay: false
@@ -69,4 +70,5 @@ difficulty: normal
 strike_lightning: true
 custom_schematic: false
 custom_schematic_seed: OBSIDIAN
+custom_creeper_id: 20
 use_block_stack: false
