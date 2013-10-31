@@ -22,7 +22,6 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
-import me.eccentric_nz.TARDIS.travel.TARDISAreasInventory;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -185,20 +184,6 @@ public class TARDISChameleonListener implements Listener {
                         }
                     }
                 }
-            }
-            if (slot == 49) {
-                // load TARDIS areas
-                close(player);
-                plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
-                    @Override
-                    public void run() {
-                        TARDISAreasInventory sst = new TARDISAreasInventory(plugin, player);
-                        ItemStack[] items = sst.getTerminal();
-                        Inventory areainv = plugin.getServer().createInventory(player, 54, "§4TARDIS areas");
-                        areainv.setContents(items);
-                        player.openInventory(areainv);
-                    }
-                }, 2L);
             }
         }
     }

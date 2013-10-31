@@ -114,19 +114,31 @@ public class TARDISBuilderPoliceBox {
          * Police Boxes in it.
          */
         plugin.tardisChunkList.add(thisChunk);
+        HashMap<String, Object> where = new HashMap<String, Object>();
+        where.put("tardis_id", id);
+        ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
+        TARDISConstants.PRESET preset = TARDISConstants.PRESET.NEW;
+        if (rs.resultSet()) {
+            preset = rs.getPreset();
+        }
         if (rebuild) {
-            TARDISPoliceBoxRebuilder rebuilder = new TARDISPoliceBoxRebuilder(plugin, l, wall_block, chameleonData, id, d, lamp, plain, sub);
-            rebuilder.rebuildPoliceBox();
+            TARDISRebuildPreset trp = new TARDISRebuildPreset(plugin, l, preset, id, d, p.getName(), mal, sub);
+            trp.rebuildPreset();
+//            TARDISPoliceBoxRebuilder rebuilder = new TARDISPoliceBoxRebuilder(plugin, l, wall_block, chameleonData, id, d, lamp, plain, sub);
+//            rebuilder.rebuildPoliceBox();
         } else {
             if (plugin.getConfig().getBoolean("materialise")) {
                 plugin.tardisMaterialising.add(id);
-                TARDISMaterialisationRunnable runnable = new TARDISMaterialisationRunnable(plugin, l, wall_block, chameleonData, id, d, p, mal, lamp, plain, sub);
+//                TARDISMaterialisationRunnable runnable = new TARDISMaterialisationRunnable(plugin, l, wall_block, chameleonData, id, d, p, mal, lamp, plain, sub);
+                TARDISPresetRunnable runnable = new TARDISPresetRunnable(plugin, l, preset, id, d, p, mal, lamp, plain, sub);
                 int taskID = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, runnable, 10L, 20L);
                 runnable.setTask(taskID);
             } else {
                 plugin.tardisMaterialising.add(id);
-                TARDISInstaPoliceBox insta = new TARDISInstaPoliceBox(plugin, l, wall_block, chameleonData, id, d, p.getName(), mal, lamp, plain, sub);
-                insta.buildPoliceBox();
+                //TARDISInstaPoliceBox insta = new TARDISInstaPoliceBox(plugin, l, wall_block, chameleonData, id, d, p.getName(), mal, lamp, plain, sub);
+                //insta.buildPoliceBox();
+                TARDISInstaPreset insta = new TARDISInstaPreset(plugin, l, preset, id, d, p.getName(), mal, sub);
+                insta.buildPreset();
             }
         }
     }
@@ -134,8 +146,8 @@ public class TARDISBuilderPoliceBox {
     @SuppressWarnings("deprecation")
     public void addPlatform(Location l, boolean rebuild, TARDISConstants.COMPASS d, String p, int id) {
         int plusx, minusx, x, y, plusz, minusz, z;
-        byte grey = 8;
         int platform_id = plugin.getConfig().getInt("platform_id");
+        byte platform_data = (byte) plugin.getConfig().getInt("platform_data");
         // add platform if configured and necessary
         World world = l.getWorld();
         x = l.getBlockX();
@@ -183,9 +195,9 @@ public class TARDISBuilderPoliceBox {
                     int matint = pb.getTypeId();
                     if (plat_blocks.contains(matint)) {
                         if (rebuild) {
-                            plugin.utils.setBlockAndRemember(world, pb.getX(), pb.getY(), pb.getZ(), platform_id, grey, id);
+                            plugin.utils.setBlockAndRemember(world, pb.getX(), pb.getY(), pb.getZ(), platform_id, platform_data, id);
                         } else {
-                            plugin.utils.setBlock(world, pb.getX(), pb.getY(), pb.getZ(), platform_id, grey);
+                            plugin.utils.setBlock(world, pb.getX(), pb.getY(), pb.getZ(), platform_id, platform_data);
                         }
                         String p_tmp = world.getName() + ":" + pb.getX() + ":" + pb.getY() + ":" + pb.getZ() + ":" + mat.toString();
                         sb.append(p_tmp).append("~");

@@ -9,8 +9,10 @@
 5. Put farmland, crops, buttons, levers and signs on last when growing rooms
 6. TARDIS Information System (in progress)
 7. Chameleon presets (in progress)
-    * Add Chameleon GUI - turn Chameleon Circuit on/off, choose chameleon preset
-    * Change Police Box building to use presets!
+    * Allow the NEW and OLD police boxes to be shorted out to a specific block
+    * Allow lamp preference to be used
+    * Fix doors popping off when preset changes to door of the other type
+    * Set sign text e.g. Party tent, Yellow Submarine etc
 
 ## Waiting on Bukkit API
 1. Get/set horse speed (Attribute API)

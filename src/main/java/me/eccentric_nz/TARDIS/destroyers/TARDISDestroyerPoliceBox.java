@@ -53,18 +53,14 @@ public class TARDISDestroyerPoliceBox {
             if (rsp.resultSet()) {
                 lamp = rsp.getLamp();
             }
-            int mat = plugin.getConfig().getInt("wall_id");
-            byte data = (byte) plugin.getConfig().getInt("wall_data");
-            if (c) {
-                // chameleon circuit is on - get chameleon_id/data
-                HashMap<String, Object> wherec = new HashMap<String, Object>();
-                wherec.put("tardis_id", id);
-                ResultSetTardis rsc = new ResultSetTardis(plugin, wherec, "", false);
-                rsc.resultSet();
-                mat = rsc.getChameleon_id();
-                data = rsc.getChameleon_data();
-            }
-            TARDISDematerialisationRunnable runnable = new TARDISDematerialisationRunnable(plugin, l, lamp, mat, data, id, d, player);
+            // get chameleon preset
+            HashMap<String, Object> wherec = new HashMap<String, Object>();
+            wherec.put("tardis_id", id);
+            ResultSetTardis rsc = new ResultSetTardis(plugin, wherec, "", false);
+            rsc.resultSet();
+            TARDISConstants.PRESET preset = rsc.getPreset();
+            //TARDISDematerialisationRunnable runnable = new TARDISDematerialisationRunnable(plugin, l, lamp, mat, data, id, d, player);
+            TARDISDematerialisationPreset runnable = new TARDISDematerialisationPreset(plugin, l, preset, lamp, id, d);
             int taskID = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, runnable, 10L, 20L);
             runnable.setTask(taskID);
         } else {

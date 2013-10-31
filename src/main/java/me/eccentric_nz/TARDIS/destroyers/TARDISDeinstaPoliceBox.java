@@ -27,6 +27,7 @@ import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 
@@ -65,29 +66,23 @@ public class TARDISDeinstaPoliceBox {
             chunk.load();
         }
         int sbx = l.getBlockX() - 1;
-        int rbx = sbx;
         int sby = l.getBlockY();
         int sbz = l.getBlockZ() - 1;
-        int rbz = sbz;
         // remove torch
-        plugin.destroyPB.destroyTorch(l);
+//        plugin.destroyPB.destroyTorch(l);
         // remove sign
         plugin.destroyPB.destroySign(l, d);
         // remove blue wool and door
-        for (int yy = 0; yy < 3; yy++) {
+        for (int yy = 0; yy < 4; yy++) {
             for (int xx = 0; xx < 3; xx++) {
                 for (int zz = 0; zz < 3; zz++) {
-                    Block b = w.getBlockAt(sbx, sby, sbz);
-                    if (b.getTypeId() != 0) {
-                        b.setTypeId(0);
+                    Block b = w.getBlockAt((sbx + xx), (sby + yy), (sbz + zz));
+                    plugin.debug("Block type = " + b.getType().toString());
+                    if (!b.getType().equals(Material.AIR)) {
+                        b.setType(Material.AIR);
                     }
-                    sbx++;
                 }
-                sbx = rbx;
-                sbz++;
             }
-            sbz = rbz;
-            sby++;
         }
         // replace the block under the door if there is one
         HashMap<String, Object> where = new HashMap<String, Object>();
