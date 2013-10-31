@@ -345,7 +345,11 @@ public class TARDISBuilderInner {
                                 setcreep.put("creeper", creeploc);
                                 wherecreep.put("tardis_id", dbID);
                                 qf.doUpdate("tardis", setcreep, wherecreep);
-                                id = 98;
+                                if (schm.equals(TARDISConstants.SCHEMATIC.CUSTOM)) {
+                                    id = plugin.getConfig().getInt("custom_creeper_id");
+                                } else {
+                                    id = 98;
+                                }
                             }
                             if (id == 92) {
                                 /*
