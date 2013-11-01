@@ -1386,7 +1386,7 @@ public class TARDISCommands implements CommandExecutor {
                             sender.sendMessage(plugin.pluginName + TARDISConstants.NO_TARDIS);
                             return false;
                         }
-                        int id = rs.getTardis_id();
+                        final int id = rs.getTardis_id();
                         int level = rs.getArtron_level();
                         int amount = plugin.getArtronConfig().getInt("random");
                         if (level < amount) {
@@ -1397,10 +1397,11 @@ public class TARDISCommands implements CommandExecutor {
                             sender.sendMessage(plugin.pluginName + "You cannot do that while the TARDIS is materialising!");
                             return true;
                         }
-                        boolean cham = false;
+                        boolean tmp_cham = false;
                         if (plugin.getConfig().getBoolean("chameleon")) {
-                            cham = rs.isChamele_on();
+                            tmp_cham = rs.isChamele_on();
                         }
+                        final boolean cham = tmp_cham;
                         String plat = rs.getPlatform();
                         boolean hid = rs.isHidden();
                         String dir = args[1].toUpperCase(Locale.ENGLISH);
@@ -1424,14 +1425,20 @@ public class TARDISCommands implements CommandExecutor {
                         did.put("tardis_id", id);
                         setd.put("door_direction", dir);
                         qf.doUpdate("doors", setd, did);
-                        Location l = new Location(rsc.getWorld(), rsc.getX(), rsc.getY(), rsc.getZ());
-                        TARDISConstants.COMPASS d = TARDISConstants.COMPASS.valueOf(dir);
+                        final Location l = new Location(rsc.getWorld(), rsc.getX(), rsc.getY(), rsc.getZ());
+                        final TARDISConstants.COMPASS d = TARDISConstants.COMPASS.valueOf(dir);
                         // destroy platform
                         if (!hid) {
                             plugin.destroyPB.destroyPlatform(plat, id);
                             plugin.destroyPB.destroySign(l, old_d);
                         }
-                        plugin.buildPB.buildPoliceBox(id, l, d, cham, player, true, false);
+                        final Player p = player;
+                        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
+                            @Override
+                            public void run() {
+                                plugin.buildPB.buildPoliceBox(id, l, d, cham, p, true, false);
+                            }
+                        }, 10L);
                         HashMap<String, Object> wherea = new HashMap<String, Object>();
                         wherea.put("tardis_id", id);
                         qf.alterEnergyLevel("tardis", -amount, wherea, player);
