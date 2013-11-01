@@ -124,6 +124,12 @@ public class TARDISBuilderPoliceBox {
                     insta.buildPreset();
                 }
             }
+            // update demat so it knows about the current preset after it has changed
+            HashMap<String, Object> whered = new HashMap<String, Object>();
+            whered.put("tardis_id", id);
+            HashMap<String, Object> set = new HashMap<String, Object>();
+            set.put("chameleon_demat", preset.toString());
+            new QueryFactory(plugin).doUpdate("tardis", set, whered);
         }
     }
 
