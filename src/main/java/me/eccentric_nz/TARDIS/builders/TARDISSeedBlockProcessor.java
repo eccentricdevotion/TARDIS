@@ -195,13 +195,6 @@ public class TARDISSeedBlockProcessor {
                 set.put("middle_data", middle_data);
                 set.put("chameleon_id", c_id);
                 set.put("chameleon_data", c_data);
-                // if the police box walls are not blue wool then turn on the chamelon circuit
-                int wall_block = plugin.getConfig().getInt("wall_id");
-                byte chameleonData = (byte) plugin.getConfig().getInt("wall_data");
-                boolean bluewool = (c_id == wall_block && c_data == chameleonData);
-                if (!bluewool) {
-                    set.put("chamele_on", 1);
-                }
                 // determine wall block material from HashMap
                 setpp.put("wall", getWallKey(middle_id, (int) middle_data));
                 setpp.put("floor", getWallKey(seed.getFloor_id(), (int) seed.getFloor_data()));

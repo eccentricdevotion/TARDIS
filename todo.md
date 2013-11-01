@@ -8,8 +8,9 @@
    * Do a quick check to make sure the player is facing the right direction
    * Add more instructions to make sure they are facing the void!
    * Put farmland, crops, buttons, levers and signs on last when growing rooms
+   * Can you manually grow a gravity or antigravity well?
 3. Architectural Reconfiguration System (almost there)
-    * Can you manually grow a gravity or antigravity well?
+    * Implement Charlie's new doors?
 4. HADS + explosions + fireballs + lava
 5. TARDIS Information System (in progress)
 6. Chameleon presets (in progress)
