@@ -86,7 +86,7 @@ public class TARDISChameleonPreset {
     private final String village_id = "[[4,4,4,17],[4,5,4,17],[4,4,4,17],[4,5,4,17],[4,4,4,17],[4,5,4,17],[4,4,4,17],[64,64,4,17],[0,0,4,17],[0,0,68,0]]";
     private final String village_data = "[[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,8,0,0],[0,0,0,0],[0,0,4,0]]";
     private final EnumMap<TARDISConstants.COMPASS, TARDISChameleonColumn> village = new EnumMap<TARDISConstants.COMPASS, TARDISChameleonColumn>(TARDISConstants.COMPASS.class);
-    private final String yellowsub_id = "[[35,35,35,171],[35,20,35,171],[35,35,35,171],[35,20,35,171],[35,35,35,171],[35,20,35,171],[35,35,35,171],[71,71,35,171],[0,0,35,89],[0,0,68,0]]";
+    private final String yellowsub_id = "[[35,35,35,0],[35,20,35,0],[35,35,35,0],[35,20,35,0],[35,35,35,0],[35,20,35,0],[35,35,35,0],[71,71,35,0],[0,0,35,89],[0,0,68,0]]";
     private final String yellowsub_data = "[[4,4,4,0],[4,0,4,0],[4,4,4,0],[4,0,4,0],[4,4,4,0],[4,0,4,0],[4,4,4,0],[0,8,4,0],[0,0,4,0],[0,0,4,0]]";
     private final EnumMap<TARDISConstants.COMPASS, TARDISChameleonColumn> yellowsub = new EnumMap<TARDISConstants.COMPASS, TARDISChameleonColumn>(TARDISConstants.COMPASS.class);
     private final List<Integer> problemBlocks = Arrays.asList(new Integer[]{64, 67, 68, 71, 106, 109, 114, 128});
