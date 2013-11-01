@@ -16,7 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.destroyers;
 
-import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.TARDISConstants.COMPASS;
@@ -45,6 +44,8 @@ public class TARDISDematerialisationPreset implements Runnable {
     public int task;
     private int i;
     private final int lamp;
+    private final int cham_id;
+    private final byte cham_data;
     private final TARDISChameleonColumn column;
     private final TARDISChameleonColumn ice_column;
     private final TARDISChameleonColumn glass_column;
@@ -61,8 +62,10 @@ public class TARDISDematerialisationPreset implements Runnable {
      * @param lamp the id of the lamp block
      * @param tid the tardis_id this Police Box belongs to
      * @param d the COMPASS direction the Police Box is facing
+     * @param cham_id the chameleon block id for the police box
+     * @param cham_data the chameleon block data for the police box
      */
-    public TARDISDematerialisationPreset(TARDIS plugin, Location location, TARDISConstants.PRESET preset, int lamp, int tid, COMPASS d) {
+    public TARDISDematerialisationPreset(TARDIS plugin, Location location, TARDISConstants.PRESET preset, int lamp, int tid, COMPASS d, int cham_id, byte cham_data) {
         this.plugin = plugin;
         this.d = d;
         this.loops = 12;
@@ -71,6 +74,8 @@ public class TARDISDematerialisationPreset implements Runnable {
         this.i = 0;
         this.tid = tid;
         this.lamp = lamp;
+        this.cham_id = cham_id;
+        this.cham_data = cham_data;
         column = getColumn(preset, d);
         switch (preset) {
             case DESERT:
@@ -124,8 +129,6 @@ public class TARDISDematerialisationPreset implements Runnable {
             }
             // first run - play sound
             if (i == 1) {
-                HashMap<String, Object> where = new HashMap<String, Object>();
-                where.put("tardis_id", tid);
 //                if (plugin.pm.getPlugin("Spout") != null && SpoutManager.getPlayer(player).isSpoutCraftEnabled()) {
 //                    SpoutManager.getSoundManager().playGlobalCustomSoundEffect(plugin, "https://dl.dropboxusercontent.com/u/53758864/tardis_takeoff.mp3", false, location, 9, 75);
 //                } else {
@@ -181,11 +184,24 @@ public class TARDISDematerialisationPreset implements Runnable {
                             break;
                     }
                     for (int yy = 0; yy < 4; yy++) {
-                        if (colids[yy] == 71 && (preset.equals(TARDISConstants.PRESET.SWAMP) || preset.equals(TARDISConstants.PRESET.VILLAGE))) {
-                            plugin.utils.setBlock(world, xx, (y + yy), zz, 64, coldatas[yy]);
-                            plugin.debug("Setting iron door to wood, during demat...");
-                        } else {
-                            plugin.utils.setBlock(world, xx, (y + yy), zz, colids[yy], coldatas[yy]);
+                        switch (colids[yy]) {
+                            case 35: // wool
+                                int chai = (preset.equals(TARDISConstants.PRESET.NEW) || preset.equals(TARDISConstants.PRESET.OLD)) ? cham_id : colids[yy];
+                                byte chad = (preset.equals(TARDISConstants.PRESET.NEW) || preset.equals(TARDISConstants.PRESET.OLD)) ? cham_data : coldatas[yy];
+                                plugin.utils.setBlock(world, xx, (y + yy), zz, chai, chad);
+                                break;
+                            case 50: // lamps, glowstone and torches
+                            case 89:
+                            case 124:
+                                int light = (preset.equals(TARDISConstants.PRESET.NEW) || preset.equals(TARDISConstants.PRESET.OLD)) ? lamp : colids[yy];
+                                plugin.utils.setBlock(world, xx, (y + yy), zz, light, coldatas[yy]);
+                                break;
+                            case 71: // doors
+                                int door = (preset.equals(TARDISConstants.PRESET.SWAMP) || preset.equals(TARDISConstants.PRESET.VILLAGE)) ? 64 : 71;
+                                plugin.utils.setBlock(world, xx, (y + yy), zz, door, coldatas[yy]);
+                            default: // everything else
+                                plugin.utils.setBlock(world, xx, (y + yy), zz, colids[yy], coldatas[yy]);
+                                break;
                         }
                     }
                 }

@@ -19,6 +19,7 @@ package me.eccentric_nz.TARDIS.destroyers;
 import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
+import me.eccentric_nz.TARDIS.chameleon.TARDISChameleonCircuit;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
@@ -26,6 +27,7 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
+import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Player;
 
 /**
@@ -46,23 +48,39 @@ public class TARDISDestroyerPoliceBox {
 
     public void destroyPoliceBox(Location l, TARDISConstants.COMPASS d, int id, boolean hide, boolean dematerialise, boolean c, Player player) {
         if (dematerialise && !hide) {
-            int lamp = plugin.getConfig().getInt("tardis_lamp");
-            HashMap<String, Object> wherepp = new HashMap<String, Object>();
-            wherepp.put("player", player.getName());
-            ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, wherepp);
-            if (rsp.resultSet()) {
-                lamp = rsp.getLamp();
+            HashMap<String, Object> where = new HashMap<String, Object>();
+            where.put("tardis_id", id);
+            ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
+            if (rs.resultSet()) {
+                TARDISConstants.PRESET demat = rs.getDemat();
+                int cham_id = rs.getChameleon_id();
+                byte cham_data = rs.getChameleon_data();
+                if (c && (demat.equals(TARDISConstants.PRESET.NEW) || demat.equals(TARDISConstants.PRESET.OLD))) {
+                    Block chameleonBlock;
+                    // chameleon circuit is on - get block under TARDIS
+                    if (l.getBlock().getType() == Material.SNOW) {
+                        chameleonBlock = l.getBlock();
+                    } else {
+                        chameleonBlock = l.getBlock().getRelative(BlockFace.DOWN);
+                    }
+                    // determine cham_id
+                    TARDISChameleonCircuit tcc = new TARDISChameleonCircuit(plugin);
+                    int[] b_data = tcc.getChameleonBlock(chameleonBlock, player, false);
+                    cham_id = b_data[0];
+                    cham_data = (byte) b_data[1];
+                }
+                int lamp = plugin.getConfig().getInt("tardis_lamp");
+                HashMap<String, Object> wherepp = new HashMap<String, Object>();
+                wherepp.put("player", player.getName());
+                ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, wherepp);
+                if (rsp.resultSet()) {
+                    lamp = rsp.getLamp();
+                }
+                //TARDISDematerialisationRunnable runnable = new TARDISDematerialisationRunnable(plugin, l, lamp, cham_id, cham_data, id, d, player);
+                TARDISDematerialisationPreset runnable = new TARDISDematerialisationPreset(plugin, l, demat, lamp, id, d, cham_id, cham_data);
+                int taskID = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, runnable, 10L, 20L);
+                runnable.setTask(taskID);
             }
-            // get chameleon preset
-            HashMap<String, Object> wherec = new HashMap<String, Object>();
-            wherec.put("tardis_id", id);
-            ResultSetTardis rsc = new ResultSetTardis(plugin, wherec, "", false);
-            rsc.resultSet();
-            TARDISConstants.PRESET demat = rsc.getDemat();
-            //TARDISDematerialisationRunnable runnable = new TARDISDematerialisationRunnable(plugin, l, lamp, mat, data, id, d, player);
-            TARDISDematerialisationPreset runnable = new TARDISDematerialisationPreset(plugin, l, demat, lamp, id, d);
-            int taskID = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, runnable, 10L, 20L);
-            runnable.setTask(taskID);
         } else {
             new TARDISDeinstaPoliceBox(plugin).instaDestroyPB(l, d, id, hide);
         }
@@ -108,7 +126,7 @@ public class TARDISDestroyerPoliceBox {
             for (String sb : str_blocks) {
                 String[] p_data = sb.split(":");
                 World pw = plugin.getServer().getWorld(p_data[0]);
-                Material mat = Material.valueOf(p_data[4]);
+                Material cham_id = Material.valueOf(p_data[4]);
                 try {
                     px = Integer.valueOf(p_data[1]);
                     py = Integer.valueOf(p_data[2]);
@@ -117,7 +135,7 @@ public class TARDISDestroyerPoliceBox {
                     plugin.console.sendMessage(plugin.pluginName + "Could not convert to number!");
                 }
                 Block pb = pw.getBlockAt(px, py, pz);
-                pb.setType(mat);
+                pb.setType(cham_id);
             }
         }
         // forget the platform blocks

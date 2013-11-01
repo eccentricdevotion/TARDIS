@@ -13,9 +13,6 @@
 5. Put farmland, crops, buttons, levers and signs on last when growing rooms
 6. TARDIS Information System (in progress)
 7. Chameleon presets (in progress)
-    * Allow the NEW and OLD police boxes to be shorted out to a specific block - either through `/tardis chameleon short` or via TARDIS seed block
-    * Allow lamp preference to be used (for OLD & NEW presets only)
-    * Fix doors popping off when preset changes to door of the other type
     * Match presets to biomes, and use Yellow Submarine when underwater
 
 ## Waiting on Bukkit API

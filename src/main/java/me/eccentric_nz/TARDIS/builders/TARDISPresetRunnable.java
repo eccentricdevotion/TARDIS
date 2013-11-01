@@ -58,8 +58,9 @@ public class TARDISPresetRunnable implements Runnable {
     private final Player player;
     private final boolean mal;
     private final int lamp;
-    private final boolean nosign;
     private final boolean sub;
+    private final int cham_id;
+    private final byte cham_data;
     private Block sponge;
     private final TARDISChameleonColumn column;
     private final TARDISChameleonColumn ice_column;
@@ -80,10 +81,11 @@ public class TARDISPresetRunnable implements Runnable {
      * @param mal a boolean determining whether there has been a TARDIS
      * malfunction
      * @param lamp a boolean determining whether there should be a lamp
-     * @param nosign a boolean determining whether it should be a plain a TARDIS
      * @param sub a boolean determining whether the TARDIS is in submarine mode
+     * @param cham_id the chameleon block id for the police box
+     * @param cham_data the chameleon block data for the police box
      */
-    public TARDISPresetRunnable(TARDIS plugin, Location location, TARDISConstants.PRESET preset, int tid, COMPASS d, Player player, boolean mal, int lamp, boolean nosign, boolean sub) {
+    public TARDISPresetRunnable(TARDIS plugin, Location location, TARDISConstants.PRESET preset, int tid, COMPASS d, Player player, boolean mal, int lamp, boolean sub, int cham_id, byte cham_data) {
         this.plugin = plugin;
         this.d = d;
         this.loops = 12;
@@ -94,8 +96,9 @@ public class TARDISPresetRunnable implements Runnable {
         this.player = player;
         this.mal = mal;
         this.lamp = lamp;
-        this.nosign = nosign;
         this.sub = sub;
+        this.cham_id = cham_id;
+        this.cham_data = cham_data;
         column = getColumn(preset, d);
         switch (preset) {
             case DESERT:
@@ -317,14 +320,23 @@ public class TARDISPresetRunnable implements Runnable {
                                 break;
                         }
                         for (int yy = 0; yy < 4; yy++) {
-                            if (colids[yy] == 71 && (preset.equals(TARDISConstants.PRESET.SWAMP) || preset.equals(TARDISConstants.PRESET.VILLAGE))) {
-                                plugin.debug("Setting iron door to wood, during materialisation...");
-                                plugin.utils.setBlockAndRemember(world, xx, (y + yy), zz, 64, coldatas[yy], tid);
-                            } else {
-                                if (colids[yy] != 68) {
-                                    plugin.utils.setBlockAndRemember(world, xx, (y + yy), zz, colids[yy], coldatas[yy], tid);
-                                }
-                                if (yy == 2 && colids[yy] == 68) {
+                            switch (colids[yy]) {
+                                case 35:
+                                    int chai = (preset.equals(TARDISConstants.PRESET.NEW) || preset.equals(TARDISConstants.PRESET.OLD)) ? cham_id : colids[yy];
+                                    byte chad = (preset.equals(TARDISConstants.PRESET.NEW) || preset.equals(TARDISConstants.PRESET.OLD)) ? cham_data : coldatas[yy];
+                                    plugin.utils.setBlockAndRemember(world, xx, (y + yy), zz, chai, chad, tid);
+                                    break;
+                                case 50: // lamps, glowstone and torches
+                                case 89:
+                                case 124:
+                                    int light = (preset.equals(TARDISConstants.PRESET.NEW) || preset.equals(TARDISConstants.PRESET.OLD)) ? lamp : colids[yy];
+                                    plugin.utils.setBlockAndRemember(world, xx, (y + yy), zz, light, coldatas[yy], tid);
+                                    break;
+                                case 71: // doors
+                                    int door = (preset.equals(TARDISConstants.PRESET.SWAMP) || preset.equals(TARDISConstants.PRESET.VILLAGE)) ? 64 : 71;
+                                    plugin.utils.setBlockAndRemember(world, xx, (y + yy), zz, door, coldatas[yy], tid);
+                                    break;
+                                case 68: // sign - if there is one
                                     plugin.utils.setBlock(world, xx, (y + yy), zz, colids[yy], coldatas[yy]);
                                     Block sign = world.getBlockAt(xx, (y + yy), zz);
                                     if (sign.getType().equals(Material.WALL_SIGN)) {
@@ -374,7 +386,10 @@ public class TARDISPresetRunnable implements Runnable {
                                         s.setLine(2, ChatColor.WHITE + line2);
                                         s.update();
                                     }
-                                }
+                                    break;
+                                default: // everything else
+                                    plugin.utils.setBlockAndRemember(world, xx, (y + yy), zz, colids[yy], coldatas[yy], tid);
+                                    break;
                             }
                         }
                     }
@@ -423,10 +438,25 @@ public class TARDISPresetRunnable implements Runnable {
                                 break;
                         }
                         for (int yy = 0; yy < 4; yy++) {
-                            if (colids[yy] == 71 && (preset.equals(TARDISConstants.PRESET.SWAMP) || preset.equals(TARDISConstants.PRESET.VILLAGE))) {
-                                plugin.utils.setBlock(world, xx, (y + yy), zz, 64, coldatas[yy]);
-                            } else {
-                                plugin.utils.setBlock(world, xx, (y + yy), zz, colids[yy], coldatas[yy]);
+                            switch (colids[yy]) {
+                                case 35: // wool
+                                    int chai = (preset.equals(TARDISConstants.PRESET.NEW) || preset.equals(TARDISConstants.PRESET.OLD)) ? cham_id : colids[yy];
+                                    byte chad = (preset.equals(TARDISConstants.PRESET.NEW) || preset.equals(TARDISConstants.PRESET.OLD)) ? cham_data : coldatas[yy];
+                                    plugin.utils.setBlock(world, xx, (y + yy), zz, chai, chad);
+                                    break;
+                                case 50: // lamps, glowstone and torches
+                                case 89:
+                                case 124:
+                                    int light = (preset.equals(TARDISConstants.PRESET.NEW) || preset.equals(TARDISConstants.PRESET.OLD)) ? lamp : colids[yy];
+                                    plugin.utils.setBlock(world, xx, (y + yy), zz, light, coldatas[yy]);
+                                    break;
+                                case 71: // doors
+                                    int door = (preset.equals(TARDISConstants.PRESET.SWAMP) || preset.equals(TARDISConstants.PRESET.VILLAGE)) ? 64 : 71;
+                                    plugin.utils.setBlock(world, xx, (y + yy), zz, door, coldatas[yy]);
+                                    break;
+                                default: // everything else
+                                    plugin.utils.setBlock(world, xx, (y + yy), zz, colids[yy], coldatas[yy]);
+                                    break;
                             }
                         }
                     }

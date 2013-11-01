@@ -51,12 +51,15 @@ public class TARDISInstaPreset {
     private final int tid;
     private final String p;
     private final boolean mal;
+    private final int lamp;
     private final boolean sub;
+    private final int cham_id;
+    private final byte cham_data;
     private Block sponge;
     private final TARDISConstants.PRESET preset;
     private TARDISChameleonColumn column;
 
-    public TARDISInstaPreset(TARDIS plugin, Location location, TARDISConstants.PRESET preset, int tid, TARDISConstants.COMPASS d, String p, boolean mal, boolean sub) {
+    public TARDISInstaPreset(TARDIS plugin, Location location, TARDISConstants.PRESET preset, int tid, TARDISConstants.COMPASS d, String p, boolean mal, int lamp, boolean sub, int cham_id, byte cham_data) {
         this.plugin = plugin;
         this.d = d;
         this.location = location;
@@ -64,7 +67,10 @@ public class TARDISInstaPreset {
         this.tid = tid;
         this.p = p;
         this.mal = mal;
+        this.lamp = lamp;
         this.sub = sub;
+        this.cham_id = cham_id;
+        this.cham_data = cham_data;
     }
 
     /**
@@ -241,59 +247,76 @@ public class TARDISInstaPreset {
                     break;
             }
             for (int yy = 0; yy < 4; yy++) {
-                if (colids[yy] != 68) {
-                    plugin.utils.setBlockAndRemember(world, xx, (y + yy), zz, colids[yy], coldatas[yy], tid);
-                }
-                if (yy == 2 && colids[yy] == 68) {
-                    plugin.utils.setBlock(world, xx, (y + yy), zz, colids[yy], coldatas[yy]);
-                    Block sign = world.getBlockAt(xx, (y + yy), zz);
-                    if (sign.getType().equals(Material.WALL_SIGN)) {
-                        Sign s = (Sign) sign.getState();
-                        if (plugin.getConfig().getBoolean("name_tardis")) {
-                            HashMap<String, Object> wheret = new HashMap<String, Object>();
-                            wheret.put("tardis_id", tid);
-                            ResultSetTardis rst = new ResultSetTardis(plugin, wheret, "", false);
-                            if (rst.resultSet()) {
-                                String owner = rst.getOwner();
-                                if (owner.length() > 14) {
-                                    s.setLine(0, owner.substring(0, 12) + "'s");
-                                } else {
-                                    s.setLine(0, owner + "'s");
+                switch (colids[yy]) {
+                    case 35:
+                        int chai = (preset.equals(TARDISConstants.PRESET.NEW) || preset.equals(TARDISConstants.PRESET.OLD)) ? cham_id : colids[yy];
+                        byte chad = (preset.equals(TARDISConstants.PRESET.NEW) || preset.equals(TARDISConstants.PRESET.OLD)) ? cham_data : coldatas[yy];
+                        plugin.utils.setBlockAndRemember(world, xx, (y + yy), zz, chai, chad, tid);
+                        break;
+                    case 50: // lamps, glowstone and torches
+                    case 89:
+                    case 124:
+                        int light = (preset.equals(TARDISConstants.PRESET.NEW) || preset.equals(TARDISConstants.PRESET.OLD)) ? lamp : colids[yy];
+                        plugin.utils.setBlockAndRemember(world, xx, (y + yy), zz, light, coldatas[yy], tid);
+                        break;
+                    case 71: // doors
+                        int door = (preset.equals(TARDISConstants.PRESET.SWAMP) || preset.equals(TARDISConstants.PRESET.VILLAGE)) ? 64 : 71;
+                        plugin.utils.setBlockAndRemember(world, xx, (y + yy), zz, door, coldatas[yy], tid);
+                        break;
+                    case 68: // sign - if there is one
+                        plugin.utils.setBlock(world, xx, (y + yy), zz, colids[yy], coldatas[yy]);
+                        Block sign = world.getBlockAt(xx, (y + yy), zz);
+                        if (sign.getType().equals(Material.WALL_SIGN)) {
+                            Sign s = (Sign) sign.getState();
+                            if (plugin.getConfig().getBoolean("name_tardis")) {
+                                HashMap<String, Object> wheret = new HashMap<String, Object>();
+                                wheret.put("tardis_id", tid);
+                                ResultSetTardis rst = new ResultSetTardis(plugin, wheret, "", false);
+                                if (rst.resultSet()) {
+                                    String owner = rst.getOwner();
+                                    if (owner.length() > 14) {
+                                        s.setLine(0, owner.substring(0, 12) + "'s");
+                                    } else {
+                                        s.setLine(0, owner + "'s");
+                                    }
                                 }
                             }
+                            String line1;
+                            String line2;
+                            switch (preset) {
+                                case FACTORY:
+                                    line1 = "Type 40";
+                                    line2 = "TARDIS";
+                                    break;
+                                case STONE:
+                                    line1 = "Stone Brick";
+                                    line2 = "COLUMN";
+                                    break;
+                                case PARTY:
+                                    line1 = "PARTY";
+                                    line2 = "TENT";
+                                    break;
+                                case VILLAGE:
+                                    line1 = "VILLAGE";
+                                    line2 = "HOUSE";
+                                    break;
+                                case YELLOW:
+                                    line1 = "YELLOW";
+                                    line2 = "SUBMARINE";
+                                    break;
+                                default:
+                                    line1 = "POLICE";
+                                    line2 = "BOX";
+                                    break;
+                            }
+                            s.setLine(1, ChatColor.WHITE + line1);
+                            s.setLine(2, ChatColor.WHITE + line2);
+                            s.update();
                         }
-                        String line1;
-                        String line2;
-                        switch (preset) {
-                            case FACTORY:
-                                line1 = "Type 40";
-                                line2 = "TARDIS";
-                                break;
-                            case STONE:
-                                line1 = "Stone Brick";
-                                line2 = "COLUMN";
-                                break;
-                            case PARTY:
-                                line1 = "PARTY";
-                                line2 = "TENT";
-                                break;
-                            case VILLAGE:
-                                line1 = "VILLAGE";
-                                line2 = "HOUSE";
-                                break;
-                            case YELLOW:
-                                line1 = "YELLOW";
-                                line2 = "SUBMARINE";
-                                break;
-                            default:
-                                line1 = "POLICE";
-                                line2 = "BOX";
-                                break;
-                        }
-                        s.setLine(1, ChatColor.WHITE + line1);
-                        s.setLine(2, ChatColor.WHITE + line2);
-                        s.update();
-                    }
+                        break;
+                    default: // everything else
+                        plugin.utils.setBlockAndRemember(world, xx, (y + yy), zz, colids[yy], coldatas[yy], tid);
+                        break;
                 }
             }
         }

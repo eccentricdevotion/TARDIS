@@ -62,83 +62,67 @@ public class TARDISBuilderPoliceBox {
      * @param mal boolean determining whether a malfunction has occurred
      */
     public void buildPoliceBox(int id, Location l, TARDISConstants.COMPASS d, boolean c, Player p, boolean rebuild, boolean mal) {
-        int wall_block = plugin.getConfig().getInt("wall_id");
-        byte chameleonData = (byte) plugin.getConfig().getInt("wall_data");
-        if (c) {
-            Block chameleonBlock;
-            // chameleon circuit is on - get block under TARDIS
-            if (l.getBlock().getType() == Material.SNOW) {
-                chameleonBlock = l.getBlock();
-            } else {
-                chameleonBlock = l.getBlock().getRelative(BlockFace.DOWN);
-            }
-            // get chameleon_id/data if set
-            HashMap<String, Object> wherec = new HashMap<String, Object>();
-            wherec.put("tardis_id", id);
-            ResultSetTardis rsc = new ResultSetTardis(plugin, wherec, "", false);
-            rsc.resultSet();
-            int c_id = rsc.getChameleon_id();
-            byte c_data = rsc.getChameleon_data();
-            boolean bluewool = (c_id == wall_block && c_data == chameleonData);
-            if (!bluewool) {
-                wall_block = c_id;
-                chameleonData = c_data;
-            } else {
-                // determine wall_block
-                TARDISChameleonCircuit tcc = new TARDISChameleonCircuit(plugin);
-                int[] b_data = tcc.getChameleonBlock(chameleonBlock, p, false);
-                wall_block = b_data[0];
-                chameleonData = (byte) b_data[1];
-            }
-        }
-        // get sign and torch preferences
-        int lamp = plugin.getConfig().getInt("tardis_lamp");
-        boolean plain = plugin.getConfig().getBoolean("plain_on");
-        boolean sub = false;
-        HashMap<String, Object> wherepp = new HashMap<String, Object>();
-        wherepp.put("player", p.getName());
-        ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, wherepp);
-        if (rsp.resultSet()) {
-            lamp = rsp.getLamp();
-            plain = rsp.isPlain_on();
-            sub = (rsp.isSubmarine_on() && plugin.trackSubmarine.contains(Integer.valueOf(id)));
-        }
-        // keep the chunk this Police box is in loaded
-        Chunk thisChunk = l.getChunk();
-        while (!thisChunk.isLoaded()) {
-            thisChunk.load();
-        }
-        /*
-         * We can always add the chunk, as List.remove() only removes the first
-         * occurence - and we want the chunk to remain loaded if there are other
-         * Police Boxes in it.
-         */
-        plugin.tardisChunkList.add(thisChunk);
         HashMap<String, Object> where = new HashMap<String, Object>();
         where.put("tardis_id", id);
         ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
-        TARDISConstants.PRESET preset = TARDISConstants.PRESET.NEW;
         if (rs.resultSet()) {
-            preset = rs.getPreset();
-        }
-        if (rebuild) {
-            TARDISRebuildPreset trp = new TARDISRebuildPreset(plugin, l, preset, id, d, p.getName(), mal, sub);
-            trp.rebuildPreset();
-//            TARDISPoliceBoxRebuilder rebuilder = new TARDISPoliceBoxRebuilder(plugin, l, wall_block, chameleonData, id, d, lamp, plain, sub);
+            TARDISConstants.PRESET preset = rs.getPreset();
+            int cham_id = rs.getChameleon_id();
+            byte cham_data = rs.getChameleon_data();
+            if (c && (preset.equals(TARDISConstants.PRESET.NEW) || preset.equals(TARDISConstants.PRESET.OLD))) {
+                Block chameleonBlock;
+                // chameleon circuit is on - get block under TARDIS
+                if (l.getBlock().getType() == Material.SNOW) {
+                    chameleonBlock = l.getBlock();
+                } else {
+                    chameleonBlock = l.getBlock().getRelative(BlockFace.DOWN);
+                }
+                // determine cham_id
+                TARDISChameleonCircuit tcc = new TARDISChameleonCircuit(plugin);
+                int[] b_data = tcc.getChameleonBlock(chameleonBlock, p, false);
+                cham_id = b_data[0];
+                cham_data = (byte) b_data[1];
+            }
+            // get lamp and submarine preferences
+            int lamp = plugin.getConfig().getInt("tardis_lamp");
+            boolean sub = false;
+            HashMap<String, Object> wherepp = new HashMap<String, Object>();
+            wherepp.put("player", p.getName());
+            ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, wherepp);
+            if (rsp.resultSet()) {
+                lamp = rsp.getLamp();
+                sub = (rsp.isSubmarine_on() && plugin.trackSubmarine.contains(Integer.valueOf(id)));
+            }
+            // keep the chunk this Police box is in loaded
+            Chunk thisChunk = l.getChunk();
+            while (!thisChunk.isLoaded()) {
+                thisChunk.load();
+            }
+            /*
+             * We can always add the chunk, as List.remove() only removes the first
+             * occurence - and we want the chunk to remain loaded if there are other
+             * Police Boxes in it.
+             */
+            plugin.tardisChunkList.add(thisChunk);
+            if (rebuild) {
+                TARDISRebuildPreset trp = new TARDISRebuildPreset(plugin, l, preset, id, d, p.getName(), mal, lamp, sub, cham_id, cham_data);
+                trp.rebuildPreset();
+//            TARDISPoliceBoxRebuilder rebuilder = new TARDISPoliceBoxRebuilder(plugin, l, cham_id, cham_data, id, d, lamp, plain, sub);
 //            rebuilder.rebuildPoliceBox();
-        } else {
-            if (plugin.getConfig().getBoolean("materialise")) {
-                plugin.tardisMaterialising.add(id);
-//                TARDISMaterialisationRunnable runnable = new TARDISMaterialisationRunnable(plugin, l, wall_block, chameleonData, id, d, p, mal, lamp, plain, sub);
-                TARDISPresetRunnable runnable = new TARDISPresetRunnable(plugin, l, preset, id, d, p, mal, lamp, plain, sub);
-                int taskID = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, runnable, 10L, 20L);
-                runnable.setTask(taskID);
             } else {
-                plugin.tardisMaterialising.add(id);
-                //TARDISInstaPoliceBox insta = new TARDISInstaPoliceBox(plugin, l, wall_block, chameleonData, id, d, p.getName(), mal, lamp, plain, sub);
-                //insta.buildPoliceBox();
-                TARDISInstaPreset insta = new TARDISInstaPreset(plugin, l, preset, id, d, p.getName(), mal, sub);
-                insta.buildPreset();
+                if (plugin.getConfig().getBoolean("materialise")) {
+                    plugin.tardisMaterialising.add(id);
+//                TARDISMaterialisationRunnable runnable = new TARDISMaterialisationRunnable(plugin, l, cham_id, cham_data, id, d, p, mal, lamp, plain, sub);
+                    TARDISPresetRunnable runnable = new TARDISPresetRunnable(plugin, l, preset, id, d, p, mal, lamp, sub, cham_id, cham_data);
+                    int taskID = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, runnable, 10L, 20L);
+                    runnable.setTask(taskID);
+                } else {
+                    plugin.tardisMaterialising.add(id);
+                    //TARDISInstaPoliceBox insta = new TARDISInstaPoliceBox(plugin, l, cham_id, cham_data, id, d, p.getName(), mal, lamp, plain, sub);
+                    //insta.buildPoliceBox();
+                    TARDISInstaPreset insta = new TARDISInstaPreset(plugin, l, preset, id, d, p.getName(), mal, lamp, sub, cham_id, cham_data);
+                    insta.buildPreset();
+                }
             }
         }
     }
