@@ -262,8 +262,36 @@ public class TARDISRebuildPreset {
                                 }
                             }
                         }
-                        s.setLine(1, ChatColor.WHITE + "POLICE");
-                        s.setLine(2, ChatColor.WHITE + "BOX");
+                        String line1;
+                        String line2;
+                        switch (preset) {
+                            case FACTORY:
+                                line1 = "Type 40";
+                                line2 = "TARDIS";
+                                break;
+                            case STONE:
+                                line1 = "Stone Brick";
+                                line2 = "COLUMN";
+                                break;
+                            case PARTY:
+                                line1 = "PARTY";
+                                line2 = "TENT";
+                                break;
+                            case VILLAGE:
+                                line1 = "VILLAGE";
+                                line2 = "HOUSE";
+                                break;
+                            case YELLOW:
+                                line1 = "YELLOW";
+                                line2 = "SUBMARINE";
+                                break;
+                            default:
+                                line1 = "POLICE";
+                                line2 = "BOX";
+                                break;
+                        }
+                        s.setLine(1, ChatColor.WHITE + line1);
+                        s.setLine(2, ChatColor.WHITE + line2);
                         s.update();
                     }
                 }

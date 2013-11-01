@@ -53,6 +53,11 @@ public class TARDISChameleonInventory {
         String on_off = (bool) ? ChatColor.GREEN + "ON" : ChatColor.RED + "OFF";
         ing.setLore(Arrays.asList(new String[]{on_off}));
         con.setItemMeta(ing);
+        // Apply preset
+        ItemStack apply = new ItemStack(Material.BOOKSHELF, 1);
+        ItemMeta now = apply.getItemMeta();
+        now.setDisplayName("Apply preset now");
+        apply.setItemMeta(now);
         // New Police Box
         ItemStack box = new ItemStack(Material.WOOL, 1, (short) 11);
         ItemMeta day = box.getItemMeta();
@@ -115,7 +120,7 @@ public class TARDISChameleonInventory {
         close.setItemMeta(can);
 
         ItemStack[] is = {
-            con, null, box, null, off, null, null, null, close,
+            con, null, apply, null, box, null, off, null, close,
             null, stone, null, desert, null, jungle, null, nether, null,
             def, null, swamp, null, tent, null, village, null, yellow
         };

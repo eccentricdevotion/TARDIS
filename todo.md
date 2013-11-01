@@ -14,14 +14,14 @@
 6. TARDIS Information System (in progress)
 7. Chameleon presets (in progress)
     * Allow the NEW and OLD police boxes to be shorted out to a specific block - either through `/tardis chameleon short` or via TARDIS seed block
-    * Allow lamp preference to be used (where preset has lamp)
+    * Allow lamp preference to be used (for OLD & NEW presets only)
     * Fix doors popping off when preset changes to door of the other type
-    * Set sign text e.g. Party tent, Yellow Submarine etc
-    * Add a 'Change now' button to the Chameleon GUI
+    * Match presets to biomes, and use Yellow Submarine when underwater
 
 ## Waiting on Bukkit API
 1. Get/set horse speed (Attribute API)
 2. Use Resource Pack sounds
+3. Change ice presets to stained glass of a similar colour to chosen preset
 
 ## Next version `2.7+`
 0. Sonic Screwdrivers

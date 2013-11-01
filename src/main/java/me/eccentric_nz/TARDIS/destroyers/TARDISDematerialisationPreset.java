@@ -72,8 +72,28 @@ public class TARDISDematerialisationPreset implements Runnable {
         this.tid = tid;
         this.lamp = lamp;
         column = getColumn(preset, d);
-        ice_column = plugin.presets.getIce().get(d);
-        glass_column = plugin.presets.getGlass().get(d);
+        switch (preset) {
+            case DESERT:
+            case NEW:
+            case STONE:
+            case SWAMP:
+            case VILLAGE:
+                ice_column = plugin.presets.getTaller_ice().get(d);
+                glass_column = plugin.presets.getTaller_glass().get(d);
+                break;
+            case JUNGLE:
+                ice_column = plugin.presets.getJungle_ice().get(d);
+                glass_column = plugin.presets.getJungle_glass().get(d);
+                break;
+            case PARTY:
+                ice_column = plugin.presets.getTent_ice().get(d);
+                glass_column = plugin.presets.getTent_glass().get(d);
+                break;
+            default:
+                ice_column = plugin.presets.getIce().get(d);
+                glass_column = plugin.presets.getGlass().get(d);
+                break;
+        }
     }
 
     @Override

@@ -99,13 +99,17 @@ public class TARDISChameleonListener implements Listener {
                                     set.put("chamele_on", oo);
                                     break;
                                 case 2:
+                                    player.performCommand("tardis rebuild");
+                                    close(player);
+                                    break;
+                                case 4:
                                     // new Police Box
                                     set.put("chameleon_preset", "NEW");
                                     setSign(rs.getChameleon(), 3, "NEW", player);
                                     close(player);
                                     player.sendMessage(plugin.pluginName + "Chameleon Preset set to " + ChatColor.AQUA + "New Police Box");
                                     break;
-                                case 4:
+                                case 6:
                                     // factory
                                     set.put("chameleon_preset", "FACTORY");
                                     setSign(rs.getChameleon(), 3, "FACTORY", player);

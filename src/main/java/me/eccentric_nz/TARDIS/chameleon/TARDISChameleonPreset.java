@@ -41,9 +41,27 @@ public class TARDISChameleonPreset {
     private final String glass_id = "[[20,20,20,0],[20,20,20,0],[20,20,20,0],[20,20,20,0],[20,20,20,0],[20,20,20,0],[20,20,20,0],[71,71,20,0],[0,0,20,0],[0,0,68,0]]";
     private final String glass_data = "[[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,8,0,0],[0,0,0,0],[0,0,4,0]]";
     private final EnumMap<TARDISConstants.COMPASS, TARDISChameleonColumn> glass = new EnumMap<TARDISConstants.COMPASS, TARDISChameleonColumn>(TARDISConstants.COMPASS.class);
+    private final String taller_glass_id = "[[20,20,20,20],[20,20,20,20],[20,20,20,20],[20,20,20,20],[20,20,20,20],[20,20,20,20],[20,20,20,20],[71,71,20,20],[0,0,0,20],[0,0,68,0]]";
+    private final String taller_glass_data = "[[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,8,0,0],[0,0,0,0],[0,0,4,0]]";
+    private final EnumMap<TARDISConstants.COMPASS, TARDISChameleonColumn> taller_glass = new EnumMap<TARDISConstants.COMPASS, TARDISChameleonColumn>(TARDISConstants.COMPASS.class);
+    private final String tent_glass_id = "[[20,20,0,0],[20,20,20,0],[20,20,0,0],[20,20,20,0],[20,20,0,0],[20,20,20,0],[20,20,0,0],[71,71,20,0],[0,0,20,20],[0,0,68,0]]";
+    private final String tent_glass_data = "[[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,8,0,0],[0,0,0,0],[0,0,4,0]]";
+    private final EnumMap<TARDISConstants.COMPASS, TARDISChameleonColumn> tent_glass = new EnumMap<TARDISConstants.COMPASS, TARDISChameleonColumn>(TARDISConstants.COMPASS.class);
+    private final String jungle_glass_id = "[[20,20,20,0],[20,20,20,20],[20,20,20,0],[20,20,20,20],[20,20,20,0],[20,20,20,20],[20,20,20,0],[71,71,20,20],[0,0,0,20],[0,0,106,0]]";
+    private final String jungle_glass_data = "[[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,8,0,0],[0,0,0,0],[0,0,8,0]]";
+    private final EnumMap<TARDISConstants.COMPASS, TARDISChameleonColumn> jungle_glass = new EnumMap<TARDISConstants.COMPASS, TARDISChameleonColumn>(TARDISConstants.COMPASS.class);
     private final String ice_id = "[[79,79,79,0],[79,79,79,0],[79,79,79,0],[79,79,79,0],[79,79,79,0],[79,79,79,0],[79,79,79,0],[71,71,79,0],[0,0,35,0],[0,0,68,0]]";
     private final String ice_data = "[[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,8,0,0],[0,0,0,0],[0,0,4,0]]";
     private final EnumMap<TARDISConstants.COMPASS, TARDISChameleonColumn> ice = new EnumMap<TARDISConstants.COMPASS, TARDISChameleonColumn>(TARDISConstants.COMPASS.class);
+    private final String taller_ice_id = "[[79,79,79,79],[79,79,79,79],[79,79,79,79],[79,79,79,79],[79,79,79,79],[79,79,79,79],[79,79,79,79],[71,71,79,79],[0,0,0,79],[0,0,68,0]]";
+    private final String taller_ice_data = "[[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,8,0,0],[0,0,0,0],[0,0,4,0]]";
+    private final EnumMap<TARDISConstants.COMPASS, TARDISChameleonColumn> taller_ice = new EnumMap<TARDISConstants.COMPASS, TARDISChameleonColumn>(TARDISConstants.COMPASS.class);
+    private final String tent_ice_id = "[[79,79,0,0],[79,79,79,0],[79,79,0,0],[79,79,79,0],[79,79,0,0],[79,79,79,0],[79,79,0,0],[71,71,79,0],[0,0,79,79],[0,0,68,0]]";
+    private final String tent_ice_data = "[[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,8,0,0],[0,0,0,0],[0,0,4,0]]";
+    private final EnumMap<TARDISConstants.COMPASS, TARDISChameleonColumn> tent_ice = new EnumMap<TARDISConstants.COMPASS, TARDISChameleonColumn>(TARDISConstants.COMPASS.class);
+    private final String jungle_ice_id = "[[79,79,79,0],[79,79,79,79],[79,79,79,0],[79,79,79,79],[79,79,79,0],[79,79,79,79],[79,79,79,0],[71,71,79,79],[0,0,0,79],[0,0,106,0]]";
+    private final String jungle_ice_data = "[[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,8,0,0],[0,0,0,0],[0,0,8,0]]";
+    private final EnumMap<TARDISConstants.COMPASS, TARDISChameleonColumn> jungle_ice = new EnumMap<TARDISConstants.COMPASS, TARDISChameleonColumn>(TARDISConstants.COMPASS.class);
     private final String jungle_id = "[[48,48,4,0],[48,4,48,67],[4,4,48,0],[4,48,4,67],[48,4,48,0],[48,4,48,67],[4,4,48,0],[71,71,4,67],[0,0,4,4],[0,0,106,0]]";
     private final String jungle_data = "[[0,0,0,0],[0,0,0,2],[0,0,0,0],[0,0,0,1],[0,0,0,0],[0,0,0,3],[0,0,0,0],[0,8,0,0],[0,0,0,0],[0,0,8,0]]";
     private final EnumMap<TARDISConstants.COMPASS, TARDISChameleonColumn> jungle = new EnumMap<TARDISConstants.COMPASS, TARDISChameleonColumn>(TARDISConstants.COMPASS.class);
@@ -80,15 +98,21 @@ public class TARDISChameleonPreset {
         for (TARDISConstants.COMPASS d : TARDISConstants.COMPASS.values()) {
             column.put(d, buildTARDISChameleonColumn(d, column_id, column_data));
             desert.put(d, buildTARDISChameleonColumn(d, desert_id, desert_data));
+            factory.put(d, buildTARDISChameleonColumn(d, plain_id, factory_data));
             glass.put(d, buildTARDISChameleonColumn(d, glass_id, glass_data));
             ice.put(d, buildTARDISChameleonColumn(d, ice_id, ice_data));
             jungle.put(d, buildTARDISChameleonColumn(d, jungle_id, jungle_data));
+            jungle_glass.put(d, buildTARDISChameleonColumn(d, jungle_glass_id, jungle_glass_data));
+            jungle_ice.put(d, buildTARDISChameleonColumn(d, jungle_ice_id, jungle_ice_data));
             nether.put(d, buildTARDISChameleonColumn(d, nether_id, nether_data));
-            factory.put(d, buildTARDISChameleonColumn(d, plain_id, factory_data));
             police.put(d, buildTARDISChameleonColumn(d, police_id, police_data));
             swamp.put(d, buildTARDISChameleonColumn(d, swamp_id, swamp_data));
             taller.put(d, buildTARDISChameleonColumn(d, taller_id, taller_data));
+            taller_glass.put(d, buildTARDISChameleonColumn(d, taller_glass_id, taller_glass_data));
+            taller_ice.put(d, buildTARDISChameleonColumn(d, taller_ice_id, taller_ice_data));
             tent.put(d, buildTARDISChameleonColumn(d, tent_id, tent_data));
+            tent_glass.put(d, buildTARDISChameleonColumn(d, tent_glass_id, tent_glass_data));
+            tent_ice.put(d, buildTARDISChameleonColumn(d, tent_ice_id, tent_ice_data));
             village.put(d, buildTARDISChameleonColumn(d, village_id, village_data));
             yellowsub.put(d, buildTARDISChameleonColumn(d, yellowsub_id, yellowsub_data));
         }
@@ -403,6 +427,30 @@ public class TARDISChameleonPreset {
 
     public EnumMap<TARDISConstants.COMPASS, TARDISChameleonColumn> getJungle() {
         return jungle;
+    }
+
+    public EnumMap<TARDISConstants.COMPASS, TARDISChameleonColumn> getTaller_glass() {
+        return taller_glass;
+    }
+
+    public EnumMap<TARDISConstants.COMPASS, TARDISChameleonColumn> getTent_glass() {
+        return tent_glass;
+    }
+
+    public EnumMap<TARDISConstants.COMPASS, TARDISChameleonColumn> getJungle_glass() {
+        return jungle_glass;
+    }
+
+    public EnumMap<TARDISConstants.COMPASS, TARDISChameleonColumn> getTaller_ice() {
+        return taller_ice;
+    }
+
+    public EnumMap<TARDISConstants.COMPASS, TARDISChameleonColumn> getTent_ice() {
+        return tent_ice;
+    }
+
+    public EnumMap<TARDISConstants.COMPASS, TARDISChameleonColumn> getJungle_ice() {
+        return jungle_ice;
     }
 
     public EnumMap<TARDISConstants.COMPASS, TARDISChameleonColumn> getNether() {
