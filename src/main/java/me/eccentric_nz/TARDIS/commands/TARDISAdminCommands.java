@@ -149,6 +149,7 @@ public class TARDISAdminCommands implements CommandExecutor {
         firstsInt.add("border_radius");
         firstsInt.add("confirm_timeout");
         firstsInt.add("count");
+        firstsInt.add("custom_creeper_id");
         firstsInt.add("gravity_max_distance");
         firstsInt.add("gravity_max_velocity");
         firstsInt.add("hads_damage");
@@ -156,6 +157,7 @@ public class TARDISAdminCommands implements CommandExecutor {
         firstsInt.add("malfunction");
         firstsInt.add("malfunction_end");
         firstsInt.add("malfunction_nether");
+        firstsInt.add("platform_data");
         firstsInt.add("platform_id");
         firstsInt.add("random_attempts");
         firstsInt.add("recharge_distance");

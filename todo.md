@@ -5,14 +5,14 @@
 2. Rooms
    * Jettison the whole room (including walls)
    * Grow rooms one block further out than current, so walls aren't shared
-   * do a quick check to make sure the player is facing the right direction
-   * add more instructions to make sure they are facing the void!
+   * Do a quick check to make sure the player is facing the right direction
+   * Add more instructions to make sure they are facing the void!
+   * Put farmland, crops, buttons, levers and signs on last when growing rooms
 3. Architectural Reconfiguration System (almost there)
     * Can you manually grow a gravity or antigravity well?
 4. HADS + explosions + fireballs + lava
-5. Put farmland, crops, buttons, levers and signs on last when growing rooms
-6. TARDIS Information System (in progress)
-7. Chameleon presets (in progress)
+5. TARDIS Information System (in progress)
+6. Chameleon presets (in progress)
     * Match presets to biomes, and use Yellow Submarine when underwater
 
 ## Waiting on Bukkit API
