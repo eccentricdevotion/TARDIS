@@ -318,6 +318,7 @@ public class TARDISPresetRunnable implements Runnable {
                         }
                         for (int yy = 0; yy < 4; yy++) {
                             if (colids[yy] == 71 && (preset.equals(TARDISConstants.PRESET.SWAMP) || preset.equals(TARDISConstants.PRESET.VILLAGE))) {
+                                plugin.debug("Setting iron door to wood, during materialisation...");
                                 plugin.utils.setBlockAndRemember(world, xx, (y + yy), zz, 64, coldatas[yy], tid);
                             } else {
                                 if (colids[yy] != 68) {

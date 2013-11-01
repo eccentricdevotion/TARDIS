@@ -75,6 +75,7 @@ public class TARDISChameleonListener implements Listener {
                         where.put("tardis_id", id);
                         ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
                         if (rs.resultSet()) {
+                            String preset = rs.getPreset().toString();
                             HashMap<String, Object> set = new HashMap<String, Object>();
                             QueryFactory qf = new QueryFactory(plugin);
                             HashMap<String, Object> wherec = new HashMap<String, Object>();
@@ -183,6 +184,7 @@ public class TARDISChameleonListener implements Listener {
                                     close(player);
                             }
                             if (set.size() > 0) {
+                                set.put("chameleon_demat", preset);
                                 qf.doUpdate("tardis", set, wherec);
                             }
                         }

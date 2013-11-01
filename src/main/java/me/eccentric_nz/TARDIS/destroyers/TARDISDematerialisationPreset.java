@@ -183,6 +183,7 @@ public class TARDISDematerialisationPreset implements Runnable {
                     for (int yy = 0; yy < 4; yy++) {
                         if (colids[yy] == 71 && (preset.equals(TARDISConstants.PRESET.SWAMP) || preset.equals(TARDISConstants.PRESET.VILLAGE))) {
                             plugin.utils.setBlock(world, xx, (y + yy), zz, 64, coldatas[yy]);
+                            plugin.debug("Setting iron door to wood, during demat...");
                         } else {
                             plugin.utils.setBlock(world, xx, (y + yy), zz, colids[yy], coldatas[yy]);
                         }

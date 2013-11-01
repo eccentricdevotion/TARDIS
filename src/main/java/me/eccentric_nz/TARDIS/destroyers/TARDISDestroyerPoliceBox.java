@@ -58,9 +58,9 @@ public class TARDISDestroyerPoliceBox {
             wherec.put("tardis_id", id);
             ResultSetTardis rsc = new ResultSetTardis(plugin, wherec, "", false);
             rsc.resultSet();
-            TARDISConstants.PRESET preset = rsc.getPreset();
+            TARDISConstants.PRESET demat = rsc.getDemat();
             //TARDISDematerialisationRunnable runnable = new TARDISDematerialisationRunnable(plugin, l, lamp, mat, data, id, d, player);
-            TARDISDematerialisationPreset runnable = new TARDISDematerialisationPreset(plugin, l, preset, lamp, id, d);
+            TARDISDematerialisationPreset runnable = new TARDISDematerialisationPreset(plugin, l, demat, lamp, id, d);
             int taskID = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, runnable, 10L, 20L);
             runnable.setTask(taskID);
         } else {
