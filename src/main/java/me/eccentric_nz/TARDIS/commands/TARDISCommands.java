@@ -457,13 +457,7 @@ public class TARDISCommands implements CommandExecutor {
                     sd.setRoom(room);
                     sd.setSchematic(schm);
                     sd.setChunkMinMax(chunk);
-                    String message;
-                    // if it is a gravity well
-                    if (room.equals("GRAVITY") || room.equals("ANTIGRAVITY")) {
-                        message = "Place the GRAVITY WELL seed block (" + plugin.getRoomsConfig().getString("rooms." + room + ".seed") + ") into the centre of the floor in an empty room, then hit it with the TARDIS key to start growing your room!";
-                    } else {
-                        message = "Place the " + room + " seed block (" + plugin.getRoomsConfig().getString("rooms." + room + ".seed") + ") where the door should be, then hit it with the TARDIS key to start growing your room!";
-                    }
+                    String message = "Place the " + room + " seed block (" + plugin.getRoomsConfig().getString("rooms." + room + ".seed") + ") in front of the pressure plate, then hit it with the TARDIS key to start growing your room!";
                     plugin.trackRoomSeed.put(player.getName(), sd);
                     player.sendMessage(plugin.pluginName + message);
                     return true;
@@ -477,8 +471,7 @@ public class TARDISCommands implements CommandExecutor {
                         }
                         String room = args[1].toUpperCase(Locale.ENGLISH);
                         if (room.equals("GRAVITY") || room.equals("ANTIGRAVITY")) {
-                            player.sendMessage(plugin.pluginName + "You cannot jettison gravity wells! To remove the gravity blocks use the " + ChatColor.AQUA + "/tardisgravity remove" + ChatColor.RESET + " command.");
-                            return true;
+                            player.sendMessage(plugin.pluginName + "Please make sure you have removed the gravity blocks with the " + ChatColor.AQUA + "/tardisgravity remove" + ChatColor.RESET + " command before proceeding!");
                         }
                         if (!roomArgs.contains(room)) {
                             StringBuilder buf = new StringBuilder(args[1]);
@@ -508,7 +501,7 @@ public class TARDISCommands implements CommandExecutor {
                         }
                         plugin.trackJettison.put(player.getName(), room);
                         String seed = plugin.getArtronConfig().getString("jettison_seed");
-                        player.sendMessage(plugin.pluginName + "Stand in the doorway of the room you want to jettison and place a " + seed + " block directly in front of the door. Hit the " + seed + " with the TARDIS key to jettison the room!");
+                        player.sendMessage(plugin.pluginName + "Place the " + room + " block in front of the pressure plate. Hit the " + seed + " with the TARDIS key to jettison the room!");
                         return true;
                     } else {
                         sender.sendMessage(plugin.pluginName + TARDISConstants.NO_PERMS_MESSAGE);

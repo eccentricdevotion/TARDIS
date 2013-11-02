@@ -19,7 +19,10 @@ package me.eccentric_nz.TARDIS.ARS;
 import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
+import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.World;
+import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 
 /**
@@ -44,6 +47,8 @@ public class TARDISARSJettisonRunnable implements Runnable {
 
     @Override
     public void run() {
+        QueryFactory qf = new QueryFactory(plugin);
+        String r = room.toString();
         // remove the room
         World w = slot.getChunk().getWorld();
         int x = slot.getX();
@@ -52,15 +57,25 @@ public class TARDISARSJettisonRunnable implements Runnable {
         for (int yy = y; yy < (y + 16); yy++) {
             for (int xx = x; xx < (x + 16); xx++) {
                 for (int zz = z; zz < (z + 16); zz++) {
-                    w.getBlockAt(xx, yy, zz).setTypeId(0);
+                    Block b = w.getBlockAt(xx, yy, zz);
+                    b.setType(Material.AIR);
+                    // if it is a GRAVITY or ANTIGRAVITY well remove it from the database
+                    if (r.equals("GRAVITY") || r.equals("ANTIGRAVITY")) {
+                        byte d = b.getData();
+                        if ((d == (byte) 5 || d == (byte) 6) && b.getType().equals(Material.WOOL)) {
+                            String l = new Location(w, xx, yy, zz).toString();
+                            HashMap<String, Object> where = new HashMap<String, Object>();
+                            where.put("location", l);
+                            where.put("tardis_id", id);
+                            qf.doDelete("gravity_well", where);
+                        }
+                    }
                 }
             }
         }
         // give them their energy!
         if (room != TARDISARS.SLOT) {
-            String r = room.toString();
             int amount = Math.round((plugin.getArtronConfig().getInt("jettison") / 100F) * plugin.getRoomsConfig().getInt("rooms." + r + ".cost"));
-            QueryFactory qf = new QueryFactory(plugin);
             HashMap<String, Object> set = new HashMap<String, Object>();
             set.put("tardis_id", id);
             qf.alterEnergyLevel("tardis", amount, set, null);
