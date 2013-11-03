@@ -116,28 +116,6 @@ public class TARDISRoomRunnable implements Runnable {
         String tmp;
         if (level == h && row == w && col == (c - 1)) {
             // the entire schematic has been read :)
-            if (!room.equals("GRAVITY") && !room.equals("ANTIGRAVITY")) {
-                byte door_data;
-                switch (d) {
-                    case NORTH:
-                        door_data = 1;
-                        break;
-                    case WEST:
-                        door_data = 0;
-                        break;
-                    case SOUTH:
-                        door_data = 3;
-                        break;
-                    default:
-                        door_data = 2;
-                        break;
-                }
-                // put door on
-                if (b != null) {
-                    b.setTypeIdAndData(64, door_data, true);
-                    b.getRelative(BlockFace.UP).setTypeIdAndData(64, (byte) 8, true);
-                }
-            }
             if (iceblocks.size() > 0) {
                 p.sendMessage(plugin.pluginName + "Melting the ice!");
                 // set all the ice to water
@@ -197,11 +175,11 @@ public class TARDISRoomRunnable implements Runnable {
             tmp = s[level][row][col];
             String[] iddata = tmp.split(":");
             id = plugin.utils.parseNum(iddata[0]);
-            if (TARDISConstants.PROBLEM_BLOCKS.contains(Integer.valueOf(id)) && (d.equals(COMPASS.NORTH) || d.equals(COMPASS.WEST))) {
-                data = TARDISDataRecalculator.calculateData(id, Byte.parseByte(iddata[1]));
-            } else {
-                data = Byte.parseByte(iddata[1]);
-            }
+//            if (TARDISConstants.PROBLEM_BLOCKS.contains(Integer.valueOf(id)) && (d.equals(COMPASS.NORTH) || d.equals(COMPASS.WEST))) {
+//                data = TARDISDataRecalculator.calculateData(id, Byte.parseByte(iddata[1]));
+//            } else {
+//                data = Byte.parseByte(iddata[1]);
+//            }
             if (id == 35 && data == 7 && plugin.getConfig().getBoolean("use_clay")) {
                 id = 159;
             }

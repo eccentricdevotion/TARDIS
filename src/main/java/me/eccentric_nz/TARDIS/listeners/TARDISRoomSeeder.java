@@ -28,6 +28,7 @@ import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.rooms.TARDISCondenserData;
 import me.eccentric_nz.TARDIS.rooms.TARDISRoomBuilder;
+import me.eccentric_nz.TARDIS.rooms.TARDISRoomDirection;
 import me.eccentric_nz.TARDIS.rooms.TARDISSeedData;
 import me.eccentric_nz.tardischunkgenerator.TARDISChunkGenerator;
 import org.bukkit.Chunk;
@@ -109,8 +110,21 @@ public class TARDISRoomSeeder implements Listener {
                 }
                 // get clicked block location
                 Location b = block.getLocation();
-                // get player's direction
-                COMPASS d = COMPASS.valueOf(plugin.utils.getPlayersDirection(player, false));
+                // get the growing direction
+                TARDISRoomDirection trd = new TARDISRoomDirection(block);
+                trd.getDirection();
+                if (!trd.isFound()) {
+                    player.sendMessage(plugin.pluginName + "Could not find the door pressure plate! Check the seed block position.");
+                    return;
+                }
+                COMPASS d = trd.getCompass();
+                BlockFace facing = trd.getFace();
+                // check there is not a block in the direction the player is facing
+                Block check_block = b.getBlock().getRelative(BlockFace.DOWN).getRelative(facing, 9);
+                if (!check_block.getType().equals(Material.AIR)) {
+                    player.sendMessage(plugin.pluginName + "There seems to be a block in the way! You should be growing out into the void...");
+                    return;
+                }
                 // get seed data
                 TARDISSeedData sd = plugin.trackRoomSeed.get(playerNameStr);
                 // check they are not in an ARS chunk
@@ -131,10 +145,19 @@ public class TARDISRoomSeeder implements Listener {
                     player.sendMessage(plugin.pluginName + "That is not the correct seed block to grow a " + plugin.trackRoomSeed.get(playerNameStr).getRoom() + "!");
                     return;
                 }
-                TARDISRoomBuilder builder = new TARDISRoomBuilder(plugin, r, b, d, player);
+                // adjust the location three/four blocks out
+                int how_far = (d.equals(COMPASS.SOUTH) || d.equals(COMPASS.EAST)) ? 3 : 4;
+                Location l = block.getRelative(facing, how_far).getLocation();
+                // build the room
+                TARDISRoomBuilder builder = new TARDISRoomBuilder(plugin, r, l, d, player);
                 if (builder.build()) {
+                    // remove seed block and set block above it to AIR as well
+                    block.setType(Material.AIR);
+                    Block doorway = block.getRelative(facing, 2);
+                    doorway.setType(Material.AIR);
+                    doorway.getRelative(BlockFace.UP).setType(Material.AIR);
                     plugin.trackRoomSeed.remove(playerNameStr);
-                    // ok they clicked it, so take their energy!
+                    // ok, room growing was successful, so take their energy!
                     int amount = plugin.getRoomsConfig().getInt("rooms." + r + ".cost");
                     QueryFactory qf = new QueryFactory(plugin);
                     HashMap<String, Object> set = new HashMap<String, Object>();

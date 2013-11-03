@@ -16,12 +16,15 @@
  */
 package me.eccentric_nz.TARDIS.rooms;
 
+import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants.COMPASS;
+import me.eccentric_nz.TARDIS.database.QueryFactory;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
+import org.bukkit.block.BlockFace;
 
 /**
  * When the Eleventh Doctor was trying to get out of his universe, he said he
@@ -36,12 +39,14 @@ public class TARDISRoomRemover {
     private final String r;
     private final Location l;
     private final COMPASS d;
+    private final int id;
 
-    public TARDISRoomRemover(TARDIS plugin, String r, Location l, COMPASS d) {
+    public TARDISRoomRemover(TARDIS plugin, String r, Location l, COMPASS d, int id) {
         this.plugin = plugin;
         this.r = r;
         this.l = l;
         this.d = d;
+        this.id = id;
     }
 
     /**
@@ -52,52 +57,57 @@ public class TARDISRoomRemover {
      * @return false if the room has already been jettisoned
      */
     public boolean remove() {
+        if (l.getBlock().getRelative(BlockFace.DOWN).getRelative(BlockFace.valueOf(d.toString()), 7).getType().equals(Material.AIR)) {
+            return false;
+        }
         // get start locations
-        int sx, sy, sz, ex, ey, ez, downy, upy, half, lessthree;
+        int sx, sy, sz, ex, ey, ez, downy, upy;
         // calculate values for downy and upy from schematic dimensions / config
         short[] dimensions = plugin.room_dimensions.get(r);
         downy = Math.abs(plugin.getRoomsConfig().getInt("rooms." + r + ".offset"));
         upy = dimensions[0] - (downy + 1);
-        half = (dimensions[1] - 2) / 2;
-        lessthree = dimensions[1] - 3;
+        int xzoffset = (dimensions[1] / 2);
         switch (d) {
             case NORTH:
-                sx = l.getBlockX() - half;
-                sz = l.getBlockZ() - lessthree;
-                ex = l.getBlockX() + half;
-                ez = l.getBlockZ();
+                l.setX(l.getX() - xzoffset);
+                l.setZ(l.getZ() - (dimensions[1] - 1));
                 break;
             case WEST:
-                sx = l.getBlockX() - lessthree;
-                sz = l.getBlockZ() - half;
-                ex = l.getBlockX();
-                ez = l.getBlockZ() + half;
+                l.setX(l.getX() - (dimensions[1] - 1));
+                l.setZ(l.getZ() - xzoffset);
                 break;
             case SOUTH:
-                sx = l.getBlockX() - half;
-                sz = l.getBlockZ();
-                ex = l.getBlockX() + half;
-                ez = l.getBlockZ() + lessthree;
+                l.setX(l.getX() - xzoffset);
                 break;
             default:
-                sx = l.getBlockX();
-                sz = l.getBlockZ() - half;
-                ex = l.getBlockX() + lessthree;
-                ez = l.getBlockZ() + half;
+                l.setZ(l.getZ() - xzoffset);
                 break;
         }
-        sy = l.getBlockY() - downy;
-        ey = l.getBlockY() + upy;
+        sx = l.getBlockX();
+        ex = l.getBlockX() + dimensions[1];
+        sz = l.getBlockZ();
+        ez = l.getBlockZ() + dimensions[1];
+        sy = l.getBlockY() + upy;
+        ey = l.getBlockY() - downy;
         World w = l.getWorld();
-        if (w.getBlockAt(sx + 2, l.getBlockY() - 1, sz + 2).getType().equals(Material.AIR)) {
-            return false;
-        }
+        QueryFactory qf = new QueryFactory(plugin);
         // loop through blocks and set them to air
-        for (int y = ey; y >= sy; y--) {
+        for (int y = sy; y >= ey; y--) {
             for (int x = sx; x <= ex; x++) {
                 for (int z = sz; z <= ez; z++) {
                     Block block = w.getBlockAt(x, y, z);
-                    block.setTypeId(0);
+                    block.setType(Material.AIR);
+                    // if it is a GRAVITY or ANTIGRAVITY well remove it from the database
+                    if (r.equals("GRAVITY") || r.equals("ANTIGRAVITY")) {
+                        byte data = block.getData();
+                        if ((data == (byte) 5 || data == (byte) 6) && block.getType().equals(Material.WOOL)) {
+                            String loc = new Location(w, x, y, z).toString();
+                            HashMap<String, Object> where = new HashMap<String, Object>();
+                            where.put("location", loc);
+                            where.put("tardis_id", id);
+                            qf.doDelete("gravity_well", where);
+                        }
+                    }
                 }
             }
         }

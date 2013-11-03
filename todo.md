@@ -1,19 +1,16 @@
 # TODO
 
 ## Current version `2.6-beta-1`
-1. Test `platform_id`, Temporal Invisibility
+1. Test Temporal Invisibility
 2. Rooms
-   * Jettison the whole room (including walls)
-   * Grow rooms one block further out than current, so walls aren't shared
-   * Do a quick check to make sure the player is facing the right direction
-   * Add more instructions to make sure they are facing the void!
+   * Set data correctly for all directions
+   * Re-schematic the large TARDISes
+   * Check Charlie's schematics (arboretum, greenhouse)
    * Put farmland, crops, buttons, levers and signs on last when growing rooms
-   * Can you manually grow a gravity or antigravity well?
 3. Architectural Reconfiguration System (almost there)
-    * Implement Charlie's new doors?
-4. HADS + explosions + fireballs + lava
-5. TARDIS Information System (in progress)
-6. Chameleon presets (in progress)
+    * Implement Charlie's new doors (in progress)
+4. TARDIS Information System (in progress)
+5. Chameleon presets (in progress)
     * Match presets to biomes, and use Yellow Submarine when underwater
 
 ## Waiting on Bukkit API
@@ -35,6 +32,7 @@
 10. TARDIS exterior rendering / scanner room
 11. Underground materialisation
 12. Update the malfunction location finder to have a greater range
+13. HADS + explosions + fireballs + lava
 
 ## Minecraft API when available
 1. Recreate everything with the new API :)
