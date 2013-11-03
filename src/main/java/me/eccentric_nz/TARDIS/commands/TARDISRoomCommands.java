@@ -20,8 +20,10 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
@@ -53,9 +55,16 @@ import org.bukkit.entity.Player;
 public class TARDISRoomCommands implements CommandExecutor {
 
     private final TARDIS plugin;
+    public List<String> roomArgs = new ArrayList<String>();
 
     public TARDISRoomCommands(TARDIS plugin) {
         this.plugin = plugin;
+        // rooms - only add if enabled in the config
+        for (String r : plugin.getRoomsConfig().getConfigurationSection("rooms").getKeys(false)) {
+            if (plugin.getRoomsConfig().getBoolean("rooms." + r + ".enabled")) {
+                roomArgs.add(r);
+            }
+        }
     }
 
     @Override

@@ -23,12 +23,15 @@ import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetChunks;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
+import me.eccentric_nz.tardischunkgenerator.TARDISChunkGenerator;
 import org.bukkit.Bukkit;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.World;
+import org.bukkit.WorldType;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
+import org.bukkit.generator.ChunkGenerator;
 
 /**
  * Various utility methods.
@@ -337,5 +340,14 @@ public class TARDISUtils {
      */
     public String makeLocationStr(World w, int x, int y, int z) {
         return "Location{world=CraftWorld{name=" + w.getName() + "},x=" + x + ".0,y=" + y + ".0,z=" + z + ".0,pitch=0.0,yaw=0.0}";
+    }
+
+    public boolean canGrowRooms(String chunk) {
+        String[] data = chunk.split(":");
+        World room_world = plugin.getServer().getWorld(data[0]);
+        ChunkGenerator gen = room_world.getGenerator();
+        WorldType wt = room_world.getWorldType();
+        boolean special = (data[0].contains("TARDIS_TimeVortex") && (wt.equals(WorldType.FLAT) || gen instanceof TARDISChunkGenerator));
+        return (data[0].contains("TARDIS_WORLD_") || special);
     }
 }

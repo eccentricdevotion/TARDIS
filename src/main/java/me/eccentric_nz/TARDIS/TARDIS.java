@@ -34,7 +34,7 @@ import me.eccentric_nz.TARDIS.commands.TARDISAdminCommands;
 import me.eccentric_nz.TARDIS.commands.TARDISAreaCommands;
 import me.eccentric_nz.TARDIS.commands.TARDISBindCommands;
 import me.eccentric_nz.TARDIS.commands.TARDISBookCommands;
-import me.eccentric_nz.TARDIS.commands.TARDISCommands;
+import me.eccentric_nz.TARDIS.commands.tardis.TARDISCommands;
 import me.eccentric_nz.TARDIS.commands.TARDISGravityCommands;
 import me.eccentric_nz.TARDIS.commands.TARDISPrefsCommands;
 import me.eccentric_nz.TARDIS.commands.TARDISRecipeCommands;

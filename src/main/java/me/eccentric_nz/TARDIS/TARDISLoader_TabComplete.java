@@ -22,7 +22,7 @@ import me.eccentric_nz.TARDIS.commands.TARDISBindTabComplete;
 import me.eccentric_nz.TARDIS.commands.TARDISGravityTabComplete;
 import me.eccentric_nz.TARDIS.commands.TARDISPrefsTabComplete;
 import me.eccentric_nz.TARDIS.commands.TARDISRecipeTabComplete;
-import me.eccentric_nz.TARDIS.commands.TARDISTabComplete;
+import me.eccentric_nz.TARDIS.commands.tardis.TARDISTabComplete;
 import me.eccentric_nz.TARDIS.commands.TARDISTextureTabComplete;
 import me.eccentric_nz.TARDIS.commands.TARDISTravelTabComplete;
 

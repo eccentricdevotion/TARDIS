@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.utility;
+package me.eccentric_nz.TARDIS.commands.tardis;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -35,11 +35,11 @@ import org.bukkit.entity.Player;
  *
  * @author eccentric_nz
  */
-public class TARDISLampScanner {
+public class TARDISLampsCommand {
 
     private final TARDIS plugin;
 
-    public TARDISLampScanner(TARDIS plugin) {
+    public TARDISLampsCommand(TARDIS plugin) {
         this.plugin = plugin;
     }
 
