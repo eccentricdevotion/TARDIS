@@ -178,7 +178,7 @@ public class TARDISRoomRunnable implements Runnable {
 //            if (TARDISConstants.PROBLEM_BLOCKS.contains(Integer.valueOf(id)) && (d.equals(COMPASS.NORTH) || d.equals(COMPASS.WEST))) {
 //                data = TARDISDataRecalculator.calculateData(id, Byte.parseByte(iddata[1]));
 //            } else {
-//                data = Byte.parseByte(iddata[1]);
+            data = Byte.parseByte(iddata[1]);
 //            }
             if (id == 35 && data == 7 && plugin.getConfig().getBoolean("use_clay")) {
                 id = 159;

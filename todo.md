@@ -3,15 +3,14 @@
 ## Current version `2.6-beta-1`
 1. Test Temporal Invisibility
 2. Rooms
-   * Set data correctly for all directions
-   * Re-schematic the large TARDISes
    * Check Charlie's schematics (arboretum, greenhouse)
    * Put farmland, crops, buttons, levers and signs on last when growing rooms
 3. Architectural Reconfiguration System (almost there)
     * Implement Charlie's new doors (in progress)
-4. TARDIS Information System (in progress)
+4. TARDIS Information System (in progress - add new features)
 5. Chameleon presets (in progress)
-    * Match presets to biomes, and use Yellow Submarine when underwater
+    * Match presets to biomes, and use Yellow Submarine when underwater?
+6. Documentation & videos!
 
 ## Waiting on Bukkit API
 1. Get/set horse speed (Attribute API)
