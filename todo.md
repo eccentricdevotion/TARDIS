@@ -5,9 +5,9 @@
 2. Rooms
    * Check Charlie's schematics (arboretum, greenhouse)
    * Put farmland, crops, buttons, levers and signs on last when growing rooms
-3. Architectural Reconfiguration System (almost there)
+3. Architectural Reconfiguration System
     * Implement Charlie's new doors (in progress)
-4. TARDIS Information System (in progress - add new features)
+4. TARDIS Information System (add new features)
 5. Chameleon presets (in progress)
     * Match presets to biomes, and use Yellow Submarine when underwater?
 6. Documentation & videos!

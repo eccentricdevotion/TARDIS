@@ -16,11 +16,11 @@
  */
 package me.eccentric_nz.TARDIS;
 
-import me.eccentric_nz.TARDIS.commands.TARDISAdminTabComplete;
+import me.eccentric_nz.TARDIS.commands.admin.TARDISAdminTabComplete;
 import me.eccentric_nz.TARDIS.commands.TARDISAreaTabComplete;
 import me.eccentric_nz.TARDIS.commands.TARDISBindTabComplete;
 import me.eccentric_nz.TARDIS.commands.TARDISGravityTabComplete;
-import me.eccentric_nz.TARDIS.commands.TARDISPrefsTabComplete;
+import me.eccentric_nz.TARDIS.commands.preferences.TARDISPrefsTabComplete;
 import me.eccentric_nz.TARDIS.commands.TARDISRecipeTabComplete;
 import me.eccentric_nz.TARDIS.commands.tardis.TARDISTabComplete;
 import me.eccentric_nz.TARDIS.commands.TARDISTextureTabComplete;

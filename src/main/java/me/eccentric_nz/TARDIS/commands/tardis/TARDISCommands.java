@@ -41,7 +41,7 @@ public class TARDISCommands implements CommandExecutor {
 
     private final TARDIS plugin;
     private TARDISPluginRespect respect;
-    HashSet<Byte> transparent = new HashSet<Byte>();
+    public HashSet<Byte> transparent = new HashSet<Byte>();
     private final List<String> firstArgs = new ArrayList<String>();
     public List<String> roomArgs = new ArrayList<String>();
 
