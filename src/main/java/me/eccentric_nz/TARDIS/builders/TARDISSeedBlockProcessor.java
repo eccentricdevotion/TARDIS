@@ -223,7 +223,7 @@ public class TARDISSeedBlockProcessor {
                 qf.insertLocations(setlocs);
                 // turn the block stack into a TARDIS
                 // police box needs to use chameleon id/data
-                plugin.buildPB.buildPoliceBox(lastInsertId, l, TARDISConstants.COMPASS.valueOf(d), true, player, false, false);
+                plugin.buildPB.buildPoliceBox(lastInsertId, l, TARDISConstants.COMPASS.valueOf(d), false, player, false, false);
                 plugin.buildI.buildInner(schm, chunkworld, lastInsertId, player, middle_id, middle_data);
                 // set achievement completed
                 if (player.hasPermission("tardis.book")) {
