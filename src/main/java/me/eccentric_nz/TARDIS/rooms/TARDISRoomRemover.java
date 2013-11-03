@@ -70,10 +70,10 @@ public class TARDISRoomRemover {
         switch (d) {
             case NORTH:
                 l.setX(l.getX() - xzoffset);
-                l.setZ(l.getZ() - (dimensions[1] - 1));
+                l.setZ(l.getZ() - dimensions[1]);
                 break;
             case WEST:
-                l.setX(l.getX() - (dimensions[1] - 1));
+                l.setX(l.getX() - dimensions[1]);
                 l.setZ(l.getZ() - xzoffset);
                 break;
             case SOUTH:

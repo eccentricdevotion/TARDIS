@@ -146,8 +146,7 @@ public class TARDISRoomSeeder implements Listener {
                     return;
                 }
                 // adjust the location three/four blocks out
-                int how_far = (d.equals(COMPASS.SOUTH) || d.equals(COMPASS.EAST)) ? 3 : 4;
-                Location l = block.getRelative(facing, how_far).getLocation();
+                Location l = block.getRelative(facing, 3).getLocation();
                 // build the room
                 TARDISRoomBuilder builder = new TARDISRoomBuilder(plugin, r, l, d, player);
                 if (builder.build()) {

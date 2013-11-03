@@ -94,8 +94,7 @@ public class TARDISJettisonSeeder implements Listener {
                 COMPASS d = trd.getCompass();
                 BlockFace facing = trd.getFace();
                 // get clicked block location
-                int how_far = (d.equals(COMPASS.SOUTH) || d.equals(COMPASS.EAST)) ? 3 : 4;
-                Location l = block.getRelative(facing, how_far).getLocation();
+                Location l = block.getRelative(facing, 3).getLocation();
                 // get the TARDIS id
                 HashMap<String, Object> whereid = new HashMap<String, Object>();
                 whereid.put("owner", playerNameStr);
