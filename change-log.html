@@ -26,6 +26,187 @@
     <section>
         <h1>Change log</h1>
         <h2>What&rsquo;s been changed?</h2>
+        <h3>v2.6-beta-1</h3>
+        <p>There are lots of changes &mdash; some of which are not compatible with previous TARDISes... please read carefully &mdash; videos and full documentation are coming ASAP</p>
+        <h4>Additions</h4>
+        <ul>
+            <li>Added 3 new TARDIS consoles &mdash; ARS (see below), TOM and PLANK
+                <ul>
+                    <li>TOM and PLANK are similar to the BAKER and WOOD rooms, but are fully fledged primary consoles </li>
+                </ul>
+            </li>
+            <li>Added submarine mode
+                <ul>
+                    <li>a new button in the destination terminal GUI toggles submarine mode on and off</li>
+                    <li>when <strong>on</strong>, the TARDIS can land underwater</li>
+                    <li>the area surrounding the Police Box is cleared of water (requires the WorldGuard plugin to be installed on the server)</li>
+                </ul>
+            </li>
+            <li>Added a TARDIS Architectural Reconfiguration System
+                <ul>
+                    <li>the ARS, BUDGET, STEAMPUNK, TOM, and PLANK console types now have an ARS sign, which when clicked displays the ARS GUI</li>
+                    <li>allows players to program multiple rooms to grow (and be jettisoned)</li>
+                    <li>all room schematics have been changed to fit this new system, and include new automatic piston doors</li>
+                </ul>
+            </li>
+            <li>Added TARDIS seed blocks
+                <ul>
+                    <li>Seed blocks are crafted</li>
+                    <li>
+                        <p> <code>123
+                            456
+                            789</code> </p>
+                        <p>If the above is a 3x3 crafting grid, then:<br />
+                            1 = Redstone torch<br />
+                            2 = AIR<br />
+                            3 = AIR<br />
+                            4 = Lapis Block<br />
+                            5 = Any valid Police Box Lamp block/item<br />
+                            6 = Any valid TARDIS wall block<br />
+                            7 = Any of the current TARDIS &lsquo;type&rsquo; blocks e.g. IRON, GOLD, DIAMOND, EMERALD etc<br />
+                            8 = Any valid Police Box wall block<br />
+                            9 = Any valid TARDIS floor block</p>
+                    </li>
+                    <li>
+                        <p>You then need to click the crafting output slot to generate the seed.</p>
+                        <p><img src="https://dl.dropboxusercontent.com/u/53758864/tardisseed1.jpg" alt="tardis seed" /></p>
+                        <p> <img src="https://dl.dropboxusercontent.com/u/53758864/tardisseed2.jpg" alt="tardis seed" /></p>
+                    </li>
+                    <li>Right-click a placed seed block with the TARDIS key to start growing a TARDIS...
+                    <li>There are about 19,450,850 different possible seed block combinations</li>
+                    <li>Seed blocks can be placed, broken and dropped and still remain as a valid seed block</li>
+                    <li>This is now the default way to create a TARDIS</li>
+                    <li>You can revert to using the old block stack method by setting <code>use_block_stack</code> in config.yml</li>
+                </ul>
+            </li>
+            <li>Added Chameleon Presets
+                <ul>
+                    <li>Presets are selected using the new Chameleon sign GUI</li>
+                    <li>There are currently 11 presets: a NEW (taller) Police Box design, the OLD Police Box, a PARTY tent, a SWAMP hut, a JUNGLE temple, a DESERT temple, a STONE column, a VILLAGE house, a NETHER shape, a FACTORY fresh Type 40, and a YELLOW submarine</li>
+                </ul>
+            </li>
+            <li>Added custom console slot
+                <ul>
+                    <li>add your custom schematic to the <em>plugins/TARDIS/schematics</em> folder &mdash; it maust be named <strong>custom.schematic</strong></li>
+                    <li>to enable a custom console, set <code>custom_schematic: true</code> in the config</li>
+                    <li>to set the custom schematic seed block type, set <code>custom_schematic_seed: [material]</code> in the config &mdash; the default is OBSIDIAN</li>
+                </ul>
+            </li>
+            <li>Added the TARDIS Information System
+                <ul>
+                    <li>You can add this to existing TARDISes by placing a sign and using the <code>/tardis update info</code> command</li>
+                    <li>Click the TIS sign to enter the chat based info system</li>
+                    <li>type the underlined letter in the menus into chat to see more options and info</li>
+                </ul>
+            </li>
+            <li>Added a VILLAGE room to transport Villagers into the TARDIS</li>
+            <li>Added the TRENZALORE room to the default rooms</li>
+            <li>Added compatibility with Multiverse-Adventure world resetting</li>
+            <li>Added a command to abort room growing <code>/tardis abort [task ID]</code></li>
+            <li>Allow players with <code>tardis.create_world</code> permission to have a TARDIS in their own world when <code>default_world</code> is true
+                <ol>
+                    <li>set <code>create_worlds: false</code></li>
+                    <li>set <code>create_worlds_with_perms: true</code></li>
+                    <li>set up default world as usual</li>
+                    <li>give players permission <code>tardis.create_world</code></li>
+                </ol>
+            </li>
+            <li>Added a config option to set the speed that rooms are grown at &mdash; <code>room_speed: [a number between 1 &amp; 20]</code> &mdash; the bigeer the number the faster the room grows</li>
+            <li>Added a button in the save sign GUI to switch to TARDIS areas</li>
+            <li>Added a check to make sure the right versions of the Factions plugin is installed if <code>respect_factions</code> is true</li>
+            <li>Added a configuration section <code>under_door_blocks</code> to <em>blocks.yml</em> to set which blocks are replaced under the Police Box door. Also added carpet to the default list</li>
+            <li>Added a configuration section <code>no_artron_value</code> to <em>blocks.yml</em> for zero value condensables</li>
+            <li>Added a new config option for <code>custom_creeper_id</code> to set the id of the block under the Artron Energy Creeper in the new &lsquo;custom&rsquo; console schematic</li>
+            <li>Added basic MCPC+/Forge support</li>
+            <li>You can now delete all companions with the command <code>/tardis remove all</code></li>
+        </ul>
+        </li>
+        </ul>
+        <h4>Changes</h4>
+        <ul>
+            <li>All console and room schematics have been updated
+                <ul>
+                    <li><strong>You need to delete the <em>plugins/TARDIS/schematics</em> folder!</strong></li>
+                </ul>
+            </li>
+            <li>
+                <p>Room and jettison seed position has changed</p>
+                <ul>
+                    <li>unfortunately this is <strong>not backwards compatible with old rooms</strong> (as this change was needed to implement and be compatible with ARS and full room jettisoning)</li>
+                    <li>
+                        <p>seed blocks are now placed in front of the stone pressure plate that activates the new piston doors positions are shown marked in red below:</p>
+                        <p><img src="https://dl.dropboxusercontent.com/u/53758864/seedblockpositions.png" alt="sedd block positions" /></p>
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <p>The <code>/tardis jettison</code> command now removes the whole room</p>
+            </li>
+            <li>TARDIS creation now defaults to using seed blocks &mdash; see &lsquo;Additions&rsquo; above</li>
+            <li>The TARDIS Temporal circuit now makes the player invisible</li>
+            <li>If the Police Box lamp is set to a REDSTON_LAMP, then it flashes on and off during re- and de-materialisation</li>
+            <li>Leashes are retained in the player&rsquo;s inventory when transferring horses</li>
+            <li>The Police Box platform block id and data value can now be set in the config &mdash; <code>platform_id: [id]</code> and <code>platform_data: [data]</code></li>
+            <li>If the Police Box door is locked, entities cannot be transported</li>
+            <li>Leashes and beacons can now be condensed</li>
+            <li>The save sign can now only display a maximum of 45 saves</li>
+            <li>Malfunctions are now allowed to travel to disabled nether/the end worlds</li>
+            <li>The compass target is reset to the bed spawn / world spawn location when a regular compass is selected after using the TARDIS locator</li>
+            <li>All wool in a room is replaced with stained clay if <code>use_clay</code> is true</li>
+            <li>TARDIS control signs (except Keyboard) can now be COMPARATORS</li>
+            <li>Mobs are not farmed at all if there is no FARM room &amp;&amp; <code>spawn_eggs</code> is false</li>
+            <li>The TARDIS home, current, next and back location saving has been completely reworked</li>
+            <li>Almost all non-SELECT SQL queries are now run asynchronously</li>
+            <li>The player must still be in a TARDIS world when updating blocks</li>
+            <li>The player must grow a (farm, rail, stable or village) room first before being able to update the relevant block locations</li>
+            <li>The plugin  now prevents the TARDIS from landing at y = 0</li>
+            <li>When LEFT-clicking the door, it now locks / unlocks both sides</li>
+            <li>Plugin metrics has been removed due to unreliability</li>
+            <li>Random location finding attempts can now be limited with a config option &mdash; <code>random_attempts: [number]</code> &mdash; default is 30</li>
+            <li>The <code>tardis.skeletonkey</code> permission now overrides locked isomorphic controls</li>
+            <li>The destiantion terminal, ARS, TIS, temporal circuit, and keyboard sign GUIs are now added automatically to new TARDISes</li>
+        </ul>
+        <h4>Bug fixes</h4>
+        <ul>
+            <li>The plugin now checks the player has permission to use the back door to The End or the Nether</li>
+            <li>Police Box block protection is removed correctly when travelling after the Police Box has been hidden</li>
+            <li>Fixed RAIL room offset</li>
+            <li>Fixed a typo in the Materialsation Circuit recipe which prevented the circuit from being crafted in hard difficulty mode</li>
+            <li>Fixed a number of <code>ArrayIndexOutOfBoundsException</code> in the sign GUIs</li>
+            <li>Fixed some servers not being able to find the TARDIS item recipe map files</li>
+            <li>Fixed an exploit involving Multiverse-inventories with TARDIS mob farming and minecart transfers</li>
+            <li>Stopped room block positions from being updated if the room hadn&rsquo;t been grown yet</li>
+            <li>Fixed the farm room using wool in the floor even if <code>use_clay</code> is true</li>
+            <li>Fix players being able to go the protected or disabled locations under certain circumstances</li>
+            <li>If a TARDIS default world uses TARDISChunkGenerator, then SPONGE is converted to AIR in the console schematics</li>
+            <li>A handbrake control record is inserted even if a custom schematic does not have CAKE block (the placeholder for the handbrake)</li>
+            <li>The plugin now checks for unique save names</li>
+            <li>Fixed the condenser chest throwing an IllegalArgumentException if it was turned into a double chest</li>
+            <li>Fixed the fix <code>/tardistravel area [area]</code> command landing TARDIS is the same spot</li>
+            <li>Fixed a bug where, if the TARDIS was created in same world, it wasn&rsquo;t created underground</li>
+            <li>Bedrock and pistion extensions in room schematics are now ignored when <code>rooms_require_blocks</code> is true</li>
+            <li>Players are rescued even if <code>materialise</code> is false</li>
+            <li>The plugin only loops for the size of the TARDIS area, that way if it is full, it doesn&rsquo;t go into an endless loop and crash the server</li>
+            <li>Fixed an ArrayIndexOutOfBounds error if no EPS messgae is supplied to the <code>/tardisprefs eps_message</code> command</li>
+            <li>The plugin now checks a player has permission for a world before using it in the random world list</li>
+            <li>Fixed a NullPointerException in the Chat listener when a player is muted by another plugin</li>
+        </ul>
+        <h3>v2.5.8</h3>
+        <ul>
+            <li>Fixed a potential server crashing error when trying to travel to a TARDIS area</li>
+            <li>Removed the use of the <em>plugins/TARDIS/chunks.txt</em> file</li>
+        </ul>
+        <h3>v2.5.7</h3>
+        <ul>
+            <li>Updated Factions support to 2.0.5 - <em>Disable Factions support or do not use this version if you are running Factions 1.8.x and lower</em></li>
+            <li>Fixed a NPE when using the ARS GUI and the map was not loaded</li>
+            <li>Fixed a TARDIS deletion bug, where if you had the admin permission <code>tardis.delete</code> it would not find the TARDIS location properly</li>
+            <li>After using the TARDIS Locator, if a regular compass is selected in the hot bar, the player's compass target is reset back to the spawn/bed spawn location instead of always pointing at the TARDIS location</li>
+            <li>Fixed an ArrayIndexOutOfBoundsException when a malfunction occurred and the destination was set to the Nether or The End (and travel there was disabled). <strong>Travel will now be allowed to the destination</strong> - as this was the original specification for the malfunction feature when it was suggested</li>
+            <li>Fixed an error when the condenser chest was made into a double chest</li>
+            <li>Fixed an error with the save sign when a player has more than 53 saves</li>
+            <li>Fixed an error when not specifying a message in the <code>/tardisprefs eps_message</code> command</li>
+        </ul>
         <h3>v2.5.6</h3>
         <ul>
             <li>Fixed a bug where when using the save sign the TARDIS direction could be incorrectly set</li>
