@@ -68,8 +68,6 @@ public class TARDISDeinstaPoliceBox {
         int sbx = l.getBlockX() - 1;
         int sby = l.getBlockY();
         int sbz = l.getBlockZ() - 1;
-        // remove torch
-//        plugin.destroyPB.destroyTorch(l);
         // remove sign
         plugin.destroyPB.destroySign(l, d);
         // remove blue wool and door
@@ -158,13 +156,9 @@ public class TARDISDeinstaPoliceBox {
                 }
             }
         }
+        // if just hiding don't remove block protection
         if (hide == false) {
-            HashMap<String, Object> whereb = new HashMap<String, Object>();
-            whereb.put("tardis_id", id);
-            whereb.put("police_box", 1);
-            qf.doDelete("blocks", whereb);
-            // remove from protectBlockMap - remove(Integer.valueOf(id)) would only remove the first one
-            plugin.protectBlockMap.values().removeAll(Collections.singleton(Integer.valueOf(id)));
+            plugin.destroyPB.removeBlockProtection(id, qf);
         }
         plugin.tardisDematerialising.remove(Integer.valueOf(id));
         plugin.tardisChunkList.remove(l.getChunk());

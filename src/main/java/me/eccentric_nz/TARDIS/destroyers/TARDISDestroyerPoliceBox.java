@@ -16,6 +16,7 @@
  */
 package me.eccentric_nz.TARDIS.destroyers;
 
+import java.util.Collections;
 import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
@@ -47,11 +48,11 @@ public class TARDISDestroyerPoliceBox {
     }
 
     public void destroyPoliceBox(Location l, TARDISConstants.COMPASS d, int id, boolean hide, boolean dematerialise, boolean c, Player player) {
-        if (dematerialise && !hide) {
-            HashMap<String, Object> where = new HashMap<String, Object>();
-            where.put("tardis_id", id);
-            ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
-            if (rs.resultSet()) {
+        HashMap<String, Object> where = new HashMap<String, Object>();
+        where.put("tardis_id", id);
+        ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
+        if (rs.resultSet()) {
+            if (dematerialise && !hide) {
                 TARDISConstants.PRESET demat = rs.getDemat();
                 int cham_id = rs.getChameleon_id();
                 byte cham_data = rs.getChameleon_data();
@@ -80,9 +81,9 @@ public class TARDISDestroyerPoliceBox {
                 TARDISDematerialisationPreset runnable = new TARDISDematerialisationPreset(plugin, l, demat, lamp, id, d, cham_id, cham_data);
                 int taskID = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, runnable, 10L, 20L);
                 runnable.setTask(taskID);
+            } else {
+                new TARDISDeinstaPoliceBox(plugin).instaDestroyPB(l, d, id, hide);
             }
-        } else {
-            new TARDISDeinstaPoliceBox(plugin).instaDestroyPB(l, d, id, hide);
         }
     }
 
@@ -145,5 +146,14 @@ public class TARDISDestroyerPoliceBox {
         HashMap<String, Object> wherep = new HashMap<String, Object>();
         wherep.put("tardis_id", id);
         qf.doUpdate("tardis", setp, wherep);
+    }
+
+    public void removeBlockProtection(int id, QueryFactory qf) {
+        HashMap<String, Object> whereb = new HashMap<String, Object>();
+        whereb.put("tardis_id", id);
+        whereb.put("police_box", 1);
+        qf.doDelete("blocks", whereb);
+        // remove from protectBlockMap - remove(Integer.valueOf(id)) would only remove the first one
+        plugin.protectBlockMap.values().removeAll(Collections.singleton(Integer.valueOf(id)));
     }
 }

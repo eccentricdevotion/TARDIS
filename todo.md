@@ -13,6 +13,7 @@
 6. Documentation & videos!
 
 ## Waiting on Bukkit API
+0. IDs are soon to be history... so convert all ID use to entity names
 1. Get/set horse speed (Attribute API)
 2. Use Resource Pack sounds
 3. Change ice presets to stained glass of a similar colour to chosen preset

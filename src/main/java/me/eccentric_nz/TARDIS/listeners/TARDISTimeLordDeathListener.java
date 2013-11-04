@@ -152,6 +152,7 @@ public class TARDISTimeLordDeathListener implements Listener {
                                 if (!rs.isHidden()) {
                                     plugin.destroyPB.destroyPoliceBox(sl, cd, id, false, plugin.getConfig().getBoolean("materialise"), cham, player);
                                 } else {
+                                    plugin.destroyPB.removeBlockProtection(id, qf);
                                     HashMap<String, Object> set = new HashMap<String, Object>();
                                     set.put("hidden", 0);
                                     HashMap<String, Object> tid = new HashMap<String, Object>();

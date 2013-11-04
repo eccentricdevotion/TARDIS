@@ -216,6 +216,7 @@ public class TARDISHandbrakeListener implements Listener {
                                             } else {
                                                 // set hidden false!
                                                 set.put("hidden", 0);
+                                                plugin.destroyPB.removeBlockProtection(id, new QueryFactory(plugin));
                                             }
                                             long delay = (mat) ? ((plugin.pm.getPlugin("Spout") != null) ? 450L : 200L) : 1L;
                                             final Location e = exit;

@@ -183,7 +183,7 @@ public class TARDISStattenheimListener implements Listener {
                     final Player p = player;
                     if (rsc.getWorld() != null) {
                         final Location oldSave = new Location(rsc.getWorld(), rsc.getX(), rsc.getY(), rsc.getZ());
-                        QueryFactory qf = new QueryFactory(plugin);
+                        final QueryFactory qf = new QueryFactory(plugin);
                         // set current location
                         HashMap<String, Object> cid = new HashMap<String, Object>();
                         cid.put("tardis_id", id);
@@ -222,6 +222,8 @@ public class TARDISStattenheimListener implements Listener {
                                 if (!hidden) {
                                     plugin.tardisDematerialising.add(id);
                                     plugin.destroyPB.destroyPoliceBox(oldSave, d, id, false, mat, cham, p);
+                                } else {
+                                    plugin.destroyPB.removeBlockProtection(id, qf);
                                 }
                             }
                         }, delay);

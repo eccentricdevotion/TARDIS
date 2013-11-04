@@ -146,7 +146,7 @@ public class TARDISComehereCommand {
                     World w = rsc.getWorld();
                     if (w != null) {
                         final Location oldSave = new Location(w, rsc.getX(), rsc.getY(), rsc.getZ());
-                        QueryFactory qf = new QueryFactory(plugin);
+                        final QueryFactory qf = new QueryFactory(plugin);
                         HashMap<String, Object> tid = new HashMap<String, Object>();
                         tid.put("tardis_id", id);
                         HashMap<String, Object> set = new HashMap<String, Object>();
@@ -183,6 +183,8 @@ public class TARDISComehereCommand {
                                 if (!hidden) {
                                     plugin.tardisDematerialising.add(id);
                                     plugin.destroyPB.destroyPoliceBox(oldSave, d, id, false, mat, cham, p);
+                                } else {
+                                    plugin.destroyPB.removeBlockProtection(id, qf);
                                 }
                             }
                         }, delay);
