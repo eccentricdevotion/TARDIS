@@ -17,7 +17,6 @@
 package me.eccentric_nz.TARDIS.destroyers;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
@@ -106,7 +105,8 @@ public class TARDISDeinstaPoliceBox {
                     plugin.console.sendMessage(plugin.pluginName + "Could not convert to number!");
                 }
                 b = rw.getBlockAt(rx, ry, rz);
-                b.setTypeIdAndData(rID, rb, true);
+                b.setTypeId(rID);
+                b.setData(rb, true);
                 HashMap<String, Object> wherepp = new HashMap<String, Object>();
                 wherepp.put("player", owner);
                 ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, wherepp);

@@ -86,7 +86,11 @@ public class TARDISUtils {
             m = (plugin.bukkitversion.compareTo(plugin.prewoodbuttonversion) < 0) ? 77 : 143;
             d = (byte) 3;
         }
-        b.setTypeIdAndData(m, d, true);
+        if (m == 158 || m == -98) {
+            plugin.debug("id/data: " + m + "/" + d);
+        }
+        b.setTypeId(m);
+        b.setData(d, true);
     }
 
     /**
@@ -120,7 +124,8 @@ public class TARDISUtils {
         qf.doInsert("blocks", set);
         plugin.protectBlockMap.put(l, id);
         // set the block
-        b.setTypeIdAndData(m, d, true);
+        b.setTypeId(m);
+        b.setData(d, true);
     }
 
     /**
@@ -144,7 +149,8 @@ public class TARDISUtils {
         Integer bId = Integer.valueOf(b.getTypeId());
         byte bData = b.getData();
         if (ids.contains(bId) || sub) {
-            b.setTypeIdAndData(m, d, true);
+            b.setTypeId(m);
+            b.setData(d, true);
             // remember replaced block location, TypeId and Data so we can restore it later
             String replaced = w.getName() + ":" + x + ":" + y + ":" + z + ":" + bId + ":" + bData;
             QueryFactory qf = new QueryFactory(plugin);

@@ -132,14 +132,16 @@ public class TARDISRoomRunnable implements Runnable {
                 caneblocks.clear();
                 // attach the cocoa
                 for (Map.Entry<Block, Byte> entry : cocoablocks.entrySet()) {
-                    entry.getKey().setTypeIdAndData(127, entry.getValue(), true);
+                    entry.getKey().setTypeId(127);
+                    entry.getKey().setData(entry.getValue(), true);
                 }
                 cocoablocks.clear();
             }
             if (room.equals("VILLAGE")) {
                 // put doors on
                 for (Map.Entry<Block, Byte> entry : doorblocks.entrySet()) {
-                    entry.getKey().setTypeIdAndData(64, entry.getValue(), true);
+                    entry.getKey().setTypeId(64);
+                    entry.getKey().setData(entry.getValue(), true);
                 }
                 doorblocks.clear();
             }
@@ -151,12 +153,14 @@ public class TARDISRoomRunnable implements Runnable {
             lampblocks.clear();
             // put torches on
             for (Map.Entry<Block, Byte> entry : torchblocks.entrySet()) {
-                entry.getKey().setTypeIdAndData(50, entry.getValue(), true);
+                entry.getKey().setTypeId(50);
+                entry.getKey().setData(entry.getValue(), true);
             }
             torchblocks.clear();
             // put redstone torches on
             for (Map.Entry<Block, Byte> entry : redstoneTorchblocks.entrySet()) {
-                entry.getKey().setTypeIdAndData(76, entry.getValue(), true);
+                entry.getKey().setTypeId(76);
+                entry.getKey().setData(entry.getValue(), true);
             }
             torchblocks.clear();
             // remove the chunks, so they can unload as normal again
@@ -179,6 +183,31 @@ public class TARDISRoomRunnable implements Runnable {
 //                data = TARDISDataRecalculator.calculateData(id, Byte.parseByte(iddata[1]));
 //            } else {
             data = Byte.parseByte(iddata[1]);
+            if (id == 158 || id == -98) {
+                byte bit = data;
+                switch (bit) {
+                    case 8:
+                        data = 0;
+                        break;
+                    case 9:
+                        data = 1;
+                        break;
+                    case 10:
+                        data = 2;
+                        break;
+                    case 11:
+                        data = 3;
+                        break;
+                    case 12:
+                        data = 4;
+                        break;
+                    case 13:
+                        data = 5;
+                        break;
+                    default:
+                        break;
+                }
+            }
 //            }
             if (id == 35 && data == 7 && plugin.getConfig().getBoolean("use_clay")) {
                 id = 159;

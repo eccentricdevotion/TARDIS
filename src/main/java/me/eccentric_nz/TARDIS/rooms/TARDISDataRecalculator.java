@@ -147,15 +147,12 @@ public class TARDISDataRecalculator {
                         break;
                 }
                 break;
-            case 23: // dispenser
             case 54: // chest
             case 61: // furnace
             case 65: // ladder
             case 68: // wall sign
             case 130: // ender chest
             case 146: // trapped chest
-            case 158: // dropper
-            case -98: // dropper
             case -110: // trapped chest
             case -126: // ender chest
                 switch (bit) {
@@ -338,9 +335,53 @@ public class TARDISDataRecalculator {
                         break;
                 }
                 break;
-            // hoppers
-            case 154:
-            case -102:
+            case 23: // dispenser
+            case 158: // dropper
+            case -98: // dropper
+                switch (bit) {
+                    case 2:
+                        data = 3;
+                        break;
+                    case 3:
+                        data = 2;
+                        break;
+                    case 4:
+                        data = 5;
+                        break;
+                    case 5:
+                        data = 4;
+                        break;
+                    case 6:
+                        data = 7;
+                        break;
+                    case 7:
+                        data = 6;
+                        break;
+                    case 8:
+                        data = 0;
+                        break;
+                    case 9:
+                        data = 1;
+                        break;
+                    case 10:
+                        data = 3;
+                        break;
+                    case 11:
+                        data = 2;
+                        break;
+                    case 12:
+                        data = 5;
+                        break;
+                    case 13:
+                        data = 4;
+                        break;
+                    default:
+                        data = bit;
+                        break;
+                }
+                break;
+            case 154: // hopper
+            case -102: // hopper
                 switch (bit) {
                     case 2:
                         data = 3;

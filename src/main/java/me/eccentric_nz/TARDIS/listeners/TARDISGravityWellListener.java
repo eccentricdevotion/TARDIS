@@ -226,7 +226,8 @@ public class TARDISGravityWellListener implements Listener {
                                     break;
                             }
                             // set the block to light grey wool
-                            b.setTypeIdAndData(35, (byte) 8, true);
+                            b.setTypeId(35);
+                            b.setData((byte) 8, true);
                             player.sendMessage(plugin.pluginName + "The gravity block was removed successfully");
                         }
                     } else {

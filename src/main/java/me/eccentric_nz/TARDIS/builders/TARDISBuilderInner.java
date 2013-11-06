@@ -472,17 +472,20 @@ public class TARDISBuilderInner {
         for (Map.Entry<Block, Byte> entry : postDoorBlocks.entrySet()) {
             Block pdb = entry.getKey();
             byte pddata = entry.getValue();
-            pdb.setTypeIdAndData(71, pddata, true);
+            pdb.setTypeId(71);
+            pdb.setData(pddata, true);
         }
         for (Map.Entry<Block, Byte> entry : postTorchBlocks.entrySet()) {
             Block ptb = entry.getKey();
             byte ptdata = entry.getValue();
-            ptb.setTypeIdAndData(76, ptdata, true);
+            ptb.setTypeId(76);
+            ptb.setData(ptdata, true);
         }
         for (Map.Entry<Block, Byte> entry : postSignBlocks.entrySet()) {
             final Block psb = entry.getKey();
             byte psdata = entry.getValue();
-            psb.setTypeIdAndData(68, psdata, true);
+            psb.setTypeId(68);
+            psb.setData(psdata, true);
             if (psb.getType().equals(Material.WALL_SIGN)) {
                 Sign cs = (Sign) psb.getState();
                 cs.setLine(0, "Chameleon");
@@ -496,7 +499,8 @@ public class TARDISBuilderInner {
         ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
         if (rs.resultSet()) {
             if (postSaveSignBlock != null) {
-                postSaveSignBlock.setTypeIdAndData(68, (byte) 3, true);
+                postSaveSignBlock.setTypeId(68);
+                postSaveSignBlock.setData((byte) 3, true);
                 if (postSaveSignBlock.getType().equals(Material.WALL_SIGN)) {
                     Sign ss = (Sign) postSaveSignBlock.getState();
                     ss.setLine(0, "TARDIS");
@@ -507,7 +511,8 @@ public class TARDISBuilderInner {
                 }
             }
             if (postTerminalBlock != null) {
-                postTerminalBlock.setTypeIdAndData(68, (byte) 3, true);
+                postTerminalBlock.setTypeId(68);
+                postTerminalBlock.setData((byte) 3, true);
                 if (postTerminalBlock.getType().equals(Material.WALL_SIGN)) {
                     Sign ts = (Sign) postTerminalBlock.getState();
                     ts.setLine(0, "");
@@ -518,7 +523,8 @@ public class TARDISBuilderInner {
                 }
             }
             if (postARSBlock != null) {
-                postARSBlock.setTypeIdAndData(68, (byte) 3, true);
+                postARSBlock.setTypeId(68);
+                postARSBlock.setData((byte) 3, true);
                 if (postARSBlock.getType().equals(Material.WALL_SIGN)) {
                     Sign as = (Sign) postARSBlock.getState();
                     as.setLine(0, "TARDIS");
@@ -529,7 +535,8 @@ public class TARDISBuilderInner {
                 }
             }
             if (postTISBlock != null) {
-                postTISBlock.setTypeIdAndData(68, (byte) 3, true);
+                postTISBlock.setTypeId(68);
+                postTISBlock.setData((byte) 3, true);
                 if (postTISBlock.getType().equals(Material.WALL_SIGN)) {
                     Sign is = (Sign) postTISBlock.getState();
                     is.setLine(0, "-----");
@@ -540,7 +547,8 @@ public class TARDISBuilderInner {
                 }
             }
             if (postTemporalBlock != null) {
-                postTemporalBlock.setTypeIdAndData(68, (byte) 3, true);
+                postTemporalBlock.setTypeId(68);
+                postTemporalBlock.setData((byte) 3, true);
                 if (postTemporalBlock.getType().equals(Material.WALL_SIGN)) {
                     Sign ms = (Sign) postTemporalBlock.getState();
                     ms.setLine(0, "");
@@ -551,7 +559,8 @@ public class TARDISBuilderInner {
                 }
             }
             if (postKeyboardBlock != null) {
-                postKeyboardBlock.setTypeIdAndData(68, (byte) 3, true);
+                postKeyboardBlock.setTypeId(68);
+                postKeyboardBlock.setData((byte) 3, true);
                 if (postKeyboardBlock.getType().equals(Material.WALL_SIGN)) {
                     Sign ks = (Sign) postKeyboardBlock.getState();
                     ks.setLine(0, "Keyboard");
