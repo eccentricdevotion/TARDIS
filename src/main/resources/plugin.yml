@@ -142,6 +142,7 @@ permissions:
       tardis.room.pool: true
       tardis.room.rail: true
       tardis.room.stable: true
+      tardis.room.trenzalore: true
       tardis.room.vault: true
       tardis.room.village: true
       tardis.room.wood: true
