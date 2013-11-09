@@ -384,7 +384,7 @@ public class TARDIS extends JavaPlugin {
         tardisCSV.copy(getDataFolder() + File.separator + "artron.yml", getResource("artron.yml"));
         tardisCSV.copy(getDataFolder() + File.separator + "blocks.yml", getResource("blocks.yml"));
         tardisCSV.copy(getDataFolder() + File.separator + "rooms.yml", getResource("rooms.yml"));
-        this.achivement_config = YamlConfiguration.loadConfiguration(new File(plugin.getDataFolder(), "achievements.yml"));
+        this.achivement_config = YamlConfiguration.loadConfiguration(new File(getDataFolder(), "achievements.yml"));
         if (this.achivement_config.getString("travel.message").equals("Life of the party!")) {
             this.achivement_config.set("travel.message", "There and back again!");
             try {
@@ -393,9 +393,9 @@ public class TARDIS extends JavaPlugin {
                 debug("Could not save achievements.yml " + io);
             }
         }
-        this.artron_config = YamlConfiguration.loadConfiguration(new File(plugin.getDataFolder(), "artron.yml"));
-        this.blocks_config = YamlConfiguration.loadConfiguration(new File(plugin.getDataFolder(), "blocks.yml"));
-        this.rooms_config = YamlConfiguration.loadConfiguration(new File(plugin.getDataFolder(), "rooms.yml"));
+        this.artron_config = YamlConfiguration.loadConfiguration(new File(getDataFolder(), "artron.yml"));
+        this.blocks_config = YamlConfiguration.loadConfiguration(new File(getDataFolder(), "blocks.yml"));
+        this.rooms_config = YamlConfiguration.loadConfiguration(new File(getDataFolder(), "rooms.yml"));
     }
 
     /**
@@ -526,7 +526,7 @@ public class TARDIS extends JavaPlugin {
      */
     private void loadBooks() {
         // copy book files
-        File bookDir = new File(plugin.getDataFolder() + File.separator + "books");
+        File bookDir = new File(getDataFolder() + File.separator + "books");
         if (!bookDir.exists()) {
             boolean result = bookDir.mkdir();
             if (result) {
@@ -560,7 +560,7 @@ public class TARDIS extends JavaPlugin {
      * the server.
      */
     private void startSound() {
-        if (plugin.pm.getPlugin("Spout") != null && getConfig().getBoolean("sfx")) {
+        if (pm.getPlugin("Spout") != null && getConfig().getBoolean("sfx")) {
             this.getServer().getScheduler().scheduleSyncRepeatingTask(this, new Runnable() {
                 @Override
                 public void run() {
@@ -682,7 +682,7 @@ public class TARDIS extends JavaPlugin {
                 map.put(m, s);
             }
         }
-        plugin.saveConfig();
+        saveConfig();
         return map;
     }
 

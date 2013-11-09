@@ -267,10 +267,9 @@ public class TARDISDoorListener implements Listener {
                                         userQuotes = true;
                                         userTP = false;
                                     }
-                                    List<TARDISMob> pets = null;
                                     // get players direction
                                     TARDISConstants.COMPASS pd = TARDISConstants.COMPASS.valueOf(plugin.utils.getPlayersDirection(player, false));                                    // get the other door direction
-                                    TARDISConstants.COMPASS d;
+                                    final TARDISConstants.COMPASS d;
                                     HashMap<String, Object> other = new HashMap<String, Object>();
                                     other.put("tardis_id", id);
                                     other.put("door_type", end_doortype);
@@ -324,9 +323,14 @@ public class TARDISDoorListener implements Listener {
                                                 movePlayer(player, exitTardis, true, playerWorld, userQuotes);
                                                 if (plugin.getConfig().getBoolean("allow_mob_farming") && player.hasPermission("tardis.farm")) {
                                                     TARDISFarmer tf = new TARDISFarmer(plugin);
-                                                    pets = tf.exitPets(player);
+                                                    final List<TARDISMob> pets = tf.exitPets(player);
                                                     if (pets != null && pets.size() > 0) {
-                                                        movePets(pets, exitTardis, player, d);
+                                                        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
+                                                            @Override
+                                                            public void run() {
+                                                                movePets(pets, exitTardis, player, d, false);
+                                                            }
+                                                        }, 10L);
                                                     }
                                                 }
                                                 if (plugin.getConfig().getBoolean("allow_tp_switch") && userTP) {
@@ -364,6 +368,7 @@ public class TARDISDoorListener implements Listener {
                                                 World cw = idl.getW();
                                                 TARDISConstants.COMPASS innerD = idl.getD();
                                                 // check for entities near the police box
+                                                List<TARDISMob> pets = null;
                                                 if (plugin.getConfig().getBoolean("allow_mob_farming") && player.hasPermission("tardis.farm") && !plugin.trackFarming.contains(playerNameStr)) {
                                                     plugin.trackFarming.add(playerNameStr);
                                                     TARDISFarmer tf = new TARDISFarmer(plugin);
@@ -381,7 +386,7 @@ public class TARDISDoorListener implements Listener {
                                                 final Location tardis_loc = tmp_loc;
                                                 movePlayer(player, tardis_loc, false, playerWorld, userQuotes);
                                                 if (pets != null && pets.size() > 0) {
-                                                    movePets(pets, tardis_loc, player, d);
+                                                    movePets(pets, tardis_loc, player, d, true);
                                                 }
                                                 if (plugin.getConfig().getBoolean("allow_tp_switch") && userTP) {
                                                     if (!rsp.getTexture_in().isEmpty()) {
@@ -599,32 +604,41 @@ public class TARDISDoorListener implements Listener {
      * @param l the location to teleport pets to
      * @param player the player who owns the pets
      */
-    private void movePets(List<TARDISMob> p, Location l, Player player, TARDISConstants.COMPASS d) {
+    private void movePets(List<TARDISMob> p, Location l, Player player, TARDISConstants.COMPASS d, boolean enter) {
         Location pl = l.clone();
         World w = l.getWorld();
         // will need to adjust this depending on direction Police Box is facing
-        switch (d) {
-            case NORTH:
-                pl.setX(l.getX() + 1);
-                pl.setZ(l.getZ() + 1);
-                break;
-            case WEST:
-                pl.setX(l.getX() + 1);
-                pl.setZ(l.getZ() - 1);
-                break;
-            case SOUTH:
-                pl.setX(l.getX() - 1);
-                pl.setZ(l.getZ() - 1);
-                break;
-            default:
-                pl.setX(l.getX() - 1);
-                pl.setZ(l.getZ() + 1);
-                break;
+        if (enter) {
+            pl.setZ(l.getZ() + 1);
+        } else {
+            switch (d) {
+                case NORTH:
+                    pl.setX(l.getX() + 1);
+                    pl.setZ(l.getZ() + 1);
+                    break;
+                case WEST:
+                    pl.setX(l.getX() + 1);
+                    pl.setZ(l.getZ() - 1);
+                    break;
+                case SOUTH:
+                    pl.setX(l.getX() - 1);
+                    pl.setZ(l.getZ() - 1);
+                    break;
+                default:
+                    pl.setX(l.getX() - 1);
+                    pl.setZ(l.getZ() + 1);
+                    break;
+            }
         }
         for (TARDISMob pet : p) {
             plugin.myspawn = true;
-            LivingEntity ent = (LivingEntity) w.spawnEntity(pl, pet.getType());
-            ent.setTicksLived(pet.getAge());
+            LivingEntity ent;
+            ent = (LivingEntity) w.spawnEntity(pl, pet.getType());
+            if (ent.isDead()) {
+                ent.remove();
+                plugin.debug("Entity is dead! Spawning again...");
+                ent = (LivingEntity) w.spawnEntity(pl, pet.getType());
+            }
             String pet_name = pet.getName();
             if (pet_name != null && !pet_name.isEmpty()) {
                 ent.setCustomName(pet.getName());
@@ -637,6 +651,7 @@ public class TARDISDoorListener implements Listener {
                 Wolf wolf = (Wolf) ent;
                 wolf.setCollarColor(pet.getColour());
                 wolf.setSitting(pet.getSitting());
+                wolf.setAge(pet.getAge());
                 if (pet.isBaby()) {
                     wolf.setBaby();
                 }
@@ -644,6 +659,7 @@ public class TARDISDoorListener implements Listener {
                 Ocelot cat = (Ocelot) ent;
                 cat.setCatType(pet.getCatType());
                 cat.setSitting(pet.getSitting());
+                cat.setAge(pet.getAge());
                 if (pet.isBaby()) {
                     cat.setBaby();
                 }

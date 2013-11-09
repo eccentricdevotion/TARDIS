@@ -147,7 +147,7 @@ public class TARDISFarmer {
                     switch (e.getType()) {
                         case CHICKEN:
                             TARDISMob tmchk = new TARDISMob();
-                            tmchk.setAge(e.getTicksLived());
+                            tmchk.setAge(((Chicken) e).getAge());
                             tmchk.setBaby(!((Chicken) e).isAdult());
                             old_macd_had_a_chicken.add(tmchk);
                             if (!farm.isEmpty() || (farm.isEmpty() && plugin.getConfig().getBoolean("spawn_eggs"))) {
@@ -160,7 +160,7 @@ public class TARDISFarmer {
                             break;
                         case COW:
                             TARDISMob tmcow = new TARDISMob();
-                            tmcow.setAge(e.getTicksLived());
+                            tmcow.setAge(((Cow) e).getAge());
                             tmcow.setBaby(!((Cow) e).isAdult());
                             old_macd_had_a_cow.add(tmcow);
                             if (!farm.isEmpty() || (farm.isEmpty() && plugin.getConfig().getBoolean("spawn_eggs"))) {
@@ -183,7 +183,7 @@ public class TARDISFarmer {
                                 }
                             }
                             TARDISHorse tmhor = new TARDISHorse();
-                            tmhor.setAge(e.getTicksLived());
+                            tmhor.setAge(horse.getAge());
                             tmhor.setBaby(!horse.isAdult());
                             tmhor.setHealth(horse.getHealth());
                             // get horse colour, style and variant
@@ -225,7 +225,7 @@ public class TARDISFarmer {
                             break;
                         case PIG:
                             TARDISMob tmpig = new TARDISMob();
-                            tmpig.setAge(e.getTicksLived());
+                            tmpig.setAge(((Pig) e).getAge());
                             tmpig.setBaby(!((Pig) e).isAdult());
                             // eject any passengers
                             ((Pig) e).eject();
@@ -240,7 +240,7 @@ public class TARDISFarmer {
                             break;
                         case SHEEP:
                             TARDISMob tmshp = new TARDISMob();
-                            tmshp.setAge(e.getTicksLived());
+                            tmshp.setAge(((Sheep) e).getAge());
                             tmshp.setBaby(!((Sheep) e).isAdult());
                             tmshp.setColour(((Sheep) e).getColor());
                             old_macd_had_a_sheep.add(tmshp);
@@ -254,7 +254,7 @@ public class TARDISFarmer {
                             break;
                         case MUSHROOM_COW:
                             TARDISMob tmshr = new TARDISMob();
-                            tmshr.setAge(e.getTicksLived());
+                            tmshr.setAge(((MushroomCow) e).getAge());
                             tmshr.setBaby(!((MushroomCow) e).isAdult());
                             old_macd_had_a_mooshroom.add(tmshr);
                             if (!farm.isEmpty() || (farm.isEmpty() && plugin.getConfig().getBoolean("spawn_eggs"))) {
@@ -284,19 +284,20 @@ public class TARDISFarmer {
                             if (tamed.isTamed() && tamed.getOwner().getName().equals(p.getName())) {
                                 TARDISMob pet = new TARDISMob();
                                 pet.setType(e.getType());
-                                pet.setAge(e.getTicksLived());
                                 String pet_name = ((LivingEntity) e).getCustomName();
                                 if (pet_name != null) {
                                     pet.setName(pet_name);
                                 }
                                 double health;
                                 if (e.getType().equals(EntityType.WOLF)) {
+                                    pet.setAge(((Wolf) e).getAge());
                                     pet.setSitting(((Wolf) e).isSitting());
                                     pet.setColour(((Wolf) e).getCollarColor());
                                     health = (((Wolf) e).getHealth() > 8D) ? 8D : ((Wolf) e).getHealth();
                                     pet.setHealth(health);
                                     pet.setBaby(!((Wolf) e).isAdult());
                                 } else {
+                                    pet.setAge(((Ocelot) e).getAge());
                                     pet.setSitting(((Ocelot) e).isSitting());
                                     pet.setCatType(((Ocelot) e).getCatType());
                                     health = (((Ocelot) e).getHealth() > 8D) ? 8D : ((Ocelot) e).getHealth();
@@ -555,19 +556,20 @@ public class TARDISFarmer {
                     if (tamed.isTamed() && tamed.getOwner().getName().equals(p.getName())) {
                         TARDISMob pet = new TARDISMob();
                         pet.setType(e.getType());
-                        pet.setAge(e.getTicksLived());
                         String pet_name = ((LivingEntity) e).getCustomName();
                         if (pet_name != null) {
                             pet.setName(pet_name);
                         }
                         double health;
                         if (e.getType().equals(EntityType.WOLF)) {
+                            pet.setAge(((Wolf) e).getAge());
                             pet.setSitting(((Wolf) e).isSitting());
                             pet.setColour(((Wolf) e).getCollarColor());
                             health = (((Wolf) e).getHealth() > 8D) ? 8D : ((Wolf) e).getHealth();
                             pet.setHealth(health);
                             pet.setBaby(!((Wolf) e).isAdult());
                         } else {
+                            pet.setAge(((Ocelot) e).getAge());
                             pet.setSitting(((Ocelot) e).isSitting());
                             pet.setCatType(((Ocelot) e).getCatType());
                             health = (((Ocelot) e).getHealth() > 8D) ? 8D : ((Ocelot) e).getHealth();
