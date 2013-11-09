@@ -1,4 +1,4 @@
-package org.json;
+package me.eccentric_nz.TARDIS.JSON;
 
 /*
  Copyright (c) 2002 JSON.org
@@ -42,64 +42,47 @@ import java.util.Set;
  * A JSONObject is an unordered collection of name/value pairs. Its external
  * form is a string wrapped in curly braces with colons between the names and
  * values, and commas between the values and names. The internal form is an
- * object having
- * <code>get</code> and
- * <code>opt</code> methods for accessing the values by name, and
- * <code>put</code> methods for adding or replacing values by name. The values
- * can be any of these types:
- * <code>Boolean</code>,
- * <code>JSONArray</code>,
- * <code>JSONObject</code>,
- * <code>Number</code>,
- * <code>String</code>, or the
- * <code>JSONObject.NULL</code> object. A JSONObject constructor can be used to
- * convert an external form JSON text into an internal form whose values can be
- * retrieved with the
- * <code>get</code> and
+ * object having <code>get</code> and <code>opt</code> methods for accessing the
+ * values by name, and <code>put</code> methods for adding or replacing values
+ * by name. The values can be any of these types: <code>Boolean</code>,
+ * <code>JSONArray</code>, <code>JSONObject</code>, <code>Number</code>,
+ * <code>String</code>, or the <code>JSONObject.NULL</code> object. A JSONObject
+ * constructor can be used to convert an external form JSON text into an
+ * internal form whose values can be retrieved with the <code>get</code> and
  * <code>opt</code> methods, or to convert values into a JSON text using the
- * <code>put</code> and
- * <code>toString</code> methods. A
- * <code>get</code> method returns a value if one can be found, and throws an
- * exception if one cannot be found. An
- * <code>opt</code> method returns a default value instead of throwing an
- * exception, and so is useful for obtaining optional values.
+ * <code>put</code> and <code>toString</code> methods. A <code>get</code> method
+ * returns a value if one can be found, and throws an exception if one cannot be
+ * found. An <code>opt</code> method returns a default value instead of throwing
+ * an exception, and so is useful for obtaining optional values.
  * <p>
- * The generic
- * <code>get()</code> and
- * <code>opt()</code> methods return an object, which you can cast or query for
- * type. There are also typed
- * <code>get</code> and
- * <code>opt</code> methods that do type checking and type coercion for you. The
- * opt methods differ from the get methods in that they do not throw. Instead,
- * they return a specified value, such as null.
+ * The generic <code>get()</code> and <code>opt()</code> methods return an
+ * object, which you can cast or query for type. There are also typed
+ * <code>get</code> and <code>opt</code> methods that do type checking and type
+ * coercion for you. The opt methods differ from the get methods in that they do
+ * not throw. Instead, they return a specified value, such as null.
  * <p>
- * The
- * <code>put</code> methods add or replace values in an object. For example,
+ * The <code>put</code> methods add or replace values in an object. For example,
  *
  * <pre>
  * myString = new JSONObject()
  *         .put(&quot;JSON&quot;, &quot;Hello, World!&quot;).toString();
  * </pre>
  *
- * produces the string
- * <code>{"JSON": "Hello, World"}</code>.
+ * produces the string <code>{"JSON": "Hello, World"}</code>.
  * <p>
- * The texts produced by the
- * <code>toString</code> methods strictly conform to the JSON syntax rules. The
- * constructors are more forgiving in the texts they will accept:
+ * The texts produced by the <code>toString</code> methods strictly conform to
+ * the JSON syntax rules. The constructors are more forgiving in the texts they
+ * will accept:
  * <ul>
- * <li>An extra
- * <code>,</code>&nbsp;<small>(comma)</small> may appear just before the closing
- * brace.</li>
- * <li>Strings may be quoted with
- * <code>'</code>&nbsp;<small>(single quote)</small>.</li>
+ * <li>An extra <code>,</code>&nbsp;<small>(comma)</small> may appear just
+ * before the closing brace.</li>
+ * <li>Strings may be quoted with <code>'</code>&nbsp;<small>(single
+ * quote)</small>.</li>
  * <li>Strings do not need to be quoted at all if they do not begin with a quote
  * or single quote, and if they do not contain leading or trailing spaces, and
  * if they do not contain any of these characters:
  * <code>{ } [ ] / \ : , #</code> and if they do not look like numbers and if
- * they are not the reserved words
- * <code>true</code>,
- * <code>false</code>, or
+ * they are not the reserved words <code>true</code>, <code>false</code>, or
  * <code>null</code>.</li>
  * </ul>
  *
@@ -163,12 +146,9 @@ public class JSONObject {
     private final Map map;
     /**
      * It is sometimes more convenient and less ambiguous to have a
-     * <code>NULL</code> object than to use Java's
-     * <code>null</code> value.
-     * <code>JSONObject.NULL.equals(null)</code> returns
-     * <code>true</code>.
-     * <code>JSONObject.NULL.toString()</code> returns
-     * <code>"null"</code>.
+     * <code>NULL</code> object than to use Java's <code>null</code> value.
+     * <code>JSONObject.NULL.equals(null)</code> returns <code>true</code>.
+     * <code>JSONObject.NULL.toString()</code> returns <code>"null"</code>.
      */
     public static final Object NULL = new Null();
 
@@ -228,7 +208,6 @@ public class JSONObject {
             }
 
 // The key is followed by ':'.
-
             c = x.nextClean();
             if (c != ':') {
                 throw x.syntaxError("Expected a ':' after a key");
@@ -236,7 +215,6 @@ public class JSONObject {
             this.putOnce(key, x.nextValue());
 
 // Pairs are separated by ','.
-
             switch (x.nextClean()) {
                 case ';':
                 case ',':
@@ -277,20 +255,17 @@ public class JSONObject {
     /**
      * Construct a JSONObject from an Object using bean getters. It reflects on
      * all of the public methods of the object. For each of the methods with no
-     * parameters and a name starting with
-     * <code>"get"</code> or
+     * parameters and a name starting with <code>"get"</code> or
      * <code>"is"</code> followed by an uppercase letter, the method is invoked,
      * and a key and the value returned from the getter method are put into the
      * new JSONObject.
      *
-     * The key is formed by removing the
-     * <code>"get"</code> or
-     * <code>"is"</code> prefix. If the second remaining character is not upper
-     * case, then the first character is converted to lower case.
+     * The key is formed by removing the <code>"get"</code> or <code>"is"</code>
+     * prefix. If the second remaining character is not upper case, then the
+     * first character is converted to lower case.
      *
-     * For example, if an object has a method named
-     * <code>"getName"</code>, and if the result of calling
-     * <code>object.getName()</code> is
+     * For example, if an object has a method named <code>"getName"</code>, and
+     * if the result of calling <code>object.getName()</code> is
      * <code>"Larry Fine"</code>, then the JSONObject will contain
      * <code>"name": "Larry Fine"</code>.
      *
@@ -353,7 +328,6 @@ public class JSONObject {
                 Thread.currentThread().getContextClassLoader());
 
 // Iterate through the keys in the bundle.
-
         Enumeration keys = bundle.getKeys();
         while (keys.hasMoreElements()) {
             Object key = keys.nextElement();
@@ -362,7 +336,6 @@ public class JSONObject {
 // Go through the path, ensuring that there is a nested JSONObject for each
 // segment except the last. Add the value using the last segment's name into
 // the deepest nested JSONObject.
-
                 String[] path = ((String) key).split("\\.");
                 int last = path.length - 1;
                 JSONObject target = this;
@@ -451,7 +424,6 @@ public class JSONObject {
         }
 
 // Shave off trailing zeros and decimal point, if possible.
-
         String string = Double.toString(d);
         if (string.indexOf('.') > 0 && string.indexOf('e') < 0
                 && string.indexOf('E') < 0) {
@@ -519,7 +491,7 @@ public class JSONObject {
         try {
             return object instanceof Number ? ((Number) object).doubleValue()
                     : Double.parseDouble((String) object);
-        } catch (Exception e) {
+        } catch (NumberFormatException e) {
             throw new JSONException("JSONObject[" + quote(key)
                     + "] is not a number.");
         }
@@ -538,7 +510,7 @@ public class JSONObject {
         try {
             return object instanceof Number ? ((Number) object).intValue()
                     : Integer.parseInt((String) object);
-        } catch (Exception e) {
+        } catch (NumberFormatException e) {
             throw new JSONException("JSONObject[" + quote(key)
                     + "] is not an int.");
         }
@@ -591,7 +563,7 @@ public class JSONObject {
         try {
             return object instanceof Number ? ((Number) object).longValue()
                     : Long.parseLong((String) object);
-        } catch (Exception e) {
+        } catch (NumberFormatException e) {
             throw new JSONException("JSONObject[" + quote(key)
                     + "] is not a long.");
         }
@@ -600,6 +572,7 @@ public class JSONObject {
     /**
      * Get an array of field names from a JSONObject.
      *
+     * @param jo
      * @return An array of field names, or null if there are no names.
      */
     public static String[] getNames(JSONObject jo) {
@@ -620,6 +593,7 @@ public class JSONObject {
     /**
      * Get an array of field names from an Object.
      *
+     * @param object
      * @return An array of field names, or null if there are no names.
      */
     public static String[] getNames(Object object) {
@@ -761,7 +735,6 @@ public class JSONObject {
         testValidity(number);
 
 // Shave off trailing zeros and decimal point, if possible.
-
         String string = number.toString();
         if (string.indexOf('.') > 0 && string.indexOf('e') < 0
                 && string.indexOf('E') < 0) {
@@ -808,7 +781,7 @@ public class JSONObject {
     public boolean optBoolean(String key, boolean defaultValue) {
         try {
             return this.getBoolean(key);
-        } catch (Exception e) {
+        } catch (JSONException e) {
             return defaultValue;
         }
     }
@@ -837,7 +810,7 @@ public class JSONObject {
     public double optDouble(String key, double defaultValue) {
         try {
             return this.getDouble(key);
-        } catch (Exception e) {
+        } catch (JSONException e) {
             return defaultValue;
         }
     }
@@ -866,7 +839,7 @@ public class JSONObject {
     public int optInt(String key, int defaultValue) {
         try {
             return this.getInt(key);
-        } catch (Exception e) {
+        } catch (JSONException e) {
             return defaultValue;
         }
     }
@@ -919,7 +892,7 @@ public class JSONObject {
     public long optLong(String key, long defaultValue) {
         try {
             return this.getLong(key);
-        } catch (Exception e) {
+        } catch (JSONException e) {
             return defaultValue;
         }
     }
@@ -953,7 +926,6 @@ public class JSONObject {
         Class klass = bean.getClass();
 
 // If klass is a System class then set includeSuperClass to false.
-
         boolean includeSuperClass = klass.getClassLoader() != null;
 
         Method[] methods = includeSuperClass ? klass.getMethods() : klass
@@ -1265,7 +1237,6 @@ public class JSONObject {
          * If it might be a number, try converting it. If a number cannot be
          * produced, then the value will just be a string.
          */
-
         char b = string.charAt(0);
         if ((b >= '0' && b <= '9') || b == '-') {
             try {
@@ -1285,7 +1256,7 @@ public class JSONObject {
                         }
                     }
                 }
-            } catch (Exception ignore) {
+            } catch (NumberFormatException ignore) {
             }
         }
         return string;
@@ -1348,7 +1319,7 @@ public class JSONObject {
     public String toString() {
         try {
             return this.toString(0);
-        } catch (Exception e) {
+        } catch (JSONException e) {
             return null;
         }
     }
@@ -1473,7 +1444,7 @@ public class JSONObject {
                 return object.toString();
             }
             return new JSONObject(object);
-        } catch (Exception exception) {
+        } catch (JSONException exception) {
             return null;
         }
     }

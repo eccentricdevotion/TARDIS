@@ -35,7 +35,7 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
-import org.json.JSONArray;
+import me.eccentric_nz.TARDIS.JSON.JSONArray;
 
 /**
  * The architectural reconfiguration system is a component of the Doctor's

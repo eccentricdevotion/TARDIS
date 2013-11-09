@@ -1,4 +1,4 @@
-package org.json;
+package me.eccentric_nz.TARDIS.JSON;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -67,6 +67,8 @@ public class JSONTokener {
 
     /**
      * Construct a JSONTokener from an InputStream.
+     *
+     * @param inputStream
      */
     public JSONTokener(InputStream inputStream) throws JSONException {
         this(new InputStreamReader(inputStream));

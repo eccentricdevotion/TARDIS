@@ -1,4 +1,4 @@
-package org.json;
+package me.eccentric_nz.TARDIS.JSON;
 
 /**
  * The

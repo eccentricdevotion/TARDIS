@@ -1,4 +1,4 @@
-package org.json;
+package me.eccentric_nz.TARDIS.JSON;
 
 /**
  * The JSONException is thrown by the JSON.org classes when things are amiss.
@@ -22,6 +22,8 @@ public class JSONException extends RuntimeException {
 
     /**
      * Constructs a new JSONException with the specified cause.
+     *
+     * @param cause
      */
     public JSONException(Throwable cause) {
         super(cause.getMessage());

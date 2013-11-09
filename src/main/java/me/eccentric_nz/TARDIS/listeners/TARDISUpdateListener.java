@@ -43,7 +43,7 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.generator.ChunkGenerator;
-import org.json.JSONArray;
+import me.eccentric_nz.TARDIS.JSON.JSONArray;
 
 /**
  * The TARDIS interior goes through occasional metamorphoses, sometimes by

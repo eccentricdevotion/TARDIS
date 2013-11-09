@@ -20,7 +20,7 @@ import java.util.Arrays;
 import java.util.EnumMap;
 import java.util.List;
 import me.eccentric_nz.TARDIS.TARDISConstants;
-import org.json.JSONArray;
+import me.eccentric_nz.TARDIS.JSON.JSONArray;
 
 /**
  * A chameleon conversion is a repair procedure that technicians perform on

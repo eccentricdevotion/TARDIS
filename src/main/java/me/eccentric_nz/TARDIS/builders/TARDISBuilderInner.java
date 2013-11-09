@@ -40,7 +40,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.Plugin;
-import org.json.JSONArray;
+import me.eccentric_nz.TARDIS.JSON.JSONArray;
 
 /**
  * The TARDIS was prone to a number of technical faults, ranging from depleted
