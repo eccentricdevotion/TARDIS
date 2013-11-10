@@ -104,7 +104,7 @@ public class TARDISSignListener implements Listener {
                     if (line1.equals("Chameleon")) {
                         // open Chameleon Circuit GUI
                         ItemStack[] cc = new TARDISChameleonInventory(rs.isChamele_on()).getTerminal();
-                        Inventory cc_gui = plugin.getServer().createInventory(player, 27, "§4Chameleon Circuit");
+                        Inventory cc_gui = plugin.getServer().createInventory(player, 54, "§4Chameleon Circuit");
                         cc_gui.setContents(cc);
                         player.openInventory(cc_gui);
 //                        HashMap<String, Object> set = new HashMap<String, Object>();

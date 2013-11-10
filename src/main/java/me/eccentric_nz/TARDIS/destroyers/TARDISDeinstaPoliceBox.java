@@ -125,7 +125,7 @@ public class TARDISDeinstaPoliceBox {
         set.put("replaced", "");
         qf.doUpdate("tardis", set, wherer);
 
-        // get rid of platform is there is one
+        // get rid of platform if there is one
         if (plugin.getConfig().getBoolean("platform")) {
             String plat = rs.getPlatform();
             plugin.destroyPB.destroyPlatform(plat, id);

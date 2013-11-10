@@ -40,10 +40,10 @@ public class TARDISRebuildCommand {
         this.plugin = plugin;
     }
 
-    public boolean rebuildPreset(Player player, String[] args) {
+    public boolean rebuildPreset(final Player player, String[] args) {
         if (player.hasPermission("tardis.rebuild")) {
             World w;
-            int id;
+            final int id;
             boolean cham = false;
             HashMap<String, Object> where = new HashMap<String, Object>();
             where.put("owner", player.getName());
@@ -53,6 +53,7 @@ public class TARDISRebuildCommand {
                 return false;
             }
             id = rs.getTardis_id();
+            boolean hidden = rs.isHidden();
             HashMap<String, Object> wherein = new HashMap<String, Object>();
             wherein.put("player", player.getName());
             ResultSetTravellers rst = new ResultSetTravellers(plugin, wherein, false);
@@ -70,12 +71,12 @@ public class TARDISRebuildCommand {
             }
             HashMap<String, Object> wherecl = new HashMap<String, Object>();
             wherecl.put("tardis_id", rs.getTardis_id());
-            ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
+            final ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
             if (!rsc.resultSet()) {
                 player.sendMessage(plugin.pluginName + "Could not get the TARDIS location!");
                 return true;
             }
-            Location l = new Location(rsc.getWorld(), rsc.getX(), rsc.getY(), rsc.getZ());
+            final Location l = new Location(rsc.getWorld(), rsc.getX(), rsc.getY(), rsc.getZ());
             HashMap<String, Object> wheret = new HashMap<String, Object>();
             wheret.put("tardis_id", id);
             QueryFactory qf = new QueryFactory(plugin);
@@ -84,7 +85,17 @@ public class TARDISRebuildCommand {
                 player.sendMessage(plugin.pluginName + ChatColor.RED + "The TARDIS does not have enough Artron Energy to rebuild!");
                 return false;
             }
-            plugin.buildPB.buildPoliceBox(id, l, rsc.getDirection(), cham, player, true, false);
+            if (!hidden) {
+                // remove the police box first - should fix conflict between wood and iron doors
+                plugin.destroyPB.destroyPoliceBox(l, rsc.getDirection(), id, true, false, false, null);
+            }
+            final boolean c = cham;
+            plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
+                @Override
+                public void run() {
+                    plugin.buildPB.buildPoliceBox(id, l, rsc.getDirection(), c, player, true, false);
+                }
+            }, 10L);
             player.sendMessage(plugin.pluginName + "The TARDIS Police Box was rebuilt!");
             qf.alterEnergyLevel("tardis", -rebuild, wheret, player);
             // set hidden to false

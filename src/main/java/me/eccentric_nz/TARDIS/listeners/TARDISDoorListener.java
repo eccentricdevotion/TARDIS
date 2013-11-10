@@ -116,7 +116,7 @@ public class TARDISDoorListener implements Listener {
             Material blockType = block.getType();
             Action action = event.getAction();
             // only proceed if they are clicking an iron door with a TARDIS key!
-            if (blockType == Material.IRON_DOOR_BLOCK || blockType == Material.WOODEN_DOOR) {
+            if (blockType.equals(Material.IRON_DOOR_BLOCK) || blockType.equals(Material.WOODEN_DOOR) || blockType.equals(Material.TRAP_DOOR)) {
                 if (player.hasPermission("tardis.enter")) {
                     World playerWorld = player.getLocation().getWorld();
                     Location block_loc = block.getLocation();
@@ -193,39 +193,73 @@ public class TARDISDoorListener implements Listener {
                             if (action == Action.RIGHT_CLICK_BLOCK && player.isSneaking()) {
                                 if (!rsd.isLocked()) {
                                     // toogle the door open/closed
-                                    Block door_bottom;
-                                    Door door = (Door) block.getState().getData();
-                                    door_bottom = (door.isTopHalf()) ? block.getRelative(BlockFace.DOWN) : block;
-                                    byte door_data = door_bottom.getData();
-                                    switch (dd) {
-                                        case NORTH:
-                                            if (door_data == 3) {
-                                                door_bottom.setData((byte) 7, false);
-                                            } else {
-                                                door_bottom.setData((byte) 3, false);
-                                            }
-                                            break;
-                                        case WEST:
-                                            if (door_data == 2) {
-                                                door_bottom.setData((byte) 6, false);
-                                            } else {
-                                                door_bottom.setData((byte) 2, false);
-                                            }
-                                            break;
-                                        case SOUTH:
-                                            if (door_data == 1) {
-                                                door_bottom.setData((byte) 5, false);
-                                            } else {
-                                                door_bottom.setData((byte) 1, false);
-                                            }
-                                            break;
-                                        default:
-                                            if (door_data == 0) {
-                                                door_bottom.setData((byte) 4, false);
-                                            } else {
-                                                door_bottom.setData((byte) 0, false);
-                                            }
-                                            break;
+                                    if (blockType.equals(Material.IRON_DOOR_BLOCK) || blockType.equals(Material.WOODEN_DOOR)) {
+                                        Block door_bottom;
+                                        Door door = (Door) block.getState().getData();
+                                        door_bottom = (door.isTopHalf()) ? block.getRelative(BlockFace.DOWN) : block;
+                                        byte door_data = door_bottom.getData();
+                                        switch (dd) {
+                                            case NORTH:
+                                                if (door_data == 3) {
+                                                    door_bottom.setData((byte) 7, false);
+                                                } else {
+                                                    door_bottom.setData((byte) 3, false);
+                                                }
+                                                break;
+                                            case WEST:
+                                                if (door_data == 2) {
+                                                    door_bottom.setData((byte) 6, false);
+                                                } else {
+                                                    door_bottom.setData((byte) 2, false);
+                                                }
+                                                break;
+                                            case SOUTH:
+                                                if (door_data == 1) {
+                                                    door_bottom.setData((byte) 5, false);
+                                                } else {
+                                                    door_bottom.setData((byte) 1, false);
+                                                }
+                                                break;
+                                            default:
+                                                if (door_data == 0) {
+                                                    door_bottom.setData((byte) 4, false);
+                                                } else {
+                                                    door_bottom.setData((byte) 0, false);
+                                                }
+                                                break;
+                                        }
+                                    } else if (blockType.equals(Material.TRAP_DOOR)) {
+                                        byte door_data = block.getData();
+                                        switch (dd) {
+                                            case NORTH:
+                                                if (door_data == 1) {
+                                                    block.setData((byte) 5, false);
+                                                } else {
+                                                    block.setData((byte) 1, false);
+                                                }
+                                                break;
+                                            case WEST:
+                                                if (door_data == 3) {
+                                                    block.setData((byte) 7, false);
+                                                } else {
+                                                    block.setData((byte) 3, false);
+                                                }
+                                                break;
+                                            case SOUTH:
+                                                if (door_data == 0) {
+                                                    block.setData((byte) 4, false);
+                                                } else {
+                                                    block.setData((byte) 0, false);
+                                                }
+                                                break;
+                                            default:
+                                                if (door_data == 2) {
+                                                    block.setData((byte) 6, false);
+                                                } else {
+                                                    block.setData((byte) 2, false);
+                                                }
+                                                break;
+                                        }
                                     }
                                     playDoorSound(player, playerWorld, block_loc);
                                 } else {

@@ -16,6 +16,7 @@
  */
 package me.eccentric_nz.TARDIS.builders;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
@@ -65,6 +66,7 @@ public class TARDISPresetRunnable implements Runnable {
     private final TARDISChameleonColumn column;
     private final TARDISChameleonColumn ice_column;
     private final TARDISChameleonColumn glass_column;
+    private final List<TARDISConstants.PRESET> no_block_under_door;
 
     /**
      * Runnable method to materialise the TARDIS Police Box. Tries to mimic the
@@ -101,11 +103,15 @@ public class TARDISPresetRunnable implements Runnable {
         this.cham_data = cham_data;
         column = getColumn(preset, d);
         switch (preset) {
+            case CHALICE:
             case DESERT:
             case NEW:
+            case RAISED:
             case STONE:
             case SWAMP:
+            case TELEPHONE:
             case VILLAGE:
+            case WINDMILL:
                 ice_column = plugin.presets.getTaller_ice().get(d);
                 glass_column = plugin.presets.getTaller_glass().get(d);
                 break;
@@ -117,11 +123,27 @@ public class TARDISPresetRunnable implements Runnable {
                 ice_column = plugin.presets.getTent_ice().get(d);
                 glass_column = plugin.presets.getTent_glass().get(d);
                 break;
+            case FLOWER:
+                ice_column = plugin.presets.getFlower_ice().get(d);
+                glass_column = plugin.presets.getFlower_glass().get(d);
+                break;
+            case SUBMERGED:
+                ice_column = plugin.presets.getSubmerged_ice().get(d);
+                glass_column = plugin.presets.getSubmerged_glass().get(d);
+                break;
+            case WELL:
+                ice_column = plugin.presets.getWell_ice().get(d);
+                glass_column = plugin.presets.getWell_glass().get(d);
+                break;
             default:
                 ice_column = plugin.presets.getIce().get(d);
                 glass_column = plugin.presets.getGlass().get(d);
                 break;
         }
+        no_block_under_door = new ArrayList<TARDISConstants.PRESET>();
+        no_block_under_door.add(TARDISConstants.PRESET.RAISED);
+        no_block_under_door.add(TARDISConstants.PRESET.SUBMERGED);
+        no_block_under_door.add(TARDISConstants.PRESET.WELL);
     }
 
     @Override
@@ -131,8 +153,15 @@ public class TARDISPresetRunnable implements Runnable {
             byte[][] datas;
             // get relative locations
             int x = location.getBlockX(), plusx = location.getBlockX() + 1, minusx = location.getBlockX() - 1;
-            int y = location.getBlockY();
-            int undery = location.getBlockY() - 1;
+            int y;
+            int undery;
+            if (preset.equals(TARDISConstants.PRESET.SUBMERGED)) {
+                y = location.getBlockY() - 1;
+                undery = (location.getBlockY() - 2);
+            } else {
+                y = location.getBlockY();
+                undery = (location.getBlockY() - 1);
+            }
             int z = location.getBlockZ(), plusz = location.getBlockZ() + 1, minusz = location.getBlockZ() - 1;
             int platform_id = plugin.getConfig().getInt("platform_id");
             byte platform_data = (byte) plugin.getConfig().getInt("platform_data");
@@ -155,7 +184,6 @@ public class TARDISPresetRunnable implements Runnable {
                         datas = column.getData();
                         break;
                 }
-                String doorloc = "";
                 // rescue player?
                 if (i == 10 && plugin.trackRescue.containsKey(tid)) {
                     String name = plugin.trackRescue.get(tid);
@@ -199,12 +227,11 @@ public class TARDISPresetRunnable implements Runnable {
                             if (sub) {
                                 plugin.utils.setBlockCheck(world, x, undery, minusz, 19, (byte) 0, tid, true); // door is here if player facing south
                                 sponge = world.getBlockAt(x, undery, minusz);
-                            } else {
+                            } else if (!no_block_under_door.contains(preset)) {
                                 plugin.utils.setBlockCheck(world, x, undery, minusz, platform_id, platform_data, tid, false); // door is here if player facing south
                             }
                             loc = world.getBlockAt(x, undery, minusz).getLocation().toString();
                             ps.put("location", loc);
-                            doorloc = world.getName() + ":" + x + ":" + y + ":" + minusz;
                             signx = x;
                             signz = (minusz - 1);
                             break;
@@ -213,12 +240,11 @@ public class TARDISPresetRunnable implements Runnable {
                             if (sub) {
                                 plugin.utils.setBlockCheck(world, minusx, undery, z, 19, (byte) 0, tid, true); // door is here if player facing east
                                 sponge = world.getBlockAt(minusx, undery, z);
-                            } else {
+                            } else if (!no_block_under_door.contains(preset)) {
                                 plugin.utils.setBlockCheck(world, minusx, undery, z, platform_id, platform_data, tid, false); // door is here if player facing east
                             }
                             loc = world.getBlockAt(minusx, undery, z).getLocation().toString();
                             ps.put("location", loc);
-                            doorloc = world.getName() + ":" + minusx + ":" + y + ":" + z;
                             signx = (minusx - 1);
                             signz = z;
                             break;
@@ -227,12 +253,11 @@ public class TARDISPresetRunnable implements Runnable {
                             if (sub) {
                                 plugin.utils.setBlockCheck(world, x, undery, plusz, 19, (byte) 0, tid, true); // door is here if player facing north
                                 sponge = world.getBlockAt(x, undery, plusz);
-                            } else {
+                            } else if (!no_block_under_door.contains(preset)) {
                                 plugin.utils.setBlockCheck(world, x, undery, plusz, platform_id, platform_data, tid, false); // door is here if player facing north
                             }
                             loc = world.getBlockAt(x, undery, plusz).getLocation().toString();
                             ps.put("location", loc);
-                            doorloc = world.getName() + ":" + x + ":" + y + ":" + plusz;
                             signx = x;
                             signz = (plusz + 1);
                             break;
@@ -241,12 +266,11 @@ public class TARDISPresetRunnable implements Runnable {
                             if (sub) {
                                 plugin.utils.setBlockCheck(world, plusx, undery, z, 19, (byte) 0, tid, true); // door is here if player facing west
                                 sponge = world.getBlockAt(plusx, undery, z);
-                            } else {
+                            } else if (!no_block_under_door.contains(preset)) {
                                 plugin.utils.setBlockCheck(world, plusx, undery, z, platform_id, platform_data, tid, false); // door is here if player facing west
                             }
                             loc = world.getBlockAt(plusx, undery, z).getLocation().toString();
                             ps.put("location", loc);
-                            doorloc = world.getName() + ":" + plusx + ":" + y + ":" + z;
                             signx = (plusx + 1);
                             signz = z;
                             break;
@@ -255,23 +279,6 @@ public class TARDISPresetRunnable implements Runnable {
                     qf.doInsert("blocks", ps);
                     if (!loc.isEmpty()) {
                         plugin.protectBlockMap.put(loc, tid);
-                    }
-                    // should insert the door when tardis is first made, and then update location there after!
-                    HashMap<String, Object> whered = new HashMap<String, Object>();
-                    whered.put("door_type", 0);
-                    whered.put("tardis_id", tid);
-                    ResultSetDoors rsd = new ResultSetDoors(plugin, whered, false);
-                    HashMap<String, Object> setd = new HashMap<String, Object>();
-                    setd.put("door_location", doorloc);
-                    if (rsd.resultSet()) {
-                        HashMap<String, Object> whereid = new HashMap<String, Object>();
-                        whereid.put("door_id", rsd.getDoor_id());
-                        qf.doUpdate("doors", setd, whereid);
-                    } else {
-                        setd.put("tardis_id", tid);
-                        setd.put("door_type", 0);
-                        setd.put("door_direction", d.toString());
-                        qf.doInsert("doors", setd);
                     }
                     int xx, zz;
                     for (int n = 0; n < 10; n++) {
@@ -332,10 +339,37 @@ public class TARDISPresetRunnable implements Runnable {
                                     int light = (preset.equals(TARDISConstants.PRESET.NEW) || preset.equals(TARDISConstants.PRESET.OLD)) ? lamp : colids[yy];
                                     plugin.utils.setBlockAndRemember(world, xx, (y + yy), zz, light, coldatas[yy], tid);
                                     break;
-                                case 71: // doors
-                                    int door = (preset.equals(TARDISConstants.PRESET.SWAMP) || preset.equals(TARDISConstants.PRESET.VILLAGE)) ? 64 : 71;
-                                    plugin.utils.setBlockAndRemember(world, xx, (y + yy), zz, door, coldatas[yy], tid);
+                                case 64: // wood, iron & trap doors
+                                case 71:
+                                case 96:
+                                    if (coldatas[yy] < 8) {
+                                        // remember the door location
+                                        String doorloc = world.getName() + ":" + xx + ":" + (y + yy) + ":" + zz;
+                                        // should insert the door when tardis is first made, and then update location there after!
+                                        HashMap<String, Object> whered = new HashMap<String, Object>();
+                                        whered.put("door_type", 0);
+                                        whered.put("tardis_id", tid);
+                                        ResultSetDoors rsd = new ResultSetDoors(plugin, whered, false);
+                                        HashMap<String, Object> setd = new HashMap<String, Object>();
+                                        setd.put("door_location", doorloc);
+                                        if (rsd.resultSet()) {
+                                            HashMap<String, Object> whereid = new HashMap<String, Object>();
+                                            whereid.put("door_id", rsd.getDoor_id());
+                                            qf.doUpdate("doors", setd, whereid);
+                                        } else {
+                                            setd.put("tardis_id", tid);
+                                            setd.put("door_type", 0);
+                                            setd.put("door_direction", d.toString());
+                                            qf.doInsert("doors", setd);
+                                        }
+                                    }
+                                    if (preset.equals(TARDISConstants.PRESET.SUBMERGED) && yy == 0) {
+                                        plugin.utils.setBlockAndRemember(world, xx, (y + yy), zz, colids[yy], coldatas[yy], tid);
+                                    } else {
+                                        plugin.utils.setBlockAndRemember(world, xx, (y + yy), zz, colids[yy], coldatas[yy], tid);
+                                    }
                                     break;
+
                                 case 68: // sign - if there is one
                                     plugin.utils.setBlock(world, xx, (y + yy), zz, colids[yy], coldatas[yy]);
                                     Block sign = world.getBlockAt(xx, (y + yy), zz);
@@ -357,12 +391,8 @@ public class TARDISPresetRunnable implements Runnable {
                                         String line1;
                                         String line2;
                                         switch (preset) {
-                                            case FACTORY:
-                                                line1 = "Type 40";
-                                                line2 = "TARDIS";
-                                                break;
                                             case STONE:
-                                                line1 = "Stone Brick";
+                                                line1 = "STONE BRICK";
                                                 line2 = "COLUMN";
                                                 break;
                                             case PARTY:
@@ -377,6 +407,18 @@ public class TARDISPresetRunnable implements Runnable {
                                                 line1 = "YELLOW";
                                                 line2 = "SUBMARINE";
                                                 break;
+                                            case TELEPHONE:
+                                                line1 = "TELEPHONE";
+                                                line2 = "BOX";
+                                                break;
+                                            case WINDMILL:
+                                                line1 = "VERY SMALL";
+                                                line2 = "WINDMILL";
+                                                break;
+                                            case RAISED:
+                                                line1 = "SIGN ABOVE";
+                                                line2 = "THE DOOR";
+                                                break;
                                             default:
                                                 line1 = "POLICE";
                                                 line2 = "BOX";
@@ -388,7 +430,11 @@ public class TARDISPresetRunnable implements Runnable {
                                     }
                                     break;
                                 default: // everything else
-                                    plugin.utils.setBlockAndRemember(world, xx, (y + yy), zz, colids[yy], coldatas[yy], tid);
+                                    if (preset.equals(TARDISConstants.PRESET.SUBMERGED) && yy == 0) {
+                                        plugin.utils.setBlockAndRemember(world, xx, (y + yy), zz, colids[yy], coldatas[yy], tid);
+                                    } else {
+                                        plugin.utils.setBlockAndRemember(world, xx, (y + yy), zz, colids[yy], coldatas[yy], tid);
+                                    }
                                     break;
                             }
                         }
@@ -450,10 +496,10 @@ public class TARDISPresetRunnable implements Runnable {
                                     int light = (preset.equals(TARDISConstants.PRESET.NEW) || preset.equals(TARDISConstants.PRESET.OLD)) ? lamp : colids[yy];
                                     plugin.utils.setBlock(world, xx, (y + yy), zz, light, coldatas[yy]);
                                     break;
-                                case 71: // doors
-                                    int door = (preset.equals(TARDISConstants.PRESET.SWAMP) || preset.equals(TARDISConstants.PRESET.VILLAGE)) ? 64 : 71;
-                                    plugin.utils.setBlock(world, xx, (y + yy), zz, door, coldatas[yy]);
-                                    break;
+//                                case 71: // doors
+//                                    int door = (preset.equals(TARDISConstants.PRESET.SWAMP) || preset.equals(TARDISConstants.PRESET.VILLAGE)) ? 64 : 71;
+//                                    plugin.utils.setBlock(world, xx, (y + yy), zz, door, coldatas[yy]);
+//                                    break;
                                 default: // everything else
                                     plugin.utils.setBlock(world, xx, (y + yy), zz, colids[yy], coldatas[yy]);
                                     break;
@@ -517,6 +563,20 @@ public class TARDISPresetRunnable implements Runnable {
                 return plugin.presets.getVillage().get(d);
             case YELLOW:
                 return plugin.presets.getYellowsub().get(d);
+            case SUBMERGED:
+                return plugin.presets.getSubmerged().get(d);
+            case RAISED:
+                return plugin.presets.getRaised().get(d);
+            case FLOWER:
+                return plugin.presets.getFlower().get(d);
+            case CHALICE:
+                return plugin.presets.getChalice().get(d);
+            case WINDMILL:
+                return plugin.presets.getWindmill().get(d);
+            case TELEPHONE:
+                return plugin.presets.getTelephone().get(d);
+            case WELL:
+                return plugin.presets.getWell().get(d);
             default:
                 return plugin.presets.getTaller().get(d);
         }

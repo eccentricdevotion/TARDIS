@@ -94,6 +94,8 @@ public class TARDISDatabase {
             statement.executeUpdate(queryCounts);
             String queryARS = "CREATE TABLE IF NOT EXISTS ars (ars_id INTEGER PRIMARY KEY NOT NULL, tardis_id INTEGER, player TEXT COLLATE NOCASE, ars_x_east INTEGER DEFAULT 2, ars_z_south INTEGER DEFAULT 2, ars_y_layer INTEGER DEFAULT 1, json TEXT DEFAULT '')";
             statement.executeUpdate(queryARS);
+            String querySubmerged = "CREATE TABLE IF NOT EXISTS submerged (sub_id INTEGER PRIMARY KEY NOT NULL, tardis_id INTEGER, world TEXT COLLATE NOCASE DEFAULT '', x INTEGER, y INTEGER, z INTEGER, id INTEGER, data, INTEGER)";
+            statement.executeUpdate(querySubmerged);
 
             // delete old gravity and levers tables
             String dropGravity = "DROP TABLE IF EXISTS gravity";

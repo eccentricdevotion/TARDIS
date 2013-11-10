@@ -94,6 +94,18 @@ public class TARDISDematerialisationPreset implements Runnable {
                 ice_column = plugin.presets.getTent_ice().get(d);
                 glass_column = plugin.presets.getTent_glass().get(d);
                 break;
+            case FLOWER:
+                ice_column = plugin.presets.getFlower_ice().get(d);
+                glass_column = plugin.presets.getFlower_glass().get(d);
+                break;
+            case SUBMERGED:
+                ice_column = plugin.presets.getSubmerged_ice().get(d);
+                glass_column = plugin.presets.getSubmerged_glass().get(d);
+                break;
+            case WELL:
+                ice_column = plugin.presets.getWell_ice().get(d);
+                glass_column = plugin.presets.getWell_glass().get(d);
+                break;
             default:
                 ice_column = plugin.presets.getIce().get(d);
                 glass_column = plugin.presets.getGlass().get(d);
@@ -107,7 +119,12 @@ public class TARDISDematerialisationPreset implements Runnable {
         byte[][] datas;
         // get relative locations
         int x = location.getBlockX(), plusx = location.getBlockX() + 1, minusx = location.getBlockX() - 1;
-        int y = location.getBlockY();
+        int y;
+        if (preset.equals(TARDISConstants.PRESET.SUBMERGED)) {
+            y = location.getBlockY() - 1;
+        } else {
+            y = location.getBlockY();
+        }
         int z = location.getBlockZ(), plusz = location.getBlockZ() + 1, minusz = location.getBlockZ() - 1;
         World world = location.getWorld();
         if (i < loops) {
@@ -239,6 +256,20 @@ public class TARDISDematerialisationPreset implements Runnable {
                 return plugin.presets.getVillage().get(d);
             case YELLOW:
                 return plugin.presets.getYellowsub().get(d);
+            case SUBMERGED:
+                return plugin.presets.getSubmerged().get(d);
+            case RAISED:
+                return plugin.presets.getRaised().get(d);
+            case FLOWER:
+                return plugin.presets.getFlower().get(d);
+            case CHALICE:
+                return plugin.presets.getChalice().get(d);
+            case WINDMILL:
+                return plugin.presets.getWindmill().get(d);
+            case TELEPHONE:
+                return plugin.presets.getTelephone().get(d);
+            case WELL:
+                return plugin.presets.getWell().get(d);
             default:
                 return plugin.presets.getTaller().get(d);
         }

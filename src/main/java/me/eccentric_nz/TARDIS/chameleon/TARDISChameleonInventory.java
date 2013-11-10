@@ -113,6 +113,41 @@ public class TARDISChameleonInventory {
         ItemMeta sme = yellow.getItemMeta();
         sme.setDisplayName("Yellow Submarine");
         yellow.setItemMeta(sme);
+        // Telephone Box
+        ItemStack tel = new ItemStack(Material.WOOL, 1, (short) 14);
+        ItemMeta pho = tel.getItemMeta();
+        pho.setDisplayName("Red Telephone Box");
+        tel.setItemMeta(pho);
+        // Partly Submerged
+        ItemStack sub = new ItemStack(Material.DIRT, 1);
+        ItemMeta mer = sub.getItemMeta();
+        mer.setDisplayName("Submerged");
+        sub.setItemMeta(mer);
+        // Daisy Flower
+        ItemStack flo = new ItemStack(Material.WOOL, 1, (short) 0);
+        ItemMeta wer = flo.getItemMeta();
+        wer.setDisplayName("Daisy Flower");
+        flo.setItemMeta(wer);
+        // Chalice
+        ItemStack chal = new ItemStack(Material.QUARTZ_BLOCK, 1);
+        ItemMeta ice = chal.getItemMeta();
+        ice.setDisplayName("Quartz Chalice");
+        chal.setItemMeta(ice);
+        // Raised Swamp Hut
+        ItemStack rai = new ItemStack(Material.WOOD, 1, (short) 2);
+        ItemMeta sed = rai.getItemMeta();
+        sed.setDisplayName("Raised Swamp Hut");
+        rai.setItemMeta(sed);
+        // Windmill
+        ItemStack win = new ItemStack(Material.WOOL, 1, (short) 1);
+        ItemMeta mill = win.getItemMeta();
+        mill.setDisplayName("Windmill");
+        win.setItemMeta(mill);
+        // Well
+        ItemStack well = new ItemStack(Material.MOSSY_COBBLESTONE, 1);
+        ItemMeta ivy = well.getItemMeta();
+        ivy.setDisplayName("Mossy Well");
+        well.setItemMeta(ivy);
         // Cancel / close
         ItemStack close = new ItemStack(Material.WOOL, 1, (short) 15);
         ItemMeta can = close.getItemMeta();
@@ -120,9 +155,12 @@ public class TARDISChameleonInventory {
         close.setItemMeta(can);
 
         ItemStack[] is = {
-            con, null, apply, null, box, null, off, null, close,
-            null, stone, null, desert, null, jungle, null, nether, null,
-            def, null, swamp, null, tent, null, village, null, yellow
+            con, null, null, null, apply, null, null, null, close,
+            null, null, null, null, null, null, null, null, null,
+            box, null, off, null, jungle, null, nether, null, def,
+            null, swamp, null, tent, null, village, null, yellow, null,
+            tel, null, sub, null, rai, null, flo, null, chal,
+            null, stone, null, win, null, desert, null, well, null
         };
         return is;
     }

@@ -16,6 +16,7 @@
  */
 package me.eccentric_nz.TARDIS.builders;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
@@ -24,7 +25,6 @@ import me.eccentric_nz.TARDIS.chameleon.TARDISChameleonColumn;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetDoors;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
-import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.travel.TARDISDoorLocation;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -58,6 +58,7 @@ public class TARDISRebuildPreset {
     private Block sponge;
     private final TARDISConstants.PRESET preset;
     private TARDISChameleonColumn column;
+    private final List<TARDISConstants.PRESET> no_block_under_door;
 
     public TARDISRebuildPreset(TARDIS plugin, Location location, TARDISConstants.PRESET preset, int tid, TARDISConstants.COMPASS d, String p, boolean mal, int lamp, boolean sub, int cham_id, byte cham_data) {
         this.plugin = plugin;
@@ -71,6 +72,10 @@ public class TARDISRebuildPreset {
         this.sub = sub;
         this.cham_id = cham_id;
         this.cham_data = cham_data;
+        no_block_under_door = new ArrayList<TARDISConstants.PRESET>();
+        no_block_under_door.add(TARDISConstants.PRESET.RAISED);
+        no_block_under_door.add(TARDISConstants.PRESET.SUBMERGED);
+        no_block_under_door.add(TARDISConstants.PRESET.WELL);
     }
 
     /**
@@ -85,14 +90,18 @@ public class TARDISRebuildPreset {
         x = location.getBlockX();
         plusx = (location.getBlockX() + 1);
         minusx = (location.getBlockX() - 1);
-        y = location.getBlockY();
-        undery = (location.getBlockY() - 1);
+        if (preset.equals(TARDISConstants.PRESET.SUBMERGED)) {
+            y = location.getBlockY() - 1;
+            undery = (location.getBlockY() - 2);
+        } else {
+            y = location.getBlockY();
+            undery = (location.getBlockY() - 1);
+        }
         z = (location.getBlockZ());
         plusz = (location.getBlockZ() + 1);
         minusz = (location.getBlockZ() - 1);
         world = location.getWorld();
         int signx = 0, signz = 0;
-        String doorloc = "";
         // rescue player?
         if (plugin.trackRescue.containsKey(tid)) {
             String name = plugin.trackRescue.get(tid);
@@ -124,12 +133,11 @@ public class TARDISRebuildPreset {
                 if (sub) {
                     plugin.utils.setBlockCheck(world, x, undery, minusz, 19, (byte) 0, tid, true); // door is here if player facing south
                     sponge = world.getBlockAt(x, undery, minusz);
-                } else {
+                } else if (!no_block_under_door.contains(preset)) {
                     plugin.utils.setBlockCheck(world, x, undery, minusz, platform_id, platform_data, tid, false); // door is here if player facing south
                 }
                 loc = world.getBlockAt(x, undery, minusz).getLocation().toString();
                 ps.put("location", loc);
-                doorloc = world.getName() + ":" + x + ":" + y + ":" + minusz;
                 signx = x;
                 signz = (minusz - 1);
                 break;
@@ -138,12 +146,11 @@ public class TARDISRebuildPreset {
                 if (sub) {
                     plugin.utils.setBlockCheck(world, minusx, undery, z, 19, (byte) 0, tid, true); // door is here if player facing east
                     sponge = world.getBlockAt(minusx, undery, z);
-                } else {
+                } else if (!no_block_under_door.contains(preset)) {
                     plugin.utils.setBlockCheck(world, minusx, undery, z, platform_id, platform_data, tid, false); // door is here if player facing east
                 }
                 loc = world.getBlockAt(minusx, undery, z).getLocation().toString();
                 ps.put("location", loc);
-                doorloc = world.getName() + ":" + minusx + ":" + y + ":" + z;
                 signx = (minusx - 1);
                 signz = z;
                 break;
@@ -152,12 +159,11 @@ public class TARDISRebuildPreset {
                 if (sub) {
                     plugin.utils.setBlockCheck(world, x, undery, plusz, 19, (byte) 0, tid, true); // door is here if player facing north
                     sponge = world.getBlockAt(x, undery, plusz);
-                } else {
+                } else if (!no_block_under_door.contains(preset)) {
                     plugin.utils.setBlockCheck(world, x, undery, plusz, platform_id, platform_data, tid, false); // door is here if player facing north
                 }
                 loc = world.getBlockAt(x, undery, plusz).getLocation().toString();
                 ps.put("location", loc);
-                doorloc = world.getName() + ":" + x + ":" + y + ":" + plusz;
                 signx = x;
                 signz = (plusz + 1);
                 break;
@@ -166,12 +172,11 @@ public class TARDISRebuildPreset {
                 if (sub) {
                     plugin.utils.setBlockCheck(world, plusx, undery, z, 19, (byte) 0, tid, true); // door is here if player facing west
                     sponge = world.getBlockAt(plusx, undery, z);
-                } else {
+                } else if (!no_block_under_door.contains(preset)) {
                     plugin.utils.setBlockCheck(world, plusx, undery, z, platform_id, platform_data, tid, false); // door is here if player facing west
                 }
                 loc = world.getBlockAt(plusx, undery, z).getLocation().toString();
                 ps.put("location", loc);
-                doorloc = world.getName() + ":" + plusx + ":" + y + ":" + z;
                 signx = (plusx + 1);
                 signz = z;
                 break;
@@ -180,23 +185,6 @@ public class TARDISRebuildPreset {
         qf.doInsert("blocks", ps);
         if (!loc.isEmpty()) {
             plugin.protectBlockMap.put(loc, tid);
-        }
-        // should insert the door when tardis is first made, and then update location there after!
-        HashMap<String, Object> whered = new HashMap<String, Object>();
-        whered.put("door_type", 0);
-        whered.put("tardis_id", tid);
-        ResultSetDoors rsd = new ResultSetDoors(plugin, whered, false);
-        HashMap<String, Object> setd = new HashMap<String, Object>();
-        setd.put("door_location", doorloc);
-        if (rsd.resultSet()) {
-            HashMap<String, Object> whereid = new HashMap<String, Object>();
-            whereid.put("door_id", rsd.getDoor_id());
-            qf.doUpdate("doors", setd, whereid);
-        } else {
-            setd.put("tardis_id", tid);
-            setd.put("door_type", 0);
-            setd.put("door_direction", d.toString());
-            qf.doInsert("doors", setd);
         }
         int xx, zz;
         int[][] ids = column.getId();
@@ -259,6 +247,36 @@ public class TARDISRebuildPreset {
                         int light = (preset.equals(TARDISConstants.PRESET.NEW) || preset.equals(TARDISConstants.PRESET.OLD)) ? lamp : colids[yy];
                         plugin.utils.setBlock(world, xx, (y + yy), zz, light, coldatas[yy]);
                         break;
+                    case 64: // wood, iron & trap doors
+                    case 71:
+                    case 96:
+                        if (coldatas[yy] < 8) {
+                            // remember the door location
+                            String doorloc = world.getName() + ":" + xx + ":" + (y + yy) + ":" + zz;
+                            // should insert the door when tardis is first made, and then update location there after!
+                            HashMap<String, Object> whered = new HashMap<String, Object>();
+                            whered.put("door_type", 0);
+                            whered.put("tardis_id", tid);
+                            ResultSetDoors rsd = new ResultSetDoors(plugin, whered, false);
+                            HashMap<String, Object> setd = new HashMap<String, Object>();
+                            setd.put("door_location", doorloc);
+                            if (rsd.resultSet()) {
+                                HashMap<String, Object> whereid = new HashMap<String, Object>();
+                                whereid.put("door_id", rsd.getDoor_id());
+                                qf.doUpdate("doors", setd, whereid);
+                            } else {
+                                setd.put("tardis_id", tid);
+                                setd.put("door_type", 0);
+                                setd.put("door_direction", d.toString());
+                                qf.doInsert("doors", setd);
+                            }
+                        }
+                        if (preset.equals(TARDISConstants.PRESET.SUBMERGED) && yy == 0) {
+                            plugin.utils.setBlockAndRemember(world, xx, (y + yy), zz, colids[yy], coldatas[yy], tid);
+                        } else {
+                            plugin.utils.setBlock(world, xx, (y + yy), zz, colids[yy], coldatas[yy]);
+                        }
+                        break;
                     case 68: // sign - if there is one
                         plugin.utils.setBlock(world, xx, (y + yy), zz, colids[yy], coldatas[yy]);
                         Block sign = world.getBlockAt(xx, (y + yy), zz);
@@ -280,12 +298,8 @@ public class TARDISRebuildPreset {
                             String line1;
                             String line2;
                             switch (preset) {
-                                case FACTORY:
-                                    line1 = "Type 40";
-                                    line2 = "TARDIS";
-                                    break;
                                 case STONE:
-                                    line1 = "Stone Brick";
+                                    line1 = "STONE BRICK";
                                     line2 = "COLUMN";
                                     break;
                                 case PARTY:
@@ -300,6 +314,18 @@ public class TARDISRebuildPreset {
                                     line1 = "YELLOW";
                                     line2 = "SUBMARINE";
                                     break;
+                                case TELEPHONE:
+                                    line1 = "TELEPHONE";
+                                    line2 = "BOX";
+                                    break;
+                                case WINDMILL:
+                                    line1 = "VERY SMALL";
+                                    line2 = "WINDMILL";
+                                    break;
+                                case RAISED:
+                                    line1 = "SIGN ABOVE";
+                                    line2 = "THE DOOR";
+                                    break;
                                 default:
                                     line1 = "POLICE";
                                     line2 = "BOX";
@@ -311,32 +337,17 @@ public class TARDISRebuildPreset {
                         }
                         break;
                     default: // everything else
-                        plugin.utils.setBlock(world, xx, (y + yy), zz, colids[yy], coldatas[yy]);
+                        if (preset.equals(TARDISConstants.PRESET.SUBMERGED) && yy == 0) {
+                            plugin.utils.setBlockAndRemember(world, xx, (y + yy), zz, colids[yy], coldatas[yy], tid);
+                        } else {
+                            plugin.utils.setBlock(world, xx, (y + yy), zz, colids[yy], coldatas[yy]);
+                        }
                         break;
                 }
             }
         }
         if (sub && plugin.worldGuardOnServer) {
             plugin.wgutils.sponge(sponge, true);
-        }
-        // message travellers in tardis
-        HashMap<String, Object> where = new HashMap<String, Object>();
-        where.put("tardis_id", tid);
-        ResultSetTravellers rst = new ResultSetTravellers(plugin, where, true);
-        if (rst.resultSet()) {
-            final List<String> travellers = rst.getData();
-            plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
-                @Override
-                public void run() {
-                    for (String s : travellers) {
-                        Player p = plugin.getServer().getPlayer(s);
-                        if (p != null) {
-                            String message = (mal) ? "There was a malfunction and the emergency handbrake was engaged! Scan location before exit!" : "LEFT-click the handbrake to exit!";
-                            p.sendMessage(plugin.pluginName + message);
-                        }
-                    }
-                }
-            }, 30L);
         }
         plugin.tardisMaterialising.remove(Integer.valueOf(tid));
     }
@@ -363,6 +374,20 @@ public class TARDISRebuildPreset {
                 return plugin.presets.getVillage().get(d);
             case YELLOW:
                 return plugin.presets.getYellowsub().get(d);
+            case SUBMERGED:
+                return plugin.presets.getSubmerged().get(d);
+            case RAISED:
+                return plugin.presets.getRaised().get(d);
+            case FLOWER:
+                return plugin.presets.getFlower().get(d);
+            case CHALICE:
+                return plugin.presets.getChalice().get(d);
+            case WINDMILL:
+                return plugin.presets.getWindmill().get(d);
+            case TELEPHONE:
+                return plugin.presets.getTelephone().get(d);
+            case WELL:
+                return plugin.presets.getWell().get(d);
             default:
                 return plugin.presets.getTaller().get(d);
         }
