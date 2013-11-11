@@ -215,7 +215,7 @@ public class TARDISStattenheimListener implements Listener {
                         }
                         player.sendMessage(plugin.pluginName + "The TARDIS is coming...");
                         final boolean mat = plugin.getConfig().getBoolean("materialise");
-                        long delay = (mat) ? 1L : 180L;
+                        long delay = (mat) ? 10L : 180L;
                         Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
                             @Override
                             public void run() {

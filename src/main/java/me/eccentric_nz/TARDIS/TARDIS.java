@@ -95,6 +95,7 @@ import me.eccentric_nz.TARDIS.listeners.TARDISTeleportListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISTemporalLocatorListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISTerminalListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISTimeLordDeathListener;
+import me.eccentric_nz.TARDIS.listeners.TARDISTrapdoorListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISUpdateListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISWorldResetListener;
 import me.eccentric_nz.TARDIS.rooms.TARDISCondenserData;
@@ -238,6 +239,7 @@ public class TARDIS extends JavaPlugin {
     public HashMap<String, Integer> protectBlockMap = new HashMap<String, Integer>();
     public HashMap<String, TARDISCondenserData> roomCondenserData = new HashMap<String, TARDISCondenserData>();
     public List<Integer> npcIDs = new ArrayList<Integer>();
+    public List<String> isWellPresetMaterialising = new ArrayList<String>();
     public ArrayList<String> quote;
     public HashMap<Material, String> seeds;
     public int quotelen;
@@ -434,6 +436,7 @@ public class TARDIS extends JavaPlugin {
         pm.registerEvents(new TARDISJoinListener(this), this);
         pm.registerEvents(new TARDISQuitListener(this), this);
         pm.registerEvents(new TARDISKeyboardListener(this), this);
+        pm.registerEvents(new TARDISTrapdoorListener(this), this);
         if (bukkitversion.compareTo(preIMversion) >= 0) {
             pm.registerEvents(new TARDISTerminalListener(this), this);
             pm.registerEvents(new TARDISChameleonListener(this), this);

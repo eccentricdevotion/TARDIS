@@ -134,6 +134,7 @@ public class TARDISPresetRunnable implements Runnable {
             case WELL:
                 ice_column = plugin.presets.getWell_ice().get(d);
                 glass_column = plugin.presets.getWell_glass().get(d);
+                plugin.isWellPresetMaterialising.add("tid" + tid);
                 break;
             default:
                 ice_column = plugin.presets.getIce().get(d);
@@ -508,6 +509,9 @@ public class TARDISPresetRunnable implements Runnable {
                     }
                 }
             } else {
+                if (preset.equals(TARDISConstants.PRESET.WELL)) {
+                    plugin.isWellPresetMaterialising.remove("tid" + tid);
+                }
                 // set sheild if submarine
                 if (sub && plugin.worldGuardOnServer) {
                     plugin.wgutils.sponge(sponge, true);

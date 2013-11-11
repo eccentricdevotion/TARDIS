@@ -52,8 +52,8 @@ public class TARDISDestroyerPoliceBox {
         where.put("tardis_id", id);
         ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
         if (rs.resultSet()) {
+            TARDISConstants.PRESET demat = rs.getDemat();
             if (dematerialise && !hide) {
-                TARDISConstants.PRESET demat = rs.getDemat();
                 int cham_id = rs.getChameleon_id();
                 byte cham_data = rs.getChameleon_data();
                 if (c && (demat.equals(TARDISConstants.PRESET.NEW) || demat.equals(TARDISConstants.PRESET.OLD))) {
@@ -82,7 +82,7 @@ public class TARDISDestroyerPoliceBox {
                 int taskID = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, runnable, 10L, 20L);
                 runnable.setTask(taskID);
             } else {
-                new TARDISDeinstaPoliceBox(plugin).instaDestroyPB(l, d, id, hide);
+                new TARDISDeinstaPoliceBox(plugin).instaDestroyPB(l, d, id, hide, demat);
             }
         }
     }

@@ -105,6 +105,7 @@ public class TARDISDematerialisationPreset implements Runnable {
             case WELL:
                 ice_column = plugin.presets.getWell_ice().get(d);
                 glass_column = plugin.presets.getWell_glass().get(d);
+                plugin.isWellPresetMaterialising.add("tid" + tid);
                 break;
             default:
                 ice_column = plugin.presets.getIce().get(d);
@@ -224,7 +225,10 @@ public class TARDISDematerialisationPreset implements Runnable {
                 }
             }
         } else {
-            new TARDISDeinstaPoliceBox(plugin).instaDestroyPB(location, d, tid, false);
+            if (preset.equals(TARDISConstants.PRESET.WELL)) {
+                plugin.isWellPresetMaterialising.remove("tid" + tid);
+            }
+            new TARDISDeinstaPoliceBox(plugin).instaDestroyPB(location, d, tid, false, preset);
             plugin.getServer().getScheduler().cancelTask(task);
             task = 0;
         }

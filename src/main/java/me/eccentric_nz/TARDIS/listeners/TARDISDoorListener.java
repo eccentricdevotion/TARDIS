@@ -53,6 +53,7 @@ import org.bukkit.entity.Ocelot;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Tameable;
 import org.bukkit.entity.Wolf;
+import org.bukkit.event.Event;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -106,7 +107,7 @@ public class TARDISDoorListener implements Listener {
      * @param event a player clicking a block
      */
     @SuppressWarnings("deprecation")
-    @EventHandler(priority = EventPriority.MONITOR)
+    @EventHandler(priority = EventPriority.NORMAL)
     public void onDoorInteract(PlayerInteractEvent event) {
         QueryFactory qf = new QueryFactory(plugin);
         final Player player = event.getPlayer();
@@ -148,6 +149,8 @@ public class TARDISDoorListener implements Listener {
                     where.put("door_location", doorloc);
                     ResultSetDoors rsd = new ResultSetDoors(plugin, where, false);
                     if (rsd.resultSet()) {
+                        event.setUseInteractedBlock(Event.Result.DENY);
+                        event.setUseItemInHand(Event.Result.DENY);
                         event.setCancelled(true);
                         if (material.equals(m)) {
                             TARDISConstants.COMPASS dd = rsd.getDoor_direction();

@@ -55,9 +55,10 @@ public class TARDISDeinstaPoliceBox {
      * @param id the unique key of the record for this TARDIS in the database.
      * @param hide boolean determining whether to forget the protected Police
      * Box blocks.
+     * @param preset
      */
     @SuppressWarnings("deprecation")
-    public void instaDestroyPB(Location l, TARDISConstants.COMPASS d, int id, boolean hide) {
+    public void instaDestroyPB(Location l, TARDISConstants.COMPASS d, int id, boolean hide, TARDISConstants.PRESET preset) {
         World w = l.getWorld();
         // make sure chunk is loaded
         Chunk chunk = w.getChunkAt(l);
@@ -65,7 +66,12 @@ public class TARDISDeinstaPoliceBox {
             chunk.load();
         }
         int sbx = l.getBlockX() - 1;
-        int sby = l.getBlockY();
+        int sby;
+        if (preset.equals(TARDISConstants.PRESET.SUBMERGED)) {
+            sby = l.getBlockY() - 1;
+        } else {
+            sby = l.getBlockY();
+        }
         int sbz = l.getBlockZ() - 1;
         // remove sign
         plugin.destroyPB.destroySign(l, d);
