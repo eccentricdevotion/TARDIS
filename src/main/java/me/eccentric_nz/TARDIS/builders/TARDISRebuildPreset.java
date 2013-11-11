@@ -236,6 +236,12 @@ public class TARDISRebuildPreset {
             }
             for (int yy = 0; yy < 4; yy++) {
                 switch (colids[yy]) {
+                    case 2:
+                    case 3:
+                        int subi = (preset.equals(TARDISConstants.PRESET.SUBMERGED)) ? cham_id : colids[yy];
+                        byte subd = (preset.equals(TARDISConstants.PRESET.SUBMERGED)) ? cham_data : coldatas[yy];
+                        plugin.utils.setBlock(world, xx, (y + yy), zz, subi, subd);
+                        break;
                     case 35: // wool
                         int chai = (preset.equals(TARDISConstants.PRESET.NEW) || preset.equals(TARDISConstants.PRESET.OLD)) ? cham_id : colids[yy];
                         byte chad = (preset.equals(TARDISConstants.PRESET.NEW) || preset.equals(TARDISConstants.PRESET.OLD)) ? cham_data : coldatas[yy];

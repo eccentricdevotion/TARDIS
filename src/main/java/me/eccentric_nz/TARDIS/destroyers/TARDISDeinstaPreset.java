@@ -39,11 +39,11 @@ import org.bukkit.block.Block;
  *
  * @author eccentric_nz
  */
-public class TARDISDeinstaPoliceBox {
+public class TARDISDeinstaPreset {
 
     private final TARDIS plugin;
 
-    public TARDISDeinstaPoliceBox(TARDIS plugin) {
+    public TARDISDeinstaPreset(TARDIS plugin) {
         this.plugin = plugin;
     }
 
@@ -58,7 +58,7 @@ public class TARDISDeinstaPoliceBox {
      * @param preset
      */
     @SuppressWarnings("deprecation")
-    public void instaDestroyPB(Location l, TARDISConstants.COMPASS d, int id, boolean hide, TARDISConstants.PRESET preset) {
+    public void instaDestroyPreset(Location l, TARDISConstants.COMPASS d, int id, boolean hide, TARDISConstants.PRESET preset) {
         World w = l.getWorld();
         // make sure chunk is loaded
         Chunk chunk = w.getChunkAt(l);
