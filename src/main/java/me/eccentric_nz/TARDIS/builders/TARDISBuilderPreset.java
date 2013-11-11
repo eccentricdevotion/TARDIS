@@ -40,12 +40,12 @@ import org.bukkit.entity.Player;
  *
  * @author eccentric_nz
  */
-public class TARDISBuilderPoliceBox {
+public class TARDISBuilderPreset {
 
     private final TARDIS plugin;
     List<Integer> plat_blocks = Arrays.asList(new Integer[]{0, 6, 9, 8, 31, 32, 37, 38, 39, 40, 78, 106, 3019, 3020});
 
-    public TARDISBuilderPoliceBox(TARDIS plugin) {
+    public TARDISBuilderPreset(TARDIS plugin) {
         this.plugin = plugin;
     }
 
@@ -61,7 +61,7 @@ public class TARDISBuilderPoliceBox {
      * be remembered in the database for protection purposes.
      * @param mal boolean determining whether a malfunction has occurred
      */
-    public void buildPoliceBox(int id, Location l, TARDISConstants.COMPASS d, boolean c, Player p, boolean rebuild, boolean mal) {
+    public void buildPreset(int id, Location l, TARDISConstants.COMPASS d, boolean c, Player p, boolean rebuild, boolean mal) {
         HashMap<String, Object> where = new HashMap<String, Object>();
         where.put("tardis_id", id);
         ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
@@ -69,7 +69,7 @@ public class TARDISBuilderPoliceBox {
             TARDISConstants.PRESET preset = rs.getPreset();
             int cham_id = rs.getChameleon_id();
             byte cham_data = rs.getChameleon_data();
-            if (c && (preset.equals(TARDISConstants.PRESET.NEW) || preset.equals(TARDISConstants.PRESET.OLD))) {
+            if (c && (preset.equals(TARDISConstants.PRESET.NEW) || preset.equals(TARDISConstants.PRESET.OLD) || preset.equals(TARDISConstants.PRESET.SUBMERGED))) {
                 Block chameleonBlock;
                 // chameleon circuit is on - get block under TARDIS
                 if (l.getBlock().getType() == Material.SNOW) {
@@ -82,6 +82,7 @@ public class TARDISBuilderPoliceBox {
                 int[] b_data = tcc.getChameleonBlock(chameleonBlock, p, false);
                 cham_id = b_data[0];
                 cham_data = (byte) b_data[1];
+                plugin.debug("i:" + cham_id + ", d:" + cham_data);
             }
             // get lamp and submarine preferences
             int lamp = plugin.getConfig().getInt("tardis_lamp");
@@ -107,19 +108,14 @@ public class TARDISBuilderPoliceBox {
             if (rebuild) {
                 TARDISRebuildPreset trp = new TARDISRebuildPreset(plugin, l, preset, id, d, p.getName(), mal, lamp, sub, cham_id, cham_data);
                 trp.rebuildPreset();
-//            TARDISPoliceBoxRebuilder rebuilder = new TARDISPoliceBoxRebuilder(plugin, l, cham_id, cham_data, id, d, lamp, plain, sub);
-//            rebuilder.rebuildPoliceBox();
             } else {
                 if (plugin.getConfig().getBoolean("materialise")) {
                     plugin.tardisMaterialising.add(id);
-//                TARDISMaterialisationRunnable runnable = new TARDISMaterialisationRunnable(plugin, l, cham_id, cham_data, id, d, p, mal, lamp, plain, sub);
                     TARDISPresetRunnable runnable = new TARDISPresetRunnable(plugin, l, preset, id, d, p, mal, lamp, sub, cham_id, cham_data);
                     int taskID = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, runnable, 10L, 20L);
                     runnable.setTask(taskID);
                 } else {
                     plugin.tardisMaterialising.add(id);
-                    //TARDISInstaPoliceBox insta = new TARDISInstaPoliceBox(plugin, l, cham_id, cham_data, id, d, p.getName(), mal, lamp, plain, sub);
-                    //insta.buildPoliceBox();
                     TARDISInstaPreset insta = new TARDISInstaPreset(plugin, l, preset, id, d, p.getName(), mal, lamp, sub, cham_id, cham_data);
                     insta.buildPreset();
                 }

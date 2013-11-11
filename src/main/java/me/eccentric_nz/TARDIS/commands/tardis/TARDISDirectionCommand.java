@@ -101,7 +101,7 @@ public class TARDISDirectionCommand {
             plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
                 @Override
                 public void run() {
-                    plugin.buildPB.buildPoliceBox(id, l, d, cham, p, true, false);
+                    plugin.buildPB.buildPreset(id, l, d, cham, p, true, false);
                 }
             }, 10L);
             HashMap<String, Object> wherea = new HashMap<String, Object>();

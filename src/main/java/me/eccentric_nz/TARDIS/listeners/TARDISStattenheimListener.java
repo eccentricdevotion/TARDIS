@@ -221,7 +221,7 @@ public class TARDISStattenheimListener implements Listener {
                             public void run() {
                                 if (!hidden) {
                                     plugin.tardisDematerialising.add(id);
-                                    plugin.destroyPB.destroyPoliceBox(oldSave, d, id, false, mat, cham, p);
+                                    plugin.destroyPB.destroyPreset(oldSave, d, id, false, mat, cham, p);
                                 } else {
                                     plugin.destroyPB.removeBlockProtection(id, qf);
                                 }
@@ -230,7 +230,7 @@ public class TARDISStattenheimListener implements Listener {
                         Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
                             @Override
                             public void run() {
-                                plugin.buildPB.buildPoliceBox(id, remoteLocation, d, cham, p, false, false);
+                                plugin.buildPB.buildPreset(id, remoteLocation, d, cham, p, false, false);
                             }
                         }, delay * 2);
                         // remove energy from TARDIS

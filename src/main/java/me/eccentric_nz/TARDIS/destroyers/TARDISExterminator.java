@@ -70,7 +70,7 @@ public class TARDISExterminator {
                 Location bb_loc = new Location(rsc.getWorld(), rsc.getX(), rsc.getY(), rsc.getZ());
                 TARDISConstants.COMPASS d = rsc.getDirection();
                 if (!hid) {
-                    plugin.destroyPB.destroyPoliceBox(bb_loc, d, id, false, false, false, null);
+                    plugin.destroyPB.destroyPreset(bb_loc, d, id, false, false, false, null);
                 }
                 String[] chunkworld = chunkLoc.split(":");
                 World cw = plugin.getServer().getWorld(chunkworld[0]);
@@ -189,7 +189,7 @@ public class TARDISExterminator {
             if (sign_loc.getBlockX() == bb_loc.getBlockX() + signx && sign_loc.getBlockY() + signy == bb_loc.getBlockY() && sign_loc.getBlockZ() == bb_loc.getBlockZ() + signz) {
                 if (!rs.isHidden()) {
                     // remove Police Box
-                    plugin.destroyPB.destroyPoliceBox(bb_loc, d, id, false, false, false, null);
+                    plugin.destroyPB.destroyPreset(bb_loc, d, id, false, false, false, null);
                 }
                 String[] chunkworld = chunkLoc.split(":");
                 World cw = plugin.getServer().getWorld(chunkworld[0]);

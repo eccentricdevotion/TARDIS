@@ -182,7 +182,7 @@ public class TARDISComehereCommand {
                             public void run() {
                                 if (!hidden) {
                                     plugin.tardisDematerialising.add(id);
-                                    plugin.destroyPB.destroyPoliceBox(oldSave, d, id, false, mat, cham, p);
+                                    plugin.destroyPB.destroyPreset(oldSave, d, id, false, mat, cham, p);
                                 } else {
                                     plugin.destroyPB.removeBlockProtection(id, qf);
                                 }
@@ -191,7 +191,7 @@ public class TARDISComehereCommand {
                         Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
                             @Override
                             public void run() {
-                                plugin.buildPB.buildPoliceBox(id, eyeLocation, d, cham, p, false, false);
+                                plugin.buildPB.buildPreset(id, eyeLocation, d, cham, p, false, false);
                             }
                         }, delay * 2);
                         // remove energy from TARDIS

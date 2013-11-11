@@ -128,7 +128,7 @@ public class TARDISDeleteCommand {
                 plugin.destroyI.destroyInner(schm, id, cw, restore, args[1]);
             }
             if (!rs.isHidden()) {
-                plugin.destroyPB.destroyPoliceBox(bb_loc, d, id, false, false, false, null);
+                plugin.destroyPB.destroyPreset(bb_loc, d, id, false, false, false, null);
             }
             // delete the TARDIS from the db
             HashMap<String, Object> wherec = new HashMap<String, Object>();

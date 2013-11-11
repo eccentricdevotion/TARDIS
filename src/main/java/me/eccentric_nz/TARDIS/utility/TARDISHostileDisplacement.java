@@ -135,13 +135,13 @@ public class TARDISHostileDisplacement {
                                         @Override
                                         public void run() {
                                             plugin.tardisDematerialising.add(id);
-                                            plugin.destroyPB.destroyPoliceBox(loc, d, id, false, mat, cham, player);
+                                            plugin.destroyPB.destroyPreset(loc, d, id, false, mat, cham, player);
                                         }
                                     }, delay);
                                     plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
                                         @Override
                                         public void run() {
-                                            plugin.buildPB.buildPoliceBox(id, fl, d, cham, player, false, false);
+                                            plugin.buildPB.buildPreset(id, fl, d, cham, player, false, false);
                                         }
                                     }, delay * 2);
                                     // message time lord

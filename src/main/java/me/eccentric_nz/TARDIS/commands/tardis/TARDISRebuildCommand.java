@@ -87,13 +87,13 @@ public class TARDISRebuildCommand {
             }
             if (!hidden) {
                 // remove the police box first - should fix conflict between wood and iron doors
-                plugin.destroyPB.destroyPoliceBox(l, rsc.getDirection(), id, true, false, false, null);
+                plugin.destroyPB.destroyPreset(l, rsc.getDirection(), id, true, false, false, null);
             }
             final boolean c = cham;
             plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
                 @Override
                 public void run() {
-                    plugin.buildPB.buildPoliceBox(id, l, rsc.getDirection(), c, player, true, false);
+                    plugin.buildPB.buildPreset(id, l, rsc.getDirection(), c, player, true, false);
                 }
             }, 10L);
             player.sendMessage(plugin.pluginName + "The TARDIS Police Box was rebuilt!");

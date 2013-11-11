@@ -58,9 +58,6 @@ public class TARDISCraftListener implements Listener {
         t.put(Material.LAPIS_BLOCK, "TOM"); // tom baker
         t.put(Material.BOOKSHELF, "PLANK"); // plank
         t.put(Material.valueOf(this.plugin.getConfig().getString("custom_schematic_seed")), "CUSTOM"); // custom
-//        for (String m : plugin.getBlocksConfig().getStringList("tardis_blocks")) {
-//            b.add(Material.valueOf(m));
-//        }
         for (Integer i : plugin.getBlocksConfig().getIntegerList("chameleon_blocks")) {
             c.add(i);
         }

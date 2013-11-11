@@ -39,15 +39,15 @@ import org.bukkit.entity.Player;
  *
  * @author eccentric_nz
  */
-public class TARDISDestroyerPoliceBox {
+public class TARDISDestroyerPreset {
 
     private final TARDIS plugin;
 
-    public TARDISDestroyerPoliceBox(TARDIS plugin) {
+    public TARDISDestroyerPreset(TARDIS plugin) {
         this.plugin = plugin;
     }
 
-    public void destroyPoliceBox(Location l, TARDISConstants.COMPASS d, int id, boolean hide, boolean dematerialise, boolean c, Player player) {
+    public void destroyPreset(Location l, TARDISConstants.COMPASS d, int id, boolean hide, boolean dematerialise, boolean c, Player player) {
         HashMap<String, Object> where = new HashMap<String, Object>();
         where.put("tardis_id", id);
         ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
@@ -56,7 +56,7 @@ public class TARDISDestroyerPoliceBox {
             if (dematerialise && !hide) {
                 int cham_id = rs.getChameleon_id();
                 byte cham_data = rs.getChameleon_data();
-                if (c && (demat.equals(TARDISConstants.PRESET.NEW) || demat.equals(TARDISConstants.PRESET.OLD))) {
+                if (c && (demat.equals(TARDISConstants.PRESET.NEW) || demat.equals(TARDISConstants.PRESET.OLD) || demat.equals(TARDISConstants.PRESET.SUBMERGED))) {
                     Block chameleonBlock;
                     // chameleon circuit is on - get block under TARDIS
                     if (l.getBlock().getType() == Material.SNOW) {
@@ -69,6 +69,7 @@ public class TARDISDestroyerPoliceBox {
                     int[] b_data = tcc.getChameleonBlock(chameleonBlock, player, false);
                     cham_id = b_data[0];
                     cham_data = (byte) b_data[1];
+                    plugin.debug("i:" + cham_id + ", d:" + cham_data);
                 }
                 int lamp = plugin.getConfig().getInt("tardis_lamp");
                 HashMap<String, Object> wherepp = new HashMap<String, Object>();
@@ -77,12 +78,11 @@ public class TARDISDestroyerPoliceBox {
                 if (rsp.resultSet()) {
                     lamp = rsp.getLamp();
                 }
-                //TARDISDematerialisationRunnable runnable = new TARDISDematerialisationRunnable(plugin, l, lamp, cham_id, cham_data, id, d, player);
                 TARDISDematerialisationPreset runnable = new TARDISDematerialisationPreset(plugin, l, demat, lamp, id, d, cham_id, cham_data);
                 int taskID = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, runnable, 10L, 20L);
                 runnable.setTask(taskID);
             } else {
-                new TARDISDeinstaPoliceBox(plugin).instaDestroyPB(l, d, id, hide, demat);
+                new TARDISDeinstaPreset(plugin).instaDestroyPreset(l, d, id, hide, demat);
             }
         }
     }

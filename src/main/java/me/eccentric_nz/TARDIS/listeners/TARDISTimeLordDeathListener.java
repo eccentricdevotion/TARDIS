@@ -150,7 +150,7 @@ public class TARDISTimeLordDeathListener implements Listener {
                                 final COMPASS fd = (going_home) ? hd : cd;
                                 // destroy police box
                                 if (!rs.isHidden()) {
-                                    plugin.destroyPB.destroyPoliceBox(sl, cd, id, false, plugin.getConfig().getBoolean("materialise"), cham, player);
+                                    plugin.destroyPB.destroyPreset(sl, cd, id, false, plugin.getConfig().getBoolean("materialise"), cham, player);
                                 } else {
                                     plugin.destroyPB.removeBlockProtection(id, qf);
                                     HashMap<String, Object> set = new HashMap<String, Object>();
@@ -171,7 +171,7 @@ public class TARDISTimeLordDeathListener implements Listener {
                                     @Override
                                     public void run() {
                                         // rebuild police box - needs to be a delay
-                                        plugin.buildPB.buildPoliceBox(id, auto_loc, fd, cham, player, false, false);
+                                        plugin.buildPB.buildPreset(id, auto_loc, fd, cham, player, false, false);
                                     }
                                 }, 200L);
                                 // set current
