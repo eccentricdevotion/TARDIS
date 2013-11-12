@@ -10,7 +10,13 @@
 4. TARDIS Information System (add new features)
 5. Chameleon presets (in progress)
     * Match presets to biomes, and use Yellow Submarine when underwater?
-    * Fix doors again
+    * If police box lamp is not a redstone lamp, then make the redstone block a normal wall block
+    * Fix vine on jungle
+    * Fix door popping off raised and end of demat
+    * Fix platform and underdoor block not being removed?
+    * Upside down Police Box /gravestone with HERE LIES
+    * Check chameleon on / off in GUI
+    * Party tent / flower is random colour
 6. Documentation & videos!
 
 ## Waiting on Bukkit API

@@ -25,6 +25,7 @@ import me.eccentric_nz.TARDIS.chameleon.TARDISChameleonCircuit;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
+import me.eccentric_nz.TARDIS.destroyers.TARDISDeinstaPreset;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -67,6 +68,7 @@ public class TARDISBuilderPreset {
         ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
         if (rs.resultSet()) {
             TARDISConstants.PRESET preset = rs.getPreset();
+            TARDISConstants.PRESET demat = rs.getDemat();
             int cham_id = rs.getChameleon_id();
             byte cham_data = rs.getChameleon_data();
             if (c && (preset.equals(TARDISConstants.PRESET.NEW) || preset.equals(TARDISConstants.PRESET.OLD) || preset.equals(TARDISConstants.PRESET.SUBMERGED))) {
@@ -82,11 +84,11 @@ public class TARDISBuilderPreset {
                 int[] b_data = tcc.getChameleonBlock(chameleonBlock, p, false);
                 cham_id = b_data[0];
                 cham_data = (byte) b_data[1];
-                plugin.debug("i:" + cham_id + ", d:" + cham_data);
             }
             // get lamp and submarine preferences
             int lamp = plugin.getConfig().getInt("tardis_lamp");
             boolean sub = false;
+            boolean hidden = rs.isHidden();
             HashMap<String, Object> wherepp = new HashMap<String, Object>();
             wherepp.put("player", p.getName());
             ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, wherepp);
@@ -106,8 +108,18 @@ public class TARDISBuilderPreset {
              */
             plugin.tardisChunkList.add(thisChunk);
             if (rebuild) {
-                TARDISRebuildPreset trp = new TARDISRebuildPreset(plugin, l, preset, id, d, p.getName(), mal, lamp, sub, cham_id, cham_data);
-                trp.rebuildPreset();
+                // always destroy it first as the player may just be switching presets
+                if (!hidden) {
+                    TARDISDeinstaPreset deinsta = new TARDISDeinstaPreset(plugin);
+                    deinsta.instaDestroyPreset(l, d, id, sub, demat);
+                }
+                final TARDISRebuildPreset trp = new TARDISRebuildPreset(plugin, l, preset, id, d, p.getName(), mal, lamp, sub, cham_id, cham_data);
+                plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
+                    @Override
+                    public void run() {
+                        trp.rebuildPreset();
+                    }
+                }, 10L);
             } else {
                 if (plugin.getConfig().getBoolean("materialise")) {
                     plugin.tardisMaterialising.add(id);

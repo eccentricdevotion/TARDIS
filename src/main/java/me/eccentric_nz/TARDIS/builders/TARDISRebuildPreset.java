@@ -25,14 +25,12 @@ import me.eccentric_nz.TARDIS.chameleon.TARDISChameleonColumn;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetDoors;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
-import me.eccentric_nz.TARDIS.travel.TARDISDoorLocation;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.block.Sign;
-import org.bukkit.entity.Player;
 
 /**
  * A police box is a telephone kiosk that can be used by members of the public
@@ -82,7 +80,7 @@ public class TARDISRebuildPreset {
      * Builds the TARDIS Preset.
      */
     public void rebuildPreset() {
-        column = getColumn(preset, d);
+        column = plugin.presets.getColumn(preset, d);
         int plusx, minusx, x, plusz, y, undery, minusz, z, platform_id = plugin.getConfig().getInt("platform_id");
         byte platform_data = (byte) plugin.getConfig().getInt("platform_data");
         final World world;
@@ -102,23 +100,6 @@ public class TARDISRebuildPreset {
         minusz = (location.getBlockZ() - 1);
         world = location.getWorld();
         int signx = 0, signz = 0;
-        // rescue player?
-        if (plugin.trackRescue.containsKey(tid)) {
-            String name = plugin.trackRescue.get(tid);
-            Player saved = plugin.getServer().getPlayer(name);
-            if (saved != null) {
-                TARDISDoorLocation idl = plugin.doorListener.getDoor(1, tid);
-                Location l = idl.getL();
-                plugin.doorListener.movePlayer(saved, l, false, world, false);
-                // put player into travellers table
-                HashMap<String, Object> set = new HashMap<String, Object>();
-                set.put("tardis_id", tid);
-                set.put("player", name);
-                QueryFactory qf = new QueryFactory(plugin);
-                qf.doInsert("travellers", set);
-            }
-            plugin.trackRescue.remove(tid);
-        }
         // platform
         plugin.buildPB.addPlatform(location, false, d, p, tid);
         QueryFactory qf = new QueryFactory(plugin);
@@ -356,46 +337,5 @@ public class TARDISRebuildPreset {
             plugin.wgutils.sponge(sponge, true);
         }
         plugin.tardisMaterialising.remove(Integer.valueOf(tid));
-    }
-
-    private TARDISChameleonColumn getColumn(TARDISConstants.PRESET p, TARDISConstants.COMPASS d) {
-        switch (p) {
-            case OLD:
-                return plugin.presets.getPolice().get(d);
-            case FACTORY:
-                return plugin.presets.getFactory().get(d);
-            case STONE:
-                return plugin.presets.getColumn().get(d);
-            case DESERT:
-                return plugin.presets.getDesert().get(d);
-            case JUNGLE:
-                return plugin.presets.getJungle().get(d);
-            case NETHER:
-                return plugin.presets.getNether().get(d);
-            case SWAMP:
-                return plugin.presets.getSwamp().get(d);
-            case PARTY:
-                return plugin.presets.getTent().get(d);
-            case VILLAGE:
-                return plugin.presets.getVillage().get(d);
-            case YELLOW:
-                return plugin.presets.getYellowsub().get(d);
-            case SUBMERGED:
-                return plugin.presets.getSubmerged().get(d);
-            case RAISED:
-                return plugin.presets.getRaised().get(d);
-            case FLOWER:
-                return plugin.presets.getFlower().get(d);
-            case CHALICE:
-                return plugin.presets.getChalice().get(d);
-            case WINDMILL:
-                return plugin.presets.getWindmill().get(d);
-            case TELEPHONE:
-                return plugin.presets.getTelephone().get(d);
-            case WELL:
-                return plugin.presets.getWell().get(d);
-            default:
-                return plugin.presets.getTaller().get(d);
-        }
     }
 }

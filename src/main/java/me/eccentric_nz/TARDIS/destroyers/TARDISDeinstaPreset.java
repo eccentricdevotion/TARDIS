@@ -73,8 +73,10 @@ public class TARDISDeinstaPreset {
             sby = l.getBlockY();
         }
         int sbz = l.getBlockZ() - 1;
+        // remove torch
+        plugin.destroyPB.destroyLamp(l);
         // remove sign
-        plugin.destroyPB.destroySign(l, d);
+        plugin.destroyPB.destroySign(l, d, preset);
         // remove blue wool and door
         for (int yy = 0; yy < 4; yy++) {
             for (int xx = 0; xx < 3; xx++) {

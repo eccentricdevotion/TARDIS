@@ -69,7 +69,6 @@ public class TARDISDestroyerPreset {
                     int[] b_data = tcc.getChameleonBlock(chameleonBlock, player, false);
                     cham_id = b_data[0];
                     cham_data = (byte) b_data[1];
-                    plugin.debug("i:" + cham_id + ", d:" + cham_data);
                 }
                 int lamp = plugin.getConfig().getInt("tardis_lamp");
                 HashMap<String, Object> wherepp = new HashMap<String, Object>();
@@ -87,7 +86,7 @@ public class TARDISDestroyerPreset {
         }
     }
 
-    public void destroySign(Location l, TARDISConstants.COMPASS d) {
+    public void destroySign(Location l, TARDISConstants.COMPASS d, TARDISConstants.PRESET p) {
         World w = l.getWorld();
         int signx = 0, signz = 0;
         switch (d) {
@@ -108,11 +107,11 @@ public class TARDISDestroyerPreset {
                 signz = 2;
                 break;
         }
-        int signy = 2;
+        int signy = (p.equals(TARDISConstants.PRESET.RAISED)) ? 3 : 2;
         plugin.utils.setBlock(w, l.getBlockX() + signx, l.getBlockY() + signy, l.getBlockZ() + signz, 0, (byte) 0);
     }
 
-    public void destroyTorch(Location l) {
+    public void destroyLamp(Location l) {
         World w = l.getWorld();
         int tx = l.getBlockX();
         int ty = l.getBlockY() + 3;

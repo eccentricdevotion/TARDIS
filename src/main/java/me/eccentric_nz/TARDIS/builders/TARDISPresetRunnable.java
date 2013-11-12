@@ -101,46 +101,9 @@ public class TARDISPresetRunnable implements Runnable {
         this.sub = sub;
         this.cham_id = cham_id;
         this.cham_data = cham_data;
-        column = getColumn(preset, d);
-        switch (preset) {
-            case CHALICE:
-            case DESERT:
-            case NEW:
-            case RAISED:
-            case STONE:
-            case SWAMP:
-            case TELEPHONE:
-            case VILLAGE:
-            case WINDMILL:
-                ice_column = plugin.presets.getTaller_ice().get(d);
-                glass_column = plugin.presets.getTaller_glass().get(d);
-                break;
-            case JUNGLE:
-                ice_column = plugin.presets.getJungle_ice().get(d);
-                glass_column = plugin.presets.getJungle_glass().get(d);
-                break;
-            case PARTY:
-                ice_column = plugin.presets.getTent_ice().get(d);
-                glass_column = plugin.presets.getTent_glass().get(d);
-                break;
-            case FLOWER:
-                ice_column = plugin.presets.getFlower_ice().get(d);
-                glass_column = plugin.presets.getFlower_glass().get(d);
-                break;
-            case SUBMERGED:
-                ice_column = plugin.presets.getSubmerged_ice().get(d);
-                glass_column = plugin.presets.getSubmerged_glass().get(d);
-                break;
-            case WELL:
-                ice_column = plugin.presets.getWell_ice().get(d);
-                glass_column = plugin.presets.getWell_glass().get(d);
-                plugin.isWellPresetMaterialising.add("tid" + tid);
-                break;
-            default:
-                ice_column = plugin.presets.getIce().get(d);
-                glass_column = plugin.presets.getGlass().get(d);
-                break;
-        }
+        column = plugin.presets.getColumn(preset, d);
+        ice_column = plugin.presets.getIce(preset, d);
+        glass_column = plugin.presets.getGlass(preset, d);
         no_block_under_door = new ArrayList<TARDISConstants.PRESET>();
         no_block_under_door.add(TARDISConstants.PRESET.RAISED);
         no_block_under_door.add(TARDISConstants.PRESET.SUBMERGED);
@@ -156,6 +119,9 @@ public class TARDISPresetRunnable implements Runnable {
             int x = location.getBlockX(), plusx = location.getBlockX() + 1, minusx = location.getBlockX() - 1;
             int y;
             int undery;
+            if (preset.equals(TARDISConstants.PRESET.WELL)) {
+                plugin.isWellPresetMaterialising.add("tid" + tid);
+            }
             if (preset.equals(TARDISConstants.PRESET.SUBMERGED)) {
                 y = location.getBlockY() - 1;
                 undery = (location.getBlockY() - 2);
@@ -426,6 +392,10 @@ public class TARDISPresetRunnable implements Runnable {
                                                 line1 = "SIGN ABOVE";
                                                 line2 = "THE DOOR";
                                                 break;
+                                            case SWAMP:
+                                                line1 = "SWAMP";
+                                                line2 = "HUT";
+                                                break;
                                             default:
                                                 line1 = "POLICE";
                                                 line2 = "BOX";
@@ -509,10 +479,6 @@ public class TARDISPresetRunnable implements Runnable {
                                     int light = (preset.equals(TARDISConstants.PRESET.NEW) || preset.equals(TARDISConstants.PRESET.OLD)) ? lamp : colids[yy];
                                     plugin.utils.setBlock(world, xx, (y + yy), zz, light, coldatas[yy]);
                                     break;
-//                                case 71: // doors
-//                                    int door = (preset.equals(TARDISConstants.PRESET.SWAMP) || preset.equals(TARDISConstants.PRESET.VILLAGE)) ? 64 : 71;
-//                                    plugin.utils.setBlock(world, xx, (y + yy), zz, door, coldatas[yy]);
-//                                    break;
                                 default: // everything else
                                     plugin.utils.setBlock(world, xx, (y + yy), zz, colids[yy], coldatas[yy]);
                                     break;
@@ -555,46 +521,5 @@ public class TARDISPresetRunnable implements Runnable {
 
     public void setTask(int task) {
         this.task = task;
-    }
-
-    private TARDISChameleonColumn getColumn(TARDISConstants.PRESET p, TARDISConstants.COMPASS d) {
-        switch (p) {
-            case OLD:
-                return plugin.presets.getPolice().get(d);
-            case FACTORY:
-                return plugin.presets.getFactory().get(d);
-            case STONE:
-                return plugin.presets.getColumn().get(d);
-            case DESERT:
-                return plugin.presets.getDesert().get(d);
-            case JUNGLE:
-                return plugin.presets.getJungle().get(d);
-            case NETHER:
-                return plugin.presets.getNether().get(d);
-            case SWAMP:
-                return plugin.presets.getSwamp().get(d);
-            case PARTY:
-                return plugin.presets.getTent().get(d);
-            case VILLAGE:
-                return plugin.presets.getVillage().get(d);
-            case YELLOW:
-                return plugin.presets.getYellowsub().get(d);
-            case SUBMERGED:
-                return plugin.presets.getSubmerged().get(d);
-            case RAISED:
-                return plugin.presets.getRaised().get(d);
-            case FLOWER:
-                return plugin.presets.getFlower().get(d);
-            case CHALICE:
-                return plugin.presets.getChalice().get(d);
-            case WINDMILL:
-                return plugin.presets.getWindmill().get(d);
-            case TELEPHONE:
-                return plugin.presets.getTelephone().get(d);
-            case WELL:
-                return plugin.presets.getWell().get(d);
-            default:
-                return plugin.presets.getTaller().get(d);
-        }
     }
 }

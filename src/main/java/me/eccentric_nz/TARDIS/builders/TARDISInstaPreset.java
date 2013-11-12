@@ -83,7 +83,7 @@ public class TARDISInstaPreset {
      * Builds the TARDIS Preset.
      */
     public void buildPreset() {
-        column = getColumn(preset, d);
+        column = plugin.presets.getColumn(preset, d);
         int plusx, minusx, x, plusz, y, undery, minusz, z, platform_id = plugin.getConfig().getInt("platform_id");
         byte platform_data = (byte) plugin.getConfig().getInt("platform_data");
         final World world;
@@ -376,46 +376,5 @@ public class TARDISInstaPreset {
             }, 30L);
         }
         plugin.tardisMaterialising.remove(Integer.valueOf(tid));
-    }
-
-    private TARDISChameleonColumn getColumn(TARDISConstants.PRESET p, TARDISConstants.COMPASS d) {
-        switch (p) {
-            case OLD:
-                return plugin.presets.getPolice().get(d);
-            case FACTORY:
-                return plugin.presets.getFactory().get(d);
-            case STONE:
-                return plugin.presets.getColumn().get(d);
-            case DESERT:
-                return plugin.presets.getDesert().get(d);
-            case JUNGLE:
-                return plugin.presets.getJungle().get(d);
-            case NETHER:
-                return plugin.presets.getNether().get(d);
-            case SWAMP:
-                return plugin.presets.getSwamp().get(d);
-            case PARTY:
-                return plugin.presets.getTent().get(d);
-            case VILLAGE:
-                return plugin.presets.getVillage().get(d);
-            case YELLOW:
-                return plugin.presets.getYellowsub().get(d);
-            case SUBMERGED:
-                return plugin.presets.getSubmerged().get(d);
-            case RAISED:
-                return plugin.presets.getRaised().get(d);
-            case FLOWER:
-                return plugin.presets.getFlower().get(d);
-            case CHALICE:
-                return plugin.presets.getChalice().get(d);
-            case WINDMILL:
-                return plugin.presets.getWindmill().get(d);
-            case TELEPHONE:
-                return plugin.presets.getTelephone().get(d);
-            case WELL:
-                return plugin.presets.getWell().get(d);
-            default:
-                return plugin.presets.getTaller().get(d);
-        }
     }
 }

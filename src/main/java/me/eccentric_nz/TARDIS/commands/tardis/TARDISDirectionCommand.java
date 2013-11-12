@@ -69,6 +69,7 @@ public class TARDISDirectionCommand {
             final boolean cham = tmp_cham;
             String plat = rs.getPlatform();
             boolean hid = rs.isHidden();
+            TARDISConstants.PRESET demat = rs.getDemat();
             String dir = args[1].toUpperCase(Locale.ENGLISH);
             HashMap<String, Object> wherecl = new HashMap<String, Object>();
             wherecl.put("tardis_id", id);
@@ -95,7 +96,7 @@ public class TARDISDirectionCommand {
             // destroy platform
             if (!hid) {
                 plugin.destroyPB.destroyPlatform(plat, id);
-                plugin.destroyPB.destroySign(l, old_d);
+                plugin.destroyPB.destroySign(l, old_d, demat);
             }
             final Player p = player;
             plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
