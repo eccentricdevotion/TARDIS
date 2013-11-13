@@ -12,14 +12,12 @@
     * Match presets to biomes, and use Yellow Submarine when underwater?
     * If police box lamp is not a redstone lamp, then make the redstone block a normal wall block - check chameleon circuit as well
     * Fix vine on jungle
-    * Fix door popping off raised at end of demat - we know door location, so remove door first
     * Fix platform and underdoor block not being removed
-    * Upside down Police Box / gravestone with "HERE LIES"
     * Check chameleon on / off in GUI
     * Party tent / flower is random colour
     * Custom preset x1 - custom_preset.json
 6. Documentation & videos!
-7. Add MySQL support
+7. Insert last use is inserted when TARDIS is created and whe player logs in
 
 ## Waiting on Bukkit API
 0. IDs are soon to be history... so convert all ID use to entity names
@@ -42,6 +40,7 @@
 11. Underground materialisation
 12. Update the malfunction location finder to have a greater range
 13. HADS + explosions + fireballs + lava
+14. Add MySQL support
 
 ## Minecraft API when available
 1. Recreate everything with the new API :)

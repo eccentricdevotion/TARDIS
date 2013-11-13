@@ -94,7 +94,8 @@ public class TARDISDestroyerPreset {
         ResultSetDoors rsd = new ResultSetDoors(plugin, where, false);
         if (rsd.resultSet()) {
             String dl = rsd.getDoor_location();
-            Block b = plugin.utils.getLocationFromBukkitString(dl).getBlock();
+            float f = 0.0F;
+            Block b = plugin.utils.getLocationFromDB(dl, f, f).getBlock();
             b.setType(Material.AIR);
             b.getRelative(BlockFace.UP).setType(Material.AIR);
         }

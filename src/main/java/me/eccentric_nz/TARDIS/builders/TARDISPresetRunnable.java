@@ -105,6 +105,7 @@ public class TARDISPresetRunnable implements Runnable {
         ice_column = plugin.presets.getIce(preset, d);
         glass_column = plugin.presets.getGlass(preset, d);
         no_block_under_door = new ArrayList<TARDISConstants.PRESET>();
+        no_block_under_door.add(TARDISConstants.PRESET.GRAVESTONE);
         no_block_under_door.add(TARDISConstants.PRESET.RAISED);
         no_block_under_door.add(TARDISConstants.PRESET.SUBMERGED);
         no_block_under_door.add(TARDISConstants.PRESET.WELL);

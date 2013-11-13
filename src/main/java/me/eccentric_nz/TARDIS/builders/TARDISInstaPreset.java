@@ -74,6 +74,7 @@ public class TARDISInstaPreset {
         this.cham_id = cham_id;
         this.cham_data = cham_data;
         no_block_under_door = new ArrayList<TARDISConstants.PRESET>();
+        no_block_under_door.add(TARDISConstants.PRESET.GRAVESTONE);
         no_block_under_door.add(TARDISConstants.PRESET.RAISED);
         no_block_under_door.add(TARDISConstants.PRESET.SUBMERGED);
         no_block_under_door.add(TARDISConstants.PRESET.WELL);

@@ -73,6 +73,8 @@ public class TARDISDeinstaPreset {
             sby = l.getBlockY();
         }
         int sbz = l.getBlockZ() - 1;
+        // remove door
+        plugin.destroyPB.destroyDoor(id);
         // remove torch
         plugin.destroyPB.destroyLamp(l);
         // remove sign
