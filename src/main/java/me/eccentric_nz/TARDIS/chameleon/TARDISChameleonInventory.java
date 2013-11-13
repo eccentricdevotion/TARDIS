@@ -163,6 +163,11 @@ public class TARDISChameleonInventory {
         ItemMeta turvey = topsy.getItemMeta();
         turvey.setDisplayName("Topsy-turvey");
         topsy.setItemMeta(turvey);
+        // mushroom
+        ItemStack mush = new ItemStack(Material.HUGE_MUSHROOM_1, 1);
+        ItemMeta shroom = mush.getItemMeta();
+        shroom.setDisplayName("Mushroom");
+        mush.setItemMeta(shroom);
         // custom
         ItemStack custom = new ItemStack(Material.PISTON_STICKY_BASE, 1);
         ItemMeta pre = custom.getItemMeta();
@@ -175,12 +180,12 @@ public class TARDISChameleonInventory {
         close.setItemMeta(can);
 
         ItemStack[] is = {
-            con, null, null, null, apply, null, null, null, close,
-            null, box, null, off, null, jungle, null, nether, null,
-            swamp, null, tent, null, village, null, yellow, null, def,
-            null, tel, null, sub, null, rai, null, flo, null,
-            stone, null, win, null, desert, null, well, null, chal,
-            null, cake, null, grave, null, topsy, null, custom, null
+            null, null, null, con, apply, close, null, null, null,
+            box, null, off, null, jungle, null, nether, null, def,
+            null, swamp, null, tent, null, village, null, yellow, null,
+            tel, null, sub, null, rai, null, flo, null, stone,
+            null, win, null, desert, null, well, null, chal, null,
+            cake, null, grave, null, topsy, null, mush, null, custom
         };
         return is;
     }

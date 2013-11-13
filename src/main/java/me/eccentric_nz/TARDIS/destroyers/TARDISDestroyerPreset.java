@@ -109,26 +109,6 @@ public class TARDISDestroyerPreset {
                 signx = 0;
                 signz = 0;
                 break;
-            case SHROOM:
-                switch (d) {
-                    case EAST:
-                        signx = -1;
-                        signz = 0;
-                        break;
-                    case SOUTH:
-                        signx = 0;
-                        signz = -1;
-                        break;
-                    case WEST:
-                        signx = 1;
-                        signz = 0;
-                        break;
-                    default:
-                        signx = 0;
-                        signz = 1;
-                        break;
-                }
-                break;
             default:
                 switch (d) {
                     case EAST:
@@ -152,6 +132,7 @@ public class TARDISDestroyerPreset {
         }
         switch (p) {
             case RAISED:
+            case SHROOM:
                 signy = 3;
                 break;
             case TOPSYTURVEY:

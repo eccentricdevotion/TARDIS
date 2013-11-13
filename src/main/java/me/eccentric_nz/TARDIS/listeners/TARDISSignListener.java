@@ -98,34 +98,12 @@ public class TARDISSignListener implements Listener {
                     } else {
                         line1 = (signloc.equals(rs.getChameleon())) ? "Chameleon" : "Save Sign";
                     }
-                    //QueryFactory qf = new QueryFactory(plugin);
-//                    HashMap<String, Object> tid = new HashMap<String, Object>();
-//                    tid.put("tardis_id", id);
                     if (line1.equals("Chameleon")) {
                         // open Chameleon Circuit GUI
                         ItemStack[] cc = new TARDISChameleonInventory(rs.isChamele_on()).getTerminal();
                         Inventory cc_gui = plugin.getServer().createInventory(player, 54, "§4Chameleon Circuit");
                         cc_gui.setContents(cc);
                         player.openInventory(cc_gui);
-//                        HashMap<String, Object> set = new HashMap<String, Object>();
-//                        if (c_on) {
-//                            set.put("chamele_on", 0);
-//                            if ((blockType == Material.WALL_SIGN || blockType == Material.SIGN_POST) && s != null) {
-//                                s.setLine(3, ChatColor.RED + "OFF");
-//                                s.update();
-//                            } else {
-//                                player.sendMessage(plugin.pluginName + "Chameleon Circuit OFF");
-//                            }
-//                        } else {
-//                            set.put("chamele_on", 1);
-//                            if ((blockType == Material.WALL_SIGN || blockType == Material.SIGN_POST) && s != null) {
-//                                s.setLine(3, ChatColor.GREEN + "ON");
-//                                s.update();
-//                            } else {
-//                                player.sendMessage(plugin.pluginName + "Chameleon Circuit ON");
-//                            }
-//                        }
-//                        qf.doUpdate("tardis", set, tid);
                     } else {
                         if (event.getAction().equals(Action.RIGHT_CLICK_BLOCK) && plugin.bukkitversion.compareTo(plugin.preIMversion) >= 0) {
                             TARDISSaveSignInventory sst = new TARDISSaveSignInventory(plugin, rs.getTardis_id());

@@ -31,7 +31,7 @@ import me.eccentric_nz.TARDIS.JSON.JSONArray;
  */
 public class TARDISChameleonPreset {
 
-    private final List<Integer> problemBlocks = Arrays.asList(new Integer[]{64, 67, 68, 71, 96, 106, 109, 114, 128, 156});
+    private final List<Integer> problemBlocks = Arrays.asList(new Integer[]{64, 67, 68, 71, 96, 99, 106, 109, 114, 128, 156});
     public final TARDISCakePreset cake;
     public final TARDISChalicePreset chalice;
     public final TARDISColumnPreset column;
@@ -44,6 +44,7 @@ public class TARDISChameleonPreset {
     public final TARDISPartyPreset party;
     public final TARDISPoliceBoxPreset police;
     public final TARDISRaisedPreset raised;
+    public final TARDISMushroomPreset shroom;
     public final TARDISSubmergedPreset submerged;
     public final TARDISSwampPreset swamp;
     public final TARDISTallerPreset taller;
@@ -68,6 +69,7 @@ public class TARDISChameleonPreset {
         this.party = new TARDISPartyPreset();
         this.police = new TARDISPoliceBoxPreset();
         this.raised = new TARDISRaisedPreset();
+        this.shroom = new TARDISMushroomPreset();
         this.submerged = new TARDISSubmergedPreset();
         this.swamp = new TARDISSwampPreset();
         this.taller = new TARDISTallerPreset();
@@ -93,6 +95,7 @@ public class TARDISChameleonPreset {
         party.makePresets();
         police.makePresets();
         raised.makePresets();
+        shroom.makePresets();
         submerged.makePresets();
         swamp.makePresets();
         taller.makePresets();
@@ -407,6 +410,84 @@ public class TARDISChameleonPreset {
                                     break;
                             }
                             break;
+                        case 99:
+                            switch (d) {
+                                case SOUTH:
+                                    switch (data[col][block]) {
+                                        case 1:
+                                            data[col][block] = 3;
+                                            break;
+                                        case 2:
+                                            data[col][block] = 6;
+                                            break;
+                                        case 3:
+                                            data[col][block] = 9;
+                                            break;
+                                        case 4:
+                                            data[col][block] = 2;
+                                            break;
+                                        case 6:
+                                            data[col][block] = 8;
+                                            break;
+                                        case 7:
+                                            data[col][block] = 1;
+                                            break;
+                                        case 8:
+                                            data[col][block] = 4;
+                                            break;
+                                        case 9:
+                                            data[col][block] = 7;
+                                            break;
+                                        default:
+                                            break;
+                                    }
+                                    break;
+                                case WEST:
+                                    if (col == 3 || col == 7) {
+                                        switch (data[col][block]) {
+                                            case 4:
+                                                data[col][block] = (byte) 6;
+                                                break;
+                                            case 6:
+                                                data[col][block] = (byte) 4;
+                                                break;
+                                            default:
+                                                break;
+                                        }
+                                    }
+                                    break;
+                                default:
+                                    switch (data[col][block]) {
+                                        case 1:
+                                            data[col][block] = 7;
+                                            break;
+                                        case 2:
+                                            data[col][block] = 4;
+                                            break;
+                                        case 3:
+                                            data[col][block] = 1;
+                                            break;
+                                        case 4:
+                                            data[col][block] = 8;
+                                            break;
+                                        case 6:
+                                            data[col][block] = 2;
+                                            break;
+                                        case 7:
+                                            data[col][block] = 9;
+                                            break;
+                                        case 8:
+                                            data[col][block] = 6;
+                                            break;
+                                        case 9:
+                                            data[col][block] = 3;
+                                            break;
+                                        default:
+                                            break;
+                                    }
+                                    break;
+                            }
+                            break;
                         default: // vine
                             switch (d) {
                                 case SOUTH:
@@ -469,6 +550,8 @@ public class TARDISChameleonPreset {
                 return gravestone.getBlueprint().get(d);
             case TOPSYTURVEY:
                 return topsyturvey.getBlueprint().get(d);
+            case SHROOM:
+                return shroom.getBlueprint().get(d);
             case CUSTOM:
                 return custom.getBlueprint().get(d);
             default:
@@ -518,6 +601,8 @@ public class TARDISChameleonPreset {
                 return gravestone.getGlass().get(d);
             case TOPSYTURVEY:
                 return topsyturvey.getGlass().get(d);
+            case SHROOM:
+                return shroom.getGlass().get(d);
             case CUSTOM:
                 return custom.getGlass().get(d);
             default:
@@ -567,6 +652,8 @@ public class TARDISChameleonPreset {
                 return gravestone.getIce().get(d);
             case TOPSYTURVEY:
                 return topsyturvey.getIce().get(d);
+            case SHROOM:
+                return shroom.getIce().get(d);
             case CUSTOM:
                 return custom.getIce().get(d);
             default:
