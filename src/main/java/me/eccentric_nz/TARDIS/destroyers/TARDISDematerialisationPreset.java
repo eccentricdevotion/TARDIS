@@ -16,14 +16,21 @@
  */
 package me.eccentric_nz.TARDIS.destroyers;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.TARDISConstants.COMPASS;
 import me.eccentric_nz.TARDIS.chameleon.TARDISChameleonColumn;
+import me.eccentric_nz.TARDIS.database.ResultSetDoors;
 import org.bukkit.Effect;
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.World;
+import org.bukkit.block.Block;
+import org.bukkit.block.BlockFace;
 //import org.getspout.spoutapi.SpoutManager;
 
 /**
@@ -49,6 +56,8 @@ public class TARDISDematerialisationPreset implements Runnable {
     private final TARDISChameleonColumn column;
     private final TARDISChameleonColumn ice_column;
     private final TARDISChameleonColumn glass_column;
+    private final List<BlockFace> faces = new ArrayList<BlockFace>();
+    private byte the_colour;
 
     /**
      * Runnable method to materialise the TARDIS Police Box. Tries to mimic the
@@ -79,6 +88,10 @@ public class TARDISDematerialisationPreset implements Runnable {
         column = plugin.presets.getColumn(preset, d);
         ice_column = plugin.presets.getIce(preset, d);
         glass_column = plugin.presets.getGlass(preset, d);
+        this.faces.add(BlockFace.NORTH);
+        this.faces.add(BlockFace.SOUTH);
+        this.faces.add(BlockFace.EAST);
+        this.faces.add(BlockFace.WEST);
     }
 
     @Override
@@ -88,9 +101,7 @@ public class TARDISDematerialisationPreset implements Runnable {
         // get relative locations
         int x = location.getBlockX(), plusx = location.getBlockX() + 1, minusx = location.getBlockX() - 1;
         int y;
-//        if (preset.equals(TARDISConstants.PRESET.WELL) || preset.equals(TARDISConstants.PRESET.GRAVESTONE)) {
         plugin.isPresetMaterialising.add("tid" + tid);
-//        }
         if (preset.equals(TARDISConstants.PRESET.SUBMERGED)) {
             y = location.getBlockY() - 1;
         } else {
@@ -127,6 +138,7 @@ public class TARDISDematerialisationPreset implements Runnable {
                     world.playEffect(location, Effect.BLAZE_SHOOT, 0);
                 }
 //                }
+                the_colour = getWoolColour(tid, preset);
             } else {
                 // just change the walls
                 int xx, zz;
@@ -182,6 +194,9 @@ public class TARDISDematerialisationPreset implements Runnable {
                             case 35: // wool
                                 int chai = (preset.equals(TARDISConstants.PRESET.NEW) || preset.equals(TARDISConstants.PRESET.OLD)) ? cham_id : colids[yy];
                                 byte chad = (preset.equals(TARDISConstants.PRESET.NEW) || preset.equals(TARDISConstants.PRESET.OLD)) ? cham_data : coldatas[yy];
+                                if (preset.equals(TARDISConstants.PRESET.PARTY) || (preset.equals(TARDISConstants.PRESET.FLOWER) && coldatas[yy] == 0)) {
+                                    chad = the_colour;
+                                }
                                 plugin.utils.setBlock(world, xx, (y + yy), zz, chai, chad);
                                 break;
                             case 50: // lamps, glowstone and torches
@@ -202,6 +217,26 @@ public class TARDISDematerialisationPreset implements Runnable {
             plugin.getServer().getScheduler().cancelTask(task);
             task = 0;
         }
+    }
+
+    private byte getWoolColour(int id, TARDISConstants.PRESET p) {
+        HashMap<String, Object> where = new HashMap<String, Object>();
+        where.put("tardis_id", id);
+        where.put("door_type", 0);
+        ResultSetDoors rs = new ResultSetDoors(plugin, where, false);
+        if (rs.resultSet()) {
+            Block b = plugin.utils.getLocationFromDB(rs.getDoor_location(), 0.0F, 0.0F).getBlock();
+            if (p.equals(TARDISConstants.PRESET.FLOWER)) {
+                return b.getRelative(BlockFace.UP, 3).getData();
+            } else {
+                for (BlockFace f : faces) {
+                    if (b.getRelative(f).getType().equals(Material.WOOL)) {
+                        return b.getRelative(f).getData();
+                    }
+                }
+            }
+        }
+        return (byte) 0;
     }
 
     public void setTask(int task) {

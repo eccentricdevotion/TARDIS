@@ -19,6 +19,7 @@ package me.eccentric_nz.TARDIS.builders;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Random;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.chameleon.TARDISChameleonColumn;
@@ -60,6 +61,9 @@ public class TARDISInstaPreset {
     private final TARDISConstants.PRESET preset;
     private TARDISChameleonColumn column;
     private final List<TARDISConstants.PRESET> no_block_under_door;
+    private final byte[] colours;
+    private final Random rand;
+    private final byte random_colour;
 
     public TARDISInstaPreset(TARDIS plugin, Location location, TARDISConstants.PRESET preset, int tid, TARDISConstants.COMPASS d, String p, boolean mal, int lamp, boolean sub, int cham_id, byte cham_data) {
         this.plugin = plugin;
@@ -78,6 +82,9 @@ public class TARDISInstaPreset {
         no_block_under_door.add(TARDISConstants.PRESET.RAISED);
         no_block_under_door.add(TARDISConstants.PRESET.SUBMERGED);
         no_block_under_door.add(TARDISConstants.PRESET.WELL);
+        colours = new byte[]{0, 1, 2, 3, 4, 5, 6, 9, 10, 11, 12, 13, 14};
+        rand = new Random();
+        random_colour = colours[rand.nextInt(13)];
     }
 
     /**
@@ -247,6 +254,9 @@ public class TARDISInstaPreset {
                     case 35:
                         int chai = (preset.equals(TARDISConstants.PRESET.NEW) || preset.equals(TARDISConstants.PRESET.OLD)) ? cham_id : colids[yy];
                         byte chad = (preset.equals(TARDISConstants.PRESET.NEW) || preset.equals(TARDISConstants.PRESET.OLD)) ? cham_data : coldatas[yy];
+                        if (preset.equals(TARDISConstants.PRESET.PARTY) || (preset.equals(TARDISConstants.PRESET.FLOWER) && coldatas[yy] == 0)) {
+                            chad = random_colour;
+                        }
                         plugin.utils.setBlockAndRemember(world, xx, (y + yy), zz, chai, chad, tid);
                         break;
                     case 50: // lamps, glowstone and torches

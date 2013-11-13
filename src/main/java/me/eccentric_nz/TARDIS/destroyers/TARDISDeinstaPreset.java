@@ -58,7 +58,7 @@ public class TARDISDeinstaPreset {
      * @param preset
      */
     @SuppressWarnings("deprecation")
-    public void instaDestroyPreset(Location l, TARDISConstants.COMPASS d, int id, boolean hide, TARDISConstants.PRESET preset) {
+    public void instaDestroyPreset(Location l, TARDISConstants.COMPASS d, final int id, boolean hide, TARDISConstants.PRESET preset) {
         World w = l.getWorld();
         // make sure chunk is loaded
         Chunk chunk = w.getChunkAt(l);
@@ -94,7 +94,7 @@ public class TARDISDeinstaPreset {
         HashMap<String, Object> where = new HashMap<String, Object>();
         where.put("tardis_id", id);
         ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
-        QueryFactory qf = new QueryFactory(plugin);
+        final QueryFactory qf = new QueryFactory(plugin);
         String owner;
         Block b;
         if (rs.resultSet()) {
@@ -129,11 +129,16 @@ public class TARDISDeinstaPreset {
             }
         }
         // finally forget the replaced block
-        HashMap<String, Object> set = new HashMap<String, Object>();
-        HashMap<String, Object> wherer = new HashMap<String, Object>();
-        wherer.put("tardis_id", id);
-        set.put("replaced", "");
-        qf.doUpdate("tardis", set, wherer);
+        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
+            @Override
+            public void run() {
+                HashMap<String, Object> set = new HashMap<String, Object>();
+                HashMap<String, Object> wherer = new HashMap<String, Object>();
+                wherer.put("tardis_id", id);
+                set.put("replaced", "");
+                qf.doUpdate("tardis", set, wherer);
+            }
+        }, 15L);
 
         // get rid of platform if there is one
         if (plugin.getConfig().getBoolean("platform")) {

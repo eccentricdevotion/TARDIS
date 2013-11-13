@@ -146,7 +146,7 @@ public class TARDISUtils {
         // List of blocks that a door cannot be placed on
         List<Integer> ids = plugin.getBlocksConfig().getIntegerList("under_door_blocks");
         Block b = w.getBlockAt(x, y, z);
-        Integer bId = Integer.valueOf(b.getTypeId());
+        int bId = b.getTypeId();
         byte bData = b.getData();
         if (ids.contains(bId) || sub) {
             b.setTypeId(m);

@@ -14,8 +14,7 @@
     * Fix vine on jungle
     * Fix platform and underdoor block not being removed
     * Check chameleon on / off in GUI
-    * Party tent / flower is random colour
-    * Custom preset x1 - custom_preset.json
+    * Custom preset x1 - custom_preset.txt - add sign text
 6. Documentation & videos!
 7. Insert last use is inserted when TARDIS is created and whe player logs in
 
