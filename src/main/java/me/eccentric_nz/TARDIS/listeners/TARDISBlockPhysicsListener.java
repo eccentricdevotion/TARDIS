@@ -29,11 +29,11 @@ import org.bukkit.event.block.BlockPhysicsEvent;
  *
  * @author eccentric_nz
  */
-public class TARDISTrapdoorListener implements Listener {
+public class TARDISBlockPhysicsListener implements Listener {
 
     private final TARDIS plugin;
 
-    public TARDISTrapdoorListener(TARDIS plugin) {
+    public TARDISBlockPhysicsListener(TARDIS plugin) {
         this.plugin = plugin;
     }
 
@@ -43,12 +43,22 @@ public class TARDISTrapdoorListener implements Listener {
         if (event.isCancelled()) {
             return;
         }
-        Block block = event.getBlock();
-        if (block.getType() == Material.TRAP_DOOR && plugin.isWellPresetMaterialising.size() > 0) {
-            Block blockBehind = getBlockBehindHatch(block);
-            if (blockBehind != null) {
-                if (blockBehind.getType().equals(Material.GLASS) || blockBehind.getType().equals(Material.ICE)) {
-                    event.setCancelled(true);
+        if (plugin.isPresetMaterialising.size() > 0) {
+            Block block = event.getBlock();
+            if (block.getType() == Material.TRAP_DOOR) {
+                Block blockBehind = getBlockBehindHatch(block);
+                if (blockBehind != null) {
+                    if (blockBehind.getType().equals(Material.GLASS) || blockBehind.getType().equals(Material.ICE)) {
+                        event.setCancelled(true);
+                    }
+                }
+            }
+            if (block.getType() == Material.TORCH || block.getType() == Material.IRON_DOOR_BLOCK || block.getType() == Material.WOODEN_DOOR || block.getType() == Material.RED_ROSE) {
+                Block blockBelow = getBlockBelow(block);
+                if (blockBelow != null) {
+                    if (blockBelow.getType().equals(Material.GLASS) || blockBelow.getType().equals(Material.ICE) || blockBelow.getType().equals(Material.WOODEN_DOOR) || blockBelow.getType().equals(Material.IRON_DOOR_BLOCK)) {
+                        event.setCancelled(true);
+                    }
                 }
             }
         }
@@ -67,5 +77,9 @@ public class TARDISTrapdoorListener implements Listener {
             default:
                 return null;
         }
+    }
+
+    Block getBlockBelow(Block block) {
+        return block.getRelative(BlockFace.DOWN);
     }
 }

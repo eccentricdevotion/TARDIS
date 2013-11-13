@@ -119,9 +119,9 @@ public class TARDISPresetRunnable implements Runnable {
             int x = location.getBlockX(), plusx = location.getBlockX() + 1, minusx = location.getBlockX() - 1;
             int y;
             int undery;
-            if (preset.equals(TARDISConstants.PRESET.WELL)) {
-                plugin.isWellPresetMaterialising.add("tid" + tid);
-            }
+//            if (preset.equals(TARDISConstants.PRESET.WELL) || preset.equals(TARDISConstants.PRESET.GRAVESTONE)) {
+            plugin.isPresetMaterialising.add("tid" + tid);
+//            }
             if (preset.equals(TARDISConstants.PRESET.SUBMERGED)) {
                 y = location.getBlockY() - 1;
                 undery = (location.getBlockY() - 2);
@@ -396,6 +396,22 @@ public class TARDISPresetRunnable implements Runnable {
                                                 line1 = "SWAMP";
                                                 line2 = "HUT";
                                                 break;
+                                            case CAKE:
+                                                line1 = "CAKE AND";
+                                                line2 = "EAT IT TOO";
+                                                break;
+                                            case TOPSYTURVEY:
+                                                line1 = "Topsy-turvey";
+                                                line2 = "BOX O' MARVEL";
+                                                break;
+                                            case GRAVESTONE:
+                                                line1 = "HERE";
+                                                line2 = "LIES";
+                                                break;
+                                            case SHROOM:
+                                                line1 = "TRIPPY";
+                                                line2 = "SPACE SHROOM";
+                                                break;
                                             default:
                                                 line1 = "POLICE";
                                                 line2 = "BOX";
@@ -487,9 +503,9 @@ public class TARDISPresetRunnable implements Runnable {
                     }
                 }
             } else {
-                if (preset.equals(TARDISConstants.PRESET.WELL)) {
-                    plugin.isWellPresetMaterialising.remove("tid" + tid);
-                }
+//                if (preset.equals(TARDISConstants.PRESET.WELL) || preset.equals(TARDISConstants.PRESET.GRAVESTONE)) {
+                plugin.isPresetMaterialising.remove("tid" + tid);
+//                }
                 // set sheild if submarine
                 if (sub && plugin.worldGuardOnServer) {
                     plugin.wgutils.sponge(sponge, true);

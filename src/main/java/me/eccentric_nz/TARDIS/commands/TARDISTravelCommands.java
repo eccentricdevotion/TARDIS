@@ -232,6 +232,7 @@ public class TARDISTravelCommands implements CommandExecutor {
                             try {
                                 Biome biome = Biome.valueOf(upper);
                                 sender.sendMessage(plugin.pluginName + "Searching for biome, this may take some time!");
+
                                 HashMap<String, Object> wherecl = new HashMap<String, Object>();
                                 wherecl.put("tardis_id", rs.getTardis_id());
                                 ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
@@ -239,7 +240,7 @@ public class TARDISTravelCommands implements CommandExecutor {
                                     player.sendMessage(plugin.pluginName + "Could not get the current TARDIS location!");
                                     return true;
                                 }
-                                Location nsob = searchBiome(player, biome, rsc.getWorld());
+                                Location nsob = searchBiome(player, id, biome, rsc.getWorld(), rsc.getX(), rsc.getZ());
                                 if (nsob == null) {
                                     sender.sendMessage(plugin.pluginName + "Could not find biome!");
                                     return true;
@@ -469,10 +470,15 @@ public class TARDISTravelCommands implements CommandExecutor {
         return w_str;
     }
 
-    private Location searchBiome(Player p, Biome b, World w) {
+    private Location searchBiome(Player p, int id, Biome b, World w, int startx, int startz) {
+        HashMap<String, Object> wherecl = new HashMap<String, Object>();
+        wherecl.put("tardis_id", id);
+        ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
+        if (!rsc.resultSet()) {
+            p.sendMessage(plugin.pluginName + "Could not get the current TARDIS location!");
+            return null;
+        }
         Location l = null;
-        int startx = p.getLocation().getBlockX();
-        int startz = p.getLocation().getBlockZ();
         // get a world
         // Assume all non-nether/non-end world environments are NORMAL
         if (w != null && !w.getEnvironment().equals(Environment.NETHER) && !w.getEnvironment().equals(Environment.THE_END)) {

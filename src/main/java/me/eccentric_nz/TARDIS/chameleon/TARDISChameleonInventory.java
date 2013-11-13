@@ -148,6 +148,26 @@ public class TARDISChameleonInventory {
         ItemMeta ivy = well.getItemMeta();
         ivy.setDisplayName("Mossy Well");
         well.setItemMeta(ivy);
+        // cake
+        ItemStack cake = new ItemStack(Material.WOOL, 1, (short) 12);
+        ItemMeta candle = cake.getItemMeta();
+        candle.setDisplayName("Birthday Cake");
+        cake.setItemMeta(candle);
+        // grave
+        ItemStack grave = new ItemStack(Material.ENDER_STONE, 1);
+        ItemMeta epitaph = grave.getItemMeta();
+        epitaph.setDisplayName("Gravestone");
+        grave.setItemMeta(epitaph);
+        // topsy
+        ItemStack topsy = new ItemStack(Material.WOOL, 1, (short) 6);
+        ItemMeta turvey = topsy.getItemMeta();
+        turvey.setDisplayName("Topsy-turvey");
+        topsy.setItemMeta(turvey);
+        // custom
+        ItemStack custom = new ItemStack(Material.PISTON_STICKY_BASE, 1);
+        ItemMeta pre = custom.getItemMeta();
+        pre.setDisplayName("Custom");
+        custom.setItemMeta(pre);
         // Cancel / close
         ItemStack close = new ItemStack(Material.WOOL, 1, (short) 15);
         ItemMeta can = close.getItemMeta();
@@ -156,11 +176,11 @@ public class TARDISChameleonInventory {
 
         ItemStack[] is = {
             con, null, null, null, apply, null, null, null, close,
-            null, null, null, null, null, null, null, null, null,
-            box, null, off, null, jungle, null, nether, null, def,
-            null, swamp, null, tent, null, village, null, yellow, null,
-            tel, null, sub, null, rai, null, flo, null, chal,
-            null, stone, null, win, null, desert, null, well, null
+            null, box, null, off, null, jungle, null, nether, null,
+            swamp, null, tent, null, village, null, yellow, null, def,
+            null, tel, null, sub, null, rai, null, flo, null,
+            stone, null, win, null, desert, null, well, null, chal,
+            null, cake, null, grave, null, topsy, null, custom, null
         };
         return is;
     }

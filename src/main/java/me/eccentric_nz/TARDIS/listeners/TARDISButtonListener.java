@@ -310,6 +310,16 @@ public class TARDISButtonListener implements Listener {
                                         player.sendMessage(plugin.pluginName + ChatColor.RED + "You cannot reconfigure rooms while the TARDIS is travelling!");
                                         return;
                                     }
+                                    // check they have permission to grow rooms
+                                    if (!player.hasPermission("tardis.room")) {
+                                        player.sendMessage(plugin.pluginName + "You do not have permission to grow rooms!");
+                                        return;
+                                    }
+                                    // check they're in a compatible world
+                                    if (!plugin.utils.canGrowRooms(rs.getChunk())) {
+                                        player.sendMessage(plugin.pluginName + "You cannot grow rooms unless your TARDIS was created in its own world!");
+                                        return;
+                                    }
                                     // ARS sign
                                     Inventory ars = plugin.getServer().createInventory(player, 54, "§4Architectural Reconfiguration");
                                     ars.setContents(tars);

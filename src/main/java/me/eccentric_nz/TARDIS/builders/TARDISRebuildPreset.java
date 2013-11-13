@@ -276,9 +276,17 @@ public class TARDISRebuildPreset {
                                 if (rst.resultSet()) {
                                     String owner = rst.getOwner();
                                     if (owner.length() > 14) {
-                                        s.setLine(0, owner.substring(0, 12) + "'s");
+                                        if (preset.equals(TARDISConstants.PRESET.GRAVESTONE)) {
+                                            s.setLine(3, owner.substring(0, 14));
+                                        } else {
+                                            s.setLine(0, owner.substring(0, 12) + "'s");
+                                        }
                                     } else {
-                                        s.setLine(0, owner + "'s");
+                                        if (preset.equals(TARDISConstants.PRESET.GRAVESTONE)) {
+                                            s.setLine(3, owner);
+                                        } else {
+                                            s.setLine(0, owner + "'s");
+                                        }
                                     }
                                 }
                             }
@@ -312,6 +320,26 @@ public class TARDISRebuildPreset {
                                 case RAISED:
                                     line1 = "SIGN ABOVE";
                                     line2 = "THE DOOR";
+                                    break;
+                                case SWAMP:
+                                    line1 = "SWAMP";
+                                    line2 = "HUT";
+                                    break;
+                                case CAKE:
+                                    line1 = "CAKE AND";
+                                    line2 = "EAT IT TOO";
+                                    break;
+                                case TOPSYTURVEY:
+                                    line1 = "Topsy-turvey";
+                                    line2 = "BOX O' MARVEL";
+                                    break;
+                                case GRAVESTONE:
+                                    line1 = "HERE";
+                                    line2 = "LIES";
+                                    break;
+                                case SHROOM:
+                                    line1 = "TRIPPY";
+                                    line2 = "SPACE SHROOM";
                                     break;
                                 default:
                                     line1 = "POLICE";

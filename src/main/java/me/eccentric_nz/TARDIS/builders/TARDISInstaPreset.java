@@ -333,6 +333,26 @@ public class TARDISInstaPreset {
                                     line1 = "SIGN ABOVE";
                                     line2 = "THE DOOR";
                                     break;
+                                case SWAMP:
+                                    line1 = "SWAMP";
+                                    line2 = "HUT";
+                                    break;
+                                case CAKE:
+                                    line1 = "CAKE AND";
+                                    line2 = "EAT IT TOO";
+                                    break;
+                                case TOPSYTURVEY:
+                                    line1 = "Topsy-turvey";
+                                    line2 = "BOX O' MARVEL";
+                                    break;
+                                case GRAVESTONE:
+                                    line1 = "HERE";
+                                    line2 = "LIES";
+                                    break;
+                                case SHROOM:
+                                    line1 = "TRIPPY";
+                                    line2 = "SPACE SHROOM";
+                                    break;
                                 default:
                                     line1 = "POLICE";
                                     line2 = "BOX";

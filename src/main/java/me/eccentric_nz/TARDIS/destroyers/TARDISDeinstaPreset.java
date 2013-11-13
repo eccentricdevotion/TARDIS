@@ -170,5 +170,6 @@ public class TARDISDeinstaPreset {
         }
         plugin.tardisDematerialising.remove(Integer.valueOf(id));
         plugin.tardisChunkList.remove(l.getChunk());
+        plugin.isPresetMaterialising.remove("tid" + id);
     }
 }

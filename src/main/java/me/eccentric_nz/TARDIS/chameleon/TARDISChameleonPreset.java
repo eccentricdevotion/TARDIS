@@ -32,11 +32,13 @@ import me.eccentric_nz.TARDIS.JSON.JSONArray;
 public class TARDISChameleonPreset {
 
     private final List<Integer> problemBlocks = Arrays.asList(new Integer[]{64, 67, 68, 71, 96, 106, 109, 114, 128, 156});
+    public final TARDISCakePreset cake;
     public final TARDISChalicePreset chalice;
     public final TARDISColumnPreset column;
     public final TARDISDesertPreset desert;
     public final TARDISFactoryPreset factory;
     public final TARDISFlowerPreset flower;
+    public final TARDISGravestonePreset gravestone;
     public final TARDISJunglePreset jungle;
     public final TARDISNetherPreset nether;
     public final TARDISPartyPreset party;
@@ -46,17 +48,21 @@ public class TARDISChameleonPreset {
     public final TARDISSwampPreset swamp;
     public final TARDISTallerPreset taller;
     public final TARDISTelephoneBoxPreset telephone;
+    public final TARDISTopsyTurveyPreset topsyturvey;
     public final TARDISVillagePreset village;
     public final TARDISWellPreset well;
     public final TARDISWindmillPreset windmill;
     public final TARDISYellowSubmarinePreset yellow;
+    public final TARDISCustomPreset custom;
 
     public TARDISChameleonPreset() {
+        this.cake = new TARDISCakePreset();
         this.chalice = new TARDISChalicePreset();
         this.column = new TARDISColumnPreset();
         this.desert = new TARDISDesertPreset();
         this.factory = new TARDISFactoryPreset();
         this.flower = new TARDISFlowerPreset();
+        this.gravestone = new TARDISGravestonePreset();
         this.jungle = new TARDISJunglePreset();
         this.nether = new TARDISNetherPreset();
         this.party = new TARDISPartyPreset();
@@ -66,18 +72,22 @@ public class TARDISChameleonPreset {
         this.swamp = new TARDISSwampPreset();
         this.taller = new TARDISTallerPreset();
         this.telephone = new TARDISTelephoneBoxPreset();
+        this.topsyturvey = new TARDISTopsyTurveyPreset();
         this.village = new TARDISVillagePreset();
         this.well = new TARDISWellPreset();
         this.windmill = new TARDISWindmillPreset();
         this.yellow = new TARDISYellowSubmarinePreset();
+        this.custom = new TARDISCustomPreset();
     }
 
     public void makePresets() {
+        cake.makePresets();
         chalice.makePresets();
         column.makePresets();
         desert.makePresets();
         factory.makePresets();
         flower.makePresets();
+        gravestone.makePresets();
         jungle.makePresets();
         nether.makePresets();
         party.makePresets();
@@ -87,10 +97,12 @@ public class TARDISChameleonPreset {
         swamp.makePresets();
         taller.makePresets();
         telephone.makePresets();
+        topsyturvey.makePresets();
         village.makePresets();
         well.makePresets();
         windmill.makePresets();
         yellow.makePresets();
+        custom.makePresets();
     }
 
     public TARDISChameleonColumn buildTARDISChameleonColumn(TARDISConstants.COMPASS d, String id, String data, boolean assyemtric) {
@@ -451,6 +463,14 @@ public class TARDISChameleonPreset {
                 return telephone.getTelephone().get(d);
             case WELL:
                 return well.getWell().get(d);
+            case CAKE:
+                return cake.getBlueprint().get(d);
+            case GRAVESTONE:
+                return gravestone.getBlueprint().get(d);
+            case TOPSYTURVEY:
+                return topsyturvey.getBlueprint().get(d);
+            case CUSTOM:
+                return custom.getBlueprint().get(d);
             default:
                 return taller.getTaller().get(d);
         }
@@ -492,6 +512,14 @@ public class TARDISChameleonPreset {
                 return telephone.getGlass().get(d);
             case WELL:
                 return well.getGlass().get(d);
+            case CAKE:
+                return cake.getGlass().get(d);
+            case GRAVESTONE:
+                return gravestone.getGlass().get(d);
+            case TOPSYTURVEY:
+                return topsyturvey.getGlass().get(d);
+            case CUSTOM:
+                return custom.getGlass().get(d);
             default:
                 return taller.getGlass().get(d);
         }
@@ -533,6 +561,14 @@ public class TARDISChameleonPreset {
                 return telephone.getIce().get(d);
             case WELL:
                 return well.getIce().get(d);
+            case CAKE:
+                return cake.getIce().get(d);
+            case GRAVESTONE:
+                return gravestone.getIce().get(d);
+            case TOPSYTURVEY:
+                return topsyturvey.getIce().get(d);
+            case CUSTOM:
+                return custom.getIce().get(d);
             default:
                 return taller.getIce().get(d);
         }

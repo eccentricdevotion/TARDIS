@@ -88,9 +88,9 @@ public class TARDISDematerialisationPreset implements Runnable {
         // get relative locations
         int x = location.getBlockX(), plusx = location.getBlockX() + 1, minusx = location.getBlockX() - 1;
         int y;
-        if (preset.equals(TARDISConstants.PRESET.WELL)) {
-            plugin.isWellPresetMaterialising.add("tid" + tid);
-        }
+//        if (preset.equals(TARDISConstants.PRESET.WELL) || preset.equals(TARDISConstants.PRESET.GRAVESTONE)) {
+        plugin.isPresetMaterialising.add("tid" + tid);
+//        }
         if (preset.equals(TARDISConstants.PRESET.SUBMERGED)) {
             y = location.getBlockY() - 1;
         } else {
@@ -198,9 +198,6 @@ public class TARDISDematerialisationPreset implements Runnable {
                 }
             }
         } else {
-            if (preset.equals(TARDISConstants.PRESET.WELL)) {
-                plugin.isWellPresetMaterialising.remove("tid" + tid);
-            }
             new TARDISDeinstaPreset(plugin).instaDestroyPreset(location, d, tid, false, preset);
             plugin.getServer().getScheduler().cancelTask(task);
             task = 0;

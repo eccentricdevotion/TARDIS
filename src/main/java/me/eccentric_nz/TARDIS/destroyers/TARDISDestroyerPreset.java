@@ -102,26 +102,64 @@ public class TARDISDestroyerPreset {
 
     public void destroySign(Location l, TARDISConstants.COMPASS d, TARDISConstants.PRESET p) {
         World w = l.getWorld();
-        int signx = 0, signz = 0;
-        switch (d) {
-            case EAST:
-                signx = -2;
+        int signx, signz, signy;
+        switch (p) {
+            case GRAVESTONE:
+                signx = 0;
                 signz = 0;
                 break;
-            case SOUTH:
-                signx = 0;
-                signz = -2;
+            case SHROOM:
+                switch (d) {
+                    case EAST:
+                        signx = -1;
+                        signz = 0;
+                        break;
+                    case SOUTH:
+                        signx = 0;
+                        signz = -1;
+                        break;
+                    case WEST:
+                        signx = 1;
+                        signz = 0;
+                        break;
+                    default:
+                        signx = 0;
+                        signz = 1;
+                        break;
+                }
                 break;
-            case WEST:
-                signx = 2;
-                signz = 0;
-                break;
-            case NORTH:
-                signx = 0;
-                signz = 2;
+            default:
+                switch (d) {
+                    case EAST:
+                        signx = -2;
+                        signz = 0;
+                        break;
+                    case SOUTH:
+                        signx = 0;
+                        signz = -2;
+                        break;
+                    case WEST:
+                        signx = 2;
+                        signz = 0;
+                        break;
+                    default:
+                        signx = 0;
+                        signz = 2;
+                        break;
+                }
                 break;
         }
-        int signy = (p.equals(TARDISConstants.PRESET.RAISED)) ? 3 : 2;
+        switch (p) {
+            case RAISED:
+                signy = 3;
+                break;
+            case TOPSYTURVEY:
+                signy = 1;
+                break;
+            default:
+                signy = 2;
+                break;
+        }
         plugin.utils.setBlock(w, l.getBlockX() + signx, l.getBlockY() + signy, l.getBlockZ() + signz, 0, (byte) 0);
     }
 
