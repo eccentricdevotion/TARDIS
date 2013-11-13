@@ -356,4 +356,19 @@ public class TARDISUtils {
         boolean special = (data[0].contains("TARDIS_TimeVortex") && (wt.equals(WorldType.FLAT) || gen instanceof TARDISChunkGenerator));
         return (data[0].contains("TARDIS_WORLD_") || special);
     }
+
+    public Location getLocationFromBukkitString(String string) {
+        //Location{world=CraftWorld{name=world},x=0.0,y=0.0,z=0.0,pitch=0.0,yaw=0.0}
+        String[] loc_data = string.split(",");
+        // w, x, y, z - 0, 1, 2, 3
+        String[] wStr = loc_data[0].split("=");
+        String[] xStr = loc_data[1].split("=");
+        String[] yStr = loc_data[2].split("=");
+        String[] zStr = loc_data[3].split("=");
+        World w = plugin.getServer().getWorld(wStr[2].substring(0, (wStr[2].length() - 1)));
+        int x = plugin.utils.parseNum(xStr[1].substring(0, (xStr[1].length() - 2)));
+        int y = plugin.utils.parseNum(yStr[1].substring(0, (yStr[1].length() - 2)));
+        int z = plugin.utils.parseNum(zStr[1].substring(0, (zStr[1].length() - 2)));
+        return new Location(w, x, y, z);
+    }
 }

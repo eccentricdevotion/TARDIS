@@ -1,6 +1,6 @@
 # TODO
 
-## Current version `2.6-beta-1`
+## Current version `2.6-beta-2`
 1. Test Temporal Invisibility
 2. Rooms
    * Check Charlie's schematics (arboretum, greenhouse)
@@ -10,14 +10,16 @@
 4. TARDIS Information System (add new features)
 5. Chameleon presets (in progress)
     * Match presets to biomes, and use Yellow Submarine when underwater?
-    * If police box lamp is not a redstone lamp, then make the redstone block a normal wall block
+    * If police box lamp is not a redstone lamp, then make the redstone block a normal wall block - check chameleon circuit as well
     * Fix vine on jungle
-    * Fix door popping off raised and end of demat
-    * Fix platform and underdoor block not being removed?
-    * Upside down Police Box /gravestone with HERE LIES
+    * Fix door popping off raised at end of demat - we know door location, so remove door first
+    * Fix platform and underdoor block not being removed
+    * Upside down Police Box / gravestone with "HERE LIES"
     * Check chameleon on / off in GUI
     * Party tent / flower is random colour
+    * Custom preset x1 - custom_preset.json
 6. Documentation & videos!
+7. Add MySQL support
 
 ## Waiting on Bukkit API
 0. IDs are soon to be history... so convert all ID use to entity names

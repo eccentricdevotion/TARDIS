@@ -22,6 +22,7 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.chameleon.TARDISChameleonCircuit;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
+import me.eccentric_nz.TARDIS.database.ResultSetDoors;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import org.bukkit.Location;
@@ -83,6 +84,19 @@ public class TARDISDestroyerPreset {
             } else {
                 new TARDISDeinstaPreset(plugin).instaDestroyPreset(l, d, id, hide, demat);
             }
+        }
+    }
+
+    public void destroyDoor(int id) {
+        HashMap<String, Object> where = new HashMap<String, Object>();
+        where.put("tardis_id", id);
+        where.put("door_type", 0);
+        ResultSetDoors rsd = new ResultSetDoors(plugin, where, false);
+        if (rsd.resultSet()) {
+            String dl = rsd.getDoor_location();
+            Block b = plugin.utils.getLocationFromBukkitString(dl).getBlock();
+            b.setType(Material.AIR);
+            b.getRelative(BlockFace.UP).setType(Material.AIR);
         }
     }
 

@@ -385,7 +385,7 @@ public class TARDISChameleonPreset {
                         case 96: // trapdoor
                             switch (d) {
                                 case SOUTH:
-                                    data[col][block] = (byte) 4;
+                                    data[col][block] = (byte) 0;
                                     break;
                                 case WEST:
                                     data[col][block] = (byte) 3;
@@ -394,6 +394,7 @@ public class TARDISChameleonPreset {
                                     data[col][block] = (byte) 1;
                                     break;
                             }
+                            break;
                         default: // vine
                             switch (d) {
                                 case SOUTH:
