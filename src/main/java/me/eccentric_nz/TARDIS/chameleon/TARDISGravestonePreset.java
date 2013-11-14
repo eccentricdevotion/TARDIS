@@ -45,9 +45,9 @@ public class TARDISGravestonePreset {
     public void makePresets() {
         TARDISChameleonPreset tcp = new TARDISChameleonPreset();
         for (TARDISConstants.COMPASS d : TARDISConstants.COMPASS.values()) {
-            blueprint.put(d, tcp.buildTARDISChameleonColumn(d, blueprint_id, blueprint_data, false));
-            glass.put(d, tcp.buildTARDISChameleonColumn(d, glass_id, glass_data, false));
-            ice.put(d, tcp.buildTARDISChameleonColumn(d, ice_id, ice_data, false));
+            blueprint.put(d, tcp.buildTARDISChameleonColumn(d, blueprint_id, blueprint_data, true));
+            glass.put(d, tcp.buildTARDISChameleonColumn(d, glass_id, glass_data, true));
+            ice.put(d, tcp.buildTARDISChameleonColumn(d, ice_id, ice_data, true));
         }
     }
 
