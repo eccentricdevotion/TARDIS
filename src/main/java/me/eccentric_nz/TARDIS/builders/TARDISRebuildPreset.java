@@ -355,6 +355,10 @@ public class TARDISRebuildPreset {
                                     line1 = "TRIPPY";
                                     line2 = "SPACE SHROOM";
                                     break;
+                                case CUSTOM:
+                                    line1 = plugin.presets.custom.getLine_one();
+                                    line2 = plugin.presets.custom.getLine_two();
+                                    break;
                                 default:
                                     line1 = "POLICE";
                                     line2 = "BOX";
@@ -363,6 +367,13 @@ public class TARDISRebuildPreset {
                             s.setLine(1, ChatColor.WHITE + line1);
                             s.setLine(2, ChatColor.WHITE + line2);
                             s.update();
+                        }
+                        break;
+                    case 152:
+                        if (lamp != 123 && (preset.equals(TARDISConstants.PRESET.NEW) || preset.equals(TARDISConstants.PRESET.OLD))) {
+                            plugin.utils.setBlock(world, xx, (y + yy), zz, cham_id, cham_data);
+                        } else {
+                            plugin.utils.setBlock(world, xx, (y + yy), zz, colids[yy], coldatas[yy]);
                         }
                         break;
                     default: // everything else

@@ -364,6 +364,10 @@ public class TARDISInstaPreset {
                                     line1 = "TRIPPY";
                                     line2 = "SPACE SHROOM";
                                     break;
+                                case CUSTOM:
+                                    line1 = plugin.presets.custom.getLine_one();
+                                    line2 = plugin.presets.custom.getLine_two();
+                                    break;
                                 default:
                                     line1 = "POLICE";
                                     line2 = "BOX";
@@ -372,6 +376,13 @@ public class TARDISInstaPreset {
                             s.setLine(1, ChatColor.WHITE + line1);
                             s.setLine(2, ChatColor.WHITE + line2);
                             s.update();
+                        }
+                        break;
+                    case 152:
+                        if (lamp != 123 && (preset.equals(TARDISConstants.PRESET.NEW) || preset.equals(TARDISConstants.PRESET.OLD))) {
+                            plugin.utils.setBlockAndRemember(world, xx, (y + yy), zz, cham_id, cham_data, tid);
+                        } else {
+                            plugin.utils.setBlockAndRemember(world, xx, (y + yy), zz, colids[yy], coldatas[yy], tid);
                         }
                         break;
                     default: // everything else

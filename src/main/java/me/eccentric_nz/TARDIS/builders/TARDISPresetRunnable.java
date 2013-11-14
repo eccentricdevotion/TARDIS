@@ -353,7 +353,6 @@ public class TARDISPresetRunnable implements Runnable {
                                         plugin.utils.setBlockAndRemember(world, xx, (y + yy), zz, colids[yy], coldatas[yy], tid);
                                     }
                                     break;
-
                                 case 68: // sign - if there is one
                                     plugin.utils.setBlock(world, xx, (y + yy), zz, colids[yy], coldatas[yy]);
                                     Block sign = world.getBlockAt(xx, (y + yy), zz);
@@ -423,6 +422,10 @@ public class TARDISPresetRunnable implements Runnable {
                                                 line1 = "TRIPPY";
                                                 line2 = "SPACE SHROOM";
                                                 break;
+                                            case CUSTOM:
+                                                line1 = plugin.presets.custom.getLine_one();
+                                                line2 = plugin.presets.custom.getLine_two();
+                                                break;
                                             default:
                                                 line1 = "POLICE";
                                                 line2 = "BOX";
@@ -431,6 +434,13 @@ public class TARDISPresetRunnable implements Runnable {
                                         s.setLine(1, ChatColor.WHITE + line1);
                                         s.setLine(2, ChatColor.WHITE + line2);
                                         s.update();
+                                    }
+                                    break;
+                                case 152:
+                                    if (lamp != 123 && (preset.equals(TARDISConstants.PRESET.NEW) || preset.equals(TARDISConstants.PRESET.OLD))) {
+                                        plugin.utils.setBlockAndRemember(world, xx, (y + yy), zz, cham_id, cham_data, tid);
+                                    } else {
+                                        plugin.utils.setBlockAndRemember(world, xx, (y + yy), zz, colids[yy], coldatas[yy], tid);
                                     }
                                     break;
                                 default: // everything else
@@ -508,6 +518,13 @@ public class TARDISPresetRunnable implements Runnable {
                                 case 124:
                                     int light = (preset.equals(TARDISConstants.PRESET.NEW) || preset.equals(TARDISConstants.PRESET.OLD)) ? lamp : colids[yy];
                                     plugin.utils.setBlock(world, xx, (y + yy), zz, light, coldatas[yy]);
+                                    break;
+                                case 152:
+                                    if (lamp != 123 && (preset.equals(TARDISConstants.PRESET.NEW) || preset.equals(TARDISConstants.PRESET.OLD))) {
+                                        plugin.utils.setBlock(world, xx, (y + yy), zz, cham_id, cham_data);
+                                    } else {
+                                        plugin.utils.setBlock(world, xx, (y + yy), zz, colids[yy], coldatas[yy]);
+                                    }
                                     break;
                                 default: // everything else
                                     plugin.utils.setBlock(world, xx, (y + yy), zz, colids[yy], coldatas[yy]);
