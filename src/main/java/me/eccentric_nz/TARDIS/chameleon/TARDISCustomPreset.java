@@ -37,6 +37,8 @@ public class TARDISCustomPreset {
     private final EnumMap<TARDISConstants.COMPASS, TARDISChameleonColumn> blueprint = new EnumMap<TARDISConstants.COMPASS, TARDISChameleonColumn>(TARDISConstants.COMPASS.class);
     private final EnumMap<TARDISConstants.COMPASS, TARDISChameleonColumn> ice = new EnumMap<TARDISConstants.COMPASS, TARDISChameleonColumn>(TARDISConstants.COMPASS.class);
     private final EnumMap<TARDISConstants.COMPASS, TARDISChameleonColumn> glass = new EnumMap<TARDISConstants.COMPASS, TARDISChameleonColumn>(TARDISConstants.COMPASS.class);
+    String line_one;
+    String line_two;
 
     public TARDISCustomPreset() {
     }
@@ -44,7 +46,7 @@ public class TARDISCustomPreset {
     public void makePresets() {
         // get the custom preset file and read the contents
         // ignore lines that start with a #
-        String[] custom_data = new String[6];
+        String[] custom_data = new String[8];
         File custom_file = TARDIS.plugin.tardisCSV.copy(TARDIS.plugin.getDataFolder() + File.separator + "custom_preset.txt", TARDIS.plugin.getResource("custom_preset.txt"));
         BufferedReader bufRdr = null;
         int i = 0;
@@ -76,6 +78,13 @@ public class TARDISCustomPreset {
             ice.put(d, tcp.buildTARDISChameleonColumn(d, custom_data[2], custom_data[3], false));
             glass.put(d, tcp.buildTARDISChameleonColumn(d, custom_data[4], custom_data[5], false));
         }
+        if (custom_data[6] != null && !custom_data[6].isEmpty()) {
+            this.line_one = custom_data[6];
+            this.line_two = custom_data[7];
+        } else {
+            this.line_one = "CUSTOM TEXT";
+            this.line_two = "GOES HERE";
+        }
     }
 
     public EnumMap<TARDISConstants.COMPASS, TARDISChameleonColumn> getBlueprint() {
@@ -88,5 +97,13 @@ public class TARDISCustomPreset {
 
     public EnumMap<TARDISConstants.COMPASS, TARDISChameleonColumn> getGlass() {
         return glass;
+    }
+
+    public String getLine_one() {
+        return line_one;
+    }
+
+    public String getLine_two() {
+        return line_two;
     }
 }

@@ -25,7 +25,6 @@ import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
-import org.bukkit.World;
 import org.bukkit.entity.Player;
 
 /**
@@ -42,7 +41,6 @@ public class TARDISRebuildCommand {
 
     public boolean rebuildPreset(final Player player, String[] args) {
         if (player.hasPermission("tardis.rebuild")) {
-            World w;
             final int id;
             boolean cham = false;
             HashMap<String, Object> where = new HashMap<String, Object>();
