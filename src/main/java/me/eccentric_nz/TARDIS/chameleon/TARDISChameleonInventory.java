@@ -34,10 +34,12 @@ public class TARDISChameleonInventory {
 
     private final ItemStack[] terminal;
     private final boolean bool;
+    private final boolean adapt;
 
-    public TARDISChameleonInventory(boolean bool) {
-        this.terminal = getItemStack();
+    public TARDISChameleonInventory(boolean bool, boolean adapt) {
         this.bool = bool;
+        this.adapt = adapt;
+        this.terminal = getItemStack();
     }
 
     /**
@@ -51,7 +53,8 @@ public class TARDISChameleonInventory {
         ItemMeta ing = con.getItemMeta();
         ing.setDisplayName("Circuit");
         String on_off = (bool) ? ChatColor.GREEN + "ON" : ChatColor.RED + "OFF";
-        ing.setLore(Arrays.asList(new String[]{on_off}));
+        String to_engage = (bool) ? "OFF" : "ON";
+        ing.setLore(Arrays.asList(new String[]{on_off, "Click to turn " + to_engage}));
         con.setItemMeta(ing);
         // Apply preset
         ItemStack apply = new ItemStack(Material.BOOKSHELF, 1);
@@ -173,6 +176,14 @@ public class TARDISChameleonInventory {
         ItemMeta pre = custom.getItemMeta();
         pre.setDisplayName("Custom");
         custom.setItemMeta(pre);
+        // Biome
+        ItemStack bio = new ItemStack(Material.LOG, 1, (short) 2);
+        ItemMeta me = bio.getItemMeta();
+        me.setDisplayName("Biome Adaption");
+        String biome = (adapt) ? ChatColor.GREEN + "ON" : ChatColor.RED + "OFF";
+        String to_turn = (adapt) ? "OFF" : "ON";
+        me.setLore(Arrays.asList(new String[]{biome, "Click to turn " + to_turn}));
+        bio.setItemMeta(me);
         // Cancel / close
         ItemStack close = new ItemStack(Material.WOOL, 1, (short) 15);
         ItemMeta can = close.getItemMeta();
@@ -180,11 +191,11 @@ public class TARDISChameleonInventory {
         close.setItemMeta(can);
 
         ItemStack[] is = {
-            null, null, null, con, apply, close, null, null, null,
+            null, con, null, apply, null, bio, null, close, null,
             box, null, off, null, jungle, null, nether, null, def,
             null, swamp, null, tent, null, village, null, yellow, null,
             tel, null, sub, null, rai, null, flo, null, stone,
-            null, win, null, desert, null, well, null, chal, null,
+            null, chal, null, desert, null, well, null, win, null,
             cake, null, grave, null, topsy, null, mush, null, custom
         };
         return is;

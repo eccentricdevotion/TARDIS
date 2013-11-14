@@ -127,9 +127,7 @@ public class TARDISPresetRunnable implements Runnable {
             int x = location.getBlockX(), plusx = location.getBlockX() + 1, minusx = location.getBlockX() - 1;
             int y;
             int undery;
-//            if (preset.equals(TARDISConstants.PRESET.WELL) || preset.equals(TARDISConstants.PRESET.GRAVESTONE)) {
             plugin.isPresetMaterialising.add("tid" + tid);
-//            }
             if (preset.equals(TARDISConstants.PRESET.SUBMERGED)) {
                 y = location.getBlockY() - 1;
                 undery = (location.getBlockY() - 2);

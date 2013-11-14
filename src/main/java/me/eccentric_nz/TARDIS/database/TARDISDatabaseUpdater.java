@@ -68,6 +68,7 @@ public class TARDISDatabaseUpdater {
         prefsupdates.add("texture_on INTEGER DEFAULT 0");
         prefsupdates.add("texture_in TEXT DEFAULT ''");
         prefsupdates.add("texture_out TEXT DEFAULT 'default'");
+        tardisupdates.add("adapti_on INTEGER DEFAULT 0");
         tardisupdates.add("artron_level INTEGER DEFAULT 0");
         tardisupdates.add("beacon TEXT DEFAULT ''");
         tardisupdates.add("chameleon_data INTEGER DEFAULT 11");

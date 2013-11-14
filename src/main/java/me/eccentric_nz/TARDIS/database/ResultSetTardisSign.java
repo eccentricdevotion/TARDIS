@@ -39,6 +39,7 @@ public class ResultSetTardisSign {
     private String save_sign;
     private String chameleon;
     private boolean chamele_on;
+    private boolean adapti_on;
     private boolean iso_on;
 
     /**
@@ -75,6 +76,7 @@ public class ResultSetTardisSign {
                 this.save_sign = rs.getString("save_sign");
                 this.chameleon = rs.getString("chameleon");
                 this.chamele_on = rs.getBoolean("chamele_on");
+                this.adapti_on = rs.getBoolean("adapti_on");
                 this.iso_on = rs.getBoolean("iso_on");
             } else {
                 return false;
@@ -115,6 +117,10 @@ public class ResultSetTardisSign {
 
     public boolean isChamele_on() {
         return chamele_on;
+    }
+
+    public boolean isAdapti_on() {
+        return adapti_on;
     }
 
     public boolean isIso_on() {

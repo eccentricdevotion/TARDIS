@@ -31,7 +31,7 @@ import me.eccentric_nz.TARDIS.JSON.JSONArray;
  */
 public class TARDISChameleonPreset {
 
-    private final List<Integer> problemBlocks = Arrays.asList(new Integer[]{64, 67, 68, 71, 96, 99, 106, 109, 114, 128, 156});
+    private final List<Integer> problemBlocks = Arrays.asList(new Integer[]{53, 64, 67, 68, 71, 96, 99, 106, 109, 114, 128, 156});
     public final TARDISCakePreset cake;
     public final TARDISChalicePreset chalice;
     public final TARDISColumnPreset column;
@@ -313,6 +313,7 @@ public class TARDISChameleonPreset {
                                     break;
                             }
                             break;
+                        case 53: // oak wood stair
                         case 67: // cobble stair
                         case 109: // smooth stair
                         case 114: // nether brick stair
@@ -531,9 +532,9 @@ public class TARDISChameleonPreset {
             case YELLOW:
                 return yellow.getYellowSub().get(d);
             case SUBMERGED:
-                return submerged.getSubmerged().get(d);
+                return submerged.getBlueprint().get(d);
             case RAISED:
-                return raised.getRaised().get(d);
+                return raised.getBlueprint().get(d);
             case FLOWER:
                 return flower.getFlower().get(d);
             case CHALICE:

@@ -49,7 +49,6 @@ public class TARDISRebuildPreset {
     private final Location location;
     private final int tid;
     private final String p;
-    private final boolean mal;
     private final int lamp;
     private final boolean sub;
     private final int cham_id;
@@ -69,7 +68,6 @@ public class TARDISRebuildPreset {
         this.preset = preset;
         this.tid = tid;
         this.p = p;
-        this.mal = mal;
         this.lamp = lamp;
         this.sub = sub;
         this.cham_id = cham_id;
@@ -91,7 +89,6 @@ public class TARDISRebuildPreset {
         column = plugin.presets.getColumn(preset, d);
         int plusx, minusx, x, plusz, y, undery, minusz, z, platform_id = plugin.getConfig().getInt("platform_id");
         byte platform_data = (byte) plugin.getConfig().getInt("platform_data");
-        final World world;
         // get relative locations
         x = location.getBlockX();
         plusx = (location.getBlockX() + 1);
@@ -106,7 +103,7 @@ public class TARDISRebuildPreset {
         z = (location.getBlockZ());
         plusz = (location.getBlockZ() + 1);
         minusz = (location.getBlockZ() - 1);
-        world = location.getWorld();
+        final World world = location.getWorld();
         int signx = 0, signz = 0;
         // platform
         plugin.buildPB.addPlatform(location, false, d, p, tid);

@@ -30,6 +30,7 @@ import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
+import org.bukkit.block.Biome;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Player;
@@ -68,6 +69,10 @@ public class TARDISBuilderPreset {
         ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
         if (rs.resultSet()) {
             TARDISConstants.PRESET preset = rs.getPreset();
+            if (rs.isAdapti_on()) {
+                Biome biome = l.getWorld().getBiome(l.getBlockX(), l.getBlockZ());
+                preset = adapt(biome, preset);
+            }
             TARDISConstants.PRESET demat = rs.getDemat();
             int cham_id = rs.getChameleon_id();
             byte cham_data = rs.getChameleon_data();
@@ -212,6 +217,28 @@ public class TARDISBuilderPreset {
                 wheref.put("tardis_id", id);
                 qf.doUpdate("tardis", setf, wheref);
             }
+        }
+    }
+
+    public TARDISConstants.PRESET adapt(Biome biome, TARDISConstants.PRESET preset) {
+        switch (biome) {
+            case DESERT:
+            case DESERT_HILLS:
+                return TARDISConstants.PRESET.DESERT;
+            case HELL:
+                return TARDISConstants.PRESET.NETHER;
+            case JUNGLE:
+            case JUNGLE_HILLS:
+                return TARDISConstants.PRESET.JUNGLE;
+            case PLAINS:
+                return TARDISConstants.PRESET.VILLAGE;
+            case MUSHROOM_ISLAND:
+            case MUSHROOM_SHORE:
+                return TARDISConstants.PRESET.SHROOM;
+            case SWAMPLAND:
+                return TARDISConstants.PRESET.RAISED;
+            default:
+                return preset;
         }
     }
 }

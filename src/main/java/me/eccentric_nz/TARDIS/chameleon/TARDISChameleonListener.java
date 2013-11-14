@@ -81,27 +81,49 @@ public class TARDISChameleonListener implements Listener {
                             HashMap<String, Object> wherec = new HashMap<String, Object>();
                             wherec.put("tardis_id", id);
                             switch (slot) {
-                                case 3:
+                                case 1:
                                     // toggle chameleon circuit
                                     String onoff;
+                                    String engage;
                                     int oo;
                                     if (rs.isChamele_on()) {
                                         onoff = ChatColor.RED + "OFF";
+                                        engage = "ON";
                                         oo = 0;
                                     } else {
                                         onoff = ChatColor.GREEN + "ON";
+                                        engage = "OFF";
                                         oo = 1;
                                     }
                                     ItemMeta im = is.getItemMeta();
-                                    im.setLore(Arrays.asList(new String[]{onoff}));
+                                    im.setLore(Arrays.asList(new String[]{onoff, "Click to turn " + engage}));
                                     is.setItemMeta(im);
                                     // set sign text
                                     setSign(rs.getChameleon(), 2, onoff, player);
                                     set.put("chamele_on", oo);
                                     break;
-                                case 4:
+                                case 3:
                                     player.performCommand("tardis rebuild");
                                     close(player);
+                                    break;
+                                case 5:
+                                    // toggle biome adaption
+                                    String biome;
+                                    String to_turn;
+                                    int ba;
+                                    if (rs.isAdapti_on()) {
+                                        biome = ChatColor.RED + "OFF";
+                                        to_turn = "ON";
+                                        ba = 0;
+                                    } else {
+                                        biome = ChatColor.GREEN + "ON";
+                                        to_turn = "OFF";
+                                        ba = 1;
+                                    }
+                                    ItemMeta bio = is.getItemMeta();
+                                    bio.setLore(Arrays.asList(new String[]{biome, "Click to turn " + to_turn}));
+                                    is.setItemMeta(bio);
+                                    set.put("adapti_on", ba);
                                     break;
                                 case 9:
                                     // new Police Box
@@ -202,11 +224,11 @@ public class TARDISChameleonListener implements Listener {
                                     player.sendMessage(plugin.pluginName + "Chameleon Preset set to " + ChatColor.AQUA + "Stone Brick Column");
                                     break;
                                 case 37:
-                                    // windmill
-                                    set.put("chameleon_preset", "WINDMILL");
-                                    setSign(rs.getChameleon(), 3, "WINDMILL", player);
+                                    // chalice
+                                    set.put("chameleon_preset", "CHALICE");
+                                    setSign(rs.getChameleon(), 3, "CHALICE", player);
                                     close(player);
-                                    player.sendMessage(plugin.pluginName + "Chameleon Preset set to " + ChatColor.AQUA + "Windmill");
+                                    player.sendMessage(plugin.pluginName + "Chameleon Preset set to " + ChatColor.AQUA + "Quartz Chalice");
                                     break;
                                 case 39:
                                     // desert temple
@@ -223,11 +245,11 @@ public class TARDISChameleonListener implements Listener {
                                     player.sendMessage(plugin.pluginName + "Chameleon Preset set to " + ChatColor.AQUA + "Mossy Well");
                                     break;
                                 case 43:
-                                    // chalice
-                                    set.put("chameleon_preset", "CHALICE");
-                                    setSign(rs.getChameleon(), 3, "CHALICE", player);
+                                    // windmill
+                                    set.put("chameleon_preset", "WINDMILL");
+                                    setSign(rs.getChameleon(), 3, "WINDMILL", player);
                                     close(player);
-                                    player.sendMessage(plugin.pluginName + "Chameleon Preset set to " + ChatColor.AQUA + "Quartz Chalice");
+                                    player.sendMessage(plugin.pluginName + "Chameleon Preset set to " + ChatColor.AQUA + "Windmill");
                                     break;
                                 case 45:
                                     // Cake

@@ -10,11 +10,8 @@
 4. TARDIS Information System (add new features)
 5. Chameleon presets (in progress)
     * Match presets to biomes, and use Yellow Submarine when underwater?
-    * If police box lamp is not a redstone lamp, then make the redstone block a normal wall block - check chameleon circuit as well
-    * Fix vine on jungle
     * Fix platform and underdoor block not being removed
-    * Check chameleon on / off in GUI
-    * Custom preset x1 - custom_preset.txt - add sign text
+    * Random cake?
 6. Documentation & videos!
 7. Insert last use is inserted when TARDIS is created and whe player logs in
 

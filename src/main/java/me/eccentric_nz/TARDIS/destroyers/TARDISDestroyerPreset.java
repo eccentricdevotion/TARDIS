@@ -143,6 +143,9 @@ public class TARDISDestroyerPreset {
                 break;
         }
         plugin.utils.setBlock(w, l.getBlockX() + signx, l.getBlockY() + signy, l.getBlockZ() + signz, 0, (byte) 0);
+        if (p.equals(TARDISConstants.PRESET.RAISED)) {
+            plugin.utils.setBlock(w, l.getBlockX() + signx, l.getBlockY(), l.getBlockZ() + signz, 0, (byte) 0);
+        }
     }
 
     public void destroyLamp(Location l) {
