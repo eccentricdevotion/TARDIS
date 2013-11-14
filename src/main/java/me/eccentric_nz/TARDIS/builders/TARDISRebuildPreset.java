@@ -229,6 +229,9 @@ public class TARDISRebuildPreset {
                     case 3:
                         int subi = (preset.equals(TARDISConstants.PRESET.SUBMERGED)) ? cham_id : colids[yy];
                         byte subd = (preset.equals(TARDISConstants.PRESET.SUBMERGED)) ? cham_data : coldatas[yy];
+                        if (preset.equals(TARDISConstants.PRESET.SUBMERGED) && yy == 0) {
+                            plugin.utils.setBlockAndRemember(world, xx, (y + yy), zz, subi, subd, tid);
+                        }
                         plugin.utils.setBlock(world, xx, (y + yy), zz, subi, subd);
                         break;
                     case 35: // wool
