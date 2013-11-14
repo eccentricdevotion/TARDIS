@@ -62,6 +62,7 @@ public class TARDISJoinListener implements Listener {
     public void onJoin(PlayerJoinEvent event) {
         final Player player = event.getPlayer();
         String playerNameStr = player.getName();
+        QueryFactory qf = new QueryFactory(plugin);
         if ((plugin.bukkitversion.compareTo(plugin.preIMversion) > 0 || (plugin.bukkitversion.compareTo(plugin.preIMversion) == 0 && plugin.SUBversion.compareTo(plugin.preSUBversion) > 0)) && plugin.getConfig().getBoolean("allow_achievements")) {
             if (player.hasPermission("tardis.book")) {
                 // check if they have started building a TARDIS yet
@@ -74,7 +75,6 @@ public class TARDISJoinListener implements Listener {
                     HashMap<String, Object> set = new HashMap<String, Object>();
                     set.put("player", player.getName());
                     set.put("name", "tardis");
-                    QueryFactory qf = new QueryFactory(plugin);
                     qf.doInsert("achievements", set);
                     TARDISBook book = new TARDISBook(plugin);
                     // title, author, filename, player
@@ -109,8 +109,9 @@ public class TARDISJoinListener implements Listener {
         wherep.put("owner", playerNameStr);
         ResultSetTardis rs = new ResultSetTardis(plugin, wherep, "", false);
         if (rs.resultSet()) {
+            int id = rs.getTardis_id();
             HashMap<String, Object> wherecl = new HashMap<String, Object>();
-            wherecl.put("tardis_id", rs.getTardis_id());
+            wherecl.put("tardis_id", id);
             ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
             if (rsc.resultSet()) {
                 World w = rsc.getWorld();
@@ -122,6 +123,17 @@ public class TARDISJoinListener implements Listener {
                     plugin.tardisChunkList.add(chunk);
                 }
             }
+            long now;
+            if (player.hasPermission("tardis.prune.bypass")) {
+                now = Long.MAX_VALUE;
+            } else {
+                now = System.currentTimeMillis();
+            }
+            HashMap<String, Object> set = new HashMap<String, Object>();
+            set.put("lastuse", now);
+            HashMap<String, Object> wherel = new HashMap<String, Object>();
+            wherel.put("tardis_id", id);
+            qf.doUpdate("tardis", set, wherel);
         }
     }
 }

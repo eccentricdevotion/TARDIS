@@ -195,6 +195,13 @@ public class TARDISSeedBlockProcessor {
                 set.put("middle_data", middle_data);
                 set.put("chameleon_id", c_id);
                 set.put("chameleon_data", c_data);
+                long now;
+                if (player.hasPermission("tardis.prune.bypass")) {
+                    now = Long.MAX_VALUE;
+                } else {
+                    now = System.currentTimeMillis();
+                }
+                set.put("lastuse", now);
                 // determine wall block material from HashMap
                 setpp.put("wall", getWallKey(middle_id, (int) middle_data));
                 setpp.put("floor", getWallKey(seed.getFloor_id(), (int) seed.getFloor_data()));

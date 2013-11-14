@@ -7,13 +7,13 @@
    * Put farmland, crops, buttons, ladders, levers and signs on last when growing rooms   
 3. Architectural Reconfiguration System
     * Implement Charlie's new doors (in progress)
-4. TARDIS Information System (add new features)
+4. TARDIS Information System
+    * add new features
+    * auto log out
 5. Chameleon presets (in progress)
-    * Match presets to biomes, and use Yellow Submarine when underwater?
     * Fix platform and underdoor block not being removed
     * Random cake?
 6. Documentation & videos!
-7. Insert last use is inserted when TARDIS is created and whe player logs in
 
 ## Waiting on Bukkit API
 0. IDs are soon to be history... so convert all ID use to entity names

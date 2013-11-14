@@ -251,6 +251,13 @@ public class TARDISBlockPlaceListener implements Listener {
                         set.put("owner", playerNameStr);
                         set.put("chunk", chun);
                         set.put("size", schm.name());
+                        long now;
+                        if (player.hasPermission("tardis.prune.bypass")) {
+                            now = Long.MAX_VALUE;
+                        } else {
+                            now = System.currentTimeMillis();
+                        }
+                        set.put("lastuse", now);
                         HashMap<String, Object> setpp = new HashMap<String, Object>();
                         if (middle_id == 22) {
                             set.put("middle_id", 35);
