@@ -264,7 +264,12 @@ public class TARDISInstaPreset {
                                 wheret.put("tardis_id", tid);
                                 ResultSetTardis rst = new ResultSetTardis(plugin, wheret, "", false);
                                 if (rst.resultSet()) {
-                                    String owner = rst.getOwner().substring(0, 12) + "'s";
+                                    String owner;
+                                    if (preset.equals(TARDISConstants.PRESET.GRAVESTONE)) {
+                                        owner = (rst.getOwner().length() > 14) ? rst.getOwner().substring(0, 14) : rst.getOwner();
+                                    } else {
+                                        owner = (rst.getOwner().length() > 14) ? rst.getOwner().substring(0, 12) + "'s" : rst.getOwner() + "'s";
+                                    }
                                     switch (preset) {
                                         case GRAVESTONE:
                                             s.setLine(3, owner);
