@@ -51,7 +51,6 @@ public class TARDISRebuildCommand {
                 return false;
             }
             id = rs.getTardis_id();
-            boolean hidden = rs.isHidden();
             HashMap<String, Object> wherein = new HashMap<String, Object>();
             wherein.put("player", player.getName());
             ResultSetTravellers rst = new ResultSetTravellers(plugin, wherein, false);
@@ -83,15 +82,13 @@ public class TARDISRebuildCommand {
                 player.sendMessage(plugin.pluginName + ChatColor.RED + "The TARDIS does not have enough Artron Energy to rebuild!");
                 return false;
             }
-            //if (!hidden) {
             // remove the police box first - should fix conflict between wood and iron doors
-            plugin.destroyPB.destroyPreset(l, rsc.getDirection(), id, true, false, false, null);
-            //}
+            plugin.destroyerP.destroyPreset(l, rsc.getDirection(), id, true, false, false, null);
             final boolean c = cham;
             plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
                 @Override
                 public void run() {
-                    plugin.buildPB.buildPreset(id, l, rsc.getDirection(), c, player, true, false);
+                    plugin.builderP.buildPreset(id, l, rsc.getDirection(), c, player, true, false);
                 }
             }, 10L);
             player.sendMessage(plugin.pluginName + "The TARDIS Police Box was rebuilt!");

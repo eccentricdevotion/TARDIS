@@ -93,16 +93,16 @@ public class TARDISDirectionCommand {
             qf.doUpdate("doors", setd, did);
             final Location l = new Location(rsc.getWorld(), rsc.getX(), rsc.getY(), rsc.getZ());
             final TARDISConstants.COMPASS d = TARDISConstants.COMPASS.valueOf(dir);
-            // destroy platform
+            // destroy sign
             if (!hid) {
-                plugin.destroyPB.destroyPlatform(plat, id);
-                plugin.destroyPB.destroySign(l, old_d, demat);
+                plugin.destroyerP.destroySign(l, old_d, demat);
             }
+            plugin.destroyerP.destroyPreset(l, d, id, true, false, false, null);
             final Player p = player;
             plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
                 @Override
                 public void run() {
-                    plugin.buildPB.buildPreset(id, l, d, cham, p, true, false);
+                    plugin.builderP.buildPreset(id, l, d, cham, p, true, false);
                 }
             }, 10L);
             HashMap<String, Object> wherea = new HashMap<String, Object>();

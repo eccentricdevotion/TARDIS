@@ -102,71 +102,29 @@ public class TARDISRebuildPreset {
         final World world = location.getWorld();
         int signx = 0, signz = 0;
         // platform
-        plugin.buildPB.addPlatform(location, false, d, p, tid);
+        plugin.builderP.addPlatform(location, false, d, p, tid);
         QueryFactory qf = new QueryFactory(plugin);
-        HashMap<String, Object> ps = new HashMap<String, Object>();
-        ps.put("tardis_id", tid);
-        String loc = "";
-        // get direction player is facing from yaw
-        // place block under door if block is in list of blocks an iron door cannot go on
         switch (d) {
             case SOUTH:
                 //if (yaw >= 315 || yaw < 45)
-                if (sub) {
-                    plugin.utils.setBlockCheck(world, x, undery, minusz, 19, (byte) 0, tid, true); // door is here if player facing south
-                    sponge = world.getBlockAt(x, undery, minusz);
-                } else if (!plugin.buildPB.no_block_under_door.contains(preset)) {
-                    plugin.utils.setBlockCheck(world, x, undery, minusz, platform_id, platform_data, tid, false); // door is here if player facing south
-                }
-                loc = world.getBlockAt(x, undery, minusz).getLocation().toString();
-                ps.put("location", loc);
                 signx = x;
                 signz = (minusz - 1);
                 break;
             case EAST:
                 //if (yaw >= 225 && yaw < 315)
-                if (sub) {
-                    plugin.utils.setBlockCheck(world, minusx, undery, z, 19, (byte) 0, tid, true); // door is here if player facing east
-                    sponge = world.getBlockAt(minusx, undery, z);
-                } else if (!plugin.buildPB.no_block_under_door.contains(preset)) {
-                    plugin.utils.setBlockCheck(world, minusx, undery, z, platform_id, platform_data, tid, false); // door is here if player facing east
-                }
-                loc = world.getBlockAt(minusx, undery, z).getLocation().toString();
-                ps.put("location", loc);
                 signx = (minusx - 1);
                 signz = z;
                 break;
             case NORTH:
                 //if (yaw >= 135 && yaw < 225)
-                if (sub) {
-                    plugin.utils.setBlockCheck(world, x, undery, plusz, 19, (byte) 0, tid, true); // door is here if player facing north
-                    sponge = world.getBlockAt(x, undery, plusz);
-                } else if (!plugin.buildPB.no_block_under_door.contains(preset)) {
-                    plugin.utils.setBlockCheck(world, x, undery, plusz, platform_id, platform_data, tid, false); // door is here if player facing north
-                }
-                loc = world.getBlockAt(x, undery, plusz).getLocation().toString();
-                ps.put("location", loc);
                 signx = x;
                 signz = (plusz + 1);
                 break;
             case WEST:
                 //if (yaw >= 45 && yaw < 135)
-                if (sub) {
-                    plugin.utils.setBlockCheck(world, plusx, undery, z, 19, (byte) 0, tid, true); // door is here if player facing west
-                    sponge = world.getBlockAt(plusx, undery, z);
-                } else if (!plugin.buildPB.no_block_under_door.contains(preset)) {
-                    plugin.utils.setBlockCheck(world, plusx, undery, z, platform_id, platform_data, tid, false); // door is here if player facing west
-                }
-                loc = world.getBlockAt(plusx, undery, z).getLocation().toString();
-                ps.put("location", loc);
                 signx = (plusx + 1);
                 signz = z;
                 break;
-        }
-        ps.put("police_box", 1);
-        qf.doInsert("blocks", ps);
-        if (!loc.isEmpty()) {
-            plugin.protectBlockMap.put(loc, tid);
         }
         int xx, zz;
         int[][] ids = column.getId();
@@ -263,6 +221,15 @@ public class TARDISRebuildPreset {
                                 setd.put("door_type", 0);
                                 setd.put("door_direction", d.toString());
                                 qf.doInsert("doors", setd);
+                            }
+                        }
+                        if (yy == 0) {
+                            // place block under door if block is in list of blocks an iron door cannot go on
+                            if (sub) {
+                                plugin.utils.setBlockAndRemember(world, xx, (y - 1), zz, 19, (byte) 0, tid);
+                                sponge = world.getBlockAt(xx, (y - 1), zz);
+                            } else if (!plugin.builderP.no_block_under_door.contains(preset)) {
+                                plugin.utils.setUnderDoorBlock(world, xx, (y - 1), zz, platform_id, platform_data, tid);
                             }
                         }
                         if (preset.equals(TARDISConstants.PRESET.SUBMERGED) && yy == 0) {
@@ -369,7 +336,7 @@ public class TARDISRebuildPreset {
                     case 144:
                         plugin.utils.setBlock(world, xx, (y + yy), zz, colids[yy], coldatas[yy]);
                         Skull skull = (Skull) world.getBlockAt(xx, (y + yy), zz).getState();
-                        skull.setRotation(plugin.buildPB.getSkullDirection(d));
+                        skull.setRotation(plugin.builderP.getSkullDirection(d));
                         skull.update();
                         break;
                     case 152:

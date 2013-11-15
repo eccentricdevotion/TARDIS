@@ -70,13 +70,13 @@ public class TARDISExterminator {
                 Location bb_loc = new Location(rsc.getWorld(), rsc.getX(), rsc.getY(), rsc.getZ());
                 TARDISConstants.COMPASS d = rsc.getDirection();
                 if (!hid) {
-                    plugin.destroyPB.destroyPreset(bb_loc, d, id, false, false, false, null);
+                    plugin.destroyerP.destroyPreset(bb_loc, d, id, false, false, false, null);
                 }
                 String[] chunkworld = chunkLoc.split(":");
                 World cw = plugin.getServer().getWorld(chunkworld[0]);
                 int restore = getRestore(cw);
                 if (!cw.getName().contains("TARDIS_WORLD_")) {
-                    plugin.destroyI.destroyInner(schm, id, cw, restore, owner);
+                    plugin.destroyerI.destroyInner(schm, id, cw, restore, owner);
                 }
                 cleanDatabase(id);
                 cleanWorlds(cw, owner);
@@ -189,13 +189,13 @@ public class TARDISExterminator {
             if (sign_loc.getBlockX() == bb_loc.getBlockX() + signx && sign_loc.getBlockY() + signy == bb_loc.getBlockY() && sign_loc.getBlockZ() == bb_loc.getBlockZ() + signz) {
                 if (!rs.isHidden()) {
                     // remove Police Box
-                    plugin.destroyPB.destroyPreset(bb_loc, d, id, false, false, false, null);
+                    plugin.destroyerP.destroyPreset(bb_loc, d, id, false, false, false, null);
                 }
                 String[] chunkworld = chunkLoc.split(":");
                 World cw = plugin.getServer().getWorld(chunkworld[0]);
                 int restore = getRestore(cw);
                 if (!cw.getName().contains("TARDIS_WORLD_")) {
-                    plugin.destroyI.destroyInner(schm, id, cw, restore, playerNameStr);
+                    plugin.destroyerI.destroyInner(schm, id, cw, restore, playerNameStr);
                 }
                 cleanDatabase(id);
                 cleanWorlds(cw, playerNameStr);

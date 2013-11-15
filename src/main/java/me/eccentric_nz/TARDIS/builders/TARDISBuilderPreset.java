@@ -209,30 +209,12 @@ public class TARDISBuilderPreset {
                         platform_blocks = Arrays.asList(world.getBlockAt(plusx + 1, y, z + 1), world.getBlockAt(plusx + 1, y, z), world.getBlockAt(plusx + 1, y, z - 1), world.getBlockAt(plusx + 2, y, z + 1), world.getBlockAt(plusx + 2, y, z), world.getBlockAt(plusx + 2, y, z - 1));
                         break;
                 }
-                StringBuilder sb = new StringBuilder();
                 for (Block pb : platform_blocks) {
-                    Material mat = pb.getType();
                     int matint = pb.getTypeId();
                     if (plat_blocks.contains(matint)) {
-                        if (rebuild) {
-                            plugin.utils.setBlockAndRemember(world, pb.getX(), pb.getY(), pb.getZ(), platform_id, platform_data, id);
-                        } else {
-                            plugin.utils.setBlock(world, pb.getX(), pb.getY(), pb.getZ(), platform_id, platform_data);
-                        }
-                        String p_tmp = world.getName() + ":" + pb.getX() + ":" + pb.getY() + ":" + pb.getZ() + ":" + mat.toString();
-                        sb.append(p_tmp).append("~");
+                        plugin.utils.setBlockAndRemember(world, pb.getX(), pb.getY(), pb.getZ(), platform_id, platform_data, id);
                     }
                 }
-                String recall = sb.toString();
-                String platform_recall = "";
-                if (recall.length() > 0) {
-                    platform_recall = recall.substring(0, recall.length() - 1);
-                }
-                HashMap<String, Object> setf = new HashMap<String, Object>();
-                setf.put("platform", platform_recall);
-                HashMap<String, Object> wheref = new HashMap<String, Object>();
-                wheref.put("tardis_id", id);
-                qf.doUpdate("tardis", setf, wheref);
             }
         }
     }

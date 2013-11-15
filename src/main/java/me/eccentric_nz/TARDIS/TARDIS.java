@@ -191,10 +191,10 @@ public class TARDIS extends JavaPlugin {
     public TARDISUtils utils = new TARDISUtils(this);
     public TARDISCommands tardisCommand;
     public TARDISAdminCommands tardisAdminCommand;
-    public TARDISBuilderInner buildI = new TARDISBuilderInner(this);
-    public TARDISBuilderPreset buildPB = new TARDISBuilderPreset(this);
-    public TARDISDestroyerInner destroyI = new TARDISDestroyerInner(this);
-    public TARDISDestroyerPreset destroyPB = new TARDISDestroyerPreset(this);
+    public TARDISBuilderInner builderI = new TARDISBuilderInner(this);
+    public TARDISBuilderPreset builderP = new TARDISBuilderPreset(this);
+    public TARDISDestroyerInner destroyerI = new TARDISDestroyerInner(this);
+    public TARDISDestroyerPreset destroyerP = new TARDISDestroyerPreset(this);
     public TARDISArea ta = new TARDISArea(this);
     public TARDISWorldGuardUtils wgutils;
     public TARDISTownyChecker tychk;
@@ -544,19 +544,6 @@ public class TARDIS extends JavaPlugin {
         }
     }
 
-    /**
-     * Starts the sending of plugin statistics. To stop TARDIS sending metrics
-     * data, edit plugins/PluginMetrics/config.yml and set opt-out to true.
-     */
-//    private void loadMetrics() {
-//        try {
-//            MetricsLite metrics = new MetricsLite(this);
-//            metrics.start();
-//        } catch (IOException e) {
-//            // Failed to submit the stats :-(
-//        }
-//    }
-//
     /**
      * Starts a repeating tasks that plays TARDIS sound effects to players while
      * they are inside the TARDIS. Requires the Spout plugin to be installed on

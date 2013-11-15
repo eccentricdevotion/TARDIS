@@ -74,11 +74,11 @@ public class TARDISDeinstaPreset {
         }
         int sbz = l.getBlockZ() - 1;
         // remove door
-        plugin.destroyPB.destroyDoor(id);
+        plugin.destroyerP.destroyDoor(id);
         // remove torch
-        plugin.destroyPB.destroyLamp(l);
+        plugin.destroyerP.destroyLamp(l);
         // remove sign
-        plugin.destroyPB.destroySign(l, d, preset);
+        plugin.destroyerP.destroySign(l, d, preset);
         // remove blue wool and door
         for (int yy = 0; yy < 4; yy++) {
             for (int xx = 0; xx < 3; xx++) {
@@ -101,6 +101,7 @@ public class TARDISDeinstaPreset {
             owner = rs.getOwner();
             String replacedData = rs.getReplaced();
             if (!replacedData.isEmpty()) {
+                plugin.debug("replaced data is not empty");
                 String[] parts = replacedData.split(":");
                 World rw = plugin.getServer().getWorld(parts[0]);
                 int rx, ry, rz, rID;
@@ -140,11 +141,6 @@ public class TARDISDeinstaPreset {
             }
         }, 15L);
 
-        // get rid of platform if there is one
-        if (plugin.getConfig().getBoolean("platform")) {
-            String plat = rs.getPlatform();
-            plugin.destroyPB.destroyPlatform(plat, id);
-        }
         // check protected blocks if has block id and data stored then put the block back!
         HashMap<String, Object> tid = new HashMap<String, Object>();
         tid.put("tardis_id", id);
@@ -156,24 +152,22 @@ public class TARDISDeinstaPreset {
                 if (map.get("block") != null) {
                     bID = plugin.utils.parseNum(map.get("block"));
                 }
-                if (bID != 0) {
-                    byte bd = Byte.parseByte(map.get("data"));
-                    String locStr = map.get("location");
-                    String[] loc_data = locStr.split(",");
-                    // x, y, z - 1, 2, 3
-                    String[] xStr = loc_data[1].split("=");
-                    String[] yStr = loc_data[2].split("=");
-                    String[] zStr = loc_data[3].split("=");
-                    int rx = plugin.utils.parseNum(xStr[1].substring(0, (xStr[1].length() - 2)));
-                    int ry = plugin.utils.parseNum(yStr[1].substring(0, (yStr[1].length() - 2)));
-                    int rz = plugin.utils.parseNum(zStr[1].substring(0, (zStr[1].length() - 2)));
-                    plugin.utils.setBlock(w, rx, ry, rz, bID, bd);
-                }
+                byte bd = Byte.parseByte(map.get("data"));
+                String locStr = map.get("location");
+                String[] loc_data = locStr.split(",");
+                // x, y, z - 1, 2, 3
+                String[] xStr = loc_data[1].split("=");
+                String[] yStr = loc_data[2].split("=");
+                String[] zStr = loc_data[3].split("=");
+                int rx = plugin.utils.parseNum(xStr[1].substring(0, (xStr[1].length() - 2)));
+                int ry = plugin.utils.parseNum(yStr[1].substring(0, (yStr[1].length() - 2)));
+                int rz = plugin.utils.parseNum(zStr[1].substring(0, (zStr[1].length() - 2)));
+                plugin.utils.setBlock(w, rx, ry, rz, bID, bd);
             }
         }
         // if just hiding don't remove block protection
         if (hide == false) {
-            plugin.destroyPB.removeBlockProtection(id, qf);
+            plugin.destroyerP.removeBlockProtection(id, qf);
         }
         plugin.tardisDematerialising.remove(Integer.valueOf(id));
         plugin.tardisChunkList.remove(l.getChunk());

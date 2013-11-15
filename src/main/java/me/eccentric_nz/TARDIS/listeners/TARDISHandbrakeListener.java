@@ -212,11 +212,11 @@ public class TARDISHandbrakeListener implements Listener {
                                                 if (sub) {
                                                     plugin.trackSubmarine.add(Integer.valueOf(id));
                                                 }
-                                                plugin.destroyPB.destroyPreset(l, cd, id, false, mat, cham, player);
+                                                plugin.destroyerP.destroyPreset(l, cd, id, false, mat, cham, player);
                                             } else {
                                                 // set hidden false!
                                                 set.put("hidden", 0);
-                                                plugin.destroyPB.removeBlockProtection(id, new QueryFactory(plugin));
+                                                plugin.destroyerP.removeBlockProtection(id, new QueryFactory(plugin));
                                             }
                                             long delay = (mat) ? ((plugin.pm.getPlugin("Spout") != null) ? 450L : 200L) : 1L;
                                             final Location e = exit;
@@ -228,7 +228,7 @@ public class TARDISHandbrakeListener implements Listener {
                                             plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
                                                 @Override
                                                 public void run() {
-                                                    plugin.buildPB.buildPreset(id, e, sd, cham, player, false, mal);
+                                                    plugin.builderP.buildPreset(id, e, sd, cham, player, false, mal);
                                                     playSound(handbrake_loc, player, "tardis_land");
                                                 }
                                             }, delay);

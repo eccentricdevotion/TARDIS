@@ -301,8 +301,8 @@ public class TARDISBlockPlaceListener implements Listener {
                         blockBelow.setTypeId(0);
                         blockBottom.setTypeId(0);
                         // turn the block stack into a TARDIS
-                        plugin.buildPB.buildPreset(lastInsertId, block_loc, TARDISConstants.COMPASS.valueOf(d), false, player, false, false);
-                        plugin.buildI.buildInner(schm, chunkworld, lastInsertId, player, middle_id, middle_data);
+                        plugin.builderP.buildPreset(lastInsertId, block_loc, TARDISConstants.COMPASS.valueOf(d), false, player, false, false);
+                        plugin.builderI.buildInner(schm, chunkworld, lastInsertId, player, middle_id, middle_data);
                         // set achievement completed
                         if (player.hasPermission("tardis.book")) {
                             HashMap<String, Object> seta = new HashMap<String, Object>();

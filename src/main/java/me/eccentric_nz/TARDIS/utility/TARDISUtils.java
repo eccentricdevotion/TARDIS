@@ -115,11 +115,11 @@ public class TARDISUtils {
         set.put("tardis_id", id);
         set.put("location", l);
         int bid = b.getTypeId();
-        if (bid != 0) {
-            byte data = b.getData();
-            set.put("block", bid);
-            set.put("data", data);
-        }
+        //if (bid != 0) {
+        byte data = b.getData();
+        set.put("block", bid);
+        set.put("data", data);
+        //}
         set.put("police_box", 1);
         qf.doInsert("blocks", set);
         plugin.protectBlockMap.put(l, id);
@@ -139,26 +139,27 @@ public class TARDISUtils {
      * @param m the typeId to set the block to.
      * @param d the data bit to set the block to.
      * @param id the TARDIS this block belongs to.
-     * @param sub whether the TARDIS is in submarine mode
      */
     @SuppressWarnings("deprecation")
-    public void setBlockCheck(World w, int x, int y, int z, int m, byte d, int id, boolean sub) {
+    public void setUnderDoorBlock(World w, int x, int y, int z, int m, byte d, int id) {
         // List of blocks that a door cannot be placed on
         List<Integer> ids = plugin.getBlocksConfig().getIntegerList("under_door_blocks");
         Block b = w.getBlockAt(x, y, z);
-        int bId = b.getTypeId();
-        byte bData = b.getData();
-        if (ids.contains(bId) || sub) {
+        int bid = b.getTypeId();
+        if (ids.contains(bid)) {
             b.setTypeId(m);
             b.setData(d, true);
             // remember replaced block location, TypeId and Data so we can restore it later
-            String replaced = w.getName() + ":" + x + ":" + y + ":" + z + ":" + bId + ":" + bData;
+            String l = b.getLocation().toString();
             QueryFactory qf = new QueryFactory(plugin);
             HashMap<String, Object> set = new HashMap<String, Object>();
-            set.put("replaced", replaced);
-            HashMap<String, Object> where = new HashMap<String, Object>();
-            where.put("tardis_id", id);
-            qf.doUpdate("tardis", set, where);
+            set.put("tardis_id", id);
+            set.put("location", l);
+            set.put("block", bid);
+            set.put("data", b.getData());
+            set.put("police_box", 1);
+            qf.doInsert("blocks", set);
+            plugin.protectBlockMap.put(l, id);
         }
     }
 

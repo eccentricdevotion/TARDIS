@@ -159,34 +159,6 @@ public class TARDISDestroyerPreset {
         plugin.utils.setBlock(w, tx, ty, tz, 0, (byte) 0);
     }
 
-    public void destroyPlatform(String plat, int id) {
-        if (!plat.isEmpty()) {
-            int px = 0, py = 0, pz = 0;
-            String[] str_blocks = plat.split("~");
-            for (String sb : str_blocks) {
-                String[] p_data = sb.split(":");
-                World pw = plugin.getServer().getWorld(p_data[0]);
-                Material cham_id = Material.valueOf(p_data[4]);
-                try {
-                    px = Integer.valueOf(p_data[1]);
-                    py = Integer.valueOf(p_data[2]);
-                    pz = Integer.valueOf(p_data[3]);
-                } catch (NumberFormatException nfe) {
-                    plugin.console.sendMessage(plugin.pluginName + "Could not convert to number!");
-                }
-                Block pb = pw.getBlockAt(px, py, pz);
-                pb.setType(cham_id);
-            }
-        }
-        // forget the platform blocks
-        QueryFactory qf = new QueryFactory(plugin);
-        HashMap<String, Object> setp = new HashMap<String, Object>();
-        setp.put("platform", "");
-        HashMap<String, Object> wherep = new HashMap<String, Object>();
-        wherep.put("tardis_id", id);
-        qf.doUpdate("tardis", setp, wherep);
-    }
-
     public void removeBlockProtection(int id, QueryFactory qf) {
         HashMap<String, Object> whereb = new HashMap<String, Object>();
         whereb.put("tardis_id", id);
