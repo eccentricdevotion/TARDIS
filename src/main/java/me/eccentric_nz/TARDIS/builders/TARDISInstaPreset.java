@@ -264,7 +264,7 @@ public class TARDISInstaPreset {
                     case 64: // wood, iron & trap doors
                     case 71:
                     case 96:
-                        if (coldatas[yy] < 8) {
+                        if (coldatas[yy] < 8 || colids[yy] == 96) {
                             // remember the door location
                             String doorloc = world.getName() + ":" + xx + ":" + (y + yy) + ":" + zz;
                             // should insert the door when tardis is first made, and then update location there after!
