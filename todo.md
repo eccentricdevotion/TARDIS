@@ -7,12 +7,14 @@
    * Put farmland, crops, buttons, ladders, levers and signs on last when growing rooms   
 3. Architectural Reconfiguration System
     * Implement Charlie's new doors (in progress)
+    * Gravity well jettisoning
 4. TARDIS Information System
     * add new features
     * auto log out
 5. Chameleon presets (in progress)
     * Fix platform and underdoor block not being removed
     * Random cake?
+    * Obsidian End TARDIS
 6. Documentation & videos!
 
 ## Waiting on Bukkit API

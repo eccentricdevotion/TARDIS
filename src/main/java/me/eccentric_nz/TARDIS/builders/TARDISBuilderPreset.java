@@ -16,9 +16,11 @@
  */
 package me.eccentric_nz.TARDIS.builders;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Random;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.chameleon.TARDISChameleonCircuit;
@@ -46,9 +48,24 @@ public class TARDISBuilderPreset {
 
     private final TARDIS plugin;
     List<Integer> plat_blocks = Arrays.asList(new Integer[]{0, 6, 9, 8, 31, 32, 37, 38, 39, 40, 78, 106, 3019, 3020});
+    HashMap<TARDISConstants.COMPASS, BlockFace[]> face_map = new HashMap<TARDISConstants.COMPASS, BlockFace[]>();
+    public final List<TARDISConstants.PRESET> no_block_under_door;
+    Random rand;
 
     public TARDISBuilderPreset(TARDIS plugin) {
         this.plugin = plugin;
+        this.rand = new Random();
+        face_map.put(TARDISConstants.COMPASS.NORTH, new BlockFace[]{BlockFace.SOUTH_WEST, BlockFace.SOUTH_SOUTH_WEST, BlockFace.SOUTH, BlockFace.SOUTH_SOUTH_EAST, BlockFace.SOUTH_EAST});
+        face_map.put(TARDISConstants.COMPASS.WEST, new BlockFace[]{BlockFace.SOUTH_EAST, BlockFace.EAST_SOUTH_EAST, BlockFace.EAST, BlockFace.EAST_NORTH_EAST, BlockFace.NORTH_EAST});
+        face_map.put(TARDISConstants.COMPASS.SOUTH, new BlockFace[]{BlockFace.NORTH_EAST, BlockFace.NORTH_NORTH_EAST, BlockFace.NORTH, BlockFace.NORTH_NORTH_WEST, BlockFace.NORTH_WEST});
+        face_map.put(TARDISConstants.COMPASS.EAST, new BlockFace[]{BlockFace.NORTH_WEST, BlockFace.WEST_NORTH_WEST, BlockFace.WEST, BlockFace.WEST_SOUTH_WEST, BlockFace.SOUTH_WEST});
+        no_block_under_door = new ArrayList<TARDISConstants.PRESET>();
+        no_block_under_door.add(TARDISConstants.PRESET.ANGEL);
+        no_block_under_door.add(TARDISConstants.PRESET.GRAVESTONE);
+        no_block_under_door.add(TARDISConstants.PRESET.SWAMP);
+        no_block_under_door.add(TARDISConstants.PRESET.SUBMERGED);
+        no_block_under_door.add(TARDISConstants.PRESET.WELL);
+
     }
 
     /**
@@ -236,9 +253,14 @@ public class TARDISBuilderPreset {
             case MUSHROOM_SHORE:
                 return TARDISConstants.PRESET.SHROOM;
             case SWAMPLAND:
-                return TARDISConstants.PRESET.RAISED;
+                return TARDISConstants.PRESET.SWAMP;
             default:
                 return preset;
         }
+    }
+
+    public BlockFace getSkullDirection(TARDISConstants.COMPASS d) {
+        BlockFace[] faces = face_map.get(d);
+        return faces[rand.nextInt(5)];
     }
 }

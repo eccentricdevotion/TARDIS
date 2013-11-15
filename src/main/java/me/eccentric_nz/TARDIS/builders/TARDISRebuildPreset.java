@@ -16,9 +16,7 @@
  */
 package me.eccentric_nz.TARDIS.builders;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Random;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
@@ -32,6 +30,7 @@ import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.block.Sign;
+import org.bukkit.block.Skull;
 
 /**
  * A police box is a telephone kiosk that can be used by members of the public
@@ -56,7 +55,6 @@ public class TARDISRebuildPreset {
     private Block sponge;
     private final TARDISConstants.PRESET preset;
     private TARDISChameleonColumn column;
-    private final List<TARDISConstants.PRESET> no_block_under_door;
     private final byte[] colours;
     private final Random rand;
     private final byte random_colour;
@@ -72,11 +70,6 @@ public class TARDISRebuildPreset {
         this.sub = sub;
         this.cham_id = cham_id;
         this.cham_data = cham_data;
-        no_block_under_door = new ArrayList<TARDISConstants.PRESET>();
-        no_block_under_door.add(TARDISConstants.PRESET.GRAVESTONE);
-        no_block_under_door.add(TARDISConstants.PRESET.RAISED);
-        no_block_under_door.add(TARDISConstants.PRESET.SUBMERGED);
-        no_block_under_door.add(TARDISConstants.PRESET.WELL);
         colours = new byte[]{0, 1, 2, 3, 4, 5, 6, 9, 10, 11, 12, 13, 14};
         rand = new Random();
         random_colour = colours[rand.nextInt(13)];
@@ -86,6 +79,9 @@ public class TARDISRebuildPreset {
      * Builds the TARDIS Preset.
      */
     public void rebuildPreset() {
+        if (preset.equals(TARDISConstants.PRESET.ANGEL)) {
+            plugin.presets.setR(rand.nextInt(2));
+        }
         column = plugin.presets.getColumn(preset, d);
         int plusx, minusx, x, plusz, y, undery, minusz, z, platform_id = plugin.getConfig().getInt("platform_id");
         byte platform_data = (byte) plugin.getConfig().getInt("platform_data");
@@ -119,7 +115,7 @@ public class TARDISRebuildPreset {
                 if (sub) {
                     plugin.utils.setBlockCheck(world, x, undery, minusz, 19, (byte) 0, tid, true); // door is here if player facing south
                     sponge = world.getBlockAt(x, undery, minusz);
-                } else if (!no_block_under_door.contains(preset)) {
+                } else if (!plugin.buildPB.no_block_under_door.contains(preset)) {
                     plugin.utils.setBlockCheck(world, x, undery, minusz, platform_id, platform_data, tid, false); // door is here if player facing south
                 }
                 loc = world.getBlockAt(x, undery, minusz).getLocation().toString();
@@ -132,7 +128,7 @@ public class TARDISRebuildPreset {
                 if (sub) {
                     plugin.utils.setBlockCheck(world, minusx, undery, z, 19, (byte) 0, tid, true); // door is here if player facing east
                     sponge = world.getBlockAt(minusx, undery, z);
-                } else if (!no_block_under_door.contains(preset)) {
+                } else if (!plugin.buildPB.no_block_under_door.contains(preset)) {
                     plugin.utils.setBlockCheck(world, minusx, undery, z, platform_id, platform_data, tid, false); // door is here if player facing east
                 }
                 loc = world.getBlockAt(minusx, undery, z).getLocation().toString();
@@ -145,7 +141,7 @@ public class TARDISRebuildPreset {
                 if (sub) {
                     plugin.utils.setBlockCheck(world, x, undery, plusz, 19, (byte) 0, tid, true); // door is here if player facing north
                     sponge = world.getBlockAt(x, undery, plusz);
-                } else if (!no_block_under_door.contains(preset)) {
+                } else if (!plugin.buildPB.no_block_under_door.contains(preset)) {
                     plugin.utils.setBlockCheck(world, x, undery, plusz, platform_id, platform_data, tid, false); // door is here if player facing north
                 }
                 loc = world.getBlockAt(x, undery, plusz).getLocation().toString();
@@ -158,7 +154,7 @@ public class TARDISRebuildPreset {
                 if (sub) {
                     plugin.utils.setBlockCheck(world, plusx, undery, z, 19, (byte) 0, tid, true); // door is here if player facing west
                     sponge = world.getBlockAt(plusx, undery, z);
-                } else if (!no_block_under_door.contains(preset)) {
+                } else if (!plugin.buildPB.no_block_under_door.contains(preset)) {
                     plugin.utils.setBlockCheck(world, plusx, undery, z, platform_id, platform_data, tid, false); // door is here if player facing west
                 }
                 loc = world.getBlockAt(plusx, undery, z).getLocation().toString();
@@ -285,19 +281,17 @@ public class TARDISRebuildPreset {
                                 wheret.put("tardis_id", tid);
                                 ResultSetTardis rst = new ResultSetTardis(plugin, wheret, "", false);
                                 if (rst.resultSet()) {
-                                    String owner = rst.getOwner();
-                                    if (owner.length() > 14) {
-                                        if (preset.equals(TARDISConstants.PRESET.GRAVESTONE)) {
-                                            s.setLine(3, owner.substring(0, 14));
-                                        } else {
-                                            s.setLine(0, owner.substring(0, 12) + "'s");
-                                        }
-                                    } else {
-                                        if (preset.equals(TARDISConstants.PRESET.GRAVESTONE)) {
+                                    String owner = rst.getOwner().substring(0, 12) + "'s";
+                                    switch (preset) {
+                                        case GRAVESTONE:
                                             s.setLine(3, owner);
-                                        } else {
-                                            s.setLine(0, owner + "'s");
-                                        }
+                                            break;
+                                        case ANGEL:
+                                            s.setLine(2, owner);
+                                            break;
+                                        default:
+                                            s.setLine(0, owner);
+                                            break;
                                     }
                                 }
                             }
@@ -328,13 +322,13 @@ public class TARDISRebuildPreset {
                                     line1 = "VERY SMALL";
                                     line2 = "WINDMILL";
                                     break;
-                                case RAISED:
+                                case SWAMP:
                                     line1 = "SIGN ABOVE";
                                     line2 = "THE DOOR";
                                     break;
-                                case SWAMP:
-                                    line1 = "SWAMP";
-                                    line2 = "HUT";
+                                case ANGEL:
+                                    line1 = "WEEPING";
+                                    line2 = "ANGELS HAVE";
                                     break;
                                 case CAKE:
                                     line1 = "CAKE AND";
@@ -361,10 +355,22 @@ public class TARDISRebuildPreset {
                                     line2 = "BOX";
                                     break;
                             }
-                            s.setLine(1, ChatColor.WHITE + line1);
-                            s.setLine(2, ChatColor.WHITE + line2);
+                            if (preset.equals(TARDISConstants.PRESET.ANGEL)) {
+                                s.setLine(0, ChatColor.WHITE + line1);
+                                s.setLine(1, ChatColor.WHITE + line2);
+                                s.setLine(3, ChatColor.WHITE + "TARDIS");
+                            } else {
+                                s.setLine(1, ChatColor.WHITE + line1);
+                                s.setLine(2, ChatColor.WHITE + line2);
+                            }
                             s.update();
                         }
+                        break;
+                    case 144:
+                        plugin.utils.setBlock(world, xx, (y + yy), zz, colids[yy], coldatas[yy]);
+                        Skull skull = (Skull) world.getBlockAt(xx, (y + yy), zz).getState();
+                        skull.setRotation(plugin.buildPB.getSkullDirection(d));
+                        skull.update();
                         break;
                     case 152:
                         if (lamp != 123 && (preset.equals(TARDISConstants.PRESET.NEW) || preset.equals(TARDISConstants.PRESET.OLD))) {

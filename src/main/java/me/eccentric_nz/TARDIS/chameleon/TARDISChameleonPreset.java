@@ -32,6 +32,8 @@ import me.eccentric_nz.TARDIS.JSON.JSONArray;
 public class TARDISChameleonPreset {
 
     private final List<Integer> problemBlocks = Arrays.asList(new Integer[]{53, 64, 67, 68, 71, 96, 99, 106, 109, 114, 128, 156});
+    public final TARDISAngelDownPreset angeld;
+    public final TARDISAngelUpPreset angelu;
     public final TARDISCakePreset cake;
     public final TARDISChalicePreset chalice;
     public final TARDISColumnPreset column;
@@ -40,11 +42,10 @@ public class TARDISChameleonPreset {
     public final TARDISFlowerPreset flower;
     public final TARDISGravestonePreset gravestone;
     public final TARDISJunglePreset jungle;
+    public final TARDISMushroomPreset shroom;
     public final TARDISNetherPreset nether;
     public final TARDISPartyPreset party;
     public final TARDISPoliceBoxPreset police;
-    public final TARDISRaisedPreset raised;
-    public final TARDISMushroomPreset shroom;
     public final TARDISSubmergedPreset submerged;
     public final TARDISSwampPreset swamp;
     public final TARDISTallerPreset taller;
@@ -55,8 +56,11 @@ public class TARDISChameleonPreset {
     public final TARDISWindmillPreset windmill;
     public final TARDISYellowSubmarinePreset yellow;
     public final TARDISCustomPreset custom;
+    int r;
 
     public TARDISChameleonPreset() {
+        this.angeld = new TARDISAngelDownPreset();
+        this.angelu = new TARDISAngelUpPreset();
         this.cake = new TARDISCakePreset();
         this.chalice = new TARDISChalicePreset();
         this.column = new TARDISColumnPreset();
@@ -68,7 +72,6 @@ public class TARDISChameleonPreset {
         this.nether = new TARDISNetherPreset();
         this.party = new TARDISPartyPreset();
         this.police = new TARDISPoliceBoxPreset();
-        this.raised = new TARDISRaisedPreset();
         this.shroom = new TARDISMushroomPreset();
         this.submerged = new TARDISSubmergedPreset();
         this.swamp = new TARDISSwampPreset();
@@ -83,6 +86,8 @@ public class TARDISChameleonPreset {
     }
 
     public void makePresets() {
+        angeld.makePresets();
+        angelu.makePresets();
         cake.makePresets();
         chalice.makePresets();
         column.makePresets();
@@ -94,7 +99,6 @@ public class TARDISChameleonPreset {
         nether.makePresets();
         party.makePresets();
         police.makePresets();
-        raised.makePresets();
         shroom.makePresets();
         submerged.makePresets();
         swamp.makePresets();
@@ -401,13 +405,25 @@ public class TARDISChameleonPreset {
                         case 96: // trapdoor
                             switch (d) {
                                 case SOUTH:
-                                    data[col][block] = (byte) 0;
+                                    if (data[col][block] == 2) {
+                                        data[col][block] = (byte) 0;
+                                    } else {
+                                        data[col][block] = (byte) 13;
+                                    }
                                     break;
                                 case WEST:
-                                    data[col][block] = (byte) 3;
+                                    if (data[col][block] == 2) {
+                                        data[col][block] = (byte) 3;
+                                    } else {
+                                        data[col][block] = (byte) 14;
+                                    }
                                     break;
                                 default:
-                                    data[col][block] = (byte) 1;
+                                    if (data[col][block] == 2) {
+                                        data[col][block] = (byte) 1;
+                                    } else {
+                                        data[col][block] = (byte) 12;
+                                    }
                                     break;
                             }
                             break;
@@ -523,8 +539,12 @@ public class TARDISChameleonPreset {
                 return jungle.getJungle().get(d);
             case NETHER:
                 return nether.getNether().get(d);
-            case SWAMP:
-                return swamp.getSwamp().get(d);
+            case ANGEL:
+                if (r == 0) {
+                    return angelu.getBlueprint().get(d);
+                } else {
+                    return angeld.getBlueprint().get(d);
+                }
             case PARTY:
                 return party.getPartyTent().get(d);
             case VILLAGE:
@@ -533,8 +553,8 @@ public class TARDISChameleonPreset {
                 return yellow.getYellowSub().get(d);
             case SUBMERGED:
                 return submerged.getBlueprint().get(d);
-            case RAISED:
-                return raised.getBlueprint().get(d);
+            case SWAMP:
+                return swamp.getBlueprint().get(d);
             case FLOWER:
                 return flower.getFlower().get(d);
             case CHALICE:
@@ -584,8 +604,12 @@ public class TARDISChameleonPreset {
                 return yellow.getGlass().get(d);
             case SUBMERGED:
                 return submerged.getGlass().get(d);
-            case RAISED:
-                return raised.getGlass().get(d);
+            case ANGEL:
+                if (r == 0) {
+                    return angelu.getGlass().get(d);
+                } else {
+                    return angeld.getGlass().get(d);
+                }
             case FLOWER:
                 return flower.getGlass().get(d);
             case CHALICE:
@@ -635,8 +659,12 @@ public class TARDISChameleonPreset {
                 return yellow.getIce().get(d);
             case SUBMERGED:
                 return submerged.getIce().get(d);
-            case RAISED:
-                return raised.getIce().get(d);
+            case ANGEL:
+                if (r == 0) {
+                    return angelu.getIce().get(d);
+                } else {
+                    return angeld.getIce().get(d);
+                }
             case FLOWER:
                 return flower.getIce().get(d);
             case CHALICE:
@@ -661,4 +689,9 @@ public class TARDISChameleonPreset {
                 return taller.getIce().get(d);
         }
     }
+
+    public void setR(int r) {
+        this.r = r;
+    }
+
 }

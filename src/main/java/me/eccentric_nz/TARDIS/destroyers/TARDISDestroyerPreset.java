@@ -131,19 +131,22 @@ public class TARDISDestroyerPreset {
                 break;
         }
         switch (p) {
-            case RAISED:
+            case SWAMP:
             case SHROOM:
                 signy = 3;
                 break;
             case TOPSYTURVEY:
                 signy = 1;
                 break;
+            case ANGEL:
+                signy = 0;
+                break;
             default:
                 signy = 2;
                 break;
         }
         plugin.utils.setBlock(w, l.getBlockX() + signx, l.getBlockY() + signy, l.getBlockZ() + signz, 0, (byte) 0);
-        if (p.equals(TARDISConstants.PRESET.RAISED)) {
+        if (p.equals(TARDISConstants.PRESET.SWAMP)) {
             plugin.utils.setBlock(w, l.getBlockX() + signx, l.getBlockY(), l.getBlockZ() + signz, 0, (byte) 0);
         }
     }

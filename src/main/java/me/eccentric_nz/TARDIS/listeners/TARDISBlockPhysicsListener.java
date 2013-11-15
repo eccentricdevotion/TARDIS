@@ -48,7 +48,7 @@ public class TARDISBlockPhysicsListener implements Listener {
             if (block.getType() == Material.TRAP_DOOR) {
                 Block blockBehind = getBlockBehindHatch(block);
                 if (blockBehind != null) {
-                    if (blockBehind.getType().equals(Material.GLASS) || blockBehind.getType().equals(Material.ICE)) {
+                    if (blockBehind.getType().equals(Material.GLASS) || blockBehind.getType().equals(Material.ICE) || blockBehind.getType().equals(Material.SMOOTH_BRICK)) {
                         event.setCancelled(true);
                     }
                 }
@@ -69,12 +69,24 @@ public class TARDISBlockPhysicsListener implements Listener {
 
     Block getBlockBehindHatch(Block block) {
         switch (block.getData()) {
+            case 12:
+            case 8:
+            case 4:
             case 0:
                 return block.getRelative(BlockFace.SOUTH);
+            case 13:
+            case 9:
+            case 5:
             case 1:
                 return block.getRelative(BlockFace.NORTH);
+            case 14:
+            case 10:
+            case 6:
             case 2:
                 return block.getRelative(BlockFace.EAST);
+            case 15:
+            case 11:
+            case 7:
             case 3:
                 return block.getRelative(BlockFace.WEST);
             default:

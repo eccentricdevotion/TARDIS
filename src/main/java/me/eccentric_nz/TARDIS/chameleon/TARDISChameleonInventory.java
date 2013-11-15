@@ -136,11 +136,11 @@ public class TARDISChameleonInventory {
         ItemMeta ice = chal.getItemMeta();
         ice.setDisplayName("Quartz Chalice");
         chal.setItemMeta(ice);
-        // Raised Swamp Hut
-        ItemStack rai = new ItemStack(Material.WOOD, 1, (short) 2);
-        ItemMeta sed = rai.getItemMeta();
-        sed.setDisplayName("Raised Swamp Hut");
-        rai.setItemMeta(sed);
+        // Angel
+        ItemStack ang = new ItemStack(Material.FEATHER, 1);
+        ItemMeta wee = ang.getItemMeta();
+        wee.setDisplayName("Weeping Angel");
+        ang.setItemMeta(wee);
         // Windmill
         ItemStack win = new ItemStack(Material.WOOL, 1, (short) 1);
         ItemMeta mill = win.getItemMeta();
@@ -194,7 +194,7 @@ public class TARDISChameleonInventory {
             null, con, null, apply, null, bio, null, close, null,
             box, null, off, null, jungle, null, nether, null, def,
             null, swamp, null, tent, null, village, null, yellow, null,
-            tel, null, sub, null, rai, null, flo, null, stone,
+            tel, null, ang, null, sub, null, flo, null, stone,
             null, chal, null, desert, null, well, null, win, null,
             cake, null, grave, null, topsy, null, mush, null, custom
         };
