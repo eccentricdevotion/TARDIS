@@ -97,6 +97,11 @@ public class TARDISDatabase {
             String querySubmerged = "CREATE TABLE IF NOT EXISTS submerged (sub_id INTEGER PRIMARY KEY NOT NULL, tardis_id INTEGER, world TEXT COLLATE NOCASE DEFAULT '', x INTEGER, y INTEGER, z INTEGER, id INTEGER, data, INTEGER)";
             statement.executeUpdate(querySubmerged);
 
+            // change RAISED preset to SWAMP
+            String queryRaisedPreset = "UPDATE tardis SET preset = 'SWAMP' WHERE preset = 'RAISED'";
+            statement.executeUpdate(queryRaisedPreset);
+            String queryRaisedDemat = "UPDATE tardis SET demat = 'SWAMP' WHERE demat = 'RAISED'";
+            statement.executeUpdate(queryRaisedDemat);
             // delete old gravity and levers tables
             String dropGravity = "DROP TABLE IF EXISTS gravity";
             statement.executeUpdate(dropGravity);
