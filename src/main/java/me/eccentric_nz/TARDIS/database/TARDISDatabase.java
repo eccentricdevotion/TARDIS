@@ -98,9 +98,9 @@ public class TARDISDatabase {
             statement.executeUpdate(querySubmerged);
 
             // change RAISED preset to SWAMP
-            String queryRaisedPreset = "UPDATE tardis SET preset = 'SWAMP' WHERE preset = 'RAISED'";
+            String queryRaisedPreset = "UPDATE tardis SET chameleon_preset = 'SWAMP' WHERE chameleon_preset = 'RAISED'";
             statement.executeUpdate(queryRaisedPreset);
-            String queryRaisedDemat = "UPDATE tardis SET demat = 'SWAMP' WHERE demat = 'RAISED'";
+            String queryRaisedDemat = "UPDATE tardis SET chameleon_demat = 'SWAMP' WHERE chameleon_demat = 'RAISED'";
             statement.executeUpdate(queryRaisedDemat);
             // delete old gravity and levers tables
             String dropGravity = "DROP TABLE IF EXISTS gravity";
