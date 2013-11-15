@@ -12,7 +12,6 @@
     * add new features
     * auto log out
 5. Chameleon presets (in progress)
-    * Fix platform and underdoor block not being removed
     * Random cake?
     * Obsidian End TARDIS
 6. Documentation & videos!
