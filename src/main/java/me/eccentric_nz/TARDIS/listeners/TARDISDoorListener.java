@@ -126,7 +126,7 @@ public class TARDISDoorListener implements Listener {
                     int bx = block_loc.getBlockX();
                     int by = block_loc.getBlockY();
                     int bz = block_loc.getBlockZ();
-                    if (doorData >= 8) {
+                    if (doorData >= 8 && !blockType.equals(Material.TRAP_DOOR)) {
                         by = (by - 1);
                     }
                     String doorloc = bw + ":" + bx + ":" + by + ":" + bz;
