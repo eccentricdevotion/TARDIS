@@ -22,9 +22,9 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetARS;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
+import me.eccentric_nz.TARDIS.JSON.JSONArray;
 import org.bukkit.Chunk;
 import org.bukkit.World;
-import me.eccentric_nz.TARDIS.JSON.JSONArray;
 
 /**
  *
@@ -71,6 +71,7 @@ public class TARDISARSProcessor {
                                     slot2.setZ(z);
                                     jettison.put(slot2, TARDISARS.SLOT);
                                     // need to update the slot in the DB
+                                    resetSlot(l, x, z);
                                     resetSlot(l - 1, x, z);
                                 }
                             } else if (start[l][x][z] == 24) {
@@ -91,6 +92,7 @@ public class TARDISARSProcessor {
                                     slot2.setZ(z);
                                     jettison.put(slot2, TARDISARS.SLOT);
                                     // need to update the slot in the DB
+                                    resetSlot(l, x, z);
                                     resetSlot(l + 1, x, z);
                                 }
                             } else {
