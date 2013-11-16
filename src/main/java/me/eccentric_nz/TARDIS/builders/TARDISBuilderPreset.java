@@ -63,9 +63,7 @@ public class TARDISBuilderPreset {
         no_block_under_door.add(TARDISConstants.PRESET.ANGEL);
         no_block_under_door.add(TARDISConstants.PRESET.GRAVESTONE);
         no_block_under_door.add(TARDISConstants.PRESET.SWAMP);
-        no_block_under_door.add(TARDISConstants.PRESET.SUBMERGED);
         no_block_under_door.add(TARDISConstants.PRESET.WELL);
-
     }
 
     /**
