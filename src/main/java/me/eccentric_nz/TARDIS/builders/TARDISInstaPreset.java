@@ -89,7 +89,7 @@ public class TARDISInstaPreset {
             plugin.presets.setR(rand.nextInt(2));
         }
         column = plugin.presets.getColumn(preset, d);
-        int plusx, minusx, x, plusz, y, undery, minusz, z, platform_id = plugin.getConfig().getInt("platform_id");
+        int plusx, minusx, x, plusz, y, minusz, z, platform_id = plugin.getConfig().getInt("platform_id");
         byte platform_data = (byte) plugin.getConfig().getInt("platform_data");
         // get relative locations
         x = location.getBlockX();
@@ -97,10 +97,8 @@ public class TARDISInstaPreset {
         minusx = (location.getBlockX() - 1);
         if (preset.equals(TARDISConstants.PRESET.SUBMERGED)) {
             y = location.getBlockY() - 1;
-            undery = (location.getBlockY() - 2);
         } else {
             y = location.getBlockY();
-            undery = (location.getBlockY() - 1);
         }
         z = (location.getBlockZ());
         plusz = (location.getBlockZ() + 1);

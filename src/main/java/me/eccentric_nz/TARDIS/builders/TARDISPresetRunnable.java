@@ -120,17 +120,13 @@ public class TARDISPresetRunnable implements Runnable {
         if (!plugin.tardisDematerialising.contains(tid)) {
             int[][] ids;
             byte[][] datas;
-            // get relative locations
-            int x = location.getBlockX(), plusx = location.getBlockX() + 1, minusx = location.getBlockX() - 1;
-            int y;
-            int undery;
             plugin.isPresetMaterialising.add("tid" + tid);
+            // get relative locations
+            int x = location.getBlockX(), plusx = location.getBlockX() + 1, minusx = location.getBlockX() - 1, y;
             if (preset.equals(TARDISConstants.PRESET.SUBMERGED)) {
                 y = location.getBlockY() - 1;
-                undery = (location.getBlockY() - 2);
             } else {
                 y = location.getBlockY();
-                undery = (location.getBlockY() - 1);
             }
             int z = location.getBlockZ(), plusz = location.getBlockZ() + 1, minusz = location.getBlockZ() - 1;
             int platform_id = plugin.getConfig().getInt("platform_id");
