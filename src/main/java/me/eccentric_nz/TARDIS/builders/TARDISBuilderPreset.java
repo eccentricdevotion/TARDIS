@@ -234,6 +234,8 @@ public class TARDISBuilderPreset {
                 return TARDISConstants.PRESET.SHROOM;
             case SWAMPLAND:
                 return TARDISConstants.PRESET.SWAMP;
+            case SKY:
+                return TARDISConstants.PRESET.THEEND;
             default:
                 return preset;
         }

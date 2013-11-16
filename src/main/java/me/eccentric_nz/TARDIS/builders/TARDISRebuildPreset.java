@@ -183,6 +183,14 @@ public class TARDISRebuildPreset {
                         }
                         plugin.utils.setBlock(world, xx, (y + yy), zz, subi, subd);
                         break;
+                    case 7:
+                        if (preset.equals(TARDISConstants.PRESET.THEEND)) {
+                            plugin.utils.setBlock(world, xx, (y + yy), zz, 7, (byte) 5);
+                            world.getBlockAt(xx, (y + yy + 1), zz).setType(Material.FIRE);
+                        } else {
+                            plugin.utils.setBlock(world, xx, (y + yy), zz, colids[yy], coldatas[yy]);
+                        }
+                        break;
                     case 35: // wool
                         int chai = (preset.equals(TARDISConstants.PRESET.NEW) || preset.equals(TARDISConstants.PRESET.OLD)) ? cham_id : colids[yy];
                         byte chad = (preset.equals(TARDISConstants.PRESET.NEW) || preset.equals(TARDISConstants.PRESET.OLD)) ? cham_data : coldatas[yy];
@@ -315,6 +323,11 @@ public class TARDISRebuildPreset {
                                 case SHROOM:
                                     line1 = "TRIPPY";
                                     line2 = "SPACE SHROOM";
+                                    break;
+                                case THEEND:
+                                    line1 = "DRAGON";
+                                    line2 = "SLAYING";
+                                    s.setLine(3, ChatColor.WHITE + "HOT ROD");
                                     break;
                                 case CUSTOM:
                                     line1 = plugin.presets.custom.getLine_one();

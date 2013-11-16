@@ -566,6 +566,8 @@ public class TARDISChameleonPreset {
                 return swamp.getBlueprint().get(d);
             case TELEPHONE:
                 return telephone.getBlueprint().get(d);
+            case THEEND:
+                return theend.getBlueprint().get(d);
             case TOPSYTURVEY:
                 return topsyturvey.getBlueprint().get(d);
             case VILLAGE:
@@ -622,7 +624,7 @@ public class TARDISChameleonPreset {
             case TELEPHONE:
                 return telephone.getGlass().get(d);
             case THEEND:
-                return shroom.getGlass().get(d);
+                return theend.getGlass().get(d);
             case TOPSYTURVEY:
                 return topsyturvey.getGlass().get(d);
             case VILLAGE:
@@ -678,6 +680,8 @@ public class TARDISChameleonPreset {
                 return submerged.getIce().get(d);
             case TELEPHONE:
                 return telephone.getIce().get(d);
+            case THEEND:
+                return theend.getIce().get(d);
             case TOPSYTURVEY:
                 return topsyturvey.getIce().get(d);
             case VILLAGE:
