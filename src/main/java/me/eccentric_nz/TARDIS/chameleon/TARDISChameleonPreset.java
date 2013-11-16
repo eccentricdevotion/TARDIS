@@ -50,6 +50,7 @@ public class TARDISChameleonPreset {
     public final TARDISSwampPreset swamp;
     public final TARDISTallerPreset taller;
     public final TARDISTelephoneBoxPreset telephone;
+    public final TARDISTheEndPreset theend;
     public final TARDISTopsyTurveyPreset topsyturvey;
     public final TARDISVillagePreset village;
     public final TARDISWellPreset well;
@@ -77,6 +78,7 @@ public class TARDISChameleonPreset {
         this.swamp = new TARDISSwampPreset();
         this.taller = new TARDISTallerPreset();
         this.telephone = new TARDISTelephoneBoxPreset();
+        this.theend = new TARDISTheEndPreset();
         this.topsyturvey = new TARDISTopsyTurveyPreset();
         this.village = new TARDISVillagePreset();
         this.well = new TARDISWellPreset();
@@ -104,6 +106,7 @@ public class TARDISChameleonPreset {
         swamp.makePresets();
         taller.makePresets();
         telephone.makePresets();
+        theend.makePresets();
         topsyturvey.makePresets();
         village.makePresets();
         well.makePresets();
@@ -527,107 +530,109 @@ public class TARDISChameleonPreset {
 
     public TARDISChameleonColumn getColumn(TARDISConstants.PRESET p, TARDISConstants.COMPASS d) {
         switch (p) {
-            case OLD:
-                return police.getPoliceBox().get(d);
-            case FACTORY:
-                return factory.getFactory().get(d);
-            case STONE:
-                return column.getColumn().get(d);
-            case DESERT:
-                return desert.getDesert().get(d);
-            case JUNGLE:
-                return jungle.getJungle().get(d);
-            case NETHER:
-                return nether.getNether().get(d);
             case ANGEL:
                 if (r == 0) {
                     return angelu.getBlueprint().get(d);
                 } else {
                     return angeld.getBlueprint().get(d);
                 }
+            case CAKE:
+                return cake.getBlueprint().get(d);
+            case CHALICE:
+                return chalice.getBlueprint().get(d);
+            case DESERT:
+                return desert.getBlueprint().get(d);
+            case FACTORY:
+                return factory.getBlueprint().get(d);
+            case FLOWER:
+                return flower.getBlueprint().get(d);
+            case GRAVESTONE:
+                return gravestone.getBlueprint().get(d);
+            case JUNGLE:
+                return jungle.getBlueprint().get(d);
+            case NETHER:
+                return nether.getBlueprint().get(d);
+            case OLD:
+                return police.getBlueprint().get(d);
             case PARTY:
-                return party.getPartyTent().get(d);
-            case VILLAGE:
-                return village.getVillage().get(d);
-            case YELLOW:
-                return yellow.getYellowSub().get(d);
+                return party.getBlueprint().get(d);
+            case SHROOM:
+                return shroom.getBlueprint().get(d);
+            case STONE:
+                return column.getBlueprint().get(d);
             case SUBMERGED:
                 return submerged.getBlueprint().get(d);
             case SWAMP:
                 return swamp.getBlueprint().get(d);
-            case FLOWER:
-                return flower.getFlower().get(d);
-            case CHALICE:
-                return chalice.getChalice().get(d);
-            case WINDMILL:
-                return windmill.getWindmill().get(d);
             case TELEPHONE:
-                return telephone.getTelephone().get(d);
-            case WELL:
-                return well.getWell().get(d);
-            case CAKE:
-                return cake.getBlueprint().get(d);
-            case GRAVESTONE:
-                return gravestone.getBlueprint().get(d);
+                return telephone.getBlueprint().get(d);
             case TOPSYTURVEY:
                 return topsyturvey.getBlueprint().get(d);
-            case SHROOM:
-                return shroom.getBlueprint().get(d);
+            case VILLAGE:
+                return village.getBlueprint().get(d);
+            case WELL:
+                return well.getWell().get(d);
+            case WINDMILL:
+                return windmill.getBlueprint().get(d);
+            case YELLOW:
+                return yellow.getBlueprint().get(d);
             case CUSTOM:
                 return custom.getBlueprint().get(d);
             default:
-                return taller.getTaller().get(d);
+                return taller.getBlueprint().get(d);
         }
     }
 
     public TARDISChameleonColumn getGlass(TARDISConstants.PRESET p, TARDISConstants.COMPASS d) {
         switch (p) {
-            case OLD:
-                return police.getGlass().get(d);
-            case FACTORY:
-                return factory.getGlass().get(d);
-            case STONE:
-                return column.getGlass().get(d);
-            case DESERT:
-                return desert.getGlass().get(d);
-            case JUNGLE:
-                return jungle.getGlass().get(d);
-            case NETHER:
-                return nether.getGlass().get(d);
-            case SWAMP:
-                return swamp.getGlass().get(d);
-            case PARTY:
-                return party.getGlass().get(d);
-            case VILLAGE:
-                return village.getGlass().get(d);
-            case YELLOW:
-                return yellow.getGlass().get(d);
-            case SUBMERGED:
-                return submerged.getGlass().get(d);
             case ANGEL:
                 if (r == 0) {
                     return angelu.getGlass().get(d);
                 } else {
                     return angeld.getGlass().get(d);
                 }
-            case FLOWER:
-                return flower.getGlass().get(d);
-            case CHALICE:
-                return chalice.getGlass().get(d);
-            case WINDMILL:
-                return windmill.getGlass().get(d);
-            case TELEPHONE:
-                return telephone.getGlass().get(d);
-            case WELL:
-                return well.getGlass().get(d);
             case CAKE:
                 return cake.getGlass().get(d);
+            case CHALICE:
+                return chalice.getGlass().get(d);
+            case DESERT:
+                return desert.getGlass().get(d);
+            case FACTORY:
+                return factory.getGlass().get(d);
+            case FLOWER:
+                return flower.getGlass().get(d);
             case GRAVESTONE:
                 return gravestone.getGlass().get(d);
-            case TOPSYTURVEY:
-                return topsyturvey.getGlass().get(d);
+            case JUNGLE:
+                return jungle.getGlass().get(d);
+            case NETHER:
+                return nether.getGlass().get(d);
+            case OLD:
+                return police.getGlass().get(d);
+            case PARTY:
+                return party.getGlass().get(d);
             case SHROOM:
                 return shroom.getGlass().get(d);
+            case STONE:
+                return column.getGlass().get(d);
+            case SUBMERGED:
+                return submerged.getGlass().get(d);
+            case SWAMP:
+                return swamp.getGlass().get(d);
+            case TELEPHONE:
+                return telephone.getGlass().get(d);
+            case THEEND:
+                return shroom.getGlass().get(d);
+            case TOPSYTURVEY:
+                return topsyturvey.getGlass().get(d);
+            case VILLAGE:
+                return village.getGlass().get(d);
+            case WELL:
+                return well.getGlass().get(d);
+            case WINDMILL:
+                return windmill.getGlass().get(d);
+            case YELLOW:
+                return yellow.getGlass().get(d);
             case CUSTOM:
                 return custom.getGlass().get(d);
             default:
@@ -637,52 +642,52 @@ public class TARDISChameleonPreset {
 
     public TARDISChameleonColumn getIce(TARDISConstants.PRESET p, TARDISConstants.COMPASS d) {
         switch (p) {
-            case OLD:
-                return police.getIce().get(d);
-            case FACTORY:
-                return factory.getIce().get(d);
-            case STONE:
-                return column.getIce().get(d);
-            case DESERT:
-                return desert.getIce().get(d);
-            case JUNGLE:
-                return jungle.getIce().get(d);
-            case NETHER:
-                return nether.getIce().get(d);
-            case SWAMP:
-                return swamp.getIce().get(d);
-            case PARTY:
-                return party.getIce().get(d);
-            case VILLAGE:
-                return village.getIce().get(d);
-            case YELLOW:
-                return yellow.getIce().get(d);
-            case SUBMERGED:
-                return submerged.getIce().get(d);
             case ANGEL:
                 if (r == 0) {
                     return angelu.getIce().get(d);
                 } else {
                     return angeld.getIce().get(d);
                 }
-            case FLOWER:
-                return flower.getIce().get(d);
-            case CHALICE:
-                return chalice.getIce().get(d);
-            case WINDMILL:
-                return windmill.getIce().get(d);
-            case TELEPHONE:
-                return telephone.getIce().get(d);
-            case WELL:
-                return well.getIce().get(d);
             case CAKE:
                 return cake.getIce().get(d);
+            case CHALICE:
+                return chalice.getIce().get(d);
+            case DESERT:
+                return desert.getIce().get(d);
+            case FACTORY:
+                return factory.getIce().get(d);
+            case FLOWER:
+                return flower.getIce().get(d);
             case GRAVESTONE:
                 return gravestone.getIce().get(d);
-            case TOPSYTURVEY:
-                return topsyturvey.getIce().get(d);
+            case JUNGLE:
+                return jungle.getIce().get(d);
+            case NETHER:
+                return nether.getIce().get(d);
+            case OLD:
+                return police.getIce().get(d);
+            case PARTY:
+                return party.getIce().get(d);
             case SHROOM:
                 return shroom.getIce().get(d);
+            case STONE:
+                return column.getIce().get(d);
+            case SWAMP:
+                return swamp.getIce().get(d);
+            case SUBMERGED:
+                return submerged.getIce().get(d);
+            case TELEPHONE:
+                return telephone.getIce().get(d);
+            case TOPSYTURVEY:
+                return topsyturvey.getIce().get(d);
+            case VILLAGE:
+                return village.getIce().get(d);
+            case WELL:
+                return well.getIce().get(d);
+            case WINDMILL:
+                return windmill.getIce().get(d);
+            case YELLOW:
+                return yellow.getIce().get(d);
             case CUSTOM:
                 return custom.getIce().get(d);
             default:

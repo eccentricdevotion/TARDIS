@@ -29,13 +29,13 @@ import me.eccentric_nz.TARDIS.TARDISConstants;
  */
 public class TARDISWindmillPreset {
 
-    private final String windmill_id = "[[35,35,0,0],[35,35,0,0],[0,0,35,0],[0,35,5,35],[0,0,35,0],[35,35,0,0],[35,35,0,0],[64,64,35,0],[35,35,35,50],[0,0,68,0]]";
-    private final String windmill_data = "[[1,1,0,0],[1,1,0,0],[0,0,0,0],[0,0,1,0],[0,0,0,0],[1,1,0,0],[1,1,0,0],[0,8,1,0],[1,1,1,5],[0,0,4,0]]";
+    private final String blueprint_id = "[[35,35,0,0],[35,35,0,0],[0,0,35,0],[0,35,5,35],[0,0,35,0],[35,35,0,0],[35,35,0,0],[64,64,35,0],[35,35,35,50],[0,0,68,0]]";
+    private final String blueprint_data = "[[1,1,0,0],[1,1,0,0],[0,0,0,0],[0,0,1,0],[0,0,0,0],[1,1,0,0],[1,1,0,0],[0,8,1,0],[1,1,1,5],[0,0,4,0]]";
     private final String ice_id = "[[79,79,0,0],[79,79,0,0],[0,0,79,0],[0,79,5,79],[0,0,79,0],[79,79,0,0],[79,79,0,0],[64,64,79,0],[79,79,35,50],[0,0,68,0]]";
     private final String ice_data = "[[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,8,0,0],[0,0,3,0],[0,0,4,0]]";
     private final String glass_id = "[[20,20,0,0],[20,20,0,0],[0,0,20,0],[0,20,20,20],[0,0,20,0],[20,20,0,0],[20,20,0,0],[64,64,20,0],[20,20,20,50],[0,0,68,0]]";
     private final String glass_data = "[[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,8,0,0],[0,0,0,0],[0,0,4,0]]";
-    private final EnumMap<TARDISConstants.COMPASS, TARDISChameleonColumn> windmill = new EnumMap<TARDISConstants.COMPASS, TARDISChameleonColumn>(TARDISConstants.COMPASS.class);
+    private final EnumMap<TARDISConstants.COMPASS, TARDISChameleonColumn> blueprint = new EnumMap<TARDISConstants.COMPASS, TARDISChameleonColumn>(TARDISConstants.COMPASS.class);
     private final EnumMap<TARDISConstants.COMPASS, TARDISChameleonColumn> ice = new EnumMap<TARDISConstants.COMPASS, TARDISChameleonColumn>(TARDISConstants.COMPASS.class);
     private final EnumMap<TARDISConstants.COMPASS, TARDISChameleonColumn> glass = new EnumMap<TARDISConstants.COMPASS, TARDISChameleonColumn>(TARDISConstants.COMPASS.class);
 
@@ -45,14 +45,14 @@ public class TARDISWindmillPreset {
     public void makePresets() {
         TARDISChameleonPreset tcp = new TARDISChameleonPreset();
         for (TARDISConstants.COMPASS d : TARDISConstants.COMPASS.values()) {
-            windmill.put(d, tcp.buildTARDISChameleonColumn(d, windmill_id, windmill_data, true));
+            blueprint.put(d, tcp.buildTARDISChameleonColumn(d, blueprint_id, blueprint_data, true));
             glass.put(d, tcp.buildTARDISChameleonColumn(d, glass_id, glass_data, true));
             ice.put(d, tcp.buildTARDISChameleonColumn(d, ice_id, ice_data, true));
         }
     }
 
-    public EnumMap<TARDISConstants.COMPASS, TARDISChameleonColumn> getWindmill() {
-        return windmill;
+    public EnumMap<TARDISConstants.COMPASS, TARDISChameleonColumn> getBlueprint() {
+        return blueprint;
     }
 
     public EnumMap<TARDISConstants.COMPASS, TARDISChameleonColumn> getIce() {
