@@ -22,6 +22,7 @@ import java.util.List;
 import java.util.Random;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
+import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetLamps;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
@@ -76,20 +77,29 @@ public class TARDISMalfunction {
 
     public Location getMalfunction() {
         Location l;
-        int end = 100 - plugin.getConfig().getInt("malfunction_end");
-        int nether = end - plugin.getConfig().getInt("malfunction_nether");
-        int r = rand.nextInt(100);
-        TARDISTimeTravel tt = new TARDISTimeTravel(plugin);
-        byte x = (byte) 2;
-        if (r > end) {
-            // get random the_end location
-            l = tt.randomDestination(p, x, x, x, dir, "THE_END", null, true);
-        } else if (r > nether) {
-            // get random nether location
-            l = tt.randomDestination(p, x, x, x, dir, "NETHER", null, true);
+        // get cuurent TARDIS preset location
+        HashMap<String, Object> wherecl = new HashMap<String, Object>();
+        wherecl.put("tardis_id", id);
+        ResultSetCurrentLocation rscl = new ResultSetCurrentLocation(plugin, wherecl);
+        if (rscl.resultSet()) {
+            Location cl = new Location(rscl.getWorld(), rscl.getX(), rscl.getY(), rscl.getZ());
+            int end = 100 - plugin.getConfig().getInt("malfunction_end");
+            int nether = end - plugin.getConfig().getInt("malfunction_nether");
+            int r = rand.nextInt(100);
+            TARDISTimeTravel tt = new TARDISTimeTravel(plugin);
+            byte x = (byte) 2;
+            if (r > end) {
+                // get random the_end location
+                l = tt.randomDestination(p, x, x, x, dir, "THE_END", null, true, cl);
+            } else if (r > nether) {
+                // get random nether location
+                l = tt.randomDestination(p, x, x, x, dir, "NETHER", null, true, cl);
+            } else {
+                // get random normal location
+                l = tt.randomDestination(p, x, x, x, dir, "NORMAL", null, false, cl);
+            }
         } else {
-            // get random normal location
-            l = tt.randomDestination(p, x, x, x, dir, "NORMAL", null, false);
+            l = null;
         }
         if (l != null) {
             doMalfunction(l);

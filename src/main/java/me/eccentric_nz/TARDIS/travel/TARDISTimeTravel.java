@@ -84,10 +84,11 @@ public class TARDISTimeTravel {
      * travel to.
      * @param this_world the world the Police Box is currently in
      * @param malfunction whether there should be a malfunction
+     * @param current
      * @return a random Location
      */
     @SuppressWarnings("deprecation")
-    public Location randomDestination(Player p, byte rx, byte rz, byte ry, TARDISConstants.COMPASS d, String e, World this_world, boolean malfunction) {
+    public Location randomDestination(Player p, byte rx, byte rz, byte ry, TARDISConstants.COMPASS d, String e, World this_world, boolean malfunction, Location current) {
         int startx, starty, startz, resetx, resetz, listlen, rw;
         World randworld = null;
         int count;
@@ -148,8 +149,8 @@ public class TARDISTimeTravel {
         }
         if (randworld != null && randworld.getEnvironment().equals(Environment.NETHER)) {
             for (int n = 0; n < attempts; n++) {
-                wherex = randomX(rand, range, quarter, rx, ry, max);
-                wherez = randomZ(rand, range, quarter, rz, ry, max);
+                wherex = randomX(rand, range, quarter, rx, ry, e, current);
+                wherez = randomZ(rand, range, quarter, rz, ry, e, current);
                 if (safeNether(randworld, wherex, wherez, d, p)) {
                     break;
                 }
@@ -199,8 +200,8 @@ public class TARDISTimeTravel {
                     // reset count
                     count = 0;
                     // randomX(Random rand, int range, int quarter, byte rx, byte ry, int max)
-                    wherex = randomX(rand, range, quarter, rx, ry, max);
-                    wherez = randomZ(rand, range, quarter, rz, ry, max);
+                    wherex = randomX(rand, range, quarter, rx, ry, e, current);
+                    wherez = randomZ(rand, range, quarter, rz, ry, e, current);
                     highest = randworld.getHighestBlockYAt(wherex, wherez);
                     if (highest > 3) {
                         Block currentBlock = randworld.getBlockAt(wherex, highest, wherez);
@@ -487,7 +488,8 @@ public class TARDISTimeTravel {
      * @param ry the data bit of the y-repeater setting.
      * @param max the max_distance config option.
      */
-    private int randomX(Random rand, int range, int quarter, byte rx, byte ry, int max) {
+    private int randomX(Random rand, int range, int quarter, byte rx, byte ry, String e, Location l) {
+        int currentx = (e.equals("THIS")) ? l.getBlockX() : 0;
         int wherex;
         wherex = rand.nextInt(range);
         // add the distance from the x and z repeaters
@@ -517,7 +519,7 @@ public class TARDISTimeTravel {
         if (ry >= 12 && ry <= 15) {
             wherex *= 4;
         }
-        return wherex;
+        return wherex + currentx;
     }
 
     /**
@@ -530,7 +532,8 @@ public class TARDISTimeTravel {
      * @param ry the data bit of the y-repeater setting.
      * @param max the max_distance config option.
      */
-    private int randomZ(Random rand, int range, int quarter, byte rz, byte ry, int max) {
+    private int randomZ(Random rand, int range, int quarter, byte rz, byte ry, String e, Location l) {
+        int currentz = (e.equals("THIS")) ? l.getBlockZ() : 0;
         int wherez;
         wherez = rand.nextInt(range);
         // add the distance from the x and z repeaters
@@ -560,7 +563,7 @@ public class TARDISTimeTravel {
         if (ry >= 12 && ry <= 15) {
             wherez *= 4;
         }
-        return wherez;
+        return wherez + currentz;
     }
 
     @SuppressWarnings("deprecation")

@@ -127,7 +127,7 @@ public class TARDISButtonListener implements Listener {
                             QueryFactory qf = new QueryFactory(plugin);
                             HashMap<String, Object> set = new HashMap<String, Object>();
                             switch (type) {
-                                case 1:
+                                case 1: // random location button
                                     if (!hb) {
                                         player.sendMessage(plugin.pluginName + ChatColor.RED + "You cannot set a destination while the TARDIS is travelling!");
                                         return;
@@ -147,6 +147,7 @@ public class TARDISButtonListener implements Listener {
                                         return;
                                     }
                                     TARDISConstants.COMPASS dir = rscl.getDirection();
+                                    Location cl = new Location(rscl.getWorld(), rscl.getX(), rscl.getY(), rscl.getZ());
                                     if (player.hasPermission("tardis.exile") && plugin.getConfig().getBoolean("exile")) {
                                         // get the exile area
                                         String permArea = plugin.ta.getExileArea(player);
@@ -207,7 +208,7 @@ public class TARDISButtonListener implements Listener {
                                             }
                                             // create a random destination
                                             TARDISTimeTravel tt = new TARDISTimeTravel(plugin);
-                                            Location rand = tt.randomDestination(player, repeaters[1], repeaters[2], repeaters[3], dir, environment, rscl.getWorld(), false);
+                                            Location rand = tt.randomDestination(player, repeaters[1], repeaters[2], repeaters[3], dir, environment, rscl.getWorld(), false, cl);
                                             if (rand != null) {
                                                 set.put("world", rand.getWorld().getName());
                                                 set.put("x", rand.getBlockX());
