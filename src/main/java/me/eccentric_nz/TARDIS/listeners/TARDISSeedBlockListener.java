@@ -24,6 +24,7 @@ import me.eccentric_nz.TARDIS.TARDISConstants.SCHEMATIC;
 import me.eccentric_nz.TARDIS.builders.TARDISBuildData;
 import me.eccentric_nz.TARDIS.builders.TARDISSeedBlockProcessor;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
+import me.eccentric_nz.TARDIS.rooms.TARDISWallsLookup;
 import org.bukkit.DyeColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -45,11 +46,12 @@ import org.bukkit.inventory.meta.ItemMeta;
 public class TARDISSeedBlockListener implements Listener {
 
     private final TARDIS plugin;
-    //private final TARDISWalls tw;
+    private final TARDISWallsLookup twl;
     private final HashMap<Location, TARDISBuildData> trackTARDISSeed = new HashMap<Location, TARDISBuildData>();
 
     public TARDISSeedBlockListener(TARDIS plugin) {
         this.plugin = plugin;
+        twl = new TARDISWallsLookup(plugin);
     }
 
     /**
@@ -111,8 +113,8 @@ public class TARDISSeedBlockListener implements Listener {
             im.setDisplayName("§6TARDIS Seed Block");
             List<String> lore = new ArrayList<String>();
             lore.add(data.getSchematic().toString());
-            lore.add("Walls: " + ((data.getWall_id() == 35 || data.getWall_id() == 159) ? DyeColor.getByWoolData(data.getWall_data()) + " " : "") + Material.getMaterial(data.getWall_id()).toString());
-            lore.add("Floors: " + ((data.getFloor_id() == 35 || data.getFloor_id() == 159) ? DyeColor.getByWoolData(data.getFloor_data()) + " " : "") + Material.getMaterial(data.getFloor_id()).toString());
+            lore.add("Walls: " + twl.wall_lookup.get(data.getWall_id() + ":" + data.getWall_data()));
+            lore.add("Floors: " + twl.wall_lookup.get(data.getFloor_id() + ":" + data.getFloor_data()));
             lore.add("Chameleon block: " + ((data.getBox_id() == 35 || data.getBox_id() == 159) ? DyeColor.getByWoolData(data.getBox_data()) + " " : "") + Material.getMaterial(data.getBox_id()).toString());
             lore.add("Lamp: " + Material.getMaterial(data.getLamp()).toString());
             im.setLore(lore);

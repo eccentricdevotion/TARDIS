@@ -3,16 +3,11 @@
 ## Current version `2.6-beta-2`
 1. Test Temporal Invisibility
 2. Rooms
-   * Check Charlie's schematics (arboretum, greenhouse)
    * Put farmland, crops, buttons, ladders, levers and signs on last when growing rooms   
-3. Architectural Reconfiguration System
-    * Implement Charlie's new doors (in progress)
-4. TARDIS Information System
+3. TARDIS Information System
     * add new features
     * auto log out
-5. Chameleon presets (in progress)
-    * Obsidian End TARDIS
-6. Documentation & videos!
+4. Documentation & videos!
 
 ## Waiting on Bukkit API
 0. IDs are soon to be history... so convert all ID use to entity names
@@ -26,6 +21,7 @@
 2. Advanced TARDIS console
 3. Artron storage blocks
 4. T.I.P.S. - TARDIS Interior Positioning System
+   * Implement Charlie's new doors (in progress)
 5. Add command to make EP1 appear
 6. Reload TARDIS recipes when difficulty level is changed
 7. Configurable option to allow Gravity Wells outside of the TARDIS
