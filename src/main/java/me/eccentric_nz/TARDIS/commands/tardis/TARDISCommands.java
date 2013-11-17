@@ -59,6 +59,7 @@ public class TARDISCommands implements CommandExecutor {
         // add first arguments
         firstArgs.add("abort");
         firstArgs.add("add");
+        firstArgs.add("arsremove");
         firstArgs.add("chameleon");
         firstArgs.add("check_loc");
         firstArgs.add("comehere");
@@ -127,6 +128,9 @@ public class TARDISCommands implements CommandExecutor {
                 sender.sendMessage(plugin.pluginName + ChatColor.RED + " This command can only be run by a player");
                 return false;
             } else {
+                if (args[0].equalsIgnoreCase("arsremove")) {
+                    return new TARDISARSRemoveCommand(plugin).resetARS(player);
+                }
                 if (args[0].equalsIgnoreCase("lamps")) {
                     return new TARDISLampsCommand(plugin).addLampBlocks(player);
                 }

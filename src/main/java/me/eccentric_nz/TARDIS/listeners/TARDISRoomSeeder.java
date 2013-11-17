@@ -128,7 +128,7 @@ public class TARDISRoomSeeder implements Listener {
                 // get seed data
                 TARDISSeedData sd = plugin.trackRoomSeed.get(playerNameStr);
                 // check they are not in an ARS chunk
-                if (ars.contains(sd.getSchematic())) {
+                if (ars.contains(sd.getSchematic()) && sd.hasARS()) {
                     Chunk c = b.getWorld().getChunkAt(block.getRelative(BlockFace.valueOf(d.toString()), 4));
                     int cx = c.getX();
                     int cy = block.getY();

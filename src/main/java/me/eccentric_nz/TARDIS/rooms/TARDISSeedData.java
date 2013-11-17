@@ -33,6 +33,7 @@ public class TARDISSeedData {
     private int maxx;
     private int minz;
     private int maxz;
+    private boolean ARS;
 
     public TARDISSeedData(TARDIS plugin) {
         this.plugin = plugin;
@@ -86,5 +87,13 @@ public class TARDISSeedData {
         this.maxx = x + 4;
         this.minz = z - 4;
         this.maxz = z + 4;
+    }
+
+    public boolean hasARS() {
+        return ARS;
+    }
+
+    public void setARS(boolean ARS) {
+        this.ARS = ARS;
     }
 }
