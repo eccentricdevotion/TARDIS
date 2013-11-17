@@ -120,7 +120,6 @@ public class TARDISPresetRunnable implements Runnable {
         if (!plugin.tardisDematerialising.contains(tid)) {
             int[][] ids;
             byte[][] datas;
-            plugin.isPresetMaterialising.add("tid" + tid);
             // get relative locations
             int x = location.getBlockX(), plusx = location.getBlockX() + 1, minusx = location.getBlockX() - 1, y;
             if (preset.equals(TARDISConstants.PRESET.SUBMERGED)) {
@@ -427,11 +426,11 @@ public class TARDISPresetRunnable implements Runnable {
                                     }
                                     break;
                                 default: // everything else
-                                    if (preset.equals(TARDISConstants.PRESET.SUBMERGED) && yy == 0) {
-                                        plugin.utils.setBlockAndRemember(world, xx, (y + yy), zz, colids[yy], coldatas[yy], tid);
-                                    } else {
-                                        plugin.utils.setBlockAndRemember(world, xx, (y + yy), zz, colids[yy], coldatas[yy], tid);
-                                    }
+//                                    if (preset.equals(TARDISConstants.PRESET.SUBMERGED) && yy == 0) {
+//                                        plugin.utils.setBlockAndRemember(world, xx, (y + yy), zz, colids[yy], coldatas[yy], tid);
+//                                    } else {
+                                    plugin.utils.setBlockAndRemember(world, xx, (y + yy), zz, colids[yy], coldatas[yy], tid);
+//                                    }
                                     break;
                             }
                         }
@@ -504,6 +503,11 @@ public class TARDISPresetRunnable implements Runnable {
                                     }
                                     plugin.utils.setBlock(world, xx, (y + yy), zz, chai, chad);
                                     break;
+                                case 38:
+                                    if (i == 12 && preset.equals(TARDISConstants.PRESET.GRAVESTONE)) {
+                                        plugin.utils.setBlock(world, xx, (y + yy), zz, colids[yy], coldatas[yy]);
+                                    }
+                                    break;
                                 case 50: // lamps, glowstone and torches
                                 case 89:
                                 case 124:
@@ -531,7 +535,6 @@ public class TARDISPresetRunnable implements Runnable {
                     }
                 }
             } else {
-                plugin.isPresetMaterialising.remove("tid" + tid);
                 // set sheild if submarine
                 if (sub && plugin.worldGuardOnServer) {
                     plugin.wgutils.sponge(sponge, true);

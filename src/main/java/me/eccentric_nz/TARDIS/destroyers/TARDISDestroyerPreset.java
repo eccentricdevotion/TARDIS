@@ -88,6 +88,7 @@ public class TARDISDestroyerPreset {
     }
 
     public void destroyDoor(int id) {
+//        plugin.debug("Removing door (bottom up)...");
         HashMap<String, Object> where = new HashMap<String, Object>();
         where.put("tardis_id", id);
         where.put("door_type", 0);
@@ -102,6 +103,7 @@ public class TARDISDestroyerPreset {
     }
 
     public void destroySign(Location l, TARDISConstants.COMPASS d, TARDISConstants.PRESET p) {
+//        plugin.debug("Removing sign...");
         World w = l.getWorld();
         int signx, signz, signy;
         switch (p) {
@@ -151,12 +153,20 @@ public class TARDISDestroyerPreset {
         }
     }
 
-    public void destroyLamp(Location l) {
+    public void destroyLamp(Location l, TARDISConstants.PRESET p) {
         World w = l.getWorld();
         int tx = l.getBlockX();
         int ty = l.getBlockY() + 3;
         int tz = l.getBlockZ();
-        plugin.utils.setBlock(w, tx, ty, tz, 0, (byte) 0);
+        if (p.equals(TARDISConstants.PRESET.CAKE)) {
+            for (int i = (tx - 1); i < (tx + 2); i++) {
+                for (int j = (tz - 1); j < (tz + 2); j++) {
+                    plugin.utils.setBlock(w, i, ty, j, 0, (byte) 0);
+                }
+            }
+        } else {
+            plugin.utils.setBlock(w, tx, ty, tz, 0, (byte) 0);
+        }
     }
 
     public void removeBlockProtection(int id, QueryFactory qf) {

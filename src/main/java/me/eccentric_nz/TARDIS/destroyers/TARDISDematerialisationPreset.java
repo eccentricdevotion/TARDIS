@@ -101,7 +101,6 @@ public class TARDISDematerialisationPreset implements Runnable {
         // get relative locations
         int x = location.getBlockX(), plusx = location.getBlockX() + 1, minusx = location.getBlockX() - 1;
         int y;
-        plugin.isPresetMaterialising.add("tid" + tid);
         if (preset.equals(TARDISConstants.PRESET.SUBMERGED)) {
             y = location.getBlockY() - 1;
         } else {
@@ -128,6 +127,37 @@ public class TARDISDematerialisationPreset implements Runnable {
             }
             // first run - play sound
             if (i == 1) {
+                switch (preset) {
+                    case GRAVESTONE:
+                        // remove flower
+                        int flowerx;
+                        int flowery = (location.getBlockY() + 1);
+                        int flowerz;
+                        switch (d) {
+                            case NORTH:
+                                flowerx = location.getBlockX();
+                                flowerz = location.getBlockZ() + 1;
+                                break;
+                            case WEST:
+                                flowerx = location.getBlockX() + 1;
+                                flowerz = location.getBlockZ();
+                                break;
+                            case SOUTH:
+                                flowerx = location.getBlockX();
+                                flowerz = location.getBlockZ() - 1;
+                                break;
+                            default:
+                                flowerx = location.getBlockX() - 1;
+                                flowerz = location.getBlockZ();
+                                break;
+                        }
+                        plugin.utils.setBlock(world, flowerx, flowery, flowerz, 0, (byte) 0);
+                        break;
+                    case CAKE:
+                        plugin.destroyerP.destroyLamp(location, preset);
+                    default:
+                        break;
+                }
 //                if (plugin.pm.getPlugin("Spout") != null && SpoutManager.getPlayer(player).isSpoutCraftEnabled()) {
 //                    SpoutManager.getSoundManager().playGlobalCustomSoundEffect(plugin, "https://dl.dropboxusercontent.com/u/53758864/tardis_takeoff.mp3", false, location, 9, 75);
 //                } else {
@@ -199,11 +229,15 @@ public class TARDISDematerialisationPreset implements Runnable {
                                 }
                                 plugin.utils.setBlock(world, xx, (y + yy), zz, chai, chad);
                                 break;
+                            case 38:
+                                break;
                             case 50: // lamps, glowstone and torches
                             case 89:
                             case 124:
                                 int light = (preset.equals(TARDISConstants.PRESET.NEW) || preset.equals(TARDISConstants.PRESET.OLD)) ? lamp : colids[yy];
                                 plugin.utils.setBlock(world, xx, (y + yy), zz, light, coldatas[yy]);
+                                break;
+                            case 68: // except the sign
                                 break;
                             default: // everything else
                                 plugin.utils.setBlock(world, xx, (y + yy), zz, colids[yy], coldatas[yy]);

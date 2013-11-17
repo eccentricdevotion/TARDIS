@@ -239,7 +239,6 @@ public class TARDIS extends JavaPlugin {
     public HashMap<String, Integer> protectBlockMap = new HashMap<String, Integer>();
     public HashMap<String, TARDISCondenserData> roomCondenserData = new HashMap<String, TARDISCondenserData>();
     public List<Integer> npcIDs = new ArrayList<Integer>();
-    public List<String> isPresetMaterialising = new ArrayList<String>();
     public ArrayList<String> quote;
     public HashMap<Material, String> seeds;
     public int quotelen;

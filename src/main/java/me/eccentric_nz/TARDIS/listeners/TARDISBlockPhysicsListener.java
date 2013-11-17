@@ -43,7 +43,7 @@ public class TARDISBlockPhysicsListener implements Listener {
         if (event.isCancelled()) {
             return;
         }
-        if (plugin.isPresetMaterialising.size() > 0) {
+        if (plugin.tardisMaterialising.size() > 0 || plugin.tardisDematerialising.size() > 0) {
             Block block = event.getBlock();
             if (block.getType() == Material.TRAP_DOOR) {
                 Block blockBehind = getBlockBehindHatch(block);
@@ -56,7 +56,7 @@ public class TARDISBlockPhysicsListener implements Listener {
             if (block.getType() == Material.VINE) {
                 event.setCancelled(true);
             }
-            if (block.getType() == Material.TORCH || block.getType() == Material.IRON_DOOR_BLOCK || block.getType() == Material.WOODEN_DOOR || block.getType() == Material.RED_ROSE) {
+            if (block.getType() == Material.IRON_DOOR_BLOCK || block.getType() == Material.WOODEN_DOOR) {
                 Block blockBelow = getBlockBelow(block);
                 if (blockBelow != null) {
                     if (blockBelow.getType().equals(Material.GLASS) || blockBelow.getType().equals(Material.ICE) || blockBelow.getType().equals(Material.WOODEN_DOOR) || blockBelow.getType().equals(Material.IRON_DOOR_BLOCK) || blockBelow.getType().equals(Material.AIR)) {

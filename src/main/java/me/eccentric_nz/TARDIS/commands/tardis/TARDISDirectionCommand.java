@@ -91,20 +91,20 @@ public class TARDISDirectionCommand {
             did.put("tardis_id", id);
             setd.put("door_direction", dir);
             qf.doUpdate("doors", setd, did);
-            final Location l = new Location(rsc.getWorld(), rsc.getX(), rsc.getY(), rsc.getZ());
-            final TARDISConstants.COMPASS d = TARDISConstants.COMPASS.valueOf(dir);
+            Location l = new Location(rsc.getWorld(), rsc.getX(), rsc.getY(), rsc.getZ());
+            TARDISConstants.COMPASS d = TARDISConstants.COMPASS.valueOf(dir);
             // destroy sign
-            if (!hid) {
-                plugin.destroyerP.destroySign(l, old_d, demat);
-            }
-            plugin.destroyerP.destroyPreset(l, d, id, true, false, false, null);
-            final Player p = player;
-            plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
-                @Override
-                public void run() {
-                    plugin.builderP.buildPreset(id, l, d, cham, p, true, false);
-                }
-            }, 10L);
+//            if (!hid) {
+//                plugin.destroyerP.destroySign(l, old_d, demat);
+//            }
+            //plugin.destroyerP.destroyPreset(l, d, id, true, false, false, null);
+//            final Player p = player;
+//            plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
+//                @Override
+//                public void run() {
+            plugin.builderP.buildPreset(id, l, d, cham, player, true, false);
+//                }
+//            }, 10L);
             HashMap<String, Object> wherea = new HashMap<String, Object>();
             wherea.put("tardis_id", id);
             qf.alterEnergyLevel("tardis", -amount, wherea, player);

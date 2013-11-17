@@ -59,24 +59,58 @@ public class TARDISDeinstaPreset {
      */
     @SuppressWarnings("deprecation")
     public void instaDestroyPreset(Location l, TARDISConstants.COMPASS d, final int id, boolean hide, TARDISConstants.PRESET preset) {
-        World w = l.getWorld();
+//        plugin.debug("Destroying preset...");
+        final World w = l.getWorld();
         // make sure chunk is loaded
         Chunk chunk = w.getChunkAt(l);
         while (!chunk.isLoaded()) {
             chunk.load();
         }
-        int sbx = l.getBlockX() - 1;
-        int sby;
+        final int sbx = l.getBlockX() - 1;
+        final int sby;
         if (preset.equals(TARDISConstants.PRESET.SUBMERGED)) {
             sby = l.getBlockY() - 1;
         } else {
             sby = l.getBlockY();
         }
-        int sbz = l.getBlockZ() - 1;
+        final int sbz = l.getBlockZ() - 1;
+        // remove problem blocks first
+
+        switch (preset) {
+            case GRAVESTONE:
+                // remove flower
+                int flowerx;
+                int flowery = (l.getBlockY() + 1);
+                int flowerz;
+                switch (d) {
+                    case NORTH:
+                        flowerx = l.getBlockX();
+                        flowerz = l.getBlockZ() + 1;
+                        break;
+                    case WEST:
+                        flowerx = l.getBlockX() + 1;
+                        flowerz = l.getBlockZ();
+                        break;
+                    case SOUTH:
+                        flowerx = l.getBlockX();
+                        flowerz = l.getBlockZ() - 1;
+                        break;
+                    default:
+                        flowerx = l.getBlockX() - 1;
+                        flowerz = l.getBlockZ();
+                        break;
+                }
+                plugin.utils.setBlock(w, flowerx, flowery, flowerz, 0, (byte) 0);
+                break;
+            default:
+                break;
+        }
+        plugin.tardisDematerialising.remove(Integer.valueOf(id));
+        plugin.tardisChunkList.remove(l.getChunk());
         // remove door
         plugin.destroyerP.destroyDoor(id);
         // remove torch
-        plugin.destroyerP.destroyLamp(l);
+        plugin.destroyerP.destroyLamp(l, preset);
         // remove sign
         plugin.destroyerP.destroySign(l, d, preset);
         // remove blue wool and door
@@ -90,6 +124,7 @@ public class TARDISDeinstaPreset {
                 }
             }
         }
+
         // replace the block under the door if there is one
         HashMap<String, Object> where = new HashMap<String, Object>();
         where.put("tardis_id", id);
@@ -101,7 +136,6 @@ public class TARDISDeinstaPreset {
             owner = rs.getOwner();
             String replacedData = rs.getReplaced();
             if (!replacedData.isEmpty()) {
-                plugin.debug("replaced data is not empty");
                 String[] parts = replacedData.split(":");
                 World rw = plugin.getServer().getWorld(parts[0]);
                 int rx, ry, rz, rID;
@@ -152,25 +186,25 @@ public class TARDISDeinstaPreset {
                 if (map.get("block") != null) {
                     bID = plugin.utils.parseNum(map.get("block"));
                 }
-                byte bd = Byte.parseByte(map.get("data"));
-                String locStr = map.get("location");
-                String[] loc_data = locStr.split(",");
-                // x, y, z - 1, 2, 3
-                String[] xStr = loc_data[1].split("=");
-                String[] yStr = loc_data[2].split("=");
-                String[] zStr = loc_data[3].split("=");
-                int rx = plugin.utils.parseNum(xStr[1].substring(0, (xStr[1].length() - 2)));
-                int ry = plugin.utils.parseNum(yStr[1].substring(0, (yStr[1].length() - 2)));
-                int rz = plugin.utils.parseNum(zStr[1].substring(0, (zStr[1].length() - 2)));
-                plugin.utils.setBlock(w, rx, ry, rz, bID, bd);
+                if (bID != 0) {
+                    byte bd = Byte.parseByte(map.get("data"));
+                    String locStr = map.get("location");
+                    String[] loc_data = locStr.split(",");
+                    // x, y, z - 1, 2, 3
+                    String[] xStr = loc_data[1].split("=");
+                    String[] yStr = loc_data[2].split("=");
+                    String[] zStr = loc_data[3].split("=");
+                    int rx = plugin.utils.parseNum(xStr[1].substring(0, (xStr[1].length() - 2)));
+                    int ry = plugin.utils.parseNum(yStr[1].substring(0, (yStr[1].length() - 2)));
+                    int rz = plugin.utils.parseNum(zStr[1].substring(0, (zStr[1].length() - 2)));
+                    plugin.utils.setBlock(w, rx, ry, rz, bID, bd);
+                }
             }
         }
+
         // if just hiding don't remove block protection
         if (hide == false) {
             plugin.destroyerP.removeBlockProtection(id, qf);
         }
-        plugin.tardisDematerialising.remove(Integer.valueOf(id));
-        plugin.tardisChunkList.remove(l.getChunk());
-        plugin.isPresetMaterialising.remove("tid" + id);
     }
 }

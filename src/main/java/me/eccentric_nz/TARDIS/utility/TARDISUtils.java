@@ -68,8 +68,10 @@ public class TARDISUtils {
      * @param z the z co-ordinate of the block.
      * @param m the typeId to set the block to.
      * @param d the data bit to set the block to.
+     * @return true if the block was set
      */
-    public void setBlock(World w, int x, int y, int z, int m, byte d) {
+    public boolean setBlock(World w, int x, int y, int z, int m, byte d) {
+        boolean success = false;
         Block b = w.getBlockAt(x, y, z);
         if (m < 0) {
             if (plugin.bukkitversion.compareTo(plugin.prewoodbuttonversion) < 0 && (m == 143 || m == -113)) {
@@ -86,11 +88,11 @@ public class TARDISUtils {
             m = (plugin.bukkitversion.compareTo(plugin.prewoodbuttonversion) < 0) ? 77 : 143;
             d = (byte) 3;
         }
-        if (m == 158 || m == -98) {
-            plugin.debug("id/data: " + m + "/" + d);
+        if (b.setTypeId(m)) {
+            b.setData(d, true);
+            success = true;
         }
-        b.setTypeId(m);
-        b.setData(d, true);
+        return success;
     }
 
     /**

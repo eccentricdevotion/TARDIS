@@ -133,11 +133,11 @@ public class TARDISBuilderPreset {
                     TARDISDeinstaPreset deinsta = new TARDISDeinstaPreset(plugin);
                     deinsta.instaDestroyPreset(l, d, id, sub, demat);
                 }
-                final TARDISRebuildPreset trp = new TARDISRebuildPreset(plugin, l, preset, id, d, p.getName(), mal, lamp, sub, cham_id, cham_data);
+                final TARDISInstaPreset trp = new TARDISInstaPreset(plugin, l, preset, id, d, p.getName(), mal, lamp, sub, cham_id, cham_data, true);
                 plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
                     @Override
                     public void run() {
-                        trp.rebuildPreset();
+                        trp.buildPreset();
                     }
                 }, 10L);
             } else {
@@ -148,7 +148,7 @@ public class TARDISBuilderPreset {
                     runnable.setTask(taskID);
                 } else {
                     plugin.tardisMaterialising.add(id);
-                    TARDISInstaPreset insta = new TARDISInstaPreset(plugin, l, preset, id, d, p.getName(), mal, lamp, sub, cham_id, cham_data);
+                    TARDISInstaPreset insta = new TARDISInstaPreset(plugin, l, preset, id, d, p.getName(), mal, lamp, sub, cham_id, cham_data, false);
                     insta.buildPreset();
                 }
             }

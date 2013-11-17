@@ -83,7 +83,6 @@ public class TARDISRebuildCommand {
                 return false;
             }
             // remove the police box first - should fix conflict between wood and iron doors
-            plugin.destroyerP.destroyPreset(l, rsc.getDirection(), id, true, false, false, null);
             final boolean c = cham;
             plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
                 @Override

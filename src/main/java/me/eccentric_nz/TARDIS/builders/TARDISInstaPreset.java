@@ -57,6 +57,7 @@ public class TARDISInstaPreset {
     private final boolean sub;
     private final int cham_id;
     private final byte cham_data;
+    private final boolean rebuild;
     private Block sponge;
     private final TARDISConstants.PRESET preset;
     private TARDISChameleonColumn column;
@@ -64,7 +65,7 @@ public class TARDISInstaPreset {
     private final Random rand;
     private final byte random_colour;
 
-    public TARDISInstaPreset(TARDIS plugin, Location location, TARDISConstants.PRESET preset, int tid, TARDISConstants.COMPASS d, String p, boolean mal, int lamp, boolean sub, int cham_id, byte cham_data) {
+    public TARDISInstaPreset(TARDIS plugin, Location location, TARDISConstants.PRESET preset, int tid, TARDISConstants.COMPASS d, String p, boolean mal, int lamp, boolean sub, int cham_id, byte cham_data, boolean rebuild) {
         this.plugin = plugin;
         this.d = d;
         this.location = location;
@@ -76,6 +77,7 @@ public class TARDISInstaPreset {
         this.sub = sub;
         this.cham_id = cham_id;
         this.cham_data = cham_data;
+        this.rebuild = rebuild;
         colours = new byte[]{0, 1, 2, 3, 4, 5, 6, 9, 10, 11, 12, 13, 14};
         rand = new Random();
         random_colour = colours[rand.nextInt(13)];
@@ -379,11 +381,11 @@ public class TARDISInstaPreset {
                         }
                         break;
                     default: // everything else
-                        if (preset.equals(TARDISConstants.PRESET.SUBMERGED) && yy == 0) {
-                            plugin.utils.setBlockAndRemember(world, xx, (y + yy), zz, colids[yy], coldatas[yy], tid);
-                        } else {
-                            plugin.utils.setBlockAndRemember(world, xx, (y + yy), zz, colids[yy], coldatas[yy], tid);
-                        }
+//                        if (preset.equals(TARDISConstants.PRESET.SUBMERGED) && yy == 0) {
+//                            plugin.utils.setBlockAndRemember(world, xx, (y + yy), zz, colids[yy], coldatas[yy], tid);
+//                        } else {
+                        plugin.utils.setBlockAndRemember(world, xx, (y + yy), zz, colids[yy], coldatas[yy], tid);
+//                        }
                         break;
                 }
             }
@@ -391,24 +393,26 @@ public class TARDISInstaPreset {
         if (sub && plugin.worldGuardOnServer) {
             plugin.wgutils.sponge(sponge, true);
         }
-        // message travellers in tardis
-        HashMap<String, Object> where = new HashMap<String, Object>();
-        where.put("tardis_id", tid);
-        ResultSetTravellers rst = new ResultSetTravellers(plugin, where, true);
-        if (rst.resultSet()) {
-            final List<String> travellers = rst.getData();
-            plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
-                @Override
-                public void run() {
-                    for (String s : travellers) {
-                        Player p = plugin.getServer().getPlayer(s);
-                        if (p != null) {
-                            String message = (mal) ? "There was a malfunction and the emergency handbrake was engaged! Scan location before exit!" : "LEFT-click the handbrake to exit!";
-                            p.sendMessage(plugin.pluginName + message);
+        if (!rebuild) {
+            // message travellers in tardis
+            HashMap<String, Object> where = new HashMap<String, Object>();
+            where.put("tardis_id", tid);
+            ResultSetTravellers rst = new ResultSetTravellers(plugin, where, true);
+            if (rst.resultSet()) {
+                final List<String> travellers = rst.getData();
+                plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
+                    @Override
+                    public void run() {
+                        for (String s : travellers) {
+                            Player p = plugin.getServer().getPlayer(s);
+                            if (p != null) {
+                                String message = (mal) ? "There was a malfunction and the emergency handbrake was engaged! Scan location before exit!" : "LEFT-click the handbrake to exit!";
+                                p.sendMessage(plugin.pluginName + message);
+                            }
                         }
                     }
-                }
-            }, 30L);
+                }, 30L);
+            }
         }
         plugin.tardisMaterialising.remove(Integer.valueOf(tid));
     }
