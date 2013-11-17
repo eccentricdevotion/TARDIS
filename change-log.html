@@ -26,7 +26,34 @@
     <section>
         <h1>Change log</h1>
         <h2>What&rsquo;s been changed?</h2>
-        <h3>v2.6-beta-1</h3>
+        <h3>v2.6-beta-2</h3>
+        <p>There are lots of changes in v2.6 &mdash; some of which are not compatible with previous TARDISes... please read this and the <a href="#v26b1">previous change log</a> carefully</p>
+        <h4>Additions</h4>
+        <ul>
+            <li>There are some new presets &mdash; TELEPHONE, SUBMERGED, FLOWER, CHALICE, WINDMILL, WELL, ANGEL, GRAVESTONE, CAKE, TOPSYTURVEY, SHROOM, CUSTOM and one other secret one</li>
+            <li>Added the ability to add a custom preset &mdash; edit the <em>plugins/TARDIS/custom_preset.txt</em> file and restart the server. The file contains data for the new taller Police Box preset &mdash; you should be able to work it out from there (the sign <em>if used</em>, will need to be in the default location).</li>
+            <li>Added a new setting to the Chameleon Circuit GUI &mdash; Biome Adaption &mdash; if this is turned on, a biome related preset will be selected automatically (if there is one)</li>
+            <li>The Chameleon Circuit GUI no longer closes when you select a preset &mdash; you need to use the &lsquo;Close&rsquo; or &lsquo;Apply&rsquo; button (or just hit ESC on the keyboard)</li>
+            <li>Added a command to remove the ARS sign to allow manual room growing in the ARS grid area <code>/tardis arsremove</code> &mdash; useful if your TARDIS was created before v2.6 and is not compatible with ARS (Note: adding it back after removal will potentially overwrite any manually grown rooms)</li>
+        </ul>
+        <h4>Changes</h4>
+        <ul>
+            <li>Some presets now have random attributes &mdash; for example the Party Tent and Flower change to a random colour, the Angel has different wing and head positions</li>
+            <li>The SWAMP preset has changed to be more like a witches hut</li>
+            <li>The TARDIS &lsquo;last use&rsquo; field is set upon TARDIS creation, and updated more often (not just when a Time Lord travels)</li>
+            <li>The random destination button now selects a random location relative to the current location of the TARDIS preset (when travelling in the <em>same</em> world)</li>
+            <li>The <code>/tardistravel biome [biome]</code> command now finds the closest biome relative to the current location of the TARDIS preset (and not the player&rsquo;s location)</li>
+        </ul>
+        <h4>Bug fixes</h4>
+        <ul>
+            <li>Fixed doors, trapdoors and various other blocks popping off presets when they de/materialise</li>
+            <li>Fixed under door and platform blocks not being removed when the TARDIS leaves a location</li>
+            <li>Fixed DROPPERS getting the wrong data value when being grown in a room</li>
+            <li>Fixed a conflict with the JSONArray class</li>
+            <li>Fixed pets disappearing when the player tries to exit the TARDIS with them</li>
+            <li>In the ARS GUI, both (anti)gravity well slots are reset when jettisoning said rooms</li>
+        </ul>
+        <h3 id="v26b1">v2.6-beta-1</h3>
         <p>There are lots of changes &mdash; some of which are not compatible with previous TARDISes... please read carefully &mdash; videos and full documentation are coming ASAP</p>
         <h4>Additions</h4>
         <ul>
@@ -52,21 +79,19 @@
             <li>Added TARDIS seed blocks
                 <ul>
                     <li>Seed blocks are crafted</li>
-                    
-<pre><code>123
+                    <pre><code>123
 456
 789</code> </pre>
-                        <li>If the above is a 3x3 crafting grid, then:<br />
-                            1 = Redstone torch<br />
-                            2 = AIR<br />
-                            3 = AIR<br />
-                            4 = Lapis Block<br />
-                            5 = Any valid Police Box Lamp block/item<br />
-                            6 = Any valid TARDIS wall block<br />
-                            7 = Any of the current TARDIS &lsquo;type&rsquo; blocks e.g. IRON, GOLD, DIAMOND, EMERALD etc<br />
-                            8 = Any valid Police Box wall block<br />
-                            9 = Any valid TARDIS floor block
-                    </li>
+                    <li>If the above is a 3x3 crafting grid, then:<br />
+                        1 = Redstone torch<br />
+                        2 = AIR<br />
+                        3 = AIR<br />
+                        4 = Lapis Block<br />
+                        5 = Any valid Police Box Lamp block/item<br />
+                        6 = Any valid TARDIS wall block<br />
+                        7 = Any of the current TARDIS &lsquo;type&rsquo; blocks e.g. IRON, GOLD, DIAMOND, EMERALD etc<br />
+                        8 = Any valid Police Box wall block<br />
+                        9 = Any valid TARDIS floor block </li>
                     <li>
                         <p>You then need to click the crafting output slot to generate the seed.</p>
                         <p><img src="https://dl.dropboxusercontent.com/u/53758864/tardisseed1.jpg" alt="tardis seed" /></p>
@@ -134,7 +159,7 @@
                 <ul>
                     <li>unfortunately this is <strong>not backwards compatible with old rooms</strong> (as this change was needed to implement and be compatible with ARS and full room jettisoning)</li>
                     <li>
-                        <p>seed blocks are now placed in front of the stone pressure plate that activates the new piston doors positions(new schematics required) - players with older TARDISes should be able to work out where to place the seed block using the diagram below (grey squares are stone pressure plates, red squares are seed blocks, green blocks are piston doors, purple blocks are room walls)</p>
+                        <p>seed blocks are now placed in front of the stone pressure plate that activates the new piston doors positions(new schematics required) &mdash; players with older TARDISes should be able to work out where to place the seed block using the diagram below (grey squares are stone pressure plates, red squares are seed blocks, green blocks are piston doors, purple blocks are room walls)</p>
                         <p><img src="https://dl.dropboxusercontent.com/u/53758864/seedblockpositions.png" alt="sedd block positions" /></p>
                     </li>
                 </ul>
@@ -198,11 +223,11 @@
         </ul>
         <h3>v2.5.7</h3>
         <ul>
-            <li>Updated Factions support to 2.0.5 - <em>Disable Factions support or do not use this version if you are running Factions 1.8.x and lower</em></li>
+            <li>Updated Factions support to 2.0.5 &mdash; <em>Disable Factions support or do not use this version if you are running Factions 1.8.x and lower</em></li>
             <li>Fixed a NPE when using the ARS GUI and the map was not loaded</li>
             <li>Fixed a TARDIS deletion bug, where if you had the admin permission <code>tardis.delete</code> it would not find the TARDIS location properly</li>
-            <li>After using the TARDIS Locator, if a regular compass is selected in the hot bar, the player's compass target is reset back to the spawn/bed spawn location instead of always pointing at the TARDIS location</li>
-            <li>Fixed an ArrayIndexOutOfBoundsException when a malfunction occurred and the destination was set to the Nether or The End (and travel there was disabled). <strong>Travel will now be allowed to the destination</strong> - as this was the original specification for the malfunction feature when it was suggested</li>
+            <li>After using the TARDIS Locator, if a regular compass is selected in the hot bar, the player&rsquo;s compass target is reset back to the spawn/bed spawn location instead of always pointing at the TARDIS location</li>
+            <li>Fixed an ArrayIndexOutOfBoundsException when a malfunction occurred and the destination was set to the Nether or The End (and travel there was disabled). <strong>Travel will now be allowed to the destination</strong> &mdash; as this was the original specification for the malfunction feature when it was suggested</li>
             <li>Fixed an error when the condenser chest was made into a double chest</li>
             <li>Fixed an error with the save sign when a player has more than 53 saves</li>
             <li>Fixed an error when not specifying a message in the <code>/tardisprefs eps_message</code> command</li>
