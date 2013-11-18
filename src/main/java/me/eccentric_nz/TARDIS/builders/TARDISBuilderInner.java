@@ -1,4 +1,4 @@
-/*
+ /*
  * Copyright (C) 2013 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
@@ -25,7 +25,6 @@ import java.util.Map;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
-import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.tardischunkgenerator.TARDISChunkGenerator;
 import org.bukkit.ChatColor;
 import org.bukkit.Chunk;
@@ -34,13 +33,11 @@ import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.WorldType;
 import org.bukkit.block.Block;
-import org.bukkit.block.Chest;
 import org.bukkit.block.Sign;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.Inventory;
-import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.Plugin;
 import me.eccentric_nz.TARDIS.JSON.JSONArray;
+import static me.eccentric_nz.TARDIS.utility.TARDISUtils.roundUp;
 
 /**
  * The TARDIS was prone to a number of technical faults, ranging from depleted
@@ -76,7 +73,7 @@ public class TARDISBuilderInner {
     public void buildInner(TARDISConstants.SCHEMATIC schm, World world, int dbID, Player p, int middle_id, byte middle_data) {
         String[][][] s;
         short[] d;
-        int level, row, col, id, x, z, startx, startz, resetx, resetz, cx, cy, cz, rid, multiplier = 1, j = 2;
+        int level, row, col, id, x, z, startx, startz, resetx, resetz, j = 2;
         boolean below = (!plugin.getConfig().getBoolean("create_worlds") && !plugin.getConfig().getBoolean("default_world"));
         int starty = (below) ? 15 : 64;
         switch (schm) {
@@ -126,8 +123,7 @@ public class TARDISBuilderInner {
         short w = d[1];
         short l = d[2];
         byte data;
-        short damage = 0;
-        String tmp, replacedBlocks;
+        String tmp;
         HashMap<Block, Byte> postDoorBlocks = new HashMap<Block, Byte>();
         HashMap<Block, Byte> postTorchBlocks = new HashMap<Block, Byte>();
         HashMap<Block, Byte> postSignBlocks = new HashMap<Block, Byte>();
@@ -145,44 +141,13 @@ public class TARDISBuilderInner {
         resetz = gsl[3];
         x = gsl[4];
         z = gsl[5];
-        Location wg1 = new Location(world, startx, starty, startz);
-        // need to set TARDIS space to air first otherwise torches may be placed askew
-        // also getting and storing block ids for bonus chest if configured
-        StringBuilder sb = new StringBuilder();
-        List<Chunk> chunkList = new ArrayList<Chunk>();
         boolean own_world = plugin.getConfig().getBoolean("create_worlds");
-        boolean bonus_chest = plugin.getConfig().getBoolean("bonus_chest");
-        boolean schematicHasChest = false;
-        for (level = 0; level < h; level++) {
-            for (row = 0; row < w; row++) {
-                for (col = 0; col < l; col++) {
-                    Location replaceLoc = new Location(world, startx, starty, startz);
-                    // get list of used chunks
-                    Chunk thisChunk = world.getChunkAt(replaceLoc);
-                    if (!chunkList.contains(thisChunk)) {
-                        chunkList.add(thisChunk);
-                    }
-                    if (bonus_chest && !own_world) {
-                        // get block at location
-                        int replacedMaterialId = replaceLoc.getBlock().getTypeId();
-                        if (replacedMaterialId != 8 && replacedMaterialId != 9 && replacedMaterialId != 10 && replacedMaterialId != 11) {
-                            sb.append(replacedMaterialId).append(":");
-                        }
-                    }
-                    if (!own_world) {
-                        plugin.utils.setBlock(world, startx, starty, startz, 0, (byte) 0);
-                    }
-                    startx += x;
-                }
-                startx = resetx;
-                startz += z;
-            }
-            startz = resetz;
-            starty += 1;
-        }
-        Location wg2 = new Location(world, startx + (w - 1), starty, startz + (l - 1));
-        // update chunks list in DB
+        Location wg1 = new Location(world, startx, starty, startz);
+        Location wg2 = new Location(world, startx + (w - 1), starty + (h - 1), startz + (l - 1));
         QueryFactory qf = new QueryFactory(plugin);
+        // get list of used chunks
+        List<Chunk> chunkList = getChunks(world, wg1.getChunk().getX(), wg1.getChunk().getZ(), d);
+        // update chunks list in DB
         for (Chunk c : chunkList) {
             HashMap<String, Object> set = new HashMap<String, Object>();
             set.put("tardis_id", dbID);
@@ -191,11 +156,28 @@ public class TARDISBuilderInner {
             set.put("z", c.getZ());
             qf.doInsert("chunks", set);
         }
-        // reset start positions and do over
-        startx = resetx;
-        starty = (below) ? 15 : 64;
-        startz = resetz;
-
+        // if for some reason this is not a TARDIS world, set the blocks to air first
+        if (below) {
+            for (level = 0; level < h; level++) {
+                for (row = 0; row < w; row++) {
+                    for (col = 0; col < l; col++) {
+                        plugin.utils.setBlock(world, startx, starty, startz, 0, (byte) 0);
+                        startx += x;
+                    }
+                    startx = resetx;
+                    startz += z;
+                }
+                startz = resetz;
+                starty += 1;
+            }
+            // reset start positions
+            startx = resetx;
+            starty = 15;
+            startz = resetz;
+        }
+        HashMap<String, Object> set = new HashMap<String, Object>();
+        HashMap<String, Object> where = new HashMap<String, Object>();
+        where.put("tardis_id", dbID);
         for (level = 0; level < h; level++) {
             for (row = 0; row < w; row++) {
                 for (col = 0; col < l; col++) {
@@ -206,26 +188,22 @@ public class TARDISBuilderInner {
                             id = plugin.utils.parseNum(iddata[0]);
                             data = Byte.parseByte(iddata[1]);
                             if (id == 54) { // chest
-                                schematicHasChest = true;
-                                // remember the location of this chest - if create_worlds is true make it the condenser chest
-                                HashMap<String, Object> setc = new HashMap<String, Object>();
-                                HashMap<String, Object> wherec = new HashMap<String, Object>();
+                                // remember the location of the condenser chest
                                 String chest = world.getName() + ":" + startx + ":" + starty + ":" + startz;
-                                String which = (own_world) ? "condenser" : "chest";
-                                setc.put(which, chest);
-                                wherec.put("tardis_id", dbID);
-                                qf.doUpdate("tardis", setc, wherec);
+                                set.put("condenser", chest);
                             }
                             if (id == 77) { // stone button
                                 // remember the location of this button
                                 String button = plugin.utils.makeLocationStr(world, startx, starty, startz);
-                                qf.insertControl(dbID, 1, button, 0);
+                                qf.insertSyncControl(dbID, 1, button, 0);
                             }
                             if (id == 93) { // remember the location of this redstone repeater
                                 // save repeater location
-                                String repeater = world.getName() + ":" + startx + ":" + starty + ":" + startz;
-                                qf.insertControl(dbID, j, repeater, 0);
-                                j++;
+                                if (j < 6) {
+                                    String repeater = world.getName() + ":" + startx + ":" + starty + ":" + startz;
+                                    qf.insertSyncControl(dbID, j, repeater, 0);
+                                    j++;
+                                }
                             }
                             if (id == 71 && data < (byte) 8) { // iron door bottom
                                 HashMap<String, Object> setd = new HashMap<String, Object>();
@@ -251,42 +229,30 @@ public class TARDISBuilderInner {
                                 }
                             }
                             if (id == 68) { // chameleon circuit sign
-                                HashMap<String, Object> setc = new HashMap<String, Object>();
-                                HashMap<String, Object> wherec = new HashMap<String, Object>();
                                 String chameleonloc = world.getName() + ":" + startx + ":" + starty + ":" + startz;
-                                setc.put("chameleon", chameleonloc);
-                                setc.put("chamele_on", 0);
-                                wherec.put("tardis_id", dbID);
-                                qf.doUpdate("tardis", setc, wherec);
+                                set.put("chameleon", chameleonloc);
+                                set.put("chamele_on", 0);
                             }
                             if (id == 52) { // scanner button
                                 /*
                                  * mob spawner will be converted to the correct id by
                                  * setBlock(), but remember it for the scanner.
                                  */
-                                HashMap<String, Object> setscan = new HashMap<String, Object>();
-                                HashMap<String, Object> wherescan = new HashMap<String, Object>();
                                 String scanloc = world.getName() + ":" + startx + ":" + starty + ":" + startz;
-                                setscan.put("scanner", scanloc);
-                                wherescan.put("tardis_id", dbID);
-                                qf.doUpdate("tardis", setscan, wherescan);
+                                set.put("scanner", scanloc);
                             }
                             if (id == 97) { // silverfish stone
                                 String blockLocStr = (new Location(world, startx, starty, startz)).toString();
                                 switch (data) {
                                     case 0: // Save Sign
                                         String save_loc = world.getName() + ":" + startx + ":" + starty + ":" + startz;
-                                        HashMap<String, Object> setss = new HashMap<String, Object>();
-                                        HashMap<String, Object> wheress = new HashMap<String, Object>();
-                                        wheress.put("tardis_id", dbID);
-                                        setss.put("save_sign", save_loc);
-                                        qf.doUpdate("tardis", setss, wheress);
+                                        set.put("save_sign", save_loc);
                                         break;
                                     case 1: // Destination Terminal
-                                        qf.insertControl(dbID, 9, blockLocStr, 0);
+                                        qf.insertSyncControl(dbID, 9, blockLocStr, 0);
                                         break;
                                     case 2: // Architectural Reconfiguration System
-                                        qf.insertControl(dbID, 10, blockLocStr, 0);
+                                        qf.insertSyncControl(dbID, 10, blockLocStr, 0);
                                         // create default json
                                         int[][][] empty = new int[3][9][9];
                                         for (int y = 0; y < 3; y++) {
@@ -323,13 +289,13 @@ public class TARDISBuilderInner {
                                         qf.doInsert("ars", seta);
                                         break;
                                     case 3: // TARDIS Information System
-                                        qf.insertControl(dbID, 13, blockLocStr, 0);
+                                        qf.insertSyncControl(dbID, 13, blockLocStr, 0);
                                         break;
                                     case 4: // Temporal Circuit
-                                        qf.insertControl(dbID, 11, blockLocStr, 0);
+                                        qf.insertSyncControl(dbID, 11, blockLocStr, 0);
                                         break;
                                     case 5: // Keyboard
-                                        qf.insertControl(dbID, 7, blockLocStr, 0);
+                                        qf.insertSyncControl(dbID, 7, blockLocStr, 0);
                                         break;
                                     default:
                                         break;
@@ -339,12 +305,8 @@ public class TARDISBuilderInner {
                                 /*
                                  * command block - remember it to spawn the creeper on.
                                  */
-                                HashMap<String, Object> setcreep = new HashMap<String, Object>();
-                                HashMap<String, Object> wherecreep = new HashMap<String, Object>();
                                 String creeploc = world.getName() + ":" + (startx + 0.5) + ":" + starty + ":" + (startz + 0.5);
-                                setcreep.put("creeper", creeploc);
-                                wherecreep.put("tardis_id", dbID);
-                                qf.doUpdate("tardis", setcreep, wherecreep);
+                                set.put("creeper", creeploc);
                                 if (schm.equals(TARDISConstants.SCHEMATIC.CUSTOM)) {
                                     id = plugin.getConfig().getInt("custom_creeper_id");
                                 } else {
@@ -357,7 +319,7 @@ public class TARDISBuilderInner {
                                  * setBlock(), but remember it so we can use it as the handbrake!
                                  */
                                 String handbrakeloc = plugin.utils.makeLocationStr(world, startx, starty, startz);
-                                qf.insertControl(dbID, 0, handbrakeloc, 0);
+                                qf.insertSyncControl(dbID, 0, handbrakeloc, 0);
                             }
                             if (id == 143 || id == -113) {
                                 /*
@@ -365,16 +327,12 @@ public class TARDISBuilderInner {
                                  * setBlock(), but remember it for the Artron Energy Capacitor.
                                  */
                                 String woodbuttonloc = plugin.utils.makeLocationStr(world, startx, starty, startz);
-                                qf.insertControl(dbID, 6, woodbuttonloc, 0);
+                                qf.insertSyncControl(dbID, 6, woodbuttonloc, 0);
                             }
                             if (id == 7) {
                                 // remember bedrock location to block off the beacon light
-                                HashMap<String, Object> setbeac = new HashMap<String, Object>();
-                                HashMap<String, Object> wherebeac = new HashMap<String, Object>();
                                 String bedrocloc = world.getName() + ":" + startx + ":" + starty + ":" + startz;
-                                setbeac.put("beacon", bedrocloc);
-                                wherebeac.put("tardis_id", dbID);
-                                qf.doUpdate("tardis", setbeac, wherebeac);
+                                set.put("beacon", bedrocloc);
                             }
                             if (id == 124) {
                                 // remember lamp blocks
@@ -494,137 +452,77 @@ public class TARDISBuilderInner {
                 cs.update();
             }
         }
-        HashMap<String, Object> where = new HashMap<String, Object>();
-        where.put("tardis_id", dbID);
-        ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
-        if (rs.resultSet()) {
-            if (postSaveSignBlock != null) {
-                postSaveSignBlock.setTypeId(68);
-                postSaveSignBlock.setData((byte) 3, true);
-                if (postSaveSignBlock.getType().equals(Material.WALL_SIGN)) {
-                    Sign ss = (Sign) postSaveSignBlock.getState();
-                    ss.setLine(0, "TARDIS");
-                    ss.setLine(1, "Saved");
-                    ss.setLine(2, "Locations");
-                    ss.setLine(3, "");
-                    ss.update();
-                }
+        if (postSaveSignBlock != null) {
+            postSaveSignBlock.setTypeId(68);
+            postSaveSignBlock.setData((byte) 3, true);
+            if (postSaveSignBlock.getType().equals(Material.WALL_SIGN)) {
+                Sign ss = (Sign) postSaveSignBlock.getState();
+                ss.setLine(0, "TARDIS");
+                ss.setLine(1, "Saved");
+                ss.setLine(2, "Locations");
+                ss.setLine(3, "");
+                ss.update();
             }
-            if (postTerminalBlock != null) {
-                postTerminalBlock.setTypeId(68);
-                postTerminalBlock.setData((byte) 3, true);
-                if (postTerminalBlock.getType().equals(Material.WALL_SIGN)) {
-                    Sign ts = (Sign) postTerminalBlock.getState();
-                    ts.setLine(0, "");
-                    ts.setLine(1, "Destination");
-                    ts.setLine(2, "Terminal");
-                    ts.setLine(3, "");
-                    ts.update();
-                }
+        }
+        if (postTerminalBlock != null) {
+            postTerminalBlock.setTypeId(68);
+            postTerminalBlock.setData((byte) 3, true);
+            if (postTerminalBlock.getType().equals(Material.WALL_SIGN)) {
+                Sign ts = (Sign) postTerminalBlock.getState();
+                ts.setLine(0, "");
+                ts.setLine(1, "Destination");
+                ts.setLine(2, "Terminal");
+                ts.setLine(3, "");
+                ts.update();
             }
-            if (postARSBlock != null) {
-                postARSBlock.setTypeId(68);
-                postARSBlock.setData((byte) 3, true);
-                if (postARSBlock.getType().equals(Material.WALL_SIGN)) {
-                    Sign as = (Sign) postARSBlock.getState();
-                    as.setLine(0, "TARDIS");
-                    as.setLine(1, "Architectural");
-                    as.setLine(2, "Reconfiguration");
-                    as.setLine(3, "System");
-                    as.update();
-                }
+        }
+        if (postARSBlock != null) {
+            postARSBlock.setTypeId(68);
+            postARSBlock.setData((byte) 3, true);
+            if (postARSBlock.getType().equals(Material.WALL_SIGN)) {
+                Sign as = (Sign) postARSBlock.getState();
+                as.setLine(0, "TARDIS");
+                as.setLine(1, "Architectural");
+                as.setLine(2, "Reconfiguration");
+                as.setLine(3, "System");
+                as.update();
             }
-            if (postTISBlock != null) {
-                postTISBlock.setTypeId(68);
-                postTISBlock.setData((byte) 3, true);
-                if (postTISBlock.getType().equals(Material.WALL_SIGN)) {
-                    Sign is = (Sign) postTISBlock.getState();
-                    is.setLine(0, "-----");
-                    is.setLine(1, "TARDIS");
-                    is.setLine(2, "Information");
-                    is.setLine(3, "System");
-                    is.update();
-                }
+        }
+        if (postTISBlock != null) {
+            postTISBlock.setTypeId(68);
+            postTISBlock.setData((byte) 3, true);
+            if (postTISBlock.getType().equals(Material.WALL_SIGN)) {
+                Sign is = (Sign) postTISBlock.getState();
+                is.setLine(0, "-----");
+                is.setLine(1, "TARDIS");
+                is.setLine(2, "Information");
+                is.setLine(3, "System");
+                is.update();
             }
-            if (postTemporalBlock != null) {
-                postTemporalBlock.setTypeId(68);
-                postTemporalBlock.setData((byte) 3, true);
-                if (postTemporalBlock.getType().equals(Material.WALL_SIGN)) {
-                    Sign ms = (Sign) postTemporalBlock.getState();
-                    ms.setLine(0, "");
-                    ms.setLine(1, "Temporal");
-                    ms.setLine(2, "Locator");
-                    ms.setLine(3, "");
-                    ms.update();
-                }
+        }
+        if (postTemporalBlock != null) {
+            postTemporalBlock.setTypeId(68);
+            postTemporalBlock.setData((byte) 3, true);
+            if (postTemporalBlock.getType().equals(Material.WALL_SIGN)) {
+                Sign ms = (Sign) postTemporalBlock.getState();
+                ms.setLine(0, "");
+                ms.setLine(1, "Temporal");
+                ms.setLine(2, "Locator");
+                ms.setLine(3, "");
+                ms.update();
             }
-            if (postKeyboardBlock != null) {
-                postKeyboardBlock.setTypeId(68);
-                postKeyboardBlock.setData((byte) 3, true);
-                if (postKeyboardBlock.getType().equals(Material.WALL_SIGN)) {
-                    Sign ks = (Sign) postKeyboardBlock.getState();
-                    ks.setLine(0, "Keyboard");
-                    for (int i = 1; i < 4; i++) {
-                        ks.setLine(i, "");
-                    }
-                    ks.update();
+        }
+        if (postKeyboardBlock != null) {
+            postKeyboardBlock.setTypeId(68);
+            postKeyboardBlock.setData((byte) 3, true);
+            if (postKeyboardBlock.getType().equals(Material.WALL_SIGN)) {
+                Sign ks = (Sign) postKeyboardBlock.getState();
+                ks.setLine(0, "Keyboard");
+                for (int i = 1; i < 4; i++) {
+                    ks.setLine(i, "");
                 }
+                ks.update();
             }
-            if (schematicHasChest && bonus_chest && !own_world) {
-                // get rid of last ":" and assign ids to an array
-                String rb = sb.toString();
-                replacedBlocks = rb.substring(0, rb.length() - 1);
-                String[] replaceddata = replacedBlocks.split(":");
-                // get saved chest location
-                String saved_chestloc = rs.getChest();
-                String[] cdata = saved_chestloc.split(":");
-                World cw = plugin.getServer().getWorld(cdata[0]);
-                cx = plugin.utils.parseNum(cdata[1]);
-                cy = plugin.utils.parseNum(cdata[2]);
-                cz = plugin.utils.parseNum(cdata[3]);
-                Location chest_loc = new Location(cw, cx, cy, cz);
-                Block the_chest = chest_loc.getBlock();
-                if (the_chest.getType() == Material.CHEST) {
-                    Chest chest = (Chest) the_chest.getState();
-                    // get chest inventory
-                    Inventory chestInv = chest.getInventory();
-                    // convert non-smeltable ores to items
-                    for (String i : replaceddata) {
-                        rid = plugin.utils.parseNum(i);
-                        switch (rid) {
-                            case 1: // stone to cobblestone
-                                rid = 4;
-                                break;
-                            case 16: // coal ore to coal
-                                rid = 263;
-                                break;
-                            case 21: // lapis ore to lapis dye
-                                rid = 351;
-                                multiplier = 4;
-                                damage = 4;
-                                break;
-                            case 56: // diamond ore to diamonds
-                                rid = 264;
-                                break;
-                            case 73: // redstone ore to redstone dust
-                                rid = 331;
-                                multiplier = 4;
-                                break;
-                            case 129: // emerald ore to emerald
-                                rid = 388;
-                                break;
-                            default:
-                                break;
-                        }
-                        // add items to chest
-                        chestInv.addItem(new ItemStack(rid, multiplier, damage));
-                        multiplier = 1; // reset multiplier
-                        damage = 0; // reset damage
-                    }
-                }
-            }
-        } else {
-            plugin.console.sendMessage(plugin.pluginName + "Could not find chest location in DB!");
         }
         for (Block lamp : lampblocks) {
             lamp.setType(Material.REDSTONE_LAMP_ON);
@@ -633,5 +531,29 @@ public class TARDISBuilderInner {
         if (plugin.worldGuardOnServer && plugin.getConfig().getBoolean("use_worldguard")) {
             plugin.wgutils.addWGProtection(p, wg1, wg2);
         }
+        // finished processing - update tardis table!
+        qf.doUpdate("tardis", set, where);
+    }
+
+    /**
+     * Checks whether a chunk is available to build a TARDIS in.
+     *
+     * @param w the world the chunk is in.
+     * @param x the x co-ordinate of the chunk.
+     * @param z the z co-ordinate of the chunk.
+     * @param d an array of the schematic dimensions
+     * @return true or false.
+     */
+    public List<Chunk> getChunks(World w, int x, int z, short[] d) {
+        List<Chunk> chunks = new ArrayList<Chunk>();
+        int cw = roundUp(d[1], 16);
+        int cl = roundUp(d[2], 16);
+        // check all the chunks that will be used by the schematic
+        for (int cx = 0; cx < cw; cx++) {
+            for (int cz = 0; cz < cl; cz++) {
+                chunks.add(w.getChunkAt((x + cx), (z + cl)));
+            }
+        }
+        return chunks;
     }
 }

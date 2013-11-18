@@ -85,6 +85,9 @@ public class QueryFactory {
                 } else {
                     if (entry.getValue().getClass().getName().contains("Double")) {
                         ps.setDouble(i, Double.parseDouble(entry.getValue().toString()));
+                    }
+                    if (entry.getValue().getClass().getName().contains("Long")) {
+                        ps.setLong(i, Long.parseLong(entry.getValue().toString()));
                     } else {
                         ps.setInt(i, plugin.utils.parseNum(entry.getValue().toString()));
                     }
@@ -228,11 +231,75 @@ public class QueryFactory {
      * Inserts data into an SQLite database table. This method executes the SQL
      * in a separate thread.
      *
+     * @param id the database table name to insert the data into.
+     * @param type the type of control to insert.
+     * @param l the string location of the control
+     * @param s what level the control is (1 primary, 2 secondary, 3 tertiary)
+     */
+    public void insertSyncControl(int id, int type, String l, int s) {
+        Statement statement = null;
+        try {
+            statement = connection.createStatement();
+            String select = "SELECT c_id FROM controls WHERE tardis_id = " + id + " AND type = " + type + " AND secondary = " + s;
+            ResultSet rs = statement.executeQuery(select);
+            if (rs.isBeforeFirst()) {
+                // update
+                String update = "UPDATE controls SET location = '" + l + "' WHERE c_id = " + rs.getInt("c_id");
+                statement.executeUpdate(update);
+            } else {
+                // insert
+                String insert = "INSERT INTO controls (tardis_id, type, location, secondary) VALUES (" + id + ", " + type + ", '" + l + "', " + s + ")";
+                statement.executeUpdate(insert);
+            }
+        } catch (SQLException e) {
+            plugin.debug("Insert control error! " + e.getMessage());
+        } finally {
+            try {
+                if (statement != null) {
+                    statement.close();
+                }
+            } catch (SQLException e) {
+                plugin.debug("Error closing insert control statement! " + e.getMessage());
+            }
+        }
+    }
+
+    /**
+     * Inserts data into an SQLite database table. This method executes the SQL
+     * in a separate thread.
+     *
      * @param data a HashMap<String, Object> of table fields and values to
      * insert.
      */
     public void insertLocations(HashMap<String, Object> data) {
         TARDISSQLInsertLocations locate = new TARDISSQLInsertLocations(plugin, data);
         plugin.getServer().getScheduler().runTaskAsynchronously(plugin, locate);
+    }
+
+    /**
+     * Updates the Artron condenser block count for a specific block.
+     *
+     * @param new_size the newly calculated total number of blocks condensed
+     * @param id the tardis_id of the record to update
+     * @param block_data the block_data of the record to update
+     */
+    public void updateCondensedBlockCount(int new_size, int id, int block_data) {
+        Statement statement = null;
+        String query = "UPDATE condenser SET block_count = " + new_size + " WHERE tardis_id = " + id + " AND block_data = " + block_data;
+        try {
+            statement = connection.createStatement();
+
+            statement.executeUpdate(query);
+        } catch (SQLException e) {
+            plugin.debug("Update error for condenser! " + e.getMessage());
+        } finally {
+            try {
+                if (statement != null) {
+                    statement.close();
+                }
+            } catch (SQLException e) {
+                plugin.debug("Error closing condenser! " + e.getMessage());
+            }
+        }
     }
 }
