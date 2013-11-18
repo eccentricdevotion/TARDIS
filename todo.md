@@ -1,13 +1,16 @@
 # TODO
 
 ## Current version `2.6-beta-2`
-1. Test Temporal Invisibility
+1. TARDIS creation
+   * check controls are inserted into database - all the time - do sync updates?
 2. Rooms
    * Put farmland, crops, buttons, ladders, levers and signs on last when growing rooms   
 3. TARDIS Information System
     * add new features
     * auto log out
 4. Documentation & videos!
+5. Change the light grey wool blocks in TARDIS consoles to the chosen TARDIS seed floor block?
+6. 50th anniversary Easter egg
 
 ## Waiting on Bukkit API
 0. IDs are soon to be history... so convert all ID use to entity names
