@@ -50,7 +50,6 @@ import me.eccentric_nz.TARDIS.files.TARDISBlockLoader;
 import me.eccentric_nz.TARDIS.files.TARDISConfiguration;
 import me.eccentric_nz.TARDIS.files.TARDISMakeRoomCSV;
 import me.eccentric_nz.TARDIS.files.TARDISMakeTardisCSV;
-import me.eccentric_nz.TARDIS.files.TARDISUpdateChecker;
 import me.eccentric_nz.TARDIS.info.TARDISInfoMenu;
 import me.eccentric_nz.TARDIS.info.TARDISInformationSystemListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISAdminMenuListener;
@@ -300,10 +299,6 @@ public class TARDIS extends JavaPlugin {
 
         quote = quotes();
         quotelen = quote.size();
-        if (getConfig().getBoolean("check_for_updates")) {
-            TARDISUpdateChecker update = new TARDISUpdateChecker(this);
-            update.checkVersion(null);
-        }
 
         TARDISCreeperChecker cc = new TARDISCreeperChecker(this);
         cc.startCreeperCheck();
