@@ -93,15 +93,14 @@ public class TARDISCondenserListener implements Listener {
                 for (ItemStack is : inv.getContents()) {
                     if (is != null) {
                         String item = is.getType().name();
-                        //plugin.debug(is);
                         if (tc.condensables.containsKey(item)) {
                             int stack_size = is.getAmount();
                             if (!zero.contains(item)) {
                                 amount += stack_size * tc.condensables.get(item);
                             }
+                            int block_data = is.getTypeId();
                             inv.remove(is);
                             if (plugin.getConfig().getBoolean("rooms_require_blocks")) {
-                                String block_data = String.format("%s", is.getTypeId());
                                 // check if the tardis has condensed this material before
                                 HashMap<String, Object> wherec = new HashMap<String, Object>();
                                 wherec.put("tardis_id", rs.getTardis_id());
@@ -109,11 +108,8 @@ public class TARDISCondenserListener implements Listener {
                                 ResultSetCondenser rsc = new ResultSetCondenser(plugin, wherec, false);
                                 HashMap<String, Object> setc = new HashMap<String, Object>();
                                 if (rsc.resultSet()) {
-                                    setc.put("block_count", stack_size + rsc.getBlock_count());
-                                    HashMap<String, Object> wheret = new HashMap<String, Object>();
-                                    wheret.put("tardis_id", rs.getTardis_id());
-                                    wheret.put("block_data", block_data);
-                                    qf.doUpdate("condenser", setc, wheret);
+                                    int new_stack_size = stack_size + rsc.getBlock_count();
+                                    qf.updateCondensedBlockCount(new_stack_size, rs.getTardis_id(), block_data);
                                 } else {
                                     setc.put("tardis_id", rs.getTardis_id());
                                     setc.put("block_data", block_data);
