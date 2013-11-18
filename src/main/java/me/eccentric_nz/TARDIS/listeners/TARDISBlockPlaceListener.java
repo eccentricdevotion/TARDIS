@@ -251,7 +251,7 @@ public class TARDISBlockPlaceListener implements Listener {
                         set.put("owner", playerNameStr);
                         set.put("chunk", chun);
                         set.put("size", schm.name());
-                        long now;
+                        Long now;
                         if (player.hasPermission("tardis.prune.bypass")) {
                             now = Long.MAX_VALUE;
                         } else {

@@ -253,6 +253,12 @@ public class TARDISUtils {
             case TOM:
                 d = plugin.tomdimensions;
                 break;
+            case ARS:
+                d = plugin.arsdimensions;
+                break;
+            case CUSTOM:
+                d = plugin.customdimensions;
+                break;
             default:
                 d = plugin.budgetdimensions;
                 break;
@@ -286,7 +292,7 @@ public class TARDISUtils {
         try {
             num = Integer.parseInt(i);
         } catch (NumberFormatException n) {
-            plugin.debug("Could not convert to number");
+            plugin.debug("Could not convert to number, the string was: " + i);
         }
         return num;
     }

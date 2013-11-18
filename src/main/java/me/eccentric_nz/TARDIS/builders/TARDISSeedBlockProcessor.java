@@ -195,7 +195,7 @@ public class TARDISSeedBlockProcessor {
                 set.put("middle_data", middle_data);
                 set.put("chameleon_id", c_id);
                 set.put("chameleon_data", c_data);
-                long now;
+                Long now;
                 if (player.hasPermission("tardis.prune.bypass")) {
                     now = Long.MAX_VALUE;
                 } else {
