@@ -2,7 +2,7 @@
 
 ## Current version `2.6-beta-2`
 1. TARDIS creation
-   * check controls are inserted into database - all the time - do sync updates?
+   * fix TARDIS schematics so they only have 4 repeaters
 2. Rooms
    * Put farmland, crops, buttons, ladders, levers and signs on last when growing rooms   
 3. TARDIS Information System

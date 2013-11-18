@@ -37,7 +37,6 @@ import org.bukkit.block.Sign;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 import me.eccentric_nz.TARDIS.JSON.JSONArray;
-import static me.eccentric_nz.TARDIS.utility.TARDISUtils.roundUp;
 
 /**
  * The TARDIS was prone to a number of technical faults, ranging from depleted
@@ -539,19 +538,25 @@ public class TARDISBuilderInner {
      * Checks whether a chunk is available to build a TARDIS in.
      *
      * @param w the world the chunk is in.
-     * @param x the x co-ordinate of the chunk.
-     * @param z the z co-ordinate of the chunk.
+     * @param x the x coordinate of the chunk.
+     * @param z the z coordinate of the chunk.
      * @param d an array of the schematic dimensions
-     * @return true or false.
+     * @return a list of Chunks.
      */
     public List<Chunk> getChunks(World w, int x, int z, short[] d) {
+        plugin.debug("x: " + x);
+        plugin.debug("z: " + z);
         List<Chunk> chunks = new ArrayList<Chunk>();
-        int cw = roundUp(d[1], 16);
-        int cl = roundUp(d[2], 16);
+        int cw = plugin.utils.roundUp(d[1], 16);
+        int cl = plugin.utils.roundUp(d[2], 16);
+        plugin.debug("cw: " + cw);
+        plugin.debug("cl: " + cl);
         // check all the chunks that will be used by the schematic
         for (int cx = 0; cx < cw; cx++) {
             for (int cz = 0; cz < cl; cz++) {
-                chunks.add(w.getChunkAt((x + cx), (z + cl)));
+                Chunk chunk = w.getChunkAt((x + cx), (z + cz));
+                plugin.debug("Chunk: " + chunk);
+                chunks.add(chunk);
             }
         }
         return chunks;

@@ -43,16 +43,6 @@ import org.bukkit.generator.ChunkGenerator;
  */
 public class TARDISUtils {
 
-    /**
-     * Returns a rounded integer after division.
-     *
-     * @param num the number being divided.
-     * @param divisor the number to divide by.
-     * @return a rounded number.
-     */
-    public static int roundUp(int num, int divisor) {
-        return (num + divisor - 1) / divisor;
-    }
     private final TARDIS plugin;
 
     public TARDISUtils(TARDIS plugin) {
@@ -279,6 +269,17 @@ public class TARDISUtils {
             }
         }
         return chunkchk;
+    }
+
+    /**
+     * Returns a rounded integer after division.
+     *
+     * @param num the number being divided.
+     * @param divisor the number to divide by.
+     * @return a rounded number.
+     */
+    public int roundUp(int num, int divisor) {
+        return (num + divisor - 1) / divisor;
     }
 
     /**
