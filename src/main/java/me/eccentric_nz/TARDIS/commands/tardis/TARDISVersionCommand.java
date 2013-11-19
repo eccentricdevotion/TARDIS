@@ -17,7 +17,6 @@
 package me.eccentric_nz.TARDIS.commands.tardis;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.files.TARDISUpdateChecker;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
@@ -42,11 +41,6 @@ public class TARDISVersionCommand {
         String version = pluginYml.getString("version");
         String cb = Bukkit.getVersion();
         sender.sendMessage(plugin.pluginName + "You are running TARDIS version: " + ChatColor.AQUA + version + ChatColor.RESET + " with CraftBukkit " + cb);
-        // also check if there is an update
-        if (plugin.getConfig().getBoolean("check_for_updates")) {
-            TARDISUpdateChecker update = new TARDISUpdateChecker(plugin);
-            update.checkVersion(player);
-        }
         return true;
     }
 }

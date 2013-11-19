@@ -84,9 +84,9 @@ public class TARDISRoomRemover {
                 break;
         }
         sx = l.getBlockX();
-        ex = l.getBlockX() + dimensions[1];
+        ex = l.getBlockX() + (dimensions[1] - 1);
         sz = l.getBlockZ();
-        ez = l.getBlockZ() + dimensions[1];
+        ez = l.getBlockZ() + (dimensions[1] - 1);
         sy = l.getBlockY() + upy;
         ey = l.getBlockY() - downy;
         World w = l.getWorld();
