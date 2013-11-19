@@ -63,13 +63,17 @@ public class TARDISBuilderInner {
      * @param world the world where the TARDIS is to be built.
      * @param dbID the unique key of the record for this TARDIS in the database.
      * @param p an instance of the player who owns the TARDIS.
-     * @param middle_id the material type ID determined from the middle block in
-     * the TARDIS creation stack, this material determines the makeup of the
-     * TARDIS walls.
+     * @param middle_id a material type ID determined from the TARDIS seed
+     * block, or the middle block in the TARDIS creation stack, this material
+     * determines the makeup of the TARDIS walls.
      * @param middle_data the data bit associated with the middle_id parameter.
+     * @param floor_id a material type ID determined from the TARDIS seed block,
+     * or 35 (if TARDIS was made via the creation stack), this material
+     * determines the makeup of the TARDIS floors.
+     * @param floor_data the data bit associated with the floor_id parameter.
      */
     @SuppressWarnings("deprecation")
-    public void buildInner(TARDISConstants.SCHEMATIC schm, World world, int dbID, Player p, int middle_id, byte middle_data) {
+    public void buildInner(TARDISConstants.SCHEMATIC schm, World world, int dbID, Player p, int middle_id, byte middle_data, int floor_id, byte floor_data) {
         String[][][] s;
         short[] d;
         int level, row, col, id, x, z, startx, startz, resetx, resetz, j = 2;
@@ -126,6 +130,7 @@ public class TARDISBuilderInner {
         HashMap<Block, Byte> postDoorBlocks = new HashMap<Block, Byte>();
         HashMap<Block, Byte> postTorchBlocks = new HashMap<Block, Byte>();
         HashMap<Block, Byte> postSignBlocks = new HashMap<Block, Byte>();
+        HashMap<Block, Byte> postRepeaterBlocks = new HashMap<Block, Byte>();
         Block postSaveSignBlock = null;
         Block postTerminalBlock = null;
         Block postARSBlock = null;
@@ -186,23 +191,61 @@ public class TARDISBuilderInner {
                             String[] iddata = tmp.split(":");
                             id = plugin.utils.parseNum(iddata[0]);
                             data = Byte.parseByte(iddata[1]);
+                            if (id == 7) {
+                                // remember bedrock location to block off the beacon light
+                                String bedrocloc = world.getName() + ":" + startx + ":" + starty + ":" + startz;
+                                set.put("beacon", bedrocloc);
+                            }
+                            if (id == 35) { // wool
+                                switch (data) {
+                                    case 1:
+                                        switch (middle_id) {
+                                            case 22: // if using the default Lapis Block - then use Orange Wool / Stained Clay
+                                                if (plugin.getConfig().getBoolean("use_clay")) {
+                                                    id = 159;
+                                                }
+                                                break;
+                                            default:
+                                                id = middle_id;
+                                                data = middle_data;
+                                        }
+                                        break;
+                                    case 8:
+                                        switch (floor_id) {
+                                            case 22: // if using the default Lapis Block - then use Light Grey Wool / Stained Clay
+                                                if (plugin.getConfig().getBoolean("use_clay")) {
+                                                    id = 159;
+                                                }
+                                                break;
+                                            default:
+                                                id = floor_id;
+                                                data = floor_data;
+                                        }
+                                        break;
+                                    default:
+                                        if (plugin.getConfig().getBoolean("use_clay")) {
+                                            id = 159;
+                                        }
+                                        break;
+                                }
+                            }
+                            if (id == 52) { // scanner button
+                                /*
+                                 * mob spawner will be converted to the correct id by
+                                 * setBlock(), but remember it for the scanner.
+                                 */
+                                String scanloc = world.getName() + ":" + startx + ":" + starty + ":" + startz;
+                                set.put("scanner", scanloc);
+                            }
                             if (id == 54) { // chest
                                 // remember the location of the condenser chest
                                 String chest = world.getName() + ":" + startx + ":" + starty + ":" + startz;
                                 set.put("condenser", chest);
                             }
-                            if (id == 77) { // stone button
-                                // remember the location of this button
-                                String button = plugin.utils.makeLocationStr(world, startx, starty, startz);
-                                qf.insertSyncControl(dbID, 1, button, 0);
-                            }
-                            if (id == 93) { // remember the location of this redstone repeater
-                                // save repeater location
-                                if (j < 6) {
-                                    String repeater = world.getName() + ":" + startx + ":" + starty + ":" + startz;
-                                    qf.insertSyncControl(dbID, j, repeater, 0);
-                                    j++;
-                                }
+                            if (id == 68) { // chameleon circuit sign
+                                String chameleonloc = world.getName() + ":" + startx + ":" + starty + ":" + startz;
+                                set.put("chameleon", chameleonloc);
+                                set.put("chamele_on", 0);
                             }
                             if (id == 71 && data < (byte) 8) { // iron door bottom
                                 HashMap<String, Object> setd = new HashMap<String, Object>();
@@ -227,18 +270,18 @@ public class TARDISBuilderInner {
                                     }
                                 }
                             }
-                            if (id == 68) { // chameleon circuit sign
-                                String chameleonloc = world.getName() + ":" + startx + ":" + starty + ":" + startz;
-                                set.put("chameleon", chameleonloc);
-                                set.put("chamele_on", 0);
+                            if (id == 77) { // stone button
+                                // remember the location of this button
+                                String button = plugin.utils.makeLocationStr(world, startx, starty, startz);
+                                qf.insertSyncControl(dbID, 1, button, 0);
                             }
-                            if (id == 52) { // scanner button
+                            if (id == 92) {
                                 /*
-                                 * mob spawner will be converted to the correct id by
-                                 * setBlock(), but remember it for the scanner.
+                                 * This block will be converted to a lever by
+                                 * setBlock(), but remember it so we can use it as the handbrake!
                                  */
-                                String scanloc = world.getName() + ":" + startx + ":" + starty + ":" + startz;
-                                set.put("scanner", scanloc);
+                                String handbrakeloc = plugin.utils.makeLocationStr(world, startx, starty, startz);
+                                qf.insertSyncControl(dbID, 0, handbrakeloc, 0);
                             }
                             if (id == 97) { // silverfish stone
                                 String blockLocStr = (new Location(world, startx, starty, startz)).toString();
@@ -300,38 +343,28 @@ public class TARDISBuilderInner {
                                         break;
                                 }
                             }
-                            if (id == 137 || id == -119) {
-                                /*
-                                 * command block - remember it to spawn the creeper on.
-                                 */
-                                String creeploc = world.getName() + ":" + (startx + 0.5) + ":" + starty + ":" + (startz + 0.5);
-                                set.put("creeper", creeploc);
-                                if (schm.equals(TARDISConstants.SCHEMATIC.CUSTOM)) {
-                                    id = plugin.getConfig().getInt("custom_creeper_id");
-                                } else {
-                                    id = 98;
+                            // repeaters
+                            if (id == 100 && data == 15) { // remember the location of this redstone repeater
+                                // save repeater location
+                                if (j < 6) {
+                                    String repeater = world.getName() + ":" + startx + ":" + starty + ":" + startz;
+                                    qf.insertSyncControl(dbID, j, repeater, 0);
+                                    switch (j) {
+                                        case 2:
+                                            postRepeaterBlocks.put(world.getBlockAt(startx, starty, startz), (byte) 2);
+                                            break;
+                                        case 3:
+                                            postRepeaterBlocks.put(world.getBlockAt(startx, starty, startz), (byte) 1);
+                                            break;
+                                        case 4:
+                                            postRepeaterBlocks.put(world.getBlockAt(startx, starty, startz), (byte) 3);
+                                            break;
+                                        default:
+                                            postRepeaterBlocks.put(world.getBlockAt(startx, starty, startz), (byte) 0);
+                                            break;
+                                    }
+                                    j++;
                                 }
-                            }
-                            if (id == 92) {
-                                /*
-                                 * This block will be converted to a lever by
-                                 * setBlock(), but remember it so we can use it as the handbrake!
-                                 */
-                                String handbrakeloc = plugin.utils.makeLocationStr(world, startx, starty, startz);
-                                qf.insertSyncControl(dbID, 0, handbrakeloc, 0);
-                            }
-                            if (id == 143 || id == -113) {
-                                /*
-                                 * wood button will be coverted to the correct id by
-                                 * setBlock(), but remember it for the Artron Energy Capacitor.
-                                 */
-                                String woodbuttonloc = plugin.utils.makeLocationStr(world, startx, starty, startz);
-                                qf.insertSyncControl(dbID, 6, woodbuttonloc, 0);
-                            }
-                            if (id == 7) {
-                                // remember bedrock location to block off the beacon light
-                                String bedrocloc = world.getName() + ":" + startx + ":" + starty + ":" + startz;
-                                set.put("beacon", bedrocloc);
                             }
                             if (id == 124) {
                                 // remember lamp blocks
@@ -346,20 +379,25 @@ public class TARDISBuilderInner {
                                     qf.doInsert("lamps", setlb);
                                 }
                             }
-                            if (id == 35 && data != 1 && plugin.getConfig().getBoolean("use_clay")) {
-                                id = 159;
-                            }
-                            if (id == 35 && data == 1) {
-                                switch (middle_id) {
-                                    case 22:
-                                        if (plugin.getConfig().getBoolean("use_clay")) {
-                                            id = 159;
-                                        }
-                                        break;
-                                    default:
-                                        id = middle_id;
-                                        data = middle_data;
+                            if (id == 137 || id == -119) {
+                                /*
+                                 * command block - remember it to spawn the creeper on.
+                                 */
+                                String creeploc = world.getName() + ":" + (startx + 0.5) + ":" + starty + ":" + (startz + 0.5);
+                                set.put("creeper", creeploc);
+                                if (schm.equals(TARDISConstants.SCHEMATIC.CUSTOM)) {
+                                    id = plugin.getConfig().getInt("custom_creeper_id");
+                                } else {
+                                    id = 98;
                                 }
+                            }
+                            if (id == 143 || id == -113) {
+                                /*
+                                 * wood button will be coverted to the correct id by
+                                 * setBlock(), but remember it for the Artron Energy Capacitor.
+                                 */
+                                String woodbuttonloc = plugin.utils.makeLocationStr(world, startx, starty, startz);
+                                qf.insertSyncControl(dbID, 6, woodbuttonloc, 0);
                             }
                         } else {
                             id = plugin.utils.parseNum(tmp);
@@ -376,45 +414,47 @@ public class TARDISBuilderInner {
                             plugin.protectBlockMap.put(loc, dbID);
                         }
                         // if it's the door, don't set it just remember its block then do it at the end
-                        if (id == 71) {
-                            postDoorBlocks.put(world.getBlockAt(startx, starty, startz), data);
-                        } else if (id == 76) {
-                            postTorchBlocks.put(world.getBlockAt(startx, starty, startz), data);
-                        } else if (id == 68) {
-                            postSignBlocks.put(world.getBlockAt(startx, starty, startz), data);
-                        } else if (id == 97) {
-                            switch (data) {
-                                case 0:
-                                    postSaveSignBlock = world.getBlockAt(startx, starty, startz);
-                                    break;
-                                case 1:
-                                    postTerminalBlock = world.getBlockAt(startx, starty, startz);
-                                    break;
-                                case 2:
-                                    postARSBlock = world.getBlockAt(startx, starty, startz);
-                                    break;
-                                case 3:
-                                    postTISBlock = world.getBlockAt(startx, starty, startz);
-                                    break;
-                                case 4:
-                                    postTemporalBlock = world.getBlockAt(startx, starty, startz);
-                                    break;
-                                case 5:
-                                    postKeyboardBlock = world.getBlockAt(startx, starty, startz);
-                                    break;
-                                default:
-                                    break;
-                            }
-                        } else if (id == 19) {
-                            int swap;
-                            if (world.getWorldType().equals(WorldType.FLAT) || own_world || world.getName().equals("TARDIS_TimeVortex") || world.getGenerator() instanceof TARDISChunkGenerator) {
-                                swap = 0;
+                        if (!(id == 100 && data == 15)) {
+                            if (id == 71) {
+                                postDoorBlocks.put(world.getBlockAt(startx, starty, startz), data);
+                            } else if (id == 76) {
+                                postTorchBlocks.put(world.getBlockAt(startx, starty, startz), data);
+                            } else if (id == 68) {
+                                postSignBlocks.put(world.getBlockAt(startx, starty, startz), data);
+                            } else if (id == 97) {
+                                switch (data) {
+                                    case 0:
+                                        postSaveSignBlock = world.getBlockAt(startx, starty, startz);
+                                        break;
+                                    case 1:
+                                        postTerminalBlock = world.getBlockAt(startx, starty, startz);
+                                        break;
+                                    case 2:
+                                        postARSBlock = world.getBlockAt(startx, starty, startz);
+                                        break;
+                                    case 3:
+                                        postTISBlock = world.getBlockAt(startx, starty, startz);
+                                        break;
+                                    case 4:
+                                        postTemporalBlock = world.getBlockAt(startx, starty, startz);
+                                        break;
+                                    case 5:
+                                        postKeyboardBlock = world.getBlockAt(startx, starty, startz);
+                                        break;
+                                    default:
+                                        break;
+                                }
+                            } else if (id == 19) {
+                                int swap;
+                                if (world.getWorldType().equals(WorldType.FLAT) || own_world || world.getName().equals("TARDIS_TimeVortex") || world.getGenerator() instanceof TARDISChunkGenerator) {
+                                    swap = 0;
+                                } else {
+                                    swap = 1;
+                                }
+                                plugin.utils.setBlock(world, startx, starty, startz, swap, data);
                             } else {
-                                swap = 1;
+                                plugin.utils.setBlock(world, startx, starty, startz, id, data);
                             }
-                            plugin.utils.setBlock(world, startx, starty, startz, swap, data);
-                        } else {
-                            plugin.utils.setBlock(world, startx, starty, startz, id, data);
                         }
                     }
                     startx += x;
@@ -425,7 +465,7 @@ public class TARDISBuilderInner {
             startz = resetz;
             starty += 1;
         }
-        // put on the door and the redstone torches
+        // put on the door, redstone torches, signs, and the repeaters
         for (Map.Entry<Block, Byte> entry : postDoorBlocks.entrySet()) {
             Block pdb = entry.getKey();
             byte pddata = entry.getValue();
@@ -437,6 +477,12 @@ public class TARDISBuilderInner {
             byte ptdata = entry.getValue();
             ptb.setTypeId(76);
             ptb.setData(ptdata, true);
+        }
+        for (Map.Entry<Block, Byte> entry : postRepeaterBlocks.entrySet()) {
+            Block prb = entry.getKey();
+            byte ptdata = entry.getValue();
+            prb.setTypeId(93);
+            prb.setData(ptdata, true);
         }
         for (Map.Entry<Block, Byte> entry : postSignBlocks.entrySet()) {
             final Block psb = entry.getKey();
@@ -544,18 +590,13 @@ public class TARDISBuilderInner {
      * @return a list of Chunks.
      */
     public List<Chunk> getChunks(World w, int x, int z, short[] d) {
-        plugin.debug("x: " + x);
-        plugin.debug("z: " + z);
         List<Chunk> chunks = new ArrayList<Chunk>();
         int cw = plugin.utils.roundUp(d[1], 16);
         int cl = plugin.utils.roundUp(d[2], 16);
-        plugin.debug("cw: " + cw);
-        plugin.debug("cl: " + cl);
         // check all the chunks that will be used by the schematic
         for (int cx = 0; cx < cw; cx++) {
             for (int cz = 0; cz < cl; cz++) {
                 Chunk chunk = w.getChunkAt((x + cx), (z + cz));
-                plugin.debug("Chunk: " + chunk);
                 chunks.add(chunk);
             }
         }

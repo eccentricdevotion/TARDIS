@@ -189,6 +189,8 @@ public class TARDISSeedBlockProcessor {
                 HashMap<String, Object> setpp = new HashMap<String, Object>();
                 final int middle_id = seed.getWall_id();
                 final byte middle_data = seed.getWall_data();
+                final int floor_id = seed.getFloor_id();
+                final byte floor_data = seed.getFloor_data();
                 final int c_id = seed.getBox_id();
                 final byte c_data = seed.getBox_data();
                 set.put("middle_id", middle_id);
@@ -204,7 +206,7 @@ public class TARDISSeedBlockProcessor {
                 set.put("lastuse", now);
                 // determine wall block material from HashMap
                 setpp.put("wall", getWallKey(middle_id, (int) middle_data));
-                setpp.put("floor", getWallKey(seed.getFloor_id(), (int) seed.getFloor_data()));
+                setpp.put("floor", getWallKey(floor_id, (int) floor_data));
                 setpp.put("lamp", seed.getLamp());
                 final int lastInsertId = qf.doSyncInsert("tardis", set);
                 // insert/update  player prefs
@@ -231,7 +233,7 @@ public class TARDISSeedBlockProcessor {
                 // turn the block stack into a TARDIS
                 // police box needs to use chameleon id/data
                 plugin.builderP.buildPreset(lastInsertId, l, TARDISConstants.COMPASS.valueOf(d), false, player, false, false);
-                plugin.builderI.buildInner(schm, chunkworld, lastInsertId, player, middle_id, middle_data);
+                plugin.builderI.buildInner(schm, chunkworld, lastInsertId, player, middle_id, middle_data, floor_id, floor_data);
                 // set achievement completed
                 if (player.hasPermission("tardis.book")) {
                     HashMap<String, Object> seta = new HashMap<String, Object>();

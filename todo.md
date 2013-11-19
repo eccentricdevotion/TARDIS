@@ -1,16 +1,14 @@
 # TODO
 
 ## Current version `2.6-beta-2`
-1. TARDIS creation
-   * fix TARDIS schematics so they only have 4 repeaters
-2. Rooms
-   * Put farmland, crops, buttons, ladders, levers and signs on last when growing rooms   
-3. TARDIS Information System
+1. Rooms / consoles
+   * Put farmland, crops, buttons, ladders, levers and signs on last when growing rooms
+   * Make sure floors are all light grey wool
+2. TARDIS Information System
     * add new features
     * auto log out
-4. Documentation & videos!
-5. Change the light grey wool blocks in TARDIS consoles to the chosen TARDIS seed floor block?
-6. 50th anniversary Easter egg
+3. Documentation & videos!
+4. 50th anniversary Easter egg
 
 ## Waiting on Bukkit API
 0. IDs are soon to be history... so convert all ID use to entity names
