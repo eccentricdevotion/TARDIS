@@ -186,19 +186,17 @@ public class TARDISDeinstaPreset {
                 if (map.get("block") != null) {
                     bID = plugin.utils.parseNum(map.get("block"));
                 }
-                if (bID != 0) {
-                    byte bd = Byte.parseByte(map.get("data"));
-                    String locStr = map.get("location");
-                    String[] loc_data = locStr.split(",");
-                    // x, y, z - 1, 2, 3
-                    String[] xStr = loc_data[1].split("=");
-                    String[] yStr = loc_data[2].split("=");
-                    String[] zStr = loc_data[3].split("=");
-                    int rx = plugin.utils.parseNum(xStr[1].substring(0, (xStr[1].length() - 2)));
-                    int ry = plugin.utils.parseNum(yStr[1].substring(0, (yStr[1].length() - 2)));
-                    int rz = plugin.utils.parseNum(zStr[1].substring(0, (zStr[1].length() - 2)));
-                    plugin.utils.setBlock(w, rx, ry, rz, bID, bd);
-                }
+                byte bd = Byte.parseByte(map.get("data"));
+                String locStr = map.get("location");
+                String[] loc_data = locStr.split(",");
+                // x, y, z - 1, 2, 3
+                String[] xStr = loc_data[1].split("=");
+                String[] yStr = loc_data[2].split("=");
+                String[] zStr = loc_data[3].split("=");
+                int rx = plugin.utils.parseNum(xStr[1].substring(0, (xStr[1].length() - 2)));
+                int ry = plugin.utils.parseNum(yStr[1].substring(0, (yStr[1].length() - 2)));
+                int rz = plugin.utils.parseNum(zStr[1].substring(0, (zStr[1].length() - 2)));
+                plugin.utils.setBlock(w, rx, ry, rz, bID, bd);
             }
         }
 
