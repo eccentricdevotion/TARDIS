@@ -47,7 +47,7 @@ public class TARDISAdminTabComplete implements TabCompleter {
             if (sub.equals("difficulty")) {
                 return partial(lastArg, DIFFICULTY_SUBS);
             }
-            if (sub.equals("enter")) { // return null to default to online player name matching
+            if (sub.equals("delete") || sub.equals("enter")) { // return null to default to online player name matching
                 return null;
             } else {
                 return partial(lastArg, BOOL_SUBS);
