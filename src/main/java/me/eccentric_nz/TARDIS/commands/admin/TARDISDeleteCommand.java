@@ -26,6 +26,7 @@ import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
 import static me.eccentric_nz.TARDIS.destroyers.TARDISExterminator.deleteFolder;
+import me.eccentric_nz.tardischunkgenerator.TARDISChunkGenerator;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.WorldType;
@@ -63,21 +64,7 @@ public class TARDISDeleteCommand {
             String[] cdata = chunkLoc.split(":");
             String name = cdata[0];
             World cw = plugin.getServer().getWorld(name);
-            int restore = 0;
-            // if (!create_worlds) set the restore block
-            if (!name.contains("TARDIS_WORLD_") && cw.getWorldType() != WorldType.FLAT) {
-                World.Environment env = cw.getEnvironment();
-                switch (env) {
-                    case NETHER:
-                        restore = 87;
-                        break;
-                    case THE_END:
-                        restore = 121;
-                        break;
-                    default:
-                        restore = 1;
-                }
-            }
+            int restore = getRestore(cw);
             // check if player is in the TARDIS
             HashMap<String, Object> wheret = new HashMap<String, Object>();
             wheret.put("tardis_id", id);
@@ -158,5 +145,20 @@ public class TARDISDeleteCommand {
             return true;
         }
         return true;
+    }
+
+    private int getRestore(World w) {
+        World.Environment env = w.getEnvironment();
+        if (w.getWorldType() == WorldType.FLAT || w.getName().equals("TARDIS_TimeVortex") || w.getGenerator() instanceof TARDISChunkGenerator) {
+            return 0;
+        }
+        switch (env) {
+            case NETHER:
+                return 87;
+            case THE_END:
+                return 121;
+            default:
+                return 1;
+        }
     }
 }

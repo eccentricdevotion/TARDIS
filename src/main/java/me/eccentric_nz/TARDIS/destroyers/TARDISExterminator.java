@@ -29,8 +29,6 @@ import me.eccentric_nz.tardischunkgenerator.TARDISChunkGenerator;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.World;
-import static org.bukkit.World.Environment.NETHER;
-import static org.bukkit.World.Environment.THE_END;
 import org.bukkit.WorldType;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
@@ -85,9 +83,8 @@ public class TARDISExterminator {
         } catch (Exception e) {
             plugin.console.sendMessage(plugin.pluginName + "TARDIS exterminate by id error: " + e);
             return false;
-        } finally {
-            return false;
         }
+        return true;
     }
 
     /**
@@ -141,9 +138,7 @@ public class TARDISExterminator {
         ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
         if (rs.resultSet()) {
             int id = rs.getTardis_id();
-            //String saveLoc = rs.getCurrent();
             String chunkLoc = rs.getChunk();
-            //String owner = rs.getOwner();
             TARDISConstants.SCHEMATIC schm = rs.getSchematic();
             // need to check that a player is not currently in the TARDIS
             if (player.hasPermission("tardis.delete")) {
@@ -195,6 +190,7 @@ public class TARDISExterminator {
                 World cw = plugin.getServer().getWorld(chunkworld[0]);
                 int restore = getRestore(cw);
                 if (!cw.getName().contains("TARDIS_WORLD_")) {
+                    plugin.debug("Name does  not contain 'TARDIS_WORLD_', so shopuld be deleting inner TARDIS");
                     plugin.destroyerI.destroyInner(schm, id, cw, restore, playerNameStr);
                 }
                 cleanDatabase(id);
