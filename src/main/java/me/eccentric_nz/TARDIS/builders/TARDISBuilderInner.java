@@ -80,7 +80,7 @@ public class TARDISBuilderInner {
         boolean below = (!plugin.getConfig().getBoolean("create_worlds") && !plugin.getConfig().getBoolean("default_world"));
         int starty = (below) ? 15 : 64;
         switch (schm) {
-            // some TARDIS schematics supplied by ewized http://dev.bukkit.org/profiles/ewized/
+            // TARDIS schematics supplied by Lord_Rahl and the team at mcnovus.net
             case BIGGER:
                 s = plugin.biggerschematic;
                 d = plugin.biggerdimensions;
