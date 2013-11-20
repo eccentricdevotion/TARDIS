@@ -9,6 +9,7 @@
     * auto log out
 3. Documentation & videos!
 4. 50th anniversary Easter egg
+5. Custom room schematics in ARS (check they are 16x16x16)
 
 ## Waiting on Bukkit API
 0. IDs are soon to be history... so convert all ID use to entity names

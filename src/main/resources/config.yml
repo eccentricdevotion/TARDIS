@@ -69,5 +69,5 @@ difficulty: normal
 strike_lightning: true
 custom_schematic: false
 custom_schematic_seed: OBSIDIAN
-custom_creeper_id: 20
+custom_creeper_id: 138
 use_block_stack: false

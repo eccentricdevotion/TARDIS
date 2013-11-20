@@ -379,16 +379,25 @@ public class TARDISBuilderInner {
                                     qf.doInsert("lamps", setlb);
                                 }
                             }
-                            if (id == 137 || id == -119) {
+                            if (id == 137 || id == -119 || ((schm.equals(TARDISConstants.SCHEMATIC.BIGGER) || schm.equals(TARDISConstants.SCHEMATIC.DELUXE)) && (id == 138 || id == -118))) {
                                 /*
                                  * command block - remember it to spawn the creeper on.
+                                 * could also be a beacon block, as the creeper sits
+                                 * over the beacon in the deluxe and bigger consoles.
                                  */
                                 String creeploc = world.getName() + ":" + (startx + 0.5) + ":" + starty + ":" + (startz + 0.5);
                                 set.put("creeper", creeploc);
-                                if (schm.equals(TARDISConstants.SCHEMATIC.CUSTOM)) {
-                                    id = plugin.getConfig().getInt("custom_creeper_id");
-                                } else {
-                                    id = 98;
+                                switch (schm) {
+                                    case CUSTOM:
+                                        id = plugin.getConfig().getInt("custom_creeper_id");
+                                        break;
+                                    case BIGGER:
+                                    case DELUXE:
+                                        id = 138;
+                                        break;
+                                    default:
+                                        id = 98;
+                                        break;
                                 }
                             }
                             if (id == 143 || id == -113) {
@@ -493,7 +502,8 @@ public class TARDISBuilderInner {
                 Sign cs = (Sign) psb.getState();
                 cs.setLine(0, "Chameleon");
                 cs.setLine(1, "Circuit");
-                cs.setLine(3, ChatColor.RED + "OFF");
+                cs.setLine(2, ChatColor.RED + "OFF");
+                cs.setLine(3, "NEW");
                 cs.update();
             }
         }
