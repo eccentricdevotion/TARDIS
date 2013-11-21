@@ -58,6 +58,7 @@ public class TARDISMakeTardisCSV {
             }
         }
         // load tardisCSV files - create them if they don't exist
+        // TARDIS schematics supplied by Lord_Rahl and killeratnight at mcnovus.net
         plugin.arsSchematicCSV = createFile(TARDISConstants.SCHEMATIC_ARS + ".csv");
         plugin.biggerSchematicCSV = createFile(TARDISConstants.SCHEMATIC_BIGGER + ".csv");
         plugin.budgetSchematicCSV = createFile(TARDISConstants.SCHEMATIC_BUDGET + ".csv");

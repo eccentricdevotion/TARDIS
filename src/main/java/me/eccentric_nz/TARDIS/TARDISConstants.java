@@ -31,7 +31,7 @@ import org.bukkit.ChatColor;
  */
 public class TARDISConstants {
 
-    // TARDIS schematics supplied by Lord_Rahl and the team at mcnovus.net
+    // TARDIS schematics supplied by Lord_Rahl and killeratnight at mcnovus.net
     public static final String SCHEMATIC_ARS = "ars.schematic";
     public static final String SCHEMATIC_BUDGET = "budget.schematic";
     public static final String SCHEMATIC_BIGGER = "bigger.schematic";
