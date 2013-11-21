@@ -3,10 +3,10 @@
 ## Current version `2.6-beta-2`
 1. Rooms / consoles
    * Put farmland, crops, buttons, ladders, levers and signs on last when growing rooms
-   * Make sure floors are all light grey wool
+   * Make sure floors are all light grey wool? OR revert console floor block change commit?
 2. TARDIS Information System
     * add new features
-    * auto log out
+    * auto log out?
 3. Documentation & videos!
 4. 50th anniversary Easter egg
 5. Custom room schematics in ARS (check they are 16x16x16)
