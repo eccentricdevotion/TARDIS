@@ -34,6 +34,8 @@
 12. Update the malfunction location finder to have a greater range
 13. HADS + explosions + fireballs + lava
 14. Add MySQL support
+15. Add an admin /tardisgive command to make locators/remotes etc
+
 
 ## Minecraft API when available
 1. Recreate everything with the new API :)
