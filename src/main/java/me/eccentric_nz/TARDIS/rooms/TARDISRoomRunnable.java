@@ -179,9 +179,6 @@ public class TARDISRoomRunnable implements Runnable {
             tmp = s[level][row][col];
             String[] iddata = tmp.split(":");
             id = plugin.utils.parseNum(iddata[0]);
-//            if (TARDISConstants.PROBLEM_BLOCKS.contains(Integer.valueOf(id)) && (d.equals(COMPASS.NORTH) || d.equals(COMPASS.WEST))) {
-//                data = TARDISDataRecalculator.calculateData(id, Byte.parseByte(iddata[1]));
-//            } else {
             data = Byte.parseByte(iddata[1]);
             if (id == 158 || id == -98) {
                 byte bit = data;
@@ -208,7 +205,6 @@ public class TARDISRoomRunnable implements Runnable {
                         break;
                 }
             }
-//            }
             if (id == 35 && data == 7 && plugin.getConfig().getBoolean("use_clay")) {
                 id = 159;
             }
@@ -340,10 +336,14 @@ public class TARDISRoomRunnable implements Runnable {
                 chunkList.add(thisChunk);
             }
             if (id != 83 && id != 127 && id != 64 && id != 50 && id != 76 && id != 34) {
-                plugin.utils.setBlock(world, startx, starty, startz, id, data);
+                if (id == 9) {
+                    plugin.utils.setBlock(world, startx, starty, startz, 79, (byte) 0);
+                } else {
+                    plugin.utils.setBlock(world, startx, starty, startz, id, data);
+                }
             }
             // remember ice blocks
-            if (id == 79) {
+            if (id == 9 || id == 79) {
                 Block icy = world.getBlockAt(startx, starty, startz);
                 iceblocks.add(icy);
             }
