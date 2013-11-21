@@ -75,7 +75,7 @@ public class TARDISJettisonCommand {
             }
             plugin.trackJettison.put(player.getName(), room);
             String seed = plugin.getArtronConfig().getString("jettison_seed");
-            player.sendMessage(plugin.pluginName + "Place the " + room + " block in front of the pressure plate. Hit the " + seed + " with the TARDIS key to jettison the room!");
+            player.sendMessage(plugin.pluginName + "Place a " + seed + " block in front of the pressure plate leading to the " + room + ". Hit the " + seed + " with the TARDIS key to jettison the room!");
             return true;
         } else {
             player.sendMessage(plugin.pluginName + TARDISConstants.NO_PERMS_MESSAGE);
