@@ -16,7 +16,12 @@ xcuserdata
 # svn & cvs
 .svn
 CVS
-/target/
+/target/classes/
+/target/generated-sources/
+/target/maven-archiver/
+/target/maven-status/
+/target/surefire/
+/target/test-classes/
 /sounds/
 /lib/
 /psd/
