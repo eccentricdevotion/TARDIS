@@ -171,8 +171,6 @@ public class TARDISArea {
                     if (!rs.resultSet()) {
                         chk = true;
                         break outerloop;
-                    } else {
-                        plugin.debug("Location " + wStr + ":" + xx + ":" + zz + " occupied");
                     }
                 }
             }

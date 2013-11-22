@@ -50,7 +50,6 @@ public class TARDISBlockLoader {
             for (HashMap<String, String> map : data) {
                 plugin.protectBlockMap.put(map.get("location"), Integer.valueOf(map.get("tardis_id")));
             }
-            plugin.debug("Loaded blocks for protection");
         }
     }
 
@@ -95,7 +94,6 @@ public class TARDISBlockLoader {
                         break;
                 }
             }
-            plugin.debug("Loaded Gravity Wells");
         }
     }
 }

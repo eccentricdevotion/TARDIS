@@ -74,7 +74,7 @@ public class TARDISEnterCommand {
                     cy = Integer.parseInt(split[2]);
                     cz = Integer.parseInt(split[3]);
                 } catch (NumberFormatException nfe) {
-                    plugin.debug(plugin.pluginName + "Could not convert to number!");
+                    plugin.debug("Could not convert to number!");
                 }
                 Location tmp_loc = cw.getBlockAt(cx, cy, cz).getLocation();
                 int getx = tmp_loc.getBlockX();

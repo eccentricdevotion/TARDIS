@@ -59,7 +59,6 @@ public class TARDISDeinstaPreset {
      */
     @SuppressWarnings("deprecation")
     public void instaDestroyPreset(Location l, TARDISConstants.COMPASS d, final int id, boolean hide, TARDISConstants.PRESET preset) {
-//        plugin.debug("Destroying preset...");
         final World w = l.getWorld();
         // make sure chunk is loaded
         Chunk chunk = w.getChunkAt(l);

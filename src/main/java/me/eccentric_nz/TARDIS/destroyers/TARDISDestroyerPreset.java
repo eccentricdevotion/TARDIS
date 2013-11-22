@@ -88,7 +88,6 @@ public class TARDISDestroyerPreset {
     }
 
     public void destroyDoor(int id) {
-//        plugin.debug("Removing door (bottom up)...");
         HashMap<String, Object> where = new HashMap<String, Object>();
         where.put("tardis_id", id);
         where.put("door_type", 0);
@@ -103,7 +102,6 @@ public class TARDISDestroyerPreset {
     }
 
     public void destroySign(Location l, TARDISConstants.COMPASS d, TARDISConstants.PRESET p) {
-//        plugin.debug("Removing sign...");
         World w = l.getWorld();
         int signx, signz, signy;
         switch (p) {

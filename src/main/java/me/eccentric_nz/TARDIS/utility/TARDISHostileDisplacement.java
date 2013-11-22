@@ -95,7 +95,6 @@ public class TARDISHostileDisplacement {
                         }
                         l.setY(y);
                         if (l.getBlock().getRelative(BlockFace.DOWN).isLiquid() && !plugin.getConfig().getBoolean("land_on_water") && !plugin.trackSubmarine.contains(id)) {
-                            plugin.debug("bool: false");
                             bool = false;
                         }
                         final Player player = plugin.getServer().getPlayer(owner);

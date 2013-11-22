@@ -53,13 +53,10 @@ public class TARDISAnvilListener implements Listener {
         if (inv instanceof AnvilInventory) {
             Player player = (Player) event.getWhoClicked();
             int slot = event.getRawSlot();
-            plugin.debug("Slot: " + slot);
             // slot 2 = result item slot
             if (slot == 2) {
-                plugin.debug("Trying to get item...");
                 ItemStack is = event.getCurrentItem();
                 if (is != null && is.hasItemMeta()) {
-                    plugin.debug("Trying to get meta...");
                     ItemMeta im = is.getItemMeta();
                     if (im.hasDisplayName() && disallow.containsKey(im.getDisplayName()) && is.getTypeId() == disallow.get(im.getDisplayName())) {
                         player.sendMessage(plugin.pluginName + "You cannot name the item that!");

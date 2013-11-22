@@ -91,9 +91,9 @@ public class TARDISEPSRunnable implements Runnable {
                     }
                 }
             } catch (NumberFormatException e) {
-                plugin.debug(e);
+                plugin.debug(e.getMessage());
             } catch (CommandException e) {
-                plugin.debug(e);
+                plugin.debug(e.getMessage());
             }
         }
     }

@@ -190,7 +190,6 @@ public class TARDISExterminator {
                 World cw = plugin.getServer().getWorld(chunkworld[0]);
                 int restore = getRestore(cw);
                 if (!cw.getName().contains("TARDIS_WORLD_")) {
-                    plugin.debug("Name does  not contain 'TARDIS_WORLD_', so shopuld be deleting inner TARDIS");
                     plugin.destroyerI.destroyInner(schm, id, cw, restore, playerNameStr);
                 }
                 cleanDatabase(id);
