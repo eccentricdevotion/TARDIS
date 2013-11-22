@@ -211,15 +211,21 @@ public class TARDISBuilderInner {
                                         }
                                         break;
                                     case 8:
-                                        switch (floor_id) {
-                                            case 22: // if using the default Lapis Block - then use Light Grey Wool / Stained Clay
-                                                if (plugin.getConfig().getBoolean("use_clay")) {
-                                                    id = 159;
-                                                }
-                                                break;
-                                            default:
-                                                id = floor_id;
-                                                data = floor_data;
+                                        if (!schm.equals(TARDISConstants.SCHEMATIC.ELEVENTH)) {
+                                            switch (floor_id) {
+                                                case 22: // if using the default Lapis Block - then use Light Grey Wool / Stained Clay
+                                                    if (plugin.getConfig().getBoolean("use_clay")) {
+                                                        id = 159;
+                                                    }
+                                                    break;
+                                                default:
+                                                    id = floor_id;
+                                                    data = floor_data;
+                                            }
+                                        } else {
+                                            if (plugin.getConfig().getBoolean("use_clay")) {
+                                                id = 159;
+                                            }
                                         }
                                         break;
                                     default:

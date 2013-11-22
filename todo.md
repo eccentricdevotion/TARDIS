@@ -3,13 +3,10 @@
 ## Current version `2.6-beta-2`
 1. Rooms / consoles
    * Put farmland, crops, buttons, ladders, levers and signs on last when growing rooms
-   * Make sure floors are all light grey wool? OR revert console floor block change commit?
 2. TARDIS Information System
     * add new features
     * auto log out?
 3. Documentation & videos!
-4. 50th anniversary Easter egg
-5. Custom room schematics in ARS (check they are 16x16x16)
 
 ## Waiting on Bukkit API
 0. IDs are soon to be history... so convert all ID use to entity names
@@ -23,7 +20,6 @@
 2. Advanced TARDIS console
 3. Artron storage blocks
 4. T.I.P.S. - TARDIS Interior Positioning System
-   * Implement Charlie's new doors (in progress)
 5. Add command to make EP1 appear
 6. Reload TARDIS recipes when difficulty level is changed
 7. Configurable option to allow Gravity Wells outside of the TARDIS
@@ -35,7 +31,7 @@
 13. HADS + explosions + fireballs + lava
 14. Add MySQL support
 15. Add an admin /tardisgive command to make locators/remotes etc
-
+16. Custom room schematics in ARS (check they are 16x16x16)
 
 ## Minecraft API when available
 1. Recreate everything with the new API :)
