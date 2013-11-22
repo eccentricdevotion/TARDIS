@@ -84,6 +84,7 @@ public class TARDISCommands implements CommandExecutor {
         firstArgs.add("save");
         firstArgs.add("secondary");
         firstArgs.add("setdest");
+        firstArgs.add("tagtheood");
         firstArgs.add("update");
         firstArgs.add("version");
         // rooms - only add if enabled in the config
@@ -205,6 +206,9 @@ public class TARDISCommands implements CommandExecutor {
                 }
                 if (args[0].equalsIgnoreCase("help")) {
                     return new TARDISHelpCommand(plugin).showHelp(player, args);
+                }
+                if (args[0].equalsIgnoreCase("tagtheood")) {
+                    return new TARDISTagCommand(plugin).getStats(player);
                 }
             }
         }

@@ -20,6 +20,7 @@ import java.io.*;
 import java.lang.reflect.InvocationTargetException;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Properties;
@@ -41,6 +42,7 @@ import me.eccentric_nz.TARDIS.commands.TARDISRecipeCommands;
 import me.eccentric_nz.TARDIS.commands.TARDISRoomCommands;
 import me.eccentric_nz.TARDIS.commands.TARDISTextureCommands;
 import me.eccentric_nz.TARDIS.commands.TARDISTravelCommands;
+import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.TARDISControlsConverter;
 import me.eccentric_nz.TARDIS.database.TARDISDatabase;
 import me.eccentric_nz.TARDIS.database.TARDISLocationsConverter;
@@ -95,6 +97,7 @@ import me.eccentric_nz.TARDIS.listeners.TARDISTemporalLocatorListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISTerminalListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISTimeLordDeathListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISBlockPhysicsListener;
+import me.eccentric_nz.TARDIS.listeners.TARDISTagListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISUpdateListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISWorldResetListener;
 import me.eccentric_nz.TARDIS.rooms.TARDISCondenserData;
@@ -254,6 +257,7 @@ public class TARDIS extends JavaPlugin {
     private FileConfiguration artron_config;
     private FileConfiguration blocks_config;
     private FileConfiguration rooms_config;
+    private FileConfiguration tag_config;
     public TARDISButtonListener buttonListener;
     public TARDISDoorListener doorListener;
     public Version bukkitversion;
@@ -268,6 +272,8 @@ public class TARDIS extends JavaPlugin {
     public TARDISChameleonPreset presets;
     public TARDISMultiverseInventoriesChecker tmic;
     public TARDISWalls tw;
+    private Calendar beforecal;
+    private Calendar aftercal;
 
     @Override
     public void onEnable() {
@@ -308,7 +314,6 @@ public class TARDIS extends JavaPlugin {
                 alwaysNight.keepNight();
             }
         }
-        // new ResultSetPoliceBox(this).loadChunks();
         TARDISBlockLoader bl = new TARDISBlockLoader(this);
         bl.loadProtectBlocks();
         bl.loadGravityWells();
@@ -321,7 +326,6 @@ public class TARDIS extends JavaPlugin {
             new TARDISLocationsConverter(this).convert();
         }
         tp = getServerTP();
-        //new TARDISPasteBox(this).loadBoxes();
         if (bukkitversion.compareTo(preIMversion) >= 0) {
             // copy maps
             checkMaps();
@@ -339,10 +343,12 @@ public class TARDIS extends JavaPlugin {
         if (pm.isPluginEnabled("Multiverse-Inventories")) {
             tmic = new TARDISMultiverseInventoriesChecker(this);
         }
+        setDates();
     }
 
     @Override
     public void onDisable() {
+        updateTagStats();
         saveConfig();
         closeDatabase();
         resetTime();
@@ -380,6 +386,7 @@ public class TARDIS extends JavaPlugin {
         tardisCSV.copy(getDataFolder() + File.separator + "artron.yml", getResource("artron.yml"));
         tardisCSV.copy(getDataFolder() + File.separator + "blocks.yml", getResource("blocks.yml"));
         tardisCSV.copy(getDataFolder() + File.separator + "rooms.yml", getResource("rooms.yml"));
+        tardisCSV.copy(getDataFolder() + File.separator + "tag.yml", getResource("tag.yml"));
         this.achivement_config = YamlConfiguration.loadConfiguration(new File(getDataFolder(), "achievements.yml"));
         if (this.achivement_config.getString("travel.message").equals("Life of the party!")) {
             this.achivement_config.set("travel.message", "There and back again!");
@@ -392,6 +399,7 @@ public class TARDIS extends JavaPlugin {
         this.artron_config = YamlConfiguration.loadConfiguration(new File(getDataFolder(), "artron.yml"));
         this.blocks_config = YamlConfiguration.loadConfiguration(new File(getDataFolder(), "blocks.yml"));
         this.rooms_config = YamlConfiguration.loadConfiguration(new File(getDataFolder(), "rooms.yml"));
+        this.tag_config = YamlConfiguration.loadConfiguration(new File(getDataFolder(), "tag.yml"));
     }
 
     /**
@@ -431,6 +439,7 @@ public class TARDIS extends JavaPlugin {
         pm.registerEvents(new TARDISQuitListener(this), this);
         pm.registerEvents(new TARDISKeyboardListener(this), this);
         pm.registerEvents(new TARDISBlockPhysicsListener(this), this);
+        pm.registerEvents(new TARDISTagListener(this), this);
         if (bukkitversion.compareTo(preIMversion) >= 0) {
             pm.registerEvents(new TARDISTerminalListener(this), this);
             pm.registerEvents(new TARDISChameleonListener(this), this);
@@ -778,6 +787,40 @@ public class TARDIS extends JavaPlugin {
         }
     }
 
+    private void setDates() {
+        int month = getTagConfig().getInt("month") - 1;
+        int day = getTagConfig().getInt("day");
+        debug("month: " + month);
+        debug("day: " + day);
+        beforecal = Calendar.getInstance();
+        beforecal.set(Calendar.HOUR, 0);
+        beforecal.set(Calendar.MINUTE, 0);
+        beforecal.set(Calendar.SECOND, 0);
+        beforecal.set(Calendar.MONTH, month);
+        beforecal.set(Calendar.DATE, day);
+        debug("Before: " + beforecal.getTime().toString());
+        aftercal = Calendar.getInstance();
+        aftercal.set(Calendar.HOUR, 23);
+        aftercal.set(Calendar.MINUTE, 59);
+        aftercal.set(Calendar.SECOND, 59);
+        aftercal.set(Calendar.MONTH, month);
+        aftercal.set(Calendar.DATE, day);
+        debug("After: " + aftercal.getTime().toString());
+        // reset config
+        getTagConfig().set("it", "");
+    }
+
+    private void updateTagStats() {
+        String it = getTagConfig().getString("it");
+        if (!it.equals("")) {
+            HashMap<String, Object> set = new HashMap<String, Object>();
+            set.put("player", getTagConfig().getString("it"));
+            long time = System.currentTimeMillis() - getTagConfig().getLong("time");
+            set.put("time", time);
+            new QueryFactory(this).doSyncInsert("tag", set);
+        }
+    }
+
     /**
      * Outputs a message to the console. Requires debug: true in config.yml
      *
@@ -803,5 +846,17 @@ public class TARDIS extends JavaPlugin {
 
     public FileConfiguration getRoomsConfig() {
         return rooms_config;
+    }
+
+    public FileConfiguration getTagConfig() {
+        return tag_config;
+    }
+
+    public Calendar getBeforeCal() {
+        return beforecal;
+    }
+
+    public Calendar getAfterCal() {
+        return aftercal;
     }
 }
