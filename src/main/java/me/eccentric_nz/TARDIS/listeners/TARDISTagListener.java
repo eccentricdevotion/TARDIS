@@ -46,21 +46,24 @@ public class TARDISTagListener implements Listener {
     }
 
     /**
+     * Informs the player that a game of tag in on. The date of the game can be
+     * set in tag.yml. It will also say happy birthday to Doctor Who on the
+     * 23/11 of each year.
+     *
+     * If no player is currently 'it' a random player is chosen (usually the
+     * first player to login).
      *
      * @param event a player joining a server
      */
     @EventHandler
     public void onPlayerTagJoin(PlayerJoinEvent event) {
         Calendar eggcal = Calendar.getInstance();
-        plugin.debug("Before: " + plugin.getBeforeCal().getTime().toString());
-        plugin.debug("Now: " + eggcal.getTime().toString());
-        plugin.debug("After: " + plugin.getAfterCal().getTime().toString());
         if (eggcal.after(plugin.getBeforeCal()) && eggcal.before(plugin.getAfterCal())) {
-            plugin.debug("In the zone!");
-            int age = ((Calendar.getInstance().get(Calendar.YEAR)) - 1963);
-            String ordinal = getOrdinal(age);
-
-            event.getPlayer().sendMessage(plugin.pluginName + "Happy " + age + ordinal + " Birthday Doctor Who!");
+            if (eggcal.get(Calendar.MONTH) == 10 && eggcal.get(Calendar.DATE) == 23) { // zero based month
+                int age = ((eggcal.get(Calendar.YEAR)) - 1963);
+                String ordinal = getOrdinal(age);
+                event.getPlayer().sendMessage(plugin.pluginName + "Happy " + age + ordinal + " Birthday Doctor Who!");
+            }
             event.getPlayer().sendMessage(plugin.pluginName + "Today, and today only, you can play 'Tag the OOD'!");
             event.getPlayer().sendMessage(plugin.pluginName + "To see tag stats (and who is currently 'it'), use the command " + ChatColor.AQUA + "/tardis tagtheood");
             if (plugin.getTagConfig().get("it").equals("")) {
@@ -78,7 +81,6 @@ public class TARDISTagListener implements Listener {
      */
     @EventHandler
     public void onPlayerLeave(PlayerQuitEvent event) {
-        System.out.println("Someone left...");
         Calendar eggcal = Calendar.getInstance();
         if (eggcal.after(plugin.getBeforeCal()) && eggcal.before(plugin.getAfterCal())) {
             String p = event.getPlayer().getName();
@@ -103,7 +105,6 @@ public class TARDISTagListener implements Listener {
     @EventHandler
     public void onPlayerInteractPlayer(PlayerInteractEntityEvent event) {
         if (event.getRightClicked() instanceof Player) {
-            System.out.println("Someone right-clicked a player...");
             Player clicked = (Player) event.getRightClicked();
             String p = clicked.getName();
             if (clicked.getName().equals(plugin.getTagConfig().getString("it"))) {
