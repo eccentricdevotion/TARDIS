@@ -30,22 +30,34 @@
         <p>There are lots of changes in v2.6 &mdash; some of which are not compatible with previous TARDISes... please read this and the <a href="#v26b1">previous change log</a> carefully</p>
         <h4>Additions</h4>
         <ul>
+            <li>Added a Doctor Who 50th anniversary easter egg</li>
             <li>There are some new presets &mdash; TELEPHONE, SUBMERGED, FLOWER, CHALICE, WINDMILL, WELL, ANGEL, GRAVESTONE, CAKE, TOPSYTURVEY, SHROOM, CUSTOM and one other secret one</li>
             <li>Added the ability to add a custom preset &mdash; edit the <em>plugins/TARDIS/custom_preset.txt</em> file and restart the server. The file contains data for the new taller Police Box preset &mdash; you should be able to work it out from there (the sign <em>if used</em>, will need to be in the default location).</li>
             <li>Added a new setting to the Chameleon Circuit GUI &mdash; Biome Adaption &mdash; if this is turned on, a biome related preset will be selected automatically (if there is one)</li>
-            <li>The Chameleon Circuit GUI no longer closes when you select a preset &mdash; you need to use the &lsquo;Close&rsquo; or &lsquo;Apply&rsquo; button (or just hit ESC on the keyboard)</li>
             <li>Added a command to remove the ARS sign to allow manual room growing in the ARS grid area <code>/tardis arsremove</code> &mdash; useful if your TARDIS was created before v2.6 and is not compatible with ARS (Note: adding it back after removal will potentially overwrite any manually grown rooms)</li>
+            <li>Added tab auto-completion for player names added to the <code>/tardisadmin enter</code> and <code>/tardisadmin delete</code> commands</li>
         </ul>
         <h4>Changes</h4>
         <ul>
+            <li>New (larger sized console) schematics for better room growing and future ARS compatibility - many thanks to Lord_Rahl and <strong>killeratnight</strong> at mcnovus.net for the new designs</li>
+            <li>All schematics updated with new piston doors - they now only open if there is a room on the other side - once again thanks to Lord_Rahl and killeratnight</li>
             <li>Some presets now have random attributes &mdash; for example the Party Tent and Flower change to a random colour, the Angel has different wing and head positions</li>
+            <li>The Chameleon Circuit GUI no longer closes when you select a preset &mdash; you need to use the &lsquo;Close&rsquo; or &lsquo;Apply&rsquo; button (or just hit ESC on the keyboard)</li>
             <li>The SWAMP preset has changed to be more like a witches hut</li>
             <li>The TARDIS &lsquo;last use&rsquo; field is set upon TARDIS creation, and updated more often (not just when a Time Lord travels)</li>
             <li>The random destination button now selects a random location relative to the current location of the TARDIS preset (when travelling in the <em>same</em> world)</li>
             <li>The <code>/tardistravel biome [biome]</code> command now finds the closest biome relative to the current location of the TARDIS preset (and not the player&rsquo;s location)</li>
+            <li>Removed bonus_chest from config, admin commands and builder</li>
+            <li>Removed the update checker - plugin enabling should be quicker now anyway</li>
+            <li>Light grey wool blocks (usually the floor blocks) in TARDIS consoles (except the EMERALD type) are now replaced with the player&rsquo;s preferred floor block (like rooms already do)</li>
         </ul>
         <h4>Bug fixes</h4>
         <ul>
+            <li>Fixed TARDIS consoles not being removed in shared worlds</li>
+            <li>Fixed room jettisoning being off by 1 in both x and z directions, and the grammar in the jettison message</li>
+            <li>Fixed a problem with controls not being set correctly with the new piston door schematics</li>
+            <li>Fixed TARDIS seed blocks returning a non-valid block after being broken</li>
+            <li>Fixed incorrect amount of blocks being added to the condenser table</li>
             <li>Fixed TARDIS seed blocks returning a non-valid block after being broken</li>
             <li>Fixed doors, trapdoors and various other blocks popping off presets when they de/materialise</li>
             <li>Fixed under door and platform blocks not being removed when the TARDIS leaves a location</li>
@@ -53,6 +65,8 @@
             <li>Fixed a conflict with the JSONArray class</li>
             <li>Fixed pets disappearing when the player tries to exit the TARDIS with them</li>
             <li>In the ARS GUI, both (anti)gravity well slots are reset when jettisoning said rooms</li>
+            <li>Fixed a parse number error trying to update <em>lastuse</em> for players with <code>tardis.prune.bybass</code> perms</li>
+            <li>Fixed the platform and underdoor blocks being left behind if they just replaced AIR</li>
         </ul>
         <h3 id="v26b1">v2.6-beta-1</h3>
         <p>There are lots of changes &mdash; some of which are not compatible with previous TARDISes... please read carefully &mdash; videos and full documentation are coming ASAP</p>
