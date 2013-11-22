@@ -81,7 +81,6 @@ public class TARDISAdminCommands implements CommandExecutor {
         firstsBool.add("allow_mob_farming");
         firstsBool.add("allow_tp_switch");
         firstsBool.add("chameleon");
-        firstsBool.add("check_for_updates");
         firstsBool.add("create_worlds");
         firstsBool.add("create_worlds_with_perms");
         firstsBool.add("custom_schematic");

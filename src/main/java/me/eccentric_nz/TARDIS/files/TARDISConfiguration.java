@@ -71,7 +71,6 @@ public class TARDISConfiguration {
         boolOptions.put("allow_mob_farming", true);
         boolOptions.put("allow_tp_switch", true);
         boolOptions.put("chameleon", true);
-        boolOptions.put("check_for_updates", true);
         boolOptions.put("conversion_done", false);
         boolOptions.put("create_worlds", true);
         boolOptions.put("create_worlds_with_perms", false);
