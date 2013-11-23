@@ -50,9 +50,15 @@ public class TARDISBuilderInner {
 
     private final TARDIS plugin;
     List<Block> lampblocks = new ArrayList<Block>();
+    List<TARDISConstants.SCHEMATIC> only_ars = new ArrayList<TARDISConstants.SCHEMATIC>();
 
     public TARDISBuilderInner(TARDIS plugin) {
         this.plugin = plugin;
+        only_ars.add(TARDISConstants.SCHEMATIC.ARS);
+        only_ars.add(TARDISConstants.SCHEMATIC.BUDGET);
+        only_ars.add(TARDISConstants.SCHEMATIC.PLANK);
+        only_ars.add(TARDISConstants.SCHEMATIC.STEAMPUNK);
+        only_ars.add(TARDISConstants.SCHEMATIC.TOM);
     }
 
     /**
@@ -300,41 +306,42 @@ public class TARDISBuilderInner {
                                         qf.insertSyncControl(dbID, 9, blockLocStr, 0);
                                         break;
                                     case 2: // Architectural Reconfiguration System
-                                        qf.insertSyncControl(dbID, 10, blockLocStr, 0);
-                                        // create default json
-                                        int[][][] empty = new int[3][9][9];
-                                        for (int y = 0; y < 3; y++) {
-                                            for (int ars_x = 0; ars_x < 9; ars_x++) {
-                                                for (int ars_z = 0; ars_z < 9; ars_z++) {
-                                                    empty[y][ars_x][ars_z] = 1;
+                                        if (only_ars.contains(schm)) {
+                                            qf.insertSyncControl(dbID, 10, blockLocStr, 0);
+                                            // create default json
+                                            int[][][] empty = new int[3][9][9];
+                                            for (int y = 0; y < 3; y++) {
+                                                for (int ars_x = 0; ars_x < 9; ars_x++) {
+                                                    for (int ars_z = 0; ars_z < 9; ars_z++) {
+                                                        empty[y][ars_x][ars_z] = 1;
+                                                    }
                                                 }
                                             }
+                                            int control = 42;
+                                            switch (schm) {
+                                                case STEAMPUNK:
+                                                    control = 173;
+                                                    break;
+                                                case ARS:
+                                                    control = 159;
+                                                    break;
+                                                case PLANK:
+                                                    control = 22;
+                                                    break;
+                                                case TOM:
+                                                    control = 155;
+                                                    break;
+                                                default:
+                                                    break;
+                                            }
+                                            empty[1][4][4] = control;
+                                            JSONArray json = new JSONArray(empty);
+                                            HashMap<String, Object> seta = new HashMap<String, Object>();
+                                            seta.put("tardis_id", dbID);
+                                            seta.put("player", p.getName());
+                                            seta.put("json", json.toString());
+                                            qf.doInsert("ars", seta);
                                         }
-                                        int control = 42;
-                                        switch (schm) {
-                                            case STEAMPUNK:
-                                                control = 173;
-                                                break;
-                                            case ARS:
-                                                control = 159;
-                                                break;
-                                            case PLANK:
-                                                control = 22;
-                                                break;
-                                            case TOM:
-                                                control = 155;
-                                                break;
-                                            default:
-                                                break;
-                                        }
-                                        empty[1][4][4] = control;
-                                        JSONArray json = new JSONArray(empty);
-
-                                        HashMap<String, Object> seta = new HashMap<String, Object>();
-                                        seta.put("tardis_id", dbID);
-                                        seta.put("player", p.getName());
-                                        seta.put("json", json.toString());
-                                        qf.doInsert("ars", seta);
                                         break;
                                     case 3: // TARDIS Information System
                                         qf.insertSyncControl(dbID, 13, blockLocStr, 0);
@@ -542,10 +549,17 @@ public class TARDISBuilderInner {
             postARSBlock.setData((byte) 3, true);
             if (postARSBlock.getType().equals(Material.WALL_SIGN)) {
                 Sign as = (Sign) postARSBlock.getState();
-                as.setLine(0, "TARDIS");
-                as.setLine(1, "Architectural");
-                as.setLine(2, "Reconfiguration");
-                as.setLine(3, "System");
+                if (only_ars.contains(schm)) {
+                    as.setLine(0, "TARDIS");
+                    as.setLine(1, "Architectural");
+                    as.setLine(2, "Reconfiguration");
+                    as.setLine(3, "System");
+                } else {
+                    as.setLine(0, "ARS");
+                    as.setLine(1, "coming");
+                    as.setLine(2, "here");
+                    as.setLine(3, "soon...");
+                }
                 as.update();
             }
         }
