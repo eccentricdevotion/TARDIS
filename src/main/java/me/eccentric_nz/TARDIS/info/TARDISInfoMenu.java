@@ -76,6 +76,7 @@ public enum TARDISInfoMenu {
     PLANK("TIS|TARDIS Types|Plank", "TYPES", "P"),
     TOM("TIS|TARDIS Types|Tom", "TYPES", "T"),
     ARS("TIS|TARDIS Types|ARS", "TYPES", "A"),
+    CUSTOM("TIS|TARDIS Types|Custom", "TYPES", "C"),
     ROOMS("TIS|Rooms", "TIS", "R"),
     ANTIGRAVITY("TIS|Rooms|Anti-gravity", "ROOMS", "A"),
     ARBORETUM("TIS|Rooms|Arboretum", "ROOMS", "u"),

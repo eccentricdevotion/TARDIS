@@ -355,6 +355,9 @@ public class TARDISInformationSystemListener implements Listener {
                     if (chat.equalsIgnoreCase("A")) {
                         showInfo(p, TARDISInfoMenu.ARS);
                     }
+                    if (chat.equalsIgnoreCase("C")) {
+                        showInfo(p, TARDISInfoMenu.CUSTOM);
+                    }
                     break;
                 // THIRD level menus
                 case KEY:

@@ -43,11 +43,12 @@ public enum TARDISDescription {
     BIGGER("Big enough to swing a cat."),
     DELUXE("Luxury in a box."),
     ELEVENTH("It’s smaller on the outside..."),
-    REDSTONE("Multi-level madness."),
+    REDSTONE("This one has some redstone in it."),
     STEAMPUNK("Small, but steamy."),
     PLANK("A wood based interior."),
     TOM("The 4th Doctor's TARDIS."),
     ARS("The Architectural Reconfiguration System TARDIS."),
+    CUSTOM("A custom designed server TARDIS"),
     ANTIGRAVITY("Going up..."),
     ARBORETUM("A room full of plants."),
     BAKER("A secondary console room based on the 4th Doctor's TARDIS."),
@@ -88,7 +89,7 @@ public enum TARDISDescription {
             + "USAGE: Right-click.\n"
             + "UPDATING: /tardis update button\n"
             + "BLOCK: LEVER, STONE_BUTTON or WOODEN_BUTTON"),
-    CHAMELEON(" INFO: The Chameleon sign allows the Chameleon Circuit to be turned on or off. The Chameleon Circuit makes the TARDIS exterior become the block it lands on.\n"
+    CHAMELEON(" INFO: The Chameleon sign allows the Chameleon Circuit to be turned on or off, and for presets to be selected. The Chameleon Circuit makes the TARDIS exterior become the block it lands on.\n"
             + "USAGE: Right-click the sign.\n"
             + "UPDATING: /tardis update chameleon\n"
             + "BLOCK: SIGN"),
