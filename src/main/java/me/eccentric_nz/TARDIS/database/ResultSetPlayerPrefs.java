@@ -148,7 +148,7 @@ public class ResultSetPlayerPrefs {
                 if (statement != null) {
                     statement.close();
                 }
-            } catch (Exception e) {
+            } catch (SQLException e) {
                 plugin.debug("Error closing player_prefs table! " + e.getMessage());
             }
         }

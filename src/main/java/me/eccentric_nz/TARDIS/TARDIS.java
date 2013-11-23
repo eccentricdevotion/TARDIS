@@ -790,22 +790,18 @@ public class TARDIS extends JavaPlugin {
     private void setDates() {
         int month = getTagConfig().getInt("month") - 1;
         int day = getTagConfig().getInt("day");
-        debug("month: " + month);
-        debug("day: " + day);
         beforecal = Calendar.getInstance();
         beforecal.set(Calendar.HOUR, 0);
         beforecal.set(Calendar.MINUTE, 0);
         beforecal.set(Calendar.SECOND, 0);
         beforecal.set(Calendar.MONTH, month);
         beforecal.set(Calendar.DATE, day);
-        debug("Before: " + beforecal.getTime().toString());
         aftercal = Calendar.getInstance();
         aftercal.set(Calendar.HOUR, 23);
         aftercal.set(Calendar.MINUTE, 59);
         aftercal.set(Calendar.SECOND, 59);
         aftercal.set(Calendar.MONTH, month);
         aftercal.set(Calendar.DATE, day);
-        debug("After: " + aftercal.getTime().toString());
         // reset config
         getTagConfig().set("it", "");
     }

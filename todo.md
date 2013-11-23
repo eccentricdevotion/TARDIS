@@ -1,6 +1,6 @@
 # TODO
 
-## Current version `2.6-beta-2`
+## Current version `2.6-beta-3`
 1. Rooms / consoles
    * Put farmland, crops, buttons, ladders, levers and signs on last when growing rooms
 2. TARDIS Information System
@@ -32,6 +32,7 @@
 14. Add MySQL support
 15. Add an admin /tardisgive command to make locators/remotes etc
 16. Custom room schematics in ARS (check they are 16x16x16)
+17. Add `/tardisgive` command to spawn in TARDIS items
 
 ## Minecraft API when available
 1. Recreate everything with the new API :)
