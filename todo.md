@@ -30,9 +30,10 @@
 12. Update the malfunction location finder to have a greater range
 13. HADS + explosions + fireballs + lava
 14. Add MySQL support
-15. Add an admin /tardisgive command to make locators/remotes etc
+15. Add an admin `/tardisgive` command to make locators/remotes etc
 16. Custom room schematics in ARS (check they are 16x16x16)
-17. Add `/tardisgive` command to spawn in TARDIS items
+17. Export TARDIS saves / areas / etc. to disks for use with Advanced TARDIS console
+    * Have a storage container with GUI for accessing disks
 
 ## Minecraft API when available
 1. Recreate everything with the new API :)
