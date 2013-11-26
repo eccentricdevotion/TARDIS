@@ -58,6 +58,7 @@ public class TARDISConstants {
     public static final String SCHEMATIC_POOL = "pool.schematic";
     public static final String SCHEMATIC_RAIL = "rail.schematic";
     public static final String SCHEMATIC_STABLE = "stable.schematic";
+    public static final String SCHEMATIC_TEMPLATE = "template.schematic";
     public static final String SCHEMATIC_TRENZALORE = "trenzalore.schematic";
     public static final String SCHEMATIC_VAULT = "vault.schematic";
     public static final String SCHEMATIC_VILLAGE = "village.schematic";
