@@ -66,6 +66,8 @@ public class TARDISRoomRunnable implements Runnable {
     HashMap<Block, Byte> doorblocks = new HashMap<Block, Byte>();
     HashMap<Block, Byte> torchblocks = new HashMap<Block, Byte>();
     HashMap<Block, Byte> redstoneTorchblocks = new HashMap<Block, Byte>();
+    HashMap<Block, Byte> mushroomblocks = new HashMap<Block, Byte>();
+    byte[] repeaterData = new byte[6];
 
     public TARDISRoomRunnable(TARDIS plugin, TARDISRoomData roomData, Player p) {
         this.plugin = plugin;
@@ -84,6 +86,12 @@ public class TARDISRoomRunnable implements Runnable {
         this.tardis_id = roomData.getTardis_id();
         this.running = false;
         this.p = p;
+        this.repeaterData[0] = (byte) 0;
+        this.repeaterData[1] = (byte) 0;
+        this.repeaterData[2] = (byte) 2;
+        this.repeaterData[3] = (byte) 3;
+        this.repeaterData[4] = (byte) 1;
+        this.repeaterData[5] = (byte) 0;
     }
 
     /**
@@ -123,6 +131,14 @@ public class TARDISRoomRunnable implements Runnable {
                     ice.setTypeId(9);
                 }
                 iceblocks.clear();
+            }
+            if (room.equals("BAKER") || room.equals("WOOD")) {
+                // set the repeaters
+                for (Map.Entry<Block, Byte> entry : mushroomblocks.entrySet()) {
+                    entry.getKey().setTypeId(93);
+                    entry.getKey().setData(entry.getValue(), true);
+                }
+                mushroomblocks.clear();
             }
             if (room.equals("GREENHOUSE")) {
                 // plant the sugar cane
@@ -335,7 +351,7 @@ public class TARDISRoomRunnable implements Runnable {
                 plugin.roomChunkList.add(thisChunk);
                 chunkList.add(thisChunk);
             }
-            if (id != 83 && id != 127 && id != 64 && id != 50 && id != 76 && id != 34) {
+            if (id != 83 && id != 127 && id != 64 && id != 50 && id != 76 && id != 34 && (id != 100 && data != (byte) 15)) {
                 if (id == 9) {
                     plugin.utils.setBlock(world, startx, starty, startz, 79, (byte) 0);
                 } else {
@@ -386,16 +402,18 @@ public class TARDISRoomRunnable implements Runnable {
                 int r = 2;
                 int type;
                 String loc_str;
-                List<Integer> controls = Arrays.asList(new Integer[]{69, 77, 92, 143, -113});
+                List<Integer> controls = Arrays.asList(new Integer[]{69, 77, 100, 143, -113});
                 if (controls.contains(Integer.valueOf(id))) {
                     switch (id) {
                         case 77: // stone button - random
                             type = 1;
                             loc_str = plugin.utils.makeLocationStr(world, startx, starty, startz);
                             break;
-                        case 93: // repeater
+                        case 100: // repeater
                             type = r;
                             loc_str = world.getName() + ":" + startx + ":" + starty + ":" + startz;
+                            Block rb = world.getBlockAt(startx, starty, startz);
+                            mushroomblocks.put(rb, repeaterData[r]);
                             r++;
                             break;
                         case -113: // wood button - artron
