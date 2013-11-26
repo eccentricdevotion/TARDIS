@@ -1,1 +1,1 @@
-This product includes software from JNBT (http://jnbt.sourceforge.net/).
+This product includes software from JNBT (http://jnbt.sourceforge.net/), and from JSON (http://http://www.json.org/java/index.html).
