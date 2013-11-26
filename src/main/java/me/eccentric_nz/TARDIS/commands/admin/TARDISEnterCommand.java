@@ -143,6 +143,7 @@ public class TARDISEnterCommand {
                 return true;
             }
         }
-        return false;
+        sender.sendMessage(plugin.pluginName + args[1] + " has not created a TARDIS yet!");
+        return true;
     }
 }
