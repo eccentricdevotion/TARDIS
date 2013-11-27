@@ -1,6 +1,6 @@
 # TODO
 
-## Current version `2.6-beta-3`
+## Current version `2.6`
 1. Rooms / consoles
    * Put farmland, crops, buttons, ladders, levers and signs on last when growing rooms
 2. TARDIS Information System
