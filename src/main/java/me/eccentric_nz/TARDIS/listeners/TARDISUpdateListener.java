@@ -407,6 +407,38 @@ public class TARDISUpdateListener implements Listener {
                     }
                     int control = 42;
                     switch (schm) {
+                        case DELUXE:
+                            control = 57;
+                            empty[0][4][4] = control;
+                            empty[0][4][5] = control;
+                            empty[0][5][4] = control;
+                            empty[0][5][5] = control;
+                            empty[1][4][5] = control;
+                            empty[1][5][4] = control;
+                            empty[1][5][5] = control;
+                            break;
+                        case ELEVENTH:
+                            control = 133;
+                            empty[0][4][4] = control;
+                            empty[0][4][5] = control;
+                            empty[0][5][4] = control;
+                            empty[0][5][5] = control;
+                            empty[1][4][5] = control;
+                            empty[1][5][4] = control;
+                            empty[1][5][5] = control;
+                            break;
+                        case BIGGER:
+                            control = 41;
+                            empty[1][4][5] = control;
+                            empty[1][5][4] = control;
+                            empty[1][5][5] = control;
+                            break;
+                        case REDSTONE:
+                            control = 152;
+                            empty[1][4][5] = control;
+                            empty[1][5][4] = control;
+                            empty[1][5][5] = control;
+                            break;
                         case STEAMPUNK:
                             control = 173;
                             break;

@@ -36,6 +36,7 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import me.eccentric_nz.TARDIS.JSON.JSONArray;
+import org.bukkit.Material;
 
 /**
  * The architectural reconfiguration system is a component of the Doctor's
@@ -50,10 +51,6 @@ import me.eccentric_nz.TARDIS.JSON.JSONArray;
 public class TARDISARSListener implements Listener {
 
     private final TARDIS plugin;
-//    HashMap<String, Block> trackPosi = new HashMap<String, Block>();
-//    private ItemStack[] items;
-//    private int[] room_ids = new int[]{82, 18, 89, 86, 47, 80, 23, 112, 20, 48, 24, 109, 121, 5, 3, 88, 103, 25, 13};
-//    private String[] room_names = new String[]{"Passage", "Arboretum", "Bedroom", "Kitchen", "Library", "Pool", "Vault", "Workshop", "Empty", "Gravity", "Antigravity", "Harmony", "Baker", "Wood", "Farm", "Cross", "Greenhouse", "Long", "Mushroom"};
     private int[] room_ids;
     private String[] room_names;
     private final HashMap<String, Integer> scroll_start = new HashMap<String, Integer>();
@@ -62,6 +59,7 @@ public class TARDISARSListener implements Listener {
     private final HashMap<String, TARDISARSMapData> map_data = new HashMap<String, TARDISARSMapData>();
     private final String[] levels = new String[]{"Bottom level", "Main level", "Top level"};
     private final List<TARDISARS> notrooms;
+    private final List<Material> consoleBlocks;
     private final HashMap<String, Integer> ids = new HashMap<String, Integer>();
     private final List<String> hasLoadedMap = new ArrayList<String>();
 
@@ -69,6 +67,7 @@ public class TARDISARSListener implements Listener {
         this.plugin = plugin;
         this.notrooms = Arrays.asList(new TARDISARS[]{TARDISARS.ARS, TARDISARS.BUDGET, TARDISARS.JETTISON, TARDISARS.PLANK, TARDISARS.SLOT, TARDISARS.STEAMPUNK, TARDISARS.TOM});
         getRoomIdAndNames();
+        this.consoleBlocks = Arrays.asList(new Material[]{Material.IRON_BLOCK, Material.GOLD_BLOCK, Material.DIAMOND_BLOCK, Material.EMERALD_BLOCK, Material.REDSTONE_BLOCK, Material.COAL_BLOCK, Material.QUARTZ_BLOCK, Material.LAPIS_BLOCK, Material.BOOKSHELF});
     }
 
     /**
@@ -125,8 +124,10 @@ public class TARDISARSListener implements Listener {
                     case 42:
                     case 43:
                     case 44:
-                        // select slot
-                        selected_slot.put(playerNameStr, slot);
+                        if (!checkSlotForConsole(inv, slot)) {
+                            // select slot
+                            selected_slot.put(playerNameStr, slot);
+                        }
                         break;
                     case 10:
                         // load map
@@ -734,5 +735,10 @@ public class TARDISARSListener implements Listener {
             id = rs.getTardis_id();
         }
         return id;
+    }
+
+    private boolean checkSlotForConsole(Inventory inv, int slot) {
+        Material m = inv.getItem(slot).getType();
+        return (consoleBlocks.contains(m));
     }
 }

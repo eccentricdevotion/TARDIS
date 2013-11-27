@@ -122,7 +122,7 @@ public class TARDISARSInventory {
         pumpkin.setDisplayName("Kitchen");
         kitchen.setItemMeta(pumpkin);
         // library
-        ItemStack library = new ItemStack(47, 1);
+        ItemStack library = new ItemStack(116, 1);
         ItemMeta book = library.getItemMeta();
         book.setDisplayName("Library");
         library.setItemMeta(book);

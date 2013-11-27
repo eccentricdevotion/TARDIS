@@ -119,6 +119,11 @@ public class TARDISButtonListener implements Listener {
                         whereid.put("tardis_id", id);
                         ResultSetTardis rs = new ResultSetTardis(plugin, whereid, "", false);
                         if (rs.resultSet()) {
+                            // check they initialised
+                            if (!rs.isTardis_init()) {
+                                player.sendMessage(plugin.pluginName + ChatColor.RED + "The TARDIS Artron Energy Capacitor has not been initialised!");
+                                return;
+                            }
                             int level = rs.getArtron_level();
                             boolean hb = rs.isHandbrake_on();
                             boolean set_dest = false;

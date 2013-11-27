@@ -221,6 +221,9 @@ public class TARDISRoomRunnable implements Runnable {
                         break;
                 }
             }
+            if (id == 55) {
+                data = 0;
+            }
             if (id == 35 && data == 7 && plugin.getConfig().getBoolean("use_clay")) {
                 id = 159;
             }
@@ -351,7 +354,7 @@ public class TARDISRoomRunnable implements Runnable {
                 plugin.roomChunkList.add(thisChunk);
                 chunkList.add(thisChunk);
             }
-            if (id != 83 && id != 127 && id != 64 && id != 50 && id != 76 && id != 34 && (id != 100 && data != (byte) 15)) {
+            if (id != 83 && id != 127 && id != 64 && id != 50 && id != 76 && id != 34 && !(id == 100 && data == (byte) 15)) {
                 if (id == 9) {
                     plugin.utils.setBlock(world, startx, starty, startz, 79, (byte) 0);
                 } else {
