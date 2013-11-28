@@ -3,7 +3,7 @@ rooms:
   PASSAGE:
     enabled: true
     cost: 200
-    offset: -3
+    offset: -4
     seed: CLAY
     user: false
   ARBORETUM:
@@ -15,114 +15,114 @@ rooms:
   BEDROOM:
     enabled: true
     cost: 475
-    offset: -3
+    offset: -4
     seed: GLOWSTONE
     user: false
   KITCHEN:
     enabled: true
     cost: 450
-    offset: -3
+    offset: -4
     seed: PUMPKIN
     user: false
   LIBRARY:
     enabled: true
     cost: 550
-    offset: -3
+    offset: -4
     seed: BOOKSHELF
     user: false
   POOL:
     enabled: true
     cost: 450
-    offset: -3
+    offset: -4
     seed: SNOW_BLOCK
     user: false
   VAULT:
     enabled: true
     cost: 350
-    offset: -3
+    offset: -4
     seed: DISPENSER
     user: false
   WORKSHOP:
     enabled: true
     cost: 400
-    offset: -3
+    offset: -4
     seed: NETHER_BRICK
     user: false
   EMPTY:
     enabled: true
     cost: 250
-    offset: -3
+    offset: -4
     seed: GLASS
     user: false
   GRAVITY:
     enabled: true
     cost: 625
-    offset: -19
+    offset: -20
     seed: MOSSY_COBBLESTONE
     user: false
   ANTIGRAVITY:
     enabled: true
     cost: 625
-    offset: -3
+    offset: -4
     seed: SANDSTONE
     user: false
   HARMONY:
     enabled: true
     cost: 450
-    offset: -3
+    offset: -4
     seed: SMOOTH_STAIRS
     user: false
   BAKER:
     enabled: true
     cost: 350
-    offset: -3
+    offset: -4
     seed: ENDER_STONE
     user: false
   WOOD:
     enabled: true
     cost: 350
-    offset: -3
+    offset: -4
     seed: WOOD
     user: false
   FARM:
     enabled: true
     cost: 350
-    offset: -3
+    offset: -4
     seed: DIRT
     user: false
   GREENHOUSE:
     enabled: true
     cost: 450
-    offset: -3
+    offset: -4
     seed: MELON_BLOCK
     user: false
   MUSHROOM:
     enabled: true
     cost: 350
-    offset: -3
+    offset: -4
     seed: GRAVEL
     user: false
   STABLE:
     enabled: true
     cost: 350
-    offset: -3
+    offset: -4
     seed: HAY_BLOCK
     user: false
   RAIL:
     enabled: true
     cost: 650
-    offset: -3
+    offset: -4
     seed: HOPPER
     user: false
   VILLAGE:
     enabled: true
     cost: 550
-    offset: -3
+    offset: -4
     seed: LOG
     user: false
   TRENZALORE:
     enabled: true
     cost: 550
-    offset: -3
+    offset: -4
     seed: BRICK
     user: false
