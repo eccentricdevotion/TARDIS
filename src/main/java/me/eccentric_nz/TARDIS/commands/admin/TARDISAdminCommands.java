@@ -65,6 +65,7 @@ public class TARDISAdminCommands implements CommandExecutor {
         firstsStr.add("inventory_group");
         firstsStr.add("key");
         firstsStr.add("list");
+        firstsStr.add("make_preset");
         firstsStr.add("playercount");
         firstsStr.add("prune");
         firstsStr.add("recharger");
@@ -173,9 +174,9 @@ public class TARDISAdminCommands implements CommandExecutor {
                     if (first.equals("reload")) {
                         return new TARDISReloadCommand(plugin).reloadConfig(sender);
                     }
-                    if (first.equals("config")) {
-                        return new TARDISConfigCommand(plugin).showConfigOptions(sender, args);
-                    }
+                }
+                if (first.equals("config")) {
+                    return new TARDISConfigCommand(plugin).showConfigOptions(sender, args);
                 }
                 if (first.equals("list")) {
                     return new TARDISListTardisesCommand(plugin).listTardises(sender, args);
@@ -183,6 +184,9 @@ public class TARDISAdminCommands implements CommandExecutor {
                 if (args.length < 2) {
                     sender.sendMessage(plugin.pluginName + "Too few command arguments!");
                     return false;
+                }
+                if (first.equals("make_preset")) {
+                    return new TARDISMakePresetCommand(plugin).scanBlocks(sender, args);
                 }
                 if (first.equals("playercount")) {
                     return new TARDISPlayerCountCommand(plugin).countPlayers(sender, args);
