@@ -403,29 +403,6 @@ public class TARDISBuilderInner {
                                         break;
                                 }
                             }
-                            // repeaters
-                            if (id == 100 && data == 15) { // remember the location of this redstone repeater
-                                // save repeater location
-                                if (j < 6) {
-                                    String repeater = world.getName() + ":" + startx + ":" + starty + ":" + startz;
-                                    qf.insertSyncControl(dbID, j, repeater, 0);
-                                    switch (j) {
-                                        case 2:
-                                            postRepeaterBlocks.put(world.getBlockAt(startx, starty, startz), (byte) 2);
-                                            break;
-                                        case 3:
-                                            postRepeaterBlocks.put(world.getBlockAt(startx, starty, startz), (byte) 1);
-                                            break;
-                                        case 4:
-                                            postRepeaterBlocks.put(world.getBlockAt(startx, starty, startz), (byte) 3);
-                                            break;
-                                        default:
-                                            postRepeaterBlocks.put(world.getBlockAt(startx, starty, startz), (byte) 0);
-                                            break;
-                                    }
-                                    j++;
-                                }
-                            }
                             if (id == 124) {
                                 // remember lamp blocks
                                 Block lamp = world.getBlockAt(startx, starty, startz);
@@ -483,47 +460,66 @@ public class TARDISBuilderInner {
                             plugin.protectBlockMap.put(loc, dbID);
                         }
                         // if it's the door, don't set it just remember its block then do it at the end
-                        if (!(id == 100 && data == 15)) {
-                            if (id == 71) {
-                                postDoorBlocks.put(world.getBlockAt(startx, starty, startz), data);
-                            } else if (id == 76) {
-                                postTorchBlocks.put(world.getBlockAt(startx, starty, startz), data);
-                            } else if (id == 68) {
-                                postSignBlocks.put(world.getBlockAt(startx, starty, startz), data);
-                            } else if (id == 97) {
-                                switch (data) {
-                                    case 0:
-                                        postSaveSignBlock = world.getBlockAt(startx, starty, startz);
-                                        break;
-                                    case 1:
-                                        postTerminalBlock = world.getBlockAt(startx, starty, startz);
-                                        break;
+                        if (id == 71) { // doors
+                            postDoorBlocks.put(world.getBlockAt(startx, starty, startz), data);
+                        } else if (id == 76) { // redstone torches
+                            postTorchBlocks.put(world.getBlockAt(startx, starty, startz), data);
+                        } else if (id == 68) { // wall signs
+                            postSignBlocks.put(world.getBlockAt(startx, starty, startz), data);
+                        } else if (id == 97) { // monster egg stone for controls
+                            switch (data) {
+                                case 0:
+                                    postSaveSignBlock = world.getBlockAt(startx, starty, startz);
+                                    break;
+                                case 1:
+                                    postTerminalBlock = world.getBlockAt(startx, starty, startz);
+                                    break;
+                                case 2:
+                                    postARSBlock = world.getBlockAt(startx, starty, startz);
+                                    break;
+                                case 3:
+                                    postTISBlock = world.getBlockAt(startx, starty, startz);
+                                    break;
+                                case 4:
+                                    postTemporalBlock = world.getBlockAt(startx, starty, startz);
+                                    break;
+                                case 5:
+                                    postKeyboardBlock = world.getBlockAt(startx, starty, startz);
+                                    break;
+                                default:
+                                    break;
+                            }
+                        } else if (id == 100 && data == 15) { // mushroom stem for repeaters
+                            // save repeater location
+                            if (j < 6) {
+                                String repeater = world.getName() + ":" + startx + ":" + starty + ":" + startz;
+                                qf.insertSyncControl(dbID, j, repeater, 0);
+                                switch (j) {
                                     case 2:
-                                        postARSBlock = world.getBlockAt(startx, starty, startz);
+                                        postRepeaterBlocks.put(world.getBlockAt(startx, starty, startz), (byte) 2);
                                         break;
                                     case 3:
-                                        postTISBlock = world.getBlockAt(startx, starty, startz);
+                                        postRepeaterBlocks.put(world.getBlockAt(startx, starty, startz), (byte) 1);
                                         break;
                                     case 4:
-                                        postTemporalBlock = world.getBlockAt(startx, starty, startz);
-                                        break;
-                                    case 5:
-                                        postKeyboardBlock = world.getBlockAt(startx, starty, startz);
+                                        postRepeaterBlocks.put(world.getBlockAt(startx, starty, startz), (byte) 3);
                                         break;
                                     default:
+                                        postRepeaterBlocks.put(world.getBlockAt(startx, starty, startz), (byte) 0);
                                         break;
                                 }
-                            } else if (id == 19) {
-                                int swap;
-                                if (world.getWorldType().equals(WorldType.FLAT) || own_world || world.getName().equals("TARDIS_TimeVortex") || world.getGenerator() instanceof TARDISChunkGenerator) {
-                                    swap = 0;
-                                } else {
-                                    swap = 1;
-                                }
-                                plugin.utils.setBlock(world, startx, starty, startz, swap, data);
-                            } else {
-                                plugin.utils.setBlock(world, startx, starty, startz, id, data);
+                                j++;
                             }
+                        } else if (id == 19) { // sponge
+                            int swap;
+                            if (world.getWorldType().equals(WorldType.FLAT) || own_world || world.getName().equals("TARDIS_TimeVortex") || world.getGenerator() instanceof TARDISChunkGenerator) {
+                                swap = 0;
+                            } else {
+                                swap = 1;
+                            }
+                            plugin.utils.setBlock(world, startx, starty, startz, swap, data);
+                        } else {
+                            plugin.utils.setBlock(world, startx, starty, startz, id, data);
                         }
                     }
                     startx += x;
