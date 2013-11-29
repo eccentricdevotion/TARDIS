@@ -262,10 +262,11 @@ public class TARDISInstaPreset {
                         }
                         plugin.utils.setBlockAndRemember(world, xx, (y + yy), zz, colids[yy], coldatas[yy], tid);
                         break;
+                    case 63:
                     case 68: // sign - if there is one
                         plugin.utils.setBlock(world, xx, (y + yy), zz, colids[yy], coldatas[yy]);
                         Block sign = world.getBlockAt(xx, (y + yy), zz);
-                        if (sign.getType().equals(Material.WALL_SIGN)) {
+                        if (sign.getType().equals(Material.WALL_SIGN) || sign.getType().equals(Material.SIGN_POST)) {
                             Sign s = (Sign) sign.getState();
                             if (plugin.getConfig().getBoolean("name_tardis")) {
                                 HashMap<String, Object> wheret = new HashMap<String, Object>();
@@ -273,7 +274,7 @@ public class TARDISInstaPreset {
                                 ResultSetTardis rst = new ResultSetTardis(plugin, wheret, "", false);
                                 if (rst.resultSet()) {
                                     String owner;
-                                    if (preset.equals(TARDISConstants.PRESET.GRAVESTONE)) {
+                                    if (preset.equals(TARDISConstants.PRESET.GRAVESTONE) || preset.equals(TARDISConstants.PRESET.PUNKED) || preset.equals(TARDISConstants.PRESET.ROBOT)) {
                                         owner = (rst.getOwner().length() > 14) ? rst.getOwner().substring(0, 14) : rst.getOwner();
                                     } else {
                                         owner = (rst.getOwner().length() > 14) ? rst.getOwner().substring(0, 12) + "'s" : rst.getOwner() + "'s";
@@ -283,6 +284,7 @@ public class TARDISInstaPreset {
                                             s.setLine(3, owner);
                                             break;
                                         case ANGEL:
+                                        case JAIL:
                                             s.setLine(2, owner);
                                             break;
                                         default:
@@ -294,53 +296,120 @@ public class TARDISInstaPreset {
                             String line1;
                             String line2;
                             switch (preset) {
-                                case STONE:
-                                    line1 = "STONE BRICK";
-                                    line2 = "COLUMN";
-                                    break;
-                                case PARTY:
-                                    line1 = "PARTY";
-                                    line2 = "TENT";
-                                    break;
-                                case VILLAGE:
-                                    line1 = "VILLAGE";
-                                    line2 = "HOUSE";
-                                    break;
-                                case YELLOW:
-                                    line1 = "YELLOW";
-                                    line2 = "SUBMARINE";
-                                    break;
-                                case TELEPHONE:
-                                    line1 = "TELEPHONE";
-                                    line2 = "BOX";
-                                    break;
-                                case WINDMILL:
-                                    line1 = "VERY SMALL";
-                                    line2 = "WINDMILL";
-                                    break;
-                                case SWAMP:
-                                    line1 = "SIGN ABOVE";
-                                    line2 = "THE DOOR";
-                                    break;
                                 case ANGEL:
                                     line1 = "WEEPING";
                                     line2 = "ANGELS HAVE";
+                                    s.setLine(3, ChatColor.WHITE + "TARDIS");
+                                    break;
+                                case APPERTURE:
+                                    line1 = "APPERTURE";
+                                    line2 = "SCIENCE";
+                                    s.setLine(3, ChatColor.WHITE + "LAB");
                                     break;
                                 case CAKE:
                                     line1 = "CAKE AND";
                                     line2 = "EAT IT TOO";
                                     break;
-                                case TOPSYTURVEY:
-                                    line1 = "Topsy-turvey";
-                                    line2 = "BOX O' MARVEL";
+                                case CREEPY:
+                                    line1 = "HAUNTED";
+                                    line2 = "HOUSE";
+                                    break;
+                                case FENCE:
+                                    line1 = "RANDOM";
+                                    line2 = "FENCE";
+                                    break;
+                                case GAZEBO:
+                                    line1 = "CHILLED OUT";
+                                    line2 = "GAZEBO";
                                     break;
                                 case GRAVESTONE:
                                     line1 = "HERE";
                                     line2 = "LIES";
                                     break;
+                                case HELIX:
+                                    line1 = "INDUSTRIAL";
+                                    line2 = "DOUBLE HELIX";
+                                    break;
+                                case JAIL:
+                                    line1 = "$50,000";
+                                    line2 = "REWARD FOR";
+                                    s.setLine(3, ChatColor.WHITE + "CAPTURE");
+                                    break;
+                                case LAMP:
+                                    line1 = "LONELY";
+                                    line2 = "LAMP POST";
+                                    break;
+                                case LIBRARY:
+                                    line1 = "LIBRARY OF";
+                                    line2 = "TIME LORE";
+                                    break;
+                                case LIGHTHOUSE:
+                                    line1 = "TINY";
+                                    line2 = "LIGHTHOUSE";
+                                    break;
+                                case MINESHAFT:
+                                    line1 = "ROAD TO";
+                                    line2 = "EL DORADO";
+                                    break;
+                                case PARTY:
+                                    line1 = "PARTY";
+                                    line2 = "TENT";
+                                    break;
+                                case PEANUT:
+                                    line1 = "JAR OF";
+                                    line2 = "PEANUT BUTTER";
+                                    break;
+                                case PINE:
+                                    line1 = "PINE";
+                                    line2 = "TREE";
+                                    break;
+                                case PORTAL:
+                                    line1 = "PORTAL TO";
+                                    line2 = "SOMEWHERE";
+                                    break;
+                                case PUNKED:
+                                    line1 = "JUST GOT";
+                                    line2 = "PUNKED";
+                                    break;
+                                case ROBOT:
+                                    line1 = "WILL BE";
+                                    line2 = "DELETED";
+                                    break;
                                 case SHROOM:
                                     line1 = "TRIPPY";
                                     line2 = "SPACE SHROOM";
+                                    break;
+                                case SNOWMAN:
+                                    line1 = "TAKES ONE";
+                                    line2 = "TO SNOW ONE";
+                                    break;
+                                case STONE:
+                                    line1 = "STONE BRICK";
+                                    line2 = "COLUMN";
+                                    break;
+                                case SWAMP:
+                                    line1 = "SIGN ABOVE";
+                                    line2 = "THE DOOR";
+                                    break;
+                                case TELEPHONE:
+                                    line1 = "TELEPHONE";
+                                    line2 = "BOX";
+                                    break;
+                                case TOPSYTURVEY:
+                                    line1 = "Topsy-turvey";
+                                    line2 = "BOX O' MARVEL";
+                                    break;
+                                case VILLAGE:
+                                    line1 = "VILLAGE";
+                                    line2 = "HOUSE";
+                                    break;
+                                case WINDMILL:
+                                    line1 = "VERY SMALL";
+                                    line2 = "WINDMILL";
+                                    break;
+                                case YELLOW:
+                                    line1 = "YELLOW";
+                                    line2 = "SUBMARINE";
                                     break;
                                 case THEEND:
                                     line1 = "DRAGON";
@@ -356,16 +425,25 @@ public class TARDISInstaPreset {
                                     line2 = "BOX";
                                     break;
                             }
-                            if (preset.equals(TARDISConstants.PRESET.ANGEL)) {
+                            if (preset.equals(TARDISConstants.PRESET.ANGEL) || preset.equals(TARDISConstants.PRESET.JAIL)) {
                                 s.setLine(0, ChatColor.WHITE + line1);
                                 s.setLine(1, ChatColor.WHITE + line2);
-                                s.setLine(3, ChatColor.WHITE + "TARDIS");
                             } else {
                                 s.setLine(1, ChatColor.WHITE + line1);
                                 s.setLine(2, ChatColor.WHITE + line2);
                             }
                             s.update();
                         }
+                        break;
+                    case 87:
+                        plugin.utils.setBlockAndRemember(world, xx, (y + yy), zz, colids[yy], coldatas[yy], tid);
+                        if (preset.equals(TARDISConstants.PRESET.TORCH)) {
+                            world.getBlockAt(xx, (y + yy + 1), zz).setType(Material.FIRE);
+                        }
+                        break;
+                    case 90:
+                        plugin.utils.setBlockAndRemember(world, xx, (y + yy + 1), zz, 49, (byte) 0, tid);
+                        plugin.utils.setBlockAndRemember(world, xx, (y + yy), zz, colids[yy], coldatas[yy], tid);
                         break;
                     case 144:
                         plugin.utils.setBlockAndRemember(world, xx, (y + yy), zz, colids[yy], coldatas[yy], tid);

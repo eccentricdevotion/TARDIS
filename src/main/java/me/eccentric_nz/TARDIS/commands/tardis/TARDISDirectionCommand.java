@@ -38,7 +38,7 @@ public class TARDISDirectionCommand {
         this.plugin = plugin;
     }
 
-    public boolean changeDirection(Player player, String[] args) {
+    public boolean changeDirection(final Player player, String[] args) {
         if (player.hasPermission("tardis.timetravel")) {
             if (args.length < 2 || (!args[1].equalsIgnoreCase("north") && !args[1].equalsIgnoreCase("west") && !args[1].equalsIgnoreCase("south") && !args[1].equalsIgnoreCase("east"))) {
                 player.sendMessage(plugin.pluginName + "You need to specify the compass direction e.g. north, west, south or east!");
@@ -91,20 +91,19 @@ public class TARDISDirectionCommand {
             did.put("tardis_id", id);
             setd.put("door_direction", dir);
             qf.doUpdate("doors", setd, did);
-            Location l = new Location(rsc.getWorld(), rsc.getX(), rsc.getY(), rsc.getZ());
-            TARDISConstants.COMPASS d = TARDISConstants.COMPASS.valueOf(dir);
+            final Location l = new Location(rsc.getWorld(), rsc.getX(), rsc.getY(), rsc.getZ());
+            final TARDISConstants.COMPASS d = TARDISConstants.COMPASS.valueOf(dir);
             // destroy sign
-//            if (!hid) {
-//                plugin.destroyerP.destroySign(l, old_d, demat);
-//            }
-            //plugin.destroyerP.destroyPreset(l, d, id, true, false, false, null);
-//            final Player p = player;
-//            plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
-//                @Override
-//                public void run() {
-            plugin.builderP.buildPreset(id, l, d, cham, player, true, false);
-//                }
-//            }, 10L);
+            if (!hid) {
+                plugin.destroyerP.destroyDoor(id);
+                plugin.destroyerP.destroySign(l, old_d, demat);
+            }
+            plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
+                @Override
+                public void run() {
+                    plugin.builderP.buildPreset(id, l, d, cham, player, true, false);
+                }
+            }, 10L);
             HashMap<String, Object> wherea = new HashMap<String, Object>();
             wherea.put("tardis_id", id);
             qf.alterEnergyLevel("tardis", -amount, wherea, player);

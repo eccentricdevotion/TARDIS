@@ -27,19 +27,19 @@ import me.eccentric_nz.TARDIS.TARDISConstants;
  *
  * @author eccentric_nz
  */
-public class TARDISWellPreset {
+public class TARDISAppertureSciencePreset {
 
-    private final String blueprint_id = "[[98,85,85,98],[98,0,0,98],[98,85,85,98],[98,0,0,98],[98,85,85,98],[98,0,0,98],[98,85,85,98],[98,0,0,98],[96,0,0,98],[0,0,0,106]]";
-    private final String blueprint_data = "[[1,0,0,1],[1,0,0,1],[1,0,0,1],[1,0,0,1],[1,0,0,1],[1,0,0,1],[1,0,0,1],[1,0,0,1],[2,0,0,1],[0,0,0,8]]";
-    private final String ice_id = "[[79,79,79,79],[79,0,0,79],[79,79,79,79],[79,0,0,79],[79,79,79,79],[79,0,0,79],[79,79,79,79],[79,0,0,79],[96,0,0,79],[0,0,0,106]]";
-    private final String ice_data = "[[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0],[2,0,0,0],[0,0,0,8]]";
-    private final String glass_id = "[[20,20,20,20],[20,0,0,20],[20,20,20,20],[20,0,0,20],[20,20,20,20],[20,0,0,20],[20,20,20,20],[20,0,0,20],[96,0,0,20],[0,0,0,106]]";
-    private final String glass_data = "[[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0],[2,0,0,0],[0,0,0,8]]";
+    private final String blueprint_id = "[[35,35,35,0],[35,0,35,0],[35,35,35,0],[63,0,0,0],[35,35,35,0],[35,0,35,0],[35,35,35,0],[0,0,0,0],[0,0,96,0],[0,0,0,0]]";
+    private final String blueprint_data = "[[1,1,1,0],[1,0,1,0],[1,1,1,0],[4,0,0,0],[11,11,11,0],[11,0,11,0],[11,11,11,0],[0,0,0,0],[0,0,8,0],[0,0,0,0]]";
+    private final String ice_id = "[[79,79,79,0],[79,0,79,0],[79,79,79,0],[63,0,0,0],[79,79,79,0],[79,0,79,0],[79,79,79,0],[0,0,0,0],[0,0,96,0],[0,0,0,0]]";
+    private final String ice_data = "[[0,0,0,0],[0,0,0,0],[0,0,0,0],[4,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,8,0],[0,0,0,0]]";
+    private final String glass_id = "[[20,20,20,0],[20,0,20,0],[20,20,20,0],[63,0,0,0],[20,20,20,0],[20,0,20,0],[20,20,20,0],[0,0,0,0],[0,0,96,0],[0,0,0,0]]";
+    private final String glass_data = "[[0,0,0,0],[0,0,0,0],[0,0,0,0],[4,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,8,0],[0,0,0,0]]";
     private final EnumMap<TARDISConstants.COMPASS, TARDISChameleonColumn> blueprint = new EnumMap<TARDISConstants.COMPASS, TARDISChameleonColumn>(TARDISConstants.COMPASS.class);
     private final EnumMap<TARDISConstants.COMPASS, TARDISChameleonColumn> ice = new EnumMap<TARDISConstants.COMPASS, TARDISChameleonColumn>(TARDISConstants.COMPASS.class);
     private final EnumMap<TARDISConstants.COMPASS, TARDISChameleonColumn> glass = new EnumMap<TARDISConstants.COMPASS, TARDISChameleonColumn>(TARDISConstants.COMPASS.class);
 
-    public TARDISWellPreset() {
+    public TARDISAppertureSciencePreset() {
     }
 
     public void makePresets() {

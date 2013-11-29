@@ -19,6 +19,8 @@ package me.eccentric_nz.TARDIS.chameleon;
 import java.util.Arrays;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
+import org.bukkit.enchantments.Enchantment;
+import org.bukkit.enchantments.EnchantmentWrapper;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
@@ -61,6 +63,13 @@ public class TARDISChameleonInventory {
         ItemMeta now = apply.getItemMeta();
         now.setDisplayName("Apply preset now");
         apply.setItemMeta(now);
+        // page two
+        ItemStack page = new ItemStack(Material.ARROW, 1);
+        ItemMeta two = page.getItemMeta();
+        two.setDisplayName("Go to page 2");
+        Enchantment e = EnchantmentWrapper.ARROW_FIRE;
+        two.addEnchant(e, 1, true);
+        page.setItemMeta(two);
         // New Police Box
         ItemStack box = new ItemStack(Material.WOOL, 1, (short) 11);
         ItemMeta day = box.getItemMeta();
@@ -171,11 +180,6 @@ public class TARDISChameleonInventory {
         ItemMeta shroom = mush.getItemMeta();
         shroom.setDisplayName("Mushroom");
         mush.setItemMeta(shroom);
-        // custom
-        ItemStack custom = new ItemStack(Material.PISTON_STICKY_BASE, 1);
-        ItemMeta pre = custom.getItemMeta();
-        pre.setDisplayName("Custom");
-        custom.setItemMeta(pre);
         // Biome
         ItemStack bio = new ItemStack(Material.LOG, 1, (short) 2);
         ItemMeta me = bio.getItemMeta();
@@ -196,7 +200,7 @@ public class TARDISChameleonInventory {
             null, swamp, null, tent, null, village, null, yellow, null,
             tel, null, ang, null, sub, null, flo, null, stone,
             null, chal, null, desert, null, well, null, win, null,
-            cake, null, grave, null, topsy, null, mush, null, custom
+            cake, null, grave, null, topsy, null, mush, null, page
         };
         return is;
     }

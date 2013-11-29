@@ -61,7 +61,11 @@ public class TARDISBuilderPreset {
         face_map.put(TARDISConstants.COMPASS.EAST, new BlockFace[]{BlockFace.NORTH_WEST, BlockFace.WEST_NORTH_WEST, BlockFace.WEST, BlockFace.WEST_SOUTH_WEST, BlockFace.SOUTH_WEST});
         no_block_under_door = new ArrayList<TARDISConstants.PRESET>();
         no_block_under_door.add(TARDISConstants.PRESET.ANGEL);
+        no_block_under_door.add(TARDISConstants.PRESET.APPERTURE);
+        no_block_under_door.add(TARDISConstants.PRESET.DUCK);
         no_block_under_door.add(TARDISConstants.PRESET.GRAVESTONE);
+        no_block_under_door.add(TARDISConstants.PRESET.ROBOT);
+        no_block_under_door.add(TARDISConstants.PRESET.SNOWMAN);
         no_block_under_door.add(TARDISConstants.PRESET.SWAMP);
         no_block_under_door.add(TARDISConstants.PRESET.WELL);
     }

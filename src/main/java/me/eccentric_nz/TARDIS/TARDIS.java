@@ -31,6 +31,7 @@ import me.eccentric_nz.TARDIS.builders.TARDISBuilderPreset;
 import me.eccentric_nz.TARDIS.builders.TARDISSpace;
 import me.eccentric_nz.TARDIS.chameleon.TARDISChameleonListener;
 import me.eccentric_nz.TARDIS.chameleon.TARDISChameleonPreset;
+import me.eccentric_nz.TARDIS.chameleon.TARDISPresetListener;
 import me.eccentric_nz.TARDIS.commands.admin.TARDISAdminCommands;
 import me.eccentric_nz.TARDIS.commands.TARDISAreaCommands;
 import me.eccentric_nz.TARDIS.commands.TARDISBindCommands;
@@ -446,6 +447,7 @@ public class TARDIS extends JavaPlugin {
         if (bukkitversion.compareTo(preIMversion) >= 0) {
             pm.registerEvents(new TARDISTerminalListener(this), this);
             pm.registerEvents(new TARDISChameleonListener(this), this);
+            pm.registerEvents(new TARDISPresetListener(this), this);
             pm.registerEvents(new TARDISARSListener(this), this);
             pm.registerEvents(new TARDISSaveSignListener(this), this);
             pm.registerEvents(new TARDISAreaSignListener(this), this);
