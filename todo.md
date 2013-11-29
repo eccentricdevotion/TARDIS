@@ -9,7 +9,6 @@
 3. Documentation & videos!
 4. Move custom.schematic to user_schematics folder
 5. Presets
-   * Underdoor blocks for MINESHAFT (rails)
    * RUBBER DUCK remove button eyes first when destroying
 
 ## Waiting on Bukkit API

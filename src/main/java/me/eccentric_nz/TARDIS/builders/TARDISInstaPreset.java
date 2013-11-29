@@ -227,10 +227,11 @@ public class TARDISInstaPreset {
                         int light = (preset.equals(TARDISConstants.PRESET.NEW) || preset.equals(TARDISConstants.PRESET.OLD)) ? lamp : colids[yy];
                         plugin.utils.setBlockAndRemember(world, xx, (y + yy), zz, light, coldatas[yy], tid);
                         break;
-                    case 64: // wood, iron & trap doors
+                    case 64: // wood, iron & trap doors, rails
+                    case 66:
                     case 71:
                     case 96:
-                        if (coldatas[yy] < 8 || colids[yy] == 96) {
+                        if ((coldatas[yy] < 8 || colids[yy] == 96) && colids[yy] != 66) {
                             // remember the door location
                             String doorloc = world.getName() + ":" + xx + ":" + (y + yy) + ":" + zz;
                             // should insert the door when tardis is first made, and then update location there after!
