@@ -233,7 +233,7 @@ public class TARDISRoomRunnable implements Runnable {
                 } else {
                     id = middle_id;
                 }
-                data = middle_data;
+                data = ((room.equals("GRAVITY") || room.equals("ANTIGRAVITY")) && middle_id == 35 && (middle_data == 5 || middle_data == 6)) ? 1 : middle_data;
             }
             if (id == 35 && data == 8) {
                 if (floor_id == 35 && floor_data == 8 && plugin.getConfig().getBoolean("use_clay")) {
@@ -241,7 +241,7 @@ public class TARDISRoomRunnable implements Runnable {
                 } else {
                     id = floor_id;
                 }
-                data = floor_data;
+                data = ((room.equals("GRAVITY") || room.equals("ANTIGRAVITY")) && floor_id == 35 && (floor_data == 5 || floor_data == 6)) ? 8 : floor_data;
             }
             QueryFactory qf = new QueryFactory(plugin);
             // set condenser
