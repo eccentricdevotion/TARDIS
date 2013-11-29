@@ -16,7 +16,9 @@
  */
 package me.eccentric_nz.TARDIS.commands.admin;
 
+import java.util.Locale;
 import me.eccentric_nz.TARDIS.TARDIS;
+import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
@@ -47,8 +49,21 @@ public class TARDISMakePresetCommand {
             player.sendMessage(plugin.pluginName + "You must be facing EAST, with the preset front facing WEST!");
             return true;
         }
+        String bool;
+        if (args.length == 3) {
+            // check they typed true of false
+            String tf = args[2].toLowerCase(Locale.ENGLISH);
+            if (!tf.equals("true") && !tf.equals("false")) {
+                sender.sendMessage(plugin.pluginName + ChatColor.RED + "The last argument must be true or false!");
+                return false;
+            }
+            bool = tf;
+        } else {
+            // presume it is assymetric if not set
+            bool = "true";
+        }
         player.sendMessage(plugin.pluginName + "Please right-click the lower left block of the preset with your TARDIS key. If there is no block there, place some sponge instead.");
-        plugin.trackPreset.put(player.getName(), args[1]);
+        plugin.trackPreset.put(player.getName(), args[1] + ":" + bool);
         return true;
     }
 }
