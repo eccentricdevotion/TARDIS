@@ -97,7 +97,7 @@ public class TARDISUpdateCommand {
                     return true;
                 }
                 TARDISConstants.SCHEMATIC schm = rs.getSchematic();
-                if (!schm.equals(TARDISConstants.SCHEMATIC.CUSTOM)) {
+                if (schm.equals(TARDISConstants.SCHEMATIC.CUSTOM)) {
                     player.sendMessage(plugin.pluginName + "You cannot use the Architectural Reconfiguration System with a CUSTOM TARDIS!");
                     return true;
                 }
