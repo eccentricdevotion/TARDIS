@@ -95,6 +95,9 @@ public class TARDISDirectionCommand {
             final TARDISConstants.COMPASS d = TARDISConstants.COMPASS.valueOf(dir);
             // destroy sign
             if (!hid) {
+                if (demat.equals(TARDISConstants.PRESET.DUCK)) {
+                    plugin.destroyerP.destroyDuckEyes(l, d);
+                }
                 plugin.destroyerP.destroyDoor(id);
                 plugin.destroyerP.destroySign(l, old_d, demat);
             }

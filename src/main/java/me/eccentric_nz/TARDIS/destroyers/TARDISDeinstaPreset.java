@@ -101,6 +101,9 @@ public class TARDISDeinstaPreset {
                 }
                 plugin.utils.setBlock(w, flowerx, flowery, flowerz, 0, (byte) 0);
                 break;
+            case DUCK:
+                plugin.destroyerP.destroyDuckEyes(l, d);
+                break;
             default:
                 break;
         }
