@@ -48,6 +48,7 @@ public class TARDISMakeTardisCSV {
      * administrators to use their own schematic files.
      */
     public void loadCSV() {
+        // make directories if they don't exist
         File schematicDir = new File(plugin.getDataFolder() + File.separator + "schematics");
         if (!schematicDir.exists()) {
             boolean result = schematicDir.mkdir();
@@ -55,6 +56,15 @@ public class TARDISMakeTardisCSV {
                 schematicDir.setWritable(true);
                 schematicDir.setExecutable(true);
                 plugin.console.sendMessage(plugin.pluginName + "Created schematics directory.");
+            }
+        }
+        File userDir = new File(plugin.getDataFolder() + File.separator + "user_schematics");
+        if (!userDir.exists()) {
+            boolean useResult = userDir.mkdir();
+            if (useResult) {
+                userDir.setWritable(true);
+                userDir.setExecutable(true);
+                plugin.console.sendMessage(plugin.pluginName + "Created user_schematics directory.");
             }
         }
         // load tardisCSV files - create them if they don't exist
@@ -71,6 +81,7 @@ public class TARDISMakeTardisCSV {
         reader = new TARDISInteriorSchematicReader(plugin);
         // load schematic files - copy the defaults if they don't exist
         String basepath = plugin.getDataFolder() + File.separator + "schematics" + File.separator;
+        String userbasepath = plugin.getDataFolder() + File.separator + "user_schematics" + File.separator;
         String arsnstr = basepath + TARDISConstants.SCHEMATIC_ARS;
         String bignstr = basepath + TARDISConstants.SCHEMATIC_BIGGER;
         String budnstr = basepath + TARDISConstants.SCHEMATIC_BUDGET;
@@ -157,14 +168,18 @@ public class TARDISMakeTardisCSV {
         plugin.plankschematic = TARDISSchematic.schematic(plugin.plankSchematicCSV, plugin.plankdimensions[0], plugin.plankdimensions[1], plugin.plankdimensions[2]);
         plugin.tomschematic = TARDISSchematic.schematic(plugin.tomSchematicCSV, plugin.tomdimensions[0], plugin.tomdimensions[1], plugin.tomdimensions[2]);
         // do custom schematic last
-        File c_file = new File(basepath + TARDISConstants.SCHEMATIC_CUSTOM);
+        File c_file = new File(userbasepath + TARDISConstants.SCHEMATIC_CUSTOM);
         //new File(plugin.getDataFolder() + File.separator + "schematics" + File.separator, TARDISConstants.SCHEMATIC_CUSTOM);
-        if (plugin.getConfig().getBoolean("custom_schematic") && c_file.exists()) {
-            plugin.customSchematicCSV = createFile(TARDISConstants.SCHEMATIC_CUSTOM + ".csv");
-            String cusnstr = basepath + TARDISConstants.SCHEMATIC_CUSTOM;
-            //plugin.customSchematicFile = copy(cusnstr, plugin.getResource(TARDISConstants.SCHEMATIC_CUSTOM));
-            reader.readAndMakeInteriorCSV(cusnstr, TARDISConstants.SCHEMATIC.CUSTOM);
-            plugin.customschematic = TARDISSchematic.schematic(plugin.customSchematicCSV, plugin.customdimensions[0], plugin.customdimensions[1], plugin.customdimensions[2]);
+        if (plugin.getConfig().getBoolean("custom_schematic")) {
+            if (c_file.exists()) {
+                plugin.customSchematicCSV = createFile(TARDISConstants.SCHEMATIC_CUSTOM + ".csv");
+                String cusnstr = userbasepath + TARDISConstants.SCHEMATIC_CUSTOM;
+                //plugin.customSchematicFile = copy(cusnstr, plugin.getResource(TARDISConstants.SCHEMATIC_CUSTOM));
+                reader.readAndMakeInteriorCSV(cusnstr, TARDISConstants.SCHEMATIC.CUSTOM);
+                plugin.customschematic = TARDISSchematic.schematic(plugin.customSchematicCSV, plugin.customdimensions[0], plugin.customdimensions[1], plugin.customdimensions[2]);
+            } else {
+                plugin.console.sendMessage(plugin.pluginName + "CUSTOM console is enabled in the config, but the schematic file was not found in 'user_schematics'!");
+            }
         }
     }
 

@@ -49,15 +49,6 @@ public class TARDISMakeRoomCSV {
      * administrators to use their own schematic files.
      */
     public void loadCSV() {
-        File userDir = new File(plugin.getDataFolder() + File.separator + "user_schematics");
-        if (!userDir.exists()) {
-            boolean result = userDir.mkdir();
-            if (result) {
-                userDir.setWritable(true);
-                userDir.setExecutable(true);
-                plugin.console.sendMessage(plugin.pluginName + "Created user_schematics directory.");
-            }
-        }
         // load room CSV files - create them if they don't exist
         reader = new TARDISRoomSchematicReader(plugin);
         String defaultbasepath = plugin.getDataFolder() + File.separator + "schematics" + File.separator;
