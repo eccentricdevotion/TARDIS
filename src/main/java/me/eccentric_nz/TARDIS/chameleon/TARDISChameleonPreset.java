@@ -256,11 +256,17 @@ public class TARDISChameleonPreset {
                 return id;
             case WEST:
                 if (assymetric) {
+                    int[] zero_w = id[0];
+                    int[] one_w = id[1];
                     int[] two_w = id[2];
                     int[] four_w = id[4];
-                    id[2] = id[0];
+                    int[] five_w = id[5];
+                    int[] six_w = id[6];
+                    id[1] = five_w;
+                    id[2] = zero_w;
                     id[0] = two_w;
-                    id[4] = id[6];
+                    id[4] = six_w;
+                    id[5] = one_w;
                     id[6] = four_w;
                 }
                 int[] three_w = id[3];

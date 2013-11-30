@@ -61,12 +61,6 @@ public class TARDISButtonRecalculator {
                     case 2:
                         recalc = 1;
                         break;
-                    case 3:
-                        recalc = 4;
-                        break;
-                    case 4:
-                        recalc = 3;
-                        break;
                     default:
                         recalc = b;
                 }

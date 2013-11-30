@@ -7,7 +7,6 @@
     * add new features
     * auto log out?
 3. Documentation & videos!
-4. Move custom.schematic to user_schematics folder
 5. Presets
    * RUBBER DUCK remove button eyes first when destroying
 
