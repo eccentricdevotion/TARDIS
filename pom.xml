@@ -151,6 +151,12 @@
             <artifactId>TARDISHorseSpeed</artifactId>
             <version>1.0a</version>
             <type>jar</type>
+            <exclusions>
+                <exclusion>
+                    <artifactId>craftbukkit</artifactId>
+                    <groupId>org.bukkit</groupId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>org.bukkit</groupId>
@@ -163,6 +169,24 @@
             <artifactId>worldguard</artifactId>
             <version>5.8.1-SNAPSHOT</version>
             <type>jar</type>
+            <exclusions>
+                <exclusion>
+                    <artifactId>opencsv</artifactId>
+                    <groupId>net.sf.opencsv</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>prtree</artifactId>
+                    <groupId>org.khelekore</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>iconomy</artifactId>
+                    <groupId>com.nijikokun</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>commandbook</artifactId>
+                    <groupId>com.sk89q</groupId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>com.sk89q</groupId>
@@ -187,18 +211,80 @@
             <artifactId>Multiverse-Core</artifactId>
             <version>2.5</version>
             <type>jar</type>
+            <exclusions>
+                <exclusion>
+                    <artifactId>metrics</artifactId>
+                    <groupId>org.mcstats</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>craftbukkit</artifactId>
+                    <groupId>org.bukkit</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>buscript</artifactId>
+                    <groupId>com.dumptruckman.minecraft</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>AllPay</artifactId>
+                    <groupId>com.fernferret.allpay</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>CommandHandler</artifactId>
+                    <groupId>com.pneumaticraft.commandhandler</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>Logging</artifactId>
+                    <groupId>com.dumptruckman.minecraft</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>SerializationConfig</artifactId>
+                    <groupId>me.main__.util</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>Vault</artifactId>
+                    <groupId>net.milkbowl.vault</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>junit</artifactId>
+                    <groupId>junit</groupId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>com.onarandombox.multiverseinventories</groupId>
             <artifactId>Multiverse-Inventories</artifactId>
             <version>2.5</version>
             <type>jar</type>
+            <exclusions>
+                <exclusion>
+                    <artifactId>craftbukkit</artifactId>
+                    <groupId>org.bukkit</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>MultiInv</artifactId>
+                    <groupId>uk.co</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>WorldInventories</artifactId>
+                    <groupId>me.drayshak</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>junit</artifactId>
+                    <groupId>junit</groupId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>com.onarandombox.multiverseadventure</groupId>
             <artifactId>Multiverse-Adventure</artifactId>
             <version>2.5</version>
             <type>jar</type>
+            <exclusions>
+                <exclusion>
+                    <artifactId>Multiverse-Portals</artifactId>
+                    <groupId>com.onarandombox.multiverseportals</groupId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>multiworld</groupId>
