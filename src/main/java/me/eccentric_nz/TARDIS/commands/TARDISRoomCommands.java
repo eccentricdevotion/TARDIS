@@ -35,7 +35,6 @@ import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.files.TARDISMakeRoomCSV;
 import me.eccentric_nz.TARDIS.files.TARDISRoomSchematicReader;
 import me.eccentric_nz.TARDIS.files.TARDISSchematic;
-import me.eccentric_nz.TARDIS.utility.TARDISMaterials;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.command.Command;
@@ -244,7 +243,7 @@ public class TARDISRoomCommands implements CommandExecutor {
                     } catch (NumberFormatException nfe) {
                         // string seed
                         String setMaterial = args[1].toUpperCase(Locale.ENGLISH);
-                        if (!Arrays.asList(TARDISMaterials.MATERIAL_LIST).contains(setMaterial)) {
+                        if (!Arrays.asList(Material.values()).contains(Material.valueOf(setMaterial))) {
                             sender.sendMessage(plugin.pluginName + ChatColor.RED + "That is not a valid Material! Try checking http://jd.bukkit.org/apidocs/org/bukkit/Material.html");
                             return false;
                         }

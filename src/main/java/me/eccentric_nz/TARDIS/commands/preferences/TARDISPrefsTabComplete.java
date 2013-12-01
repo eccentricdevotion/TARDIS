@@ -19,7 +19,7 @@ package me.eccentric_nz.TARDIS.commands.preferences;
 import com.google.common.collect.ImmutableList;
 import java.util.*;
 import me.eccentric_nz.TARDIS.rooms.TARDISWalls;
-import me.eccentric_nz.TARDIS.utility.TARDISMaterials;
+import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
@@ -42,7 +42,12 @@ public class TARDISPrefsTabComplete implements TabCompleter {
             mats.add(key);
         }
         this.MAT_SUBS = ImmutableList.copyOf(mats);
-        this.KEY_SUBS = ImmutableList.copyOf(Arrays.asList(TARDISMaterials.MATERIAL_LIST));
+        List<String> keys = new ArrayList<String>();
+        Material[] materialValues = Material.values();
+        for (Material key : materialValues) {
+            keys.add(key.toString());
+        }
+        this.KEY_SUBS = ImmutableList.copyOf(keys);
     }
 
     @Override

@@ -21,8 +21,8 @@ import java.io.IOException;
 import java.util.Arrays;
 import java.util.Locale;
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.utility.TARDISMaterials;
 import org.bukkit.ChatColor;
+import org.bukkit.Material;
 import org.bukkit.command.CommandSender;
 
 /**
@@ -40,7 +40,7 @@ public class TARDISSetMaterialCommand {
     public boolean setConfigMaterial(CommandSender sender, String[] args) {
         String first = args[0];
         String setMaterial = args[1].toUpperCase(Locale.ENGLISH);
-        if (!Arrays.asList(TARDISMaterials.MATERIAL_LIST).contains(setMaterial)) {
+        if (!Arrays.asList(Material.values()).contains(Material.valueOf(setMaterial))) {
             sender.sendMessage(plugin.pluginName + ChatColor.RED + "That is not a valid Material! Try checking http://jd.bukkit.org/apidocs/org/bukkit/Material.html");
             return false;
         } else {

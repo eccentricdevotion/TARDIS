@@ -21,8 +21,8 @@ import java.util.HashMap;
 import java.util.Locale;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
-import me.eccentric_nz.TARDIS.utility.TARDISMaterials;
 import org.bukkit.ChatColor;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
 
 /**
@@ -43,7 +43,7 @@ public class TARDISSetKeyCommand {
             return false;
         }
         String setMaterial = args[1].toUpperCase(Locale.ENGLISH);
-        if (!Arrays.asList(TARDISMaterials.MATERIAL_LIST).contains(setMaterial)) {
+        if (!Arrays.asList(Material.values()).contains(Material.valueOf(setMaterial))) {
             player.sendMessage(plugin.pluginName + ChatColor.RED + "That is not a valid Material! Try checking http://jd.bukkit.org/apidocs/org/bukkit/Material.html");
             return false;
         } else {
