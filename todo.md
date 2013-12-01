@@ -1,14 +1,10 @@
 # TODO
 
 ## Current version `2.6`
-1. Rooms / consoles
-   * check the offsets in TARDISARS.java, also check that the new piston door schematics grow at the correct level for all TARDIS types - both with ARS and manually.
-2. TARDIS Information System
+1. TARDIS Information System
     * add new features
     * auto log out?
-3. Documentation & videos!
-5. Presets
-   * RUBBER DUCK remove button eyes first when destroying
+2. Documentation & videos!
 
 ## Waiting on Bukkit API
 0. IDs are soon to be history... so convert all ID use to entity names
@@ -16,7 +12,7 @@
 2. Use Resource Pack sounds
 3. Change ice presets to stained glass of a similar colour to chosen preset
 
-## Next version `2.7`
+## Next version `2.7-beta-1`
 1. T.I.P.S. - TARDIS Interior Positioning System
 2. Sonic Screwdrivers
 3. Advanced TARDIS console
