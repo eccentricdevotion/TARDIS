@@ -112,6 +112,14 @@ public class TARDISRoomRemover {
                 }
             }
         }
+        if (r.equals("FARM") || r.equals("STABLE") || r.equals("RAIL") || r.equals("VILLAGE")) {
+            // remove farm location from the database
+            HashMap<String, Object> set = new HashMap<String, Object>();
+            set.put(r.toLowerCase(), "");
+            HashMap<String, Object> where = new HashMap<String, Object>();
+            where.put("tardis_id", id);
+            qf.doUpdate("tardis", set, where);
+        }
         return true;
     }
 }
