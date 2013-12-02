@@ -78,28 +78,50 @@ public class TARDISLampsCommand {
             ResultSetChunks rsc = new ResultSetChunks(plugin, wherec, true);
             if (rsc.resultSet()) {
                 int starty, endy;
+                short[] dimensions;
                 switch (rs.getSchematic()) {
                     case BIGGER:
-                        starty = 20;
-                        endy = 28;
+                        starty = 65;
+                        dimensions = plugin.biggerdimensions;
                         break;
                     case DELUXE:
-                        starty = 20;
-                        endy = 27;
+                        starty = 64;
+                        dimensions = plugin.deluxedimensions;
                         break;
                     case ELEVENTH:
-                        starty = 16;
-                        endy = 30;
+                        starty = 64;
+                        dimensions = plugin.eleventhdimensions;
                         break;
                     case REDSTONE:
-                        starty = 20;
-                        endy = 33;
+                        starty = 65;
+                        dimensions = plugin.redstonedimensions;
+                        break;
+                    case ARS:
+                        starty = 64;
+                        dimensions = plugin.arsdimensions;
+                        break;
+                    case PLANK:
+                        starty = 64;
+                        dimensions = plugin.plankdimensions;
+                        break;
+                    case TOM:
+                        starty = 64;
+                        dimensions = plugin.tomdimensions;
+                        break;
+                    case STEAMPUNK:
+                        starty = 64;
+                        dimensions = plugin.steampunkdimensions;
+                        break;
+                    case CUSTOM:
+                        starty = 64;
+                        dimensions = plugin.customdimensions;
                         break;
                     default:
-                        starty = 19;
-                        endy = 28;
+                        starty = 64;
+                        dimensions = plugin.budgetdimensions;
                         break;
                 }
+                endy = starty + dimensions[0];
                 ArrayList<HashMap<String, String>> data = rsc.getData();
                 // loop through the chunks
                 for (HashMap<String, String> map : data) {

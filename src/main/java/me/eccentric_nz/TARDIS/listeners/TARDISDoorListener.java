@@ -60,7 +60,6 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.material.Door;
-//import org.getspout.spoutapi.SpoutManager;
 
 /**
  * During TARDIS operation, a distinctive grinding and whirring sound is usually
