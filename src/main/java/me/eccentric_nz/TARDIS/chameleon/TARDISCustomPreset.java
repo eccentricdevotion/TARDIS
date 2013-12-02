@@ -35,7 +35,7 @@ import me.eccentric_nz.TARDIS.TARDISConstants;
 public class TARDISCustomPreset {
 
     private final EnumMap<TARDISConstants.COMPASS, TARDISChameleonColumn> blueprint = new EnumMap<TARDISConstants.COMPASS, TARDISChameleonColumn>(TARDISConstants.COMPASS.class);
-    private final EnumMap<TARDISConstants.COMPASS, TARDISChameleonColumn> ice = new EnumMap<TARDISConstants.COMPASS, TARDISChameleonColumn>(TARDISConstants.COMPASS.class);
+    private final EnumMap<TARDISConstants.COMPASS, TARDISChameleonColumn> stained = new EnumMap<TARDISConstants.COMPASS, TARDISChameleonColumn>(TARDISConstants.COMPASS.class);
     private final EnumMap<TARDISConstants.COMPASS, TARDISChameleonColumn> glass = new EnumMap<TARDISConstants.COMPASS, TARDISChameleonColumn>(TARDISConstants.COMPASS.class);
     String line_one;
     String line_two;
@@ -81,7 +81,7 @@ public class TARDISCustomPreset {
         TARDISChameleonPreset tcp = new TARDISChameleonPreset();
         for (TARDISConstants.COMPASS d : TARDISConstants.COMPASS.values()) {
             blueprint.put(d, tcp.buildTARDISChameleonColumn(d, custom_data[0], custom_data[1], asymmetric));
-            ice.put(d, tcp.buildTARDISChameleonColumn(d, custom_data[2], custom_data[3], asymmetric));
+            stained.put(d, tcp.buildTARDISChameleonColumn(d, custom_data[2], custom_data[3], asymmetric));
             glass.put(d, tcp.buildTARDISChameleonColumn(d, custom_data[4], custom_data[5], asymmetric));
         }
         if (custom_data[6] != null && !custom_data[6].isEmpty()) {
@@ -97,8 +97,8 @@ public class TARDISCustomPreset {
         return blueprint;
     }
 
-    public EnumMap<TARDISConstants.COMPASS, TARDISChameleonColumn> getIce() {
-        return ice;
+    public EnumMap<TARDISConstants.COMPASS, TARDISChameleonColumn> getStained() {
+        return stained;
     }
 
     public EnumMap<TARDISConstants.COMPASS, TARDISChameleonColumn> getGlass() {

@@ -48,7 +48,7 @@ public class TARDISBlockPhysicsListener implements Listener {
             if (block.getType() == Material.TRAP_DOOR) {
                 Block blockBehind = getBlockBehindHatch(block);
                 if (blockBehind != null) {
-                    if (blockBehind.getType().equals(Material.GLASS) || blockBehind.getType().equals(Material.ICE) || blockBehind.getType().equals(Material.SMOOTH_BRICK)) {
+                    if (blockBehind.getType().equals(Material.GLASS) || blockBehind.getType().equals(Material.ICE) || blockBehind.getType().equals(Material.STAINED_GLASS)) {
                         event.setCancelled(true);
                     }
                 }
@@ -59,7 +59,7 @@ public class TARDISBlockPhysicsListener implements Listener {
             if (block.getType() == Material.IRON_DOOR_BLOCK || block.getType() == Material.WOODEN_DOOR) {
                 Block blockBelow = getBlockBelow(block);
                 if (blockBelow != null) {
-                    if (blockBelow.getType().equals(Material.GLASS) || blockBelow.getType().equals(Material.ICE) || blockBelow.getType().equals(Material.WOODEN_DOOR) || blockBelow.getType().equals(Material.IRON_DOOR_BLOCK) || blockBelow.getType().equals(Material.AIR)) {
+                    if (blockBelow.getType().equals(Material.GLASS) || blockBelow.getType().equals(Material.ICE) || blockBelow.getType().equals(Material.WOODEN_DOOR) || blockBelow.getType().equals(Material.IRON_DOOR_BLOCK) || blockBelow.getType().equals(Material.STAINED_GLASS) || blockBelow.getType().equals(Material.AIR)) {
                         event.setCancelled(true);
                     }
                 }

@@ -29,10 +29,8 @@ import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.travel.TARDISDoorLocation;
 import org.bukkit.ChatColor;
-import org.bukkit.Effect;
 import org.bukkit.Location;
 import org.bukkit.Material;
-import org.bukkit.Sound;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.block.Sign;
@@ -65,7 +63,7 @@ public class TARDISPresetRunnable implements Runnable {
     private final byte cham_data;
     private Block sponge;
     private final TARDISChameleonColumn column;
-    private final TARDISChameleonColumn ice_column;
+    private final TARDISChameleonColumn stained_column;
     private final TARDISChameleonColumn glass_column;
     private final byte[] colours;
     private final Random rand;
@@ -109,7 +107,7 @@ public class TARDISPresetRunnable implements Runnable {
             plugin.presets.setR(rand.nextInt(2));
         }
         column = plugin.presets.getColumn(preset, d);
-        ice_column = plugin.presets.getIce(preset, d);
+        stained_column = plugin.presets.getStained(preset, d);
         glass_column = plugin.presets.getGlass(preset, d);
         colours = new byte[]{0, 1, 2, 3, 4, 5, 6, 9, 10, 11, 12, 13, 14};
         random_colour = colours[rand.nextInt(13)];
@@ -136,9 +134,9 @@ public class TARDISPresetRunnable implements Runnable {
                 i++;
                 // determine preset to use
                 switch (i % 3) {
-                    case 2: // ice
-                        ids = ice_column.getId();
-                        datas = ice_column.getData();
+                    case 2: // stained
+                        ids = stained_column.getId();
+                        datas = stained_column.getData();
                         break;
                     case 1: // glass
                         ids = glass_column.getId();
@@ -156,7 +154,7 @@ public class TARDISPresetRunnable implements Runnable {
                     if (saved != null) {
                         TARDISDoorLocation idl = plugin.doorListener.getDoor(1, tid);
                         Location l = idl.getL();
-                        plugin.doorListener.movePlayer(saved, l, false, world, false);
+                        plugin.doorListener.movePlayer(saved, l, false, world, false, 0);
                         // put player into travellers table
                         HashMap<String, Object> set = new HashMap<String, Object>();
                         set.put("tardis_id", tid);
@@ -171,16 +169,7 @@ public class TARDISPresetRunnable implements Runnable {
                     plugin.builderP.addPlatform(location, false, d, player.getName(), tid);
                     HashMap<String, Object> where = new HashMap<String, Object>();
                     where.put("tardis_id", tid);
-//                    if (plugin.pm.getPlugin("Spout") != null && SpoutManager.getPlayer(player).isSpoutCraftEnabled()) {
-//                        SpoutManager.getSoundManager().playGlobalCustomSoundEffect(plugin, "https://dl.dropboxusercontent.com/u/53758864/tardis_land.mp3", false, location, 9, 75);
-//                    } else {
-                    try {
-                        Class.forName("org.bukkit.Sound");
-                        world.playSound(location, Sound.MINECART_INSIDE, 1, 0);
-                    } catch (ClassNotFoundException e) {
-                        world.playEffect(location, Effect.BLAZE_SHOOT, 0);
-                    }
-//                    }
+                    plugin.utils.playTARDISSound(location, player, "tardis_land");
                     QueryFactory qf = new QueryFactory(plugin);
                     // get direction player is facing from yaw place block under door if block is in list of blocks an iron door cannot go on
                     switch (d) {

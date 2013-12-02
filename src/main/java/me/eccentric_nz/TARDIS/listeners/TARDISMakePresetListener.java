@@ -2,17 +2,17 @@
  * Copyright (C) 2013 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
+ * it under the terms of the GNU General Public Lstainnse as published by
+ * the Free Software Foundation, either version 3 of the Lstainnse, or
  * (at your option) any later version.
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
- * GNU General Public License for more details.
+ * GNU General Public Lstainnse for more details.
  *
- * You should have received a copy of the GNU General Public License
- * along with this program. If not, see <http://www.gnu.org/licenses/>.
+ * You should have received a copy of the GNU General Public Lstainnse
+ * along with this program. If not, see <http://www.gnu.org/lstainnses/>.
  */
 package me.eccentric_nz.TARDIS.listeners;
 
@@ -23,6 +23,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.chameleon.TARDISStainedGlassLookup;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.block.Block;
@@ -45,18 +46,19 @@ public class TARDISMakePresetListener implements Listener {
     private final TARDIS plugin;
     private final int[] orderx;
     private final int[] orderz;
-    private final List<Integer> not_iceorglass = new ArrayList<Integer>();
+    private final List<Integer> not_glass = new ArrayList<Integer>();
+    private final TARDISStainedGlassLookup lookup = new TARDISStainedGlassLookup();
 
     public TARDISMakePresetListener(TARDIS plugin) {
         this.plugin = plugin;
         this.orderx = new int[]{0, 1, 2, 2, 2, 1, 0, 0, 1, -1};
         this.orderz = new int[]{0, 0, 0, 1, 2, 2, 2, 1, 1, 1};
-        this.not_iceorglass.add(0); // air
-        this.not_iceorglass.add(63); // sign post
-        this.not_iceorglass.add(64); // wood door
-        this.not_iceorglass.add(68); // wall sign
-        this.not_iceorglass.add(71); // iron door
-        this.not_iceorglass.add(96); // trap door
+        this.not_glass.add(0); // air
+        this.not_glass.add(63); // sign post
+        this.not_glass.add(64); // wood door
+        this.not_glass.add(68); // wall sign
+        this.not_glass.add(71); // iron door
+        this.not_glass.add(96); // trap door
     }
 
     /**
@@ -84,15 +86,15 @@ public class TARDISMakePresetListener implements Listener {
                 player.sendMessage(plugin.pluginName + "Scanning 3 x 3 x 4 area...");
                 StringBuilder sb_id = new StringBuilder("[");
                 StringBuilder sb_data = new StringBuilder("[");
-                StringBuilder sb_ice_id = new StringBuilder("[");
-                StringBuilder sb_ice_data = new StringBuilder("[");
+                StringBuilder sb_stain_id = new StringBuilder("[");
+                StringBuilder sb_stain_data = new StringBuilder("[");
                 StringBuilder sb_glass_id = new StringBuilder("[");
                 StringBuilder sb_glass_data = new StringBuilder("[");
                 for (int c = 0; c < 10; c++) {
                     sb_id.append("[");
                     sb_data.append("[");
-                    sb_ice_id.append("[");
-                    sb_ice_data.append("[");
+                    sb_stain_id.append("[");
+                    sb_stain_data.append("[");
                     sb_glass_id.append("[");
                     sb_glass_data.append("[");
                     for (int y = fy; y < (fy + 4); y++) {
@@ -105,28 +107,28 @@ public class TARDISMakePresetListener implements Listener {
                         if (y == (fy + 3)) {
                             sb_id.append(id);
                             sb_data.append(data);
-                            if (not_iceorglass.contains(id)) {
-                                sb_ice_id.append(id);
-                                sb_ice_data.append(data);
+                            if (not_glass.contains(id)) {
+                                sb_stain_id.append(id);
+                                sb_stain_data.append(data);
                                 sb_glass_id.append(id);
                                 sb_glass_data.append(data);
                             } else {
-                                sb_ice_id.append(79);
-                                sb_ice_data.append(0);
+                                sb_stain_id.append(95);
+                                sb_stain_data.append(lookup.getStain().get(id)); // get the appropiately coloured stained glass
                                 sb_glass_id.append(20);
                                 sb_glass_data.append(0);
                             }
                         } else {
                             sb_id.append(id).append(",");
                             sb_data.append(data).append(",");
-                            if (not_iceorglass.contains(id)) {
-                                sb_ice_id.append(id).append(",");
-                                sb_ice_data.append(data).append(",");
+                            if (not_glass.contains(id)) {
+                                sb_stain_id.append(id).append(",");
+                                sb_stain_data.append(data).append(",");
                                 sb_glass_id.append(id).append(",");
                                 sb_glass_data.append(data).append(",");
                             } else {
-                                sb_ice_id.append(79).append(",");
-                                sb_ice_data.append(0).append(",");
+                                sb_stain_id.append(95).append(",");
+                                sb_stain_data.append(lookup.getStain().get(id)).append(","); // get the appropiately coloured stained glass
                                 sb_glass_id.append(20).append(",");
                                 sb_glass_data.append(0).append(",");
                             }
@@ -135,29 +137,29 @@ public class TARDISMakePresetListener implements Listener {
                     if (c == 9) {
                         sb_id.append("]");
                         sb_data.append("]");
-                        sb_ice_id.append("]");
-                        sb_ice_data.append("]");
+                        sb_stain_id.append("]");
+                        sb_stain_data.append("]");
                         sb_glass_id.append("]");
                         sb_glass_data.append("]");
                     } else {
                         sb_id.append("],");
                         sb_data.append("],");
-                        sb_ice_id.append("],");
-                        sb_ice_data.append("],");
+                        sb_stain_id.append("],");
+                        sb_stain_data.append("],");
                         sb_glass_id.append("],");
                         sb_glass_data.append("],");
                     }
                 }
                 sb_id.append("]");
                 sb_data.append("]");
-                sb_ice_id.append("]");
-                sb_ice_data.append("]");
+                sb_stain_id.append("]");
+                sb_stain_data.append("]");
                 sb_glass_id.append("]");
                 sb_glass_data.append("]");
                 String ids = sb_id.toString();
                 String datas = sb_data.toString();
-                String ice_ids = sb_ice_id.toString();
-                String ice_datas = sb_ice_data.toString();
+                String stain_ids = sb_stain_id.toString();
+                String stain_datas = sb_stain_data.toString();
                 String glass_ids = sb_glass_id.toString();
                 String glass_datas = sb_glass_data.toString();
                 String filename = "custom_preset_" + name + ".txt";
@@ -174,15 +176,15 @@ public class TARDISMakePresetListener implements Listener {
                     bw.newLine();
                     bw.write(datas);
                     bw.newLine();
-                    bw.write("##start custom ice");
+                    bw.write("##start custom stain");
                     bw.newLine();
                     bw.write("#id");
                     bw.newLine();
-                    bw.write(ice_ids);
+                    bw.write(stain_ids);
                     bw.newLine();
                     bw.write("#data");
                     bw.newLine();
-                    bw.write(ice_datas);
+                    bw.write(stain_datas);
                     bw.newLine();
                     bw.write("##start custom glass");
                     bw.newLine();

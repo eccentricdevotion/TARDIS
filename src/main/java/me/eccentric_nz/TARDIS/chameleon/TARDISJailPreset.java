@@ -31,12 +31,12 @@ public class TARDISJailPreset {
 
     private final String blueprint_id = "[[98,101,101,44],[98,101,101,109],[98,101,101,44],[98,101,101,109],[98,101,101,44],[98,101,101,109],[98,101,101,44],[109,0,0,109],[98,71,71,89],[0,0,0,68]]";
     private final String blueprint_data = "[[0,0,0,5],[0,0,0,2],[0,0,0,5],[0,0,0,1],[0,0,0,5],[0,0,0,3],[0,0,0,5],[0,0,0,0],[0,0,8,0],[0,0,0,4]]";
-    private final String ice_id = "[[79,0,0,79],[79,0,0,79],[79,0,0,79],[79,0,0,79],[79,0,0,79],[79,0,0,79],[79,0,0,79],[79,0,0,79],[79,71,71,79],[0,0,0,68]]";
-    private final String ice_data = "[[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,8,0],[0,0,0,4]]";
+    private final String stained_id = "[[79,0,0,79],[79,0,0,79],[79,0,0,79],[79,0,0,79],[79,0,0,79],[79,0,0,79],[79,0,0,79],[79,0,0,79],[79,71,71,79],[0,0,0,68]]";
+    private final String stained_data = "[[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,8,0],[0,0,0,4]]";
     private final String glass_id = "[[20,0,0,20],[20,0,0,20],[20,0,0,20],[20,0,0,20],[20,0,0,20],[20,0,0,20],[20,0,0,20],[20,0,0,20],[20,71,71,20],[0,0,0,68]]";
     private final String glass_data = "[[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,8,0],[0,0,0,4]]";
     private final EnumMap<TARDISConstants.COMPASS, TARDISChameleonColumn> blueprint = new EnumMap<TARDISConstants.COMPASS, TARDISChameleonColumn>(TARDISConstants.COMPASS.class);
-    private final EnumMap<TARDISConstants.COMPASS, TARDISChameleonColumn> ice = new EnumMap<TARDISConstants.COMPASS, TARDISChameleonColumn>(TARDISConstants.COMPASS.class);
+    private final EnumMap<TARDISConstants.COMPASS, TARDISChameleonColumn> stained = new EnumMap<TARDISConstants.COMPASS, TARDISChameleonColumn>(TARDISConstants.COMPASS.class);
     private final EnumMap<TARDISConstants.COMPASS, TARDISChameleonColumn> glass = new EnumMap<TARDISConstants.COMPASS, TARDISChameleonColumn>(TARDISConstants.COMPASS.class);
 
     public TARDISJailPreset() {
@@ -47,7 +47,7 @@ public class TARDISJailPreset {
         for (TARDISConstants.COMPASS d : TARDISConstants.COMPASS.values()) {
             blueprint.put(d, tcp.buildTARDISChameleonColumn(d, blueprint_id, blueprint_data, false));
             glass.put(d, tcp.buildTARDISChameleonColumn(d, glass_id, glass_data, false));
-            ice.put(d, tcp.buildTARDISChameleonColumn(d, ice_id, ice_data, false));
+            stained.put(d, tcp.buildTARDISChameleonColumn(d, stained_id, stained_data, false));
         }
     }
 
@@ -55,8 +55,8 @@ public class TARDISJailPreset {
         return blueprint;
     }
 
-    public EnumMap<TARDISConstants.COMPASS, TARDISChameleonColumn> getIce() {
-        return ice;
+    public EnumMap<TARDISConstants.COMPASS, TARDISChameleonColumn> getStained() {
+        return stained;
     }
 
     public EnumMap<TARDISConstants.COMPASS, TARDISChameleonColumn> getGlass() {

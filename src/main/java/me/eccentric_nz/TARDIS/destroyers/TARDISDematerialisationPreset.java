@@ -24,13 +24,12 @@ import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.TARDISConstants.COMPASS;
 import me.eccentric_nz.TARDIS.chameleon.TARDISChameleonColumn;
 import me.eccentric_nz.TARDIS.database.ResultSetDoors;
-import org.bukkit.Effect;
 import org.bukkit.Location;
 import org.bukkit.Material;
-import org.bukkit.Sound;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
+import org.bukkit.entity.Player;
 //import org.getspout.spoutapi.SpoutManager;
 
 /**
@@ -53,8 +52,9 @@ public class TARDISDematerialisationPreset implements Runnable {
     private final int lamp;
     private final int cham_id;
     private final byte cham_data;
+    private final Player player;
     private final TARDISChameleonColumn column;
-    private final TARDISChameleonColumn ice_column;
+    private final TARDISChameleonColumn stained_column;
     private final TARDISChameleonColumn glass_column;
     private final List<BlockFace> faces = new ArrayList<BlockFace>();
     private byte the_colour;
@@ -73,8 +73,9 @@ public class TARDISDematerialisationPreset implements Runnable {
      * @param d the COMPASS direction the Police Box is facing
      * @param cham_id the chameleon block id for the police box
      * @param cham_data the chameleon block data for the police box
+     * @param player the player to play the sound to
      */
-    public TARDISDematerialisationPreset(TARDIS plugin, Location location, TARDISConstants.PRESET preset, int lamp, int tid, COMPASS d, int cham_id, byte cham_data) {
+    public TARDISDematerialisationPreset(TARDIS plugin, Location location, TARDISConstants.PRESET preset, int lamp, int tid, COMPASS d, int cham_id, byte cham_data, Player player) {
         this.plugin = plugin;
         this.d = d;
         this.loops = 12;
@@ -85,8 +86,9 @@ public class TARDISDematerialisationPreset implements Runnable {
         this.lamp = lamp;
         this.cham_id = cham_id;
         this.cham_data = cham_data;
+        this.player = player;
         column = plugin.presets.getColumn(preset, d);
-        ice_column = plugin.presets.getIce(preset, d);
+        stained_column = plugin.presets.getStained(preset, d);
         glass_column = plugin.presets.getGlass(preset, d);
         this.faces.add(BlockFace.NORTH);
         this.faces.add(BlockFace.SOUTH);
@@ -112,9 +114,9 @@ public class TARDISDematerialisationPreset implements Runnable {
             i++;
             // expand placed blocks to a police box
             switch (i % 3) {
-                case 2: // ice
-                    ids = ice_column.getId();
-                    datas = ice_column.getData();
+                case 2: // stained
+                    ids = stained_column.getId();
+                    datas = stained_column.getData();
                     break;
                 case 1: // glass
                     ids = glass_column.getId();
@@ -158,16 +160,7 @@ public class TARDISDematerialisationPreset implements Runnable {
                     default:
                         break;
                 }
-//                if (plugin.pm.getPlugin("Spout") != null && SpoutManager.getPlayer(player).isSpoutCraftEnabled()) {
-//                    SpoutManager.getSoundManager().playGlobalCustomSoundEffect(plugin, "https://dl.dropboxusercontent.com/u/53758864/tardis_takeoff.mp3", false, location, 9, 75);
-//                } else {
-                try {
-                    Class.forName("org.bukkit.Sound");
-                    world.playSound(location, Sound.MINECART_INSIDE, 1, 0);
-                } catch (ClassNotFoundException e) {
-                    world.playEffect(location, Effect.BLAZE_SHOOT, 0);
-                }
-//                }
+                plugin.utils.playTARDISSound(location, player, "tardis_takeoff");
                 the_colour = getWoolColour(tid, preset);
             } else {
                 // just change the walls

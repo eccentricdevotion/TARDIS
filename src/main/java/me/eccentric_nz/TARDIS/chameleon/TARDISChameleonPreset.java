@@ -663,102 +663,102 @@ public class TARDISChameleonPreset {
         }
     }
 
-    public TARDISChameleonColumn getIce(TARDISConstants.PRESET p, TARDISConstants.COMPASS d) {
+    public TARDISChameleonColumn getStained(TARDISConstants.PRESET p, TARDISConstants.COMPASS d) {
         switch (p) {
             case ANGEL:
                 if (r == 0) {
-                    return angelu.getIce().get(d);
+                    return angelu.getStained().get(d);
                 } else {
-                    return angeld.getIce().get(d);
+                    return angeld.getStained().get(d);
                 }
             case APPERTURE:
-                return apperture.getIce().get(d);
+                return apperture.getStained().get(d);
             case CAKE:
-                return cake.getIce().get(d);
+                return cake.getStained().get(d);
             case CANDY:
-                return candy.getIce().get(d);
+                return candy.getStained().get(d);
             case CHALICE:
-                return chalice.getIce().get(d);
+                return chalice.getStained().get(d);
             case CREEPY:
-                return creepy.getIce().get(d);
+                return creepy.getStained().get(d);
             case DESERT:
-                return desert.getIce().get(d);
+                return desert.getStained().get(d);
             case DUCK:
-                return duck.getIce().get(d);
+                return duck.getStained().get(d);
             case FACTORY:
-                return factory.getIce().get(d);
+                return factory.getStained().get(d);
             case FENCE:
-                return fence.getIce().get(d);
+                return fence.getStained().get(d);
             case FLOWER:
-                return flower.getIce().get(d);
+                return flower.getStained().get(d);
             case GAZEBO:
-                return gazebo.getIce().get(d);
+                return gazebo.getStained().get(d);
             case GRAVESTONE:
-                return gravestone.getIce().get(d);
+                return gravestone.getStained().get(d);
             case HELIX:
-                return helix.getIce().get(d);
+                return helix.getStained().get(d);
             case JAIL:
-                return jail.getIce().get(d);
+                return jail.getStained().get(d);
             case JUNGLE:
-                return jungle.getIce().get(d);
+                return jungle.getStained().get(d);
             case LAMP:
-                return lamp.getIce().get(d);
+                return lamp.getStained().get(d);
             case LIBRARY:
-                return library.getIce().get(d);
+                return library.getStained().get(d);
             case LIGHTHOUSE:
-                return lighthouse.getIce().get(d);
+                return lighthouse.getStained().get(d);
             case MINESHAFT:
-                return mine.getIce().get(d);
+                return mine.getStained().get(d);
             case NETHER:
-                return nether.getIce().get(d);
+                return nether.getStained().get(d);
             case OLD:
-                return police.getIce().get(d);
+                return police.getStained().get(d);
             case PANDORICA:
-                return pandorica.getIce().get(d);
+                return pandorica.getStained().get(d);
             case PARTY:
-                return party.getIce().get(d);
+                return party.getStained().get(d);
             case PEANUT:
-                return peanut.getIce().get(d);
+                return peanut.getStained().get(d);
             case PINE:
-                return pine.getIce().get(d);
+                return pine.getStained().get(d);
             case PORTAL:
-                return portal.getIce().get(d);
+                return portal.getStained().get(d);
             case PUNKED:
-                return punked.getIce().get(d);
+                return punked.getStained().get(d);
             case ROBOT:
-                return robot.getIce().get(d);
+                return robot.getStained().get(d);
             case SHROOM:
-                return shroom.getIce().get(d);
+                return shroom.getStained().get(d);
             case SNOWMAN:
-                return snowman.getIce().get(d);
+                return snowman.getStained().get(d);
             case STONE:
-                return column.getIce().get(d);
+                return column.getStained().get(d);
             case SUBMERGED:
-                return submerged.getIce().get(d);
+                return submerged.getStained().get(d);
             case SWAMP:
-                return swamp.getIce().get(d);
+                return swamp.getStained().get(d);
             case TELEPHONE:
-                return telephone.getIce().get(d);
+                return telephone.getStained().get(d);
             case THEEND:
-                return theend.getIce().get(d);
+                return theend.getStained().get(d);
             case TOILET:
-                return toilet.getIce().get(d);
+                return toilet.getStained().get(d);
             case TOPSYTURVEY:
-                return topsyturvey.getIce().get(d);
+                return topsyturvey.getStained().get(d);
             case TORCH:
-                return torch.getIce().get(d);
+                return torch.getStained().get(d);
             case VILLAGE:
-                return village.getIce().get(d);
+                return village.getStained().get(d);
             case WELL:
-                return well.getIce().get(d);
+                return well.getStained().get(d);
             case WINDMILL:
-                return windmill.getIce().get(d);
+                return windmill.getStained().get(d);
             case YELLOW:
-                return yellow.getIce().get(d);
+                return yellow.getStained().get(d);
             case CUSTOM:
-                return custom.getIce().get(d);
+                return custom.getStained().get(d);
             default:
-                return taller.getIce().get(d);
+                return taller.getStained().get(d);
         }
     }
 

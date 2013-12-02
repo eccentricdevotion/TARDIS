@@ -31,12 +31,12 @@ public class TARDISColumnPreset {
 
     private final String blueprint_id = "[[109,109,109,44],[109,109,109,44],[109,109,109,44],[109,109,109,44],[109,109,109,44],[109,109,109,44],[109,109,109,44],[71,71,109,44],[0,0,4,44],[0,0,68,0]]";
     private final String blueprint_data = "[[2,6,2,5],[2,6,2,5],[2,6,2,5],[1,5,1,5],[3,7,3,5],[3,7,3,5],[3,7,3,5],[0,8,0,5],[0,0,0,5],[0,0,4,0]]";
-    private final String ice_id = "[[79,79,79,79],[79,79,79,79],[79,79,79,79],[79,79,79,79],[79,79,79,79],[79,79,79,79],[79,79,79,79],[71,71,79,79],[0,0,0,79],[0,0,68,0]]";
-    private final String ice_data = "[[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,8,0,0],[0,0,0,0],[0,0,4,0]]";
+    private final String stained_id = "[[79,79,79,79],[79,79,79,79],[79,79,79,79],[79,79,79,79],[79,79,79,79],[79,79,79,79],[79,79,79,79],[71,71,79,79],[0,0,0,79],[0,0,68,0]]";
+    private final String stained_data = "[[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,8,0,0],[0,0,0,0],[0,0,4,0]]";
     private final String glass_id = "[[20,20,20,20],[20,20,20,20],[20,20,20,20],[20,20,20,20],[20,20,20,20],[20,20,20,20],[20,20,20,20],[71,71,20,20],[0,0,0,20],[0,0,68,0]]";
     private final String glass_data = "[[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,8,0,0],[0,0,0,0],[0,0,4,0]]";
     private final EnumMap<TARDISConstants.COMPASS, TARDISChameleonColumn> blueprint = new EnumMap<TARDISConstants.COMPASS, TARDISChameleonColumn>(TARDISConstants.COMPASS.class);
-    private final EnumMap<TARDISConstants.COMPASS, TARDISChameleonColumn> ice = new EnumMap<TARDISConstants.COMPASS, TARDISChameleonColumn>(TARDISConstants.COMPASS.class);
+    private final EnumMap<TARDISConstants.COMPASS, TARDISChameleonColumn> stained = new EnumMap<TARDISConstants.COMPASS, TARDISChameleonColumn>(TARDISConstants.COMPASS.class);
     private final EnumMap<TARDISConstants.COMPASS, TARDISChameleonColumn> glass = new EnumMap<TARDISConstants.COMPASS, TARDISChameleonColumn>(TARDISConstants.COMPASS.class);
 
     public TARDISColumnPreset() {
@@ -47,7 +47,7 @@ public class TARDISColumnPreset {
         for (TARDISConstants.COMPASS d : TARDISConstants.COMPASS.values()) {
             blueprint.put(d, tcp.buildTARDISChameleonColumn(d, blueprint_id, blueprint_data, false));
             glass.put(d, tcp.buildTARDISChameleonColumn(d, glass_id, glass_data, false));
-            ice.put(d, tcp.buildTARDISChameleonColumn(d, ice_id, ice_data, false));
+            stained.put(d, tcp.buildTARDISChameleonColumn(d, stained_id, stained_data, false));
         }
     }
 
@@ -55,8 +55,8 @@ public class TARDISColumnPreset {
         return blueprint;
     }
 
-    public EnumMap<TARDISConstants.COMPASS, TARDISChameleonColumn> getIce() {
-        return ice;
+    public EnumMap<TARDISConstants.COMPASS, TARDISChameleonColumn> getStained() {
+        return stained;
     }
 
     public EnumMap<TARDISConstants.COMPASS, TARDISChameleonColumn> getGlass() {
