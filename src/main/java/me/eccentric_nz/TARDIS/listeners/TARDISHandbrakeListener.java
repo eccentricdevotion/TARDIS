@@ -28,10 +28,8 @@ import me.eccentric_nz.TARDIS.database.ResultSetNextLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.travel.TARDISMalfunction;
-import org.bukkit.Effect;
 import org.bukkit.Location;
 import org.bukkit.Material;
-import org.bukkit.Sound;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockState;
@@ -168,14 +166,15 @@ public class TARDISHandbrakeListener implements Listener {
                                                         plugin.tardisHasDestination.remove(Integer.valueOf(id));
                                                     }
                                                     // play tardis crash sound
-                                                    try {
-                                                        Class.forName("org.bukkit.Sound");
-                                                        handbrake_loc.getWorld().playSound(handbrake_loc, Sound.MINECART_INSIDE, 1, 0);
-                                                    } catch (ClassNotFoundException e) {
-                                                        handbrake_loc.getWorld().playEffect(handbrake_loc, Effect.BLAZE_SHOOT, 0);
-                                                    }
+                                                    plugin.utils.playTARDISSound(handbrake_loc, player, "tardis_malfunction");
                                                     // add a potion effect to the player
                                                     player.addPotionEffect(new PotionEffect(PotionEffectType.CONFUSION, 150, 5));
+                                                    plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
+                                                        @Override
+                                                        public void run() {
+                                                            plugin.utils.playTARDISSound(handbrake_loc, player, "tardis_cloister_bell");
+                                                        }
+                                                    }, 300L);
                                                 } else {
                                                     malfunction = false;
                                                 }
@@ -199,7 +198,7 @@ public class TARDISHandbrakeListener implements Listener {
                                             // Sets database and sends the player/world message/sounds
                                             set.put("handbrake_on", 0);
                                             player.sendMessage(plugin.pluginName + "Handbrake OFF! Entering the time vortex...");
-                                            playSound(handbrake_loc, player, "tardis_takeoff");
+                                            plugin.utils.playTARDISSound(handbrake_loc, player, "tardis_takeoff");
                                         }
                                         if (exit != null) {
                                             // Removes Blue Box and loads chunk if it unloaded somehow
@@ -218,7 +217,7 @@ public class TARDISHandbrakeListener implements Listener {
                                                 set.put("hidden", 0);
                                                 plugin.destroyerP.removeBlockProtection(id, new QueryFactory(plugin));
                                             }
-                                            long delay = (mat) ? ((plugin.pm.getPlugin("Spout") != null) ? 450L : 200L) : 1L;
+                                            long delay = (mat) ? 500L : 1L;
                                             final Location e = exit;
                                             final boolean mal = malfunction;
                                             final TARDISConstants.COMPASS sd = tmpd;
@@ -229,7 +228,7 @@ public class TARDISHandbrakeListener implements Listener {
                                                 @Override
                                                 public void run() {
                                                     plugin.builderP.buildPreset(id, e, sd, cham, player, false, mal);
-                                                    playSound(handbrake_loc, player, "tardis_land");
+                                                    plugin.utils.playTARDISSound(handbrake_loc, player, "tardis_land");
                                                 }
                                             }, delay);
                                             if (plugin.trackDamage.containsKey(Integer.valueOf(id))) {
@@ -360,19 +359,5 @@ public class TARDISHandbrakeListener implements Listener {
         Location bl = new Location(w, bx, by, bz);
         Block b = bl.getBlock();
         b.setTypeId((on) ? 20 : 7);
-    }
-
-    private void playSound(Location handbrake_loc, Player player, String sound) {
-        World handbrake_locw = handbrake_loc.getWorld();
-//        if (plugin.pm.getPlugin("Spout") != null && SpoutManager.getPlayer(player).isSpoutCraftEnabled()) {
-//            SpoutManager.getSoundManager().playGlobalCustomSoundEffect(plugin, "https://dl.dropboxusercontent.com/u/53758864/" + sound + ".mp3", false, handbrake_loc, 20, 75);
-//        } else {
-        try {
-            Class.forName("org.bukkit.Sound");
-            handbrake_locw.playSound(handbrake_loc, Sound.MINECART_INSIDE, 1, 0);
-        } catch (ClassNotFoundException e) {
-            handbrake_locw.playEffect(handbrake_loc, Effect.BLAZE_SHOOT, 0);
-        }
-//        }
     }
 }

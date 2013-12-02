@@ -558,14 +558,12 @@ public class TARDIS extends JavaPlugin {
      * the server.
      */
     private void startSound() {
-        if (pm.getPlugin("Spout") != null && getConfig().getBoolean("sfx")) {
-            this.getServer().getScheduler().scheduleSyncRepeatingTask(this, new Runnable() {
-                @Override
-                public void run() {
-                    TARDISSounds.randomTARDISSound();
-                }
-            }, 60L, 1200L);
-        }
+        this.getServer().getScheduler().scheduleSyncRepeatingTask(this, new Runnable() {
+            @Override
+            public void run() {
+                TARDISSounds.randomTARDISSound();
+            }
+        }, 60L, 1200L);
     }
 
     /**

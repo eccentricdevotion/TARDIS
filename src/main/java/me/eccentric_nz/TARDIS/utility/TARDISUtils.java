@@ -378,4 +378,8 @@ public class TARDISUtils {
         int z = plugin.utils.parseNum(zStr[1].substring(0, (zStr[1].length() - 2)));
         return new Location(w, x, y, z);
     }
+
+    public void playTARDISSound(Location l, Player p, String s) {
+        p.playSound(l, s, 5.0F, 1.0F);
+    }
 }

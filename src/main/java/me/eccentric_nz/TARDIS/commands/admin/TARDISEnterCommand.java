@@ -102,12 +102,6 @@ public class TARDISEnterCommand {
                         break;
                 }
                 // enter TARDIS!
-                try {
-                    Class.forName("org.bukkit.Sound");
-                    player.playSound(player.getLocation(), Sound.ENDERMAN_TELEPORT, 1, 1);
-                } catch (ClassNotFoundException e) {
-                    player.getLocation().getWorld().playEffect(player.getLocation(), Effect.GHAST_SHRIEK, 0);
-                }
                 cw.getChunkAt(tmp_loc).load();
                 float yaw = player.getLocation().getYaw();
                 float pitch = player.getLocation().getPitch();
@@ -133,7 +127,7 @@ public class TARDISEnterCommand {
                 tmp_loc.setYaw(yaw);
                 final Location tardis_loc = tmp_loc;
                 World playerWorld = player.getLocation().getWorld();
-                plugin.doorListener.movePlayer(player, tardis_loc, false, playerWorld, false);
+                plugin.doorListener.movePlayer(player, tardis_loc, false, playerWorld, false, 3);
                 // put player into travellers table
                 QueryFactory qf = new QueryFactory(plugin);
                 HashMap<String, Object> set = new HashMap<String, Object>();

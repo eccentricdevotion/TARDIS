@@ -38,11 +38,9 @@ import multiworld.api.MultiWorldAPI;
 import multiworld.api.MultiWorldWorldData;
 import multiworld.api.flag.FlagName;
 import org.bukkit.Bukkit;
-import org.bukkit.Effect;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.Material;
-import org.bukkit.Sound;
 import org.bukkit.World;
 import org.bukkit.World.Environment;
 import org.bukkit.block.Block;
@@ -196,6 +194,7 @@ public class TARDISDoorListener implements Listener {
                             if (action == Action.RIGHT_CLICK_BLOCK && player.isSneaking()) {
                                 if (!rsd.isLocked()) {
                                     // toogle the door open/closed
+                                    int open = 1;
                                     if (blockType.equals(Material.IRON_DOOR_BLOCK) || blockType.equals(Material.WOODEN_DOOR)) {
                                         Block door_bottom;
                                         Door door = (Door) block.getState().getData();
@@ -207,6 +206,7 @@ public class TARDISDoorListener implements Listener {
                                                     door_bottom.setData((byte) 7, false);
                                                 } else {
                                                     door_bottom.setData((byte) 3, false);
+                                                    open = 2;
                                                 }
                                                 break;
                                             case WEST:
@@ -214,6 +214,7 @@ public class TARDISDoorListener implements Listener {
                                                     door_bottom.setData((byte) 6, false);
                                                 } else {
                                                     door_bottom.setData((byte) 2, false);
+                                                    open = 2;
                                                 }
                                                 break;
                                             case SOUTH:
@@ -221,6 +222,7 @@ public class TARDISDoorListener implements Listener {
                                                     door_bottom.setData((byte) 5, false);
                                                 } else {
                                                     door_bottom.setData((byte) 1, false);
+                                                    open = 2;
                                                 }
                                                 break;
                                             default:
@@ -228,6 +230,7 @@ public class TARDISDoorListener implements Listener {
                                                     door_bottom.setData((byte) 4, false);
                                                 } else {
                                                     door_bottom.setData((byte) 0, false);
+                                                    open = 2;
                                                 }
                                                 break;
                                         }
@@ -239,6 +242,7 @@ public class TARDISDoorListener implements Listener {
                                                     block.setData((byte) 5, false);
                                                 } else {
                                                     block.setData((byte) 1, false);
+                                                    open = 2;
                                                 }
                                                 break;
                                             case WEST:
@@ -246,6 +250,7 @@ public class TARDISDoorListener implements Listener {
                                                     block.setData((byte) 7, false);
                                                 } else {
                                                     block.setData((byte) 3, false);
+                                                    open = 2;
                                                 }
                                                 break;
                                             case SOUTH:
@@ -253,6 +258,7 @@ public class TARDISDoorListener implements Listener {
                                                     block.setData((byte) 4, false);
                                                 } else {
                                                     block.setData((byte) 0, false);
+                                                    open = 2;
                                                 }
                                                 break;
                                             default:
@@ -260,11 +266,12 @@ public class TARDISDoorListener implements Listener {
                                                     block.setData((byte) 6, false);
                                                 } else {
                                                     block.setData((byte) 2, false);
+                                                    open = 2;
                                                 }
                                                 break;
                                         }
                                     }
-                                    playDoorSound(player, playerWorld, block_loc);
+                                    playDoorSound(player, open, player.getLocation());
                                 } else {
                                     player.sendMessage(plugin.pluginName + "You need to unlock the door!");
                                 }
@@ -356,8 +363,7 @@ public class TARDISDoorListener implements Listener {
                                                         break;
                                                 }
                                                 // exit TARDIS!
-                                                playDoorSound(player, playerWorld, block_loc);
-                                                movePlayer(player, exitTardis, true, playerWorld, userQuotes);
+                                                movePlayer(player, exitTardis, true, playerWorld, userQuotes, 2);
                                                 if (plugin.getConfig().getBoolean("allow_mob_farming") && player.hasPermission("tardis.farm")) {
                                                     TARDISFarmer tf = new TARDISFarmer(plugin);
                                                     final List<TARDISMob> pets = tf.exitPets(player);
@@ -412,7 +418,6 @@ public class TARDISDoorListener implements Listener {
                                                     pets = tf.farmAnimals(block_loc, d, id, player, tmp_loc.getWorld().getName(), playerWorld.getName());
                                                 }
                                                 // enter TARDIS!
-                                                playDoorSound(player, playerWorld, block_loc);
                                                 cw.getChunkAt(tmp_loc).load();
                                                 tmp_loc.setPitch(pitch);
                                                 // get inner door direction so we can adjust yaw if necessary
@@ -421,7 +426,7 @@ public class TARDISDoorListener implements Listener {
                                                 }
                                                 tmp_loc.setYaw(yaw);
                                                 final Location tardis_loc = tmp_loc;
-                                                movePlayer(player, tardis_loc, false, playerWorld, userQuotes);
+                                                movePlayer(player, tardis_loc, false, playerWorld, userQuotes, 1);
                                                 if (pets != null && pets.size() > 0) {
                                                     movePets(pets, tardis_loc, player, d, true);
                                                 }
@@ -437,9 +442,7 @@ public class TARDISDoorListener implements Listener {
                                                 set.put("tardis_id", id);
                                                 set.put("player", playerNameStr);
                                                 qf.doSyncInsert("travellers", set);
-//                                                if (plugin.pm.getPlugin("Spout") != null && SpoutManager.getPlayer(player).isSpoutCraftEnabled()) {
-//                                                    SpoutManager.getSoundManager().playCustomSoundEffect(plugin, SpoutManager.getPlayer(player), "https://dl.dropboxusercontent.com/u/53758864/tardis_hum.mp3", false, tardis_loc, 9, 25);
-//                                                }
+                                                plugin.utils.playTARDISSound(tardis_loc, player, "tardis_hum");
                                             }
                                             break;
                                         case 2:
@@ -462,8 +465,7 @@ public class TARDISDoorListener implements Listener {
                                             ibd_loc.setYaw(yaw);
                                             ibd_loc.setPitch(pitch);
                                             final Location inner_loc = ibd_loc;
-                                            playDoorSound(player, playerWorld, block_loc);
-                                            movePlayer(player, inner_loc, false, playerWorld, userQuotes);
+                                            movePlayer(player, inner_loc, false, playerWorld, userQuotes, 1);
                                             if (plugin.getConfig().getBoolean("allow_tp_switch") && userTP) {
                                                 if (!rsp.getTexture_in().isEmpty()) {
                                                     new TARDISTexturePackChanger(plugin).changeTP(player, rsp.getTexture_in());
@@ -510,8 +512,7 @@ public class TARDISDoorListener implements Listener {
                                             obd_loc.setYaw(yaw);
                                             obd_loc.setPitch(pitch);
                                             final Location outer_loc = obd_loc;
-                                            playDoorSound(player, playerWorld, block_loc);
-                                            movePlayer(player, outer_loc, false, playerWorld, userQuotes);
+                                            movePlayer(player, outer_loc, false, playerWorld, userQuotes, 2);
                                             if (plugin.getConfig().getBoolean("allow_tp_switch") && userTP) {
                                                 new TARDISTexturePackChanger(plugin).changeTP(player, rsp.getTexture_out());
                                             }
@@ -553,8 +554,9 @@ public class TARDISDoorListener implements Listener {
      * they are exiting
      * @param from the world they are teleporting from
      * @param q whether the player will receive a TARDIS quote message
+     * @param sound an int representing the sound to play
      */
-    public void movePlayer(final Player p, Location l, final boolean exit, final World from, boolean q) {
+    public void movePlayer(final Player p, Location l, final boolean exit, final World from, boolean q, final int sound) {
 
         final int i = r.nextInt(plugin.quotelen);
         final Location theLocation = l;
@@ -577,6 +579,7 @@ public class TARDISDoorListener implements Listener {
             @SuppressWarnings("deprecation")
             public void run() {
                 p.teleport(theLocation);
+                playDoorSound(p, sound, theLocation);
                 if (p.getGameMode() == GameMode.CREATIVE || (allowFlight && crossWorlds && !isSurvival)) {
                     p.setAllowFlight(true);
                 }
@@ -819,12 +822,19 @@ public class TARDISDoorListener implements Listener {
      * @param w a world to play the sound in
      * @param l a location to play the sound at
      */
-    private void playDoorSound(Player p, World w, Location l) {
-        try {
-            Class.forName("org.bukkit.Sound");
-            p.playSound(p.getLocation(), Sound.DOOR_OPEN, 1, 1);
-        } catch (ClassNotFoundException e) {
-            w.playEffect(l, Effect.DOOR_TOGGLE, 0);
+    private void playDoorSound(Player p, int sound, Location l) {
+        switch (sound) {
+            case 1:
+                plugin.utils.playTARDISSound(l, p, "police_box_open");
+                break;
+            case 2:
+                plugin.utils.playTARDISSound(l, p, "police_box_close");
+                break;
+            case 3:
+                plugin.utils.playTARDISSound(l, p, "tardis_enter");
+                break;
+            default:
+                break;
         }
     }
 

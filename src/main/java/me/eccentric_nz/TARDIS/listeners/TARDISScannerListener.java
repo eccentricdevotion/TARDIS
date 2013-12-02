@@ -25,10 +25,8 @@ import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetNextLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
-import org.bukkit.Effect;
 import org.bukkit.Location;
 import org.bukkit.Material;
-import org.bukkit.Sound;
 import org.bukkit.World;
 import org.bukkit.block.Biome;
 import org.bukkit.block.Block;
@@ -139,16 +137,7 @@ public class TARDISScannerListener implements Listener {
                 ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
                 if (rs.resultSet()) {
                     int id = rs.getTardis_id();
-//                    if (plugin.pm.getPlugin("Spout") != null && SpoutManager.getPlayer(player).isSpoutCraftEnabled()) {
-//                        SpoutManager.getSoundManager().playGlobalCustomSoundEffect(plugin, "https://dl.dropboxusercontent.com/u/53758864/soundeffects/scanner.mp3", false, b, 20, 75);
-//                    } else {
-                    try {
-                        Class.forName("org.bukkit.Sound");
-                        w.playSound(b, Sound.ORB_PICKUP, 1, 0);
-                    } catch (ClassNotFoundException e) {
-                        w.playEffect(b, Effect.BOW_FIRE, 0);
-                    }
-//                    }
+                    plugin.utils.playTARDISSound(player.getLocation(), player, "tardis_scanner");
                     Location scan_loc;
                     String whereisit;
                     TARDISConstants.COMPASS tardisDirection;

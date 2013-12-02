@@ -114,7 +114,7 @@ public class TARDISInstaPreset {
             if (saved != null) {
                 TARDISDoorLocation idl = plugin.doorListener.getDoor(1, tid);
                 Location l = idl.getL();
-                plugin.doorListener.movePlayer(saved, l, false, world, false);
+                plugin.doorListener.movePlayer(saved, l, false, world, false, 0);
                 // put player into travellers table
                 HashMap<String, Object> set = new HashMap<String, Object>();
                 set.put("tardis_id", tid);
