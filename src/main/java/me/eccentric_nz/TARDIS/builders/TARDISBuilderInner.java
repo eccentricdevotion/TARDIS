@@ -154,6 +154,9 @@ public class TARDISBuilderInner {
         HashMap<Block, Byte> postTorchBlocks = new HashMap<Block, Byte>();
         HashMap<Block, Byte> postSignBlocks = new HashMap<Block, Byte>();
         HashMap<Block, Byte> postRepeaterBlocks = new HashMap<Block, Byte>();
+        HashMap<Block, Byte> postPistonBaseBlocks = new HashMap<Block, Byte>();
+        HashMap<Block, Byte> postStickyPistonBaseBlocks = new HashMap<Block, Byte>();
+        HashMap<Block, Byte> postPistonExtensionBlocks = new HashMap<Block, Byte>();
         Block postSaveSignBlock = null;
         Block postTerminalBlock = null;
         Block postARSBlock = null;
@@ -464,6 +467,12 @@ public class TARDISBuilderInner {
                             postDoorBlocks.put(world.getBlockAt(startx, starty, startz), data);
                         } else if (id == 76) { // redstone torches
                             postTorchBlocks.put(world.getBlockAt(startx, starty, startz), data);
+                        } else if (id == 29) { // wall signs
+                            postStickyPistonBaseBlocks.put(world.getBlockAt(startx, starty, startz), data);
+                        } else if (id == 33) { // wall signs
+                            postPistonBaseBlocks.put(world.getBlockAt(startx, starty, startz), data);
+                        } else if (id == 34) { // wall signs
+                            postPistonExtensionBlocks.put(world.getBlockAt(startx, starty, startz), data);
                         } else if (id == 68) { // wall signs
                             postSignBlocks.put(world.getBlockAt(startx, starty, startz), data);
                         } else if (id == 97) { // monster egg stone for controls
@@ -548,6 +557,26 @@ public class TARDISBuilderInner {
             byte ptdata = entry.getValue();
             prb.setTypeId(93);
             prb.setData(ptdata, true);
+        }
+        for (Map.Entry<Block, Byte> entry : postStickyPistonBaseBlocks.entrySet()) {
+            Block pspb = entry.getKey();
+            plugin.pistons.add(pspb);
+            byte pspdata = entry.getValue();
+            pspb.setTypeId(29);
+            pspb.setData(pspdata, true);
+        }
+        for (Map.Entry<Block, Byte> entry : postPistonBaseBlocks.entrySet()) {
+            Block ppb = entry.getKey();
+            plugin.pistons.add(ppb);
+            byte ppbdata = entry.getValue();
+            ppb.setTypeId(33);
+            ppb.setData(ppbdata, true);
+        }
+        for (Map.Entry<Block, Byte> entry : postPistonExtensionBlocks.entrySet()) {
+            Block ppeb = entry.getKey();
+            byte ppedata = entry.getValue();
+            ppeb.setTypeId(34);
+            ppeb.setData(ppedata, true);
         }
         for (Map.Entry<Block, Byte> entry : postSignBlocks.entrySet()) {
             final Block psb = entry.getKey();

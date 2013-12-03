@@ -60,7 +60,7 @@ public class TARDISUtils {
      * @param d the data bit to set the block to.
      */
     public void setBlock(World w, int x, int y, int z, int m, byte d) {
-        Block b = w.getBlockAt(x, y, z);
+        final Block b = w.getBlockAt(x, y, z);
         if (m < 0) {
             if (plugin.bukkitversion.compareTo(plugin.prewoodbuttonversion) < 0 && (m == 143 || m == -113)) {
                 m = 77;
@@ -76,9 +76,19 @@ public class TARDISUtils {
             m = (plugin.bukkitversion.compareTo(plugin.prewoodbuttonversion) < 0) ? 77 : 143;
             d = (byte) 3;
         }
-        if (m != 34) {
-            b.setTypeId(m);
-            b.setData(d, true);
+        if (m == 33) {
+            plugin.debug("data before setting: " + d);
+        }
+        b.setTypeId(m);
+        b.setData(d, true);
+        if (m == 33) {
+            plugin.debug("data right after setting: " + b.getData());
+            plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
+                @Override
+                public void run() {
+                    plugin.debug("data 20L after setting: " + b.getData());
+                }
+            }, 20L);
         }
     }
 
