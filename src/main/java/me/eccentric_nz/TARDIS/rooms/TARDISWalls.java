@@ -43,11 +43,15 @@ public class TARDISWalls {
         blocks.put("SPRUCE_WOOD", new int[]{5, 1});
         blocks.put("BIRCH_WOOD", new int[]{5, 2});
         blocks.put("JUNGLE_WOOD", new int[]{5, 3});
+        blocks.put("ACACIA_WOOD", new int[]{5, 4});
+        blocks.put("DARK_OAK_WOOD", new int[]{5, 5});
         blocks.put("OAK_LOG", new int[]{17, 0});
         blocks.put("PINE_LOG", new int[]{17, 1});
         blocks.put("SPRUCE_LOG", new int[]{17, 1});
         blocks.put("BIRCH_LOG", new int[]{17, 2});
         blocks.put("JUNGLE_LOG", new int[]{17, 3});
+        blocks.put("ACACIA_LOG", new int[]{162, 0});
+        blocks.put("DARK_OAK_LOG", new int[]{162, 1});
         blocks.put("SANDSTONE", new int[]{24, 0});
         blocks.put("CHISELED_SANDSTONE", new int[]{24, 1});
         blocks.put("SMOOTH_SANDSTONE", new int[]{24, 2});
@@ -106,6 +110,7 @@ public class TARDISWalls {
         blocks.put("CHISELED_QUARTZ", new int[]{155, 1});
         blocks.put("QUARTZ_PILLAR", new int[]{155, 2});
         blocks.put("HAY", new int[]{170, 0});
+        blocks.put("PACKED_ICE", new int[]{174, 0});
         if (TARDIS.plugin.getConfig().getBoolean("all_blocks")) {
             blocks.put("BEDROCK", new int[]{7, 0});
             blocks.put("COAL_ORE", new int[]{16, 0});

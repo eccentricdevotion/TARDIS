@@ -77,6 +77,7 @@ public class TARDISToggleOnOffCommand {
             if (beacon.isEmpty()) {
                 // get the location from the TARDIS size and the creeper location
                 switch (rs.getSchematic()) {
+                    // TODO - Find out how far away the bedrock block is
                     case REDSTONE:
                         plusy = 18;
                         break;

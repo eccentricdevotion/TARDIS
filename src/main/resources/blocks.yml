@@ -7,6 +7,7 @@ tardis_blocks:
 - DIRT
 - WOOD
 - LOG
+- LOG_2
 - SANDSTONE
 - WOOL
 - BRICK
@@ -21,6 +22,7 @@ tardis_blocks:
 - STAINED_CLAY
 - HAY_BLOCK
 - HARD_CLAY
+- PACKED_ICE
 # TARDIS Police Box blocks - these are allowed block IDs
 chameleon_blocks:
 - 1
@@ -75,9 +77,12 @@ chameleon_blocks:
 - 133
 - 155
 - 159
+- 161
+- 162
 - 170
 - 172
 - 173
+- 174
 lamp_blocks:
 - 50
 - 76
@@ -167,6 +172,7 @@ under_door_blocks:
 - 134
 - 135
 - 136
+- 161
 - 171
 # Add MATERIAL names here for blocks that should have zero Artron value when condensed
 no_artron_value:
