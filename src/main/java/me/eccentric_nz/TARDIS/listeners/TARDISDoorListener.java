@@ -441,7 +441,6 @@ public class TARDISDoorListener implements Listener {
                                                 set.put("tardis_id", id);
                                                 set.put("player", playerNameStr);
                                                 qf.doSyncInsert("travellers", set);
-                                                plugin.utils.playTARDISSound(tardis_loc, player, "tardis_hum");
                                             }
                                             break;
                                         case 2:
@@ -601,6 +600,7 @@ public class TARDISDoorListener implements Listener {
                 } else {
                     if (p.isPlayerTimeRelative()) {
                         setTemporalLocation(p, -1);
+                        plugin.utils.playTARDISSound(p.getLocation(), p, "tardis_hum");
                     }
                 }
                 // give a key
