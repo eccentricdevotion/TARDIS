@@ -31,8 +31,8 @@ public class TARDISGravestonePreset {
 
     private final String blueprint_id = "[[0,0,0,0],[0,0,0,0],[0,0,121,0],[121,121,121,121],[0,0,121,0],[0,0,0,0],[0,0,0,0],[3,38,0,0],[3,96,68,0],[0,0,0,0]]";
     private final String blueprint_data = "[[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,2,4,0],[0,0,0,0]]";
-    private final String stained_id = "[[0,0,0,0],[0,0,0,0],[0,0,79,0],[79,79,79,79],[0,0,79,0],[0,0,0,0],[0,0,0,0],[79,0,0,0],[79,96,68,0],[0,0,0,0]]";
-    private final String stained_data = "[[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,2,4,0],[0,0,0,0]]";
+    private final String stained_id = "[[0,0,0,0],[0,0,0,0],[0,0,95,0],[95,95,95,95],[0,0,95,0],[0,0,0,0],[0,0,0,0],[95,0,0,0],[95,96,68,0],[0,0,0,0]]";
+    private final String stained_data = "[[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0],[12,0,0,0],[12,2,4,0],[0,0,0,0]]";
     private final String glass_id = "[[0,0,0,0],[0,0,0,0],[0,0,20,0],[20,20,20,20],[0,0,20,0],[0,0,0,0],[0,0,0,0],[20,0,0,0],[20,96,68,0],[0,0,0,0]]";
     private final String glass_data = "[[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,2,4,0],[0,0,0,0]]";
     private final EnumMap<TARDISConstants.COMPASS, TARDISChameleonColumn> blueprint = new EnumMap<TARDISConstants.COMPASS, TARDISChameleonColumn>(TARDISConstants.COMPASS.class);

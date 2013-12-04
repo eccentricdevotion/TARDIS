@@ -54,11 +54,18 @@ public class TARDISMakePresetListener implements Listener {
         this.orderx = new int[]{0, 1, 2, 2, 2, 1, 0, 0, 1, -1};
         this.orderz = new int[]{0, 0, 0, 1, 2, 2, 2, 1, 1, 1};
         this.not_glass.add(0); // air
+        this.not_glass.add(20); // glass
+        this.not_glass.add(50); // torch
         this.not_glass.add(63); // sign post
         this.not_glass.add(64); // wood door
         this.not_glass.add(68); // wall sign
         this.not_glass.add(71); // iron door
+        this.not_glass.add(75); // redstone torch off
+        this.not_glass.add(76); // redstone torch on
         this.not_glass.add(96); // trap door
+        this.not_glass.add(106); // vine
+        this.not_glass.add(123); // redstone lamp off
+        this.not_glass.add(124); // redstone lamp on
     }
 
     /**

@@ -31,9 +31,9 @@ public class TARDISPortalPreset {
 
     private final String blueprint_id = "[[153,153,153,44],[49,49,49,44],[153,153,153,44],[153,153,153,44],[153,153,153,44],[49,49,49,44],[153,153,153,44],[71,71,153,44],[49,90,49,89],[0,0,68,0]]";
     private final String blueprint_data = "[[0,0,0,7],[0,0,0,7],[0,0,0,7],[0,0,0,7],[0,0,0,7],[0,0,0,7],[0,0,0,7],[0,8,0,7],[0,0,0,0],[0,0,4,0]]";
-    private final String stained_id = "[[79,79,79,79],[79,79,79,79],[79,79,79,79],[79,79,79,79],[79,79,79,79],[79,79,79,79],[79,79,79,79],[71,71,79,79],[79,0,0,79],[0,0,68,0]]";
-    private final String stained_data = "[[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,8,0,0],[0,0,0,0],[0,0,4,0]]";
-    private final String glass_id = "[[20,20,20,20],[20,20,20,20],[20,20,20,20],[20,20,20,20],[20,20,20,20],[20,20,20,20],[20,20,20,20],[71,71,20,20],[20,0,0,20],[0,0,68,0]]";
+    private final String stained_id = "[[95,95,95,95],[95,95,95,95],[95,95,95,95],[95,95,95,95],[95,95,95,95],[95,95,95,95],[95,95,95,95],[71,71,95,95],[95,95,95,95],[0,0,68,0]]";
+    private final String stained_data = "[[14,14,14,8],[15,15,15,8],[14,14,14,8],[14,14,14,8],[14,14,14,8],[15,15,15,8],[14,14,14,8],[0,8,14,8],[15,10,15,4],[0,0,4,0]]";
+    private final String glass_id = "[[20,20,20,20],[20,20,20,20],[20,20,20,20],[20,20,20,20],[20,20,20,20],[20,20,20,20],[20,20,20,20],[71,71,20,20],[20,20,20,20],[0,0,68,0]]";
     private final String glass_data = "[[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,8,0,0],[0,0,0,0],[0,0,4,0]]";
     private final EnumMap<TARDISConstants.COMPASS, TARDISChameleonColumn> blueprint = new EnumMap<TARDISConstants.COMPASS, TARDISChameleonColumn>(TARDISConstants.COMPASS.class);
     private final EnumMap<TARDISConstants.COMPASS, TARDISChameleonColumn> stained = new EnumMap<TARDISConstants.COMPASS, TARDISChameleonColumn>(TARDISConstants.COMPASS.class);

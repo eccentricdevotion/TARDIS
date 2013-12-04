@@ -131,12 +131,12 @@ public class TARDISPresetInventory {
         tal.setDisplayName("Nether Portal");
         por.setItemMeta(tal);
         // Apperture Science
-        ItemStack app = new ItemStack(Material.WOOL, 1, (short) 1);
+        ItemStack app = new ItemStack(Material.PORTAL, 1);
         ItemMeta sci = app.getItemMeta();
         sci.setDisplayName("Apperture Science");
         app.setItemMeta(sci);
         // Lighthouse
-        ItemStack lig = new ItemStack(Material.REDSTONE_LAMP_ON, 1);
+        ItemStack lig = new ItemStack(Material.REDSTONE_LAMP_OFF, 1);
         ItemMeta hou = lig.getItemMeta();
         hou.setDisplayName("Tiny Lighthouse");
         lig.setItemMeta(hou);

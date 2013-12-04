@@ -31,10 +31,10 @@ public class TARDISPunkedPreset {
 
     private final String blueprint_id = "[[44,44,17,17],[29,0,173,44],[44,44,17,17],[29,0,173,44],[44,44,17,17],[29,0,173,44],[44,44,17,17],[29,0,173,96],[152,0,44,50],[0,0,68,0]]";
     private final String blueprint_data = "[[0,8,0,0],[1,0,0,0],[0,8,0,0],[1,0,0,0],[0,8,0,0],[1,0,0,0],[0,8,0,0],[1,0,0,0],[0,0,8,5],[0,0,4,0]]";
-    private final String stained_id = "[[79,79,79,79],[79,0,79,79],[79,79,79,79],[79,0,79,79],[79,79,79,79],[79,0,79,79],[79,79,79,79],[79,0,79,96],[79,0,79,0],[0,0,68,0]]";
-    private final String stained_data = "[[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,8,0,0],[0,0,3,0],[0,0,4,0]]";
-    private final String glass_id = "[[20,20,20,20],[20,0,20,20],[20,20,20,20],[20,0,20,20],[20,20,20,20],[20,0,20,20],[20,20,20,20],[20,0,20,96],[20,0,79,50],[0,0,68,0]]";
-    private final String glass_data = "[[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,8,0,0],[0,0,0,5],[0,0,4,0]]";
+    private final String stained_id = "[[95,95,95,95],[95,0,95,95],[95,95,95,95],[95,0,95,95],[95,95,95,95],[95,0,95,95],[95,95,95,95],[95,0,95,96],[95,0,95,0],[0,0,68,0]]";
+    private final String stained_data = "[[8,8,12,12],[8,0,15,8],[8,8,12,12],[8,0,15,8],[8,8,12,12],[8,0,15,8],[8,8,12,12],[8,0,15,0],[14,0,8,0],[0,0,4,0]]";
+    private final String glass_id = "[[20,20,20,20],[20,0,20,20],[20,20,20,20],[20,0,20,20],[20,20,20,20],[20,0,20,20],[20,20,20,20],[20,0,20,96],[20,0,79,0],[0,0,68,0]]";
+    private final String glass_data = "[[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,8,0,0],[0,0,0,0],[0,0,4,0]]";
     private final EnumMap<TARDISConstants.COMPASS, TARDISChameleonColumn> blueprint = new EnumMap<TARDISConstants.COMPASS, TARDISChameleonColumn>(TARDISConstants.COMPASS.class);
     private final EnumMap<TARDISConstants.COMPASS, TARDISChameleonColumn> stained = new EnumMap<TARDISConstants.COMPASS, TARDISChameleonColumn>(TARDISConstants.COMPASS.class);
     private final EnumMap<TARDISConstants.COMPASS, TARDISChameleonColumn> glass = new EnumMap<TARDISConstants.COMPASS, TARDISChameleonColumn>(TARDISConstants.COMPASS.class);

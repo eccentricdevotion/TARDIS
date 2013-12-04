@@ -81,8 +81,6 @@ public class TARDISStainedGlassLookup {
         stain.put(72, 12);
         stain.put(73, 8);
         stain.put(74, 8);
-        stain.put(75, 14);
-        stain.put(76, 14);
         stain.put(77, 8);
         stain.put(78, 0);
         stain.put(79, 3);
@@ -102,10 +100,9 @@ public class TARDISStainedGlassLookup {
         stain.put(93, 14);
         stain.put(94, 14);
         stain.put(95, -1);
-        stain.put(96, 12);
         stain.put(97, 8);
         stain.put(98, 8);
-        stain.put(99, 14);
+        stain.put(99, 12);
         stain.put(100, 12);
         stain.put(101, 8);
         stain.put(102, 0);

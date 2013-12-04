@@ -31,8 +31,8 @@ public class TARDISLampPostPreset {
 
     private final String blueprint_id = "[[0,0,0,96],[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,96],[113,113,154,89],[0,0,0,96],[63,0,0,96]]";
     private final String blueprint_data = "[[0,0,0,12],[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,13],[0,0,0,0],[0,0,0,15],[4,0,0,14]]";
-    private final String stained_id = "[[0,0,0,96],[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,96],[79,79,79,79],[0,0,0,96],[63,0,0,96]]";
-    private final String stained_data = "[[0,0,0,12],[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,13],[0,0,0,0],[0,0,0,15],[4,0,0,14]]";
+    private final String stained_id = "[[0,0,0,96],[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,96],[95,95,95,95],[0,0,0,96],[63,0,0,96]]";
+    private final String stained_data = "[[0,0,0,12],[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,13],[14,14,7,4],[0,0,0,15],[4,0,0,14]]";
     private final String glass_id = "[[0,0,0,96],[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,96],[20,20,20,20],[0,0,0,96],[63,0,0,96]]";
     private final String glass_data = "[[0,0,0,12],[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,13],[0,0,0,0],[0,0,0,15],[4,0,0,14]]";
     private final EnumMap<TARDISConstants.COMPASS, TARDISChameleonColumn> blueprint = new EnumMap<TARDISConstants.COMPASS, TARDISChameleonColumn>(TARDISConstants.COMPASS.class);

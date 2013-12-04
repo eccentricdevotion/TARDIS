@@ -31,9 +31,9 @@ public class TARDISCreepyPreset {
 
     private final String blueprint_id = "[[159,159,159,44],[30,30,30,44],[159,159,159,44],[30,30,30,44],[159,159,159,44],[30,30,30,44],[159,159,159,44],[71,71,30,44],[0,0,152,123],[0,0,68,0]]";
     private final String blueprint_data = "[[7,7,7,6],[0,0,0,6],[7,7,7,6],[0,0,0,6],[7,7,7,6],[0,0,0,6],[7,7,7,6],[0,8,0,6],[0,0,0,0],[0,0,4,0]]";
-    private final String stained_id = "[[79,79,79,79],[0,79,79,79],[79,79,79,79],[79,79,79,79],[79,79,79,79],[79,79,79,79],[79,79,79,79],[71,71,79,79],[0,0,35,79],[0,0,68,0]]";
-    private final String stained_data = "[[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,8,0,0],[0,0,3,0],[0,0,4,0]]";
-    private final String glass_id = "[[20,20,20,20],[20,20,20,20],[20,20,20,20],[20,20,20,20],[20,20,20,20],[20,20,20,20],[20,20,20,20],[71,71,20,20],[0,0,20,20],[0,0,68,0]]";
+    private final String stained_id = "[[95,95,95,95],[95,95,95,95],[95,95,95,95],[95,95,95,95],[95,95,95,95],[95,95,95,95],[95,95,95,95],[71,71,95,95],[0,0,95,123],[0,0,68,0]]";
+    private final String stained_data = "[[7,7,7,8],[0,0,0,8],[7,7,7,8],[0,0,0,8],[7,7,7,8],[0,0,0,8],[7,7,7,8],[0,8,0,8],[0,0,14,4],[0,0,4,0]]";
+    private final String glass_id = "[[20,20,20,20],[20,20,20,20],[20,20,20,20],[20,20,20,20],[20,20,20,20],[20,20,20,20],[20,20,20,20],[71,71,20,20],[0,0,20,123],[0,0,68,0]]";
     private final String glass_data = "[[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,8,0,0],[0,0,0,0],[0,0,4,0]]";
     private final EnumMap<TARDISConstants.COMPASS, TARDISChameleonColumn> blueprint = new EnumMap<TARDISConstants.COMPASS, TARDISChameleonColumn>(TARDISConstants.COMPASS.class);
     private final EnumMap<TARDISConstants.COMPASS, TARDISChameleonColumn> stained = new EnumMap<TARDISConstants.COMPASS, TARDISChameleonColumn>(TARDISConstants.COMPASS.class);
