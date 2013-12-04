@@ -484,11 +484,7 @@ public class TARDISPresetRunnable implements Runnable {
                                     }
                                     break;
                                 default: // everything else
-//                                    if (preset.equals(TARDISConstants.PRESET.SUBMERGED) && yy == 0) {
-//                                        plugin.utils.setBlockAndRemember(world, xx, (y + yy), zz, colids[yy], coldatas[yy], tid);
-//                                    } else {
                                     plugin.utils.setBlockAndRemember(world, xx, (y + yy), zz, colids[yy], coldatas[yy], tid);
-//                                    }
                                     break;
                             }
                         }
@@ -581,6 +577,18 @@ public class TARDISPresetRunnable implements Runnable {
                                 case 90:
                                     plugin.utils.setBlock(world, xx, (y + yy + 1), zz, 49, (byte) 0);
                                     plugin.utils.setBlock(world, xx, (y + yy), zz, colids[yy], coldatas[yy]);
+                                    break;
+                                case 95:
+                                    if (coldatas[yy] == -1) {
+                                        if (preset.equals(TARDISConstants.PRESET.PARTY) || (preset.equals(TARDISConstants.PRESET.FLOWER) && coldatas[yy] == 0)) {
+                                            chad = random_colour;
+                                        } else {
+                                            chad = plugin.lookup.getStain().get(cham_id);
+                                        }
+                                        plugin.utils.setBlock(world, xx, (y + yy), zz, 95, chad);
+                                    } else {
+                                        plugin.utils.setBlock(world, xx, (y + yy), zz, colids[yy], coldatas[yy]);
+                                    }
                                     break;
                                 case 144:
                                     plugin.utils.setBlock(world, xx, (y + yy), zz, colids[yy], coldatas[yy]);

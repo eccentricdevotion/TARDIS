@@ -32,6 +32,7 @@ import me.eccentric_nz.TARDIS.builders.TARDISSpace;
 import me.eccentric_nz.TARDIS.chameleon.TARDISChameleonListener;
 import me.eccentric_nz.TARDIS.chameleon.TARDISChameleonPreset;
 import me.eccentric_nz.TARDIS.chameleon.TARDISPresetListener;
+import me.eccentric_nz.TARDIS.chameleon.TARDISStainedGlassLookup;
 import me.eccentric_nz.TARDIS.commands.admin.TARDISAdminCommands;
 import me.eccentric_nz.TARDIS.commands.TARDISAreaCommands;
 import me.eccentric_nz.TARDIS.commands.TARDISBindCommands;
@@ -200,6 +201,7 @@ public class TARDIS extends JavaPlugin {
     public TARDISBuilderPreset builderP = new TARDISBuilderPreset(this);
     public TARDISDestroyerInner destroyerI = new TARDISDestroyerInner(this);
     public TARDISDestroyerPreset destroyerP = new TARDISDestroyerPreset(this);
+    public TARDISStainedGlassLookup lookup = new TARDISStainedGlassLookup();
     public TARDISArea ta = new TARDISArea(this);
     public TARDISWorldGuardUtils wgutils;
     public TARDISTownyChecker tychk;

@@ -23,7 +23,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.chameleon.TARDISStainedGlassLookup;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.block.Block;
@@ -47,7 +46,6 @@ public class TARDISMakePresetListener implements Listener {
     private final int[] orderx;
     private final int[] orderz;
     private final List<Integer> not_glass = new ArrayList<Integer>();
-    private final TARDISStainedGlassLookup lookup = new TARDISStainedGlassLookup();
 
     public TARDISMakePresetListener(TARDIS plugin) {
         this.plugin = plugin;
@@ -121,7 +119,7 @@ public class TARDISMakePresetListener implements Listener {
                                 sb_glass_data.append(data);
                             } else {
                                 sb_stain_id.append(95);
-                                sb_stain_data.append(lookup.getStain().get(id)); // get the appropiately coloured stained glass
+                                sb_stain_data.append(plugin.lookup.getStain().get(id)); // get the appropiately coloured stained glass
                                 sb_glass_id.append(20);
                                 sb_glass_data.append(0);
                             }
@@ -135,7 +133,7 @@ public class TARDISMakePresetListener implements Listener {
                                 sb_glass_data.append(data).append(",");
                             } else {
                                 sb_stain_id.append(95).append(",");
-                                sb_stain_data.append(lookup.getStain().get(id)).append(","); // get the appropiately coloured stained glass
+                                sb_stain_data.append(plugin.lookup.getStain().get(id)).append(","); // get the appropiately coloured stained glass
                                 sb_glass_id.append(20).append(",");
                                 sb_glass_data.append(0).append(",");
                             }

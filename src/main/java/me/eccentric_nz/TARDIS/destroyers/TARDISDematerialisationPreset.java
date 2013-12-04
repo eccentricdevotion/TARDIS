@@ -232,6 +232,18 @@ public class TARDISDematerialisationPreset implements Runnable {
                                 break;
                             case 68: // except the sign
                                 break;
+                            case 95:
+                                if (coldatas[yy] == -1) {
+                                    if (preset.equals(TARDISConstants.PRESET.PARTY) || (preset.equals(TARDISConstants.PRESET.FLOWER) && coldatas[yy] == 0)) {
+                                        chad = the_colour;
+                                    } else {
+                                        chad = plugin.lookup.getStain().get(cham_id);
+                                    }
+                                    plugin.utils.setBlock(world, xx, (y + yy), zz, 95, chad);
+                                } else {
+                                    plugin.utils.setBlock(world, xx, (y + yy), zz, colids[yy], coldatas[yy]);
+                                }
+                                break;
                             default: // everything else
                                 plugin.utils.setBlock(world, xx, (y + yy), zz, colids[yy], coldatas[yy]);
                                 break;
