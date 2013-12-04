@@ -123,6 +123,7 @@ public class TARDISHandbrakeListener implements Listener {
                             if (action == Action.RIGHT_CLICK_BLOCK) {
                                 if (rs.isHandbrake_on()) {
                                     if (plugin.tardisHasDestination.containsKey(Integer.valueOf(id))) {
+                                        plugin.utils.playTARDISSound(handbrake_loc, player, "tardis_handbrake_release");
                                         if (!beac_on && !beacon.isEmpty()) {
                                             toggleBeacon(beacon, true);
                                         }
@@ -289,6 +290,7 @@ public class TARDISHandbrakeListener implements Listener {
                             }
                             if (action == Action.LEFT_CLICK_BLOCK) {
                                 if (!rs.isHandbrake_on()) {
+                                    plugin.utils.playTARDISSound(handbrake_loc, player, "tardis_handbrake_engage");
                                     // Changes the lever to on
                                     lever.setPowered(true);
                                     state.setData(lever);

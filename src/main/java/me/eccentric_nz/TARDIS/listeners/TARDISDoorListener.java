@@ -571,6 +571,7 @@ public class TARDISDoorListener implements Listener {
             @Override
             public void run() {
                 p.teleport(theLocation);
+                playDoorSound(p, sound, theLocation);
             }
         }, 5L);
         Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
@@ -578,7 +579,6 @@ public class TARDISDoorListener implements Listener {
             @SuppressWarnings("deprecation")
             public void run() {
                 p.teleport(theLocation);
-                playDoorSound(p, sound, theLocation);
                 if (p.getGameMode() == GameMode.CREATIVE || (allowFlight && crossWorlds && !isSurvival)) {
                     p.setAllowFlight(true);
                 }
@@ -824,10 +824,10 @@ public class TARDISDoorListener implements Listener {
     private void playDoorSound(Player p, int sound, Location l) {
         switch (sound) {
             case 1:
-                plugin.utils.playTARDISSound(l, p, "police_box_open");
+                plugin.utils.playTARDISSound(l, p, "tardis_door_open");
                 break;
             case 2:
-                plugin.utils.playTARDISSound(l, p, "police_box_close");
+                plugin.utils.playTARDISSound(l, p, "tardis_door_close");
                 break;
             case 3:
                 plugin.utils.playTARDISSound(l, p, "tardis_enter");
