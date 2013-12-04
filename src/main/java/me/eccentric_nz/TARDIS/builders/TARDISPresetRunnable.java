@@ -91,7 +91,7 @@ public class TARDISPresetRunnable implements Runnable {
     public TARDISPresetRunnable(TARDIS plugin, Location location, TARDISConstants.PRESET preset, int tid, COMPASS d, Player player, boolean mal, int lamp, boolean sub, int cham_id, byte cham_data) {
         this.plugin = plugin;
         this.d = d;
-        this.loops = 12;
+        this.loops = 15;
         this.location = location;
         this.i = 0;
         this.tid = tid;
@@ -546,7 +546,7 @@ public class TARDISPresetRunnable implements Runnable {
                                     plugin.utils.setBlock(world, xx, (y + yy), zz, subi, subd);
                                     break;
                                 case 7:
-                                    if (preset.equals(TARDISConstants.PRESET.THEEND) && i == 12) {
+                                    if (preset.equals(TARDISConstants.PRESET.THEEND) && i == loops) {
                                         plugin.utils.setBlock(world, xx, (y + yy), zz, 7, (byte) 5);
                                         world.getBlockAt(xx, (y + yy + 1), zz).setType(Material.FIRE);
                                     } else {
@@ -562,7 +562,7 @@ public class TARDISPresetRunnable implements Runnable {
                                     plugin.utils.setBlock(world, xx, (y + yy), zz, chai, chad);
                                     break;
                                 case 38:
-                                    if (i == 12 && preset.equals(TARDISConstants.PRESET.GRAVESTONE)) {
+                                    if (i == loops && preset.equals(TARDISConstants.PRESET.GRAVESTONE)) {
                                         plugin.utils.setBlock(world, xx, (y + yy), zz, colids[yy], coldatas[yy]);
                                     }
                                     break;
@@ -574,7 +574,7 @@ public class TARDISPresetRunnable implements Runnable {
                                     break;
                                 case 87:
                                     plugin.utils.setBlock(world, xx, (y + yy), zz, colids[yy], coldatas[yy]);
-                                    if (preset.equals(TARDISConstants.PRESET.TORCH) && i == 12) {
+                                    if (preset.equals(TARDISConstants.PRESET.TORCH) && i == loops) {
                                         world.getBlockAt(xx, (y + yy + 1), zz).setType(Material.FIRE);
                                     }
                                     break;
