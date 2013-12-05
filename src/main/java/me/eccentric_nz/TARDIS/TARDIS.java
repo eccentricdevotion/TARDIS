@@ -280,6 +280,7 @@ public class TARDIS extends JavaPlugin {
     public TARDISWalls tw;
     private Calendar beforecal;
     private Calendar aftercal;
+    private boolean hasVersion = false;
 
     @Override
     public void onEnable() {
@@ -293,6 +294,7 @@ public class TARDIS extends JavaPlugin {
         Version minversion = new Version("1.7.2");
         // check CraftBukkit version
         if (bukkitversion.compareTo(minversion) >= 0) {
+            hasVersion = true;
             saveDefaultConfig();
             loadCustomConfigs();
             TARDISConfiguration tc = new TARDISConfiguration(this);
@@ -359,10 +361,12 @@ public class TARDIS extends JavaPlugin {
 
     @Override
     public void onDisable() {
-        updateTagStats();
-        saveConfig();
-        closeDatabase();
-        resetTime();
+        if (hasVersion) {
+            updateTagStats();
+            saveConfig();
+            closeDatabase();
+            resetTime();
+        }
     }
 
     /**
