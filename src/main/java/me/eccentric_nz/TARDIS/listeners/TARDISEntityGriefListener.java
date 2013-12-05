@@ -44,9 +44,7 @@ public class TARDISEntityGriefListener implements Listener {
         this.plugin = plugin;
         ents.add(EntityType.ENDER_DRAGON);
         ents.add(EntityType.FIREBALL);
-        if (plugin.bukkitversion.compareTo(plugin.prewoodbuttonversion) >= 0) {
-            ents.add(EntityType.WITHER);
-        }
+        ents.add(EntityType.WITHER);
     }
 
     /**

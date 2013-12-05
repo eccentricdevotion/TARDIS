@@ -66,16 +66,10 @@ public class TARDISBlockPlaceListener implements Listener {
         blocks.add(Material.DIAMOND_BLOCK); // deluxe
         blocks.add(Material.LAPIS_BLOCK); // tom baker
         blocks.add(Material.BOOKSHELF); // wood plank
-        if (plugin.bukkitversion.compareTo(plugin.preemeraldversion) >= 0) {
-            blocks.add(Material.EMERALD_BLOCK); // eleventh
-        }
-        if (plugin.bukkitversion.compareTo(plugin.precomparatorversion) >= 0) {
-            blocks.add(Material.REDSTONE_BLOCK); // redstone
-            blocks.add(Material.QUARTZ_BLOCK); // ARS
-        }
-        if (plugin.bukkitversion.compareTo(plugin.precarpetversion) >= 0) {
-            blocks.add(Material.COAL_BLOCK); // steampunk
-        }
+        blocks.add(Material.EMERALD_BLOCK); // eleventh
+        blocks.add(Material.REDSTONE_BLOCK); // redstone
+        blocks.add(Material.QUARTZ_BLOCK); // ARS
+        blocks.add(Material.COAL_BLOCK); // steampunk
         if (plugin.getConfig().getBoolean("custom_schematic")) {
             custom = Material.valueOf(plugin.getConfig().getString("custom_schematic_seed"));
             blocks.add(custom); // custom
@@ -261,7 +255,7 @@ public class TARDISBlockPlaceListener implements Listener {
                         HashMap<String, Object> setpp = new HashMap<String, Object>();
                         if (middle_id == 22) {
                             set.put("middle_id", 35);
-                            if (plugin.bukkitversion.compareTo(plugin.preemeraldversion) >= 0 && blockBottom.getType().equals(Material.EMERALD_BLOCK)) {
+                            if (blockBottom.getType().equals(Material.EMERALD_BLOCK)) {
                                 set.put("middle_data", 8);
                                 setpp.put("wall", "LIGHT_GREY_WOOL");
                             } else {

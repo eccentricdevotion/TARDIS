@@ -63,7 +63,7 @@ public class TARDISJoinListener implements Listener {
         final Player player = event.getPlayer();
         String playerNameStr = player.getName();
         QueryFactory qf = new QueryFactory(plugin);
-        if ((plugin.bukkitversion.compareTo(plugin.preIMversion) > 0 || (plugin.bukkitversion.compareTo(plugin.preIMversion) == 0 && plugin.SUBversion.compareTo(plugin.preSUBversion) > 0)) && plugin.getConfig().getBoolean("allow_achievements")) {
+        if (plugin.getConfig().getBoolean("allow_achievements")) {
             if (player.hasPermission("tardis.book")) {
                 // check if they have started building a TARDIS yet
                 HashMap<String, Object> where = new HashMap<String, Object>();

@@ -333,9 +333,6 @@ public class TARDISConfiguration {
                 rooms_config.set(entry.getKey(), entry.getValue());
                 i++;
             }
-            if (entry.getKey().equals("rooms.STABLE.enabled") && plugin.bukkitversion.compareTo(plugin.precarpetversion) < 0) {
-                rooms_config.set(entry.getKey(), false);
-            }
         }
         // int values
         for (Map.Entry<String, Integer> entry : roomIntOptions.entrySet()) {

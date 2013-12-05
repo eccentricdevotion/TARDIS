@@ -71,20 +71,7 @@ public class TARDISScannerListener implements Listener {
 
     public TARDISScannerListener(TARDIS plugin) {
         this.plugin = plugin;
-        if (plugin.bukkitversion.compareTo(plugin.prewoodbuttonversion) >= 0) {
-            validBlocks.add(Material.WOOD_BUTTON);
-            entities.add(EntityType.WITCH);
-            entities.add(EntityType.BAT);
-        }
-        if (plugin.bukkitversion.compareTo(plugin.precarpetversion) >= 0) {
-            validBlocks.add(Material.REDSTONE_COMPARATOR_OFF);
-            validBlocks.add(Material.REDSTONE_COMPARATOR_ON);
-        }
-        if (plugin.bukkitversion.compareTo(plugin.precarpetversion) >= 0) {
-            entities.add(EntityType.HORSE);
-        }
-        validBlocks.add(Material.STONE_BUTTON);
-        validBlocks.add(Material.LEVER);
+        entities.add(EntityType.BAT);
         entities.add(EntityType.BLAZE);
         entities.add(EntityType.CAVE_SPIDER);
         entities.add(EntityType.CHICKEN);
@@ -92,6 +79,7 @@ public class TARDISScannerListener implements Listener {
         entities.add(EntityType.CREEPER);
         entities.add(EntityType.ENDERMAN);
         entities.add(EntityType.GHAST);
+        entities.add(EntityType.HORSE);
         entities.add(EntityType.IRON_GOLEM);
         entities.add(EntityType.MAGMA_CUBE);
         entities.add(EntityType.MUSHROOM_COW);
@@ -106,8 +94,14 @@ public class TARDISScannerListener implements Listener {
         entities.add(EntityType.SPIDER);
         entities.add(EntityType.SQUID);
         entities.add(EntityType.VILLAGER);
+        entities.add(EntityType.WITCH);
         entities.add(EntityType.WOLF);
         entities.add(EntityType.ZOMBIE);
+        validBlocks.add(Material.LEVER);
+        validBlocks.add(Material.REDSTONE_COMPARATOR_OFF);
+        validBlocks.add(Material.REDSTONE_COMPARATOR_ON);
+        validBlocks.add(Material.STONE_BUTTON);
+        validBlocks.add(Material.WOOD_BUTTON);
     }
 
     /**

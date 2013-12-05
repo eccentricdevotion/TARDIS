@@ -60,19 +60,17 @@ public class TARDISStattenheimListener implements Listener {
     public TARDISStattenheimListener(TARDIS plugin) {
         this.plugin = plugin;
         // add useless blocks
-        doors.add(Material.WOODEN_DOOR);
         doors.add(Material.IRON_DOOR_BLOCK);
+        doors.add(Material.WOODEN_DOOR);
+        useless.add(Material.BROWN_MUSHROOM);
+        useless.add(Material.CARPET);
         useless.add(Material.DEAD_BUSH);
         useless.add(Material.LONG_GRASS);
-        useless.add(Material.SNOW);
-        useless.add(Material.SAPLING);
-        useless.add(Material.RED_ROSE);
-        useless.add(Material.YELLOW_FLOWER);
         useless.add(Material.RED_MUSHROOM);
-        useless.add(Material.BROWN_MUSHROOM);
-        if (plugin.bukkitversion.compareTo(plugin.precarpetversion) >= 0) {
-            useless.add(Material.CARPET);
-        }
+        useless.add(Material.RED_ROSE);
+        useless.add(Material.SAPLING);
+        useless.add(Material.SNOW);
+        useless.add(Material.YELLOW_FLOWER);
         remote = Material.valueOf(plugin.getConfig().getString("stattenheim"));
     }
 

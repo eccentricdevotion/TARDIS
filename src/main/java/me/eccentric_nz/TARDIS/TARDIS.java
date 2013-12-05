@@ -17,7 +17,6 @@
 package me.eccentric_nz.TARDIS;
 
 import java.io.*;
-import java.lang.reflect.InvocationTargetException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -35,15 +34,24 @@ import me.eccentric_nz.TARDIS.chameleon.TARDISPresetListener;
 import me.eccentric_nz.TARDIS.chameleon.TARDISStainedGlassLookup;
 import me.eccentric_nz.TARDIS.commands.admin.TARDISAdminCommands;
 import me.eccentric_nz.TARDIS.commands.TARDISAreaCommands;
+import me.eccentric_nz.TARDIS.commands.TARDISAreaTabComplete;
 import me.eccentric_nz.TARDIS.commands.TARDISBindCommands;
+import me.eccentric_nz.TARDIS.commands.TARDISBindTabComplete;
 import me.eccentric_nz.TARDIS.commands.TARDISBookCommands;
 import me.eccentric_nz.TARDIS.commands.tardis.TARDISCommands;
 import me.eccentric_nz.TARDIS.commands.TARDISGravityCommands;
+import me.eccentric_nz.TARDIS.commands.TARDISGravityTabComplete;
 import me.eccentric_nz.TARDIS.commands.preferences.TARDISPrefsCommands;
 import me.eccentric_nz.TARDIS.commands.TARDISRecipeCommands;
+import me.eccentric_nz.TARDIS.commands.TARDISRecipeTabComplete;
 import me.eccentric_nz.TARDIS.commands.TARDISRoomCommands;
 import me.eccentric_nz.TARDIS.commands.TARDISTextureCommands;
+import me.eccentric_nz.TARDIS.commands.TARDISTextureTabComplete;
 import me.eccentric_nz.TARDIS.commands.TARDISTravelCommands;
+import me.eccentric_nz.TARDIS.commands.TARDISTravelTabComplete;
+import me.eccentric_nz.TARDIS.commands.admin.TARDISAdminTabComplete;
+import me.eccentric_nz.TARDIS.commands.preferences.TARDISPrefsTabComplete;
+import me.eccentric_nz.TARDIS.commands.tardis.TARDISTabComplete;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.TARDISControlsConverter;
 import me.eccentric_nz.TARDIS.database.TARDISDatabase;
@@ -267,15 +275,6 @@ public class TARDIS extends JavaPlugin {
     private FileConfiguration tag_config;
     public TARDISButtonListener buttonListener;
     public TARDISDoorListener doorListener;
-    public Version bukkitversion;
-    public Version preemeraldversion = new Version("1.3.1");
-    public Version prewoodbuttonversion = new Version("1.4.2");
-    public Version preIMversion = new Version("1.4.5");
-    public Version precomparatorversion = new Version("1.5");
-    public Version precarpetversion = new Version("1.6");
-    public Version SUBversion;
-    public Version preSUBversion = new Version("1.0");
-    public TARDISTabCompleteAPI apiHandler;
     public TARDISChameleonPreset presets;
     public TARDISMultiverseInventoriesChecker tmic;
     public TARDISWalls tw;
@@ -288,52 +287,53 @@ public class TARDIS extends JavaPlugin {
         pluginName = ChatColor.GOLD + "[" + pdfFile.getName() + "]" + ChatColor.RESET + " ";
         plugin = this;
         console = getServer().getConsoleSender();
+
         String[] v = Bukkit.getServer().getBukkitVersion().split("-");
-        bukkitversion = (!v[0].equalsIgnoreCase("unknown")) ? new Version(v[0]) : new Version("1.4.7");
-        SUBversion = (!v[0].equalsIgnoreCase("unknown")) ? new Version(v[1].substring(1, v[1].length())) : new Version("4.7");
+        Version bukkitversion = (!v[0].equalsIgnoreCase("unknown")) ? new Version(v[0]) : new Version("1.6.4");
+        Version minversion = new Version("1.7.2");
+        // check CraftBukkit version
+        if (bukkitversion.compareTo(minversion) >= 0) {
+            saveDefaultConfig();
+            loadCustomConfigs();
+            TARDISConfiguration tc = new TARDISConfiguration(this);
+            tc.checkConfig();
+            checkTCG();
+            seeds = getSeeds();
+            tw = new TARDISWalls();
+            loadDatabase();
+            loadFiles();
+            registerListeners();
+            loadCommands();
+            //loadMetrics();
+            startSound();
+            loadWorldGuard();
+            loadTowny();
+            loadWorldBorder();
+            loadFactions();
 
-        saveDefaultConfig();
-        loadCustomConfigs();
-        TARDISConfiguration tc = new TARDISConfiguration(this);
-        tc.checkConfig();
-        checkTCG();
-        seeds = getSeeds();
-        tw = new TARDISWalls();
-        loadDatabase();
-        loadFiles();
-        registerListeners();
-        loadCommands();
-        //loadMetrics();
-        startSound();
-        loadWorldGuard();
-        loadTowny();
-        loadWorldBorder();
-        loadFactions();
+            quote = quotes();
+            quotelen = quote.size();
 
-        quote = quotes();
-        quotelen = quote.size();
-
-        TARDISCreeperChecker cc = new TARDISCreeperChecker(this);
-        cc.startCreeperCheck();
-        if (pm.isPluginEnabled("TARDISChunkGenerator")) {
-            TARDISSpace alwaysNight = new TARDISSpace(this);
-            if (getConfig().getBoolean("keep_night")) {
-                alwaysNight.keepNight();
+            TARDISCreeperChecker cc = new TARDISCreeperChecker(this);
+            cc.startCreeperCheck();
+            if (pm.isPluginEnabled("TARDISChunkGenerator")) {
+                TARDISSpace alwaysNight = new TARDISSpace(this);
+                if (getConfig().getBoolean("keep_night")) {
+                    alwaysNight.keepNight();
+                }
             }
-        }
-        TARDISBlockLoader bl = new TARDISBlockLoader(this);
-        bl.loadProtectBlocks();
-        bl.loadGravityWells();
-        loadPerms();
-        loadBooks();
-        if (!getConfig().getBoolean("conversion_done")) {
-            new TARDISControlsConverter(this).convertControls();
-        }
-        if (!getConfig().getBoolean("location_conversion_done")) {
-            new TARDISLocationsConverter(this).convert();
-        }
-        tp = getServerTP();
-        if (bukkitversion.compareTo(preIMversion) >= 0) {
+            TARDISBlockLoader bl = new TARDISBlockLoader(this);
+            bl.loadProtectBlocks();
+            bl.loadGravityWells();
+            loadPerms();
+            loadBooks();
+            if (!getConfig().getBoolean("conversion_done")) {
+                new TARDISControlsConverter(this).convertControls();
+            }
+            if (!getConfig().getBoolean("location_conversion_done")) {
+                new TARDISLocationsConverter(this).convert();
+            }
+            tp = getServerTP();
             // copy maps
             checkMaps();
             // register recipes
@@ -344,13 +344,17 @@ public class TARDIS extends JavaPlugin {
             r.sonic();
             r.stattenheim();
             r.stattenheimCircuit();
+
+            presets = new TARDISChameleonPreset();
+            presets.makePresets();
+            if (pm.isPluginEnabled("Multiverse-Inventories")) {
+                tmic = new TARDISMultiverseInventoriesChecker(this);
+            }
+            setDates();
+        } else {
+            console.sendMessage(pluginName + "This plugin requires CraftBukkit 1.7.2 or higher, disabling...");
+            pm.disablePlugin(this);
         }
-        presets = new TARDISChameleonPreset();
-        presets.makePresets();
-        if (pm.isPluginEnabled("Multiverse-Inventories")) {
-            tmic = new TARDISMultiverseInventoriesChecker(this);
-        }
-        setDates();
     }
 
     @Override
@@ -449,36 +453,28 @@ public class TARDIS extends JavaPlugin {
         pm.registerEvents(new TARDISTagListener(this), this);
         pm.registerEvents(new TARDISMakePresetListener(this), this);
         pm.registerEvents(new TARDISPistonListener(this), this);
-        if (bukkitversion.compareTo(preIMversion) >= 0) {
-            pm.registerEvents(new TARDISTerminalListener(this), this);
-            pm.registerEvents(new TARDISChameleonListener(this), this);
-            pm.registerEvents(new TARDISPresetListener(this), this);
-            pm.registerEvents(new TARDISARSListener(this), this);
-            pm.registerEvents(new TARDISSaveSignListener(this), this);
-            pm.registerEvents(new TARDISAreaSignListener(this), this);
-            pm.registerEvents(new TARDISStattenheimListener(this), this);
-            pm.registerEvents(new TARDISHotbarListener(this), this);
-            pm.registerEvents(new TARDISAdminMenuListener(this), this);
-            pm.registerEvents(new TARDISTemporalLocatorListener(this), this);
-            pm.registerEvents(new TARDISRecipeListener(this), this);
-            pm.registerEvents(new TARDISSeedBlockListener(this), this);
-            pm.registerEvents(new TARDISCraftListener(this), this);
-        }
+        pm.registerEvents(new TARDISTerminalListener(this), this);
+        pm.registerEvents(new TARDISChameleonListener(this), this);
+        pm.registerEvents(new TARDISPresetListener(this), this);
+        pm.registerEvents(new TARDISARSListener(this), this);
+        pm.registerEvents(new TARDISSaveSignListener(this), this);
+        pm.registerEvents(new TARDISAreaSignListener(this), this);
+        pm.registerEvents(new TARDISStattenheimListener(this), this);
+        pm.registerEvents(new TARDISHotbarListener(this), this);
+        pm.registerEvents(new TARDISAdminMenuListener(this), this);
+        pm.registerEvents(new TARDISTemporalLocatorListener(this), this);
+        pm.registerEvents(new TARDISRecipeListener(this), this);
+        pm.registerEvents(new TARDISSeedBlockListener(this), this);
+        pm.registerEvents(new TARDISCraftListener(this), this);
+        pm.registerEvents(new TARDISChatListener(this), this);
+        pm.registerEvents(new TARDISMinecartListener(this), this);
+        pm.registerEvents(new TARDISHorseListener(this), this);
+        pm.registerEvents(new TARDISTeleportListener(this), this);
+        pm.registerEvents(new TARDISAnvilListener(this), this);
+        pm.registerEvents(new TARDISInformationSystemListener(this), this);
         if (getNPCManager()) {
             pm.registerEvents(new TARDISNPCListener(this), this);
         }
-        if (bukkitversion.compareTo(precomparatorversion) >= 0) {
-            pm.registerEvents(new TARDISChatListener(this), this);
-            pm.registerEvents(new TARDISMinecartListener(this), this);
-        }
-        if (bukkitversion.compareTo(precarpetversion) >= 0) {
-            pm.registerEvents(new TARDISHorseListener(this), this);
-        }
-        pm.registerEvents(new TARDISTeleportListener(this), this);
-        if (bukkitversion.compareTo(prewoodbuttonversion) >= 0) {
-            pm.registerEvents(new TARDISAnvilListener(this), this);
-        }
-        pm.registerEvents(new TARDISInformationSystemListener(this), this);
         if (pm.isPluginEnabled("Multiverse-Adventure")) {
             pm.registerEvents(new TARDISWorldResetListener(this), this);
         }
@@ -490,41 +486,26 @@ public class TARDIS extends JavaPlugin {
     private void loadCommands() {
         tardisCommand = new TARDISCommands(this);
         getCommand("tardis").setExecutor(tardisCommand);
+        getCommand("tardis").setTabCompleter(new TARDISTabComplete(plugin));
         tardisAdminCommand = new TARDISAdminCommands(this);
         getCommand("tardisadmin").setExecutor(tardisAdminCommand);
+        getCommand("tardisadmin").setTabCompleter(new TARDISAdminTabComplete(plugin));
         getCommand("tardisarea").setExecutor(new TARDISAreaCommands(this));
+        getCommand("tardisarea").setTabCompleter(new TARDISAreaTabComplete());
         getCommand("tardisbind").setExecutor(new TARDISBindCommands(this));
+        getCommand("tardisbind").setTabCompleter(new TARDISBindTabComplete());
         getCommand("tardisbook").setExecutor(new TARDISBookCommands(this));
         getCommand("tardisgravity").setExecutor(new TARDISGravityCommands(this));
+        getCommand("tardisgravity").setTabCompleter(new TARDISGravityTabComplete());
         getCommand("tardisprefs").setExecutor(new TARDISPrefsCommands(this));
+        getCommand("tardisprefs").setTabCompleter(new TARDISPrefsTabComplete());
+        getCommand("tardisrecipe").setExecutor(new TARDISRecipeCommands(this));
+        getCommand("tardisrecipe").setTabCompleter(new TARDISRecipeTabComplete());
         getCommand("tardisroom").setExecutor(new TARDISRoomCommands(this));
         getCommand("tardistexture").setExecutor(new TARDISTextureCommands(this));
+        getCommand("tardistexture").setTabCompleter(new TARDISTextureTabComplete());
         getCommand("tardistravel").setExecutor(new TARDISTravelCommands(this));
-        getCommand("tardisrecipe").setExecutor(new TARDISRecipeCommands(this));
-        if (this.bukkitversion.compareTo(this.preemeraldversion) > 0) {
-            // need to dynamically load these classes
-            try {
-                final Class<?> clazz = Class.forName("me.eccentric_nz.TARDIS.TARDISLoader_TabComplete");
-                if (TARDISTabCompleteAPI.class.isAssignableFrom(clazz)) { // Make sure it actually implements the API
-                    apiHandler = (TARDISTabCompleteAPI) clazz.getConstructor().newInstance(); // Set the handler
-                }
-                apiHandler.loadTabCompletion();
-            } catch (ClassNotFoundException e) {
-                debug("Could not load Tab Completion classes " + e.getMessage());
-            } catch (IllegalAccessException e) {
-                debug("Could not load Tab Completion classes " + e.getMessage());
-            } catch (IllegalArgumentException e) {
-                debug("Could not load Tab Completion classes " + e.getMessage());
-            } catch (InstantiationException e) {
-                debug("Could not load Tab Completion classes " + e.getMessage());
-            } catch (NoSuchMethodException e) {
-                debug("Could not load Tab Completion classes " + e.getMessage());
-            } catch (SecurityException e) {
-                debug("Could not load Tab Completion classes " + e.getMessage());
-            } catch (InvocationTargetException e) {
-                debug("Could not load Tab Completion classes " + e.getMessage());
-            }
-        }
+        getCommand("tardistravel").setTabCompleter(new TARDISTravelTabComplete(plugin));
     }
 
     /**

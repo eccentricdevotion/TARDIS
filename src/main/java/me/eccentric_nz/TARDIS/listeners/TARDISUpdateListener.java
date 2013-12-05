@@ -64,39 +64,35 @@ public class TARDISUpdateListener implements Listener {
 
     public TARDISUpdateListener(TARDIS plugin) {
         this.plugin = plugin;
-        if (plugin.bukkitversion.compareTo(plugin.prewoodbuttonversion) >= 0) {
-            validBlocks.add(Material.WOOD_BUTTON);
-        }
-        if (plugin.bukkitversion.compareTo(plugin.precomparatorversion) >= 0) {
-            validBlocks.add(Material.REDSTONE_COMPARATOR_OFF);
-            validBlocks.add(Material.REDSTONE_COMPARATOR_ON);
-            validSigns.add(Material.REDSTONE_COMPARATOR_OFF);
-            validSigns.add(Material.REDSTONE_COMPARATOR_ON);
-        }
-        validBlocks.add(Material.STONE_BUTTON);
-        validBlocks.add(Material.LEVER);
-        validSigns.add(Material.WALL_SIGN);
-        validSigns.add(Material.SIGN_POST);
-        controls.put("handbrake", 0);
+        controls.put("ars", 10);
+        controls.put("artron", 6);
+        controls.put("back", 8);
         controls.put("button", 1);
+        controls.put("handbrake", 0);
+        controls.put("info", 13);
+        controls.put("keyboard", 7);
+        controls.put("light", 12);
+        controls.put("temporal", 11);
+        controls.put("terminal", 9);
         controls.put("world-repeater", 2);
         controls.put("x-repeater", 3);
-        controls.put("z-repeater", 4);
         controls.put("y-repeater", 5);
-        controls.put("artron", 6);
-        controls.put("keyboard", 7);
-        controls.put("back", 8);
-        controls.put("terminal", 9);
-        controls.put("ars", 10);
-        controls.put("temporal", 11);
-        controls.put("light", 12);
-        controls.put("info", 13);
+        controls.put("z-repeater", 4);
+        mustbeinworld.add("ars");
+        mustbeinworld.add("creeper");
         mustbeinworld.add("farm");
+        mustbeinworld.add("rail");
         mustbeinworld.add("stable");
         mustbeinworld.add("village");
-        mustbeinworld.add("rail");
-        mustbeinworld.add("creeper");
-        mustbeinworld.add("ars");
+        validBlocks.add(Material.LEVER);
+        validBlocks.add(Material.REDSTONE_COMPARATOR_OFF);
+        validBlocks.add(Material.REDSTONE_COMPARATOR_ON);
+        validBlocks.add(Material.STONE_BUTTON);
+        validBlocks.add(Material.WOOD_BUTTON);
+        validSigns.add(Material.REDSTONE_COMPARATOR_OFF);
+        validSigns.add(Material.REDSTONE_COMPARATOR_ON);
+        validSigns.add(Material.SIGN_POST);
+        validSigns.add(Material.WALL_SIGN);
     }
 
     /**

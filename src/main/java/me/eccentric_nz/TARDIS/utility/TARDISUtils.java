@@ -62,18 +62,14 @@ public class TARDISUtils {
     public void setBlock(World w, int x, int y, int z, int m, byte d) {
         final Block b = w.getBlockAt(x, y, z);
         if (m < 0) {
-            if (plugin.bukkitversion.compareTo(plugin.prewoodbuttonversion) < 0 && (m == 143 || m == -113)) {
-                m = 77;
-            } else {
-                m += 256;
-            }
+            m += 256;
         }
         if (m == 92) { //cake -> handbrake
             m = 69;
             d = (byte) 5;
         }
         if (m == 52) { //mob spawner -> scanner button
-            m = (plugin.bukkitversion.compareTo(plugin.prewoodbuttonversion) < 0) ? 77 : 143;
+            m = 143;
             d = (byte) 3;
         }
         if (m == 33) {

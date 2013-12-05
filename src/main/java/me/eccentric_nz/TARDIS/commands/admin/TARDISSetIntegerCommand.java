@@ -55,7 +55,7 @@ public class TARDISSetIntegerCommand {
             }
         } else {
             plugin.getConfig().set(first, val);
-            if (first.equals("terminal_step") && plugin.bukkitversion.compareTo(plugin.preIMversion) >= 0) {
+            if (first.equals("terminal_step")) {
                 // reset the terminal inventory
                 plugin.buttonListener.items = new TARDISTerminalInventory().getTerminal();
             }

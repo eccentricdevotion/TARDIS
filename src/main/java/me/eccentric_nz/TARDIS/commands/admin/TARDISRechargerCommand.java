@@ -32,13 +32,9 @@ import org.bukkit.entity.Player;
 public class TARDISRechargerCommand {
 
     private final TARDIS plugin;
-    private Material charger = Material.REDSTONE_LAMP_ON;
 
     public TARDISRechargerCommand(TARDIS plugin) {
         this.plugin = plugin;
-        if (plugin.bukkitversion.compareTo(plugin.prewoodbuttonversion) >= 0) {
-            charger = Material.BEACON;
-        }
     }
 
     public boolean setRecharger(CommandSender sender, String[] args) {
@@ -51,8 +47,8 @@ public class TARDISRechargerCommand {
             return true;
         }
         Block b = player.getTargetBlock(plugin.tardisCommand.transparent, 50);
-        if (!b.getType().equals(charger)) {
-            player.sendMessage(plugin.pluginName + "You must be targeting a " + charger.toString() + " block!");
+        if (!b.getType().equals(Material.BEACON)) {
+            player.sendMessage(plugin.pluginName + "You must be targeting a BEACON block!");
             return true;
         }
         // make sure they're not targeting their inner TARDIS beacon
@@ -60,7 +56,7 @@ public class TARDISRechargerCommand {
         where.put("player", player.getName());
         ResultSetTravellers rst = new ResultSetTravellers(plugin, where, false);
         if (rst.resultSet()) {
-            player.sendMessage(plugin.pluginName + "You cannot use the TARDIS " + charger.toString() + " to recharge!");
+            player.sendMessage(plugin.pluginName + "You cannot use the TARDIS BEACON to recharge!");
             return true;
         }
         Location l = b.getLocation();

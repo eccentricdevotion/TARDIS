@@ -729,10 +729,8 @@ public class TARDISDoorListener implements Listener {
             Material m = Material.valueOf(key);
             if (!inv.contains(m)) {
                 ItemStack is = new ItemStack(m, 1);
-                if (plugin.bukkitversion.compareTo(plugin.preIMversion) > 0 || (plugin.bukkitversion.compareTo(plugin.preIMversion) == 0 && plugin.SUBversion.compareTo(plugin.preSUBversion) >= 0)) {
-                    TARDISItemRenamer ir = new TARDISItemRenamer(is);
-                    ir.setName("Sonic Screwdriver", true);
-                }
+                TARDISItemRenamer ir = new TARDISItemRenamer(is);
+                ir.setName("Sonic Screwdriver", true);
                 inv.addItem(is);
                 p.updateInventory();
                 p.sendMessage(plugin.pluginName + "Don't forget your TARDIS key!");

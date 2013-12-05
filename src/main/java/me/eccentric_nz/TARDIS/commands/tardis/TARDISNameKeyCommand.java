@@ -37,10 +37,6 @@ public class TARDISNameKeyCommand {
     }
 
     public boolean nameKey(Player player, String[] args) {
-        if (plugin.bukkitversion.compareTo(plugin.preIMversion) < 0 || (plugin.bukkitversion.compareTo(plugin.preIMversion) == 0 && plugin.SUBversion.compareTo(plugin.preSUBversion) < 0)) {
-            player.sendMessage(plugin.pluginName + "You cannot rename the TARDIS key with this version of Bukkit!");
-            return true;
-        }
         // determine key item
         String key;
         HashMap<String, Object> where = new HashMap<String, Object>();

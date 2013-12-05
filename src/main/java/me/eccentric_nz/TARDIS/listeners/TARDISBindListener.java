@@ -50,9 +50,7 @@ public class TARDISBindListener implements Listener {
         this.plugin = plugin;
         validBlocks.add(Material.WALL_SIGN);
         validBlocks.add(Material.SIGN_POST);
-        if (plugin.bukkitversion.compareTo(plugin.prewoodbuttonversion) >= 0) {
-            validBlocks.add(Material.WOOD_BUTTON);
-        }
+        validBlocks.add(Material.WOOD_BUTTON);
         validBlocks.add(Material.STONE_BUTTON);
         validBlocks.add(Material.LEVER);
     }

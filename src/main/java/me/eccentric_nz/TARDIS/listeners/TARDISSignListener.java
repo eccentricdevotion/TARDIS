@@ -52,10 +52,8 @@ public class TARDISSignListener implements Listener {
 
     public TARDISSignListener(TARDIS plugin) {
         this.plugin = plugin;
-        if (plugin.bukkitversion.compareTo(plugin.precomparatorversion) >= 0) {
-            validSigns.add(Material.REDSTONE_COMPARATOR_OFF);
-            validSigns.add(Material.REDSTONE_COMPARATOR_ON);
-        }
+        validSigns.add(Material.REDSTONE_COMPARATOR_OFF);
+        validSigns.add(Material.REDSTONE_COMPARATOR_ON);
         validSigns.add(Material.WALL_SIGN);
         validSigns.add(Material.SIGN_POST);
     }
@@ -105,7 +103,7 @@ public class TARDISSignListener implements Listener {
                         cc_gui.setContents(cc);
                         player.openInventory(cc_gui);
                     } else {
-                        if (event.getAction().equals(Action.RIGHT_CLICK_BLOCK) && plugin.bukkitversion.compareTo(plugin.preIMversion) >= 0) {
+                        if (event.getAction().equals(Action.RIGHT_CLICK_BLOCK)) {
                             TARDISSaveSignInventory sst = new TARDISSaveSignInventory(plugin, rs.getTardis_id());
                             ItemStack[] items = sst.getTerminal();
                             Inventory inv = plugin.getServer().createInventory(player, 54, "§4TARDIS saves");

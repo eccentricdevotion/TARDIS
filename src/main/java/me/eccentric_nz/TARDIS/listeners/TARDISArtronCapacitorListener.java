@@ -54,13 +54,9 @@ public class TARDISArtronCapacitorListener implements Listener {
 
     public TARDISArtronCapacitorListener(TARDIS plugin) {
         this.plugin = plugin;
-        if (plugin.bukkitversion.compareTo(plugin.prewoodbuttonversion) >= 0) {
-            validBlocks.add(Material.WOOD_BUTTON);
-        }
-        if (plugin.bukkitversion.compareTo(plugin.precomparatorversion) >= 0) {
-            validBlocks.add(Material.REDSTONE_COMPARATOR_OFF);
-            validBlocks.add(Material.REDSTONE_COMPARATOR_ON);
-        }
+        validBlocks.add(Material.WOOD_BUTTON);
+        validBlocks.add(Material.REDSTONE_COMPARATOR_OFF);
+        validBlocks.add(Material.REDSTONE_COMPARATOR_ON);
         validBlocks.add(Material.STONE_BUTTON);
         validBlocks.add(Material.LEVER);
     }

@@ -60,11 +60,9 @@ public class TARDISFarmer {
 
     public TARDISFarmer(TARDIS plugin) {
         this.plugin = plugin;
-        if (this.plugin.bukkitversion.compareTo(this.plugin.precarpetversion) >= 0) {
-            this.barding.add(Material.IRON_BARDING);
-            this.barding.add(Material.GOLD_BARDING);
-            this.barding.add(Material.DIAMOND_BARDING);
-        }
+        this.barding.add(Material.IRON_BARDING);
+        this.barding.add(Material.GOLD_BARDING);
+        this.barding.add(Material.DIAMOND_BARDING);
     }
 
     /**
