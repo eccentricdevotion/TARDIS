@@ -26,6 +26,7 @@ import me.eccentric_nz.TARDIS.builders.TARDISSeedBlockProcessor;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.rooms.TARDISWallsLookup;
 import org.bukkit.DyeColor;
+import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -103,25 +104,28 @@ public class TARDISSeedBlockListener implements Listener {
     @SuppressWarnings("deprecation")
     public void onSeedBlockBreak(BlockBreakEvent event) {
         Location l = event.getBlock().getLocation();
+        Player p = event.getPlayer();
         if (trackTARDISSeed.containsKey(l)) {
-            // get the Seed block data
-            TARDISBuildData data = trackTARDISSeed.get(l);
-            // drop a TARDIS Seed Block
-            World w = l.getWorld();
-            ItemStack is = new ItemStack(event.getBlock().getType(), 1);
-            ItemMeta im = is.getItemMeta();
-            im.setDisplayName("§6TARDIS Seed Block");
-            List<String> lore = new ArrayList<String>();
-            lore.add(data.getSchematic().toString());
-            lore.add("Walls: " + twl.wall_lookup.get(data.getWall_id() + ":" + data.getWall_data()));
-            lore.add("Floors: " + twl.wall_lookup.get(data.getFloor_id() + ":" + data.getFloor_data()));
-            lore.add("Chameleon block: " + ((data.getBox_id() == 35 || data.getBox_id() == 159) ? DyeColor.getByWoolData(data.getBox_data()) + " " : "") + Material.getMaterial(data.getBox_id()).toString());
-            lore.add("Lamp: " + Material.getMaterial(data.getLamp()).toString());
-            im.setLore(lore);
-            is.setItemMeta(im);
-            // set the block to AIR
-            event.getBlock().setType(Material.AIR);
-            w.dropItemNaturally(l, is);
+            if (!p.getGameMode().equals(GameMode.CREATIVE)) {
+                // get the Seed block data
+                TARDISBuildData data = trackTARDISSeed.get(l);
+                // drop a TARDIS Seed Block
+                World w = l.getWorld();
+                ItemStack is = new ItemStack(event.getBlock().getType(), 1);
+                ItemMeta im = is.getItemMeta();
+                im.setDisplayName("§6TARDIS Seed Block");
+                List<String> lore = new ArrayList<String>();
+                lore.add(data.getSchematic().toString());
+                lore.add("Walls: " + twl.wall_lookup.get(data.getWall_id() + ":" + data.getWall_data()));
+                lore.add("Floors: " + twl.wall_lookup.get(data.getFloor_id() + ":" + data.getFloor_data()));
+                lore.add("Chameleon block: " + ((data.getBox_id() == 35 || data.getBox_id() == 159) ? DyeColor.getByWoolData(data.getBox_data()) + " " : "") + Material.getMaterial(data.getBox_id()).toString());
+                lore.add("Lamp: " + Material.getMaterial(data.getLamp()).toString());
+                im.setLore(lore);
+                is.setItemMeta(im);
+                // set the block to AIR
+                event.getBlock().setType(Material.AIR);
+                w.dropItemNaturally(l, is);
+            }
             trackTARDISSeed.remove(l);
         }
     }
