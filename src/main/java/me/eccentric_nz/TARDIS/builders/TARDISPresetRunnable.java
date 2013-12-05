@@ -91,7 +91,7 @@ public class TARDISPresetRunnable implements Runnable {
     public TARDISPresetRunnable(TARDIS plugin, Location location, TARDISConstants.PRESET preset, int tid, COMPASS d, Player player, boolean mal, int lamp, boolean sub, int cham_id, byte cham_data) {
         this.plugin = plugin;
         this.d = d;
-        this.loops = 15;
+        this.loops = 18;
         this.location = location;
         this.i = 0;
         this.tid = tid;

@@ -78,7 +78,7 @@ public class TARDISDematerialisationPreset implements Runnable {
     public TARDISDematerialisationPreset(TARDIS plugin, Location location, TARDISConstants.PRESET preset, int lamp, int tid, COMPASS d, int cham_id, byte cham_data, Player player) {
         this.plugin = plugin;
         this.d = d;
-        this.loops = 15;
+        this.loops = 18;
         this.location = location;
         this.preset = preset;
         this.i = 0;

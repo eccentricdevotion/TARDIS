@@ -2,7 +2,7 @@
 
 ## Current version `2.6`
 1. Finesse Resource Pack sounds
-2. If materialisation is going to use stained glass, then remove support for Bukkit versions prior to 1.7.2!
+2. Now that materialisation uses stained glass, remove support for Bukkit versions prior to 1.7.2!
 3. TARDIS Information System
     * add new features
     * auto log out?
