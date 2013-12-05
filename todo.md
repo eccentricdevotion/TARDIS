@@ -1,13 +1,12 @@
 # TODO
 
 ## Current version `2.6`
-1. Use Resource Pack sounds
-2. Change ice presets to stained glass of a similar colour to chosen preset (in progress) - calculate the appropriate colour for Blue Police Boxes and submerged from chameleon changed block
-3. If materialisation is going to use stained glass, then remove support for Bukkit versions prior to 1.7.2!
-4. TARDIS Information System
+1. Finesse Resource Pack sounds
+2. If materialisation is going to use stained glass, then remove support for Bukkit versions prior to 1.7.2!
+3. TARDIS Information System
     * add new features
     * auto log out?
-5. Documentation & videos!
+4. Documentation & videos!
 
 ## Waiting on Bukkit API
 0. IDs are soon to be history... so convert all ID use to entity names
