@@ -89,11 +89,6 @@ public class TARDISBuilderInner {
             starty = 15;
         } else {
             switch (schm) {
-                case DELUXE:
-                case ELEVENTH:
-                    starty = 66;
-                    break;
-                case BIGGER:
                 case REDSTONE:
                     starty = 65;
                     break;
