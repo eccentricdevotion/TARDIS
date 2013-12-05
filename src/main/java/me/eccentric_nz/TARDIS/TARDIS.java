@@ -553,7 +553,7 @@ public class TARDIS extends JavaPlugin {
             public void run() {
                 TARDISSounds.randomTARDISSound();
             }
-        }, 60L, 1200L);
+        }, 60L, 1500L);
     }
 
     /**

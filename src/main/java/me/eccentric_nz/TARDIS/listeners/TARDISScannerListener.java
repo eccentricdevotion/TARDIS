@@ -224,9 +224,14 @@ public class TARDISScannerListener implements Listener {
                         @Override
                         public void run() {
                             player.sendMessage("Humidity: " + String.format("%.2f", scan_loc.getBlock().getHumidity()));
-                            player.sendMessage("Temperature: " + String.format("%.2f", scan_loc.getBlock().getTemperature()));
                         }
                     }, 100L);
+                    bsched.scheduleSyncDelayedTask(plugin, new Runnable() {
+                        @Override
+                        public void run() {
+                            player.sendMessage("Temperature: " + String.format("%.2f", scan_loc.getBlock().getTemperature()));
+                        }
+                    }, 120L);
                     bsched.scheduleSyncDelayedTask(plugin, new Runnable() {
                         @Override
                         public void run() {
@@ -248,7 +253,7 @@ public class TARDISScannerListener implements Listener {
                                 player.sendMessage("Nearby entities: none");
                             }
                         }
-                    }, 120L);
+                    }, 140L);
                 }
             }
         }
