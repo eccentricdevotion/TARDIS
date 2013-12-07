@@ -49,18 +49,21 @@ public class TARDISChatListener implements Listener {
      */
     @EventHandler(priority = EventPriority.MONITOR)
     public void onChat(AsyncPlayerChatEvent event) {
-        String saved = event.getPlayer().getName();
+        final String saved = event.getPlayer().getName();
         String chat = event.getMessage();
-        if (chat.equalsIgnoreCase("tardis rescue accept")) {
+        if (chat != null && chat.equalsIgnoreCase("tardis rescue accept")) {
             if (plugin.trackChat.containsKey(saved)) {
-                Player rescuer = plugin.getServer().getPlayer(plugin.trackChat.get(saved));
-                TARDISRescue res = new TARDISRescue(plugin);
-                if (res.tryRescue(rescuer, saved)) {
-                    rescuer.sendMessage(plugin.pluginName + "Release the handbrake to start rescuing " + saved);
-                } else {
-                    rescuer.sendMessage(plugin.pluginName + "There was a problem trying to rescue " + saved + ", they probably need to move.");
-                }
+                final Player rescuer = plugin.getServer().getPlayer(plugin.trackChat.get(saved));
+                final TARDISRescue res = new TARDISRescue(plugin);
                 plugin.trackChat.remove(saved);
+                // delay it so the chat appears before the message
+                plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
+                    @Override
+                    public void run() {
+                        res.tryRescue(rescuer, saved);
+                        rescuer.sendMessage(plugin.pluginName + "Release the handbrake to start rescuing " + saved);
+                    }
+                }, 2L);
             } else {
                 event.getPlayer().sendMessage(plugin.pluginName + "Rescue request timed out! You need to respond within 60 seconds.");
             }

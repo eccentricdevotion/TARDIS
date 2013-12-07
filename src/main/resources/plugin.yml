@@ -3,11 +3,11 @@ description: A plugin for all Doctor Who fans - create and use a TARDIS! Telepor
 main: me.eccentric_nz.TARDIS.TARDIS
 name: TARDIS
 startup: postworld
-softdepend: [Multiverse-Core,MultiWorld,My Worlds,WorldGuard,WorldBorder,Towny,Citizens]
+softdepend: [Multiverse-Core,Multiverse-Adventure,Multiverse-Inventories,MultiWorld,My Worlds,WorldGuard,WorldBorder,Towny,Citizens]
 website: http://dev.bukkit.org/bukkit-plugins/tardis/
 dev-url: http://dev.bukkit.org/bukkit-plugins/tardis/
 url: http://eccentricdevotion.github.io/TARDIS/
-version: '2.5.3'
+version: maven-version-number
 permissions:
   tardis.admin:
     description: Allow players access to the TARDIS admin commands.
@@ -42,6 +42,9 @@ permissions:
     default: false
   tardis.create:
     description: Allow players to create a TARDIS.
+    default: op
+  tardis.create_world:
+    description: Allow players to create a TARDIS in it's own world. This is only used in conjuction with the create_worlds_with_perms config option.
     default: op
   tardis.exterminate:
     description: Allow players to delete their own TARDIS.
@@ -100,6 +103,18 @@ permissions:
   tardis.steampunk:
     description: Allow players to build the 'steampunk' TARDIS.
     default: op
+  tardis.ars:
+    description: Allow players to build the 'Architectural Reconfiguration System' TARDIS.
+    default: op
+  tardis.plank:
+    description: Allow players to build the 'wood' TARDIS.
+    default: op
+  tardis.tom:
+    description: Allow players to build the '4th Doctor's' TARDIS.
+    default: op
+  tardis.custom:
+    description: Allow players to build the server's 'custom' TARDIS.
+    default: op
   tardis.end:
     description: Allow players to time travel to the END.
     default: op
@@ -125,8 +140,11 @@ permissions:
       tardis.room.mushroom: true
       tardis.room.passage: true
       tardis.room.pool: true
+      tardis.room.rail: true
       tardis.room.stable: true
+      tardis.room.trenzalore: true
       tardis.room.vault: true
+      tardis.room.village: true
       tardis.room.wood: true
       tardis.room.workshop: true
     default: op
@@ -200,12 +218,12 @@ commands:
       permission-message: You don't have the permission <permission> to use this command
     remove:
       description: Remove a companion from your TARDIS.
-      usage: /<command> remove [player name]
+      usage: /<command> remove [player name|all]
       permission: tardis.add
       permission-message: You don't have the permission <permission> to use this command
     update:
       description: Modify the interior of the TARDIS.
-      usage: /<command> update [door|button|world-repeater|x-repeater|z-repeater|y-repeater|chameleon|save-sign|artron|handbrake|condenser|scanner|backdoor|keyboard|creeper|eps]
+      usage: /<command> update [door|button|world-repeater|x-repeater|z-repeater|y-repeater|chameleon|save-sign|artron|handbrake|condenser|scanner|backdoor|keyboard|creeper|eps|back|terminal|ars|temporal|light|farm|stable|rail|info]
       permission: tardis.update
       permission-message: You don't have the permission <permission> to use this command
     secondary:
@@ -267,20 +285,47 @@ commands:
       usage: /<command> room [room type|help]
       permission: tardis.room
       permission-message: You don't have the permission <permission> to use this command
+    abort:
+      description: Stop growing a TARDIS room.
+      usage: /<command> abort [task ID number]
+      permission: tardis.room
+      permission-message: You don't have the permission <permission> to use this command
     version:
       description: Display the TARDIS plugin and CraftBukkit version.
       usage: /<command> version
+    lamps:
+      description: Scan the main control room for new or moved lamp blocks.
+      usage: /<command> lamps
   tardistravel:
     aliases: ttravel
     description: Travel to destinations in various ways.
     usage: |
-      /<command> [player] or /<command> [world x y z] or /<command> dest [name] or /<command> area [name]
+      /<command> [player] or /<command> [world x y z] or /<command> dest [name] or /<command> area [name] or /<command> biome [biome]
       Example: /<command> eccentric_nz - travel to a players location
       Example: /<command> New_new_earth -117 64 273 - travel to co-ordinates in a specific world
       Example: /<command> dest mine - travel to saved destination called 'mine'
       Example: /<command> area airport - travel to the TARDIS area called 'airport'
+      Example: /<command> biome DESERT - travel to the nearest DESERT biome
     permission: tardis.timetravel
     permission-message: You don't have the permission <permission> to use this command
+    home:
+      description: Time travel to the TARDIS 'home' location.
+      usage: /<command> home
+    player:
+      description: Time travel to the specified player.
+      usage: /<command> [player]
+    coords:
+      description: Time travel to the specified coordinates.
+      usage: /<command> [world x y z]
+    dest:
+      description: Time travel to a saved destination.
+      usage: /<command> dest [save name]
+    area:
+      description: Time travel to a server defined TARDIS area.
+      usage: /<command> area [area name]
+    biome:
+      description: Time travel to the closest specified biome type.
+      usage: /<command> biome [biome type]
   tardisadmin:
     aliases: tadmin
     description: Set TARDIS configuration options.
@@ -293,40 +338,69 @@ commands:
     usage: /<command> add [name] or /<command> [name] [boolean|integer|string] or /<command> blocks [name|save]
     permission: tardis.admin
     permission-message: You don't have the permission <permission> to use this command
+    add:
+      description: Add a new custom room schematic.
+      usage: /<command> add [schematic name]
+    seed:
+      description: Set the seed block of a custom room.
+      usage: /<command> [schematic name] [material]
+    cost:
+      description: Set the cost of a custom room.
+      usage: /<command> add [schematic name]
+    offset:
+      description: Set the offset of a custom room.
+      usage: /<command> [schematic name] [negative amount]
+    enabled:
+      description: Set the custom room as active/inactive.
+      usage: /<command> [schematic name] [true|false]
   tardisprefs:
     aliases: tprefs
     description: Set player preferences.
     usage: /<command> [preference] [on|off]
+    permission: tardis.timetravel
+    permission-message: You don't have the permission <permission> to use this command
     sfx:
       description: Toggle the TARDIS sound effects on and off.
       usage: /<command> sfx [on|off]
-      permission: tardis.timetravel
-      permission-message: You don't have the permission <permission> to use this command
     quotes:
       description: Toggle the TARDIS quotes on and off.
       usage: /<command> quotes [on|off]
-      permission: tardis.timetravel
-      permission-message: You don't have the permission <permission> to use this command
     platform:
       description: Toggle the TARDIS platform on and off.
       usage: /<command> platform [on|off]
-      permission: tardis.timetravel
-      permission-message: You don't have the permission <permission> to use this command
     key:
       description: Set the TARDIS key item.
       usage: /<command> key [material]
-      permission: tardis.timetravel
-      permission-message: You don't have the permission <permission> to use this command
     wall:
       description: Set the TARDIS room growing wall material.
       usage: /<command> wall [material]
-      permission: tardis.timetravel
-      permission-message: You don't have the permission <permission> to use this command
     floor:
       description: Set the TARDIS room growing floor material.
       usage: /<command> floor [material]
-      permission: tardis.timetravel
-      permission-message: You don't have the permission <permission> to use this command
+    auto:
+      description: Toggle the TARDIS Autonomous Homing feature on and off.
+      usage: /<command> auto [on|off]
+    eps:
+      description: Toggle Emergency Program One on and off.
+      usage: /<command> eps [on|off]
+    message:
+      description: Set the Emergency Program One message.
+      usage: /<command> eps_message [message]
+    hads:
+      description: Toggle HADS on and off.
+      usage: /<command> hads [on|off]
+    isomorphic:
+      description: Toggle isomorphic controls on and off.
+      usage: /<command> isomorphic [on|off]
+    lamp:
+      description: Set the Police Box lamp block type.
+      usage: /<command> lamp [block id]
+    plain:
+      description: Toggle the plain TARDIS on and off (no sign or lamp).
+      usage: /<command> plain [on|off]
+    submarine:
+      description: Toggle submarine landings on and off.
+      usage: /<command> submarine [on|off]
   tardisarea:
     aliases: tarea
     description: Set up predefined TARDIS travel areas.
@@ -353,31 +427,26 @@ commands:
       permission-message: You don't have the permission <permission> to use this command
   tardisbind:
     aliases: tbind
+    permission: tardis.update
+    permission-message: You don't have the permission <permission> to use this command
     save:
       description: Bind a saved location to a button.
-      usage: /<command> [save name]
-      permission: tardis.update
-      permission-message: You don't have the permission <permission> to use this command
+      usage: /<command> save [save name]
     cmd:
       description: Bind the 'home', 'hide' or 'rebuild' commands to a button.
-      usage: /<command> [home|hide|rebuild]
-      permission: tardis.update
-      permission-message: You don't have the permission <permission> to use this command
+      usage: /<command> cmd [home|hide|rebuild]
     player:
       description: Bind a player location to a button.
-      usage: /<command> [player]
-      permission: tardis.update
-      permission-message: You don't have the permission <permission> to use this command
+      usage: /<command> player [player]
     area:
       description: Bind a TARDIS area to a button.
-      usage: /<command> [area name]
-      permission: tardis.update
-      permission-message: You don't have the permission <permission> to use this command
+      usage: /<command> area [area name]
+    biome:
+      description: Bind a biome to a button.
+      usage: /<command> biome [biome]
     remove:
       description: Remove a 'bound' saved location, command, player or area from a button.
-      usage: /<command> [save name|cmd|player|area]
-      permission: tardis.update
-      permission-message: You don't have the permission <permission> to use this command
+      usage: /<command> remove [save name|cmd|player|area]
   tardisgravity:
     aliases: tgravity
     description: Add or remove gravity well blocks.
@@ -396,9 +465,21 @@ commands:
     usage: /<command> [on|off|in|out] [url]
     permission: tardis.texture
     permission-message: You don't have the permission <permission> to use this command
+    'on':
+      description: Turns texture pack switching on.
+      usage: /<command> on
+    'off':
+      description: Turns texture pack switching off.
+      usage: /<command> off
+    in:
+      description: Set texure pack that is switched to inside the TARDIS.
+      usage: /<command> in [url]
+    out:
+      description: Set texure pack that is switched to in the outside world.
+      usage: /<command> out [url]
   tardisrecipe:
     aliases: [trecipe, trep]
     description: View TARDIS item recipes.
-    usage: /<command> [remote|locator|l-circuit|m-circuit|s-circuit]
+    usage: /<command> [remote|locator|l-circuit|m-circuit|s-circuit|key|sonic-q|sonic-r|sonic-d|sonic-e|sonic-a]
     permission: tardis.use
     permission-message: You don't have the permission <permission> to use this command

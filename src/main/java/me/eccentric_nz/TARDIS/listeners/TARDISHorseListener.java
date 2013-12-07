@@ -21,6 +21,7 @@ import java.util.HashMap;
 import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
+import me.eccentric_nz.TARDIS.database.ResultSetDoors;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.travel.TARDISDoorLocation;
 import me.eccentric_nz.TARDIS.travel.TARDISHorse;
@@ -47,7 +48,7 @@ import org.bukkit.inventory.ItemStack;
 public class TARDISHorseListener implements Listener {
 
     private final TARDIS plugin;
-    private List<Material> barding = new ArrayList<Material>();
+    private final List<Material> barding = new ArrayList<Material>();
 
     public TARDISHorseListener(TARDIS plugin) {
         this.plugin = plugin;
@@ -71,8 +72,17 @@ public class TARDISHorseListener implements Listener {
                     wherep.put("player", p.getName());
                     ResultSetTravellers rst = new ResultSetTravellers(plugin, wherep, false);
                     if (rst.resultSet() && pworld.contains("TARDIS")) {
+                        int id = rst.getTardis_id();
+                        HashMap<String, Object> whered = new HashMap<String, Object>();
+                        whered.put("tardis_id", id);
+                        whered.put("door_type", 1);
+                        ResultSetDoors rsd = new ResultSetDoors(plugin, whered, false);
+                        if (rsd.resultSet() && rsd.isLocked()) {
+                            p.sendMessage(plugin.pluginName + "You need to unlock the door!");
+                            return;
+                        }
                         // get spawn location
-                        TARDISDoorLocation dl = plugin.doorListener.getDoor(0, rst.getTardis_id());
+                        TARDISDoorLocation dl = plugin.doorListener.getDoor(0, id);
                         Location l = dl.getL();
                         switch (dl.getD()) {
                             case NORTH:
@@ -135,6 +145,7 @@ public class TARDISHorseListener implements Listener {
                             if (tmhor.hasChest()) {
                                 equine.setCarryingChest(true);
                             }
+                            equine.setHealth(tmhor.getHealth());
                             Inventory inv = equine.getInventory();
                             inv.setContents(tmhor.getHorseinventory());
                             if (inv.contains(Material.SADDLE)) {
@@ -149,12 +160,16 @@ public class TARDISHorseListener implements Listener {
                                     equine.getInventory().setArmor(bard);
                                 }
                             }
+                            if (plugin.pm.isPluginEnabled("TardisHorseSpeed")) {
+                                TardisHorseSpeed ths = (TardisHorseSpeed) plugin.pm.getPlugin("TardisHorseSpeed");
+                                ths.setHorseSpeed(equine, tmhor.getSpeed());
+                            }
                             Tameable tamed = (Tameable) equine;
                             tamed.setTamed(true);
                             tamed.setOwner(p);
 
                             // teleport player and remove from travellers table
-                            plugin.doorListener.movePlayer(p, l, true, p.getWorld(), false);
+                            plugin.doorListener.movePlayer(p, l, true, p.getWorld(), false, 0);
                             HashMap<String, Object> where = new HashMap<String, Object>();
                             where.put("player", p.getName());
                             new QueryFactory(plugin).doDelete("travellers", where);

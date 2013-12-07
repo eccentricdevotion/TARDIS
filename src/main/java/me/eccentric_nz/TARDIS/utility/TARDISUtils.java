@@ -16,7 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.utility;
 
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
@@ -24,15 +23,15 @@ import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetChunks;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
-import me.eccentric_nz.TARDIS.thirdparty.Version;
+import me.eccentric_nz.tardischunkgenerator.TARDISChunkGenerator;
 import org.bukkit.Bukkit;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.World;
+import org.bukkit.WorldType;
 import org.bukkit.block.Block;
-import org.bukkit.configuration.file.FileConfiguration;
-import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
+import org.bukkit.generator.ChunkGenerator;
 
 /**
  * Various utility methods.
@@ -44,16 +43,6 @@ import org.bukkit.entity.Player;
  */
 public class TARDISUtils {
 
-    /**
-     * Returns a rounded integer after division.
-     *
-     * @param num the number being divided.
-     * @param divisor the number to divide by.
-     * @return
-     */
-    public static int roundUp(int num, int divisor) {
-        return (num + divisor - 1) / divisor;
-    }
     private final TARDIS plugin;
 
     public TARDISUtils(TARDIS plugin) {
@@ -71,23 +60,32 @@ public class TARDISUtils {
      * @param d the data bit to set the block to.
      */
     public void setBlock(World w, int x, int y, int z, int m, byte d) {
-        Block b = w.getBlockAt(x, y, z);
+        final Block b = w.getBlockAt(x, y, z);
         if (m < 0) {
-            if (plugin.bukkitversion.compareTo(plugin.prewoodbuttonversion) < 0 && (m == 143 || m == -113)) {
-                m = 77;
-            } else {
-                m += 256;
-            }
+            m += 256;
         }
         if (m == 92) { //cake -> handbrake
             m = 69;
             d = (byte) 5;
         }
         if (m == 52) { //mob spawner -> scanner button
-            m = (plugin.bukkitversion.compareTo(plugin.prewoodbuttonversion) < 0) ? 77 : 143;
+            m = 143;
             d = (byte) 3;
         }
-        b.setTypeIdAndData(m, d, true);
+        if (m == 33) {
+            plugin.debug("data before setting: " + d);
+        }
+        b.setTypeId(m);
+        b.setData(d, true);
+        if (m == 33) {
+            plugin.debug("data right after setting: " + b.getData());
+            plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
+                @Override
+                public void run() {
+                    plugin.debug("data 20L after setting: " + b.getData());
+                }
+            }, 20L);
+        }
     }
 
     /**
@@ -102,6 +100,7 @@ public class TARDISUtils {
      * @param d the data bit to set the block to.
      * @param id the TARDIS this block belongs to.
      */
+    @SuppressWarnings("deprecation")
     public void setBlockAndRemember(World w, int x, int y, int z, int m, byte d, int id) {
         Block b = w.getBlockAt(x, y, z);
         // save the block location so that we can protect it from damage and restore it (if it wasn't air)!
@@ -111,16 +110,17 @@ public class TARDISUtils {
         set.put("tardis_id", id);
         set.put("location", l);
         int bid = b.getTypeId();
-        if (bid != 0) {
-            byte data = b.getData();
-            set.put("block", bid);
-            set.put("data", data);
-        }
+        //if (bid != 0) {
+        byte data = b.getData();
+        set.put("block", bid);
+        set.put("data", data);
+        //}
         set.put("police_box", 1);
         qf.doInsert("blocks", set);
         plugin.protectBlockMap.put(l, id);
         // set the block
-        b.setTypeIdAndData(m, d, true);
+        b.setTypeId(m);
+        b.setData(d, true);
     }
 
     /**
@@ -135,22 +135,26 @@ public class TARDISUtils {
      * @param d the data bit to set the block to.
      * @param id the TARDIS this block belongs to.
      */
-    public void setBlockCheck(World w, int x, int y, int z, int m, byte d, int id) {
+    @SuppressWarnings("deprecation")
+    public void setUnderDoorBlock(World w, int x, int y, int z, int m, byte d, int id) {
         // List of blocks that a door cannot be placed on
-        List<Integer> ids = Arrays.asList(0, 6, 8, 9, 10, 11, 18, 20, 26, 27, 28, 29, 30, 31, 32, 33, 34, 37, 38, 39, 40, 44, 46, 50, 51, 53, 54, 55, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 75, 76, 77, 78, 79, 81, 83, 85, 89, 92, 93, 94, 96, 101, 102, 104, 105, 106, 107, 108, 109, 111, 113, 114, 115, 116, 117, 118, 119, 120, 122, 126, 128, 130, 131, 132, 134, 135, 136);
+        List<Integer> ids = plugin.getBlocksConfig().getIntegerList("under_door_blocks");
         Block b = w.getBlockAt(x, y, z);
-        Integer bId = Integer.valueOf(b.getTypeId());
-        byte bData = b.getData();
-        if (ids.contains(bId)) {
-            b.setTypeIdAndData(m, d, true);
+        int bid = b.getTypeId();
+        if (ids.contains(bid)) {
+            b.setTypeId(m);
+            b.setData(d, true);
             // remember replaced block location, TypeId and Data so we can restore it later
-            String replaced = w.getName() + ":" + x + ":" + y + ":" + z + ":" + bId + ":" + bData;
+            String l = b.getLocation().toString();
             QueryFactory qf = new QueryFactory(plugin);
             HashMap<String, Object> set = new HashMap<String, Object>();
-            set.put("replaced", replaced);
-            HashMap<String, Object> where = new HashMap<String, Object>();
-            where.put("tardis_id", id);
-            qf.doUpdate("tardis", set, where);
+            set.put("tardis_id", id);
+            set.put("location", l);
+            set.put("block", bid);
+            set.put("data", b.getData());
+            set.put("police_box", 1);
+            qf.doInsert("blocks", set);
+            plugin.protectBlockMap.put(l, id);
         }
     }
 
@@ -158,7 +162,7 @@ public class TARDISUtils {
      * Gets a start location for building the inner TARDIS.
      *
      * @param id the TARDIS this location belongs to.
-     * @return
+     * @return an array of ints.
      */
     public int[] getStartLocation(int id) {
         int[] startLoc = new int[6];
@@ -173,37 +177,9 @@ public class TARDISUtils {
             cx = parseNum(split[1]);
             cz = parseNum(split[2]);
             Chunk chunk = w.getChunkAt(cx, cz);
-            // adjust for TARDIS size
-            int adjust = 0;
-            FileConfiguration pluginYml = YamlConfiguration.loadConfiguration(plugin.pm.getPlugin("TARDIS").getResource("plugin.yml"));
-            String[] version = pluginYml.getString("version").split("-");
-            Version this_version = new Version(version[0]);
-            Version min_version = new Version("2.5");
-            if (this_version.compareTo(min_version) >= 0) {
-                switch (rs.getSchematic()) {
-                    case BIGGER:
-                        adjust = (15 - plugin.biggerdimensions[1]) / 2;
-                        break;
-                    case REDSTONE:
-                        adjust = (15 - plugin.redstonedimensions[1]) / 2;
-                        break;
-                    case STEAMPUNK:
-                        adjust = (15 - plugin.steampunkdimensions[1]) / 2;
-                        break;
-                    case DELUXE:
-                        adjust = (15 - plugin.deluxedimensions[1]) / 2;
-                        break;
-                    case ELEVENTH:
-                        adjust = (15 - plugin.eleventhdimensions[1]) / 2;
-                        break;
-                    default:
-                        adjust = (15 - plugin.budgetdimensions[1]) / 2;
-                        break;
-                }
-            }
-            startLoc[0] = (chunk.getBlock(0, 15, 0).getX()) + adjust;
+            startLoc[0] = (chunk.getBlock(0, 64, 0).getX());
             startLoc[1] = startLoc[0];
-            startLoc[2] = (chunk.getBlock(0, 15, 0).getZ()) + adjust;
+            startLoc[2] = (chunk.getBlock(0, 64, 0).getZ());
             startLoc[3] = startLoc[2];
             startLoc[4] = 1;
             startLoc[5] = 1;
@@ -218,7 +194,7 @@ public class TARDISUtils {
      * @param s the saved location data from the database.
      * @param yaw the player's yaw.
      * @param pitch the player's pitch.
-     * @return
+     * @return a Location.
      */
     public Location getLocationFromDB(String s, float yaw, float pitch) {
         int savedx, savedy, savedz;
@@ -243,7 +219,7 @@ public class TARDISUtils {
      * @param x the x co-ordinate of the chunk.
      * @param z the z co-ordinate of the chunk.
      * @param schm the schematic of the TARDIS being created.
-     * @return
+     * @return true or false.
      */
     public boolean checkChunk(String w, int x, int z, TARDISConstants.SCHEMATIC schm) {
         boolean chunkchk = false;
@@ -263,6 +239,18 @@ public class TARDISUtils {
                 break;
             case STEAMPUNK:
                 d = plugin.steampunkdimensions;
+                break;
+            case PLANK:
+                d = plugin.plankdimensions;
+                break;
+            case TOM:
+                d = plugin.tomdimensions;
+                break;
+            case ARS:
+                d = plugin.arsdimensions;
+                break;
+            case CUSTOM:
+                d = plugin.customdimensions;
                 break;
             default:
                 d = plugin.budgetdimensions;
@@ -289,6 +277,17 @@ public class TARDISUtils {
     /**
      * Returns a rounded integer after division.
      *
+     * @param num the number being divided.
+     * @param divisor the number to divide by.
+     * @return a rounded number.
+     */
+    public int roundUp(int num, int divisor) {
+        return (num + divisor - 1) / divisor;
+    }
+
+    /**
+     * Returns a rounded integer after division.
+     *
      * @param i the number to convert to an int.
      * @return a number
      */
@@ -297,7 +296,7 @@ public class TARDISUtils {
         try {
             num = Integer.parseInt(i);
         } catch (NumberFormatException n) {
-            plugin.debug("Could not convert to number");
+            plugin.debug("Could not convert to number, the string was: " + i);
         }
         return num;
     }
@@ -360,5 +359,33 @@ public class TARDISUtils {
      */
     public String makeLocationStr(World w, int x, int y, int z) {
         return "Location{world=CraftWorld{name=" + w.getName() + "},x=" + x + ".0,y=" + y + ".0,z=" + z + ".0,pitch=0.0,yaw=0.0}";
+    }
+
+    public boolean canGrowRooms(String chunk) {
+        String[] data = chunk.split(":");
+        World room_world = plugin.getServer().getWorld(data[0]);
+        ChunkGenerator gen = room_world.getGenerator();
+        WorldType wt = room_world.getWorldType();
+        boolean special = (data[0].contains("TARDIS_TimeVortex") && (wt.equals(WorldType.FLAT) || gen instanceof TARDISChunkGenerator));
+        return (data[0].contains("TARDIS_WORLD_") || special);
+    }
+
+    public Location getLocationFromBukkitString(String string) {
+        //Location{world=CraftWorld{name=world},x=0.0,y=0.0,z=0.0,pitch=0.0,yaw=0.0}
+        String[] loc_data = string.split(",");
+        // w, x, y, z - 0, 1, 2, 3
+        String[] wStr = loc_data[0].split("=");
+        String[] xStr = loc_data[1].split("=");
+        String[] yStr = loc_data[2].split("=");
+        String[] zStr = loc_data[3].split("=");
+        World w = plugin.getServer().getWorld(wStr[2].substring(0, (wStr[2].length() - 1)));
+        int x = plugin.utils.parseNum(xStr[1].substring(0, (xStr[1].length() - 2)));
+        int y = plugin.utils.parseNum(yStr[1].substring(0, (yStr[1].length() - 2)));
+        int z = plugin.utils.parseNum(zStr[1].substring(0, (zStr[1].length() - 2)));
+        return new Location(w, x, y, z);
+    }
+
+    public void playTARDISSound(Location l, Player p, String s) {
+        p.playSound(l, s, 5.0F, 1.0F);
     }
 }

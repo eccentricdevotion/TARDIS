@@ -22,6 +22,8 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants.COMPASS;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetAreas;
+import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
+import me.eccentric_nz.TARDIS.database.ResultSetHomeLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
@@ -93,67 +95,108 @@ public class TARDISTimeLordDeathListener implements Listener {
                             }
                             String death_world = death_loc.getWorld().getName();
                             // where is the TARDIS Police Box?
-                            String save = rs.getCurrent();
-                            String[] save_data = save.split(":");
-                            World sw = plugin.getServer().getWorld(save_data[0]);
-                            int sx = plugin.utils.parseNum(save_data[1]);
-                            int sy = plugin.utils.parseNum(save_data[2]);
-                            int sz = plugin.utils.parseNum(save_data[3]);
-                            Location sl = new Location(sw, sx, sy, sz);
+                            HashMap<String, Object> wherecl = new HashMap<String, Object>();
+                            wherecl.put("tardis_id", id);
+                            ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
+                            if (!rsc.resultSet()) {
+                                plugin.debug("Current record not found!");
+                                return;
+                            }
+                            COMPASS cd = rsc.getDirection();
+                            Location sl = new Location(rsc.getWorld(), rsc.getX(), rsc.getY(), rsc.getZ());
                             // where is home?
-                            String home = rs.getHome();
-                            String[] home_data = home.split(":");
-                            World hw = plugin.getServer().getWorld(home_data[0]);
-                            int hx = plugin.utils.parseNum(home_data[1]);
-                            int hy = plugin.utils.parseNum(home_data[2]);
-                            int hz = plugin.utils.parseNum(home_data[3]);
-                            Location home_loc = new Location(hw, hx, hy, hz);
+                            HashMap<String, Object> wherehl = new HashMap<String, Object>();
+                            wherehl.put("tardis_id", id);
+                            ResultSetHomeLocation rsh = new ResultSetHomeLocation(plugin, wherehl);
+                            if (!rsh.resultSet()) {
+                                plugin.debug("Home record not found!");
+                                return;
+                            }
+                            World hw = rsh.getWorld();
+                            Location home_loc = new Location(hw, rsh.getX(), rsh.getY(), rsh.getZ());
+                            COMPASS hd = rsh.getDirection();
+                            boolean sub = rsh.isSubmarine();
                             Location goto_loc;
+                            boolean going_home = false;
                             // if home world is NOT the death world
-                            if (!home_data[0].equals(death_world)) {
+                            if (!hw.getName().equals(death_world)) {
                                 // look for a recharge location
                                 goto_loc = getRecharger(death_world, player);
                                 if (goto_loc == null) {
                                     // no parking spots - default to TARDIS home location
                                     goto_loc = home_loc;
+                                    going_home = true;
                                 }
                             } else {
                                 // died in home world get closest location
                                 Location recharger = getRecharger(death_world, player);
                                 if (recharger != null) {
                                     // which is closer?
-                                    goto_loc = (death_loc.distanceSquared(home_loc) > death_loc.distanceSquared(recharger)) ? recharger : home_loc;
+                                    boolean closer = death_loc.distanceSquared(home_loc) > death_loc.distanceSquared(recharger);
+                                    goto_loc = (closer) ? recharger : home_loc;
+                                    if (!closer) {
+                                        going_home = true;
+                                    }
                                 } else {
                                     // no parking spots - set to TARDIS home location
                                     goto_loc = home_loc;
+                                    going_home = true;
                                 }
                             }
                             // if the TARDIS is already at the home location, do nothing
-                            if (!home.equals(save)) {
-                                // destroy police box
-                                final COMPASS d = rs.getDirection();
+                            if (!compareCurrentToHome(rsc, rsh)) {
+                                QueryFactory qf = new QueryFactory(plugin);
                                 final boolean cham = rs.isChamele_on();
-                                HashMap<String, Object> set = new HashMap<String, Object>();
+                                final COMPASS fd = (going_home) ? hd : cd;
+                                // destroy police box
                                 if (!rs.isHidden()) {
-                                    plugin.destroyPB.destroyPoliceBox(sl, d, id, false, plugin.getConfig().getBoolean("materialise"), cham, player);
+                                    plugin.destroyerP.destroyPreset(sl, cd, id, false, plugin.getConfig().getBoolean("materialise"), cham, player);
                                 } else {
+                                    plugin.destroyerP.removeBlockProtection(id, qf);
+                                    HashMap<String, Object> set = new HashMap<String, Object>();
                                     set.put("hidden", 0);
+                                    HashMap<String, Object> tid = new HashMap<String, Object>();
+                                    tid.put("tardis_id", id);
+                                    qf.doUpdate("tardis", set, tid);
                                 }
                                 final Location auto_loc = goto_loc;
+                                if (sub && going_home) {
+                                    plugin.trackSubmarine.add(id);
+                                } else {
+                                    if (plugin.trackSubmarine.contains(Integer.valueOf(id))) {
+                                        plugin.trackSubmarine.remove(Integer.valueOf(id));
+                                    }
+                                }
                                 plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
                                     @Override
                                     public void run() {
                                         // rebuild police box - needs to be a delay
-                                        plugin.buildPB.buildPoliceBox(id, auto_loc, d, cham, player, false, false);
+                                        plugin.builderP.buildPreset(id, auto_loc, fd, cham, player, false, false);
                                     }
                                 }, 200L);
-                                String save_loc = goto_loc.getWorld().getName() + ":" + goto_loc.getBlockX() + ":" + goto_loc.getBlockY() + ":" + goto_loc.getBlockZ() + ":" + d.toString();
-                                set.put("save", save_loc);
-                                set.put("current", save_loc);
-                                HashMap<String, Object> tid = new HashMap<String, Object>();
-                                tid.put("tardis_id", id);
-                                QueryFactory qf = new QueryFactory(plugin);
-                                qf.doUpdate("tardis", set, tid);
+                                // set current
+                                HashMap<String, Object> setc = new HashMap<String, Object>();
+                                setc.put("world", goto_loc.getWorld().getName());
+                                setc.put("x", goto_loc.getBlockX());
+                                setc.put("y", goto_loc.getBlockY());
+                                setc.put("z", goto_loc.getBlockZ());
+                                setc.put("direction", fd.toString());
+                                setc.put("submarine", (sub) ? 1 : 0);
+                                HashMap<String, Object> wherec = new HashMap<String, Object>();
+                                wherec.put("tardis_id", id);
+                                qf.doUpdate("current", setc, wherec);
+                                // set back
+                                HashMap<String, Object> setb = new HashMap<String, Object>();
+                                setb.put("world", rsc.getWorld().getName());
+                                setb.put("x", rsc.getX());
+                                setb.put("y", rsc.getY());
+                                setb.put("z", rsc.getZ());
+                                setb.put("direction", rsc.getDirection().toString());
+                                setb.put("submarine", (rsc.isSubmarine()) ? 1 : 0);
+                                HashMap<String, Object> whereb = new HashMap<String, Object>();
+                                whereb.put("tardis_id", id);
+                                qf.doUpdate("back", setb, whereb);
+                                // take energy
                                 HashMap<String, Object> wherea = new HashMap<String, Object>();
                                 wherea.put("tardis_id", id);
                                 int amount = plugin.getArtronConfig().getInt("autonomous") * -1;
@@ -179,5 +222,12 @@ public class TARDISTimeLordDeathListener implements Listener {
             l = plugin.ta.getNextSpot(rsa.getArea_name());
         }
         return l;
+    }
+
+    private boolean compareCurrentToHome(ResultSetCurrentLocation c, ResultSetHomeLocation h) {
+        return (c.getWorld().equals(h.getWorld())
+                && c.getX() == h.getX()
+                && c.getY() == h.getY()
+                && c.getZ() == h.getZ());
     }
 }
