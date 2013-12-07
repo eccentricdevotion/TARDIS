@@ -320,7 +320,7 @@ public class TARDISRoomRunnable implements Runnable {
                     id = 0;
                     data = (byte) 0;
                 } else {
-                    id = middle_id;
+                    id = (middle_id == 35 && middle_data == 1 && plugin.getConfig().getBoolean("use_clay")) ? 159 : middle_id;
                     data = middle_data;
                 }
             }
