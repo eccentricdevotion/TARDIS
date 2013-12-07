@@ -1,2 +1,31 @@
-## YAML Template.
----
+shaped:
+    Vorpal Sword:
+        shape: A-A,BBB,CDC
+        ingredients:
+            A: 1
+            B: 2
+            C: '5:2'
+            D: 57
+        result: 276
+        amount: 1
+        displayname: true
+        lore: "The vorpal blade\ngoes snicker-snack!"
+        enchantment: FIRE_ASPECT
+        strength: 3
+shapeless:
+    Slime:
+        recipe: 106,106,106
+        result: 341
+        amount: 1
+        displayname: false
+        lore: ""
+        enchantment: NONE
+        strength: 0
+furnace:
+    Nuclear Wool:
+        recipe: '35:0'
+        result: '35:15'
+        displayname: true
+        lore: "Done to a crisp"
+        enchantment: NONE
+        strength: 0

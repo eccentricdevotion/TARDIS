@@ -268,11 +268,12 @@ public class TARDIS extends JavaPlugin {
     public boolean myspawn = false;
     public HashMap<String, HashMap<String, Integer>> roomBlockCounts = new HashMap<String, HashMap<String, Integer>>();
     public String tp;
-    public FileConfiguration achivement_config;
-    private FileConfiguration artron_config;
-    private FileConfiguration blocks_config;
-    private FileConfiguration rooms_config;
-    private FileConfiguration tag_config;
+    public FileConfiguration achievementConfig;
+    private FileConfiguration artronConfig;
+    private FileConfiguration blocksConfig;
+    private FileConfiguration roomsConfig;
+    private FileConfiguration tagConfig;
+    private FileConfiguration recipesConfig;
     public TARDISButtonListener buttonListener;
     public TARDISDoorListener doorListener;
     public TARDISChameleonPreset presets;
@@ -397,24 +398,27 @@ public class TARDIS extends JavaPlugin {
      * Loads the custom config files.
      */
     private void loadCustomConfigs() {
+        //TODO - change file copy method - just send the file name and process it there?
         tardisCSV.copy(getDataFolder() + File.separator + "achievements.yml", getResource("achievements.yml"));
         tardisCSV.copy(getDataFolder() + File.separator + "artron.yml", getResource("artron.yml"));
         tardisCSV.copy(getDataFolder() + File.separator + "blocks.yml", getResource("blocks.yml"));
         tardisCSV.copy(getDataFolder() + File.separator + "rooms.yml", getResource("rooms.yml"));
         tardisCSV.copy(getDataFolder() + File.separator + "tag.yml", getResource("tag.yml"));
-        this.achivement_config = YamlConfiguration.loadConfiguration(new File(getDataFolder(), "achievements.yml"));
-        if (this.achivement_config.getString("travel.message").equals("Life of the party!")) {
-            this.achivement_config.set("travel.message", "There and back again!");
+        tardisCSV.copy(getDataFolder() + File.separator + "recipes.yml", getResource("recipes.yml"));
+        this.achievementConfig = YamlConfiguration.loadConfiguration(new File(getDataFolder(), "achievements.yml"));
+        if (this.achievementConfig.getString("travel.message").equals("Life of the party!")) {
+            this.achievementConfig.set("travel.message", "There and back again!");
             try {
-                this.achivement_config.save(getDataFolder() + File.separator + "achievements.yml");
+                this.achievementConfig.save(getDataFolder() + File.separator + "achievements.yml");
             } catch (IOException io) {
                 debug("Could not save achievements.yml " + io);
             }
         }
-        this.artron_config = YamlConfiguration.loadConfiguration(new File(getDataFolder(), "artron.yml"));
-        this.blocks_config = YamlConfiguration.loadConfiguration(new File(getDataFolder(), "blocks.yml"));
-        this.rooms_config = YamlConfiguration.loadConfiguration(new File(getDataFolder(), "rooms.yml"));
-        this.tag_config = YamlConfiguration.loadConfiguration(new File(getDataFolder(), "tag.yml"));
+        this.artronConfig = YamlConfiguration.loadConfiguration(new File(getDataFolder(), "artron.yml"));
+        this.blocksConfig = YamlConfiguration.loadConfiguration(new File(getDataFolder(), "blocks.yml"));
+        this.roomsConfig = YamlConfiguration.loadConfiguration(new File(getDataFolder(), "rooms.yml"));
+        this.tagConfig = YamlConfiguration.loadConfiguration(new File(getDataFolder(), "tag.yml"));
+        this.recipesConfig = YamlConfiguration.loadConfiguration(new File(getDataFolder(), "recipes.yml"));
     }
 
     /**
@@ -536,7 +540,7 @@ public class TARDIS extends JavaPlugin {
                 console.sendMessage(pluginName + "Created books directory.");
             }
         }
-        Set<String> booknames = achivement_config.getKeys(false);
+        Set<String> booknames = achievementConfig.getKeys(false);
         for (String b : booknames) {
             tardisCSV.copy(getDataFolder() + File.separator + "books" + File.separator + b + ".txt", getResource(b + ".txt"));
         }
@@ -822,23 +826,27 @@ public class TARDIS extends JavaPlugin {
     }
 
     public FileConfiguration getAchivementConfig() {
-        return achivement_config;
+        return achievementConfig;
     }
 
     public FileConfiguration getArtronConfig() {
-        return artron_config;
+        return artronConfig;
     }
 
     public FileConfiguration getBlocksConfig() {
-        return blocks_config;
+        return blocksConfig;
     }
 
     public FileConfiguration getRoomsConfig() {
-        return rooms_config;
+        return roomsConfig;
     }
 
     public FileConfiguration getTagConfig() {
-        return tag_config;
+        return tagConfig;
+    }
+
+    public FileConfiguration getRecipesConfig() {
+        return recipesConfig;
     }
 
     public Calendar getBeforeCal() {
