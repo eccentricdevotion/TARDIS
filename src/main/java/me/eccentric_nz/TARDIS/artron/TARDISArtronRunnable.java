@@ -22,6 +22,7 @@ import java.util.List;
 import java.util.Set;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
+import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import org.bukkit.Location;
 import org.bukkit.World;
@@ -35,7 +36,7 @@ import org.bukkit.World;
 public class TARDISArtronRunnable implements Runnable {
 
     private final TARDIS plugin;
-    private int id;
+    private final int id;
     private int task;
     List<Location> rechargers;
     QueryFactory qf;
@@ -76,25 +77,22 @@ public class TARDISArtronRunnable implements Runnable {
     private boolean isNearCharger(int id) {
         HashMap<String, Object> where = new HashMap<String, Object>();
         where.put("tardis_id", id);
-        ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
+        ResultSetCurrentLocation rs = new ResultSetCurrentLocation(plugin, where);
         if (!rs.resultSet()) {
             return false;
         }
+        if (rs.getWorld() == null) {
+            return false;
+        }
         // get Police Box location
-        String save = rs.getSave();
-        String[] data = save.split(":");
-        World w = plugin.getServer().getWorld(data[0]);
-        int x = plugin.utils.parseNum(data[1]);
-        int y = plugin.utils.parseNum(data[2]);
-        int z = plugin.utils.parseNum(data[3]);
-        Location pb_loc = new Location(w, x, y, z);
+        Location pb_loc = new Location(rs.getWorld(), rs.getX(), rs.getY(), rs.getZ());
         // check location is within configured blocks of a recharger
         for (Location l : rechargers) {
             if (plugin.utils.compareLocations(pb_loc, l)) {
                 // strike lightning to the Police Box torch location
                 if (plugin.getConfig().getBoolean("strike_lightning")) {
                     pb_loc.setY(pb_loc.getY() + 3);
-                    w.strikeLightningEffect(pb_loc);
+                    rs.getWorld().strikeLightningEffect(pb_loc);
                 }
                 return true;
             }

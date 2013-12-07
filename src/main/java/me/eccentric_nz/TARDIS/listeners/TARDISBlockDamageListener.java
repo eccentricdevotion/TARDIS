@@ -37,7 +37,7 @@ import org.bukkit.event.block.BlockDamageEvent;
 public class TARDISBlockDamageListener implements Listener {
 
     private final TARDIS plugin;
-    private boolean HADS;
+    private final boolean HADS;
 
     public TARDISBlockDamageListener(TARDIS plugin) {
         this.plugin = plugin;
@@ -50,6 +50,7 @@ public class TARDISBlockDamageListener implements Listener {
      *
      * @param event a block being damaged
      */
+    @SuppressWarnings("deprecation")
     @EventHandler(priority = EventPriority.NORMAL)
     public void onPoliceBoxDamage(BlockDamageEvent event) {
         Player p = event.getPlayer();

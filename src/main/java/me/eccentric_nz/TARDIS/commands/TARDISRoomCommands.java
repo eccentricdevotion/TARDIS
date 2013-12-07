@@ -20,8 +20,10 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
@@ -33,7 +35,6 @@ import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.files.TARDISMakeRoomCSV;
 import me.eccentric_nz.TARDIS.files.TARDISRoomSchematicReader;
 import me.eccentric_nz.TARDIS.files.TARDISSchematic;
-import me.eccentric_nz.TARDIS.utility.TARDISMaterials;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.command.Command;
@@ -53,9 +54,16 @@ import org.bukkit.entity.Player;
 public class TARDISRoomCommands implements CommandExecutor {
 
     private final TARDIS plugin;
+    public List<String> roomArgs = new ArrayList<String>();
 
     public TARDISRoomCommands(TARDIS plugin) {
         this.plugin = plugin;
+        // rooms - only add if enabled in the config
+        for (String r : plugin.getRoomsConfig().getConfigurationSection("rooms").getKeys(false)) {
+            if (plugin.getRoomsConfig().getBoolean("rooms." + r + ".enabled")) {
+                roomArgs.add(r);
+            }
+        }
     }
 
     @Override
@@ -235,7 +243,7 @@ public class TARDISRoomCommands implements CommandExecutor {
                     } catch (NumberFormatException nfe) {
                         // string seed
                         String setMaterial = args[1].toUpperCase(Locale.ENGLISH);
-                        if (!Arrays.asList(TARDISMaterials.MATERIAL_LIST).contains(setMaterial)) {
+                        if (!Arrays.asList(Material.values()).contains(Material.valueOf(setMaterial))) {
                             sender.sendMessage(plugin.pluginName + ChatColor.RED + "That is not a valid Material! Try checking http://jd.bukkit.org/apidocs/org/bukkit/Material.html");
                             return false;
                         }

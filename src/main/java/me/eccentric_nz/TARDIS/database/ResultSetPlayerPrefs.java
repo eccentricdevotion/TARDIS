@@ -32,10 +32,10 @@ import me.eccentric_nz.TARDIS.TARDIS;
  */
 public class ResultSetPlayerPrefs {
 
-    private TARDISDatabase service = TARDISDatabase.getInstance();
-    private Connection connection = service.getConnection();
-    private TARDIS plugin;
-    private HashMap<String, Object> where;
+    private final TARDISDatabase service = TARDISDatabase.getInstance();
+    private final Connection connection = service.getConnection();
+    private final TARDIS plugin;
+    private final HashMap<String, Object> where;
     private int pp_id;
     private String player;
     private String key;
@@ -45,7 +45,7 @@ public class ResultSetPlayerPrefs {
     private boolean auto_on;
     private boolean beacon_on;
     private boolean hads_on;
-    private boolean plain_on;
+    private boolean submarine_on;
     private int artron_level;
     private int lamp;
     private String wall;
@@ -114,10 +114,7 @@ public class ResultSetPlayerPrefs {
                 this.auto_on = rs.getBoolean("auto_on");
                 this.beacon_on = rs.getBoolean("beacon_on");
                 this.hads_on = rs.getBoolean("hads_on");
-                this.plain_on = rs.getBoolean("plain_on");
-                if (rs.wasNull()) {
-                    this.plain_on = plugin.getConfig().getBoolean("plain_on");
-                }
+                this.submarine_on = rs.getBoolean("submarine_on");
                 this.artron_level = rs.getInt("artron_level");
                 this.lamp = rs.getInt("lamp");
                 if (rs.wasNull()) {
@@ -151,7 +148,7 @@ public class ResultSetPlayerPrefs {
                 if (statement != null) {
                     statement.close();
                 }
-            } catch (Exception e) {
+            } catch (SQLException e) {
                 plugin.debug("Error closing player_prefs table! " + e.getMessage());
             }
         }
@@ -226,11 +223,11 @@ public class ResultSetPlayerPrefs {
         return texture_out;
     }
 
-    public boolean isPlain_on() {
-        return plain_on;
-    }
-
     public int getLamp() {
         return lamp;
+    }
+
+    public boolean isSubmarine_on() {
+        return submarine_on;
     }
 }

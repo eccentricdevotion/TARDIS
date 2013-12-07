@@ -40,7 +40,7 @@ import org.bukkit.entity.Player;
 public class TARDISTextureCommands implements CommandExecutor {
 
     private final TARDIS plugin;
-    private List<String> firstArgs = new ArrayList<String>();
+    private final List<String> firstArgs = new ArrayList<String>();
 
     public TARDISTextureCommands(TARDIS plugin) {
         this.plugin = plugin;
@@ -96,7 +96,7 @@ public class TARDISTextureCommands implements CommandExecutor {
                         upd.put("texture_out", "default");
                     } else {
                         try {
-                            new URL(args[1]);
+                            URL url = new URL(args[1]);
                             if (pref.equals("in")) {
                                 upd.put("texture_in", args[1]);
                             }

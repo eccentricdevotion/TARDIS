@@ -20,8 +20,8 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
-import org.getspout.spoutapi.SpoutManager;
-import org.getspout.spoutapi.player.SpoutPlayer;
+//import org.getspout.spoutapi.SpoutManager;
+//import org.getspout.spoutapi.player.SpoutPlayer;
 
 /**
  * A message pod was a device used by the Time Lords as, essentially, a secure
@@ -49,11 +49,11 @@ public class TARDISAchievementNotify {
      * @param mat The icon to display in the notification
      */
     public void sendAchievement(Player player, String msg, Material mat) {
-        if (plugin.pm.getPlugin("Spout") != null && SpoutManager.getPlayer(player).isSpoutCraftEnabled()) {
-            ((SpoutPlayer) player).sendNotification("Achievement Get!", msg, mat);
-        } else {
-            player.sendMessage(ChatColor.YELLOW + "Achievement Get!");
-            player.sendMessage(ChatColor.WHITE + msg);
-        }
+//        if (plugin.pm.getPlugin("Spout") != null && SpoutManager.getPlayer(player).isSpoutCraftEnabled()) {
+//            ((SpoutPlayer) player).sendNotification("Achievement Get!", msg, mat);
+//        } else {
+        player.sendMessage(ChatColor.YELLOW + "Achievement Get!");
+        player.sendMessage(ChatColor.WHITE + msg);
+//        }
     }
 }

@@ -49,15 +49,6 @@ public class TARDISMakeRoomCSV {
      * administrators to use their own schematic files.
      */
     public void loadCSV() {
-        File userDir = new File(plugin.getDataFolder() + File.separator + "user_schematics");
-        if (!userDir.exists()) {
-            boolean result = userDir.mkdir();
-            if (result) {
-                userDir.setWritable(true);
-                userDir.setExecutable(true);
-                plugin.console.sendMessage(plugin.pluginName + "Created user_schematics directory.");
-            }
-        }
         // load room CSV files - create them if they don't exist
         reader = new TARDISRoomSchematicReader(plugin);
         String defaultbasepath = plugin.getDataFolder() + File.separator + "schematics" + File.separator;
@@ -74,13 +65,6 @@ public class TARDISMakeRoomCSV {
                         short[] dimensions = plugin.room_dimensions.get(r);
                         String[][][] schem = TARDISSchematic.schematic(file, dimensions[0], dimensions[1], dimensions[2]);
                         plugin.room_schematics.put(r, schem);
-                        if (r.equals("PASSAGE") || r.equals("LONG")) {
-                            // repeat for EW
-                            File file_EW = createFile(lower + "_EW.csv", defaultbasepath);
-                            reader.readAndMakeRoomCSV(basepath + lower, r + "_EW", true);
-                            String[][][] schem_EW = TARDISSchematic.schematic(file_EW, dimensions[0], dimensions[1], dimensions[2]);
-                            plugin.room_schematics.put(r + "_EW", schem_EW);
-                        }
                     }
                 } else {
                     plugin.console.sendMessage(plugin.pluginName + ChatColor.RED + lower + ".schematic was not found in 'user_schematics' and was disabled!");
@@ -95,6 +79,7 @@ public class TARDISMakeRoomCSV {
      * is created.
      *
      * @param filename the file to find/create
+     * @param folder the folder to look in
      * @return a File
      */
     public File createFile(String filename, String folder) {

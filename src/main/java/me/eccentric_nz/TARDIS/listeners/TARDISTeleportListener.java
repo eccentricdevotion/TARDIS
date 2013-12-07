@@ -37,7 +37,7 @@ import org.bukkit.event.player.PlayerTeleportEvent.TeleportCause;
 public class TARDISTeleportListener implements Listener {
 
     private final TARDIS plugin;
-    private List<TeleportCause> causes = new ArrayList<TeleportCause>();
+    private final List<TeleportCause> causes = new ArrayList<TeleportCause>();
 
     public TARDISTeleportListener(TARDIS plugin) {
         this.plugin = plugin;

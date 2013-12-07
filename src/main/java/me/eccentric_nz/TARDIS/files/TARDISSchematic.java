@@ -68,7 +68,7 @@ public class TARDISSchematic {
                 if (bufRdr != null) {
                     bufRdr.close();
                 }
-            } catch (Exception e) {
+            } catch (IOException e) {
             }
         }
         return blocks;

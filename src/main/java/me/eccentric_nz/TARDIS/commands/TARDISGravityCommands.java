@@ -42,9 +42,9 @@ import org.bukkit.generator.ChunkGenerator;
  */
 public class TARDISGravityCommands implements CommandExecutor {
 
-    private TARDIS plugin;
-    private List<String> directions = new ArrayList<String>();
-    private HashMap<String, Double> gravityDirection = new HashMap<String, Double>();
+    private final TARDIS plugin;
+    private final List<String> directions = new ArrayList<String>();
+    private final HashMap<String, Double> gravityDirection = new HashMap<String, Double>();
 
     public TARDISGravityCommands(TARDIS plugin) {
         this.plugin = plugin;

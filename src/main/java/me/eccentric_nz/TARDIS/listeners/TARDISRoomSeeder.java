@@ -16,21 +16,28 @@
  */
 package me.eccentric_nz.TARDIS.listeners;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants.COMPASS;
+import me.eccentric_nz.TARDIS.TARDISConstants.SCHEMATIC;
 import me.eccentric_nz.TARDIS.achievement.TARDISAchievementFactory;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.rooms.TARDISCondenserData;
 import me.eccentric_nz.TARDIS.rooms.TARDISRoomBuilder;
+import me.eccentric_nz.TARDIS.rooms.TARDISRoomDirection;
+import me.eccentric_nz.TARDIS.rooms.TARDISSeedData;
 import me.eccentric_nz.tardischunkgenerator.TARDISChunkGenerator;
+import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.WorldType;
 import org.bukkit.block.Block;
+import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -48,9 +55,15 @@ import org.bukkit.generator.ChunkGenerator;
 public class TARDISRoomSeeder implements Listener {
 
     private final TARDIS plugin;
+    private final List<SCHEMATIC> ars = new ArrayList<SCHEMATIC>();
 
     public TARDISRoomSeeder(TARDIS plugin) {
         this.plugin = plugin;
+        ars.add(SCHEMATIC.ARS);
+        ars.add(SCHEMATIC.BUDGET);
+        ars.add(SCHEMATIC.PLANK);
+        ars.add(SCHEMATIC.STEAMPUNK);
+        ars.add(SCHEMATIC.TOM);
     }
 
     /**
@@ -95,21 +108,55 @@ public class TARDISRoomSeeder implements Listener {
                     player.sendMessage(plugin.pluginName + "You must be in a TARDIS world to grow a room!");
                     return;
                 }
-                // get schematic
-                String r = plugin.seeds.get(blockType);
-                // check that the blockType is the same as the one they ran the /tardis room [type] command for
-                if (!plugin.trackRoomSeed.get(playerNameStr).equals(r)) {
-                    player.sendMessage(plugin.pluginName + "That is not the correct seed block to grow a " + plugin.trackRoomSeed.get(playerNameStr) + "!");
-                    return;
-                }
                 // get clicked block location
                 Location b = block.getLocation();
-                // get player's direction
-                COMPASS d = COMPASS.valueOf(plugin.utils.getPlayersDirection(player, false));
-                TARDISRoomBuilder builder = new TARDISRoomBuilder(plugin, r, b, d, player);
+                // get the growing direction
+                TARDISRoomDirection trd = new TARDISRoomDirection(block);
+                trd.getDirection();
+                if (!trd.isFound()) {
+                    player.sendMessage(plugin.pluginName + "Could not find the door pressure plate! Check the seed block position.");
+                    return;
+                }
+                COMPASS d = trd.getCompass();
+                BlockFace facing = trd.getFace();
+                // check there is not a block in the direction the player is facing
+                Block check_block = b.getBlock().getRelative(BlockFace.DOWN).getRelative(facing, 9);
+                if (!check_block.getType().equals(Material.AIR)) {
+                    player.sendMessage(plugin.pluginName + "There seems to be a block in the way! You should be growing out into the void...");
+                    return;
+                }
+                // get seed data
+                TARDISSeedData sd = plugin.trackRoomSeed.get(playerNameStr);
+                // check they are not in an ARS chunk
+                if (ars.contains(sd.getSchematic()) && sd.hasARS()) {
+                    Chunk c = b.getWorld().getChunkAt(block.getRelative(BlockFace.valueOf(d.toString()), 4));
+                    int cx = c.getX();
+                    int cy = block.getY();
+                    int cz = c.getZ();
+                    if ((cx >= sd.getMinx() && cx <= sd.getMaxx()) && (cy >= 48 && cy <= 96) && (cz >= sd.getMinz() && cz <= sd.getMaxz())) {
+                        player.sendMessage(plugin.pluginName + "You cannot manually grow a room here, please use the Architectural Reconfiguration System!");
+                        return;
+                    }
+                }
+                // get room schematic
+                String r = plugin.seeds.get(blockType);
+                // check that the blockType is the same as the one they ran the /tardis room [type] command for
+                if (!sd.getRoom().equals(r)) {
+                    player.sendMessage(plugin.pluginName + "That is not the correct seed block to grow a " + plugin.trackRoomSeed.get(playerNameStr).getRoom() + "!");
+                    return;
+                }
+                // adjust the location three/four blocks out
+                Location l = block.getRelative(facing, 3).getLocation();
+                // build the room
+                TARDISRoomBuilder builder = new TARDISRoomBuilder(plugin, r, l, d, player);
                 if (builder.build()) {
+                    // remove seed block and set block above it to AIR as well
+                    block.setType(Material.AIR);
+                    Block doorway = block.getRelative(facing, 2);
+                    doorway.setType(Material.AIR);
+                    doorway.getRelative(BlockFace.UP).setType(Material.AIR);
                     plugin.trackRoomSeed.remove(playerNameStr);
-                    // ok they clicked it, so take their energy!
+                    // ok, room growing was successful, so take their energy!
                     int amount = plugin.getRoomsConfig().getInt("rooms." + r + ".cost");
                     QueryFactory qf = new QueryFactory(plugin);
                     HashMap<String, Object> set = new HashMap<String, Object>();

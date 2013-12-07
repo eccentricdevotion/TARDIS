@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
+import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import org.bukkit.Location;
 import org.bukkit.World;
@@ -67,24 +68,25 @@ public class TARDISLightningListener implements Listener {
                     if (map.get("recharging").equals("0")) {
                         charging = false;
                     }
-                    String[] loc = map.get("save").split(":");
-                    World w = plugin.getServer().getWorld(loc[0]);
-                    // only if the tardis is in the same world as the lightning strike and is not at a beacon recharger!
-                    if (strikeworld.equals(w) && !charging) {
-                        int id = plugin.utils.parseNum(map.get("tardis_id"));
-                        int x = plugin.utils.parseNum(loc[1]);
-                        int y = plugin.utils.parseNum(loc[2]);
-                        int z = plugin.utils.parseNum(loc[3]);
-                        Location t = new Location(w, x, y, z);
-                        // only recharge if the TARDIS is within range
-                        if (plugin.utils.compareLocations(t, l)) {
-                            QueryFactory qf = new QueryFactory(plugin);
-                            int amount = plugin.getArtronConfig().getInt("lightning_recharge") + plugin.utils.parseNum(map.get("artron_level"));
-                            HashMap<String, Object> set = new HashMap<String, Object>();
-                            set.put("artron_level", amount);
-                            HashMap<String, Object> where = new HashMap<String, Object>();
-                            where.put("tardis_id", id);
-                            qf.doUpdate("tardis", set, where);
+                    int id = plugin.utils.parseNum(map.get("tardis_id"));
+                    HashMap<String, Object> wherecl = new HashMap<String, Object>();
+                    wherecl.put("tardis_id", id);
+                    ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
+                    if (rsc.resultSet()) {
+                        World w = rsc.getWorld();
+                        // only if the tardis is in the same world as the lightning strike and is not at a beacon recharger!
+                        if (strikeworld.equals(w) && !charging) {
+                            Location t = new Location(w, rsc.getX(), rsc.getY(), rsc.getZ());
+                            // only recharge if the TARDIS is within range
+                            if (plugin.utils.compareLocations(t, l)) {
+                                QueryFactory qf = new QueryFactory(plugin);
+                                int amount = plugin.getArtronConfig().getInt("lightning_recharge") + plugin.utils.parseNum(map.get("artron_level"));
+                                HashMap<String, Object> set = new HashMap<String, Object>();
+                                set.put("artron_level", amount);
+                                HashMap<String, Object> where = new HashMap<String, Object>();
+                                where.put("tardis_id", id);
+                                qf.doUpdate("tardis", set, where);
+                            }
                         }
                     }
                 }

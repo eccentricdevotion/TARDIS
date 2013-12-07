@@ -18,6 +18,7 @@ package me.eccentric_nz.TARDIS.listeners;
 
 import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
@@ -40,22 +41,35 @@ public class TARDISHotbarListener implements Listener {
         this.plugin = plugin;
     }
 
+    @SuppressWarnings("deprecation")
     @EventHandler(priority = EventPriority.MONITOR)
     public void onSelectLocator(PlayerItemHeldEvent event) {
         Player player = event.getPlayer();
         PlayerInventory inv = player.getInventory();
         ItemStack is = inv.getItem(event.getNewSlot());
-        if (is != null && is.getTypeId() == 345 && is.hasItemMeta()) {
-            if (is.getItemMeta().hasDisplayName() && is.getItemMeta().getDisplayName().equals("TARDIS Locator")) {
+        if (is != null && is.getTypeId() == 345) {
+            if (is.hasItemMeta() && is.getItemMeta().hasDisplayName() && is.getItemMeta().getDisplayName().equals("TARDIS Locator")) {
                 // get TARDIS location
                 HashMap<String, Object> where = new HashMap<String, Object>();
                 where.put("owner", player.getName());
                 ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
                 if (rs.resultSet()) {
-                    Location pb = plugin.utils.getLocationFromDB(rs.getCurrent(), 0F, 0F);
-                    if (pb != null) {
-                        player.setCompassTarget(pb);
+                    HashMap<String, Object> wherecl = new HashMap<String, Object>();
+                    wherecl.put("tardis_id", rs.getTardis_id());
+                    ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
+                    if (!rsc.resultSet()) {
+                        return;
                     }
+                    Location pb = new Location(rsc.getWorld(), rsc.getX(), rsc.getY(), rsc.getZ());
+                    player.setCompassTarget(pb);
+                }
+            } else {
+                Location bedspawn = player.getBedSpawnLocation();
+                // if player has bed spawn set
+                if (bedspawn != null) {
+                    player.setCompassTarget(bedspawn);
+                } else {
+                    player.setCompassTarget(player.getWorld().getSpawnLocation());
                 }
             }
         }

@@ -44,7 +44,7 @@ import org.bukkit.entity.Player;
  */
 public class TARDISBookCommands implements CommandExecutor {
 
-    private TARDIS plugin;
+    private final TARDIS plugin;
     LinkedHashMap<String, String> books;
 
     public TARDISBookCommands(TARDIS plugin) {

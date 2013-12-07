@@ -37,8 +37,8 @@ import org.bukkit.ChatColor;
 public class TARDISControlsConverter {
 
     private final TARDIS plugin;
-    private TARDISDatabase service = TARDISDatabase.getInstance();
-    private Connection connection = service.getConnection();
+    private final TARDISDatabase service = TARDISDatabase.getInstance();
+    private final Connection connection = service.getConnection();
 
     public TARDISControlsConverter(TARDIS plugin) {
         this.plugin = plugin;
@@ -135,14 +135,14 @@ public class TARDISControlsConverter {
                 if (del != null) {
                     try {
                         del.close();
-                    } catch (Exception e) {
+                    } catch (SQLException e) {
                         plugin.debug("Control delete statement close error: " + e.getMessage());
                     }
                 }
                 if (ps != null) {
                     try {
                         ps.close();
-                    } catch (Exception e) {
+                    } catch (SQLException e) {
                         plugin.debug("Control prepared statement close error: " + e.getMessage());
                     }
                 }

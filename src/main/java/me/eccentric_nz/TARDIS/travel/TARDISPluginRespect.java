@@ -29,7 +29,7 @@ import org.bukkit.entity.Player;
  */
 public class TARDISPluginRespect {
 
-    private TARDIS plugin;
+    private final TARDIS plugin;
 
     public TARDISPluginRespect(TARDIS plugin) {
         this.plugin = plugin;
@@ -80,7 +80,7 @@ public class TARDISPluginRespect {
             }
             bool = false;
         }
-        if (plugin.worldGuardOnServer && plugin.getConfig().getBoolean("respect_worldguard") && plugin.wgchk.cantBuild(p, l)) {
+        if (plugin.worldGuardOnServer && plugin.getConfig().getBoolean("respect_worldguard") && plugin.wgutils.cantBuild(p, l)) {
             if (message) {
                 p.sendMessage(plugin.pluginName + "That location is protected by WorldGuard!");
             }

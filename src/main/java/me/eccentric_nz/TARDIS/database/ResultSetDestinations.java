@@ -26,7 +26,6 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.TARDISConstants;
 
 /**
  * Many facts, figures, and formulas are contained within the Matrix,
@@ -36,11 +35,11 @@ import me.eccentric_nz.TARDIS.TARDISConstants;
  */
 public class ResultSetDestinations {
 
-    private TARDISDatabase service = TARDISDatabase.getInstance();
-    private Connection connection = service.getConnection();
-    private TARDIS plugin;
-    private HashMap<String, Object> where;
-    private boolean multiple;
+    private final TARDISDatabase service = TARDISDatabase.getInstance();
+    private final Connection connection = service.getConnection();
+    private final TARDIS plugin;
+    private final HashMap<String, Object> where;
+    private final boolean multiple;
     private int dest_id;
     private int tardis_id;
     private String dest_name;
@@ -51,7 +50,8 @@ public class ResultSetDestinations {
     private String direction;
     private String bind;
     private int type;
-    private ArrayList<HashMap<String, String>> data = new ArrayList<HashMap<String, String>>();
+    private boolean submarine;
+    private final ArrayList<HashMap<String, String>> data = new ArrayList<HashMap<String, String>>();
 
     /**
      * Creates a class instance that can be used to retrieve an SQL ResultSet
@@ -123,6 +123,7 @@ public class ResultSetDestinations {
                     this.y = rs.getInt("y");
                     this.z = rs.getInt("z");
                     this.direction = rs.getString("direction");
+                    this.submarine = rs.getBoolean("submarine");
                     this.bind = rs.getString("bind");
                     this.type = rs.getInt("type");
                 }
@@ -140,7 +141,7 @@ public class ResultSetDestinations {
                 if (statement != null) {
                     statement.close();
                 }
-            } catch (Exception e) {
+            } catch (SQLException e) {
                 plugin.debug("Error closing destinations table! " + e.getMessage());
             }
         }
@@ -177,6 +178,10 @@ public class ResultSetDestinations {
 
     public String getDirection() {
         return direction;
+    }
+
+    public boolean isSubmarine() {
+        return submarine;
     }
 
     public String getBind() {

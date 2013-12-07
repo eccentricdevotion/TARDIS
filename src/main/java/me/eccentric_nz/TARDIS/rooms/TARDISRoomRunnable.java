@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
@@ -44,10 +45,11 @@ import org.bukkit.entity.Player;
 public class TARDISRoomRunnable implements Runnable {
 
     private final TARDIS plugin;
-    private Location l;
+    private final Location l;
     String[][][] s;
     short[] dim;
-    private int id, task, level, row, col, h, w, c, middle_id, floor_id, startx, starty, startz, resetx, resetz, x, z, tardis_id;
+    private int id, task, level, row, col, h, w, c, startx, starty, startz, resetx, resetz;
+    private final int middle_id, floor_id, x, z, tardis_id;
     byte data, middle_data, floor_data;
     Block b;
     COMPASS d;
@@ -61,6 +63,11 @@ public class TARDISRoomRunnable implements Runnable {
     List<Block> lampblocks = new ArrayList<Block>();
     List<Block> caneblocks = new ArrayList<Block>();
     HashMap<Block, Byte> cocoablocks = new HashMap<Block, Byte>();
+    HashMap<Block, Byte> doorblocks = new HashMap<Block, Byte>();
+    HashMap<Block, Byte> torchblocks = new HashMap<Block, Byte>();
+    HashMap<Block, Byte> redstoneTorchblocks = new HashMap<Block, Byte>();
+    HashMap<Block, Byte> mushroomblocks = new HashMap<Block, Byte>();
+    byte[] repeaterData = new byte[6];
 
     public TARDISRoomRunnable(TARDIS plugin, TARDISRoomData roomData, Player p) {
         this.plugin = plugin;
@@ -79,11 +86,18 @@ public class TARDISRoomRunnable implements Runnable {
         this.tardis_id = roomData.getTardis_id();
         this.running = false;
         this.p = p;
+        this.repeaterData[0] = (byte) 0;
+        this.repeaterData[1] = (byte) 0;
+        this.repeaterData[2] = (byte) 2;
+        this.repeaterData[3] = (byte) 3;
+        this.repeaterData[4] = (byte) 1;
+        this.repeaterData[5] = (byte) 0;
     }
 
     /**
      * A runnable task that builds TARDIS rooms block by block.
      */
+    @SuppressWarnings("deprecation")
     @Override
     public void run() {
         // initialise
@@ -110,26 +124,6 @@ public class TARDISRoomRunnable implements Runnable {
         String tmp;
         if (level == h && row == w && col == (c - 1)) {
             // the entire schematic has been read :)
-            if (!room.equals("GRAVITY") && !room.equals("ANTIGRAVITY")) {
-                byte door_data;
-                switch (d) {
-                    case NORTH:
-                        door_data = 1;
-                        break;
-                    case WEST:
-                        door_data = 0;
-                        break;
-                    case SOUTH:
-                        door_data = 3;
-                        break;
-                    default:
-                        door_data = 2;
-                        break;
-                }
-                // put door on
-                b.setTypeIdAndData(64, door_data, true);
-                b.getRelative(BlockFace.UP).setTypeIdAndData(64, (byte) 8, true);
-            }
             if (iceblocks.size() > 0) {
                 p.sendMessage(plugin.pluginName + "Melting the ice!");
                 // set all the ice to water
@@ -137,6 +131,14 @@ public class TARDISRoomRunnable implements Runnable {
                     ice.setTypeId(9);
                 }
                 iceblocks.clear();
+            }
+            if (room.equals("BAKER") || room.equals("WOOD")) {
+                // set the repeaters
+                for (Map.Entry<Block, Byte> entry : mushroomblocks.entrySet()) {
+                    entry.getKey().setTypeId(93);
+                    entry.getKey().setData(entry.getValue(), true);
+                }
+                mushroomblocks.clear();
             }
             if (room.equals("GREENHOUSE")) {
                 // plant the sugar cane
@@ -146,16 +148,37 @@ public class TARDISRoomRunnable implements Runnable {
                 caneblocks.clear();
                 // attach the cocoa
                 for (Map.Entry<Block, Byte> entry : cocoablocks.entrySet()) {
-                    entry.getKey().setTypeIdAndData(127, entry.getValue(), true);
+                    entry.getKey().setTypeId(127);
+                    entry.getKey().setData(entry.getValue(), true);
                 }
                 cocoablocks.clear();
             }
+            if (room.equals("VILLAGE")) {
+                // put doors on
+                for (Map.Entry<Block, Byte> entry : doorblocks.entrySet()) {
+                    entry.getKey().setTypeId(64);
+                    entry.getKey().setData(entry.getValue(), true);
+                }
+                doorblocks.clear();
+            }
             // update lamp block states
-            p.sendMessage(plugin.pluginName + "Turning on the lights!");
+            p.sendMessage(plugin.pluginName + "Turning on the power!");
             for (Block lamp : lampblocks) {
                 lamp.setType(Material.REDSTONE_LAMP_ON);
             }
             lampblocks.clear();
+            // put torches on
+            for (Map.Entry<Block, Byte> entry : torchblocks.entrySet()) {
+                entry.getKey().setTypeId(50);
+                entry.getKey().setData(entry.getValue(), true);
+            }
+            torchblocks.clear();
+            // put redstone torches on
+            for (Map.Entry<Block, Byte> entry : redstoneTorchblocks.entrySet()) {
+                entry.getKey().setTypeId(76);
+                entry.getKey().setData(entry.getValue(), true);
+            }
+            torchblocks.clear();
             // remove the chunks, so they can unload as normal again
             if (chunkList.size() > 0) {
                 for (Chunk ch : chunkList) {
@@ -172,10 +195,37 @@ public class TARDISRoomRunnable implements Runnable {
             tmp = s[level][row][col];
             String[] iddata = tmp.split(":");
             id = plugin.utils.parseNum(iddata[0]);
-            if (TARDISConstants.PROBLEM_BLOCKS.contains(Integer.valueOf(id)) && (d.equals(COMPASS.NORTH) || d.equals(COMPASS.WEST))) {
-                data = TARDISDataRecalculator.calculateData(id, Byte.parseByte(iddata[1]));
-            } else {
-                data = Byte.parseByte(iddata[1]);
+            data = Byte.parseByte(iddata[1]);
+            if (id == 158 || id == -98) {
+                byte bit = data;
+                switch (bit) {
+                    case 8:
+                        data = 0;
+                        break;
+                    case 9:
+                        data = 1;
+                        break;
+                    case 10:
+                        data = 2;
+                        break;
+                    case 11:
+                        data = 3;
+                        break;
+                    case 12:
+                        data = 4;
+                        break;
+                    case 13:
+                        data = 5;
+                        break;
+                    default:
+                        break;
+                }
+            }
+            if (id == 55) {
+                data = 0;
+            }
+            if (id == 35 && data == 7 && plugin.getConfig().getBoolean("use_clay")) {
+                id = 159;
             }
             if (id == 35 && data == 1) {
                 if (middle_id == 35 && middle_data == 1 && plugin.getConfig().getBoolean("use_clay")) {
@@ -183,7 +233,7 @@ public class TARDISRoomRunnable implements Runnable {
                 } else {
                     id = middle_id;
                 }
-                data = middle_data;
+                data = ((room.equals("GRAVITY") || room.equals("ANTIGRAVITY")) && middle_id == 35 && (middle_data == 5 || middle_data == 6)) ? 1 : middle_data;
             }
             if (id == 35 && data == 8) {
                 if (floor_id == 35 && floor_data == 8 && plugin.getConfig().getBoolean("use_clay")) {
@@ -191,7 +241,7 @@ public class TARDISRoomRunnable implements Runnable {
                 } else {
                     id = floor_id;
                 }
-                data = floor_data;
+                data = ((room.equals("GRAVITY") || room.equals("ANTIGRAVITY")) && floor_id == 35 && (floor_data == 5 || floor_data == 6)) ? 8 : floor_data;
             }
             QueryFactory qf = new QueryFactory(plugin);
             // set condenser
@@ -210,19 +260,34 @@ public class TARDISRoomRunnable implements Runnable {
                 wheref.put("tardis_id", tardis_id);
                 qf.doUpdate("tardis", setf, wheref);
                 // replace with floor material
-                id = floor_id;
+                id = (floor_id == 35 && floor_data == 8 && plugin.getConfig().getBoolean("use_clay")) ? 159 : floor_id;
                 data = floor_data;
             }
             // set stable
-            if (id == 88 && room.equals("STABLE")) {
+            if (id == 88 && (room.equals("STABLE") || room.equals("VILLAGE"))) {
                 HashMap<String, Object> sets = new HashMap<String, Object>();
-                sets.put("stable", world.getName() + ":" + startx + ":" + starty + ":" + startz);
+                sets.put(room.toLowerCase(Locale.ENGLISH), world.getName() + ":" + startx + ":" + starty + ":" + startz);
                 HashMap<String, Object> wheres = new HashMap<String, Object>();
                 wheres.put("tardis_id", tardis_id);
                 qf.doUpdate("tardis", sets, wheres);
                 // replace with grass
-                id = 2;
+                id = (room.equals("VILLAGE")) ? 4 : 2;
                 data = 0;
+            }
+            // remember village doors
+            if (id == 64 && room.equals("VILLAGE")) {
+                Block door = world.getBlockAt(startx, starty, startz);
+                doorblocks.put(door, data);
+            }
+            // remember torches
+            if (id == 50) {
+                Block torch = world.getBlockAt(startx, starty, startz);
+                torchblocks.put(torch, data);
+            }
+            // remember redstone torches
+            if (id == 76) {
+                Block torch = world.getBlockAt(startx, starty, startz);
+                redstoneTorchblocks.put(torch, data);
             }
             // set farmland hydrated
             if (id == 60 && data == 0) {
@@ -248,6 +313,16 @@ public class TARDISRoomRunnable implements Runnable {
                 HashMap<String, Object> where = new HashMap<String, Object>();
                 where.put("tardis_id", tardis_id);
                 qf.doUpdate("tardis", set, where);
+            }
+            // always replace bedrock (the door space in ARS rooms)
+            if (id == 7) {
+                if (checkRoomNextDoor(world.getBlockAt(startx, starty, startz))) {
+                    id = 0;
+                    data = (byte) 0;
+                } else {
+                    id = (middle_id == 35 && middle_data == 1 && plugin.getConfig().getBoolean("use_clay")) ? 159 : middle_id;
+                    data = middle_data;
+                }
             }
             // always remove sponge
             if (id == 19) {
@@ -279,11 +354,15 @@ public class TARDISRoomRunnable implements Runnable {
                 plugin.roomChunkList.add(thisChunk);
                 chunkList.add(thisChunk);
             }
-            if (id != 83 && id != 127) {
-                plugin.utils.setBlock(world, startx, starty, startz, id, data);
+            if (id != 83 && id != 127 && id != 64 && id != 50 && id != 76 && id != 34 && !(id == 100 && data == (byte) 15)) {
+                if (id == 9) {
+                    plugin.utils.setBlock(world, startx, starty, startz, 79, (byte) 0);
+                } else {
+                    plugin.utils.setBlock(world, startx, starty, startz, id, data);
+                }
             }
             // remember ice blocks
-            if (id == 79) {
+            if (id == 9 || id == 79) {
                 Block icy = world.getBlockAt(startx, starty, startz);
                 iceblocks.add(icy);
             }
@@ -313,10 +392,10 @@ public class TARDISRoomRunnable implements Runnable {
                     setu.put("tardis_id", tardis_id);
                     setu.put("location", loc);
                     setu.put("direction", 1);
-                    setu.put("distance", 11);
+                    setu.put("distance", 16);
                     setu.put("velocity", 0.5);
                     qf.doInsert("gravity_well", setu);
-                    Double[] values = new Double[]{1D, 11D, 0.5D};
+                    Double[] values = new Double[]{1D, 16D, 0.5D};
                     plugin.gravityUpList.put(loc, values);
                 }
             }
@@ -326,16 +405,18 @@ public class TARDISRoomRunnable implements Runnable {
                 int r = 2;
                 int type;
                 String loc_str;
-                List<Integer> controls = Arrays.asList(new Integer[]{69, 77, 92, 143, -113});
+                List<Integer> controls = Arrays.asList(new Integer[]{69, 77, 100, 143, -113});
                 if (controls.contains(Integer.valueOf(id))) {
                     switch (id) {
                         case 77: // stone button - random
                             type = 1;
                             loc_str = plugin.utils.makeLocationStr(world, startx, starty, startz);
                             break;
-                        case 93: // repeater
+                        case 100: // repeater
                             type = r;
                             loc_str = world.getName() + ":" + startx + ":" + starty + ":" + startz;
+                            Block rb = world.getBlockAt(startx, starty, startz);
+                            mushroomblocks.put(rb, repeaterData[r]);
                             r++;
                             break;
                         case -113: // wood button - artron
@@ -367,6 +448,16 @@ public class TARDISRoomRunnable implements Runnable {
                 level++;
             }
         }
+    }
+
+    @SuppressWarnings("deprecation")
+    private boolean checkRoomNextDoor(Block b) {
+        if (b.getLocation().getBlockX() > (resetx + 10) && b.getRelative(BlockFace.EAST).getTypeId() != 0) {
+            return true;
+        } else if (b.getRelative(BlockFace.SOUTH).getTypeId() != 0) {
+            return true;
+        }
+        return false;
     }
 
     public void setTask(int task) {

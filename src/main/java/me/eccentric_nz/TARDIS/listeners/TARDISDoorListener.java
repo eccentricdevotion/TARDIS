@@ -24,6 +24,7 @@ import java.util.Random;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
+import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetDoors;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
@@ -37,12 +38,11 @@ import multiworld.api.MultiWorldAPI;
 import multiworld.api.MultiWorldWorldData;
 import multiworld.api.flag.FlagName;
 import org.bukkit.Bukkit;
-import org.bukkit.Effect;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.Material;
-import org.bukkit.Sound;
 import org.bukkit.World;
+import org.bukkit.World.Environment;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.entity.EntityType;
@@ -51,6 +51,7 @@ import org.bukkit.entity.Ocelot;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Tameable;
 import org.bukkit.entity.Wolf;
+import org.bukkit.event.Event;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -59,7 +60,6 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.material.Door;
-import org.getspout.spoutapi.SpoutManager;
 
 /**
  * During TARDIS operation, a distinctive grinding and whirring sound is usually
@@ -71,7 +71,7 @@ import org.getspout.spoutapi.SpoutManager;
  */
 public class TARDISDoorListener implements Listener {
 
-    private TARDIS plugin;
+    private final TARDIS plugin;
     public float[][] adjustYaw = new float[4][4];
     Random r = new Random();
 
@@ -79,20 +79,20 @@ public class TARDISDoorListener implements Listener {
         this.plugin = plugin;
         // yaw adjustments if inner and outer door directions are different
         adjustYaw[0][0] = 0;
-        adjustYaw[0][1] = -90;
+        adjustYaw[0][1] = 90;
         adjustYaw[0][2] = 180;
-        adjustYaw[0][3] = 90;
-        adjustYaw[1][0] = 90;
+        adjustYaw[0][3] = -90;
+        adjustYaw[1][0] = -90;
         adjustYaw[1][1] = 0;
-        adjustYaw[1][2] = -90;
+        adjustYaw[1][2] = 90;
         adjustYaw[1][3] = 180;
         adjustYaw[2][0] = 180;
-        adjustYaw[2][1] = 90;
+        adjustYaw[2][1] = -90;
         adjustYaw[2][2] = 0;
-        adjustYaw[2][3] = -90;
-        adjustYaw[3][0] = -90;
+        adjustYaw[2][3] = 90;
+        adjustYaw[3][0] = 90;
         adjustYaw[3][1] = 180;
-        adjustYaw[3][2] = 90;
+        adjustYaw[3][2] = -90;
         adjustYaw[3][3] = 0;
     }
 
@@ -103,7 +103,8 @@ public class TARDISDoorListener implements Listener {
      *
      * @param event a player clicking a block
      */
-    @EventHandler(priority = EventPriority.MONITOR)
+    @SuppressWarnings("deprecation")
+    @EventHandler(priority = EventPriority.NORMAL)
     public void onDoorInteract(PlayerInteractEvent event) {
         QueryFactory qf = new QueryFactory(plugin);
         final Player player = event.getPlayer();
@@ -113,7 +114,7 @@ public class TARDISDoorListener implements Listener {
             Material blockType = block.getType();
             Action action = event.getAction();
             // only proceed if they are clicking an iron door with a TARDIS key!
-            if (blockType == Material.IRON_DOOR_BLOCK) {
+            if (blockType.equals(Material.IRON_DOOR_BLOCK) || blockType.equals(Material.WOODEN_DOOR) || blockType.equals(Material.TRAP_DOOR)) {
                 if (player.hasPermission("tardis.enter")) {
                     World playerWorld = player.getLocation().getWorld();
                     Location block_loc = block.getLocation();
@@ -122,7 +123,7 @@ public class TARDISDoorListener implements Listener {
                     int bx = block_loc.getBlockX();
                     int by = block_loc.getBlockY();
                     int bz = block_loc.getBlockZ();
-                    if (doorData >= 8) {
+                    if (doorData >= 8 && !blockType.equals(Material.TRAP_DOOR)) {
                         by = (by - 1);
                     }
                     String doorloc = bw + ":" + bx + ":" + by + ":" + bz;
@@ -145,9 +146,27 @@ public class TARDISDoorListener implements Listener {
                     where.put("door_location", doorloc);
                     ResultSetDoors rsd = new ResultSetDoors(plugin, where, false);
                     if (rsd.resultSet()) {
+                        event.setUseInteractedBlock(Event.Result.DENY);
+                        event.setUseItemInHand(Event.Result.DENY);
+                        event.setCancelled(true);
                         if (material.equals(m)) {
                             TARDISConstants.COMPASS dd = rsd.getDoor_direction();
                             int doortype = rsd.getDoor_type();
+                            int end_doortype;
+                            switch (doortype) {
+                                case 0:
+                                    end_doortype = 1;
+                                    break;
+                                case 2:
+                                    end_doortype = 3;
+                                    break;
+                                case 3:
+                                    end_doortype = 2;
+                                    break;
+                                default:
+                                    end_doortype = 0;
+                                    break;
+                            }
                             if (action == Action.LEFT_CLICK_BLOCK) {
                                 // must be the owner
                                 int id = rsd.getTardis_id();
@@ -165,7 +184,8 @@ public class TARDISDoorListener implements Listener {
                                     setl.put("locked", locked);
                                     HashMap<String, Object> wherel = new HashMap<String, Object>();
                                     wherel.put("tardis_id", rsd.getTardis_id());
-                                    wherel.put("door_type", rsd.getDoor_type());
+                                    // always lock / unlock both doors?
+                                    //wherel.put("door_type", rsd.getDoor_type());
                                     qf.doUpdate("doors", setl, wherel);
                                     player.sendMessage(plugin.pluginName + "The door was " + message);
                                 }
@@ -173,41 +193,84 @@ public class TARDISDoorListener implements Listener {
                             if (action == Action.RIGHT_CLICK_BLOCK && player.isSneaking()) {
                                 if (!rsd.isLocked()) {
                                     // toogle the door open/closed
-                                    Block door_bottom;
-                                    Door door = (Door) block.getState().getData();
-                                    door_bottom = (door.isTopHalf()) ? block.getRelative(BlockFace.DOWN) : block;
-                                    byte door_data = door_bottom.getData();
-                                    switch (dd) {
-                                        case NORTH:
-                                            if (door_data == 3) {
-                                                door_bottom.setData((byte) 7, false);
-                                            } else {
-                                                door_bottom.setData((byte) 3, false);
-                                            }
-                                            break;
-                                        case WEST:
-                                            if (door_data == 2) {
-                                                door_bottom.setData((byte) 6, false);
-                                            } else {
-                                                door_bottom.setData((byte) 2, false);
-                                            }
-                                            break;
-                                        case SOUTH:
-                                            if (door_data == 1) {
-                                                door_bottom.setData((byte) 5, false);
-                                            } else {
-                                                door_bottom.setData((byte) 1, false);
-                                            }
-                                            break;
-                                        default:
-                                            if (door_data == 0) {
-                                                door_bottom.setData((byte) 4, false);
-                                            } else {
-                                                door_bottom.setData((byte) 0, false);
-                                            }
-                                            break;
+                                    int open = 1;
+                                    if (blockType.equals(Material.IRON_DOOR_BLOCK) || blockType.equals(Material.WOODEN_DOOR)) {
+                                        Block door_bottom;
+                                        Door door = (Door) block.getState().getData();
+                                        door_bottom = (door.isTopHalf()) ? block.getRelative(BlockFace.DOWN) : block;
+                                        byte door_data = door_bottom.getData();
+                                        switch (dd) {
+                                            case NORTH:
+                                                if (door_data == 3) {
+                                                    door_bottom.setData((byte) 7, false);
+                                                } else {
+                                                    door_bottom.setData((byte) 3, false);
+                                                    open = 2;
+                                                }
+                                                break;
+                                            case WEST:
+                                                if (door_data == 2) {
+                                                    door_bottom.setData((byte) 6, false);
+                                                } else {
+                                                    door_bottom.setData((byte) 2, false);
+                                                    open = 2;
+                                                }
+                                                break;
+                                            case SOUTH:
+                                                if (door_data == 1) {
+                                                    door_bottom.setData((byte) 5, false);
+                                                } else {
+                                                    door_bottom.setData((byte) 1, false);
+                                                    open = 2;
+                                                }
+                                                break;
+                                            default:
+                                                if (door_data == 0) {
+                                                    door_bottom.setData((byte) 4, false);
+                                                } else {
+                                                    door_bottom.setData((byte) 0, false);
+                                                    open = 2;
+                                                }
+                                                break;
+                                        }
+                                    } else if (blockType.equals(Material.TRAP_DOOR)) {
+                                        byte door_data = block.getData();
+                                        switch (dd) {
+                                            case NORTH:
+                                                if (door_data == 1) {
+                                                    block.setData((byte) 5, false);
+                                                } else {
+                                                    block.setData((byte) 1, false);
+                                                    open = 2;
+                                                }
+                                                break;
+                                            case WEST:
+                                                if (door_data == 3) {
+                                                    block.setData((byte) 7, false);
+                                                } else {
+                                                    block.setData((byte) 3, false);
+                                                    open = 2;
+                                                }
+                                                break;
+                                            case SOUTH:
+                                                if (door_data == 0) {
+                                                    block.setData((byte) 4, false);
+                                                } else {
+                                                    block.setData((byte) 0, false);
+                                                    open = 2;
+                                                }
+                                                break;
+                                            default:
+                                                if (door_data == 2) {
+                                                    block.setData((byte) 6, false);
+                                                } else {
+                                                    block.setData((byte) 2, false);
+                                                    open = 2;
+                                                }
+                                                break;
+                                        }
                                     }
-                                    playDoorSound(player, playerWorld, block_loc);
+                                    playDoorSound(player, open, player.getLocation());
                                 } else {
                                     player.sendMessage(plugin.pluginName + "You need to unlock the door!");
                                 }
@@ -223,12 +286,20 @@ public class TARDISDoorListener implements Listener {
                                 if (rs.resultSet()) {
                                     int artron = rs.getArtron_level();
                                     int required = plugin.getArtronConfig().getInt("backdoor");
-                                    TARDISConstants.COMPASS d = rs.getDirection();
                                     String tl = rs.getOwner();
-                                    String current = rs.getCurrent();
+                                    //String current = rs.getCurrent();
                                     float yaw = player.getLocation().getYaw();
                                     float pitch = player.getLocation().getPitch();
                                     String companions = rs.getCompanions();
+                                    boolean hb = rs.isHandbrake_on();
+                                    HashMap<String, Object> wherecl = new HashMap<String, Object>();
+                                    wherecl.put("tardis_id", rs.getTardis_id());
+                                    ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
+                                    if (!rsc.resultSet()) {
+                                        player.sendMessage(plugin.pluginName + "Could not get current TARDIS location!");
+                                        return;
+                                    }
+                                    TARDISConstants.COMPASS d_backup = rsc.getDirection();
                                     // get quotes player prefs
                                     boolean userQuotes;
                                     boolean userTP;
@@ -239,7 +310,18 @@ public class TARDISDoorListener implements Listener {
                                         userQuotes = true;
                                         userTP = false;
                                     }
-                                    List<TARDISMob> pets = null;
+                                    // get players direction
+                                    TARDISConstants.COMPASS pd = TARDISConstants.COMPASS.valueOf(plugin.utils.getPlayersDirection(player, false));                                    // get the other door direction
+                                    final TARDISConstants.COMPASS d;
+                                    HashMap<String, Object> other = new HashMap<String, Object>();
+                                    other.put("tardis_id", id);
+                                    other.put("door_type", end_doortype);
+                                    ResultSetDoors rse = new ResultSetDoors(plugin, other, false);
+                                    if (rse.resultSet()) {
+                                        d = rse.getDoor_direction();
+                                    } else {
+                                        d = d_backup;
+                                    }
                                     switch (doortype) {
                                         case 1:
                                         case 4:
@@ -249,8 +331,8 @@ public class TARDISDoorListener implements Listener {
                                                 return;
                                             }
                                             // player is in the TARDIS - always exit to current location
-                                            Location exitLoc = plugin.utils.getLocationFromDB(current, yaw, pitch);
-                                            if (rs.isHandbrake_on()) {
+                                            Location exitLoc = new Location(rsc.getWorld(), rsc.getX(), rsc.getY(), rsc.getZ(), yaw, pitch);
+                                            if (hb) {
                                                 // change the yaw if the door directions are different
                                                 if (!dd.equals(d)) {
                                                     yaw += adjustYaw(dd, d);
@@ -280,13 +362,17 @@ public class TARDISDoorListener implements Listener {
                                                         break;
                                                 }
                                                 // exit TARDIS!
-                                                playDoorSound(player, playerWorld, block_loc);
-                                                movePlayer(player, exitTardis, true, playerWorld, userQuotes);
+                                                movePlayer(player, exitTardis, true, playerWorld, userQuotes, 2);
                                                 if (plugin.getConfig().getBoolean("allow_mob_farming") && player.hasPermission("tardis.farm")) {
                                                     TARDISFarmer tf = new TARDISFarmer(plugin);
-                                                    pets = tf.exitPets(player);
+                                                    final List<TARDISMob> pets = tf.exitPets(player);
                                                     if (pets != null && pets.size() > 0) {
-                                                        movePets(pets, exitTardis, player, d);
+                                                        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
+                                                            @Override
+                                                            public void run() {
+                                                                movePets(pets, exitTardis, player, d, false);
+                                                            }
+                                                        }, 10L);
                                                     }
                                                 }
                                                 if (plugin.getConfig().getBoolean("allow_tp_switch") && userTP) {
@@ -323,25 +409,25 @@ public class TARDISDoorListener implements Listener {
                                                 Location tmp_loc = idl.getL();
                                                 World cw = idl.getW();
                                                 TARDISConstants.COMPASS innerD = idl.getD();
-                                                // check for entities in the police box
+                                                // check for entities near the police box
+                                                List<TARDISMob> pets = null;
                                                 if (plugin.getConfig().getBoolean("allow_mob_farming") && player.hasPermission("tardis.farm") && !plugin.trackFarming.contains(playerNameStr)) {
                                                     plugin.trackFarming.add(playerNameStr);
                                                     TARDISFarmer tf = new TARDISFarmer(plugin);
-                                                    pets = tf.farmAnimals(block_loc, d, id, player);
+                                                    pets = tf.farmAnimals(block_loc, d, id, player, tmp_loc.getWorld().getName(), playerWorld.getName());
                                                 }
                                                 // enter TARDIS!
-                                                playDoorSound(player, playerWorld, block_loc);
                                                 cw.getChunkAt(tmp_loc).load();
                                                 tmp_loc.setPitch(pitch);
                                                 // get inner door direction so we can adjust yaw if necessary
-                                                if (!innerD.equals(d)) {
-                                                    yaw += adjustYaw(d, innerD);
+                                                if (!innerD.equals(pd)) {
+                                                    yaw += adjustYaw(pd, innerD);
                                                 }
                                                 tmp_loc.setYaw(yaw);
                                                 final Location tardis_loc = tmp_loc;
-                                                movePlayer(player, tardis_loc, false, playerWorld, userQuotes);
+                                                movePlayer(player, tardis_loc, false, playerWorld, userQuotes, 1);
                                                 if (pets != null && pets.size() > 0) {
-                                                    movePets(pets, tardis_loc, player, d);
+                                                    movePets(pets, tardis_loc, player, d, true);
                                                 }
                                                 if (plugin.getConfig().getBoolean("allow_tp_switch") && userTP) {
                                                     if (!rsp.getTexture_in().isEmpty()) {
@@ -354,10 +440,7 @@ public class TARDISDoorListener implements Listener {
                                                 HashMap<String, Object> set = new HashMap<String, Object>();
                                                 set.put("tardis_id", id);
                                                 set.put("player", playerNameStr);
-                                                qf.doInsert("travellers", set);
-                                                if (plugin.pm.getPlugin("Spout") != null && SpoutManager.getPlayer(player).isSpoutCraftEnabled()) {
-                                                    SpoutManager.getSoundManager().playCustomSoundEffect(plugin, SpoutManager.getPlayer(player), "https://dl.dropboxusercontent.com/u/53758864/tardis_hum.mp3", false, tardis_loc, 9, 25);
-                                                }
+                                                qf.doSyncInsert("travellers", set);
                                             }
                                             break;
                                         case 2:
@@ -373,15 +456,14 @@ public class TARDISDoorListener implements Listener {
                                                 return;
                                             }
                                             TARDISConstants.COMPASS ibdd = ibdl.getD();
-                                            TARDISConstants.COMPASS ipd = TARDISConstants.COMPASS.valueOf(plugin.utils.getPlayersDirection(player, false));
+                                            TARDISConstants.COMPASS ipd = TARDISConstants.COMPASS.valueOf(plugin.utils.getPlayersDirection(player, true));
                                             if (!ibdd.equals(ipd)) {
                                                 yaw += adjustYaw(ipd, ibdd);
                                             }
                                             ibd_loc.setYaw(yaw);
                                             ibd_loc.setPitch(pitch);
                                             final Location inner_loc = ibd_loc;
-                                            playDoorSound(player, playerWorld, block_loc);
-                                            movePlayer(player, inner_loc, false, playerWorld, userQuotes);
+                                            movePlayer(player, inner_loc, false, playerWorld, userQuotes, 1);
                                             if (plugin.getConfig().getBoolean("allow_tp_switch") && userTP) {
                                                 if (!rsp.getTexture_in().isEmpty()) {
                                                     new TARDISTexturePackChanger(plugin).changeTP(player, rsp.getTexture_in());
@@ -392,10 +474,7 @@ public class TARDISDoorListener implements Listener {
                                             HashMap<String, Object> set = new HashMap<String, Object>();
                                             set.put("tardis_id", id);
                                             set.put("player", playerNameStr);
-                                            qf.doInsert("travellers", set);
-                                            if (plugin.pm.getPlugin("Spout") != null && SpoutManager.getPlayer(player).isSpoutCraftEnabled()) {
-                                                SpoutManager.getSoundManager().playCustomSoundEffect(plugin, SpoutManager.getPlayer(player), "https://dl.dropboxusercontent.com/u/53758864/tardis_hum.mp3", false, inner_loc, 9, 25);
-                                            }
+                                            qf.doSyncInsert("travellers", set);
                                             HashMap<String, Object> wheree = new HashMap<String, Object>();
                                             wheree.put("tardis_id", id);
                                             int cost = (0 - plugin.getArtronConfig().getInt("backdoor"));
@@ -413,6 +492,16 @@ public class TARDISDoorListener implements Listener {
                                                 player.sendMessage(plugin.pluginName + "You need to add a back door outside the TARDIS!");
                                                 return;
                                             }
+                                            if (obd_loc.getWorld().getEnvironment().equals(Environment.THE_END) && (!player.hasPermission("tardis.end") || !plugin.getConfig().getBoolean("the_end"))) {
+                                                String message = (!player.hasPermission("tardis.end")) ? "You don't have permission to use a back door to The End!" : "TARDIS travel to The End is disabled!";
+                                                player.sendMessage(plugin.pluginName + message);
+                                                return;
+                                            }
+                                            if (obd_loc.getWorld().getEnvironment().equals(Environment.NETHER) && (!player.hasPermission("tardis.nether") || !plugin.getConfig().getBoolean("nether"))) {
+                                                String message = (!player.hasPermission("tardis.end")) ? "You don't have permission to use a back door to the Nether!" : "TARDIS travel to the Nether is disabled!";
+                                                player.sendMessage(plugin.pluginName + message);
+                                                return;
+                                            }
                                             TARDISConstants.COMPASS obdd = obdl.getD();
                                             TARDISConstants.COMPASS opd = TARDISConstants.COMPASS.valueOf(plugin.utils.getPlayersDirection(player, false));
                                             if (!obdd.equals(opd)) {
@@ -421,8 +510,7 @@ public class TARDISDoorListener implements Listener {
                                             obd_loc.setYaw(yaw);
                                             obd_loc.setPitch(pitch);
                                             final Location outer_loc = obd_loc;
-                                            playDoorSound(player, playerWorld, block_loc);
-                                            movePlayer(player, outer_loc, false, playerWorld, userQuotes);
+                                            movePlayer(player, outer_loc, false, playerWorld, userQuotes, 2);
                                             if (plugin.getConfig().getBoolean("allow_tp_switch") && userTP) {
                                                 new TARDISTexturePackChanger(plugin).changeTP(player, rsp.getTexture_out());
                                             }
@@ -464,8 +552,9 @@ public class TARDISDoorListener implements Listener {
      * they are exiting
      * @param from the world they are teleporting from
      * @param q whether the player will receive a TARDIS quote message
+     * @param sound an int representing the sound to play
      */
-    public void movePlayer(final Player p, Location l, final boolean exit, final World from, boolean q) {
+    public void movePlayer(final Player p, Location l, final boolean exit, final World from, boolean q, final int sound) {
 
         final int i = r.nextInt(plugin.quotelen);
         final Location theLocation = l;
@@ -481,6 +570,7 @@ public class TARDISDoorListener implements Listener {
             @Override
             public void run() {
                 p.teleport(theLocation);
+                playDoorSound(p, sound, theLocation);
             }
         }, 5L);
         Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
@@ -510,6 +600,7 @@ public class TARDISDoorListener implements Listener {
                 } else {
                     if (p.isPlayerTimeRelative()) {
                         setTemporalLocation(p, -1);
+                        plugin.utils.playTARDISSound(p.getLocation(), p, "tardis_hum");
                     }
                 }
                 // give a key
@@ -552,32 +643,41 @@ public class TARDISDoorListener implements Listener {
      * @param l the location to teleport pets to
      * @param player the player who owns the pets
      */
-    private void movePets(List<TARDISMob> p, Location l, Player player, TARDISConstants.COMPASS d) {
+    private void movePets(List<TARDISMob> p, Location l, Player player, TARDISConstants.COMPASS d, boolean enter) {
         Location pl = l.clone();
         World w = l.getWorld();
         // will need to adjust this depending on direction Police Box is facing
-        switch (d) {
-            case NORTH:
-                pl.setX(l.getX() + 1);
-                pl.setZ(l.getZ() + 1);
-                break;
-            case WEST:
-                pl.setX(l.getX() + 1);
-                pl.setZ(l.getZ() - 1);
-                break;
-            case SOUTH:
-                pl.setX(l.getX() - 1);
-                pl.setZ(l.getZ() - 1);
-                break;
-            default:
-                pl.setX(l.getX() - 1);
-                pl.setZ(l.getZ() + 1);
-                break;
+        if (enter) {
+            pl.setZ(l.getZ() + 1);
+        } else {
+            switch (d) {
+                case NORTH:
+                    pl.setX(l.getX() + 1);
+                    pl.setZ(l.getZ() + 1);
+                    break;
+                case WEST:
+                    pl.setX(l.getX() + 1);
+                    pl.setZ(l.getZ() - 1);
+                    break;
+                case SOUTH:
+                    pl.setX(l.getX() - 1);
+                    pl.setZ(l.getZ() - 1);
+                    break;
+                default:
+                    pl.setX(l.getX() - 1);
+                    pl.setZ(l.getZ() + 1);
+                    break;
+            }
         }
         for (TARDISMob pet : p) {
             plugin.myspawn = true;
-            LivingEntity ent = (LivingEntity) w.spawnEntity(pl, pet.getType());
-            ent.setTicksLived(pet.getAge());
+            LivingEntity ent;
+            ent = (LivingEntity) w.spawnEntity(pl, pet.getType());
+            if (ent.isDead()) {
+                ent.remove();
+                plugin.debug("Entity is dead! Spawning again...");
+                ent = (LivingEntity) w.spawnEntity(pl, pet.getType());
+            }
             String pet_name = pet.getName();
             if (pet_name != null && !pet_name.isEmpty()) {
                 ent.setCustomName(pet.getName());
@@ -590,6 +690,7 @@ public class TARDISDoorListener implements Listener {
                 Wolf wolf = (Wolf) ent;
                 wolf.setCollarColor(pet.getColour());
                 wolf.setSitting(pet.getSitting());
+                wolf.setAge(pet.getAge());
                 if (pet.isBaby()) {
                     wolf.setBaby();
                 }
@@ -597,6 +698,7 @@ public class TARDISDoorListener implements Listener {
                 Ocelot cat = (Ocelot) ent;
                 cat.setCatType(pet.getCatType());
                 cat.setSitting(pet.getSitting());
+                cat.setAge(pet.getAge());
                 if (pet.isBaby()) {
                     cat.setBaby();
                 }
@@ -627,10 +729,8 @@ public class TARDISDoorListener implements Listener {
             Material m = Material.valueOf(key);
             if (!inv.contains(m)) {
                 ItemStack is = new ItemStack(m, 1);
-                if (plugin.bukkitversion.compareTo(plugin.preIMversion) > 0 || (plugin.bukkitversion.compareTo(plugin.preIMversion) == 0 && plugin.SUBversion.compareTo(plugin.preSUBversion) >= 0)) {
-                    TARDISItemRenamer ir = new TARDISItemRenamer(is);
-                    ir.setName("Sonic Screwdriver", true);
-                }
+                TARDISItemRenamer ir = new TARDISItemRenamer(is);
+                ir.setName("Sonic Screwdriver", true);
                 inv.addItem(is);
                 p.updateInventory();
                 p.sendMessage(plugin.pluginName + "Don't forget your TARDIS key!");
@@ -647,11 +747,11 @@ public class TARDISDoorListener implements Listener {
      */
     private float adjustYaw(TARDISConstants.COMPASS d1, TARDISConstants.COMPASS d2) {
         switch (d1) {
-            case NORTH:
+            case EAST:
                 return adjustYaw[0][d2.ordinal()];
-            case WEST:
-                return adjustYaw[1][d2.ordinal()];
             case SOUTH:
+                return adjustYaw[1][d2.ordinal()];
+            case WEST:
                 return adjustYaw[2][d2.ordinal()];
             default:
                 return adjustYaw[3][d2.ordinal()];
@@ -719,12 +819,19 @@ public class TARDISDoorListener implements Listener {
      * @param w a world to play the sound in
      * @param l a location to play the sound at
      */
-    private void playDoorSound(Player p, World w, Location l) {
-        try {
-            Class.forName("org.bukkit.Sound");
-            p.playSound(p.getLocation(), Sound.DOOR_OPEN, 1, 1);
-        } catch (ClassNotFoundException e) {
-            w.playEffect(l, Effect.DOOR_TOGGLE, 0);
+    private void playDoorSound(Player p, int sound, Location l) {
+        switch (sound) {
+            case 1:
+                plugin.utils.playTARDISSound(l, p, "tardis_door_open");
+                break;
+            case 2:
+                plugin.utils.playTARDISSound(l, p, "tardis_door_close");
+                break;
+            case 3:
+                plugin.utils.playTARDISSound(l, p, "tardis_enter");
+                break;
+            default:
+                break;
         }
     }
 
@@ -746,11 +853,25 @@ public class TARDISDoorListener implements Listener {
                     @Override
                     public void run() {
                         p.setPlayerTime(calculatedtime, true);
+                        enableInvisiblity(p);
                     }
                 }, 10L);
             } else {
                 p.resetPlayerTime();
+                disableInvisiblity(p);
             }
+        }
+    }
+
+    public void enableInvisiblity(Player player) {
+        for (Player p : plugin.getServer().getOnlinePlayers()) {
+            p.hidePlayer(player);
+        }
+    }
+
+    public void disableInvisiblity(Player player) {
+        for (Player p : plugin.getServer().getOnlinePlayers()) {
+            p.showPlayer(player);
         }
     }
 
@@ -762,6 +883,6 @@ public class TARDISDoorListener implements Listener {
     private void removeTraveller(String p) {
         HashMap<String, Object> where = new HashMap<String, Object>();
         where.put("player", p);
-        new QueryFactory(plugin).doDelete("travellers", where);
+        new QueryFactory(plugin).doSyncDelete("travellers", where);
     }
 }

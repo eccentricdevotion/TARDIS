@@ -41,7 +41,7 @@ import org.bukkit.entity.Player;
  */
 public class TARDISAreaCommands implements CommandExecutor {
 
-    private TARDIS plugin;
+    private final TARDIS plugin;
 
     public TARDISAreaCommands(TARDIS plugin) {
         this.plugin = plugin;
@@ -147,7 +147,7 @@ public class TARDISAreaCommands implements CommandExecutor {
         private final Block b3;
         private final Block b4;
 
-        public SetAir(Block b1, Block b2, Block b3, Block b4) {
+        SetAir(Block b1, Block b2, Block b3, Block b4) {
             this.b1 = b1;
             this.b2 = b2;
             this.b3 = b3;

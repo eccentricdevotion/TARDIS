@@ -32,7 +32,7 @@ import org.bukkit.inventory.meta.ItemMeta;
  */
 public class TARDISTemporalLocatorInventory {
 
-    private ItemStack[] terminal;
+    private final ItemStack[] terminal;
     List<String> time = new ArrayList<String>();
 
     public TARDISTemporalLocatorInventory() {

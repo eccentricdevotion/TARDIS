@@ -19,6 +19,7 @@ package me.eccentric_nz.TARDIS.listeners;
 import java.util.ArrayList;
 import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
+import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.event.EventHandler;
@@ -35,7 +36,7 @@ import org.bukkit.event.block.BlockIgniteEvent;
  */
 public class TARDISFireListener implements Listener {
 
-    private TARDIS plugin;
+    private final TARDIS plugin;
     List<BlockFace> faces = new ArrayList<BlockFace>();
 
     public TARDISFireListener(TARDIS plugin) {
@@ -61,7 +62,7 @@ public class TARDISFireListener implements Listener {
         for (BlockFace bf : faces) {
             Block chkBlock = b.getRelative(bf);
             String l = chkBlock.getLocation().toString();
-            if (plugin.protectBlockMap.containsKey(l)) {
+            if (plugin.protectBlockMap.containsKey(l) && !chkBlock.getType().equals(Material.BEDROCK)) {
                 event.setCancelled(true);
                 break;
             }

@@ -19,12 +19,11 @@ package me.eccentric_nz.TARDIS.database;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 import me.eccentric_nz.TARDIS.TARDIS;
 
@@ -40,15 +39,15 @@ import me.eccentric_nz.TARDIS.TARDIS;
  */
 public class ResultSetTravellers {
 
-    private TARDISDatabase service = TARDISDatabase.getInstance();
-    private Connection connection = service.getConnection();
-    private TARDIS plugin;
-    private HashMap<String, Object> where;
-    private boolean multiple;
+    private final TARDISDatabase service = TARDISDatabase.getInstance();
+    private final Connection connection = service.getConnection();
+    private final TARDIS plugin;
+    private final HashMap<String, Object> where;
+    private final boolean multiple;
     private int traveller_id;
     private int tardis_id;
     private String player;
-    private List<String> data = new ArrayList<String>();
+    private final List<String> data = new ArrayList<String>();
 
     /**
      * Creates a class instance that can be used to retrieve an SQL ResultSet
@@ -124,7 +123,7 @@ public class ResultSetTravellers {
                 if (statement != null) {
                     statement.close();
                 }
-            } catch (Exception e) {
+            } catch (SQLException e) {
                 plugin.debug("Error closing travellers table! " + e.getMessage());
             }
         }
@@ -144,6 +143,6 @@ public class ResultSetTravellers {
     }
 
     public List<String> getData() {
-        return data;
+        return Collections.unmodifiableList(data);
     }
 }

@@ -18,14 +18,11 @@ package me.eccentric_nz.TARDIS.utility;
 
 import java.util.HashMap;
 import java.util.List;
-import java.util.Random;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
 import org.bukkit.Bukkit;
-import org.bukkit.Location;
 import org.bukkit.entity.Player;
-import org.getspout.spoutapi.SpoutManager;
 
 /**
  * The distinctive TARDIS sound effect - a cyclic wheezing, groaning noise - was
@@ -38,7 +35,8 @@ import org.getspout.spoutapi.SpoutManager;
  */
 public class TARDISSounds {
 
-    private static Random rand = new Random();
+    private TARDISSounds() {
+    }
 
     /**
      * Plays a random TARDIS sound to players who are inside the TARDIS and
@@ -61,18 +59,12 @@ public class TARDISSounds {
                     }
                     final Player player = Bukkit.getServer().getPlayer(s);
                     if (player != null) {
-                        if (SpoutManager.getPlayer(player).isSpoutCraftEnabled() && userSFX) {
-                            int i = rand.nextInt(12);
-                            final String sfx = "https://dl.dropboxusercontent.com/u/53758864/soundeffects/drwho" + i + ".mp3";
-                            final Location location = player.getLocation();
-                            SpoutManager.getSoundManager().playCustomSoundEffect(TARDIS.plugin, SpoutManager.getPlayer(player), sfx, false, location, 9, 75);
+                        if (userSFX) {
+                            TARDIS.plugin.utils.playTARDISSound(player.getLocation(), player, "tardis_hum");
                         }
                     }
                 }
             }
         }
-    }
-
-    private TARDISSounds() {
     }
 }

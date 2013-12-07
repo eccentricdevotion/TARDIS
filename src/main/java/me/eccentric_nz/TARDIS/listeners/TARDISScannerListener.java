@@ -21,11 +21,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.TARDISConstants;
+import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
+import me.eccentric_nz.TARDIS.database.ResultSetNextLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
-import org.bukkit.Effect;
 import org.bukkit.Location;
 import org.bukkit.Material;
-import org.bukkit.Sound;
 import org.bukkit.World;
 import org.bukkit.block.Biome;
 import org.bukkit.block.Block;
@@ -36,7 +37,8 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractEvent;
-import org.getspout.spoutapi.SpoutManager;
+import org.bukkit.scheduler.BukkitScheduler;
+//import org.getspout.spoutapi.SpoutManager;
 
 /**
  * The Scanner consists of a collection of thousands of instruments designed to
@@ -69,20 +71,7 @@ public class TARDISScannerListener implements Listener {
 
     public TARDISScannerListener(TARDIS plugin) {
         this.plugin = plugin;
-        if (plugin.bukkitversion.compareTo(plugin.prewoodbuttonversion) >= 0) {
-            validBlocks.add(Material.WOOD_BUTTON);
-            entities.add(EntityType.WITCH);
-            entities.add(EntityType.BAT);
-        }
-        if (plugin.bukkitversion.compareTo(plugin.precarpetversion) >= 0) {
-            validBlocks.add(Material.REDSTONE_COMPARATOR_OFF);
-            validBlocks.add(Material.REDSTONE_COMPARATOR_ON);
-        }
-        if (plugin.bukkitversion.compareTo(plugin.precarpetversion) >= 0) {
-            entities.add(EntityType.HORSE);
-        }
-        validBlocks.add(Material.STONE_BUTTON);
-        validBlocks.add(Material.LEVER);
+        entities.add(EntityType.BAT);
         entities.add(EntityType.BLAZE);
         entities.add(EntityType.CAVE_SPIDER);
         entities.add(EntityType.CHICKEN);
@@ -90,6 +79,7 @@ public class TARDISScannerListener implements Listener {
         entities.add(EntityType.CREEPER);
         entities.add(EntityType.ENDERMAN);
         entities.add(EntityType.GHAST);
+        entities.add(EntityType.HORSE);
         entities.add(EntityType.IRON_GOLEM);
         entities.add(EntityType.MAGMA_CUBE);
         entities.add(EntityType.MUSHROOM_COW);
@@ -104,8 +94,14 @@ public class TARDISScannerListener implements Listener {
         entities.add(EntityType.SPIDER);
         entities.add(EntityType.SQUID);
         entities.add(EntityType.VILLAGER);
+        entities.add(EntityType.WITCH);
         entities.add(EntityType.WOLF);
         entities.add(EntityType.ZOMBIE);
+        validBlocks.add(Material.LEVER);
+        validBlocks.add(Material.REDSTONE_COMPARATOR_OFF);
+        validBlocks.add(Material.REDSTONE_COMPARATOR_ON);
+        validBlocks.add(Material.STONE_BUTTON);
+        validBlocks.add(Material.WOOD_BUTTON);
     }
 
     /**
@@ -136,29 +132,34 @@ public class TARDISScannerListener implements Listener {
                 ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
                 if (rs.resultSet()) {
                     int id = rs.getTardis_id();
-                    if (plugin.pm.getPlugin("Spout") != null && SpoutManager.getPlayer(player).isSpoutCraftEnabled()) {
-                        SpoutManager.getSoundManager().playGlobalCustomSoundEffect(plugin, "https://dl.dropboxusercontent.com/u/53758864/soundeffects/scanner.mp3", false, b, 20, 75);
-                    } else {
-                        try {
-                            Class.forName("org.bukkit.Sound");
-                            w.playSound(b, Sound.ORB_PICKUP, 1, 0);
-                        } catch (ClassNotFoundException e) {
-                            w.playEffect(b, Effect.BOW_FIRE, 0);
-                        }
-                    }
-                    String policebox;
+                    plugin.utils.playTARDISSound(player.getLocation(), player, "tardis_scanner");
+                    final Location scan_loc;
                     String whereisit;
+                    final TARDISConstants.COMPASS tardisDirection;
+                    HashMap<String, Object> wherenl = new HashMap<String, Object>();
+                    wherenl.put("tardis_id", id);
                     if (plugin.tardisHasDestination.containsKey(Integer.valueOf(id))) {
-                        policebox = rs.getSave();
+                        ResultSetNextLocation rsn = new ResultSetNextLocation(plugin, wherenl);
+                        if (!rsn.resultSet()) {
+                            player.sendMessage(plugin.pluginName + "Could not get TARDIS's next destination!");
+                            return;
+                        }
+                        scan_loc = new Location(rsn.getWorld(), rsn.getX(), rsn.getY(), rsn.getZ());
+                        tardisDirection = rsn.getDirection();
                         whereisit = "next destination";
                     } else {
-                        policebox = rs.getCurrent();
+                        ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherenl);
+                        if (!rsc.resultSet()) {
+                            player.sendMessage(plugin.pluginName + "Could not get TARDIS's current destination!");
+                            return;
+                        }
+                        scan_loc = new Location(rsc.getWorld(), rsc.getX(), rsc.getY(), rsc.getZ());
+                        tardisDirection = rsc.getDirection();
                         whereisit = "current location";
                     }
-                    Location scan_loc = plugin.utils.getLocationFromDB(policebox, 0, 0);
                     // record nearby entities
-                    HashMap<EntityType, Integer> scannedentities = new HashMap<EntityType, Integer>();
-                    List<String> playernames = new ArrayList<String>();
+                    final HashMap<EntityType, Integer> scannedentities = new HashMap<EntityType, Integer>();
+                    final List<String> playernames = new ArrayList<String>();
                     for (Entity k : getNearbyEntities(scan_loc, 16)) {
                         EntityType et = k.getType();
                         if (entities.contains(et)) {
@@ -177,18 +178,35 @@ public class TARDISScannerListener implements Listener {
                             }
                         }
                     }
-                    long time = scan_loc.getWorld().getTime();
-                    String daynight = getTime(time);
+                    final long time = scan_loc.getWorld().getTime();
+                    final String daynight = getTime(time);
                     // message the player
                     player.sendMessage(plugin.pluginName + "Scanner results for the TARDIS's " + whereisit);
                     player.sendMessage("World: " + scan_loc.getWorld().getName());
                     player.sendMessage("Co-ordinates: " + scan_loc.getBlockX() + ":" + scan_loc.getBlockY() + ":" + scan_loc.getBlockZ());
+                    BukkitScheduler bsched = plugin.getServer().getScheduler();
+                    bsched.scheduleSyncDelayedTask(plugin, new Runnable() {
+                        @Override
+                        public void run() {
+                            player.sendMessage("TARDIS Direction: " + tardisDirection);
+                        }
+                    }, 20L);
                     // get biome
-                    Biome biome = scan_loc.getBlock().getBiome();
-                    player.sendMessage("Biome type: " + biome);
-                    player.sendMessage("Time of day: " + daynight + " / " + time + " ticks");
+                    final Biome biome = scan_loc.getBlock().getBiome();
+                    bsched.scheduleSyncDelayedTask(plugin, new Runnable() {
+                        @Override
+                        public void run() {
+                            player.sendMessage("Biome type: " + biome);
+                        }
+                    }, 40L);
+                    bsched.scheduleSyncDelayedTask(plugin, new Runnable() {
+                        @Override
+                        public void run() {
+                            player.sendMessage("Time of day: " + daynight + " / " + time + " ticks");
+                        }
+                    }, 60L);
                     // get weather
-                    String weather;
+                    final String weather;
                     if (biome.equals(Biome.DESERT) || biome.equals(Biome.DESERT_HILLS)) {
                         weather = "dry as a bone";
                     } else if (biome.equals(Biome.TAIGA) || biome.equals(Biome.TAIGA_HILLS) || biome.equals(Biome.ICE_PLAINS)) {
@@ -196,26 +214,46 @@ public class TARDISScannerListener implements Listener {
                     } else {
                         weather = (scan_loc.getWorld().hasStorm()) ? "raining" : "clear";
                     }
-                    player.sendMessage("Weather: " + weather);
-                    player.sendMessage("Humidity: " + String.format("%.2f", scan_loc.getBlock().getHumidity()));
-                    player.sendMessage("Temperature: " + String.format("%.2f", scan_loc.getBlock().getTemperature()));
-                    if (scannedentities.size() > 0) {
-                        player.sendMessage("Nearby entities:");
-                        for (Map.Entry<EntityType, Integer> entry : scannedentities.entrySet()) {
-                            String message = "";
-                            StringBuilder buf = new StringBuilder();
-                            if (entry.getKey().equals(EntityType.PLAYER) && playernames.size() > 0) {
-                                for (String p : playernames) {
-                                    buf.append(", ").append(p);
-                                }
-                                message = " (" + buf.toString().substring(2) + ")";
-                            }
-                            player.sendMessage("    " + entry.getKey() + ": " + entry.getValue() + message);
+                    bsched.scheduleSyncDelayedTask(plugin, new Runnable() {
+                        @Override
+                        public void run() {
+                            player.sendMessage("Weather: " + weather);
                         }
-                        scannedentities.clear();
-                    } else {
-                        player.sendMessage("Nearby entities: none");
-                    }
+                    }, 80L);
+                    bsched.scheduleSyncDelayedTask(plugin, new Runnable() {
+                        @Override
+                        public void run() {
+                            player.sendMessage("Humidity: " + String.format("%.2f", scan_loc.getBlock().getHumidity()));
+                        }
+                    }, 100L);
+                    bsched.scheduleSyncDelayedTask(plugin, new Runnable() {
+                        @Override
+                        public void run() {
+                            player.sendMessage("Temperature: " + String.format("%.2f", scan_loc.getBlock().getTemperature()));
+                        }
+                    }, 120L);
+                    bsched.scheduleSyncDelayedTask(plugin, new Runnable() {
+                        @Override
+                        public void run() {
+                            if (scannedentities.size() > 0) {
+                                player.sendMessage("Nearby entities:");
+                                for (Map.Entry<EntityType, Integer> entry : scannedentities.entrySet()) {
+                                    String message = "";
+                                    StringBuilder buf = new StringBuilder();
+                                    if (entry.getKey().equals(EntityType.PLAYER) && playernames.size() > 0) {
+                                        for (String p : playernames) {
+                                            buf.append(", ").append(p);
+                                        }
+                                        message = " (" + buf.toString().substring(2) + ")";
+                                    }
+                                    player.sendMessage("    " + entry.getKey() + ": " + entry.getValue() + message);
+                                }
+                                scannedentities.clear();
+                            } else {
+                                player.sendMessage("Nearby entities: none");
+                            }
+                        }
+                    }, 140L);
                 }
             }
         }

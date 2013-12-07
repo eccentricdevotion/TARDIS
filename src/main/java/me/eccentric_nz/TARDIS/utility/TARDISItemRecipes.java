@@ -42,7 +42,7 @@ public class TARDISItemRecipes {
     }
 
     public ShapedRecipe stattenheim() {
-        ItemStack is = new ItemStack(Material.FLINT, 1);
+        ItemStack is = new ItemStack(mat, 1);
         ItemMeta im = is.getItemMeta();
         im.setDisplayName("Stattenheim Remote");
         im.setLore(Arrays.asList(new String[]{"Right-click block", "to call TARDIS"}));
@@ -85,7 +85,7 @@ public class TARDISItemRecipes {
         ShapedRecipe matcircuit = new ShapedRecipe(is);
         matcircuit.shape("IDI", "DLD", "QRQ");
         if (plugin.getConfig().getString("difficulty").equalsIgnoreCase("hard")) {
-            matcircuit.setIngredient('L', Material.EYE_OF_ENDER);
+            matcircuit.setIngredient('I', Material.EYE_OF_ENDER);
         } else {
             matcircuit.setIngredient('I', Material.IRON_INGOT);
         }

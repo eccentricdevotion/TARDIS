@@ -19,7 +19,7 @@ package me.eccentric_nz.TARDIS.listeners;
 import java.util.Arrays;
 import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.commands.TARDISAdminMenuInventory;
+import me.eccentric_nz.TARDIS.commands.admin.TARDISAdminMenuInventory;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -49,6 +49,7 @@ public class TARDISAdminMenuListener implements Listener {
         this.plugin = plugin;
     }
 
+    @SuppressWarnings("deprecation")
     @EventHandler(priority = EventPriority.NORMAL)
     public void onPlayerInteract(PlayerInteractEvent event) {
         Player p = event.getPlayer();

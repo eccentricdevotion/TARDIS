@@ -17,15 +17,19 @@
 package me.eccentric_nz.TARDIS.travel;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
 import java.util.Set;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
+import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
+import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.World.Environment;
+import org.bukkit.block.Biome;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Player;
@@ -41,11 +45,12 @@ import org.bukkit.entity.Player;
  */
 public class TARDISTimeTravel {
 
-    private static int[] startLoc = new int[6];
+    private static final int[] startLoc = new int[6];
     private Location dest;
-    private TARDIS plugin;
-    private List<Material> goodMaterials = new ArrayList<Material>();
-    private TARDISPluginRespect respect;
+    private final TARDIS plugin;
+    private final List<Material> goodMaterials = new ArrayList<Material>();
+    private final TARDISPluginRespect respect;
+    private final int attempts;
 
     public TARDISTimeTravel(TARDIS plugin) {
         this.plugin = plugin;
@@ -60,29 +65,33 @@ public class TARDISTimeTravel {
         goodMaterials.add(Material.SAPLING);
         goodMaterials.add(Material.SNOW);
         respect = new TARDISPluginRespect(plugin);
+        this.attempts = plugin.getConfig().getInt("random_attempts");
     }
 
     /**
-     * Checks if a location is contained within a defined TARDIS area.
+     * Retrieves a random location determined from the TARDIS repeater or
+     * terminal settings.
      *
      * @param p a player object used to check permissions against.
      * @param rx the data bit setting of the x-repeater, this determines the
      * distance in the x direction.
      * @param rz the data bit setting of the z-repeater, this determines the
      * distance in the z direction.
-     * @param ry the data bit setting of the Y-repeater, this determines the
+     * @param ry the data bit setting of the y-repeater, this determines the
      * multiplier for both the x and z directions.
      * @param d the direction the TARDIS Police Box faces.
      * @param e the environment(s) the player has chosen (or is allowed) to
      * travel to.
+     * @param this_world the world the Police Box is currently in
+     * @param malfunction whether there should be a malfunction
+     * @param current
      * @return a random Location
      */
-    public Location randomDestination(Player p, byte rx, byte rz, byte ry, TARDISConstants.COMPASS d, String e, String this_world) {
+    @SuppressWarnings("deprecation")
+    public Location randomDestination(Player p, byte rx, byte rz, byte ry, TARDISConstants.COMPASS d, String e, World this_world, boolean malfunction, Location current) {
         int startx, starty, startz, resetx, resetz, listlen, rw;
         World randworld = null;
-        boolean danger = true;
         int count;
-        // there needs to be room for the TARDIS and the player!
         Random rand = new Random();
         // get max_radius from config
         int max = plugin.getConfig().getInt("tp_radius");
@@ -94,29 +103,36 @@ public class TARDISTimeTravel {
         List<World> allowedWorlds = new ArrayList<World>();
 
         if (e.equals("THIS")) {
-            allowedWorlds.add(plugin.getServer().getWorld(this_world));
+            allowedWorlds.add(this_world);
         } else {
-            //List<String> envOptions = Arrays.asList(e.split(":"));
             for (String o : worldlist) {
                 World ww = plugin.getServer().getWorld(o);
                 if (ww != null) {
                     String env = ww.getEnvironment().toString();
+                    // Catch all non-nether and non-end ENVIRONMENT types and assume they're normal
+                    if (!env.equals("NETHER") && !env.equals("THE_END")) {
+                        env = "NORMAL";
+                    }
                     if (e.equalsIgnoreCase(env)) {
                         if (plugin.getConfig().getBoolean("include_default_world") || !plugin.getConfig().getBoolean("default_world")) {
-                            if (plugin.getConfig().getBoolean("worlds." + o)) {
+                            if (plugin.getConfig().getBoolean("worlds." + o) || malfunction) {
                                 allowedWorlds.add(plugin.getServer().getWorld(o));
                             }
                         } else {
                             if (!o.equals(plugin.getConfig().getString("default_world_name"))) {
-                                if (plugin.getConfig().getBoolean("worlds." + o)) {
+                                if (plugin.getConfig().getBoolean("worlds." + o) || malfunction) {
                                     allowedWorlds.add(plugin.getServer().getWorld(o));
                                 }
                             }
                         }
                     }
                     // remove the world the Police Box is in
-                    if (this_world != null && allowedWorlds.size() > 1 && allowedWorlds.contains(plugin.getServer().getWorld(this_world))) {
-                        allowedWorlds.remove(plugin.getServer().getWorld(this_world));
+                    if (allowedWorlds.size() > 1 && allowedWorlds.contains(this_world)) {
+                        allowedWorlds.remove(this_world);
+                    }
+                    // remove the world if the player doesn't have permission
+                    if (allowedWorlds.size() > 1 && plugin.getConfig().getBoolean("per_world_perms") && !p.hasPermission("tardis.travel." + o)) {
+                        allowedWorlds.remove(this_world);
                     }
                 }
             }
@@ -132,17 +148,16 @@ public class TARDISTimeTravel {
             i += 1;
         }
         if (randworld != null && randworld.getEnvironment().equals(Environment.NETHER)) {
-            while (danger == true) {
-                wherex = randomX(rand, range, quarter, rx, ry, max);
-                wherez = randomZ(rand, range, quarter, rz, ry, max);
+            for (int n = 0; n < attempts; n++) {
+                wherex = randomX(rand, range, quarter, rx, ry, e, current);
+                wherez = randomZ(rand, range, quarter, rz, ry, e, current);
                 if (safeNether(randworld, wherex, wherez, d, p)) {
-                    danger = false;
                     break;
                 }
             }
         }
         if (randworld != null && randworld.getEnvironment().equals(Environment.THE_END)) {
-            while (danger == true) {
+            for (int n = 0; n < attempts; n++) {
                 wherex = rand.nextInt(240);
                 wherez = rand.nextInt(240);
                 wherex -= 120;
@@ -154,8 +169,6 @@ public class TARDISTimeTravel {
                     Block currentBlock = randworld.getBlockAt(wherex, highest, wherez);
                     Location chunk_loc = currentBlock.getLocation();
                     if (respect.getRespect(p, chunk_loc, false)) {
-                        randworld.getChunkAt(chunk_loc).load();
-                        randworld.getChunkAt(chunk_loc).load(true);
                         while (!randworld.getChunkAt(chunk_loc).isLoaded()) {
                             randworld.getChunkAt(chunk_loc).load();
                         }
@@ -174,34 +187,58 @@ public class TARDISTimeTravel {
                     count = 1;
                 }
                 if (count == 0) {
-                    danger = false;
                     break;
                 }
             }
-            dest = new Location(randworld, wherex, highest, wherez);
+            dest = (highest > 0) ? new Location(randworld, wherex, highest, wherez) : null;
         }
-        if (randworld != null && randworld.getEnvironment().equals(Environment.NORMAL)) {
+        // Assume every non-nether/non-END world qualifies as NORMAL.
+        if (randworld != null && !randworld.getEnvironment().equals(Environment.NETHER) && !randworld.getEnvironment().equals(Environment.THE_END)) {
             long timeout = System.currentTimeMillis() + (plugin.getConfig().getLong("timeout") * 1000);
-            while (danger == true) {
+            while (true) {
                 if (System.currentTimeMillis() < timeout) {
                     // reset count
                     count = 0;
                     // randomX(Random rand, int range, int quarter, byte rx, byte ry, int max)
-                    wherex = randomX(rand, range, quarter, rx, ry, max);
-                    wherez = randomZ(rand, range, quarter, rz, ry, max);
+                    wherex = randomX(rand, range, quarter, rx, ry, e, current);
+                    wherez = randomZ(rand, range, quarter, rz, ry, e, current);
                     highest = randworld.getHighestBlockYAt(wherex, wherez);
                     if (highest > 3) {
                         Block currentBlock = randworld.getBlockAt(wherex, highest, wherez);
                         if ((currentBlock.getRelative(BlockFace.DOWN).getTypeId() == 8 || currentBlock.getRelative(BlockFace.DOWN).getTypeId() == 9) && plugin.getConfig().getBoolean("land_on_water") == false) {
-                            count = 1;
+                            // check if submarine is on
+                            HashMap<String, Object> wheres = new HashMap<String, Object>();
+                            wheres.put("player", p.getName());
+                            ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, wheres);
+                            if (rsp.resultSet()) {
+                                if (rsp.isSubmarine_on() && currentBlock.getBiome().equals(Biome.OCEAN)) {
+                                    // get submarine location
+                                    p.sendMessage(plugin.pluginName + "Searching for underwater location...");
+                                    Location underwater = submarine(currentBlock, d);
+                                    if (underwater != null) {
+                                        // get TARDIS id
+                                        HashMap<String, Object> wherep = new HashMap<String, Object>();
+                                        wherep.put("player", p.getName());
+                                        ResultSetTravellers rst = new ResultSetTravellers(plugin, wherep, false);
+                                        if (rst.resultSet()) {
+                                            plugin.trackSubmarine.add(Integer.valueOf(rst.getTardis_id()));
+                                        }
+                                        return underwater;
+                                    } else {
+                                        count = 1;
+                                    }
+                                } else if (!rsp.isSubmarine_on()) {
+                                    count = 1;
+                                }
+                            } else {
+                                count = 1;
+                            }
                         } else {
                             if (goodMaterials.contains(currentBlock.getType())) {
                                 currentBlock = currentBlock.getRelative(BlockFace.DOWN);
                             }
                             Location chunk_loc = currentBlock.getLocation();
                             if (respect.getRespect(p, chunk_loc, false)) {
-                                randworld.getChunkAt(chunk_loc).load();
-                                randworld.getChunkAt(chunk_loc).load(true);
                                 while (!randworld.getChunkAt(chunk_loc).isLoaded()) {
                                     randworld.getChunkAt(chunk_loc).load();
                                 }
@@ -250,6 +287,7 @@ public class TARDISTimeTravel {
      * @param d the direction the Police Box is facing.
      * @return the number of unsafe blocks
      */
+    @SuppressWarnings("deprecation")
     public int safeLocation(int startx, int starty, int startz, int resetx, int resetz, World w, TARDISConstants.COMPASS d) {
         int level, row, col, rowcount, colcount, count = 0;
         switch (d) {
@@ -381,8 +419,7 @@ public class TARDISTimeTravel {
                 startLoc[2] = loc.getBlockZ() - 2;
                 startLoc[3] = startLoc[2];
                 break;
-            case WEST:
-            case NORTH:
+            default:
                 startLoc[0] = loc.getBlockX() - 1;
                 startLoc[1] = startLoc[0];
                 startLoc[2] = loc.getBlockZ() - 1;
@@ -399,17 +436,20 @@ public class TARDISTimeTravel {
      * @param wherex an x co-ordinate.
      * @param wherez a z co-ordinate.
      * @param d the direction the Police Box is facing.
+     * @param p the player to check permissions for
+     * @return true or false
      */
+    @SuppressWarnings("deprecation")
     public boolean safeNether(World nether, int wherex, int wherez, TARDISConstants.COMPASS d, Player p) {
         boolean safe = false;
         int startx, starty, startz, resetx, resetz, count;
         int wherey = 100;
         Block startBlock = nether.getBlockAt(wherex, wherey, wherez);
-        while (startBlock.getTypeId() != 0) {
+        while (!startBlock.getType().equals(Material.AIR)) {
             startBlock = startBlock.getRelative(BlockFace.DOWN);
         }
         int air = 0;
-        while (startBlock.getTypeId() == 0 && startBlock.getLocation().getBlockY() > 30) {
+        while (startBlock.getType().equals(Material.AIR) && startBlock.getLocation().getBlockY() > 30) {
             startBlock = startBlock.getRelative(BlockFace.DOWN);
             air++;
         }
@@ -448,7 +488,8 @@ public class TARDISTimeTravel {
      * @param ry the data bit of the y-repeater setting.
      * @param max the max_distance config option.
      */
-    private int randomX(Random rand, int range, int quarter, byte rx, byte ry, int max) {
+    private int randomX(Random rand, int range, int quarter, byte rx, byte ry, String e, Location l) {
+        int currentx = (e.equals("THIS")) ? l.getBlockX() : 0;
         int wherex;
         wherex = rand.nextInt(range);
         // add the distance from the x and z repeaters
@@ -464,12 +505,10 @@ public class TARDISTimeTravel {
         if (rx >= 12 && rx <= 15) {
             wherex += (quarter * 4);
         }
-
         // add chance of negative values
         if (rand.nextInt(2) == 1) {
             wherex = 0 - wherex;
         }
-
         // use multiplier based on position of third (y) repeater
         if (ry >= 4 && ry <= 7) {
             wherex *= 2;
@@ -480,7 +519,7 @@ public class TARDISTimeTravel {
         if (ry >= 12 && ry <= 15) {
             wherex *= 4;
         }
-        return wherex;
+        return wherex + currentx;
     }
 
     /**
@@ -493,7 +532,8 @@ public class TARDISTimeTravel {
      * @param ry the data bit of the y-repeater setting.
      * @param max the max_distance config option.
      */
-    private int randomZ(Random rand, int range, int quarter, byte rz, byte ry, int max) {
+    private int randomZ(Random rand, int range, int quarter, byte rz, byte ry, String e, Location l) {
+        int currentz = (e.equals("THIS")) ? l.getBlockZ() : 0;
         int wherez;
         wherez = rand.nextInt(range);
         // add the distance from the x and z repeaters
@@ -509,13 +549,10 @@ public class TARDISTimeTravel {
         if (rz >= 12 && rz <= 15) {
             wherez += (quarter * 4);
         }
-
         // add chance of negative values
         if (rand.nextInt(2) == 1) {
             wherez = 0 - wherez;
         }
-
-
         // use multiplier based on position of third (y) repeater
         if (ry >= 4 && ry <= 7) {
             wherez *= 2;
@@ -526,6 +563,68 @@ public class TARDISTimeTravel {
         if (ry >= 12 && ry <= 15) {
             wherez *= 4;
         }
-        return wherez;
+        return wherez + currentz;
+    }
+
+    @SuppressWarnings("deprecation")
+    public Location submarine(Block b, TARDISConstants.COMPASS d) {
+        Block block = b;
+        while (true) {
+            block = block.getRelative(BlockFace.DOWN);
+            if (!block.getType().equals(Material.STATIONARY_WATER) && !block.getType().equals(Material.WATER)) {
+                break;
+            }
+        }
+        Location loc = block.getRelative(BlockFace.UP).getLocation();
+        for (int n = 0; n < attempts; n++) {
+            if (isSafeSubmarine(loc, d)) {
+                return loc;
+            } else {
+                loc.setY(loc.getY() + 1);
+            }
+        }
+        return (isSafeSubmarine(loc, d)) ? loc : null;
+    }
+
+    @SuppressWarnings("deprecation")
+    public boolean isSafeSubmarine(Location l, TARDISConstants.COMPASS d) {
+        int[] s = getStartLocation(l, d);
+        int level, row, col, rowcount, colcount, count = 0;
+        int starty = l.getBlockY();
+        switch (d) {
+            case EAST:
+            case WEST:
+                rowcount = 3;
+                colcount = 4;
+                break;
+            default:
+                rowcount = 4;
+                colcount = 3;
+                break;
+        }
+        for (level = 0; level < 4; level++) {
+            for (row = 0; row < rowcount; row++) {
+                for (col = 0; col < colcount; col++) {
+                    int id = l.getWorld().getBlockAt(s[0], starty, s[2]).getTypeId();
+                    if (!isItWaterSafe(id)) {
+                        count++;
+                    }
+                    s[0] += 1;
+                }
+                s[0] = s[1];
+                s[2] += 1;
+            }
+            s[2] = s[3];
+            starty += 1;
+        }
+        return (count == 0);
+    }
+
+    private boolean isItWaterSafe(int id) {
+        boolean safe = false;
+        if (id == 8 || id == 9 || id == 0) {
+            safe = true;
+        }
+        return safe;
     }
 }

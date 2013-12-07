@@ -54,7 +54,7 @@ public class TARDISTemporalLocatorListener implements Listener {
             final Player player = (Player) event.getWhoClicked();
             String playerNameStr = player.getName();
             int slot = event.getRawSlot();
-            if (slot < 27) {
+            if (slot >= 0 && slot < 27) {
                 ItemStack is = inv.getItem(slot);
                 if (is.hasItemMeta()) {
                     ItemMeta im = is.getItemMeta();
@@ -86,7 +86,7 @@ public class TARDISTemporalLocatorListener implements Listener {
      * @param p the player using the GUI
      */
     private void close(final Player p) {
-        final String n = p.getName();
+//        final String n = p.getName();
         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
             @Override
             public void run() {

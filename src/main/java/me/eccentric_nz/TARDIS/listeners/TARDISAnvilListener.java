@@ -25,7 +25,6 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.AnvilInventory;
 import org.bukkit.inventory.Inventory;
-import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
@@ -47,19 +46,17 @@ public class TARDISAnvilListener implements Listener {
         disallow.put("Stattenheim Remote", 318);
     }
 
+    @SuppressWarnings("deprecation")
     @EventHandler(priority = EventPriority.HIGH)
     public void onInteract(InventoryClickEvent event) {
         Inventory inv = event.getView().getTopInventory();
         if (inv instanceof AnvilInventory) {
             Player player = (Player) event.getWhoClicked();
             int slot = event.getRawSlot();
-            plugin.debug("Slot: " + slot);
             // slot 2 = result item slot
             if (slot == 2) {
-                plugin.debug("Trying to get item...");
                 ItemStack is = event.getCurrentItem();
                 if (is != null && is.hasItemMeta()) {
-                    plugin.debug("Trying to get meta...");
                     ItemMeta im = is.getItemMeta();
                     if (im.hasDisplayName() && disallow.containsKey(im.getDisplayName()) && is.getTypeId() == disallow.get(im.getDisplayName())) {
                         player.sendMessage(plugin.pluginName + "You cannot name the item that!");

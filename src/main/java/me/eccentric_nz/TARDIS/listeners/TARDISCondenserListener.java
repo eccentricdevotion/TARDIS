@@ -16,7 +16,9 @@
  */
 package me.eccentric_nz.TARDIS.listeners;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.achievement.TARDISAchievementFactory;
 import me.eccentric_nz.TARDIS.artron.TARDISCondensables;
@@ -50,9 +52,11 @@ import org.bukkit.inventory.ItemStack;
 public class TARDISCondenserListener implements Listener {
 
     private final TARDIS plugin;
+    private List<String> zero = new ArrayList<String>();
 
     public TARDISCondenserListener(TARDIS plugin) {
         this.plugin = plugin;
+        zero = this.plugin.getBlocksConfig().getStringList("no_artron_value");
     }
 
     /**
@@ -62,6 +66,7 @@ public class TARDISCondenserListener implements Listener {
      *
      * @param event a chest closing
      */
+    @SuppressWarnings("deprecation")
     @EventHandler(priority = EventPriority.NORMAL)
     public void onChestClose(InventoryCloseEvent event) {
         Inventory inv = event.getInventory();
@@ -88,13 +93,14 @@ public class TARDISCondenserListener implements Listener {
                 for (ItemStack is : inv.getContents()) {
                     if (is != null) {
                         String item = is.getType().name();
-                        //plugin.debug(is);
                         if (tc.condensables.containsKey(item)) {
                             int stack_size = is.getAmount();
-                            amount += stack_size * tc.condensables.get(item);
+                            if (!zero.contains(item)) {
+                                amount += stack_size * tc.condensables.get(item);
+                            }
+                            int block_data = is.getTypeId();
                             inv.remove(is);
                             if (plugin.getConfig().getBoolean("rooms_require_blocks")) {
-                                String block_data = String.format("%s", is.getTypeId());
                                 // check if the tardis has condensed this material before
                                 HashMap<String, Object> wherec = new HashMap<String, Object>();
                                 wherec.put("tardis_id", rs.getTardis_id());
@@ -102,11 +108,8 @@ public class TARDISCondenserListener implements Listener {
                                 ResultSetCondenser rsc = new ResultSetCondenser(plugin, wherec, false);
                                 HashMap<String, Object> setc = new HashMap<String, Object>();
                                 if (rsc.resultSet()) {
-                                    setc.put("block_count", stack_size + rsc.getBlock_count());
-                                    HashMap<String, Object> wheret = new HashMap<String, Object>();
-                                    wheret.put("tardis_id", rs.getTardis_id());
-                                    wheret.put("block_data", block_data);
-                                    qf.doUpdate("condenser", setc, wheret);
+                                    int new_stack_size = stack_size + rsc.getBlock_count();
+                                    qf.updateCondensedBlockCount(new_stack_size, rs.getTardis_id(), block_data);
                                 } else {
                                     setc.put("tardis_id", rs.getTardis_id());
                                     setc.put("block_data", block_data);
@@ -163,8 +166,10 @@ public class TARDISCondenserListener implements Listener {
                 InventoryHolder holder = (Chest) b.getState();
                 // the chest may have been filled by a hopper so get its contents and then clear it
                 ItemStack[] is = holder.getInventory().getContents();
+                // check inv size
+                int inv_size = (is.length > 27) ? 54 : 27;
                 holder.getInventory().clear();
-                Inventory aec = plugin.getServer().createInventory(holder, 27, "§4Artron Condenser");
+                Inventory aec = plugin.getServer().createInventory(holder, inv_size, "§4Artron Condenser");
                 // set the contents to what was in the chest
                 aec.setContents(is);
                 Player p = event.getPlayer();

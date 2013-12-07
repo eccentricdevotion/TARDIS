@@ -38,7 +38,7 @@ import org.bukkit.event.player.PlayerInteractEvent;
  */
 public class TARDISAreaListener implements Listener {
 
-    private TARDIS plugin;
+    private final TARDIS plugin;
 
     public TARDISAreaListener(TARDIS plugin) {
         this.plugin = plugin;

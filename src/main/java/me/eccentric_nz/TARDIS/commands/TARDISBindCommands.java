@@ -30,7 +30,6 @@ import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
 import org.bukkit.ChatColor;
 import org.bukkit.OfflinePlayer;
-import org.bukkit.block.Biome;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -48,8 +47,8 @@ import org.bukkit.entity.Player;
 public class TARDISBindCommands implements CommandExecutor {
 
     private final TARDIS plugin;
-    private List<String> firstArgs = new ArrayList<String>();
-    private List<String> type_1;
+    private final List<String> firstArgs = new ArrayList<String>();
+    private final List<String> type_1;
 
     public TARDISBindCommands(TARDIS plugin) {
         this.plugin = plugin;
@@ -171,7 +170,7 @@ public class TARDISBindCommands implements CommandExecutor {
                     }
                     set.put("dest_name", args[1].toLowerCase(Locale.ENGLISH));
                     set.put("type", 1);
-                    did = qf.doInsert("destinations", set);
+                    did = qf.doSyncInsert("destinations", set);
                 }
                 if (args[0].equalsIgnoreCase("player")) { // type 2
                     // get player online or offline
@@ -185,7 +184,7 @@ public class TARDISBindCommands implements CommandExecutor {
                     }
                     set.put("dest_name", args[1]);
                     set.put("type", 2);
-                    did = qf.doInsert("destinations", set);
+                    did = qf.doSyncInsert("destinations", set);
                 }
                 if (args[0].equalsIgnoreCase("area")) { // type 3
                     HashMap<String, Object> wherea = new HashMap<String, Object>();
@@ -201,17 +200,17 @@ public class TARDISBindCommands implements CommandExecutor {
                     }
                     set.put("dest_name", args[1].toLowerCase(Locale.ENGLISH));
                     set.put("type", 3);
-                    did = qf.doInsert("destinations", set);
+                    did = qf.doSyncInsert("destinations", set);
                 }
                 if (args[0].equalsIgnoreCase("biome")) { // type 4
                     // check valid biome
                     try {
                         String upper = args[1].toUpperCase(Locale.ENGLISH);
-                        Biome biome = Biome.valueOf(upper);
+//                        Biome biome = Biome.valueOf(upper);
                         if (!upper.equals("HELL") && !upper.equals("SKY")) {
                             set.put("dest_name", upper);
                             set.put("type", 4);
-                            did = qf.doInsert("destinations", set);
+                            did = qf.doSyncInsert("destinations", set);
                         }
                     } catch (IllegalArgumentException iae) {
                         player.sendMessage(plugin.pluginName + "Biome type not valid!");

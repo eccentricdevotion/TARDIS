@@ -56,8 +56,9 @@ public class TARDISDestroyerInner {
      * @param w the world where the TARDIS is to be built.
      * @param i the Material type id of the replacement block, this will either
      * be 0 (AIR) or 1 (STONE).
-     * @param p an instance of the player who owns the TARDIS.
+     * @param p the name of the player who owns the TARDIS.
      */
+    @SuppressWarnings("deprecation")
     public void destroyInner(TARDISConstants.SCHEMATIC schm, int id, World w, int i, String p) {
         // get dimensions
         short[] d;
@@ -77,6 +78,18 @@ public class TARDISDestroyerInner {
             case STEAMPUNK:
                 d = plugin.steampunkdimensions;
                 break;
+            case PLANK:
+                d = plugin.plankdimensions;
+                break;
+            case TOM:
+                d = plugin.tomdimensions;
+                break;
+            case ARS:
+                d = plugin.arsdimensions;
+                break;
+            case CUSTOM:
+                d = plugin.customdimensions;
+                break;
             default:
                 d = plugin.budgetdimensions;
                 break;
@@ -85,11 +98,13 @@ public class TARDISDestroyerInner {
         short width = d[1];
         short l = d[2];
         // destroy TARDIS
-        int level, row, col, x, y, z, startx, starty = (14 + h), startz, resetx, resetz;
+        int level, row, col, x, y, z, startx, startz, resetx, resetz;
         // calculate startx, starty, startz
         int gsl[] = plugin.utils.getStartLocation(id);
         startx = gsl[0];
         resetx = gsl[1];
+        boolean below = (!plugin.getConfig().getBoolean("create_worlds") && !plugin.getConfig().getBoolean("default_world"));
+        int starty = (below) ? (14 + h) : (63 + h);
         startz = gsl[2];
         resetz = gsl[3];
         x = gsl[4];
@@ -97,7 +112,7 @@ public class TARDISDestroyerInner {
         for (level = 0; level < h; level++) {
             for (row = 0; row < width; row++) {
                 for (col = 0; col < l; col++) {
-                    // set the block to stone
+                    // set the block to stone / air
                     Block b = w.getBlockAt(startx, starty, startz);
                     Material m = b.getType();
                     // if it's a chest clear the inventory first
@@ -140,11 +155,12 @@ public class TARDISDestroyerInner {
         // remove from protectBlockMap - remove(Integer.valueOf(id)) would only remove the first one
         plugin.protectBlockMap.values().removeAll(Collections.singleton(Integer.valueOf(id)));
         if (plugin.worldGuardOnServer) {
-            plugin.wgchk.removeRegion(w, p);
+            plugin.wgutils.removeRegion(w, p);
         }
     }
     //Originally stolen from Babarix. Thank you :)
 
+    @SuppressWarnings("deprecation")
     public Chest getDoubleChest(Block block) {
         Chest chest = null;
         if (block.getRelative(BlockFace.NORTH).getTypeId() == 54) {

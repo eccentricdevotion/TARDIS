@@ -27,22 +27,19 @@ import me.eccentric_nz.TARDIS.TARDIS;
  * incarnations of the Doctor. The Doctor modified and ostensibly upgraded it
  * over the years, giving it an increasing number of applications.
  *
- * Control types:
- * 2 = environment-repeater
- * 3 = x-repeater
- * 4 = z-repeater
- * 5 = y-repeater
+ * Control types: 2 = environment-repeater 3 = x-repeater 4 = z-repeater 5 =
+ * y-repeater
  *
  * @author eccentric_nz
  */
 public class ResultSetRepeaters {
 
-    private TARDISDatabase service = TARDISDatabase.getInstance();
-    private Connection connection = service.getConnection();
-    private TARDIS plugin;
-    private int id;
-    private int secondary;
-    private byte[] diodes = new byte[4];
+    private final TARDISDatabase service = TARDISDatabase.getInstance();
+    private final Connection connection = service.getConnection();
+    private final TARDIS plugin;
+    private final int id;
+    private final int secondary;
+    private final byte[] diodes = new byte[4];
     String[] str = new String[4];
 
     /**
@@ -50,8 +47,8 @@ public class ResultSetRepeaters {
      * from the controls table.
      *
      * @param plugin an instance of the main class.
-     * @param where a HashMap<String, Object> of table fields and values to
-     * refine the search.
+     * @param id the TARDIS id to search for.
+     * @param secondary the level of control to look for.
      */
     public ResultSetRepeaters(TARDIS plugin, int id, int secondary) {
         this.plugin = plugin;
@@ -95,7 +92,7 @@ public class ResultSetRepeaters {
                 if (statement != null) {
                     statement.close();
                 }
-            } catch (Exception e) {
+            } catch (SQLException e) {
                 plugin.debug("Error closing controls table! " + e.getMessage());
             }
         }
@@ -107,7 +104,12 @@ public class ResultSetRepeaters {
         diodes[0] = plugin.utils.getLocationFromDB(str[0], 0, 0).getBlock().getData();
         diodes[1] = plugin.utils.getLocationFromDB(str[1], 0, 0).getBlock().getData();
         diodes[2] = plugin.utils.getLocationFromDB(str[2], 0, 0).getBlock().getData();
-        diodes[3] = plugin.utils.getLocationFromDB(str[3], 0, 0).getBlock().getData();
+        // temporary fix for NPE on Castrovalva - someone is missing a y-repeater record
+        if (str[3] != null) {
+            diodes[3] = plugin.utils.getLocationFromDB(str[3], 0, 0).getBlock().getData();
+        } else {
+            diodes[3] = plugin.utils.getLocationFromDB(str[2], 0, 0).getBlock().getData();
+        }
         return diodes;
     }
 }

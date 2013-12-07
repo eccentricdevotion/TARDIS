@@ -39,8 +39,8 @@ import org.bukkit.inventory.ItemStack;
 public class TARDISAchievementFactory {
 
     private final TARDIS plugin;
-    private Player player;
-    private String name;
+    private final Player player;
+    private final String name;
     int size;
 
     public TARDISAchievementFactory(TARDIS plugin, Player player, String name, int size) {
@@ -116,6 +116,7 @@ public class TARDISAchievementFactory {
                 seta.put("player", player.getName());
                 seta.put("name", name);
                 seta.put("amount", obj);
+                seta.put("completed", 0);
                 qf.doInsert("achievements", seta);
             }
         }

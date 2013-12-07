@@ -21,7 +21,7 @@ import java.util.HashMap;
 import java.util.Set;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.ResultSetAreas;
-import me.eccentric_nz.TARDIS.database.ResultSetSave;
+import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
@@ -36,7 +36,7 @@ import org.bukkit.permissions.PermissionAttachmentInfo;
  */
 public class TARDISArea {
 
-    private TARDIS plugin;
+    private final TARDIS plugin;
 
     public TARDISArea(TARDIS plugin) {
         this.plugin = plugin;
@@ -150,6 +150,7 @@ public class TARDISArea {
         where.put("area_name", a);
         ResultSetAreas rsa = new ResultSetAreas(plugin, where, false);
         if (rsa.resultSet()) {
+            int xx, zz = 0;
             int minx = rsa.getMinx();
             int x = minx + 2;
             int minz = rsa.getMinz();
@@ -158,32 +159,28 @@ public class TARDISArea {
             int maxz = rsa.getMaxz();
             String wStr = rsa.getWorld();
             boolean chk = false;
-            while (chk == false) {
-                String queryLoc = wStr + ":" + x + ":%:" + z;
-                ResultSetSave rs = new ResultSetSave(plugin, queryLoc);
-                if (rs.resultSet()) {
-                    if (x + 5 <= maxx) {
-                        x += 5;
-                    } else {
-                        x = minx + 2;
-                        if (z + 5 <= maxz) {
-                            z += 5;
-                        } else {
-                            z = minz + 2;
-                        }
+            // only loop for the size of the TARDIS area
+            outerloop:
+            for (xx = x; xx <= maxx; xx += 5) {
+                for (zz = z; zz <= maxz; zz += 5) {
+                    HashMap<String, Object> wherec = new HashMap<String, Object>();
+                    wherec.put("world", wStr);
+                    wherec.put("x", xx);
+                    wherec.put("z", zz);
+                    ResultSetCurrentLocation rs = new ResultSetCurrentLocation(plugin, wherec);
+                    if (!rs.resultSet()) {
+                        chk = true;
+                        break outerloop;
                     }
-                } else {
-                    chk = true;
-                    break;
                 }
             }
             if (chk == true) {
                 World w = plugin.getServer().getWorld(wStr);
                 int y = rsa.getY();
                 if (y == 0) {
-                    y = w.getHighestBlockYAt(x, z);
+                    y = w.getHighestBlockYAt(xx, zz);
                 }
-                location = w.getBlockAt(x, y, z).getLocation();
+                location = w.getBlockAt(xx, y, zz).getLocation();
             }
         }
         return location;

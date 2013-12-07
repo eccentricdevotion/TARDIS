@@ -23,7 +23,6 @@ import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
-import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Player;
 
 /**
@@ -37,10 +36,10 @@ import org.bukkit.entity.Player;
 public class TARDISRoomBuilder {
 
     private final TARDIS plugin;
-    private String r;
-    private Location l;
-    private COMPASS d;
-    private Player p;
+    private final String r;
+    private final Location l;
+    private final COMPASS d;
+    private final Player p;
 
     public TARDISRoomBuilder(TARDIS plugin, String r, Location l, COMPASS d, Player p) {
         this.plugin = plugin;
@@ -73,13 +72,12 @@ public class TARDISRoomBuilder {
             int middle_id, floor_id;
             byte middle_data, floor_data;
             if (rsp.resultSet()) {
-                TARDISWalls tw = new TARDISWalls();
-                Integer[] wid_data = tw.blocks.get(rsp.getWall());
-                middle_id = wid_data[0].intValue();
-                middle_data = wid_data[1].byteValue();
-                Integer[] fid_data = tw.blocks.get(rsp.getFloor());
-                floor_id = fid_data[0].intValue();
-                floor_data = fid_data[1].byteValue();
+                int[] wid_data = plugin.tw.blocks.get(rsp.getWall());
+                middle_id = wid_data[0];
+                middle_data = (byte) wid_data[1];
+                int[] fid_data = plugin.tw.blocks.get(rsp.getFloor());
+                floor_id = fid_data[0];
+                floor_data = (byte) fid_data[1];
             } else {
                 middle_id = 35;
                 middle_data = 1;
@@ -95,55 +93,39 @@ public class TARDISRoomBuilder {
             roomData.setBlock(b);
             roomData.setDirection(d);
             short[] dimensions = plugin.room_dimensions.get(r);
-            if (r.equalsIgnoreCase("GRAVITY") || r.equalsIgnoreCase("ANTIGRAVITY")) {
-                l.setX(l.getX() - 6);
-                l.setZ(l.getZ() - 6);
-            } else {
-                int xzoffset = (dimensions[1] / 2);
-                switch (d) {
-                    case NORTH:
-                        l.setX(l.getX() + xzoffset);
-                        break;
-                    case WEST:
-                        l.setZ(l.getZ() + xzoffset);
-                        break;
-                    case SOUTH:
-                        l.setX(l.getX() - xzoffset);
-                        break;
-                    default:
-                        l.setZ(l.getZ() - xzoffset);
-                        break;
-                }
+            int xzoffset = (dimensions[1] / 2);
+            switch (d) {
+                case NORTH:
+                    l.setX(l.getX() - xzoffset);
+                    l.setZ(l.getZ() - dimensions[1]);
+                    break;
+                case WEST:
+                    l.setX(l.getX() - dimensions[1]);
+                    l.setZ(l.getZ() - xzoffset);
+                    break;
+                case SOUTH:
+                    l.setX(l.getX() - xzoffset);
+                    break;
+                default:
+                    l.setZ(l.getZ() - xzoffset);
+                    break;
             }
             // set y offset
             int offset = Math.abs(plugin.getRoomsConfig().getInt("rooms." + r + ".offset"));
             l.setY(l.getY() - offset);
             roomData.setLocation(l);
-            if (d.equals(COMPASS.EAST) || d.equals(COMPASS.SOUTH) || r.equalsIgnoreCase("GRAVITY") || r.equalsIgnoreCase("ANTIGRAVITY")) {
-                roomData.setX(1);
-                roomData.setZ(1);
-            } else {
-                roomData.setX(-1);
-                roomData.setZ(-1);
-            }
+            roomData.setX(1);
+            roomData.setZ(1);
             roomData.setRoom(r);
-            String whichroom;
-            if (r.equals("PASSAGE") || r.equals("LONG")) {
-                whichroom = (d.equals(COMPASS.EAST) || d.equals(COMPASS.WEST)) ? r + "_EW" : r;
-            } else {
-                whichroom = r;
-            }
-            roomData.setSchematic(plugin.room_schematics.get(whichroom));
+            roomData.setSchematic(plugin.room_schematics.get(r));
             roomData.setDimensions(dimensions);
 
-            // set door space to air
-            b.setTypeId(0);
-            b.getRelative(BlockFace.UP).setTypeId(0);
-            // build faster if in debug mode
-            long delay = (plugin.getConfig().getBoolean("debug")) ? 2 : 5;
+            // determine how often to place a block (in ticks) - `room_speed` is the number of blocks to place in a second (20 ticks)
+            long delay = Math.round(20 / plugin.getConfig().getDouble("room_speed"));
             TARDISRoomRunnable runnable = new TARDISRoomRunnable(plugin, roomData, p);
             int taskID = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, runnable, delay, delay);
             runnable.setTask(taskID);
+            p.sendMessage(plugin.pluginName + "To cancel growing this room use the command /tardis abort " + taskID);
         }
         return true;
     }

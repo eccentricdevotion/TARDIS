@@ -68,7 +68,7 @@ public class TARDISPermissionsExHandler {
             if (bufRdr != null) {
                 try {
                     bufRdr.close();
-                } catch (Exception e) {
+                } catch (IOException e) {
                     plugin.debug("Error closing perms reader! " + e.getMessage());
                 }
             }

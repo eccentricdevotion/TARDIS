@@ -22,11 +22,13 @@ import me.eccentric_nz.TARDIS.TARDISConstants.COMPASS;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
+import me.eccentric_nz.TARDIS.rooms.TARDISRoomDirection;
 import me.eccentric_nz.TARDIS.rooms.TARDISRoomRemover;
 import org.bukkit.Effect;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
+import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -82,46 +84,55 @@ public class TARDISJettisonSeeder implements Listener {
             // only proceed if they are clicking a seed block with the TARDIS key!
             if (blockType.equals(Material.getMaterial(plugin.getArtronConfig().getString("jettison_seed"))) && inhand.equals(Material.getMaterial(key))) {
                 String r = plugin.trackJettison.get(playerNameStr);
+                // get jettison direction
+                TARDISRoomDirection trd = new TARDISRoomDirection(block);
+                trd.getDirection();
+                if (!trd.isFound()) {
+                    player.sendMessage(plugin.pluginName + "Could not find the door pressure plate! Check the seed block position.");
+                    return;
+                }
+                COMPASS d = trd.getCompass();
+                BlockFace facing = trd.getFace();
                 // get clicked block location
-                Location b = block.getLocation();
-                // get player's direction
-                COMPASS d = COMPASS.valueOf(plugin.utils.getPlayersDirection(player, false));
-                TARDISRoomRemover remover = new TARDISRoomRemover(plugin, r, b, d);
-                if (remover.remove()) {
-                    plugin.trackJettison.remove(playerNameStr);
-                    block.setTypeIdAndData(0, (byte) 0, true);
-                    b.getWorld().playEffect(b, Effect.POTION_BREAK, 9);
-                    // ok they clicked it, so give them their energy!
-                    int amount = Math.round((plugin.getArtronConfig().getInt("jettison") / 100F) * plugin.getRoomsConfig().getInt("rooms." + r + ".cost"));
-                    QueryFactory qf = new QueryFactory(plugin);
-                    HashMap<String, Object> set = new HashMap<String, Object>();
-                    set.put("owner", playerNameStr);
-                    qf.alterEnergyLevel("tardis", amount, set, player);
-                    // if it is a secondary console room remove the controls
-                    if (r.equals("BAKER") || r.equals("WOOD")) {
-                        // get tardis_id
-                        HashMap<String, Object> wheret = new HashMap<String, Object>();
-                        wheret.put("owner", playerNameStr);
-                        ResultSetTardis rst = new ResultSetTardis(plugin, wheret, "", false);
-                        if (rst.resultSet()) {
-                            int id = rst.getTardis_id();
+                Location l = block.getRelative(facing, 3).getLocation();
+                // get the TARDIS id
+                HashMap<String, Object> whereid = new HashMap<String, Object>();
+                whereid.put("owner", playerNameStr);
+                ResultSetTardis rs = new ResultSetTardis(plugin, whereid, "", false);
+                if (rs.resultSet()) {
+                    int id = rs.getTardis_id();
+                    TARDISRoomRemover remover = new TARDISRoomRemover(plugin, r, l, d, id);
+                    if (remover.remove()) {
+                        plugin.trackJettison.remove(playerNameStr);
+                        block.setType(Material.AIR);
+                        l.getWorld().playEffect(l, Effect.POTION_BREAK, 9);
+                        // ok they clicked it, so give them their energy!
+                        int amount = Math.round((plugin.getArtronConfig().getInt("jettison") / 100F) * plugin.getRoomsConfig().getInt("rooms." + r + ".cost"));
+                        QueryFactory qf = new QueryFactory(plugin);
+                        HashMap<String, Object> set = new HashMap<String, Object>();
+                        set.put("owner", playerNameStr);
+                        qf.alterEnergyLevel("tardis", amount, set, player);
+                        // if it is a secondary console room remove the controls
+                        if (r.equals("BAKER") || r.equals("WOOD")) {
                             int secondary = (r.equals("BAKER")) ? 1 : 2;
                             HashMap<String, Object> del = new HashMap<String, Object>();
                             del.put("tardis_id", id);
                             del.put("secondary", secondary);
                             qf.doDelete("controls", del);
                         }
+                        if (plugin.getConfig().getBoolean("return_room_seed")) {
+                            // give the player back the room seed block
+                            ItemStack is = new ItemStack(Material.getMaterial(plugin.getRoomsConfig().getString("rooms." + r + ".seed")));
+                            Inventory inv = player.getInventory();
+                            inv.addItem(is);
+                            player.updateInventory();
+                        }
+                        player.sendMessage(plugin.pluginName + "You added " + amount + " to the Artron Energy Capacitor");
+                    } else {
+                        player.sendMessage(plugin.pluginName + "The room has already been jettisoned!");
                     }
-                    if (plugin.getConfig().getBoolean("return_room_seed")) {
-                        // give the player back the room seed block
-                        ItemStack is = new ItemStack(Material.getMaterial(plugin.getRoomsConfig().getString("rooms." + r + ".seed")));
-                        Inventory inv = player.getInventory();
-                        inv.addItem(is);
-                        player.updateInventory();
-                    }
-                    player.sendMessage(plugin.pluginName + "You added " + amount + " to the Artron Energy Capacitor");
                 } else {
-                    player.sendMessage(plugin.pluginName + "The room has already been jettisoned!");
+                    player.sendMessage(plugin.pluginName + "Could not get TARDIS id!");
                 }
             }
         }

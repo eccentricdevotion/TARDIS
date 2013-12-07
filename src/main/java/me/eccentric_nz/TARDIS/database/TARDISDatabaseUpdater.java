@@ -33,15 +33,15 @@ import org.bukkit.ChatColor;
  */
 public class TARDISDatabaseUpdater {
 
-    private List<String> areaupdates = new ArrayList<String>();
-    private List<String> blockupdates = new ArrayList<String>();
-    private List<String> destupdates = new ArrayList<String>();
-    private List<String> doorupdates = new ArrayList<String>();
-    private List<String> gravityupdates = new ArrayList<String>();
-    private List<String> prefsupdates = new ArrayList<String>();
-    private List<String> tardisupdates = new ArrayList<String>();
-    private long now = System.currentTimeMillis();
-    private Statement statement;
+    private final List<String> areaupdates = new ArrayList<String>();
+    private final List<String> blockupdates = new ArrayList<String>();
+    private final List<String> destupdates = new ArrayList<String>();
+    private final List<String> doorupdates = new ArrayList<String>();
+    private final List<String> gravityupdates = new ArrayList<String>();
+    private final List<String> prefsupdates = new ArrayList<String>();
+    private final List<String> tardisupdates = new ArrayList<String>();
+    private final long now = System.currentTimeMillis();
+    private final Statement statement;
 
     public TARDISDatabaseUpdater(Statement statement) {
         this.statement = statement;
@@ -50,6 +50,7 @@ public class TARDISDatabaseUpdater {
         destupdates.add("bind TEXT DEFAULT ''");
         destupdates.add("type INTEGER DEFAULT 0");
         destupdates.add("direction TEXT DEFAULT ''");
+        destupdates.add("submarine INTEGER DEFAULT 0");
         doorupdates.add("locked INTEGER DEFAULT 0");
         gravityupdates.add("distance INTEGER DEFAULT 11");
         gravityupdates.add("velocity REAL DEFAULT 0.5");
@@ -62,20 +63,22 @@ public class TARDISDatabaseUpdater {
         prefsupdates.add("wall TEXT DEFAULT 'ORANGE_WOOL'");
         prefsupdates.add("eps_on INTEGER DEFAULT 0");
         prefsupdates.add("eps_message TEXT DEFAULT ''");
-        prefsupdates.add("plain_on INTEGER");
         prefsupdates.add("lamp INTEGER");
+        prefsupdates.add("submarine_on INTEGER DEFAULT 0");
         prefsupdates.add("texture_on INTEGER DEFAULT 0");
         prefsupdates.add("texture_in TEXT DEFAULT ''");
         prefsupdates.add("texture_out TEXT DEFAULT 'default'");
+        tardisupdates.add("adapti_on INTEGER DEFAULT 0");
         tardisupdates.add("artron_level INTEGER DEFAULT 0");
         tardisupdates.add("beacon TEXT DEFAULT ''");
         tardisupdates.add("chameleon_data INTEGER DEFAULT 11");
         tardisupdates.add("chameleon_id INTEGER DEFAULT 35");
+        tardisupdates.add("chameleon_preset TEXT DEFAULT 'NEW'");
+        tardisupdates.add("chameleon_demat TEXT DEFAULT 'NEW'");
         tardisupdates.add("condenser TEXT DEFAULT ''");
         tardisupdates.add("creeper TEXT DEFAULT ''");
         tardisupdates.add("eps TEXT DEFAULT ''");
         tardisupdates.add("farm TEXT DEFAULT ''");
-        tardisupdates.add("fast_return TEXT DEFAULT ''");
         tardisupdates.add("handbrake_on INTEGER DEFAULT 1");
         tardisupdates.add("hidden INTEGER DEFAULT 0");
         tardisupdates.add("iso_on INTEGER DEFAULT 0");
@@ -87,6 +90,7 @@ public class TARDISDatabaseUpdater {
         tardisupdates.add("scanner TEXT DEFAULT ''");
         tardisupdates.add("stable TEXT DEFAULT ''");
         tardisupdates.add("tardis_init INTEGER DEFAULT 0");
+        tardisupdates.add("village TEXT DEFAULT ''");
     }
 
     /**
@@ -172,29 +176,6 @@ public class TARDISDatabaseUpdater {
         }
         if (i > 0) {
             TARDIS.plugin.console.sendMessage(TARDIS.plugin.pluginName + "Added " + ChatColor.AQUA + i + ChatColor.RESET + " fields to the database!");
-        }
-    }
-
-    public void updateHomes() {
-        // check the tardis database to see whether the homes have already been updated
-        String home_query = "SELECT home FROM tardis ORDER BY tardis_id ASC";
-        try {
-            ResultSet rs = statement.executeQuery(home_query);
-            if (rs.next()) {
-                String[] split = rs.getString("home").split(":");
-                if (split.length < 5) {
-                    String h_query = "SELECT tardis_id, direction, home FROM tardis";
-                    ResultSet rst = statement.executeQuery(h_query);
-                    while (rst.next()) {
-                        String home = rst.getString("home") + ":" + rst.getString("direction");
-                        String update = String.format("UPDATE tardis SET home = '%s' WHERE tardis_id = %d", home, rst.getInt("tardis_id"));
-                        // TARDIS.plugin.debug(update);
-                        statement.executeUpdate(update);
-                    }
-                }
-            }
-        } catch (SQLException e) {
-            TARDIS.plugin.debug("Database add fields error: " + e.getMessage() + e.getErrorCode());
         }
     }
 }

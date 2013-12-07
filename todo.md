@@ -1,34 +1,46 @@
 # TODO
 
-## Current version `2.5-beta-1`
-1. Fix bugs
+## Current version `2.6`
+1. Finesse Resource Pack sounds
+2. Test all preset de/materialisation
+3. TARDIS Information System
+    * add new features
+    * auto log out?
+4. Documentation & videos!
 
-### Waiting on Bukkit API
-1. Leashes
-2. Get/set horse speed (Attribute API)
+## Waiting on Bukkit API
+0. IDs are soon to be history... so convert all ID use to entity names
+1. Get/set horse speed (Attribute API)
 
-## Next version `2.6+`
-1. TARDIS shield - this could be adapted, so that the TARDIS can land underwater
-2. Jettison the whole room (including walls), will require new room schematics...
-3. Architectural Reconfiguration System / Map room
-4. Add sounds with Resource packs?
-5. Remove the TARDIS creation block stack, and make a special seed block that determines the type of TARDIS that will be grown. Use custom configurable recipes - the recipes will still include precious block/lapis block/redstone torch, but 4 other blocks will set:
-    * TARDIS wall block
-    * TARDIS floor block
-    * Police Box wall block - if not specified then plain tardis
-    * Police Box lamp block - if not specified then plain tardis
-7. HADS + explosions + fireballs + lava
-8. Permission-based world creation - player's without permission use the default world, those with it get a TARDIS_WORLD
-9. Put crops, buttons, levers and signs on last when growing rooms
-10. Add areas to save-sign?
-11. Sonic Screwdriver
+## Next version `2.7-beta-1`
+1. T.I.P.S. - TARDIS Interior Positioning System
+2. Sonic Screwdrivers
+3. Advanced TARDIS console
+    * Export TARDIS saves / areas / etc. to disks for use with Advanced TARDIS console
+    * Have a storage container with GUI for accessing disks
+4. Make all TARDIS recipes configurable
+    * Reload TARDIS recipes when difficulty level is changed
+5. Add command to make EP1 appear
+6. Make condensables list configurable
+7. TARDIS exterior rendering / scanner room
+8. Underground materialisation
+9. Add MySQL support
+10. Add an admin `/tardisgive` command to give locators/remotes/atron energy etc
 
-## Minecraft API when available `3.0?`
+## Future version `2.8+`
+1. Custom room schematics in ARS (check they are 16x16x16)
+2. TARDIS direction sign
+3. Configurable option to allow Gravity Wells outside of the TARDIS
+4. TARDIS invisiblity
+5. Artron storage blocks
+6. HADS + explosions + fireballs + lava
+7. Put farmland, crops, buttons, ladders, levers and signs on last when growing rooms
+
+# Minecraft API when available
 1. Recreate everything with the new API :)
 2. Create custom blocks for the TARDIS and console.
 3. If using the LAPIS block have the walls a special TARDIS wall block.
 4. A TARDIS key and a crafting recipe for that item.
 5. A Sonic Screwdriver and a crafting recipe for that item.
-6. GUI (if allowed)
-7. Sounds (if allowed)
-8. Make the TARDIS Police Box an entity (if allowed)
+6. GUIs (if allowed)
+7. Make the TARDIS Police Box an entity (if allowed)
