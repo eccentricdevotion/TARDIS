@@ -45,12 +45,14 @@ public class TARDISAddCompanionCommand {
             ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
             String comps;
             int id;
+            String[] data;
             if (!rs.resultSet()) {
                 player.sendMessage(plugin.pluginName + TARDISConstants.NO_TARDIS);
                 return false;
             } else {
                 id = rs.getTardis_id();
                 comps = rs.getCompanions();
+                data = rs.getChunk().split(":");
             }
             if (args.length < 2) {
                 player.sendMessage(plugin.pluginName + "Too few command arguments!");
@@ -78,6 +80,10 @@ public class TARDISAddCompanionCommand {
                 if (plugin.getAchivementConfig().getBoolean("friends.enabled")) {
                     TARDISAchievementFactory taf = new TARDISAchievementFactory(plugin, player, "friends", 1);
                     taf.doAchievement(1);
+                }
+                // if using WorldGuard, add them to the region membership
+                if (plugin.worldGuardOnServer && plugin.getConfig().getBoolean("use_worldguard")) {
+                    plugin.getServer().dispatchCommand(plugin.console, "rg addmember tardis_" + player.getName() + " " + args[1].toLowerCase(Locale.ENGLISH) + " -w " + data[0]);
                 }
                 return true;
             }

@@ -59,6 +59,7 @@ public class TARDISDeleteCommand {
         ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
         if (rs.resultSet()) {
             int id = rs.getTardis_id();
+            int tips = rs.getTIPS();
             TARDISConstants.SCHEMATIC schm = rs.getSchematic();
             String chunkLoc = rs.getChunk();
             String[] cdata = chunkLoc.split(":");
@@ -112,7 +113,7 @@ public class TARDISDeleteCommand {
                     plugin.debug("Could not delete world <" + name + ">");
                 }
             } else {
-                plugin.destroyerI.destroyInner(schm, id, cw, restore, args[1]);
+                plugin.destroyerI.destroyInner(schm, id, cw, restore, args[1], tips);
             }
             if (!rs.isHidden()) {
                 plugin.destroyerP.destroyPreset(bb_loc, d, id, false, false, false, null);

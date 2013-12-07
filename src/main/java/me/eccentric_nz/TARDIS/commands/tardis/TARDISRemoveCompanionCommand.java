@@ -44,16 +44,18 @@ public class TARDISRemoveCompanionCommand {
             ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
             String comps;
             int id;
+            String[] data;
             if (!rs.resultSet()) {
                 player.sendMessage(plugin.pluginName + TARDISConstants.NO_TARDIS);
                 return false;
             } else {
-                id = rs.getTardis_id();
                 comps = rs.getCompanions();
                 if (comps == null || comps.isEmpty()) {
                     player.sendMessage(plugin.pluginName + "You have not added any TARDIS companions yet!");
                     return true;
                 }
+                id = rs.getTardis_id();
+                data = rs.getChunk().split(":");
             }
             if (args.length < 2) {
                 player.sendMessage(plugin.pluginName + "Too few command arguments!");
@@ -89,6 +91,11 @@ public class TARDISRemoveCompanionCommand {
                 set.put("companions", newList);
                 QueryFactory qf = new QueryFactory(plugin);
                 qf.doUpdate("tardis", set, tid);
+                // if using WorldGuard, add them to the region membership
+                if (plugin.worldGuardOnServer && plugin.getConfig().getBoolean("use_worldguard")) {
+
+                    plugin.getServer().dispatchCommand(plugin.console, "rg removemember tardis_" + player.getName() + " " + args[1].toLowerCase(Locale.ENGLISH) + " -w " + data[0]);
+                }
                 player.sendMessage(plugin.pluginName + message);
                 return true;
             }

@@ -71,9 +71,11 @@ public class TARDISBuilderInner {
      * or 35 (if TARDIS was made via the creation stack), this material
      * determines the makeup of the TARDIS floors.
      * @param floor_data the data bit associated with the floor_id parameter.
+     * @param build a number determining where this TARDIS will be built
+     * -------- 0:own world, 1:default world, 2:underground --------
      */
     @SuppressWarnings("deprecation")
-    public void buildInner(TARDISConstants.SCHEMATIC schm, World world, int dbID, Player p, int middle_id, byte middle_data, int floor_id, byte floor_data) {
+    public void buildInner(TARDISConstants.SCHEMATIC schm, World world, int dbID, Player p, int middle_id, byte middle_data, int floor_id, byte floor_data, int build) {
         String[][][] s;
         short[] d;
         int level, row, col, id, x, z, startx, startz, resetx, resetz, j = 2;
@@ -152,28 +154,49 @@ public class TARDISBuilderInner {
         Block postTISBlock = null;
         Block postTemporalBlock = null;
         Block postKeyboardBlock = null;
+        QueryFactory qf = new QueryFactory(plugin);
+        HashMap<String, Object> set = new HashMap<String, Object>();
         // calculate startx, starty, startz
-        int gsl[] = plugin.utils.getStartLocation(dbID);
-        startx = gsl[0];
-        resetx = gsl[1];
-        startz = gsl[2];
-        resetz = gsl[3];
-        x = gsl[4];
-        z = gsl[5];
+        TARDISTIPSData pos = null;
+        switch (build) {
+            case 0: // own world
+                int neghalf = 0 - w / 2;
+                startx = neghalf;
+                resetx = neghalf;
+                startz = neghalf;
+                resetz = neghalf;
+                break;
+            case 1: // default world - use TIPS
+                TARDISInteriorPostioning tips = new TARDISInteriorPostioning(plugin);
+                int slot = tips.getFreeSlot();
+                // save the slot
+                set.put("tips", slot);
+                pos = tips.getTIPSData(slot, w);
+                startx = pos.getCentreX();
+                resetx = pos.getCentreX();
+                startz = pos.getCentreZ();
+                resetz = pos.getCentreZ();
+                break;
+            default: // underground
+                int gsl[] = plugin.utils.getStartLocation(dbID);
+                startx = gsl[0];
+                resetx = gsl[1];
+                startz = gsl[2];
+                resetz = gsl[3];
+        }
         boolean own_world = plugin.getConfig().getBoolean("create_worlds");
         Location wg1 = new Location(world, startx, starty, startz);
         Location wg2 = new Location(world, startx + (w - 1), starty + (h - 1), startz + (l - 1));
-        QueryFactory qf = new QueryFactory(plugin);
         // get list of used chunks
         List<Chunk> chunkList = getChunks(world, wg1.getChunk().getX(), wg1.getChunk().getZ(), d);
         // update chunks list in DB
         for (Chunk c : chunkList) {
-            HashMap<String, Object> set = new HashMap<String, Object>();
-            set.put("tardis_id", dbID);
-            set.put("world", world.getName());
-            set.put("x", c.getX());
-            set.put("z", c.getZ());
-            qf.doInsert("chunks", set);
+            HashMap<String, Object> setc = new HashMap<String, Object>();
+            setc.put("tardis_id", dbID);
+            setc.put("world", world.getName());
+            setc.put("x", c.getX());
+            setc.put("z", c.getZ());
+            qf.doInsert("chunks", setc);
         }
         // if for some reason this is not a TARDIS world, set the blocks to air first
         if (below) {
@@ -181,10 +204,10 @@ public class TARDISBuilderInner {
                 for (row = 0; row < w; row++) {
                     for (col = 0; col < l; col++) {
                         plugin.utils.setBlock(world, startx, starty, startz, 0, (byte) 0);
-                        startx += x;
+                        startx += 1;
                     }
                     startx = resetx;
-                    startz += z;
+                    startz += 1;
                 }
                 startz = resetz;
                 starty += 1;
@@ -194,7 +217,6 @@ public class TARDISBuilderInner {
             starty = 15;
             startz = resetz;
         }
-        HashMap<String, Object> set = new HashMap<String, Object>();
         HashMap<String, Object> where = new HashMap<String, Object>();
         where.put("tardis_id", dbID);
         for (level = 0; level < h; level++) {
@@ -520,10 +542,10 @@ public class TARDISBuilderInner {
                             plugin.utils.setBlock(world, startx, starty, startz, id, data);
                         }
                     }
-                    startx += x;
+                    startx += 1;
                 }
                 startx = resetx;
-                startz += z;
+                startz += 1;
             }
             startz = resetz;
             starty += 1;
@@ -658,7 +680,15 @@ public class TARDISBuilderInner {
         }
         lampblocks.clear();
         if (plugin.worldGuardOnServer && plugin.getConfig().getBoolean("use_worldguard")) {
-            plugin.wgutils.addWGProtection(p, wg1, wg2);
+            switch (build) {
+                case 1:
+                    if (pos != null) {
+                        plugin.wgutils.addWGProtection(p, pos, world);
+                    }
+                    break;
+                default:
+                    plugin.wgutils.addWGProtection(p, wg1, wg2);
+            }
         }
         // finished processing - update tardis table!
         qf.doUpdate("tardis", set, where);

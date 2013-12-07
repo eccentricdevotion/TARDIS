@@ -29,6 +29,7 @@ import com.sk89q.worldguard.protection.managers.RegionManager;
 import com.sk89q.worldguard.protection.regions.ProtectedCuboidRegion;
 import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.builders.TARDISTIPSData;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.block.Block;
@@ -116,6 +117,47 @@ public class TARDISWorldGuardUtils {
     }
 
     /**
+     * Adds a WorldGuard protected region for a TIPS slot. This stops other
+     * players and mobs from griefing the TARDIS :)
+     *
+     * @param p the player to assign as the owner of the region
+     * @param data a TIPS Data container
+     * @param w the world we are creating the region in
+     */
+    public void addWGProtection(Player p, TARDISTIPSData data, World w) {
+        RegionManager rm = wg.getRegionManager(w);
+        BlockVector b1 = new BlockVector(data.getMinX(), 0, data.getMinZ());
+        BlockVector b2 = new BlockVector(data.getMaxX(), 256, data.getMaxZ());
+        String region_id = "tardis_" + p.getName();
+        ProtectedCuboidRegion region = new ProtectedCuboidRegion(region_id, b1, b2);
+        DefaultDomain dd = new DefaultDomain();
+        dd.addPlayer(p.getName());
+        region.setOwners(dd);
+        HashMap<Flag<?>, Object> flags = new HashMap<Flag<?>, Object>();
+        flags.put(DefaultFlag.ENTRY, State.DENY);
+        flags.put(DefaultFlag.TNT, State.DENY);
+        flags.put(DefaultFlag.CREEPER_EXPLOSION, State.DENY);
+        flags.put(DefaultFlag.FIRE_SPREAD, State.DENY);
+        flags.put(DefaultFlag.LAVA_FIRE, State.DENY);
+        flags.put(DefaultFlag.LAVA_FLOW, State.DENY);
+        flags.put(DefaultFlag.LIGHTER, State.DENY);
+        flags.put(DefaultFlag.MOB_SPAWNING, State.DENY);
+        flags.put(DefaultFlag.CONSTRUCT, RegionGroup.OWNERS);
+        flags.put(DefaultFlag.CHEST_ACCESS, State.ALLOW);
+        region.setFlags(flags);
+        rm.addRegion(region);
+        // deny access to anyone but the owner - companions will be added as the player defines them
+        // usage = "<id> <flag> [-w world] [-g group] [value]",
+        plugin.getServer().dispatchCommand(plugin.console, "rg flag " + region_id + " entry -w " + w.getName() + " -g nonmembers");
+        // plugin.getServer().dispatchCommand(plugin.console, "rg addmember " + region_id + " " + companion
+        try {
+            rm.save();
+        } catch (ProtectionDatabaseException e) {
+            plugin.console.sendMessage(plugin.pluginName + "could not create WorldGuard Protection for TARDIS! " + e);
+        }
+    }
+
+    /**
      * Adds a WorldGuard protected region to recharger location. A 3x3 block
      * area is protected.
      *
@@ -195,6 +237,9 @@ public class TARDISWorldGuardUtils {
 
     /**
      * Sets a block with the properties of a sponge
+     *
+     * @param b the sponge block
+     * @param clear whether to set the sponge area or remove it
      */
     public void sponge(Block b, boolean clear) {
         if (clear) {

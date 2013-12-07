@@ -165,7 +165,7 @@ public class TARDISUtils {
      * @return an array of ints.
      */
     public int[] getStartLocation(int id) {
-        int[] startLoc = new int[6];
+        int[] startLoc = new int[4];
         int cx, cz;
         HashMap<String, Object> where = new HashMap<String, Object>();
         where.put("tardis_id", id);
@@ -181,8 +181,6 @@ public class TARDISUtils {
             startLoc[1] = startLoc[0];
             startLoc[2] = (chunk.getBlock(0, 64, 0).getZ());
             startLoc[3] = startLoc[2];
-            startLoc[4] = 1;
-            startLoc[5] = 1;
         }
         return startLoc;
     }
