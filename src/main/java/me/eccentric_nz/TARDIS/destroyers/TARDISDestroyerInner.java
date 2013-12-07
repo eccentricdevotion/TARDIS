@@ -101,62 +101,58 @@ public class TARDISDestroyerInner {
         short width = d[1];
         short l = d[2];
         // destroy TARDIS
-        int level, row, col, x, y, z, startx, startz, starty, resetx, resetz;
-        // calculate startx, starty, startz
         boolean below = (!plugin.getConfig().getBoolean("create_worlds") && !plugin.getConfig().getBoolean("default_world"));
         if (below) {
+            int level, row, col, startx, startz, starty, resetx, resetz;
+            // calculate startx, starty, startz
             int gsl[] = plugin.utils.getStartLocation(id);
             startx = gsl[0];
             resetx = gsl[1];
             starty = 14 + h;
             startz = gsl[2];
             resetz = gsl[3];
+            for (level = 0; level < h; level++) {
+                for (row = 0; row < width; row++) {
+                    for (col = 0; col < l; col++) {
+                        // set the block to stone / air
+                        Block b = w.getBlockAt(startx, starty, startz);
+                        Material m = b.getType();
+                        // if it's a chest clear the inventory first
+                        if (m.equals(Material.CHEST)) {
+                            Chest container = (Chest) b.getState();
+                            //Is it a double chest?
+                            Chest chest = getDoubleChest(b);
+                            if (chest != null) {
+                                chest.getInventory().clear();
+                                chest.getBlock().setTypeId(0);
+                                container.getBlock().setTypeId(0);
+                            } else if (container != null) {
+                                container.getInventory().clear();
+                                container.getBlock().setTypeId(0);
+                            }
+                        }
+                        // if it's a furnace clear the inventory first
+                        if (m.equals(Material.FURNACE)) {
+                            Furnace fur = (Furnace) b.getState();
+                            fur.getInventory().clear();
+                        }
+                        if (!m.equals(Material.CHEST)) {
+                            if (w.getBlockAt(startx, starty, startz).getTypeId() != i) {
+                                plugin.utils.setBlock(w, startx, starty, startz, i, (byte) 0);
+                            }
+                        }
+                        startx += 1;
+                    }
+                    startx = resetx;
+                    startz += 1;
+                }
+                startz = resetz;
+                starty -= 1;
+            }
         } else {
             TARDISInteriorPostioning tips = new TARDISInteriorPostioning(plugin);
             TARDISTIPSData coords = tips.getTIPSData(slot, width);
-            startx = coords.getCentreX();
-            resetx = coords.getCentreX();
-            starty = 63 + h;
-            startz = coords.getCentreZ();
-            resetz = coords.getCentreZ();
-        }
-        for (level = 0; level < h; level++) {
-            for (row = 0; row < width; row++) {
-                for (col = 0; col < l; col++) {
-                    // set the block to stone / air
-                    Block b = w.getBlockAt(startx, starty, startz);
-                    Material m = b.getType();
-                    // if it's a chest clear the inventory first
-                    if (m.equals(Material.CHEST)) {
-                        Chest container = (Chest) b.getState();
-                        //Is it a double chest?
-                        Chest chest = getDoubleChest(b);
-                        if (chest != null) {
-                            chest.getInventory().clear();
-                            chest.getBlock().setTypeId(0);
-                            container.getBlock().setTypeId(0);
-                        } else if (container != null) {
-                            container.getInventory().clear();
-                            container.getBlock().setTypeId(0);
-                        }
-                    }
-                    // if it's a furnace clear the inventory first
-                    if (m.equals(Material.FURNACE)) {
-                        Furnace fur = (Furnace) b.getState();
-                        fur.getInventory().clear();
-                    }
-                    if (!m.equals(Material.CHEST)) {
-                        if (w.getBlockAt(startx, starty, startz).getTypeId() != i) {
-                            plugin.utils.setBlock(w, startx, starty, startz, i, (byte) 0);
-                        }
-                    }
-                    startx += 1;
-                }
-                startx = resetx;
-                startz += 1;
-            }
-            startz = resetz;
-            starty -= 1;
+            tips.reclaimChunks(w, coords);
         }
         // remove blocks saved to blocks table (iron/gold/diamond/emerald)
         QueryFactory qf = new QueryFactory(plugin);

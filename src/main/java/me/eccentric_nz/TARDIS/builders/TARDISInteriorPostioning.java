@@ -24,6 +24,8 @@ import java.util.ArrayList;
 import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.TARDISDatabase;
+import org.bukkit.Chunk;
+import org.bukkit.World;
 
 /**
  *
@@ -68,12 +70,12 @@ public class TARDISInteriorPostioning {
         TARDISTIPSData data = new TARDISTIPSData();
         int row = slot / 20;
         int col = slot % 20;
-        data.setMinX(row * 1000);
-        data.setCentreX(row * 1000 + (499 - size / 2));
-        data.setMaxX(row * 1000 + 999);
-        data.setMinZ(col * 1000);
-        data.setCentreZ(col * 1000 + (499 - size / 2));
-        data.setMaxZ(col * 1000 + 999);
+        data.setMinX(row * 1024);
+        data.setCentreX(row * 1024 + (511 - size / 2));
+        data.setMaxX(row * 1024 + 1023);
+        data.setMinZ(col * 1024);
+        data.setCentreZ(col * 1024 + (511 - size / 2));
+        data.setMaxZ(col * 1024 + 1023);
         data.setSlot(slot);
         return data;
     }
@@ -111,5 +113,20 @@ public class TARDISInteriorPostioning {
             }
         }
         return usedSlots;
+    }
+
+    public void reclaimChunks(World w, TARDISTIPSData data) {
+        // get starting chunk
+        Chunk chunk = w.getChunkAt(data.getMinX(), data.getMinZ());
+        int sx = chunk.getX();
+        int sz = chunk.getZ();
+        for (int x = 0; x < 64; x++) {
+            for (int z = 0; z < 64; z++) {
+                int cx = sx + x;
+                int cz = sz + z;
+                w.regenerateChunk(cx, cz);
+                w.getChunkAt(cx, cz).unload(true, false);
+            }
+        }
     }
 }

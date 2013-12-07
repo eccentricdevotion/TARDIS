@@ -427,6 +427,7 @@ commands:
       permission-message: You don't have the permission <permission> to use this command
   tardisbind:
     aliases: tbind
+    description: Bind TARDIS commands to buttons and other controls
     permission: tardis.update
     permission-message: You don't have the permission <permission> to use this command
     save:
