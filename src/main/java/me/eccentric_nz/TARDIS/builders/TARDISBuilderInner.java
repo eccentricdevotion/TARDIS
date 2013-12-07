@@ -50,15 +50,9 @@ public class TARDISBuilderInner {
 
     private final TARDIS plugin;
     List<Block> lampblocks = new ArrayList<Block>();
-    List<TARDISConstants.SCHEMATIC> only_ars = new ArrayList<TARDISConstants.SCHEMATIC>();
 
     public TARDISBuilderInner(TARDIS plugin) {
         this.plugin = plugin;
-        only_ars.add(TARDISConstants.SCHEMATIC.ARS);
-        only_ars.add(TARDISConstants.SCHEMATIC.BUDGET);
-        only_ars.add(TARDISConstants.SCHEMATIC.PLANK);
-        only_ars.add(TARDISConstants.SCHEMATIC.STEAMPUNK);
-        only_ars.add(TARDISConstants.SCHEMATIC.TOM);
     }
 
     /**
