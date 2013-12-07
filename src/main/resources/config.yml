@@ -23,7 +23,7 @@ timeout: 5
 timeout_height: 135
 random_attempts: 30
 name_tardis: false
-border_radius: 64
+border_radius: 256
 create_worlds: true
 create_worlds_with_perms: false
 gamemode: survival
