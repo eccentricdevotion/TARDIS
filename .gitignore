@@ -16,12 +16,8 @@ xcuserdata
 # svn & cvs
 .svn
 CVS
-/target/classes/
-/target/generated-sources/
-/target/maven-archiver/
-/target/maven-status/
-/target/surefire/
-/target/test-classes/
+/target
+!/target/TARDIS.jar
 /sounds/
 /lib/
 /psd/
