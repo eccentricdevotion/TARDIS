@@ -25,6 +25,7 @@ import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.TARDISDatabaseConnection;
 import org.bukkit.Chunk;
+import org.bukkit.Location;
 import org.bukkit.World;
 
 /**
@@ -117,9 +118,12 @@ public class TARDISInteriorPostioning {
 
     public void reclaimChunks(World w, TARDISTIPSData data) {
         // get starting chunk
-        Chunk chunk = w.getChunkAt(data.getMinX(), data.getMinZ());
+        Location l = new Location(w, data.getMinX(), 0, data.getMinZ());
+        Chunk chunk = w.getChunkAt(l);
         int sx = chunk.getX();
         int sz = chunk.getZ();
+        plugin.debug("minx:" + data.getMinX() + ",minz:" + data.getMinZ());
+        plugin.debug("x:" + sx + ",z:" + sz);
         for (int x = 0; x < 64; x++) {
             for (int z = 0; z < 64; z++) {
                 int cx = sx + x;
