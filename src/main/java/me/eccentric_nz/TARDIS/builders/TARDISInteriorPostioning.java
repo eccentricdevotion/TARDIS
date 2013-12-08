@@ -122,8 +122,6 @@ public class TARDISInteriorPostioning {
         Chunk chunk = w.getChunkAt(l);
         int sx = chunk.getX();
         int sz = chunk.getZ();
-        plugin.debug("minx:" + data.getMinX() + ",minz:" + data.getMinZ());
-        plugin.debug("x:" + sx + ",z:" + sz);
         for (int x = 0; x < 64; x++) {
             for (int z = 0; z < 64; z++) {
                 int cx = sx + x;
