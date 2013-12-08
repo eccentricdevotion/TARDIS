@@ -36,7 +36,7 @@ import me.eccentric_nz.TARDIS.TARDISConstants;
  */
 public class ResultSetTardis {
 
-    private final TARDISDatabase service = TARDISDatabase.getInstance();
+    private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getInstance();
     private final Connection connection = service.getConnection();
     private final TARDIS plugin;
     private final HashMap<String, Object> where;
@@ -48,7 +48,6 @@ public class ResultSetTardis {
     private int tips;
     private TARDISConstants.SCHEMATIC schematic;
     private String replaced;
-    private String chest;
     private String companions;
     private String platform;
     private String save_sign;
@@ -152,9 +151,17 @@ public class ResultSetTardis {
                     this.tips = rs.getInt("tips");
                     this.schematic = TARDISConstants.SCHEMATIC.valueOf(rs.getString("size"));
                     this.replaced = rs.getString("replaced");
-                    this.chest = rs.getString("chest");
+                    if (rs.wasNull()) {
+                        this.replaced = "";
+                    }
                     this.companions = rs.getString("companions");
+                    if (rs.wasNull()) {
+                        this.companions = "";
+                    }
                     this.platform = rs.getString("platform");
+                    if (rs.wasNull()) {
+                        this.platform = "";
+                    }
                     this.save_sign = rs.getString("save_sign");
                     this.chameleon = rs.getString("chameleon");
                     this.chamele_on = rs.getBoolean("chamele_on");
@@ -225,10 +232,6 @@ public class ResultSetTardis {
 
     public String getReplaced() {
         return replaced;
-    }
-
-    public String getChest() {
-        return chest;
     }
 
     public String getCompanions() {

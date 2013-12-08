@@ -8,7 +8,6 @@
 1. Get/set horse speed (Attribute API)
 
 ## Next version `2.7-beta-1`
-1. Test T.I.P.S. - Good job for Charlie lol
 2. Sonic Screwdrivers
 3. Advanced TARDIS console
     * Export TARDIS saves / areas / etc. to disks for use with Advanced TARDIS console
@@ -19,9 +18,8 @@
 6. Make condensables list configurable
 7. TARDIS exterior rendering / scanner room
 8. Underground materialisation
-9. Add MySQL support
-10. Add an admin `/tardisgive` command to give locators/remotes/atron energy etc
-11. TARDIS Information System
+9. Add an admin `/tardisgive` command to give locators/remotes/atron energy etc
+10. TARDIS Information System
     * add new features
     * auto log out?
 

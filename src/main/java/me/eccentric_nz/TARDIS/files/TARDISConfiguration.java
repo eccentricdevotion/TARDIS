@@ -234,6 +234,10 @@ public class TARDISConfiguration {
         strOptions.put("gamemode", "survival");
         strOptions.put("key", "STICK");
         strOptions.put("stattenheim", "FLINT");
+        strOptions.put("database", "sqlite");
+        strOptions.put("mysql.url", "mysql://localhost:3306/TARDIS");
+        strOptions.put("mysql.user", "bukkit");
+        strOptions.put("mysql.password", "mysecurepassword");
         artronStrOptions.put("jettison_seed", "TNT");
         artronStrOptions.put("full_charge_item", "NETHER_STAR");
         roomStrOptions.put("rooms.ARBORETUM.seed", "LEAVES");

@@ -32,7 +32,7 @@ import me.eccentric_nz.TARDIS.TARDIS;
  */
 public class ResultSetPlayerPrefs {
 
-    private final TARDISDatabase service = TARDISDatabase.getInstance();
+    private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getInstance();
     private final Connection connection = service.getConnection();
     private final TARDIS plugin;
     private final HashMap<String, Object> where;
@@ -107,7 +107,7 @@ public class ResultSetPlayerPrefs {
             if (rs.next()) {
                 this.pp_id = rs.getInt("pp_id");
                 this.player = rs.getString("player");
-                this.key = rs.getString("key");
+                this.key = (plugin.getConfig().getString("database").equals("sqlite")) ? rs.getString("key") : rs.getString("key_item");
                 this.sfx_on = rs.getBoolean("sfx_on");
                 this.platform_on = rs.getBoolean("platform_on");
                 this.quotes_on = rs.getBoolean("quotes_on");

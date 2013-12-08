@@ -32,6 +32,7 @@ public class TARDISAdminTabComplete implements TabCompleter {
     private final TARDIS plugin;
     private final ImmutableList<String> DIFFICULTY_SUBS = ImmutableList.of("easy", "normal", "hard");
     private final ImmutableList<String> BOOL_SUBS = ImmutableList.of("true", "false");
+    private final ImmutableList<String> DB_SUBS = ImmutableList.of("mysql", "sqlite");
 
     public TARDISAdminTabComplete(TARDIS plugin) {
         this.plugin = plugin;
@@ -46,6 +47,9 @@ public class TARDISAdminTabComplete implements TabCompleter {
             String sub = args[0];
             if (sub.equals("difficulty")) {
                 return partial(lastArg, DIFFICULTY_SUBS);
+            }
+            if (sub.equals("database")) {
+                return partial(lastArg, DB_SUBS);
             }
             if (sub.equals("delete") || sub.equals("enter")) { // return null to default to online player name matching
                 return null;

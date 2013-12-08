@@ -28,7 +28,7 @@ import java.sql.Timestamp;
 import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
-import me.eccentric_nz.TARDIS.database.TARDISDatabase;
+import me.eccentric_nz.TARDIS.database.TARDISDatabaseConnection;
 import org.bukkit.command.CommandSender;
 
 /**
@@ -40,7 +40,7 @@ import org.bukkit.command.CommandSender;
  */
 public class TARDISPruner {
 
-    private final TARDISDatabase service = TARDISDatabase.getInstance();
+    private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getInstance();
     private final Connection connection = service.getConnection();
     private final TARDIS plugin;
 

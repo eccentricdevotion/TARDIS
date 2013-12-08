@@ -29,7 +29,7 @@ import me.eccentric_nz.TARDIS.TARDIS;
 public class TARDISSQLInsertControl implements Runnable {
 
     private final TARDIS plugin;
-    private final TARDISDatabase service = TARDISDatabase.getInstance();
+    private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getInstance();
     private final Connection connection = service.getConnection();
     private final int id;
     private final int type;

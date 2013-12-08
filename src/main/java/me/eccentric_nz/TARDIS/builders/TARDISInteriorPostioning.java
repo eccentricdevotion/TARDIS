@@ -23,7 +23,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.database.TARDISDatabase;
+import me.eccentric_nz.TARDIS.database.TARDISDatabaseConnection;
 import org.bukkit.Chunk;
 import org.bukkit.World;
 
@@ -33,7 +33,7 @@ import org.bukkit.World;
  */
 public class TARDISInteriorPostioning {
 
-    private final TARDISDatabase service = TARDISDatabase.getInstance();
+    private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getInstance();
     private final Connection connection = service.getConnection();
     private final TARDIS plugin;
 

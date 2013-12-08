@@ -37,7 +37,7 @@ import org.bukkit.ChatColor;
 public class TARDISControlsConverter {
 
     private final TARDIS plugin;
-    private final TARDISDatabase service = TARDISDatabase.getInstance();
+    private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getInstance();
     private final Connection connection = service.getConnection();
 
     public TARDISControlsConverter(TARDIS plugin) {

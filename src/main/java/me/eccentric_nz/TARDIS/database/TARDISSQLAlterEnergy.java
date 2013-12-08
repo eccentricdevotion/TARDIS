@@ -32,7 +32,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 public class TARDISSQLAlterEnergy implements Runnable {
 
     private final TARDIS plugin;
-    private final TARDISDatabase service = TARDISDatabase.getInstance();
+    private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getInstance();
     private final Connection connection = service.getConnection();
     private final String table;
     private final int amount;

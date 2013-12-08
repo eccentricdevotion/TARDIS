@@ -34,7 +34,7 @@ import org.bukkit.entity.Player;
 public class QueryFactory {
 
     private final TARDIS plugin;
-    TARDISDatabase service = TARDISDatabase.getInstance();
+    TARDISDatabaseConnection service = TARDISDatabaseConnection.getInstance();
     Connection connection = service.getConnection();
 
     public QueryFactory(TARDIS plugin) {

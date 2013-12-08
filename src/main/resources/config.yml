@@ -1,6 +1,10 @@
 # config file
 debug: false
-check_for_updates: true
+database: sqlite
+mysql:
+    url: mysql://localhost:3306/TARDIS
+    user: bukkit
+    password: mysecurepassword
 key: STICK
 tp_radius: 500
 default_world: false

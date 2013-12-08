@@ -54,8 +54,10 @@ import me.eccentric_nz.TARDIS.commands.preferences.TARDISPrefsTabComplete;
 import me.eccentric_nz.TARDIS.commands.tardis.TARDISTabComplete;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.TARDISControlsConverter;
-import me.eccentric_nz.TARDIS.database.TARDISDatabase;
+import me.eccentric_nz.TARDIS.database.TARDISDatabaseConnection;
 import me.eccentric_nz.TARDIS.database.TARDISLocationsConverter;
+import me.eccentric_nz.TARDIS.database.TARDISMySQLDatabase;
+import me.eccentric_nz.TARDIS.database.TARDISSQLiteDatabase;
 import me.eccentric_nz.TARDIS.destroyers.TARDISDestroyerInner;
 import me.eccentric_nz.TARDIS.destroyers.TARDISDestroyerPreset;
 import me.eccentric_nz.TARDIS.files.TARDISBlockLoader;
@@ -155,7 +157,7 @@ public class TARDIS extends JavaPlugin {
 
     public static TARDIS plugin;
     private static final ArrayList<String> quotes = new ArrayList<String>();
-    TARDISDatabase service = TARDISDatabase.getInstance();
+    TARDISDatabaseConnection service = TARDISDatabaseConnection.getInstance();
     public TARDISMakeTardisCSV tardisCSV = new TARDISMakeTardisCSV(this);
     public TARDISMakeRoomCSV roomCSV = new TARDISMakeRoomCSV(this);
     public PluginDescriptionFile pdfFile;
@@ -374,10 +376,18 @@ public class TARDIS extends JavaPlugin {
      * Sets up the database.
      */
     private void loadDatabase() {
+        String dbtype = getConfig().getString("database");
         try {
-            String path = getDataFolder() + File.separator + "TARDIS.db";
-            service.setConnection(path);
-            service.createTables();
+            if (dbtype.equals("sqlite")) {
+                String path = getDataFolder() + File.separator + "TARDIS.db";
+                service.setConnection(path);
+                TARDISSQLiteDatabase sqlite = new TARDISSQLiteDatabase(this);
+                sqlite.createTables();
+            } else {
+                service.setConnection();
+                TARDISMySQLDatabase mysql = new TARDISMySQLDatabase(this);
+                mysql.createTables();
+            }
         } catch (Exception e) {
             console.sendMessage(pluginName + "Connection and Tables Error: " + e);
         }
