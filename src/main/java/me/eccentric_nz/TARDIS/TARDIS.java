@@ -303,6 +303,7 @@ public class TARDIS extends JavaPlugin {
             TARDISConfiguration tc = new TARDISConfiguration(this);
             tc.checkConfig();
             checkTCG();
+            checkDefaultWorld();
             seeds = getSeeds();
             tw = new TARDISWalls();
             loadDatabase();
@@ -821,6 +822,16 @@ public class TARDIS extends JavaPlugin {
             long time = System.currentTimeMillis() - getTagConfig().getLong("time");
             set.put("time", time);
             new QueryFactory(this).doSyncInsert("tag", set);
+        }
+    }
+
+    private void checkDefaultWorld() {
+        if (!getConfig().getBoolean("default_world")) {
+            return;
+        }
+        if (getServer().getWorld(getConfig().getString("default_world_name")) == null) {
+            console.sendMessage(pluginName + "Default world specified, but it doesn't exist! Trying to create it now...");
+            new TARDISSpace(this).createDefaultWorld(getConfig().getString("default_world_name"));
         }
     }
 

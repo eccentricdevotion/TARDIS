@@ -8,7 +8,6 @@
 1. Get/set horse speed (Attribute API)
 
 ## Next version `2.7-beta-1`
-1. If `default_world` is `true` and the world specified by `default_world_name` doesn't exist, then create it.
 2. Sonic Screwdrivers
 3. Advanced TARDIS console
     * Export TARDIS saves / areas / etc. to disks for use with Advanced TARDIS console
