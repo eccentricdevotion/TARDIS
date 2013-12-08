@@ -44,6 +44,7 @@ public class TARDISCraftListener implements Listener {
     private final List<Integer> c = new ArrayList<Integer>();
     private final List<Integer> l = new ArrayList<Integer>();
     private final HashMap<Material, String> t = new HashMap<Material, String>();
+    private final List<Material> hasColour = new ArrayList<Material>();
     private final TARDISWallsLookup twl;
 
     public TARDISCraftListener(TARDIS plugin) {
@@ -64,6 +65,12 @@ public class TARDISCraftListener implements Listener {
         for (Integer a : plugin.getBlocksConfig().getIntegerList("lamp_blocks")) {
             l.add(a);
         }
+        hasColour.add(Material.WOOL);
+        hasColour.add(Material.STAINED_CLAY);
+        hasColour.add(Material.STAINED_GLASS);
+        hasColour.add(Material.WOOD);
+        hasColour.add(Material.LOG);
+        hasColour.add(Material.LOG_2);
         twl = new TARDISWallsLookup(plugin);
     }
 
@@ -91,7 +98,20 @@ public class TARDISCraftListener implements Listener {
             lore.add(t.get(m7));
             lore.add("Walls: " + twl.wall_lookup.get(inv.getItem(6).getTypeId() + ":" + inv.getItem(6).getData().getData()));
             lore.add("Floors: " + twl.wall_lookup.get(inv.getItem(9).getTypeId() + ":" + inv.getItem(9).getData().getData()));
-            lore.add("Chameleon block: " + ((m8.equals(Material.WOOL) || m8.equals(Material.STAINED_CLAY)) ? DyeColor.getByWoolData(inv.getItem(8).getData().getData()) + " " : "") + m8.toString());
+            // do some funky stuff to get data values for wool/stained glass & clay/wood/log/log_2
+            if (hasColour.contains(m8)) {
+                switch (m8) {
+                    case WOOL:
+                    case STAINED_CLAY:
+                    case STAINED_GLASS:
+                        lore.add("Chameleon block: " + DyeColor.getByWoolData(inv.getItem(8).getData().getData()) + " " + m8.toString());
+                        break;
+                    default:
+                        lore.add("Chameleon block: " + plugin.utils.getWoodType(m8, inv.getItem(8).getData().getData()) + " " + m8.toString());
+                }
+            } else {
+                lore.add("Chameleon block: " + m8.toString());
+            }
             lore.add("Lamp: " + m5.toString());
             im.setLore(lore);
             is.setItemMeta(im);

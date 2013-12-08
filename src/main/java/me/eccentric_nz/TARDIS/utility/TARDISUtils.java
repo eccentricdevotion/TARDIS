@@ -27,6 +27,7 @@ import me.eccentric_nz.tardischunkgenerator.TARDISChunkGenerator;
 import org.bukkit.Bukkit;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.WorldType;
 import org.bukkit.block.Block;
@@ -385,5 +386,60 @@ public class TARDISUtils {
 
     public void playTARDISSound(Location l, Player p, String s) {
         p.playSound(l, s, 5.0F, 1.0F);
+    }
+
+    public String getWoodType(Material m, byte d) {
+        String type;
+        switch (m) {
+            case WOOD:
+                switch (d) {
+                    case 0:
+                        type = "OAK";
+                        break;
+                    case 1:
+                        type = "SPRUCE";
+                        break;
+                    case 2:
+                        type = "BIRCH";
+                        break;
+                    case 3:
+                        type = "JUNGLE";
+                        break;
+                    case 4:
+                        type = "ACACIA";
+                        break;
+                    default:
+                        type = "DARK_OAK";
+                        break;
+                }
+                break;
+            case LOG:
+                switch (d) {
+                    case 0:
+                        type = "OAK";
+                        break;
+                    case 1:
+                        type = "SPRUCE";
+                        break;
+                    case 2:
+                        type = "BIRCH";
+                        break;
+                    default:
+                        type = "JUNGLE";
+                        break;
+                }
+                break;
+            default: // LOG_2
+                switch (d) {
+                    case 0:
+                        type = "ACACIA";
+                        break;
+                    default:
+                        type = "DARK_OAK";
+                        break;
+                }
+                break;
+        }
+        return type;
     }
 }

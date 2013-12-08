@@ -17,6 +17,7 @@
 package me.eccentric_nz.TARDIS.listeners;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
@@ -49,10 +50,12 @@ public class TARDISSeedBlockListener implements Listener {
     private final TARDIS plugin;
     private final TARDISWallsLookup twl;
     private final HashMap<Location, TARDISBuildData> trackTARDISSeed = new HashMap<Location, TARDISBuildData>();
+    private final List<Integer> hasColour = new ArrayList<Integer>();
 
     public TARDISSeedBlockListener(TARDIS plugin) {
         this.plugin = plugin;
         twl = new TARDISWallsLookup(plugin);
+        hasColour.addAll(Arrays.asList(new Integer[]{5, 17, 35, 95, 159, 162}));
     }
 
     /**
@@ -118,7 +121,21 @@ public class TARDISSeedBlockListener implements Listener {
                 lore.add(data.getSchematic().toString());
                 lore.add("Walls: " + twl.wall_lookup.get(data.getWall_id() + ":" + data.getWall_data()));
                 lore.add("Floors: " + twl.wall_lookup.get(data.getFloor_id() + ":" + data.getFloor_data()));
-                lore.add("Chameleon block: " + ((data.getBox_id() == 35 || data.getBox_id() == 159) ? DyeColor.getByWoolData(data.getBox_data()) + " " : "") + Material.getMaterial(data.getBox_id()).toString());
+// do some funky stuff to get data values for wool/stained glass & clay/wood/log/log_2
+                if (hasColour.contains(data.getBox_id())) {
+                    switch (data.getBox_id()) {
+                        case 35:
+                        case 95:
+                        case 159:
+                            lore.add("Chameleon block: " + DyeColor.getByWoolData(data.getBox_data()) + " " + Material.getMaterial(data.getBox_id()).toString());
+                            break;
+                        default:
+                            lore.add("Chameleon block: " + plugin.utils.getWoodType(Material.getMaterial(data.getBox_id()), data.getBox_data()) + " " + Material.getMaterial(data.getBox_id()).toString());
+                    }
+                } else {
+                    lore.add("Chameleon block: " + Material.getMaterial(data.getBox_id()).toString());
+                }
+//                lore.add("Chameleon block: " + ((data.getBox_id() == 35 || data.getBox_id() == 159) ? DyeColor.getByWoolData(data.getBox_data()) + " " : "") + Material.getMaterial(data.getBox_id()).toString());
                 lore.add("Lamp: " + Material.getMaterial(data.getLamp()).toString());
                 im.setLore(lore);
                 is.setItemMeta(im);
@@ -177,8 +194,13 @@ public class TARDISSeedBlockListener implements Listener {
         String[] split1 = str.split(": ");
         String[] split2 = split1[1].split(" ");
         if (split2.length > 1) {
-            data.setId(Material.getMaterial(split2[1]).getId());
-            data.setData(DyeColor.valueOf(split2[0]).getWoolData());
+            Material m = Material.getMaterial(split2[1]);
+            data.setId(m.getId());
+            if (m.equals(Material.WOOL) || m.equals(Material.STAINED_CLAY) || m.equals(Material.STAINED_GLASS)) {
+                data.setData(DyeColor.valueOf(split2[0]).getWoolData());
+            } else {
+                data.setData(getWoodDataType(m, split2[0]));
+            }
         } else {
             data.setId(Material.getMaterial(split1[1]).getId());
             data.setData((byte) 0);
@@ -200,6 +222,46 @@ public class TARDISSeedBlockListener implements Listener {
         data.setId(values[0]);
         data.setData((byte) values[1]);
         return data;
+    }
+
+    private byte getWoodDataType(Material m, String w) {
+        byte b = (byte) 0;
+        switch (m) {
+            case LOG:
+                if (w.equals("SPRUCE")) {
+                    b = (byte) 1;
+                }
+                if (w.equals("BIRCH")) {
+                    b = (byte) 2;
+                }
+                if (w.equals("JUNGLE")) {
+                    b = (byte) 3;
+                }
+                break;
+            case LOG_2:
+                if (w.equals("DARK_OAK")) {
+                    b = (byte) 1;
+                }
+                break;
+            default:
+                if (w.equals("SPRUCE")) {
+                    b = (byte) 1;
+                }
+                if (w.equals("BIRCH")) {
+                    b = (byte) 2;
+                }
+                if (w.equals("JUNGLE")) {
+                    b = (byte) 3;
+                }
+                if (w.equals("ACACIA")) {
+                    b = (byte) 4;
+                }
+                if (w.equals("DARK_OAK")) {
+                    b = (byte) 5;
+                }
+                break;
+        }
+        return b;
     }
 
     /**

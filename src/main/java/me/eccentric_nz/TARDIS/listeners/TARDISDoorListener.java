@@ -563,8 +563,7 @@ public class TARDISDoorListener implements Listener {
         final boolean crossWorlds = (from != to);
         final boolean quotes = q;
         final String name = p.getName();
-        World world = l.getWorld();
-        final boolean isSurvival = checkSurvival(world);
+        final boolean isSurvival = checkSurvival(to);
 
         Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
             @Override
