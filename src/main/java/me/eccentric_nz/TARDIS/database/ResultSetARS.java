@@ -106,6 +106,9 @@ public class ResultSetARS {
                     this.south = rs.getInt("ars_z_south");
                     this.layer = rs.getInt("ars_y_layer");
                     this.json = rs.getString("json");
+                    if (rs.wasNull()) {
+                        this.json = "";
+                    }
                 }
             } else {
                 return false;

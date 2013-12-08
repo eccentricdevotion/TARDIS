@@ -125,7 +125,7 @@ public class ResultSetPlayerPrefs {
                 this.EPS_on = rs.getBoolean("eps_on");
                 // if empty use default
                 String message = rs.getString("eps_message");
-                if (message.isEmpty()) {
+                if (rs.wasNull() || message.isEmpty()) {
                     this.EPS_message = "This is Emergency Programme One. I have died. I'm sure I will regenerate soon, but just in case. I have engaged the TARDIS autonomous circuit, and we are returning to my Home location or a recharge point - which ever is closest!";
                 } else {
                     this.EPS_message = rs.getString("eps_message");

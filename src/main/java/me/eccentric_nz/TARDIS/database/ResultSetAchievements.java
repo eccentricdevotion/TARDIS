@@ -67,6 +67,8 @@ public class ResultSetAchievements {
     /**
      * Retrieves an SQL ResultSet from the achievements table. This method
      * returns true if a matching record was found.
+     *
+     * @return
      */
     public boolean resultSet() {
         PreparedStatement statement = null;
@@ -110,6 +112,9 @@ public class ResultSetAchievements {
                 this.player = rs.getString("player");
                 this.name = rs.getString("name");
                 this.amount = rs.getString("amount");
+                if (rs.wasNull()) {
+                    this.amount = "";
+                }
                 this.completed = rs.getBoolean("completed");
             } else {
                 return false;
