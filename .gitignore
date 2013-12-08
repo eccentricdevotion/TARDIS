@@ -17,7 +17,6 @@ xcuserdata
 .svn
 CVS
 /target
-!/target/TARDIS.jar
 /sounds/
 /lib/
 /psd/
