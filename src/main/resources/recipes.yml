@@ -1,23 +1,114 @@
 shaped:
-    Vorpal Sword:
-        shape: A-A,BBB,CDC
-        ingredients:
-            A: 1
-            B: 2
-            C: '5:2'
-            D: 57
-        result: 276
+    TARDIS Locator:
+        easy_shape: OIO,ICI,OIO
+        easy_ingredients:
+            O: GRAVEL
+            I: IRON_INGOT
+            C: 'WOOL:14'
+        hard_shape: OIO,ICI,OIO
+        hard_ingredients:
+            O: OBSIDIAN
+            I: IRON_INGOT
+            C: 'MAP:1965'
+        result: COMPASS
         amount: 1
-        displayname: true
-        lore: "The vorpal blade\ngoes snicker-snack!"
-        enchantment: FIRE_ASPECT
-        strength: 3
+        lore: ""
+        enchantment: NONE
+        strength: 0
+    Stattenheim Remote:
+        easy_shape: OBO,-L-,RRR
+        easy_ingredients:
+            O: OBSIDIAN
+            B: STONE_BUTTON
+            L: 'INK_SACK:4'
+            R: REDSTONE
+        hard_shape: OBO,OLO,RRR
+        hard_ingredients:
+            O: OBSIDIAN
+            B: STONE_BUTTON
+            L: 'MAP:1963'
+            R: REDSTONE
+        result: FLINT
+        amount: 1
+        lore: "Right-click block\nto call TARDIS"
+        enchantment: NONE
+        strength: 0
+    TARDIS Locator Circuit:
+        easy_shape: RQR,RIR,DRL
+        easy_ingredients:
+            R: REDSTONE
+            Q: QUARTZ
+            I: IRON_INGOT
+            D: DIODE
+            L: 'INK_SACK:4'
+        hard_shape: RQR,RIR,DRL
+        hard_ingredients:
+            R: REDSTONE
+            Q: QUARTZ
+            I: IRON_INGOT
+            D: DIODE
+            L: 'INK_SACK:4'
+        result: 'MAP:1965'
+        amount: 1
+        lore: ""
+        enchantment: NONE
+        strength: 0
+    TARDIS Materialisation Circuit:
+        easy_shape: IDI,-L-,QRQ
+        easy_ingredients:
+            I: IRON_INGOT
+            R: REDSTONE
+            L: 'INK_SACK:4'
+            Q: QUARTZ
+        hard_shape: IDI,DLD,QRQ
+        hard_ingredients:
+            I: EYE_OF_ENDER
+            D: DIODE
+            R: REDSTONE
+            L: 'INK_SACK:4'
+            Q: QUARTZ
+        result: 'MAP:1964'
+        amount: 1
+        lore: ""
+        enchantment: NONE
+        strength: 0
+    TARDIS Stattenheim Circuit:
+        easy_shape: ---,LRM,QQQ
+        easy_ingredients:
+            L: 'MAP:1965'
+            R: REDSTONE
+            M: 'MAP:1964'
+            Q: QUARTZ
+        hard_shape: ---,LRM,QQQ
+        hard_ingredients:
+            L: 'MAP:1965'
+            R: REDSTONE
+            M: 'MAP:1964'
+            Q: QUARTZ
+        result: 'MAP:1963'
+        amount: 1
+        lore: ""
+        enchantment: NONE
+        strength: 0
+    Sonic Screwdriver:
+        easy_shape: -R-,-S-,-S-
+        easy_ingredients:
+            R: REDSTONE
+            S: STICK
+        hard_shape: -R-,-S-,-S-
+        hard_ingredients:
+            R: REDSTONE
+            S: STICK
+        result: STICK
+        amount: 1
+        lore: "Enter and exit your TARDIS"
+        enchantment: DURABILITY
+        strength: 1
 shapeless:
-    Slime:
+    Bubblegum:
         recipe: 106,106,106
         result: 341
         amount: 1
-        displayname: false
         lore: ""
         enchantment: NONE
         strength: 0
@@ -25,7 +116,6 @@ furnace:
     Nuclear Wool:
         recipe: '35:0'
         result: '35:15'
-        displayname: true
         lore: "Done to a crisp"
         enchantment: NONE
         strength: 0

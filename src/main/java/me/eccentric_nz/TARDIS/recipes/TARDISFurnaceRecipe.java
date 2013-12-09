@@ -42,10 +42,9 @@ public class TARDISFurnaceRecipe {
          */
         ItemStack is;
         String[] result = plugin.getRecipesConfig().getString("furnace." + s + ".result").split(":");
-        int result_id = Integer.parseInt(result[0]);
-        Material result_m = Material.getMaterial(result_id);
+        Material result_m = Material.valueOf(result[0]);
         if (result.length == 2) {
-            byte result_data = Byte.parseByte(result[1]);
+            short result_data = Short.parseShort(result[1]);
             is = new ItemStack(result_m, 1, result_data);
         } else {
             is = new ItemStack(result_m, 1);

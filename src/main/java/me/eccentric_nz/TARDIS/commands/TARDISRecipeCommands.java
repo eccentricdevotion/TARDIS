@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import org.bukkit.Material;
@@ -29,6 +30,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.ShapedRecipe;
 import org.bukkit.inventory.meta.ItemMeta;
 
 /**
@@ -75,124 +77,53 @@ public class TARDISRecipeCommands implements CommandExecutor {
                 return false;
             }
             if (!firstArgs.contains(args[0].toLowerCase(Locale.ENGLISH))) {
-                sender.sendMessage(plugin.pluginName + "That is not a valid recipe name! Try one of: remote|locator|l-circuit|m-circuit|s-circuit");
+                sender.sendMessage(plugin.pluginName + "That is not a valid recipe name! Try one of: remote|locator|l-circuit|m-circuit|s-circuit|sonic");
                 return false;
             }
-            ItemStack obs = new ItemStack(Material.OBSIDIAN, 1);
-            ItemStack red = new ItemStack(Material.REDSTONE, 1);
-            ItemStack qtz = new ItemStack(Material.QUARTZ, 1);
-            ItemStack ing = new ItemStack(Material.IRON_INGOT, 1);
-            ItemStack dio = new ItemStack(Material.DIODE, 1);
-            ItemStack sti = new ItemStack(Material.STICK, 1);
-            ItemStack lap = new ItemStack(Material.INK_SACK, 1, (short) 4);
             if (args[0].equalsIgnoreCase("remote")) {
-                plugin.trackRecipeView.add(player.getName());
-                InventoryView view = player.openWorkbench(null, true);
-                view.getTopInventory().setItem(1, obs);
-                view.getTopInventory().setItem(2, new ItemStack(Material.STONE_BUTTON, 1));
-                view.getTopInventory().setItem(3, obs);
-                view.getTopInventory().setItem(4, obs);
-                if (plugin.getConfig().getString("difficulty").equalsIgnoreCase("hard")) {
-                    ItemStack circuit = new ItemStack(Material.MAP, 1, (short) 1963);
-                    ItemMeta im = circuit.getItemMeta();
-                    im.setDisplayName("TARDIS Stattenheim Circuit");
-                    im.setLore(Arrays.asList(new String[]{"/tardisrecipe s-circuit"}));
-                    circuit.setItemMeta(im);
-                    view.getTopInventory().setItem(5, circuit);
-                } else {
-                    view.getTopInventory().setItem(5, lap);
-                }
-                view.getTopInventory().setItem(6, obs);
-                view.getTopInventory().setItem(7, red);
-                view.getTopInventory().setItem(8, red);
-                view.getTopInventory().setItem(9, red);
+                showRecipe(player, "Stattenheim Remote");
                 return true;
             }
             if (args[0].equalsIgnoreCase("locator")) {
-                //recipe.shape("OIO", "ICI", "OIO");
-                plugin.trackRecipeView.add(player.getName());
-                InventoryView view = player.openWorkbench(null, true);
-                view.getTopInventory().setItem(1, obs);
-                view.getTopInventory().setItem(2, ing);
-                view.getTopInventory().setItem(3, obs);
-                view.getTopInventory().setItem(4, ing);
-                ItemStack circuit = new ItemStack(Material.MAP, 1, (short) 1965);
-                ItemMeta im = circuit.getItemMeta();
-                im.setDisplayName("TARDIS Locator Circuit");
-                im.setLore(Arrays.asList(new String[]{"/tardisrecipe l-circuit"}));
-                circuit.setItemMeta(im);
-                view.getTopInventory().setItem(5, circuit);
-                view.getTopInventory().setItem(6, ing);
-                view.getTopInventory().setItem(7, obs);
-                view.getTopInventory().setItem(8, ing);
-                view.getTopInventory().setItem(9, obs);
+                showRecipe(player, "TARDIS Locator");
                 return true;
             }
             if (args[0].equalsIgnoreCase("l-circuit")) {
-                //recipe.shape("RQR", "RIR", "DRL");
-                plugin.trackRecipeView.add(player.getName());
-                InventoryView view = player.openWorkbench(null, true);
-                view.getTopInventory().setItem(1, red);
-                view.getTopInventory().setItem(2, qtz);
-                view.getTopInventory().setItem(3, red);
-                view.getTopInventory().setItem(4, red);
-                view.getTopInventory().setItem(5, ing);
-                view.getTopInventory().setItem(6, red);
-                view.getTopInventory().setItem(7, dio);
-                view.getTopInventory().setItem(8, red);
-                view.getTopInventory().setItem(9, lap);
+                this.showRecipe(player, "TARDIS Locator Circuit");
                 return true;
             }
             if (args[0].equalsIgnoreCase("m-circuit")) {
-                // recipe.shape("IDI", "DLD", "QRQ");
-                plugin.trackRecipeView.add(player.getName());
-                InventoryView view = player.openWorkbench(null, true);
-                if (plugin.getConfig().getString("difficulty").equalsIgnoreCase("hard")) {
-                    ing = new ItemStack(Material.EYE_OF_ENDER, 1);
-                }
-                view.getTopInventory().setItem(1, ing);
-                view.getTopInventory().setItem(2, dio);
-                view.getTopInventory().setItem(3, ing);
-                view.getTopInventory().setItem(4, dio);
-                view.getTopInventory().setItem(5, lap);
-                view.getTopInventory().setItem(6, dio);
-                view.getTopInventory().setItem(7, qtz);
-                view.getTopInventory().setItem(8, red);
-                view.getTopInventory().setItem(9, qtz);
+                this.showRecipe(player, "TARDIS Materialisation Circuit");
                 return true;
             }
             if (args[0].equalsIgnoreCase("s-circuit")) {
-                //recipe.shape("AAA", "LRM", "QQQ");
-                plugin.trackRecipeView.add(player.getName());
-                InventoryView view = player.openWorkbench(null, true);
-                ItemStack lcircuit = new ItemStack(Material.MAP, 1, (short) 1965);
-                ItemMeta lim = lcircuit.getItemMeta();
-                lim.setDisplayName("TARDIS Locator Circuit");
-                lim.setLore(Arrays.asList(new String[]{"/tardisrecipe l-circuit"}));
-                lcircuit.setItemMeta(lim);
-                view.getTopInventory().setItem(4, lcircuit);
-                view.getTopInventory().setItem(5, red);
-                ItemStack mcircuit = new ItemStack(Material.MAP, 1, (short) 1964);
-                ItemMeta mim = mcircuit.getItemMeta();
-                mim.setDisplayName("TARDIS Materialisation Circuit");
-                mim.setLore(Arrays.asList(new String[]{"/tardisrecipe m-circuit"}));
-                mcircuit.setItemMeta(mim);
-                view.getTopInventory().setItem(6, mcircuit);
-                view.getTopInventory().setItem(7, qtz);
-                view.getTopInventory().setItem(8, qtz);
-                view.getTopInventory().setItem(9, qtz);
+                showRecipe(player, "TARDIS Stattenheim Circuit");
                 return true;
             }
             if (args[0].equalsIgnoreCase("sonic")) {
-                // recipe.shape(" R ", " S ", " S ");
-                plugin.trackRecipeView.add(player.getName());
-                InventoryView view = player.openWorkbench(null, true);
-                view.getTopInventory().setItem(2, red);
-                view.getTopInventory().setItem(5, sti);
-                view.getTopInventory().setItem(8, sti);
+                this.showRecipe(player, "Sonic Screwdriver");
                 return true;
             }
         }
         return false;
+    }
+
+    public void showRecipe(Player p, String str) {
+        ShapedRecipe recipe = plugin.figura.getShapedRecipes().get(str);
+        p.closeInventory();
+        plugin.trackRecipeView.add(p.getName());
+        final InventoryView view = p.openWorkbench(null, true);
+        final String[] recipeShape = recipe.getShape();
+        final Map<Character, ItemStack> ingredientMap = recipe.getIngredientMap();
+        for (int j = 0; j < recipeShape.length; j++) {
+            for (int k = 0; k < recipeShape[j].length(); k++) {
+                final ItemStack item = ingredientMap.get(recipeShape[j].toCharArray()[k]);
+                if (item == null) {
+                    continue;
+                }
+                item.setAmount(0);
+                view.getTopInventory().setItem(j * 3 + k + 1, item);
+            }
+        }
     }
 }

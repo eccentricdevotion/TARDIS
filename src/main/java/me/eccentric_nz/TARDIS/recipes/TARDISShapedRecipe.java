@@ -4,6 +4,7 @@
 package me.eccentric_nz.TARDIS.recipes;
 
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.Set;
 import me.eccentric_nz.TARDIS.TARDIS;
 import org.bukkit.Material;
@@ -20,9 +21,11 @@ import org.bukkit.inventory.meta.ItemMeta;
 public class TARDISShapedRecipe {
 
     private final TARDIS plugin;
+    private final HashMap<String, ShapedRecipe> shapedRecipes;
 
     public TARDISShapedRecipe(TARDIS plugin) {
         this.plugin = plugin;
+        this.shapedRecipes = new HashMap<String, ShapedRecipe>();
     }
 
     public void addShapedRecipes() {
@@ -42,54 +45,45 @@ public class TARDISShapedRecipe {
          D: 57
          result: 276
          amount: 1
-         displayname: true
          lore: "The vorpal blade\ngoes snicker-snack!"
          enchantment: FIRE_ASPECT
          strength: 3
          */
         String[] result_iddata = plugin.getRecipesConfig().getString("shaped." + s + ".result").split(":");
-        int result_id = Integer.parseInt(result_iddata[0]);
-        Material mat = Material.getMaterial(result_id);
+        Material mat = Material.valueOf(result_iddata[0]);
         int amount = plugin.getRecipesConfig().getInt("shaped." + s + ".amount");
         ItemStack is;
         if (result_iddata.length == 2) {
-            byte result_data = Byte.parseByte(result_iddata[1]);
+            short result_data = Short.parseShort(result_iddata[1]);
             is = new ItemStack(mat, amount, result_data);
         } else {
             is = new ItemStack(mat, amount);
         }
         ItemMeta im = is.getItemMeta();
-        boolean set_meta = false;
-        if (plugin.getRecipesConfig().getBoolean("shaped." + s + ".displayname")) {
-            im.setDisplayName(s);
-            if (!plugin.getRecipesConfig().getString("shaped." + s + ".lore").equals("")) {
-                im.setLore(Arrays.asList(plugin.getRecipesConfig().getString("shaped." + s + ".lore").split("\n")));
-            }
-            set_meta = true;
+        im.setDisplayName(s);
+        if (!plugin.getRecipesConfig().getString("shaped." + s + ".lore").equals("")) {
+            im.setLore(Arrays.asList(plugin.getRecipesConfig().getString("shaped." + s + ".lore").split("\n")));
         }
         if (!plugin.getRecipesConfig().getString("shaped." + s + ".enchantment").equals("NONE")) {
             Enchantment e = EnchantmentWrapper.getByName(plugin.getRecipesConfig().getString("shaped." + s + ".enchantment"));
             boolean did = im.addEnchant(e, plugin.getRecipesConfig().getInt("shaped." + s + ".strength"), plugin.getConfig().getBoolean("allow_unsafe_enchantments"));
             System.out.println((did) ? "true" : "false");
-            set_meta = true;
         }
-        if (set_meta) {
-            is.setItemMeta(im);
-        }
+        is.setItemMeta(im);
         ShapedRecipe r = new ShapedRecipe(is);
         // get shape
-        String[] shape_tmp = plugin.getRecipesConfig().getString("shaped." + s + ".shape").split(",");
+        String difficulty = plugin.getConfig().getString("difficulty");
+        String[] shape_tmp = plugin.getRecipesConfig().getString("shaped." + s + "." + difficulty + "_shape").split(",");
         String[] shape = new String[3];
         for (int i = 0; i < 3; i++) {
             shape[i] = shape_tmp[i].replaceAll("-", " ");
         }
         r.shape(shape[0], shape[1], shape[2]);
-        Set<String> ingredients = plugin.getRecipesConfig().getConfigurationSection("shaped." + s + ".ingredients").getKeys(false);
+        Set<String> ingredients = plugin.getRecipesConfig().getConfigurationSection("shaped." + s + "." + difficulty + "_ingredients").getKeys(false);
         for (String g : ingredients) {
             char c = g.charAt(0);
-            String[] recipe_iddata = plugin.getRecipesConfig().getString("shaped." + s + ".ingredients." + g).split(":");
-            int recipe_id = Integer.parseInt(recipe_iddata[0]);
-            Material m = Material.getMaterial(recipe_id);
+            String[] recipe_iddata = plugin.getRecipesConfig().getString("shaped." + s + "." + difficulty + "_ingredients." + g).split(":");
+            Material m = Material.valueOf(recipe_iddata[0]);
             if (recipe_iddata.length == 2) {
                 int recipe_data = Integer.parseInt(recipe_iddata[1]);
                 r.setIngredient(c, m, recipe_data);
@@ -97,6 +91,11 @@ public class TARDISShapedRecipe {
                 r.setIngredient(c, m);
             }
         }
+        shapedRecipes.put(s, r);
         return r;
+    }
+
+    public HashMap<String, ShapedRecipe> getShapedRecipes() {
+        return shapedRecipes;
     }
 }

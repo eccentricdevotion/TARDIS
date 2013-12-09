@@ -42,12 +42,11 @@ public class TARDISShapelessRecipe {
          */
         String[] ingredients = plugin.getRecipesConfig().getString("shapeless." + s + ".recipe").split(",");
         String[] result_iddata = plugin.getRecipesConfig().getString("shapeless." + s + ".result").split(":");
-        int result_id = Integer.parseInt(result_iddata[0]);
-        Material mat = Material.getMaterial(result_id);
+        Material mat = Material.valueOf(result_iddata[0]);
         int amount = plugin.getRecipesConfig().getInt("shapeless." + s + ".amount");
         ItemStack is;
         if (result_iddata.length == 2) {
-            byte result_data = Byte.parseByte(result_iddata[1]);
+            short result_data = Short.parseShort(result_iddata[1]);
             is = new ItemStack(mat, amount, result_data);
         } else {
             is = new ItemStack(mat, amount);
