@@ -122,7 +122,7 @@ import me.eccentric_nz.TARDIS.travel.TARDISArea;
 import me.eccentric_nz.TARDIS.utility.TARDISCreeperChecker;
 import me.eccentric_nz.TARDIS.utility.TARDISFactionsChecker;
 import me.eccentric_nz.TARDIS.recipes.TARDISShapedRecipe;
-//import me.eccentric_nz.TARDIS.recipes.TARDISShapelessRecipe;
+import me.eccentric_nz.TARDIS.recipes.TARDISShapelessRecipe;
 //import me.eccentric_nz.TARDIS.recipes.TARDISFurnaceRecipe;
 import me.eccentric_nz.TARDIS.utility.TARDISMultiverseInventoriesChecker;
 import me.eccentric_nz.TARDIS.utility.TARDISSounds;
@@ -287,7 +287,7 @@ public class TARDIS extends JavaPlugin {
     private Calendar aftercal;
     private boolean hasVersion = false;
     public TARDISShapedRecipe figura;
-    //public TARDISShapelessRecipe incomposita;
+    public TARDISShapelessRecipe incomposita;
     //public TARDISFurnaceRecipe fornacis;
 
     @Override
@@ -350,6 +350,8 @@ public class TARDIS extends JavaPlugin {
             // register recipes
             figura = new TARDISShapedRecipe(this);
             figura.addShapedRecipes();
+            incomposita = new TARDISShapelessRecipe(this);
+            incomposita.addShapelessRecipes();
 
             presets = new TARDISChameleonPreset();
             presets.makePresets();

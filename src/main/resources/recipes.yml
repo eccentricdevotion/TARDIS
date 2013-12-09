@@ -90,26 +90,77 @@ shaped:
         lore: ""
         enchantment: NONE
         strength: 0
+    TARDIS Chameleon Circuit:
+        easy_shape: -G-,RER,-G-
+        easy_ingredients:
+            G: GOLD_INGOT
+            E: DETECTOR_RAIL
+            R: REDSTONE
+        hard_shape: DGD,GEG,RMR
+        hard_ingredients:
+            D: DIODE
+            G: GOLD_INGOT
+            E: DETECTOR_RAIL
+            R: REDSTONE
+            M: 'MAP:1964'
+        result: 'MAP:1966'
+        amount: 1
+        lore: ""
+        enchantment: NONE
+        strength: 0
     Sonic Screwdriver:
         easy_shape: -R-,-S-,-S-
         easy_ingredients:
             R: REDSTONE
             S: STICK
-        hard_shape: -R-,-S-,-S-
+        hard_shape: -C-,-S-,-S-
         hard_ingredients:
-            R: REDSTONE
+            C: REDSTONE_COMPARATOR
             S: STICK
         result: STICK
         amount: 1
         lore: "Enter and exit your TARDIS"
         enchantment: DURABILITY
         strength: 1
-shapeless:
-    Bubblegum:
-        recipe: 106,106,106
-        result: 341
+    Blank Storage Disk:
+        easy_shape: QQQ,Q-Q,QQQ
+        easy_ingredients:
+            Q: QUARTZ
+        hard_shape: QQQ,Q-Q,QQQ
+        hard_ingredients:
+            Q: QUARTZ
+        result: RECORD_9
         amount: 1
         lore: ""
+        enchantment: NONE
+        strength: 0
+shapeless:
+    Save Storage Disk:
+        recipe: RECORD_9,REDSTONE
+        result: RECORD_4
+        amount: 1
+        lore: "Blank"
+        enchantment: NONE
+        strength: 0
+    Player Storage Disk:
+        recipe: RECORD_9,LAPIS_BLOCK
+        result: RECORD_12
+        amount: 1
+        lore: "Blank"
+        enchantment: NONE
+        strength: 0
+    Blank Biome Storage Disk:
+        recipe: RECORD_9,EMERALD
+        result: GREEN_RECORD
+        amount: 1
+        lore: "Blank"
+        enchantment: NONE
+        strength: 0
+    Blank Preset Storage Disk:
+        recipe: 'RECORD_9,MAP:1966'
+        result: RECORD_6
+        amount: 1
+        lore: "Blank"
         enchantment: NONE
         strength: 0
 furnace:

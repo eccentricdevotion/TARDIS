@@ -4,6 +4,7 @@
 package me.eccentric_nz.TARDIS.recipes;
 
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.Set;
 import me.eccentric_nz.TARDIS.TARDIS;
 import org.bukkit.Material;
@@ -20,9 +21,11 @@ import org.bukkit.inventory.meta.ItemMeta;
 public class TARDISShapelessRecipe {
 
     private final TARDIS plugin;
+    private final HashMap<String, ShapelessRecipe> shapelessRecipes;
 
     public TARDISShapelessRecipe(TARDIS plugin) {
         this.plugin = plugin;
+        this.shapelessRecipes = new HashMap<String, ShapelessRecipe>();
     }
 
     public void addShapelessRecipes() {
@@ -52,34 +55,31 @@ public class TARDISShapelessRecipe {
             is = new ItemStack(mat, amount);
         }
         ItemMeta im = is.getItemMeta();
-        boolean set_meta = false;
-        if (plugin.getRecipesConfig().getBoolean("shapeless." + s + ".displayname")) {
-            im.setDisplayName(s);
-            if (!plugin.getRecipesConfig().getString("shapeless." + s + ".lore").equals("")) {
-                im.setLore(Arrays.asList(plugin.getRecipesConfig().getString("shapeless." + s + ".lore").split("\n")));
-            }
-            set_meta = true;
+        im.setDisplayName(s);
+        if (!plugin.getRecipesConfig().getString("shapeless." + s + ".lore").equals("")) {
+            im.setLore(Arrays.asList(plugin.getRecipesConfig().getString("shapeless." + s + ".lore").split("\n")));
         }
         if (!plugin.getRecipesConfig().getString("shapeless." + s + ".enchantment").equals("NONE")) {
             Enchantment e = EnchantmentWrapper.getByName(plugin.getRecipesConfig().getString("shapeless." + s + ".enchantment"));
             im.addEnchant(e, plugin.getRecipesConfig().getInt("shapeless." + s + ".strength"), plugin.getConfig().getBoolean("allow_unsafe_enchantments"));
-            set_meta = true;
         }
-        if (set_meta) {
-            is.setItemMeta(im);
-        }
+        is.setItemMeta(im);
         ShapelessRecipe r = new ShapelessRecipe(is);
         for (String i : ingredients) {
-            String[] recipe_iddata = i.split(":");
-            int recipe_id = Integer.parseInt(recipe_iddata[0]);
-            Material m = Material.getMaterial(recipe_id);
-            if (recipe_iddata.length == 2) {
-                int recipe_data = Integer.parseInt(recipe_iddata[1]);
+            String[] recipe_idata = i.split(":");
+            Material m = Material.valueOf(recipe_idata[0]);
+            if (recipe_idata.length == 2) {
+                int recipe_data = Integer.parseInt(recipe_idata[1]);
                 r.addIngredient(m, recipe_data);
             } else {
                 r.addIngredient(m);
             }
         }
+        shapelessRecipes.put(s, r);
         return r;
+    }
+
+    public HashMap<String, ShapelessRecipe> getShapelessRecipes() {
+        return shapelessRecipes;
     }
 }

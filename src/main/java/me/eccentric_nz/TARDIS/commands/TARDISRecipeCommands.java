@@ -17,13 +17,11 @@
 package me.eccentric_nz.TARDIS.commands;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
-import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -31,7 +29,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ShapedRecipe;
-import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.inventory.ShapelessRecipe;
 
 /**
  * A Time Control Unit is a golden sphere about the size of a Cricket ball. It
@@ -54,7 +52,13 @@ public class TARDISRecipeCommands implements CommandExecutor {
         firstArgs.add("l-circuit"); // Locator Circuit
         firstArgs.add("m-circuit"); // Materialisation Circuit
         firstArgs.add("s-circuit"); // Stattenheim Circuit
+        firstArgs.add("c-circuit"); // Chameleon Circuit
         firstArgs.add("sonic"); // Sonic Screwdriver
+        firstArgs.add("blank"); // Blank Storage Disk
+        firstArgs.add("save-disk"); // Blank Save Storage Disk
+        firstArgs.add("preset-disk"); // Blank Preset Storage Disk
+        firstArgs.add("biome-disk"); // Blank Biome Storage Disk
+        firstArgs.add("player-disk"); // Blank Player Disk
     }
 
     @Override
@@ -77,38 +81,62 @@ public class TARDISRecipeCommands implements CommandExecutor {
                 return false;
             }
             if (!firstArgs.contains(args[0].toLowerCase(Locale.ENGLISH))) {
-                sender.sendMessage(plugin.pluginName + "That is not a valid recipe name! Try one of: remote|locator|l-circuit|m-circuit|s-circuit|sonic");
-                return false;
+                sender.sendMessage(plugin.pluginName + "That is not a valid recipe name! Try one of: remote|locator|l-circuit|m-circuit|s-circuit|c-circuit|sonic|blank|save-disk|preset-disk|biome-disk|player-disk");
+                return true;
             }
             if (args[0].equalsIgnoreCase("remote")) {
-                showRecipe(player, "Stattenheim Remote");
+                showShapedRecipe(player, "Stattenheim Remote");
                 return true;
             }
             if (args[0].equalsIgnoreCase("locator")) {
-                showRecipe(player, "TARDIS Locator");
+                showShapedRecipe(player, "TARDIS Locator");
                 return true;
             }
             if (args[0].equalsIgnoreCase("l-circuit")) {
-                this.showRecipe(player, "TARDIS Locator Circuit");
+                this.showShapedRecipe(player, "TARDIS Locator Circuit");
                 return true;
             }
             if (args[0].equalsIgnoreCase("m-circuit")) {
-                this.showRecipe(player, "TARDIS Materialisation Circuit");
+                this.showShapedRecipe(player, "TARDIS Materialisation Circuit");
                 return true;
             }
             if (args[0].equalsIgnoreCase("s-circuit")) {
-                showRecipe(player, "TARDIS Stattenheim Circuit");
+                showShapedRecipe(player, "TARDIS Stattenheim Circuit");
+                return true;
+            }
+            if (args[0].equalsIgnoreCase("c-circuit")) {
+                showShapedRecipe(player, "TARDIS Chameleon Circuit");
                 return true;
             }
             if (args[0].equalsIgnoreCase("sonic")) {
-                this.showRecipe(player, "Sonic Screwdriver");
+                this.showShapedRecipe(player, "Sonic Screwdriver");
+                return true;
+            }
+            if (args[0].equalsIgnoreCase("blank")) {
+                this.showShapedRecipe(player, "Blank Storage Disk");
+                return true;
+            }
+            if (args[0].equalsIgnoreCase("save-disk")) {
+                this.showShapelessRecipe(player, "Save Storage Disk");
+                return true;
+            }
+            if (args[0].equalsIgnoreCase("preset-disk")) {
+                this.showShapelessRecipe(player, "Blank Preset Storage Disk");
+                return true;
+            }
+            if (args[0].equalsIgnoreCase("biome-disk")) {
+                this.showShapelessRecipe(player, "Blank Biome Storage Disk");
+                return true;
+            }
+            if (args[0].equalsIgnoreCase("player-disk")) {
+                this.showShapelessRecipe(player, "Player Storage Disk");
                 return true;
             }
         }
         return false;
     }
 
-    public void showRecipe(Player p, String str) {
+    public void showShapedRecipe(Player p, String str) {
         ShapedRecipe recipe = plugin.figura.getShapedRecipes().get(str);
         p.closeInventory();
         plugin.trackRecipeView.add(p.getName());
@@ -124,6 +152,16 @@ public class TARDISRecipeCommands implements CommandExecutor {
                 item.setAmount(0);
                 view.getTopInventory().setItem(j * 3 + k + 1, item);
             }
+        }
+    }
+
+    public void showShapelessRecipe(Player player, String str) {
+        ShapelessRecipe recipe = plugin.incomposita.getShapelessRecipes().get(str);
+        final List<ItemStack> ingredients = recipe.getIngredientList();
+        plugin.trackRecipeView.add(player.getName());
+        final InventoryView view = player.openWorkbench(null, true);
+        for (int i = 0; i < ingredients.size(); i++) {
+            view.setItem(i + 1, ingredients.get(i));
         }
     }
 }
