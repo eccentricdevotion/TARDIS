@@ -211,7 +211,7 @@ public class TARDISTimeTravel {
                             wheres.put("player", p.getName());
                             ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, wheres);
                             if (rsp.resultSet()) {
-                                if (rsp.isSubmarine_on() && currentBlock.getBiome().equals(Biome.OCEAN)) {
+                                if (rsp.isSubmarine_on() && plugin.utils.isOceanBiome(currentBlock.getBiome())) {
                                     // get submarine location
                                     p.sendMessage(plugin.pluginName + "Searching for underwater location...");
                                     Location underwater = submarine(currentBlock, d);
@@ -571,7 +571,7 @@ public class TARDISTimeTravel {
         Block block = b;
         while (true) {
             block = block.getRelative(BlockFace.DOWN);
-            if (!block.getType().equals(Material.STATIONARY_WATER) && !block.getType().equals(Material.WATER)) {
+            if (!block.getType().equals(Material.STATIONARY_WATER) && !block.getType().equals(Material.WATER) && !block.getType().equals(Material.ICE)) {
                 break;
             }
         }

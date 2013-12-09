@@ -475,7 +475,7 @@ public class TARDISTerminalListener implements Listener {
                             // check submarine
                             ItemMeta subim = inv.getItem(44).getItemMeta();
                             loc.setY(starty);
-                            if (subim.hasLore() && subim.getLore().get(0).equals("true") && loc.getBlock().getBiome().equals(Biome.OCEAN)) {
+                            if (subim.hasLore() && subim.getLore().get(0).equals("true") && plugin.utils.isOceanBiome(loc.getBlock().getBiome())) {
                                 Location subloc = tt.submarine(loc.getBlock(), d);
                                 if (subloc != null) {
                                     safe = 0;

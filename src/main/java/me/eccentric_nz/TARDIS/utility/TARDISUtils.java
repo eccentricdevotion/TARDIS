@@ -30,6 +30,7 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.WorldType;
+import org.bukkit.block.Biome;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.generator.ChunkGenerator;
@@ -441,5 +442,9 @@ public class TARDISUtils {
                 break;
         }
         return type;
+    }
+
+    public boolean isOceanBiome(Biome b) {
+        return (b.equals(Biome.OCEAN) || b.equals(Biome.DEEP_OCEAN) || b.equals(Biome.FROZEN_OCEAN));
     }
 }
