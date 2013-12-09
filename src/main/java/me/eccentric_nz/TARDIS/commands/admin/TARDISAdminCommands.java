@@ -222,8 +222,8 @@ public class TARDISAdminCommands implements CommandExecutor {
                     return new TARDISDefaultWorldNameCommand(plugin).setName(sender, args);
                 }
                 if (first.equals("difficulty")) {
-                    if (!args[1].equalsIgnoreCase("easy") && !args[1].equalsIgnoreCase("normal") && !args[1].equalsIgnoreCase("hard")) {
-                        sender.sendMessage(plugin.pluginName + ChatColor.RED + "Difficulty must be easy, normal or hard!");
+                    if (!args[1].equalsIgnoreCase("easy") && !args[1].equalsIgnoreCase("hard")) {
+                        sender.sendMessage(plugin.pluginName + ChatColor.RED + "Difficulty must be easy or hard!");
                         return true;
                     }
                     plugin.getConfig().set("difficulty", args[1].toLowerCase(Locale.ENGLISH));

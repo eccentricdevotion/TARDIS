@@ -230,7 +230,7 @@ public class TARDISConfiguration {
         // string
         strOptions.put("custom_schematic_seed", "OBSIDIAN");
         strOptions.put("default_world_name", "myridiculouslylongworldnameiscalledcuthbert");
-        strOptions.put("difficulty", "normal");
+        strOptions.put("difficulty", "hard");
         strOptions.put("gamemode", "survival");
         strOptions.put("key", "STICK");
         strOptions.put("stattenheim", "FLINT");
@@ -297,6 +297,9 @@ public class TARDISConfiguration {
         }
         if (config.contains("rooms.FIRST")) {
             plugin.getConfig().set("rooms.FIRST", null);
+        }
+        if (config.contains("difficulty") && config.getString("difficulty").equals("normal")) {
+            plugin.getConfig().set("difficulty", "hard");
         }
         if (i > 0) {
             plugin.console.sendMessage(plugin.pluginName + "Added " + ChatColor.AQUA + i + ChatColor.RESET + " new items to config");

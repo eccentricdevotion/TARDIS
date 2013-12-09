@@ -30,7 +30,7 @@ import org.bukkit.util.StringUtil;
 public class TARDISAdminTabComplete implements TabCompleter {
 
     private final TARDIS plugin;
-    private final ImmutableList<String> DIFFICULTY_SUBS = ImmutableList.of("easy", "normal", "hard");
+    private final ImmutableList<String> DIFFICULTY_SUBS = ImmutableList.of("easy", "hard");
     private final ImmutableList<String> BOOL_SUBS = ImmutableList.of("true", "false");
     private final ImmutableList<String> DB_SUBS = ImmutableList.of("mysql", "sqlite");
 
