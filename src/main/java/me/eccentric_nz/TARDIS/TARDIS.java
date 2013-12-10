@@ -315,7 +315,6 @@ public class TARDIS extends JavaPlugin {
             loadFiles();
             registerListeners();
             loadCommands();
-            //loadMetrics();
             startSound();
             loadWorldGuard();
             loadTowny();

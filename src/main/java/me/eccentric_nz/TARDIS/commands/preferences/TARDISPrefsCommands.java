@@ -52,6 +52,7 @@ public class TARDISPrefsCommands implements CommandExecutor {
         this.plugin = plugin;
         firstArgs.add("auto");
         firstArgs.add("beacon");
+        firstArgs.add("dnd");
         firstArgs.add("eps");
         firstArgs.add("eps_message");
         firstArgs.add("floor");

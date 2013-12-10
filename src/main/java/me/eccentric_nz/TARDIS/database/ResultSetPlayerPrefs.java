@@ -39,7 +39,7 @@ public class ResultSetPlayerPrefs {
     private int pp_id;
     private String player;
     private String key;
-    private boolean sfx_on;
+    private boolean SFX_on;
     private boolean platform_on;
     private boolean quotes_on;
     private boolean auto_on;
@@ -55,6 +55,7 @@ public class ResultSetPlayerPrefs {
     private boolean texture_on;
     private String texture_in;
     private String texture_out;
+    private boolean DND;
 
     /**
      * Creates a class instance that can be used to retrieve an SQL ResultSet
@@ -108,7 +109,7 @@ public class ResultSetPlayerPrefs {
                 this.pp_id = rs.getInt("pp_id");
                 this.player = rs.getString("player");
                 this.key = (plugin.getConfig().getString("database").equals("sqlite")) ? rs.getString("key") : rs.getString("key_item");
-                this.sfx_on = rs.getBoolean("sfx_on");
+                this.SFX_on = rs.getBoolean("sfx_on");
                 this.platform_on = rs.getBoolean("platform_on");
                 this.quotes_on = rs.getBoolean("quotes_on");
                 this.auto_on = rs.getBoolean("auto_on");
@@ -134,6 +135,7 @@ public class ResultSetPlayerPrefs {
                 this.texture_in = rs.getString("texture_in");
                 String tp_out = rs.getString("texture_out");
                 this.texture_out = (tp_out.equals("default")) ? plugin.tp : tp_out;
+                this.DND = rs.getBoolean("dnd_on");
             } else {
                 return false;
             }
@@ -168,7 +170,7 @@ public class ResultSetPlayerPrefs {
     }
 
     public boolean isSFX_on() {
-        return sfx_on;
+        return SFX_on;
     }
 
     public boolean isPlatform_on() {
@@ -229,5 +231,9 @@ public class ResultSetPlayerPrefs {
 
     public boolean isSubmarine_on() {
         return submarine_on;
+    }
+
+    public boolean isDND() {
+        return DND;
     }
 }

@@ -32,6 +32,7 @@ import me.eccentric_nz.TARDIS.database.ResultSetBackLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetDestinations;
 import me.eccentric_nz.TARDIS.database.ResultSetHomeLocation;
+import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.travel.TARDISPluginRespect;
@@ -203,6 +204,14 @@ public class TARDISTravelCommands implements CommandExecutor {
                                 ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
                                 if (!rsc.resultSet()) {
                                     player.sendMessage(plugin.pluginName + "Could not get the current TARDIS location!");
+                                    return true;
+                                }
+                                // check the to player's DND status
+                                HashMap<String, Object> wherednd = new HashMap<String, Object>();
+                                wherednd.put("player", args[0].toLowerCase());
+                                ResultSetPlayerPrefs rspp = new ResultSetPlayerPrefs(plugin, wherednd);
+                                if (rspp.resultSet() && rspp.isDND()) {
+                                    player.sendMessage(plugin.pluginName + args[0] + " does not want to be disturbed right now! Try again later.");
                                     return true;
                                 }
                                 TARDISRescue to_player = new TARDISRescue(plugin);
