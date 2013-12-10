@@ -154,16 +154,16 @@ public class TARDISDoorListener implements Listener {
                             int doortype = rsd.getDoor_type();
                             int end_doortype;
                             switch (doortype) {
-                                case 0:
+                                case 0: // outside preset door
                                     end_doortype = 1;
                                     break;
-                                case 2:
+                                case 2: // outside backdoor
                                     end_doortype = 3;
                                     break;
-                                case 3:
+                                case 3: // inside backdoor
                                     end_doortype = 2;
                                     break;
-                                default:
+                                default: // 1, 4 TARDIS inside door, secondary inside door
                                     end_doortype = 0;
                                     break;
                             }
@@ -458,7 +458,7 @@ public class TARDISDoorListener implements Listener {
                                             TARDISConstants.COMPASS ibdd = ibdl.getD();
                                             TARDISConstants.COMPASS ipd = TARDISConstants.COMPASS.valueOf(plugin.utils.getPlayersDirection(player, true));
                                             if (!ibdd.equals(ipd)) {
-                                                yaw += adjustYaw(ipd, ibdd);
+                                                yaw += adjustYaw(ipd, ibdd) + 180F;
                                             }
                                             ibd_loc.setYaw(yaw);
                                             ibd_loc.setPitch(pitch);
