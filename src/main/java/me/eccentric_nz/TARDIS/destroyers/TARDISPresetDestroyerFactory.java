@@ -40,11 +40,11 @@ import org.bukkit.entity.Player;
  *
  * @author eccentric_nz
  */
-public class TARDISDestroyerPreset {
+public class TARDISPresetDestroyerFactory {
 
     private final TARDIS plugin;
 
-    public TARDISDestroyerPreset(TARDIS plugin) {
+    public TARDISPresetDestroyerFactory(TARDIS plugin) {
         this.plugin = plugin;
     }
 

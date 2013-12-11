@@ -45,7 +45,7 @@ import org.bukkit.entity.Player;
  *
  * @author eccentric_nz
  */
-public class TARDISPresetRunnable implements Runnable {
+public class TARDISMaterialisationPreset implements Runnable {
 
     private final TARDIS plugin;
     private final COMPASS d;
@@ -88,7 +88,7 @@ public class TARDISPresetRunnable implements Runnable {
      * @param cham_id the chameleon block id for the police box
      * @param cham_data the chameleon block data for the police box
      */
-    public TARDISPresetRunnable(TARDIS plugin, Location location, TARDISConstants.PRESET preset, int tid, COMPASS d, Player player, boolean mal, int lamp, boolean sub, int cham_id, byte cham_data) {
+    public TARDISMaterialisationPreset(TARDIS plugin, Location location, TARDISConstants.PRESET preset, int tid, COMPASS d, Player player, boolean mal, int lamp, boolean sub, int cham_id, byte cham_data) {
         this.plugin = plugin;
         this.d = d;
         this.loops = 18;
@@ -147,6 +147,7 @@ public class TARDISPresetRunnable implements Runnable {
                         datas = column.getData();
                         break;
                 }
+                QueryFactory qf = new QueryFactory(plugin);
                 // rescue player?
                 if (i == 10 && plugin.trackRescue.containsKey(tid)) {
                     String name = plugin.trackRescue.get(tid);
@@ -159,7 +160,6 @@ public class TARDISPresetRunnable implements Runnable {
                         HashMap<String, Object> set = new HashMap<String, Object>();
                         set.put("tardis_id", tid);
                         set.put("player", name);
-                        QueryFactory qf = new QueryFactory(plugin);
                         qf.doInsert("travellers", set);
                     }
                     plugin.trackRescue.remove(tid);
@@ -170,7 +170,6 @@ public class TARDISPresetRunnable implements Runnable {
                     HashMap<String, Object> where = new HashMap<String, Object>();
                     where.put("tardis_id", tid);
                     plugin.utils.playTARDISSound(location, player, "tardis_land");
-                    QueryFactory qf = new QueryFactory(plugin);
                     // get direction player is facing from yaw place block under door if block is in list of blocks an iron door cannot go on
                     switch (d) {
                         case SOUTH:
@@ -259,41 +258,56 @@ public class TARDISPresetRunnable implements Runnable {
                                 case 50: // lamps, glowstone and torches
                                 case 89:
                                 case 124:
-                                    int light = (preset.equals(TARDISConstants.PRESET.NEW) || preset.equals(TARDISConstants.PRESET.OLD)) ? lamp : colids[yy];
-                                    plugin.utils.setBlockAndRemember(world, xx, (y + yy), zz, light, coldatas[yy], tid);
+                                    int light;
+                                    byte ld;
+                                    if (sub && colids[yy] == 50) {
+                                        light = 89;
+                                        ld = 0;
+                                    } else {
+                                        light = (preset.equals(TARDISConstants.PRESET.NEW) || preset.equals(TARDISConstants.PRESET.OLD)) ? lamp : colids[yy];
+                                        ld = coldatas[yy];
+                                    }
+                                    plugin.utils.setBlockAndRemember(world, xx, (y + yy), zz, light, ld, tid);
                                     break;
                                 case 64: // wood, iron & trap doors, rails
                                 case 66:
                                 case 71:
                                 case 96:
-                                    if ((coldatas[yy] < 8 || colids[yy] == 96) && colids[yy] != 66) {
-                                        // remember the door location
-                                        String doorloc = world.getName() + ":" + xx + ":" + (y + yy) + ":" + zz;
-                                        // should insert the door when tardis is first made, and then update location there after!
-                                        HashMap<String, Object> whered = new HashMap<String, Object>();
-                                        whered.put("door_type", 0);
-                                        whered.put("tardis_id", tid);
-                                        ResultSetDoors rsd = new ResultSetDoors(plugin, whered, false);
-                                        HashMap<String, Object> setd = new HashMap<String, Object>();
-                                        setd.put("door_location", doorloc);
-                                        if (rsd.resultSet()) {
-                                            HashMap<String, Object> whereid = new HashMap<String, Object>();
-                                            whereid.put("door_id", rsd.getDoor_id());
-                                            qf.doUpdate("doors", setd, whereid);
-                                        } else {
-                                            setd.put("tardis_id", tid);
-                                            setd.put("door_type", 0);
-                                            setd.put("door_direction", d.toString());
-                                            qf.doInsert("doors", setd);
+                                    if (coldatas[yy] < 8 || colids[yy] == 96) {
+                                        if (colids[yy] != 66) {
+                                            // remember the door location
+                                            String doorloc = world.getName() + ":" + xx + ":" + (y + yy) + ":" + zz;
+                                            // should insert the door when tardis is first made, and then update location there after!
+                                            HashMap<String, Object> whered = new HashMap<String, Object>();
+                                            whered.put("door_type", 0);
+                                            whered.put("tardis_id", tid);
+                                            ResultSetDoors rsd = new ResultSetDoors(plugin, whered, false);
+                                            HashMap<String, Object> setd = new HashMap<String, Object>();
+                                            setd.put("door_location", doorloc);
+                                            if (rsd.resultSet()) {
+                                                HashMap<String, Object> whereid = new HashMap<String, Object>();
+                                                whereid.put("door_id", rsd.getDoor_id());
+                                                qf.doUpdate("doors", setd, whereid);
+                                            } else {
+                                                setd.put("tardis_id", tid);
+                                                setd.put("door_type", 0);
+                                                setd.put("door_direction", d.toString());
+                                                qf.doInsert("doors", setd);
+                                            }
                                         }
                                     }
-                                    if (yy == 0) {
-                                        if (sub) {
-                                            plugin.utils.setBlockAndRemember(world, xx, (y - 1), zz, 19, (byte) 0, tid);
-                                            sponge = world.getBlockAt(xx, (y - 1), zz);
-                                        } else if (!plugin.builderP.no_block_under_door.contains(preset)) {
-                                            plugin.utils.setUnderDoorBlock(world, xx, (y - 1), zz, platform_id, platform_data, tid);
-                                        }
+                                    if (sub) {
+                                        int sy = y - 1;
+                                        plugin.utils.setBlockAndRemember(world, xx, sy, zz, 19, (byte) 0, tid);
+                                        sponge = world.getBlockAt(xx, sy, zz);
+                                        HashMap<String, Object> sets = new HashMap<String, Object>();
+                                        sets.put("replaced", world.getName() + ":" + xx + ":" + sy + ":" + zz);
+                                        HashMap<String, Object> wheres = new HashMap<String, Object>();
+                                        wheres.put("tardis_id", tid);
+                                        plugin.debug("Updating replaced");
+                                        qf.doUpdate("tardis", sets, wheres);
+                                    } else if (yy == 0 && !plugin.builderP.no_block_under_door.contains(preset)) {
+                                        plugin.utils.setUnderDoorBlock(world, xx, (y - 1), zz, platform_id, platform_data, tid);
                                     }
                                     plugin.utils.setBlockAndRemember(world, xx, (y + yy), zz, colids[yy], coldatas[yy], tid);
                                     break;
@@ -471,10 +485,14 @@ public class TARDISPresetRunnable implements Runnable {
                                     }
                                     break;
                                 case 144:
-                                    plugin.utils.setBlockAndRemember(world, xx, (y + yy), zz, colids[yy], coldatas[yy], tid);
-                                    Skull skull = (Skull) world.getBlockAt(xx, (y + yy), zz).getState();
-                                    skull.setRotation(plugin.builderP.getSkullDirection(d));
-                                    skull.update();
+                                    if (sub) {
+                                        plugin.utils.setBlock(world, xx, (y + yy), zz, 89, (byte) 0);
+                                    } else {
+                                        plugin.utils.setBlockAndRemember(world, xx, (y + yy), zz, colids[yy], coldatas[yy], tid);
+                                        Skull skull = (Skull) world.getBlockAt(xx, (y + yy), zz).getState();
+                                        skull.setRotation(plugin.builderP.getSkullDirection(d));
+                                        skull.update();
+                                    }
                                     break;
                                 case 152:
                                     if (lamp != 123 && (preset.equals(TARDISConstants.PRESET.NEW) || preset.equals(TARDISConstants.PRESET.OLD))) {
@@ -565,8 +583,16 @@ public class TARDISPresetRunnable implements Runnable {
                                 case 50: // lamps, glowstone and torches
                                 case 89:
                                 case 124:
-                                    int light = (preset.equals(TARDISConstants.PRESET.NEW) || preset.equals(TARDISConstants.PRESET.OLD)) ? lamp : colids[yy];
-                                    plugin.utils.setBlock(world, xx, (y + yy), zz, light, coldatas[yy]);
+                                    int light;
+                                    byte ld;
+                                    if (sub && colids[yy] == 50) {
+                                        light = 89;
+                                        ld = 0;
+                                    } else {
+                                        light = (preset.equals(TARDISConstants.PRESET.NEW) || preset.equals(TARDISConstants.PRESET.OLD)) ? lamp : colids[yy];
+                                        ld = coldatas[yy];
+                                    }
+                                    plugin.utils.setBlock(world, xx, (y + yy), zz, light, ld);
                                     break;
                                 case 87:
                                     plugin.utils.setBlock(world, xx, (y + yy), zz, colids[yy], coldatas[yy]);
@@ -591,10 +617,14 @@ public class TARDISPresetRunnable implements Runnable {
                                     }
                                     break;
                                 case 144:
-                                    plugin.utils.setBlock(world, xx, (y + yy), zz, colids[yy], coldatas[yy]);
-                                    Skull skull = (Skull) world.getBlockAt(xx, (y + yy), zz).getState();
-                                    skull.setRotation(plugin.builderP.getSkullDirection(d));
-                                    skull.update();
+                                    if (sub) {
+                                        plugin.utils.setBlock(world, xx, (y + yy), zz, 89, (byte) 0);
+                                    } else {
+                                        plugin.utils.setBlock(world, xx, (y + yy), zz, colids[yy], coldatas[yy]);
+                                        Skull skull = (Skull) world.getBlockAt(xx, (y + yy), zz).getState();
+                                        skull.setRotation(plugin.builderP.getSkullDirection(d));
+                                        skull.update();
+                                    }
                                     break;
                                 case 152:
                                     if (lamp != 123 && (preset.equals(TARDISConstants.PRESET.NEW) || preset.equals(TARDISConstants.PRESET.OLD))) {

@@ -140,27 +140,18 @@ public class TARDISDeinstaPreset {
             if (!replacedData.isEmpty()) {
                 String[] parts = replacedData.split(":");
                 World rw = plugin.getServer().getWorld(parts[0]);
-                int rx, ry, rz, rID;
-                byte rb = 0;
+                int rx, ry, rz;
                 rx = plugin.utils.parseNum(parts[1]);
                 ry = plugin.utils.parseNum(parts[2]);
                 rz = plugin.utils.parseNum(parts[3]);
-                rID = plugin.utils.parseNum(parts[4]);
-                try {
-                    rb = Byte.valueOf(parts[5]);
-                } catch (NumberFormatException nfe) {
-                    plugin.console.sendMessage(plugin.pluginName + "Could not convert to number!");
-                }
                 b = rw.getBlockAt(rx, ry, rz);
-                b.setTypeId(rID);
-                b.setData(rb, true);
                 HashMap<String, Object> wherepp = new HashMap<String, Object>();
                 wherepp.put("player", owner);
                 ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, wherepp);
                 if (rsp.resultSet()) {
                     boolean sub = (rsp.isSubmarine_on() && plugin.trackSubmarine.contains(Integer.valueOf(id)));
                     if (sub && plugin.worldGuardOnServer) {
-                        plugin.wgutils.sponge(b, true);
+                        plugin.wgutils.sponge(b, false);
                     }
                 }
             }
