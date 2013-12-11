@@ -510,7 +510,7 @@ public class TARDISDoorListener implements Listener {
                                             obd_loc.setYaw(yaw);
                                             obd_loc.setPitch(pitch);
                                             final Location outer_loc = obd_loc;
-                                            movePlayer(player, outer_loc, false, playerWorld, userQuotes, 2);
+                                            movePlayer(player, outer_loc, true, playerWorld, userQuotes, 2);
                                             if (plugin.getConfig().getBoolean("allow_tp_switch") && userTP) {
                                                 new TARDISTexturePackChanger(plugin).changeTP(player, rsp.getTexture_out());
                                             }
