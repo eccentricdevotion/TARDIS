@@ -26,7 +26,7 @@ import java.util.Properties;
 import java.util.Set;
 import me.eccentric_nz.TARDIS.ARS.TARDISARSListener;
 import me.eccentric_nz.TARDIS.builders.TARDISBuilderInner;
-import me.eccentric_nz.TARDIS.builders.TARDISBuilderPreset;
+import me.eccentric_nz.TARDIS.builders.TARDISPresetBuilderFactory;
 import me.eccentric_nz.TARDIS.builders.TARDISSpace;
 import me.eccentric_nz.TARDIS.chameleon.TARDISChameleonListener;
 import me.eccentric_nz.TARDIS.chameleon.TARDISChameleonPreset;
@@ -50,6 +50,8 @@ import me.eccentric_nz.TARDIS.commands.TARDISTextureTabComplete;
 import me.eccentric_nz.TARDIS.commands.TARDISTravelCommands;
 import me.eccentric_nz.TARDIS.commands.TARDISTravelTabComplete;
 import me.eccentric_nz.TARDIS.commands.admin.TARDISAdminTabComplete;
+import me.eccentric_nz.TARDIS.commands.admin.TARDISGiveCommand;
+import me.eccentric_nz.TARDIS.commands.admin.TARDISGiveTabComplete;
 import me.eccentric_nz.TARDIS.commands.preferences.TARDISPrefsTabComplete;
 import me.eccentric_nz.TARDIS.commands.tardis.TARDISTabComplete;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
@@ -59,7 +61,7 @@ import me.eccentric_nz.TARDIS.database.TARDISLocationsConverter;
 import me.eccentric_nz.TARDIS.database.TARDISMySQLDatabase;
 import me.eccentric_nz.TARDIS.database.TARDISSQLiteDatabase;
 import me.eccentric_nz.TARDIS.destroyers.TARDISDestroyerInner;
-import me.eccentric_nz.TARDIS.destroyers.TARDISDestroyerPreset;
+import me.eccentric_nz.TARDIS.destroyers.TARDISPresetDestroyerFactory;
 import me.eccentric_nz.TARDIS.files.TARDISBlockLoader;
 import me.eccentric_nz.TARDIS.files.TARDISConfiguration;
 import me.eccentric_nz.TARDIS.files.TARDISMakeRoomCSV;
@@ -210,9 +212,9 @@ public class TARDIS extends JavaPlugin {
     public TARDISCommands tardisCommand;
     public TARDISAdminCommands tardisAdminCommand;
     public TARDISBuilderInner builderI = new TARDISBuilderInner(this);
-    public TARDISBuilderPreset builderP = new TARDISBuilderPreset(this);
+    public TARDISPresetBuilderFactory builderP = new TARDISPresetBuilderFactory(this);
     public TARDISDestroyerInner destroyerI = new TARDISDestroyerInner(this);
-    public TARDISDestroyerPreset destroyerP = new TARDISDestroyerPreset(this);
+    public TARDISPresetDestroyerFactory destroyerP = new TARDISPresetDestroyerFactory(this);
     public TARDISStainedGlassLookup lookup = new TARDISStainedGlassLookup();
     public TARDISArea ta = new TARDISArea(this);
     public TARDISWorldGuardUtils wgutils;
@@ -506,15 +508,17 @@ public class TARDIS extends JavaPlugin {
     private void loadCommands() {
         tardisCommand = new TARDISCommands(this);
         getCommand("tardis").setExecutor(tardisCommand);
-        getCommand("tardis").setTabCompleter(new TARDISTabComplete(plugin));
+        getCommand("tardis").setTabCompleter(new TARDISTabComplete(this));
         tardisAdminCommand = new TARDISAdminCommands(this);
         getCommand("tardisadmin").setExecutor(tardisAdminCommand);
-        getCommand("tardisadmin").setTabCompleter(new TARDISAdminTabComplete(plugin));
+        getCommand("tardisadmin").setTabCompleter(new TARDISAdminTabComplete(this));
         getCommand("tardisarea").setExecutor(new TARDISAreaCommands(this));
         getCommand("tardisarea").setTabCompleter(new TARDISAreaTabComplete());
         getCommand("tardisbind").setExecutor(new TARDISBindCommands(this));
         getCommand("tardisbind").setTabCompleter(new TARDISBindTabComplete());
         getCommand("tardisbook").setExecutor(new TARDISBookCommands(this));
+        getCommand("tardisgive").setExecutor(new TARDISGiveCommand(this));
+        getCommand("tardisgive").setTabCompleter(new TARDISGiveTabComplete());
         getCommand("tardisgravity").setExecutor(new TARDISGravityCommands(this));
         getCommand("tardisgravity").setTabCompleter(new TARDISGravityTabComplete());
         getCommand("tardisprefs").setExecutor(new TARDISPrefsCommands(this));
@@ -525,7 +529,7 @@ public class TARDIS extends JavaPlugin {
         getCommand("tardistexture").setExecutor(new TARDISTextureCommands(this));
         getCommand("tardistexture").setTabCompleter(new TARDISTextureTabComplete());
         getCommand("tardistravel").setExecutor(new TARDISTravelCommands(this));
-        getCommand("tardistravel").setTabCompleter(new TARDISTravelTabComplete(plugin));
+        getCommand("tardistravel").setTabCompleter(new TARDISTravelTabComplete(this));
     }
 
     /**
@@ -560,8 +564,7 @@ public class TARDIS extends JavaPlugin {
 
     /**
      * Starts a repeating tasks that plays TARDIS sound effects to players while
-     * they are inside the TARDIS. Requires the Spout plugin to be installed on
-     * the server.
+     * they are inside the TARDIS.
      */
     private void startSound() {
         this.getServer().getScheduler().scheduleSyncRepeatingTask(this, new Runnable() {
@@ -776,7 +779,7 @@ public class TARDIS extends JavaPlugin {
             String map3 = "map_1965.dat";
             console.sendMessage(pluginName + ChatColor.RED + "Could not find TARDIS map files, some recipes will not work!");
             console.sendMessage(pluginName + "Copying map files to the TARDIS folder...");
-            TARDISMakeTardisCSV copier = new TARDISMakeTardisCSV(plugin);
+            TARDISMakeTardisCSV copier = new TARDISMakeTardisCSV(this);
             copier.copy(getDataFolder() + File.separator + map, getResource(map));
             copier.copy(getDataFolder() + File.separator + map2, getResource(map2));
             copier.copy(getDataFolder() + File.separator + map3, getResource(map3));

@@ -25,7 +25,7 @@ import org.bukkit.command.TabCompleter;
 import org.bukkit.util.StringUtil;
 
 /**
- * TabCompleter for /tardistravel
+ * TabCompleter for /tardisadmin
  */
 public class TARDISAdminTabComplete implements TabCompleter {
 

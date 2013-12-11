@@ -332,6 +332,12 @@ commands:
     usage: /<command> [config option] [value]
     permission: tardis.admin
     permission-message: You don't have the permission <permission> to use this command
+  tardisgive:
+    aliases: [tgive]
+    description: Give TARDIS items to a player.
+    usage: /<command> [player] [item] [amount]
+    permission: tardis.admin
+    permission-message: You don't have the permission <permission> to use this command
   tardisroom:
     aliases: troom
     description: Set TARDIS room configuration options, and add new rooms.
