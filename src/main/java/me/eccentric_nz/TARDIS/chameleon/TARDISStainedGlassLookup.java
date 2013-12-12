@@ -60,7 +60,7 @@ public class TARDISStainedGlassLookup {
         stain.put(44, (byte) 8);
         stain.put(45, (byte) 14);
         stain.put(46, (byte) 14);
-        stain.put(47, (byte) 2);
+        stain.put(47, (byte) 14);
         stain.put(48, (byte) 8);
         stain.put(49, (byte) 15);
         stain.put(52, (byte) 0);
