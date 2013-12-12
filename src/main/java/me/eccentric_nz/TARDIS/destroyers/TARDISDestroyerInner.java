@@ -151,7 +151,7 @@ public class TARDISDestroyerInner {
             }
         } else {
             TARDISInteriorPostioning tips = new TARDISInteriorPostioning(plugin);
-            TARDISTIPSData coords = tips.getTIPSData(slot, width);
+            TARDISTIPSData coords = tips.getTIPSData(slot);
             tips.reclaimChunks(w, coords);
         }
         // remove blocks saved to blocks table (iron/gold/diamond/emerald)

@@ -71,11 +71,11 @@ public class TARDISBuilderInner {
      * or 35 (if TARDIS was made via the creation stack), this material
      * determines the makeup of the TARDIS floors.
      * @param floor_data the data bit associated with the floor_id parameter.
-     * @param build a number determining where this TARDIS will be built
-     * -------- 0:own world, 1:default world, 2:underground --------
+     * @param tips a boolean determining where this TARDIS will be built
+     * -------- false:own world, underground - true:default world--------
      */
     @SuppressWarnings("deprecation")
-    public void buildInner(TARDISConstants.SCHEMATIC schm, World world, int dbID, Player p, int middle_id, byte middle_data, int floor_id, byte floor_data, int build) {
+    public void buildInner(TARDISConstants.SCHEMATIC schm, World world, int dbID, Player p, int middle_id, byte middle_data, int floor_id, byte floor_data, boolean tips) {
         String[][][] s;
         short[] d;
         int level, row, col, id, x, z, startx, startz, resetx, resetz, j = 2;
@@ -158,35 +158,27 @@ public class TARDISBuilderInner {
         HashMap<String, Object> set = new HashMap<String, Object>();
         // calculate startx, starty, startz
         TARDISTIPSData pos = null;
-        switch (build) {
-            case 0: // own world
-                int neghalf = 0 - w / 2;
-                startx = neghalf;
-                resetx = neghalf;
-                startz = neghalf;
-                resetz = neghalf;
-                break;
-            case 1: // default world - use TIPS
-                TARDISInteriorPostioning tips = new TARDISInteriorPostioning(plugin);
-                int slot = tips.getFreeSlot();
-                // save the slot
-                set.put("tips", slot);
-                pos = tips.getTIPSData(slot, w);
-                startx = pos.getCentreX();
-                resetx = pos.getCentreX();
-                startz = pos.getCentreZ();
-                resetz = pos.getCentreZ();
-                // get the correct chunk for ARS
-                Chunk c = world.getChunkAt(new Location(world, startx, starty, startz));
-                String chun = world.getName() + ":" + c.getX() + ":" + c.getZ();
-                set.put("chunk", chun);
-                break;
-            default: // underground
-                int gsl[] = plugin.utils.getStartLocation(dbID);
-                startx = gsl[0];
-                resetx = gsl[1];
-                startz = gsl[2];
-                resetz = gsl[3];
+        if (tips) { // default world - use TIPS
+            TARDISInteriorPostioning tintpos = new TARDISInteriorPostioning(plugin);
+            int slot = tintpos.getFreeSlot();
+            // save the slot
+            set.put("tips", slot);
+            pos = tintpos.getTIPSData(slot);
+            startx = pos.getCentreX();
+            resetx = pos.getCentreX();
+            startz = pos.getCentreZ();
+            plugin.debug("startx: " + startx + ", startz: " + startz);
+            resetz = pos.getCentreZ();
+            // get the correct chunk for ARS
+            Chunk c = world.getChunkAt(new Location(world, startx, starty, startz));
+            String chun = world.getName() + ":" + c.getX() + ":" + c.getZ();
+            set.put("chunk", chun);
+        } else {
+            int gsl[] = plugin.utils.getStartLocation(dbID);
+            startx = gsl[0];
+            resetx = gsl[1];
+            startz = gsl[2];
+            resetz = gsl[3];
         }
         boolean own_world = plugin.getConfig().getBoolean("create_worlds");
         Location wg1 = new Location(world, startx, starty, startz);
@@ -684,14 +676,12 @@ public class TARDISBuilderInner {
         }
         lampblocks.clear();
         if (plugin.worldGuardOnServer && plugin.getConfig().getBoolean("use_worldguard")) {
-            switch (build) {
-                case 1:
-                    if (pos != null) {
-                        plugin.wgutils.addWGProtection(p, pos, world);
-                    }
-                    break;
-                default:
-                    plugin.wgutils.addWGProtection(p, wg1, wg2);
+            if (tips) {
+                if (pos != null) {
+                    plugin.wgutils.addWGProtection(p, pos, world);
+                }
+            } else {
+                plugin.wgutils.addWGProtection(p, wg1, wg2);
             }
         }
         // finished processing - update tardis table!

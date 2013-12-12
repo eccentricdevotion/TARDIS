@@ -64,18 +64,17 @@ public class TARDISInteriorPostioning {
      *
      * @param slot the slot position in the grid (a number between 0, 399
      * inclusive)
-     * @param size the size (width) of the TARDIS being created
      * @return a TIPS Data container
      */
-    public TARDISTIPSData getTIPSData(int slot, int size) {
+    public TARDISTIPSData getTIPSData(int slot) {
         TARDISTIPSData data = new TARDISTIPSData();
         int row = slot / 20;
         int col = slot % 20;
         data.setMinX(row * 1024);
-        data.setCentreX(row * 1024 + (511 - size / 2));
+        data.setCentreX(row * 1024 + 496);
         data.setMaxX(row * 1024 + 1023);
         data.setMinZ(col * 1024);
-        data.setCentreZ(col * 1024 + (511 - size / 2));
+        data.setCentreZ(col * 1024 + 496);
         data.setMaxZ(col * 1024 + 1023);
         data.setSlot(slot);
         return data;

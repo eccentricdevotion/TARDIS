@@ -145,7 +145,7 @@ public class TARDISSeedBlockProcessor {
                 int cz;
                 String cw;
                 final World chunkworld;
-                int build = 2;
+                boolean tips = false;
                 if (plugin.getConfig().getBoolean("create_worlds") && !plugin.getConfig().getBoolean("default_world")) {
                     // create a new world to store this TARDIS
                     cw = "TARDIS_WORLD_" + playerNameStr;
@@ -153,7 +153,6 @@ public class TARDISSeedBlockProcessor {
                     chunkworld = space.getTardisWorld(cw);
                     cx = 0;
                     cz = 0;
-                    build = 0;
                 } else if (plugin.getConfig().getBoolean("default_world") && plugin.getConfig().getBoolean("create_worlds_with_perms") && player.hasPermission("tardis.create_world")) {
                     // create a new world to store this TARDIS
                     cw = "TARDIS_WORLD_" + playerNameStr;
@@ -161,14 +160,13 @@ public class TARDISSeedBlockProcessor {
                     chunkworld = space.getTardisWorld(cw);
                     cx = 0;
                     cz = 0;
-                    build = 0;
                 } else {
                     Chunk chunk = l.getChunk();
                     // check config to see whether we are using a default world to store TARDISes
                     if (plugin.getConfig().getBoolean("default_world")) {
                         cw = plugin.getConfig().getString("default_world_name");
                         chunkworld = plugin.getServer().getWorld(cw);
-                        build = 1;
+                        tips = true;
                     } else {
                         chunkworld = chunk.getWorld();
                         cw = chunkworld.getName();
@@ -237,7 +235,7 @@ public class TARDISSeedBlockProcessor {
                 // turn the block stack into a TARDIS
                 // police box needs to use chameleon id/data
                 plugin.builderP.buildPreset(lastInsertId, l, TARDISConstants.COMPASS.valueOf(d), false, player, false, false);
-                plugin.builderI.buildInner(schm, chunkworld, lastInsertId, player, middle_id, middle_data, floor_id, floor_data, build);
+                plugin.builderI.buildInner(schm, chunkworld, lastInsertId, player, middle_id, middle_data, floor_id, floor_data, tips);
                 // set achievement completed
                 if (player.hasPermission("tardis.book")) {
                     HashMap<String, Object> seta = new HashMap<String, Object>();
