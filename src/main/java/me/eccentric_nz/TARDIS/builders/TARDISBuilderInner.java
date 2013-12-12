@@ -176,6 +176,10 @@ public class TARDISBuilderInner {
                 resetx = pos.getCentreX();
                 startz = pos.getCentreZ();
                 resetz = pos.getCentreZ();
+                // get the correct chunk for ARS
+                Chunk c = world.getChunkAt(new Location(world, startx, starty, startz));
+                String chun = world.getName() + ":" + c.getX() + ":" + c.getZ();
+                set.put("chunk", chun);
                 break;
             default: // underground
                 int gsl[] = plugin.utils.getStartLocation(dbID);
