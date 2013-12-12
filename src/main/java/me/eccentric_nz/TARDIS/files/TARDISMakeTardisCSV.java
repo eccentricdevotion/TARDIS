@@ -172,7 +172,7 @@ public class TARDISMakeTardisCSV {
         //new File(plugin.getDataFolder() + File.separator + "schematics" + File.separator, TARDISConstants.SCHEMATIC_CUSTOM);
         if (plugin.getConfig().getBoolean("custom_schematic")) {
             if (c_file.exists()) {
-                plugin.customSchematicCSV = createFile(TARDISConstants.SCHEMATIC_CUSTOM + ".csv");
+                plugin.customSchematicCSV = createCustomFile(TARDISConstants.SCHEMATIC_CUSTOM + ".csv");
                 String cusnstr = userbasepath + TARDISConstants.SCHEMATIC_CUSTOM;
                 //plugin.customSchematicFile = copy(cusnstr, plugin.getResource(TARDISConstants.SCHEMATIC_CUSTOM));
                 reader.readAndMakeInteriorCSV(cusnstr, TARDISConstants.SCHEMATIC.CUSTOM);
@@ -192,6 +192,25 @@ public class TARDISMakeTardisCSV {
      */
     public File createFile(String filename) {
         File file = new File(plugin.getDataFolder() + File.separator + "schematics" + File.separator, filename);
+        if (!file.exists()) {
+            try {
+                file.createNewFile();
+            } catch (IOException io) {
+                plugin.console.sendMessage(plugin.pluginName + filename + " could not be created! " + io.getMessage());
+            }
+        }
+        return file;
+    }
+
+    /**
+     * Tries to find the specified CSV file. If it doesn't exist, an empty file
+     * is created.
+     *
+     * @param filename the file to search for/create
+     * @return the File
+     */
+    public File createCustomFile(String filename) {
+        File file = new File(plugin.getDataFolder() + File.separator + "user_schematics" + File.separator, filename);
         if (!file.exists()) {
             try {
                 file.createNewFile();
