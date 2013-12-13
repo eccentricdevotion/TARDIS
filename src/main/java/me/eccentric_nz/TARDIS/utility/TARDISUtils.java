@@ -32,6 +32,7 @@ import org.bukkit.World;
 import org.bukkit.WorldType;
 import org.bukkit.block.Biome;
 import org.bukkit.block.Block;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.generator.ChunkGenerator;
 
@@ -46,9 +47,11 @@ import org.bukkit.generator.ChunkGenerator;
 public class TARDISUtils {
 
     private final TARDIS plugin;
+    private final float volume;
 
     public TARDISUtils(TARDIS plugin) {
         this.plugin = plugin;
+        this.volume = plugin.getConfig().getInt("sfx_volume") / 10.0F;
     }
 
     /**
@@ -386,7 +389,13 @@ public class TARDISUtils {
     }
 
     public void playTARDISSound(Location l, Player p, String s) {
-        p.playSound(l, s, 5.0F, 1.0F);
+        p.playSound(l, s, volume, 1.0F);
+        for (Entity e : p.getNearbyEntities(5.0D, 5.0D, 5.0D)) {
+            if (e instanceof Player) {
+                Player pp = (Player) e;
+                pp.playSound(pp.getLocation(), s, volume, 1.0F);
+            }
+        }
     }
 
     public String getWoodType(Material m, byte d) {

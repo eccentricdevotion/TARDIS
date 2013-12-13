@@ -14,6 +14,7 @@ platform: false
 chameleon: true
 all_blocks: false
 sfx: true
+sfx_volume: 10;
 give_key: false
 the_end: false
 nether: false

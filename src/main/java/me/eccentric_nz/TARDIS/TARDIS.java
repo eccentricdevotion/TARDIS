@@ -209,7 +209,7 @@ public class TARDIS extends JavaPlugin {
     public short[] tomdimensions = new short[3];
     public short[] customdimensions = new short[3];
     public HashMap<String, short[]> room_dimensions = new HashMap<String, short[]>();
-    public TARDISUtils utils = new TARDISUtils(this);
+    public TARDISUtils utils;
     public TARDISCommands tardisCommand;
     public TARDISAdminCommands tardisAdminCommand;
     public TARDISBuilderInner builderI = new TARDISBuilderInner(this);
@@ -312,6 +312,7 @@ public class TARDIS extends JavaPlugin {
             tc.checkConfig();
             checkTCG();
             checkDefaultWorld();
+            utils = new TARDISUtils(this);
             seeds = getSeeds();
             tw = new TARDISWalls();
             loadDatabase();
