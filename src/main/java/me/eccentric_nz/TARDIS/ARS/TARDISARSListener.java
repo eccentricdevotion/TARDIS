@@ -36,6 +36,7 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import me.eccentric_nz.TARDIS.JSON.JSONArray;
+import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
 import org.bukkit.Material;
 
 /**
@@ -84,7 +85,7 @@ public class TARDISARSListener implements Listener {
             event.setCancelled(true);
             final Player player = (Player) event.getWhoClicked();
             String playerNameStr = player.getName();
-            ids.put(playerNameStr, getTardisId(playerNameStr));
+            ids.put(playerNameStr, getTardisId(playerNameStr, player.isOp()));
             int slot = event.getRawSlot();
             if (slot != 10 && !hasLoadedMap.contains(playerNameStr)) {
                 player.sendMessage(plugin.pluginName + "You need to load the map first!");
@@ -731,13 +732,21 @@ public class TARDISARSListener implements Listener {
         return hasRequired;
     }
 
-    private int getTardisId(String p) {
+    private int getTardisId(String p, boolean isOP) {
         int id = 0;
         HashMap<String, Object> where = new HashMap<String, Object>();
-        where.put("owner", p);
-        ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
-        if (rs.resultSet()) {
-            id = rs.getTardis_id();
+        if (isOP) {
+            where.put("player", p);
+            ResultSetTravellers rs = new ResultSetTravellers(plugin, where, false);
+            if (rs.resultSet()) {
+                id = rs.getTardis_id();
+            }
+        } else {
+            where.put("owner", p);
+            ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
+            if (rs.resultSet()) {
+                id = rs.getTardis_id();
+            }
         }
         return id;
     }
