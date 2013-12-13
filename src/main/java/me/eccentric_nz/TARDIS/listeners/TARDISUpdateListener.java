@@ -60,7 +60,6 @@ public class TARDISUpdateListener implements Listener {
     List<Material> validBlocks = new ArrayList<Material>();
     List<Material> validSigns = new ArrayList<Material>();
     HashMap<String, Integer> controls = new HashMap<String, Integer>();
-    List<String> mustbeinworld = new ArrayList<String>();
 
     public TARDISUpdateListener(TARDIS plugin) {
         this.plugin = plugin;
@@ -78,12 +77,6 @@ public class TARDISUpdateListener implements Listener {
         controls.put("x-repeater", 3);
         controls.put("y-repeater", 5);
         controls.put("z-repeater", 4);
-        mustbeinworld.add("ars");
-        mustbeinworld.add("creeper");
-        mustbeinworld.add("farm");
-        mustbeinworld.add("rail");
-        mustbeinworld.add("stable");
-        mustbeinworld.add("village");
         validBlocks.add(Material.LEVER);
         validBlocks.add(Material.REDSTONE_COMPARATOR_OFF);
         validBlocks.add(Material.REDSTONE_COMPARATOR_ON);
@@ -183,8 +176,7 @@ public class TARDISUpdateListener implements Listener {
                 } else {
                     type = 2;
                     // check the world
-                    String wor = (plugin.getConfig().getBoolean("default_world")) ? plugin.getConfig().getString("default_world_name") : "TARDIS_";
-                    if (bw.getName().contains(wor)) {
+                    if (!inTARDISWorld(player)) {
                         player.sendMessage(plugin.pluginName + "You didn't enter the TARDIS by the regular door, aborting...");
                         return;
                     }
@@ -206,7 +198,7 @@ public class TARDISUpdateListener implements Listener {
                 }
             }
             // check they are still in the TARDIS world
-            if (mustbeinworld.contains(blockName) && !inTARDISWorld(player)) {
+            if (!blockName.equals("backdoor") && !inTARDISWorld(player)) {
                 player.sendMessage(plugin.pluginName + "You must be in a TARDIS world to update this block!");
                 return;
             }
