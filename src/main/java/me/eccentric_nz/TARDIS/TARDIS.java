@@ -771,19 +771,33 @@ public class TARDIS extends JavaPlugin {
         File container = getServer().getWorldContainer();
         String s_world = getServer().getWorlds().get(0).getName();
         String server_world = s_world + File.separator + "data" + File.separator;
-        String map = "map_1963.dat";
+        String map = "map_1966.dat";
         String root = container.getAbsolutePath() + File.separator + server_world;
         File file = new File(root, map);
         if (!file.exists()) {
+            String map1 = "map_1963.dat";
             String map2 = "map_1964.dat";
             String map3 = "map_1965.dat";
+            String map4 = "map_1967.dat";
+            String map5 = "map_1968.dat";
+            String map6 = "map_1969.dat";
+            String map7 = "map_1970.dat";
+            String map8 = "map_1971.dat";
+            String map9 = "map_1972.dat";
             console.sendMessage(pluginName + ChatColor.RED + "Could not find TARDIS map files, some recipes will not work!");
             console.sendMessage(pluginName + "Copying map files to the TARDIS folder...");
             TARDISMakeTardisCSV copier = new TARDISMakeTardisCSV(this);
             copier.copy(getDataFolder() + File.separator + map, getResource(map));
+            copier.copy(getDataFolder() + File.separator + map1, getResource(map1));
             copier.copy(getDataFolder() + File.separator + map2, getResource(map2));
             copier.copy(getDataFolder() + File.separator + map3, getResource(map3));
-            console.sendMessage(pluginName + "Please move the map files to the main world [" + s_world + "] data folder.");
+            copier.copy(getDataFolder() + File.separator + map4, getResource(map4));
+            copier.copy(getDataFolder() + File.separator + map5, getResource(map5));
+            copier.copy(getDataFolder() + File.separator + map6, getResource(map6));
+            copier.copy(getDataFolder() + File.separator + map7, getResource(map7));
+            copier.copy(getDataFolder() + File.separator + map8, getResource(map8));
+            copier.copy(getDataFolder() + File.separator + map9, getResource(map9));
+            console.sendMessage(pluginName + "Please move the new map files to the main world [" + s_world + "] data folder.");
             getServer().getScheduler().scheduleSyncDelayedTask(this, new Runnable() {
                 @Override
                 public void run() {

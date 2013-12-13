@@ -108,7 +108,7 @@ shaped:
         lore: ""
         enchantment: NONE
         strength: 0
-    Sonic Screwdriver:
+    TARDIS Key:
         easy_shape: -R-,-S-,-S-
         easy_ingredients:
             R: REDSTONE
@@ -130,6 +130,113 @@ shaped:
         hard_ingredients:
             Q: QUARTZ
         result: RECORD_9
+        amount: 1
+        lore: ""
+        enchantment: NONE
+        strength: 0
+    Sonic Oscillator:
+        easy_shape: RQR,R-R,RQR
+        easy_ingredients:
+            Q: QUARTZ
+            R: REDSTONE
+        hard_shape: RQR,R-R,RQR
+        hard_ingredients:
+            Q: QUARTZ
+            R: REDSTONE
+        result: 'MAP:1967'
+        amount: 1
+        lore: ""
+        enchantment: NONE
+        strength: 0
+    Sonic Screwdriver:
+        easy_shape: -Q-,-I-,-I-
+        easy_ingredients:
+            Q: QUARTZ
+            I: IRON_INGOT
+        hard_shape: -Q-,-I-,-O-
+        hard_ingredients:
+            Q: QUARTZ
+            I: IRON_INGOT
+            O: 'MAP:1967'
+        result: BLAZE_ROD
+        amount: 1
+        lore: ""
+        enchantment: DURABILITY
+        strength: 1
+    Server Admin Circuit:
+        easy_shape: DDD,DOD,DDD
+        easy_ingredients:
+            D: DIAMOND_BLOCK
+            O: 'MAP:1967'
+        hard_shape: DDD,DOD,DDD
+        hard_ingredients:
+            D: DIAMOND_BLOCK
+            O: 'MAP:1967'
+        result: 'MAP:1968'
+        amount: 1
+        lore: ""
+        enchantment: NONE
+        strength: 0
+    Bio-scanner Circuit:
+        easy_shape: -E-,BRB,-E-
+        easy_ingredients:
+            R: REDSTONE
+            E: SPIDER_EYE
+            B: BONE
+        hard_shape: -E-,BRB,-E-
+        hard_ingredients:
+            R: DIODE
+            E: SPIDER_EYE
+            B: BONE
+        result: 'MAP:1969'
+        amount: 1
+        lore: ""
+        enchantment: NONE
+        strength: 0
+    Redstone Activator Circuit:
+        easy_shape: RCR,-I-,RCR
+        easy_ingredients:
+            R: REDSTONE
+            C: REDSTONE_COMPARATOR
+            I: IRON_INGOT
+        hard_shape: RCR,-I-,RCR
+        hard_ingredients:
+            R: DIODE
+            C: REDSTONE_COMPARATOR
+            I: IRON_INGOT
+        result: 'MAP:1970'
+        amount: 1
+        lore: ""
+        enchantment: NONE
+        strength: 0
+    Diamond Disruptor Circuit:
+        easy_shape: -R-,DSD,-R-
+        easy_ingredients:
+            R: REDSTONE
+            D: DIAMOND
+            S: SHEARS
+        hard_shape: -O-,DSD,-O-
+        hard_ingredients:
+            O: OBSIDIAN
+            D: DIAMOND
+            S: SHEARS
+        result: 'MAP:1971'
+        amount: 1
+        lore: ""
+        enchantment: NONE
+        strength: 0
+    Emerald Environment Circuit:
+        easy_shape: -D-,LEL,-D-
+        easy_ingredients:
+            E: EMERALD
+            D: DIRT
+            L: LEAVES
+        hard_shape: -S-,LEL,-S-
+        hard_ingredients:
+            E: EMERALD
+            L: LEAVES
+            S: STONE
+        result: 'MAP:1972'
         amount: 1
         lore: ""
         enchantment: NONE

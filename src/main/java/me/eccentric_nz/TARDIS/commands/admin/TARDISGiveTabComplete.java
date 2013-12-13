@@ -28,7 +28,7 @@ import org.bukkit.util.StringUtil;
  */
 public class TARDISGiveTabComplete implements TabCompleter {
 
-    private final ImmutableList<String> GIVE_SUBS = ImmutableList.of("artron", "remote", "locator", "l-circuit", "m-circuit", "s-circuit", "c-circuit", "sonic", "blank", "save-disk", "preset-disk", "biome-disk", "player-disk");
+    private final ImmutableList<String> GIVE_SUBS = ImmutableList.of("remote", "locator", "l-circuit", "m-circuit", "s-circuit", "c-circuit", "key", "blank", "save-disk", "preset-disk", "biome-disk", "player-disk", "sonic", "oscillator", "a-circuit", "e-circuit", "d-circuit", "bio-circuit", "r-circuit");
 
     public TARDISGiveTabComplete() {
     }

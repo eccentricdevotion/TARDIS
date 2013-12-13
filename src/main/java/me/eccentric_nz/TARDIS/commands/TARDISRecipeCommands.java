@@ -53,12 +53,19 @@ public class TARDISRecipeCommands implements CommandExecutor {
         firstArgs.add("m-circuit"); // Materialisation Circuit
         firstArgs.add("s-circuit"); // Stattenheim Circuit
         firstArgs.add("c-circuit"); // Chameleon Circuit
-        firstArgs.add("sonic"); // Sonic Screwdriver
         firstArgs.add("blank"); // Blank Storage Disk
         firstArgs.add("save-disk"); // Blank Save Storage Disk
         firstArgs.add("preset-disk"); // Blank Preset Storage Disk
         firstArgs.add("biome-disk"); // Blank Biome Storage Disk
         firstArgs.add("player-disk"); // Blank Player Disk
+        firstArgs.add("key"); // TARDIS key
+        firstArgs.add("sonic"); // Sonic Screwdriver
+        firstArgs.add("a-circuit"); // Admin Circuit
+        firstArgs.add("oscillator"); // Sonic Oscillator
+        firstArgs.add("e-circuit"); // Emerald Circuit
+        firstArgs.add("d-circuit"); // Diamond Circuit
+        firstArgs.add("bio-circuit"); // Bio-scanner Circuit
+        firstArgs.add("r-circuit"); // Redstone Circuit
     }
 
     @Override
@@ -108,8 +115,8 @@ public class TARDISRecipeCommands implements CommandExecutor {
                 showShapedRecipe(player, "TARDIS Chameleon Circuit");
                 return true;
             }
-            if (args[0].equalsIgnoreCase("sonic")) {
-                this.showShapedRecipe(player, "Sonic Screwdriver");
+            if (args[0].equalsIgnoreCase("key")) {
+                this.showShapedRecipe(player, "TARDIS key");
                 return true;
             }
             if (args[0].equalsIgnoreCase("blank")) {
@@ -130,6 +137,34 @@ public class TARDISRecipeCommands implements CommandExecutor {
             }
             if (args[0].equalsIgnoreCase("player-disk")) {
                 this.showShapelessRecipe(player, "Player Storage Disk");
+                return true;
+            }
+            if (args[0].equalsIgnoreCase("sonic")) {
+                this.showShapedRecipe(player, "Sonic Screwdriver");
+                return true;
+            }
+            if (args[0].equalsIgnoreCase("oscillator")) {
+                this.showShapedRecipe(player, "Sonic Oscillator");
+                return true;
+            }
+            if (args[0].equalsIgnoreCase("a-circuit")) {
+                this.showShapedRecipe(player, "Server Admin Circuit");
+                return true;
+            }
+            if (args[0].equalsIgnoreCase("bio-circuit")) {
+                this.showShapedRecipe(player, "Bio-scanner Circuit");
+                return true;
+            }
+            if (args[0].equalsIgnoreCase("r-circuit")) {
+                this.showShapedRecipe(player, "Redstone Activator Circuit");
+                return true;
+            }
+            if (args[0].equalsIgnoreCase("d-circuit")) {
+                this.showShapedRecipe(player, "Diamond Disruptor Circuit");
+                return true;
+            }
+            if (args[0].equalsIgnoreCase("e-circuit")) {
+                this.showShapedRecipe(player, "Emerald Environment Circuit");
                 return true;
             }
         }

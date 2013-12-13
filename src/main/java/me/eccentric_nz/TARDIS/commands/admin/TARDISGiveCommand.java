@@ -49,12 +49,19 @@ public class TARDISGiveCommand implements CommandExecutor {
         items.put("m-circuit", "TARDIS Materialisation Circuit");
         items.put("s-circuit", "TARDIS Stattenheim Circuit");
         items.put("c-circuit", "TARDIS Chameleon Circuit");
-        items.put("sonic", "Sonic Screwdriver");
+        items.put("key", "TARDIS Key");
         items.put("blank", "Blank Storage Disk");
         items.put("save-disk", "Save Storage Disk");
         items.put("preset-disk", "Blank Preset Storage Disk");
         items.put("biome-disk", "Blank Biome Storage Disk");
         items.put("player-disk", "Player Storage Disk");
+        items.put("sonic", "Sonic Screwdriver");
+        items.put("oscillator", "Sonic Oscillator");
+        items.put("a-circuit", "Server Admin Circuit");
+        items.put("bio-circuit", "Bio-scanner Circuit");
+        items.put("r-circuit", "Redstone Activator Circuit");
+        items.put("d-circuit", "Diamond Disruptor Circuit");
+        items.put("e-circuit", "Emeral Environment Circuit");
     }
 
     @Override
