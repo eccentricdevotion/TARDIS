@@ -61,7 +61,7 @@ public class TARDISGiveCommand implements CommandExecutor {
         items.put("bio-circuit", "Bio-scanner Circuit");
         items.put("r-circuit", "Redstone Activator Circuit");
         items.put("d-circuit", "Diamond Disruptor Circuit");
-        items.put("e-circuit", "Emeral Environment Circuit");
+        items.put("e-circuit", "Emerald Environment Circuit");
     }
 
     @Override

@@ -113,6 +113,7 @@ import me.eccentric_nz.TARDIS.listeners.TARDISTimeLordDeathListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISBlockPhysicsListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISMakePresetListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISPistonListener;
+import me.eccentric_nz.TARDIS.listeners.TARDISSonicListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISTagListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISUpdateListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISWorldResetListener;
@@ -500,6 +501,7 @@ public class TARDIS extends JavaPlugin {
         if (pm.isPluginEnabled("Multiverse-Adventure")) {
             pm.registerEvents(new TARDISWorldResetListener(this), this);
         }
+        pm.registerEvents(new TARDISSonicListener(this, getRecipesConfig().getString("shaped.Sonic Screwdriver.result")), this);
     }
 
     /**
