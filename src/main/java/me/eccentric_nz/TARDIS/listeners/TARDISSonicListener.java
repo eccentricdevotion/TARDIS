@@ -19,12 +19,14 @@ package me.eccentric_nz.TARDIS.listeners;
 import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import org.bukkit.Material;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 /**
@@ -51,12 +53,23 @@ public class TARDISSonicListener implements Listener {
     public void onInteract(PlayerInteractEvent event) {
         final Player player = event.getPlayer();
         long now = System.currentTimeMillis();
-        if (player.getItemInHand().getType().equals(sonic)) {
+        final ItemStack is = player.getItemInHand();
+        if (is.getType().equals(sonic) && is.hasItemMeta()) {
             ItemMeta im = player.getItemInHand().getItemMeta();
             if (im.getDisplayName().equals("Sonic Screwdriver")) {
                 if (event.getAction().equals(Action.RIGHT_CLICK_AIR) && (!timeout.containsKey(player.getName()) || timeout.get(player.getName()) < now)) {
+                    im.addEnchant(Enchantment.DURABILITY, 1, true);
+                    is.setItemMeta(im);
                     timeout.put(player.getName(), now + 3050);
                     plugin.utils.playTARDISSound(player.getLocation(), player, "sonic_screwdriver");
+                    plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
+                        @Override
+                        public void run() {
+                            for (Enchantment e : player.getItemInHand().getEnchantments().keySet()) {
+                                player.getItemInHand().removeEnchantment(e);
+                            }
+                        }
+                    }, 60L);
                 }
             }
         }

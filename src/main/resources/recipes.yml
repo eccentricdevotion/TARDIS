@@ -161,8 +161,8 @@ shaped:
         result: BLAZE_ROD
         amount: 1
         lore: ""
-        enchantment: DURABILITY
-        strength: 1
+        enchantment: NONE
+        strength: 0
     Server Admin Circuit:
         easy_shape: DDD,DOD,DDD
         easy_ingredients:
