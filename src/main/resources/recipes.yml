@@ -13,8 +13,6 @@ shaped:
         result: COMPASS
         amount: 1
         lore: ""
-        enchantment: NONE
-        strength: 0
     Stattenheim Remote:
         easy_shape: OBO,-L-,RRR
         easy_ingredients:
@@ -31,8 +29,6 @@ shaped:
         result: FLINT
         amount: 1
         lore: "Right-click block\nto call TARDIS"
-        enchantment: NONE
-        strength: 0
     TARDIS Locator Circuit:
         easy_shape: RQR,RIR,DRL
         easy_ingredients:
@@ -51,8 +47,6 @@ shaped:
         result: 'MAP:1965'
         amount: 1
         lore: ""
-        enchantment: NONE
-        strength: 0
     TARDIS Materialisation Circuit:
         easy_shape: IDI,-L-,QRQ
         easy_ingredients:
@@ -70,8 +64,6 @@ shaped:
         result: 'MAP:1964'
         amount: 1
         lore: ""
-        enchantment: NONE
-        strength: 0
     TARDIS Stattenheim Circuit:
         easy_shape: ---,LRM,QQQ
         easy_ingredients:
@@ -88,8 +80,6 @@ shaped:
         result: 'MAP:1963'
         amount: 1
         lore: ""
-        enchantment: NONE
-        strength: 0
     TARDIS Chameleon Circuit:
         easy_shape: -G-,RER,-G-
         easy_ingredients:
@@ -106,8 +96,6 @@ shaped:
         result: 'MAP:1966'
         amount: 1
         lore: ""
-        enchantment: NONE
-        strength: 0
     TARDIS Key:
         easy_shape: -R-,-S-,-S-
         easy_ingredients:
@@ -120,8 +108,6 @@ shaped:
         result: STICK
         amount: 1
         lore: "Enter and exit your TARDIS"
-        enchantment: DURABILITY
-        strength: 1
     Blank Storage Disk:
         easy_shape: QQQ,Q-Q,QQQ
         easy_ingredients:
@@ -132,8 +118,6 @@ shaped:
         result: RECORD_9
         amount: 1
         lore: ""
-        enchantment: NONE
-        strength: 0
     Sonic Oscillator:
         easy_shape: RQR,R-R,RQR
         easy_ingredients:
@@ -146,8 +130,6 @@ shaped:
         result: 'MAP:1967'
         amount: 1
         lore: ""
-        enchantment: NONE
-        strength: 0
     Sonic Screwdriver:
         easy_shape: -Q-,-I-,-I-
         easy_ingredients:
@@ -161,8 +143,6 @@ shaped:
         result: BLAZE_ROD
         amount: 1
         lore: ""
-        enchantment: NONE
-        strength: 0
     Server Admin Circuit:
         easy_shape: DDD,DOD,DDD
         easy_ingredients:
@@ -175,8 +155,6 @@ shaped:
         result: 'MAP:1968'
         amount: 1
         lore: ""
-        enchantment: NONE
-        strength: 0
     Bio-scanner Circuit:
         easy_shape: -E-,BRB,-E-
         easy_ingredients:
@@ -191,8 +169,6 @@ shaped:
         result: 'MAP:1969'
         amount: 1
         lore: ""
-        enchantment: NONE
-        strength: 0
     Redstone Activator Circuit:
         easy_shape: RCR,-I-,RCR
         easy_ingredients:
@@ -207,8 +183,6 @@ shaped:
         result: 'MAP:1970'
         amount: 1
         lore: ""
-        enchantment: NONE
-        strength: 0
     Diamond Disruptor Circuit:
         easy_shape: -R-,DSD,-R-
         easy_ingredients:
@@ -223,8 +197,6 @@ shaped:
         result: 'MAP:1971'
         amount: 1
         lore: ""
-        enchantment: NONE
-        strength: 0
     Emerald Environment Circuit:
         easy_shape: -D-,LEL,-D-
         easy_ingredients:
@@ -239,41 +211,54 @@ shaped:
         result: 'MAP:1972'
         amount: 1
         lore: ""
-        enchantment: NONE
-        strength: 0
 shapeless:
     Save Storage Disk:
         recipe: RECORD_9,REDSTONE
         result: RECORD_4
         amount: 1
         lore: "Blank"
-        enchantment: NONE
-        strength: 0
     Player Storage Disk:
         recipe: RECORD_9,LAPIS_BLOCK
         result: RECORD_12
         amount: 1
         lore: "Blank"
-        enchantment: NONE
-        strength: 0
     Blank Biome Storage Disk:
         recipe: RECORD_9,EMERALD
         result: GREEN_RECORD
         amount: 1
         lore: "Blank"
-        enchantment: NONE
-        strength: 0
     Blank Preset Storage Disk:
         recipe: 'RECORD_9,MAP:1966'
         result: RECORD_6
         amount: 1
         lore: "Blank"
-        enchantment: NONE
-        strength: 0
+    Admin Upgrade:
+        recipe: 'BLAZE_ROD,MAP:1968'
+        result: BLAZE_ROD
+        amount: 1
+        lore: ""
+    Bio-scanner Upgrade:
+        recipe: 'BLAZE_ROD,MAP:1969'
+        result: BLAZE_ROD
+        amount: 1
+        lore: ""
+    Redstone Upgrade:
+        recipe: 'BLAZE_ROD,MAP:1970'
+        result: BLAZE_ROD
+        amount: 1
+        lore: ""
+    Diamond Upgrade:
+        recipe: 'BLAZE_ROD,MAP:1971'
+        result: BLAZE_ROD
+        amount: 1
+        lore: ""
+    Emerald Upgrade:
+        recipe: 'BLAZE_ROD,MAP:1972'
+        result: BLAZE_ROD
+        amount: 1
+        lore: ""
 furnace:
     Nuclear Wool:
         recipe: '35:0'
         result: '35:15'
         lore: "Done to a crisp"
-        enchantment: NONE
-        strength: 0

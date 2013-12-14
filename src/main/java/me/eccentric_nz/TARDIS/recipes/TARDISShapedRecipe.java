@@ -8,8 +8,6 @@ import java.util.HashMap;
 import java.util.Set;
 import me.eccentric_nz.TARDIS.TARDIS;
 import org.bukkit.Material;
-import org.bukkit.enchantments.Enchantment;
-import org.bukkit.enchantments.EnchantmentWrapper;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ShapedRecipe;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -63,11 +61,6 @@ public class TARDISShapedRecipe {
         im.setDisplayName(s);
         if (!plugin.getRecipesConfig().getString("shaped." + s + ".lore").equals("")) {
             im.setLore(Arrays.asList(plugin.getRecipesConfig().getString("shaped." + s + ".lore").split("\n")));
-        }
-        if (!plugin.getRecipesConfig().getString("shaped." + s + ".enchantment").equals("NONE")) {
-            Enchantment e = EnchantmentWrapper.getByName(plugin.getRecipesConfig().getString("shaped." + s + ".enchantment"));
-            boolean did = im.addEnchant(e, plugin.getRecipesConfig().getInt("shaped." + s + ".strength"), plugin.getConfig().getBoolean("allow_unsafe_enchantments"));
-            plugin.debug((did) ? " true" : "false");
         }
         is.setItemMeta(im);
         ShapedRecipe r = new ShapedRecipe(is);

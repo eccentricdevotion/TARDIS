@@ -8,8 +8,6 @@ import java.util.HashMap;
 import java.util.Set;
 import me.eccentric_nz.TARDIS.TARDIS;
 import org.bukkit.Material;
-import org.bukkit.enchantments.Enchantment;
-import org.bukkit.enchantments.EnchantmentWrapper;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ShapelessRecipe;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -58,10 +56,6 @@ public class TARDISShapelessRecipe {
         im.setDisplayName(s);
         if (!plugin.getRecipesConfig().getString("shapeless." + s + ".lore").equals("")) {
             im.setLore(Arrays.asList(plugin.getRecipesConfig().getString("shapeless." + s + ".lore").split("\n")));
-        }
-        if (!plugin.getRecipesConfig().getString("shapeless." + s + ".enchantment").equals("NONE")) {
-            Enchantment e = EnchantmentWrapper.getByName(plugin.getRecipesConfig().getString("shapeless." + s + ".enchantment"));
-            im.addEnchant(e, plugin.getRecipesConfig().getInt("shapeless." + s + ".strength"), plugin.getConfig().getBoolean("allow_unsafe_enchantments"));
         }
         is.setItemMeta(im);
         ShapelessRecipe r = new ShapelessRecipe(is);
