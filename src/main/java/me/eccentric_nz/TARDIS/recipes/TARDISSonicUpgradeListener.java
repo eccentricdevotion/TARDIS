@@ -17,9 +17,12 @@
 package me.eccentric_nz.TARDIS.recipes;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
 import org.bukkit.Material;
+import org.bukkit.entity.HumanEntity;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -36,33 +39,56 @@ import org.bukkit.inventory.meta.ItemMeta;
  */
 public class TARDISSonicUpgradeListener implements Listener {
 
-    //private final TARDIS plugin;
     private final Material sonicMaterial;
-    private final List<String> upgrades = new ArrayList<String>();
+    private final HashMap<String, String> upgrades = new HashMap<String, String>();
 
     public TARDISSonicUpgradeListener(TARDIS plugin) {
-        //this.plugin = plugin;
         String[] split = plugin.getRecipesConfig().getString("shaped.Sonic Screwdriver.result").split(":");
         this.sonicMaterial = Material.valueOf(split[0]);
-        this.upgrades.add("Admin Upgrade");
-        this.upgrades.add("Bio-scanner Upgrade");
-        this.upgrades.add("Redstone Upgrade");
-        this.upgrades.add("Diamond Upgrade");
-        this.upgrades.add("Emerald Upgrade");
+        this.upgrades.put("Admin Upgrade", "admin");
+        this.upgrades.put("Bio-scanner Upgrade", "bio");
+        this.upgrades.put("Redstone Upgrade", "redstone");
+        this.upgrades.put("Diamond Upgrade", "diamond");
+        this.upgrades.put("Emerald Upgrade", "emerald");
     }
 
+    /**
+     * This event will check the crafting recipe to see if it is a sonic
+     * upgrade. If it is, then the current sonic screwdriver is queried to see
+     * if it has the desired upgrade. If it hasn't (and the player has
+     * permission) then the upgrade is added.
+     *
+     * @param event A player preparing to craft a sonic upgrade
+     */
     @EventHandler(priority = EventPriority.HIGH)
     public void onSonicUpgrade(PrepareItemCraftEvent event) {
         CraftingInventory ci = event.getInventory();
         Recipe recipe = ci.getRecipe();
+        // upgrades are all shapeless so only check those
         if (recipe instanceof ShapelessRecipe) {
             ItemStack is = ci.getResult();
+            // if the recipe result is the same type of material as the sonic screwdriver
             if (is.getType().equals(sonicMaterial) && is.hasItemMeta()) {
                 ItemMeta im = is.getItemMeta();
+                // get the upgrade
                 String upgrade = im.getDisplayName();
-                if (!upgrades.contains(upgrade)) {
+                // is it a valid upgrade?
+                if (!upgrades.containsKey(upgrade)) {
                     ci.setResult(null);
+                    return;
                 }
+                // get the player
+                HumanEntity human = event.getView().getPlayer();
+                Player p = null;
+                if (human instanceof Player) {
+                    p = (Player) human;
+                }
+                // make sure the player has permission
+                if (p == null || !p.hasPermission("tardis.sonic." + upgrades.get(upgrade))) {
+                    ci.setResult(null);
+                    return;
+                }
+                // get the current sonic
                 ItemStack sonic = null;
                 for (int i = 1; i <= ci.getSize(); i++) {
                     ItemStack item = ci.getItem(i);
@@ -77,16 +103,20 @@ public class TARDISSonicUpgradeListener implements Listener {
                     ItemMeta sim = sonic.getItemMeta();
                     List<String> lore;
                     if (sim.hasLore()) {
+                        // get the current sonic's upgrades
                         lore = sim.getLore();
                     } else {
+                        // otherwise thisis the first upgrade
                         lore = new ArrayList<String>();
                         lore.add("Upgrades:");
                     }
+                    // if they don't already have the upgrade
                     if (!lore.contains(upgrade)) {
                         im.setDisplayName("Sonic Screwdriver");
                         lore.add(upgrade);
                         im.setLore(lore);
                         is.setItemMeta(im);
+                        // change the crafting result
                         ci.setResult(is);
                     } else {
                         ci.setResult(null);
@@ -95,38 +125,4 @@ public class TARDISSonicUpgradeListener implements Listener {
             }
         }
     }
-
-//    public enum UPGRADE {
-//
-//        ADMIN("Admin Upgrade"),
-//        BIO("Bio-scanner Upgrade"),
-//        REDSTONE("Redstone Upgrade"),
-//        DIAMOND("Diamond Upgrade"),
-//        EMERALD("Emerald Upgrade");
-//        private final String name;
-//
-//        private UPGRADE(String name) {
-//            this.name = name;
-//        }
-//
-//        public String getName() {
-//            return name;
-//        }
-//
-//        /**
-//         * Attempts to get the UPGRADE with the given name.
-//         *
-//         * @param name Name of the material to get
-//         * @return UPGRADE if found, or null
-//         */
-//        public static UPGRADE getUPGRADE(final String name) {
-//            return BY_NAME.get(name);
-//        }
-//
-//        static {
-//            for (UPGRADE u : values()) {
-//                BY_NAME.put(u.getName(), u);
-//            }
-//        }
-//    }
 }
