@@ -2,6 +2,7 @@
 
 ## Current version `2.7-beta-1`
 1. Documentation & videos!
+   * Add note about disabling Factions in Vortex
 2. Sonic Screwdrivers
 4. Advanced TARDIS console
     * Export TARDIS saves / areas / etc. to disks for use with Advanced TARDIS console

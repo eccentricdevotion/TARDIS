@@ -100,8 +100,8 @@ public enum TARDISARS {
     /**
      * Attempts to get the TARDISARS with the given name.
      *
-     * @param name Name of the material to get
-     * @return Material if found, or null
+     * @param name Name of the ARS to get
+     * @return ARS if found, or null
      */
     public static TARDISARS getARS(final String name) {
         return BY_NAME.get(name);
