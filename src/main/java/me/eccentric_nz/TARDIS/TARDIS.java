@@ -126,6 +126,7 @@ import me.eccentric_nz.TARDIS.utility.TARDISCreeperChecker;
 import me.eccentric_nz.TARDIS.utility.TARDISFactionsChecker;
 import me.eccentric_nz.TARDIS.recipes.TARDISShapedRecipe;
 import me.eccentric_nz.TARDIS.recipes.TARDISShapelessRecipe;
+import me.eccentric_nz.TARDIS.recipes.TARDISSonicUpgradeListener;
 //import me.eccentric_nz.TARDIS.recipes.TARDISFurnaceRecipe;
 import me.eccentric_nz.TARDIS.utility.TARDISMultiverseInventoriesChecker;
 import me.eccentric_nz.TARDIS.utility.TARDISSounds;
@@ -502,7 +503,8 @@ public class TARDIS extends JavaPlugin {
         if (pm.isPluginEnabled("Multiverse-Adventure")) {
             pm.registerEvents(new TARDISWorldResetListener(this), this);
         }
-        pm.registerEvents(new TARDISSonicListener(this, getRecipesConfig().getString("shaped.Sonic Screwdriver.result")), this);
+        pm.registerEvents(new TARDISSonicUpgradeListener(this), this);
+        pm.registerEvents(new TARDISSonicListener(this), this);
     }
 
     /**

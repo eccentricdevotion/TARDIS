@@ -39,14 +39,10 @@ public class TARDISSonicListener implements Listener {
     private final Material sonic;
     private final HashMap<String, Long> timeout = new HashMap<String, Long>();
 
-    public TARDISSonicListener(TARDIS plugin, String str) {
+    public TARDISSonicListener(TARDIS plugin) {
         this.plugin = plugin;
-        String[] split = str.split(":");
-        if (split.length > 1) {
-            this.sonic = Material.valueOf(split[0]);
-        } else {
-            this.sonic = Material.valueOf(str);
-        }
+        String[] split = plugin.getRecipesConfig().getString("shaped.Sonic Screwdriver.result").split(":");
+        this.sonic = Material.valueOf(split[0]);
     }
 
     @EventHandler(priority = EventPriority.MONITOR)
