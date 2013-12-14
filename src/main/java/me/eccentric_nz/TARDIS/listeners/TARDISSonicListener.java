@@ -16,9 +16,15 @@
  */
 package me.eccentric_nz.TARDIS.listeners;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.database.ResultSetDoors;
+import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
+import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.block.Block;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -38,11 +44,15 @@ public class TARDISSonicListener implements Listener {
     private final TARDIS plugin;
     private final Material sonic;
     private final HashMap<String, Long> timeout = new HashMap<String, Long>();
+    private final List<Material> doors = new ArrayList<Material>();
 
     public TARDISSonicListener(TARDIS plugin) {
         this.plugin = plugin;
         String[] split = plugin.getRecipesConfig().getString("shaped.Sonic Screwdriver.result").split(":");
         this.sonic = Material.valueOf(split[0]);
+        doors.add(Material.WOODEN_DOOR);
+        doors.add(Material.IRON_DOOR_BLOCK);
+        doors.add(Material.TRAP_DOOR);
     }
 
     @EventHandler(priority = EventPriority.MONITOR)
@@ -53,21 +63,69 @@ public class TARDISSonicListener implements Listener {
         if (is.getType().equals(sonic) && is.hasItemMeta()) {
             ItemMeta im = player.getItemInHand().getItemMeta();
             if (im.getDisplayName().equals("Sonic Screwdriver")) {
-                if (event.getAction().equals(Action.RIGHT_CLICK_AIR) && (!timeout.containsKey(player.getName()) || timeout.get(player.getName()) < now)) {
-                    im.addEnchant(Enchantment.DURABILITY, 1, true);
-                    is.setItemMeta(im);
-                    timeout.put(player.getName(), now + 3050);
-                    plugin.utils.playTARDISSound(player.getLocation(), player, "sonic_screwdriver");
-                    plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
-                        @Override
-                        public void run() {
-                            for (Enchantment e : player.getItemInHand().getEnchantments().keySet()) {
-                                player.getItemInHand().removeEnchantment(e);
+                List<String> lore = im.getLore();
+                Action action = event.getAction();
+                if (action.equals(Action.RIGHT_CLICK_AIR) && (!timeout.containsKey(player.getName()) || timeout.get(player.getName()) < now)) {
+                    playSonicSound(player, now);
+                }
+                if (action.equals(Action.RIGHT_CLICK_BLOCK)) {
+                    final Block b = event.getClickedBlock();
+                    if (doors.contains(b.getType()) && player.hasPermission("tardis.admin") && lore.contains("Admin Upgrade")) {
+                        playSonicSound(player, now);
+                        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
+                            @Override
+                            public void run() {
+                                HashMap<String, Object> wheredoor = new HashMap<String, Object>();
+                                Location loc = b.getLocation();
+                                String bw = loc.getWorld().getName();
+                                int bx = loc.getBlockX();
+                                int by = loc.getBlockY();
+                                int bz = loc.getBlockZ();
+                                if (b.getData() >= 8 && !b.getType().equals(Material.TRAP_DOOR)) {
+                                    by = (by - 1);
+                                }
+                                String doorloc = bw + ":" + bx + ":" + by + ":" + bz;
+                                wheredoor.put("door_location", doorloc);
+                                wheredoor.put("door_type", 0);
+                                ResultSetDoors rsd = new ResultSetDoors(plugin, wheredoor, false);
+                                if (rsd.resultSet()) {
+                                    int id = rsd.getTardis_id();
+                                    HashMap<String, Object> whereid = new HashMap<String, Object>();
+                                    whereid.put("tardis_id", id);
+                                    ResultSetTravellers rst = new ResultSetTravellers(plugin, whereid, true);
+                                    if (rst.resultSet()) {
+                                        List<String> data = rst.getData();
+                                        player.sendMessage(plugin.pluginName + "The players inside this TARDIS are:");
+                                        for (String s : data) {
+                                            player.sendMessage(s);
+                                        }
+                                    } else {
+                                        player.sendMessage(plugin.pluginName + "The TARDIS is unoccupied.");
+                                    }
+                                }
                             }
-                        }
-                    }, 60L);
+                        }, 60L);
+                    }
                 }
             }
+        }
+    }
+
+    private void playSonicSound(final Player player, long now) {
+        if ((!timeout.containsKey(player.getName()) || timeout.get(player.getName()) < now)) {
+            ItemMeta im = player.getItemInHand().getItemMeta();
+            im.addEnchant(Enchantment.DURABILITY, 1, true);
+            player.getItemInHand().setItemMeta(im);
+            timeout.put(player.getName(), now + 3050);
+            plugin.utils.playTARDISSound(player.getLocation(), player, "sonic_screwdriver");
+            plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
+                @Override
+                public void run() {
+                    for (Enchantment e : player.getItemInHand().getEnchantments().keySet()) {
+                        player.getItemInHand().removeEnchantment(e);
+                    }
+                }
+            }, 60L);
         }
     }
 }

@@ -529,13 +529,17 @@ public class TARDISDoorListener implements Listener {
                                 }
                             }
                         } else {
-                            String grammar;
-                            if (!material.equals(Material.AIR)) {
-                                grammar = (TARDISConstants.vowels.contains(material.toString().substring(0, 1))) ? "an " + material : "a " + material;
-                            } else {
-                                grammar = "nothing";
+                            String[] split = plugin.getRecipesConfig().getString("shaped.Sonic Screwdriver.result").split(":");
+                            Material sonic = Material.valueOf(split[0]);
+                            if (!material.equals(sonic) || !player.hasPermission("tardis.sonic.admin")) {
+                                String grammar;
+                                if (!material.equals(Material.AIR)) {
+                                    grammar = (TARDISConstants.vowels.contains(material.toString().substring(0, 1))) ? "an " + material : "a " + material;
+                                } else {
+                                    grammar = "nothing";
+                                }
+                                player.sendMessage(plugin.pluginName + "The TARDIS key is a " + key + ". You have " + grammar + " in your hand!");
                             }
-                            player.sendMessage(plugin.pluginName + "The TARDIS key is a " + key + ". You have " + grammar + " in your hand!");
                         }
                     }
                 }
