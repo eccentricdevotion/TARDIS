@@ -116,7 +116,7 @@ public class TARDISRecipeCommands implements CommandExecutor {
                 return true;
             }
             if (args[0].equalsIgnoreCase("key")) {
-                this.showShapedRecipe(player, "TARDIS key");
+                this.showShapedRecipe(player, "TARDIS Key");
                 return true;
             }
             if (args[0].equalsIgnoreCase("blank")) {
