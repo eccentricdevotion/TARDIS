@@ -23,6 +23,7 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.commands.admin.TARDISAdminMenuInventory;
 import me.eccentric_nz.TARDIS.database.ResultSetDoors;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
+import me.eccentric_nz.TARDIS.utility.TARDISVector3D;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -33,6 +34,7 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -47,6 +49,7 @@ public class TARDISSonicListener implements Listener {
     private final Material sonic;
     private final HashMap<String, Long> timeout = new HashMap<String, Long>();
     private final List<Material> doors = new ArrayList<Material>();
+    private final List<String> frozenPlayers = new ArrayList<String>();
 
     public TARDISSonicListener(TARDIS plugin) {
         this.plugin = plugin;
@@ -69,7 +72,7 @@ public class TARDISSonicListener implements Listener {
                 Action action = event.getAction();
                 if (action.equals(Action.RIGHT_CLICK_AIR)) {
                     playSonicSound(player, now);
-                    if (player.hasPermission("tardis.admin") && lore.contains("Admin Upgrade")) {
+                    if (player.hasPermission("tardis.admin") && lore != null && lore.contains("Admin Upgrade")) {
                         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
                             @Override
                             public void run() {
@@ -80,10 +83,49 @@ public class TARDISSonicListener implements Listener {
                             }
                         }, 40L);
                     }
+                    if (player.hasPermission("tardis.sonic.bio") && lore != null && lore.contains("Bio-scanner Upgrade")) {
+                        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
+                            @Override
+                            public void run() {
+                                Location observerPos = player.getEyeLocation();
+                                TARDISVector3D observerDir = new TARDISVector3D(observerPos.getDirection());
+
+                                TARDISVector3D observerStart = new TARDISVector3D(observerPos);
+                                TARDISVector3D observerEnd = observerStart.add(observerDir.multiply(16));
+
+                                Player hit = null;
+
+                                // Get nearby entities
+                                for (Player target : player.getWorld().getPlayers()) {
+                                    // Bounding box of the given player
+                                    TARDISVector3D targetPos = new TARDISVector3D(target.getLocation());
+                                    TARDISVector3D minimum = targetPos.add(-0.5, 0, -0.5);
+                                    TARDISVector3D maximum = targetPos.add(0.5, 1.67, 0.5);
+                                    if (target != player && hasIntersection(observerStart, observerEnd, minimum, maximum)) {
+                                        if (hit == null || hit.getLocation().distanceSquared(observerPos) > target.getLocation().distanceSquared(observerPos)) {
+                                            hit = target;
+                                        }
+                                    }
+                                }
+                                // freeze the closest player
+                                if (hit != null) {
+                                    hit.sendMessage(plugin.pluginName + player.getName() + " froze you with their Sonic Screwdriver!");
+                                    final String hitNme = hit.getName();
+                                    frozenPlayers.add(hitNme);
+                                    plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            frozenPlayers.remove(hitNme);
+                                        }
+                                    }, 100L);
+                                }
+                            }
+                        }, 20L);
+                    }
                 }
                 if (action.equals(Action.RIGHT_CLICK_BLOCK)) {
                     final Block b = event.getClickedBlock();
-                    if (doors.contains(b.getType()) && player.hasPermission("tardis.admin") && lore.contains("Admin Upgrade")) {
+                    if (doors.contains(b.getType()) && player.hasPermission("tardis.admin") && lore != null && lore.contains("Admin Upgrade")) {
                         playSonicSound(player, now);
                         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
                             @Override
@@ -139,6 +181,37 @@ public class TARDISSonicListener implements Listener {
                     }
                 }
             }, 60L);
+        }
+    }
+
+    private boolean hasIntersection(TARDISVector3D p1, TARDISVector3D p2, TARDISVector3D min, TARDISVector3D max) {
+        final double epsilon = 0.0001f;
+        TARDISVector3D d = p2.subtract(p1).multiply(0.5);
+        TARDISVector3D e = max.subtract(min).multiply(0.5);
+        TARDISVector3D c = p1.add(d).subtract(min.add(max).multiply(0.5));
+        TARDISVector3D ad = d.abs();
+        if (Math.abs(c.x) > e.x + ad.x) {
+            return false;
+        }
+        if (Math.abs(c.y) > e.y + ad.y) {
+            return false;
+        }
+        if (Math.abs(c.z) > e.z + ad.z) {
+            return false;
+        }
+        if (Math.abs(d.y * c.z - d.z * c.y) > e.y * ad.z + e.z * ad.y + epsilon) {
+            return false;
+        }
+        if (Math.abs(d.z * c.x - d.x * c.z) > e.z * ad.x + e.x * ad.z + epsilon) {
+            return false;
+        }
+        return Math.abs(d.x * c.y - d.y * c.x) <= e.x * ad.y + e.y * ad.x + epsilon;
+    }
+
+    @EventHandler
+    public void onPlayerFrozenMove(PlayerMoveEvent event) {
+        if (frozenPlayers.contains(event.getPlayer().getName())) {
+            event.setCancelled(true);
         }
     }
 }
