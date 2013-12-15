@@ -289,9 +289,9 @@ public class TARDISUtils {
     }
 
     /**
-     * Returns a rounded integer after division.
+     * Parses a string for an integer.
      *
-     * @param i the number to convert to an int.
+     * @param i the string to convert to an int.
      * @return a number
      */
     public int parseNum(String i) {

@@ -11,7 +11,8 @@
 6. Make condensables list configurable
 7. TARDIS exterior rendering / scanner room
 8. Underground materialisation
-9. TARDIS Information System
+9. Fix underdoor block for apperture preset
+10. TARDIS Information System
     * add new features
     * auto log out?
     
