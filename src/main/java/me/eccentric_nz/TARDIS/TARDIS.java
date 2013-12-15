@@ -113,6 +113,7 @@ import me.eccentric_nz.TARDIS.listeners.TARDISTimeLordDeathListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISBlockPhysicsListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISMakePresetListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISPistonListener;
+import me.eccentric_nz.TARDIS.listeners.TARDISSonicEntityListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISSonicListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISTagListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISUpdateListener;
@@ -505,6 +506,7 @@ public class TARDIS extends JavaPlugin {
         }
         pm.registerEvents(new TARDISSonicUpgradeListener(this), this);
         pm.registerEvents(new TARDISSonicListener(this), this);
+        pm.registerEvents(new TARDISSonicEntityListener(this), this);
     }
 
     /**
