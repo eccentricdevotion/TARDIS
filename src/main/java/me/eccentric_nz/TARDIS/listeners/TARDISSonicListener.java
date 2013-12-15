@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.commands.admin.TARDISAdminMenuInventory;
 import me.eccentric_nz.TARDIS.database.ResultSetDoors;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
 import org.bukkit.Location;
@@ -32,6 +33,7 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
@@ -65,8 +67,19 @@ public class TARDISSonicListener implements Listener {
             if (im.getDisplayName().equals("Sonic Screwdriver")) {
                 List<String> lore = im.getLore();
                 Action action = event.getAction();
-                if (action.equals(Action.RIGHT_CLICK_AIR) && (!timeout.containsKey(player.getName()) || timeout.get(player.getName()) < now)) {
+                if (action.equals(Action.RIGHT_CLICK_AIR)) {
                     playSonicSound(player, now);
+                    if (player.hasPermission("tardis.admin") && lore.contains("Admin Upgrade")) {
+                        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
+                            @Override
+                            public void run() {
+                                ItemStack[] items = new TARDISAdminMenuInventory(plugin).getMenu();
+                                Inventory menu = plugin.getServer().createInventory(player, 54, "§4Admin Menu");
+                                menu.setContents(items);
+                                player.openInventory(menu);
+                            }
+                        }, 40L);
+                    }
                 }
                 if (action.equals(Action.RIGHT_CLICK_BLOCK)) {
                     final Block b = event.getClickedBlock();

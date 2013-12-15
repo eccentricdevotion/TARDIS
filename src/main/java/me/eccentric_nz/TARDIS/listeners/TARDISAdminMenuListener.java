@@ -54,12 +54,6 @@ public class TARDISAdminMenuListener implements Listener {
     public void onPlayerInteract(PlayerInteractEvent event) {
         Player p = event.getPlayer();
         int inhand = p.getItemInHand().getTypeId();
-        if (event.getAction().equals(Action.RIGHT_CLICK_AIR) && inhand == plugin.getConfig().getInt("admin_item") && p.hasPermission("tardis.admin")) {
-            ItemStack[] items = new TARDISAdminMenuInventory(plugin).getMenu();
-            Inventory menu = plugin.getServer().createInventory(p, 54, "§4Admin Menu");
-            menu.setContents(items);
-            p.openInventory(menu);
-        }
         if (event.getAction().equals(Action.RIGHT_CLICK_AIR) && inhand == 347 && p.hasPermission("tardis.temporal")) {
             p.resetPlayerTime();
             if (plugin.trackSetTime.containsKey(p.getName())) {
@@ -70,7 +64,7 @@ public class TARDISAdminMenuListener implements Listener {
     }
 
     @EventHandler(priority = EventPriority.NORMAL)
-    public void onARSTerminalClick(InventoryClickEvent event) {
+    public void onAdminMenuClick(InventoryClickEvent event) {
         Inventory inv = event.getInventory();
         String name = inv.getTitle();
         if (name.equals("§4Admin Menu")) {
