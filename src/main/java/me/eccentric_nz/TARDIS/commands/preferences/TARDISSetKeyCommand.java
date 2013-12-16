@@ -47,8 +47,9 @@ public class TARDISSetKeyCommand {
             player.sendMessage(plugin.pluginName + ChatColor.RED + "That is not a valid Material! Try checking http://jd.bukkit.org/apidocs/org/bukkit/Material.html");
             return false;
         } else {
+            String field = (plugin.getConfig().getString("database").equals("sqlite")) ? "key" : "key_item";
             HashMap<String, Object> setk = new HashMap<String, Object>();
-            setk.put("key", setMaterial);
+            setk.put(field, setMaterial);
             HashMap<String, Object> where = new HashMap<String, Object>();
             where.put("player", player.getName());
             qf.doUpdate("player_prefs", setk, where);
