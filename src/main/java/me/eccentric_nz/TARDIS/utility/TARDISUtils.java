@@ -456,4 +456,48 @@ public class TARDISUtils {
     public boolean isOceanBiome(Biome b) {
         return (b.equals(Biome.OCEAN) || b.equals(Biome.DEEP_OCEAN) || b.equals(Biome.FROZEN_OCEAN));
     }
+
+    public String getTime(long t) {
+        if (t > 0 && t <= 2000) {
+            return "early morning";
+        }
+        if (t > 2000 && t <= 3500) {
+            return "mid morning";
+        }
+        if (t > 3500 && t <= 5500) {
+            return "late morning";
+        }
+        if (t > 5500 && t <= 6500) {
+            return "around noon";
+        }
+        if (t > 6500 && t <= 8000) {
+            return "afternoon";
+        }
+        if (t > 8000 && t <= 10000) {
+            return "mid afternoon";
+        }
+        if (t > 10000 && t <= 12000) {
+            return "late afternoon";
+        }
+        if (t > 12000 && t <= 14000) {
+            return "twilight";
+        }
+        if (t > 14000 && t <= 16000) {
+            return "evening";
+        }
+        if (t > 16000 && t <= 17500) {
+            return "late evening";
+        }
+        if (t > 17500 && t <= 18500) {
+            return "around midnight";
+        }
+        if (t > 18500 && t <= 20000) {
+            return "the small hours";
+        }
+        if (t > 20000 && t <= 22000) {
+            return "the wee hours";
+        } else {
+            return "pre-dawn";
+        }
+    }
 }

@@ -27,7 +27,6 @@ import me.eccentric_nz.TARDIS.database.ResultSetNextLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import org.bukkit.Location;
 import org.bukkit.Material;
-import org.bukkit.World;
 import org.bukkit.block.Biome;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Entity;
@@ -120,7 +119,6 @@ public class TARDISScannerListener implements Listener {
             if (validBlocks.contains(blockType)) {
                 // get clicked block location
                 Location b = block.getLocation();
-                World w = b.getWorld();
                 String bw = b.getWorld().getName();
                 int bx = b.getBlockX();
                 int by = b.getBlockY();
@@ -179,7 +177,7 @@ public class TARDISScannerListener implements Listener {
                         }
                     }
                     final long time = scan_loc.getWorld().getTime();
-                    final String daynight = getTime(time);
+                    final String daynight = plugin.utils.getTime(time);
                     // message the player
                     player.sendMessage(plugin.pluginName + "Scanner results for the TARDIS's " + whereisit);
                     player.sendMessage("World: " + scan_loc.getWorld().getName());
@@ -206,10 +204,11 @@ public class TARDISScannerListener implements Listener {
                         }
                     }, 60L);
                     // get weather
+                    // TODO add new biome types
                     final String weather;
                     if (biome.equals(Biome.DESERT) || biome.equals(Biome.DESERT_HILLS)) {
                         weather = "dry as a bone";
-                    } else if (biome.equals(Biome.TAIGA) || biome.equals(Biome.TAIGA_HILLS) || biome.equals(Biome.ICE_PLAINS)) {
+                    } else if (biome.equals(Biome.TAIGA) || biome.equals(Biome.TAIGA_HILLS) || biome.equals(Biome.ICE_PLAINS) || biome.equals(Biome.ICE_PLAINS_SPIKES)) {
                         weather = (scan_loc.getWorld().hasStorm()) ? "snowing" : "clear, but cold";
                     } else {
                         weather = (scan_loc.getWorld().hasStorm()) ? "raining" : "clear";
@@ -256,50 +255,6 @@ public class TARDISScannerListener implements Listener {
                     }, 140L);
                 }
             }
-        }
-    }
-
-    private String getTime(long t) {
-        if (t > 0 && t <= 2000) {
-            return "early morning";
-        }
-        if (t > 2000 && t <= 3500) {
-            return "mid morning";
-        }
-        if (t > 3500 && t <= 5500) {
-            return "late morning";
-        }
-        if (t > 5500 && t <= 6500) {
-            return "around noon";
-        }
-        if (t > 6500 && t <= 8000) {
-            return "afternoon";
-        }
-        if (t > 8000 && t <= 10000) {
-            return "mid afternoon";
-        }
-        if (t > 10000 && t <= 12000) {
-            return "late afternoon";
-        }
-        if (t > 12000 && t <= 14000) {
-            return "twilight";
-        }
-        if (t > 14000 && t <= 16000) {
-            return "evening";
-        }
-        if (t > 16000 && t <= 17500) {
-            return "late evening";
-        }
-        if (t > 17500 && t <= 18500) {
-            return "around midnight";
-        }
-        if (t > 18500 && t <= 20000) {
-            return "the small hours";
-        }
-        if (t > 20000 && t <= 22000) {
-            return "the wee hours";
-        } else {
-            return "pre-dawn";
         }
     }
 }
