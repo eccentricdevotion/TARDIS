@@ -52,7 +52,7 @@ public class TARDISDatabaseConnection {
         } catch (ClassNotFoundException e) {
             throw new RuntimeException("Cannot find the driver in the classpath!", e);
         }
-        String host = "jdbc:" + TARDIS.plugin.getConfig().getString("mysql.url");
+        String host = "jdbc:" + TARDIS.plugin.getConfig().getString("mysql.url") + "?autoReconnect=true";
         String user = TARDIS.plugin.getConfig().getString("mysql.user");
         String pass = TARDIS.plugin.getConfig().getString("mysql.password");
         try {

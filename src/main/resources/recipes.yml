@@ -123,10 +123,11 @@ shaped:
         easy_ingredients:
             Q: QUARTZ
             R: REDSTONE
-        hard_shape: RQR,R-R,RQR
+        hard_shape: RQR,RBR,RQR
         hard_ingredients:
             Q: QUARTZ
             R: REDSTONE
+            B: STONE_BUTTON
         result: 'MAP:1967'
         amount: 1
         lore: ""

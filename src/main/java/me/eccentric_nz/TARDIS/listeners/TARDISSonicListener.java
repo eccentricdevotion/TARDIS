@@ -16,6 +16,7 @@
  */
 package me.eccentric_nz.TARDIS.listeners;
 
+import com.griefcraft.lwc.LWC;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -27,6 +28,8 @@ import me.eccentric_nz.TARDIS.utility.TARDISVector3D;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
+import org.bukkit.block.BlockFace;
+import org.bukkit.block.BlockState;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -38,6 +41,10 @@ import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.material.Button;
+import org.bukkit.material.Door;
+import org.bukkit.material.Lever;
+import org.yi.acru.bukkit.Lockette.Lockette;
 
 /**
  *
@@ -49,15 +56,36 @@ public class TARDISSonicListener implements Listener {
     private final Material sonic;
     private final HashMap<String, Long> timeout = new HashMap<String, Long>();
     private final List<Material> doors = new ArrayList<Material>();
+    private final List<Material> redstone = new ArrayList<Material>();
+    private final List<Material> distance = new ArrayList<Material>();
     private final List<String> frozenPlayers = new ArrayList<String>();
+    private final List<BlockFace> faces = new ArrayList<BlockFace>();
 
     public TARDISSonicListener(TARDIS plugin) {
         this.plugin = plugin;
         String[] split = plugin.getRecipesConfig().getString("shaped.Sonic Screwdriver.result").split(":");
         this.sonic = Material.valueOf(split[0]);
-        doors.add(Material.WOODEN_DOOR);
+        distance.add(Material.IRON_DOOR_BLOCK);
+        distance.add(Material.LEVER);
+        distance.add(Material.STONE_BUTTON);
+        distance.add(Material.WOODEN_DOOR);
+        distance.add(Material.WOOD_BUTTON);
         doors.add(Material.IRON_DOOR_BLOCK);
         doors.add(Material.TRAP_DOOR);
+        doors.add(Material.WOODEN_DOOR);
+        redstone.add(Material.IRON_DOOR_BLOCK);
+        redstone.add(Material.LEVER);
+        redstone.add(Material.PISTON_BASE);
+        redstone.add(Material.PISTON_STICKY_BASE);
+        redstone.add(Material.REDSTONE_LAMP_OFF);
+        redstone.add(Material.REDSTONE_LAMP_ON);
+        redstone.add(Material.REDSTONE_WIRE);
+        redstone.add(Material.STONE_BUTTON);
+        redstone.add(Material.WOOD_BUTTON);
+        faces.add(BlockFace.NORTH);
+        faces.add(BlockFace.SOUTH);
+        faces.add(BlockFace.EAST);
+        faces.add(BlockFace.WEST);
     }
 
     @EventHandler(priority = EventPriority.MONITOR)
@@ -82,6 +110,56 @@ public class TARDISSonicListener implements Listener {
                                 player.openInventory(menu);
                             }
                         }, 40L);
+                    }
+                    if (player.hasPermission("tardis.sonic.standard") && lore == null) {
+                        Block targetBlock = player.getTargetBlock(plugin.tardisCommand.transparent, 50).getLocation().getBlock();
+                        Material blockType = targetBlock.getType();
+                        if (distance.contains(blockType)) {
+                            BlockState bs = targetBlock.getState();
+                            switch (blockType) {
+                                case IRON_DOOR_BLOCK:
+                                case WOODEN_DOOR:
+                                    boolean allow = true;
+                                    // is Lockette or LWC on the server?
+                                    if (plugin.pm.isPluginEnabled("Lockette")) {
+                                        Lockette Lockette = (Lockette) plugin.pm.getPlugin("Lockette");
+                                        if (Lockette.isProtected(targetBlock)) {
+                                            allow = false;
+                                        }
+                                    }
+                                    if (plugin.pm.isPluginEnabled("LWC")) {
+                                        LWC lwc = (LWC) plugin.pm.getPlugin("LWC");
+                                        if (!lwc.canAccessProtection(player, targetBlock)) {
+                                            allow = false;
+                                        }
+                                    }
+                                    if (allow) {
+                                        Door door = (Door) bs.getData();
+                                        door.setOpen(!door.isOpen());
+                                        bs.setData(door);
+                                        bs.update(true);
+                                    }
+                                    break;
+                                case LEVER:
+                                    Lever lever = (Lever) bs.getData();
+                                    lever.setPowered(!lever.isPowered());
+                                    bs.setData(lever);
+                                    bs.update(true);
+                                    updateBlockPhysics(targetBlock);
+                                    break;
+                                case STONE_BUTTON:
+                                case WOOD_BUTTON:
+                                    Button button = (Button) bs.getData();
+                                    button.setPowered(!button.isPowered());
+                                    bs.setData(button);
+                                    bs.update(true);
+                                    updateBlockPhysics(targetBlock);
+                                    break;
+                                default:
+                                    break;
+                            }
+                        }
+                        return;
                     }
                     if (player.hasPermission("tardis.sonic.bio") && lore != null && lore.contains("Bio-scanner Upgrade")) {
                         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
@@ -161,6 +239,30 @@ public class TARDISSonicListener implements Listener {
                             }
                         }, 60L);
                     }
+                    if (!redstone.contains(b.getType()) && player.hasPermission("tardis.sonic.emerald") && lore != null && lore.contains("Emerald Upgrade")) {
+                        // scan environment
+                    }
+                    if (redstone.contains(b.getType()) && player.hasPermission("tardis.sonic.redstone") && lore != null && lore.contains("Redstone Upgrade")) {
+                        // do redstone activation
+                        switch (b.getType()) {
+                            case IRON_DOOR_BLOCK:
+                                break;
+                            case LEVER:
+                                break;
+                            case PISTON_BASE:
+                            case PISTON_STICKY_BASE:
+                                break;
+                            case REDSTONE_LAMP_OFF:
+                            case REDSTONE_LAMP_ON:
+                                break;
+                            case REDSTONE_WIRE:
+                                break;
+                            case STONE_BUTTON:
+                            case WOOD_BUTTON:
+                            default:
+                                break;
+                        }
+                    }
                 }
             }
         }
@@ -212,6 +314,22 @@ public class TARDISSonicListener implements Listener {
     public void onPlayerFrozenMove(PlayerMoveEvent event) {
         if (frozenPlayers.contains(event.getPlayer().getName())) {
             event.setCancelled(true);
+        }
+    }
+
+    private void updateBlockPhysics(Block b) {
+        update(b.getRelative(BlockFace.DOWN));
+        update(b.getRelative(BlockFace.UP));
+        for (BlockFace f : faces) {
+            update(b.getRelative(BlockFace.UP).getRelative(f));
+            update(b.getRelative(f));
+            update(b.getRelative(BlockFace.DOWN).getRelative(f));
+        }
+    }
+
+    private void update(Block b) {
+        if (!b.getType().equals(Material.AIR)) {
+            b.getState().update(true, true);
         }
     }
 }
