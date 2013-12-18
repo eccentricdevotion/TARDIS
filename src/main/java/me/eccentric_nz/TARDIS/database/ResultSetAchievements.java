@@ -68,7 +68,7 @@ public class ResultSetAchievements {
      * Retrieves an SQL ResultSet from the achievements table. This method
      * returns true if a matching record was found.
      *
-     * @return
+     * @return true or false
      */
     public boolean resultSet() {
         PreparedStatement statement = null;

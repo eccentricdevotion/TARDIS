@@ -48,7 +48,7 @@ public class TARDISRoomRunnable implements Runnable {
     private final Location l;
     String[][][] s;
     short[] dim;
-    private int id, task, level, row, col, h, w, c, startx, starty, startz, resetx, resetz;
+    private int id, task, level, row, col, h, w, c, startx, starty, startz, resetx, resety, resetz;
     private final int middle_id, floor_id, x, z, tardis_id;
     byte data, middle_data, floor_data;
     Block b;
@@ -112,6 +112,7 @@ public class TARDISRoomRunnable implements Runnable {
             starty = l.getBlockY();
             startz = l.getBlockZ();
             resetx = startx;
+            resety = starty;
             resetz = startz;
             world = l.getWorld();
             running = true;
@@ -322,6 +323,26 @@ public class TARDISRoomRunnable implements Runnable {
                 } else {
                     id = (middle_id == 35 && middle_data == 1 && plugin.getConfig().getBoolean("use_clay")) ? 159 : middle_id;
                     data = middle_data;
+                }
+            }
+            // always clear the door blocks on the north and west sides of adjacent spaces
+            if (id == 29) {
+                // only the bottom pistons
+                if (starty == (resety + 2)) {
+                    Block bottomdoorblock = null;
+                    // north
+                    if (startx == (resetx + 8) && startz == resetz) {
+                        bottomdoorblock = world.getBlockAt(startx, (starty + 2), (startz - 1));
+                    }
+                    // west
+                    if (startx == resetx && startz == (resetz + 8)) {
+                        bottomdoorblock = world.getBlockAt((startx - 1), (starty + 2), startz);
+                    }
+                    if (bottomdoorblock != null) {
+                        Block topdoorblock = bottomdoorblock.getRelative(BlockFace.UP);
+                        bottomdoorblock.setType(Material.AIR);
+                        topdoorblock.setType(Material.AIR);
+                    }
                 }
             }
             // always remove sponge
