@@ -32,7 +32,7 @@ import me.eccentric_nz.TARDIS.TARDISConstants;
  *
  * @author eccentric_nz
  */
-public class TARDISCustomPreset {
+public class TARDISCustomPreset extends TARDISPreset {
 
     private final EnumMap<TARDISConstants.COMPASS, TARDISChameleonColumn> blueprint = new EnumMap<TARDISConstants.COMPASS, TARDISChameleonColumn>(TARDISConstants.COMPASS.class);
     private final EnumMap<TARDISConstants.COMPASS, TARDISChameleonColumn> stained = new EnumMap<TARDISConstants.COMPASS, TARDISChameleonColumn>(TARDISConstants.COMPASS.class);
@@ -43,6 +43,7 @@ public class TARDISCustomPreset {
     public TARDISCustomPreset() {
     }
 
+    @Override
     public void makePresets() {
         // get the custom preset file and read the contents
         // ignore lines that start with a #
@@ -91,18 +92,6 @@ public class TARDISCustomPreset {
             this.line_one = "CUSTOM TEXT";
             this.line_two = "GOES HERE";
         }
-    }
-
-    public EnumMap<TARDISConstants.COMPASS, TARDISChameleonColumn> getBlueprint() {
-        return blueprint;
-    }
-
-    public EnumMap<TARDISConstants.COMPASS, TARDISChameleonColumn> getStained() {
-        return stained;
-    }
-
-    public EnumMap<TARDISConstants.COMPASS, TARDISChameleonColumn> getGlass() {
-        return glass;
     }
 
     public String getLine_one() {

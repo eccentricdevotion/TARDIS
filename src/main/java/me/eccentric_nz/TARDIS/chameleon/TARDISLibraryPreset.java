@@ -27,7 +27,7 @@ import me.eccentric_nz.TARDIS.TARDISConstants;
  *
  * @author eccentric_nz
  */
-public class TARDISLibraryPreset {
+public class TARDISLibraryPreset extends TARDISPreset {
 
     private final String blueprint_id = "[[47,47,47,126],[47,47,47,126],[47,47,47,126],[47,47,47,126],[47,47,47,126],[47,47,47,126],[47,47,47,126],[0,0,85,126],[96,0,0,126],[0,0,68,0]]";
     private final String blueprint_data = "[[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0],[2,0,0,0],[0,0,4,0]]";
@@ -35,31 +35,13 @@ public class TARDISLibraryPreset {
     private final String stained_data = "[[2,2,2,12],[2,2,2,12],[2,2,2,12],[2,2,2,12],[2,2,2,12],[2,2,2,12],[2,2,2,12],[0,0,12,12],[2,0,0,12],[0,0,4,0]]";
     private final String glass_id = "[[20,20,20,20],[20,20,20,20],[20,20,20,20],[20,20,20,20],[20,20,20,20],[20,20,20,20],[20,20,20,20],[0,0,20,20],[96,0,0,20],[0,0,68,0]]";
     private final String glass_data = "[[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0],[2,0,0,0],[0,0,4,0]]";
-    private final EnumMap<TARDISConstants.COMPASS, TARDISChameleonColumn> blueprint = new EnumMap<TARDISConstants.COMPASS, TARDISChameleonColumn>(TARDISConstants.COMPASS.class);
-    private final EnumMap<TARDISConstants.COMPASS, TARDISChameleonColumn> stained = new EnumMap<TARDISConstants.COMPASS, TARDISChameleonColumn>(TARDISConstants.COMPASS.class);
-    private final EnumMap<TARDISConstants.COMPASS, TARDISChameleonColumn> glass = new EnumMap<TARDISConstants.COMPASS, TARDISChameleonColumn>(TARDISConstants.COMPASS.class);
 
     public TARDISLibraryPreset() {
-    }
-
-    public void makePresets() {
-        TARDISChameleonPreset tcp = new TARDISChameleonPreset();
-        for (TARDISConstants.COMPASS d : TARDISConstants.COMPASS.values()) {
-            blueprint.put(d, tcp.buildTARDISChameleonColumn(d, blueprint_id, blueprint_data, false));
-            glass.put(d, tcp.buildTARDISChameleonColumn(d, glass_id, glass_data, false));
-            stained.put(d, tcp.buildTARDISChameleonColumn(d, stained_id, stained_data, false));
-        }
-    }
-
-    public EnumMap<TARDISConstants.COMPASS, TARDISChameleonColumn> getBlueprint() {
-        return blueprint;
-    }
-
-    public EnumMap<TARDISConstants.COMPASS, TARDISChameleonColumn> getStained() {
-        return stained;
-    }
-
-    public EnumMap<TARDISConstants.COMPASS, TARDISChameleonColumn> getGlass() {
-        return glass;
+        setBlueprint_id(blueprint_id);
+        setBlueprint_data(blueprint_data);
+        setStained_id(stained_id);
+        setStained_data(stained_data);
+        setGlass_id(glass_id);
+        setGlass_data(glass_data);
     }
 }
