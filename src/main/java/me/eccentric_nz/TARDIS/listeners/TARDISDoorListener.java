@@ -32,7 +32,7 @@ import me.eccentric_nz.TARDIS.travel.TARDISDoorLocation;
 import me.eccentric_nz.TARDIS.travel.TARDISFarmer;
 import me.eccentric_nz.TARDIS.travel.TARDISMob;
 import me.eccentric_nz.TARDIS.utility.TARDISItemRenamer;
-import me.eccentric_nz.TARDIS.utility.TARDISTexturePackChanger;
+import me.eccentric_nz.TARDIS.utility.TARDISResourcePackChanger;
 import multiworld.MultiWorldPlugin;
 import multiworld.api.MultiWorldAPI;
 import multiworld.api.MultiWorldWorldData;
@@ -376,7 +376,7 @@ public class TARDISDoorListener implements Listener {
                                                     }
                                                 }
                                                 if (plugin.getConfig().getBoolean("allow_tp_switch") && userTP) {
-                                                    new TARDISTexturePackChanger(plugin).changeTP(player, rsp.getTexture_out());
+                                                    new TARDISResourcePackChanger(plugin).changeRP(player, rsp.getTexture_out());
                                                 }
                                                 // remove player from traveller table
                                                 removeTraveller(playerNameStr);
@@ -431,7 +431,7 @@ public class TARDISDoorListener implements Listener {
                                                 }
                                                 if (plugin.getConfig().getBoolean("allow_tp_switch") && userTP) {
                                                     if (!rsp.getTexture_in().isEmpty()) {
-                                                        new TARDISTexturePackChanger(plugin).changeTP(player, rsp.getTexture_in());
+                                                        new TARDISResourcePackChanger(plugin).changeRP(player, rsp.getTexture_in());
                                                     }
                                                 }
                                                 // put player into travellers table
@@ -466,7 +466,7 @@ public class TARDISDoorListener implements Listener {
                                             movePlayer(player, inner_loc, false, playerWorld, userQuotes, 1);
                                             if (plugin.getConfig().getBoolean("allow_tp_switch") && userTP) {
                                                 if (!rsp.getTexture_in().isEmpty()) {
-                                                    new TARDISTexturePackChanger(plugin).changeTP(player, rsp.getTexture_in());
+                                                    new TARDISResourcePackChanger(plugin).changeRP(player, rsp.getTexture_in());
                                                 }
                                             }
                                             // put player into travellers table
@@ -512,7 +512,7 @@ public class TARDISDoorListener implements Listener {
                                             final Location outer_loc = obd_loc;
                                             movePlayer(player, outer_loc, true, playerWorld, userQuotes, 2);
                                             if (plugin.getConfig().getBoolean("allow_tp_switch") && userTP) {
-                                                new TARDISTexturePackChanger(plugin).changeTP(player, rsp.getTexture_out());
+                                                new TARDISResourcePackChanger(plugin).changeRP(player, rsp.getTexture_out());
                                             }
                                             // remove player from traveller table
                                             removeTraveller(playerNameStr);

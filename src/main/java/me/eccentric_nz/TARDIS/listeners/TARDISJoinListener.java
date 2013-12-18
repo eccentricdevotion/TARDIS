@@ -25,7 +25,7 @@ import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
-import me.eccentric_nz.TARDIS.utility.TARDISTexturePackChanger;
+import me.eccentric_nz.TARDIS.utility.TARDISResourcePackChanger;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.World;
@@ -97,7 +97,7 @@ public class TARDISJoinListener implements Listener {
                         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
                             @Override
                             public void run() {
-                                new TARDISTexturePackChanger(plugin).changeTP(player, rsp.getTexture_in());
+                                new TARDISResourcePackChanger(plugin).changeRP(player, rsp.getTexture_in());
                             }
                         }, 50L);
                     }

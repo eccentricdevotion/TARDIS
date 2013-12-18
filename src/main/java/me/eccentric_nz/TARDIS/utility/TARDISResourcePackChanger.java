@@ -28,11 +28,11 @@ import org.bukkit.entity.Player;
  *
  * @author eccentric_nz
  */
-public class TARDISTexturePackChanger {
+public class TARDISResourcePackChanger {
 
     private final TARDIS plugin;
 
-    public TARDISTexturePackChanger(TARDIS plugin) {
+    public TARDISResourcePackChanger(TARDIS plugin) {
         this.plugin = plugin;
     }
 
@@ -42,13 +42,13 @@ public class TARDISTexturePackChanger {
      * @param p The player
      * @param url The URL of the texture pack file
      */
-    public void changeTP(Player p, String url) {
+    public void changeRP(Player p, String url) {
         // check the URL
         try {
             new URL(url);
             if (p.isOnline()) {
                 String player = p.getName();
-                plugin.getServer().getPlayer(player).setTexturePack(url);
+                plugin.getServer().getPlayer(player).setResourcePack(url);
             }
         } catch (MalformedURLException e) {
             p.sendMessage(plugin.pluginName + "Could not access the URL! " + e.getMessage());
