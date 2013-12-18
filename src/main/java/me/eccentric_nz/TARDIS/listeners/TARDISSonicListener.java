@@ -65,7 +65,6 @@ public class TARDISSonicListener implements Listener {
     private final List<Material> redstone = new ArrayList<Material>();
     private final List<Material> distance = new ArrayList<Material>();
     private final List<String> frozenPlayers = new ArrayList<String>();
-    private final List<BlockFace> faces = new ArrayList<BlockFace>();
     private final List<EntityType> entities = new ArrayList<EntityType>();
 
     public TARDISSonicListener(TARDIS plugin) {
@@ -89,10 +88,6 @@ public class TARDISSonicListener implements Listener {
         redstone.add(Material.REDSTONE_WIRE);
         redstone.add(Material.STONE_BUTTON);
         redstone.add(Material.WOOD_BUTTON);
-        faces.add(BlockFace.NORTH);
-        faces.add(BlockFace.SOUTH);
-        faces.add(BlockFace.EAST);
-        faces.add(BlockFace.WEST);
         entities.add(EntityType.BAT);
         entities.add(EntityType.BLAZE);
         entities.add(EntityType.CAVE_SPIDER);
@@ -148,29 +143,36 @@ public class TARDISSonicListener implements Listener {
                         Block targetBlock = player.getTargetBlock(plugin.tardisCommand.transparent, 50).getLocation().getBlock();
                         Material blockType = targetBlock.getType();
                         if (distance.contains(blockType)) {
-                            BlockState bs = targetBlock.getState();
+                            final BlockState bs = targetBlock.getState();
                             switch (blockType) {
                                 case IRON_DOOR_BLOCK:
                                 case WOODEN_DOOR:
+                                    Block lowerdoor;
+                                    if (targetBlock.getData() >= 8) {
+                                        lowerdoor = targetBlock.getRelative(BlockFace.DOWN);
+                                    } else {
+                                        lowerdoor = targetBlock;
+                                    }
                                     boolean allow = true;
                                     // is Lockette or LWC on the server?
                                     if (plugin.pm.isPluginEnabled("Lockette")) {
                                         Lockette Lockette = (Lockette) plugin.pm.getPlugin("Lockette");
-                                        if (Lockette.isProtected(targetBlock)) {
+                                        if (Lockette.isProtected(lowerdoor)) {
                                             allow = false;
                                         }
                                     }
                                     if (plugin.pm.isPluginEnabled("LWC")) {
                                         LWC lwc = (LWC) plugin.pm.getPlugin("LWC");
-                                        if (!lwc.canAccessProtection(player, targetBlock)) {
+                                        if (!lwc.canAccessProtection(player, lowerdoor)) {
                                             allow = false;
                                         }
                                     }
                                     if (allow) {
-                                        Door door = (Door) bs.getData();
+                                        BlockState bsl = lowerdoor.getState();
+                                        Door door = (Door) bsl.getData();
                                         door.setOpen(!door.isOpen());
-                                        bs.setData(door);
-                                        bs.update(true);
+                                        bsl.setData(door);
+                                        bsl.update(true);
                                     }
                                     break;
                                 case LEVER:
@@ -178,15 +180,22 @@ public class TARDISSonicListener implements Listener {
                                     lever.setPowered(!lever.isPowered());
                                     bs.setData(lever);
                                     bs.update(true);
-                                    updateBlockPhysics(targetBlock);
                                     break;
                                 case STONE_BUTTON:
                                 case WOOD_BUTTON:
-                                    Button button = (Button) bs.getData();
-                                    button.setPowered(!button.isPowered());
+                                    final Button button = (Button) bs.getData();
+                                    button.setPowered(true);
                                     bs.setData(button);
                                     bs.update(true);
-                                    updateBlockPhysics(targetBlock);
+                                    long delay = (blockType.equals(Material.STONE_BUTTON)) ? 20L : 30L;
+                                    plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            button.setPowered(false);
+                                            bs.setData(button);
+                                            bs.update(true);
+                                        }
+                                    }, delay);
                                     break;
                                 default:
                                     break;
@@ -348,22 +357,6 @@ public class TARDISSonicListener implements Listener {
     public void onPlayerFrozenMove(PlayerMoveEvent event) {
         if (frozenPlayers.contains(event.getPlayer().getName())) {
             event.setCancelled(true);
-        }
-    }
-
-    private void updateBlockPhysics(Block b) {
-        update(b.getRelative(BlockFace.DOWN));
-        update(b.getRelative(BlockFace.UP));
-        for (BlockFace f : faces) {
-            update(b.getRelative(BlockFace.UP).getRelative(f));
-            update(b.getRelative(f));
-            update(b.getRelative(BlockFace.DOWN).getRelative(f));
-        }
-    }
-
-    private void update(Block b) {
-        if (!b.getType().equals(Material.AIR)) {
-            b.getState().update(true, true);
         }
     }
 

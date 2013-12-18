@@ -52,7 +52,8 @@ public class TARDISCommands implements CommandExecutor {
         transparent.add((byte) 8); // WATER
         transparent.add((byte) 9); // STATIONARY_WATER
         transparent.add((byte) 31); // LONG_GRASS
-        transparent.add((byte) 32); //DEAD_BUSH
+        transparent.add((byte) 32); // DEAD_BUSH
+        transparent.add((byte) 55); // REDSTONE_WIRE
         transparent.add((byte) 78); // SNOW
         transparent.add((byte) 101); // IRON_FENCE
         transparent.add((byte) 106); // VINE
