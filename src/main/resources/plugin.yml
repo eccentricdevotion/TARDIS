@@ -178,6 +178,9 @@ permissions:
   tardis.sonic.bio:
     description: Allows the sonic screwdriver to be upgraded with Bio-scanner abilities.
     default: op
+  tardis.sonic.freeze:
+    description: Allows a player to use the freeze function of the sonic screwdriver with Bio-scanner.
+    default: op
   tardis.sonic.redstone:
     description: Allows the sonic screwdriver to be upgraded with Redstone Activation abilities.
     default: op

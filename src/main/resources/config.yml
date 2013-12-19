@@ -76,3 +76,4 @@ custom_schematic: false
 custom_schematic_seed: OBSIDIAN
 custom_creeper_id: 138
 use_block_stack: false
+freeze_cooldown: 60

@@ -67,6 +67,7 @@ public class TARDISSonicListener implements Listener {
     private final TARDIS plugin;
     private final Material sonic;
     private final HashMap<String, Long> timeout = new HashMap<String, Long>();
+    private final HashMap<String, Long> cooldown = new HashMap<String, Long>();
     private final List<Material> doors = new ArrayList<Material>();
     private final List<Material> redstone = new ArrayList<Material>();
     private final List<Material> distance = new ArrayList<Material>();
@@ -136,7 +137,7 @@ public class TARDISSonicListener implements Listener {
                 List<String> lore = im.getLore();
                 Action action = event.getAction();
                 if (action.equals(Action.RIGHT_CLICK_AIR)) {
-                    playSonicSound(player, now);
+                    playSonicSound(player, now, 3050L, "sonic_screwdriver");
                     if (player.hasPermission("tardis.admin") && lore != null && lore.contains("Admin Upgrade")) {
                         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
                             @Override
@@ -212,50 +213,54 @@ public class TARDISSonicListener implements Listener {
                         }
                         return;
                     }
-                    if (player.hasPermission("tardis.sonic.bio") && lore != null && lore.contains("Bio-scanner Upgrade")) {
-                        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
-                            @Override
-                            public void run() {
-                                Location observerPos = player.getEyeLocation();
-                                TARDISVector3D observerDir = new TARDISVector3D(observerPos.getDirection());
+                    if (player.hasPermission("tardis.sonic.freeze") && lore != null && lore.contains("Bio-scanner Upgrade")) {
+                        long cool = System.currentTimeMillis();
+                        if ((!cooldown.containsKey(player.getName()) || cooldown.get(player.getName()) < cool)) {
+                            cooldown.put(player.getName(), cool + (plugin.getConfig().getInt("freeze_cooldown") * 1000L));
+                            plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
+                                @Override
+                                public void run() {
+                                    Location observerPos = player.getEyeLocation();
+                                    TARDISVector3D observerDir = new TARDISVector3D(observerPos.getDirection());
+                                    TARDISVector3D observerStart = new TARDISVector3D(observerPos);
+                                    TARDISVector3D observerEnd = observerStart.add(observerDir.multiply(16));
 
-                                TARDISVector3D observerStart = new TARDISVector3D(observerPos);
-                                TARDISVector3D observerEnd = observerStart.add(observerDir.multiply(16));
-
-                                Player hit = null;
-
-                                // Get nearby entities
-                                for (Player target : player.getWorld().getPlayers()) {
-                                    // Bounding box of the given player
-                                    TARDISVector3D targetPos = new TARDISVector3D(target.getLocation());
-                                    TARDISVector3D minimum = targetPos.add(-0.5, 0, -0.5);
-                                    TARDISVector3D maximum = targetPos.add(0.5, 1.67, 0.5);
-                                    if (target != player && hasIntersection(observerStart, observerEnd, minimum, maximum)) {
-                                        if (hit == null || hit.getLocation().distanceSquared(observerPos) > target.getLocation().distanceSquared(observerPos)) {
-                                            hit = target;
+                                    Player hit = null;
+                                    // Get nearby entities
+                                    for (Player target : player.getWorld().getPlayers()) {
+                                        // Bounding box of the given player
+                                        TARDISVector3D targetPos = new TARDISVector3D(target.getLocation());
+                                        TARDISVector3D minimum = targetPos.add(-0.5, 0, -0.5);
+                                        TARDISVector3D maximum = targetPos.add(0.5, 1.67, 0.5);
+                                        if (target != player && hasIntersection(observerStart, observerEnd, minimum, maximum)) {
+                                            if (hit == null || hit.getLocation().distanceSquared(observerPos) > target.getLocation().distanceSquared(observerPos)) {
+                                                hit = target;
+                                            }
                                         }
                                     }
+                                    // freeze the closest player
+                                    if (hit != null) {
+                                        hit.sendMessage(plugin.pluginName + player.getName() + " froze you with their Sonic Screwdriver!");
+                                        final String hitNme = hit.getName();
+                                        frozenPlayers.add(hitNme);
+                                        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
+                                            @Override
+                                            public void run() {
+                                                frozenPlayers.remove(hitNme);
+                                            }
+                                        }, 100L);
+                                    }
                                 }
-                                // freeze the closest player
-                                if (hit != null) {
-                                    hit.sendMessage(plugin.pluginName + player.getName() + " froze you with their Sonic Screwdriver!");
-                                    final String hitNme = hit.getName();
-                                    frozenPlayers.add(hitNme);
-                                    plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
-                                        @Override
-                                        public void run() {
-                                            frozenPlayers.remove(hitNme);
-                                        }
-                                    }, 100L);
-                                }
-                            }
-                        }, 20L);
+                            }, 20L);
+                        } else {
+                            player.sendMessage(plugin.pluginName + player.getName() + " You cannot freeze another player yet!");
+                        }
                     }
                 }
                 if (action.equals(Action.RIGHT_CLICK_BLOCK)) {
                     final Block b = event.getClickedBlock();
                     if (doors.contains(b.getType()) && player.hasPermission("tardis.admin") && lore != null && lore.contains("Admin Upgrade")) {
-                        playSonicSound(player, now);
+                        playSonicSound(player, now, 3050L, "sonic_screwdriver");
                         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
                             @Override
                             public void run() {
@@ -310,6 +315,7 @@ public class TARDISSonicListener implements Listener {
                         this.scan(b.getLocation(), player);
                     }
                     if (redstone.contains(b.getType()) && player.hasPermission("tardis.sonic.redstone") && lore != null && lore.contains("Redstone Upgrade")) {
+                        playSonicSound(player, now, 600L, "sonic_short");
                         Material blockType = b.getType();
                         BlockState bs = b.getState();
                         // do redstone activation
@@ -397,13 +403,13 @@ public class TARDISSonicListener implements Listener {
         }
     }
 
-    private void playSonicSound(final Player player, long now) {
+    private void playSonicSound(final Player player, long now, long cooldown, String sound) {
         if ((!timeout.containsKey(player.getName()) || timeout.get(player.getName()) < now)) {
             ItemMeta im = player.getItemInHand().getItemMeta();
             im.addEnchant(Enchantment.DURABILITY, 1, true);
             player.getItemInHand().setItemMeta(im);
-            timeout.put(player.getName(), now + 3050);
-            plugin.utils.playTARDISSound(player.getLocation(), player, "sonic_screwdriver");
+            timeout.put(player.getName(), now + cooldown);
+            plugin.utils.playTARDISSound(player.getLocation(), player, sound);
             plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
                 @Override
                 public void run() {
@@ -411,7 +417,7 @@ public class TARDISSonicListener implements Listener {
                         player.getItemInHand().removeEnchantment(e);
                     }
                 }
-            }, 60L);
+            }, (cooldown / 50L));
         }
     }
 

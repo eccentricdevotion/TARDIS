@@ -165,6 +165,7 @@ public class TARDISConfiguration {
         intOptions.put("confirm_timeout", 15);
         intOptions.put("count", 0);
         intOptions.put("custom_creeper_id", 138);
+        intOptions.put("freeze_cooldown", 60);
         intOptions.put("gravity_max_distance", 16);
         intOptions.put("gravity_max_velocity", 5);
         intOptions.put("hads_damage", 10);

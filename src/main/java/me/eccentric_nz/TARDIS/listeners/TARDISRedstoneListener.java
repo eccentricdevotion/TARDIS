@@ -46,7 +46,6 @@ public class TARDISRedstoneListener implements Listener {
 
     @EventHandler
     public void onRedstoneChange(BlockRedstoneEvent event) {
-        plugin.debug("Redstone changed block: " + event.getBlock().getType().toString());
         final String block = event.getBlock().getLocation().toString();
         if (wires.contains(block) || lamps.contains(block) || rails.contains(block)) {
             event.setNewCurrent(event.getOldCurrent());
