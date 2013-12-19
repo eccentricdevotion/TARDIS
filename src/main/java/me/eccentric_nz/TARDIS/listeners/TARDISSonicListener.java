@@ -68,9 +68,10 @@ public class TARDISSonicListener implements Listener {
     private final Material sonic;
     private final HashMap<String, Long> timeout = new HashMap<String, Long>();
     private final HashMap<String, Long> cooldown = new HashMap<String, Long>();
+    private final List<Material> diamond = new ArrayList<Material>();
+    private final List<Material> distance = new ArrayList<Material>();
     private final List<Material> doors = new ArrayList<Material>();
     private final List<Material> redstone = new ArrayList<Material>();
-    private final List<Material> distance = new ArrayList<Material>();
     private final List<String> frozenPlayers = new ArrayList<String>();
     private final List<EntityType> entities = new ArrayList<EntityType>();
     private final List<BlockFace> faces = new ArrayList<BlockFace>();
@@ -79,6 +80,12 @@ public class TARDISSonicListener implements Listener {
         this.plugin = plugin;
         String[] split = plugin.getRecipesConfig().getString("shaped.Sonic Screwdriver.result").split(":");
         this.sonic = Material.valueOf(split[0]);
+        diamond.add(Material.GLASS);
+        diamond.add(Material.IRON_FENCE);
+        diamond.add(Material.STAINED_GLASS);
+        diamond.add(Material.STAINED_GLASS_PANE);
+        diamond.add(Material.THIN_GLASS);
+        diamond.add(Material.WEB);
         distance.add(Material.IRON_DOOR_BLOCK);
         distance.add(Material.LEVER);
         distance.add(Material.STONE_BUTTON);
@@ -396,6 +403,45 @@ public class TARDISSonicListener implements Listener {
                                 break;
                             default:
                                 break;
+                        }
+                    }
+                }
+                if (action.equals(Action.LEFT_CLICK_BLOCK)) {
+                    Block b = event.getClickedBlock();
+                    if (diamond.contains(b.getType()) && player.hasPermission("tardis.sonic.diamond") && lore != null && lore.contains("Diamond Upgrade")) {
+                        playSonicSound(player, now, 600L, "sonic_short");
+
+                        // drop appropriate material
+                        if (player.hasPermission("tardis.sonic.silktouch")) {
+                            Location l = b.getLocation();
+                            switch (b.getType()) {
+                                case GLASS:
+                                    l.getWorld().dropItemNaturally(l, new ItemStack(Material.GLASS, 1));
+                                    break;
+                                case IRON_FENCE:
+                                    l.getWorld().dropItemNaturally(l, new ItemStack(Material.IRON_FENCE, 1));
+                                    break;
+                                case STAINED_GLASS:
+                                    l.getWorld().dropItemNaturally(l, new ItemStack(Material.STAINED_GLASS, 1, b.getData()));
+                                    break;
+                                case STAINED_GLASS_PANE:
+                                    l.getWorld().dropItemNaturally(l, new ItemStack(Material.STAINED_GLASS_PANE, 1, b.getData()));
+                                    break;
+                                case THIN_GLASS:
+                                    l.getWorld().dropItemNaturally(l, new ItemStack(Material.THIN_GLASS, 1));
+                                    break;
+                                case WEB:
+                                    l.getWorld().dropItemNaturally(l, new ItemStack(Material.WEB, 1));
+                                    break;
+                                default:
+                                    break;
+                            }
+                            l.getWorld().playSound(l, Sound.EAT, 1.0F, 2.0F);
+                            // set the block to AIR
+                            b.setType(Material.AIR);
+                        } else {
+                            b.breakNaturally();
+                            b.getLocation().getWorld().playSound(b.getLocation(), Sound.EAT, 1.0F, 2.0F);
                         }
                     }
                 }

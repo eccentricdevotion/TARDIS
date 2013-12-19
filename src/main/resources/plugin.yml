@@ -187,6 +187,9 @@ permissions:
   tardis.sonic.diamond:
     description: Allows the sonic screwdriver to be upgraded with Diamond Disruptor abilities.
     default: op
+  tardis.sonic.silktouch:
+    description: Allows the sonic screwdriver with Diamond Disruptor to drop 'silk touch' blocks.
+    default: op
   tardis.sonic.emerald:
     description: Allows the sonic screwdriver to be upgraded with Emerald Environment abilities.
     default: op
