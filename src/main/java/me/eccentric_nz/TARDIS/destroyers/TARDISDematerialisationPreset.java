@@ -240,6 +240,9 @@ public class TARDISDematerialisationPreset implements Runnable {
                                         chad = plugin.lookup.getStain().get(cham_id);
                                     }
                                     plugin.utils.setBlock(world, xx, (y + yy), zz, 95, chad);
+                                } else if (preset.equals(TARDISConstants.PRESET.NEW) || preset.equals(TARDISConstants.PRESET.OLD) || preset.equals(TARDISConstants.PRESET.SUBMERGED)) {
+                                    chad = plugin.lookup.getStain().get(cham_id);
+                                    plugin.utils.setBlock(world, xx, (y + yy), zz, 95, chad);
                                 } else {
                                     plugin.utils.setBlock(world, xx, (y + yy), zz, colids[yy], coldatas[yy]);
                                 }
