@@ -23,12 +23,15 @@ import java.util.List;
 import java.util.Map;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.commands.admin.TARDISAdminMenuInventory;
+import me.eccentric_nz.TARDIS.database.ResultSetBackLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetDoors;
+import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
 import static me.eccentric_nz.TARDIS.listeners.TARDISScannerListener.getNearbyEntities;
 import me.eccentric_nz.TARDIS.utility.TARDISVector3D;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.Sound;
 import org.bukkit.block.Biome;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
@@ -47,8 +50,11 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.material.Button;
+import org.bukkit.material.DetectorRail;
 import org.bukkit.material.Door;
 import org.bukkit.material.Lever;
+import org.bukkit.material.PistonBaseMaterial;
+import org.bukkit.material.PoweredRail;
 import org.bukkit.scheduler.BukkitScheduler;
 import org.yi.acru.bukkit.Lockette.Lockette;
 
@@ -66,6 +72,7 @@ public class TARDISSonicListener implements Listener {
     private final List<Material> distance = new ArrayList<Material>();
     private final List<String> frozenPlayers = new ArrayList<String>();
     private final List<EntityType> entities = new ArrayList<EntityType>();
+    private final List<BlockFace> faces = new ArrayList<BlockFace>();
 
     public TARDISSonicListener(TARDIS plugin) {
         this.plugin = plugin;
@@ -79,15 +86,13 @@ public class TARDISSonicListener implements Listener {
         doors.add(Material.IRON_DOOR_BLOCK);
         doors.add(Material.TRAP_DOOR);
         doors.add(Material.WOODEN_DOOR);
-        redstone.add(Material.IRON_DOOR_BLOCK);
-        redstone.add(Material.LEVER);
+        redstone.add(Material.DETECTOR_RAIL);
         redstone.add(Material.PISTON_BASE);
         redstone.add(Material.PISTON_STICKY_BASE);
+        redstone.add(Material.POWERED_RAIL);
         redstone.add(Material.REDSTONE_LAMP_OFF);
         redstone.add(Material.REDSTONE_LAMP_ON);
         redstone.add(Material.REDSTONE_WIRE);
-        redstone.add(Material.STONE_BUTTON);
-        redstone.add(Material.WOOD_BUTTON);
         entities.add(EntityType.BAT);
         entities.add(EntityType.BLAZE);
         entities.add(EntityType.CAVE_SPIDER);
@@ -114,6 +119,10 @@ public class TARDISSonicListener implements Listener {
         entities.add(EntityType.WITCH);
         entities.add(EntityType.WOLF);
         entities.add(EntityType.ZOMBIE);
+        faces.add(BlockFace.NORTH);
+        faces.add(BlockFace.SOUTH);
+        faces.add(BlockFace.EAST);
+        faces.add(BlockFace.WEST);
     }
 
     @EventHandler(priority = EventPriority.MONITOR)
@@ -265,6 +274,21 @@ public class TARDISSonicListener implements Listener {
                                 ResultSetDoors rsd = new ResultSetDoors(plugin, wheredoor, false);
                                 if (rsd.resultSet()) {
                                     int id = rsd.getTardis_id();
+                                    // get the TARDIS owner's name
+                                    HashMap<String, Object> wheren = new HashMap<String, Object>();
+                                    wheren.put("tardis_id", id);
+                                    ResultSetTardis rsn = new ResultSetTardis(plugin, wheren, "", false);
+                                    if (rsn.resultSet()) {
+                                        player.sendMessage(plugin.pluginName + "This is " + rsn.getOwner() + "'s TARDIS");
+                                        int percent = Math.round((rsn.getArtron_level() * 100F) / plugin.getArtronConfig().getInt("full_charge"));
+                                        player.sendMessage(plugin.pluginName + "The Artron Energy Capacitor is at " + percent + "%");
+                                        HashMap<String, Object> whereb = new HashMap<String, Object>();
+                                        whereb.put("tardis_id", id);
+                                        ResultSetBackLocation rsb = new ResultSetBackLocation(plugin, whereb);
+                                        if (rsb.resultSet()) {
+                                            player.sendMessage(plugin.pluginName + "Its last location was: " + rsb.getWorld().getName() + " " + rsb.getX() + ":" + rsb.getY() + ":" + rsb.getZ());
+                                        }
+                                    }
                                     HashMap<String, Object> whereid = new HashMap<String, Object>();
                                     whereid.put("tardis_id", id);
                                     ResultSetTravellers rst = new ResultSetTravellers(plugin, whereid, true);
@@ -286,22 +310,84 @@ public class TARDISSonicListener implements Listener {
                         this.scan(b.getLocation(), player);
                     }
                     if (redstone.contains(b.getType()) && player.hasPermission("tardis.sonic.redstone") && lore != null && lore.contains("Redstone Upgrade")) {
+                        Material blockType = b.getType();
+                        BlockState bs = b.getState();
                         // do redstone activation
-                        switch (b.getType()) {
-                            case IRON_DOOR_BLOCK:
+                        switch (blockType) {
+                            case DETECTOR_RAIL:
+                                DetectorRail drail = (DetectorRail) bs.getData();
+                                if (plugin.redstoneListener.getRails().contains(b.getLocation().toString())) {
+                                    plugin.redstoneListener.getRails().remove(b.getLocation().toString());
+                                    drail.setPressed(false);
+                                    b.setData((byte) (drail.getData() - 8));
+                                } else {
+                                    plugin.redstoneListener.getRails().add(b.getLocation().toString());
+                                    drail.setPressed(true);
+                                    b.setData((byte) (drail.getData() + 8));
+                                }
                                 break;
-                            case LEVER:
+                            case POWERED_RAIL:
+                                PoweredRail rail = (PoweredRail) bs.getData();
+                                if (plugin.redstoneListener.getRails().contains(b.getLocation().toString())) {
+                                    plugin.redstoneListener.getRails().remove(b.getLocation().toString());
+                                    rail.setPowered(false);
+                                    b.setData((byte) (rail.getData() - 8));
+                                } else {
+                                    plugin.redstoneListener.getRails().add(b.getLocation().toString());
+                                    rail.setPowered(true);
+                                    b.setData((byte) (rail.getData() + 8));
+                                }
                                 break;
                             case PISTON_BASE:
                             case PISTON_STICKY_BASE:
+                                PistonBaseMaterial piston = (PistonBaseMaterial) bs.getData();
+                                // find the direction the piston is facing
+                                if (plugin.redstoneListener.getPistons().contains(b.getLocation().toString())) {
+                                    plugin.redstoneListener.getPistons().remove(b.getLocation().toString());
+                                    for (BlockFace f : faces) {
+                                        if (b.getRelative(f).getType().equals(Material.AIR)) {
+                                            b.getRelative(f).setTypeIdAndData(20, (byte) 0, true);
+                                            b.getRelative(f).setTypeIdAndData(0, (byte) 0, true);
+                                            break;
+                                        }
+                                    }
+                                } else {
+                                    plugin.redstoneListener.getPistons().add(b.getLocation().toString());
+                                    piston.setPowered(true);
+                                    plugin.redstoneListener.setExtension(b);
+                                    player.playSound(b.getLocation(), Sound.PISTON_EXTEND, 1.0f, 1.0f);
+                                }
+                                b.setData(piston.getData());
+                                bs.update(true);
                                 break;
                             case REDSTONE_LAMP_OFF:
                             case REDSTONE_LAMP_ON:
+                                if (blockType.equals(Material.REDSTONE_LAMP_OFF)) {
+                                    plugin.redstoneListener.getLamps().add(b.getLocation().toString());
+                                    b.setType(Material.REDSTONE_LAMP_ON);
+                                } else if (plugin.redstoneListener.getLamps().contains(b.getLocation().toString())) {
+                                    plugin.redstoneListener.getLamps().remove(b.getLocation().toString());
+                                    b.setType(Material.REDSTONE_LAMP_OFF);
+                                }
                                 break;
                             case REDSTONE_WIRE:
+                                if (plugin.redstoneListener.getWires().contains(b.getLocation().toString())) {
+                                    plugin.redstoneListener.getWires().remove(b.getLocation().toString());
+                                    for (BlockFace f : faces) {
+                                        if (b.getRelative(f).getType().equals(Material.REDSTONE_WIRE)) {
+                                            b.setData((byte) 0);
+                                        }
+                                    }
+                                } else {
+                                    plugin.redstoneListener.getWires().add(b.getLocation().toString());
+                                    b.setData((byte) 15);
+                                    for (BlockFace f : faces) {
+                                        if (b.getRelative(f).getType().equals(Material.REDSTONE_WIRE)) {
+                                            b.setData((byte) 13);
+                                        }
+                                    }
+                                }
                                 break;
-                            case STONE_BUTTON:
-                            case WOOD_BUTTON:
                             default:
                                 break;
                         }

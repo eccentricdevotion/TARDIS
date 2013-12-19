@@ -113,6 +113,7 @@ import me.eccentric_nz.TARDIS.listeners.TARDISTimeLordDeathListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISBlockPhysicsListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISMakePresetListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISPistonListener;
+import me.eccentric_nz.TARDIS.listeners.TARDISRedstoneListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISSonicEntityListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISSonicListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISTagListener;
@@ -285,6 +286,7 @@ public class TARDIS extends JavaPlugin {
     private FileConfiguration recipesConfig;
     public TARDISButtonListener buttonListener;
     public TARDISDoorListener doorListener;
+    public TARDISRedstoneListener redstoneListener;
     public TARDISChameleonPreset presets;
     public TARDISMultiverseInventoriesChecker tmic;
     public TARDISWalls tw;
@@ -452,6 +454,8 @@ public class TARDIS extends JavaPlugin {
         pm.registerEvents(doorListener, this);
         this.buttonListener = new TARDISButtonListener(this);
         pm.registerEvents(buttonListener, this);
+        this.redstoneListener = new TARDISRedstoneListener(this);
+        pm.registerEvents(redstoneListener, this);
         pm.registerEvents(new TARDISSignListener(this), this);
         pm.registerEvents(new TARDISUpdateListener(this), this);
         pm.registerEvents(new TARDISAreaListener(this), this);
