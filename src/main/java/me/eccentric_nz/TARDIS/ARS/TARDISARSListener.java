@@ -675,8 +675,9 @@ public class TARDISARSListener implements Listener {
 
     private void getRoomIdAndNames() {
         TARDISARS[] ars = TARDISARS.values();
+
         // less non-room types
-        int l = ars.length - 7;
+        int l = ars.length - notrooms.size();
         this.room_ids = new int[l];
         this.room_names = new String[l];
         int i = 0;
