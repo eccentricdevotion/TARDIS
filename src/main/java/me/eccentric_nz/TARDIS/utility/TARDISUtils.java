@@ -51,7 +51,7 @@ public class TARDISUtils {
 
     public TARDISUtils(TARDIS plugin) {
         this.plugin = plugin;
-        this.volume = plugin.getConfig().getInt("sfx_volume") / 10.0F;
+        this.volume = plugin.getConfig().getInt("preferences.sfx_volume") / 10.0F;
     }
 
     /**

@@ -91,8 +91,8 @@ public class TARDISInstaPreset {
             plugin.presets.setR(rand.nextInt(2));
         }
         column = plugin.presets.getColumn(preset, d);
-        int plusx, minusx, x, plusz, y, minusz, z, platform_id = plugin.getConfig().getInt("platform_id");
-        byte platform_data = (byte) plugin.getConfig().getInt("platform_data");
+        int plusx, minusx, x, plusz, y, minusz, z, platform_id = plugin.getConfig().getInt("police_box.platform_id");
+        byte platform_data = (byte) plugin.getConfig().getInt("police_box.platform_data");
         // get relative locations
         x = location.getBlockX();
         plusx = (location.getBlockX() + 1);
@@ -282,7 +282,7 @@ public class TARDISInstaPreset {
                         Block sign = world.getBlockAt(xx, (y + yy), zz);
                         if (sign.getType().equals(Material.WALL_SIGN) || sign.getType().equals(Material.SIGN_POST)) {
                             Sign s = (Sign) sign.getState();
-                            if (plugin.getConfig().getBoolean("name_tardis")) {
+                            if (plugin.getConfig().getBoolean("police_box.name_tardis")) {
                                 HashMap<String, Object> wheret = new HashMap<String, Object>();
                                 wheret.put("tardis_id", tid);
                                 ResultSetTardis rst = new ResultSetTardis(plugin, wheret, "", false);

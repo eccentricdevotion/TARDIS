@@ -146,7 +146,7 @@ public class TARDISButtonListener implements Listener {
                                     }
                                     TARDISConstants.COMPASS dir = rscl.getDirection();
                                     Location cl = new Location(rscl.getWorld(), rscl.getX(), rscl.getY(), rscl.getZ());
-                                    if (player.hasPermission("tardis.exile") && plugin.getConfig().getBoolean("exile")) {
+                                    if (player.hasPermission("tardis.exile") && plugin.getConfig().getBoolean("travel.exile")) {
                                         // get the exile area
                                         String permArea = plugin.ta.getExileArea(player);
                                         player.sendMessage(plugin.pluginName + ChatColor.RED + " Notice:" + ChatColor.RESET + " Your travel has been restricted to the [" + permArea + "] area!");
@@ -177,7 +177,7 @@ public class TARDISButtonListener implements Listener {
                                                 environment = "NORMAL";
                                             }
                                             if (repeaters[0] >= 8 && repeaters[0] <= 11) { // third position
-                                                if (plugin.getConfig().getBoolean("nether") && player.hasPermission("tardis.nether")) {
+                                                if (plugin.getConfig().getBoolean("travel.nether") && player.hasPermission("tardis.nether")) {
                                                     // check they have enough artron energy to travel to the NETHER
                                                     if (level < nether_min) {
                                                         environment = "NORMAL";
@@ -191,7 +191,7 @@ public class TARDISButtonListener implements Listener {
                                                 }
                                             }
                                             if (repeaters[0] >= 12 && repeaters[0] <= 15) { // last position
-                                                if (plugin.getConfig().getBoolean("the_end") && player.hasPermission("tardis.end")) {
+                                                if (plugin.getConfig().getBoolean("travel.the_end") && player.hasPermission("tardis.end")) {
                                                     // check they have enough artron energy to travel to THE_END
                                                     if (level < the_end_min) {
                                                         environment = "NORMAL";

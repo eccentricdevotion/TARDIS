@@ -141,7 +141,7 @@ public class TARDISHandbrakeListener implements Listener {
                                         String resetw = rscl.getWorld().getName();
                                         boolean malfunction = false;
                                         boolean is_next_sub = false;
-                                        if (plugin.getConfig().getInt("malfunction") > 0) {
+                                        if (plugin.getConfig().getInt("preferences.malfunction") > 0) {
                                             // check for a malfunction
                                             TARDISMalfunction m = new TARDISMalfunction(plugin, id, player, cd, handbrake_loc, eps, creeper);
                                             malfunction = m.isMalfunction();
@@ -206,7 +206,7 @@ public class TARDISHandbrakeListener implements Listener {
                                             if (!exit.getWorld().isChunkLoaded(exit.getChunk())) {
                                                 exit.getWorld().loadChunk(exit.getChunk());
                                             }
-                                            boolean mat = plugin.getConfig().getBoolean("materialise");
+                                            boolean mat = plugin.getConfig().getBoolean("police_box.materialise");
                                             if (!rs.isHidden() && !plugin.trackReset.contains(resetw)) {
                                                 plugin.tardisDematerialising.add(Integer.valueOf(id));
                                                 if (sub) {

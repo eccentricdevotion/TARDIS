@@ -47,7 +47,7 @@ public class TARDISPluginRespect {
      */
     public boolean getRespect(Player p, Location l, boolean message) {
         boolean bool = true;
-        if (plugin.getConfig().getBoolean("per_world_perms")) {
+        if (plugin.getConfig().getBoolean("travel.per_world_perms")) {
             String perm = l.getWorld().getName();
             if (!p.hasPermission("tardis.travel." + perm)) {
                 if (message) {
@@ -56,7 +56,7 @@ public class TARDISPluginRespect {
                 bool = false;
             }
         }
-        if (!plugin.getConfig().getBoolean("nether") && l.getWorld().getEnvironment().equals(Environment.NETHER)) {
+        if (!plugin.getConfig().getBoolean("travel.nether") && l.getWorld().getEnvironment().equals(Environment.NETHER)) {
             if (message) {
                 p.sendMessage(plugin.pluginName + "Time travel to the Nether is disabled!");
             }
@@ -68,7 +68,7 @@ public class TARDISPluginRespect {
             }
             bool = false;
         }
-        if (!plugin.getConfig().getBoolean("the_end") && l.getWorld().getEnvironment().equals(Environment.THE_END)) {
+        if (!plugin.getConfig().getBoolean("travel.the_end") && l.getWorld().getEnvironment().equals(Environment.THE_END)) {
             if (message) {
                 p.sendMessage(plugin.pluginName + "Time travel to the The End is disabled!");
             }
@@ -80,25 +80,25 @@ public class TARDISPluginRespect {
             }
             bool = false;
         }
-        if (plugin.worldGuardOnServer && plugin.getConfig().getBoolean("respect_worldguard") && plugin.wgutils.cantBuild(p, l)) {
+        if (plugin.worldGuardOnServer && plugin.getConfig().getBoolean("preferences.respect_worldguard") && plugin.wgutils.cantBuild(p, l)) {
             if (message) {
                 p.sendMessage(plugin.pluginName + "That location is protected by WorldGuard!");
             }
             bool = false;
         }
-        if (plugin.townyOnServer && plugin.getConfig().getBoolean("respect_towny") && !plugin.tychk.isWilderness(p, l)) {
+        if (plugin.townyOnServer && plugin.getConfig().getBoolean("preferences.respect_towny") && !plugin.tychk.isWilderness(p, l)) {
             if (message) {
                 p.sendMessage(plugin.pluginName + "That location is protected by Towny!");
             }
             bool = false;
         }
-        if (plugin.borderOnServer && plugin.getConfig().getBoolean("respect_worldborder") && !plugin.borderchk.isInBorder(l)) {
+        if (plugin.borderOnServer && plugin.getConfig().getBoolean("preferences.respect_worldborder") && !plugin.borderchk.isInBorder(l)) {
             if (message) {
                 p.sendMessage(plugin.pluginName + "That location is outside the World Border!");
             }
             bool = false;
         }
-        if (plugin.factionsOnServer && plugin.getConfig().getBoolean("respect_factions") && !plugin.factionschk.isInFaction(p, l)) {
+        if (plugin.factionsOnServer && plugin.getConfig().getBoolean("preferences.respect_factions") && !plugin.factionschk.isInFaction(p, l)) {
             if (message) {
                 p.sendMessage(plugin.pluginName + "That location is in another faction's claim!");
             }

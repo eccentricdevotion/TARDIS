@@ -65,7 +65,7 @@ public class TARDISShapedRecipe {
         is.setItemMeta(im);
         ShapedRecipe r = new ShapedRecipe(is);
         // get shape
-        String difficulty = plugin.getConfig().getString("difficulty");
+        String difficulty = plugin.getConfig().getString("preferences.difficulty");
         String[] shape_tmp = plugin.getRecipesConfig().getString("shaped." + s + "." + difficulty + "_shape").split(",");
         String[] shape = new String[3];
         for (int i = 0; i < 3; i++) {

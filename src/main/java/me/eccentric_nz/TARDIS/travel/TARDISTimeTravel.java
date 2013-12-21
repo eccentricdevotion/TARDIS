@@ -65,7 +65,7 @@ public class TARDISTimeTravel {
         goodMaterials.add(Material.SAPLING);
         goodMaterials.add(Material.SNOW);
         respect = new TARDISPluginRespect(plugin);
-        this.attempts = plugin.getConfig().getInt("random_attempts");
+        this.attempts = plugin.getConfig().getInt("travel.random_attempts");
     }
 
     /**
@@ -94,7 +94,7 @@ public class TARDISTimeTravel {
         int count;
         Random rand = new Random();
         // get max_radius from config
-        int max = plugin.getConfig().getInt("tp_radius");
+        int max = plugin.getConfig().getInt("travel.tp_radius");
         int quarter = (max + 4 - 1) / 4;
         int range = quarter + 1;
         int wherex = 0, highest = 252, wherez = 0;
@@ -114,12 +114,12 @@ public class TARDISTimeTravel {
                         env = "NORMAL";
                     }
                     if (e.equalsIgnoreCase(env)) {
-                        if (plugin.getConfig().getBoolean("include_default_world") || !plugin.getConfig().getBoolean("default_world")) {
+                        if (plugin.getConfig().getBoolean("travel.include_default_world") || !plugin.getConfig().getBoolean("creation.default_world")) {
                             if (plugin.getConfig().getBoolean("worlds." + o) || malfunction) {
                                 allowedWorlds.add(plugin.getServer().getWorld(o));
                             }
                         } else {
-                            if (!o.equals(plugin.getConfig().getString("default_world_name"))) {
+                            if (!o.equals(plugin.getConfig().getString("creation.default_world_name"))) {
                                 if (plugin.getConfig().getBoolean("worlds." + o) || malfunction) {
                                     allowedWorlds.add(plugin.getServer().getWorld(o));
                                 }
@@ -131,7 +131,7 @@ public class TARDISTimeTravel {
                         allowedWorlds.remove(this_world);
                     }
                     // remove the world if the player doesn't have permission
-                    if (allowedWorlds.size() > 1 && plugin.getConfig().getBoolean("per_world_perms") && !p.hasPermission("tardis.travel." + o)) {
+                    if (allowedWorlds.size() > 1 && plugin.getConfig().getBoolean("travel.per_world_perms") && !p.hasPermission("tardis.travel." + o)) {
                         allowedWorlds.remove(this_world);
                     }
                 }
@@ -194,7 +194,7 @@ public class TARDISTimeTravel {
         }
         // Assume every non-nether/non-END world qualifies as NORMAL.
         if (randworld != null && !randworld.getEnvironment().equals(Environment.NETHER) && !randworld.getEnvironment().equals(Environment.THE_END)) {
-            long timeout = System.currentTimeMillis() + (plugin.getConfig().getLong("timeout") * 1000);
+            long timeout = System.currentTimeMillis() + (plugin.getConfig().getLong("travel.timeout") * 1000);
             while (true) {
                 if (System.currentTimeMillis() < timeout) {
                     // reset count
@@ -205,7 +205,7 @@ public class TARDISTimeTravel {
                     highest = randworld.getHighestBlockYAt(wherex, wherez);
                     if (highest > 3) {
                         Block currentBlock = randworld.getBlockAt(wherex, highest, wherez);
-                        if ((currentBlock.getRelative(BlockFace.DOWN).getTypeId() == 8 || currentBlock.getRelative(BlockFace.DOWN).getTypeId() == 9) && plugin.getConfig().getBoolean("land_on_water") == false) {
+                        if ((currentBlock.getRelative(BlockFace.DOWN).getTypeId() == 8 || currentBlock.getRelative(BlockFace.DOWN).getTypeId() == 9) && plugin.getConfig().getBoolean("travel.land_on_water") == false) {
                             // check if submarine is on
                             HashMap<String, Object> wheres = new HashMap<String, Object>();
                             wheres.put("player", p.getName());
@@ -264,7 +264,7 @@ public class TARDISTimeTravel {
                     if (!respect.getRespect(p, new Location(randworld, wherex, highest, wherez), false)) {
                         return null;
                     } else {
-                        highest = plugin.getConfig().getInt("timeout_height");
+                        highest = plugin.getConfig().getInt("travel.timeout_height");
                         break;
                     }
                 }

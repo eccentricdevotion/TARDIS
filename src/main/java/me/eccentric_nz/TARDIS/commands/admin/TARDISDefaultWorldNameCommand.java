@@ -43,7 +43,7 @@ public class TARDISDefaultWorldNameCommand {
         String t = tmp.substring(0, tmp.length() - 1);
         // need to make there are no periods(.) in the text
         String nodots = StringUtils.replace(t, ".", "_");
-        plugin.getConfig().set("default_world_name", nodots);
+        plugin.getConfig().set("creation.default_world_name", nodots);
         plugin.saveConfig();
         sender.sendMessage(plugin.pluginName + "The config was updated!");
         return true;

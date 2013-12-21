@@ -110,7 +110,7 @@ public class TARDISRescue {
      * @return true if rescue was successful
      */
     public boolean tryRescue(Player player, String saved) {
-        if (player.hasPermission("tardis.timetravel") && !(player.hasPermission("tardis.exile") && plugin.getConfig().getBoolean("exile"))) {
+        if (player.hasPermission("tardis.timetravel") && !(player.hasPermission("tardis.exile") && plugin.getConfig().getBoolean("travel.exile"))) {
             TARDISTimeTravel tt = new TARDISTimeTravel(plugin);
             // get tardis data
             HashMap<String, Object> where = new HashMap<String, Object>();

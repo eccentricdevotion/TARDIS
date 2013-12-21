@@ -170,7 +170,7 @@ public class TARDISMakeTardisCSV {
         // do custom schematic last
         File c_file = new File(userbasepath + TARDISConstants.SCHEMATIC_CUSTOM);
         //new File(plugin.getDataFolder() + File.separator + "schematics" + File.separator, TARDISConstants.SCHEMATIC_CUSTOM);
-        if (plugin.getConfig().getBoolean("custom_schematic")) {
+        if (plugin.getConfig().getBoolean("creation.custom_schematic")) {
             if (c_file.exists()) {
                 plugin.customSchematicCSV = createCustomFile(TARDISConstants.SCHEMATIC_CUSTOM + ".csv");
                 String cusnstr = userbasepath + TARDISConstants.SCHEMATIC_CUSTOM;

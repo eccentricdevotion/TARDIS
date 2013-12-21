@@ -1,3 +1,8 @@
+# TARDIS recipes
+# The plugin will break if you change the names!
+# -------------------
+# shaped recipes start here
+# -------------------
 shaped:
     TARDIS Locator:
         easy_shape: OIO,ICI,OIO
@@ -212,6 +217,9 @@ shaped:
         result: 'MAP:1972'
         amount: 1
         lore: ""
+# -------------------
+# these are the shapeless recipes
+# -------------------
 shapeless:
     Save Storage Disk:
         recipe: RECORD_9,REDSTONE
@@ -258,6 +266,9 @@ shapeless:
         result: BLAZE_ROD
         amount: 1
         lore: ""
+# -------------------
+## furnace recipes are not used yet...
+# -------------------
 furnace:
     Nuclear Wool:
         recipe: '35:0'

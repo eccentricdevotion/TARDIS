@@ -69,7 +69,7 @@ public class TARDISHostileDisplacement {
             if (rsp.resultSet()) {
                 if (rsp.isHads_on()) {
                     TARDISTimeTravel tt = new TARDISTimeTravel(plugin);
-                    int r = plugin.getConfig().getInt("hads_distance");
+                    int r = plugin.getConfig().getInt("preferences.hads_distance");
                     HashMap<String, Object> wherecl = new HashMap<String, Object>();
                     wherecl.put("tardis_id", id);
                     ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
@@ -94,7 +94,7 @@ public class TARDISHostileDisplacement {
                             y = l.getWorld().getHighestBlockAt(l).getY();
                         }
                         l.setY(y);
-                        if (l.getBlock().getRelative(BlockFace.DOWN).isLiquid() && !plugin.getConfig().getBoolean("land_on_water") && !plugin.trackSubmarine.contains(id)) {
+                        if (l.getBlock().getRelative(BlockFace.DOWN).isLiquid() && !plugin.getConfig().getBoolean("travel.land_on_water") && !plugin.trackSubmarine.contains(id)) {
                             bool = false;
                         }
                         final Player player = plugin.getServer().getPlayer(owner);
@@ -127,7 +127,7 @@ public class TARDISHostileDisplacement {
                                     set.put("submarine", (plugin.trackSubmarine.contains(id)) ? 1 : 0);
                                     qf.doUpdate("current", set, tid);
                                     plugin.trackDamage.remove(Integer.valueOf(id));
-                                    final boolean mat = plugin.getConfig().getBoolean("materialise");
+                                    final boolean mat = plugin.getConfig().getBoolean("police_box.materialise");
                                     long delay = (mat) ? 1L : 180L;
                                     // move TARDIS
                                     plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {

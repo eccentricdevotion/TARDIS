@@ -71,7 +71,7 @@ public class TARDISStattenheimListener implements Listener {
         useless.add(Material.SAPLING);
         useless.add(Material.SNOW);
         useless.add(Material.YELLOW_FLOWER);
-        remote = Material.valueOf(plugin.getConfig().getString("stattenheim"));
+        remote = Material.valueOf(plugin.getRecipesConfig().getString("shaped.Stattenheim Remote.result"));
     }
 
     @SuppressWarnings("deprecation")
@@ -89,7 +89,7 @@ public class TARDISStattenheimListener implements Listener {
                 }
                 if (player.hasPermission("tardis.timetravel")) {
                     final Location remoteLocation = b.getLocation();
-                    if (!plugin.getConfig().getBoolean("include_default_world") && plugin.getConfig().getBoolean("default_world") && remoteLocation.getWorld().getName().equals(plugin.getConfig().getString("default_world_name"))) {
+                    if (!plugin.getConfig().getBoolean("travel.include_default_world") && plugin.getConfig().getBoolean("creation.default_world") && remoteLocation.getWorld().getName().equals(plugin.getConfig().getString("creation.default_world_name"))) {
                         player.sendMessage(plugin.pluginName + "The server admin will not allow you to bring the TARDIS to this world!");
                         return;
                     }
@@ -97,7 +97,7 @@ public class TARDISStattenheimListener implements Listener {
                     if (!respect.getRespect(player, remoteLocation, true)) {
                         return;
                     }
-                    if (player.hasPermission("tardis.exile") && plugin.getConfig().getBoolean("exile")) {
+                    if (player.hasPermission("tardis.exile") && plugin.getConfig().getBoolean("travel.exile")) {
                         String areaPerm = plugin.ta.getExileArea(player);
                         if (plugin.ta.areaCheckInExile(areaPerm, remoteLocation)) {
                             player.sendMessage(plugin.pluginName + "You exile status does not allow you to bring the TARDIS to this location!");
@@ -129,7 +129,7 @@ public class TARDISStattenheimListener implements Listener {
                     final int id = rs.getTardis_id();
                     final boolean hidden = rs.isHidden();
                     int level = rs.getArtron_level();
-                    final boolean cham = (plugin.getConfig().getBoolean("chameleon") && rs.isChamele_on());
+                    final boolean cham = (plugin.getConfig().getBoolean("travel.chameleon") && rs.isChamele_on());
                     // check they are not in the tardis
                     HashMap<String, Object> wherettrav = new HashMap<String, Object>();
                     wherettrav.put("player", player.getName());
@@ -212,7 +212,7 @@ public class TARDISStattenheimListener implements Listener {
                             qf.doUpdate("tardis", set, tid);
                         }
                         player.sendMessage(plugin.pluginName + "The TARDIS is coming...");
-                        final boolean mat = plugin.getConfig().getBoolean("materialise");
+                        final boolean mat = plugin.getConfig().getBoolean("police_box.materialise");
                         long delay = (mat) ? 10L : 180L;
                         Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
                             @Override

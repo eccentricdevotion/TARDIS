@@ -113,9 +113,9 @@ public class TARDISArtronCapacitorListener implements Listener {
                             boolean hasPrefs = false;
                             if (rsp.resultSet()) {
                                 hasPrefs = true;
-                                key = (!rsp.getKey().isEmpty()) ? rsp.getKey() : plugin.getConfig().getString("key");
+                                key = (!rsp.getKey().isEmpty()) ? rsp.getKey() : plugin.getConfig().getString("preferences.key");
                             } else {
-                                key = plugin.getConfig().getString("key");
+                                key = plugin.getConfig().getString("preferences.key");
                             }
                             if (item.equals(full)) {
                                 if (!init) {
@@ -186,7 +186,7 @@ public class TARDISArtronCapacitorListener implements Listener {
                                 }
                                 // transfer player artron energy into the capacitor
                                 int ten_percent = Math.round(fc * 0.1F);
-                                if (current_level >= ten_percent && plugin.getConfig().getBoolean("create_worlds")) {
+                                if (current_level >= ten_percent && plugin.getConfig().getBoolean("creation.create_worlds")) {
                                     player.sendMessage(plugin.pluginName + "You can only transfer Timelord Artron Energy when the capacitor is below 10%");
                                     return;
                                 }

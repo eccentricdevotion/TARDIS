@@ -79,7 +79,7 @@ public class TARDISBuilderInner {
         String[][][] s;
         short[] d;
         int level, row, col, id, x, z, startx, startz, resetx, resetz, j = 2;
-        boolean below = (!plugin.getConfig().getBoolean("create_worlds") && !plugin.getConfig().getBoolean("default_world"));
+        boolean below = (!plugin.getConfig().getBoolean("creation.create_worlds") && !plugin.getConfig().getBoolean("creation.default_world"));
         int starty;
         if (below) {
             starty = 15;
@@ -180,7 +180,7 @@ public class TARDISBuilderInner {
             startz = gsl[2];
             resetz = gsl[3];
         }
-        boolean own_world = plugin.getConfig().getBoolean("create_worlds");
+        boolean own_world = plugin.getConfig().getBoolean("creation.create_worlds");
         Location wg1 = new Location(world, startx, starty, startz);
         Location wg2 = new Location(world, startx + (w - 1), starty + (h - 1), startz + (l - 1));
         // get list of used chunks
@@ -234,7 +234,7 @@ public class TARDISBuilderInner {
                                     case 1:
                                         switch (middle_id) {
                                             case 22: // if using the default Lapis Block - then use Orange Wool / Stained Clay
-                                                if (plugin.getConfig().getBoolean("use_clay")) {
+                                                if (plugin.getConfig().getBoolean("creation.use_clay")) {
                                                     id = 159;
                                                 }
                                                 break;
@@ -247,7 +247,7 @@ public class TARDISBuilderInner {
                                         if (!schm.equals(TARDISConstants.SCHEMATIC.ELEVENTH)) {
                                             switch (floor_id) {
                                                 case 22: // if using the default Lapis Block - then use Light Grey Wool / Stained Clay
-                                                    if (plugin.getConfig().getBoolean("use_clay")) {
+                                                    if (plugin.getConfig().getBoolean("creation.use_clay")) {
                                                         id = 159;
                                                     }
                                                     break;
@@ -256,13 +256,13 @@ public class TARDISBuilderInner {
                                                     data = floor_data;
                                             }
                                         } else {
-                                            if (plugin.getConfig().getBoolean("use_clay")) {
+                                            if (plugin.getConfig().getBoolean("creation.use_clay")) {
                                                 id = 159;
                                             }
                                         }
                                         break;
                                     default:
-                                        if (plugin.getConfig().getBoolean("use_clay")) {
+                                        if (plugin.getConfig().getBoolean("creation.use_clay")) {
                                             id = 159;
                                         }
                                         break;
@@ -417,7 +417,7 @@ public class TARDISBuilderInner {
                                 // remember lamp blocks
                                 Block lamp = world.getBlockAt(startx, starty, startz);
                                 lampblocks.add(lamp);
-                                if (plugin.getConfig().getInt("malfunction") > 0) {
+                                if (plugin.getConfig().getInt("preferences.malfunction") > 0) {
                                     // remember lamp block locations for malfunction
                                     HashMap<String, Object> setlb = new HashMap<String, Object>();
                                     String lloc = world.getName() + ":" + startx + ":" + starty + ":" + startz;
@@ -436,7 +436,7 @@ public class TARDISBuilderInner {
                                 set.put("creeper", creeploc);
                                 switch (schm) {
                                     case CUSTOM:
-                                        id = plugin.getConfig().getInt("custom_creeper_id");
+                                        id = plugin.getConfig().getInt("creation.custom_creeper_id");
                                         break;
                                     case BIGGER:
                                     case DELUXE:
@@ -675,7 +675,7 @@ public class TARDISBuilderInner {
             lamp.setType(Material.REDSTONE_LAMP_ON);
         }
         lampblocks.clear();
-        if (plugin.worldGuardOnServer && plugin.getConfig().getBoolean("use_worldguard")) {
+        if (plugin.worldGuardOnServer && plugin.getConfig().getBoolean("preferences.use_worldguard")) {
             if (tips) {
                 if (pos != null) {
                     plugin.wgutils.addWGProtection(p, pos, world);

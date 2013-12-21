@@ -99,7 +99,7 @@ public class TARDISLocationsConverter {
         }
         if (i > 0) {
             plugin.console.sendMessage(plugin.pluginName + "Converted " + i + " TARDIS locations to new format");
-            plugin.getConfig().set("location_conversion_done", true);
+            plugin.getConfig().set("conversions.location_conversion_done", true);
             plugin.saveConfig();
         }
     }

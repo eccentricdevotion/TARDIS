@@ -77,9 +77,9 @@ public class TARDISJettisonSeeder implements Listener {
             where.put("player", playerNameStr);
             ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, where);
             if (rsp.resultSet()) {
-                key = (!rsp.getKey().isEmpty()) ? rsp.getKey() : plugin.getConfig().getString("key");
+                key = (!rsp.getKey().isEmpty()) ? rsp.getKey() : plugin.getConfig().getString("preferences.key");
             } else {
-                key = plugin.getConfig().getString("key");
+                key = plugin.getConfig().getString("preferences.key");
             }
             // only proceed if they are clicking a seed block with the TARDIS key!
             if (blockType.equals(Material.getMaterial(plugin.getArtronConfig().getString("jettison_seed"))) && inhand.equals(Material.getMaterial(key))) {
@@ -120,7 +120,7 @@ public class TARDISJettisonSeeder implements Listener {
                             del.put("secondary", secondary);
                             qf.doDelete("controls", del);
                         }
-                        if (plugin.getConfig().getBoolean("return_room_seed")) {
+                        if (plugin.getConfig().getBoolean("rooms.return_room_seed")) {
                             // give the player back the room seed block
                             ItemStack is = new ItemStack(Material.getMaterial(plugin.getRoomsConfig().getString("rooms." + r + ".seed")));
                             Inventory inv = player.getInventory();

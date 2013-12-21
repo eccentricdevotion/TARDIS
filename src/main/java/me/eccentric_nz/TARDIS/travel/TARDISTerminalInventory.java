@@ -45,7 +45,7 @@ public class TARDISTerminalInventory {
      */
     private ItemStack[] getItemStack() {
         // steps
-        int step = TARDIS.plugin.getConfig().getInt("terminal_step");
+        int step = TARDIS.plugin.getConfig().getInt("travel.terminal_step");
         // 10
         ItemStack ten = new ItemStack(Material.WOOL, 1, (byte) 0);
         ItemMeta im10 = ten.getItemMeta();

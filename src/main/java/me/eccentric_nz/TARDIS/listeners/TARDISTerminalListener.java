@@ -358,12 +358,12 @@ public class TARDISTerminalListener implements Listener {
             if (ww != null) {
                 String env = ww.getEnvironment().toString();
                 if (e.equalsIgnoreCase(env)) {
-                    if (plugin.getConfig().getBoolean("include_default_world") || !plugin.getConfig().getBoolean("default_world")) {
+                    if (plugin.getConfig().getBoolean("travel.include_default_world") || !plugin.getConfig().getBoolean("creation.default_world")) {
                         if (plugin.getConfig().getBoolean("worlds." + o)) {
                             allowedWorlds.add(o);
                         }
                     } else {
-                        if (!o.equals(plugin.getConfig().getString("default_world_name"))) {
+                        if (!o.equals(plugin.getConfig().getString("creation.default_world_name"))) {
                             if (plugin.getConfig().getBoolean("worlds." + o)) {
                                 allowedWorlds.add(o);
                             }
@@ -375,7 +375,7 @@ public class TARDISTerminalListener implements Listener {
                     allowedWorlds.remove(this_world);
                 }
                 // remove the world if the player doesn't have permission
-                if (allowedWorlds.size() > 1 && plugin.getConfig().getBoolean("per_world_perms") && !p.hasPermission("tardis.travel." + o)) {
+                if (allowedWorlds.size() > 1 && plugin.getConfig().getBoolean("travel.per_world_perms") && !p.hasPermission("tardis.travel." + o)) {
                     allowedWorlds.remove(this_world);
                 }
             }
@@ -401,7 +401,7 @@ public class TARDISTerminalListener implements Listener {
     private void checkSettings(Inventory inv, Player p) {
         String name = p.getName();
         // get x, z, m settings
-        int slotm = getValue(34, getSlot(inv, 28, 34), false, name) * plugin.getConfig().getInt("terminal_step");
+        int slotm = getValue(34, getSlot(inv, 28, 34), false, name) * plugin.getConfig().getInt("travel.terminal_step");
         int slotx = getValue(16, getSlot(inv, 10, 16), true, name) * slotm;
         int slotz = getValue(25, getSlot(inv, 19, 25), true, name) * slotm;
         List<String> lore = new ArrayList<String>();

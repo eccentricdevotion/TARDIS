@@ -92,7 +92,7 @@ public class TARDISRemoveCompanionCommand {
                 QueryFactory qf = new QueryFactory(plugin);
                 qf.doUpdate("tardis", set, tid);
                 // if using WorldGuard, add them to the region membership
-                if (plugin.worldGuardOnServer && plugin.getConfig().getBoolean("use_worldguard")) {
+                if (plugin.worldGuardOnServer && plugin.getConfig().getBoolean("preferences.use_worldguard")) {
 
                     plugin.getServer().dispatchCommand(plugin.console, "rg removemember tardis_" + player.getName() + " " + args[1].toLowerCase(Locale.ENGLISH) + " -w " + data[0]);
                 }

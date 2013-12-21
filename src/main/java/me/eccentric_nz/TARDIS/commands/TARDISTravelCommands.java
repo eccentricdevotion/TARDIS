@@ -127,7 +127,7 @@ public class TARDISTravelCommands implements CommandExecutor {
                 HashMap<String, Object> tid = new HashMap<String, Object>();
                 HashMap<String, Object> set = new HashMap<String, Object>();
                 tid.put("tardis_id", id);
-                if (player.hasPermission("tardis.exile") && plugin.getConfig().getBoolean("exile")) {
+                if (player.hasPermission("tardis.exile") && plugin.getConfig().getBoolean("travel.exile")) {
                     // get the exile area
                     String permArea = plugin.ta.getExileArea(player);
                     player.sendMessage(plugin.pluginName + ChatColor.RED + " Notice:" + ChatColor.RESET + " Your travel has been restricted to the [" + permArea + "] area!");
@@ -403,7 +403,7 @@ public class TARDISTravelCommands implements CommandExecutor {
                             sender.sendMessage(plugin.pluginName + "The server does not allow time travel to this world!");
                             return true;
                         }
-                        if (!plugin.getConfig().getBoolean("include_default_world") && plugin.getConfig().getBoolean("default_world") && args[0].equals(plugin.getConfig().getString("default_world_name"))) {
+                        if (!plugin.getConfig().getBoolean("travel.include_default_world") && plugin.getConfig().getBoolean("creation.default_world") && args[0].equals(plugin.getConfig().getString("creation.default_world_name"))) {
                             sender.sendMessage(plugin.pluginName + "The server does not allow time travel to this world!");
                             return true;
                         }

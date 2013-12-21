@@ -148,7 +148,7 @@ public class TARDISFarmer {
                             tmchk.setAge(((Chicken) e).getAge());
                             tmchk.setBaby(!((Chicken) e).isAdult());
                             old_macd_had_a_chicken.add(tmchk);
-                            if (!farm.isEmpty() || (farm.isEmpty() && plugin.getConfig().getBoolean("spawn_eggs"))) {
+                            if (!farm.isEmpty() || (farm.isEmpty() && plugin.getConfig().getBoolean("allow.spawn_eggs"))) {
                                 e.remove();
                             }
                             if (taf != null) {
@@ -161,7 +161,7 @@ public class TARDISFarmer {
                             tmcow.setAge(((Cow) e).getAge());
                             tmcow.setBaby(!((Cow) e).isAdult());
                             old_macd_had_a_cow.add(tmcow);
-                            if (!farm.isEmpty() || (farm.isEmpty() && plugin.getConfig().getBoolean("spawn_eggs"))) {
+                            if (!farm.isEmpty() || (farm.isEmpty() && plugin.getConfig().getBoolean("allow.spawn_eggs"))) {
                                 e.remove();
                             }
                             if (taf != null) {
@@ -213,7 +213,7 @@ public class TARDISFarmer {
                                 }
                             }
                             old_macd_had_a_horse.add(tmhor);
-                            if (!stable.isEmpty() || (stable.isEmpty() && plugin.getConfig().getBoolean("spawn_eggs"))) {
+                            if (!stable.isEmpty() || (stable.isEmpty() && plugin.getConfig().getBoolean("allow.spawn_eggs"))) {
                                 e.remove();
                             }
                             if (taf != null) {
@@ -228,7 +228,7 @@ public class TARDISFarmer {
                             // eject any passengers
                             ((Pig) e).eject();
                             old_macd_had_a_pig.add(tmpig);
-                            if (!farm.isEmpty() || (farm.isEmpty() && plugin.getConfig().getBoolean("spawn_eggs"))) {
+                            if (!farm.isEmpty() || (farm.isEmpty() && plugin.getConfig().getBoolean("allow.spawn_eggs"))) {
                                 e.remove();
                             }
                             if (taf != null) {
@@ -242,7 +242,7 @@ public class TARDISFarmer {
                             tmshp.setBaby(!((Sheep) e).isAdult());
                             tmshp.setColour(((Sheep) e).getColor());
                             old_macd_had_a_sheep.add(tmshp);
-                            if (!farm.isEmpty() || (farm.isEmpty() && plugin.getConfig().getBoolean("spawn_eggs"))) {
+                            if (!farm.isEmpty() || (farm.isEmpty() && plugin.getConfig().getBoolean("allow.spawn_eggs"))) {
                                 e.remove();
                             }
                             if (taf != null) {
@@ -255,7 +255,7 @@ public class TARDISFarmer {
                             tmshr.setAge(((MushroomCow) e).getAge());
                             tmshr.setBaby(!((MushroomCow) e).isAdult());
                             old_macd_had_a_mooshroom.add(tmshr);
-                            if (!farm.isEmpty() || (farm.isEmpty() && plugin.getConfig().getBoolean("spawn_eggs"))) {
+                            if (!farm.isEmpty() || (farm.isEmpty() && plugin.getConfig().getBoolean("allow.spawn_eggs"))) {
                                 e.remove();
                             }
                             if (taf != null) {
@@ -271,7 +271,7 @@ public class TARDISFarmer {
                             tv.setHealth(v.getHealth());
                             tv.setBaby(!v.isAdult());
                             old_macd_had_a_villager.add(tv);
-                            if (!village.isEmpty() || (village.isEmpty() && plugin.getConfig().getBoolean("spawn_eggs"))) {
+                            if (!village.isEmpty() || (village.isEmpty() && plugin.getConfig().getBoolean("allow.spawn_eggs"))) {
                                 e.remove();
                             }
                             villagertotal++;
@@ -394,7 +394,7 @@ public class TARDISFarmer {
                         }
                     }
                 } else {
-                    if (plugin.getConfig().getBoolean("spawn_eggs")) {
+                    if (plugin.getConfig().getBoolean("allow.spawn_eggs")) {
                         // no farm, give the player spawn eggs
                         Inventory inv = p.getInventory();
                         if (old_macd_had_a_chicken.size() > 0) {
@@ -483,7 +483,7 @@ public class TARDISFarmer {
                         }
                     }
                 } else {
-                    if (plugin.getConfig().getBoolean("spawn_eggs")) {
+                    if (plugin.getConfig().getBoolean("allow.spawn_eggs")) {
                         Inventory inv = p.getInventory();
                         if (old_macd_had_a_horse.size() > 0) {
                             ItemStack is = new ItemStack(Material.MONSTER_EGG, old_macd_had_a_horse.size(), (short) 100);
@@ -519,7 +519,7 @@ public class TARDISFarmer {
                         }
                     }
                 } else {
-                    if (plugin.getConfig().getBoolean("spawn_eggs")) {
+                    if (plugin.getConfig().getBoolean("allow.spawn_eggs")) {
                         Inventory inv = p.getInventory();
                         if (old_macd_had_a_villager.size() > 0) {
                             ItemStack is = new ItemStack(Material.MONSTER_EGG, old_macd_had_a_villager.size(), (short) 120);

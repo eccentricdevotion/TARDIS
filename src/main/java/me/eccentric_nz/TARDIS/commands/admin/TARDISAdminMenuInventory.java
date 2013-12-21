@@ -51,7 +51,7 @@ public class TARDISAdminMenuInventory {
     private ItemStack[] getItemStack() {
         List<ItemStack> options = new ArrayList<ItemStack>();
         int i = 0;
-        Set<String> config = new TreeSet(plugin.getConfig().getKeys(false));
+        Set<String> config = new TreeSet(plugin.getConfig().getKeys(true));
         for (String c : config) {
             String value = plugin.getConfig().getString(c);
             if ((value.equalsIgnoreCase("true") || value.equalsIgnoreCase("false")) && !c.equals("conversion_done") && !c.equals("location_conversion_done")) {

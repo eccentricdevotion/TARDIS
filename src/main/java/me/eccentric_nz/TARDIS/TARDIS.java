@@ -63,6 +63,7 @@ import me.eccentric_nz.TARDIS.database.TARDISSQLiteDatabase;
 import me.eccentric_nz.TARDIS.destroyers.TARDISDestroyerInner;
 import me.eccentric_nz.TARDIS.destroyers.TARDISPresetDestroyerFactory;
 import me.eccentric_nz.TARDIS.files.TARDISBlockLoader;
+import me.eccentric_nz.TARDIS.files.TARDISConfigConverter;
 import me.eccentric_nz.TARDIS.files.TARDISConfiguration;
 import me.eccentric_nz.TARDIS.files.TARDISMakeRoomCSV;
 import me.eccentric_nz.TARDIS.files.TARDISMakeTardisCSV;
@@ -336,7 +337,7 @@ public class TARDIS extends JavaPlugin {
             cc.startCreeperCheck();
             if (pm.isPluginEnabled("TARDISChunkGenerator")) {
                 TARDISSpace alwaysNight = new TARDISSpace(this);
-                if (getConfig().getBoolean("keep_night")) {
+                if (getConfig().getBoolean("creation.keep_night")) {
                     alwaysNight.keepNight();
                 }
             }
@@ -345,10 +346,10 @@ public class TARDIS extends JavaPlugin {
             bl.loadGravityWells();
             loadPerms();
             loadBooks();
-            if (!getConfig().getBoolean("conversion_done")) {
+            if (!getConfig().getBoolean("conversions.conversion_done")) {
                 new TARDISControlsConverter(this).convertControls();
             }
-            if (!getConfig().getBoolean("location_conversion_done")) {
+            if (!getConfig().getBoolean("conversions.location_conversion_done")) {
                 new TARDISLocationsConverter(this).convert();
             }
             tp = getServerTP();
@@ -386,7 +387,7 @@ public class TARDIS extends JavaPlugin {
      * Sets up the database.
      */
     private void loadDatabase() {
-        String dbtype = getConfig().getString("database");
+        String dbtype = getConfig().getString("storage.database");
         try {
             if (dbtype.equals("sqlite")) {
                 String path = getDataFolder() + File.separator + "TARDIS.db";
@@ -412,6 +413,14 @@ public class TARDIS extends JavaPlugin {
         } catch (SQLException e) {
             console.sendMessage(pluginName + "Could not close database connection: " + e);
         }
+    }
+
+    private boolean checkConfig() {
+        if (!getConfig().contains("creation.create_worlds")) {
+            debug("Starting config conversion...");
+            return new TARDISConfigConverter(this).convert();
+        }
+        return true;
     }
 
     /**
@@ -446,7 +455,7 @@ public class TARDIS extends JavaPlugin {
      * TARDIS.
      */
     private void registerListeners() {
-        if (getConfig().getBoolean("use_block_stack")) {
+        if (getConfig().getBoolean("creation.use_block_stack")) {
             pm.registerEvents(new TARDISBlockPlaceListener(this), this);
         }
         pm.registerEvents(new TARDISBlockBreakListener(this), this);
@@ -642,7 +651,7 @@ public class TARDIS extends JavaPlugin {
         if (pm.getPlugin("GroupManager") != null || pm.getPlugin("bPermissions") != null || pm.getPlugin("PermissionsEx") != null) {
             // copy default permissions file if not present
             tardisCSV.copy(getDataFolder() + File.separator + "permissions.txt", getResource("permissions.txt"));
-            if (getConfig().getBoolean("create_worlds")) {
+            if (getConfig().getBoolean("creation.create_worlds")) {
                 console.sendMessage(pluginName + "World specific permissions plugin detected please edit plugins/TARDIS/permissions.txt");
             }
         }
@@ -703,14 +712,14 @@ public class TARDIS extends JavaPlugin {
     }
 
     private void checkTCG() {
-        if (getConfig().getBoolean("create_worlds")) {
-            if (getConfig().getBoolean("default_world")) {
-                getConfig().set("default_world", false);
+        if (getConfig().getBoolean("creation.create_worlds")) {
+            if (getConfig().getBoolean("creation.default_world")) {
+                getConfig().set("creation.default_world", false);
                 saveConfig();
                 console.sendMessage(pluginName + ChatColor.RED + "default_world was disabled as create_worlds is true!");
             }
             if (pm.getPlugin("TARDISChunkGenerator") == null || (pm.getPlugin("Multiverse-Core") == null && pm.getPlugin("MultiWorld") == null && pm.getPlugin("My Worlds") == null)) {
-                getConfig().set("create_worlds", false);
+                getConfig().set("creation.create_worlds", false);
                 saveConfig();
                 console.sendMessage(pluginName + ChatColor.RED + "Create Worlds was disabled as it requires a multi-world plugin and TARDISChunkGenerator!");
             }
@@ -718,12 +727,12 @@ public class TARDIS extends JavaPlugin {
     }
 
     private boolean getNPCManager() {
-        if (pm.getPlugin("Citizens") != null && pm.getPlugin("Citizens").isEnabled() && getConfig().getBoolean("emergency_npc")) {
+        if (pm.getPlugin("Citizens") != null && pm.getPlugin("Citizens").isEnabled() && getConfig().getBoolean("allow.emergency_npc")) {
             debug("Enabling Emergency Program One!");
             return true;
         } else {
             // set emergency_npc false as Citizens not found
-            getConfig().set("emergency_npc", false);
+            getConfig().set("allow.emergency_npc", false);
             saveConfig();
             debug("Emergency Program One was disabled as it requires the Citizens plugin!");
             return false;
@@ -855,12 +864,12 @@ public class TARDIS extends JavaPlugin {
     }
 
     private void checkDefaultWorld() {
-        if (!getConfig().getBoolean("default_world")) {
+        if (!getConfig().getBoolean("creation.default_world")) {
             return;
         }
-        if (getServer().getWorld(getConfig().getString("default_world_name")) == null) {
+        if (getServer().getWorld(getConfig().getString("creation.default_world_name")) == null) {
             console.sendMessage(pluginName + "Default world specified, but it doesn't exist! Trying to create it now...");
-            new TARDISSpace(this).createDefaultWorld(getConfig().getString("default_world_name"));
+            new TARDISSpace(this).createDefaultWorld(getConfig().getString("creation.default_world_name"));
         }
     }
 

@@ -138,7 +138,7 @@ public class TARDISRoomCommands implements CommandExecutor {
                         } else {
                             mat = Material.getMaterial(bid).toString();
                         }
-                        int tmp = Math.round((entry.getValue() / 100.0F) * plugin.getConfig().getInt("rooms_condenser_percent"));
+                        int tmp = Math.round((entry.getValue() / 100.0F) * plugin.getConfig().getInt("rooms.rooms_condenser_percent"));
                         int amount = (tmp > 0) ? tmp : 1;
                         String line = mat + ", " + amount;
                         sender.sendMessage(line);

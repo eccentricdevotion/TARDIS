@@ -223,7 +223,7 @@ public class TARDISSonicListener implements Listener {
                     if (player.hasPermission("tardis.sonic.freeze") && lore != null && lore.contains("Bio-scanner Upgrade")) {
                         long cool = System.currentTimeMillis();
                         if ((!cooldown.containsKey(player.getName()) || cooldown.get(player.getName()) < cool)) {
-                            cooldown.put(player.getName(), cool + (plugin.getConfig().getInt("freeze_cooldown") * 1000L));
+                            cooldown.put(player.getName(), cool + (plugin.getConfig().getInt("preferences.freeze_cooldown") * 1000L));
                             plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
                                 @Override
                                 public void run() {

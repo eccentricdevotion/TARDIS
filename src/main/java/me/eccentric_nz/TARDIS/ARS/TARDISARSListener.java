@@ -245,7 +245,7 @@ public class TARDISARSListener implements Listener {
                                         break;
                                     }
                                 }
-                                if (plugin.getConfig().getBoolean("rooms_require_blocks")) {
+                                if (plugin.getConfig().getBoolean("rooms.rooms_require_blocks")) {
                                     if (!hasCondensables(playerNameStr, room)) {
                                         setLore(inv, slot, "You haven't condensed enough blocks for this room!");
                                         break;
@@ -554,7 +554,7 @@ public class TARDISARSListener implements Listener {
                                 }
                             }
                             // one every 40 seconds at default room_speed
-                            long period = 2400L * (Math.round(20 / plugin.getConfig().getDouble("room_speed")));
+                            long period = 2400L * (Math.round(20 / plugin.getConfig().getDouble("rooms.room_speed")));
                             long delay = 20L;
                             for (Map.Entry<TARDISARSSlot, TARDISARS> map : tap.getChanged().entrySet()) {
                                 TARDISARSRunnable ar = new TARDISARSRunnable(plugin, map.getKey(), map.getValue(), p);
@@ -715,7 +715,7 @@ public class TARDISARSListener implements Listener {
             } else {
                 bdata = String.format("%d", bid);
             }
-            int tmp = Math.round((entry.getValue() / 100.0F) * plugin.getConfig().getInt("rooms_condenser_percent"));
+            int tmp = Math.round((entry.getValue() / 100.0F) * plugin.getConfig().getInt("rooms.rooms_condenser_percent"));
             int required = (tmp > 0) ? tmp : 1;
             HashMap<String, Object> wherec = new HashMap<String, Object>();
             wherec.put("tardis_id", ids.get(player));

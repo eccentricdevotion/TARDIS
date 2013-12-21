@@ -115,7 +115,7 @@ public class TARDISPresetBuilderFactory {
                 cham_data = (byte) b_data[1];
             }
             // get lamp and submarine preferences
-            int lamp = plugin.getConfig().getInt("tardis_lamp");
+            int lamp = plugin.getConfig().getInt("police_box.tardis_lamp");
             boolean sub = false;
             boolean hidden = rs.isHidden();
             HashMap<String, Object> wherepp = new HashMap<String, Object>();
@@ -154,7 +154,7 @@ public class TARDISPresetBuilderFactory {
                     }
                 }, 10L);
             } else {
-                if (plugin.getConfig().getBoolean("materialise")) {
+                if (plugin.getConfig().getBoolean("police_box.materialise")) {
                     plugin.tardisMaterialising.add(id);
                     TARDISMaterialisationPreset runnable = new TARDISMaterialisationPreset(plugin, l, preset, id, d, p, mal, lamp, sub, cham_id, cham_data);
                     int taskID = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, runnable, 10L, 20L);
@@ -177,14 +177,14 @@ public class TARDISPresetBuilderFactory {
     @SuppressWarnings("deprecation")
     public void addPlatform(Location l, boolean rebuild, TARDISConstants.COMPASS d, String p, int id) {
         int plusx, minusx, x, y, plusz, minusz, z;
-        int platform_id = plugin.getConfig().getInt("platform_id");
-        byte platform_data = (byte) plugin.getConfig().getInt("platform_data");
+        int platform_id = plugin.getConfig().getInt("police_box.platform_id");
+        byte platform_data = (byte) plugin.getConfig().getInt("police_box.platform_data");
         // add platform if configured and necessary
         World world = l.getWorld();
         x = l.getBlockX();
         plusx = (l.getBlockX() + 1);
         minusx = (l.getBlockX() - 1);
-        if (plugin.getConfig().getBoolean("materialise") && rebuild == false) {
+        if (plugin.getConfig().getBoolean("police_box.materialise") && rebuild == false) {
             y = (l.getBlockY() - 1);
         } else {
             y = (l.getBlockY() - 3);
@@ -193,7 +193,7 @@ public class TARDISPresetBuilderFactory {
         plusz = (l.getBlockZ() + 1);
         minusz = (l.getBlockZ() - 1);
         QueryFactory qf = new QueryFactory(plugin);
-        if (plugin.getConfig().getBoolean("platform")) {
+        if (plugin.getConfig().getBoolean("travel.platform")) {
             // check if user has platform pref
             HashMap<String, Object> wherep = new HashMap<String, Object>();
             wherep.put("player", p);

@@ -43,9 +43,9 @@ public class TARDISNameKeyCommand {
         where.put("player", player.getName());
         ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, where);
         if (rsp.resultSet()) {
-            key = (!rsp.getKey().isEmpty()) ? rsp.getKey() : plugin.getConfig().getString("key");
+            key = (!rsp.getKey().isEmpty()) ? rsp.getKey() : plugin.getConfig().getString("preferences.key");
         } else {
-            key = plugin.getConfig().getString("key");
+            key = plugin.getConfig().getString("preferences.key");
         }
         Material m = Material.getMaterial(key);
         if (m.equals(Material.AIR)) {

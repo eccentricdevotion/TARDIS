@@ -101,7 +101,7 @@ public class TARDISDestroyerInner {
         short width = d[1];
         short l = d[2];
         // destroy TARDIS
-        boolean below = (!plugin.getConfig().getBoolean("create_worlds") && !plugin.getConfig().getBoolean("default_world"));
+        boolean below = (!plugin.getConfig().getBoolean("creation.create_worlds") && !plugin.getConfig().getBoolean("creation.default_world"));
         if (below) {
             int level, row, col, startx, startz, starty, resetx, resetz;
             // calculate startx, starty, startz

@@ -83,8 +83,8 @@ public class TARDISWorldGuardUtils {
         RegionManager rm = wg.getRegionManager(one.getWorld());
         BlockVector b1;
         BlockVector b2;
-        int cube = plugin.getConfig().getInt("border_radius") * 16;
-        if (plugin.getConfig().getBoolean("create_worlds")) {
+        int cube = plugin.getConfig().getInt("creation.border_radius") * 16;
+        if (plugin.getConfig().getBoolean("creation.create_worlds")) {
             // make a big cuboid region
             b1 = new BlockVector(cube, 256, cube);
             b2 = new BlockVector(-cube, 0, -cube);

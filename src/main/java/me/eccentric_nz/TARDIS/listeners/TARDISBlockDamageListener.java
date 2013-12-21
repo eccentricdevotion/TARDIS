@@ -41,7 +41,7 @@ public class TARDISBlockDamageListener implements Listener {
 
     public TARDISBlockDamageListener(TARDIS plugin) {
         this.plugin = plugin;
-        this.HADS = this.plugin.getConfig().getBoolean("allow_hads");
+        this.HADS = this.plugin.getConfig().getBoolean("allow.hads");
     }
 
     /**
@@ -73,11 +73,11 @@ public class TARDISBlockDamageListener implements Listener {
                 if (!isDoor && rsb.isPolice_box()) {
                     int damage = (plugin.trackDamage.containsKey(Integer.valueOf(id))) ? plugin.trackDamage.get(Integer.valueOf(id)) : 0;
                     plugin.trackDamage.put(Integer.valueOf(id), damage + 1);
-                    if (damage == plugin.getConfig().getInt("hads_damage")) {
+                    if (damage == plugin.getConfig().getInt("preferences.hads_damage")) {
                         new TARDISHostileDisplacement(plugin).moveTARDIS(id, p);
                         m = true;
                     }
-                    message = "WARNING - HADS initiating in " + (plugin.getConfig().getInt("hads_damage") - damage);
+                    message = "WARNING - HADS initiating in " + (plugin.getConfig().getInt("preferences.hads_damage") - damage);
                 }
             }
             event.setCancelled(true);

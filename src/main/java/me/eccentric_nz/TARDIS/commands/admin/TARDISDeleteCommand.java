@@ -96,7 +96,7 @@ public class TARDISDeleteCommand {
                 return true;
             }
             // destroy the TARDIS
-            if ((plugin.getConfig().getBoolean("create_worlds") && !plugin.getConfig().getBoolean("default_world")) || name.contains("TARDIS_WORLD_")) {
+            if ((plugin.getConfig().getBoolean("creation.create_worlds") && !plugin.getConfig().getBoolean("creation.default_world")) || name.contains("TARDIS_WORLD_")) {
                 // delete TARDIS world
                 List<Player> players = cw.getPlayers();
                 for (Player p : players) {

@@ -60,7 +60,7 @@ public class TARDISSeedBlockProcessor {
      */
     public boolean processBlock(TARDISBuildData seed, Location l, Player player) {
         if (player.hasPermission("tardis.create")) {
-            int max_count = plugin.getConfig().getInt("count");
+            int max_count = plugin.getConfig().getInt("creation.count");
             int player_count = 0;
             if (max_count > 0) {
                 HashMap<String, Object> wherec = new HashMap<String, Object>();
@@ -83,7 +83,7 @@ public class TARDISSeedBlockProcessor {
                 final TARDISConstants.SCHEMATIC schm = seed.getSchematic();
                 switch (schm) {
                     case CUSTOM:
-                        if (!plugin.getConfig().getBoolean("custom_schematic")) {
+                        if (!plugin.getConfig().getBoolean("creation.custom_schematic")) {
                             player.sendMessage(plugin.pluginName + "The custom TARDIS schematic is not enabled on this server!");
                             return false;
                         } else if (!player.hasPermission("tardis.custom")) {
@@ -146,14 +146,14 @@ public class TARDISSeedBlockProcessor {
                 String cw;
                 final World chunkworld;
                 boolean tips = false;
-                if (plugin.getConfig().getBoolean("create_worlds") && !plugin.getConfig().getBoolean("default_world")) {
+                if (plugin.getConfig().getBoolean("creation.create_worlds") && !plugin.getConfig().getBoolean("creation.default_world")) {
                     // create a new world to store this TARDIS
                     cw = "TARDIS_WORLD_" + playerNameStr;
                     TARDISSpace space = new TARDISSpace(plugin);
                     chunkworld = space.getTardisWorld(cw);
                     cx = 0;
                     cz = 0;
-                } else if (plugin.getConfig().getBoolean("default_world") && plugin.getConfig().getBoolean("create_worlds_with_perms") && player.hasPermission("tardis.create_world")) {
+                } else if (plugin.getConfig().getBoolean("creation.default_world") && plugin.getConfig().getBoolean("creation.create_worlds_with_perms") && player.hasPermission("tardis.create_world")) {
                     // create a new world to store this TARDIS
                     cw = "TARDIS_WORLD_" + playerNameStr;
                     TARDISSpace space = new TARDISSpace(plugin);
@@ -163,8 +163,8 @@ public class TARDISSeedBlockProcessor {
                 } else {
                     Chunk chunk = l.getChunk();
                     // check config to see whether we are using a default world to store TARDISes
-                    if (plugin.getConfig().getBoolean("default_world")) {
-                        cw = plugin.getConfig().getString("default_world_name");
+                    if (plugin.getConfig().getBoolean("creation.default_world")) {
+                        cw = plugin.getConfig().getString("creation.default_world_name");
                         chunkworld = plugin.getServer().getWorld(cw);
                         tips = true;
                     } else {
@@ -174,7 +174,7 @@ public class TARDISSeedBlockProcessor {
                     // get this chunk co-ords
                     cx = chunk.getX();
                     cz = chunk.getZ();
-                    if (!plugin.getConfig().getBoolean("default_world") && plugin.utils.checkChunk(cw, cx, cz, schm)) {
+                    if (!plugin.getConfig().getBoolean("creation.default_world") && plugin.utils.checkChunk(cw, cx, cz, schm)) {
                         player.sendMessage(plugin.pluginName + "A TARDIS already exists at this location, please try another chunk!");
                         return false;
                     }

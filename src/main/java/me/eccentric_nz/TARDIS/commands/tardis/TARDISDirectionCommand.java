@@ -63,7 +63,7 @@ public class TARDISDirectionCommand {
                 return true;
             }
             boolean tmp_cham = false;
-            if (plugin.getConfig().getBoolean("chameleon")) {
+            if (plugin.getConfig().getBoolean("travel.chameleon")) {
                 tmp_cham = rs.isChamele_on();
             }
             final boolean cham = tmp_cham;

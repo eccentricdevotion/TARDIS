@@ -225,11 +225,11 @@ public class TARDISRoomRunnable implements Runnable {
             if (id == 55) {
                 data = 0;
             }
-            if (id == 35 && data == 7 && plugin.getConfig().getBoolean("use_clay")) {
+            if (id == 35 && data == 7 && plugin.getConfig().getBoolean("creation.use_clay")) {
                 id = 159;
             }
             if (id == 35 && data == 1) {
-                if (middle_id == 35 && middle_data == 1 && plugin.getConfig().getBoolean("use_clay")) {
+                if (middle_id == 35 && middle_data == 1 && plugin.getConfig().getBoolean("creation.use_clay")) {
                     id = 159;
                 } else {
                     id = middle_id;
@@ -237,7 +237,7 @@ public class TARDISRoomRunnable implements Runnable {
                 data = ((room.equals("GRAVITY") || room.equals("ANTIGRAVITY")) && middle_id == 35 && (middle_data == 5 || middle_data == 6)) ? 1 : middle_data;
             }
             if (id == 35 && data == 8) {
-                if (floor_id == 35 && floor_data == 8 && plugin.getConfig().getBoolean("use_clay")) {
+                if (floor_id == 35 && floor_data == 8 && plugin.getConfig().getBoolean("creation.use_clay")) {
                     id = 159;
                 } else {
                     id = floor_id;
@@ -261,7 +261,7 @@ public class TARDISRoomRunnable implements Runnable {
                 wheref.put("tardis_id", tardis_id);
                 qf.doUpdate("tardis", setf, wheref);
                 // replace with floor material
-                id = (floor_id == 35 && floor_data == 8 && plugin.getConfig().getBoolean("use_clay")) ? 159 : floor_id;
+                id = (floor_id == 35 && floor_data == 8 && plugin.getConfig().getBoolean("creation.use_clay")) ? 159 : floor_id;
                 data = floor_data;
             }
             // set stable
@@ -321,7 +321,7 @@ public class TARDISRoomRunnable implements Runnable {
                     id = 0;
                     data = (byte) 0;
                 } else {
-                    id = (middle_id == 35 && middle_data == 1 && plugin.getConfig().getBoolean("use_clay")) ? 159 : middle_id;
+                    id = (middle_id == 35 && middle_data == 1 && plugin.getConfig().getBoolean("creation.use_clay")) ? 159 : middle_id;
                     data = middle_data;
                 }
             }

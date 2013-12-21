@@ -37,7 +37,7 @@ public class TARDISFindCommand {
     }
 
     public boolean findTARDIS(Player player, String[] args) {
-        if (plugin.getConfig().getString("difficulty").equalsIgnoreCase("easy")) {
+        if (plugin.getConfig().getString("preferences.difficulty").equalsIgnoreCase("easy")) {
             if (player.hasPermission("tardis.find")) {
                 HashMap<String, Object> where = new HashMap<String, Object>();
                 where.put("owner", player.getName());

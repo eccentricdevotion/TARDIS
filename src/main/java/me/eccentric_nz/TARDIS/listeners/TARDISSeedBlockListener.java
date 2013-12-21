@@ -163,9 +163,9 @@ public class TARDISSeedBlockListener implements Listener {
                 where.put("player", player.getName());
                 ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, where);
                 if (rsp.resultSet()) {
-                    key = (!rsp.getKey().isEmpty()) ? rsp.getKey() : plugin.getConfig().getString("key");
+                    key = (!rsp.getKey().isEmpty()) ? rsp.getKey() : plugin.getConfig().getString("preferences.key");
                 } else {
-                    key = plugin.getConfig().getString("key");
+                    key = plugin.getConfig().getString("preferences.key");
                 }
                 if (player.getItemInHand().getType().equals(Material.getMaterial(key))) {
                     // grow a TARDIS

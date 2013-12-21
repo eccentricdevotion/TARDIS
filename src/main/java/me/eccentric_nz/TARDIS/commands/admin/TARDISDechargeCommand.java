@@ -37,7 +37,7 @@ public class TARDISDechargeCommand {
             sender.sendMessage(plugin.pluginName + "Could not find a recharger with that name! Try using " + ChatColor.AQUA + "/tardis list rechargers" + ChatColor.RESET + " first.");
             return true;
         }
-        if (plugin.worldGuardOnServer && plugin.getConfig().getBoolean("use_worldguard")) {
+        if (plugin.worldGuardOnServer && plugin.getConfig().getBoolean("preferences.use_worldguard")) {
             plugin.wgutils.removeRechargerRegion(args[1]);
         }
         plugin.getConfig().set("rechargers." + args[1], null);

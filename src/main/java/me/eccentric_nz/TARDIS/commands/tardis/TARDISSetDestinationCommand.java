@@ -78,7 +78,7 @@ public class TARDISSetDestinationCommand {
                     return true;
                 }
                 String world = l.getWorld().getName();
-                if (!plugin.getConfig().getBoolean("include_default_world") && plugin.getConfig().getBoolean("default_world") && world.equals(plugin.getConfig().getString("default_world_name"))) {
+                if (!plugin.getConfig().getBoolean("travel.include_default_world") && plugin.getConfig().getBoolean("creation.default_world") && world.equals(plugin.getConfig().getString("creation.default_world_name"))) {
                     player.sendMessage(plugin.pluginName + "The server admin will not allow you to set the TARDIS destination to this world!");
                     return true;
                 }
@@ -91,7 +91,7 @@ public class TARDISSetDestinationCommand {
                 if (!respect.getRespect(player, l, true)) {
                     return true;
                 }
-                if (player.hasPermission("tardis.exile") && plugin.getConfig().getBoolean("exile")) {
+                if (player.hasPermission("tardis.exile") && plugin.getConfig().getBoolean("travel.exile")) {
                     String areaPerm = plugin.ta.getExileArea(player);
                     if (plugin.ta.areaCheckInExile(areaPerm, l)) {
                         player.sendMessage(plugin.pluginName + "You exile status does not allow you to save the TARDIS to this location!");

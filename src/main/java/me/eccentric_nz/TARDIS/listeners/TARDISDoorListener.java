@@ -137,9 +137,9 @@ public class TARDISDoorListener implements Listener {
                     boolean hasPrefs = false;
                     if (rsp.resultSet()) {
                         hasPrefs = true;
-                        key = (!rsp.getKey().isEmpty()) ? rsp.getKey() : plugin.getConfig().getString("key");
+                        key = (!rsp.getKey().isEmpty()) ? rsp.getKey() : plugin.getConfig().getString("preferences.key");
                     } else {
-                        key = plugin.getConfig().getString("key");
+                        key = plugin.getConfig().getString("preferences.key");
                     }
                     Material m = Material.getMaterial(key);
                     HashMap<String, Object> where = new HashMap<String, Object>();
@@ -363,7 +363,7 @@ public class TARDISDoorListener implements Listener {
                                                 }
                                                 // exit TARDIS!
                                                 movePlayer(player, exitTardis, true, playerWorld, userQuotes, 2);
-                                                if (plugin.getConfig().getBoolean("allow_mob_farming") && player.hasPermission("tardis.farm")) {
+                                                if (plugin.getConfig().getBoolean("allow.mob_farming") && player.hasPermission("tardis.farm")) {
                                                     TARDISFarmer tf = new TARDISFarmer(plugin);
                                                     final List<TARDISMob> pets = tf.exitPets(player);
                                                     if (pets != null && pets.size() > 0) {
@@ -375,7 +375,7 @@ public class TARDISDoorListener implements Listener {
                                                         }, 10L);
                                                     }
                                                 }
-                                                if (plugin.getConfig().getBoolean("allow_tp_switch") && userTP) {
+                                                if (plugin.getConfig().getBoolean("allow.tp_switch") && userTP) {
                                                     new TARDISResourcePackChanger(plugin).changeRP(player, rsp.getTexture_out());
                                                 }
                                                 // remove player from traveller table
@@ -411,7 +411,7 @@ public class TARDISDoorListener implements Listener {
                                                 TARDISConstants.COMPASS innerD = idl.getD();
                                                 // check for entities near the police box
                                                 List<TARDISMob> pets = null;
-                                                if (plugin.getConfig().getBoolean("allow_mob_farming") && player.hasPermission("tardis.farm") && !plugin.trackFarming.contains(playerNameStr)) {
+                                                if (plugin.getConfig().getBoolean("allow.mob_farming") && player.hasPermission("tardis.farm") && !plugin.trackFarming.contains(playerNameStr)) {
                                                     plugin.trackFarming.add(playerNameStr);
                                                     TARDISFarmer tf = new TARDISFarmer(plugin);
                                                     pets = tf.farmAnimals(block_loc, d, id, player, tmp_loc.getWorld().getName(), playerWorld.getName());
@@ -429,7 +429,7 @@ public class TARDISDoorListener implements Listener {
                                                 if (pets != null && pets.size() > 0) {
                                                     movePets(pets, tardis_loc, player, d, true);
                                                 }
-                                                if (plugin.getConfig().getBoolean("allow_tp_switch") && userTP) {
+                                                if (plugin.getConfig().getBoolean("allow.tp_switch") && userTP) {
                                                     if (!rsp.getTexture_in().isEmpty()) {
                                                         new TARDISResourcePackChanger(plugin).changeRP(player, rsp.getTexture_in());
                                                     }
@@ -464,7 +464,7 @@ public class TARDISDoorListener implements Listener {
                                             ibd_loc.setPitch(pitch);
                                             final Location inner_loc = ibd_loc;
                                             movePlayer(player, inner_loc, false, playerWorld, userQuotes, 1);
-                                            if (plugin.getConfig().getBoolean("allow_tp_switch") && userTP) {
+                                            if (plugin.getConfig().getBoolean("allow.tp_switch") && userTP) {
                                                 if (!rsp.getTexture_in().isEmpty()) {
                                                     new TARDISResourcePackChanger(plugin).changeRP(player, rsp.getTexture_in());
                                                 }
@@ -492,12 +492,12 @@ public class TARDISDoorListener implements Listener {
                                                 player.sendMessage(plugin.pluginName + "You need to add a back door outside the TARDIS!");
                                                 return;
                                             }
-                                            if (obd_loc.getWorld().getEnvironment().equals(Environment.THE_END) && (!player.hasPermission("tardis.end") || !plugin.getConfig().getBoolean("the_end"))) {
+                                            if (obd_loc.getWorld().getEnvironment().equals(Environment.THE_END) && (!player.hasPermission("tardis.end") || !plugin.getConfig().getBoolean("travel.the_end"))) {
                                                 String message = (!player.hasPermission("tardis.end")) ? "You don't have permission to use a back door to The End!" : "TARDIS travel to The End is disabled!";
                                                 player.sendMessage(plugin.pluginName + message);
                                                 return;
                                             }
-                                            if (obd_loc.getWorld().getEnvironment().equals(Environment.NETHER) && (!player.hasPermission("tardis.nether") || !plugin.getConfig().getBoolean("nether"))) {
+                                            if (obd_loc.getWorld().getEnvironment().equals(Environment.NETHER) && (!player.hasPermission("tardis.nether") || !plugin.getConfig().getBoolean("travel.nether"))) {
                                                 String message = (!player.hasPermission("tardis.end")) ? "You don't have permission to use a back door to the Nether!" : "TARDIS travel to the Nether is disabled!";
                                                 player.sendMessage(plugin.pluginName + message);
                                                 return;
@@ -511,7 +511,7 @@ public class TARDISDoorListener implements Listener {
                                             obd_loc.setPitch(pitch);
                                             final Location outer_loc = obd_loc;
                                             movePlayer(player, outer_loc, true, playerWorld, userQuotes, 2);
-                                            if (plugin.getConfig().getBoolean("allow_tp_switch") && userTP) {
+                                            if (plugin.getConfig().getBoolean("allow.tp_switch") && userTP) {
                                                 new TARDISResourcePackChanger(plugin).changeRP(player, rsp.getTexture_out());
                                             }
                                             // remove player from traveller table
@@ -593,7 +593,7 @@ public class TARDISDoorListener implements Listener {
                     // add energy to player
                     HashMap<String, Object> where = new HashMap<String, Object>();
                     where.put("player", name);
-                    int player_artron = (plugin.getConfig().getBoolean("create_worlds")) ? plugin.getArtronConfig().getInt("player") : plugin.getArtronConfig().getInt("player") * 10;
+                    int player_artron = (plugin.getConfig().getBoolean("creation.create_worlds")) ? plugin.getArtronConfig().getInt("player") : plugin.getArtronConfig().getInt("player") * 10;
                     qf.alterEnergyLevel("player_prefs", player_artron, where, p);
                     String pstr = p.getName();
                     if (plugin.trackSetTime.containsKey(pstr)) {
@@ -723,11 +723,11 @@ public class TARDISDoorListener implements Listener {
         where.put("player", p.getName());
         ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, where);
         if (rsp.resultSet()) {
-            key = (!rsp.getKey().isEmpty()) ? rsp.getKey() : plugin.getConfig().getString("key");
+            key = (!rsp.getKey().isEmpty()) ? rsp.getKey() : plugin.getConfig().getString("preferences.key");
         } else {
-            key = plugin.getConfig().getString("key");
+            key = plugin.getConfig().getString("preferences.key");
         }
-        if (plugin.getConfig().getBoolean("give_key") && !key.equals("AIR")) {
+        if (plugin.getConfig().getBoolean("travel.give_key") && !key.equals("AIR")) {
             Inventory inv = p.getInventory();
             Material m = Material.valueOf(key);
             if (!inv.contains(m)) {

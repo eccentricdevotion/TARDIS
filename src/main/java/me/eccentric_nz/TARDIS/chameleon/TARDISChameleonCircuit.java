@@ -119,7 +119,7 @@ public class TARDISChameleonCircuit {
             }
         }
         // if it's a precious block or TNT and all_blocks is false, then switch it to wool of similar colour
-        if (TARDISConstants.CHAMELEON_BLOCKS_PRECIOUS.contains((Integer) chameleonType) && !plugin.getConfig().getBoolean("all_blocks")) {
+        if (TARDISConstants.CHAMELEON_BLOCKS_PRECIOUS.contains((Integer) chameleonType) && !plugin.getConfig().getBoolean("allow.all_blocks")) {
             wall_block = 35;
             switch (chameleonType) {
                 case 41:

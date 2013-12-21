@@ -108,7 +108,7 @@ public class ResultSetPlayerPrefs {
             if (rs.next()) {
                 this.pp_id = rs.getInt("pp_id");
                 this.player = rs.getString("player");
-                this.key = (plugin.getConfig().getString("database").equals("sqlite")) ? rs.getString("key") : rs.getString("key_item");
+                this.key = (plugin.getConfig().getString("storage.database").equals("sqlite")) ? rs.getString("key") : rs.getString("key_item");
                 this.SFX_on = rs.getBoolean("sfx_on");
                 this.platform_on = rs.getBoolean("platform_on");
                 this.quotes_on = rs.getBoolean("quotes_on");
@@ -119,7 +119,7 @@ public class ResultSetPlayerPrefs {
                 this.artron_level = rs.getInt("artron_level");
                 this.lamp = rs.getInt("lamp");
                 if (rs.wasNull()) {
-                    this.lamp = plugin.getConfig().getInt("tardis_lamp");
+                    this.lamp = plugin.getConfig().getInt("police_box.tardis_lamp");
                 }
                 this.wall = rs.getString("wall");
                 this.floor = rs.getString("floor");

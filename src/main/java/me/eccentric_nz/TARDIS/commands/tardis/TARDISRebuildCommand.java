@@ -63,7 +63,7 @@ public class TARDISRebuildCommand {
                 player.sendMessage(plugin.pluginName + "You cannot do that while the TARDIS is materialising!");
                 return true;
             }
-            if (plugin.getConfig().getBoolean("chameleon")) {
+            if (plugin.getConfig().getBoolean("travel.chameleon")) {
                 cham = rs.isChamele_on();
             }
             HashMap<String, Object> wherecl = new HashMap<String, Object>();

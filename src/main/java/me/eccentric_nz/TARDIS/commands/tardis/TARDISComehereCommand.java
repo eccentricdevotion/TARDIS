@@ -47,10 +47,10 @@ public class TARDISComehereCommand {
     }
 
     public boolean doComeHere(Player player) {
-        if (plugin.getConfig().getString("difficulty").equalsIgnoreCase("easy")) {
+        if (plugin.getConfig().getString("preferences.difficulty").equalsIgnoreCase("easy")) {
             if (player.hasPermission("tardis.timetravel")) {
                 final Location eyeLocation = player.getTargetBlock(plugin.tardisCommand.transparent, 50).getLocation();
-                if (!plugin.getConfig().getBoolean("include_default_world") && plugin.getConfig().getBoolean("default_world") && eyeLocation.getWorld().getName().equals(plugin.getConfig().getString("default_world_name"))) {
+                if (!plugin.getConfig().getBoolean("travel.include_default_world") && plugin.getConfig().getBoolean("creation.default_world") && eyeLocation.getWorld().getName().equals(plugin.getConfig().getString("creation.default_world_name"))) {
                     player.sendMessage(plugin.pluginName + "The server admin will not allow you to bring the TARDIS to this world!");
                     return true;
                 }
@@ -58,7 +58,7 @@ public class TARDISComehereCommand {
                 if (!respect.getRespect(player, eyeLocation, true)) {
                     return true;
                 }
-                if (player.hasPermission("tardis.exile") && plugin.getConfig().getBoolean("exile")) {
+                if (player.hasPermission("tardis.exile") && plugin.getConfig().getBoolean("travel.exile")) {
                     String areaPerm = plugin.ta.getExileArea(player);
                     if (plugin.ta.areaCheckInExile(areaPerm, eyeLocation)) {
                         player.sendMessage(plugin.pluginName + "You exile status does not allow you to bring the TARDIS to this location!");
@@ -104,7 +104,7 @@ public class TARDISComehereCommand {
                 }
                 int level = rs.getArtron_level();
                 boolean chamtmp = false;
-                if (plugin.getConfig().getBoolean("chameleon")) {
+                if (plugin.getConfig().getBoolean("travel.chameleon")) {
                     chamtmp = rs.isChamele_on();
                 }
                 final boolean hidden = rs.isHidden();
@@ -175,7 +175,7 @@ public class TARDISComehereCommand {
                         bset.put("submarine", rsc.isSubmarine());
                         qf.doUpdate("back", bset, bid);
                         player.sendMessage(plugin.pluginName + "The TARDIS is coming...");
-                        final boolean mat = plugin.getConfig().getBoolean("materialise");
+                        final boolean mat = plugin.getConfig().getBoolean("police_box.materialise");
                         long delay = (mat) ? 1L : 180L;
                         Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
                             @Override

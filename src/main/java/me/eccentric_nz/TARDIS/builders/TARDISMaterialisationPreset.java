@@ -126,8 +126,8 @@ public class TARDISMaterialisationPreset implements Runnable {
                 y = location.getBlockY();
             }
             int z = location.getBlockZ(), plusz = location.getBlockZ() + 1, minusz = location.getBlockZ() - 1;
-            int platform_id = plugin.getConfig().getInt("platform_id");
-            byte platform_data = (byte) plugin.getConfig().getInt("platform_data");
+            int platform_id = plugin.getConfig().getInt("police_box.platform_id");
+            byte platform_data = (byte) plugin.getConfig().getInt("police_box.platform_data");
             World world = location.getWorld();
             int signx = 0, signz = 0;
             if (i < loops) {
@@ -317,7 +317,7 @@ public class TARDISMaterialisationPreset implements Runnable {
                                     Block sign = world.getBlockAt(xx, (y + yy), zz);
                                     if (sign.getType().equals(Material.WALL_SIGN) || sign.getType().equals(Material.SIGN_POST)) {
                                         Sign s = (Sign) sign.getState();
-                                        if (plugin.getConfig().getBoolean("name_tardis")) {
+                                        if (plugin.getConfig().getBoolean("police_box.name_tardis")) {
                                             HashMap<String, Object> wheret = new HashMap<String, Object>();
                                             wheret.put("tardis_id", tid);
                                             ResultSetTardis rst = new ResultSetTardis(plugin, wheret, "", false);

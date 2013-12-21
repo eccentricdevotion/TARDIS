@@ -112,7 +112,7 @@ public class TARDISEPSRunnable implements Runnable {
             int z = plugin.utils.parseNum(npc[3]);
             return new Location(w, x, y, z);
         } else {
-            if (plugin.getConfig().getBoolean("create_worlds")) {
+            if (plugin.getConfig().getBoolean("creation.create_worlds")) {
                 // get world spawn location
                 return plugin.getServer().getWorld("TARDIS_WORLD_" + tl.getName()).getSpawnLocation();
             } else {

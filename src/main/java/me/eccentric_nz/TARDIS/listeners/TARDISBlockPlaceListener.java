@@ -70,8 +70,8 @@ public class TARDISBlockPlaceListener implements Listener {
         blocks.add(Material.REDSTONE_BLOCK); // redstone
         blocks.add(Material.QUARTZ_BLOCK); // ARS
         blocks.add(Material.COAL_BLOCK); // steampunk
-        if (plugin.getConfig().getBoolean("custom_schematic")) {
-            custom = Material.valueOf(plugin.getConfig().getString("custom_schematic_seed"));
+        if (plugin.getConfig().getBoolean("creation.custom_schematic")) {
+            custom = Material.valueOf(plugin.getConfig().getString("creation.custom_schematic_seed"));
             blocks.add(custom); // custom
         }
     }
@@ -97,7 +97,7 @@ public class TARDISBlockPlaceListener implements Listener {
             if (plugin.getBlocksConfig().getStringList("tardis_blocks").contains(blockBelow.getType().toString()) && blocks.contains(blockBottom.getType())) {
                 final TARDISConstants.SCHEMATIC schm;
                 final Player player = event.getPlayer();
-                int max_count = plugin.getConfig().getInt("count");
+                int max_count = plugin.getConfig().getInt("creation.count");
                 int player_count = 0;
                 if (max_count > 0) {
                     HashMap<String, Object> wherec = new HashMap<String, Object>();
@@ -206,14 +206,14 @@ public class TARDISBlockPlaceListener implements Listener {
                         String cw;
                         final World chunkworld;
                         boolean tips = false;
-                        if (plugin.getConfig().getBoolean("create_worlds") && !plugin.getConfig().getBoolean("default_world")) {
+                        if (plugin.getConfig().getBoolean("creation.create_worlds") && !plugin.getConfig().getBoolean("creation.default_world")) {
                             // create a new world to store this TARDIS
                             cw = "TARDIS_WORLD_" + playerNameStr;
                             TARDISSpace space = new TARDISSpace(plugin);
                             chunkworld = space.getTardisWorld(cw);
                             cx = 0;
                             cz = 0;
-                        } else if (plugin.getConfig().getBoolean("default_world") && plugin.getConfig().getBoolean("create_worlds_with_perms") && player.hasPermission("tardis.create_world")) {
+                        } else if (plugin.getConfig().getBoolean("creation.default_world") && plugin.getConfig().getBoolean("creation.create_worlds_with_perms") && player.hasPermission("tardis.create_world")) {
                             // create a new world to store this TARDIS
                             cw = "TARDIS_WORLD_" + playerNameStr;
                             TARDISSpace space = new TARDISSpace(plugin);
@@ -222,8 +222,8 @@ public class TARDISBlockPlaceListener implements Listener {
                             cz = 0;
                         } else {
                             // check config to see whether we are using a default world to store TARDISes
-                            if (plugin.getConfig().getBoolean("default_world")) {
-                                cw = plugin.getConfig().getString("default_world_name");
+                            if (plugin.getConfig().getBoolean("creation.default_world")) {
+                                cw = plugin.getConfig().getString("creation.default_world_name");
                                 chunkworld = plugin.getServer().getWorld(cw);
                                 tips = true;
                             } else {
@@ -232,7 +232,7 @@ public class TARDISBlockPlaceListener implements Listener {
                             }
                             cx = chunk.getX();
                             cz = chunk.getZ();
-                            if (!plugin.getConfig().getBoolean("default_world") && utils.checkChunk(cw, cx, cz, schm)) {
+                            if (!plugin.getConfig().getBoolean("creation.default_world") && utils.checkChunk(cw, cx, cz, schm)) {
                                 player.sendMessage(plugin.pluginName + "A TARDIS already exists at this location, please try another chunk!");
                                 return;
                             }

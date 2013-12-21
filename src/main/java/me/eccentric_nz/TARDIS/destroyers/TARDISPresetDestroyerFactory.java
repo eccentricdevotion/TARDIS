@@ -71,7 +71,7 @@ public class TARDISPresetDestroyerFactory {
                     cham_id = b_data[0];
                     cham_data = (byte) b_data[1];
                 }
-                int lamp = plugin.getConfig().getInt("tardis_lamp");
+                int lamp = plugin.getConfig().getInt("police_box.tardis_lamp");
                 HashMap<String, Object> wherepp = new HashMap<String, Object>();
                 wherepp.put("player", player.getName());
                 ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, wherepp);

@@ -111,7 +111,7 @@ public class TARDISWalls {
         blocks.put("QUARTZ_PILLAR", new int[]{155, 2});
         blocks.put("HAY", new int[]{170, 0});
         blocks.put("PACKED_ICE", new int[]{174, 0});
-        if (TARDIS.plugin.getConfig().getBoolean("all_blocks")) {
+        if (TARDIS.plugin.getConfig().getBoolean("allow.all_blocks")) {
             blocks.put("BEDROCK", new int[]{7, 0});
             blocks.put("COAL_ORE", new int[]{16, 0});
             blocks.put("DIAMOND_BLOCK", new int[]{57, 0});

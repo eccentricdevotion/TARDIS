@@ -60,7 +60,7 @@ public class TARDISTimeLordDeathListener implements Listener {
      */
     @EventHandler(priority = EventPriority.MONITOR)
     public void onTimeLordDeath(PlayerDeathEvent event) {
-        if (plugin.getConfig().getBoolean("allow_autonomous")) {
+        if (plugin.getConfig().getBoolean("allow.autonomous")) {
             final Player player = event.getEntity();
             if (player.hasPermission("tardis.autonomous")) {
                 String playerNameStr = player.getName();
@@ -79,7 +79,7 @@ public class TARDISTimeLordDeathListener implements Listener {
                         // do they have the autonomous circuit on?
                         if (rsp.isAuto_on()) {
                             Location death_loc = player.getLocation();
-                            if (plugin.pm.isPluginEnabled("Citizens") && plugin.getConfig().getBoolean("emergency_npc") && rsp.isEPS_on()) {
+                            if (plugin.pm.isPluginEnabled("Citizens") && plugin.getConfig().getBoolean("allow.emergency_npc") && rsp.isEPS_on()) {
                                 // check if there are players in the TARDIS
                                 HashMap<String, Object> wherev = new HashMap<String, Object>();
                                 wherev.put("tardis_id", id);
@@ -150,7 +150,7 @@ public class TARDISTimeLordDeathListener implements Listener {
                                 final COMPASS fd = (going_home) ? hd : cd;
                                 // destroy police box
                                 if (!rs.isHidden()) {
-                                    plugin.destroyerP.destroyPreset(sl, cd, id, false, plugin.getConfig().getBoolean("materialise"), cham, player);
+                                    plugin.destroyerP.destroyPreset(sl, cd, id, false, plugin.getConfig().getBoolean("police_box.materialise"), cham, player);
                                 } else {
                                     plugin.destroyerP.removeBlockProtection(id, qf);
                                     HashMap<String, Object> set = new HashMap<String, Object>();

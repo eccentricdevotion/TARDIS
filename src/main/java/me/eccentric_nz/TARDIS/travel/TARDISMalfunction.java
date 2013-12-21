@@ -63,8 +63,8 @@ public class TARDISMalfunction {
 
     public boolean isMalfunction() {
         boolean mal = false;
-        if (plugin.getConfig().getInt("malfunction") > 0) {
-            int chance = 100 - plugin.getConfig().getInt("malfunction");
+        if (plugin.getConfig().getInt("preferences.malfunction") > 0) {
+            int chance = 100 - plugin.getConfig().getInt("preferences.malfunction");
             if (rand.nextInt(100) > chance) {
                 mal = true;
                 if (plugin.trackRescue.containsKey(Integer.valueOf(id))) {
@@ -83,8 +83,8 @@ public class TARDISMalfunction {
         ResultSetCurrentLocation rscl = new ResultSetCurrentLocation(plugin, wherecl);
         if (rscl.resultSet()) {
             Location cl = new Location(rscl.getWorld(), rscl.getX(), rscl.getY(), rscl.getZ());
-            int end = 100 - plugin.getConfig().getInt("malfunction_end");
-            int nether = end - plugin.getConfig().getInt("malfunction_nether");
+            int end = 100 - plugin.getConfig().getInt("preferences.malfunction_end");
+            int nether = end - plugin.getConfig().getInt("preferences.malfunction_nether");
             int r = rand.nextInt(100);
             TARDISTimeTravel tt = new TARDISTimeTravel(plugin);
             byte x = (byte) rand.nextInt(15);
@@ -121,7 +121,7 @@ public class TARDISMalfunction {
                 Location loc = plugin.utils.getLocationFromDB(map.get("location"), 0.0F, 0.0F);
                 lamps.add(loc.getBlock());
             }
-            if (plugin.pm.isPluginEnabled("Citizens") && plugin.getConfig().getBoolean("emergency_npc")) {
+            if (plugin.pm.isPluginEnabled("Citizens") && plugin.getConfig().getBoolean("allow.emergency_npc")) {
                 // get player prefs
                 HashMap<String, Object> wherep = new HashMap<String, Object>();
                 wherep.put("player", p.getName());

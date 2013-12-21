@@ -33,6 +33,7 @@ public class TARDISAdminTabComplete implements TabCompleter {
     private final ImmutableList<String> DIFFICULTY_SUBS = ImmutableList.of("easy", "hard");
     private final ImmutableList<String> BOOL_SUBS = ImmutableList.of("true", "false");
     private final ImmutableList<String> DB_SUBS = ImmutableList.of("mysql", "sqlite");
+    private final ImmutableList<String> CONFIG_SUBS = ImmutableList.of("worlds", "rechargers", "storage", "creation", "police_box", "travel", "preferences", "allow", "rooms", "rooms2");
 
     public TARDISAdminTabComplete(TARDIS plugin) {
         this.plugin = plugin;
@@ -45,6 +46,9 @@ public class TARDISAdminTabComplete implements TabCompleter {
             return partial(args[0], combineLists());
         } else if (args.length == 2) {
             String sub = args[0];
+            if (sub.equals("config")) {
+                return partial(lastArg, CONFIG_SUBS);
+            }
             if (sub.equals("difficulty")) {
                 return partial(lastArg, DIFFICULTY_SUBS);
             }
@@ -66,9 +70,9 @@ public class TARDISAdminTabComplete implements TabCompleter {
 
     private List<String> combineLists() {
         List<String> newList = new ArrayList<String>(plugin.tardisAdminCommand.firstsStr.size() + plugin.tardisAdminCommand.firstsBool.size() + plugin.tardisAdminCommand.firstsInt.size() + plugin.tardisAdminCommand.firstsStrArtron.size() + plugin.tardisAdminCommand.firstsIntArtron.size());
-        newList.addAll(plugin.tardisAdminCommand.firstsStr);
-        newList.addAll(plugin.tardisAdminCommand.firstsBool);
-        newList.addAll(plugin.tardisAdminCommand.firstsInt);
+        newList.addAll(plugin.tardisAdminCommand.firstsStr.keySet());
+        newList.addAll(plugin.tardisAdminCommand.firstsBool.keySet());
+        newList.addAll(plugin.tardisAdminCommand.firstsInt.keySet());
         newList.addAll(plugin.tardisAdminCommand.firstsStrArtron);
         newList.addAll(plugin.tardisAdminCommand.firstsIntArtron);
         return newList;

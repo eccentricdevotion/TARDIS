@@ -43,7 +43,7 @@ public class TARDISHomeCommand {
     public boolean setHome(Player player, String[] args) {
         if (player.hasPermission("tardis.timetravel")) {
             Location eyeLocation = player.getTargetBlock(plugin.tardisCommand.transparent, 50).getLocation();
-            if (!plugin.getConfig().getBoolean("include_default_world") && plugin.getConfig().getBoolean("default_world") && eyeLocation.getWorld().getName().equals(plugin.getConfig().getString("default_world_name"))) {
+            if (!plugin.getConfig().getBoolean("travel.include_default_world") && plugin.getConfig().getBoolean("creation.default_world") && eyeLocation.getWorld().getName().equals(plugin.getConfig().getString("creation.default_world_name"))) {
                 player.sendMessage(plugin.pluginName + "The server admin will not allow you to set the TARDIS home in this world!");
                 return true;
             }

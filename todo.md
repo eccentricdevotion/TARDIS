@@ -4,6 +4,7 @@
 1. Documentation & videos!
    * Add note about disabling Factions in Vortex
 2. Sonic Screwdrivers
+   * add texture to Resource Pack
 4. Advanced TARDIS console
     * Export TARDIS saves / areas / etc. to disks for use with Advanced TARDIS console
     * Have a storage container with GUI for accessing disks
@@ -13,7 +14,7 @@
 8. Underground materialisation
 9. Fix underdoor block for apperture preset
 10. Save Chameleon preset with saved location `/tardis csave`?
-10. TARDIS Information System
+11. TARDIS Information System
     * add new features
     * auto log out?
     
@@ -29,6 +30,16 @@
 5. Artron storage blocks
 6. HADS + explosions + fireballs + lava
 7. Put farmland, crops, buttons, ladders, levers and signs on last when growing rooms
+8. Reskin mobs for Resource pack, and add new mob sounds
+   * Skeletons -> Cybermen
+   * Wither Skeletons -> ?
+   * Wolves -> K-9
+   * Zombies -> Empty child
+   * Pigmen -> Sontarans
+   * Endermen -> The Silence
+   * Creepers -> Daleks
+   * Slimes -> Adipose?
+   * Witches -> ?
 
 # Minecraft API when available
 1. Recreate everything with the new API :)

@@ -42,7 +42,7 @@ public class TARDISChameleonCommand {
     }
 
     public boolean doChameleon(Player player, String[] args) {
-        if (!plugin.getConfig().getBoolean("chameleon")) {
+        if (!plugin.getConfig().getBoolean("travel.chameleon")) {
             player.sendMessage(plugin.pluginName + "This server does not allow the use of the chameleon circuit!");
             return false;
         }
@@ -95,8 +95,8 @@ public class TARDISChameleonCommand {
                         cs.update();
                     }
                 }
-                int dwid = plugin.getConfig().getInt("wall_id");
-                int dwd = plugin.getConfig().getInt("wall_data");
+                int dwid = plugin.getConfig().getInt("police_box.wall_id");
+                int dwd = plugin.getConfig().getInt("police_box.wall_data");
                 if (args[1].equalsIgnoreCase("short")) {
                     // get the block the player is targeting
                     Block target_block = player.getTargetBlock(plugin.tardisCommand.transparent, 50).getLocation().getBlock();

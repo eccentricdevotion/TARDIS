@@ -33,8 +33,8 @@ public class TARDISSetBooleanCommand {
         this.plugin = plugin;
     }
 
-    public boolean setConfigBool(CommandSender sender, String[] args) {
-        String first = args[0];
+    public boolean setConfigBool(CommandSender sender, String[] args, String section) {
+        String first = (section.isEmpty()) ? args[0].toLowerCase() : section + "." + args[0].toLowerCase();
         // check they typed true of false
         String tf = args[1].toLowerCase(Locale.ENGLISH);
         if (!tf.equals("true") && !tf.equals("false")) {

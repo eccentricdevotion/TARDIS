@@ -149,7 +149,7 @@ public class TARDISControlsConverter {
             }
             if (i > 0) {
                 plugin.console.sendMessage(plugin.pluginName + "Converted " + i + " control consoles");
-                plugin.getConfig().set("conversion_done", true);
+                plugin.getConfig().set("conversions.conversion_done", true);
                 plugin.saveConfig();
             }
         }
