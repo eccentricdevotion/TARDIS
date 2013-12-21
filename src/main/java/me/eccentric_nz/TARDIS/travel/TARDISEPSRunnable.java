@@ -59,6 +59,7 @@ public class TARDISEPSRunnable implements Runnable {
     @Override
     public void run() {
         Location l = getSpawnLocation(id);
+        plugin.debug("Location:" + l);
         if (l != null) {
             try {
                 plugin.myspawn = true;

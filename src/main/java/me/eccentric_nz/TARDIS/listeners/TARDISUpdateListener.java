@@ -176,7 +176,7 @@ public class TARDISUpdateListener implements Listener {
                 } else {
                     type = 2;
                     // check the world
-                    if (!inTARDISWorld(player)) {
+                    if (!plugin.utils.inTARDISWorld(player)) {
                         player.sendMessage(plugin.pluginName + "You didn't enter the TARDIS by the regular door, aborting...");
                         return;
                     }
@@ -198,7 +198,7 @@ public class TARDISUpdateListener implements Listener {
                 }
             }
             // check they are still in the TARDIS world
-            if (!blockName.equals("backdoor") && !inTARDISWorld(player)) {
+            if (!blockName.equals("backdoor") && !plugin.utils.inTARDISWorld(player)) {
                 player.sendMessage(plugin.pluginName + "You must be in a TARDIS world to update this block!");
                 return;
             }
@@ -558,14 +558,5 @@ public class TARDISUpdateListener implements Listener {
             default:
                 return "EAST";
         }
-    }
-
-    private boolean inTARDISWorld(Player player) {
-        // check they are still in the TARDIS world
-        World world = player.getLocation().getWorld();
-        String name = world.getName();
-        ChunkGenerator gen = world.getGenerator();
-        boolean special = (name.contains("TARDIS_TimeVortex") && (world.getWorldType().equals(WorldType.FLAT) || gen instanceof TARDISChunkGenerator));
-        return name.equals("TARDIS_WORLD_" + player.getName()) || special;
     }
 }

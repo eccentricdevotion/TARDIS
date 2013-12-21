@@ -65,6 +65,7 @@ public class TARDISCommands implements CommandExecutor {
         firstArgs.add("check_loc");
         firstArgs.add("comehere");
         firstArgs.add("direction");
+        firstArgs.add("ep1");
         firstArgs.add("exterminate");
         firstArgs.add("find");
         firstArgs.add("gravity");
@@ -210,6 +211,9 @@ public class TARDISCommands implements CommandExecutor {
                 }
                 if (args[0].equalsIgnoreCase("tagtheood")) {
                     return new TARDISTagCommand(plugin).getStats(player);
+                }
+                if (args[0].equalsIgnoreCase("ep1")) {
+                    return new TARDISEmergencyProgrammeCommand(plugin).showEP1(player);
                 }
             }
         }

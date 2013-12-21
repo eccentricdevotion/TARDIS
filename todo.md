@@ -8,7 +8,6 @@
 4. Advanced TARDIS console
     * Export TARDIS saves / areas / etc. to disks for use with Advanced TARDIS console
     * Have a storage container with GUI for accessing disks
-5. Add command to make EP1 appear
 6. Make condensables list configurable
 7. TARDIS exterior rendering / scanner room
 8. Underground materialisation
@@ -32,14 +31,15 @@
 7. Put farmland, crops, buttons, ladders, levers and signs on last when growing rooms
 8. Reskin mobs for Resource pack, and add new mob sounds
    * Skeletons -> Cybermen
-   * Wither Skeletons -> ?
+   * Wither Skeletons -> Vashta Nerada
    * Wolves -> K-9
    * Zombies -> Empty child
    * Pigmen -> Sontarans
    * Endermen -> The Silence
    * Creepers -> Daleks
    * Slimes -> Adipose?
-   * Witches -> ?
+   * Witches -> Scarecrow men
+   * Villagers -> Ood
 
 # Minecraft API when available
 1. Recreate everything with the new API :)

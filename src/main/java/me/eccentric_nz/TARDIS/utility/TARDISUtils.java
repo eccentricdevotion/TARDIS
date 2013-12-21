@@ -500,4 +500,13 @@ public class TARDISUtils {
             return "pre-dawn";
         }
     }
+
+    public boolean inTARDISWorld(Player player) {
+        // check they are still in the TARDIS world
+        World world = player.getLocation().getWorld();
+        String name = world.getName();
+        ChunkGenerator gen = world.getGenerator();
+        boolean special = (name.contains("TARDIS_TimeVortex") && (world.getWorldType().equals(WorldType.FLAT) || gen instanceof TARDISChunkGenerator));
+        return name.equals("TARDIS_WORLD_" + player.getName()) || special;
+    }
 }
