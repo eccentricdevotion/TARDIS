@@ -150,13 +150,13 @@ shaped:
         amount: 1
         lore: ""
     Server Admin Circuit:
-        easy_shape: DDD,DOD,DDD
+        easy_shape: BBB,BOB,BBB
         easy_ingredients:
-            D: DIAMOND_BLOCK
+            B: BEDROCK
             O: 'MAP:1967'
-        hard_shape: DDD,DOD,DDD
+        hard_shape: BBB,BOB,BBB
         hard_ingredients:
-            D: DIAMOND_BLOCK
+            B: BEDROCK
             O: 'MAP:1967'
         result: 'MAP:1968'
         amount: 1

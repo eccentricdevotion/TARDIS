@@ -37,8 +37,8 @@
    * Pigmen -> Sontarans
    * Endermen -> The Silence
    * Creepers -> Daleks
-   * Slimes -> Adipose?
-   * Witches -> Scarecrow men
+   * Slimes -> Adipose
+   * Witches -> Silurians
    * Villagers -> Ood
 
 # Minecraft API when available
