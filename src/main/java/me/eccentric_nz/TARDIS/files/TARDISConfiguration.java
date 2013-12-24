@@ -91,8 +91,8 @@ public class TARDISConfiguration {
         boolOptions.put("preferences.respect_worldguard", true);
         boolOptions.put("preferences.strike_lightning", true);
         boolOptions.put("preferences.use_worldguard", true);
-        boolOptions.put("rooms.return_room_seed", true);
-        boolOptions.put("rooms.rooms_require_blocks", false);
+        boolOptions.put("growth.return_room_seed", true);
+        boolOptions.put("growth.rooms_require_blocks", false);
         boolOptions.put("travel.chameleon", true);
         boolOptions.put("travel.exile", false);
         boolOptions.put("travel.give_key", false);
@@ -132,6 +132,8 @@ public class TARDISConfiguration {
         roomBoolOptions.put("rooms.POOL.user", false);
         roomBoolOptions.put("rooms.RAIL.enabled", true);
         roomBoolOptions.put("rooms.RAIL.user", false);
+        roomBoolOptions.put("rooms.RENDERER.enabled", true);
+        roomBoolOptions.put("rooms.RENDERER.user", false);
         roomBoolOptions.put("rooms.STABLE.enabled", true);
         roomBoolOptions.put("rooms.STABLE.user", false);
         roomBoolOptions.put("rooms.TRENZALORE.enabled", true);
@@ -176,10 +178,10 @@ public class TARDISConfiguration {
         intOptions.put("preferences.malfunction_end", 3);
         intOptions.put("preferences.malfunction_nether", 3);
         intOptions.put("preferences.sfx_volume", 10);
-        intOptions.put("rooms.gravity_max_distance", 16);
-        intOptions.put("rooms.gravity_max_velocity", 5);
-        intOptions.put("rooms.room_speed", 4);
-        intOptions.put("rooms.rooms_condenser_percent", 100);
+        intOptions.put("growth.gravity_max_distance", 16);
+        intOptions.put("growth.gravity_max_velocity", 5);
+        intOptions.put("growth.room_speed", 4);
+        intOptions.put("growth.rooms_condenser_percent", 100);
         intOptions.put("travel.random_attempts", 30);
         intOptions.put("travel.terminal_step", 1);
         intOptions.put("travel.timeout", 5);
@@ -215,6 +217,8 @@ public class TARDISConfiguration {
         roomIntOptions.put("rooms.POOL.offset", -3);
         roomIntOptions.put("rooms.RAIL.cost", 650);
         roomIntOptions.put("rooms.RAIL.offset", -3);
+        roomIntOptions.put("rooms.RENDERER.cost", 650);
+        roomIntOptions.put("rooms.RENDERER.offset", -3);
         roomIntOptions.put("rooms.STABLE.cost", 350);
         roomIntOptions.put("rooms.STABLE.offset", -3);
         roomIntOptions.put("rooms.TRENZALORE.cost", 550);
@@ -254,6 +258,7 @@ public class TARDISConfiguration {
         roomStrOptions.put("rooms.PASSAGE.seed", "CLAY");
         roomStrOptions.put("rooms.POOL.seed", "SNOW_BLOCK");
         roomStrOptions.put("rooms.RAIL.seed", "HOPPER");
+        roomStrOptions.put("rooms.RENDERER.seed", "HARD_CLAY");
         roomStrOptions.put("rooms.STABLE.seed", "HAY_BLOCK");
         roomStrOptions.put("rooms.TRENZALORE.seed", "BRICK");
         roomStrOptions.put("rooms.VAULT.seed", "DISPENSER");

@@ -103,8 +103,8 @@ public class TARDISAdminCommands implements CommandExecutor {
         firstsBool.put("respect_towny", "preferences");
         firstsBool.put("respect_worldborder", "preferences");
         firstsBool.put("respect_worldguard", "preferences");
-        firstsBool.put("return_room_seed", "rooms");
-        firstsBool.put("rooms_require_blocks", "rooms");
+        firstsBool.put("return_room_seed", "growth");
+        firstsBool.put("rooms_require_blocks", "growth");
         firstsBool.put("sfx", "allow");
         firstsBool.put("spawn_eggs", "allow");
         firstsBool.put("strike_lightning", "preferences");
@@ -117,8 +117,8 @@ public class TARDISAdminCommands implements CommandExecutor {
         firstsInt.put("confirm_timeout", "police_box");
         firstsInt.put("count", "creation");
         firstsInt.put("custom_creeper_id", "creation");
-        firstsInt.put("gravity_max_distance", "rooms");
-        firstsInt.put("gravity_max_velocity", "rooms");
+        firstsInt.put("gravity_max_distance", "growth");
+        firstsInt.put("gravity_max_velocity", "growth");
         firstsInt.put("hads_damage", "preferences");
         firstsInt.put("hads_distance", "preferences");
         firstsInt.put("malfunction", "preferences");
@@ -127,8 +127,8 @@ public class TARDISAdminCommands implements CommandExecutor {
         firstsInt.put("platform_data", "police_box");
         firstsInt.put("platform_id", "police_box");
         firstsInt.put("random_attempts", "travel");
-        firstsInt.put("room_speed", "rooms");
-        firstsInt.put("rooms_condenser_percent", "rooms");
+        firstsInt.put("room_speed", "growth");
+        firstsInt.put("rooms_condenser_percent", "growth");
         firstsInt.put("sfx_volume", "preferences");
         firstsInt.put("terminal_step", "travel");
         firstsInt.put("timeout", "travel");

@@ -104,7 +104,7 @@ public class TARDISGravityCommands implements CommandExecutor {
                     }
                     try {
                         values[1] = Double.parseDouble(args[1]);
-                        if (values[1] > plugin.getConfig().getDouble("rooms.gravity_max_distance")) {
+                        if (values[1] > plugin.getConfig().getDouble("growth.gravity_max_distance")) {
                             player.sendMessage(plugin.pluginName + "That distance is too far!");
                             return true;
                         }
@@ -117,7 +117,7 @@ public class TARDISGravityCommands implements CommandExecutor {
                 }
                 if (args.length == 3) {
                     values[2] = Double.parseDouble(args[2]);
-                    if (values[2] > plugin.getConfig().getDouble("rooms.gravity_max_velocity")) {
+                    if (values[2] > plugin.getConfig().getDouble("growth.gravity_max_velocity")) {
                         player.sendMessage(plugin.pluginName + "That velocity is too fast!");
                         return true;
                     }

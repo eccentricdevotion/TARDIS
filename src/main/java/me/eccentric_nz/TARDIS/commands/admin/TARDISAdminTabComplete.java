@@ -33,7 +33,7 @@ public class TARDISAdminTabComplete implements TabCompleter {
     private final ImmutableList<String> DIFFICULTY_SUBS = ImmutableList.of("easy", "hard");
     private final ImmutableList<String> BOOL_SUBS = ImmutableList.of("true", "false");
     private final ImmutableList<String> DB_SUBS = ImmutableList.of("mysql", "sqlite");
-    private final ImmutableList<String> CONFIG_SUBS = ImmutableList.of("worlds", "rechargers", "storage", "creation", "police_box", "travel", "preferences", "allow", "rooms", "rooms2");
+    private final ImmutableList<String> CONFIG_SUBS = ImmutableList.of("worlds", "rechargers", "storage", "creation", "police_box", "travel", "preferences", "allow", "growth", "rooms");
 
     public TARDISAdminTabComplete(TARDIS plugin) {
         this.plugin = plugin;

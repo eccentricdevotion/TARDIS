@@ -98,7 +98,7 @@ public class TARDISRoomCommand {
             player.sendMessage(plugin.pluginName + "The TARDIS does not have enough Artron Energy to grow this room!");
             return true;
         }
-        if (plugin.getConfig().getBoolean("rooms.rooms_require_blocks")) {
+        if (plugin.getConfig().getBoolean("growth.rooms_require_blocks")) {
             HashMap<String, Integer> blockIDCount = new HashMap<String, Integer>();
             boolean hasRequired = true;
             HashMap<String, Integer> roomBlocks = plugin.roomBlockCounts.get(room);
@@ -126,7 +126,7 @@ public class TARDISRoomCommand {
                     mat = Material.getMaterial(bid).toString();
                     bdata = String.format("%d", bid);
                 }
-                int tmp = Math.round((entry.getValue() / 100.0F) * plugin.getConfig().getInt("rooms.rooms_condenser_percent"));
+                int tmp = Math.round((entry.getValue() / 100.0F) * plugin.getConfig().getInt("growth.rooms_condenser_percent"));
                 int required = (tmp > 0) ? tmp : 1;
                 blockIDCount.put(bdata, required);
                 HashMap<String, Object> wherec = new HashMap<String, Object>();

@@ -79,7 +79,7 @@ allow:
     all_blocks: false
     sfx: true
 # room related
-rooms:
+growth:
     gravity_max_distance: 15
     gravity_max_velocity: 5
     return_room_seed: true

@@ -40,7 +40,7 @@ public class TARDISConfigCommand {
         sections.add("travel");
         sections.add("preferences");
         sections.add("allow");
-        sections.add("rooms");
+        sections.add("growth");
     }
 
     public boolean showConfigOptions(CommandSender sender, String[] args) {
@@ -48,9 +48,16 @@ public class TARDISConfigCommand {
         sender.sendMessage(plugin.pluginName + ChatColor.RED + " Here are the current plugin options!");
         if (sections.contains(section)) {
             sender.sendMessage(ChatColor.AQUA + section + ":" + ChatColor.RESET);
-            Set<String> rooms = plugin.getConfig().getConfigurationSection(section).getKeys(false);
-            for (String r : rooms) {
-                sender.sendMessage("      " + ChatColor.GREEN + r + ":" + plugin.getConfig().getString(section + "." + r));
+            Set<String> options = plugin.getConfig().getConfigurationSection(section).getKeys(false);
+            for (String o : options) {
+                if (o.equals("mysql")) {
+                    sender.sendMessage("    " + ChatColor.GREEN + o + "mysql:");
+                    sender.sendMessage("        " + ChatColor.GREEN + o + "url: " + plugin.getConfig().getString(section + ".mysql.url"));
+                    sender.sendMessage("        " + ChatColor.GREEN + o + "user: " + plugin.getConfig().getString(section + ".mysql.user"));
+                    sender.sendMessage("        " + ChatColor.GREEN + o + "password: " + plugin.getConfig().getString(section + ".mysql.password"));
+                } else {
+                    sender.sendMessage("    " + ChatColor.GREEN + o + ": " + plugin.getConfig().getString(section + "." + o));
+                }
             }
             return true;
         }
@@ -59,7 +66,7 @@ public class TARDISConfigCommand {
             Set<String> worldNames = plugin.getConfig().getConfigurationSection("worlds").getKeys(false);
             for (String wname : worldNames) {
                 String enabled = plugin.getConfig().getString("worlds." + wname);
-                sender.sendMessage("      " + ChatColor.GREEN + wname + ": " + ChatColor.RESET + enabled);
+                sender.sendMessage("    " + ChatColor.GREEN + wname + ": " + ChatColor.RESET + enabled);
             }
             return true;
         }
@@ -67,23 +74,23 @@ public class TARDISConfigCommand {
             sender.sendMessage(ChatColor.AQUA + section + ":" + ChatColor.RESET);
             Set<String> chargerNames = plugin.getConfig().getConfigurationSection("rechargers").getKeys(false);
             for (String charname : chargerNames) {
-                sender.sendMessage("      " + ChatColor.GREEN + charname + ":");
-                sender.sendMessage("            world: " + plugin.getConfig().getString("rechargers." + charname + ".world"));
-                sender.sendMessage("            x: " + plugin.getConfig().getString("rechargers." + charname + ".x"));
-                sender.sendMessage("            y: " + plugin.getConfig().getString("rechargers." + charname + ".y"));
-                sender.sendMessage("            z: " + plugin.getConfig().getString("rechargers." + charname + ".z"));
+                sender.sendMessage("    " + ChatColor.GREEN + charname + ":");
+                sender.sendMessage("        world: " + plugin.getConfig().getString("rechargers." + charname + ".world"));
+                sender.sendMessage("        x: " + plugin.getConfig().getString("rechargers." + charname + ".x"));
+                sender.sendMessage("        y: " + plugin.getConfig().getString("rechargers." + charname + ".y"));
+                sender.sendMessage("        z: " + plugin.getConfig().getString("rechargers." + charname + ".z"));
             }
             return true;
         }
-        if (section.equals("rooms2")) {
+        if (section.equals("rooms")) {
             sender.sendMessage(ChatColor.AQUA + section + ":" + ChatColor.RESET);
             Set<String> roomNames = plugin.getRoomsConfig().getConfigurationSection("rooms").getKeys(false);
             for (String r : roomNames) {
-                sender.sendMessage("      " + ChatColor.GREEN + r + ":");
-                sender.sendMessage("            enabled: " + plugin.getRoomsConfig().getString("rooms." + r + ".enabled"));
-                sender.sendMessage("            cost: " + plugin.getRoomsConfig().getString("rooms." + r + ".cost"));
-                sender.sendMessage("            offset: " + plugin.getRoomsConfig().getString("rooms." + r + ".offset"));
-                sender.sendMessage("            seed: " + plugin.getRoomsConfig().getString("rooms." + r + ".seed"));
+                sender.sendMessage("    " + ChatColor.GREEN + r + ":");
+                sender.sendMessage("        enabled: " + plugin.getRoomsConfig().getString("rooms." + r + ".enabled"));
+                sender.sendMessage("        cost: " + plugin.getRoomsConfig().getString("rooms." + r + ".cost"));
+                sender.sendMessage("        offset: " + plugin.getRoomsConfig().getString("rooms." + r + ".offset"));
+                sender.sendMessage("        seed: " + plugin.getRoomsConfig().getString("rooms." + r + ".seed"));
             }
             return true;
         }

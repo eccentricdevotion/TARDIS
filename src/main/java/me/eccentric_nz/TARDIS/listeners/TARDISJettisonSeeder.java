@@ -120,7 +120,7 @@ public class TARDISJettisonSeeder implements Listener {
                             del.put("secondary", secondary);
                             qf.doDelete("controls", del);
                         }
-                        if (plugin.getConfig().getBoolean("rooms.return_room_seed")) {
+                        if (plugin.getConfig().getBoolean("growth.return_room_seed")) {
                             // give the player back the room seed block
                             ItemStack is = new ItemStack(Material.getMaterial(plugin.getRoomsConfig().getString("rooms." + r + ".seed")));
                             Inventory inv = player.getInventory();

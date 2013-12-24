@@ -74,8 +74,8 @@ public class TARDISConfigConverter {
         sectionsBool.put("respect_towny", "preferences.respect_towny");
         sectionsBool.put("respect_worldborder", "preferences.respect_worldborder");
         sectionsBool.put("respect_worldguard", "preferences.respect_worldguard");
-        sectionsBool.put("return_room_seed", "rooms.return_room_seed");
-        sectionsBool.put("rooms_require_blocks", "rooms.rooms_require_blocks");
+        sectionsBool.put("return_room_seed", "growth.return_room_seed");
+        sectionsBool.put("rooms_require_blocks", "growth.rooms_require_blocks");
         sectionsBool.put("sfx", "allow.sfx");
         sectionsBool.put("spawn_eggs", "allow.spawn_eggs");
         sectionsBool.put("strike_lightning", "preferences.strike_lightning");
@@ -88,8 +88,8 @@ public class TARDISConfigConverter {
         sectionsInt.put("count", "creation.count");
         sectionsInt.put("custom_creeper_id", "creation.custom_creeper_id");
         sectionsInt.put("freeze_cooldown", "preferences.freeze_cooldown");
-        sectionsInt.put("gravity_max_distance", "rooms.gravity_max_distance");
-        sectionsInt.put("gravity_max_velocity", "rooms.gravity_max_velocity");
+        sectionsInt.put("gravity_max_distance", "growth.gravity_max_distance");
+        sectionsInt.put("gravity_max_velocity", "growth.gravity_max_velocity");
         sectionsInt.put("hads_damage", "preferences.hads_damage");
         sectionsInt.put("hads_distance", "preferences.hads_distance");
         sectionsInt.put("malfunction", "preferences.malfunction");
@@ -98,8 +98,8 @@ public class TARDISConfigConverter {
         sectionsInt.put("platform_data", "police_box.platform_data");
         sectionsInt.put("platform_id", "police_box.platform_id");
         sectionsInt.put("random_attempts", "travel.random_attempts");
-        sectionsInt.put("room_speed", "rooms.room_speed");
-        sectionsInt.put("rooms_condenser_percent", "rooms.rooms_condenser_percent");
+        sectionsInt.put("room_speed", "growth.room_speed");
+        sectionsInt.put("rooms_condenser_percent", "growth.rooms_condenser_percent");
         sectionsInt.put("sfx_volume", "preferences.sfx_volume");
         sectionsInt.put("tardis_lamp", "police_box.tardis_lamp");
         sectionsInt.put("terminal_step", "travel.terminal_step");

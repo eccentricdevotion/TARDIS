@@ -163,7 +163,7 @@ public class TARDISRoomSeeder implements Listener {
                     set.put("owner", playerNameStr);
                     qf.alterEnergyLevel("tardis", -amount, set, player);
                     // remove blocks from condenser table if rooms_require_blocks is true
-                    if (plugin.getConfig().getBoolean("rooms.rooms_require_blocks")) {
+                    if (plugin.getConfig().getBoolean("growth.rooms_require_blocks")) {
                         TARDISCondenserData c_data = plugin.roomCondenserData.get(playerNameStr);
                         for (Map.Entry<String, Integer> entry : c_data.getBlockIDCount().entrySet()) {
                             HashMap<String, Object> wherec = new HashMap<String, Object>();

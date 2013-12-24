@@ -93,7 +93,7 @@ public class TARDISARSRunnable implements Runnable {
             roomData.setRoom(whichroom);
             roomData.setSchematic(plugin.room_schematics.get(whichroom));
             roomData.setDimensions(dimensions);
-            long delay = Math.round(20 / plugin.getConfig().getDouble("rooms.room_speed"));
+            long delay = Math.round(20 / plugin.getConfig().getDouble("growth.room_speed"));
             TARDISRoomRunnable runnable = new TARDISRoomRunnable(plugin, roomData, p);
             int taskID = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, runnable, delay, delay);
             runnable.setTask(taskID);
