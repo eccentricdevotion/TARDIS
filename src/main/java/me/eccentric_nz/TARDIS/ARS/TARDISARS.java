@@ -44,6 +44,7 @@ public enum TARDISARS {
     ANTIGRAVITY(24, "Anti-gravity Well", 1),
     TRENZALORE(45, "Trenzalore", 1),
     RAIL(49, "Rail Transfer Station", 1),
+    RENDERER(172, "External Renderer", 1),
     GREENHOUSE(103, "Greenhouse", 1),
     HARMONY(109, "Eye of Harmony", 1),
     BAKER(121, "4th Doctor's Secondary Console", 1),

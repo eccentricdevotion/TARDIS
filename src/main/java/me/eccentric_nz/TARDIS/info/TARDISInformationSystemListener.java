@@ -311,6 +311,9 @@ public class TARDISInformationSystemListener implements Listener {
                     if (chat.equalsIgnoreCase("R")) {
                         showRoomInfo(p, TARDISInfoMenu.RAIL);
                     }
+                    if (chat.equalsIgnoreCase("x")) {
+                        showRoomInfo(p, TARDISInfoMenu.RENDERER);
+                    }
                     if (chat.equalsIgnoreCase("S")) {
                         showRoomInfo(p, TARDISInfoMenu.STABLE);
                     }

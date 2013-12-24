@@ -115,6 +115,7 @@ import me.eccentric_nz.TARDIS.listeners.TARDISBlockPhysicsListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISMakePresetListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISPistonListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISRedstoneListener;
+import me.eccentric_nz.TARDIS.listeners.TARDISRenderRoomListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISSonicEntityListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISSonicListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISTagListener;
@@ -252,6 +253,8 @@ public class TARDIS extends JavaPlugin {
     public List<Integer> trackMinecart = new ArrayList<Integer>();
     public List<Integer> trackSubmarine = new ArrayList<Integer>();
     public List<Integer> trackARS = new ArrayList<Integer>();
+    public HashMap<Integer, String> trackRenderer = new HashMap<Integer, String>();
+    public List<String> trackTransmat = new ArrayList<String>();
     public ArrayList<Integer> tardisMaterialising = new ArrayList<Integer>();
     public ArrayList<Integer> tardisDematerialising = new ArrayList<Integer>();
     public List<Chunk> tardisChunkList = new ArrayList<Chunk>();
@@ -520,6 +523,7 @@ public class TARDIS extends JavaPlugin {
         pm.registerEvents(new TARDISSonicUpgradeListener(this), this);
         pm.registerEvents(new TARDISSonicListener(this), this);
         pm.registerEvents(new TARDISSonicEntityListener(this), this);
+        pm.registerEvents(new TARDISRenderRoomListener(this), this);
     }
 
     /**

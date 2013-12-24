@@ -90,6 +90,7 @@ public class TARDISSQLiteDatabaseUpdater {
         tardisupdates.add("middle_id INTEGER");
         tardisupdates.add("rail TEXT DEFAULT ''");
         tardisupdates.add("recharging INTEGER DEFAULT 0");
+        tardisupdates.add("renderer TEXT DEFAULT ''");
         tardisupdates.add("scanner TEXT DEFAULT ''");
         tardisupdates.add("stable TEXT DEFAULT ''");
         tardisupdates.add("tardis_init INTEGER DEFAULT 0");

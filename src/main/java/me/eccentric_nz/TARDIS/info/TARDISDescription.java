@@ -70,6 +70,7 @@ public enum TARDISDescription {
     PASSAGE("To get from here to there."),
     POOL("Grab your togs!"),
     RAIL("You need this room to transport items into the TARDIS with a storgae minecart."),
+    RENDERER("This room shows you the environment outside the TARDIS's current location."),
     STABLE("Giddyup, here come the horses..."),
     TRENZALORE("The final resting place of the Doctor."),
     VAULT("Some extra storage space."),

@@ -10,12 +10,15 @@
     * Have a storage container with GUI for accessing disks
 6. Make condensables list configurable
 7. TARDIS exterior rendering / scanner room
+   * add WorldGuard protection so blocks cannot be harvested
+   * replace water / lava with light blue stained glass / orange wool
 8. Underground materialisation
 9. Fix underdoor block for apperture preset
 10. Save Chameleon preset with saved location `/tardis csave`?
 11. TARDIS Information System
     * add new features
     * auto log out?
+12. Fix screwy rooms config section
     
 ## Waiting on Bukkit API
 0. IDs are soon to be history... so convert all ID use to entity names

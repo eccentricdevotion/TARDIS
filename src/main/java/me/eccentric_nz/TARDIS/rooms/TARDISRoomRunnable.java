@@ -265,15 +265,27 @@ public class TARDISRoomRunnable implements Runnable {
                 data = floor_data;
             }
             // set stable
-            if (id == 88 && (room.equals("STABLE") || room.equals("VILLAGE"))) {
+            if (id == 88 && (room.equals("STABLE") || room.equals("VILLAGE") || room.equals("RENDERER"))) {
                 HashMap<String, Object> sets = new HashMap<String, Object>();
                 sets.put(room.toLowerCase(Locale.ENGLISH), world.getName() + ":" + startx + ":" + starty + ":" + startz);
                 HashMap<String, Object> wheres = new HashMap<String, Object>();
                 wheres.put("tardis_id", tardis_id);
                 qf.doUpdate("tardis", sets, wheres);
-                // replace with grass
-                id = (room.equals("VILLAGE")) ? 4 : 2;
-                data = 0;
+                // replace with correct block
+                switch (TARDISConstants.ROOM.valueOf(room)) {
+                    case VILLAGE:
+                        id = 4;
+                        data = 0;
+                        break;
+                    case STABLE:
+                        id = 2;
+                        data = 0;
+                        break;
+                    default:
+                        id = 35;
+                        data = 15;
+                        break;
+                }
             }
             // remember village doors
             if (id == 64 && room.equals("VILLAGE")) {

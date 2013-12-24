@@ -93,6 +93,7 @@ public enum TARDISInfoMenu {
     PASSAGE("TIS|Rooms|Passage", "ROOMS", "P"),
     POOL("TIS|Rooms|Pool", "ROOMS", "o"),
     RAIL("TIS|Rooms|Rail", "ROOMS", "R"),
+    RENDERER("TIS|Rooms|External Renderer", "ROOMS", "x"),
     STABLE("TIS|Rooms|Stable", "ROOMS", "S"),
     TRENZALORE("TIS|Rooms|Trenzalore", "ROOMS", "T"),
     VAULT("TIS|Rooms|Vault", "ROOMS", "V"),

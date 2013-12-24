@@ -25,6 +25,7 @@ import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetNextLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
+import me.eccentric_nz.TARDIS.rooms.TARDISExteriorRenderer;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Biome;
@@ -129,13 +130,15 @@ public class TARDISScannerListener implements Listener {
                 where.put("scanner", scanner_loc);
                 ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
                 if (rs.resultSet()) {
-                    int id = rs.getTardis_id();
+                    final int id = rs.getTardis_id();
+                    final String renderer = rs.getRenderer();
                     plugin.utils.playTARDISSound(player.getLocation(), player, "tardis_scanner");
                     final Location scan_loc;
                     String whereisit;
                     final TARDISConstants.COMPASS tardisDirection;
                     HashMap<String, Object> wherenl = new HashMap<String, Object>();
                     wherenl.put("tardis_id", id);
+                    boolean next = false;
                     if (plugin.tardisHasDestination.containsKey(Integer.valueOf(id))) {
                         ResultSetNextLocation rsn = new ResultSetNextLocation(plugin, wherenl);
                         if (!rsn.resultSet()) {
@@ -145,6 +148,7 @@ public class TARDISScannerListener implements Listener {
                         scan_loc = new Location(rsn.getWorld(), rsn.getX(), rsn.getY(), rsn.getZ());
                         tardisDirection = rsn.getDirection();
                         whereisit = "next destination";
+                        next = true;
                     } else {
                         ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherenl);
                         if (!rsc.resultSet()) {
@@ -253,6 +257,16 @@ public class TARDISScannerListener implements Listener {
                             }
                         }
                     }, 140L);
+                    if (!renderer.isEmpty()) {
+                        final boolean isNext = next;
+                        bsched.scheduleSyncDelayedTask(plugin, new Runnable() {
+                            @Override
+                            public void run() {
+                                TARDISExteriorRenderer ter = new TARDISExteriorRenderer(plugin);
+                                ter.render(renderer, scan_loc, isNext, id, player, tardisDirection);
+                            }
+                        }, 160L);
+                    }
                 }
             }
         }
