@@ -381,13 +381,13 @@ public class TARDISBuilderInner {
                                                 control = 173;
                                                 break;
                                             case ARS:
-                                                control = 159;
+                                                control = 155;
                                                 break;
                                             case PLANK:
-                                                control = 22;
+                                                control = 47;
                                                 break;
                                             case TOM:
-                                                control = 155;
+                                                control = 22;
                                                 break;
                                             default:
                                                 break;
