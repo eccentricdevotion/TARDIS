@@ -120,6 +120,10 @@ public class TARDISJettisonSeeder implements Listener {
                             del.put("secondary", secondary);
                             qf.doDelete("controls", del);
                         }
+                        if (r.equals("RENDERER")) {
+                            // remove WorldGuard protection
+                            plugin.wgutils.removeRendererRegion(l.getWorld(), playerNameStr);
+                        }
                         if (plugin.getConfig().getBoolean("growth.return_room_seed")) {
                             // give the player back the room seed block
                             ItemStack is = new ItemStack(Material.getMaterial(plugin.getRoomsConfig().getString("rooms." + r + ".seed")));

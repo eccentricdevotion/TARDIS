@@ -287,6 +287,7 @@ public class TARDISExterminator {
         // remove world guard region protection
         if (plugin.worldGuardOnServer && plugin.getConfig().getBoolean("preferences.use_worldguard")) {
             plugin.wgutils.removeRegion(w, owner);
+            plugin.wgutils.removeRendererRegion(w, owner);
         }
         // unload and remove the world if it's a TARDIS_WORLD_ world
         if (w.getName().contains("TARDIS_WORLD_")) {

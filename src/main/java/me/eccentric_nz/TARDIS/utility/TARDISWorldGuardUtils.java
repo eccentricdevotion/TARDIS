@@ -194,6 +194,37 @@ public class TARDISWorldGuardUtils {
     }
 
     /**
+     * Adds a WorldGuard protected region to exterior renderer room.
+     *
+     * @param name the name of the recharger
+     * @param one a start location of a cuboid region
+     * @param two an end location of a cuboid region
+     */
+    public void addRendererProtection(String name, Location one, Location two) {
+        RegionManager rm = wg.getRegionManager(one.getWorld());
+        BlockVector b1;
+        BlockVector b2;
+        b1 = makeBlockVector(one);
+        b2 = makeBlockVector(two);
+        ProtectedCuboidRegion region = new ProtectedCuboidRegion("renderer_" + name, b1, b2);
+        HashMap<Flag<?>, Object> flags = new HashMap<Flag<?>, Object>();
+        flags.put(DefaultFlag.TNT, State.DENY);
+        flags.put(DefaultFlag.CREEPER_EXPLOSION, State.DENY);
+        flags.put(DefaultFlag.FIRE_SPREAD, State.DENY);
+        flags.put(DefaultFlag.LAVA_FIRE, State.DENY);
+        flags.put(DefaultFlag.LAVA_FLOW, State.DENY);
+        flags.put(DefaultFlag.LIGHTER, State.DENY);
+        flags.put(DefaultFlag.BUILD, State.DENY);
+        region.setFlags(flags);
+        rm.addRegion(region);
+        try {
+            rm.save();
+        } catch (ProtectionDatabaseException e) {
+            plugin.console.sendMessage(plugin.pluginName + "could not create WorldGuard Protection for exterior renderering room! " + e);
+        }
+    }
+
+    /**
      * Removes the WorldGuard region when the TARDIS is deleted.
      *
      * @param w the world the region is located in
@@ -205,7 +236,7 @@ public class TARDISWorldGuardUtils {
         try {
             rm.save();
         } catch (ProtectionDatabaseException e) {
-            plugin.console.sendMessage(plugin.pluginName + "could not remove WorldGuard Protection! " + e);
+            plugin.console.sendMessage(plugin.pluginName + "could not remove WorldGuard Protection for TARDIS! " + e);
         }
     }
 
@@ -221,7 +252,26 @@ public class TARDISWorldGuardUtils {
         try {
             rm.save();
         } catch (ProtectionDatabaseException e) {
-            plugin.console.sendMessage(plugin.pluginName + "could not remove recharger WorldGuard Protection! " + e);
+            plugin.console.sendMessage(plugin.pluginName + "could not remove recharger WorldGuard Protection for recharger! " + e);
+        }
+    }
+
+    /**
+     * Removes the exterior rendering room region when the room is jettisoned or
+     * the TARDIS is deleted.
+     *
+     * @param w the world the region is located in
+     * @param p the player's name
+     */
+    public void removeRendererRegion(World w, String p) {
+        RegionManager rm = wg.getRegionManager(w);
+        if (rm.hasRegion("renderer_" + p)) {
+            rm.removeRegion("renderer_" + p);
+            try {
+                rm.save();
+            } catch (ProtectionDatabaseException e) {
+                plugin.console.sendMessage(plugin.pluginName + "could not remove WorldGuard Protection for renderer room! " + e);
+            }
         }
     }
 

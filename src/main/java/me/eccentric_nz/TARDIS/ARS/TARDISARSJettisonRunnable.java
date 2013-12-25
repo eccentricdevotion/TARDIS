@@ -70,6 +70,10 @@ public class TARDISARSJettisonRunnable implements Runnable {
                             qf.doDelete("gravity_well", where);
                         }
                     }
+                    if (r.equals("RENDERER")) {
+                        // remove WorldGuard protection
+                        plugin.wgutils.removeRendererRegion(w, p.getName());
+                    }
                 }
             }
         }

@@ -284,6 +284,12 @@ public class TARDISRoomRunnable implements Runnable {
                     default:
                         id = 35;
                         data = 15;
+                        // add WorldGuard region
+                        if (plugin.worldGuardOnServer && plugin.getConfig().getBoolean("preferences.use_worldguard")) {
+                            Location one = new Location(world, startx - 6, starty, startz - 6);
+                            Location two = new Location(world, startx + 6, starty + 8, startz + 6);
+                            plugin.wgutils.addRendererProtection(p.getName(), one, two);
+                        }
                         break;
                 }
             }
