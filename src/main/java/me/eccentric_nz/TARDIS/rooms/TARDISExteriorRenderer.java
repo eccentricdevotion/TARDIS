@@ -75,7 +75,18 @@ public class TARDISExteriorRenderer {
                     for (int z = esz; z < (esz + 13); z++) {
                         Block eb = ew.getBlockAt(x, y, z);
                         Block ib = iw.getBlockAt(isx + xx, isy + yy, isz + zz);
-                        ib.setTypeIdAndData(eb.getTypeId(), eb.getData(), true);
+                        switch (eb.getTypeId()) {
+                            case 8:
+                            case 9:
+                                ib.setTypeIdAndData(95, (byte) 3, true);
+                                break;
+                            case 10:
+                            case 11:
+                                ib.setTypeIdAndData(35, (byte) 1, true);
+                                break;
+                            default:
+                                ib.setTypeIdAndData(eb.getTypeId(), eb.getData(), true);
+                        }
                         zz++;
                     }
                     zz = 0;
