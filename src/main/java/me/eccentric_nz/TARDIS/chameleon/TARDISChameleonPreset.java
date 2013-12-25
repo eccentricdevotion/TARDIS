@@ -37,7 +37,7 @@ import me.eccentric_nz.TARDIS.utility.recalculators.TARDISTrapdoorRecalculator;
  */
 public class TARDISChameleonPreset {
 
-    private final List<Integer> problemBlocks = Arrays.asList(new Integer[]{50, 53, 63, 64, 67, 68, 69, 71, 77, 91, 96, 99, 106, 109, 114, 128, 145, 156});
+    private final List<Integer> problemBlocks = Arrays.asList(new Integer[]{50, 53, 63, 64, 67, 68, 69, 71, 77, 91, 96, 99, 106, 108, 109, 114, 128, 134, 135, 136, 143, 145, 156, 163, 164});
     public final TARDISAngelDownPreset angeld;
     public final TARDISAngelUpPreset angelu;
     public final TARDISAppertureSciencePreset apperture;
@@ -404,13 +404,20 @@ public class TARDISChameleonPreset {
                             break;
                         case 53: // oak wood stair
                         case 67: // cobble stair
+                        case 108: // brick stair
                         case 109: // smooth stair
                         case 114: // nether brick stair
                         case 128: // sandstone stair
+                        case 134: // spruce stair
+                        case 135: // birch stair
+                        case 136: // jungle stair
                         case 156: // quartz stair
+                        case 163: // acacia stair
+                        case 164: // dark oak stair
                             data[col][block] = new TARDISStairRecalculator().recalculate(data[col][block], d, col);
                             break;
-                        case 77: // button
+                        case 77: // stone button
+                        case 143: // wood button
                             data[col][block] = new TARDISButtonRecalculator().recalculate(data[col][block], d);
                             break;
                         case 96: // trapdoor
