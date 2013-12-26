@@ -22,7 +22,6 @@ import java.util.List;
 import java.util.Map;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
-import me.eccentric_nz.TARDIS.achievement.TARDISAchievementNotify;
 import me.eccentric_nz.TARDIS.builders.TARDISSpace;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetCount;
@@ -30,6 +29,7 @@ import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.utility.TARDISUtils;
+import org.bukkit.ChatColor;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -307,8 +307,8 @@ public class TARDISBlockPlaceListener implements Listener {
                             wherea.put("player", player.getName());
                             wherea.put("name", "tardis");
                             qf.doUpdate("achievements", seta, wherea);
-                            TARDISAchievementNotify tan = new TARDISAchievementNotify(plugin);
-                            tan.sendAchievement(player, plugin.getAchivementConfig().getString("tardis.message"), Material.valueOf(plugin.getAchivementConfig().getString("tardis.icon")));
+                            player.sendMessage(ChatColor.YELLOW + "Achievement Get!");
+                            player.sendMessage(ChatColor.WHITE + plugin.getAchivementConfig().getString("tardis.message"));
                         }
                         if (max_count > 0) {
                             player.sendMessage(plugin.pluginName + "You have used up " + (player_count + 1) + " of " + max_count + " TARDIS builds!");

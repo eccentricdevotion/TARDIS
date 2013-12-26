@@ -23,6 +23,7 @@ import java.util.Map;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetAchievements;
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
@@ -83,8 +84,9 @@ public class TARDISAchievementFactory {
                 // award achievement!
                 int reward_amount = plugin.getAchivementConfig().getInt(name + ".reward_amount");
                 String reward_type = plugin.getAchivementConfig().getString(name + ".reward_type");
-                TARDISAchievementNotify tan = new TARDISAchievementNotify(plugin);
-                tan.sendAchievement(player, plugin.getAchivementConfig().getString(name + ".message"), Material.valueOf(plugin.getAchivementConfig().getString(name + ".icon")));
+                // TODO disp[lay a proper achievement
+                player.sendMessage(ChatColor.YELLOW + "Achievement Get!");
+                player.sendMessage(ChatColor.WHITE + plugin.getAchivementConfig().getString(name + ".message"));
                 if (reward_type.equalsIgnoreCase("XP")) {
                     new TARDISXPRewarder(player).changeExp(reward_amount);
                 } else {

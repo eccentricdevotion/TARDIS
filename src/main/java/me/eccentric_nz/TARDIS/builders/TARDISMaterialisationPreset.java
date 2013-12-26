@@ -36,7 +36,6 @@ import org.bukkit.block.Block;
 import org.bukkit.block.Sign;
 import org.bukkit.block.Skull;
 import org.bukkit.entity.Player;
-//import org.getspout.spoutapi.SpoutManager;
 
 /**
  * A dematerialisation circuit was an essential part of a Type 40 TARDIS which

@@ -42,7 +42,6 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.material.Lever;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
-//import org.getspout.spoutapi.SpoutManager;
 
 /**
  * The handbrake was a utensil on the TARDIS used for quick stops. River song
