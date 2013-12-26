@@ -80,6 +80,10 @@ public class TARDISRoomCommand {
             player.sendMessage(plugin.pluginName + "You cannot grow rooms unless your TARDIS was created in its own world!");
             return true;
         }
+        if (!rs.getRenderer().isEmpty() && room.equals("RENDERER")) {
+            player.sendMessage(plugin.pluginName + "You already have an exterior rendering room! Please jettison the existing room first.");
+            return true;
+        }
         int id = rs.getTardis_id();
         int level = rs.getArtron_level();
         String chunk = rs.getChunk();

@@ -238,7 +238,7 @@ public class TARDISARSListener implements Listener {
                             } else {
                                 ItemStack ris = inv.getItem(slot);
                                 String room = TARDISARS.getARS(ris.getItemMeta().getDisplayName()).toString();
-                                if (room.equals("Gravity Well") || room.equals("Anti-gravity Well")) {
+                                if (room.equals("GRAVITY") || room.equals("ANTIGRAVITY")) {
                                     int updown = (room.equals("Gravity Well")) ? -1 : 1;
                                     if (checkSavedGrid(playerNameStr, selected_slot.get(playerNameStr), updown)) {
                                         setLore(inv, slot, "Using a gravity well here would overwrite an existing room!");
@@ -250,6 +250,10 @@ public class TARDISARSListener implements Listener {
                                         setLore(inv, slot, "You haven't condensed enough blocks for this room!");
                                         break;
                                     }
+                                }
+                                if (room.equals("RENDERER") && hasRenderer(playerNameStr)) {
+                                    setLore(inv, slot, "You already have one of these!");
+                                    break;
                                 }
                                 // setSlot(Inventory inv, int slot, ItemStack is, String player, boolean update)
                                 setSlot(inv, selected_slot.get(playerNameStr), ris, playerNameStr, true);
@@ -750,6 +754,16 @@ public class TARDISARSListener implements Listener {
             }
         }
         return id;
+    }
+
+    private boolean hasRenderer(String p) {
+        HashMap<String, Object> where = new HashMap<String, Object>();
+        where.put("tardis_id", ids.get(p));
+        ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
+        if (rs.resultSet()) {
+            return !rs.getRenderer().isEmpty();
+        }
+        return false;
     }
 
     private boolean checkSlotForConsole(Inventory inv, int slot) {

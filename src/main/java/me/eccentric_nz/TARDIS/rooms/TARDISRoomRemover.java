@@ -113,7 +113,7 @@ public class TARDISRoomRemover {
             }
         }
         if (r.equals("FARM") || r.equals("STABLE") || r.equals("RAIL") || r.equals("VILLAGE") || r.equals("RENDERER")) {
-            // remove farm location from the database
+            // remove stored location from the database
             HashMap<String, Object> set = new HashMap<String, Object>();
             set.put(r.toLowerCase(), "");
             HashMap<String, Object> where = new HashMap<String, Object>();
