@@ -84,6 +84,7 @@ public class TARDISChameleonPreset {
     public final TARDISWindmillPreset windmill;
     public final TARDISYellowSubmarinePreset yellow;
     public final TARDISCustomPreset custom;
+    public final TARDISRenderPreset render;
     int r;
 
     public TARDISChameleonPreset() {
@@ -133,6 +134,7 @@ public class TARDISChameleonPreset {
         this.windmill = new TARDISWindmillPreset();
         this.yellow = new TARDISYellowSubmarinePreset();
         this.custom = new TARDISCustomPreset();
+        this.render = new TARDISRenderPreset();
     }
 
     public void makePresets() {
@@ -182,6 +184,7 @@ public class TARDISChameleonPreset {
         windmill.makePresets();
         yellow.makePresets();
         custom.makePresets();
+        render.makePresets();
     }
 
     public TARDISChameleonColumn buildTARDISChameleonColumn(TARDISConstants.COMPASS d, String id, String data, boolean assyemtric) {
@@ -534,6 +537,8 @@ public class TARDISChameleonPreset {
                 return portal.getBlueprint().get(d);
             case PUNKED:
                 return punked.getBlueprint().get(d);
+            case RENDER:
+                return render.getBlueprint().get(d);
             case ROBOT:
                 return robot.getBlueprint().get(d);
             case SHROOM:
@@ -633,6 +638,8 @@ public class TARDISChameleonPreset {
                 return portal.getGlass().get(d);
             case PUNKED:
                 return punked.getGlass().get(d);
+            case RENDER:
+                return render.getGlass().get(d);
             case ROBOT:
                 return robot.getGlass().get(d);
             case SHROOM:
@@ -732,6 +739,8 @@ public class TARDISChameleonPreset {
                 return portal.getStained().get(d);
             case PUNKED:
                 return punked.getStained().get(d);
+            case RENDER:
+                return render.getStained().get(d);
             case ROBOT:
                 return robot.getStained().get(d);
             case SHROOM:

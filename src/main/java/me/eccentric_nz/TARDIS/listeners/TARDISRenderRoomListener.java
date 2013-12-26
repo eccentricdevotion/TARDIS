@@ -22,10 +22,12 @@ import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.database.ResultSetDoors;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
 import org.bukkit.Location;
+import org.bukkit.Sound;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 
 /**
@@ -45,12 +47,14 @@ public class TARDISRenderRoomListener implements Listener {
         final Player player = event.getPlayer();
         if (plugin.trackTransmat.contains(player.getName())) {
             event.setCancelled(true);
-            // tp the player back to the TARDIS console
-            transmat(player);
+            if (event.getAction().equals(Action.RIGHT_CLICK_BLOCK) || event.getAction().equals(Action.RIGHT_CLICK_AIR)) {
+                // tp the player back to the TARDIS console
+                transmat(player);
+            }
         }
     }
 
-    private void transmat(Player p) {
+    private void transmat(final Player p) {
         p.sendMessage(plugin.pluginName + "Stand by for transmat...");
         // get the TARDIS the player is in
         HashMap<String, Object> wherep = new HashMap<String, Object>();
@@ -97,8 +101,15 @@ public class TARDISRenderRoomListener implements Listener {
                 }
                 tmp_loc.setPitch(p.getLocation().getPitch());
                 tmp_loc.setYaw(p.getLocation().getYaw());
-                p.teleport(tmp_loc);
-                plugin.trackTransmat.remove(p.getName());
+                final Location tp_loc = tmp_loc;
+                plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
+                    @Override
+                    public void run() {
+                        p.playSound(tp_loc, Sound.ENDERMAN_TELEPORT, 1.0f, 1.0f);
+                        p.teleport(tp_loc);
+                        plugin.trackTransmat.remove(p.getName());
+                    }
+                }, 10L);
             } else {
                 p.sendMessage(plugin.pluginName + "The Transmat device couldn't find the TARDIS console!");
             }

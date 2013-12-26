@@ -70,10 +70,6 @@ public class TARDISARSJettisonRunnable implements Runnable {
                             qf.doDelete("gravity_well", where);
                         }
                     }
-                    if (r.equals("RENDERER")) {
-                        // remove WorldGuard protection
-                        plugin.wgutils.removeRendererRegion(w, p.getName());
-                    }
                 }
             }
         }
@@ -94,6 +90,16 @@ public class TARDISARSJettisonRunnable implements Runnable {
                 del.put("tardis_id", id);
                 del.put("secondary", secondary);
                 qf.doDelete("controls", del);
+            }
+            if (r.equals("RENDERER")) {
+                // remove stored location from the database
+                HashMap<String, Object> setd = new HashMap<String, Object>();
+                setd.put("renderer", "");
+                HashMap<String, Object> where = new HashMap<String, Object>();
+                where.put("tardis_id", id);
+                qf.doUpdate("tardis", setd, where);
+                // remove WorldGuard protection
+                plugin.wgutils.removeRendererRegion(w, p.getName());
             }
         }
     }

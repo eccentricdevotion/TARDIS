@@ -159,6 +159,7 @@ public class TARDISConfiguration {
         artronIntOptions.put("player", 25);
         artronIntOptions.put("random", 75);
         artronIntOptions.put("recharge_distance", 20);
+        artronIntOptions.put("render", 250);
         artronIntOptions.put("the_end_min", 5500);
         artronIntOptions.put("travel", 100);
         intOptions.put("creation.border_radius", 256);

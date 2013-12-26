@@ -22,9 +22,13 @@ import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.chameleon.TARDISChameleonColumn;
+import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import org.bukkit.Location;
+import org.bukkit.Material;
+import org.bukkit.Sound;
 import org.bukkit.World;
+import org.bukkit.block.Biome;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 
@@ -41,8 +45,7 @@ public class TARDISExteriorRenderer {
         this.plugin = plugin;
     }
 
-    public void render(String interior, Location exterior, boolean next, int id, Player p, TARDISConstants.COMPASS d, long time) {
-        // TODO only render if the destination has changed
+    public void render(String interior, Location exterior, int id, final Player p, final TARDISConstants.COMPASS d, long time, Biome biome) {
         // construct a string for comparison
         World ew = exterior.getWorld();
         int epbx = exterior.getBlockX();
@@ -54,7 +57,7 @@ public class TARDISExteriorRenderer {
         int ipbx = plugin.utils.parseNum(idata[1]);
         int ipby = plugin.utils.parseNum(idata[2]) + 2;
         int ipbz = plugin.utils.parseNum(idata[3]);
-        Location location = new Location(iw, ipbx, ipby, ipbz);
+        final Location location = new Location(iw, ipbx, ipby, ipbz);
         if (plugin.trackRenderer.containsKey(id) && plugin.trackRenderer.get(id).equals(isRendered)) {
             p.sendMessage(plugin.pluginName + "Destination unchanged, no rendering needed, stand by for transmat...");
         } else {
@@ -68,24 +71,33 @@ public class TARDISExteriorRenderer {
             esx = epbx - 6;
             esy = epby - 1;
             esz = epbz - 6;
+            // get preset bounds
+            int bwx = epbx - 1;
+            int bex = epbx + 1;
+            int buy = epby + 3;
+            int bnz = epbz - 1;
+            int bsz = epbz + 1;
             ew.getChunkAt(exterior).load();
             // loop through exterior blocks and mirror them in the interior
             for (int y = esy; y < (esy + 8); y++) {
                 for (int x = esx; x < (esx + 13); x++) {
                     for (int z = esz; z < (esz + 13); z++) {
-                        Block eb = ew.getBlockAt(x, y, z);
-                        Block ib = iw.getBlockAt(isx + xx, isy + yy, isz + zz);
-                        switch (eb.getTypeId()) {
-                            case 8:
-                            case 9:
-                                ib.setTypeIdAndData(95, (byte) 3, true);
-                                break;
-                            case 10:
-                            case 11:
-                                ib.setTypeIdAndData(35, (byte) 1, true);
-                                break;
-                            default:
-                                ib.setTypeIdAndData(eb.getTypeId(), eb.getData(), true);
+                        // don't do preset blocks - they'l be set to glass later
+                        if (!(y >= epby && y <= buy && x >= bwx && x <= bex && z >= bnz && z <= bsz)) {
+                            Block eb = ew.getBlockAt(x, y, z);
+                            Block ib = iw.getBlockAt(isx + xx, isy + yy, isz + zz);
+                            switch (eb.getTypeId()) {
+                                case 8:
+                                case 9:
+                                    ib.setTypeIdAndData(95, (byte) 3, true);
+                                    break;
+                                case 10:
+                                case 11:
+                                    ib.setTypeIdAndData(35, (byte) 1, true);
+                                    break;
+                                default:
+                                    ib.setTypeIdAndData(eb.getTypeId(), eb.getData(), true);
+                            }
                         }
                         zz++;
                     }
@@ -95,104 +107,176 @@ public class TARDISExteriorRenderer {
                 xx = 0;
                 yy++;
             }
-            // if this is the 'next' location, render a glass TARDIS
-            if (next) {
-                // get relative locations
-                int x = location.getBlockX();
-                int plusx = (location.getBlockX() + 1);
-                int minusx = (location.getBlockX() - 1);
-                int y = location.getBlockY();
-                int z = (location.getBlockZ());
-                int plusz = (location.getBlockZ() + 1);
-                int minusz = (location.getBlockZ() - 1);
-                TARDISChameleonColumn column = plugin.presets.getGlass(TARDISConstants.PRESET.OLD, d);
-                addPlatform(location, d, p.getName(), id);
-                int px, pz;
-                int[][] ids = column.getId();
-                byte[][] data = column.getData();
-                for (int i = 0; i < 9; i++) {
-                    int[] colids = ids[i];
-                    byte[] coldatas = data[i];
-                    switch (i) {
-                        case 0:
-                            px = minusx;
-                            pz = minusz;
+            // render a glass TARDIS
+            // get relative locations
+            int x = location.getBlockX();
+            int plusx = (location.getBlockX() + 1);
+            int minusx = (location.getBlockX() - 1);
+            int y = location.getBlockY();
+            int z = (location.getBlockZ());
+            int plusz = (location.getBlockZ() + 1);
+            int minusz = (location.getBlockZ() - 1);
+            TARDISChameleonColumn column = plugin.presets.getGlass(TARDISConstants.PRESET.RENDER, d);
+            addPlatform(location, d, p.getName(), id);
+            int px, pz;
+            int[][] ids = column.getId();
+            byte[][] data = column.getData();
+            for (int i = 0; i < 9; i++) {
+                int[] colids = ids[i];
+                byte[] coldatas = data[i];
+                switch (i) {
+                    case 0:
+                        px = minusx;
+                        pz = minusz;
+                        break;
+                    case 1:
+                        px = x;
+                        pz = minusz;
+                        break;
+                    case 2:
+                        px = plusx;
+                        pz = minusz;
+                        break;
+                    case 3:
+                        px = plusx;
+                        pz = z;
+                        break;
+                    case 4:
+                        px = plusx;
+                        pz = plusz;
+                        break;
+                    case 5:
+                        px = x;
+                        pz = plusz;
+                        break;
+                    case 6:
+                        px = minusx;
+                        pz = plusz;
+                        break;
+                    case 7:
+                        px = minusx;
+                        pz = z;
+                        break;
+                    default:
+                        px = x;
+                        pz = z;
+                        break;
+                }
+                for (int py = 0; py < 4; py++) {
+                    plugin.utils.setBlock(iw, px, (y + py), pz, colids[py], coldatas[py]);
+                }
+            }
+            // change the black/blue/green wool to blue/black/ to reflect time of day and environment
+            byte sky;
+            Material base;
+            Material stone;
+            switch (biome) {
+                case SKY:
+                    sky = 15;
+                    base = Material.ENDER_STONE;
+                    stone = Material.OBSIDIAN;
+                    break;
+                case HELL:
+                    sky = 15;
+                    base = Material.NETHERRACK;
+                    stone = Material.QUARTZ_ORE;
+                    break;
+                default:
+                    sky = (time > 12500) ? (byte) 15 : 3;
+                    base = Material.DIRT;
+                    stone = Material.STONE;
+                    break;
+            }
+            int endx = isx + 13;
+            int topy = isy + 8;
+            int endz = isz + 13;
+            // change the ceiling
+            for (int cx = isx; cx < isx + 13; cx++) {
+                for (int cz = isz; cz < (isz + 13); cz++) {
+                    iw.getBlockAt(cx, topy, cz).setData(sky);
+                }
+            }
+            // change the first and third walls
+            for (int x1 = isx - 1; x1 <= endx; x1++) {
+                for (int y1 = isy; y1 < topy; y1++) {
+                    switch (iw.getBlockAt(x1, y1, isz - 1).getType()) {
+                        case WOOL:
+                            iw.getBlockAt(x1, y1, isz - 1).setData(sky);
                             break;
-                        case 1:
-                            px = x;
-                            pz = minusz;
-                            break;
-                        case 2:
-                            px = plusx;
-                            pz = minusz;
-                            break;
-                        case 3:
-                            px = plusx;
-                            pz = z;
-                            break;
-                        case 4:
-                            px = plusx;
-                            pz = plusz;
-                            break;
-                        case 5:
-                            px = x;
-                            pz = plusz;
-                            break;
-                        case 6:
-                            px = minusx;
-                            pz = plusz;
-                            break;
-                        case 7:
-                            px = minusx;
-                            pz = z;
+                        case DIRT:
+                        case ENDER_STONE:
+                        case NETHERRACK:
+                            iw.getBlockAt(x1, y1, isz - 1).setType(base);
                             break;
                         default:
-                            px = x;
-                            pz = z;
+                            iw.getBlockAt(x1, y1, isz - 1).setType(stone);
                             break;
                     }
-                    for (int py = 0; py < 4; py++) {
-                        plugin.utils.setBlock(iw, px, (y + py), pz, colids[py], coldatas[py]);
-                    }
-                }
-            }
-            // change the grey/blue wool to blue/grey to reflect time of day
-            byte to = (time > 0 && time < 12500) ? (byte) 3 : 15;
-            byte from = (time > 0 && time < 12500) ? (byte) 15 : 3;
-            for (int x = isx; x < isx + 13; x++) {
-                for (int z = isz; z < (isz + 13); z++) {
-                    if (iw.getBlockAt(x, isy + 8, z).getData() == from) {
-                        iw.getBlockAt(x, isy + 8, z).setData(to);
-                    }
-                }
-            }
-            for (int x1 = isx - 1; x1 < isx + 14; x1++) {
-                for (int y1 = isy + 2; y1 < isy + 8; y1++) {
-                    if (iw.getBlockAt(x1, y1, isz - 1).getData() == from) {
-                        iw.getBlockAt(x1, y1, isz - 1).setData(to);
-                    }
-                    if (iw.getBlockAt(x1, y1, isz + 13).getData() == from) {
-                        iw.getBlockAt(x1, y1, isz + 13).setData(to);
+                    switch (iw.getBlockAt(x1, y1, endz).getType()) {
+                        case WOOL:
+                            iw.getBlockAt(x1, y1, endz).setData(sky);
+                            break;
+                        case DIRT:
+                        case ENDER_STONE:
+                        case NETHERRACK:
+                            iw.getBlockAt(x1, y1, endz).setType(base);
+                            break;
+                        default:
+                            iw.getBlockAt(x1, y1, endz).setType(stone);
+                            break;
                     }
                 }
             }
             // build second and fourth walls
-            for (int z2 = isz - 1; z2 < isz + 14; z2++) {
-                for (int y2 = isy + 2; y2 < isy + 8; y2++) {
-                    if (iw.getBlockAt(isx - 1, y2, z2).getData() == from) {
-                        iw.getBlockAt(isx - 1, y2, z2).setData(to);
+            for (int z2 = isz - 1; z2 <= endz; z2++) {
+                for (int y2 = isy; y2 < topy; y2++) {
+                    switch (iw.getBlockAt(isx - 1, y2, z2).getType()) {
+                        case WOOL:
+                            iw.getBlockAt(isx - 1, y2, z2).setData(sky);
+                            break;
+                        case DIRT:
+                        case ENDER_STONE:
+                        case NETHERRACK:
+                            iw.getBlockAt(isx - 1, y2, z2).setType(base);
+                            break;
+                        default:
+                            iw.getBlockAt(isx - 1, y2, z2).setType(stone);
+                            break;
                     }
-                    if (iw.getBlockAt(isx + 13, y2, z2).getData() == from) {
-                        iw.getBlockAt(isx + 13, y2, z2).setData(to);
+                    switch (iw.getBlockAt(endx, y2, z2).getType()) {
+                        case WOOL:
+                            iw.getBlockAt(endx, y2, z2).setData(sky);
+                            break;
+                        case DIRT:
+                        case ENDER_STONE:
+                        case NETHERRACK:
+                            iw.getBlockAt(endx, y2, z2).setType(base);
+                            break;
+                        default:
+                            iw.getBlockAt(endx, y2, z2).setType(stone);
+                            break;
                     }
                 }
             }
             plugin.trackRenderer.put(id, isRendered);
             p.sendMessage(plugin.pluginName + "Rendering complete, stand by for transmat...");
         }
+        // charge artron energy for the render
+        HashMap<String, Object> where = new HashMap<String, Object>();
+        where.put("tardis_id", id);
+        new QueryFactory(plugin).alterEnergyLevel("tardis", -plugin.getArtronConfig().getInt("render"), where, p);
         // tp the player inside the room
         plugin.trackTransmat.add(p.getName());
-        transmat(p, d, location);
+        plugin.getServer()
+                .getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
+                    @Override
+                    public void run() {
+                        transmat(p, d, location);
+                        p.playSound(location, Sound.ENDERMAN_TELEPORT, 1.0f, 1.0f);
+                        p.sendMessage(plugin.pluginName + "Right-click to exit.");
+                    }
+                },
+                10L);
     }
 
     private void transmat(Player player, TARDISConstants.COMPASS d, Location loc) {

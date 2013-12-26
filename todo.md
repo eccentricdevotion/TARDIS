@@ -10,7 +10,8 @@
     * Have a storage container with GUI for accessing disks
 6. Make condensables list configurable
 7. TARDIS exterior rendering / scanner room
-   * find a way to prevent items dropping between renders 
+   * find a way to prevent items dropping between renders
+   * switch off some lights when it's night?
 8. Underground materialisation
 9. Fix underdoor block for apperture preset
 10. Save Chameleon preset with saved location `/tardis csave`?

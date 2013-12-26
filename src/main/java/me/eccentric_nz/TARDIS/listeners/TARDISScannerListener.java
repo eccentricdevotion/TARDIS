@@ -38,7 +38,6 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.scheduler.BukkitScheduler;
-//import org.getspout.spoutapi.SpoutManager;
 
 /**
  * The Scanner consists of a collection of thousands of instruments designed to
@@ -138,7 +137,6 @@ public class TARDISScannerListener implements Listener {
                     final TARDISConstants.COMPASS tardisDirection;
                     HashMap<String, Object> wherenl = new HashMap<String, Object>();
                     wherenl.put("tardis_id", id);
-                    boolean next = false;
                     if (plugin.tardisHasDestination.containsKey(Integer.valueOf(id))) {
                         ResultSetNextLocation rsn = new ResultSetNextLocation(plugin, wherenl);
                         if (!rsn.resultSet()) {
@@ -148,7 +146,6 @@ public class TARDISScannerListener implements Listener {
                         scan_loc = new Location(rsn.getWorld(), rsn.getX(), rsn.getY(), rsn.getZ());
                         tardisDirection = rsn.getDirection();
                         whereisit = "next destination";
-                        next = true;
                     } else {
                         ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherenl);
                         if (!rsc.resultSet()) {
@@ -258,12 +255,11 @@ public class TARDISScannerListener implements Listener {
                         }
                     }, 140L);
                     if (!renderer.isEmpty()) {
-                        final boolean isNext = next;
                         bsched.scheduleSyncDelayedTask(plugin, new Runnable() {
                             @Override
                             public void run() {
                                 TARDISExteriorRenderer ter = new TARDISExteriorRenderer(plugin);
-                                ter.render(renderer, scan_loc, isNext, id, player, tardisDirection, time);
+                                ter.render(renderer, scan_loc, id, player, tardisDirection, time, biome);
                             }
                         }, 160L);
                     }
