@@ -31,7 +31,9 @@ import java.util.regex.Pattern;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.artron.TARDISCondensables;
+import me.eccentric_nz.TARDIS.database.ResultSetCondenser;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
+import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.files.TARDISMakeRoomCSV;
 import me.eccentric_nz.TARDIS.files.TARDISRoomSchematicReader;
 import me.eccentric_nz.TARDIS.files.TARDISSchematic;
@@ -143,6 +145,68 @@ public class TARDISRoomCommands implements CommandExecutor {
                         String line = mat + ", " + amount;
                         sender.sendMessage(line);
                     }
+                    return true;
+                }
+            } else if (args[0].toLowerCase(Locale.ENGLISH).equals("required")) {
+                Player player = null;
+                if (sender instanceof Player) {
+                    player = (Player) sender;
+                }
+                if (player == null) {
+                    sender.sendMessage(plugin.pluginName + "You cannot run this command from the console!");
+                    return true;
+                }
+                String name = args[1].toUpperCase(Locale.ENGLISH);
+                Set<String> rooms = plugin.getRoomsConfig().getConfigurationSection("rooms").getKeys(false);
+                if (!rooms.contains(name)) {
+                    sender.sendMessage(plugin.pluginName + "Could not find a room with that name!");
+                    return true;
+                }
+                HashMap<String, Integer> blockIDs = plugin.roomBlockCounts.get(name);
+                boolean hasPrefs = false;
+                String wall = "ORANGE WOOL";
+                String floor = "LIGHT GREY WOOL";
+
+                HashMap<String, Object> wherepp = new HashMap<String, Object>();
+                wherepp.put("player", ((Player) sender).getName());
+                ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, wherepp);
+                if (rsp.resultSet()) {
+                    hasPrefs = true;
+                    wall = rsp.getWall();
+                    floor = rsp.getFloor();
+                }
+                // get the TARDIS id
+                HashMap<String, Object> wheret = new HashMap<String, Object>();
+                wheret.put("owner", player.getName());
+                ResultSetTardis rs = new ResultSetTardis(plugin, wheret, "", false);
+                if (rs.resultSet()) {
+                    sender.sendMessage(plugin.pluginName + "You need to condense the following blocks to grow a " + name + ":");
+                    for (Map.Entry<String, Integer> entry : blockIDs.entrySet()) {
+                        String[] block_data = entry.getKey().split(":");
+                        int bid = plugin.utils.parseNum(block_data[0]);
+                        String mat;
+                        if (hasPrefs && block_data.length == 2 && (block_data[1].equals("1") || block_data[1].equals("8"))) {
+                            mat = (block_data[1].equals("1")) ? wall : floor;
+                        } else {
+                            mat = Material.getMaterial(bid).toString();
+                        }
+                        int tmp = Math.round((entry.getValue() / 100.0F) * plugin.getConfig().getInt("growth.rooms_condenser_percent"));
+                        int amount = (tmp > 0) ? tmp : 1;
+                        // get the amount of this block that the player has condensed
+                        HashMap<String, Object> wherec = new HashMap<String, Object>();
+                        wherec.put("tardis_id", rs.getTardis_id());
+                        wherec.put("block_data", bid);
+                        ResultSetCondenser rsc = new ResultSetCondenser(plugin, wherec, false);
+                        int has = (rsc.resultSet()) ? rsc.getBlock_count() : 0;
+                        int required = amount - has;
+                        if (required > 0) {
+                            String line = mat + ", " + required;
+                            sender.sendMessage(line);
+                        }
+                    }
+                    return true;
+                } else {
+                    sender.sendMessage(plugin.pluginName + "Could not get TARDIS id!");
                     return true;
                 }
             } else if (args[0].toLowerCase(Locale.ENGLISH).equals("add")) {

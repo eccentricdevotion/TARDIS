@@ -22,6 +22,7 @@
 ## Waiting on Bukkit API
 0. IDs are soon to be history... so convert all ID use to entity names
 1. Get/set horse speed (Attribute API)
+2. Achievements API
 
 ## Future version `2.8+`
 1. Custom room schematics in ARS (check they are 16x16x16)
