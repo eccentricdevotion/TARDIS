@@ -263,7 +263,7 @@ public class TARDISScannerListener implements Listener {
                             @Override
                             public void run() {
                                 TARDISExteriorRenderer ter = new TARDISExteriorRenderer(plugin);
-                                ter.render(renderer, scan_loc, isNext, id, player, tardisDirection);
+                                ter.render(renderer, scan_loc, isNext, id, player, tardisDirection, time);
                             }
                         }, 160L);
                     }

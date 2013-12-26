@@ -41,7 +41,7 @@ public class TARDISExteriorRenderer {
         this.plugin = plugin;
     }
 
-    public void render(String interior, Location exterior, boolean next, int id, Player p, TARDISConstants.COMPASS d) {
+    public void render(String interior, Location exterior, boolean next, int id, Player p, TARDISConstants.COMPASS d, long time) {
         // TODO only render if the destination has changed
         // construct a string for comparison
         World ew = exterior.getWorld();
@@ -106,7 +106,7 @@ public class TARDISExteriorRenderer {
                 int plusz = (location.getBlockZ() + 1);
                 int minusz = (location.getBlockZ() - 1);
                 TARDISChameleonColumn column = plugin.presets.getGlass(TARDISConstants.PRESET.OLD, d);
-                addPlatform(location, false, d, p.getName(), id);
+                addPlatform(location, d, p.getName(), id);
                 int px, pz;
                 int[][] ids = column.getId();
                 byte[][] data = column.getData();
@@ -156,6 +156,37 @@ public class TARDISExteriorRenderer {
                     }
                 }
             }
+            // change the grey/blue wool to blue/grey to reflect time of day
+            byte to = (time > 0 && time < 12500) ? (byte) 3 : 15;
+            byte from = (time > 0 && time < 12500) ? (byte) 15 : 3;
+            for (int x = isx; x < isx + 13; x++) {
+                for (int z = isz; z < (isz + 13); z++) {
+                    if (iw.getBlockAt(x, isy + 8, z).getData() == from) {
+                        iw.getBlockAt(x, isy + 8, z).setData(to);
+                    }
+                }
+            }
+            for (int x1 = isx - 1; x1 < isx + 14; x1++) {
+                for (int y1 = isy + 2; y1 < isy + 8; y1++) {
+                    if (iw.getBlockAt(x1, y1, isz - 1).getData() == from) {
+                        iw.getBlockAt(x1, y1, isz - 1).setData(to);
+                    }
+                    if (iw.getBlockAt(x1, y1, isz + 13).getData() == from) {
+                        iw.getBlockAt(x1, y1, isz + 13).setData(to);
+                    }
+                }
+            }
+            // build second and fourth walls
+            for (int z2 = isz - 1; z2 < isz + 14; z2++) {
+                for (int y2 = isy + 2; y2 < isy + 8; y2++) {
+                    if (iw.getBlockAt(isx - 1, y2, z2).getData() == from) {
+                        iw.getBlockAt(isx - 1, y2, z2).setData(to);
+                    }
+                    if (iw.getBlockAt(isx + 13, y2, z2).getData() == from) {
+                        iw.getBlockAt(isx + 13, y2, z2).setData(to);
+                    }
+                }
+            }
             plugin.trackRenderer.put(id, isRendered);
             p.sendMessage(plugin.pluginName + "Rendering complete, stand by for transmat...");
         }
@@ -193,7 +224,7 @@ public class TARDISExteriorRenderer {
         player.teleport(loc);
     }
 
-    private void addPlatform(Location l, boolean rebuild, TARDISConstants.COMPASS d, String p, int id) {
+    private void addPlatform(Location l, TARDISConstants.COMPASS d, String p, int id) {
         int plusx, minusx, x, y, plusz, minusz, z;
         int platform_id = plugin.getConfig().getInt("police_box.platform_id");
         byte platform_data = (byte) plugin.getConfig().getInt("police_box.platform_data");
@@ -202,7 +233,7 @@ public class TARDISExteriorRenderer {
         x = l.getBlockX();
         plusx = (l.getBlockX() + 1);
         minusx = (l.getBlockX() - 1);
-        y = (l.getBlockY() - 3);
+        y = (l.getBlockY() - 1);
         z = (l.getBlockZ());
         plusz = (l.getBlockZ() + 1);
         minusz = (l.getBlockZ() - 1);
