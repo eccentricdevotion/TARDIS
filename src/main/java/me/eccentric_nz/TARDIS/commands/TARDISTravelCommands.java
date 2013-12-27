@@ -35,6 +35,7 @@ import me.eccentric_nz.TARDIS.database.ResultSetHomeLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
+import me.eccentric_nz.TARDIS.travel.TARDISCaveFinder;
 import me.eccentric_nz.TARDIS.travel.TARDISPluginRespect;
 import me.eccentric_nz.TARDIS.travel.TARDISRescue;
 import me.eccentric_nz.TARDIS.travel.TARDISTimeTravel;
@@ -150,8 +151,8 @@ public class TARDISTravelCommands implements CommandExecutor {
                     return true;
                 } else {
                     if (args.length == 1) {
-                        // we're thinking this is a player's name or home / back
-                        if (args[0].equalsIgnoreCase("home") || args[0].equalsIgnoreCase("back")) {
+                        // we're thinking this is a player's name or home / back / cave
+                        if (args[0].equalsIgnoreCase("home") || args[0].equalsIgnoreCase("back") || args[0].equalsIgnoreCase("cave")) {
                             String which;
                             if (args[0].equalsIgnoreCase("home")) {
                                 // get home location
@@ -169,7 +170,7 @@ public class TARDISTravelCommands implements CommandExecutor {
                                 set.put("direction", rsh.getDirection().toString());
                                 set.put("submarine", (rsh.isSubmarine()) ? 1 : 0);
                                 which = "Home";
-                            } else {
+                            } else if (args[0].equalsIgnoreCase("back")) {
                                 // get fast return location
                                 HashMap<String, Object> wherebl = new HashMap<String, Object>();
                                 wherebl.put("tardis_id", id);
@@ -185,6 +186,28 @@ public class TARDISTravelCommands implements CommandExecutor {
                                 set.put("direction", rsb.getDirection().toString());
                                 set.put("submarine", (rsb.isSubmarine()) ? 1 : 0);
                                 which = "Fast Return";
+                            } else {
+                                if (!player.hasPermission("tardis.timetravel.cave")) {
+                                    player.sendMessage(plugin.pluginName + "You do not have permission to time travel to a cave!");
+                                    return true;
+                                }
+                                // find a cave
+                                Location cave = new TARDISCaveFinder(plugin).searchCave(player, id);
+                                if (cave == null) {
+                                    player.sendMessage(plugin.pluginName + "Could not find a cave within 2000 blocks!");
+                                    return true;
+                                }
+                                // check respect
+                                respect = new TARDISPluginRespect(plugin);
+                                if (!respect.getRespect(player, cave, true)) {
+                                    return true;
+                                }
+                                set.put("world", cave.getWorld().getName());
+                                set.put("x", cave.getBlockX());
+                                set.put("y", cave.getBlockY());
+                                set.put("z", cave.getBlockZ());
+                                set.put("submarine", 0);
+                                which = "Cave";
                             }
                             qf.doUpdate("next", set, tid);
                             sender.sendMessage(plugin.pluginName + which + " location loaded succesfully. Please release the handbrake!");
