@@ -608,11 +608,15 @@ public class TARDISMaterialisationPreset implements Runnable {
                                         if (preset.equals(TARDISConstants.PRESET.PARTY) || (preset.equals(TARDISConstants.PRESET.FLOWER) && coldatas[yy] == 0)) {
                                             chad = random_colour;
                                         } else {
-                                            chad = plugin.lookup.getStain().get(cham_id);
+                                            // if it was a wool / stained glass / stained clay block get the data from that
+                                            int[] finalids = column.getId()[n];
+                                            byte[] finaldatas = column.getData()[n];
+                                            if (finalids[yy] == 35 || finalids[yy] == 95 || finalids[yy] == 159 || finalids[yy] == 160 || finalids[yy] == 171) {
+                                                chad = finaldatas[yy];
+                                            } else {
+                                                chad = plugin.lookup.getStain().get(cham_id);
+                                            }
                                         }
-                                        plugin.utils.setBlock(world, xx, (y + yy), zz, 95, chad);
-                                    } else if (preset.equals(TARDISConstants.PRESET.NEW) || preset.equals(TARDISConstants.PRESET.OLD) || preset.equals(TARDISConstants.PRESET.SUBMERGED)) {
-                                        chad = plugin.lookup.getStain().get(cham_id);
                                         plugin.utils.setBlock(world, xx, (y + yy), zz, 95, chad);
                                     } else {
                                         plugin.utils.setBlock(world, xx, (y + yy), zz, colids[yy], coldatas[yy]);

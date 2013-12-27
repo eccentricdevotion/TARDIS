@@ -119,7 +119,12 @@ public class TARDISMakePresetListener implements Listener {
                                 sb_glass_data.append(data);
                             } else {
                                 sb_stain_id.append(95);
-                                sb_stain_data.append(plugin.lookup.getStain().get(id)); // get the appropiately coloured stained glass
+                                byte colour = plugin.lookup.getStain().get(id);
+                                if (colour == -1) {
+                                    // use the same data as the original block
+                                    colour = data;
+                                }
+                                sb_stain_data.append(colour); // get the appropiately coloured stained glass
                                 sb_glass_id.append(20);
                                 sb_glass_data.append(0);
                             }
@@ -133,7 +138,12 @@ public class TARDISMakePresetListener implements Listener {
                                 sb_glass_data.append(data).append(",");
                             } else {
                                 sb_stain_id.append(95).append(",");
-                                sb_stain_data.append(plugin.lookup.getStain().get(id)).append(","); // get the appropiately coloured stained glass
+                                byte colour = plugin.lookup.getStain().get(id);
+                                if (colour == -1) {
+                                    // use the same data as the original block
+                                    colour = data;
+                                }
+                                sb_stain_data.append(colour).append(","); // get the appropiately coloured stained glass
                                 sb_glass_id.append(20).append(",");
                                 sb_glass_data.append(0).append(",");
                             }

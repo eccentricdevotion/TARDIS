@@ -13,6 +13,7 @@
    * find a way to prevent items dropping between renders
    * switch off some lights when it's night?
 8. Underground materialisation
+   * check there is space for a player
 9. Fix underdoor block for apperture preset
 10. Save Chameleon preset with saved location `/tardis csave`?
 11. TARDIS Information System
