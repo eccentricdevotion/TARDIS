@@ -20,6 +20,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.TARDISConstants.COMPASS;
 import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -49,6 +50,7 @@ public class TARDISCaveFinder {
             World w = rsc.getWorld();
             int startx = rsc.getX();
             int startz = rsc.getZ();
+            COMPASS d = rsc.getDirection();
             // Assume all non-nether/non-end world environments are NORMAL
             if (!w.getEnvironment().equals(World.Environment.NETHER) && !w.getEnvironment().equals(World.Environment.THE_END)) {
                 int limitx = 2000;
@@ -63,7 +65,7 @@ public class TARDISCaveFinder {
                             // east
                             p.sendMessage(plugin.pluginName + "Looking east...");
                             for (int east = startx; east < east + limitx; east += step) {
-                                Check chk = isThereRoom(w, east, startz);
+                                Check chk = isThereRoom(w, east, startz, d);
                                 if (chk.isSafe()) {
                                     p.sendMessage(plugin.pluginName + "Cave found in an easterly direction!");
                                     return new Location(w, east, chk.getY(), startz);
@@ -74,7 +76,7 @@ public class TARDISCaveFinder {
                             // south
                             p.sendMessage(plugin.pluginName + "Looking south...");
                             for (int south = startz; south < south + limitz; south += step) {
-                                Check chk = isThereRoom(w, startx, south);
+                                Check chk = isThereRoom(w, startx, south, d);
                                 if (chk.isSafe()) {
                                     p.sendMessage(plugin.pluginName + "Cave found in a southerly direction!");
                                     return new Location(w, startx, chk.getY(), south);
@@ -85,7 +87,7 @@ public class TARDISCaveFinder {
                             // west
                             p.sendMessage(plugin.pluginName + "Looking west...");
                             for (int west = startx; west > west - limitx; west -= step) {
-                                Check chk = isThereRoom(w, west, startz);
+                                Check chk = isThereRoom(w, west, startz, d);
                                 if (chk.isSafe()) {
                                     p.sendMessage(plugin.pluginName + "Cave found in a westerly direction!");
                                     return new Location(w, west, chk.getY(), startz);
@@ -96,7 +98,7 @@ public class TARDISCaveFinder {
                             // north
                             p.sendMessage(plugin.pluginName + "Looking north...");
                             for (int north = startz; north > north - limitz; north -= step) {
-                                Check chk = isThereRoom(w, startx, north);
+                                Check chk = isThereRoom(w, startx, north, d);
                                 if (chk.isSafe()) {
                                     p.sendMessage(plugin.pluginName + "Cave found in a northerly direction!");
                                     return new Location(w, startx, chk.getY(), north);
@@ -114,24 +116,61 @@ public class TARDISCaveFinder {
         return l;
     }
 
-    private Check isThereRoom(World w, int x, int z) {
+    private Check isThereRoom(World w, int x, int z, COMPASS d) {
         Check ret = new Check();
         ret.setSafe(false);
         for (int y = 35; y > 14; y--) {
             if (w.getBlockAt(x, y, z).getType().equals(Material.AIR)) {
                 plugin.debug("Found AIR");
                 int yy = getLowestAirBlock(w, x, y, z);
-                if (yy <= y - 3 && w.getBlockAt(x - 1, yy - 1, z - 1).getType().equals(Material.STONE)
-                        && w.getBlockAt(x - 1, yy, z - 1).getType().equals(Material.AIR)
-                        && w.getBlockAt(x - 1, yy, z).getType().equals(Material.AIR)
-                        && w.getBlockAt(x - 1, yy, z + 1).getType().equals(Material.AIR)
-                        && w.getBlockAt(x, yy, z - 1).getType().equals(Material.AIR)
-                        && w.getBlockAt(x, yy, z + 1).getType().equals(Material.AIR)
-                        && w.getBlockAt(x + 1, yy, z - 1).getType().equals(Material.AIR)
-                        && w.getBlockAt(x + 1, yy, z).getType().equals(Material.AIR)
-                        && w.getBlockAt(x + 1, yy, z + 1).getType().equals(Material.AIR)) {
-                    ret.setSafe(true);
-                    ret.setY(yy);
+                // check there is enough height for the police box
+                if (yy <= y - 3 && w.getBlockAt(x - 1, yy - 1, z - 1).getType().equals(Material.STONE)) {
+                    // check there is room for the police box
+                    if (w.getBlockAt(x - 1, yy, z - 1).getType().equals(Material.AIR)
+                            && w.getBlockAt(x - 1, yy, z).getType().equals(Material.AIR)
+                            && w.getBlockAt(x - 1, yy, z + 1).getType().equals(Material.AIR)
+                            && w.getBlockAt(x, yy, z - 1).getType().equals(Material.AIR)
+                            && w.getBlockAt(x, yy, z + 1).getType().equals(Material.AIR)
+                            && w.getBlockAt(x + 1, yy, z - 1).getType().equals(Material.AIR)
+                            && w.getBlockAt(x + 1, yy, z).getType().equals(Material.AIR)
+                            && w.getBlockAt(x + 1, yy, z + 1).getType().equals(Material.AIR)) {
+                        // finally check there is space to exit the police box
+                        boolean safe = false;
+                        switch (d) {
+                            case NORTH:
+                                if (w.getBlockAt(x - 1, yy, z + 2).getType().equals(Material.AIR)
+                                        && w.getBlockAt(x, yy, z + 2).getType().equals(Material.AIR)
+                                        && w.getBlockAt(x + 1, yy, z + 2).getType().equals(Material.AIR)) {
+                                    safe = true;
+                                }
+                                break;
+                            case WEST:
+                                if (w.getBlockAt(x + 2, yy, z - 1).getType().equals(Material.AIR)
+                                        && w.getBlockAt(x + 2, yy, z).getType().equals(Material.AIR)
+                                        && w.getBlockAt(x + 2, yy, z + 1).getType().equals(Material.AIR)) {
+                                    safe = true;
+                                }
+                                break;
+                            case SOUTH:
+                                if (w.getBlockAt(x - 1, yy, z - 2).getType().equals(Material.AIR)
+                                        && w.getBlockAt(x, yy, z - 2).getType().equals(Material.AIR)
+                                        && w.getBlockAt(x + 1, yy, z - 2).getType().equals(Material.AIR)) {
+                                    safe = true;
+                                }
+                                break;
+                            default:
+                                if (w.getBlockAt(x - 2, yy, z - 1).getType().equals(Material.AIR)
+                                        && w.getBlockAt(x - 2, yy, z).getType().equals(Material.AIR)
+                                        && w.getBlockAt(x - 2, yy, z + 1).getType().equals(Material.AIR)) {
+                                    safe = true;
+                                }
+                                break;
+                        }
+                        if (safe) {
+                            ret.setSafe(true);
+                            ret.setY(yy);
+                        }
+                    }
                 }
             }
         }

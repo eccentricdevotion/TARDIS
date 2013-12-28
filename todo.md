@@ -11,10 +11,8 @@
 4. Make condensables list configurable
 5. TARDIS exterior rendering / scanner room
    * find a way to prevent items dropping between renders
-6. Underground materialisation
-   * check there is space for a player
-7. Save Chameleon preset with saved location `/tardis csave`?
-8. TARDIS Information System
+6. Save Chameleon preset with saved location `/tardis csave`?
+7. TARDIS Information System
     * add new features
     * auto log out?
     
