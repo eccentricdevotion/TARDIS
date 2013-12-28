@@ -205,11 +205,10 @@ public class TARDISScannerListener implements Listener {
                         }
                     }, 60L);
                     // get weather
-                    // TODO add new biome types
                     final String weather;
-                    if (biome.equals(Biome.DESERT) || biome.equals(Biome.DESERT_HILLS)) {
+                    if (biome.equals(Biome.DESERT) || biome.equals(Biome.DESERT_HILLS) || biome.equals(Biome.SAVANNA) || biome.equals(Biome.SAVANNA_MOUNTAINS) || biome.equals(Biome.SAVANNA_PLATEAU) || biome.equals(Biome.SAVANNA_PLATEAU_MOUNTAINS) || biome.equals(Biome.MESA) || biome.equals(Biome.MESA_BRYCE) || biome.equals(Biome.MESA_PLATEAU) || biome.equals(Biome.MESA_PLATEAU_MOUNTAINS)) {
                         weather = "dry as a bone";
-                    } else if (biome.equals(Biome.TAIGA) || biome.equals(Biome.TAIGA_HILLS) || biome.equals(Biome.ICE_PLAINS) || biome.equals(Biome.ICE_PLAINS_SPIKES)) {
+                    } else if (biome.equals(Biome.ICE_PLAINS) || biome.equals(Biome.ICE_PLAINS_SPIKES) || biome.equals(Biome.FROZEN_OCEAN) || biome.equals(Biome.FROZEN_RIVER) || biome.equals(Biome.COLD_BEACH) || biome.equals(Biome.COLD_TAIGA) || biome.equals(Biome.COLD_TAIGA_HILLS) || biome.equals(Biome.COLD_TAIGA_MOUNTAINS)) {
                         weather = (scan_loc.getWorld().hasStorm()) ? "snowing" : "clear, but cold";
                     } else {
                         weather = (scan_loc.getWorld().hasStorm()) ? "raining" : "clear";
