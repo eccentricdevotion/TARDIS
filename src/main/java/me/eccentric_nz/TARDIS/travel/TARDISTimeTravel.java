@@ -22,9 +22,9 @@ import java.util.List;
 import java.util.Random;
 import java.util.Set;
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
+import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -87,7 +87,7 @@ public class TARDISTimeTravel {
      * @return a random Location
      */
     @SuppressWarnings("deprecation")
-    public Location randomDestination(Player p, byte rx, byte rz, byte ry, TARDISConstants.COMPASS d, String e, World this_world, boolean malfunction, Location current) {
+    public Location randomDestination(Player p, byte rx, byte rz, byte ry, COMPASS d, String e, World this_world, boolean malfunction, Location current) {
         int startx, starty, startz, resetx, resetz, listlen, rw;
         World randworld = null;
         int count;
@@ -287,7 +287,7 @@ public class TARDISTimeTravel {
      * @return the number of unsafe blocks
      */
     @SuppressWarnings("deprecation")
-    public int safeLocation(int startx, int starty, int startz, int resetx, int resetz, World w, TARDISConstants.COMPASS d) {
+    public int safeLocation(int startx, int starty, int startz, int resetx, int resetz, World w, COMPASS d) {
         int level, row, col, rowcount, colcount, count = 0;
         switch (d) {
             case EAST:
@@ -326,7 +326,7 @@ public class TARDISTimeTravel {
      * @param loc
      * @param d the direction the Police Box is facing.
      */
-    public void testSafeLocation(Location loc, TARDISConstants.COMPASS d) {
+    public void testSafeLocation(Location loc, COMPASS d) {
         final World w = loc.getWorld();
         final int starty = loc.getBlockY();
         int sx, sz;
@@ -404,7 +404,7 @@ public class TARDISTimeTravel {
      * @param d the direction the Police Box is facing.
      * @return an array containing x and z coordinates
      */
-    public int[] getStartLocation(Location loc, TARDISConstants.COMPASS d) {
+    public int[] getStartLocation(Location loc, COMPASS d) {
         switch (d) {
             case EAST:
                 startLoc[0] = loc.getBlockX() - 2;
@@ -439,7 +439,7 @@ public class TARDISTimeTravel {
      * @return true or false
      */
     @SuppressWarnings("deprecation")
-    public boolean safeNether(World nether, int wherex, int wherez, TARDISConstants.COMPASS d, Player p) {
+    public boolean safeNether(World nether, int wherex, int wherez, COMPASS d, Player p) {
         boolean safe = false;
         int startx, starty, startz, resetx, resetz, count;
         int wherey = 100;
@@ -566,7 +566,7 @@ public class TARDISTimeTravel {
     }
 
     @SuppressWarnings("deprecation")
-    public Location submarine(Block b, TARDISConstants.COMPASS d) {
+    public Location submarine(Block b, COMPASS d) {
         Block block = b;
         while (true) {
             block = block.getRelative(BlockFace.DOWN);
@@ -586,7 +586,7 @@ public class TARDISTimeTravel {
     }
 
     @SuppressWarnings("deprecation")
-    public boolean isSafeSubmarine(Location l, TARDISConstants.COMPASS d) {
+    public boolean isSafeSubmarine(Location l, COMPASS d) {
         int[] s = getStartLocation(l, d);
         int level, row, col, rowcount, colcount, count = 0;
         int starty = l.getBlockY();

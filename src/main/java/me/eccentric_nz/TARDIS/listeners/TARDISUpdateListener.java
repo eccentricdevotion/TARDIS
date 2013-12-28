@@ -28,12 +28,11 @@ import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetDoors;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
-import me.eccentric_nz.tardischunkgenerator.TARDISChunkGenerator;
+import me.eccentric_nz.TARDIS.enumeration.SCHEMATIC;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
-import org.bukkit.WorldType;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.block.Sign;
@@ -42,7 +41,6 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractEvent;
-import org.bukkit.generator.ChunkGenerator;
 import me.eccentric_nz.TARDIS.JSON.JSONArray;
 
 /**
@@ -132,7 +130,7 @@ public class TARDISUpdateListener implements Listener {
             }
             int id = rs.getTardis_id();
             String preset = rs.getPreset().toString();
-            TARDISConstants.SCHEMATIC schm = rs.getSchematic();
+            SCHEMATIC schm = rs.getSchematic();
             QueryFactory qf = new QueryFactory(plugin);
             String table = "tardis";
             HashMap<String, Object> tid = new HashMap<String, Object>();

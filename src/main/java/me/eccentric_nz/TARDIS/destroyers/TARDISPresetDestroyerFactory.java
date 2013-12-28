@@ -19,12 +19,13 @@ package me.eccentric_nz.TARDIS.destroyers;
 import java.util.Collections;
 import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.chameleon.TARDISChameleonCircuit;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetDoors;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
+import me.eccentric_nz.TARDIS.enumeration.COMPASS;
+import me.eccentric_nz.TARDIS.enumeration.PRESET;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -48,16 +49,16 @@ public class TARDISPresetDestroyerFactory {
         this.plugin = plugin;
     }
 
-    public void destroyPreset(Location l, TARDISConstants.COMPASS d, int id, boolean hide, boolean dematerialise, boolean c, Player player) {
+    public void destroyPreset(Location l, COMPASS d, int id, boolean hide, boolean dematerialise, boolean c, Player player) {
         HashMap<String, Object> where = new HashMap<String, Object>();
         where.put("tardis_id", id);
         ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
         if (rs.resultSet()) {
-            TARDISConstants.PRESET demat = rs.getDemat();
+            PRESET demat = rs.getDemat();
             if (dematerialise && !hide) {
                 int cham_id = rs.getChameleon_id();
                 byte cham_data = rs.getChameleon_data();
-                if (c && (demat.equals(TARDISConstants.PRESET.NEW) || demat.equals(TARDISConstants.PRESET.OLD) || demat.equals(TARDISConstants.PRESET.SUBMERGED))) {
+                if (c && (demat.equals(PRESET.NEW) || demat.equals(PRESET.OLD) || demat.equals(PRESET.SUBMERGED))) {
                     Block chameleonBlock;
                     // chameleon circuit is on - get block under TARDIS
                     if (l.getBlock().getType() == Material.SNOW) {
@@ -101,7 +102,7 @@ public class TARDISPresetDestroyerFactory {
         }
     }
 
-    public void destroySign(Location l, TARDISConstants.COMPASS d, TARDISConstants.PRESET p) {
+    public void destroySign(Location l, COMPASS d, PRESET p) {
         World w = l.getWorld();
         int signx, signz, signy;
         switch (p) {
@@ -212,17 +213,17 @@ public class TARDISPresetDestroyerFactory {
                 break;
         }
         plugin.utils.setBlock(w, l.getBlockX() + signx, l.getBlockY() + signy, l.getBlockZ() + signz, 0, (byte) 0);
-        if (p.equals(TARDISConstants.PRESET.SWAMP)) {
+        if (p.equals(PRESET.SWAMP)) {
             plugin.utils.setBlock(w, l.getBlockX() + signx, l.getBlockY(), l.getBlockZ() + signz, 0, (byte) 0);
         }
     }
 
-    public void destroyLamp(Location l, TARDISConstants.PRESET p) {
+    public void destroyLamp(Location l, PRESET p) {
         World w = l.getWorld();
         int tx = l.getBlockX();
         int ty = l.getBlockY() + 3;
         int tz = l.getBlockZ();
-        if (p.equals(TARDISConstants.PRESET.CAKE)) {
+        if (p.equals(PRESET.CAKE)) {
             for (int i = (tx - 1); i < (tx + 2); i++) {
                 for (int j = (tz - 1); j < (tz + 2); j++) {
                     plugin.utils.setBlock(w, i, ty, j, 0, (byte) 0);
@@ -233,7 +234,7 @@ public class TARDISPresetDestroyerFactory {
         }
     }
 
-    public void destroyDuckEyes(Location l, TARDISConstants.COMPASS d) {
+    public void destroyDuckEyes(Location l, COMPASS d) {
         World w = l.getWorld();
         int leftx, leftz, rightx, rightz;
         int eyey = l.getBlockY() + 3;

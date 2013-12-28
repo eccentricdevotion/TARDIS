@@ -19,7 +19,7 @@ package me.eccentric_nz.TARDIS.utility;
 import java.util.HashMap;
 import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.TARDISConstants;
+import me.eccentric_nz.TARDIS.enumeration.SCHEMATIC;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetChunks;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
@@ -212,7 +212,7 @@ public class TARDISUtils {
      * @param schm the schematic of the TARDIS being created.
      * @return true or false.
      */
-    public boolean checkChunk(String w, int x, int z, TARDISConstants.SCHEMATIC schm) {
+    public boolean checkChunk(String w, int x, int z, SCHEMATIC schm) {
         boolean chunkchk = false;
         short[] d;
         switch (schm) {

@@ -21,7 +21,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.TARDISConstants;
+import me.eccentric_nz.TARDIS.enumeration.CMDS;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -159,7 +159,7 @@ public class TARDISAdminCommands implements CommandExecutor {
         if (cmd.getName().equalsIgnoreCase("tardisadmin")) {
             if (sender instanceof ConsoleCommandSender || sender.hasPermission("tardis.admin")) {
                 if (args.length == 0) {
-                    sender.sendMessage(TARDISConstants.COMMAND_ADMIN.split("\n"));
+                    sender.sendMessage(CMDS.ADMIN.getHelp().split("\n"));
                     return true;
                 }
                 String first = args[0].toLowerCase(Locale.ENGLISH);

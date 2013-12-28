@@ -21,13 +21,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.builders.TARDISSpace;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetCount;
 import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
+import me.eccentric_nz.TARDIS.enumeration.COMPASS;
+import me.eccentric_nz.TARDIS.enumeration.SCHEMATIC;
 import me.eccentric_nz.TARDIS.utility.TARDISUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.Chunk;
@@ -95,7 +96,7 @@ public class TARDISBlockPlaceListener implements Listener {
             Block blockBottom = blockBelow.getRelative(BlockFace.DOWN);
             // only continue if the redstone torch is placed on top of [JUST ABOUT ANY] BLOCK on top of an IRON/GOLD/DIAMOND_BLOCK
             if (plugin.getBlocksConfig().getStringList("tardis_blocks").contains(blockBelow.getType().toString()) && blocks.contains(blockBottom.getType())) {
-                final TARDISConstants.SCHEMATIC schm;
+                final SCHEMATIC schm;
                 final Player player = event.getPlayer();
                 int max_count = plugin.getConfig().getInt("creation.count");
                 int player_count = 0;
@@ -113,11 +114,11 @@ public class TARDISBlockPlaceListener implements Listener {
                 }
                 switch (blockBottom.getType()) {
                     case IRON_BLOCK:
-                        schm = TARDISConstants.SCHEMATIC.BUDGET;
+                        schm = SCHEMATIC.BUDGET;
                         break;
                     case GOLD_BLOCK:
                         if (player.hasPermission("tardis.bigger")) {
-                            schm = TARDISConstants.SCHEMATIC.BIGGER;
+                            schm = SCHEMATIC.BIGGER;
                         } else {
                             player.sendMessage(plugin.pluginName + "You don't have permission to create a 'bigger' TARDIS!");
                             return;
@@ -125,7 +126,7 @@ public class TARDISBlockPlaceListener implements Listener {
                         break;
                     case DIAMOND_BLOCK:
                         if (player.hasPermission("tardis.deluxe")) {
-                            schm = TARDISConstants.SCHEMATIC.DELUXE;
+                            schm = SCHEMATIC.DELUXE;
                         } else {
                             player.sendMessage(plugin.pluginName + "You don't have permission to create a 'deluxe' TARDIS!");
                             return;
@@ -133,7 +134,7 @@ public class TARDISBlockPlaceListener implements Listener {
                         break;
                     case EMERALD_BLOCK:
                         if (player.hasPermission("tardis.eleventh")) {
-                            schm = TARDISConstants.SCHEMATIC.ELEVENTH;
+                            schm = SCHEMATIC.ELEVENTH;
                         } else {
                             player.sendMessage(plugin.pluginName + "You don't have permission to create an 'eleventh Doctor's' TARDIS!");
                             return;
@@ -141,7 +142,7 @@ public class TARDISBlockPlaceListener implements Listener {
                         break;
                     case REDSTONE_BLOCK:
                         if (player.hasPermission("tardis.redstone")) {
-                            schm = TARDISConstants.SCHEMATIC.REDSTONE;
+                            schm = SCHEMATIC.REDSTONE;
                         } else {
                             player.sendMessage(plugin.pluginName + "You don't have permission to create a 'redstone' TARDIS!");
                             return;
@@ -149,7 +150,7 @@ public class TARDISBlockPlaceListener implements Listener {
                         break;
                     case COAL_BLOCK:
                         if (player.hasPermission("tardis.steampunk")) {
-                            schm = TARDISConstants.SCHEMATIC.STEAMPUNK;
+                            schm = SCHEMATIC.STEAMPUNK;
                         } else {
                             player.sendMessage(plugin.pluginName + "You don't have permission to create a 'steampunk' TARDIS!");
                             return;
@@ -157,7 +158,7 @@ public class TARDISBlockPlaceListener implements Listener {
                         break;
                     case LAPIS_BLOCK:
                         if (player.hasPermission("tardis.tom")) {
-                            schm = TARDISConstants.SCHEMATIC.TOM;
+                            schm = SCHEMATIC.TOM;
                         } else {
                             player.sendMessage(plugin.pluginName + "You don't have permission to create a '4th Doctor's' TARDIS!");
                             return;
@@ -165,7 +166,7 @@ public class TARDISBlockPlaceListener implements Listener {
                         break;
                     case BOOKSHELF:
                         if (player.hasPermission("tardis.plank")) {
-                            schm = TARDISConstants.SCHEMATIC.PLANK;
+                            schm = SCHEMATIC.PLANK;
                         } else {
                             player.sendMessage(plugin.pluginName + "You don't have permission to create a 'wood' TARDIS!");
                             return;
@@ -173,7 +174,7 @@ public class TARDISBlockPlaceListener implements Listener {
                         break;
                     case QUARTZ_BLOCK:
                         if (player.hasPermission("tardis.ars")) {
-                            schm = TARDISConstants.SCHEMATIC.ARS;
+                            schm = SCHEMATIC.ARS;
                         } else {
                             player.sendMessage(plugin.pluginName + "You don't have permission to create an 'ARS' TARDIS!");
                             return;
@@ -182,13 +183,13 @@ public class TARDISBlockPlaceListener implements Listener {
                     default:
                         if (plugin.getConfig().getBoolean("custom_schematic")) {
                             if (player.hasPermission("tardis.custom") && blockBottom.getType().equals(custom)) {
-                                schm = TARDISConstants.SCHEMATIC.CUSTOM;
+                                schm = SCHEMATIC.CUSTOM;
                             } else {
                                 player.sendMessage(plugin.pluginName + "You don't have permission to create the server's custom' TARDIS!");
                                 return;
                             }
                         } else {
-                            schm = TARDISConstants.SCHEMATIC.BUDGET;
+                            schm = SCHEMATIC.BUDGET;
                         }
                         break;
                 }
@@ -297,7 +298,7 @@ public class TARDISBlockPlaceListener implements Listener {
                         blockBelow.setTypeId(0);
                         blockBottom.setTypeId(0);
                         // turn the block stack into a TARDIS
-                        plugin.builderP.buildPreset(lastInsertId, block_loc, TARDISConstants.COMPASS.valueOf(d), false, player, false, false);
+                        plugin.builderP.buildPreset(lastInsertId, block_loc, COMPASS.valueOf(d), false, player, false, false);
                         plugin.builderI.buildInner(schm, chunkworld, lastInsertId, player, middle_id, middle_data, 35, (byte) 8, tips);
                         // set achievement completed
                         if (player.hasPermission("tardis.book")) {

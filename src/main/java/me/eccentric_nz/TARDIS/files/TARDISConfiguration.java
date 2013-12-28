@@ -57,7 +57,7 @@ public class TARDISConfiguration {
 
     public TARDISConfiguration(TARDIS plugin) {
         this.plugin = plugin;
-        this.configFile = new File(plugin.getDataFolder(), TARDISConstants.CONFIG_FILE_NAME);
+        this.configFile = new File(plugin.getDataFolder(), "config.yml");
         this.config = YamlConfiguration.loadConfiguration(configFile);
         this.artron_config = plugin.getArtronConfig();
         this.blocks_config = plugin.getBlocksConfig();

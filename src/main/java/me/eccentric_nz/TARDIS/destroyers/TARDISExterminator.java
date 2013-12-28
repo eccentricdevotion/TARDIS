@@ -29,6 +29,8 @@ import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetGravity;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
+import me.eccentric_nz.TARDIS.enumeration.COMPASS;
+import me.eccentric_nz.TARDIS.enumeration.SCHEMATIC;
 import me.eccentric_nz.tardischunkgenerator.TARDISChunkGenerator;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -63,7 +65,7 @@ public class TARDISExterminator {
                 String chunkLoc = rs.getChunk();
                 String owner = rs.getOwner();
                 int tips = rs.getTIPS();
-                TARDISConstants.SCHEMATIC schm = rs.getSchematic();
+                SCHEMATIC schm = rs.getSchematic();
                 HashMap<String, Object> wherecl = new HashMap<String, Object>();
                 wherecl.put("tardis_id", id);
                 ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
@@ -71,7 +73,7 @@ public class TARDISExterminator {
                     return false;
                 }
                 Location bb_loc = new Location(rsc.getWorld(), rsc.getX(), rsc.getY(), rsc.getZ());
-                TARDISConstants.COMPASS d = rsc.getDirection();
+                COMPASS d = rsc.getDirection();
                 if (!hid) {
                     plugin.destroyerP.destroyPreset(bb_loc, d, id, false, false, false, null);
                 }
@@ -146,7 +148,7 @@ public class TARDISExterminator {
             int id = rs.getTardis_id();
             String chunkLoc = rs.getChunk();
             int tips = rs.getTIPS();
-            TARDISConstants.SCHEMATIC schm = rs.getSchematic();
+            SCHEMATIC schm = rs.getSchematic();
             // need to check that a player is not currently in the TARDIS
             if (player.hasPermission("tardis.delete")) {
                 HashMap<String, Object> travid = new HashMap<String, Object>();
@@ -167,7 +169,7 @@ public class TARDISExterminator {
             }
             Location bb_loc = new Location(rsc.getWorld(), rsc.getX(), rsc.getY(), rsc.getZ());
             // get TARDIS direction
-            TARDISConstants.COMPASS d = rsc.getDirection();
+            COMPASS d = rsc.getDirection();
             switch (d) {
                 case EAST:
                     signx = -2;

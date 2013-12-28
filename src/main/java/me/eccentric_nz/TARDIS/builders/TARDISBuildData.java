@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.TARDIS.builders;
 
-import me.eccentric_nz.TARDIS.TARDISConstants.SCHEMATIC;
+import me.eccentric_nz.TARDIS.enumeration.SCHEMATIC;
 
 /**
  *

@@ -19,11 +19,12 @@ package me.eccentric_nz.TARDIS.destroyers;
 import java.util.ArrayList;
 import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetBlocks;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
+import me.eccentric_nz.TARDIS.enumeration.COMPASS;
+import me.eccentric_nz.TARDIS.enumeration.PRESET;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -58,7 +59,7 @@ public class TARDISDeinstaPreset {
      * @param preset
      */
     @SuppressWarnings("deprecation")
-    public void instaDestroyPreset(Location l, TARDISConstants.COMPASS d, final int id, boolean hide, TARDISConstants.PRESET preset) {
+    public void instaDestroyPreset(Location l, COMPASS d, final int id, boolean hide, PRESET preset) {
         final World w = l.getWorld();
         // make sure chunk is loaded
         Chunk chunk = w.getChunkAt(l);
@@ -67,7 +68,7 @@ public class TARDISDeinstaPreset {
         }
         final int sbx = l.getBlockX() - 1;
         final int sby;
-        if (preset.equals(TARDISConstants.PRESET.SUBMERGED)) {
+        if (preset.equals(PRESET.SUBMERGED)) {
             sby = l.getBlockY() - 1;
         } else {
             sby = l.getBlockY();

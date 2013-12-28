@@ -19,9 +19,7 @@ package me.eccentric_nz.TARDIS.destroyers;
 import java.util.Collections;
 import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.TARDISConstants;
-import static me.eccentric_nz.TARDIS.TARDISConstants.SCHEMATIC.BIGGER;
-import static me.eccentric_nz.TARDIS.TARDISConstants.SCHEMATIC.DELUXE;
+import me.eccentric_nz.TARDIS.enumeration.SCHEMATIC;
 import me.eccentric_nz.TARDIS.builders.TARDISInteriorPostioning;
 import me.eccentric_nz.TARDIS.builders.TARDISTIPSData;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
@@ -62,7 +60,7 @@ public class TARDISDestroyerInner {
      * @param slot the TIPS slot number
      */
     @SuppressWarnings("deprecation")
-    public void destroyInner(TARDISConstants.SCHEMATIC schm, int id, World w, int i, String p, int slot) {
+    public void destroyInner(SCHEMATIC schm, int id, World w, int i, String p, int slot) {
         // get dimensions
         short[] d;
         switch (schm) {

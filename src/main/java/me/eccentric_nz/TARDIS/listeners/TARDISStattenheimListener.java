@@ -25,6 +25,7 @@ import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
+import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.travel.TARDISPluginRespect;
 import me.eccentric_nz.TARDIS.travel.TARDISTimeTravel;
 import org.bukkit.Bukkit;
@@ -151,7 +152,7 @@ public class TARDISStattenheimListener implements Listener {
                         player.sendMessage(plugin.pluginName + "Could not get current TARDIS location!");
                         return;
                     }
-                    final TARDISConstants.COMPASS d = rsc.getDirection();
+                    final COMPASS d = rsc.getDirection();
                     TARDISTimeTravel tt = new TARDISTimeTravel(plugin);
                     int count;
                     boolean sub = false;
@@ -166,7 +167,7 @@ public class TARDISStattenheimListener implements Listener {
                         }
                     } else {
                         int[] start_loc = tt.getStartLocation(remoteLocation, d);
-                        // safeLocation(int startx, int starty, int startz, int resetx, int resetz, World w, TARDISConstants.COMPASS d)
+                        // safeLocation(int startx, int starty, int startz, int resetx, int resetz, World w, COMPASS d)
                         count = tt.safeLocation(start_loc[0], remoteLocation.getBlockY(), start_loc[2], start_loc[1], start_loc[3], remoteLocation.getWorld(), d);
                     }
                     if (count > 0) {

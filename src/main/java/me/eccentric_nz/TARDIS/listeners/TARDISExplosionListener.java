@@ -19,9 +19,9 @@ package me.eccentric_nz.TARDIS.listeners;
 import java.util.ArrayList;
 import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.database.ResultSetBlocks;
 import me.eccentric_nz.TARDIS.database.ResultSetDoors;
+import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
@@ -87,7 +87,7 @@ public class TARDISExplosionListener implements Listener {
                         ResultSetDoors rsd = new ResultSetDoors(plugin, where, true);
                         if (rsd.resultSet()) {
                             String doorLoc[] = rsd.getDoor_location().split(":");
-                            TARDISConstants.COMPASS d = rsd.getDoor_direction();
+                            COMPASS d = rsd.getDoor_direction();
                             int dx = plugin.utils.parseNum(doorLoc[1]);
                             int dy = plugin.utils.parseNum(doorLoc[2]);
                             int dz = plugin.utils.parseNum(doorLoc[3]);

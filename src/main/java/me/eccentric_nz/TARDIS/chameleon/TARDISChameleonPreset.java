@@ -18,7 +18,8 @@ package me.eccentric_nz.TARDIS.chameleon;
 
 import java.util.Arrays;
 import java.util.List;
-import me.eccentric_nz.TARDIS.TARDISConstants;
+import me.eccentric_nz.TARDIS.enumeration.COMPASS;
+import me.eccentric_nz.TARDIS.enumeration.PRESET;
 import me.eccentric_nz.TARDIS.JSON.JSONArray;
 import me.eccentric_nz.TARDIS.utility.recalculators.TARDISButtonRecalculator;
 import me.eccentric_nz.TARDIS.utility.recalculators.TARDISLeverRecalculator;
@@ -187,9 +188,9 @@ public class TARDISChameleonPreset {
         render.makePresets();
     }
 
-    public TARDISChameleonColumn buildTARDISChameleonColumn(TARDISConstants.COMPASS d, String id, String data, boolean assyemtric) {
+    public TARDISChameleonColumn buildTARDISChameleonColumn(COMPASS d, String id, String data, boolean assyemtric) {
         TARDISChameleonColumn tcc = new TARDISChameleonColumn();
-        if (d.equals(TARDISConstants.COMPASS.EAST)) {
+        if (d.equals(COMPASS.EAST)) {
             tcc.setId(getIntArrayFromJSON(id));
             tcc.setData(getByteArrayFromJSON(data));
         } else {
@@ -237,7 +238,7 @@ public class TARDISChameleonPreset {
         return preset;
     }
 
-    private int[][] rotate2DIntArray(int[][] id, TARDISConstants.COMPASS d, boolean assymetric) {
+    private int[][] rotate2DIntArray(int[][] id, COMPASS d, boolean assymetric) {
         switch (d) {
             case NORTH:
                 int[] zero_s = id[0];
@@ -297,7 +298,7 @@ public class TARDISChameleonPreset {
         }
     }
 
-    private byte[][] rotate2DByteArray(byte[][] id, TARDISConstants.COMPASS d, boolean assymetric) {
+    private byte[][] rotate2DByteArray(byte[][] id, COMPASS d, boolean assymetric) {
         switch (d) {
             case NORTH:
                 byte[] zero_s = id[0];
@@ -351,7 +352,7 @@ public class TARDISChameleonPreset {
         }
     }
 
-    private byte[][] convertData(int[][] id, byte[][] data, TARDISConstants.COMPASS d) {
+    private byte[][] convertData(int[][] id, byte[][] data, COMPASS d) {
         for (int col = 0; col < 10; col++) {
             for (int block = 0; block < 4; block++) {
                 if (problemBlocks.contains(id[col][block])) {
@@ -475,7 +476,7 @@ public class TARDISChameleonPreset {
         return data;
     }
 
-    public TARDISChameleonColumn getColumn(TARDISConstants.PRESET p, TARDISConstants.COMPASS d) {
+    public TARDISChameleonColumn getColumn(PRESET p, COMPASS d) {
         switch (p) {
             case ANGEL:
                 if (r == 0) {
@@ -576,7 +577,7 @@ public class TARDISChameleonPreset {
         }
     }
 
-    public TARDISChameleonColumn getGlass(TARDISConstants.PRESET p, TARDISConstants.COMPASS d) {
+    public TARDISChameleonColumn getGlass(PRESET p, COMPASS d) {
         switch (p) {
             case ANGEL:
                 if (r == 0) {
@@ -677,7 +678,7 @@ public class TARDISChameleonPreset {
         }
     }
 
-    public TARDISChameleonColumn getStained(TARDISConstants.PRESET p, TARDISConstants.COMPASS d) {
+    public TARDISChameleonColumn getStained(PRESET p, COMPASS d) {
         switch (p) {
             case ANGEL:
                 if (r == 0) {

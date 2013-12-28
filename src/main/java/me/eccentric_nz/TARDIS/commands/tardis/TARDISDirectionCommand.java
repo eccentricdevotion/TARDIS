@@ -23,6 +23,8 @@ import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
+import me.eccentric_nz.TARDIS.enumeration.COMPASS;
+import me.eccentric_nz.TARDIS.enumeration.PRESET;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
@@ -69,7 +71,7 @@ public class TARDISDirectionCommand {
             final boolean cham = tmp_cham;
             String plat = rs.getPlatform();
             boolean hid = rs.isHidden();
-            TARDISConstants.PRESET demat = rs.getDemat();
+            PRESET demat = rs.getDemat();
             String dir = args[1].toUpperCase(Locale.ENGLISH);
             HashMap<String, Object> wherecl = new HashMap<String, Object>();
             wherecl.put("tardis_id", id);
@@ -78,7 +80,7 @@ public class TARDISDirectionCommand {
                 player.sendMessage(plugin.pluginName + "Could not get the TARDIS location!");
                 return true;
             }
-            TARDISConstants.COMPASS old_d = rsc.getDirection();
+            COMPASS old_d = rsc.getDirection();
             QueryFactory qf = new QueryFactory(plugin);
             HashMap<String, Object> tid = new HashMap<String, Object>();
             HashMap<String, Object> set = new HashMap<String, Object>();
@@ -92,10 +94,10 @@ public class TARDISDirectionCommand {
             setd.put("door_direction", dir);
             qf.doUpdate("doors", setd, did);
             final Location l = new Location(rsc.getWorld(), rsc.getX(), rsc.getY(), rsc.getZ());
-            final TARDISConstants.COMPASS d = TARDISConstants.COMPASS.valueOf(dir);
+            final COMPASS d = COMPASS.valueOf(dir);
             // destroy sign
             if (!hid) {
-                if (demat.equals(TARDISConstants.PRESET.DUCK)) {
+                if (demat.equals(PRESET.DUCK)) {
                     plugin.destroyerP.destroyDuckEyes(l, d);
                 }
                 plugin.destroyerP.destroyDoor(id);

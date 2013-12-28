@@ -18,10 +18,10 @@ package me.eccentric_nz.TARDIS.commands.admin;
 
 import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetDoors;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
+import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.command.CommandSender;
@@ -62,7 +62,7 @@ public class TARDISEnterCommand {
             wherei.put("tardis_id", id);
             ResultSetDoors rsi = new ResultSetDoors(plugin, wherei, false);
             if (rsi.resultSet()) {
-                TARDISConstants.COMPASS innerD = rsi.getDoor_direction();
+                COMPASS innerD = rsi.getDoor_direction();
                 String doorLocStr = rsi.getDoor_location();
                 String[] split = doorLocStr.split(":");
                 World cw = plugin.getServer().getWorld(split[0]);
@@ -105,7 +105,7 @@ public class TARDISEnterCommand {
                 float pitch = player.getLocation().getPitch();
                 tmp_loc.setPitch(pitch);
                 // get players direction so we can adjust yaw if necessary
-                TARDISConstants.COMPASS d = TARDISConstants.COMPASS.valueOf(plugin.utils.getPlayersDirection(player, false));
+                COMPASS d = COMPASS.valueOf(plugin.utils.getPlayersDirection(player, false));
                 if (!innerD.equals(d)) {
                     switch (d) {
                         case NORTH:

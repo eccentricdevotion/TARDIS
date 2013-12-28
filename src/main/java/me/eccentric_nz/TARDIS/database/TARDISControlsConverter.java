@@ -23,7 +23,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.TARDISConstants;
+import me.eccentric_nz.TARDIS.enumeration.SCHEMATIC;
 import org.bukkit.ChatColor;
 
 /**
@@ -157,7 +157,7 @@ public class TARDISControlsConverter {
     }
 
     private String estimateHandbrake(String size, String cham) {
-        TARDISConstants.SCHEMATIC s = TARDISConstants.SCHEMATIC.valueOf(size);
+        SCHEMATIC s = SCHEMATIC.valueOf(size);
         String[] data = cham.split(":");
         int x = plugin.utils.parseNum(data[1]);
         int y = plugin.utils.parseNum(data[2]);
@@ -171,7 +171,7 @@ public class TARDISControlsConverter {
     }
 
     private String estimateButton(String size, String cham) {
-        TARDISConstants.SCHEMATIC s = TARDISConstants.SCHEMATIC.valueOf(size);
+        SCHEMATIC s = SCHEMATIC.valueOf(size);
         String[] data = cham.split(":");
         int x = plugin.utils.parseNum(data[1]);
         int y = plugin.utils.parseNum(data[2]);
@@ -185,7 +185,7 @@ public class TARDISControlsConverter {
     }
 
     private String estimateArtron(String size, String cham) {
-        TARDISConstants.SCHEMATIC s = TARDISConstants.SCHEMATIC.valueOf(size);
+        SCHEMATIC s = SCHEMATIC.valueOf(size);
         String[] data = cham.split(":");
         int x = plugin.utils.parseNum(data[1]);
         int y = plugin.utils.parseNum(data[2]);
@@ -200,7 +200,7 @@ public class TARDISControlsConverter {
 
     private String[] estimateRepeaters(String size, String cham) {
         String[] r = new String[4];
-        TARDISConstants.SCHEMATIC s = TARDISConstants.SCHEMATIC.valueOf(size);
+        SCHEMATIC s = SCHEMATIC.valueOf(size);
         String[] data = cham.split(":");
         int x = plugin.utils.parseNum(data[1]);
         int y = plugin.utils.parseNum(data[2]);

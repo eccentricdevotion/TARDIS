@@ -21,10 +21,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetNextLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
+import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.rooms.TARDISExteriorRenderer;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -134,7 +134,7 @@ public class TARDISScannerListener implements Listener {
                     plugin.utils.playTARDISSound(player.getLocation(), player, "tardis_scanner");
                     final Location scan_loc;
                     String whereisit;
-                    final TARDISConstants.COMPASS tardisDirection;
+                    final COMPASS tardisDirection;
                     HashMap<String, Object> wherenl = new HashMap<String, Object>();
                     wherenl.put("tardis_id", id);
                     if (plugin.tardisHasDestination.containsKey(Integer.valueOf(id))) {

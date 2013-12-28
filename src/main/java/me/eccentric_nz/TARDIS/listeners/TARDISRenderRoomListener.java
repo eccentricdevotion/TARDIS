@@ -18,9 +18,9 @@ package me.eccentric_nz.TARDIS.listeners;
 
 import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.database.ResultSetDoors;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
+import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import org.bukkit.Location;
 import org.bukkit.Sound;
 import org.bukkit.World;
@@ -67,7 +67,7 @@ public class TARDISRenderRoomListener implements Listener {
             whered.put("door_type", 1);
             ResultSetDoors rsd = new ResultSetDoors(plugin, whered, false);
             if (rsd.resultSet()) {
-                TARDISConstants.COMPASS d = rsd.getDoor_direction();
+                COMPASS d = rsd.getDoor_direction();
                 String doorLocStr = rsd.getDoor_location();
                 String[] split = doorLocStr.split(":");
                 World cw = plugin.getServer().getWorld(split[0]);

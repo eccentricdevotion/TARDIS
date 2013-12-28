@@ -23,17 +23,16 @@ import java.util.List;
 import java.util.Random;
 import java.util.Set;
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
+import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.travel.TARDISPluginRespect;
 import me.eccentric_nz.TARDIS.travel.TARDISTimeTravel;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.World.Environment;
-import org.bukkit.block.Biome;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Player;
@@ -405,7 +404,7 @@ public class TARDISTerminalListener implements Listener {
         int slotx = getValue(16, getSlot(inv, 10, 16), true, name) * slotm;
         int slotz = getValue(25, getSlot(inv, 19, 25), true, name) * slotm;
         List<String> lore = new ArrayList<String>();
-        TARDISConstants.COMPASS d = terminalUsers.get(name).getDirection();
+        COMPASS d = terminalUsers.get(name).getDirection();
         // what kind of world is it?
         Environment e;
         int[] slots = new int[]{36, 38, 40, 42};

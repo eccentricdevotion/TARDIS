@@ -21,11 +21,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetLamps;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
+import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
@@ -44,13 +44,13 @@ public class TARDISMalfunction {
     private final TARDIS plugin;
     private final int id;
     private final Player p;
-    private final TARDISConstants.COMPASS dir;
+    private final COMPASS dir;
     private final Location handbrake_loc;
     private final String eps;
     private final String creeper;
     private final Random rand;
 
-    public TARDISMalfunction(TARDIS plugin, int id, Player p, TARDISConstants.COMPASS dir, Location handbrake_loc, String eps, String creeper) {
+    public TARDISMalfunction(TARDIS plugin, int id, Player p, COMPASS dir, Location handbrake_loc, String eps, String creeper) {
         this.plugin = plugin;
         this.id = id;
         this.p = p;

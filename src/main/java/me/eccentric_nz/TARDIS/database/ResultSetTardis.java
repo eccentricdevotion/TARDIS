@@ -27,6 +27,8 @@ import java.util.Locale;
 import java.util.Map;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
+import me.eccentric_nz.TARDIS.enumeration.PRESET;
+import me.eccentric_nz.TARDIS.enumeration.SCHEMATIC;
 
 /**
  * Many facts, figures, and formulas are contained within the Matrix,
@@ -46,7 +48,7 @@ public class ResultSetTardis {
     private String owner;
     private String chunk;
     private int tips;
-    private TARDISConstants.SCHEMATIC schematic;
+    private SCHEMATIC schematic;
     private String replaced;
     private String companions;
     private String platform;
@@ -55,8 +57,8 @@ public class ResultSetTardis {
     private boolean chamele_on;
     private int chameleon_id;
     private byte chameleon_data;
-    private TARDISConstants.PRESET preset;
-    private TARDISConstants.PRESET demat;
+    private PRESET preset;
+    private PRESET demat;
     private boolean adapti_on;
     private int artron_level;
     private int middle_id;
@@ -151,7 +153,7 @@ public class ResultSetTardis {
                     this.owner = rs.getString("owner");
                     this.chunk = rs.getString("chunk");
                     this.tips = rs.getInt("tips");
-                    this.schematic = TARDISConstants.SCHEMATIC.valueOf(rs.getString("size"));
+                    this.schematic = SCHEMATIC.valueOf(rs.getString("size"));
                     this.replaced = rs.getString("replaced");
                     if (rs.wasNull()) {
                         this.replaced = "";
@@ -169,8 +171,8 @@ public class ResultSetTardis {
                     this.chamele_on = rs.getBoolean("chamele_on");
                     this.chameleon_id = rs.getInt("chameleon_id");
                     this.chameleon_data = rs.getByte("chameleon_data");
-                    this.preset = TARDISConstants.PRESET.valueOf(rs.getString("chameleon_preset"));
-                    this.demat = TARDISConstants.PRESET.valueOf(rs.getString("chameleon_demat"));
+                    this.preset = PRESET.valueOf(rs.getString("chameleon_preset"));
+                    this.demat = PRESET.valueOf(rs.getString("chameleon_demat"));
                     this.adapti_on = rs.getBoolean("adapti_on");
                     this.artron_level = rs.getInt("artron_level");
                     this.middle_id = rs.getInt("middle_id");
@@ -229,7 +231,7 @@ public class ResultSetTardis {
         return tips;
     }
 
-    public TARDISConstants.SCHEMATIC getSchematic() {
+    public SCHEMATIC getSchematic() {
         return schematic;
     }
 
@@ -265,11 +267,11 @@ public class ResultSetTardis {
         return chameleon_data;
     }
 
-    public TARDISConstants.PRESET getPreset() {
+    public PRESET getPreset() {
         return preset;
     }
 
-    public TARDISConstants.PRESET getDemat() {
+    public PRESET getDemat() {
         return demat;
     }
 

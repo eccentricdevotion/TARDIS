@@ -23,6 +23,7 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
+import me.eccentric_nz.TARDIS.enumeration.SCHEMATIC;
 import org.bukkit.entity.Player;
 
 /**
@@ -96,8 +97,8 @@ public class TARDISUpdateCommand {
                     player.sendMessage(plugin.pluginName + "You cannot use the Architectural Reconfiguration System unless your TARDIS was created in its own world!");
                     return true;
                 }
-                TARDISConstants.SCHEMATIC schm = rs.getSchematic();
-                if (schm.equals(TARDISConstants.SCHEMATIC.CUSTOM)) {
+                SCHEMATIC schm = rs.getSchematic();
+                if (schm.equals(SCHEMATIC.CUSTOM)) {
                     player.sendMessage(plugin.pluginName + "You cannot use the Architectural Reconfiguration System with a CUSTOM TARDIS!");
                     return true;
                 }

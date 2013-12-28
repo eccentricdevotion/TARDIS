@@ -17,7 +17,7 @@
 package me.eccentric_nz.TARDIS.rooms;
 
 import me.eccentric_nz.TARDIS.TARDISConstants;
-import me.eccentric_nz.TARDIS.TARDISConstants.COMPASS;
+import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
@@ -43,7 +43,7 @@ public class TARDISRoomDirection {
      * in front of the door.
      */
     public void getDirection() {
-        for (COMPASS c : TARDISConstants.COMPASS.values()) {
+        for (COMPASS c : COMPASS.values()) {
             BlockFace tmp = BlockFace.valueOf(c.toString());
             if (b.getRelative(tmp).getType().equals(Material.STONE_PLATE)) {
                 face = tmp;

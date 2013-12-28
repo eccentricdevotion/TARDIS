@@ -24,8 +24,9 @@ import java.util.Locale;
 import java.util.Map;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
-import me.eccentric_nz.TARDIS.TARDISConstants.COMPASS;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
+import me.eccentric_nz.TARDIS.enumeration.COMPASS;
+import me.eccentric_nz.TARDIS.enumeration.ROOM;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -272,7 +273,7 @@ public class TARDISRoomRunnable implements Runnable {
                 wheres.put("tardis_id", tardis_id);
                 qf.doUpdate("tardis", sets, wheres);
                 // replace with correct block
-                switch (TARDISConstants.ROOM.valueOf(room)) {
+                switch (ROOM.valueOf(room)) {
                     case VILLAGE:
                         id = 4;
                         data = 0;

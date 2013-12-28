@@ -21,7 +21,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.TARDISConstants;
+import me.eccentric_nz.TARDIS.enumeration.CMDS;
 import me.eccentric_nz.TARDIS.travel.TARDISPluginRespect;
 import org.bukkit.*;
 import org.bukkit.command.Command;
@@ -108,7 +108,7 @@ public class TARDISCommands implements CommandExecutor {
                 player = (Player) sender;
             }
             if (args.length == 0) {
-                sender.sendMessage(TARDISConstants.COMMANDS.split("\n"));
+                sender.sendMessage(CMDS.COMMANDS.getHelp().split("\n"));
                 return true;
             }
             // the command list - first argument MUST appear here!

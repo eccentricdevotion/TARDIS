@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.TARDIS.utility.recalculators;
 
-import me.eccentric_nz.TARDIS.TARDISConstants;
+import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 
 /**
  *
@@ -33,7 +33,7 @@ public class TARDISStairRecalculator {
      * @param col the preset column that is being calculated
      * @return the recalculated byte
      */
-    public byte recalculate(byte b, TARDISConstants.COMPASS d, int col) {
+    public byte recalculate(byte b, COMPASS d, int col) {
         byte recalc;
         switch (d) {
             case SOUTH:

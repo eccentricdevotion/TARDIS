@@ -20,10 +20,11 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.chameleon.TARDISChameleonColumn;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
+import me.eccentric_nz.TARDIS.enumeration.COMPASS;
+import me.eccentric_nz.TARDIS.enumeration.PRESET;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Sound;
@@ -45,7 +46,7 @@ public class TARDISExteriorRenderer {
         this.plugin = plugin;
     }
 
-    public void render(String interior, Location exterior, int id, final Player p, final TARDISConstants.COMPASS d, long time, Biome biome) {
+    public void render(String interior, Location exterior, int id, final Player p, final COMPASS d, long time, Biome biome) {
         // construct a string for comparison
         World ew = exterior.getWorld();
         int epbx = exterior.getBlockX();
@@ -116,7 +117,7 @@ public class TARDISExteriorRenderer {
             int z = (location.getBlockZ());
             int plusz = (location.getBlockZ() + 1);
             int minusz = (location.getBlockZ() - 1);
-            TARDISChameleonColumn column = plugin.presets.getGlass(TARDISConstants.PRESET.RENDER, d);
+            TARDISChameleonColumn column = plugin.presets.getGlass(PRESET.RENDER, d);
             addPlatform(location, d, p.getName(), id);
             int px, pz;
             int[][] ids = column.getId();
@@ -279,7 +280,7 @@ public class TARDISExteriorRenderer {
                 10L);
     }
 
-    private void transmat(Player player, TARDISConstants.COMPASS d, Location loc) {
+    private void transmat(Player player, COMPASS d, Location loc) {
         float yaw = player.getLocation().getYaw();
         float pitch = player.getLocation().getPitch();
         loc.setPitch(pitch);
@@ -308,7 +309,7 @@ public class TARDISExteriorRenderer {
         player.teleport(loc);
     }
 
-    private void addPlatform(Location l, TARDISConstants.COMPASS d, String p, int id) {
+    private void addPlatform(Location l, COMPASS d, String p, int id) {
         int plusx, minusx, x, y, plusz, minusz, z;
         int platform_id = plugin.getConfig().getInt("police_box.platform_id");
         byte platform_data = (byte) plugin.getConfig().getInt("police_box.platform_data");

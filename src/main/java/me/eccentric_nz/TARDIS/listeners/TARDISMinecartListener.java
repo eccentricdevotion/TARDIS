@@ -20,9 +20,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.database.ResultSetDoors;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
+import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -73,7 +73,7 @@ public class TARDISMinecartListener implements Listener {
                 String[] data = null;
                 String p = "";
                 int id = 0;
-                TARDISConstants.COMPASS d = TARDISConstants.COMPASS.SOUTH;
+                COMPASS d = COMPASS.SOUTH;
                 Location block_loc = b.getLocation();
                 String bw = block_loc.getWorld().getName();
                 int bx = block_loc.getBlockX();
@@ -155,7 +155,7 @@ public class TARDISMinecartListener implements Listener {
         }
     }
 
-    private void teleportMinecart(Vehicle minecart, Location targetLocation, TARDISConstants.COMPASS d, ItemStack[] inv) {
+    private void teleportMinecart(Vehicle minecart, Location targetLocation, COMPASS d, ItemStack[] inv) {
         // search for minecart tracks around the target waypoint
         Location trackLocation = findTrack(targetLocation);
         if (trackLocation == null) {
@@ -211,29 +211,29 @@ public class TARDISMinecartListener implements Listener {
         return (rails.contains(Integer.valueOf(id)));
     }
 
-    private TARDISConstants.COMPASS getDirection(Location l) {
-//        TARDISConstants.COMPASS d = TARDISConstants.COMPASS.SOUTH;
+    private COMPASS getDirection(Location l) {
+//        COMPASS d = COMPASS.SOUTH;
         Block centerBlock = l.getBlock();
         Block block;
         for (BlockFace f : faces) {
             block = centerBlock.getRelative(f);
             if (isTrack(block)) {
-                return TARDISConstants.COMPASS.valueOf(f.toString());
+                return COMPASS.valueOf(f.toString());
             }
         }
         return null;
     }
 
-    private TARDISConstants.COMPASS switchDirection(TARDISConstants.COMPASS d) {
+    private COMPASS switchDirection(COMPASS d) {
         switch (d) {
             case NORTH:
-                return TARDISConstants.COMPASS.SOUTH;
+                return COMPASS.SOUTH;
             case SOUTH:
-                return TARDISConstants.COMPASS.NORTH;
+                return COMPASS.NORTH;
             case WEST:
-                return TARDISConstants.COMPASS.EAST;
+                return COMPASS.EAST;
             default:
-                return TARDISConstants.COMPASS.WEST;
+                return COMPASS.WEST;
         }
     }
 }

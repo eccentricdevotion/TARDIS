@@ -19,12 +19,13 @@ package me.eccentric_nz.TARDIS.builders;
 import java.util.HashMap;
 import java.util.Map;
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetCount;
 import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
+import me.eccentric_nz.TARDIS.enumeration.COMPASS;
+import me.eccentric_nz.TARDIS.enumeration.SCHEMATIC;
 import org.bukkit.ChatColor;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
@@ -79,7 +80,7 @@ public class TARDISSeedBlockProcessor {
             where.put("owner", playerNameStr);
             ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
             if (!rs.resultSet()) {
-                final TARDISConstants.SCHEMATIC schm = seed.getSchematic();
+                final SCHEMATIC schm = seed.getSchematic();
                 switch (schm) {
                     case CUSTOM:
                         if (!plugin.getConfig().getBoolean("creation.custom_schematic")) {
@@ -236,7 +237,7 @@ public class TARDISSeedBlockProcessor {
                 qf.insertLocations(setlocs);
                 // turn the block stack into a TARDIS
                 // police box needs to use chameleon id/data
-                plugin.builderP.buildPreset(lastInsertId, l, TARDISConstants.COMPASS.valueOf(d), false, player, false, false);
+                plugin.builderP.buildPreset(lastInsertId, l, COMPASS.valueOf(d), false, player, false, false);
                 plugin.builderI.buildInner(schm, chunkworld, lastInsertId, player, middle_id, middle_data, floor_id, floor_data, tips);
                 // set achievement completed
                 if (player.hasPermission("tardis.book")) {

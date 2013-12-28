@@ -26,6 +26,7 @@ import me.eccentric_nz.TARDIS.database.ResultSetControls;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
+import me.eccentric_nz.TARDIS.enumeration.SCHEMATIC;
 import me.eccentric_nz.TARDIS.rooms.TARDISCondenserData;
 import me.eccentric_nz.TARDIS.rooms.TARDISSeedData;
 import org.bukkit.Material;
@@ -87,7 +88,7 @@ public class TARDISRoomCommand {
         int id = rs.getTardis_id();
         int level = rs.getArtron_level();
         String chunk = rs.getChunk();
-        TARDISConstants.SCHEMATIC schm = rs.getSchematic();
+        SCHEMATIC schm = rs.getSchematic();
         // check they are in the tardis
         HashMap<String, Object> wheret = new HashMap<String, Object>();
         wheret.put("player", player.getName());

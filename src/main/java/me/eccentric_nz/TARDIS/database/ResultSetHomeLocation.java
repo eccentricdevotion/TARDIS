@@ -23,7 +23,7 @@ import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.TARDISConstants;
+import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import org.bukkit.World;
 
 /**
@@ -44,7 +44,7 @@ public class ResultSetHomeLocation {
     private int x;
     private int y;
     private int z;
-    private TARDISConstants.COMPASS direction;
+    private COMPASS direction;
     private boolean submarine;
 
     /**
@@ -103,7 +103,7 @@ public class ResultSetHomeLocation {
                     this.x = rs.getInt("x");
                     this.y = rs.getInt("y");
                     this.z = rs.getInt("z");
-                    this.direction = TARDISConstants.COMPASS.valueOf(rs.getString("direction"));
+                    this.direction = COMPASS.valueOf(rs.getString("direction"));
                     this.submarine = rs.getBoolean("submarine");
                 }
             } else {
@@ -151,7 +151,7 @@ public class ResultSetHomeLocation {
         return z;
     }
 
-    public TARDISConstants.COMPASS getDirection() {
+    public COMPASS getDirection() {
         return direction;
     }
 

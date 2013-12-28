@@ -17,7 +17,7 @@
 package me.eccentric_nz.TARDIS.chameleon;
 
 import java.util.EnumMap;
-import me.eccentric_nz.TARDIS.TARDISConstants;
+import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 
 /**
  * A chameleon conversion is a repair procedure that technicians perform on
@@ -35,31 +35,31 @@ public class TARDISPreset {
     private String stained_data;
     private String glass_id;
     private String glass_data;
-    private final EnumMap<TARDISConstants.COMPASS, TARDISChameleonColumn> blueprint = new EnumMap<TARDISConstants.COMPASS, TARDISChameleonColumn>(TARDISConstants.COMPASS.class);
-    private final EnumMap<TARDISConstants.COMPASS, TARDISChameleonColumn> stained = new EnumMap<TARDISConstants.COMPASS, TARDISChameleonColumn>(TARDISConstants.COMPASS.class);
-    private final EnumMap<TARDISConstants.COMPASS, TARDISChameleonColumn> glass = new EnumMap<TARDISConstants.COMPASS, TARDISChameleonColumn>(TARDISConstants.COMPASS.class);
+    private final EnumMap<COMPASS, TARDISChameleonColumn> blueprint = new EnumMap<COMPASS, TARDISChameleonColumn>(COMPASS.class);
+    private final EnumMap<COMPASS, TARDISChameleonColumn> stained = new EnumMap<COMPASS, TARDISChameleonColumn>(COMPASS.class);
+    private final EnumMap<COMPASS, TARDISChameleonColumn> glass = new EnumMap<COMPASS, TARDISChameleonColumn>(COMPASS.class);
 
     public TARDISPreset() {
     }
 
     public void makePresets() {
         TARDISChameleonPreset tcp = new TARDISChameleonPreset();
-        for (TARDISConstants.COMPASS d : TARDISConstants.COMPASS.values()) {
+        for (COMPASS d : COMPASS.values()) {
             blueprint.put(d, tcp.buildTARDISChameleonColumn(d, blueprint_id, blueprint_data, true));
             stained.put(d, tcp.buildTARDISChameleonColumn(d, stained_id, stained_data, true));
             glass.put(d, tcp.buildTARDISChameleonColumn(d, glass_id, glass_data, true));
         }
     }
 
-    public EnumMap<TARDISConstants.COMPASS, TARDISChameleonColumn> getBlueprint() {
+    public EnumMap<COMPASS, TARDISChameleonColumn> getBlueprint() {
         return blueprint;
     }
 
-    public EnumMap<TARDISConstants.COMPASS, TARDISChameleonColumn> getStained() {
+    public EnumMap<COMPASS, TARDISChameleonColumn> getStained() {
         return stained;
     }
 
-    public EnumMap<TARDISConstants.COMPASS, TARDISChameleonColumn> getGlass() {
+    public EnumMap<COMPASS, TARDISChameleonColumn> getGlass() {
         return glass;
     }
 

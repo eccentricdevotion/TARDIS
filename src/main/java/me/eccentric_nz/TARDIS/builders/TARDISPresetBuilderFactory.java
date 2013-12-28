@@ -22,12 +22,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.chameleon.TARDISChameleonCircuit;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.destroyers.TARDISDeinstaPreset;
+import me.eccentric_nz.TARDIS.enumeration.COMPASS;
+import me.eccentric_nz.TARDIS.enumeration.PRESET;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -48,31 +49,31 @@ public class TARDISPresetBuilderFactory {
 
     private final TARDIS plugin;
     List<Integer> plat_blocks = Arrays.asList(new Integer[]{0, 6, 9, 8, 31, 32, 37, 38, 39, 40, 78, 106, 3019, 3020});
-    HashMap<TARDISConstants.COMPASS, BlockFace[]> face_map = new HashMap<TARDISConstants.COMPASS, BlockFace[]>();
-    public final List<TARDISConstants.PRESET> no_block_under_door;
-    public final List<TARDISConstants.PRESET> notSubmarinePresets;
+    HashMap<COMPASS, BlockFace[]> face_map = new HashMap<COMPASS, BlockFace[]>();
+    public final List<PRESET> no_block_under_door;
+    public final List<PRESET> notSubmarinePresets;
     Random rand;
 
     public TARDISPresetBuilderFactory(TARDIS plugin) {
         this.plugin = plugin;
         this.rand = new Random();
-        face_map.put(TARDISConstants.COMPASS.NORTH, new BlockFace[]{BlockFace.SOUTH_WEST, BlockFace.SOUTH_SOUTH_WEST, BlockFace.SOUTH, BlockFace.SOUTH_SOUTH_EAST, BlockFace.SOUTH_EAST});
-        face_map.put(TARDISConstants.COMPASS.WEST, new BlockFace[]{BlockFace.SOUTH_EAST, BlockFace.EAST_SOUTH_EAST, BlockFace.EAST, BlockFace.EAST_NORTH_EAST, BlockFace.NORTH_EAST});
-        face_map.put(TARDISConstants.COMPASS.SOUTH, new BlockFace[]{BlockFace.NORTH_EAST, BlockFace.NORTH_NORTH_EAST, BlockFace.NORTH, BlockFace.NORTH_NORTH_WEST, BlockFace.NORTH_WEST});
-        face_map.put(TARDISConstants.COMPASS.EAST, new BlockFace[]{BlockFace.NORTH_WEST, BlockFace.WEST_NORTH_WEST, BlockFace.WEST, BlockFace.WEST_SOUTH_WEST, BlockFace.SOUTH_WEST});
-        no_block_under_door = new ArrayList<TARDISConstants.PRESET>();
-        no_block_under_door.add(TARDISConstants.PRESET.ANGEL);
-        no_block_under_door.add(TARDISConstants.PRESET.DUCK);
-        no_block_under_door.add(TARDISConstants.PRESET.GAZEBO);
-        no_block_under_door.add(TARDISConstants.PRESET.HELIX);
-        no_block_under_door.add(TARDISConstants.PRESET.LIBRARY);
-        no_block_under_door.add(TARDISConstants.PRESET.PANDORICA);
-        no_block_under_door.add(TARDISConstants.PRESET.ROBOT);
-        no_block_under_door.add(TARDISConstants.PRESET.TORCH);
-        no_block_under_door.add(TARDISConstants.PRESET.WELL);
-        notSubmarinePresets = new ArrayList<TARDISConstants.PRESET>();
-        notSubmarinePresets.add(TARDISConstants.PRESET.LAMP);
-        notSubmarinePresets.add(TARDISConstants.PRESET.MINESHAFT);
+        face_map.put(COMPASS.NORTH, new BlockFace[]{BlockFace.SOUTH_WEST, BlockFace.SOUTH_SOUTH_WEST, BlockFace.SOUTH, BlockFace.SOUTH_SOUTH_EAST, BlockFace.SOUTH_EAST});
+        face_map.put(COMPASS.WEST, new BlockFace[]{BlockFace.SOUTH_EAST, BlockFace.EAST_SOUTH_EAST, BlockFace.EAST, BlockFace.EAST_NORTH_EAST, BlockFace.NORTH_EAST});
+        face_map.put(COMPASS.SOUTH, new BlockFace[]{BlockFace.NORTH_EAST, BlockFace.NORTH_NORTH_EAST, BlockFace.NORTH, BlockFace.NORTH_NORTH_WEST, BlockFace.NORTH_WEST});
+        face_map.put(COMPASS.EAST, new BlockFace[]{BlockFace.NORTH_WEST, BlockFace.WEST_NORTH_WEST, BlockFace.WEST, BlockFace.WEST_SOUTH_WEST, BlockFace.SOUTH_WEST});
+        no_block_under_door = new ArrayList<PRESET>();
+        no_block_under_door.add(PRESET.ANGEL);
+        no_block_under_door.add(PRESET.DUCK);
+        no_block_under_door.add(PRESET.GAZEBO);
+        no_block_under_door.add(PRESET.HELIX);
+        no_block_under_door.add(PRESET.LIBRARY);
+        no_block_under_door.add(PRESET.PANDORICA);
+        no_block_under_door.add(PRESET.ROBOT);
+        no_block_under_door.add(PRESET.TORCH);
+        no_block_under_door.add(PRESET.WELL);
+        notSubmarinePresets = new ArrayList<PRESET>();
+        notSubmarinePresets.add(PRESET.LAMP);
+        notSubmarinePresets.add(PRESET.MINESHAFT);
     }
 
     /**
@@ -87,20 +88,20 @@ public class TARDISPresetBuilderFactory {
      * be remembered in the database for protection purposes.
      * @param mal boolean determining whether a malfunction has occurred
      */
-    public void buildPreset(int id, Location l, TARDISConstants.COMPASS d, boolean c, Player p, boolean rebuild, boolean mal) {
+    public void buildPreset(int id, Location l, COMPASS d, boolean c, Player p, boolean rebuild, boolean mal) {
         HashMap<String, Object> where = new HashMap<String, Object>();
         where.put("tardis_id", id);
         ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
         if (rs.resultSet()) {
-            TARDISConstants.PRESET preset = rs.getPreset();
+            PRESET preset = rs.getPreset();
             if (rs.isAdapti_on()) {
                 Biome biome = l.getWorld().getBiome(l.getBlockX(), l.getBlockZ());
                 preset = adapt(biome, preset);
             }
-            TARDISConstants.PRESET demat = rs.getDemat();
+            PRESET demat = rs.getDemat();
             int cham_id = rs.getChameleon_id();
             byte cham_data = rs.getChameleon_data();
-            if (c && (preset.equals(TARDISConstants.PRESET.NEW) || preset.equals(TARDISConstants.PRESET.OLD) || preset.equals(TARDISConstants.PRESET.SUBMERGED))) {
+            if (c && (preset.equals(PRESET.NEW) || preset.equals(PRESET.OLD) || preset.equals(PRESET.SUBMERGED))) {
                 Block chameleonBlock;
                 // chameleon circuit is on - get block under TARDIS
                 if (l.getBlock().getType() == Material.SNOW) {
@@ -126,7 +127,7 @@ public class TARDISPresetBuilderFactory {
                 sub = (rsp.isSubmarine_on() && plugin.trackSubmarine.contains(Integer.valueOf(id)));
             }
             if (sub && notSubmarinePresets.contains(preset)) {
-                preset = TARDISConstants.PRESET.YELLOW;
+                preset = PRESET.YELLOW;
                 p.sendMessage(plugin.pluginName + "Selected preset unsuitable for submarine mode - changed to Yellow Submarine.");
             }
             // keep the chunk this Police box is in loaded
@@ -175,7 +176,7 @@ public class TARDISPresetBuilderFactory {
     }
 
     @SuppressWarnings("deprecation")
-    public void addPlatform(Location l, boolean rebuild, TARDISConstants.COMPASS d, String p, int id) {
+    public void addPlatform(Location l, boolean rebuild, COMPASS d, String p, int id) {
         int plusx, minusx, x, y, plusz, minusz, z;
         int platform_id = plugin.getConfig().getInt("police_box.platform_id");
         byte platform_data = (byte) plugin.getConfig().getInt("police_box.platform_data");
@@ -230,35 +231,35 @@ public class TARDISPresetBuilderFactory {
         }
     }
 
-    public TARDISConstants.PRESET adapt(Biome biome, TARDISConstants.PRESET preset) {
+    public PRESET adapt(Biome biome, PRESET preset) {
         switch (biome) {
             case DEEP_OCEAN:
             case FROZEN_OCEAN:
             case OCEAN:
-                return TARDISConstants.PRESET.YELLOW;
+                return PRESET.YELLOW;
             case DESERT:
             case DESERT_HILLS:
-                return TARDISConstants.PRESET.DESERT;
+                return PRESET.DESERT;
             case HELL:
-                return TARDISConstants.PRESET.NETHER;
+                return PRESET.NETHER;
             case JUNGLE:
             case JUNGLE_HILLS:
-                return TARDISConstants.PRESET.JUNGLE;
+                return PRESET.JUNGLE;
             case PLAINS:
-                return TARDISConstants.PRESET.VILLAGE;
+                return PRESET.VILLAGE;
             case MUSHROOM_ISLAND:
             case MUSHROOM_SHORE:
-                return TARDISConstants.PRESET.SHROOM;
+                return PRESET.SHROOM;
             case SWAMPLAND:
-                return TARDISConstants.PRESET.SWAMP;
+                return PRESET.SWAMP;
             case SKY:
-                return TARDISConstants.PRESET.THEEND;
+                return PRESET.THEEND;
             default:
                 return preset;
         }
     }
 
-    public BlockFace getSkullDirection(TARDISConstants.COMPASS d) {
+    public BlockFace getSkullDirection(COMPASS d) {
         BlockFace[] faces = face_map.get(d);
         return faces[rand.nextInt(5)];
     }

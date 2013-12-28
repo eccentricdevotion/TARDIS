@@ -563,7 +563,7 @@ public class TARDIS extends JavaPlugin {
     private void loadFiles() {
         tardisCSV.loadCSV();
         roomCSV.loadCSV();
-        quotesfile = tardisCSV.copy(getDataFolder() + File.separator + TARDISConstants.QUOTES_FILE_NAME, getResource(TARDISConstants.QUOTES_FILE_NAME));
+        quotesfile = tardisCSV.copy(getDataFolder() + File.separator + "quotes.txt", getResource("quotes.txt"));
     }
 
     /**

@@ -28,6 +28,7 @@ import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetDoors;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
+import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.travel.TARDISDoorLocation;
 import me.eccentric_nz.TARDIS.travel.TARDISFarmer;
 import me.eccentric_nz.TARDIS.travel.TARDISMob;
@@ -150,7 +151,7 @@ public class TARDISDoorListener implements Listener {
                         event.setUseItemInHand(Event.Result.DENY);
                         event.setCancelled(true);
                         if (material.equals(m)) {
-                            TARDISConstants.COMPASS dd = rsd.getDoor_direction();
+                            COMPASS dd = rsd.getDoor_direction();
                             int doortype = rsd.getDoor_type();
                             int end_doortype;
                             switch (doortype) {
@@ -299,7 +300,7 @@ public class TARDISDoorListener implements Listener {
                                         player.sendMessage(plugin.pluginName + "Could not get current TARDIS location!");
                                         return;
                                     }
-                                    TARDISConstants.COMPASS d_backup = rsc.getDirection();
+                                    COMPASS d_backup = rsc.getDirection();
                                     // get quotes player prefs
                                     boolean userQuotes;
                                     boolean userTP;
@@ -311,8 +312,8 @@ public class TARDISDoorListener implements Listener {
                                         userTP = false;
                                     }
                                     // get players direction
-                                    TARDISConstants.COMPASS pd = TARDISConstants.COMPASS.valueOf(plugin.utils.getPlayersDirection(player, false));                                    // get the other door direction
-                                    final TARDISConstants.COMPASS d;
+                                    COMPASS pd = COMPASS.valueOf(plugin.utils.getPlayersDirection(player, false));                                    // get the other door direction
+                                    final COMPASS d;
                                     HashMap<String, Object> other = new HashMap<String, Object>();
                                     other.put("tardis_id", id);
                                     other.put("door_type", end_doortype);
@@ -408,7 +409,7 @@ public class TARDISDoorListener implements Listener {
                                                 TARDISDoorLocation idl = getDoor(1, id);
                                                 Location tmp_loc = idl.getL();
                                                 World cw = idl.getW();
-                                                TARDISConstants.COMPASS innerD = idl.getD();
+                                                COMPASS innerD = idl.getD();
                                                 // check for entities near the police box
                                                 List<TARDISMob> pets = null;
                                                 if (plugin.getConfig().getBoolean("allow.mob_farming") && player.hasPermission("tardis.farm") && !plugin.trackFarming.contains(playerNameStr)) {
@@ -455,8 +456,8 @@ public class TARDISDoorListener implements Listener {
                                                 player.sendMessage(plugin.pluginName + "You need to add a back door inside the TARDIS!");
                                                 return;
                                             }
-                                            TARDISConstants.COMPASS ibdd = ibdl.getD();
-                                            TARDISConstants.COMPASS ipd = TARDISConstants.COMPASS.valueOf(plugin.utils.getPlayersDirection(player, true));
+                                            COMPASS ibdd = ibdl.getD();
+                                            COMPASS ipd = COMPASS.valueOf(plugin.utils.getPlayersDirection(player, true));
                                             if (!ibdd.equals(ipd)) {
                                                 yaw += adjustYaw(ipd, ibdd) + 180F;
                                             }
@@ -502,8 +503,8 @@ public class TARDISDoorListener implements Listener {
                                                 player.sendMessage(plugin.pluginName + message);
                                                 return;
                                             }
-                                            TARDISConstants.COMPASS obdd = obdl.getD();
-                                            TARDISConstants.COMPASS opd = TARDISConstants.COMPASS.valueOf(plugin.utils.getPlayersDirection(player, false));
+                                            COMPASS obdd = obdl.getD();
+                                            COMPASS opd = COMPASS.valueOf(plugin.utils.getPlayersDirection(player, false));
                                             if (!obdd.equals(opd)) {
                                                 yaw += adjustYaw(opd, obdd);
                                             }
@@ -646,7 +647,7 @@ public class TARDISDoorListener implements Listener {
      * @param l the location to teleport pets to
      * @param player the player who owns the pets
      */
-    private void movePets(List<TARDISMob> p, Location l, Player player, TARDISConstants.COMPASS d, boolean enter) {
+    private void movePets(List<TARDISMob> p, Location l, Player player, COMPASS d, boolean enter) {
         Location pl = l.clone();
         World w = l.getWorld();
         // will need to adjust this depending on direction Police Box is facing
@@ -748,7 +749,7 @@ public class TARDISDoorListener implements Listener {
      * @param d2 the direction the second door is facing
      * @return the angle needed to correct the yaw
      */
-    private float adjustYaw(TARDISConstants.COMPASS d1, TARDISConstants.COMPASS d2) {
+    private float adjustYaw(COMPASS d1, COMPASS d2) {
         switch (d1) {
             case EAST:
                 return adjustYaw[0][d2.ordinal()];
@@ -776,7 +777,7 @@ public class TARDISDoorListener implements Listener {
         wherei.put("tardis_id", id);
         ResultSetDoors rsd = new ResultSetDoors(plugin, wherei, false);
         if (rsd.resultSet()) {
-            TARDISConstants.COMPASS d = rsd.getDoor_direction();
+            COMPASS d = rsd.getDoor_direction();
             tdl.setD(d);
             String doorLocStr = rsd.getDoor_location();
             String[] split = doorLocStr.split(":");

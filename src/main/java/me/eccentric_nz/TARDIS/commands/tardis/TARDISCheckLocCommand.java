@@ -18,9 +18,9 @@ package me.eccentric_nz.TARDIS.commands.tardis;
 
 import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
+import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.travel.TARDISTimeTravel;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -60,7 +60,7 @@ public class TARDISCheckLocCommand {
             player.sendMessage(plugin.pluginName + "Could not get the TARDIS direction!");
             return true;
         }
-        TARDISConstants.COMPASS d = rsc.getDirection();
+        COMPASS d = rsc.getDirection();
         TARDISTimeTravel tt = new TARDISTimeTravel(plugin);
         tt.testSafeLocation(eyeLocation, d);
         return true;

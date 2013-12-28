@@ -22,7 +22,6 @@ import java.util.HashMap;
 import java.util.List;
 import me.eccentric_nz.TARDIS.ARS.TARDISARSInventory;
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetBackLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetControls;
@@ -31,6 +30,7 @@ import me.eccentric_nz.TARDIS.database.ResultSetLamps;
 import me.eccentric_nz.TARDIS.database.ResultSetRepeaters;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
+import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.info.TARDISInfoMenu;
 import me.eccentric_nz.TARDIS.travel.TARDISTemporalLocatorInventory;
 import me.eccentric_nz.TARDIS.travel.TARDISTerminalInventory;
@@ -144,7 +144,7 @@ public class TARDISButtonListener implements Listener {
                                         player.sendMessage(plugin.pluginName + ChatColor.RED + "Could not get current TARDIS location!");
                                         return;
                                     }
-                                    TARDISConstants.COMPASS dir = rscl.getDirection();
+                                    COMPASS dir = rscl.getDirection();
                                     Location cl = new Location(rscl.getWorld(), rscl.getX(), rscl.getY(), rscl.getZ());
                                     if (player.hasPermission("tardis.exile") && plugin.getConfig().getBoolean("travel.exile")) {
                                         // get the exile area

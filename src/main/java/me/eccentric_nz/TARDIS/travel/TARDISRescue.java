@@ -18,11 +18,11 @@ package me.eccentric_nz.TARDIS.travel;
 
 import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
+import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.World;
@@ -56,7 +56,7 @@ public class TARDISRescue {
      * @param rescue whether to rescue the player
      * @return true or false
      */
-    public boolean rescue(Player player, String saved, int id, TARDISTimeTravel tt, TARDISConstants.COMPASS d, boolean rescue) {
+    public boolean rescue(Player player, String saved, int id, TARDISTimeTravel tt, COMPASS d, boolean rescue) {
         if (plugin.getServer().getPlayer(saved) == null) {
             player.sendMessage(plugin.pluginName + "That player is not online!");
             return true;

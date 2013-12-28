@@ -20,12 +20,13 @@ import java.io.File;
 import java.util.HashMap;
 import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
 import static me.eccentric_nz.TARDIS.destroyers.TARDISExterminator.deleteFolder;
+import me.eccentric_nz.TARDIS.enumeration.COMPASS;
+import me.eccentric_nz.TARDIS.enumeration.SCHEMATIC;
 import me.eccentric_nz.tardischunkgenerator.TARDISChunkGenerator;
 import org.bukkit.Location;
 import org.bukkit.World;
@@ -65,7 +66,7 @@ public class TARDISDeleteCommand {
         if (rs.resultSet()) {
             int id = rs.getTardis_id();
             int tips = rs.getTIPS();
-            TARDISConstants.SCHEMATIC schm = rs.getSchematic();
+            SCHEMATIC schm = rs.getSchematic();
             String chunkLoc = rs.getChunk();
             String[] cdata = chunkLoc.split(":");
             String name = cdata[0];
@@ -83,7 +84,7 @@ public class TARDISDeleteCommand {
             }
             // get the current location
             Location bb_loc = null;
-            TARDISConstants.COMPASS d = TARDISConstants.COMPASS.EAST;
+            COMPASS d = COMPASS.EAST;
             HashMap<String, Object> wherecl = new HashMap<String, Object>();
             wherecl.put("tardis_id", id);
             ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);

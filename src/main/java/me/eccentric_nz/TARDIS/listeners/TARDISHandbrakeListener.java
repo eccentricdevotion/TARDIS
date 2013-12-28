@@ -18,7 +18,6 @@ package me.eccentric_nz.TARDIS.listeners;
 
 import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.achievement.TARDISAchievementFactory;
 import me.eccentric_nz.TARDIS.artron.TARDISArtronLevels;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
@@ -27,6 +26,7 @@ import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetNextLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
+import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.travel.TARDISMalfunction;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -133,9 +133,9 @@ public class TARDISHandbrakeListener implements Listener {
                                             player.sendMessage(plugin.pluginName + "Could not get current TARDIS location!");
                                             return;
                                         }
-                                        final TARDISConstants.COMPASS cd = rscl.getDirection();
+                                        final COMPASS cd = rscl.getDirection();
                                         boolean sub = rscl.isSubmarine();
-                                        TARDISConstants.COMPASS tmpd = cd;
+                                        COMPASS tmpd = cd;
                                         Location l = new Location(rscl.getWorld(), rscl.getX(), rscl.getY(), rscl.getZ());
                                         String resetw = rscl.getWorld().getName();
                                         boolean malfunction = false;
@@ -220,7 +220,7 @@ public class TARDISHandbrakeListener implements Listener {
                                             long delay = (mat) ? 500L : 1L;
                                             final Location e = exit;
                                             final boolean mal = malfunction;
-                                            final TARDISConstants.COMPASS sd = tmpd;
+                                            final COMPASS sd = tmpd;
                                             if (!is_next_sub && plugin.trackSubmarine.contains(Integer.valueOf(id))) {
                                                 plugin.trackSubmarine.remove(Integer.valueOf(id));
                                             }

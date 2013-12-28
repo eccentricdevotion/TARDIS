@@ -23,8 +23,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
+import me.eccentric_nz.TARDIS.enumeration.SCHEMATIC;
 import me.eccentric_nz.tardischunkgenerator.TARDISChunkGenerator;
 import org.bukkit.ChatColor;
 import org.bukkit.Chunk;
@@ -75,7 +75,7 @@ public class TARDISBuilderInner {
      * -------- false:own world, underground - true:default world--------
      */
     @SuppressWarnings("deprecation")
-    public void buildInner(TARDISConstants.SCHEMATIC schm, World world, int dbID, Player p, int middle_id, byte middle_data, int floor_id, byte floor_data, boolean tips) {
+    public void buildInner(SCHEMATIC schm, World world, int dbID, Player p, int middle_id, byte middle_data, int floor_id, byte floor_data, boolean tips) {
         String[][][] s;
         short[] d;
         int level, row, col, id, x, z, startx, startz, resetx, resetz, j = 2;
@@ -244,7 +244,7 @@ public class TARDISBuilderInner {
                                         }
                                         break;
                                     case 8:
-                                        if (!schm.equals(TARDISConstants.SCHEMATIC.ELEVENTH)) {
+                                        if (!schm.equals(SCHEMATIC.ELEVENTH)) {
                                             switch (floor_id) {
                                                 case 22: // if using the default Lapis Block - then use Light Grey Wool / Stained Clay
                                                     if (plugin.getConfig().getBoolean("creation.use_clay")) {
@@ -426,7 +426,7 @@ public class TARDISBuilderInner {
                                     qf.doInsert("lamps", setlb);
                                 }
                             }
-                            if (id == 137 || id == -119 || ((schm.equals(TARDISConstants.SCHEMATIC.BIGGER) || schm.equals(TARDISConstants.SCHEMATIC.DELUXE)) && (id == 138 || id == -118))) {
+                            if (id == 137 || id == -119 || ((schm.equals(SCHEMATIC.BIGGER) || schm.equals(SCHEMATIC.DELUXE)) && (id == 138 || id == -118))) {
                                 /*
                                  * command block - remember it to spawn the creeper on.
                                  * could also be a beacon block, as the creeper sits
