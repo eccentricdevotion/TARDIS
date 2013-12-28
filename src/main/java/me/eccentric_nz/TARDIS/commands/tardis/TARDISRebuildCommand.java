@@ -102,7 +102,7 @@ public class TARDISRebuildCommand {
             }
             return true;
         } else {
-            player.sendMessage(plugin.pluginName + MESSAGE.NO_PERMS_MESSAGE.getText());
+            player.sendMessage(plugin.pluginName + MESSAGE.NO_PERMS.getText());
             return false;
         }
     }

@@ -66,7 +66,7 @@ public class TARDISRemoveSavedLocationCommand {
             player.sendMessage(plugin.pluginName + "The destination " + args[1] + " was deleted!");
             return true;
         } else {
-            player.sendMessage(plugin.pluginName + MESSAGE.NO_PERMS_MESSAGE.getText());
+            player.sendMessage(plugin.pluginName + MESSAGE.NO_PERMS.getText());
             return false;
         }
     }

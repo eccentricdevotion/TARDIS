@@ -72,7 +72,7 @@ public class TARDISRecipeCommands implements CommandExecutor {
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
         if (cmd.getName().equalsIgnoreCase("tardisrecipe")) {
             if (!sender.hasPermission("tardis.use")) {
-                sender.sendMessage(plugin.pluginName + MESSAGE.NO_PERMS_MESSAGE.getText());
+                sender.sendMessage(plugin.pluginName + MESSAGE.NO_PERMS.getText());
                 return false;
             }
             Player player = null;

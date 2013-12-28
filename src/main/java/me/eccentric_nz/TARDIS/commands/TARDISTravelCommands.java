@@ -480,7 +480,7 @@ public class TARDISTravelCommands implements CommandExecutor {
                     }
                 }
             } else {
-                sender.sendMessage(plugin.pluginName + MESSAGE.NO_PERMS_MESSAGE.getText());
+                sender.sendMessage(plugin.pluginName + MESSAGE.NO_PERMS.getText());
                 return false;
             }
         }

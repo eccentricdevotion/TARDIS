@@ -67,7 +67,7 @@ public class TARDISSecondaryCommand {
             player.sendMessage(plugin.pluginName + "Click the TARDIS " + tardis_block + " to update its position.");
             return true;
         } else {
-            player.sendMessage(plugin.pluginName + MESSAGE.NO_PERMS_MESSAGE.getText());
+            player.sendMessage(plugin.pluginName + MESSAGE.NO_PERMS.getText());
             return false;
         }
     }

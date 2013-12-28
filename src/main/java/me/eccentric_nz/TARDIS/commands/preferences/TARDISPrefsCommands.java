@@ -120,7 +120,7 @@ public class TARDISPrefsCommands implements CommandExecutor {
                     }
                     return new TARDISToggleOnOffCommand(plugin).doAbort(player, args, qf);
                 } else {
-                    sender.sendMessage(plugin.pluginName + MESSAGE.NO_PERMS_MESSAGE.getText());
+                    sender.sendMessage(plugin.pluginName + MESSAGE.NO_PERMS.getText());
                     return false;
                 }
             }

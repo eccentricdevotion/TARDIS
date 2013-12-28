@@ -97,7 +97,7 @@ public class TARDISHomeCommand {
             player.sendMessage(plugin.pluginName + "The new TARDIS home was set!");
             return true;
         } else {
-            player.sendMessage(plugin.pluginName + MESSAGE.NO_PERMS_MESSAGE.getText());
+            player.sendMessage(plugin.pluginName + MESSAGE.NO_PERMS.getText());
             return false;
         }
     }

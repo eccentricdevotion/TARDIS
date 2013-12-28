@@ -82,7 +82,7 @@ public class TARDISRoomCommands implements CommandExecutor {
                 Set<String> rooms = plugin.getRoomsConfig().getConfigurationSection("rooms").getKeys(false);
                 if (name.equals("SAVE")) {
                     if (!sender.hasPermission("tardis.admin")) {
-                        sender.sendMessage(plugin.pluginName + MESSAGE.NO_PERMS_MESSAGE.getText());
+                        sender.sendMessage(plugin.pluginName + MESSAGE.NO_PERMS.getText());
                         return false;
                     }
                     for (String r : rooms) {
@@ -212,7 +212,7 @@ public class TARDISRoomCommands implements CommandExecutor {
                 }
             } else if (args[0].toLowerCase(Locale.ENGLISH).equals("add")) {
                 if (!sender.hasPermission("tardis.admin")) {
-                    sender.sendMessage(plugin.pluginName + MESSAGE.NO_PERMS_MESSAGE.getText());
+                    sender.sendMessage(plugin.pluginName + MESSAGE.NO_PERMS.getText());
                     return false;
                 }
                 Pattern regex = Pattern.compile(".*[A-Z].*");

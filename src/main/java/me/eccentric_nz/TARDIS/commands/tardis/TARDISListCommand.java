@@ -51,7 +51,7 @@ public class TARDISListCommand {
             TARDISLister.list(player, args[1]);
             return true;
         } else {
-            player.sendMessage(plugin.pluginName + MESSAGE.NO_PERMS_MESSAGE.getText());
+            player.sendMessage(plugin.pluginName + MESSAGE.NO_PERMS.getText());
             return false;
         }
     }

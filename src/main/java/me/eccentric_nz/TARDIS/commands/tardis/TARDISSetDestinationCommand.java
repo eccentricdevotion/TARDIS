@@ -119,7 +119,7 @@ public class TARDISSetDestinationCommand {
                 }
             }
         } else {
-            player.sendMessage(plugin.pluginName + MESSAGE.NO_PERMS_MESSAGE);
+            player.sendMessage(plugin.pluginName + MESSAGE.NO_PERMS);
             return false;
         }
     }

@@ -54,7 +54,7 @@ public class TARDISLampsCommand {
     public boolean addLampBlocks(Player owner) {
         // check they have permission
         if (!owner.hasPermission("tardis.update")) {
-            owner.sendMessage(plugin.pluginName + MESSAGE.NO_PERMS_MESSAGE.getText());
+            owner.sendMessage(plugin.pluginName + MESSAGE.NO_PERMS.getText());
             return false;
         }
         HashMap<String, Object> where = new HashMap<String, Object>();

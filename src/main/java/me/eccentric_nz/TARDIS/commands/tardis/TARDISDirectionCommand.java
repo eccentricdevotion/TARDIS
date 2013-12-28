@@ -115,7 +115,7 @@ public class TARDISDirectionCommand {
             player.sendMessage(plugin.pluginName + "You used " + amount + " Artron Energy changing the Police Box direction.");
             return true;
         } else {
-            player.sendMessage(plugin.pluginName + MESSAGE.NO_PERMS_MESSAGE.getText());
+            player.sendMessage(plugin.pluginName + MESSAGE.NO_PERMS.getText());
             return false;
         }
     }

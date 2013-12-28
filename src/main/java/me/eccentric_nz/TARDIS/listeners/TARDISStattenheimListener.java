@@ -244,7 +244,7 @@ public class TARDISStattenheimListener implements Listener {
                         player.sendMessage(plugin.pluginName + "Could not get the previous location of the TARDIS!");
                     }
                 } else {
-                    player.sendMessage(plugin.pluginName + MESSAGE.NO_PERMS_MESSAGE.getText());
+                    player.sendMessage(plugin.pluginName + MESSAGE.NO_PERMS.getText());
                 }
             }
         }

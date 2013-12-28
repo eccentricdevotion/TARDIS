@@ -22,11 +22,9 @@ package me.eccentric_nz.TARDIS.enumeration;
  */
 public enum MESSAGE {
 
-    NO_PERMS_MESSAGE("You do not have permission to do that!"),
+    NO_PERMS("You do not have permission to do that!"),
     NOT_OWNER("You are not the Timelord or Companion for this TARDIS!"),
-    NO_TARDIS("You have not created a TARDIS yet!"),
-    TIMELORD_OFFLINE("The Timelord who owns this TARDIS is offline!"),
-    TIMELORD_NOT_IN("The Timelord who owns this TARDIS is not inside!");
+    NO_TARDIS("You have not created a TARDIS yet!");
     String text;
 
     public String getText() {
