@@ -216,6 +216,9 @@ public class TARDISSeedBlockProcessor {
                 ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, wherep);
                 if (!rsp.resultSet()) {
                     setpp.put("player", player.getName());
+                    String key = (plugin.getConfig().getString("storage.database").equals("mysql")) ? "key_item" : "key";
+                    String default_key = plugin.getConfig().getString("preferences.key");
+                    setpp.put(key, default_key);
                     qf.doInsert("player_prefs", setpp);
                 } else {
                     HashMap<String, Object> wherepp = new HashMap<String, Object>();
