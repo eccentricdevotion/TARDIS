@@ -346,6 +346,7 @@ public class TARDISHandbrakeListener implements Listener {
         }
     }
 
+    @SuppressWarnings("deprecation")
     private void toggleBeacon(String str, boolean on) {
         String[] beaconData = str.split(":");
         World w = plugin.getServer().getWorld(beaconData[0]);

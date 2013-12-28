@@ -60,6 +60,7 @@ public class TARDISJettisonSeeder implements Listener {
      *
      * @param event a player clicking a block
      */
+    @SuppressWarnings("deprecation")
     @EventHandler(priority = EventPriority.MONITOR)
     public void onSeedBlockInteract(PlayerInteractEvent event) {
         final Player player = event.getPlayer();

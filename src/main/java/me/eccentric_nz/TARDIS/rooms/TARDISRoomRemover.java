@@ -56,6 +56,7 @@ public class TARDISRoomRemover {
      *
      * @return false if the room has already been jettisoned
      */
+    @SuppressWarnings("deprecation")
     public boolean remove() {
         int check_distance = (r.equals("ARBORETUM")) ? 5 : 7;
         if (l.getBlock().getRelative(BlockFace.DOWN).getRelative(BlockFace.valueOf(d.toString()), check_distance).getType().equals(Material.AIR)) {

@@ -38,6 +38,7 @@ public class TARDISCheckLocCommand {
         this.plugin = plugin;
     }
 
+    @SuppressWarnings("deprecation")
     public boolean doACheckLocation(Player player, String[] args) {
         final Location eyeLocation = player.getTargetBlock(plugin.tardisCommand.transparent, 50).getLocation();
         Material m = player.getTargetBlock(plugin.tardisCommand.transparent, 50).getType();

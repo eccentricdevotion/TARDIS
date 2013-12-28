@@ -48,6 +48,7 @@ import org.bukkit.entity.Player;
 public class TARDISPresetBuilderFactory {
 
     private final TARDIS plugin;
+    // TODO add this to TARDISConstants
     List<Integer> plat_blocks = Arrays.asList(new Integer[]{0, 6, 9, 8, 31, 32, 37, 38, 39, 40, 78, 106, 3019, 3020});
     HashMap<COMPASS, BlockFace[]> face_map = new HashMap<COMPASS, BlockFace[]>();
     public final List<PRESET> no_block_under_door;

@@ -559,6 +559,7 @@ public class TARDISDoorListener implements Listener {
      * @param q whether the player will receive a TARDIS quote message
      * @param sound an int representing the sound to play
      */
+    @SuppressWarnings("deprecation")
     public void movePlayer(final Player p, Location l, final boolean exit, final World from, boolean q, final int sound) {
 
         final int i = r.nextInt(plugin.quotelen);
@@ -579,7 +580,6 @@ public class TARDISDoorListener implements Listener {
         }, 5L);
         Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
             @Override
-            @SuppressWarnings("deprecation")
             public void run() {
                 p.teleport(theLocation);
                 if (p.getGameMode() == GameMode.CREATIVE || (allowFlight && crossWorlds && !isSurvival)) {

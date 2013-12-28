@@ -84,6 +84,7 @@ public class TARDISFarmer {
      * @param from the world from
      * @return a List of the player's pets (if any are nearby)
      */
+    @SuppressWarnings("deprecation")
     public List<TARDISMob> farmAnimals(Location l, COMPASS d, int id, final Player p, String to, String from) {
         if (plugin.pm.isPluginEnabled("Multiverse-Inventories")) {
             boolean canfarm = plugin.tmic.checkMVI(from, to);

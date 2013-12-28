@@ -48,6 +48,7 @@ public class TARDISAdminMenuInventory {
      *
      * @return an Array of itemStacks (an inventory)
      */
+    @SuppressWarnings("deprecation")
     private ItemStack[] getItemStack() {
         List<ItemStack> options = new ArrayList<ItemStack>();
         int i = 0;

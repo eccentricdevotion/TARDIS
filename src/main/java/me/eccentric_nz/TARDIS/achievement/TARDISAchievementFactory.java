@@ -84,7 +84,7 @@ public class TARDISAchievementFactory {
                 // award achievement!
                 int reward_amount = plugin.getAchivementConfig().getInt(name + ".reward_amount");
                 String reward_type = plugin.getAchivementConfig().getString(name + ".reward_type");
-                // TODO disp[lay a proper achievement
+                // TODO display a proper achievement
                 player.sendMessage(ChatColor.YELLOW + "Achievement Get!");
                 player.sendMessage(ChatColor.WHITE + plugin.getAchivementConfig().getString(name + ".message"));
                 if (reward_type.equalsIgnoreCase("XP")) {

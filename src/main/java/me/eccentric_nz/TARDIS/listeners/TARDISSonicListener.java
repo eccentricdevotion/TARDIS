@@ -133,6 +133,7 @@ public class TARDISSonicListener implements Listener {
         faces.add(BlockFace.WEST);
     }
 
+    @SuppressWarnings("deprecation")
     @EventHandler(priority = EventPriority.MONITOR)
     public void onInteract(PlayerInteractEvent event) {
         final Player player = event.getPlayer();

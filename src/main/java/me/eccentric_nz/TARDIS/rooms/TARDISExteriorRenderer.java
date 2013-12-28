@@ -40,12 +40,14 @@ import org.bukkit.entity.Player;
 public class TARDISExteriorRenderer {
 
     private final TARDIS plugin;
+    // TODO add this to TARDISConstants
     List<Integer> plat_blocks = Arrays.asList(new Integer[]{0, 6, 9, 8, 31, 32, 37, 38, 39, 40, 78, 106, 3019, 3020});
 
     public TARDISExteriorRenderer(TARDIS plugin) {
         this.plugin = plugin;
     }
 
+    @SuppressWarnings("deprecation")
     public void render(String interior, Location exterior, int id, final Player p, final COMPASS d, long time, Biome biome) {
         // construct a string for comparison
         World ew = exterior.getWorld();
@@ -309,6 +311,7 @@ public class TARDISExteriorRenderer {
         player.teleport(loc);
     }
 
+    @SuppressWarnings("deprecation")
     private void addPlatform(Location l, COMPASS d, String p, int id) {
         int plusx, minusx, x, y, plusz, minusz, z;
         int platform_id = plugin.getConfig().getInt("police_box.platform_id");
