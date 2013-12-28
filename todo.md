@@ -3,16 +3,15 @@
 ## Current version `2.7-beta-1`
 1. Documentation & videos!
    * Add note about disabling Factions in Vortex
-2. Sonic Screwdrivers
-   * add texture to Resource Pack
-3. Advanced TARDIS console
+2. Advanced TARDIS console
     * Export TARDIS saves / areas / etc. to disks for use with Advanced TARDIS console
     * Have a storage container with GUI for accessing disks
-4. Make condensables list configurable
-5. TARDIS exterior rendering / scanner room
+3. Add `/tardiskit [kit|list]` command so that servers on easy difficulty can supply players with the basics (or more if desired)
+3. Make condensables list configurable
+4. TARDIS exterior rendering / scanner room
    * find a way to prevent items dropping between renders
-6. Save Chameleon preset with saved location `/tardis csave`?
-7. TARDIS Information System
+5. Save Chameleon preset with saved location `/tardis csave`?
+6. TARDIS Information System
     * add new features
     * auto log out?
     

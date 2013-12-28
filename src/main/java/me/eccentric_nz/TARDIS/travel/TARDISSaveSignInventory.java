@@ -17,10 +17,10 @@
 package me.eccentric_nz.TARDIS.travel;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.database.ResultSetDestinations;
 import me.eccentric_nz.TARDIS.database.ResultSetHomeLocation;
 import org.bukkit.inventory.ItemStack;
@@ -37,12 +37,9 @@ public class TARDISSaveSignInventory {
 
     private final TARDIS plugin;
     private final ItemStack[] terminal;
-    private final List<Integer> ids = new ArrayList<Integer>();
     int id;
 
     public TARDISSaveSignInventory(TARDIS plugin, int id) {
-        // TODO add this to TARDISConstants
-        ids.addAll(Arrays.asList(new Integer[]{1, 2, 5, 7, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 29, 35, 41, 42, 45, 46, 47, 48, 49, 52, 56, 57, 58, 61, 73, 79, 80, 81, 82, 84, 86, 87, 88, 89, 98, 99, 100, 103, 110, 112, 118, 121, 123, 129, 133, 153, 155}));
         this.plugin = plugin;
         this.id = id;
         this.terminal = getItemStack();
@@ -57,7 +54,7 @@ public class TARDISSaveSignInventory {
     private ItemStack[] getItemStack() {
         List<ItemStack> dests = new ArrayList<ItemStack>();
         // home stack
-        ItemStack his = new ItemStack(ids.get(0), 1);
+        ItemStack his = new ItemStack(TARDISConstants.GUI_IDS.get(0), 1);
         ItemMeta him = his.getItemMeta();
         List<String> hlore = new ArrayList<String>();
         HashMap<String, Object> wherehl = new HashMap<String, Object>();
@@ -90,7 +87,7 @@ public class TARDISSaveSignInventory {
             for (HashMap<String, String> map : data) {
                 if (map.get("type").equals("0")) {
                     if (i < 45) {
-                        ItemStack is = new ItemStack(ids.get(i), 1);
+                        ItemStack is = new ItemStack(TARDISConstants.GUI_IDS.get(i), 1);
                         ItemMeta im = is.getItemMeta();
                         im.setDisplayName(map.get("dest_name"));
                         List<String> lore = new ArrayList<String>();

@@ -20,6 +20,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.chameleon.TARDISChameleonColumn;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
@@ -40,8 +41,6 @@ import org.bukkit.entity.Player;
 public class TARDISExteriorRenderer {
 
     private final TARDIS plugin;
-    // TODO add this to TARDISConstants
-    List<Integer> plat_blocks = Arrays.asList(new Integer[]{0, 6, 9, 8, 31, 32, 37, 38, 39, 40, 78, 106, 3019, 3020});
 
     public TARDISExteriorRenderer(TARDIS plugin) {
         this.plugin = plugin;
@@ -354,7 +353,7 @@ public class TARDISExteriorRenderer {
                 }
                 for (Block pb : platform_blocks) {
                     int matint = pb.getTypeId();
-                    if (plat_blocks.contains(matint)) {
+                    if (TARDISConstants.PLATFORM_BLOCKS.contains(matint)) {
                         plugin.utils.setBlock(world, pb.getX(), pb.getY(), pb.getZ(), platform_id, platform_data);
                     }
                 }
