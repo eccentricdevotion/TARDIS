@@ -31,6 +31,7 @@ public class TARDISCondensables {
 
     public TARDISCondensables() {
         condensables = new HashMap<String, Integer>();
+        condensables.put("ACACIA_STAIRS", 1);
         condensables.put("ANVIL", 200);
         condensables.put("APPLE", 10);
         condensables.put("ARROW", 4);
@@ -76,6 +77,7 @@ public class TARDISCondensables {
         condensables.put("COOKED_CHICKEN", 7);
         condensables.put("COOKED_FISH", 7);
         condensables.put("COOKIE", 3);
+        condensables.put("DARK_OAK_STAIRS", 1);
         condensables.put("DAYLIGHT_DETECTOR", 130);
         condensables.put("DIAMOND", 200);
         condensables.put("DIAMOND_AXE", 650);
@@ -94,6 +96,7 @@ public class TARDISCondensables {
         condensables.put("DIRT", 1);
         condensables.put("DISPENSER", 58);
         condensables.put("DOUBLE_STEP", 1);
+        condensables.put("DOUBLE_PLANT", 1);
         condensables.put("DROPPER", 58);
         condensables.put("EGG", 1);
         condensables.put("EMERALD", 200);
@@ -161,8 +164,10 @@ public class TARDISCondensables {
         condensables.put("LEATHER_HELMET", 52);
         condensables.put("LEATHER_LEGGINGS", 75);
         condensables.put("LEAVES", 1);
+        condensables.put("LEAVES_2", 1);
         condensables.put("LEVER", 1);
         condensables.put("LOG", 2);
+        condensables.put("LOG_2", 2);
         condensables.put("MELON_SEEDS", 2);
         condensables.put("MILK_BUCKET", 40);
         condensables.put("MINECART", 23);
@@ -231,6 +236,8 @@ public class TARDISCondensables {
         condensables.put("SPONGE", 80);
         condensables.put("SPRUCE_WOOD_STAIRS", 1);
         condensables.put("STAINED_CLAY", 15);
+        condensables.put("STAINED_GLASS", 32);
+        condensables.put("STAINED_GLASS_PANE", 6);
         condensables.put("STEP", 2);
         condensables.put("STICK", 1);
         condensables.put("STONE", 30);
