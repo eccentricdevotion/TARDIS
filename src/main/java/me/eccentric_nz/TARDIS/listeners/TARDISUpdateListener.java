@@ -21,13 +21,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetControls;
 import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetDoors;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
+import me.eccentric_nz.TARDIS.enumeration.MESSAGE;
 import me.eccentric_nz.TARDIS.enumeration.SCHEMATIC;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -94,6 +94,7 @@ public class TARDISUpdateListener implements Listener {
      *
      * @param event a player clicking on a block
      */
+    @SuppressWarnings("deprecation")
     @EventHandler(priority = EventPriority.MONITOR)
     public void onUpdateInteract(PlayerInteractEvent event) {
         final Player player = event.getPlayer();
@@ -125,7 +126,7 @@ public class TARDISUpdateListener implements Listener {
             where.put("owner", playerNameStr);
             ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
             if (!rs.resultSet()) {
-                player.sendMessage(plugin.pluginName + TARDISConstants.NO_TARDIS);
+                player.sendMessage(plugin.pluginName + MESSAGE.NO_TARDIS.getText());
                 return;
             }
             int id = rs.getTardis_id();

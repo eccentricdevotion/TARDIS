@@ -19,11 +19,11 @@ package me.eccentric_nz.TARDIS.commands.tardis;
 import java.util.HashMap;
 import java.util.Locale;
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
+import me.eccentric_nz.TARDIS.enumeration.MESSAGE;
 import me.eccentric_nz.TARDIS.enumeration.PRESET;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
@@ -50,7 +50,7 @@ public class TARDISDirectionCommand {
             where.put("owner", player.getName());
             ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
             if (!rs.resultSet()) {
-                player.sendMessage(plugin.pluginName + TARDISConstants.NO_TARDIS);
+                player.sendMessage(plugin.pluginName + MESSAGE.NO_TARDIS.getText());
                 return false;
             }
             final int id = rs.getTardis_id();
@@ -115,7 +115,7 @@ public class TARDISDirectionCommand {
             player.sendMessage(plugin.pluginName + "You used " + amount + " Artron Energy changing the Police Box direction.");
             return true;
         } else {
-            player.sendMessage(plugin.pluginName + TARDISConstants.NO_PERMS_MESSAGE);
+            player.sendMessage(plugin.pluginName + MESSAGE.NO_PERMS_MESSAGE.getText());
             return false;
         }
     }

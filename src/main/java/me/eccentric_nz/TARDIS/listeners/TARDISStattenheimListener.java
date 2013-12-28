@@ -20,12 +20,12 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
+import me.eccentric_nz.TARDIS.enumeration.MESSAGE;
 import me.eccentric_nz.TARDIS.travel.TARDISPluginRespect;
 import me.eccentric_nz.TARDIS.travel.TARDISTimeTravel;
 import org.bukkit.Bukkit;
@@ -244,7 +244,7 @@ public class TARDISStattenheimListener implements Listener {
                         player.sendMessage(plugin.pluginName + "Could not get the previous location of the TARDIS!");
                     }
                 } else {
-                    player.sendMessage(plugin.pluginName + TARDISConstants.NO_PERMS_MESSAGE);
+                    player.sendMessage(plugin.pluginName + MESSAGE.NO_PERMS_MESSAGE.getText());
                 }
             }
         }

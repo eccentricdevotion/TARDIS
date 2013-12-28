@@ -25,7 +25,6 @@ import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetAreas;
 import me.eccentric_nz.TARDIS.database.ResultSetBackLocation;
@@ -35,6 +34,7 @@ import me.eccentric_nz.TARDIS.database.ResultSetHomeLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
+import me.eccentric_nz.TARDIS.enumeration.MESSAGE;
 import me.eccentric_nz.TARDIS.travel.TARDISCaveFinder;
 import me.eccentric_nz.TARDIS.travel.TARDISPluginRespect;
 import me.eccentric_nz.TARDIS.travel.TARDISRescue;
@@ -480,7 +480,7 @@ public class TARDISTravelCommands implements CommandExecutor {
                     }
                 }
             } else {
-                sender.sendMessage(plugin.pluginName + TARDISConstants.NO_PERMS_MESSAGE);
+                sender.sendMessage(plugin.pluginName + MESSAGE.NO_PERMS_MESSAGE.getText());
                 return false;
             }
         }

@@ -18,12 +18,12 @@ package me.eccentric_nz.TARDIS.commands.tardis;
 
 import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
+import me.eccentric_nz.TARDIS.enumeration.MESSAGE;
 import me.eccentric_nz.TARDIS.travel.TARDISPluginRespect;
 import me.eccentric_nz.TARDIS.travel.TARDISTimeTravel;
 import org.bukkit.Bukkit;
@@ -47,6 +47,7 @@ public class TARDISComehereCommand {
         this.plugin = plugin;
     }
 
+    @SuppressWarnings("deprecation")
     public boolean doComeHere(Player player) {
         if (plugin.getConfig().getString("preferences.difficulty").equalsIgnoreCase("easy")) {
             if (player.hasPermission("tardis.timetravel")) {
@@ -210,7 +211,7 @@ public class TARDISComehereCommand {
                     return true;
                 }
             } else {
-                player.sendMessage(plugin.pluginName + TARDISConstants.NO_PERMS_MESSAGE);
+                player.sendMessage(plugin.pluginName + MESSAGE.NO_PERMS_MESSAGE.getText());
                 return false;
             }
         } else {

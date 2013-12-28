@@ -22,10 +22,10 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.TARDISDatabaseConnection;
+import me.eccentric_nz.TARDIS.enumeration.MESSAGE;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
@@ -51,7 +51,7 @@ public class TARDISGravityConverterCommand {
         where.put("owner", player.getName());
         ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
         if (!rs.resultSet()) {
-            sender.sendMessage(plugin.pluginName + TARDISConstants.NO_TARDIS);
+            sender.sendMessage(plugin.pluginName + MESSAGE.NO_TARDIS.getText());
             return false;
         }
         int id = rs.getTardis_id();

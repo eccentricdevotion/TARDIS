@@ -21,7 +21,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.TARDISConstants;
+import me.eccentric_nz.TARDIS.enumeration.MESSAGE;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -72,7 +72,7 @@ public class TARDISRecipeCommands implements CommandExecutor {
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
         if (cmd.getName().equalsIgnoreCase("tardisrecipe")) {
             if (!sender.hasPermission("tardis.use")) {
-                sender.sendMessage(plugin.pluginName + TARDISConstants.NO_PERMS_MESSAGE);
+                sender.sendMessage(plugin.pluginName + MESSAGE.NO_PERMS_MESSAGE.getText());
                 return false;
             }
             Player player = null;

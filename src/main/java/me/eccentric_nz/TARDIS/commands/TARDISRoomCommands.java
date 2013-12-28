@@ -29,11 +29,11 @@ import java.util.Map;
 import java.util.Set;
 import java.util.regex.Pattern;
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.artron.TARDISCondensables;
 import me.eccentric_nz.TARDIS.database.ResultSetCondenser;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
+import me.eccentric_nz.TARDIS.enumeration.MESSAGE;
 import me.eccentric_nz.TARDIS.files.TARDISMakeRoomCSV;
 import me.eccentric_nz.TARDIS.files.TARDISRoomSchematicReader;
 import me.eccentric_nz.TARDIS.files.TARDISSchematic;
@@ -68,6 +68,7 @@ public class TARDISRoomCommands implements CommandExecutor {
         }
     }
 
+    @SuppressWarnings("deprecation")
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
         if (cmd.getName().equalsIgnoreCase("tardisroom")) {
@@ -81,7 +82,7 @@ public class TARDISRoomCommands implements CommandExecutor {
                 Set<String> rooms = plugin.getRoomsConfig().getConfigurationSection("rooms").getKeys(false);
                 if (name.equals("SAVE")) {
                     if (!sender.hasPermission("tardis.admin")) {
-                        sender.sendMessage(plugin.pluginName + TARDISConstants.NO_PERMS_MESSAGE);
+                        sender.sendMessage(plugin.pluginName + MESSAGE.NO_PERMS_MESSAGE.getText());
                         return false;
                     }
                     for (String r : rooms) {
@@ -211,7 +212,7 @@ public class TARDISRoomCommands implements CommandExecutor {
                 }
             } else if (args[0].toLowerCase(Locale.ENGLISH).equals("add")) {
                 if (!sender.hasPermission("tardis.admin")) {
-                    sender.sendMessage(plugin.pluginName + TARDISConstants.NO_PERMS_MESSAGE);
+                    sender.sendMessage(plugin.pluginName + MESSAGE.NO_PERMS_MESSAGE.getText());
                     return false;
                 }
                 Pattern regex = Pattern.compile(".*[A-Z].*");

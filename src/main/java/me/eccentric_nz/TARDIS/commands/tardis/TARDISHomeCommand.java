@@ -18,10 +18,10 @@ package me.eccentric_nz.TARDIS.commands.tardis;
 
 import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
+import me.eccentric_nz.TARDIS.enumeration.MESSAGE;
 import me.eccentric_nz.TARDIS.travel.TARDISPluginRespect;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -40,6 +40,7 @@ public class TARDISHomeCommand {
         this.plugin = plugin;
     }
 
+    @SuppressWarnings("deprecation")
     public boolean setHome(Player player, String[] args) {
         if (player.hasPermission("tardis.timetravel")) {
             Location eyeLocation = player.getTargetBlock(plugin.tardisCommand.transparent, 50).getLocation();
@@ -96,7 +97,7 @@ public class TARDISHomeCommand {
             player.sendMessage(plugin.pluginName + "The new TARDIS home was set!");
             return true;
         } else {
-            player.sendMessage(plugin.pluginName + TARDISConstants.NO_PERMS_MESSAGE);
+            player.sendMessage(plugin.pluginName + MESSAGE.NO_PERMS_MESSAGE.getText());
             return false;
         }
     }

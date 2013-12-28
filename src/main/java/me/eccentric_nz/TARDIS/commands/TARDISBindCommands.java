@@ -22,12 +22,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetAreas;
 import me.eccentric_nz.TARDIS.database.ResultSetDestinations;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
+import me.eccentric_nz.TARDIS.enumeration.MESSAGE;
 import org.bukkit.ChatColor;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.command.Command;
@@ -66,7 +66,7 @@ public class TARDISBindCommands implements CommandExecutor {
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
         if (cmd.getName().equalsIgnoreCase("tardisbind")) {
             if (!sender.hasPermission("tardis.update")) {
-                sender.sendMessage(plugin.pluginName + TARDISConstants.NO_PERMS_MESSAGE);
+                sender.sendMessage(plugin.pluginName + MESSAGE.NO_PERMS_MESSAGE.getText());
                 return false;
             }
             Player player = null;

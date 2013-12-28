@@ -18,10 +18,10 @@ package me.eccentric_nz.TARDIS.commands.tardis;
 
 import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
+import me.eccentric_nz.TARDIS.enumeration.MESSAGE;
 import me.eccentric_nz.TARDIS.travel.TARDISPluginRespect;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -40,13 +40,14 @@ public class TARDISSetDestinationCommand {
         this.plugin = plugin;
     }
 
+    @SuppressWarnings("deprecation")
     public boolean doSetDestination(Player player, String[] args) {
         if (player.hasPermission("tardis.save")) {
             HashMap<String, Object> where = new HashMap<String, Object>();
             where.put("owner", player.getName());
             ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
             if (!rs.resultSet()) {
-                player.sendMessage(plugin.pluginName + TARDISConstants.NO_TARDIS);
+                player.sendMessage(plugin.pluginName + MESSAGE.NO_TARDIS);
                 return false;
             }
             if (args.length < 2) {
@@ -118,7 +119,7 @@ public class TARDISSetDestinationCommand {
                 }
             }
         } else {
-            player.sendMessage(plugin.pluginName + TARDISConstants.NO_PERMS_MESSAGE);
+            player.sendMessage(plugin.pluginName + MESSAGE.NO_PERMS_MESSAGE);
             return false;
         }
     }

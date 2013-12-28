@@ -38,12 +38,6 @@ public class TARDISConstants {
     public static final HashMap<Integer, Integer> CHAMELEON_BLOCKS_CHANGE_HASH = toMap(CHAMELEON_BLOCKS_CHANGE_ARR, CHAMELEON_BLOCKS_CHANGE_TO_ARR);
     public static final List<Integer> CHAMELEON_BLOCKS_NEXT = Arrays.asList(new Integer[]{0, 27, 28, 30, 31, 32, 37, 38, 39, 40, 66, 151});
     public static final List<Integer> CHAMELEON_BLOCKS_PRECIOUS = Arrays.asList(new Integer[]{41, 42, 46, 57, 133, 152, 173});
-    // messages
-    public static final String NO_PERMS_MESSAGE = "You do not have permission to do that!";
-    public static final String NOT_OWNER = "You are not the Timelord or Companion for this TARDIS!";
-    public static final String NO_TARDIS = "You have not created a TARDIS yet!";
-    public static final String TIMELORD_OFFLINE = "The Timelord who owns this TARDIS is offline!";
-    public static final String TIMELORD_NOT_IN = "The Timelord who owns this TARDIS is not inside!";
     public static final List<String> vowels = Arrays.asList(new String[]{"A", "E", "I", "O", "U"});
 
     /**

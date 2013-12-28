@@ -18,8 +18,8 @@ package me.eccentric_nz.TARDIS.commands.tardis;
 
 import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
+import me.eccentric_nz.TARDIS.enumeration.MESSAGE;
 import me.eccentric_nz.TARDIS.utility.TARDISLister;
 import org.bukkit.entity.Player;
 
@@ -41,7 +41,7 @@ public class TARDISListCommand {
             where.put("owner", player.getName());
             ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
             if (!rs.resultSet()) {
-                player.sendMessage(plugin.pluginName + TARDISConstants.NO_TARDIS);
+                player.sendMessage(plugin.pluginName + MESSAGE.NO_TARDIS.getText());
                 return false;
             }
             if (args.length < 2 || (!args[1].equalsIgnoreCase("saves") && !args[1].equalsIgnoreCase("companions") && !args[1].equalsIgnoreCase("areas") && !args[1].equalsIgnoreCase("rechargers"))) {
@@ -51,7 +51,7 @@ public class TARDISListCommand {
             TARDISLister.list(player, args[1]);
             return true;
         } else {
-            player.sendMessage(plugin.pluginName + TARDISConstants.NO_PERMS_MESSAGE);
+            player.sendMessage(plugin.pluginName + MESSAGE.NO_PERMS_MESSAGE.getText());
             return false;
         }
     }

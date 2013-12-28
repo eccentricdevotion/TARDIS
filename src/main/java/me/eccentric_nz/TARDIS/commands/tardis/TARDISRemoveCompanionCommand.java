@@ -19,9 +19,9 @@ package me.eccentric_nz.TARDIS.commands.tardis;
 import java.util.HashMap;
 import java.util.Locale;
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
+import me.eccentric_nz.TARDIS.enumeration.MESSAGE;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
@@ -46,7 +46,7 @@ public class TARDISRemoveCompanionCommand {
             int id;
             String[] data;
             if (!rs.resultSet()) {
-                player.sendMessage(plugin.pluginName + TARDISConstants.NO_TARDIS);
+                player.sendMessage(plugin.pluginName + MESSAGE.NO_TARDIS.getText());
                 return false;
             } else {
                 comps = rs.getCompanions();
@@ -100,7 +100,7 @@ public class TARDISRemoveCompanionCommand {
                 return true;
             }
         } else {
-            player.sendMessage(plugin.pluginName + TARDISConstants.NO_PERMS_MESSAGE);
+            player.sendMessage(plugin.pluginName + MESSAGE.NO_PERMS_MESSAGE.getText());
             return false;
         }
     }

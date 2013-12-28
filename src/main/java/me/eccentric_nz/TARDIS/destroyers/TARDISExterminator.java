@@ -22,7 +22,6 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetBlocks;
 import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
@@ -30,6 +29,7 @@ import me.eccentric_nz.TARDIS.database.ResultSetGravity;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
+import me.eccentric_nz.TARDIS.enumeration.MESSAGE;
 import me.eccentric_nz.TARDIS.enumeration.SCHEMATIC;
 import me.eccentric_nz.tardischunkgenerator.TARDISChunkGenerator;
 import org.bukkit.ChatColor;
@@ -102,6 +102,7 @@ public class TARDISExterminator {
      * @param block the block that represents the Police Box sign
      * @return true or false depending on whether the TARIS could be deleted
      */
+    @SuppressWarnings("deprecation")
     public boolean exterminate(Player player, Block block) {
         int signx = 0, signz = 0;
         String playerNameStr = player.getName();
@@ -207,7 +208,7 @@ public class TARDISExterminator {
                 return true;
             } else {
                 // cancel the event because it's not the player's TARDIS
-                player.sendMessage(TARDISConstants.NOT_OWNER);
+                player.sendMessage(MESSAGE.NOT_OWNER.getText());
                 return false;
             }
         } else {
