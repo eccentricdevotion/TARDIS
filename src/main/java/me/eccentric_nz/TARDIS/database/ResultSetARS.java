@@ -82,6 +82,7 @@ public class ResultSetARS {
         }
         String query = "SELECT * FROM ars" + wheres;
         try {
+            service.testConnection(connection);
             statement = connection.prepareStatement(query);
             if (where != null) {
                 int s = 1;
@@ -97,7 +98,6 @@ public class ResultSetARS {
             }
             rs = statement.executeQuery();
             if (rs.isBeforeFirst()) {
-                //plugin.debug(query);
                 while (rs.next()) {
                     this.id = rs.getInt("ars_id");
                     this.tardis_id = rs.getInt("tardis_id");

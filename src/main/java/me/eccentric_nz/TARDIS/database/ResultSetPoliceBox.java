@@ -57,6 +57,7 @@ public class ResultSetPoliceBox {
         ResultSet rs = null;
         String query = "SELECT * FROM current";
         try {
+            service.testConnection(connection);
             statement = connection.prepareStatement(query);
             rs = statement.executeQuery();
             if (rs.isBeforeFirst()) {

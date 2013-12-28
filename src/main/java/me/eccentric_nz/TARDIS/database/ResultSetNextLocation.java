@@ -80,6 +80,7 @@ public class ResultSetNextLocation {
         }
         String query = "SELECT * FROM next" + wheres;
         try {
+            service.testConnection(connection);
             statement = connection.prepareStatement(query);
             if (where != null) {
                 int s = 1;

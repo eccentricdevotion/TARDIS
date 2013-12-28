@@ -69,6 +69,7 @@ public class ResultSetRepeaters {
         ResultSet rs = null;
         String query = "SELECT DISTINCT location FROM controls WHERE tardis_id = ? AND type IN (2,3,4,5) AND secondary = ? ORDER BY type";
         try {
+            service.testConnection(connection);
             statement = connection.prepareStatement(query);
             statement.setInt(1, id);
             statement.setInt(2, secondary);

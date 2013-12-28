@@ -64,6 +64,7 @@ public class TARDISSQLInsert implements Runnable {
         fields = sbf.toString().substring(0, sbf.length() - 1);
         questions = sbq.toString().substring(0, sbq.length() - 1);
         try {
+            service.testConnection(connection);
             ps = connection.prepareStatement("INSERT INTO " + table + " (" + fields + ") VALUES (" + questions + ")");
             int i = 1;
             for (Map.Entry<String, Object> entry : data.entrySet()) {

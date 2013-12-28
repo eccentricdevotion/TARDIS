@@ -85,6 +85,7 @@ public class TARDISSQLAlterEnergy implements Runnable {
             }.runTask(plugin);
         }
         try {
+            service.testConnection(connection);
             statement = connection.createStatement();
             statement.executeUpdate(query);
         } catch (SQLException e) {

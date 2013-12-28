@@ -68,6 +68,7 @@ public class TARDISSQLCondenserUpdate implements Runnable {
         wheres = sbw.toString().substring(0, sbw.length() - 5);
         String query = "UPDATE condenser SET block_count = block_count - " + amount + " WHERE " + wheres;
         try {
+            service.testConnection(connection);
             statement = connection.createStatement();
             statement.executeUpdate(query);
         } catch (SQLException e) {

@@ -55,6 +55,7 @@ public class TARDISControlsConverter {
             Statement del = null;
             PreparedStatement ps = null;
             try {
+                service.testConnection(connection);
                 // clear the controls table first - just incase they have reset `conversion_done` in the config
                 del = connection.createStatement();
                 del.executeUpdate("DELETE FROM controls");

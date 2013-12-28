@@ -62,6 +62,7 @@ public class TARDISSQLInsertLocations implements Runnable {
         fields = sbf.toString().substring(0, sbf.length() - 1);
         questions = sbq.toString().substring(0, sbq.length() - 1);
         try {
+            service.testConnection(connection);
             for (String s : tables) {
                 ps = connection.prepareStatement("INSERT INTO " + s + " (" + fields + ") VALUES (" + questions + ")");
                 int i = 1;

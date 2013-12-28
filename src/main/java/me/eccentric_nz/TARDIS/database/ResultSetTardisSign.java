@@ -66,6 +66,7 @@ public class ResultSetTardisSign {
         ResultSet rs = null;
         String query = "SELECT * FROM tardis WHERE chameleon = ? OR save_sign = ?";
         try {
+            service.testConnection(connection);
             statement = connection.prepareStatement(query);
             statement.setString(1, where);
             statement.setString(2, where);

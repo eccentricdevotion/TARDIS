@@ -61,6 +61,7 @@ public class TARDISLocationsConverter {
         String query = "SELECT tardis_id, direction, home, save, current, fast_return FROM tardis";
         int i = 0;
         try {
+            service.testConnection(connection);
             statement = connection.prepareStatement(query);
             rs = statement.executeQuery();
             if (rs.isBeforeFirst()) {

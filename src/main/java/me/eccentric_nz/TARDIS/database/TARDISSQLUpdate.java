@@ -76,6 +76,7 @@ public class TARDISSQLUpdate implements Runnable {
         wheres = sbw.toString().substring(0, sbw.length() - 5);
         String query = "UPDATE " + table + " SET " + updates + " WHERE " + wheres;
         try {
+            service.testConnection(connection);
             statement = connection.prepareStatement(query);
             int s = 1;
             for (Map.Entry<String, Object> entry : data.entrySet()) {

@@ -83,6 +83,7 @@ public class ResultSetCount {
         }
         String query = "SELECT * FROM t_count" + wheres;
         try {
+            service.testConnection(connection);
             statement = connection.prepareStatement(query);
             if (where != null) {
                 int s = 1;
@@ -98,7 +99,6 @@ public class ResultSetCount {
             }
             rs = statement.executeQuery();
             if (rs.isBeforeFirst()) {
-                //plugin.debug(query);
                 while (rs.next()) {
                     if (multiple) {
                         HashMap<String, String> row = new HashMap<String, String>();

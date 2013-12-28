@@ -61,10 +61,10 @@ public class ResultSetTag {
         ResultSet rs = null;
         String query = "SELECT * FROM tag ORDER BY time DESC LIMIT 5";
         try {
+            service.testConnection(connection);
             statement = connection.prepareStatement(query);
             rs = statement.executeQuery();
             if (rs.isBeforeFirst()) {
-                //plugin.debug(query);
                 while (rs.next()) {
                     HashMap<String, String> row = new HashMap<String, String>();
                     ResultSetMetaData rsmd = rs.getMetaData();

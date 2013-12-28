@@ -85,8 +85,8 @@ public class ResultSetControls {
             wheres = " WHERE " + sbw.toString().substring(0, sbw.length() - 5);
         }
         String query = "SELECT * FROM controls" + wheres;
-        //plugin.debug(query);
         try {
+            service.testConnection(connection);
             statement = connection.prepareStatement(query);
             if (where != null) {
                 int s = 1;

@@ -58,6 +58,7 @@ public class TARDISSQLInsertControl implements Runnable {
     public void run() {
         Statement statement = null;
         try {
+            service.testConnection(connection);
             statement = connection.createStatement();
             String select = "SELECT c_id FROM controls WHERE tardis_id = " + id + " AND type = " + type + " AND secondary = " + s;
             ResultSet rs = statement.executeQuery(select);

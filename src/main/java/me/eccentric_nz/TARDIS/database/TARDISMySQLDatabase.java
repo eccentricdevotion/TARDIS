@@ -45,7 +45,9 @@ public class TARDISMySQLDatabase {
      * Creates the TARDIS default tables in the database.
      */
     public void createTables() {
+        service.setIsMySQL(true);
         try {
+            service.testConnection(connection);
             statement = connection.createStatement();
             // Table structure for table 'achievements'
             String achievementsQuery = "CREATE TABLE IF NOT EXISTS achievements (a_id int(11) NOT NULL AUTO_INCREMENT, player varchar(32) DEFAULT '', `name` varchar(32) DEFAULT '', amount text, completed int(1) DEFAULT '0', PRIMARY KEY (a_id)) DEFAULT CHARSET=utf8 COLLATE utf8_general_ci";

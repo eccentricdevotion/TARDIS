@@ -67,6 +67,7 @@ public class TARDISSQLDelete implements Runnable {
         values = sbw.toString().substring(0, sbw.length() - 5);
         String query = "DELETE FROM " + table + " WHERE " + values;
         try {
+            service.testConnection(connection);
             statement = connection.createStatement();
             statement.executeUpdate(query);
         } catch (SQLException e) {
