@@ -100,7 +100,6 @@ public class TARDISConfigConverter {
         sectionsInt.put("random_attempts", "travel.random_attempts");
         sectionsInt.put("room_speed", "growth.room_speed");
         sectionsInt.put("rooms_condenser_percent", "growth.rooms_condenser_percent");
-        sectionsInt.put("sfx_volume", "preferences.sfx_volume");
         sectionsInt.put("tardis_lamp", "police_box.tardis_lamp");
         sectionsInt.put("terminal_step", "travel.terminal_step");
         sectionsInt.put("timeout", "travel.timeout");

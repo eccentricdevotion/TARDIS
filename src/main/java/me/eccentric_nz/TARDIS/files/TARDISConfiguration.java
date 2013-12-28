@@ -292,6 +292,9 @@ public class TARDISConfiguration {
                     plugin.getConfig().set(entry.getKey(), entry.getValue());
                     i++;
                 }
+                if (entry.getKey().equals("preferences.sfx_volume") && plugin.getConfig().getInt("preferences.sfx_volume") == 0) {
+                    plugin.getConfig().set("preferences.sfx_volume", 10);
+                }
             }
             // string values
             for (Map.Entry<String, String> entry : strOptions.entrySet()) {
@@ -367,7 +370,6 @@ public class TARDISConfiguration {
         // copy old settings and add any custom rooms
         if (config.contains("rooms")) {
             for (String r : config.getConfigurationSection("rooms").getKeys(false)) {
-                //if (!rooms_config.contains("rooms." + r)) {
                 rooms_config.set("rooms." + r + ".enabled", config.getBoolean("rooms." + r + ".enabled"));
                 rooms_config.set("rooms." + r + ".cost", config.getInt("rooms." + r + ".cost"));
                 if (!r.equalsIgnoreCase("ANTIGRAVITY")) {
@@ -375,7 +377,6 @@ public class TARDISConfiguration {
                 }
                 rooms_config.set("rooms." + r + ".seed", config.getString("rooms." + r + ".seed"));
                 rooms_config.set("rooms." + r + ".user", config.getBoolean("rooms." + r + ".user"));
-                //}
             }
             // remove old rooms section
             plugin.getConfig().set("rooms", null);

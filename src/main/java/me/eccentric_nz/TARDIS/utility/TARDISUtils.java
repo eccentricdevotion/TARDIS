@@ -77,20 +77,8 @@ public class TARDISUtils {
             m = 143;
             d = (byte) 3;
         }
-        if (m == 33) {
-            plugin.debug("data before setting: " + d);
-        }
         b.setTypeId(m);
         b.setData(d, true);
-        if (m == 33) {
-            plugin.debug("data right after setting: " + b.getData());
-            plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
-                @Override
-                public void run() {
-                    plugin.debug("data 20L after setting: " + b.getData());
-                }
-            }, 20L);
-        }
     }
 
     /**
