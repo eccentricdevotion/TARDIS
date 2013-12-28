@@ -5,18 +5,16 @@
    * Add note about disabling Factions in Vortex
 2. Sonic Screwdrivers
    * add texture to Resource Pack
-4. Advanced TARDIS console
+3. Advanced TARDIS console
     * Export TARDIS saves / areas / etc. to disks for use with Advanced TARDIS console
     * Have a storage container with GUI for accessing disks
-6. Make condensables list configurable
-7. TARDIS exterior rendering / scanner room
+4. Make condensables list configurable
+5. TARDIS exterior rendering / scanner room
    * find a way to prevent items dropping between renders
-   * switch off some lights when it's night?
-8. Underground materialisation
+6. Underground materialisation
    * check there is space for a player
-9. Fix underdoor block for apperture preset
-10. Save Chameleon preset with saved location `/tardis csave`?
-11. TARDIS Information System
+7. Save Chameleon preset with saved location `/tardis csave`?
+8. TARDIS Information System
     * add new features
     * auto log out?
     

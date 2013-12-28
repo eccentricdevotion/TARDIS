@@ -311,6 +311,9 @@ public class TARDISMaterialisationPreset implements Runnable {
                                     plugin.utils.setBlockAndRemember(world, xx, (y + yy), zz, colids[yy], coldatas[yy], tid);
                                     break;
                                 case 63:
+                                    if (preset.equals(TARDISConstants.PRESET.APPERTURE)) {
+                                        plugin.utils.setUnderDoorBlock(world, xx, (y - 1), zz, platform_id, platform_data, tid);
+                                    }
                                 case 68: // sign - if there is one
                                     plugin.utils.setBlock(world, xx, (y + yy), zz, colids[yy], coldatas[yy]);
                                     Block sign = world.getBlockAt(xx, (y + yy), zz);
