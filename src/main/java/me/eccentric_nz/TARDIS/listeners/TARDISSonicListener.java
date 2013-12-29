@@ -440,12 +440,12 @@ public class TARDISSonicListener implements Listener {
                                 default:
                                     break;
                             }
-                            l.getWorld().playSound(l, Sound.EAT, 1.0F, 2.0F);
+                            l.getWorld().playSound(l, Sound.SHEEP_SHEAR, 1.0F, 1.5F);
                             // set the block to AIR
                             b.setType(Material.AIR);
                         } else {
                             b.breakNaturally();
-                            b.getLocation().getWorld().playSound(b.getLocation(), Sound.EAT, 1.0F, 2.0F);
+                            b.getLocation().getWorld().playSound(b.getLocation(), Sound.SHEEP_SHEAR, 1.0F, 1.5F);
                         }
                     }
                 }
