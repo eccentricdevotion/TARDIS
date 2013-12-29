@@ -121,7 +121,6 @@ public class TARDISCaveFinder {
         ret.setSafe(false);
         for (int y = 35; y > 14; y--) {
             if (w.getBlockAt(x, y, z).getType().equals(Material.AIR)) {
-                plugin.debug("Found AIR");
                 int yy = getLowestAirBlock(w, x, y, z);
                 // check there is enough height for the police box
                 if (yy <= y - 3 && w.getBlockAt(x - 1, yy - 1, z - 1).getType().equals(Material.STONE)) {
