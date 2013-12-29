@@ -1,63 +1,63 @@
 <!doctype html>
 <html>
 <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="chrome=1">
-    <title>TARDIS: Custom rooms</title>
-    <link rel="stylesheet" href="stylesheets/styles.css">
-    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
-    <script src="javascripts/scale.fix.js"></script>
-    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
-    <!--[if lt IE 9]>
-    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="chrome=1">
+<title>TARDIS: Custom rooms</title>
+<link rel="stylesheet" href="stylesheets/styles.css">
+<link rel="stylesheet" href="stylesheets/pygment_trac.css">
+<script src="javascripts/scale.fix.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+<!--[if lt IE 9]>
+<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+<![endif]-->
 </head>
 <body>
 <div class="wrapper">
-    <header>
-        <h1>TARDIS</h1>
-            <p>A Bukkit plugin for all Doctor Who fans &mdash; create and use a TARDIS! It&rsquo;s bigger on the inside!</p>
-            <p class="view"><a href="https://github.com/eccentricdevotion/TARDIS">View the Project on GitHub <small>eccentricdevotion/TARDIS</small></a></p>
-            <ul>
-                <li><a href="/TARDIS/">Back <strong>home</strong></a></li>
-                <li><a href="contents.html"><strong>Contents</strong> page</a></li>
-            </ul>
-    </header>
-    <section>
-        <p><a href="#video">Jump to video</a></p>
-        <h1>Custom rooms</h1>
-        <p>TARDIS has the ability to add your own custom rooms using WorldEdit/MCEdit schematic files and the <code>/tardisroom</code> command.</p>
-        <p>You can download community contributed schematics from <a href="http://tardis.thatsnotacreeper.com/">http://tardis.thatsnotacreeper.com/</a></p>
-        <p>Put your custom schematic in the <em>plugins/TARDIS/user_schematics</em> folder &mdash; it should be called <strong>[something]</strong>.schematic &mdash; then run the following commands:</p>
-        <pre><code>/tardisroom add [something]
+	<header>
+		<h1>TARDIS</h1>
+		<p>A Bukkit plugin for all Doctor Who fans &mdash; create and use a TARDIS! It&rsquo;s bigger on the inside!</p>
+		<p class="view"><a href="https://github.com/eccentricdevotion/TARDIS">View the Project on GitHub <small>eccentricdevotion/TARDIS</small></a></p>
+		<ul>
+			<li><a href="/TARDIS/">Back <strong>home</strong></a></li>
+			<li><a href="contents.html"><strong>Contents</strong> page</a></li>
+		</ul>
+	</header>
+	<section>
+		<p><a href="#video">Jump to video</a></p>
+		<h1>Custom rooms</h1>
+		<p>TARDIS has the ability to add your own custom rooms using WorldEdit/MCEdit schematic files and the <code>/tardisroom</code> command.</p>
+		<p>You can download community contributed schematics from <a href="http://tardis.thatsnotacreeper.com/">http://tardis.thatsnotacreeper.com/</a></p>
+		<p>Put your custom schematic in the <em>plugins/TARDIS/user_schematics</em> folder &mdash; it should be called <strong>[something]</strong>.schematic &mdash; then run the following commands:</p>
+		<pre><code>/tardisroom add [something]
 /tardisroom [something] [cost]
 /tardisroom [something] [offset]
 /tardisroom [something] [seed material]
 /tardisroom [something] true
 </code></pre>
-        <p><code>[something]</code> is the name of the room/schematic file and <em>MUST</em> be lowercase.</p>
-        <p><code>[cost]</code> is the Artron Energy cost to grow the room, and must be a <strong>POSITIVE</strong> number.</p>
-        <p><code>[offset]</code> is how far below the door position the schematic extends, and must be a <strong>NEGATIVE</strong> number e.g. <code>-1</code> (if your floors don&rsquo;t line up then you got this wrong) See image below.</p>
-        <p><img src="https://dl.dropboxusercontent.com/u/53758864/offset.jpg" alt="Offset example" /></p>
-        <p><code>[seed material]</code> is the <a href="http://jd.bukkit.org/rb/apidocs/org/bukkit/Material.html">Bukkit Material enum</a> of the room seed block, and must be <em>a block not used by any other rooms</em> e.g. SAND</p>
-        <p>The last command enables the room.</p>
-        <h2>Tips</h2>
-        <ul>
-            <li>Any room can be enabled/disabled with <code>/tardisroom [name] [true|false]</code>, and all other settings can be changed using the same command <code>/tardisroom [name] [value]</code></li>
-            <li>Rooms schematics must be the same width and length i.e. square</li>
-            <li>Don&rsquo;t put doors in the walls they will be added automatically (always in the centre of the wall)</li>
-            <li>If you want to be able to have the rooms use the player wall and floor preferences, then you need to use orange wool for the walls and light grey wool for the floors</li>
-            <li>Not all items will work &mdash; things that will NOT are: paintings, item frames, plants in flower pots (the pots are OK)</li>
-            <li>Rooms are grown from the bottom to top so keep that in mind when designing the room &mdash; you can&rsquo;t place levers upside down for example as there will be no block for them to stick to and they will just fall into the void</li>
-        </ul>
-        <h3 id="video">Video</h3>
-        <p><strong>Note:</strong> The video shows the custom room schematic being put into the <em>schematics</em> folder, but it sould now be put into the <em>user_schematics</em> folder.</p>
-        <iframe src="http://player.vimeo.com/video/64474578" width="600" height="365" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
-    </section>
+		<p><code>[something]</code> is the name of the room/schematic file and <em>MUST</em> be lowercase.</p>
+		<p><code>[cost]</code> is the Artron Energy cost to grow the room, and must be a <strong>POSITIVE</strong> number.</p>
+		<p><code>[offset]</code> is how far below the door position the schematic extends, and must be a <strong>NEGATIVE</strong> number e.g. <code>-1</code> (if your floors don&rsquo;t line up then you got this wrong) See image below.</p>
+		<p><img src="https://dl.dropboxusercontent.com/u/53758864/offset.jpg" alt="Offset example" /></p>
+		<p><code>[seed material]</code> is the <a href="http://jd.bukkit.org/rb/apidocs/org/bukkit/Material.html">Bukkit Material enum</a> of the room seed block, and must be <em>a block not used by any other rooms</em> e.g. SAND</p>
+		<p>The last command enables the room.</p>
+		<h2>Tips</h2>
+		<ul>
+			<li>Any room can be enabled/disabled with <code>/tardisroom [name] [true|false]</code>, and all other settings can be changed using the same command <code>/tardisroom [name] [value]</code></li>
+			<li>Rooms schematics must be the same width and length i.e. square</li>
+			<li>Don&rsquo;t put doors in the walls they will be added automatically (always in the centre of the wall)</li>
+			<li>If you want to be able to have the rooms use the player wall and floor preferences, then you need to use orange wool for the walls and light grey wool for the floors</li>
+			<li>Not all items will work &mdash; things that will NOT are: paintings, item frames, plants in flower pots (the pots are OK)</li>
+			<li>Rooms are grown from the bottom to top so keep that in mind when designing the room &mdash; you can&rsquo;t place levers upside down for example as there will be no block for them to stick to and they will just fall into the void</li>
+		</ul>
+		<h3 id="video">Video</h3>
+		<p><strong>Note:</strong> The video shows the custom room schematic being put into the <em>schematics</em> folder, but it sould now be put into the <em>user_schematics</em> folder.</p>
+		<iframe src="http://player.vimeo.com/video/64474578" width="600" height="365" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+	</section>
 </div>
 <footer>
-    <p>Project maintained by <a href="https://github.com/eccentricdevotion">eccentricdevotion</a></p>
-    <p>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></p>
+	<p>Project maintained by <a href="https://github.com/eccentricdevotion">eccentricdevotion</a></p>
+	<p>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></p>
 </footer>
 <!--[if !IE]><script>fixScale(document);</script><![endif]-->
 </body>

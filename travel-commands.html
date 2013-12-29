@@ -9,43 +9,45 @@
 <script src="javascripts/scale.fix.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
 <!--[if lt IE 9]>
-    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
+<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+<![endif]-->
 </head>
 <body>
 <div class="wrapper">
-    <header>
-        <h1>TARDIS</h1>
-        <p>A Bukkit plugin for all Doctor Who fans &mdash; create and use a TARDIS! It&rsquo;s bigger on the inside!</p>
-        <p class="view"><a href="https://github.com/eccentricdevotion/TARDIS">View the Project on GitHub <small>eccentricdevotion/TARDIS</small></a></p>
-        <ul>
-            <li><a href="/TARDIS/">Back <strong>home</strong></a></li>
-            <li><a href="commands.html"><strong>Commands</strong> page</a></li>
-            <li><a href="contents.html"><strong>Contents</strong> page</a></li>
-        </ul>
-    </header>
-    <section>
-        <h1>Time travel commands</h1>
-        <h3><code>/tardistravel</code></h3>
-        <p>Set the destination location when exiting the TARDIS. You can either time travel to specific co-ordinates, to a player&rsquo;s location, a saved destination, a specified biome, the TARDIS &lsquo;home&rsquo; location, or an admin preset area. Type:</p>
-        <pre><code>/tardistravel [world] [x] [y] [z]</code></pre>
-        <p>eg. <code>/tardistravel New_New_York -319 64 277</code> - to travel to co-ordinates</p>
-        <pre><code>/tardistravel [player]</code></pre>
-        <p>eg. <code>/tardistravel eccentric_nz</code> - to travel to a player</p>
-        <pre><code>/tardistravel dest [name]</code></pre>
-        <p>eg. <code>/tardistravel dest mycoolsavedplace</code> - to travel to a saved destination</p>
-        <pre><code>/tardistravel area [name]</code></pre>
-        <p>eg. <code>/tardistravel area airport</code> - to travel to a server defined TARDIS area</p>
-        <pre><code>/tardistravel biome [biome|list]</code></pre>
-        <p>eg. <code>/tardistravel biome DESERT</code> - to travel to the nearest desert biome</p>
-        <p>eg. <code>/tardistravel biome list</code> - to list all available biome types</p>
-        <pre><code>/tardistravel home</code></pre>
-        <p>Travel to where the TARDIS was first created</p>
-    </section>
+	<header>
+		<h1>TARDIS</h1>
+		<p>A Bukkit plugin for all Doctor Who fans &mdash; create and use a TARDIS! It&rsquo;s bigger on the inside!</p>
+		<p class="view"><a href="https://github.com/eccentricdevotion/TARDIS">View the Project on GitHub <small>eccentricdevotion/TARDIS</small></a></p>
+		<ul>
+			<li><a href="/TARDIS/">Back <strong>home</strong></a></li>
+			<li><a href="commands.html"><strong>Commands</strong> page</a></li>
+			<li><a href="contents.html"><strong>Contents</strong> page</a></li>
+		</ul>
+	</header>
+	<section>
+		<h1>Time travel commands</h1>
+		<h3><code>/tardistravel</code></h3>
+		<p>Set the destination location when exiting the TARDIS. You can either time travel to specific co-ordinates, to a player&rsquo;s location, a saved destination, a specified biome, the TARDIS &lsquo;home&rsquo; location, an underground cave, or an admin preset area. Type:</p>
+		<pre><code>/tardistravel [world] [x] [y] [z]</code></pre>
+		<p>eg. <code>/tardistravel New_New_York -319 64 277</code> - to travel to co-ordinates</p>
+		<pre><code>/tardistravel [player]</code></pre>
+		<p>eg. <code>/tardistravel eccentric_nz</code> - to travel to a player</p>
+		<pre><code>/tardistravel dest [name]</code></pre>
+		<p>eg. <code>/tardistravel dest mycoolsavedplace</code> - to travel to a saved destination</p>
+		<pre><code>/tardistravel area [name]</code></pre>
+		<p>eg. <code>/tardistravel area airport</code> - to travel to a server defined TARDIS area</p>
+		<pre><code>/tardistravel biome [biome|list]</code></pre>
+		<p>eg. <code>/tardistravel biome DESERT</code> - to travel to the nearest desert biome</p>
+		<p>eg. <code>/tardistravel biome list</code> - to list all available biome types</p>
+		<pre><code>/tardistravel home</code></pre>
+		<p>Travel to where the TARDIS was first created</p>
+		<pre><code>/tardistravel cave</code></pre>
+		<p>Travel underground to the nearest cave in a random direction from the TARDISes current location.</p>
+	</section>
 </div>
 <footer>
-    <p>Project maintained by <a href="https://github.com/eccentricdevotion">eccentricdevotion</a></p>
-    <p>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></p>
+	<p>Project maintained by <a href="https://github.com/eccentricdevotion">eccentricdevotion</a></p>
+	<p>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></p>
 </footer>
 <!--[if !IE]><script>fixScale(document);</script><![endif]-->
 </body>
