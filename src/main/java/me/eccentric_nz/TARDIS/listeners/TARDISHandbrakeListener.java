@@ -19,6 +19,7 @@ package me.eccentric_nz.TARDIS.listeners;
 import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.achievement.TARDISAchievementFactory;
+import me.eccentric_nz.TARDIS.artron.TARDISArtronIndicator;
 import me.eccentric_nz.TARDIS.artron.TARDISArtronLevels;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetControls;
@@ -312,7 +313,7 @@ public class TARDISHandbrakeListener implements Listener {
                                         if (!player.getName().equals(owner)) {
                                             Player ptl = plugin.getServer().getPlayer(owner);
                                             if (ptl != null) {
-                                                ptl.sendMessage(plugin.pluginName + "You used " + Math.abs(amount) + " Artron Energy.");
+                                                new TARDISArtronIndicator(plugin).showArtronLevel(ptl, id, true, Math.abs(amount));
                                             }
                                         }
                                     }

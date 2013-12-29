@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.artron.TARDISArtronIndicator;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetControls;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
@@ -216,8 +217,7 @@ public class TARDISArtronCapacitorListener implements Listener {
                                 }
                             } else {
                                 // just tell us how much energy we have
-                                int percent = Math.round((current_level * 100F) / fc);
-                                player.sendMessage(plugin.pluginName + "The Artron Energy Capacitor is at " + percent + "%");
+                                new TARDISArtronIndicator(plugin).showArtronLevel(player, id, true, 0);
                             }
                         }
                     }

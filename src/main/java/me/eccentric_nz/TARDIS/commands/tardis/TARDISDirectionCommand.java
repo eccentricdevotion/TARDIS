@@ -19,6 +19,7 @@ package me.eccentric_nz.TARDIS.commands.tardis;
 import java.util.HashMap;
 import java.util.Locale;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.artron.TARDISArtronIndicator;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
@@ -112,7 +113,7 @@ public class TARDISDirectionCommand {
             HashMap<String, Object> wherea = new HashMap<String, Object>();
             wherea.put("tardis_id", id);
             qf.alterEnergyLevel("tardis", -amount, wherea, player);
-            player.sendMessage(plugin.pluginName + "You used " + amount + " Artron Energy changing the Police Box direction.");
+            new TARDISArtronIndicator(plugin).showArtronLevel(player, id, true, amount);
             return true;
         } else {
             player.sendMessage(plugin.pluginName + MESSAGE.NO_PERMS.getText());
