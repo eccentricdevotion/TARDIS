@@ -62,6 +62,8 @@ public class TARDISPruner {
                 BufferedWriter bw = new BufferedWriter(new FileWriter(file, false));
                 if (rs.isBeforeFirst()) {
                     sender.sendMessage(plugin.pluginName + "Prune List:");
+                } else {
+                    sender.sendMessage(plugin.pluginName + "No TARDISes to prune");
                 }
                 while (rs.next()) {
                     HashMap<String, Object> wherecl = new HashMap<String, Object>();
