@@ -25,6 +25,9 @@ import java.util.List;
 import java.util.Properties;
 import java.util.Set;
 import me.eccentric_nz.TARDIS.ARS.TARDISARSListener;
+import me.eccentric_nz.TARDIS.advanced.TARDISConsoleListener;
+import me.eccentric_nz.TARDIS.artron.TARDISArtronStorageCommand;
+import me.eccentric_nz.TARDIS.artron.TARDISArtronTabComplete;
 import me.eccentric_nz.TARDIS.builders.TARDISBuilderInner;
 import me.eccentric_nz.TARDIS.builders.TARDISPresetBuilderFactory;
 import me.eccentric_nz.TARDIS.builders.TARDISSpace;
@@ -525,6 +528,7 @@ public class TARDIS extends JavaPlugin {
         pm.registerEvents(new TARDISSonicListener(this), this);
         pm.registerEvents(new TARDISSonicEntityListener(this), this);
         pm.registerEvents(new TARDISRenderRoomListener(this), this);
+        pm.registerEvents(new TARDISConsoleListener(this), this);
     }
 
     /**
@@ -539,6 +543,8 @@ public class TARDIS extends JavaPlugin {
         getCommand("tardisadmin").setTabCompleter(new TARDISAdminTabComplete(this));
         getCommand("tardisarea").setExecutor(new TARDISAreaCommands(this));
         getCommand("tardisarea").setTabCompleter(new TARDISAreaTabComplete());
+        getCommand("tardisartron").setExecutor(new TARDISArtronStorageCommand(this));
+        getCommand("tardisartron").setTabCompleter(new TARDISArtronTabComplete());
         getCommand("tardisbind").setExecutor(new TARDISBindCommands(this));
         getCommand("tardisbind").setTabCompleter(new TARDISBindTabComplete());
         getCommand("tardisbook").setExecutor(new TARDISBookCommands(this));
@@ -796,7 +802,7 @@ public class TARDIS extends JavaPlugin {
         File container = getServer().getWorldContainer();
         String s_world = getServer().getWorlds().get(0).getName();
         String server_world = s_world + File.separator + "data" + File.separator;
-        String map = "map_1966.dat";
+        String map = "map_1973.dat";
         String root = container.getAbsolutePath() + File.separator + server_world;
         File file = new File(root, map);
         if (!file.exists()) {
@@ -809,6 +815,12 @@ public class TARDIS extends JavaPlugin {
             String map7 = "map_1970.dat";
             String map8 = "map_1971.dat";
             String map9 = "map_1972.dat";
+            String map10 = "map_1973.dat";
+            String map11 = "map_1974.dat";
+            String map12 = "map_1975.dat";
+            String map13 = "map_1976.dat";
+            String map14 = "map_1977.dat";
+            String map15 = "map_1978.dat";
             console.sendMessage(pluginName + ChatColor.RED + "Could not find TARDIS map files, some recipes will not work!");
             console.sendMessage(pluginName + "Copying map files to the TARDIS folder...");
             TARDISMakeTardisCSV copier = new TARDISMakeTardisCSV(this);
@@ -822,6 +834,12 @@ public class TARDIS extends JavaPlugin {
             copier.copy(getDataFolder() + File.separator + map7, getResource(map7));
             copier.copy(getDataFolder() + File.separator + map8, getResource(map8));
             copier.copy(getDataFolder() + File.separator + map9, getResource(map9));
+            copier.copy(getDataFolder() + File.separator + map10, getResource(map10));
+            copier.copy(getDataFolder() + File.separator + map11, getResource(map11));
+            copier.copy(getDataFolder() + File.separator + map12, getResource(map12));
+            copier.copy(getDataFolder() + File.separator + map13, getResource(map13));
+            copier.copy(getDataFolder() + File.separator + map14, getResource(map14));
+            copier.copy(getDataFolder() + File.separator + map15, getResource(map15));
             console.sendMessage(pluginName + "Please move the new map files to the main world [" + s_world + "] data folder.");
             getServer().getScheduler().scheduleSyncDelayedTask(this, new Runnable() {
                 @Override

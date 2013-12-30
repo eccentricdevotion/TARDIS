@@ -131,7 +131,6 @@ permissions:
       tardis.room.arboretum: true
       tardis.room.baker: true
       tardis.room.bedroom: true
-      tardis.room.cross: true
       tardis.room.empty: true
       tardis.room.farm: true
       tardis.room.gravity: true
@@ -139,7 +138,6 @@ permissions:
       tardis.room.harmony: true
       tardis.room.kitchen: true
       tardis.room.library: true
-      tardis.room.long: true
       tardis.room.mushroom: true
       tardis.room.passage: true
       tardis.room.pool: true
@@ -195,6 +193,9 @@ permissions:
     default: op
   tardis.sonic.emerald:
     description: Allows the sonic screwdriver to be upgraded with Emerald Environment abilities.
+    default: op
+  tardis.store:
+    description: Allows the Artron Energy to be stored in an Artron Storage Cell.
     default: op
 commands:
   tardis:
@@ -455,6 +456,12 @@ commands:
       usage: /<command> remove [name]
       permission: tardis.admin
       permission-message: You don't have the permission <permission> to use this command
+  tardisartron:
+    aliases: [tartron,artron]
+    description: Transfer Artron Energy to an Artron Storage Cell
+    permission: tardis.store
+    permission-message: You don't have the permission <permission> to use this command
+    usage: /<command> [tardis|timelord] [amount]
   tardisbind:
     aliases: tbind
     description: Bind TARDIS commands to buttons and other controls
