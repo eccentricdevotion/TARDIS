@@ -58,6 +58,7 @@ public class TARDISSpace {
             String gm = plugin.getConfig().getString("creation.gamemode").toLowerCase(Locale.ENGLISH);
             if (plugin.pm.isPluginEnabled("MultiWorld")) {
                 plugin.getServer().dispatchCommand(plugin.console, "mw create " + name + " plugin:TARDISChunkGenerator");
+                plugin.getServer().dispatchCommand(plugin.console, "mw load " + name);
                 plugin.getServer().dispatchCommand(plugin.console, "mw setflag " + name + " SpawnMonster false");
                 plugin.getServer().dispatchCommand(plugin.console, "mw setflag " + name + " SpawnAnimal false");
                 plugin.getServer().dispatchCommand(plugin.console, "mw setflag " + name + " PvP false");
