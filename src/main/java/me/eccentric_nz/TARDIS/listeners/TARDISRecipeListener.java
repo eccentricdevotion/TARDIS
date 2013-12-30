@@ -74,7 +74,7 @@ public class TARDISRecipeListener implements Listener {
      * stick). Has huge potential for being a DIAMOND generator, as there is
      * nothing stopping players from changing their key preference to a DIAMOND
      * and crafting as many as they want! Could still be valid if a key material
-     * list is used and the items are of the same or lesser value that 2 sticks
+     * list is used and the items are of the same or lesser value than 2 sticks
      * and a redstone, OR the recipe is changed to be really expensive.
      */
 //    @EventHandler(priority = EventPriority.NORMAL)

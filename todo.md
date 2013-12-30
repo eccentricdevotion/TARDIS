@@ -14,6 +14,7 @@
 7. TARDIS Information System
     * add new features
     * auto log out?
+8. Add a command to purge the database of TARDIS records when someone totally messes up their TARDIS (eg deleted the world the TARDIS was in) - `tardisadmin purge [player]` - will not physically delete blocks or worlds only database records
     
 ## Waiting on Bukkit API
 0. IDs are soon to be history... so convert all ID use to entity names
