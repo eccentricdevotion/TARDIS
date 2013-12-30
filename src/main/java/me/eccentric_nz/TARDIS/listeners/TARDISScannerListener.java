@@ -21,6 +21,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetNextLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
@@ -49,53 +50,11 @@ import org.bukkit.scheduler.BukkitScheduler;
  */
 public class TARDISScannerListener implements Listener {
 
-    public static List<Entity> getNearbyEntities(Location l, int radius) {
-        int chunkRadius = radius < 16 ? 1 : (radius - (radius % 16)) / 16;
-        List<Entity> radiusEntities = new ArrayList<Entity>();
-        for (int chX = 0 - chunkRadius; chX <= chunkRadius; chX++) {
-            for (int chZ = 0 - chunkRadius; chZ <= chunkRadius; chZ++) {
-                int x = (int) l.getX(), y = (int) l.getY(), z = (int) l.getZ();
-                for (Entity e : new Location(l.getWorld(), x + (chX * 16), y, z + (chZ * 16)).getChunk().getEntities()) {
-                    if (e.getLocation().distance(l) <= radius && e.getLocation().getBlock() != l.getBlock()) {
-                        radiusEntities.add(e);
-                    }
-                }
-            }
-        }
-        return radiusEntities;
-    }
     private final TARDIS plugin;
     List<Material> validBlocks = new ArrayList<Material>();
-    List<EntityType> entities = new ArrayList<EntityType>();
 
     public TARDISScannerListener(TARDIS plugin) {
         this.plugin = plugin;
-        entities.add(EntityType.BAT);
-        entities.add(EntityType.BLAZE);
-        entities.add(EntityType.CAVE_SPIDER);
-        entities.add(EntityType.CHICKEN);
-        entities.add(EntityType.COW);
-        entities.add(EntityType.CREEPER);
-        entities.add(EntityType.ENDERMAN);
-        entities.add(EntityType.GHAST);
-        entities.add(EntityType.HORSE);
-        entities.add(EntityType.IRON_GOLEM);
-        entities.add(EntityType.MAGMA_CUBE);
-        entities.add(EntityType.MUSHROOM_COW);
-        entities.add(EntityType.OCELOT);
-        entities.add(EntityType.PIG);
-        entities.add(EntityType.PIG_ZOMBIE);
-        entities.add(EntityType.PLAYER);
-        entities.add(EntityType.SHEEP);
-        entities.add(EntityType.SILVERFISH);
-        entities.add(EntityType.SKELETON);
-        entities.add(EntityType.SLIME);
-        entities.add(EntityType.SPIDER);
-        entities.add(EntityType.SQUID);
-        entities.add(EntityType.VILLAGER);
-        entities.add(EntityType.WITCH);
-        entities.add(EntityType.WOLF);
-        entities.add(EntityType.ZOMBIE);
         validBlocks.add(Material.LEVER);
         validBlocks.add(Material.REDSTONE_COMPARATOR_OFF);
         validBlocks.add(Material.REDSTONE_COMPARATOR_ON);
@@ -161,7 +120,7 @@ public class TARDISScannerListener implements Listener {
                     final List<String> playernames = new ArrayList<String>();
                     for (Entity k : getNearbyEntities(scan_loc, 16)) {
                         EntityType et = k.getType();
-                        if (entities.contains(et)) {
+                        if (TARDISConstants.ENTITY_TYPES.contains(et)) {
                             Integer entity_count = (scannedentities.containsKey(et)) ? scannedentities.get(et) : 0;
                             boolean visible = true;
                             if (et.equals(EntityType.PLAYER)) {
@@ -265,5 +224,21 @@ public class TARDISScannerListener implements Listener {
                 }
             }
         }
+    }
+
+    public static List<Entity> getNearbyEntities(Location l, int radius) {
+        int chunkRadius = radius < 16 ? 1 : (radius - (radius % 16)) / 16;
+        List<Entity> radiusEntities = new ArrayList<Entity>();
+        for (int chX = 0 - chunkRadius; chX <= chunkRadius; chX++) {
+            for (int chZ = 0 - chunkRadius; chZ <= chunkRadius; chZ++) {
+                int x = (int) l.getX(), y = (int) l.getY(), z = (int) l.getZ();
+                for (Entity e : new Location(l.getWorld(), x + (chX * 16), y, z + (chZ * 16)).getChunk().getEntities()) {
+                    if (e.getLocation().distance(l) <= radius && e.getLocation().getBlock() != l.getBlock()) {
+                        radiusEntities.add(e);
+                    }
+                }
+            }
+        }
+        return radiusEntities;
     }
 }

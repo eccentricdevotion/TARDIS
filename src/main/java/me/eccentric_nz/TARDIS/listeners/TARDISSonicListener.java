@@ -22,6 +22,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.commands.admin.TARDISAdminMenuInventory;
 import me.eccentric_nz.TARDIS.database.ResultSetBackLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetDoors;
@@ -73,7 +74,6 @@ public class TARDISSonicListener implements Listener {
     private final List<Material> doors = new ArrayList<Material>();
     private final List<Material> redstone = new ArrayList<Material>();
     private final List<String> frozenPlayers = new ArrayList<String>();
-    private final List<EntityType> entities = new ArrayList<EntityType>();
     private final List<BlockFace> faces = new ArrayList<BlockFace>();
 
     public TARDISSonicListener(TARDIS plugin) {
@@ -101,32 +101,6 @@ public class TARDISSonicListener implements Listener {
         redstone.add(Material.REDSTONE_LAMP_OFF);
         redstone.add(Material.REDSTONE_LAMP_ON);
         redstone.add(Material.REDSTONE_WIRE);
-        entities.add(EntityType.BAT);
-        entities.add(EntityType.BLAZE);
-        entities.add(EntityType.CAVE_SPIDER);
-        entities.add(EntityType.CHICKEN);
-        entities.add(EntityType.COW);
-        entities.add(EntityType.CREEPER);
-        entities.add(EntityType.ENDERMAN);
-        entities.add(EntityType.GHAST);
-        entities.add(EntityType.HORSE);
-        entities.add(EntityType.IRON_GOLEM);
-        entities.add(EntityType.MAGMA_CUBE);
-        entities.add(EntityType.MUSHROOM_COW);
-        entities.add(EntityType.OCELOT);
-        entities.add(EntityType.PIG);
-        entities.add(EntityType.PIG_ZOMBIE);
-        entities.add(EntityType.PLAYER);
-        entities.add(EntityType.SHEEP);
-        entities.add(EntityType.SILVERFISH);
-        entities.add(EntityType.SKELETON);
-        entities.add(EntityType.SLIME);
-        entities.add(EntityType.SPIDER);
-        entities.add(EntityType.SQUID);
-        entities.add(EntityType.VILLAGER);
-        entities.add(EntityType.WITCH);
-        entities.add(EntityType.WOLF);
-        entities.add(EntityType.ZOMBIE);
         faces.add(BlockFace.NORTH);
         faces.add(BlockFace.SOUTH);
         faces.add(BlockFace.EAST);
@@ -508,7 +482,7 @@ public class TARDISSonicListener implements Listener {
         final List<String> playernames = new ArrayList<String>();
         for (Entity k : getNearbyEntities(scan_loc, 16)) {
             EntityType et = k.getType();
-            if (entities.contains(et)) {
+            if (TARDISConstants.ENTITY_TYPES.contains(et)) {
                 Integer entity_count = (scannedentities.containsKey(et)) ? scannedentities.get(et) : 0;
                 boolean visible = true;
                 if (et.equals(EntityType.PLAYER)) {

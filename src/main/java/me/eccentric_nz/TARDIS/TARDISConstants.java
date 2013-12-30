@@ -19,6 +19,7 @@ package me.eccentric_nz.TARDIS;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
+import org.bukkit.entity.EntityType;
 
 /**
  * One of the key features of a TARDIS is that the interior exists in a
@@ -43,6 +44,7 @@ public class TARDISConstants {
     public static final List<Integer> CHAMELEON_BLOCKS_NEXT = Arrays.asList(new Integer[]{0, 27, 28, 30, 31, 32, 37, 38, 39, 40, 66, 151});
     public static final List<Integer> CHAMELEON_BLOCKS_PRECIOUS = Arrays.asList(new Integer[]{41, 42, 46, 57, 133, 152, 173});
     public static final List<String> vowels = Arrays.asList(new String[]{"A", "E", "I", "O", "U"});
+    public static final List<EntityType> ENTITY_TYPES = Arrays.asList(EntityType.BAT, EntityType.BLAZE, EntityType.CAVE_SPIDER, EntityType.CHICKEN, EntityType.COW, EntityType.CREEPER, EntityType.ENDERMAN, EntityType.GHAST, EntityType.HORSE, EntityType.IRON_GOLEM, EntityType.MAGMA_CUBE, EntityType.MUSHROOM_COW, EntityType.OCELOT, EntityType.PIG, EntityType.PIG_ZOMBIE, EntityType.PLAYER, EntityType.SHEEP, EntityType.SILVERFISH, EntityType.SKELETON, EntityType.SLIME, EntityType.SPIDER, EntityType.SQUID, EntityType.VILLAGER, EntityType.WITCH, EntityType.WOLF, EntityType.ZOMBIE);
 
     /**
      * Creates a HashMap from two arrays. The resulting map is used by the
