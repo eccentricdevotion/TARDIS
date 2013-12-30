@@ -734,7 +734,7 @@ public class TARDISDoorListener implements Listener {
             if (!inv.contains(m)) {
                 ItemStack is = new ItemStack(m, 1);
                 TARDISItemRenamer ir = new TARDISItemRenamer(is);
-                ir.setName("Sonic Screwdriver", true);
+                ir.setName("TARDIS Key", true);
                 inv.addItem(is);
                 p.updateInventory();
                 p.sendMessage(plugin.pluginName + "Don't forget your TARDIS key!");
