@@ -7,6 +7,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Set;
 import me.eccentric_nz.TARDIS.TARDIS;
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ShapedRecipe;
@@ -66,23 +67,27 @@ public class TARDISShapedRecipe {
         ShapedRecipe r = new ShapedRecipe(is);
         // get shape
         String difficulty = plugin.getConfig().getString("preferences.difficulty");
-        String[] shape_tmp = plugin.getRecipesConfig().getString("shaped." + s + "." + difficulty + "_shape").split(",");
-        String[] shape = new String[3];
-        for (int i = 0; i < 3; i++) {
-            shape[i] = shape_tmp[i].replaceAll("-", " ");
-        }
-        r.shape(shape[0], shape[1], shape[2]);
-        Set<String> ingredients = plugin.getRecipesConfig().getConfigurationSection("shaped." + s + "." + difficulty + "_ingredients").getKeys(false);
-        for (String g : ingredients) {
-            char c = g.charAt(0);
-            String[] recipe_iddata = plugin.getRecipesConfig().getString("shaped." + s + "." + difficulty + "_ingredients." + g).split(":");
-            Material m = Material.valueOf(recipe_iddata[0]);
-            if (recipe_iddata.length == 2) {
-                int recipe_data = Integer.parseInt(recipe_iddata[1]);
-                r.setIngredient(c, m, recipe_data);
-            } else {
-                r.setIngredient(c, m);
+        try {
+            String[] shape_tmp = plugin.getRecipesConfig().getString("shaped." + s + "." + difficulty + "_shape").split(",");
+            String[] shape = new String[3];
+            for (int i = 0; i < 3; i++) {
+                shape[i] = shape_tmp[i].replaceAll("-", " ");
             }
+            r.shape(shape[0], shape[1], shape[2]);
+            Set<String> ingredients = plugin.getRecipesConfig().getConfigurationSection("shaped." + s + "." + difficulty + "_ingredients").getKeys(false);
+            for (String g : ingredients) {
+                char c = g.charAt(0);
+                String[] recipe_iddata = plugin.getRecipesConfig().getString("shaped." + s + "." + difficulty + "_ingredients." + g).split(":");
+                Material m = Material.valueOf(recipe_iddata[0]);
+                if (recipe_iddata.length == 2) {
+                    int recipe_data = Integer.parseInt(recipe_iddata[1]);
+                    r.setIngredient(c, m, recipe_data);
+                } else {
+                    r.setIngredient(c, m);
+                }
+            }
+        } catch (IllegalArgumentException e) {
+            plugin.console.sendMessage(plugin.pluginName + ChatColor.RED + s + " recipe failed! " + ChatColor.RESET + "Check the recipe config file!");
         }
         shapedRecipes.put(s, r);
         return r;
