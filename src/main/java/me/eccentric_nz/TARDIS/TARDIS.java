@@ -383,6 +383,7 @@ public class TARDIS extends JavaPlugin {
             saveConfig();
             closeDatabase();
             resetTime();
+            getServer().getScheduler().cancelTasks(this);
         }
     }
 
