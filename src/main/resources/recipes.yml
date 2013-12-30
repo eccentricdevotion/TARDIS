@@ -102,17 +102,15 @@ shaped:
         amount: 1
         lore: ""
     TARDIS ARS Circuit:
-        easy_shape: SSS,DPT,RRR
+        easy_shape: SSS,T-T,RRR
         easy_ingredients:
             S: SEEDS
-            E: DIODE
-            P: PISTON_BASE
             T: REDSTONE_TORCH_ON
             R: REDSTONE
         hard_shape: SSS,DPT,RRR
         hard_ingredients:
             S: SEEDS
-            E: DIODE
+            D: DIODE
             P: PISTON_BASE
             T: REDSTONE_TORCH_ON
             R: REDSTONE
@@ -120,83 +118,56 @@ shaped:
         amount: 1
         lore: ""
     TARDIS Temporal Circuit:
-        easy_shape: -G-,RER,-G-
+        easy_shape: -I-,RWR,-I-
         easy_ingredients:
-            G: GOLD_INGOT
-            E: DETECTOR_RAIL
+            I: IRON_INGOT
             R: REDSTONE
-        hard_shape: DGD,GEG,RMR
+            W: WATCH
+        hard_shape: -I-,RWR,QIQ
         hard_ingredients:
-            D: DIODE
-            G: GOLD_INGOT
-            E: DETECTOR_RAIL
+            I: IRON_INGOT
             R: REDSTONE
-            M: 'MAP:1964'
+            W: WATCH
+            Q: QUARTZ
         result: 'MAP:1974'
         amount: 1
         lore: ""
     TARDIS Memory Circuit:
-        easy_shape: -G-,RER,-G-
+        easy_shape: -T-,TCT,-T-
         easy_ingredients:
-            G: GOLD_INGOT
-            E: DETECTOR_RAIL
-            R: REDSTONE
-        hard_shape: DGD,GEG,RMR
+            T: REDSTONE_TORCH_ON
+            C: CHEST
+        hard_shape: RTR,TCT,RTR
         hard_ingredients:
-            D: DIODE
-            G: GOLD_INGOT
-            E: DETECTOR_RAIL
-            R: REDSTONE
-            M: 'MAP:1964'
+            R: 'SAND:1'
+            T: REDSTONE_TORCH_ON
+            C: TRAPPED_CHEST
         result: 'MAP:1975'
         amount: 1
         lore: ""
     TARDIS Input Circuit:
-        easy_shape: -G-,RER,-G-
+        easy_shape: -R-,-S-,-R-
         easy_ingredients:
-            G: GOLD_INGOT
-            E: DETECTOR_RAIL
             R: REDSTONE
-        hard_shape: DGD,GEG,RMR
+            S: SIGN
+        hard_shape: -R-,-S-,-R-
         hard_ingredients:
-            D: DIODE
-            G: GOLD_INGOT
-            E: DETECTOR_RAIL
             R: REDSTONE
-            M: 'MAP:1964'
+            S: SIGN
         result: 'MAP:1976'
         amount: 1
         lore: ""
     TARDIS Scanner Circuit:
-        easy_shape: -G-,RER,-G-
+        easy_shape: GRG,RGR,GRG
         easy_ingredients:
-            G: GOLD_INGOT
-            E: DETECTOR_RAIL
+            G: THIN_GLASS
             R: REDSTONE
-        hard_shape: DGD,GEG,RMR
+        hard_shape: GRG,RER,GRG
         hard_ingredients:
-            D: DIODE
-            G: GOLD_INGOT
-            E: DETECTOR_RAIL
+            G: GLASS
+            E: SPIDER_EYE
             R: REDSTONE
-            M: 'MAP:1964'
         result: 'MAP:1977'
-        amount: 1
-        lore: ""
-    TARDIS Renderer Circuit:
-        easy_shape: -G-,RER,-G-
-        easy_ingredients:
-            G: GOLD_INGOT
-            E: DETECTOR_RAIL
-            R: REDSTONE
-        hard_shape: DGD,GEG,RMR
-        hard_ingredients:
-            D: DIODE
-            G: GOLD_INGOT
-            E: DETECTOR_RAIL
-            R: REDSTONE
-            M: 'MAP:1964'
-        result: 'MAP:1978'
         amount: 1
         lore: ""
     TARDIS Key:
@@ -321,7 +292,7 @@ shaped:
             B: BUCKET
             R: REDSTONE
             L: 'STAINED_GLASS:5'
-        easy_shape: -B-,LRL,-L-
+        hard_shape: -B-,LRL,-L-
         hard_ingredients:
             B: BUCKET
             L: 'STAINED_GLASS:5'
