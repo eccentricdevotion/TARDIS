@@ -30,7 +30,7 @@ import org.bukkit.util.StringUtil;
 public class TARDISTabComplete implements TabCompleter {
 
     private final TARDIS plugin;
-    private final List<String> ROOT_SUBS = ImmutableList.of("abort", "add", "arsremove", "chameleon", "comehere", "direction", "ep1", "exterminate", "find", "help", "hide", "home", "inside", "jettison", "list", "namekey", "occupy", "rebuild", "remove", "removesave", "rescue", "room", "save", "secondary", "setdest", "tagtheood", "update", "version");
+    private final List<String> ROOT_SUBS = ImmutableList.of("abort", "add", "arsremove", "chameleon", "comehere", "direction", "ep1", "erase", "exterminate", "find", "help", "hide", "home", "inside", "jettison", "list", "namekey", "occupy", "rebuild", "remove", "removesave", "rescue", "room", "save", "save_player", "secondary", "setdest", "tagtheood", "update", "version");
     private final List<String> CHAM_SUBS = ImmutableList.of("on", "off", "short", "reset");
     private final List<String> DIR_SUBS = ImmutableList.of("north", "west", "south", "east");
     private final List<String> LIST_SUBS = ImmutableList.of("companions", "saves", "areas", "rechargers");
@@ -58,7 +58,7 @@ public class TARDISTabComplete implements TabCompleter {
                 return partial(lastArg, DIR_SUBS);
             } else if (sub.equals("list")) {
                 return partial(lastArg, LIST_SUBS);
-            } else if (sub.equals("rescue")) {
+            } else if (sub.equals("rescue") || sub.equals("save_player")) {
                 return null;
             } else if (sub.equals("room") || sub.equals("jettison")) {
                 return partial(lastArg, plugin.getRoomsConfig().getConfigurationSection("rooms").getKeys(false));

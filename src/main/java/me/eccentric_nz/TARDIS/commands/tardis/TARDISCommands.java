@@ -21,6 +21,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.advanced.TARDISDiskWriterCommand;
 import me.eccentric_nz.TARDIS.enumeration.CMDS;
 import me.eccentric_nz.TARDIS.travel.TARDISPluginRespect;
 import org.bukkit.*;
@@ -28,6 +29,7 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 
 /**
  * Command /tardis [arguments].
@@ -66,6 +68,7 @@ public class TARDISCommands implements CommandExecutor {
         firstArgs.add("comehere");
         firstArgs.add("direction");
         firstArgs.add("ep1");
+        firstArgs.add("erase");
         firstArgs.add("exterminate");
         firstArgs.add("find");
         firstArgs.add("gravity");
@@ -84,6 +87,7 @@ public class TARDISCommands implements CommandExecutor {
         firstArgs.add("rescue");
         firstArgs.add("room");
         firstArgs.add("save");
+        firstArgs.add("save_player");
         firstArgs.add("secondary");
         firstArgs.add("setdest");
         firstArgs.add("tagtheood");
@@ -192,7 +196,24 @@ public class TARDISCommands implements CommandExecutor {
                     return new TARDISRemoveCompanionCommand(plugin).doRemoveCompanion(player, args);
                 }
                 if (args[0].equalsIgnoreCase("save")) {
-                    return new TARDISSaveLocationCommand(plugin).doSave(player, args);
+                    ItemStack is = player.getItemInHand();
+                    if (is.hasItemMeta() && is.getItemMeta().getDisplayName().equals("Save Storage Disk")) {
+                        return new TARDISDiskWriterCommand(plugin).writeSave(player, args);
+                    } else {
+                        return new TARDISSaveLocationCommand(plugin).doSave(player, args);
+                    }
+                }
+                if (args[0].equalsIgnoreCase("save_player")) {
+                    ItemStack is = player.getItemInHand();
+                    if (is.hasItemMeta() && is.getItemMeta().getDisplayName().equals("Player Storage Disk")) {
+                        return new TARDISDiskWriterCommand(plugin).writePlayer(player, args);
+                    } else {
+                        sender.sendMessage(plugin.pluginName + "You must be holding a Player Storage Disk in your hand!");
+                        return true;
+                    }
+                }
+                if (args[0].equalsIgnoreCase("erase")) {
+                    return new TARDISDiskWriterCommand(plugin).eraseDisk(player);
                 }
                 if (args[0].equalsIgnoreCase("removesave")) {
                     return new TARDISRemoveSavedLocationCommand(plugin).doRemoveSave(player, args);

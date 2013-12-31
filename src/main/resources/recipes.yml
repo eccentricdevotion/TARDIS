@@ -314,12 +314,12 @@ shapeless:
         result: RECORD_12
         amount: 1
         lore: "Blank"
-    Blank Biome Storage Disk:
+    Biome Storage Disk:
         recipe: RECORD_9,EMERALD
         result: GREEN_RECORD
         amount: 1
         lore: "Blank"
-    Blank Preset Storage Disk:
+    Preset Storage Disk:
         recipe: 'RECORD_9,MAP:1966'
         result: RECORD_6
         amount: 1
