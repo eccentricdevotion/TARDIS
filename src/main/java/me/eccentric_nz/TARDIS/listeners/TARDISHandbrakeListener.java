@@ -28,6 +28,7 @@ import me.eccentric_nz.TARDIS.database.ResultSetNextLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
+import me.eccentric_nz.TARDIS.enumeration.MESSAGE;
 import me.eccentric_nz.TARDIS.travel.TARDISMalfunction;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -105,7 +106,9 @@ public class TARDISHandbrakeListener implements Listener {
                         String creeper = rs.getCreeper();
                         Location exit = null;
                         boolean error = false;
-                        if (!plugin.tardisDematerialising.contains(Integer.valueOf(id)) && !plugin.tardisMaterialising.contains(id)) {
+                        if (plugin.tardisDematerialising.contains(Integer.valueOf(id)) || plugin.tardisMaterialising.contains(Integer.valueOf(id))) {
+                            player.sendMessage(plugin.pluginName + "You cannot change the handbrake while the TARDIS is in the time vortex!");
+                        } else {
                             Action action = event.getAction();
                             BlockState state = block.getState();
                             Lever lever = (Lever) state.getData();
@@ -131,7 +134,7 @@ public class TARDISHandbrakeListener implements Listener {
                                         wherecl.put("tardis_id", id);
                                         ResultSetCurrentLocation rscl = new ResultSetCurrentLocation(plugin, wherecl);
                                         if (!rscl.resultSet()) {
-                                            player.sendMessage(plugin.pluginName + "Could not get current TARDIS location!");
+                                            player.sendMessage(plugin.pluginName + MESSAGE.NO_CURRENT.getText());
                                             return;
                                         }
                                         final COMPASS cd = rscl.getDirection();
@@ -208,7 +211,7 @@ public class TARDISHandbrakeListener implements Listener {
                                             }
                                             boolean mat = plugin.getConfig().getBoolean("police_box.materialise");
                                             if (!rs.isHidden() && !plugin.trackReset.contains(resetw)) {
-                                                plugin.tardisDematerialising.add(Integer.valueOf(id));
+                                                plugin.tardisDematerialising.add(Integer.valueOf(Integer.valueOf(id)));
                                                 if (sub) {
                                                     plugin.trackSubmarine.add(Integer.valueOf(id));
                                                 }
@@ -248,7 +251,7 @@ public class TARDISHandbrakeListener implements Listener {
                                             wherecu.put("tardis_id", id);
                                             ResultSetCurrentLocation rscu = new ResultSetCurrentLocation(plugin, wherecu);
                                             if (!rscu.resultSet()) {
-                                                player.sendMessage(plugin.pluginName + "Could not get current TARDIS location!");
+                                                player.sendMessage(plugin.pluginName + MESSAGE.NO_CURRENT.getText());
                                                 return;
                                             }
                                             // back
@@ -338,8 +341,6 @@ public class TARDISHandbrakeListener implements Listener {
                                     taf.doAchievement(dist);
                                 }
                             }
-                        } else {
-                            player.sendMessage(plugin.pluginName + "You cannot change the handbrake while the TARDIS is in the time vortex!");
                         }
                     }
                 }

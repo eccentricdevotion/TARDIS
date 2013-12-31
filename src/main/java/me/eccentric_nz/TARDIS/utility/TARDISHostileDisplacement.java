@@ -133,7 +133,7 @@ public class TARDISHostileDisplacement {
                                     plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
                                         @Override
                                         public void run() {
-                                            plugin.tardisDematerialising.add(id);
+                                            plugin.tardisDematerialising.add(Integer.valueOf(id));
                                             plugin.destroyerP.destroyPreset(loc, d, id, false, mat, cham, player);
                                         }
                                     }, delay);

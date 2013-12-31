@@ -29,6 +29,7 @@ import me.eccentric_nz.TARDIS.database.ResultSetDoors;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
+import me.eccentric_nz.TARDIS.enumeration.MESSAGE;
 import me.eccentric_nz.TARDIS.travel.TARDISDoorLocation;
 import me.eccentric_nz.TARDIS.travel.TARDISFarmer;
 import me.eccentric_nz.TARDIS.travel.TARDISMob;
@@ -297,7 +298,7 @@ public class TARDISDoorListener implements Listener {
                                     wherecl.put("tardis_id", rs.getTardis_id());
                                     ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
                                     if (!rsc.resultSet()) {
-                                        player.sendMessage(plugin.pluginName + "Could not get current TARDIS location!");
+                                        player.sendMessage(plugin.pluginName + MESSAGE.NO_CURRENT.getText());
                                         return;
                                     }
                                     COMPASS d_backup = rsc.getDirection();
@@ -327,7 +328,7 @@ public class TARDISDoorListener implements Listener {
                                         case 1:
                                         case 4:
                                             // is the TARDIS materialising?
-                                            if (plugin.tardisMaterialising.contains(id) || plugin.tardisDematerialising.contains(id)) {
+                                            if (plugin.tardisMaterialising.contains(Integer.valueOf(id)) || plugin.tardisDematerialising.contains(Integer.valueOf(id))) {
                                                 player.sendMessage(plugin.pluginName + "The TARDIS is still travelling... you would get lost in the time vortex!");
                                                 return;
                                             }
@@ -387,7 +388,7 @@ public class TARDISDoorListener implements Listener {
                                             break;
                                         case 0:
                                             // is the TARDIS materialising?
-                                            if (plugin.tardisMaterialising.contains(id) || plugin.tardisDematerialising.contains(id)) {
+                                            if (plugin.tardisMaterialising.contains(Integer.valueOf(id)) || plugin.tardisDematerialising.contains(Integer.valueOf(id))) {
                                                 player.sendMessage(plugin.pluginName + "The TARDIS is still travelling... you would get lost in the time vortex!");
                                                 return;
                                             }

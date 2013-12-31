@@ -100,7 +100,7 @@ public class TARDISComehereCommand {
                     player.sendMessage(plugin.pluginName + "You cannot bring the Police Box here because you are inside a TARDIS!");
                     return true;
                 }
-                if (plugin.tardisMaterialising.contains(id) || plugin.tardisDematerialising.contains(id)) {
+                if (plugin.tardisMaterialising.contains(Integer.valueOf(id)) || plugin.tardisDematerialising.contains(Integer.valueOf(id))) {
                     player.sendMessage(plugin.pluginName + "You cannot do that while the TARDIS is materialising!");
                     return true;
                 }
@@ -140,7 +140,7 @@ public class TARDISComehereCommand {
                     }
                     int ch = plugin.getArtronConfig().getInt("comehere");
                     if (level < ch) {
-                        player.sendMessage(plugin.pluginName + ChatColor.RED + "The TARDIS does not have enough Artron Energy to make this trip!");
+                        player.sendMessage(plugin.pluginName + ChatColor.RED + MESSAGE.NOT_ENOUGH_ENERGY.getText());
                         return true;
                     }
                     final Player p = player;
@@ -183,7 +183,7 @@ public class TARDISComehereCommand {
                             @Override
                             public void run() {
                                 if (!hidden) {
-                                    plugin.tardisDematerialising.add(id);
+                                    plugin.tardisDematerialising.add(Integer.valueOf(id));
                                     plugin.destroyerP.destroyPreset(oldSave, d, id, false, mat, cham, p);
                                 } else {
                                     plugin.destroyerP.removeBlockProtection(id, qf);

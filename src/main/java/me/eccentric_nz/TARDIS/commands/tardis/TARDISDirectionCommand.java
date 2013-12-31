@@ -61,7 +61,7 @@ public class TARDISDirectionCommand {
                 player.sendMessage(plugin.pluginName + "The TARDIS does not have enough Artron Energy to change the Police Box direction!");
                 return true;
             }
-            if (plugin.tardisMaterialising.contains(id) || plugin.tardisDematerialising.contains(id)) {
+            if (plugin.tardisMaterialising.contains(Integer.valueOf(id)) || plugin.tardisDematerialising.contains(Integer.valueOf(id))) {
                 player.sendMessage(plugin.pluginName + "You cannot do that while the TARDIS is materialising!");
                 return true;
             }

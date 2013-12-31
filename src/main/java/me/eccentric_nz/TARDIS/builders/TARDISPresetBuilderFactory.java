@@ -156,12 +156,12 @@ public class TARDISPresetBuilderFactory {
                 }, 10L);
             } else {
                 if (plugin.getConfig().getBoolean("police_box.materialise")) {
-                    plugin.tardisMaterialising.add(id);
+                    plugin.tardisMaterialising.add(Integer.valueOf(id));
                     TARDISMaterialisationPreset runnable = new TARDISMaterialisationPreset(plugin, l, preset, id, d, p, mal, lamp, sub, cham_id, cham_data);
                     int taskID = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, runnable, 10L, 20L);
                     runnable.setTask(taskID);
                 } else {
-                    plugin.tardisMaterialising.add(id);
+                    plugin.tardisMaterialising.add(Integer.valueOf(id));
                     TARDISInstaPreset insta = new TARDISInstaPreset(plugin, l, preset, id, d, p.getName(), mal, lamp, sub, cham_id, cham_data, false);
                     insta.buildPreset();
                 }

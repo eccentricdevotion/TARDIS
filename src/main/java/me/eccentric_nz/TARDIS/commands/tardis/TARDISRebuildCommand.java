@@ -59,7 +59,7 @@ public class TARDISRebuildCommand {
                 return true;
             }
             int level = rs.getArtron_level();
-            if (plugin.tardisMaterialising.contains(id) || plugin.tardisDematerialising.contains(id)) {
+            if (plugin.tardisMaterialising.contains(Integer.valueOf(id)) || plugin.tardisDematerialising.contains(Integer.valueOf(id))) {
                 player.sendMessage(plugin.pluginName + "You cannot do that while the TARDIS is materialising!");
                 return true;
             }

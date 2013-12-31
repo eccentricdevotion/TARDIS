@@ -140,7 +140,7 @@ public class TARDISStattenheimListener implements Listener {
                         player.sendMessage(plugin.pluginName + "You cannot bring the Police Box here because you are inside a TARDIS!");
                         return;
                     }
-                    if (plugin.tardisMaterialising.contains(id) || plugin.tardisDematerialising.contains(id)) {
+                    if (plugin.tardisMaterialising.contains(Integer.valueOf(id)) || plugin.tardisDematerialising.contains(Integer.valueOf(id))) {
                         player.sendMessage(plugin.pluginName + "You cannot do that while the TARDIS is materialising!");
                         return;
                     }
@@ -149,7 +149,7 @@ public class TARDISStattenheimListener implements Listener {
                     wherecl.put("tardis_id", rs.getTardis_id());
                     ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
                     if (!rsc.resultSet()) {
-                        player.sendMessage(plugin.pluginName + "Could not get current TARDIS location!");
+                        player.sendMessage(plugin.pluginName + MESSAGE.NO_CURRENT.getText());
                         return;
                     }
                     final COMPASS d = rsc.getDirection();
@@ -176,7 +176,7 @@ public class TARDISStattenheimListener implements Listener {
                     }
                     int ch = plugin.getArtronConfig().getInt("comehere");
                     if (level < ch) {
-                        player.sendMessage(plugin.pluginName + ChatColor.RED + "The TARDIS does not have enough Artron Energy to make this trip!");
+                        player.sendMessage(plugin.pluginName + ChatColor.RED + MESSAGE.NOT_ENOUGH_ENERGY.getText());
                         return;
                     }
                     final Player p = player;
@@ -219,7 +219,7 @@ public class TARDISStattenheimListener implements Listener {
                             @Override
                             public void run() {
                                 if (!hidden) {
-                                    plugin.tardisDematerialising.add(id);
+                                    plugin.tardisDematerialising.add(Integer.valueOf(id));
                                     plugin.destroyerP.destroyPreset(oldSave, d, id, false, mat, cham, p);
                                 } else {
                                     plugin.destroyerP.removeBlockProtection(id, qf);

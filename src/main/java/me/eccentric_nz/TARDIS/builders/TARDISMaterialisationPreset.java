@@ -114,7 +114,7 @@ public class TARDISMaterialisationPreset implements Runnable {
 
     @Override
     public void run() {
-        if (!plugin.tardisDematerialising.contains(tid)) {
+        if (!plugin.tardisDematerialising.contains(Integer.valueOf(tid))) {
             int[][] ids;
             byte[][] datas;
             // get relative locations
