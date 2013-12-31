@@ -24,7 +24,11 @@ public enum MESSAGE {
 
     NO_PERMS("You do not have permission to do that!"),
     NOT_OWNER("You are not the Timelord or Companion for this TARDIS!"),
-    NO_TARDIS("You have not created a TARDIS yet!");
+    NO_TARDIS("You have not created a TARDIS yet!"),
+    NO_CURRENT("Could not get current TARDIS location!"),
+    NOT_ENOUGH_ENERGY("The TARDIS does not have enough Artron Energy to make this trip!"),
+    NOT_WHILE_TRAVELLING("You cannot set a destination while the TARDIS is travelling!");
+
     String text;
 
     public String getText() {

@@ -18,7 +18,6 @@ package me.eccentric_nz.TARDIS.commands.tardis;
 
 import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetDestinations;
@@ -52,7 +51,7 @@ public class TARDISSaveLocationCommand {
                 return false;
             }
             if (!args[1].matches("[A-Za-z0-9_]{2,16}")) {
-                player.sendMessage(plugin.pluginName + "That doesn't appear to be a valid save name (it may be too long or contains spaces).");
+                player.sendMessage(plugin.pluginName + "That doesn't appear to be a valid save name (it may be too long or contain spaces).");
                 return false;
             } else {
                 int id = rs.getTardis_id();
@@ -71,7 +70,7 @@ public class TARDISSaveLocationCommand {
                 wherecl.put("tardis_id", rs.getTardis_id());
                 ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
                 if (!rsc.resultSet()) {
-                    player.sendMessage(plugin.pluginName + "Could not get current TARDIS location!");
+                    player.sendMessage(plugin.pluginName + MESSAGE.NO_CURRENT.getText());
                     return true;
                 }
                 QueryFactory qf = new QueryFactory(plugin);

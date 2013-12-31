@@ -25,6 +25,7 @@ import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
+import me.eccentric_nz.TARDIS.enumeration.MESSAGE;
 import org.bukkit.command.CommandSender;
 
 /**
@@ -52,7 +53,7 @@ public class TARDISListTardisesCommand {
                         wherecl.put("tardis_id", plugin.utils.parseNum(map.get("tardis_id")));
                         ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
                         if (!rsc.resultSet()) {
-                            sender.sendMessage(plugin.pluginName + "Could not get current TARDIS location!");
+                            sender.sendMessage(plugin.pluginName + MESSAGE.NO_CURRENT.getText());
                             return true;
                         }
                         String line = "Timelord: " + map.get("owner") + ", Location: " + rsc.getWorld().getName() + ":" + rsc.getX() + ":" + rsc.getY() + ":" + rsc.getZ();
@@ -84,7 +85,7 @@ public class TARDISListTardisesCommand {
                     wherecl.put("tardis_id", plugin.utils.parseNum(map.get("tardis_id")));
                     ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
                     if (!rsc.resultSet()) {
-                        sender.sendMessage(plugin.pluginName + "Could not get current TARDIS location!");
+                        sender.sendMessage(plugin.pluginName + MESSAGE.NO_CURRENT.getText());
                         return true;
                     }
                     sender.sendMessage("Timelord: " + map.get("owner") + ", Location: " + rsc.getWorld().getName() + ":" + rsc.getX() + ":" + rsc.getY() + ":" + rsc.getZ());

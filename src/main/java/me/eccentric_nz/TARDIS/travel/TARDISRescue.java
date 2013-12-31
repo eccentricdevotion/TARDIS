@@ -23,6 +23,7 @@ import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
+import me.eccentric_nz.TARDIS.enumeration.MESSAGE;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.World;
@@ -117,12 +118,12 @@ public class TARDISRescue {
             where.put("owner", player.getName());
             ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
             if (!rs.resultSet()) {
-                player.sendMessage(plugin.pluginName + "You are not a Timelord. You need to create a TARDIS before using this command!");
+                player.sendMessage(plugin.pluginName + MESSAGE.NO_TARDIS.getText());
                 return true;
             }
             int id = rs.getTardis_id();
             if (!rs.isHandbrake_on()) {
-                player.sendMessage(plugin.pluginName + ChatColor.RED + "You cannot set a destination while the TARDIS is travelling!");
+                player.sendMessage(plugin.pluginName + ChatColor.RED + MESSAGE.NOT_WHILE_TRAVELLING.getText());
                 return true;
             }
             HashMap<String, Object> wheret = new HashMap<String, Object>();
@@ -140,7 +141,7 @@ public class TARDISRescue {
             int level = rs.getArtron_level();
             int travel = plugin.getArtronConfig().getInt("travel");
             if (level < travel) {
-                player.sendMessage(plugin.pluginName + ChatColor.RED + "The TARDIS does not have enough Artron Energy to make this trip!");
+                player.sendMessage(plugin.pluginName + ChatColor.RED + MESSAGE.NOT_ENOUGH_ENERGY.getText());
                 return true;
             }
             // get direction
@@ -148,7 +149,7 @@ public class TARDISRescue {
             wherecl.put("tardis_id", id);
             ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
             if (!rsc.resultSet()) {
-                player.sendMessage(plugin.pluginName + ChatColor.RED + "Could not get current TARDIS location!");
+                player.sendMessage(plugin.pluginName + ChatColor.RED + MESSAGE.NO_CURRENT.getText());
                 return true;
             }
             return rescue(player, saved, id, tt, rsc.getDirection(), true);

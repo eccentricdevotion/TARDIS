@@ -99,12 +99,12 @@ public class TARDISTravelCommands implements CommandExecutor {
                 where.put("owner", player.getName());
                 ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
                 if (!rs.resultSet()) {
-                    sender.sendMessage(plugin.pluginName + "You are not a Timelord. You need to create a TARDIS before using this command!");
+                    sender.sendMessage(plugin.pluginName + MESSAGE.NO_TARDIS.getText());
                     return true;
                 }
                 int id = rs.getTardis_id();
                 if (!rs.isHandbrake_on()) {
-                    player.sendMessage(plugin.pluginName + ChatColor.RED + "You cannot set a destination while the TARDIS is travelling!");
+                    player.sendMessage(plugin.pluginName + ChatColor.RED + MESSAGE.NOT_WHILE_TRAVELLING.getText());
                     return true;
                 }
                 HashMap<String, Object> wheret = new HashMap<String, Object>();
@@ -122,7 +122,7 @@ public class TARDISTravelCommands implements CommandExecutor {
                 int level = rs.getArtron_level();
                 int travel = plugin.getArtronConfig().getInt("travel");
                 if (level < travel) {
-                    player.sendMessage(plugin.pluginName + ChatColor.RED + "The TARDIS does not have enough Artron Energy to make this trip!");
+                    player.sendMessage(plugin.pluginName + ChatColor.RED + MESSAGE.NOT_ENOUGH_ENERGY.getText());
                     return true;
                 }
                 HashMap<String, Object> tid = new HashMap<String, Object>();

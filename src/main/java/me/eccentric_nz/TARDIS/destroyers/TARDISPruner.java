@@ -29,6 +29,7 @@ import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.TARDISDatabaseConnection;
+import me.eccentric_nz.TARDIS.enumeration.MESSAGE;
 import org.bukkit.command.CommandSender;
 
 /**
@@ -82,7 +83,7 @@ public class TARDISPruner {
                             sender.sendMessage(line);
                         }
                     } else {
-                        plugin.debug("Could not get current TARDIS location!");
+                        plugin.debug(MESSAGE.NO_CURRENT.getText());
                     }
                 }
                 bw.close();

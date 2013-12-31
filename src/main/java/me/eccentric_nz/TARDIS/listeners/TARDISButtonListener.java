@@ -31,6 +31,7 @@ import me.eccentric_nz.TARDIS.database.ResultSetRepeaters;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
+import me.eccentric_nz.TARDIS.enumeration.MESSAGE;
 import me.eccentric_nz.TARDIS.info.TARDISInfoMenu;
 import me.eccentric_nz.TARDIS.travel.TARDISTemporalLocatorInventory;
 import me.eccentric_nz.TARDIS.travel.TARDISTerminalInventory;
@@ -127,11 +128,11 @@ public class TARDISButtonListener implements Listener {
                             switch (type) {
                                 case 1: // random location button
                                     if (!hb) {
-                                        player.sendMessage(plugin.pluginName + ChatColor.RED + "You cannot set a destination while the TARDIS is travelling!");
+                                        player.sendMessage(plugin.pluginName + ChatColor.RED + MESSAGE.NOT_WHILE_TRAVELLING.getText());
                                         return;
                                     }
                                     if (level < plugin.getArtronConfig().getInt("random")) {
-                                        player.sendMessage(plugin.pluginName + ChatColor.RED + "The TARDIS does not have enough Artron Energy to make this trip!");
+                                        player.sendMessage(plugin.pluginName + ChatColor.RED + MESSAGE.NOT_ENOUGH_ENERGY.getText());
                                         return;
                                     }
                                     if (plugin.trackSubmarine.contains(Integer.valueOf(id))) {
@@ -141,7 +142,7 @@ public class TARDISButtonListener implements Listener {
                                     wherecl.put("tardis_id", rs.getTardis_id());
                                     ResultSetCurrentLocation rscl = new ResultSetCurrentLocation(plugin, wherecl);
                                     if (!rscl.resultSet()) {
-                                        player.sendMessage(plugin.pluginName + ChatColor.RED + "Could not get current TARDIS location!");
+                                        player.sendMessage(plugin.pluginName + ChatColor.RED + MESSAGE.NO_CURRENT.getText());
                                         return;
                                     }
                                     COMPASS dir = rscl.getDirection();
@@ -251,11 +252,11 @@ public class TARDISButtonListener implements Listener {
                                     break;
                                 case 8:
                                     if (!hb) {
-                                        player.sendMessage(plugin.pluginName + ChatColor.RED + "You cannot set a destination while the TARDIS is travelling!");
+                                        player.sendMessage(plugin.pluginName + ChatColor.RED + MESSAGE.NOT_WHILE_TRAVELLING.getText());
                                         return;
                                     }
                                     if (level < plugin.getArtronConfig().getInt("random")) {
-                                        player.sendMessage(plugin.pluginName + ChatColor.RED + "The TARDIS does not have enough Artron Energy to make this trip!");
+                                        player.sendMessage(plugin.pluginName + ChatColor.RED + MESSAGE.NOT_ENOUGH_ENERGY.getText());
                                         return;
                                     }
                                     // fast return button
@@ -284,11 +285,11 @@ public class TARDISButtonListener implements Listener {
                                     break;
                                 case 9:
                                     if (!hb) {
-                                        player.sendMessage(plugin.pluginName + ChatColor.RED + "You cannot set a destination while the TARDIS is travelling!");
+                                        player.sendMessage(plugin.pluginName + ChatColor.RED + MESSAGE.NOT_WHILE_TRAVELLING.getText());
                                         return;
                                     }
                                     if (level < plugin.getArtronConfig().getInt("random")) {
-                                        player.sendMessage(plugin.pluginName + ChatColor.RED + "The TARDIS does not have enough Artron Energy to make this trip!");
+                                        player.sendMessage(plugin.pluginName + ChatColor.RED + MESSAGE.NOT_ENOUGH_ENERGY.getText());
                                         return;
                                     }
                                     // terminal sign
