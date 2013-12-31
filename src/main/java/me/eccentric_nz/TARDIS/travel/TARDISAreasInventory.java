@@ -61,7 +61,7 @@ public class TARDISAreasInventory {
             // cycle through areas
             for (HashMap<String, String> map : data) {
                 String name = map.get("area_name");
-                if (p.hasPermission("tardis.area." + name)) {
+                if (p.hasPermission("tardis.area." + name) || p.hasPermission("tardis.area.*")) {
                     ItemStack is = new ItemStack(TARDISConstants.GUI_IDS.get(i), 1);
                     ItemMeta im = is.getItemMeta();
                     im.setDisplayName(name);
