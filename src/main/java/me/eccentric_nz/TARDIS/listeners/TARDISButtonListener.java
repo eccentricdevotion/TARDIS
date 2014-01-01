@@ -303,7 +303,7 @@ public class TARDISButtonListener implements Listener {
                                         return;
                                     }
                                     // check they have permission to grow rooms
-                                    if (!player.hasPermission("tardis.room")) {
+                                    if (!player.hasPermission("tardis.ars")) {
                                         player.sendMessage(plugin.pluginName + "You do not have permission to grow rooms!");
                                         return;
                                     }
