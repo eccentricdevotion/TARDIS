@@ -109,6 +109,12 @@ permissions:
   tardis.ars:
     description: Allow players to build the 'Architectural Reconfiguration System' TARDIS.
     default: op
+  tardis.storage:
+    description: Allow players to utilise the TARDIS Disk Storage.
+    default: op
+  tardis.advanced:
+    description: Allow players to utilise the TARDIS Advanced Console.
+    default: op
   tardis.plank:
     description: Allow players to build the 'wood' TARDIS.
     default: op
@@ -248,7 +254,7 @@ commands:
       permission-message: You don't have the permission <permission> to use this command
     update:
       description: Modify the interior of the TARDIS.
-      usage: /<command> update [door|button|world-repeater|x-repeater|z-repeater|y-repeater|chameleon|save-sign|artron|handbrake|condenser|scanner|backdoor|keyboard|creeper|eps|back|terminal|ars|temporal|light|farm|stable|rail|info]
+      usage: /<command> update [advanced|ars|artron|back|backdoor|button|chameleon|condenser|creeper|door|eps|farm|handbrake|info|keyboard|light|rail|save-sign|scanner|stable|storage|temporal|terminal|village|world-repeater|x-repeater|y-repeater|z-repeater]
       permission: tardis.update
       permission-message: You don't have the permission <permission> to use this command
     secondary:

@@ -30,6 +30,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
@@ -49,8 +50,20 @@ public class TARDISStorageListener implements Listener {
         }
     }
 
+    @EventHandler(priority = EventPriority.NORMAL)
+    public void onDiskStorageClose(InventoryCloseEvent event) {
+        Inventory inv = event.getInventory();
+        String title = inv.getTitle();
+        if (titles.contains(title)) {
+            // which inventory screen is it?
+            String[] split = title.split(" ");
+            STORAGE store = STORAGE.valueOf(split[0].toUpperCase(Locale.ENGLISH));
+            saveCurrentStorage(inv, store.getTable(), event.getPlayer().getName());
+        }
+    }
+
     @EventHandler(priority = EventPriority.MONITOR)
-    public void onInteract(InventoryClickEvent event) {
+    public void onDiskStorageInteract(InventoryClickEvent event) {
         Inventory inv = event.getInventory();
         String title = inv.getTitle();
         if (!titles.contains(title) || event.isCancelled()) {

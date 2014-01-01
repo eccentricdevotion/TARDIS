@@ -42,7 +42,6 @@ public class ResultSetDiskStorage {
     private final TARDIS plugin;
     private final HashMap<String, Object> where;
     private int id;
-    private String location;
     private int tardis_id;
     private String owner;
     private String savesOne;
@@ -104,7 +103,6 @@ public class ResultSetDiskStorage {
             if (rs.isBeforeFirst()) {
                 while (rs.next()) {
                     this.id = rs.getInt("storage_id");
-                    this.location = rs.getString("location");
                     this.tardis_id = rs.getInt("tardis_id");
                     this.owner = rs.getString("owner");
                     if (rs.wasNull()) {
@@ -162,10 +160,6 @@ public class ResultSetDiskStorage {
 
     public int getId() {
         return id;
-    }
-
-    public String getLocation() {
-        return location;
     }
 
     public int getTardis_id() {

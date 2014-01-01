@@ -114,7 +114,7 @@ public class TARDISMySQLDatabase {
             statement.executeUpdate(player_prefsQuery);
 
             // Table structure for table 'storage'
-            String storageQuery = "CREATE TABLE IF NOT EXISTS storage (storage_id int(11) NOT NULL AUTO_INCREMENT, location text NULL, tardis_id int(11) DEFAULT '0', owner varchar(32) DEFAULT '', saves_one text NULL, saves_two text NULL, areas text NULL, presets text NULL, biomes text NULL, players text NULL, circuits text NULL, PRIMARY KEY (storage_id)) DEFAULT CHARSET=utf8 COLLATE utf8_general_ci";
+            String storageQuery = "CREATE TABLE IF NOT EXISTS storage (storage_id int(11) NOT NULL AUTO_INCREMENT, tardis_id int(11) DEFAULT '0', owner varchar(32) DEFAULT '', saves_one text NULL, saves_two text NULL, areas text NULL, presets text NULL, biomes text NULL, players text NULL, circuits text NULL, PRIMARY KEY (storage_id)) DEFAULT CHARSET=utf8 COLLATE utf8_general_ci";
             statement.executeUpdate(storageQuery);
 
             // Table structure for table 'tag'

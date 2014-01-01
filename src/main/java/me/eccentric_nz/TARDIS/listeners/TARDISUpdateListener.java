@@ -61,20 +61,22 @@ public class TARDISUpdateListener implements Listener {
 
     public TARDISUpdateListener(TARDIS plugin) {
         this.plugin = plugin;
-        controls.put("ars", 10);
-        controls.put("artron", 6);
-        controls.put("back", 8);
-        controls.put("button", 1);
         controls.put("handbrake", 0);
-        controls.put("info", 13);
-        controls.put("keyboard", 7);
-        controls.put("light", 12);
-        controls.put("temporal", 11);
-        controls.put("terminal", 9);
+        controls.put("button", 1);
         controls.put("world-repeater", 2);
         controls.put("x-repeater", 3);
-        controls.put("y-repeater", 5);
         controls.put("z-repeater", 4);
+        controls.put("y-repeater", 5);
+        controls.put("artron", 6);
+        controls.put("keyboard", 7);
+        controls.put("back", 8);
+        controls.put("terminal", 9);
+        controls.put("ars", 10);
+        controls.put("temporal", 11);
+        controls.put("light", 12);
+        controls.put("info", 13);
+        controls.put("storage", 14);
+        controls.put("advanced", 15);
         validBlocks.add(Material.LEVER);
         validBlocks.add(Material.REDSTONE_COMPARATOR_OFF);
         validBlocks.add(Material.REDSTONE_COMPARATOR_ON);
@@ -533,6 +535,32 @@ public class TARDISUpdateListener implements Listener {
                     s.setLine(2, "Information");
                     s.setLine(3, "System");
                     s.update();
+                }
+            }
+            if (blockName.equalsIgnoreCase("storage") && blockType.equals(Material.NOTE_BLOCK)) {
+                HashMap<String, Object> wherel = new HashMap<String, Object>();
+                wherel.put("tardis_id", id);
+                wherel.put("type", 14);
+                ResultSetControls rsc = new ResultSetControls(plugin, wherel, false);
+                if (!rsc.resultSet()) {
+                    // insert control
+                    qf.insertControl(id, 14, blockLocStr, 0);
+                    secondary = true;
+                } else {
+                    set.put("location", blockLocStr);
+                }
+            }
+            if (blockName.equalsIgnoreCase("advanced") && blockType.equals(Material.JUKEBOX)) {
+                HashMap<String, Object> wherel = new HashMap<String, Object>();
+                wherel.put("tardis_id", id);
+                wherel.put("type", 15);
+                ResultSetControls rsc = new ResultSetControls(plugin, wherel, false);
+                if (!rsc.resultSet()) {
+                    // insert control
+                    qf.insertControl(id, 15, blockLocStr, 0);
+                    secondary = true;
+                } else {
+                    set.put("location", blockLocStr);
                 }
             }
             if (set.size() > 0 || secondary) {

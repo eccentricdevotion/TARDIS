@@ -40,7 +40,7 @@ public class TARDISUpdateCommand {
 
     public boolean startUpdate(Player player, String[] args) {
         if (player.hasPermission("tardis.update")) {
-            String[] validBlockNames = {"door", "button", "world-repeater", "x-repeater", "z-repeater", "y-repeater", "chameleon", "save-sign", "artron", "handbrake", "condenser", "scanner", "backdoor", "keyboard", "creeper", "eps", "back", "terminal", "ars", "temporal", "light", "farm", "stable", "rail", "info", "village"};
+            String[] validBlockNames = {"advanced", "ars", "artron", "back", "backdoor", "button", "chameleon", "condenser", "creeper", "door", "eps", "farm", "handbrake", "info", "keyboard", "light", "rail", "save-sign", "scanner", "stable", "storage", "temporal", "terminal", "village", "world-repeater", "x-repeater", "y-repeater", "z-repeater"};
             if (args.length < 2) {
                 player.sendMessage(plugin.pluginName + "Too few command arguments!");
                 return false;
@@ -49,6 +49,14 @@ public class TARDISUpdateCommand {
             if (!Arrays.asList(validBlockNames).contains(tardis_block)) {
                 player.sendMessage(plugin.pluginName + "That is not a valid TARDIS block name! Try one of : door|button|world-repeater|x-repeater|z-repeater|y-repeater|chameleon|save-sign|artron|handbrake|condenser|scanner|backdoor|keyboard|creeper|eps|back|terminal|ars|temporal|light|farm|stable|rail|info|village");
                 return false;
+            }
+            if (tardis_block.equals("advanced") && !player.hasPermission("tardis.advanced")) {
+                player.sendMessage(plugin.pluginName + "You do not have permission to create an Advanced Console!");
+                return true;
+            }
+            if (tardis_block.equals("storage") && !player.hasPermission("tardis.storage")) {
+                player.sendMessage(plugin.pluginName + "You do not have permission to create Disk Storage!");
+                return true;
             }
             if (tardis_block.equals("backdoor") && !player.hasPermission("tardis.backdoor")) {
                 player.sendMessage(plugin.pluginName + "You do not have permission to create a back door!");

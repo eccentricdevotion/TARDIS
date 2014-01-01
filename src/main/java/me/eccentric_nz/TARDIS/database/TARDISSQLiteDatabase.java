@@ -114,7 +114,7 @@ public class TARDISSQLiteDatabase {
             statement.executeUpdate(queryPlayers);
 
             // Table structure for table 'storage'
-            String queryStorage = "CREATE TABLE IF NOT EXISTS storage (storage_id INTEGER PRIMARY KEY NOT NULL, location TEXT COLLATE NOCASE DEFAULT '', tardis_id INTEGER, owner TEXT DEFAULT '', saves_one TEXT DEFAULT '', saves_two TEXT DEFAULT '', areas TEXT DEFAULT '', presets TEXT DEFAULT '', biomes TEXT DEFAULT '', players TEXT DEFAULT '', circuits TEXT DEFAULT '')";
+            String queryStorage = "CREATE TABLE IF NOT EXISTS storage (storage_id INTEGER PRIMARY KEY NOT NULL, tardis_id INTEGER, owner TEXT DEFAULT '', saves_one TEXT DEFAULT '', saves_two TEXT DEFAULT '', areas TEXT DEFAULT '', presets TEXT DEFAULT '', biomes TEXT DEFAULT '', players TEXT DEFAULT '', circuits TEXT DEFAULT '')";
             statement.executeUpdate(queryStorage);
 
             // Table structure for table 'tag'
