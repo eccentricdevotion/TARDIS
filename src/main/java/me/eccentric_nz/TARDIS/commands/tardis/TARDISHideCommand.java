@@ -61,8 +61,8 @@ public class TARDISHideCommand {
                 return true;
             }
             int level = rs.getArtron_level();
-            if (plugin.tardisMaterialising.contains(Integer.valueOf(id)) || plugin.tardisDematerialising.contains(Integer.valueOf(id))) {
-                player.sendMessage(plugin.pluginName + "You cannot do that while the TARDIS is materialising!");
+            if (plugin.inVortex.contains(Integer.valueOf(id))) {
+                player.sendMessage(plugin.pluginName + MESSAGE.NOT_WHILE_MAT.getText());
                 return true;
             }
             if (plugin.getConfig().getBoolean("travel.chameleon")) {

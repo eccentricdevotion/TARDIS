@@ -261,6 +261,7 @@ public class TARDIS extends JavaPlugin {
     public List<String> trackTransmat = new ArrayList<String>();
     public ArrayList<Integer> tardisMaterialising = new ArrayList<Integer>();
     public ArrayList<Integer> tardisDematerialising = new ArrayList<Integer>();
+    public ArrayList<Integer> inVortex = new ArrayList<Integer>();
     public List<Chunk> tardisChunkList = new ArrayList<Chunk>();
     public List<Chunk> roomChunkList = new ArrayList<Chunk>();
     public HashMap<String, Double[]> gravityUpList = new HashMap<String, Double[]>();

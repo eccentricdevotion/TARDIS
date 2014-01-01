@@ -130,6 +130,7 @@ public class TARDISHostileDisplacement {
                                     final boolean mat = plugin.getConfig().getBoolean("police_box.materialise");
                                     long delay = (mat) ? 1L : 180L;
                                     // move TARDIS
+                                    plugin.inVortex.add(Integer.valueOf(id));
                                     plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
                                         @Override
                                         public void run() {

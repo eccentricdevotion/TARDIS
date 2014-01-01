@@ -511,5 +511,6 @@ public class TARDISInstaPreset {
             }
         }
         plugin.tardisMaterialising.remove(Integer.valueOf(tid));
+        plugin.inVortex.remove(Integer.valueOf(tid));
     }
 }

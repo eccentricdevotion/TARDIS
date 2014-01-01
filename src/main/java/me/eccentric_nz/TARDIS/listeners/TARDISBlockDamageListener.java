@@ -64,7 +64,7 @@ public class TARDISBlockDamageListener implements Listener {
             boolean m = false;
             boolean isDoor = false;
             int id = rsb.getTardis_id();
-            if (HADS && !plugin.tardisDematerialising.contains(Integer.valueOf(id)) && !plugin.tardisMaterialising.contains(Integer.valueOf(id)) && isOwnerOnline(id)) {
+            if (HADS && !plugin.inVortex.contains(Integer.valueOf(id)) && isOwnerOnline(id)) {
                 if (b.getTypeId() == 71) {
                     if (isOwner(id, p.getName())) {
                         isDoor = true;

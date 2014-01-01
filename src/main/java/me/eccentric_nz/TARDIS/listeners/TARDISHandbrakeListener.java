@@ -106,7 +106,7 @@ public class TARDISHandbrakeListener implements Listener {
                         String creeper = rs.getCreeper();
                         Location exit = null;
                         boolean error = false;
-                        if (plugin.tardisDematerialising.contains(Integer.valueOf(id)) || plugin.tardisMaterialising.contains(Integer.valueOf(id))) {
+                        if (plugin.inVortex.contains(Integer.valueOf(id))) {
                             player.sendMessage(plugin.pluginName + "You cannot change the handbrake while the TARDIS is in the time vortex!");
                         } else {
                             Action action = event.getAction();
@@ -210,6 +210,7 @@ public class TARDISHandbrakeListener implements Listener {
                                                 exit.getWorld().loadChunk(exit.getChunk());
                                             }
                                             boolean mat = plugin.getConfig().getBoolean("police_box.materialise");
+                                            plugin.inVortex.add(Integer.valueOf(id));
                                             if (!rs.isHidden() && !plugin.trackReset.contains(resetw)) {
                                                 plugin.tardisDematerialising.add(Integer.valueOf(Integer.valueOf(id)));
                                                 if (sub) {

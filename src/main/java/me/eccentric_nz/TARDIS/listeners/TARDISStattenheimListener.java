@@ -140,8 +140,8 @@ public class TARDISStattenheimListener implements Listener {
                         player.sendMessage(plugin.pluginName + "You cannot bring the Police Box here because you are inside a TARDIS!");
                         return;
                     }
-                    if (plugin.tardisMaterialising.contains(Integer.valueOf(id)) || plugin.tardisDematerialising.contains(Integer.valueOf(id))) {
-                        player.sendMessage(plugin.pluginName + "You cannot do that while the TARDIS is materialising!");
+                    if (plugin.inVortex.contains(Integer.valueOf(id))) {
+                        player.sendMessage(plugin.pluginName + MESSAGE.NOT_WHILE_MAT.getText());
                         return;
                     }
                     // get TARDIS's current location
@@ -215,6 +215,7 @@ public class TARDISStattenheimListener implements Listener {
                         player.sendMessage(plugin.pluginName + "The TARDIS is coming...");
                         final boolean mat = plugin.getConfig().getBoolean("police_box.materialise");
                         long delay = (mat) ? 10L : 180L;
+                        plugin.inVortex.add(Integer.valueOf(id));
                         Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
                             @Override
                             public void run() {

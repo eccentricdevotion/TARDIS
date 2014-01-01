@@ -108,9 +108,7 @@ public class TARDISDeinstaPreset {
             default:
                 break;
         }
-//        if (!plugin.getConfig().getBoolean("police_box.materialise")) {
         plugin.tardisDematerialising.remove(Integer.valueOf(id));
-//        }
         plugin.tardisChunkList.remove(l.getChunk());
         // remove door
         plugin.destroyerP.destroyDoor(id);

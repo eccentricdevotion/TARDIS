@@ -655,6 +655,7 @@ public class TARDISMaterialisationPreset implements Runnable {
                     plugin.wgutils.sponge(sponge, true);
                 }
                 plugin.tardisMaterialising.remove(Integer.valueOf(tid));
+                plugin.inVortex.remove(Integer.valueOf(tid));
                 plugin.getServer().getScheduler().cancelTask(task);
                 task = 0;
                 // tardis has moved so remove HADS damage count

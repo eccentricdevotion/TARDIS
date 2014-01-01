@@ -328,7 +328,7 @@ public class TARDISDoorListener implements Listener {
                                         case 1:
                                         case 4:
                                             // is the TARDIS materialising?
-                                            if (plugin.tardisMaterialising.contains(Integer.valueOf(id)) || plugin.tardisDematerialising.contains(Integer.valueOf(id))) {
+                                            if (plugin.inVortex.contains(Integer.valueOf(id))) {
                                                 player.sendMessage(plugin.pluginName + "The TARDIS is still travelling... you would get lost in the time vortex!");
                                                 return;
                                             }
@@ -388,7 +388,7 @@ public class TARDISDoorListener implements Listener {
                                             break;
                                         case 0:
                                             // is the TARDIS materialising?
-                                            if (plugin.tardisMaterialising.contains(Integer.valueOf(id)) || plugin.tardisDematerialising.contains(Integer.valueOf(id))) {
+                                            if (plugin.inVortex.contains(Integer.valueOf(id))) {
                                                 player.sendMessage(plugin.pluginName + "The TARDIS is still travelling... you would get lost in the time vortex!");
                                                 return;
                                             }
