@@ -51,12 +51,12 @@ public class TARDISConsoleListener implements Listener {
     @EventHandler(priority = EventPriority.MONITOR)
     public void onConsoleInteract(PlayerInteractEvent event) {
         final Player player = event.getPlayer();
-        String playerNameStr = player.getName();
+        //String playerNameStr = player.getName();
         if (event.getAction().equals(Action.RIGHT_CLICK_BLOCK)) {
             ItemStack disk = event.getPlayer().getItemInHand();
             if (disk.hasItemMeta()) {
                 ItemMeta im = disk.getItemMeta();
-                if (im.getDisplayName().equals("Save Storage Disk")) {
+                if (im.hasDisplayName() && im.getDisplayName().equals("Save Storage Disk")) {
                     Block b = event.getClickedBlock();
                     if (b != null && b.getType().equals(Material.JUKEBOX)) {
                         event.setCancelled(true);
