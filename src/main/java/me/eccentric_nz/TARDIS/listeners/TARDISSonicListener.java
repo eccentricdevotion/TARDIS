@@ -364,6 +364,7 @@ public class TARDISSonicListener implements Listener {
                             case REDSTONE_WIRE:
                                 if (plugin.redstoneListener.getWires().contains(b.getLocation().toString())) {
                                     plugin.redstoneListener.getWires().remove(b.getLocation().toString());
+                                    b.setData((byte) 0);
                                     for (BlockFace f : faces) {
                                         if (b.getRelative(f).getType().equals(Material.REDSTONE_WIRE)) {
                                             b.setData((byte) 0);
