@@ -73,7 +73,7 @@ public class TARDISMySQLDatabase {
             String chunksQuery = "CREATE TABLE IF NOT EXISTS chunks (chunk_id int(11) NOT NULL AUTO_INCREMENT, tardis_id int(11) DEFAULT '0', world varchar(64) DEFAULT '0', x int(7) DEFAULT '0', z int(7) DEFAULT '0', PRIMARY KEY (chunk_id)) DEFAULT CHARSET=utf8 COLLATE utf8_general_ci";
             statement.executeUpdate(chunksQuery);
 
-// Table structure for table 'condenser'
+            // Table structure for table 'condenser'
             String condenserQuery = "CREATE TABLE IF NOT EXISTS condenser (c_id int(11) NOT NULL AUTO_INCREMENT, tardis_id int(11) DEFAULT '0', block_data varchar(32) DEFAULT '', block_count int(11) DEFAULT '0', PRIMARY KEY (c_id)) DEFAULT CHARSET=utf8 COLLATE utf8_general_ci";
             statement.executeUpdate(condenserQuery);
 
@@ -112,6 +112,10 @@ public class TARDISMySQLDatabase {
             // Table structure for table 'player_prefs'
             String player_prefsQuery = "CREATE TABLE IF NOT EXISTS player_prefs (pp_id int(11) NOT NULL AUTO_INCREMENT, player varchar(32), `key_item` varchar(32) DEFAULT 'STICK', sfx_on int(1) DEFAULT '0', platform_on int(1) DEFAULT '0', quotes_on int(1) DEFAULT '0', artron_level int(11) DEFAULT '0', wall varchar(64) DEFAULT 'ORANGE_WOOL', floor varchar(64) DEFAULT 'LIGHT_GREY_WOOL', auto_on int(1) DEFAULT '0', beacon_on int(11) DEFAULT '1', hads_on int(11) DEFAULT '1', eps_on int(1) DEFAULT '0', eps_message text, lamp int(6) DEFAULT '0', texture_on int(1) DEFAULT '0', texture_in varchar(512) DEFAULT '', texture_out varchar(512) DEFAULT 'default', submarine_on int(1) DEFAULT '0', dnd_on int(1) DEFAULT '0', PRIMARY KEY (pp_id)) DEFAULT CHARSET=utf8 COLLATE utf8_general_ci";
             statement.executeUpdate(player_prefsQuery);
+
+            // Table structure for table 'storage'
+            String storageQuery = "CREATE TABLE IF NOT EXISTS storage (storage_id int(11) NOT NULL AUTO_INCREMENT, location text NULL, tardis_id int(11) DEFAULT '0', owner varchar(32) DEFAULT '', saves_one text NULL, saves_two text NULL, areas text NULL, presets text NULL, biomes text NULL, players text NULL, circuits text NULL, PRIMARY KEY (storage_id)) DEFAULT CHARSET=utf8 COLLATE utf8_general_ci";
+            statement.executeUpdate(storageQuery);
 
             // Table structure for table 'tag'
             String tagQuery = "CREATE TABLE IF NOT EXISTS tag (tag_id int(11) NOT NULL AUTO_INCREMENT, player varchar(32) DEFAULT '', `time` int(11) DEFAULT '0', PRIMARY KEY (tag_id)) DEFAULT CHARSET=utf8 COLLATE utf8_general_ci";
