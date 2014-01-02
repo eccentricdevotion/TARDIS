@@ -60,6 +60,7 @@ public class TARDISPrefsCommands implements CommandExecutor {
         firstArgs.add("isomorphic");
         firstArgs.add("key");
         firstArgs.add("lamp");
+        firstArgs.add("minecart");
         firstArgs.add("plain");
         firstArgs.add("platform");
         firstArgs.add("quotes");

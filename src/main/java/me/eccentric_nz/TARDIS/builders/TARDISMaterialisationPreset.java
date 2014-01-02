@@ -31,6 +31,7 @@ import me.eccentric_nz.TARDIS.travel.TARDISDoorLocation;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.Sound;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.block.Sign;
@@ -58,6 +59,7 @@ public class TARDISMaterialisationPreset implements Runnable {
     private final boolean mal;
     private final int lamp;
     private final boolean sub;
+    private final boolean minecart;
     private final int cham_id;
     private final byte cham_data;
     private Block sponge;
@@ -86,8 +88,10 @@ public class TARDISMaterialisationPreset implements Runnable {
      * @param sub a boolean determining whether the TARDIS is in submarine mode
      * @param cham_id the chameleon block id for the police box
      * @param cham_data the chameleon block data for the police box
+     * @param minecart whether to play the minecart sound instead of the
+     * resource pack sounds
      */
-    public TARDISMaterialisationPreset(TARDIS plugin, Location location, PRESET preset, int tid, COMPASS d, Player player, boolean mal, int lamp, boolean sub, int cham_id, byte cham_data) {
+    public TARDISMaterialisationPreset(TARDIS plugin, Location location, PRESET preset, int tid, COMPASS d, Player player, boolean mal, int lamp, boolean sub, int cham_id, byte cham_data, boolean minecart) {
         this.plugin = plugin;
         this.d = d;
         this.loops = 18;
@@ -100,8 +104,9 @@ public class TARDISMaterialisationPreset implements Runnable {
         this.lamp = lamp;
         this.sub = sub;
         this.cham_id = cham_id;
-        rand = new Random();
         this.cham_data = cham_data;
+        this.minecart = minecart;
+        rand = new Random();
         if (preset.equals(PRESET.ANGEL)) {
             plugin.presets.setR(rand.nextInt(2));
         }
@@ -168,7 +173,11 @@ public class TARDISMaterialisationPreset implements Runnable {
                     plugin.builderP.addPlatform(location, false, d, player.getName(), tid);
                     HashMap<String, Object> where = new HashMap<String, Object>();
                     where.put("tardis_id", tid);
-                    plugin.utils.playTARDISSound(location, player, "tardis_land");
+                    if (!minecart) {
+                        plugin.utils.playTARDISSound(location, player, "tardis_land");
+                    } else {
+                        world.playSound(location, Sound.MINECART_INSIDE, 1.0F, 0.0F);
+                    }
                     // get direction player is facing from yaw place block under door if block is in list of blocks an iron door cannot go on
                     switch (d) {
                         case SOUTH:

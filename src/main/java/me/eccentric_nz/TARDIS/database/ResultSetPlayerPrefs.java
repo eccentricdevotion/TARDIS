@@ -39,23 +39,24 @@ public class ResultSetPlayerPrefs {
     private int pp_id;
     private String player;
     private String key;
-    private boolean SFX_on;
-    private boolean platform_on;
-    private boolean quotes_on;
-    private boolean auto_on;
-    private boolean beacon_on;
-    private boolean hads_on;
-    private boolean submarine_on;
-    private int artron_level;
+    private boolean sfxOn;
+    private boolean platformOn;
+    private boolean quotesOn;
+    private boolean autoOn;
+    private boolean beaconOn;
+    private boolean hadsOn;
+    private boolean submarineOn;
+    private int artronLevel;
     private int lamp;
     private String wall;
     private String floor;
-    private boolean EPS_on;
-    private String EPS_message;
-    private boolean texture_on;
-    private String texture_in;
-    private String texture_out;
+    private boolean epsOn;
+    private String epsMessage;
+    private boolean textureOn;
+    private String textureIn;
+    private String textureOut;
     private boolean DND;
+    private boolean minecartOn;
 
     /**
      * Creates a class instance that can be used to retrieve an SQL ResultSet
@@ -109,33 +110,34 @@ public class ResultSetPlayerPrefs {
                 this.pp_id = rs.getInt("pp_id");
                 this.player = rs.getString("player");
                 this.key = (plugin.getConfig().getString("storage.database").equals("sqlite")) ? rs.getString("key") : rs.getString("key_item");
-                this.SFX_on = rs.getBoolean("sfx_on");
-                this.platform_on = rs.getBoolean("platform_on");
-                this.quotes_on = rs.getBoolean("quotes_on");
-                this.auto_on = rs.getBoolean("auto_on");
-                this.beacon_on = rs.getBoolean("beacon_on");
-                this.hads_on = rs.getBoolean("hads_on");
-                this.submarine_on = rs.getBoolean("submarine_on");
-                this.artron_level = rs.getInt("artron_level");
+                this.sfxOn = rs.getBoolean("sfx_on");
+                this.platformOn = rs.getBoolean("platform_on");
+                this.quotesOn = rs.getBoolean("quotes_on");
+                this.autoOn = rs.getBoolean("auto_on");
+                this.beaconOn = rs.getBoolean("beacon_on");
+                this.hadsOn = rs.getBoolean("hads_on");
+                this.submarineOn = rs.getBoolean("submarine_on");
+                this.artronLevel = rs.getInt("artron_level");
                 this.lamp = rs.getInt("lamp");
                 if (rs.wasNull()) {
                     this.lamp = plugin.getConfig().getInt("police_box.tardis_lamp");
                 }
                 this.wall = rs.getString("wall");
                 this.floor = rs.getString("floor");
-                this.EPS_on = rs.getBoolean("eps_on");
+                this.epsOn = rs.getBoolean("eps_on");
                 // if empty use default
                 String message = rs.getString("eps_message");
                 if (rs.wasNull() || message.isEmpty()) {
-                    this.EPS_message = "This is Emergency Programme One. I have died. I'm sure I will regenerate soon, but just in case. I have engaged the TARDIS autonomous circuit, and we are returning to my Home location or a recharge point - which ever is closest!";
+                    this.epsMessage = "This is Emergency Programme One. I have died. I'm sure I will regenerate soon, but just in case. I have engaged the TARDIS autonomous circuit, and we are returning to my Home location or a recharge point - which ever is closest!";
                 } else {
-                    this.EPS_message = rs.getString("eps_message");
+                    this.epsMessage = rs.getString("eps_message");
                 }
-                this.texture_on = rs.getBoolean("texture_on");
-                this.texture_in = rs.getString("texture_in");
+                this.textureOn = rs.getBoolean("texture_on");
+                this.textureIn = rs.getString("texture_in");
                 String tp_out = rs.getString("texture_out");
-                this.texture_out = (tp_out.equals("default")) ? plugin.tp : tp_out;
+                this.textureOut = (tp_out.equals("default")) ? plugin.tp : tp_out;
                 this.DND = rs.getBoolean("dnd_on");
+                this.minecartOn = rs.getBoolean("minecart_on");
             } else {
                 return false;
             }
@@ -169,32 +171,32 @@ public class ResultSetPlayerPrefs {
         return key;
     }
 
-    public boolean isSFX_on() {
-        return SFX_on;
+    public boolean isSfxOn() {
+        return sfxOn;
     }
 
-    public boolean isPlatform_on() {
-        return platform_on;
+    public boolean isPlatformOn() {
+        return platformOn;
     }
 
-    public boolean isQuotes_on() {
-        return quotes_on;
+    public boolean isQuotesOn() {
+        return quotesOn;
     }
 
-    public boolean isAuto_on() {
-        return auto_on;
+    public boolean isAutoOn() {
+        return autoOn;
     }
 
-    public boolean isBeacon_on() {
-        return beacon_on;
+    public boolean isBeaconOn() {
+        return beaconOn;
     }
 
-    public boolean isHads_on() {
-        return hads_on;
+    public boolean isHadsOn() {
+        return hadsOn;
     }
 
-    public int getArtron_level() {
-        return artron_level;
+    public int getArtronLevel() {
+        return artronLevel;
     }
 
     public String getWall() {
@@ -205,35 +207,39 @@ public class ResultSetPlayerPrefs {
         return floor;
     }
 
-    public boolean isEPS_on() {
-        return EPS_on;
+    public boolean isEpsOn() {
+        return epsOn;
     }
 
-    public String getEPS_message() {
-        return EPS_message;
+    public String getEpsMessage() {
+        return epsMessage;
     }
 
-    public boolean isTexture_on() {
-        return texture_on;
+    public boolean isTextureOn() {
+        return textureOn;
     }
 
-    public String getTexture_in() {
-        return texture_in;
+    public String getTextureIn() {
+        return textureIn;
     }
 
     public String getTexture_out() {
-        return texture_out;
+        return textureOut;
     }
 
     public int getLamp() {
         return lamp;
     }
 
-    public boolean isSubmarine_on() {
-        return submarine_on;
+    public boolean isSubmarineOn() {
+        return submarineOn;
     }
 
     public boolean isDND() {
         return DND;
+    }
+
+    public boolean isMinecartOn() {
+        return minecartOn;
     }
 }

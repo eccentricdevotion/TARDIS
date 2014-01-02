@@ -34,6 +34,7 @@ import org.bukkit.ChatColor;
 public class TARDISMySQLDatabaseUpdater {
 
     private final List<String> tardisupdates = new ArrayList<String>();
+    private final List<String> prefsupdates = new ArrayList<String>();
     private final Statement statement;
     private final TARDIS plugin;
 
@@ -41,6 +42,7 @@ public class TARDISMySQLDatabaseUpdater {
         this.plugin = plugin;
         this.statement = statement;
         tardisupdates.add("renderer varchar(512) DEFAULT ''");
+        prefsupdates.add("minecart_on int(1) DEFAULT '0'");
     }
 
     /**
@@ -59,8 +61,18 @@ public class TARDISMySQLDatabaseUpdater {
                     statement.executeUpdate(t_alter);
                 }
             }
+            for (String p : prefsupdates) {
+                String[] psplit = p.split(" ");
+                String p_query = "SHOW COLUMNS FROM player_prefs LIKE '" + psplit[0] + "'";
+                ResultSet rst = statement.executeQuery(p_query);
+                if (!rst.next()) {
+                    i++;
+                    String p_alter = "ALTER TABLE tardis ADD " + p;
+                    statement.executeUpdate(p_alter);
+                }
+            }
         } catch (SQLException e) {
-            plugin.debug("SQLite database add fields error: " + e.getMessage() + e.getErrorCode());
+            plugin.debug("MySQL database add fields error: " + e.getMessage() + e.getErrorCode());
         }
         if (i > 0) {
             plugin.console.sendMessage(TARDIS.plugin.pluginName + "Added " + ChatColor.AQUA + i + ChatColor.RESET + " fields to the MySQL database!");

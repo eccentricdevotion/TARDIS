@@ -118,13 +118,15 @@ public class TARDISPresetBuilderFactory {
             // get lamp and submarine preferences
             int lamp = plugin.getConfig().getInt("police_box.tardis_lamp");
             boolean sub = false;
+            boolean minecart = false;
             boolean hidden = rs.isHidden();
             HashMap<String, Object> wherepp = new HashMap<String, Object>();
             wherepp.put("player", p.getName());
             ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, wherepp);
             if (rsp.resultSet()) {
                 lamp = rsp.getLamp();
-                sub = (rsp.isSubmarine_on() && plugin.trackSubmarine.contains(Integer.valueOf(id)));
+                sub = (rsp.isSubmarineOn() && plugin.trackSubmarine.contains(Integer.valueOf(id)));
+                minecart = rsp.isMinecartOn();
             }
             if (sub && notSubmarinePresets.contains(preset)) {
                 preset = PRESET.YELLOW;
@@ -157,7 +159,7 @@ public class TARDISPresetBuilderFactory {
             } else {
                 if (plugin.getConfig().getBoolean("police_box.materialise")) {
                     plugin.tardisMaterialising.add(Integer.valueOf(id));
-                    TARDISMaterialisationPreset runnable = new TARDISMaterialisationPreset(plugin, l, preset, id, d, p, mal, lamp, sub, cham_id, cham_data);
+                    TARDISMaterialisationPreset runnable = new TARDISMaterialisationPreset(plugin, l, preset, id, d, p, mal, lamp, sub, cham_id, cham_data, minecart);
                     int taskID = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, runnable, 10L, 20L);
                     runnable.setTask(taskID);
                 } else {
@@ -201,7 +203,7 @@ public class TARDISPresetBuilderFactory {
             ResultSetPlayerPrefs pp = new ResultSetPlayerPrefs(plugin, wherep);
             boolean userPlatform;
             if (pp.resultSet()) {
-                userPlatform = pp.isPlatform_on();
+                userPlatform = pp.isPlatformOn();
             } else {
                 userPlatform = true;
             }

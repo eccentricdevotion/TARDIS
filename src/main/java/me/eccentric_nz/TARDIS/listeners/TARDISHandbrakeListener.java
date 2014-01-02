@@ -32,6 +32,7 @@ import me.eccentric_nz.TARDIS.enumeration.MESSAGE;
 import me.eccentric_nz.TARDIS.travel.TARDISMalfunction;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.Sound;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockState;
@@ -117,11 +118,11 @@ public class TARDISHandbrakeListener implements Listener {
                             HashMap<String, Object> wherek = new HashMap<String, Object>();
                             wherek.put("player", player.getName());
                             ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, wherek);
-                            boolean beac_on;
+                            boolean beac_on = true;
+                            boolean minecart = false;
                             if (rsp.resultSet()) {
-                                beac_on = rsp.isBeacon_on();
-                            } else {
-                                beac_on = true;
+                                beac_on = rsp.isBeaconOn();
+                                minecart = rsp.isMinecartOn();
                             }
                             if (action == Action.RIGHT_CLICK_BLOCK) {
                                 if (rs.isHandbrake_on()) {
@@ -202,7 +203,11 @@ public class TARDISHandbrakeListener implements Listener {
                                             // Sets database and sends the player/world message/sounds
                                             set.put("handbrake_on", 0);
                                             player.sendMessage(plugin.pluginName + "Handbrake OFF! Entering the time vortex...");
-                                            plugin.utils.playTARDISSound(handbrake_loc, player, "tardis_takeoff");
+                                            if (!minecart) {
+                                                plugin.utils.playTARDISSound(handbrake_loc, player, "tardis_takeoff");
+                                            } else {
+                                                handbrake_loc.getWorld().playSound(handbrake_loc, Sound.MINECART_INSIDE, 1.0F, 0.0F);
+                                            }
                                         }
                                         if (exit != null) {
                                             // Removes Blue Box and loads chunk if it unloaded somehow
@@ -225,6 +230,7 @@ public class TARDISHandbrakeListener implements Listener {
                                             long delay = (mat) ? 500L : 1L;
                                             final Location e = exit;
                                             final boolean mal = malfunction;
+                                            final boolean mine_sound = minecart;
                                             final COMPASS sd = tmpd;
                                             if (!is_next_sub && plugin.trackSubmarine.contains(Integer.valueOf(id))) {
                                                 plugin.trackSubmarine.remove(Integer.valueOf(id));
@@ -233,7 +239,11 @@ public class TARDISHandbrakeListener implements Listener {
                                                 @Override
                                                 public void run() {
                                                     plugin.builderP.buildPreset(id, e, sd, cham, player, false, mal);
-                                                    plugin.utils.playTARDISSound(handbrake_loc, player, "tardis_land");
+                                                    if (!mine_sound) {
+                                                        plugin.utils.playTARDISSound(handbrake_loc, player, "tardis_land");
+                                                    } else {
+                                                        handbrake_loc.getWorld().playSound(handbrake_loc, Sound.MINECART_INSIDE, 1.0F, 0.0F);
+                                                    }
                                                 }
                                             }, delay);
                                             if (plugin.trackDamage.containsKey(Integer.valueOf(id))) {

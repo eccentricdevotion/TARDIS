@@ -22,10 +22,12 @@ import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.chameleon.TARDISChameleonColumn;
 import me.eccentric_nz.TARDIS.database.ResultSetDoors;
+import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.PRESET;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.Sound;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
@@ -159,7 +161,18 @@ public class TARDISDematerialisationPreset implements Runnable {
                     default:
                         break;
                 }
-                plugin.utils.playTARDISSound(location, player, "tardis_takeoff");
+                HashMap<String, Object> wherep = new HashMap<String, Object>();
+                wherep.put("player", player.getName());
+                ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, wherep);
+                boolean minecart = false;
+                if (rsp.resultSet()) {
+                    minecart = rsp.isMinecartOn();
+                }
+                if (!minecart) {
+                    plugin.utils.playTARDISSound(location, player, "tardis_takeoff");
+                } else {
+                    world.playSound(location, Sound.MINECART_INSIDE, 1.0F, 0.0F);
+                }
                 the_colour = getWoolColour(tid, preset);
             } else {
                 // just change the walls
