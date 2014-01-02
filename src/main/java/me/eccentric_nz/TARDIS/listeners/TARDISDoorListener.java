@@ -193,6 +193,10 @@ public class TARDISDoorListener implements Listener {
                                 }
                             }
                             if (action == Action.RIGHT_CLICK_BLOCK && player.isSneaking()) {
+                                if (plugin.inVortex.contains(Integer.valueOf(rsd.getTardis_id()))) {
+                                    player.sendMessage(plugin.pluginName + MESSAGE.NOT_WHILE_MAT.getText());
+                                    return;
+                                }
                                 if (!rsd.isLocked()) {
                                     // toogle the door open/closed
                                     int open = 1;
