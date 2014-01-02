@@ -82,108 +82,102 @@ public class TARDISStorageListener implements Listener {
         if (rs.resultSet()) {
             // which inventory screen is it?
             String[] split = title.split(" ");
-            STORAGE store = STORAGE.valueOf(split[0].toUpperCase(Locale.ENGLISH));
-            if (slot == 18 || slot == 26) {
+            String tmp = split[0].toUpperCase(Locale.ENGLISH);
+            if (split.length > 2) {
+                tmp = tmp + "_" + split[2];
+            }
+            STORAGE store = STORAGE.valueOf(tmp);
+            if (slot < 6 || slot == 18 || slot == 26) {
                 saveCurrentStorage(inv, store.getTable(), playerNameStr);
             }
+            switch (slot) {
+                case 0:
+                    // switch to saves
+                    loadInventory(rs.getSavesOne(), player, STORAGE.SAVE_1);
+                    break;
+                case 1:
+                    // switch to areas
+                    loadInventory(rs.getAreas(), player, STORAGE.AREA);
+                    break;
+                case 2:
+                    // switch to players
+                    loadInventory(rs.getPlayers(), player, STORAGE.PLAYER);
+                    break;
+                case 3:
+                    // switch to biomes
+                    loadInventory(rs.getBiomesOne(), player, STORAGE.BIOME_1);
+                    break;
+                case 4:
+                    // switch to presets
+                    loadInventory(rs.getPresetsOne(), player, STORAGE.PRESET_1);
+                    break;
+                case 5:
+                    // switch to circuits
+                    loadInventory(rs.getCircuits(), player, STORAGE.CIRCUIT);
+                    break;
+            }
             switch (store) {
-                case AREA:
+                case BIOME_1:
                     switch (slot) {
-                        case 18:
-                            // switch to second
-                            loadInventory(rs.getSavesTwo(), player, STORAGE.SECOND);
-                            break;
                         case 26:
-                            // switch to players
-                            loadInventory(rs.getPlayers(), player, STORAGE.PLAYER);
+                            // switch to biome 2
+                            loadInventory(rs.getBiomesTwo(), player, STORAGE.BIOME_2);
                             break;
                         default:
                             break;
                     }
                     break;
-                case BIOME:
+                case BIOME_2:
                     switch (slot) {
                         case 18:
-                            // switch to players
-                            loadInventory(rs.getPlayers(), player, STORAGE.PLAYER);
-                            break;
-                        case 26:
-                            // switch to presets
-                            loadInventory(rs.getPresets(), player, STORAGE.PRESET);
+                            // switch to biome 1
+                            loadInventory(rs.getBiomesOne(), player, STORAGE.BIOME_1);
                             break;
                         default:
                             break;
                     }
                     break;
-                case CIRCUIT:
+                case PRESET_1:
                     switch (slot) {
-                        case 18:
-                            // switch to presets
-                            loadInventory(rs.getPresets(), player, STORAGE.PRESET);
-                            break;
                         case 26:
-                            // switch to first
-                            loadInventory(rs.getSavesOne(), player, STORAGE.FIRST);
+                            // switch to preset 2
+                            loadInventory(rs.getPresetsTwo(), player, STORAGE.PRESET_2);
                             break;
                         default:
                             break;
                     }
                     break;
-                case FIRST:
+                case PRESET_2:
                     switch (slot) {
                         case 18:
-                            // switch to circuits
-                            loadInventory(rs.getCircuits(), player, STORAGE.CIRCUIT);
-                            break;
-                        case 26:
-                            // switch to second
-                            loadInventory(rs.getSavesTwo(), player, STORAGE.SECOND);
+                            // switch to preset 1
+                            loadInventory(rs.getPresetsOne(), player, STORAGE.PRESET_1);
                             break;
                         default:
                             break;
                     }
                     break;
-                case PLAYER:
+                case SAVE_1:
                     switch (slot) {
-                        case 18:
-                            // switch to areas
-                            loadInventory(rs.getAreas(), player, STORAGE.AREA);
-                            break;
                         case 26:
-                            // switch to biomes
-                            loadInventory(rs.getBiomes(), player, STORAGE.BIOME);
+                            // switch to save 2
+                            loadInventory(rs.getSavesTwo(), player, STORAGE.SAVE_2);
                             break;
                         default:
                             break;
                     }
                     break;
-                case PRESET:
+                case SAVE_2:
                     switch (slot) {
                         case 18:
-                            // switch to biomes
-                            loadInventory(rs.getBiomes(), player, STORAGE.BIOME);
-                            break;
-                        case 26:
-                            // switch to circuits
-                            loadInventory(rs.getCircuits(), player, STORAGE.CIRCUIT);
+                            // switch to save 1
+                            loadInventory(rs.getSavesOne(), player, STORAGE.SAVE_1);
                             break;
                         default:
                             break;
                     }
                     break;
-                default: // second
-                    switch (slot) {
-                        case 18:
-                            // switch to first
-                            loadInventory(rs.getSavesOne(), player, STORAGE.FIRST);
-                            break;
-                        case 26:
-                            // switch to areas
-                            loadInventory(rs.getAreas(), player, STORAGE.AREA);
-                            break;
-                        default:
-                            break;
-                    }
+                default: // no extra pages
                     break;
             }
         }

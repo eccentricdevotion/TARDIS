@@ -47,9 +47,11 @@ public class ResultSetDiskStorage {
     private String savesOne;
     private String savesTwo;
     private String areas;
-    private String presets;
-    private String biomes;
     private String players;
+    private String biomesOne;
+    private String biomesTwo;
+    private String presetsOne;
+    private String presetsTwo;
     private String circuits;
 
     /**
@@ -120,17 +122,25 @@ public class ResultSetDiskStorage {
                     if (rs.wasNull()) {
                         this.areas = "";
                     }
-                    this.presets = rs.getString("presets");
-                    if (rs.wasNull()) {
-                        this.presets = "";
-                    }
-                    this.biomes = rs.getString("biomes");
-                    if (rs.wasNull()) {
-                        this.biomes = "";
-                    }
                     this.players = rs.getString("players");
                     if (rs.wasNull()) {
                         this.players = "";
+                    }
+                    this.biomesOne = rs.getString("biomes_one");
+                    if (rs.wasNull()) {
+                        this.biomesOne = "";
+                    }
+                    this.biomesTwo = rs.getString("biomes_two");
+                    if (rs.wasNull()) {
+                        this.biomesTwo = "";
+                    }
+                    this.presetsOne = rs.getString("presets_one");
+                    if (rs.wasNull()) {
+                        this.presetsOne = "";
+                    }
+                    this.presetsTwo = rs.getString("presets_two");
+                    if (rs.wasNull()) {
+                        this.presetsTwo = "";
                     }
                     this.circuits = rs.getString("circuits");
                     if (rs.wasNull()) {
@@ -182,16 +192,24 @@ public class ResultSetDiskStorage {
         return areas;
     }
 
-    public String getPresets() {
-        return presets;
-    }
-
-    public String getBiomes() {
-        return biomes;
-    }
-
     public String getPlayers() {
         return players;
+    }
+
+    public String getBiomesOne() {
+        return biomesOne;
+    }
+
+    public String getBiomesTwo() {
+        return biomesTwo;
+    }
+
+    public String getPresetsOne() {
+        return presetsOne;
+    }
+
+    public String getPresetsTwo() {
+        return presetsTwo;
     }
 
     public String getCircuits() {

@@ -40,6 +40,7 @@
    * Slimes -> Adipose
    * Witches -> Silurians
    * Villagers -> Ood
+9. Toggle both doors open when shift-clicking the door, and when exiting (if the preset has a door and the door is open) tp the player to the door location.
 
 # Minecraft API when available
 1. Recreate everything with the new API :)

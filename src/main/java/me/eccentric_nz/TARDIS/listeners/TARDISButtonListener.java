@@ -380,14 +380,14 @@ public class TARDISButtonListener implements Listener {
                                             if (!rsstore.getSavesOne().isEmpty()) {
                                                 stack = TARDISSerializeInventory.itemStacksFromString(rsstore.getSavesOne());
                                             } else {
-                                                stack = TARDISSerializeInventory.itemStacksFromString(STORAGE.FIRST.getEmpty());
+                                                stack = TARDISSerializeInventory.itemStacksFromString(STORAGE.SAVE_1.getEmpty());
                                             }
                                         } catch (IOException ex) {
                                             Logger.getLogger(TARDISButtonListener.class.getName()).log(Level.SEVERE, null, ex);
                                         }
                                     } else {
                                         try {
-                                            stack = TARDISSerializeInventory.itemStacksFromString(STORAGE.FIRST.getEmpty());
+                                            stack = TARDISSerializeInventory.itemStacksFromString(STORAGE.SAVE_1.getEmpty());
                                         } catch (IOException ex) {
                                             Logger.getLogger(TARDISButtonListener.class.getName()).log(Level.SEVERE, null, ex);
                                         }
@@ -397,7 +397,7 @@ public class TARDISButtonListener implements Listener {
                                         setstore.put("tardis_id", id);
                                         qf.doInsert("storage", setstore);
                                     }
-                                    Inventory inv = plugin.getServer().createInventory(player, 54, STORAGE.FIRST.getTitle());
+                                    Inventory inv = plugin.getServer().createInventory(player, 54, STORAGE.SAVE_1.getTitle());
                                     inv.setContents(stack);
                                     player.openInventory(inv);
                                     break;

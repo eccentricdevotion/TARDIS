@@ -17,6 +17,7 @@
 package me.eccentric_nz.TARDIS.database;
 
 import java.sql.Connection;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import me.eccentric_nz.TARDIS.TARDIS;
@@ -113,8 +114,16 @@ public class TARDISSQLiteDatabase {
             String queryPlayers = "CREATE TABLE IF NOT EXISTS player_prefs (pp_id INTEGER PRIMARY KEY NOT NULL, player TEXT COLLATE NOCASE, key TEXT DEFAULT '', sfx_on INTEGER DEFAULT 0, platform_on INTEGER DEFAULT 0, quotes_on INTEGER DEFAULT 0, artron_level INTEGER DEFAULT 0, wall TEXT DEFAULT 'ORANGE_WOOL', floor TEXT DEFAULT 'LIGHT_GREY_WOOL', auto_on INTEGER DEFAULT 0, beacon_on INTEGER DEFAULT 1, hads_on INTEGER DEFAULT 1, eps_on INTEGER DEFAULT 0, eps_message TEXT DEFAULT '', lamp INTEGER, texture_on INTEGER DEFAULT 0, texture_in TEXT DEFAULT '', texture_out TEXT DEFAULT 'default', submarine_on INTEGER DEFAULT 0, dnd_on INTEGER DEFAULT 0)";
             statement.executeUpdate(queryPlayers);
 
+            // reset storage table
+            String s_query = "SELECT sql FROM sqlite_master WHERE tbl_name = 'storage' AND sql LIKE '%presets_two%'";
+            ResultSet rss = statement.executeQuery(s_query);
+            if (!rss.next()) {
+                String s_drop = "DROP TABLE storage";
+                statement.executeUpdate(s_drop);
+            }
+
             // Table structure for table 'storage'
-            String queryStorage = "CREATE TABLE IF NOT EXISTS storage (storage_id INTEGER PRIMARY KEY NOT NULL, tardis_id INTEGER, owner TEXT DEFAULT '', saves_one TEXT DEFAULT '', saves_two TEXT DEFAULT '', areas TEXT DEFAULT '', presets TEXT DEFAULT '', biomes TEXT DEFAULT '', players TEXT DEFAULT '', circuits TEXT DEFAULT '')";
+            String queryStorage = "CREATE TABLE IF NOT EXISTS storage (storage_id INTEGER PRIMARY KEY NOT NULL, tardis_id INTEGER, owner TEXT DEFAULT '', saves_one TEXT DEFAULT '', saves_two TEXT DEFAULT '', areas TEXT DEFAULT '', presets_one TEXT DEFAULT '', presets_two TEXT DEFAULT '', biomes_one TEXT DEFAULT '', biomes_two TEXT DEFAULT '', players TEXT DEFAULT '', circuits TEXT DEFAULT '')";
             statement.executeUpdate(queryStorage);
 
             // Table structure for table 'tag'
