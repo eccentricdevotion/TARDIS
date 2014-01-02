@@ -71,7 +71,7 @@ public class TARDISRecipeCommands implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
         if (cmd.getName().equalsIgnoreCase("tardisrecipe")) {
-            if (!sender.hasPermission("tardis.use")) {
+            if (!sender.hasPermission("tardis.create")) {
                 sender.sendMessage(plugin.pluginName + MESSAGE.NO_PERMS.getText());
                 return false;
             }
