@@ -57,7 +57,11 @@ public class TARDISStorageListener implements Listener {
         if (titles.contains(title)) {
             // which inventory screen is it?
             String[] split = title.split(" ");
-            STORAGE store = STORAGE.valueOf(split[0].toUpperCase(Locale.ENGLISH));
+            String tmp = split[0].toUpperCase(Locale.ENGLISH);
+            if (split.length > 2) {
+                tmp = tmp + "_" + split[2];
+            }
+            STORAGE store = STORAGE.valueOf(tmp);
             saveCurrentStorage(inv, store.getTable(), event.getPlayer().getName());
         }
     }
