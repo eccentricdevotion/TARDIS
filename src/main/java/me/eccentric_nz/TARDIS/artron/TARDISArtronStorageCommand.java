@@ -104,7 +104,7 @@ public class TARDISArtronStorageCommand implements CommandExecutor {
                     sender.sendMessage(plugin.pluginName + MESSAGE.NO_TARDIS.getText());
                     return true;
                 }
-                current_level = rs.getArtron_level();
+                current_level = rs.getArtronLevel();
             }
             int amount;
             try {

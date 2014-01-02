@@ -310,8 +310,8 @@ public class TARDISDoorListener implements Listener {
                                     boolean userQuotes;
                                     boolean userTP;
                                     if (hasPrefs) {
-                                        userQuotes = rsp.isQuotes_on();
-                                        userTP = rsp.isTexture_on();
+                                        userQuotes = rsp.isQuotesOn();
+                                        userTP = rsp.isTextureOn();
                                     } else {
                                         userQuotes = true;
                                         userTP = false;
@@ -436,8 +436,8 @@ public class TARDISDoorListener implements Listener {
                                                     movePets(pets, tardis_loc, player, d, true);
                                                 }
                                                 if (plugin.getConfig().getBoolean("allow.tp_switch") && userTP) {
-                                                    if (!rsp.getTexture_in().isEmpty()) {
-                                                        new TARDISResourcePackChanger(plugin).changeRP(player, rsp.getTexture_in());
+                                                    if (!rsp.getTextureIn().isEmpty()) {
+                                                        new TARDISResourcePackChanger(plugin).changeRP(player, rsp.getTextureIn());
                                                     }
                                                 }
                                                 // put player into travellers table
@@ -471,8 +471,8 @@ public class TARDISDoorListener implements Listener {
                                             final Location inner_loc = ibd_loc;
                                             movePlayer(player, inner_loc, false, playerWorld, userQuotes, 1);
                                             if (plugin.getConfig().getBoolean("allow.tp_switch") && userTP) {
-                                                if (!rsp.getTexture_in().isEmpty()) {
-                                                    new TARDISResourcePackChanger(plugin).changeRP(player, rsp.getTexture_in());
+                                                if (!rsp.getTextureIn().isEmpty()) {
+                                                    new TARDISResourcePackChanger(plugin).changeRP(player, rsp.getTextureIn());
                                                 }
                                             }
                                             // put player into travellers table

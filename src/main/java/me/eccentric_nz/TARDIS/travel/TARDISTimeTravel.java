@@ -210,7 +210,7 @@ public class TARDISTimeTravel {
                             wheres.put("player", p.getName());
                             ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, wheres);
                             if (rsp.resultSet()) {
-                                if (rsp.isSubmarine_on() && plugin.utils.isOceanBiome(currentBlock.getBiome())) {
+                                if (rsp.isSubmarineOn() && plugin.utils.isOceanBiome(currentBlock.getBiome())) {
                                     // get submarine location
                                     p.sendMessage(plugin.pluginName + "Searching for underwater location...");
                                     Location underwater = submarine(currentBlock, d);
@@ -226,7 +226,7 @@ public class TARDISTimeTravel {
                                     } else {
                                         count = 1;
                                     }
-                                } else if (!rsp.isSubmarine_on()) {
+                                } else if (!rsp.isSubmarineOn()) {
                                     count = 1;
                                 }
                             } else {

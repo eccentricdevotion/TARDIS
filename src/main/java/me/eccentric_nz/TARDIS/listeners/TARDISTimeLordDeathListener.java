@@ -77,9 +77,9 @@ public class TARDISTimeLordDeathListener implements Listener {
                     ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, wherep);
                     if (rsp.resultSet()) {
                         // do they have the autonomous circuit on?
-                        if (rsp.isAuto_on()) {
+                        if (rsp.isAutoOn()) {
                             Location death_loc = player.getLocation();
-                            if (plugin.pm.isPluginEnabled("Citizens") && plugin.getConfig().getBoolean("allow.emergency_npc") && rsp.isEPS_on()) {
+                            if (plugin.pm.isPluginEnabled("Citizens") && plugin.getConfig().getBoolean("allow.emergency_npc") && rsp.isEpsOn()) {
                                 // check if there are players in the TARDIS
                                 HashMap<String, Object> wherev = new HashMap<String, Object>();
                                 wherev.put("tardis_id", id);
@@ -88,7 +88,7 @@ public class TARDISTimeLordDeathListener implements Listener {
                                     List data = rst.getData();
                                     if (data.size() > 0 && !data.contains(playerNameStr)) {
                                         // schedule the NPC to appear
-                                        TARDISEPSRunnable EPS_runnable = new TARDISEPSRunnable(plugin, rsp.getEPS_message(), player, data, id, eps, creeper);
+                                        TARDISEPSRunnable EPS_runnable = new TARDISEPSRunnable(plugin, rsp.getEpsMessage(), player, data, id, eps, creeper);
                                         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, EPS_runnable, 20L);
                                     }
                                 }

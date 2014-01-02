@@ -93,11 +93,11 @@ public class TARDISJoinListener implements Listener {
                 wherep.put("player", playerNameStr);
                 final ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, wherep);
                 if (rsp.resultSet()) {
-                    if (rsp.isTexture_on()) {
+                    if (rsp.isTextureOn()) {
                         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
                             @Override
                             public void run() {
-                                new TARDISResourcePackChanger(plugin).changeRP(player, rsp.getTexture_in());
+                                new TARDISResourcePackChanger(plugin).changeRP(player, rsp.getTextureIn());
                             }
                         }, 50L);
                     }

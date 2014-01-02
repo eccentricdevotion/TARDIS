@@ -67,7 +67,7 @@ public class TARDISHostileDisplacement {
             wherep.put("player", owner);
             ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, wherep);
             if (rsp.resultSet()) {
-                if (rsp.isHads_on()) {
+                if (rsp.isHadsOn()) {
                     TARDISTimeTravel tt = new TARDISTimeTravel(plugin);
                     int r = plugin.getConfig().getInt("preferences.hads_distance");
                     HashMap<String, Object> wherecl = new HashMap<String, Object>();

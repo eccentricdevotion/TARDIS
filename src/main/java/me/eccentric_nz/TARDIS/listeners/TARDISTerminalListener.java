@@ -199,7 +199,7 @@ public class TARDISTerminalListener implements Listener {
             wherepp.put("player", name);
             ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, wherepp);
             if (rsp.resultSet()) {
-                String sub = (rsp.isSubmarine_on()) ? "true" : "false";
+                String sub = (rsp.isSubmarineOn()) ? "true" : "false";
                 ItemStack is = inv.getItem(44);
                 ItemMeta im = is.getItemMeta();
                 im.setLore(Arrays.asList(new String[]{sub}));
@@ -334,12 +334,12 @@ public class TARDISTerminalListener implements Listener {
         where.put("player", p.getName());
         ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, where);
         if (rsp.resultSet()) {
-            String bool = (rsp.isSubmarine_on()) ? "false" : "true";
+            String bool = (rsp.isSubmarineOn()) ? "false" : "true";
             ItemStack is = inv.getItem(44);
             ItemMeta im = is.getItemMeta();
             im.setLore(Arrays.asList(new String[]{bool}));
             is.setItemMeta(im);
-            int tf = (rsp.isSubmarine_on()) ? 0 : 1;
+            int tf = (rsp.isSubmarineOn()) ? 0 : 1;
             HashMap<String, Object> set = new HashMap<String, Object>();
             set.put("submarine_on", tf);
             HashMap<String, Object> wheret = new HashMap<String, Object>();

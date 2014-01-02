@@ -331,7 +331,7 @@ public class TARDISExteriorRenderer {
             ResultSetPlayerPrefs pp = new ResultSetPlayerPrefs(plugin, wherep);
             boolean userPlatform;
             if (pp.resultSet()) {
-                userPlatform = pp.isPlatform_on();
+                userPlatform = pp.isPlatformOn();
             } else {
                 userPlatform = true;
             }

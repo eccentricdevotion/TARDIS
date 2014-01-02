@@ -150,7 +150,7 @@ public class TARDISDeinstaPreset {
                 wherepp.put("player", owner);
                 ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, wherepp);
                 if (rsp.resultSet()) {
-                    boolean sub = (rsp.isSubmarine_on() && plugin.trackSubmarine.contains(Integer.valueOf(id)));
+                    boolean sub = (rsp.isSubmarineOn() && plugin.trackSubmarine.contains(Integer.valueOf(id)));
                     if (sub && plugin.worldGuardOnServer) {
                         plugin.wgutils.sponge(b, false);
                     }

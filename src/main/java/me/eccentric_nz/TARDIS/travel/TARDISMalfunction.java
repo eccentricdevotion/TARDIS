@@ -126,7 +126,7 @@ public class TARDISMalfunction {
                 HashMap<String, Object> wherep = new HashMap<String, Object>();
                 wherep.put("player", p.getName());
                 ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, wherep);
-                if (rsp.resultSet() && rsp.isEPS_on()) {
+                if (rsp.resultSet() && rsp.isEpsOn()) {
                     // schedule the NPC to appear
                     String message = "This is Emergency Programme One. Now listen, this is important. If this message is activated, then it can only mean one thing: we must be in danger, and I mean fatal. You're about to die any second with no chance of escape.";
                     HashMap<String, Object> wherev = new HashMap<String, Object>();

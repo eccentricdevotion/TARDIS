@@ -72,7 +72,7 @@ public class TARDISArtronIndicator {
         wherep.put("player", p.getName());
         ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, wherep);
         if (rsp.resultSet()) {
-            timelord.setScore(rsp.getArtron_level());
+            timelord.setScore(rsp.getArtronLevel());
         }
         p.setScoreboard(board);
         if (hide) {
