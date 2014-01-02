@@ -25,6 +25,7 @@ import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetDestinations;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.enumeration.MESSAGE;
+import me.eccentric_nz.TARDIS.enumeration.PRESET;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -72,6 +73,7 @@ public class TARDISDiskWriterCommand {
                     return false;
                 } else {
                     int id = rs.getTardis_id();
+                    PRESET preset = rs.getPreset();
                     // check has unique name
                     HashMap<String, Object> wherename = new HashMap<String, Object>();
                     wherename.put("tardis_id", id);
@@ -95,8 +97,9 @@ public class TARDISDiskWriterCommand {
                     lore.set(2, "" + rsc.getX());
                     lore.set(3, "" + rsc.getY());
                     lore.set(4, "" + rsc.getZ());
-                    lore.set(5, rsc.getDirection().toString());
-                    lore.set(6, (plugin.trackSubmarine.contains(id)) ? "true" : "false");
+                    lore.set(5, preset.toString());
+                    lore.set(6, rsc.getDirection().toString());
+                    lore.set(7, (plugin.trackSubmarine.contains(id)) ? "true" : "false");
                     im.setLore(lore);
                     is.setItemMeta(im);
                     player.sendMessage(plugin.pluginName + "Location successfully saved to disk!");
