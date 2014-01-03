@@ -108,6 +108,7 @@ public class TARDISAreaDisks {
             List<String> player_has = new ArrayList<String>();
             String serilized_areas = rs.getAreas();
             try {
+                // check storage inventory
                 ItemStack[] areas = TARDISSerializeInventory.itemStacksFromString(serilized_areas);
                 for (ItemStack a : areas) {
                     if (a != null && a.getType().equals(Material.RECORD_3) && a.hasItemMeta()) {
@@ -117,12 +118,23 @@ public class TARDISAreaDisks {
                         }
                     }
                 }
+                // check console inventory
                 ItemStack[] console = TARDISSerializeInventory.itemStacksFromString(rs.getConsole());
                 for (ItemStack c : console) {
                     if (c != null && c.getType().equals(Material.RECORD_3) && c.hasItemMeta()) {
                         ItemMeta imc = c.getItemMeta();
                         if (imc.hasLore()) {
                             player_has.add(imc.getLore().get(0));
+                        }
+                    }
+                }
+                // check player inventory
+                ItemStack[] player = p.getInventory().getContents();
+                for (ItemStack y : player) {
+                    if (y != null && y.getType().equals(Material.RECORD_3) && y.hasItemMeta()) {
+                        ItemMeta imy = y.getItemMeta();
+                        if (imy.hasLore()) {
+                            player_has.add(imy.getLore().get(0));
                         }
                     }
                 }
