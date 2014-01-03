@@ -43,25 +43,27 @@ public class TARDISGiveCommand implements CommandExecutor {
         this.plugin = plugin;
         this.full = this.plugin.getArtronConfig().getInt("full_charge");
         items.put("artron", "");
-        items.put("remote", "Stattenheim Remote");
-        items.put("locator", "TARDIS Locator");
-        items.put("l-circuit", "TARDIS Locator Circuit");
-        items.put("m-circuit", "TARDIS Materialisation Circuit");
-        items.put("s-circuit", "TARDIS Stattenheim Circuit");
-        items.put("c-circuit", "TARDIS Chameleon Circuit");
-        items.put("key", "TARDIS Key");
-        items.put("blank", "Blank Storage Disk");
-        items.put("save-disk", "Save Storage Disk");
-        items.put("preset-disk", "Blank Preset Storage Disk");
-        items.put("biome-disk", "Blank Biome Storage Disk");
-        items.put("player-disk", "Player Storage Disk");
-        items.put("sonic", "Sonic Screwdriver");
-        items.put("oscillator", "Sonic Oscillator");
         items.put("a-circuit", "Server Admin Circuit");
         items.put("bio-circuit", "Bio-scanner Circuit");
-        items.put("r-circuit", "Redstone Activator Circuit");
+        items.put("biome-disk", "Blank Biome Storage Disk");
+        items.put("blank", "Blank Storage Disk");
+        items.put("c-circuit", "TARDIS Chameleon Circuit");
         items.put("d-circuit", "Diamond Disruptor Circuit");
         items.put("e-circuit", "Emerald Environment Circuit");
+        items.put("filter", "Perception Filter");
+        items.put("key", "TARDIS Key");
+        items.put("l-circuit", "TARDIS Locator Circuit");
+        items.put("locator", "TARDIS Locator");
+        items.put("m-circuit", "TARDIS Materialisation Circuit");
+        items.put("oscillator", "Sonic Oscillator");
+        items.put("p-circuit", "Perception Circuit");
+        items.put("player-disk", "Player Storage Disk");
+        items.put("preset-disk", "Blank Preset Storage Disk");
+        items.put("r-circuit", "Redstone Activator Circuit");
+        items.put("remote", "Stattenheim Remote");
+        items.put("s-circuit", "TARDIS Stattenheim Circuit");
+        items.put("save-disk", "Save Storage Disk");
+        items.put("sonic", "Sonic Screwdriver");
     }
 
     @Override
@@ -75,7 +77,7 @@ public class TARDISGiveCommand implements CommandExecutor {
                 }
                 String item = args[1].toLowerCase();
                 if (!items.containsKey(item)) {
-                    sender.sendMessage(plugin.pluginName + "Unknown item! Try one of: artron|remote|locator|l-circuit|m-circuit|s-circuit|c-circuit|sonic|blank|save-disk|preset-disk|biome-disk|player-disk");
+                    sender.sendMessage(plugin.pluginName + "Unknown item! Try one of: artron|a-circuit|bio-circuit|biome-disk|blank|c-circuit|d-circuit|e-circuit|filter|key|l-circuit|locator|m-circuit|oscillator|p-circuit|player-disk|preset-disk|r-circuit|remote|s-circuit|save-disk|sonic");
                     return true;
                 }
                 int amount;

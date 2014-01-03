@@ -47,25 +47,27 @@ public class TARDISRecipeCommands implements CommandExecutor {
 
     public TARDISRecipeCommands(TARDIS plugin) {
         this.plugin = plugin;
-        firstArgs.add("remote"); // Stattenheim Remote
-        firstArgs.add("locator"); // TARDIS Locator
-        firstArgs.add("l-circuit"); // Locator Circuit
-        firstArgs.add("m-circuit"); // Materialisation Circuit
-        firstArgs.add("s-circuit"); // Stattenheim Circuit
-        firstArgs.add("c-circuit"); // Chameleon Circuit
-        firstArgs.add("blank"); // Blank Storage Disk
-        firstArgs.add("save-disk"); // Blank Save Storage Disk
-        firstArgs.add("preset-disk"); // Blank Preset Storage Disk
-        firstArgs.add("biome-disk"); // Blank Biome Storage Disk
-        firstArgs.add("player-disk"); // Blank Player Disk
-        firstArgs.add("key"); // TARDIS key
-        firstArgs.add("sonic"); // Sonic Screwdriver
         firstArgs.add("a-circuit"); // Admin Circuit
-        firstArgs.add("oscillator"); // Sonic Oscillator
-        firstArgs.add("e-circuit"); // Emerald Circuit
-        firstArgs.add("d-circuit"); // Diamond Circuit
         firstArgs.add("bio-circuit"); // Bio-scanner Circuit
+        firstArgs.add("biome-disk"); // Blank Biome Storage Disk
+        firstArgs.add("blank"); // Blank Storage Disk
+        firstArgs.add("c-circuit"); // Chameleon Circuit
+        firstArgs.add("d-circuit"); // Diamond Circuit
+        firstArgs.add("e-circuit"); // Emerald Circuit
+        firstArgs.add("filter"); // Perception Filter
+        firstArgs.add("key"); // TARDIS key
+        firstArgs.add("l-circuit"); // Locator Circuit
+        firstArgs.add("locator"); // TARDIS Locator
+        firstArgs.add("m-circuit"); // Materialisation Circuit
+        firstArgs.add("oscillator"); // Sonic Oscillator
+        firstArgs.add("p-circuit"); // Perception Circuit
+        firstArgs.add("player-disk"); // Blank Player Disk
+        firstArgs.add("preset-disk"); // Blank Preset Storage Disk
         firstArgs.add("r-circuit"); // Redstone Circuit
+        firstArgs.add("remote"); // Stattenheim Remote
+        firstArgs.add("s-circuit"); // Stattenheim Circuit
+        firstArgs.add("save-disk"); // Blank Save Storage Disk
+        firstArgs.add("sonic"); // Sonic Screwdriver
     }
 
     @Override
@@ -165,6 +167,14 @@ public class TARDISRecipeCommands implements CommandExecutor {
             }
             if (args[0].equalsIgnoreCase("e-circuit")) {
                 this.showShapedRecipe(player, "Emerald Environment Circuit");
+                return true;
+            }
+            if (args[0].equalsIgnoreCase("p-circuit")) {
+                this.showShapedRecipe(player, "Perception Circuit");
+                return true;
+            }
+            if (args[0].equalsIgnoreCase("filter")) {
+                this.showShapedRecipe(player, "Perception Filter");
                 return true;
             }
         }

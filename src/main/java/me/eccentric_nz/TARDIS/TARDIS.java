@@ -117,6 +117,7 @@ import me.eccentric_nz.TARDIS.listeners.TARDISTerminalListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISTimeLordDeathListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISBlockPhysicsListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISMakePresetListener;
+import me.eccentric_nz.TARDIS.listeners.TARDISPerceptionFilterListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISPistonListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISRedstoneListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISRenderRoomListener;
@@ -137,6 +138,7 @@ import me.eccentric_nz.TARDIS.recipes.TARDISShapelessRecipe;
 import me.eccentric_nz.TARDIS.recipes.TARDISSonicUpgradeListener;
 //import me.eccentric_nz.TARDIS.recipes.TARDISFurnaceRecipe;
 import me.eccentric_nz.TARDIS.utility.TARDISMultiverseInventoriesChecker;
+import me.eccentric_nz.TARDIS.utility.TARDISPerceptionFilter;
 import me.eccentric_nz.TARDIS.utility.TARDISSounds;
 import me.eccentric_nz.TARDIS.utility.TARDISTownyChecker;
 import me.eccentric_nz.TARDIS.utility.TARDISUtils;
@@ -305,6 +307,7 @@ public class TARDIS extends JavaPlugin {
     public TARDISShapedRecipe figura;
     public TARDISShapelessRecipe incomposita;
     //public TARDISFurnaceRecipe fornacis;
+    public TARDISPerceptionFilter filter;
 
     @Override
     public void onEnable() {
@@ -375,6 +378,8 @@ public class TARDIS extends JavaPlugin {
                 tmic = new TARDISMultiverseInventoriesChecker(this);
             }
             setDates();
+            filter = new TARDISPerceptionFilter(this);
+            filter.createPerceptionFilter();
         } else {
             console.sendMessage(pluginName + "This plugin requires CraftBukkit 1.7.2 or higher, disabling...");
             pm.disablePlugin(this);
@@ -532,6 +537,7 @@ public class TARDIS extends JavaPlugin {
         pm.registerEvents(new TARDISRenderRoomListener(this), this);
         pm.registerEvents(new TARDISStorageListener(this), this);
         pm.registerEvents(new TARDISConsoleListener(this), this);
+        pm.registerEvents(new TARDISPerceptionFilterListener(this), this);
     }
 
     /**

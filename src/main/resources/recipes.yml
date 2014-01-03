@@ -170,6 +170,42 @@ shaped:
         result: 'MAP:1977'
         amount: 1
         lore: ""
+    Perception Filter:
+        easy_shape: S-S,-S-,RGC
+        easy_ingredients:
+            S: STRING
+            R: REDSTONE
+            G: GOLD_NUGGET
+            C: REDSTONE_COMPARATOR
+        hard_shape: S-S,-S-,RGC
+        hard_ingredients:
+            S: STRING
+            R: REDSTONE
+            G: GOLD_NUGGET
+            C: 'MAP:1978'
+        result: GOLD_NUGGET
+        amount: 1
+        lore: ""
+    Perception Circuit:
+        easy_shape: IGI,CEC,DTD
+        easy_ingredients:
+            I: IRON_INGOT
+            G: GOLDEN_CARROT
+            C: REDSTONE_COMPARATOR
+            E: FERMENTED_SPIDER_EYE
+            D: DIODE
+            T: REDSTONE_TORCH_ON
+        hard_shape: IGI,CEC,DTD
+        hard_ingredients:
+            I: IRON_INGOT
+            G: GOLDEN_CARROT
+            C: REDSTONE_COMPARATOR
+            E: FERMENTED_SPIDER_EYE
+            D: DIODE
+            T: REDSTONE_TORCH_ON
+        result: 'MAP:1978'
+        amount: 1
+        lore: ""
     TARDIS Key:
         easy_shape: -R-,-S-,-S-
         easy_ingredients:

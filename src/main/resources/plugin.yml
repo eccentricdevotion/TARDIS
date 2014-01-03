@@ -203,6 +203,9 @@ permissions:
   tardis.store:
     description: Allows the Artron Energy to be stored in an Artron Storage Cell.
     default: op
+  tardis.filter:
+    description: Allows a player to use the TARDIS perception filter.
+    default: op
 commands:
   tardis:
     aliases: [tt,ttardis,/tardis,timelord]

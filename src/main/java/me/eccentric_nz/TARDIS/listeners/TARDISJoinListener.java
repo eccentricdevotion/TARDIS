@@ -135,5 +135,6 @@ public class TARDISJoinListener implements Listener {
             wherel.put("tardis_id", id);
             qf.doUpdate("tardis", set, wherel);
         }
+        plugin.filter.addPlayer(player);
     }
 }
