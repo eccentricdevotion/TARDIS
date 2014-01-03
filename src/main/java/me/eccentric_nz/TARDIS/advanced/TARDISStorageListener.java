@@ -24,7 +24,9 @@ import java.util.Locale;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetDiskStorage;
+import me.eccentric_nz.TARDIS.enumeration.DISK_CIRCUIT;
 import me.eccentric_nz.TARDIS.enumeration.STORAGE;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -42,11 +44,17 @@ public class TARDISStorageListener implements Listener {
 
     private final TARDIS plugin;
     List<String> titles = new ArrayList<String>();
+    private final List<Material> onlythese = new ArrayList<Material>();
 
     public TARDISStorageListener(TARDIS plugin) {
         this.plugin = plugin;
         for (STORAGE s : STORAGE.values()) {
             this.titles.add(s.getTitle());
+        }
+        for (DISK_CIRCUIT dc : DISK_CIRCUIT.values()) {
+            if (!onlythese.contains(dc.getMaterial())) {
+                onlythese.add(dc.getMaterial());
+            }
         }
     }
 
@@ -62,7 +70,7 @@ public class TARDISStorageListener implements Listener {
                 tmp = tmp + "_" + split[2];
             }
             STORAGE store = STORAGE.valueOf(tmp);
-            saveCurrentStorage(inv, store.getTable(), event.getPlayer().getName());
+            saveCurrentStorage(inv, store.getTable(), (Player) event.getPlayer());
         }
     }
 
@@ -92,7 +100,7 @@ public class TARDISStorageListener implements Listener {
             }
             STORAGE store = STORAGE.valueOf(tmp);
             if (slot < 6 || slot == 18 || slot == 26) {
-                saveCurrentStorage(inv, store.getTable(), playerNameStr);
+                saveCurrentStorage(inv, store.getTable(), player);
             }
             switch (slot) {
                 case 0:
@@ -187,12 +195,22 @@ public class TARDISStorageListener implements Listener {
         }
     }
 
-    private void saveCurrentStorage(Inventory inv, String column, String p) {
+    private void saveCurrentStorage(Inventory inv, String column, Player p) {
+        // loop through inventory contents and remove any items that are not disks or circuits
+        for (int i = 27; i < 54; i++) {
+            ItemStack is = inv.getItem(i);
+            if (is != null) {
+                if (!onlythese.contains(is.getType())) {
+                    p.getLocation().getWorld().dropItemNaturally(p.getLocation(), is);
+                    inv.setItem(i, new ItemStack(Material.AIR));
+                }
+            }
+        }
         String serialized = TARDISSerializeInventory.itemStacksToString(inv.getContents());
         HashMap<String, Object> set = new HashMap<String, Object>();
         set.put(column, serialized);
         HashMap<String, Object> where = new HashMap<String, Object>();
-        where.put("owner", p);
+        where.put("owner", p.getName());
         new QueryFactory(plugin).doUpdate("storage", set, where);
     }
 

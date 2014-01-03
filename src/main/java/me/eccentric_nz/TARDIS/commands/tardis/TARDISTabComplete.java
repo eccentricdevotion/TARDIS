@@ -35,7 +35,7 @@ public class TARDISTabComplete implements TabCompleter {
     private final List<String> DIR_SUBS = ImmutableList.of("north", "west", "south", "east");
     private final List<String> LIST_SUBS = ImmutableList.of("companions", "saves", "areas", "rechargers");
     private final List<String> SEC_SUBS = ImmutableList.of("button", "world-repeater", "x-repeater", "z-repeater", "y-repeater", "artron", "handbrake", "door", "back");
-    private final List<String> UPD_SUBS = ImmutableList.of("door", "button", "world-repeater", "x-repeater", "z-repeater", "y-repeater", "chameleon", "save-sign", "artron", "handbrake", "condenser", "scanner", "backdoor", "keyboard", "creeper", "eps", "back", "terminal", "ars", "temporal", "light", "farm", "stable", "rail", "info", "village");
+    private final List<String> UPD_SUBS = ImmutableList.of("advanced", "ars", "artron", "back", "backdoor", "button", "chameleon", "condenser", "creeper", "door", "eps", "farm", "handbrake", "info", "keyboard", "light", "rail", "save-sign", "scanner", "stable", "storage", "temporal", "terminal", "village", "world-repeater", "x-repeater", "y-repeater", "z-repeater");
 
     public TARDISTabComplete(TARDIS plugin) {
         this.plugin = plugin;

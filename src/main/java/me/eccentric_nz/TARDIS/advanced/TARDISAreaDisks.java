@@ -53,7 +53,7 @@ public class TARDISAreaDisks {
             for (HashMap<String, String> map : data) {
                 String name = map.get("area_name");
                 if (p.hasPermission("tardis.area." + name) || p.hasPermission("tardis.area.*")) {
-                    ItemStack is = new ItemStack(Material.RECORD_8, 1);
+                    ItemStack is = new ItemStack(Material.RECORD_3, 1);
                     ItemMeta im = is.getItemMeta();
                     im.setDisplayName("Area Storage Disk");
                     List<String> lore = new ArrayList<String>();

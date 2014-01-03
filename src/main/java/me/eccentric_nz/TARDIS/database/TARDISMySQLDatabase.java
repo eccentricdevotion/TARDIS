@@ -115,7 +115,7 @@ public class TARDISMySQLDatabase {
             statement.executeUpdate(player_prefsQuery);
 
             // drop storage table
-            String s_query = "SHOW COLUMNS FROM tardis LIKE 'presets_two'";
+            String s_query = "SHOW COLUMNS FROM tardis LIKE 'console'";
             ResultSet rss = statement.executeQuery(s_query);
             if (!rss.next()) {
                 String s_drop = "DROP TABLE storage";
@@ -123,7 +123,7 @@ public class TARDISMySQLDatabase {
             }
 
             // Table structure for table 'storage'
-            String storageQuery = "CREATE TABLE IF NOT EXISTS storage (storage_id int(11) NOT NULL AUTO_INCREMENT, tardis_id int(11) DEFAULT '0', owner varchar(32) DEFAULT '', saves_one text NULL, saves_two text NULL, areas text NULL, presets_one text NULL, presets_two text NULL, biomes_one text NULL, biomes_two text NULL, players text NULL, circuits text NULL, PRIMARY KEY (storage_id)) DEFAULT CHARSET=utf8 COLLATE utf8_general_ci";
+            String storageQuery = "CREATE TABLE IF NOT EXISTS storage (storage_id int(11) NOT NULL AUTO_INCREMENT, tardis_id int(11) DEFAULT '0', owner varchar(32) DEFAULT '', saves_one text NULL, saves_two text NULL, areas text NULL, presets_one text NULL, presets_two text NULL, biomes_one text NULL, biomes_two text NULL, players text NULL, circuits text NULL, console text NULL, PRIMARY KEY (storage_id)) DEFAULT CHARSET=utf8 COLLATE utf8_general_ci";
             statement.executeUpdate(storageQuery);
 
             // Table structure for table 'tag'

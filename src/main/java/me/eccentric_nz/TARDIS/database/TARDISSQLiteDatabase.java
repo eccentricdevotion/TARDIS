@@ -115,7 +115,7 @@ public class TARDISSQLiteDatabase {
             statement.executeUpdate(queryPlayers);
 
             // reset storage table
-            String s_query = "SELECT sql FROM sqlite_master WHERE tbl_name = 'storage' AND sql LIKE '%presets_two%'";
+            String s_query = "SELECT sql FROM sqlite_master WHERE tbl_name = 'storage' AND sql LIKE '%console%'";
             ResultSet rss = statement.executeQuery(s_query);
             if (!rss.next()) {
                 String s_drop = "DROP TABLE storage";
@@ -123,7 +123,7 @@ public class TARDISSQLiteDatabase {
             }
 
             // Table structure for table 'storage'
-            String queryStorage = "CREATE TABLE IF NOT EXISTS storage (storage_id INTEGER PRIMARY KEY NOT NULL, tardis_id INTEGER, owner TEXT DEFAULT '', saves_one TEXT DEFAULT '', saves_two TEXT DEFAULT '', areas TEXT DEFAULT '', presets_one TEXT DEFAULT '', presets_two TEXT DEFAULT '', biomes_one TEXT DEFAULT '', biomes_two TEXT DEFAULT '', players TEXT DEFAULT '', circuits TEXT DEFAULT '')";
+            String queryStorage = "CREATE TABLE IF NOT EXISTS storage (storage_id INTEGER PRIMARY KEY NOT NULL, tardis_id INTEGER, owner TEXT DEFAULT '', saves_one TEXT DEFAULT '', saves_two TEXT DEFAULT '', areas TEXT DEFAULT '', presets_one TEXT DEFAULT '', presets_two TEXT DEFAULT '', biomes_one TEXT DEFAULT '', biomes_two TEXT DEFAULT '', players TEXT DEFAULT '', circuits TEXT DEFAULT '', console TEXT DEFAULT '')";
             statement.executeUpdate(queryStorage);
 
             // Table structure for table 'tag'

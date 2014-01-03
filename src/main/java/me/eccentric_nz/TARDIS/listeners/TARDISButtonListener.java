@@ -67,7 +67,7 @@ public class TARDISButtonListener implements Listener {
 
     private final TARDIS plugin;
     private final List<Material> validBlocks = new ArrayList<Material>();
-    private final List<Integer> onlythese = Arrays.asList(new Integer[]{1, 8, 9, 10, 11, 12, 13, 14, 15});
+    private final List<Integer> onlythese = Arrays.asList(new Integer[]{1, 8, 9, 10, 11, 12, 13, 14});
     public ItemStack[] items;
     private final ItemStack[] tars;
     private final ItemStack[] clocks;
@@ -400,10 +400,6 @@ public class TARDISButtonListener implements Listener {
                                     Inventory inv = plugin.getServer().createInventory(player, 54, STORAGE.SAVE_1.getTitle());
                                     inv.setContents(stack);
                                     player.openInventory(inv);
-                                    break;
-                                case 15:
-                                    // Advanced console
-                                    player.sendMessage(plugin.pluginName + "You clicked the Advanced Console!");
                                     break;
                                 default:
                                     break;

@@ -53,6 +53,7 @@ public class ResultSetDiskStorage {
     private String presetsOne;
     private String presetsTwo;
     private String circuits;
+    private String console;
 
     /**
      * Creates a class instance that can be used to retrieve an SQL ResultSet
@@ -146,6 +147,10 @@ public class ResultSetDiskStorage {
                     if (rs.wasNull()) {
                         this.circuits = "";
                     }
+                    this.console = rs.getString("console");
+                    if (rs.wasNull()) {
+                        this.console = "";
+                    }
                 }
             } else {
                 return false;
@@ -214,5 +219,9 @@ public class ResultSetDiskStorage {
 
     public String getCircuits() {
         return circuits;
+    }
+
+    public String getConsole() {
+        return console;
     }
 }
