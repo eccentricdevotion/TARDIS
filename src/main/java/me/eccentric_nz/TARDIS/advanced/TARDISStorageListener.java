@@ -221,7 +221,11 @@ public class TARDISStorageListener implements Listener {
                 ItemStack[] stack = null;
                 try {
                     if (!serialized.isEmpty()) {
-                        stack = TARDISSerializeInventory.itemStacksFromString(serialized);
+                        if (s.equals(STORAGE.AREA)) {
+                            stack = TARDISSerializeInventory.itemStacksFromString(new TARDISAreaDisks(plugin).checkDisksForNewAreas(p));
+                        } else {
+                            stack = TARDISSerializeInventory.itemStacksFromString(serialized);
+                        }
                     } else {
                         if (s.equals(STORAGE.AREA)) {
                             stack = new TARDISAreaDisks(plugin).makeDisks(p);

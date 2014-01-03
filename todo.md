@@ -5,7 +5,6 @@
    * Add note about disabling Factions in Vortex
 2. Advanced TARDIS console
     * Export TARDIS saves / areas / etc. to disks for use with Advanced TARDIS console
-    * Have a storage container with GUI for accessing disks
 3. Add `/tardiskit [kit|list]` command so that servers on easy difficulty can supply players with the basics (or more if desired)
 4. Make condensables list configurable
 5. TARDIS exterior rendering / scanner room
