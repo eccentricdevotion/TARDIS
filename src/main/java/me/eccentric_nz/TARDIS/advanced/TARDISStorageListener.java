@@ -100,7 +100,7 @@ public class TARDISStorageListener implements Listener {
             return;
         }
         int slot = event.getRawSlot();
-        if (slot < 27) {
+        if (slot < 27 || event.isShiftClick()) {
             event.setCancelled(true);
         }
         final Player player = (Player) event.getWhoClicked();
