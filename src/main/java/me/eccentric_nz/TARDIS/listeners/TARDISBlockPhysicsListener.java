@@ -56,7 +56,7 @@ public class TARDISBlockPhysicsListener implements Listener {
                     }
                 }
             }
-            if (block.getType().equals(Material.VINE) || block.getType().equals(Material.REDSTONE_WIRE)) {
+            if (block.getType().equals(Material.VINE)) {
                 event.setCancelled(true);
             }
             if (block.getType().equals(Material.IRON_DOOR_BLOCK) || block.getType().equals(Material.WOODEN_DOOR)) {
