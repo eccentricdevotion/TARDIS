@@ -20,6 +20,7 @@ import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
+import me.eccentric_nz.TARDIS.enumeration.MESSAGE;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -108,7 +109,7 @@ public class TARDISGiveCommand implements CommandExecutor {
                     return this.giveItem(sender, item, amount, p);
                 }
             } else {
-                sender.sendMessage(plugin.pluginName + "You do not have permission to run this command!");
+                sender.sendMessage(plugin.pluginName + MESSAGE.NO_PERMS.getText());
                 return true;
             }
         }

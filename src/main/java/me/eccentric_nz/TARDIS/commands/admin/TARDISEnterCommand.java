@@ -22,6 +22,7 @@ import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetDoors;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
+import me.eccentric_nz.TARDIS.enumeration.MESSAGE;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.command.CommandSender;
@@ -49,7 +50,7 @@ public class TARDISEnterCommand {
             return true;
         }
         if (!player.hasPermission("tardis.skeletonkey")) {
-            sender.sendMessage(plugin.pluginName + "You do not have permission to run this command!");
+            sender.sendMessage(plugin.pluginName + MESSAGE.NO_PERMS.getText());
             return true;
         }
         HashMap<String, Object> where = new HashMap<String, Object>();

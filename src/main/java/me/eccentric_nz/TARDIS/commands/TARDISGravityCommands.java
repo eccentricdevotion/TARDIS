@@ -21,6 +21,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.enumeration.MESSAGE;
 import me.eccentric_nz.tardischunkgenerator.TARDISChunkGenerator;
 import org.bukkit.ChatColor;
 import org.bukkit.World;
@@ -78,7 +79,7 @@ public class TARDISGravityCommands implements CommandExecutor {
                 return false;
             }
             if (!player.hasPermission("tardis.gravity")) {
-                sender.sendMessage(plugin.pluginName + ChatColor.RED + "You do not have permission to use this command!");
+                sender.sendMessage(plugin.pluginName + MESSAGE.NO_PERMS.getText());
                 return true;
             }
             // check they are still in the TARDIS world
