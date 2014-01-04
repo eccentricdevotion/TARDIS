@@ -159,7 +159,7 @@ public class TARDISMaterialisationPreset implements Runnable {
                     if (saved != null) {
                         TARDISDoorLocation idl = plugin.doorListener.getDoor(1, tid);
                         Location l = idl.getL();
-                        plugin.doorListener.movePlayer(saved, l, false, world, false, 0);
+                        plugin.doorListener.movePlayer(saved, l, false, world, false, 0, minecart);
                         // put player into travellers table
                         HashMap<String, Object> set = new HashMap<String, Object>();
                         set.put("tardis_id", tid);

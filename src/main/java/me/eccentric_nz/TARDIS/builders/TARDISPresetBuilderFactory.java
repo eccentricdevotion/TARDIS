@@ -149,7 +149,7 @@ public class TARDISPresetBuilderFactory {
                     TARDISDeinstaPreset deinsta = new TARDISDeinstaPreset(plugin);
                     deinsta.instaDestroyPreset(l, d, id, sub, demat);
                 }
-                final TARDISInstaPreset trp = new TARDISInstaPreset(plugin, l, preset, id, d, p.getName(), mal, lamp, sub, cham_id, cham_data, true);
+                final TARDISInstaPreset trp = new TARDISInstaPreset(plugin, l, preset, id, d, p.getName(), mal, lamp, sub, cham_id, cham_data, true, minecart);
                 plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
                     @Override
                     public void run() {
@@ -164,7 +164,7 @@ public class TARDISPresetBuilderFactory {
                     runnable.setTask(taskID);
                 } else {
                     plugin.tardisMaterialising.add(Integer.valueOf(id));
-                    TARDISInstaPreset insta = new TARDISInstaPreset(plugin, l, preset, id, d, p.getName(), mal, lamp, sub, cham_id, cham_data, false);
+                    TARDISInstaPreset insta = new TARDISInstaPreset(plugin, l, preset, id, d, p.getName(), mal, lamp, sub, cham_id, cham_data, false, minecart);
                     insta.buildPreset();
                 }
             }

@@ -43,6 +43,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.Sound;
 import org.bukkit.World;
 import org.bukkit.World.Environment;
 import org.bukkit.block.Block;
@@ -143,6 +144,7 @@ public class TARDISDoorListener implements Listener {
                     } else {
                         key = plugin.getConfig().getString("preferences.key");
                     }
+                    boolean minecart = rsp.isMinecartOn();
                     Material m = Material.getMaterial(key);
                     HashMap<String, Object> where = new HashMap<String, Object>();
                     where.put("door_location", doorloc);
@@ -276,7 +278,7 @@ public class TARDISDoorListener implements Listener {
                                                 break;
                                         }
                                     }
-                                    playDoorSound(player, open, player.getLocation());
+                                    playDoorSound(player, open, player.getLocation(), minecart);
                                 } else {
                                     player.sendMessage(plugin.pluginName + "You need to unlock the door!");
                                 }
@@ -368,7 +370,7 @@ public class TARDISDoorListener implements Listener {
                                                         break;
                                                 }
                                                 // exit TARDIS!
-                                                movePlayer(player, exitTardis, true, playerWorld, userQuotes, 2);
+                                                movePlayer(player, exitTardis, true, playerWorld, userQuotes, 2, minecart);
                                                 if (plugin.getConfig().getBoolean("allow.mob_farming") && player.hasPermission("tardis.farm")) {
                                                     TARDISFarmer tf = new TARDISFarmer(plugin);
                                                     final List<TARDISMob> pets = tf.exitPets(player);
@@ -431,7 +433,7 @@ public class TARDISDoorListener implements Listener {
                                                 }
                                                 tmp_loc.setYaw(yaw);
                                                 final Location tardis_loc = tmp_loc;
-                                                movePlayer(player, tardis_loc, false, playerWorld, userQuotes, 1);
+                                                movePlayer(player, tardis_loc, false, playerWorld, userQuotes, 1, minecart);
                                                 if (pets != null && pets.size() > 0) {
                                                     movePets(pets, tardis_loc, player, d, true);
                                                 }
@@ -469,7 +471,7 @@ public class TARDISDoorListener implements Listener {
                                             ibd_loc.setYaw(yaw);
                                             ibd_loc.setPitch(pitch);
                                             final Location inner_loc = ibd_loc;
-                                            movePlayer(player, inner_loc, false, playerWorld, userQuotes, 1);
+                                            movePlayer(player, inner_loc, false, playerWorld, userQuotes, 1, minecart);
                                             if (plugin.getConfig().getBoolean("allow.tp_switch") && userTP) {
                                                 if (!rsp.getTextureIn().isEmpty()) {
                                                     new TARDISResourcePackChanger(plugin).changeRP(player, rsp.getTextureIn());
@@ -516,7 +518,7 @@ public class TARDISDoorListener implements Listener {
                                             obd_loc.setYaw(yaw);
                                             obd_loc.setPitch(pitch);
                                             final Location outer_loc = obd_loc;
-                                            movePlayer(player, outer_loc, true, playerWorld, userQuotes, 2);
+                                            movePlayer(player, outer_loc, true, playerWorld, userQuotes, 2, minecart);
                                             if (plugin.getConfig().getBoolean("allow.tp_switch") && userTP) {
                                                 new TARDISResourcePackChanger(plugin).changeRP(player, rsp.getTexture_out());
                                             }
@@ -565,7 +567,7 @@ public class TARDISDoorListener implements Listener {
      * @param sound an int representing the sound to play
      */
     @SuppressWarnings("deprecation")
-    public void movePlayer(final Player p, Location l, final boolean exit, final World from, boolean q, final int sound) {
+    public void movePlayer(final Player p, Location l, final boolean exit, final World from, boolean q, final int sound, final boolean m) {
 
         final int i = r.nextInt(plugin.quotelen);
         final Location theLocation = l;
@@ -580,7 +582,7 @@ public class TARDISDoorListener implements Listener {
             @Override
             public void run() {
                 p.teleport(theLocation);
-                playDoorSound(p, sound, theLocation);
+                playDoorSound(p, sound, theLocation, m);
             }
         }, 5L);
         Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
@@ -828,16 +830,28 @@ public class TARDISDoorListener implements Listener {
      * @param w a world to play the sound in
      * @param l a location to play the sound at
      */
-    private void playDoorSound(Player p, int sound, Location l) {
+    private void playDoorSound(Player p, int sound, Location l, boolean m) {
         switch (sound) {
             case 1:
-                plugin.utils.playTARDISSound(l, p, "tardis_door_open");
+                if (!m) {
+                    plugin.utils.playTARDISSound(l, p, "tardis_door_open");
+                } else {
+                    p.playSound(p.getLocation(), Sound.DOOR_OPEN, 1.0F, 1.0F);
+                }
                 break;
             case 2:
-                plugin.utils.playTARDISSound(l, p, "tardis_door_close");
+                if (!m) {
+                    plugin.utils.playTARDISSound(l, p, "tardis_door_close");
+                } else {
+                    p.playSound(p.getLocation(), Sound.DOOR_OPEN, 1.0F, 1.0F);
+                }
                 break;
             case 3:
-                plugin.utils.playTARDISSound(l, p, "tardis_enter");
+                if (!m) {
+                    plugin.utils.playTARDISSound(l, p, "tardis_enter");
+                } else {
+                    p.playSound(p.getLocation(), Sound.ENDERMAN_TELEPORT, 1.0F, 1.0F);
+                }
                 break;
             default:
                 break;

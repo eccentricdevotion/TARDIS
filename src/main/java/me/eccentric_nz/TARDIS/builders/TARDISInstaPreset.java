@@ -59,6 +59,7 @@ public class TARDISInstaPreset {
     private final int cham_id;
     private final byte cham_data;
     private final boolean rebuild;
+    private final boolean minecart;
     private Block sponge;
     private final PRESET preset;
     private TARDISChameleonColumn column;
@@ -66,7 +67,7 @@ public class TARDISInstaPreset {
     private final Random rand;
     private final byte random_colour;
 
-    public TARDISInstaPreset(TARDIS plugin, Location location, PRESET preset, int tid, COMPASS d, String p, boolean mal, int lamp, boolean sub, int cham_id, byte cham_data, boolean rebuild) {
+    public TARDISInstaPreset(TARDIS plugin, Location location, PRESET preset, int tid, COMPASS d, String p, boolean mal, int lamp, boolean sub, int cham_id, byte cham_data, boolean rebuild, boolean minecart) {
         this.plugin = plugin;
         this.d = d;
         this.location = location;
@@ -79,6 +80,7 @@ public class TARDISInstaPreset {
         this.cham_id = cham_id;
         this.cham_data = cham_data;
         this.rebuild = rebuild;
+        this.minecart = minecart;
         colours = new byte[]{0, 1, 2, 3, 4, 5, 6, 9, 10, 11, 12, 13, 14};
         rand = new Random();
         random_colour = colours[rand.nextInt(13)];
@@ -116,7 +118,7 @@ public class TARDISInstaPreset {
             if (saved != null) {
                 TARDISDoorLocation idl = plugin.doorListener.getDoor(1, tid);
                 Location l = idl.getL();
-                plugin.doorListener.movePlayer(saved, l, false, world, false, 0);
+                plugin.doorListener.movePlayer(saved, l, false, world, false, 0, minecart);
                 // put player into travellers table
                 HashMap<String, Object> set = new HashMap<String, Object>();
                 set.put("tardis_id", tid);

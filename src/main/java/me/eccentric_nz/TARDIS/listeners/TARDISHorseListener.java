@@ -164,7 +164,7 @@ public class TARDISHorseListener implements Listener {
                             tamed.setOwner(p);
 
                             // teleport player and remove from travellers table
-                            plugin.doorListener.movePlayer(p, l, true, p.getWorld(), false, 0);
+                            plugin.doorListener.movePlayer(p, l, true, p.getWorld(), false, 0, true);
                             HashMap<String, Object> where = new HashMap<String, Object>();
                             where.put("player", p.getName());
                             new QueryFactory(plugin).doDelete("travellers", where);
