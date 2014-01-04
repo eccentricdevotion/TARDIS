@@ -45,7 +45,7 @@ public class TARDISGiveCommand implements CommandExecutor {
         items.put("artron", "");
         items.put("a-circuit", "Server Admin Circuit");
         items.put("bio-circuit", "Bio-scanner Circuit");
-        items.put("biome-disk", "Blank Biome Storage Disk");
+        items.put("biome-disk", "Biome Storage Disk");
         items.put("blank", "Blank Storage Disk");
         items.put("c-circuit", "TARDIS Chameleon Circuit");
         items.put("d-circuit", "Diamond Disruptor Circuit");
@@ -58,7 +58,7 @@ public class TARDISGiveCommand implements CommandExecutor {
         items.put("oscillator", "Sonic Oscillator");
         items.put("p-circuit", "Perception Circuit");
         items.put("player-disk", "Player Storage Disk");
-        items.put("preset-disk", "Blank Preset Storage Disk");
+        items.put("preset-disk", "Preset Storage Disk");
         items.put("r-circuit", "Redstone Activator Circuit");
         items.put("remote", "Stattenheim Remote");
         items.put("s-circuit", "TARDIS Stattenheim Circuit");
