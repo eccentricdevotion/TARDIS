@@ -52,21 +52,19 @@ public class TARDISPerceptionFilterListener implements Listener {
     @EventHandler
     public void onPerceptionFilterClick(PlayerInteractEvent event) {
         final Player player = event.getPlayer();
-        if (!player.hasPermission("tardis.filter")) {
-            player.sendMessage(plugin.pluginName + MESSAGE.NO_PERMS.getText());
-            return;
-        }
         if (player.getItemInHand().getType().equals(filter) && event.getAction().equals(Action.RIGHT_CLICK_AIR)) {
             ItemStack is = player.getItemInHand();
             if (is.hasItemMeta()) {
                 ItemMeta im = is.getItemMeta();
-                if (im.hasDisplayName() && im.getDisplayName().equals("Perception Filter")) {
+                if (im.hasDisplayName() && im.getDisplayName().equals("Perception Filter") && player.hasPermission("tardis.filter")) {
                     // equip the chest slot with the perception filter
                     player.getInventory().setChestplate(is);
                     player.updateInventory();
                     player.setItemInHand(new ItemStack(Material.AIR));
                     // make the player invisible
                     plugin.filter.addPerceptionFilter(player);
+                } else {
+                    player.sendMessage(plugin.pluginName + MESSAGE.NO_PERMS.getText());
                 }
             }
         }
