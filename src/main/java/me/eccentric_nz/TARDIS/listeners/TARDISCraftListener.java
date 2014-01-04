@@ -40,7 +40,6 @@ import org.bukkit.inventory.meta.ItemMeta;
 public class TARDISCraftListener implements Listener {
 
     private final TARDIS plugin;
-    private final List<Material> b = new ArrayList<Material>();
     private final List<Integer> c = new ArrayList<Integer>();
     private final List<Integer> l = new ArrayList<Integer>();
     private final HashMap<Material, String> t = new HashMap<Material, String>();
@@ -80,7 +79,7 @@ public class TARDISCraftListener implements Listener {
      * @param event the player clicking the crafting result slot.
      */
     @EventHandler(priority = EventPriority.MONITOR)
-    public void onInteract(InventoryClickEvent event) {
+    public void onSeedBlockCraft(InventoryClickEvent event) {
         Inventory inv = event.getInventory();
         int slot = event.getRawSlot();
         if (inv.getType().equals(InventoryType.WORKBENCH) && slot == 0 && checkSlots(inv)) {
