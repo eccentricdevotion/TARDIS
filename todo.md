@@ -4,7 +4,6 @@
 1. Documentation & videos!
    * Add note about disabling Factions in Vortex
 2. Advanced TARDIS console
-    * export TARDIS presets / biomes to disks for use with Advanced TARDIS console
     * process disks when the console GUI is closed
     * if console circuits are RIGHT-clicked, open the appropriate GUI
     * if the appropriate circuit is not installed in the console, disable that feature (`difficulty: hard`)
@@ -18,6 +17,7 @@
     * add new features
     * auto log out?
 8. Add a command to purge the database of TARDIS records when someone totally messes up their TARDIS (eg deleted the world the TARDIS was in) - `tardisadmin purge [player]` - will not physically delete blocks or worlds only database records
+9. In the `/tardisrecipe` command, translate `Map #1967` etc to the correct circuit name
     
 ## Waiting on Bukkit API
 0. IDs are soon to be history... so convert all ID use to entity names

@@ -21,7 +21,9 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import org.bukkit.ChatColor;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.scoreboard.DisplaySlot;
 import org.bukkit.scoreboard.Objective;
 import org.bukkit.scoreboard.Score;
@@ -37,29 +39,23 @@ public class TARDISArtronIndicator {
     private final TARDIS plugin;
     private final ScoreboardManager manager;
     private final int fc;
+    private final Material filter;
 
     public TARDISArtronIndicator(TARDIS plugin) {
         this.plugin = plugin;
         this.manager = plugin.getServer().getScoreboardManager();
         this.fc = plugin.getArtronConfig().getInt("full_charge");
+        this.filter = Material.valueOf(plugin.getRecipesConfig().getString("shaped.Perception Filter.result"));
     }
 
     public void showArtronLevel(final Player p, int id, boolean hide, int used) {
-        Scoreboard board = manager.getMainScoreboard();
-        Objective tmp = board.getObjective("TARDIS");
-        if (tmp == null) {
-            tmp = board.registerNewObjective("TARDIS", "Artron");
-        }
-        final Objective objective = tmp;
-        objective.setDisplaySlot(DisplaySlot.SIDEBAR);
-        objective.setDisplayName("Artron Energy");
-        Score current = objective.getScore(plugin.getServer().getOfflinePlayer(ChatColor.GREEN + "Remaining:"));
-        Score max = objective.getScore(plugin.getServer().getOfflinePlayer(ChatColor.AQUA + "Maximum:"));
-        Score percentage = objective.getScore(plugin.getServer().getOfflinePlayer(ChatColor.LIGHT_PURPLE + "Percent:"));
-        Score timelord = objective.getScore(plugin.getServer().getOfflinePlayer(ChatColor.YELLOW + "Time Lord:"));
-        if (used > 0) {
-            Score amount_used = objective.getScore(plugin.getServer().getOfflinePlayer(ChatColor.RED + "Used:"));
-            amount_used.setScore(used);
+        // check if they have the perception filter on
+        boolean isFiltered = false;
+        ItemStack[] armour = p.getInventory().getArmorContents();
+        for (ItemStack is : armour) {
+            if (is != null && is.getType().equals(filter)) {
+                isFiltered = true;
+            }
         }
         // get Artron level
         HashMap<String, Object> where = new HashMap<String, Object>();
@@ -68,25 +64,44 @@ public class TARDISArtronIndicator {
         if (rs.resultSet()) {
             int current_level = rs.getArtron_level();
             int percent = Math.round((current_level * 100F) / fc);
-            current.setScore(current_level);
-            max.setScore(fc);
-            percentage.setScore(percent);
-        }
-        HashMap<String, Object> wherep = new HashMap<String, Object>();
-        wherep.put("player", p.getName());
-        ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, wherep);
-        if (rsp.resultSet()) {
-            timelord.setScore(rsp.getArtronLevel());
-        }
-        p.setScoreboard(board);
-        if (hide) {
-            plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
-                @Override
-                public void run() {
-                    objective.setDisplaySlot(null);
-//                    p.setScoreboard(manager.getMainScoreboard());
+            if (!isFiltered) {
+                Scoreboard board = manager.getNewScoreboard();
+                Objective objective = board.registerNewObjective("TARDIS", "Artron");
+                objective.setDisplaySlot(DisplaySlot.SIDEBAR);
+                objective.setDisplayName("Artron Energy");
+                Score current = objective.getScore(plugin.getServer().getOfflinePlayer(ChatColor.GREEN + "Remaining:"));
+                Score max = objective.getScore(plugin.getServer().getOfflinePlayer(ChatColor.AQUA + "Maximum:"));
+                Score percentage = objective.getScore(plugin.getServer().getOfflinePlayer(ChatColor.LIGHT_PURPLE + "Percent:"));
+                Score timelord = objective.getScore(plugin.getServer().getOfflinePlayer(ChatColor.YELLOW + "Time Lord:"));
+                if (used > 0) {
+                    Score amount_used = objective.getScore(plugin.getServer().getOfflinePlayer(ChatColor.RED + "Used:"));
+                    amount_used.setScore(used);
                 }
-            }, 150L);
+                current.setScore(current_level);
+                max.setScore(fc);
+                percentage.setScore(percent);
+                HashMap<String, Object> wherep = new HashMap<String, Object>();
+                wherep.put("player", p.getName());
+                ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, wherep);
+                if (rsp.resultSet()) {
+                    timelord.setScore(rsp.getArtronLevel());
+                }
+                p.setScoreboard(board);
+                if (hide) {
+                    plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
+                        @Override
+                        public void run() {
+                            p.setScoreboard(manager.getNewScoreboard());
+                        }
+                    }, 150L);
+                }
+            } else {
+                if (used > 0) {
+                    p.sendMessage(plugin.pluginName + "You used " + used + " Artron Energy.");
+                } else {
+                    p.sendMessage(plugin.pluginName + "The Artron Energy Capacitor is at " + percent + "%");
+                }
+            }
         }
     }
 }
