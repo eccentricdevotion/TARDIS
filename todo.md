@@ -4,12 +4,16 @@
 1. Documentation & videos!
    * Add note about disabling Factions in Vortex
 2. Advanced TARDIS console
-    * Export TARDIS saves / areas / etc. to disks for use with Advanced TARDIS console
+    * export TARDIS presets / biomes to disks for use with Advanced TARDIS console
+    * process disks when the console GUI is closed
+    * if console circuits are RIGHT-clicked, open the appropriate GUI
+    * if the appropriate circuit is not installed in the console, disable that feature (`difficulty: hard`)
 3. Add `/tardiskit [kit|list]` command so that servers on easy difficulty can supply players with the basics (or more if desired)
 4. Make condensables list configurable
 5. TARDIS exterior rendering / scanner room
    * find a way to prevent items dropping between renders
 6. Save Chameleon preset with saved location `/tardis csave`?
+   * Presets are now saved to Save Storage Disks along with locations
 7. TARDIS Information System
     * add new features
     * auto log out?

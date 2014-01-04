@@ -609,8 +609,8 @@ public class TARDISDoorListener implements Listener {
                 } else {
                     if (p.isPlayerTimeRelative()) {
                         setTemporalLocation(p, -1);
-                        plugin.utils.playTARDISSound(p.getLocation(), p, "tardis_hum");
                     }
+                    plugin.utils.playTARDISSound(p.getLocation(), p, "tardis_hum");
                 }
                 // give a key
                 giveKey(p);
@@ -867,7 +867,16 @@ public class TARDISDoorListener implements Listener {
                 }, 10L);
             } else {
                 p.resetPlayerTime();
-                plugin.filter.removePerceptionFilter(p);
+                boolean remove = true;
+                Material m = Material.valueOf(plugin.getRecipesConfig().getString("shaped.Perception Filter.result"));
+                for (ItemStack is : p.getInventory().getArmorContents()) {
+                    if (is != null && is.getType().equals(m)) {
+                        remove = false;
+                    }
+                }
+                if (remove) {
+                    plugin.filter.removePerceptionFilter(p);
+                }
             }
         }
     }

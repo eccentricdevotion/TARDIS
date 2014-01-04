@@ -45,8 +45,12 @@ public class TARDISArtronIndicator {
     }
 
     public void showArtronLevel(final Player p, int id, boolean hide, int used) {
-        Scoreboard board = manager.getNewScoreboard();
-        Objective objective = board.registerNewObjective("TARDIS", "Artron");
+        Scoreboard board = manager.getMainScoreboard();
+        Objective tmp = board.getObjective("TARDIS");
+        if (tmp == null) {
+            tmp = board.registerNewObjective("TARDIS", "Artron");
+        }
+        final Objective objective = tmp;
         objective.setDisplaySlot(DisplaySlot.SIDEBAR);
         objective.setDisplayName("Artron Energy");
         Score current = objective.getScore(plugin.getServer().getOfflinePlayer(ChatColor.GREEN + "Remaining:"));
@@ -79,7 +83,8 @@ public class TARDISArtronIndicator {
             plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
                 @Override
                 public void run() {
-                    p.setScoreboard(manager.getNewScoreboard());
+                    objective.setDisplaySlot(null);
+//                    p.setScoreboard(manager.getMainScoreboard());
                 }
             }, 150L);
         }
