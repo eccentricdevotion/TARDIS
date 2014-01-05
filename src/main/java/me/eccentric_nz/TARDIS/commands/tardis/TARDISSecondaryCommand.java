@@ -60,7 +60,7 @@ public class TARDISSecondaryCommand {
             wheret.put("player", player.getName());
             ResultSetTravellers rst = new ResultSetTravellers(plugin, wheret, false);
             if (!rst.resultSet()) {
-                player.sendMessage(plugin.pluginName + "You are not inside your TARDIS. You need to be to run this command!");
+                player.sendMessage(plugin.pluginName + MESSAGE.NOT_IN_TARDIS.getText());
                 return false;
             }
             plugin.trackSecondary.put(player.getName(), tardis_block);

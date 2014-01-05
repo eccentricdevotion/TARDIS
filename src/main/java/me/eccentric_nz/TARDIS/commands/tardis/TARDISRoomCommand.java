@@ -26,6 +26,7 @@ import me.eccentric_nz.TARDIS.database.ResultSetControls;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
+import me.eccentric_nz.TARDIS.enumeration.MESSAGE;
 import me.eccentric_nz.TARDIS.enumeration.SCHEMATIC;
 import me.eccentric_nz.TARDIS.rooms.TARDISCondenserData;
 import me.eccentric_nz.TARDIS.rooms.TARDISSeedData;
@@ -95,7 +96,7 @@ public class TARDISRoomCommand {
         wheret.put("tardis_id", id);
         ResultSetTravellers rst = new ResultSetTravellers(plugin, wheret, false);
         if (!rst.resultSet()) {
-            player.sendMessage(plugin.pluginName + "You are not inside your TARDIS. You need to be to run this command!");
+            player.sendMessage(plugin.pluginName + MESSAGE.NOT_IN_TARDIS.getText());
             return true;
         }
         // check they have enough artron energy

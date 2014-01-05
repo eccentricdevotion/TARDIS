@@ -23,6 +23,7 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
+import me.eccentric_nz.TARDIS.enumeration.MESSAGE;
 import me.eccentric_nz.TARDIS.travel.TARDISEPSRunnable;
 import org.bukkit.entity.Player;
 
@@ -58,11 +59,11 @@ public class TARDISEmergencyProgrammeCommand {
             wherem.put("player", p.getName());
             ResultSetTravellers rsm = new ResultSetTravellers(plugin, wherem, true);
             if (!rsm.resultSet()) {
-                p.sendMessage(plugin.pluginName + "You must be inside the TARDIS before using this command!");
+                p.sendMessage(plugin.pluginName + MESSAGE.NOT_IN_TARDIS.getText());
                 return true;
             }
             if (rsm.getTardis_id() != id) {
-                p.sendMessage(plugin.pluginName + "You must be inside your own TARDIS before using this command!");
+                p.sendMessage(plugin.pluginName + MESSAGE.NOT_IN_TARDIS.getText());
                 return true;
             }
             // get player prefs

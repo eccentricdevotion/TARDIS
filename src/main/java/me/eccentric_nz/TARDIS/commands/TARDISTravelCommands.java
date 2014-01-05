@@ -111,7 +111,7 @@ public class TARDISTravelCommands implements CommandExecutor {
                 wheret.put("player", player.getName());
                 ResultSetTravellers rst = new ResultSetTravellers(plugin, wheret, false);
                 if (!rst.resultSet()) {
-                    sender.sendMessage(plugin.pluginName + "You are not inside the TARDIS. You need to be to run this command!");
+                    sender.sendMessage(plugin.pluginName + MESSAGE.NOT_IN_TARDIS.getText());
                     return true;
                 }
                 int tardis_id = rst.getTardis_id();

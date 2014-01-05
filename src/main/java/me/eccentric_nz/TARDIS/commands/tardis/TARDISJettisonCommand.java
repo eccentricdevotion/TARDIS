@@ -70,7 +70,7 @@ public class TARDISJettisonCommand {
             wheret.put("tardis_id", id);
             ResultSetTravellers rst = new ResultSetTravellers(plugin, wheret, false);
             if (!rst.resultSet()) {
-                player.sendMessage(plugin.pluginName + "You are not inside your TARDIS. You need to be to run this command!");
+                player.sendMessage(plugin.pluginName + MESSAGE.NOT_IN_TARDIS.getText());
                 return true;
             }
             plugin.trackJettison.put(player.getName(), room);
