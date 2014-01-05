@@ -113,7 +113,7 @@ public class TARDISComehereCommand {
                 // get current police box location
                 HashMap<String, Object> wherecl = new HashMap<String, Object>();
                 wherecl.put("tardis_id", id);
-                ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
+                final ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
                 if (rsc.resultSet()) {
                     final COMPASS d = rsc.getDirection();
                     TARDISTimeTravel tt = new TARDISTimeTravel(plugin);
@@ -123,13 +123,9 @@ public class TARDISComehereCommand {
                     if (b.getRelative(BlockFace.UP).getTypeId() == 8 || b.getRelative(BlockFace.UP).getTypeId() == 9) {
                         count = (tt.isSafeSubmarine(eyeLocation, d)) ? 0 : 1;
                         if (count == 0) {
-                            plugin.trackSubmarine.add(id);
                             sub = true;
                         }
                     } else {
-                        if (plugin.trackSubmarine.contains(Integer.valueOf(id))) {
-                            plugin.trackSubmarine.remove(Integer.valueOf(id));
-                        }
                         int[] start_loc = tt.getStartLocation(eyeLocation, d);
                         // safeLocation(int startx, int starty, int startz, int resetx, int resetz, World w, COMPASS d)
                         count = tt.safeLocation(start_loc[0], eyeLocation.getBlockY(), start_loc[2], start_loc[1], start_loc[3], eyeLocation.getWorld(), d);
@@ -180,12 +176,13 @@ public class TARDISComehereCommand {
                         final boolean mat = plugin.getConfig().getBoolean("police_box.materialise");
                         long delay = (mat) ? 1L : 180L;
                         plugin.inVortex.add(Integer.valueOf(id));
+                        final boolean loc_is_sub = sub;
                         Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
                             @Override
                             public void run() {
                                 if (!hidden) {
                                     plugin.tardisDematerialising.add(Integer.valueOf(id));
-                                    plugin.destroyerP.destroyPreset(oldSave, d, id, false, mat, cham, p);
+                                    plugin.destroyerP.destroyPreset(oldSave, d, id, false, mat, cham, p, rsc.isSubmarine());
                                 } else {
                                     plugin.destroyerP.removeBlockProtection(id, qf);
                                 }
@@ -194,7 +191,7 @@ public class TARDISComehereCommand {
                         Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
                             @Override
                             public void run() {
-                                plugin.builderP.buildPreset(id, eyeLocation, d, cham, p, false, false);
+                                plugin.builderP.buildPreset(id, eyeLocation, d, cham, p, false, false, loc_is_sub);
                             }
                         }, delay * 2);
                         // remove energy from TARDIS

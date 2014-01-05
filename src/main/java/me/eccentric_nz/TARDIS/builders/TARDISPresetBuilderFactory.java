@@ -87,8 +87,9 @@ public class TARDISPresetBuilderFactory {
      * @param rebuild boolean determining whether the Police Box blocks should
      * be remembered in the database for protection purposes.
      * @param mal boolean determining whether a malfunction has occurred
+     * @param sub whether the location is submarine
      */
-    public void buildPreset(int id, Location l, COMPASS d, boolean c, Player p, boolean rebuild, boolean mal) {
+    public void buildPreset(int id, Location l, COMPASS d, boolean c, Player p, boolean rebuild, boolean mal, boolean sub) {
         HashMap<String, Object> where = new HashMap<String, Object>();
         where.put("tardis_id", id);
         ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
@@ -117,7 +118,6 @@ public class TARDISPresetBuilderFactory {
             }
             // get lamp and submarine preferences
             int lamp = plugin.getConfig().getInt("police_box.tardis_lamp");
-            boolean sub = false;
             boolean minecart = false;
             boolean hidden = rs.isHidden();
             HashMap<String, Object> wherepp = new HashMap<String, Object>();
@@ -125,7 +125,6 @@ public class TARDISPresetBuilderFactory {
             ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, wherepp);
             if (rsp.resultSet()) {
                 lamp = rsp.getLamp();
-                sub = (rsp.isSubmarineOn() && plugin.trackSubmarine.contains(Integer.valueOf(id)));
                 minecart = rsp.isMinecartOn();
             }
             if (sub && notSubmarinePresets.contains(preset)) {
@@ -147,7 +146,7 @@ public class TARDISPresetBuilderFactory {
                 // always destroy it first as the player may just be switching presets
                 if (!hidden) {
                     TARDISDeinstaPreset deinsta = new TARDISDeinstaPreset(plugin);
-                    deinsta.instaDestroyPreset(l, d, id, sub, demat);
+                    deinsta.instaDestroyPreset(l, d, id, false, demat, sub);
                 }
                 final TARDISInstaPreset trp = new TARDISInstaPreset(plugin, l, preset, id, d, p.getName(), mal, lamp, sub, cham_id, cham_data, true, minecart);
                 plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {

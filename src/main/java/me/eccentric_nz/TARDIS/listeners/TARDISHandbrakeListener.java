@@ -218,10 +218,7 @@ public class TARDISHandbrakeListener implements Listener {
                                             plugin.inVortex.add(Integer.valueOf(id));
                                             if (!rs.isHidden() && !plugin.trackReset.contains(resetw)) {
                                                 plugin.tardisDematerialising.add(Integer.valueOf(Integer.valueOf(id)));
-                                                if (sub) {
-                                                    plugin.trackSubmarine.add(Integer.valueOf(id));
-                                                }
-                                                plugin.destroyerP.destroyPreset(l, cd, id, false, mat, cham, player);
+                                                plugin.destroyerP.destroyPreset(l, cd, id, false, mat, cham, player, sub);
                                             } else {
                                                 // set hidden false!
                                                 set.put("hidden", 0);
@@ -231,14 +228,12 @@ public class TARDISHandbrakeListener implements Listener {
                                             final Location e = exit;
                                             final boolean mal = malfunction;
                                             final boolean mine_sound = minecart;
+                                            final boolean next_sub = is_next_sub;
                                             final COMPASS sd = tmpd;
-                                            if (!is_next_sub && plugin.trackSubmarine.contains(Integer.valueOf(id))) {
-                                                plugin.trackSubmarine.remove(Integer.valueOf(id));
-                                            }
                                             plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
                                                 @Override
                                                 public void run() {
-                                                    plugin.builderP.buildPreset(id, e, sd, cham, player, false, mal);
+                                                    plugin.builderP.buildPreset(id, e, sd, cham, player, false, mal, next_sub);
                                                     if (!mine_sound) {
                                                         plugin.utils.playTARDISSound(handbrake_loc, player, "tardis_land");
                                                     } else {

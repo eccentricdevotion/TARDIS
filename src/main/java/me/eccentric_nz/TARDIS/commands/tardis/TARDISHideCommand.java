@@ -84,7 +84,7 @@ public class TARDISHideCommand {
                 player.sendMessage(plugin.pluginName + ChatColor.RED + "The TARDIS does not have enough Artron Energy to hide!");
                 return false;
             }
-            plugin.destroyerP.destroyPreset(l, rsc.getDirection(), id, true, false, false, null);
+            plugin.destroyerP.destroyPreset(l, rsc.getDirection(), id, true, false, false, null, rsc.isSubmarine());
             player.sendMessage(plugin.pluginName + "The TARDIS Police Box was hidden! Use " + ChatColor.GREEN + "/tardis rebuild" + ChatColor.RESET + " to show it again.");
             qf.alterEnergyLevel("tardis", -hide, wheret, player);
             // set hidden to true

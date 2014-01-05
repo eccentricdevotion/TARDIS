@@ -66,9 +66,6 @@ public class TARDISAreaSignListener implements Listener {
                 if (rst.resultSet()) {
                     ItemStack is = inv.getItem(slot);
                     if (is != null) {
-                        if (plugin.trackSubmarine.contains(Integer.valueOf(rst.getTardis_id()))) {
-                            plugin.trackSubmarine.remove(Integer.valueOf(rst.getTardis_id()));
-                        }
                         ItemMeta im = is.getItemMeta();
                         String area = im.getDisplayName();
                         Location l = plugin.ta.getNextSpot(area);

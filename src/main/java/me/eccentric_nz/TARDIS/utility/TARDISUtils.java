@@ -24,7 +24,6 @@ import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetChunks;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.tardischunkgenerator.TARDISChunkGenerator;
-import org.bukkit.Bukkit;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -191,7 +190,7 @@ public class TARDISUtils {
         int savedx, savedy, savedz;
         // compile location from string
         String[] data = s.split(":");
-        World savedw = Bukkit.getServer().getWorld(data[0]);
+        World savedw = plugin.getServer().getWorld(data[0]);
         if (savedw != null) {
             savedx = parseNum(data[1]);
             savedy = parseNum(data[2]);

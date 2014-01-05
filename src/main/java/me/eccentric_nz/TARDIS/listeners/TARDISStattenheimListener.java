@@ -147,7 +147,7 @@ public class TARDISStattenheimListener implements Listener {
                     // get TARDIS's current location
                     HashMap<String, Object> wherecl = new HashMap<String, Object>();
                     wherecl.put("tardis_id", rs.getTardis_id());
-                    ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
+                    final ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
                     if (!rsc.resultSet()) {
                         player.sendMessage(plugin.pluginName + MESSAGE.NO_CURRENT.getText());
                         return;
@@ -156,13 +156,9 @@ public class TARDISStattenheimListener implements Listener {
                     TARDISTimeTravel tt = new TARDISTimeTravel(plugin);
                     int count;
                     boolean sub = false;
-                    if (plugin.trackSubmarine.contains(Integer.valueOf(id))) {
-                        plugin.trackSubmarine.remove(Integer.valueOf(id));
-                    }
                     if (b.getRelative(BlockFace.UP).getTypeId() == 8 || b.getRelative(BlockFace.UP).getTypeId() == 9) {
                         count = (tt.isSafeSubmarine(remoteLocation, d)) ? 0 : 1;
                         if (count == 0) {
-                            plugin.trackSubmarine.add(id);
                             sub = true;
                         }
                     } else {
@@ -221,16 +217,17 @@ public class TARDISStattenheimListener implements Listener {
                             public void run() {
                                 if (!hidden) {
                                     plugin.tardisDematerialising.add(Integer.valueOf(id));
-                                    plugin.destroyerP.destroyPreset(oldSave, d, id, false, mat, cham, p);
+                                    plugin.destroyerP.destroyPreset(oldSave, d, id, false, mat, cham, p, rsc.isSubmarine());
                                 } else {
                                     plugin.destroyerP.removeBlockProtection(id, qf);
                                 }
                             }
                         }, delay);
+                        final boolean is_sub = sub;
                         Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
                             @Override
                             public void run() {
-                                plugin.builderP.buildPreset(id, remoteLocation, d, cham, p, false, false);
+                                plugin.builderP.buildPreset(id, remoteLocation, d, cham, p, false, false, is_sub);
                             }
                         }, delay * 2);
                         // remove energy from TARDIS

@@ -30,6 +30,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.World;
+import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Player;
 
 /**
@@ -237,7 +238,7 @@ public class TARDISSeedBlockProcessor {
                 qf.insertLocations(setlocs);
                 // turn the block stack into a TARDIS
                 // police box needs to use chameleon id/data
-                plugin.builderP.buildPreset(lastInsertId, l, COMPASS.valueOf(d), false, player, false, false);
+                plugin.builderP.buildPreset(lastInsertId, l, COMPASS.valueOf(d), false, player, false, false, isSub(l));
                 plugin.builderI.buildInner(schm, chunkworld, lastInsertId, player, middle_id, middle_data, floor_id, floor_data, tips);
                 // set achievement completed
                 if (player.hasPermission("tardis.book")) {
@@ -289,5 +290,15 @@ public class TARDISSeedBlockProcessor {
             }
         }
         return "ORANGE_WOOL";
+    }
+
+    private boolean isSub(Location l) {
+        switch (l.getBlock().getRelative(BlockFace.UP).getType()) {
+            case STATIONARY_WATER:
+            case WATER:
+                return true;
+            default:
+                return false;
+        }
     }
 }

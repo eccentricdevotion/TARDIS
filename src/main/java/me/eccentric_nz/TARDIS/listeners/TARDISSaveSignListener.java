@@ -77,9 +77,6 @@ public class TARDISSaveSignListener implements Listener {
                         Location current = new Location(rsc.getWorld(), rsc.getX(), rsc.getY(), rsc.getZ());
                         ItemStack is = inv.getItem(slot);
                         if (is != null) {
-                            if (plugin.trackSubmarine.contains(Integer.valueOf(id))) {
-                                plugin.trackSubmarine.remove(Integer.valueOf(id));
-                            }
                             ItemMeta im = is.getItemMeta();
                             List<String> lore = im.getLore();
                             Location save_dest = getLocation(lore);
@@ -117,7 +114,6 @@ public class TARDISSaveSignListener implements Listener {
                                         }
                                         if (l_size > 5 && !lore.get(5).isEmpty() && lore.get(5).equals("true")) {
                                             set.put("submarine", 1);
-                                            plugin.trackSubmarine.add(id);
                                         } else {
                                             set.put("submarine", 0);
                                         }

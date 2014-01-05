@@ -49,7 +49,7 @@ public class TARDISPresetDestroyerFactory {
         this.plugin = plugin;
     }
 
-    public void destroyPreset(Location l, COMPASS d, int id, boolean hide, boolean dematerialise, boolean c, Player player) {
+    public void destroyPreset(Location l, COMPASS d, int id, boolean hide, boolean dematerialise, boolean c, Player player, boolean sub) {
         HashMap<String, Object> where = new HashMap<String, Object>();
         where.put("tardis_id", id);
         ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
@@ -79,11 +79,11 @@ public class TARDISPresetDestroyerFactory {
                 if (rsp.resultSet()) {
                     lamp = rsp.getLamp();
                 }
-                TARDISDematerialisationPreset runnable = new TARDISDematerialisationPreset(plugin, l, demat, lamp, id, d, cham_id, cham_data, player);
+                TARDISDematerialisationPreset runnable = new TARDISDematerialisationPreset(plugin, l, demat, lamp, id, d, cham_id, cham_data, player, sub);
                 int taskID = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, runnable, 10L, 20L);
                 runnable.setTask(taskID);
             } else {
-                new TARDISDeinstaPreset(plugin).instaDestroyPreset(l, d, id, hide, demat);
+                new TARDISDeinstaPreset(plugin).instaDestroyPreset(l, d, id, hide, demat, sub);
             }
         }
     }

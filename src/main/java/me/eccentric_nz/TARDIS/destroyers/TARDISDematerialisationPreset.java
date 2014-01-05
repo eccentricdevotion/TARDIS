@@ -54,6 +54,7 @@ public class TARDISDematerialisationPreset implements Runnable {
     private final int cham_id;
     private final byte cham_data;
     private final Player player;
+    private final boolean sub;
     private final TARDISChameleonColumn column;
     private final TARDISChameleonColumn stained_column;
     private final TARDISChameleonColumn glass_column;
@@ -75,8 +76,9 @@ public class TARDISDematerialisationPreset implements Runnable {
      * @param cham_id the chameleon block id for the police box
      * @param cham_data the chameleon block data for the police box
      * @param player the player to play the sound to
+     * @param sub whether the location is submarine
      */
-    public TARDISDematerialisationPreset(TARDIS plugin, Location location, PRESET preset, int lamp, int tid, COMPASS d, int cham_id, byte cham_data, Player player) {
+    public TARDISDematerialisationPreset(TARDIS plugin, Location location, PRESET preset, int lamp, int tid, COMPASS d, int cham_id, byte cham_data, Player player, boolean sub) {
         this.plugin = plugin;
         this.d = d;
         this.loops = 18;
@@ -88,6 +90,7 @@ public class TARDISDematerialisationPreset implements Runnable {
         this.cham_id = cham_id;
         this.cham_data = cham_data;
         this.player = player;
+        this.sub = sub;
         column = plugin.presets.getColumn(preset, d);
         stained_column = plugin.presets.getStained(preset, d);
         glass_column = plugin.presets.getGlass(preset, d);
@@ -271,7 +274,7 @@ public class TARDISDematerialisationPreset implements Runnable {
                 }
             }
         } else {
-            new TARDISDeinstaPreset(plugin).instaDestroyPreset(location, d, tid, false, preset);
+            new TARDISDeinstaPreset(plugin).instaDestroyPreset(location, d, tid, false, preset, sub);
             plugin.getServer().getScheduler().cancelTask(task);
             task = 0;
         }

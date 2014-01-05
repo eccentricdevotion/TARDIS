@@ -115,7 +115,7 @@ public class TARDISTimeLordDeathListener implements Listener {
                             World hw = rsh.getWorld();
                             Location home_loc = new Location(hw, rsh.getX(), rsh.getY(), rsh.getZ());
                             COMPASS hd = rsh.getDirection();
-                            boolean sub = rsh.isSubmarine();
+                            final boolean sub = rsh.isSubmarine();
                             Location goto_loc;
                             boolean going_home = false;
                             // if home world is NOT the death world
@@ -150,7 +150,7 @@ public class TARDISTimeLordDeathListener implements Listener {
                                 final COMPASS fd = (going_home) ? hd : cd;
                                 // destroy police box
                                 if (!rs.isHidden()) {
-                                    plugin.destroyerP.destroyPreset(sl, cd, id, false, plugin.getConfig().getBoolean("police_box.materialise"), cham, player);
+                                    plugin.destroyerP.destroyPreset(sl, cd, id, false, plugin.getConfig().getBoolean("police_box.materialise"), cham, player, rsc.isSubmarine());
                                 } else {
                                     plugin.destroyerP.removeBlockProtection(id, qf);
                                     HashMap<String, Object> set = new HashMap<String, Object>();
@@ -160,18 +160,11 @@ public class TARDISTimeLordDeathListener implements Listener {
                                     qf.doUpdate("tardis", set, tid);
                                 }
                                 final Location auto_loc = goto_loc;
-                                if (sub && going_home) {
-                                    plugin.trackSubmarine.add(id);
-                                } else {
-                                    if (plugin.trackSubmarine.contains(Integer.valueOf(id))) {
-                                        plugin.trackSubmarine.remove(Integer.valueOf(id));
-                                    }
-                                }
                                 plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
                                     @Override
                                     public void run() {
                                         // rebuild police box - needs to be a delay
-                                        plugin.builderP.buildPreset(id, auto_loc, fd, cham, player, false, false);
+                                        plugin.builderP.buildPreset(id, auto_loc, fd, cham, player, false, false, sub);
                                     }
                                 }, 200L);
                                 // set current

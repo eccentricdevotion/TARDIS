@@ -72,7 +72,7 @@ public class TARDISHostileDisplacement {
                     int r = plugin.getConfig().getInt("preferences.hads_distance");
                     HashMap<String, Object> wherecl = new HashMap<String, Object>();
                     wherecl.put("tardis_id", id);
-                    ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
+                    final ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
                     if (!rsc.resultSet()) {
                         plugin.debug("Could not get current TARDIS location for HADS!");
                     }
@@ -94,25 +94,22 @@ public class TARDISHostileDisplacement {
                             y = l.getWorld().getHighestBlockAt(l).getY();
                         }
                         l.setY(y);
-                        if (l.getBlock().getRelative(BlockFace.DOWN).isLiquid() && !plugin.getConfig().getBoolean("travel.land_on_water") && !plugin.trackSubmarine.contains(id)) {
+                        if (l.getBlock().getRelative(BlockFace.DOWN).isLiquid() && !plugin.getConfig().getBoolean("travel.land_on_water") && !rsc.isSubmarine()) {
                             bool = false;
                         }
                         final Player player = plugin.getServer().getPlayer(owner);
                         if (bool) {
                             Location sub = null;
                             boolean safe;
-                            if (plugin.trackSubmarine.contains(id)) {
+                            if (rsc.isSubmarine()) {
                                 sub = tt.submarine(l.getBlock(), d);
                                 safe = (sub != null);
                             } else {
                                 int[] start = tt.getStartLocation(l, d);
                                 safe = (tt.safeLocation(start[0], y, start[2], start[1], start[3], l.getWorld(), d) < 1);
-                                if (plugin.trackSubmarine.contains(id)) {
-                                    plugin.trackSubmarine.remove(id);
-                                }
                             }
                             if (safe) {
-                                final Location fl = (plugin.trackSubmarine.contains(id)) ? sub : l;
+                                final Location fl = (rsc.isSubmarine()) ? sub : l;
                                 TARDISPluginRespect pr = new TARDISPluginRespect(plugin);
                                 if (pr.getRespect(player, fl, false)) {
                                     // set current
@@ -124,7 +121,7 @@ public class TARDISHostileDisplacement {
                                     set.put("x", fl.getBlockX());
                                     set.put("y", fl.getBlockY());
                                     set.put("z", fl.getBlockZ());
-                                    set.put("submarine", (plugin.trackSubmarine.contains(id)) ? 1 : 0);
+                                    set.put("submarine", (rsc.isSubmarine()) ? 1 : 0);
                                     qf.doUpdate("current", set, tid);
                                     plugin.trackDamage.remove(Integer.valueOf(id));
                                     final boolean mat = plugin.getConfig().getBoolean("police_box.materialise");
@@ -135,13 +132,13 @@ public class TARDISHostileDisplacement {
                                         @Override
                                         public void run() {
                                             plugin.tardisDematerialising.add(Integer.valueOf(id));
-                                            plugin.destroyerP.destroyPreset(loc, d, id, false, mat, cham, player);
+                                            plugin.destroyerP.destroyPreset(loc, d, id, false, mat, cham, player, rsc.isSubmarine());
                                         }
                                     }, delay);
                                     plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
                                         @Override
                                         public void run() {
-                                            plugin.builderP.buildPreset(id, fl, d, cham, player, false, false);
+                                            plugin.builderP.buildPreset(id, fl, d, cham, player, false, false, rsc.isSubmarine());
                                         }
                                     }, delay * 2);
                                     // message time lord

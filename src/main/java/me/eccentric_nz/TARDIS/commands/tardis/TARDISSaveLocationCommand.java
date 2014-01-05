@@ -82,7 +82,7 @@ public class TARDISSaveLocationCommand {
                 set.put("y", rsc.getY());
                 set.put("z", rsc.getZ());
                 set.put("direction", rsc.getDirection().toString());
-                set.put("submarine", (plugin.trackSubmarine.contains(id)) ? 1 : 0);
+                set.put("submarine", (rsc.isSubmarine()) ? 1 : 0);
                 if (qf.doSyncInsert("destinations", set) < 0) {
                     return false;
                 } else {

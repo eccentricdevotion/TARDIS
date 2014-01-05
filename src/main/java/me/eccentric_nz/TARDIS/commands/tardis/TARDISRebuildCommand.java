@@ -87,7 +87,7 @@ public class TARDISRebuildCommand {
             plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
                 @Override
                 public void run() {
-                    plugin.builderP.buildPreset(id, l, rsc.getDirection(), c, player, true, false);
+                    plugin.builderP.buildPreset(id, l, rsc.getDirection(), c, player, true, false, rsc.isSubmarine());
                 }
             }, 10L);
             player.sendMessage(plugin.pluginName + "The TARDIS Police Box was rebuilt!");

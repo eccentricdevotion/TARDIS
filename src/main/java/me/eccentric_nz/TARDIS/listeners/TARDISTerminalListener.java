@@ -480,15 +480,11 @@ public class TARDISTerminalListener implements Listener {
                                     safe = 0;
                                     starty = subloc.getBlockY();
                                     terminalSub.put(name, true);
-                                    plugin.trackSubmarine.add(terminalIDs.get(name));
                                 } else {
                                     safe = 1;
                                 }
                             } else {
                                 safe = tt.safeLocation(start[0], starty, start[2], start[1], start[3], w, d);
-                                if (plugin.trackSubmarine.contains(Integer.valueOf(terminalIDs.get(name)))) {
-                                    plugin.trackSubmarine.remove(Integer.valueOf(terminalIDs.get(name)));
-                                }
                             }
                             if (safe == 0) {
                                 String save = world + ":" + slotx + ":" + starty + ":" + slotz;

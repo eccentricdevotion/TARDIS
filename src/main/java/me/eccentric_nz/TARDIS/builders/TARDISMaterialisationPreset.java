@@ -304,18 +304,15 @@ public class TARDISMaterialisationPreset implements Runnable {
                                             }
                                         }
                                     }
-                                    if (sub) {
-                                        int sy = y - 1;
-                                        plugin.utils.setBlockAndRemember(world, xx, sy, zz, 19, (byte) 0, tid);
-                                        sponge = world.getBlockAt(xx, sy, zz);
-                                        HashMap<String, Object> sets = new HashMap<String, Object>();
-                                        sets.put("replaced", world.getName() + ":" + xx + ":" + sy + ":" + zz);
-                                        HashMap<String, Object> wheres = new HashMap<String, Object>();
-                                        wheres.put("tardis_id", tid);
-                                        plugin.debug("Updating replaced");
-                                        qf.doUpdate("tardis", sets, wheres);
-                                    } else if (yy == 0 && !plugin.builderP.no_block_under_door.contains(preset)) {
-                                        plugin.utils.setUnderDoorBlock(world, xx, (y - 1), zz, platform_id, platform_data, tid);
+                                    if (yy == 0) {
+                                        if (sub && plugin.worldGuardOnServer) {
+                                            int sy = y - 1;
+                                            plugin.utils.setBlockAndRemember(world, xx, sy, zz, 19, (byte) 0, tid);
+                                            sponge = world.getBlockAt(xx, sy, zz);
+                                            plugin.wgutils.sponge(sponge, true);
+                                        } else if (!plugin.builderP.no_block_under_door.contains(preset)) {
+                                            plugin.utils.setUnderDoorBlock(world, xx, (y - 1), zz, platform_id, platform_data, tid);
+                                        }
                                     }
                                     plugin.utils.setBlockAndRemember(world, xx, (y + yy), zz, colids[yy], coldatas[yy], tid);
                                     break;
@@ -660,9 +657,6 @@ public class TARDISMaterialisationPreset implements Runnable {
                 }
             } else {
                 // set sheild if submarine
-                if (sub && plugin.worldGuardOnServer) {
-                    plugin.wgutils.sponge(sponge, true);
-                }
                 plugin.tardisMaterialising.remove(Integer.valueOf(tid));
                 plugin.inVortex.remove(Integer.valueOf(tid));
                 plugin.getServer().getScheduler().cancelTask(task);

@@ -70,13 +70,12 @@ public class TARDISDirectionCommand {
                 tmp_cham = rs.isChamele_on();
             }
             final boolean cham = tmp_cham;
-            String plat = rs.getPlatform();
             boolean hid = rs.isHidden();
             PRESET demat = rs.getDemat();
             String dir = args[1].toUpperCase(Locale.ENGLISH);
             HashMap<String, Object> wherecl = new HashMap<String, Object>();
             wherecl.put("tardis_id", id);
-            ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
+            final ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
             if (!rsc.resultSet()) {
                 player.sendMessage(plugin.pluginName + "Could not get the TARDIS location!");
                 return true;
@@ -107,7 +106,7 @@ public class TARDISDirectionCommand {
             plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
                 @Override
                 public void run() {
-                    plugin.builderP.buildPreset(id, l, d, cham, player, true, false);
+                    plugin.builderP.buildPreset(id, l, d, cham, player, true, false, rsc.isSubmarine());
                 }
             }, 10L);
             HashMap<String, Object> wherea = new HashMap<String, Object>();

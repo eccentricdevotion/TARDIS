@@ -21,8 +21,6 @@ import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetBlocks;
-import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
-import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.PRESET;
 import org.bukkit.Chunk;
@@ -56,10 +54,11 @@ public class TARDISDeinstaPreset {
      * @param id the unique key of the record for this TARDIS in the database.
      * @param hide boolean determining whether to forget the protected Police
      * Box blocks.
-     * @param preset
+     * @param preset the preset to destroy
+     * @param sub whether the next location is submarine
      */
     @SuppressWarnings("deprecation")
-    public void instaDestroyPreset(Location l, COMPASS d, final int id, boolean hide, PRESET preset) {
+    public void instaDestroyPreset(Location l, COMPASS d, final int id, boolean hide, PRESET preset, boolean sub) {
         final World w = l.getWorld();
         // make sure chunk is loaded
         Chunk chunk = w.getChunkAt(l);
@@ -128,46 +127,22 @@ public class TARDISDeinstaPreset {
             }
         }
 
-        // replace the block under the door if there is one
-        HashMap<String, Object> where = new HashMap<String, Object>();
-        where.put("tardis_id", id);
-        ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
-        final QueryFactory qf = new QueryFactory(plugin);
-        String owner;
-        Block b;
-        if (rs.resultSet()) {
-            owner = rs.getOwner();
-            String replacedData = rs.getReplaced();
-            if (!replacedData.isEmpty()) {
-                String[] parts = replacedData.split(":");
-                World rw = plugin.getServer().getWorld(parts[0]);
-                int rx, ry, rz;
-                rx = plugin.utils.parseNum(parts[1]);
-                ry = plugin.utils.parseNum(parts[2]);
-                rz = plugin.utils.parseNum(parts[3]);
-                b = rw.getBlockAt(rx, ry, rz);
-                HashMap<String, Object> wherepp = new HashMap<String, Object>();
-                wherepp.put("player", owner);
-                ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, wherepp);
-                if (rsp.resultSet()) {
-                    boolean sub = (rsp.isSubmarineOn() && plugin.trackSubmarine.contains(Integer.valueOf(id)));
-                    if (sub && plugin.worldGuardOnServer) {
-                        plugin.wgutils.sponge(b, false);
-                    }
+        if (sub && plugin.worldGuardOnServer) {
+            // replace the block under the door if there is one
+            HashMap<String, Object> where = new HashMap<String, Object>();
+            where.put("tardis_id", id);
+            where.put("block", 19);
+            ResultSetBlocks rs = new ResultSetBlocks(plugin, where, false);
+            Block b;
+            if (rs.resultSet()) {
+                String replacedData = rs.getLocation();
+                if (!replacedData.isEmpty()) {
+                    Location sponge = plugin.utils.getLocationFromBukkitString(replacedData);
+                    b = sponge.getBlock();
+                    plugin.wgutils.sponge(b, false);
                 }
             }
         }
-        // finally forget the replaced block
-        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
-            @Override
-            public void run() {
-                HashMap<String, Object> set = new HashMap<String, Object>();
-                HashMap<String, Object> wherer = new HashMap<String, Object>();
-                wherer.put("tardis_id", id);
-                set.put("replaced", "");
-                qf.doUpdate("tardis", set, wherer);
-            }
-        }, 15L);
 
         // check protected blocks if has block id and data stored then put the block back!
         HashMap<String, Object> tid = new HashMap<String, Object>();
@@ -195,8 +170,8 @@ public class TARDISDeinstaPreset {
         }
 
         // if just hiding don't remove block protection
-        if (hide == false) {
-            plugin.destroyerP.removeBlockProtection(id, qf);
+        if (!hide) {
+            plugin.destroyerP.removeBlockProtection(id, new QueryFactory(plugin));
         }
     }
 }

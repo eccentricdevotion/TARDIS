@@ -143,9 +143,6 @@ public class TARDISButtonListener implements Listener {
                                         player.sendMessage(plugin.pluginName + ChatColor.RED + MESSAGE.NOT_ENOUGH_ENERGY.getText());
                                         return;
                                     }
-                                    if (plugin.trackSubmarine.contains(Integer.valueOf(id))) {
-                                        plugin.trackSubmarine.remove(Integer.valueOf(id));
-                                    }
                                     HashMap<String, Object> wherecl = new HashMap<String, Object>();
                                     wherecl.put("tardis_id", rs.getTardis_id());
                                     ResultSetCurrentLocation rscl = new ResultSetCurrentLocation(plugin, wherecl);
@@ -224,6 +221,7 @@ public class TARDISButtonListener implements Listener {
                                                 set.put("direction", dir.toString());
                                                 set.put("submarine", (plugin.trackSubmarine.contains(Integer.valueOf(id))) ? 1 : 0);
                                                 set_dest = true;
+                                                plugin.trackSubmarine.remove(Integer.valueOf(id));
                                                 String dchat = rand.getWorld().getName() + " at x: " + rand.getBlockX() + " y: " + rand.getBlockY() + " z: " + rand.getBlockZ();
                                                 boolean isTL = true;
                                                 if (comps != null && !comps.isEmpty()) {

@@ -298,7 +298,7 @@ public class TARDISBlockPlaceListener implements Listener {
                         blockBelow.setTypeId(0);
                         blockBottom.setTypeId(0);
                         // turn the block stack into a TARDIS
-                        plugin.builderP.buildPreset(lastInsertId, block_loc, COMPASS.valueOf(d), false, player, false, false);
+                        plugin.builderP.buildPreset(lastInsertId, block_loc, COMPASS.valueOf(d), false, player, false, false, isSub(blockBottom));
                         plugin.builderI.buildInner(schm, chunkworld, lastInsertId, player, middle_id, middle_data, 35, (byte) 8, tips);
                         // set achievement completed
                         if (player.hasPermission("tardis.book")) {
@@ -349,5 +349,15 @@ public class TARDISBlockPlaceListener implements Listener {
             }
         }
         return "ORANGE_WOOL";
+    }
+
+    private boolean isSub(Block b) {
+        switch (b.getRelative(BlockFace.EAST).getType()) {
+            case STATIONARY_WATER:
+            case WATER:
+                return true;
+            default:
+                return false;
+        }
     }
 }

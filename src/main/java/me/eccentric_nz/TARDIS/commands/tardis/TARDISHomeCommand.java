@@ -92,13 +92,23 @@ public class TARDISHomeCommand {
             set.put("x", eyeLocation.getBlockX());
             set.put("y", eyeLocation.getBlockY());
             set.put("z", eyeLocation.getBlockZ());
-            set.put("submarine", (plugin.trackSubmarine.contains(id)) ? 1 : 0);
+            set.put("submarine", isSub(eyeLocation) ? 1 : 0);
             qf.doUpdate("homes", set, tid);
             player.sendMessage(plugin.pluginName + "The new TARDIS home was set!");
             return true;
         } else {
             player.sendMessage(plugin.pluginName + MESSAGE.NO_PERMS.getText());
             return false;
+        }
+    }
+
+    private boolean isSub(Location l) {
+        switch (l.getBlock().getType()) {
+            case STATIONARY_WATER:
+            case WATER:
+                return true;
+            default:
+                return false;
         }
     }
 }

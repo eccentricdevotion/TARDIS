@@ -122,7 +122,7 @@ public class TARDISDeleteCommand {
                 plugin.destroyerI.destroyInner(schm, id, cw, restore, args[1], tips);
             }
             if (!rs.isHidden()) {
-                plugin.destroyerP.destroyPreset(bb_loc, d, id, false, false, false, null);
+                plugin.destroyerP.destroyPreset(bb_loc, d, id, false, false, false, null, rsc.isSubmarine());
             }
             // delete the TARDIS from the db
             HashMap<String, Object> wherec = new HashMap<String, Object>();
