@@ -21,7 +21,9 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.enumeration.MAP;
 import me.eccentric_nz.TARDIS.enumeration.MESSAGE;
+import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -30,6 +32,7 @@ import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ShapedRecipe;
 import org.bukkit.inventory.ShapelessRecipe;
+import org.bukkit.inventory.meta.ItemMeta;
 
 /**
  * A Time Control Unit is a golden sphere about the size of a Cricket ball. It
@@ -194,6 +197,11 @@ public class TARDISRecipeCommands implements CommandExecutor {
                 if (item == null) {
                     continue;
                 }
+                if (item.getType().equals(Material.MAP)) {
+                    ItemMeta im = item.getItemMeta();
+                    im.setDisplayName(getDisplayName(item.getData().getData()));
+                    item.setItemMeta(im);
+                }
                 item.setAmount(0);
                 view.getTopInventory().setItem(j * 3 + k + 1, item);
             }
@@ -206,7 +214,21 @@ public class TARDISRecipeCommands implements CommandExecutor {
         plugin.trackRecipeView.add(player.getName());
         final InventoryView view = player.openWorkbench(null, true);
         for (int i = 0; i < ingredients.size(); i++) {
+            if (ingredients.get(i).getType().equals(Material.MAP)) {
+                ItemMeta im = ingredients.get(i).getItemMeta();
+                im.setDisplayName(getDisplayName(ingredients.get(i).getData().getData()));
+                ingredients.get(i).setItemMeta(im);
+            }
             view.setItem(i + 1, ingredients.get(i));
+        }
+    }
+
+    private String getDisplayName(byte data) {
+        MAP map = MAP.getMap(data);
+        if (map != null) {
+            return map.getDisplayName();
+        } else {
+            return "Map #" + data;
         }
     }
 }
