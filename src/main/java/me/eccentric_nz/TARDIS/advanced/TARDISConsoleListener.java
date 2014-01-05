@@ -25,6 +25,7 @@ import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetControls;
 import me.eccentric_nz.TARDIS.database.ResultSetDiskStorage;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
+import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.enumeration.DISK_CIRCUIT;
 import me.eccentric_nz.TARDIS.enumeration.MESSAGE;
 import org.bukkit.Material;
@@ -74,20 +75,48 @@ public class TARDISConsoleListener implements Listener {
                         p.getLocation().getWorld().dropItemNaturally(p.getLocation(), is);
                         inv.setItem(i, new ItemStack(Material.AIR));
                     } else {
-                        // process any disks
-                        switch (is.getType()) {
-                            case RECORD_3: // area
-                                break;
-                            case GREEN_RECORD: // biome
-                                break;
-                            case RECORD_12: // player
-                                break;
-                            case RECORD_6: // preset
-                                break;
-                            case RECORD_4: // save
-                                break;
-                            default:
-                                break;
+                        boolean ignore = false;
+                        HashMap<String, Object> set_next = new HashMap<String, Object>();
+                        HashMap<String, Object> set_tardis = new HashMap<String, Object>();
+                        HashMap<String, Object> where = new HashMap<String, Object>();
+                        // get the TARDIS the player is in
+                        HashMap<String, Object> wheret = new HashMap<String, Object>();
+                        wheret.put("player", p.getName());
+                        ResultSetTravellers rst = new ResultSetTravellers(plugin, wheret, false);
+                        if (rst.resultSet()) {
+                            // process any disks
+                            switch (is.getType()) {
+                                case RECORD_3: // area
+                                    // get a parking spot in this area
+                                    break;
+                                case GREEN_RECORD: // biome
+                                    // find a biome location
+                                    break;
+                                case RECORD_12: // player
+                                    // get the player's location
+                                    break;
+                                case RECORD_6: // preset
+                                    if (!ignore) {
+                                        // apply the preset
+
+                                    }
+                                    break;
+                                case RECORD_4: // save
+                                    ignore = true;
+                                    // read the lore from the disk
+
+                                    break;
+                                default:
+                                    break;
+                            }
+                            if (set_next.size() > 0) {
+                                // update next
+                            }
+                            if (set_tardis.size() > 0) {
+                                // update tardis
+                            }
+                        } else {
+                            p.sendMessage(plugin.pluginName + MESSAGE.NOT_IN_TARDIS.getText());
                         }
                     }
                 }

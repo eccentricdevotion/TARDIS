@@ -99,7 +99,7 @@ public class TARDISDiskWriterCommand {
                     lore.set(4, "" + rsc.getZ());
                     lore.set(5, preset.toString());
                     lore.set(6, rsc.getDirection().toString());
-                    lore.set(7, (plugin.trackSubmarine.contains(id)) ? "true" : "false");
+                    lore.set(7, (rsc.isSubmarine()) ? "true" : "false");
                     im.setLore(lore);
                     is.setItemMeta(im);
                     player.sendMessage(plugin.pluginName + "Location successfully saved to disk!");
