@@ -115,11 +115,15 @@ public class TARDISSQLiteDatabase {
             statement.executeUpdate(queryPlayers);
 
             // reset storage table
-            String s_query = "SELECT sql FROM sqlite_master WHERE tbl_name = 'storage' AND sql LIKE '%console%'";
+            String s_query = "SELECT sql FROM sqlite_master WHERE tbl_name = 'storage'";
             ResultSet rss = statement.executeQuery(s_query);
-            if (!rss.next()) {
-                String s_drop = "DROP TABLE storage";
-                statement.executeUpdate(s_drop);
+            if (rss.next()) {
+                String sd_query = "SELECT sql FROM sqlite_master WHERE tbl_name = 'storage' AND sql LIKE '%console%'";
+                ResultSet rssd = statement.executeQuery(sd_query);
+                if (rssd.next()) {
+                    String s_drop = "DROP TABLE storage";
+                    statement.executeUpdate(s_drop);
+                }
             }
 
             // Table structure for table 'storage'

@@ -115,11 +115,15 @@ public class TARDISMySQLDatabase {
             statement.executeUpdate(player_prefsQuery);
 
             // drop storage table
-            String s_query = "SHOW COLUMNS FROM tardis LIKE 'console'";
+            String s_query = "SHOW TABLES LIKE 'storage'";
             ResultSet rss = statement.executeQuery(s_query);
-            if (!rss.next()) {
-                String s_drop = "DROP TABLE storage";
-                statement.executeUpdate(s_drop);
+            if (rss.next()) {
+                String sd_query = "SHOW COLUMNS FROM storage LIKE 'console'";
+                ResultSet rssd = statement.executeQuery(sd_query);
+                if (!rssd.next()) {
+                    String s_drop = "DROP TABLE storage";
+                    statement.executeUpdate(s_drop);
+                }
             }
 
             // Table structure for table 'storage'
