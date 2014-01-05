@@ -154,6 +154,7 @@ permissions:
       tardis.room.village: true
       tardis.room.wood: true
       tardis.room.workshop: true
+      tardis.room.renderer: true
     default: op
   tardis.gravity:
     description: Allow players to use the /tardisgravity command.
