@@ -16,9 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.chameleon;
 
-import java.util.EnumMap;
-import me.eccentric_nz.TARDIS.TARDISConstants;
-
 /**
  * A chameleon conversion is a repair procedure that technicians perform on
  * TARDIS chameleon circuits. The Fourth Doctor once said that the reason the

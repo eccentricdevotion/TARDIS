@@ -16,7 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.rooms;
 
-import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
