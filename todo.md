@@ -4,19 +4,17 @@
 1. Documentation & videos!
    * Add note about disabling Factions in Vortex
 2. Advanced TARDIS console
-    * process disks when the console GUI is closed
+    * when processing travel disks, check that the disk is different than the current location
     * if console circuits are RIGHT-clicked, open the appropriate GUI
     * if the appropriate circuit is not installed in the console, disable that feature (`difficulty: hard`)
 3. Add `/tardiskit [kit|list]` command so that servers on easy difficulty can supply players with the basics (or more if desired)
 4. Make condensables list configurable
 5. TARDIS exterior rendering / scanner room
    * find a way to prevent items dropping between renders
-6. Save Chameleon preset with saved location `/tardis csave`?
-   * Presets are now saved to Save Storage Disks along with locations
-7. TARDIS Information System
+6. TARDIS Information System
     * add new features
     * auto log out?
-8. Add a command to purge the database of TARDIS records when someone totally messes up their TARDIS (eg deleted the world the TARDIS was in) - `tardisadmin purge [player]` - will not physically delete blocks or worlds only database records
+7. Add a command to purge the database of TARDIS records when someone totally messes up their TARDIS (eg deleted the world the TARDIS was in) - `tardisadmin purge [player]` - will not physically delete blocks or worlds only database records
     
 ## Waiting on Bukkit API
 0. IDs are soon to be history... so convert all ID use to entity names

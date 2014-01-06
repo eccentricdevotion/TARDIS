@@ -77,31 +77,45 @@ public class TARDISConsoleListener implements Listener {
         String inv_name = inv.getTitle();
         if (inv_name.equals("§4TARDIS Console")) {
             Player p = ((Player) event.getPlayer());
-            // loop through inventory contents and remove any items that are not disks or circuits
-            for (int i = 0; i < 9; i++) {
-                ItemStack is = inv.getItem(i);
-                if (is != null) {
-                    if (!onlythese.contains(is.getType())) {
-                        p.getLocation().getWorld().dropItemNaturally(p.getLocation(), is);
-                        inv.setItem(i, new ItemStack(Material.AIR));
-                    } else {
-                        boolean ignore = false;
-                        HashMap<String, Object> set_next = new HashMap<String, Object>();
-                        HashMap<String, Object> set_tardis = new HashMap<String, Object>();
-                        HashMap<String, Object> where_next = new HashMap<String, Object>();
-                        HashMap<String, Object> where_tardis = new HashMap<String, Object>();
-                        // get the TARDIS the p is in
-                        HashMap<String, Object> wheret = new HashMap<String, Object>();
-                        wheret.put("player", p.getName());
-                        ResultSetTravellers rst = new ResultSetTravellers(plugin, wheret, false);
-                        if (rst.resultSet()) {
-                            int id = rst.getTardis_id();
+            // get the TARDIS the player is in
+            HashMap<String, Object> wheret = new HashMap<String, Object>();
+            wheret.put("player", p.getName());
+            ResultSetTravellers rst = new ResultSetTravellers(plugin, wheret, false);
+            if (rst.resultSet()) {
+                int id = rst.getTardis_id();
+                // get TARDIS's current location
+                HashMap<String, Object> wherecl = new HashMap<String, Object>();
+                wherecl.put("tardis_id", id);
+                ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
+                if (!rsc.resultSet()) {
+                    p.sendMessage(plugin.pluginName + "Could not get the current TARDIS location!");
+                    return;
+                }
+                Location current = new Location(rsc.getWorld(), rsc.getX(), rsc.getY(), rsc.getZ());
+                // loop through inventory contents and remove any items that are not disks or circuits
+                for (int i = 0; i < 9; i++) {
+                    ItemStack is = inv.getItem(i);
+                    if (is != null) {
+                        if (!onlythese.contains(is.getType())) {
+                            p.getLocation().getWorld().dropItemNaturally(p.getLocation(), is);
+                            inv.setItem(i, new ItemStack(Material.AIR));
+                        } else {
+                            boolean ignore = false;
+                            HashMap<String, Object> set_next = new HashMap<String, Object>();
+                            HashMap<String, Object> set_tardis = new HashMap<String, Object>();
+                            HashMap<String, Object> where_next = new HashMap<String, Object>();
+                            HashMap<String, Object> where_tardis = new HashMap<String, Object>();
+
                             // process any disks
                             List<String> lore = is.getItemMeta().getLore();
                             String first = lore.get(0);
                             TARDISTimeTravel tt = new TARDISTimeTravel(plugin);
                             switch (is.getType()) {
                                 case RECORD_3: // area
+                                    // check the current location is not in this area already
+                                    if (!plugin.ta.areaCheckInExile(first, current)) {
+                                        return;
+                                    }
                                     // get a parking spot in this area
                                     HashMap<String, Object> wherea = new HashMap<String, Object>();
                                     wherea.put("area_name", first);
@@ -133,18 +147,12 @@ public class TARDISConsoleListener implements Listener {
                                         p.sendMessage(plugin.pluginName + "You do not have permission to time travel to a biome!");
                                         return;
                                     }
-
+                                    if (current.getBlock().getBiome().toString().equals(first)) {
+                                        return;
+                                    }
                                     try {
                                         Biome biome = Biome.valueOf(first);
                                         p.sendMessage(plugin.pluginName + "Searching for biome, this may take some time!");
-
-                                        HashMap<String, Object> wherecl = new HashMap<String, Object>();
-                                        wherecl.put("tardis_id", id);
-                                        ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
-                                        if (!rsc.resultSet()) {
-                                            p.sendMessage(plugin.pluginName + "Could not get the current TARDIS location!");
-                                            return;
-                                        }
                                         Location nsob = plugin.tardisTravelCommand.searchBiome(p, id, biome, rsc.getWorld(), rsc.getX(), rsc.getZ());
                                         if (nsob == null) {
                                             p.sendMessage(plugin.pluginName + "Could not find biome!");
@@ -188,13 +196,6 @@ public class TARDISConsoleListener implements Listener {
                                             p.sendMessage(plugin.pluginName + "You cannot travel to yourself!");
                                             return;
                                         }
-                                        HashMap<String, Object> wherecl = new HashMap<String, Object>();
-                                        wherecl.put("tardis_id", id);
-                                        ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
-                                        if (!rsc.resultSet()) {
-                                            p.sendMessage(plugin.pluginName + "Could not get the current TARDIS location!");
-                                            return;
-                                        }
                                         // check the to player's DND status
                                         HashMap<String, Object> wherednd = new HashMap<String, Object>();
                                         wherednd.put("player", first.toLowerCase());
@@ -218,11 +219,18 @@ public class TARDISConsoleListener implements Listener {
                                     break;
                                 case RECORD_4: // save
                                     ignore = true;
+                                    String world = lore.get(1);
+                                    int x = plugin.utils.parseNum(lore.get(2));
+                                    int y = plugin.utils.parseNum(lore.get(3));
+                                    int z = plugin.utils.parseNum(lore.get(4));
+                                    if (current.getWorld().toString().equals(world) && current.getBlockX() == x && current.getBlockZ() == z) {
+                                        return;
+                                    }
                                     // read the lore from the disk
-                                    set_next.put("world", lore.get(1));
-                                    set_next.put("x", plugin.utils.parseNum(lore.get(2)));
-                                    set_next.put("y", plugin.utils.parseNum(lore.get(3)));
-                                    set_next.put("z", plugin.utils.parseNum(lore.get(4)));
+                                    set_next.put("world", world);
+                                    set_next.put("x", x);
+                                    set_next.put("y", y);
+                                    set_next.put("z", z);
                                     set_next.put("direction", lore.get(6));
                                     boolean sub = Boolean.valueOf(lore.get(7));
                                     set_next.put("submarine", (sub) ? 1 : 0);
@@ -246,14 +254,14 @@ public class TARDISConsoleListener implements Listener {
                             if (plugin.trackRescue.containsKey(Integer.valueOf(id))) {
                                 plugin.trackRescue.remove(Integer.valueOf(id));
                             }
-                        } else {
-                            p.sendMessage(plugin.pluginName + MESSAGE.NOT_IN_TARDIS.getText());
                         }
                     }
                 }
+                // remember what was placed in the console
+                saveCurrentConsole(inv, p.getName());
+            } else {
+                p.sendMessage(plugin.pluginName + MESSAGE.NOT_IN_TARDIS.getText());
             }
-            // remember what was placed in the console
-            saveCurrentConsole(inv, p.getName());
         }
     }
 
