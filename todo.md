@@ -5,7 +5,6 @@
    * Add note about disabling Factions in Vortex
 2. Advanced TARDIS console
     * when processing travel disks, check that the disk is different than the current location
-    * if console circuits are RIGHT-clicked, open the appropriate GUI
     * if the appropriate circuit is not installed in the console, disable that feature (`difficulty: hard`)
 3. Add `/tardiskit [kit|list]` command so that servers on easy difficulty can supply players with the basics (or more if desired)
 4. Make condensables list configurable

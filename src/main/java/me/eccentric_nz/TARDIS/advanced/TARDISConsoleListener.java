@@ -20,7 +20,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import me.eccentric_nz.TARDIS.ARS.TARDISARSInventory;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.chameleon.TARDISChameleonInventory;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetAreas;
 import me.eccentric_nz.TARDIS.database.ResultSetControls;
@@ -33,6 +35,9 @@ import me.eccentric_nz.TARDIS.enumeration.DISK_CIRCUIT;
 import me.eccentric_nz.TARDIS.enumeration.MESSAGE;
 import me.eccentric_nz.TARDIS.travel.TARDISPluginRespect;
 import me.eccentric_nz.TARDIS.travel.TARDISRescue;
+import me.eccentric_nz.TARDIS.travel.TARDISSaveSignInventory;
+import me.eccentric_nz.TARDIS.travel.TARDISTemporalLocatorInventory;
+import me.eccentric_nz.TARDIS.travel.TARDISTerminalInventory;
 import me.eccentric_nz.TARDIS.travel.TARDISTimeTravel;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -45,6 +50,8 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
+import org.bukkit.event.inventory.ClickType;
+import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.Inventory;
@@ -96,10 +103,11 @@ public class TARDISConsoleListener implements Listener {
                 for (int i = 0; i < 9; i++) {
                     ItemStack is = inv.getItem(i);
                     if (is != null) {
-                        if (!onlythese.contains(is.getType())) {
+                        Material mat = is.getType();
+                        if (!onlythese.contains(mat)) {
                             p.getLocation().getWorld().dropItemNaturally(p.getLocation(), is);
                             inv.setItem(i, new ItemStack(Material.AIR));
-                        } else {
+                        } else if (!mat.equals(Material.MAP)) {
                             boolean ignore = false;
                             HashMap<String, Object> set_next = new HashMap<String, Object>();
                             HashMap<String, Object> set_tardis = new HashMap<String, Object>();
@@ -110,7 +118,7 @@ public class TARDISConsoleListener implements Listener {
                             List<String> lore = is.getItemMeta().getLore();
                             String first = lore.get(0);
                             TARDISTimeTravel tt = new TARDISTimeTravel(plugin);
-                            switch (is.getType()) {
+                            switch (mat) {
                                 case RECORD_3: // area
                                     // check the current location is not in this area already
                                     if (!plugin.ta.areaCheckInExile(first, current)) {
@@ -319,6 +327,62 @@ public class TARDISConsoleListener implements Listener {
                             // open gui
                             p.openInventory(inv);
                         }
+                    }
+                }
+            }
+        }
+    }
+
+    @SuppressWarnings("Deprecation")
+    @EventHandler
+    public void onConsoleInventoryClick(final InventoryClickEvent event) {
+        Inventory inv = event.getInventory();
+        if (inv.getTitle().equals("§4TARDIS Console")) {
+            if (event.getClick().equals(ClickType.SHIFT_RIGHT)) {
+                event.setCancelled(true);
+                final ItemStack item = inv.getItem(event.getRawSlot());
+                if (item.getType().equals(Material.MAP)) {
+                    final Player p = (Player) event.getWhoClicked();
+                    HashMap<String, Object> where = new HashMap<String, Object>();
+                    where.put("owner", p.getName());
+                    final ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
+                    if (rs.resultSet()) {
+                        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
+                            @Override
+                            public void run() {
+                                ItemStack[] stack;
+                                Inventory new_inv;
+                                switch (item.getData().getData()) {
+                                    case (byte) 1966: // Chameleon circuit
+                                        new_inv = plugin.getServer().createInventory(p, 54, "§4Chameleon Circuit");
+                                        stack = new TARDISChameleonInventory(rs.isChamele_on(), rs.isAdapti_on()).getTerminal();
+                                        break;
+                                    case (byte) 1973: // ARS circuit
+                                        new_inv = plugin.getServer().createInventory(p, 54, "§4Architectural Reconfiguration");
+                                        stack = new TARDISARSInventory().getTerminal();
+                                        break;
+                                    case (byte) 1974: // Temporal circuit
+                                        new_inv = plugin.getServer().createInventory(p, 27, "§4Temporal Locator");
+                                        stack = new TARDISTemporalLocatorInventory().getTerminal();
+                                        break;
+                                    case (byte) 1975: // Memory circuit (saves/areas)
+                                        new_inv = plugin.getServer().createInventory(p, 54, "§4TARDIS saves");
+                                        stack = new TARDISSaveSignInventory(plugin, rs.getTardis_id()).getTerminal();
+                                        break;
+                                    default: // Input circuit (terminal)
+                                        new_inv = plugin.getServer().createInventory(p, 54, "§4Destination Terminal");
+                                        stack = new TARDISTerminalInventory().getTerminal();
+                                        break;
+                                }
+                                // close inventory
+                                p.closeInventory();
+                                // open new inventory
+                                new_inv.setContents(stack);
+                                p.openInventory(new_inv);
+                            }
+                        }, 1L);
+                    } else {
+                        p.sendMessage(plugin.pluginName + MESSAGE.NO_TARDIS.getText());
                     }
                 }
             }
