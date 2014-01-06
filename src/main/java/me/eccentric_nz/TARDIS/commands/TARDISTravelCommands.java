@@ -80,7 +80,7 @@ public class TARDISTravelCommands implements CommandExecutor {
         if (sender instanceof Player) {
             player = (Player) sender;
         }
-        // If the player typed /tardis then do the following...
+        // If the player typed /tardistravel then do the following...
         // check there is the right number of arguments
         if (cmd.getName().equalsIgnoreCase("tardistravel")) {
             if (player == null) {
@@ -502,7 +502,7 @@ public class TARDISTravelCommands implements CommandExecutor {
         return w_str;
     }
 
-    private Location searchBiome(Player p, int id, Biome b, World w, int startx, int startz) {
+    public Location searchBiome(Player p, int id, Biome b, World w, int startx, int startz) {
         HashMap<String, Object> wherecl = new HashMap<String, Object>();
         wherecl.put("tardis_id", id);
         ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);

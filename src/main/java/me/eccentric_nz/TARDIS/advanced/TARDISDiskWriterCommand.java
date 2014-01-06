@@ -93,13 +93,13 @@ public class TARDISDiskWriterCommand {
                         return true;
                     }
                     lore.set(0, args[1]);
-                    lore.set(1, rsc.getWorld().getName());
-                    lore.set(2, "" + rsc.getX());
-                    lore.set(3, "" + rsc.getY());
-                    lore.set(4, "" + rsc.getZ());
-                    lore.set(5, preset.toString());
-                    lore.set(6, rsc.getDirection().toString());
-                    lore.set(7, (rsc.isSubmarine()) ? "true" : "false");
+                    lore.add(1, rsc.getWorld().getName());
+                    lore.add(2, "" + rsc.getX());
+                    lore.add(3, "" + rsc.getY());
+                    lore.add(4, "" + rsc.getZ());
+                    lore.add(5, preset.toString());
+                    lore.add(6, rsc.getDirection().toString());
+                    lore.add(7, (rsc.isSubmarine()) ? "true" : "false");
                     im.setLore(lore);
                     is.setItemMeta(im);
                     player.sendMessage(plugin.pluginName + "Location successfully saved to disk!");
