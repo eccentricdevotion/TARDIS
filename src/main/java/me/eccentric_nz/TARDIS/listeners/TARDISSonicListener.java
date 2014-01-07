@@ -24,6 +24,7 @@ import java.util.Map;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.commands.admin.TARDISAdminMenuInventory;
+import me.eccentric_nz.TARDIS.commands.preferences.TARDISPrefsMenuInventory;
 import me.eccentric_nz.TARDIS.database.ResultSetBackLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetDoors;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
@@ -118,7 +119,7 @@ public class TARDISSonicListener implements Listener {
             if (im.getDisplayName().equals("Sonic Screwdriver")) {
                 List<String> lore = im.getLore();
                 Action action = event.getAction();
-                if (action.equals(Action.RIGHT_CLICK_AIR)) {
+                if (action.equals(Action.RIGHT_CLICK_AIR) && !player.isSneaking()) {
                     playSonicSound(player, now, 3050L, "sonic_screwdriver");
                     if (player.hasPermission("tardis.admin") && lore != null && lore.contains("Admin Upgrade")) {
                         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
@@ -240,6 +241,12 @@ public class TARDISSonicListener implements Listener {
                         }
                         return;
                     }
+                }
+                if (action.equals(Action.RIGHT_CLICK_AIR) && player.isSneaking()) {
+                    Inventory ppm = plugin.getServer().createInventory(player, 18, "§4Player Prefs Menu");
+                    ppm.setContents(new TARDISPrefsMenuInventory(plugin, player.getName()).getMenu());
+                    player.openInventory(ppm);
+                    return;
                 }
                 if (action.equals(Action.RIGHT_CLICK_BLOCK)) {
                     final Block b = event.getClickedBlock();

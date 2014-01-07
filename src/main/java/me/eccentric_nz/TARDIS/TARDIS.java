@@ -59,10 +59,12 @@ import me.eccentric_nz.TARDIS.commands.TARDISTextureTabComplete;
 import me.eccentric_nz.TARDIS.commands.TARDISTravelCommands;
 import me.eccentric_nz.TARDIS.commands.TARDISTravelTabComplete;
 import me.eccentric_nz.TARDIS.commands.admin.TARDISAdminCommands;
+import me.eccentric_nz.TARDIS.commands.admin.TARDISAdminMenuListener;
 import me.eccentric_nz.TARDIS.commands.admin.TARDISAdminTabComplete;
 import me.eccentric_nz.TARDIS.commands.admin.TARDISGiveCommand;
 import me.eccentric_nz.TARDIS.commands.admin.TARDISGiveTabComplete;
 import me.eccentric_nz.TARDIS.commands.preferences.TARDISPrefsCommands;
+import me.eccentric_nz.TARDIS.commands.preferences.TARDISPrefsMenuListener;
 import me.eccentric_nz.TARDIS.commands.preferences.TARDISPrefsTabComplete;
 import me.eccentric_nz.TARDIS.commands.tardis.TARDISCommands;
 import me.eccentric_nz.TARDIS.commands.tardis.TARDISTabComplete;
@@ -81,7 +83,6 @@ import me.eccentric_nz.TARDIS.files.TARDISMakeRoomCSV;
 import me.eccentric_nz.TARDIS.files.TARDISMakeTardisCSV;
 import me.eccentric_nz.TARDIS.info.TARDISInfoMenu;
 import me.eccentric_nz.TARDIS.info.TARDISInformationSystemListener;
-import me.eccentric_nz.TARDIS.listeners.TARDISAdminMenuListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISAnvilListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISAreaListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISAreaSignListener;
@@ -549,6 +550,7 @@ public class TARDIS extends JavaPlugin {
         pm.registerEvents(new TARDISConsoleSwitchListener(this), this);
         pm.registerEvents(new TARDISConsoleCloseListener(this), this);
         pm.registerEvents(new TARDISPerceptionFilterListener(this), this);
+        pm.registerEvents(new TARDISPrefsMenuListener(this), this);
     }
 
     /**

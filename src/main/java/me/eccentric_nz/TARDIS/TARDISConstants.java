@@ -32,6 +32,7 @@ public class TARDISConstants {
 
     // GUI ids
     public static final List<Integer> GUI_IDS = Arrays.asList(new Integer[]{1, 2, 5, 7, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 29, 35, 41, 42, 45, 46, 47, 48, 49, 52, 56, 57, 58, 61, 73, 79, 80, 81, 82, 84, 86, 87, 88, 89, 98, 99, 100, 103, 110, 112, 118, 121, 123, 129, 133, 153, 155});
+    public static final List<Integer> GUI_ITEMS = Arrays.asList(new Integer[]{6, 37, 38, 39, 40, 50, 131, 260, 262, 266, 280, 281, 287, 288, 289, 291, 295, 296, 297, 318, 320, 321, 322, 323, 326, 328, 331, 332, 334, 336, 337, 338, 339, 340, 341, 344, 345, 347, 349, 352, 355, 357, 358, 359, 360, 364, 365, 368, 385, 386, 390, 393, 2262});
     // platform blocks
     public static final List<Integer> PLATFORM_BLOCKS = Arrays.asList(new Integer[]{0, 6, 9, 8, 31, 32, 37, 38, 39, 40, 78, 106, 3019, 3020});
     // chameleon blocks
