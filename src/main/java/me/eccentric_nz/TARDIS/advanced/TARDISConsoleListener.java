@@ -336,12 +336,15 @@ public class TARDISConsoleListener implements Listener {
     @SuppressWarnings("Deprecation")
     @EventHandler
     public void onConsoleInventoryClick(final InventoryClickEvent event) {
+        if (event.isCancelled()) {
+            return;
+        }
         Inventory inv = event.getInventory();
         if (inv.getTitle().equals("§4TARDIS Console")) {
             if (event.getClick().equals(ClickType.SHIFT_RIGHT)) {
                 event.setCancelled(true);
                 final ItemStack item = inv.getItem(event.getRawSlot());
-                if (item.getType().equals(Material.MAP)) {
+                if (item != null && item.getType().equals(Material.MAP)) {
                     final Player p = (Player) event.getWhoClicked();
                     HashMap<String, Object> where = new HashMap<String, Object>();
                     where.put("owner", p.getName());
