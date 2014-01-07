@@ -19,6 +19,7 @@ package me.eccentric_nz.TARDIS.commands.tardis;
 import java.util.HashMap;
 import java.util.Locale;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
 import me.eccentric_nz.TARDIS.artron.TARDISArtronIndicator;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
@@ -55,6 +56,15 @@ public class TARDISDirectionCommand {
                 return false;
             }
             final int id = rs.getTardis_id();
+            TARDISCircuitChecker tcc = null;
+            if (plugin.getConfig().getString("preferences.difficulty").equals("hard")) {
+                tcc = new TARDISCircuitChecker(plugin, id);
+                tcc.getCircuits();
+            }
+            if (tcc != null && !tcc.hasMaterialisation()) {
+                player.sendMessage(plugin.pluginName + "The Materialisation Circuit is missing from the console!");
+                return true;
+            }
             int level = rs.getArtron_level();
             int amount = plugin.getArtronConfig().getInt("random");
             if (level < amount) {

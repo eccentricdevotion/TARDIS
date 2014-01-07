@@ -18,6 +18,7 @@ package me.eccentric_nz.TARDIS.commands.tardis;
 
 import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
 import me.eccentric_nz.TARDIS.chameleon.TARDISChameleonCircuit;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
@@ -61,6 +62,15 @@ public class TARDISChameleonCommand {
                 return false;
             }
             int id = rs.getTardis_id();
+            TARDISCircuitChecker circ_chk = null;
+            if (plugin.getConfig().getString("preferences.difficulty").equals("hard")) {
+                circ_chk = new TARDISCircuitChecker(plugin, id);
+                circ_chk.getCircuits();
+            }
+            if (circ_chk != null && !circ_chk.hasChameleon()) {
+                player.sendMessage(plugin.pluginName + "The Chameleon Circuit is missing from the console!");
+                return true;
+            }
             String chamStr = rs.getChameleon();
             if (chamStr.isEmpty()) {
                 player.sendMessage(plugin.pluginName + "Could not find the Chameleon Circuit!");

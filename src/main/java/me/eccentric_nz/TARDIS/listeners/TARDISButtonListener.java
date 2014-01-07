@@ -25,6 +25,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import me.eccentric_nz.TARDIS.ARS.TARDISARSInventory;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
 import me.eccentric_nz.TARDIS.advanced.TARDISSerializeInventory;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetBackLocation;
@@ -131,6 +132,11 @@ public class TARDISButtonListener implements Listener {
                             boolean set_dest = false;
                             String comps = rs.getCompanions();
                             String owner = rs.getOwner();
+                            TARDISCircuitChecker tcc = null;
+                            if (plugin.getConfig().getString("preferences.difficulty").equals("hard")) {
+                                tcc = new TARDISCircuitChecker(plugin, id);
+                                tcc.getCircuits();
+                            }
                             QueryFactory qf = new QueryFactory(plugin);
                             HashMap<String, Object> set = new HashMap<String, Object>();
                             switch (type) {
@@ -298,6 +304,10 @@ public class TARDISButtonListener implements Listener {
                                         player.sendMessage(plugin.pluginName + ChatColor.RED + MESSAGE.NOT_ENOUGH_ENERGY.getText());
                                         return;
                                     }
+                                    if (tcc != null && !tcc.hasInput()) {
+                                        player.sendMessage(plugin.pluginName + "The Input Circuit is missing from the console!");
+                                        return;
+                                    }
                                     // terminal sign
                                     Inventory aec = plugin.getServer().createInventory(player, 54, "§4Destination Terminal");
                                     aec.setContents(items);
@@ -318,6 +328,10 @@ public class TARDISButtonListener implements Listener {
                                         player.sendMessage(plugin.pluginName + "You cannot grow rooms unless your TARDIS was created in its own world!");
                                         return;
                                     }
+                                    if (tcc != null && !tcc.hasARS()) {
+                                        player.sendMessage(plugin.pluginName + "The ARS Circuit is missing from the console!");
+                                        return;
+                                    }
                                     // ARS sign
                                     Inventory ars = plugin.getServer().createInventory(player, 54, "§4Architectural Reconfiguration");
                                     ars.setContents(tars);
@@ -325,6 +339,10 @@ public class TARDISButtonListener implements Listener {
                                     break;
                                 case 11:
                                     // Temporal Locator sign
+                                    if (tcc != null && !tcc.hasTemporal()) {
+                                        player.sendMessage(plugin.pluginName + "The Temporal Circuit is missing from the console!");
+                                        return;
+                                    }
                                     if (player.hasPermission("tardis.temporal")) {
                                         Inventory tmpl = plugin.getServer().createInventory(player, 27, "§4Temporal Locator");
                                         tmpl.setContents(clocks);

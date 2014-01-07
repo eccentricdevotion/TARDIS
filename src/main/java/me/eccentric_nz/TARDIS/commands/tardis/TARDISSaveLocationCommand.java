@@ -18,6 +18,7 @@ package me.eccentric_nz.TARDIS.commands.tardis;
 
 import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetDestinations;
@@ -55,6 +56,15 @@ public class TARDISSaveLocationCommand {
                 return false;
             } else {
                 int id = rs.getTardis_id();
+                TARDISCircuitChecker tcc = null;
+                if (plugin.getConfig().getString("preferences.difficulty").equals("hard")) {
+                    tcc = new TARDISCircuitChecker(plugin, id);
+                    tcc.getCircuits();
+                }
+                if (tcc != null && !tcc.hasMemory()) {
+                    player.sendMessage(plugin.pluginName + "The Memory Circuit is missing from the console!");
+                    return true;
+                }
                 // check has unique name
                 HashMap<String, Object> wherename = new HashMap<String, Object>();
                 wherename.put("tardis_id", id);

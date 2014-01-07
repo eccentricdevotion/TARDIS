@@ -20,6 +20,7 @@ import java.util.ArrayList;
 //import java.util.HashMap;
 import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
 import me.eccentric_nz.TARDIS.chameleon.TARDISChameleonInventory;
 //import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetTardisSign;
@@ -96,7 +97,16 @@ public class TARDISSignListener implements Listener {
                     } else {
                         line1 = (signloc.equals(rs.getChameleon())) ? "Chameleon" : "Save Sign";
                     }
+                    TARDISCircuitChecker tcc = null;
+                    if (plugin.getConfig().getString("preferences.difficulty").equals("hard")) {
+                        tcc = new TARDISCircuitChecker(plugin, rs.getTardis_id());
+                        tcc.getCircuits();
+                    }
                     if (line1.equals("Chameleon")) {
+                        if (tcc != null && !tcc.hasChameleon()) {
+                            player.sendMessage(plugin.pluginName + "The Chameleon Circuit is missing from the console!");
+                            return;
+                        }
                         // open Chameleon Circuit GUI
                         ItemStack[] cc = new TARDISChameleonInventory(rs.isChamele_on(), rs.isAdapti_on()).getTerminal();
                         Inventory cc_gui = plugin.getServer().createInventory(player, 54, "§4Chameleon Circuit");
@@ -104,6 +114,10 @@ public class TARDISSignListener implements Listener {
                         player.openInventory(cc_gui);
                     } else {
                         if (event.getAction().equals(Action.RIGHT_CLICK_BLOCK)) {
+                            if (tcc != null && !tcc.hasMemory()) {
+                                player.sendMessage(plugin.pluginName + "The Memory Circuit is missing from the console!");
+                                return;
+                            }
                             TARDISSaveSignInventory sst = new TARDISSaveSignInventory(plugin, rs.getTardis_id());
                             ItemStack[] items = sst.getTerminal();
                             Inventory inv = plugin.getServer().createInventory(player, 54, "§4TARDIS saves");

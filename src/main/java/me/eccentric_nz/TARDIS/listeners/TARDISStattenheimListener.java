@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
@@ -128,6 +129,15 @@ public class TARDISStattenheimListener implements Listener {
                         return;
                     }
                     final int id = rs.getTardis_id();
+                    TARDISCircuitChecker tcc = null;
+                    if (plugin.getConfig().getString("preferences.difficulty").equals("hard")) {
+                        tcc = new TARDISCircuitChecker(plugin, id);
+                        tcc.getCircuits();
+                    }
+                    if (tcc != null && !tcc.hasMaterialisation()) {
+                        player.sendMessage(plugin.pluginName + "The Materialisation Circuit is missing from the console!");
+                        return;
+                    }
                     final boolean hidden = rs.isHidden();
                     int level = rs.getArtron_level();
                     final boolean cham = (plugin.getConfig().getBoolean("travel.chameleon") && rs.isChamele_on());

@@ -19,6 +19,7 @@ package me.eccentric_nz.TARDIS.listeners;
 import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.achievement.TARDISAchievementFactory;
+import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
 import me.eccentric_nz.TARDIS.artron.TARDISArtronIndicator;
 import me.eccentric_nz.TARDIS.artron.TARDISArtronLevels;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
@@ -84,6 +85,15 @@ public class TARDISHandbrakeListener implements Listener {
                 ResultSetControls rsc = new ResultSetControls(plugin, where, false);
                 if (rsc.resultSet()) {
                     final int id = rsc.getTardis_id();
+                    TARDISCircuitChecker tcc = null;
+                    if (plugin.getConfig().getString("preferences.difficulty").equals("hard")) {
+                        tcc = new TARDISCircuitChecker(plugin, id);
+                        tcc.getCircuits();
+                    }
+                    if (tcc != null && !tcc.hasMaterialisation()) {
+                        player.sendMessage(plugin.pluginName + "The Materialisation Circuit is missing from the console!");
+                        return;
+                    }
                     HashMap<String, Object> wherei = new HashMap<String, Object>();
                     wherei.put("tardis_id", id);
                     ResultSetTardis rs = new ResultSetTardis(plugin, wherei, "", false);

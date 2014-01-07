@@ -22,6 +22,7 @@ import java.util.List;
 import java.util.Map;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
+import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
 import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetNextLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
@@ -89,6 +90,15 @@ public class TARDISScannerListener implements Listener {
                 ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
                 if (rs.resultSet()) {
                     final int id = rs.getTardis_id();
+                    TARDISCircuitChecker tcc = null;
+                    if (plugin.getConfig().getString("preferences.difficulty").equals("hard")) {
+                        tcc = new TARDISCircuitChecker(plugin, id);
+                        tcc.getCircuits();
+                    }
+                    if (tcc != null && !tcc.hasScanner()) {
+                        player.sendMessage(plugin.pluginName + "The Scanner Circuit is missing from the console!");
+                        return;
+                    }
                     final String renderer = rs.getRenderer();
                     plugin.utils.playTARDISSound(player.getLocation(), player, "tardis_scanner");
                     final Location scan_loc;

@@ -18,6 +18,7 @@ package me.eccentric_nz.TARDIS.commands.tardis;
 
 import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
@@ -51,6 +52,15 @@ public class TARDISRebuildCommand {
                 return false;
             }
             id = rs.getTardis_id();
+            TARDISCircuitChecker tcc = null;
+            if (plugin.getConfig().getString("preferences.difficulty").equals("hard")) {
+                tcc = new TARDISCircuitChecker(plugin, id);
+                tcc.getCircuits();
+            }
+            if (tcc != null && !tcc.hasMaterialisation()) {
+                player.sendMessage(plugin.pluginName + "The Materialisation Circuit is missing from the console!");
+                return true;
+            }
             HashMap<String, Object> wherein = new HashMap<String, Object>();
             wherein.put("player", player.getName());
             ResultSetTravellers rst = new ResultSetTravellers(plugin, wherein, false);

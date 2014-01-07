@@ -19,6 +19,7 @@ package me.eccentric_nz.TARDIS.listeners;
 import java.util.HashMap;
 import java.util.Locale;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
 import me.eccentric_nz.TARDIS.database.ResultSetAreas;
 import me.eccentric_nz.TARDIS.database.ResultSetControls;
 import me.eccentric_nz.TARDIS.database.ResultSetDestinations;
@@ -64,6 +65,15 @@ public class TARDISKeyboardListener implements Listener {
         where.put("location", loc_str);
         ResultSetControls rsc = new ResultSetControls(plugin, where, false);
         if (rsc.resultSet()) {
+            TARDISCircuitChecker tcc = null;
+            if (plugin.getConfig().getString("preferences.difficulty").equals("hard")) {
+                tcc = new TARDISCircuitChecker(plugin, rsc.getTardis_id());
+                tcc.getCircuits();
+            }
+            if (tcc != null && !tcc.hasInput()) {
+                event.getPlayer().sendMessage(plugin.pluginName + "The Input Circuit is missing from the console!");
+                return;
+            }
             Sign keyboard = (Sign) against.getState();
             // track this sign
             plugin.trackSign.put(block.getLocation().toString(), keyboard);

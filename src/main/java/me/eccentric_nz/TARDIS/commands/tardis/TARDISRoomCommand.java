@@ -21,6 +21,7 @@ import java.util.Locale;
 import java.util.Map;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
+import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
 import me.eccentric_nz.TARDIS.database.ResultSetCondenser;
 import me.eccentric_nz.TARDIS.database.ResultSetControls;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
@@ -87,6 +88,15 @@ public class TARDISRoomCommand {
             return true;
         }
         int id = rs.getTardis_id();
+        TARDISCircuitChecker tcc = null;
+        if (plugin.getConfig().getString("preferences.difficulty").equals("hard")) {
+            tcc = new TARDISCircuitChecker(plugin, id);
+            tcc.getCircuits();
+        }
+        if (tcc != null && !tcc.hasARS()) {
+            player.sendMessage(plugin.pluginName + "The ARS Circuit is missing from the console!");
+            return true;
+        }
         int level = rs.getArtron_level();
         String chunk = rs.getChunk();
         SCHEMATIC schm = rs.getSchematic();
