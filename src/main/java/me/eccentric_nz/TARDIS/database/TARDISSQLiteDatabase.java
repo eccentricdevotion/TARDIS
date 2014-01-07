@@ -120,7 +120,7 @@ public class TARDISSQLiteDatabase {
             if (rss.next()) {
                 String sd_query = "SELECT sql FROM sqlite_master WHERE tbl_name = 'storage' AND sql LIKE '%console%'";
                 ResultSet rssd = statement.executeQuery(sd_query);
-                if (rssd.next()) {
+                if (!rssd.next()) {
                     String s_drop = "DROP TABLE storage";
                     statement.executeUpdate(s_drop);
                 }
