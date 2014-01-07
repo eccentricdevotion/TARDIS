@@ -30,7 +30,9 @@ import java.util.List;
 import java.util.Properties;
 import java.util.Set;
 import me.eccentric_nz.TARDIS.ARS.TARDISARSListener;
+import me.eccentric_nz.TARDIS.advanced.TARDISConsoleCloseListener;
 import me.eccentric_nz.TARDIS.advanced.TARDISConsoleListener;
+import me.eccentric_nz.TARDIS.advanced.TARDISConsoleSwitchListener;
 import me.eccentric_nz.TARDIS.advanced.TARDISDiskCraftListener;
 import me.eccentric_nz.TARDIS.advanced.TARDISStorageListener;
 import me.eccentric_nz.TARDIS.artron.TARDISArtronStorageCommand;
@@ -544,6 +546,8 @@ public class TARDIS extends JavaPlugin {
         pm.registerEvents(new TARDISDiskCraftListener(this), this);
         pm.registerEvents(new TARDISStorageListener(this), this);
         pm.registerEvents(new TARDISConsoleListener(this), this);
+        pm.registerEvents(new TARDISConsoleSwitchListener(this), this);
+        pm.registerEvents(new TARDISConsoleCloseListener(this), this);
         pm.registerEvents(new TARDISPerceptionFilterListener(this), this);
     }
 
