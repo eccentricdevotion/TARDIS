@@ -207,15 +207,15 @@ shaped:
         amount: 1
         lore: ""
     TARDIS Key:
-        easy_shape: -R-,-S-,-S-
+        easy_shape: ---,-R-,-G-
         easy_ingredients:
             R: REDSTONE
-            S: STICK
-        hard_shape: -C-,-S-,-S-
+            G: GOLD_NUGGET
+        hard_shape: ---,-C-,-G-
         hard_ingredients:
             C: REDSTONE_COMPARATOR
-            S: STICK
-        result: STICK
+            G: GOLD_NUGGET
+        result: GOLD_NUGGET
         amount: 1
         lore: "Enter and exit your TARDIS"
     Blank Storage Disk:
