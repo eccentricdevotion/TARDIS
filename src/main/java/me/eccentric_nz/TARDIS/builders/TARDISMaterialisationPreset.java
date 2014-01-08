@@ -248,6 +248,14 @@ public class TARDISMaterialisationPreset implements Runnable {
                                 break;
                         }
                         for (int yy = 0; yy < 4; yy++) {
+                            boolean change = true;
+                            if (yy == 0 && n == 9) {
+                                Block rail = world.getBlockAt(xx, y, zz);
+                                if (rail.getType().equals(Material.RAILS) || rail.getType().equals(Material.POWERED_RAIL)) {
+                                    change = false;
+                                    plugin.utils.setBlockAndRemember(world, xx, y, zz, rail.getTypeId(), rail.getData(), tid);
+                                }
+                            }
                             switch (colids[yy]) {
                                 case 2:
                                 case 3:
@@ -510,7 +518,9 @@ public class TARDISMaterialisationPreset implements Runnable {
                                     }
                                     break;
                                 default: // everything else
-                                    plugin.utils.setBlockAndRemember(world, xx, (y + yy), zz, colids[yy], coldatas[yy], tid);
+                                    if (change) {
+                                        plugin.utils.setBlockAndRemember(world, xx, (y + yy), zz, colids[yy], coldatas[yy], tid);
+                                    }
                                     break;
                             }
                         }
@@ -560,6 +570,13 @@ public class TARDISMaterialisationPreset implements Runnable {
                                 break;
                         }
                         for (int yy = 0; yy < 4; yy++) {
+                            boolean change = true;
+                            if (yy == 0 && n == 9) {
+                                Block rail = world.getBlockAt(xx, y, zz);
+                                if (rail.getType().equals(Material.RAILS) || rail.getType().equals(Material.POWERED_RAIL)) {
+                                    change = false;
+                                }
+                            }
                             switch (colids[yy]) {
                                 case 2:
                                 case 3:
@@ -649,7 +666,9 @@ public class TARDISMaterialisationPreset implements Runnable {
                                     }
                                     break;
                                 default: // everything else
-                                    plugin.utils.setBlock(world, xx, (y + yy), zz, colids[yy], coldatas[yy]);
+                                    if (change) {
+                                        plugin.utils.setBlock(world, xx, (y + yy), zz, colids[yy], coldatas[yy]);
+                                    }
                                     break;
                             }
                         }
