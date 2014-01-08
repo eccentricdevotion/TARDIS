@@ -67,6 +67,7 @@ preferences:
     malfunction: 3
     malfunction_end: 3
     malfunction_nether: 3
+    use_default_condensables: true
 # restrictions
 allow:
     mob_farming: true

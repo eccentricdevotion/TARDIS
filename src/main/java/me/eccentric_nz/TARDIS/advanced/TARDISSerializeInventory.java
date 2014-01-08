@@ -28,8 +28,8 @@ import org.yaml.snakeyaml.external.biz.base64Coder.Base64Coder;
 
 /**
  *
- * @author comphenix
- * @url https://gist.github.com/aadnk/8138186
+ * @author original code by comphenix
+ * @see https://gist.github.com/aadnk/8138186
  */
 public class TARDISSerializeInventory {
 
@@ -73,7 +73,6 @@ public class TARDISSerializeInventory {
             ByteArrayInputStream inputStream = new ByteArrayInputStream(Base64Coder.decodeLines(data));
             BukkitObjectInputStream dataInput = new BukkitObjectInputStream(inputStream);
             Inventory inventory = Bukkit.getServer().createInventory(null, dataInput.readInt());
-
             // Read the serialized inventory
             for (int i = 0; i < inventory.getSize(); i++) {
                 inventory.setItem(i, (ItemStack) dataInput.readObject());
@@ -90,7 +89,6 @@ public class TARDISSerializeInventory {
             ByteArrayInputStream inputStream = new ByteArrayInputStream(Base64Coder.decodeLines(data));
             BukkitObjectInputStream dataInput = new BukkitObjectInputStream(inputStream);
             ItemStack[] stack = new ItemStack[dataInput.readInt()];
-
             // Read the serialized ItemStacks
             for (int i = 0; i < stack.length; i++) {
                 stack[i] = (ItemStack) dataInput.readObject();

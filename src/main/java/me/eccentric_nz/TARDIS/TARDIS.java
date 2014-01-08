@@ -37,6 +37,7 @@ import me.eccentric_nz.TARDIS.advanced.TARDISDiskCraftListener;
 import me.eccentric_nz.TARDIS.advanced.TARDISStorageListener;
 import me.eccentric_nz.TARDIS.artron.TARDISArtronStorageCommand;
 import me.eccentric_nz.TARDIS.artron.TARDISArtronTabComplete;
+import me.eccentric_nz.TARDIS.artron.TARDISCondensables;
 import me.eccentric_nz.TARDIS.builders.TARDISBuilderInner;
 import me.eccentric_nz.TARDIS.builders.TARDISPresetBuilderFactory;
 import me.eccentric_nz.TARDIS.builders.TARDISSpace;
@@ -305,6 +306,7 @@ public class TARDIS extends JavaPlugin {
     private FileConfiguration tagConfig;
     private FileConfiguration recipesConfig;
     private FileConfiguration kitsConfig;
+    private FileConfiguration condensablesConfig;
     public TARDISButtonListener buttonListener;
     public TARDISDoorListener doorListener;
     public TARDISRedstoneListener redstoneListener;
@@ -318,6 +320,7 @@ public class TARDIS extends JavaPlugin {
     public TARDISShapelessRecipe incomposita;
     //public TARDISFurnaceRecipe fornacis;
     public TARDISPerceptionFilter filter;
+    private HashMap<String, Integer> condensables;
 
     @Override
     public void onEnable() {
@@ -390,6 +393,9 @@ public class TARDIS extends JavaPlugin {
             setDates();
             filter = new TARDISPerceptionFilter(this);
             filter.createPerceptionFilter();
+            TARDISCondensables cond = new TARDISCondensables(this);
+            cond.makeCondensables();
+            condensables = cond.getCondensables();
         } else {
             console.sendMessage(pluginName + "This plugin requires CraftBukkit 1.7.2 or higher, disabling...");
             pm.disablePlugin(this);
@@ -459,6 +465,7 @@ public class TARDIS extends JavaPlugin {
         tardisCSV.copy(getDataFolder() + File.separator + "tag.yml", getResource("tag.yml"));
         tardisCSV.copy(getDataFolder() + File.separator + "recipes.yml", getResource("recipes.yml"));
         tardisCSV.copy(getDataFolder() + File.separator + "kits.yml", getResource("kits.yml"));
+        tardisCSV.copy(getDataFolder() + File.separator + "condensables.yml", getResource("condensables.yml"));
         this.achievementConfig = YamlConfiguration.loadConfiguration(new File(getDataFolder(), "achievements.yml"));
         if (this.achievementConfig.getString("travel.message").equals("Life of the party!")) {
             this.achievementConfig.set("travel.message", "There and back again!");
@@ -474,6 +481,7 @@ public class TARDIS extends JavaPlugin {
         this.tagConfig = YamlConfiguration.loadConfiguration(new File(getDataFolder(), "tag.yml"));
         this.recipesConfig = YamlConfiguration.loadConfiguration(new File(getDataFolder(), "recipes.yml"));
         this.kitsConfig = YamlConfiguration.loadConfiguration(new File(getDataFolder(), "kits.yml"));
+        this.condensablesConfig = YamlConfiguration.loadConfiguration(new File(getDataFolder(), "condensables.yml"));
     }
 
     /**
@@ -961,11 +969,19 @@ public class TARDIS extends JavaPlugin {
         return kitsConfig;
     }
 
+    public FileConfiguration getCondensablesConfig() {
+        return condensablesConfig;
+    }
+
     public Calendar getBeforeCal() {
         return beforecal;
     }
 
     public Calendar getAfterCal() {
         return aftercal;
+    }
+
+    public HashMap<String, Integer> getCondensables() {
+        return condensables;
     }
 }

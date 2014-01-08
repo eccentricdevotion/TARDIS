@@ -29,7 +29,6 @@ import java.util.Map;
 import java.util.Set;
 import java.util.regex.Pattern;
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.artron.TARDISCondensables;
 import me.eccentric_nz.TARDIS.database.ResultSetCondenser;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
@@ -77,7 +76,6 @@ public class TARDISRoomCommands implements CommandExecutor {
                 return false;
             }
             if (args[0].toLowerCase(Locale.ENGLISH).equals("blocks")) {
-                TARDISCondensables tc = new TARDISCondensables();
                 String name = args[1].toUpperCase(Locale.ENGLISH);
                 Set<String> rooms = plugin.getRoomsConfig().getConfigurationSection("rooms").getKeys(false);
                 if (name.equals("SAVE")) {
@@ -98,8 +96,8 @@ public class TARDISRoomCommands implements CommandExecutor {
                                 String line = mat + " (" + entry.getKey() + "), " + entry.getValue();
                                 bw.write(line);
                                 bw.newLine();
-                                if (tc.condensables.containsKey(mat)) {
-                                    int value = entry.getValue() * tc.condensables.get(mat);
+                                if (plugin.getCondensables().containsKey(mat)) {
+                                    int value = entry.getValue() * plugin.getCondensables().get(mat);
                                     cost += value;
                                 }
                             }
