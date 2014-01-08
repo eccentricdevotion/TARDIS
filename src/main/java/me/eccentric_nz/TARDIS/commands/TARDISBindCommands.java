@@ -59,7 +59,7 @@ public class TARDISBindCommands implements CommandExecutor {
         firstArgs.add("biome"); // type 4
         firstArgs.add("remove");
         firstArgs.add("update");
-        type_1 = Arrays.asList(new String[]{"hide", "rebuild", "home"});
+        type_1 = Arrays.asList(new String[]{"hide", "rebuild", "home", "cave"});
     }
 
     @Override
@@ -165,7 +165,7 @@ public class TARDISBindCommands implements CommandExecutor {
                 set.put("tardis_id", id);
                 if (args[0].equalsIgnoreCase("cmd")) { // type 1
                     if (!type_1.contains(args[1])) {
-                        sender.sendMessage(plugin.pluginName + "You can only bind the hide, rebuild and home commands!");
+                        sender.sendMessage(plugin.pluginName + "You can only bind the hide, cave, rebuild and home commands!");
                         return true;
                     }
                     set.put("dest_name", args[1].toLowerCase(Locale.ENGLISH));

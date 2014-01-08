@@ -4,6 +4,7 @@
 1. Documentation & videos!
    * Add note about disabling Factions in Vortex
 2. Advanced TARDIS console
+   * Test all disks & circuits
 3. Add `/tardiskit [kit|list]` command so that servers on easy difficulty can supply players with the basics (or more if desired)
 4. Make condensables list configurable
 5. TARDIS exterior rendering / scanner room
@@ -38,6 +39,7 @@
    * Witches -> Silurians
    * Villagers -> Ood
 9. Toggle both doors open when shift-clicking the door, and when exiting (if the preset has a door and the door is open) tp the player to the door location.
+10. Weeping Angels
 
 # Minecraft API when available
 1. Recreate everything with the new API :)
