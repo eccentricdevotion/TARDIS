@@ -23,7 +23,6 @@ import com.sk89q.worldguard.domains.DefaultDomain;
 import com.sk89q.worldguard.protection.databases.ProtectionDatabaseException;
 import com.sk89q.worldguard.protection.flags.DefaultFlag;
 import com.sk89q.worldguard.protection.flags.Flag;
-//import com.sk89q.worldguard.protection.flags.RegionGroup;
 import com.sk89q.worldguard.protection.flags.StateFlag.State;
 import com.sk89q.worldguard.protection.managers.RegionManager;
 import com.sk89q.worldguard.protection.regions.ProtectedCuboidRegion;
@@ -142,14 +141,12 @@ public class TARDISWorldGuardUtils {
         flags.put(DefaultFlag.LAVA_FLOW, State.DENY);
         flags.put(DefaultFlag.LIGHTER, State.DENY);
         flags.put(DefaultFlag.MOB_SPAWNING, State.DENY);
-        //flags.put(DefaultFlag.CONSTRUCT, RegionGroup.OWNERS);
         flags.put(DefaultFlag.CHEST_ACCESS, State.ALLOW);
         region.setFlags(flags);
         rm.addRegion(region);
         // deny access to anyone but the owner - companions will be added as the player defines them
         // usage = "<id> <flag> [-w world] [-g group] [value]",
-        plugin.getServer().dispatchCommand(plugin.console, "rg flag " + region_id + " entry -w " + w.getName() + " -g nonmembers");
-        // plugin.getServer().dispatchCommand(plugin.console, "rg addmember " + region_id + " " + companion
+        plugin.getServer().dispatchCommand(plugin.console, "rg flag " + region_id + " entry -w " + w.getName() + " -g nonmembers deny");
         try {
             rm.save();
         } catch (ProtectionDatabaseException e) {

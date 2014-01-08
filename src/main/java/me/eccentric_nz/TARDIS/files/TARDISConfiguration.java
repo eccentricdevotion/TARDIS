@@ -237,7 +237,7 @@ public class TARDISConfiguration {
         strOptions.put("creation.default_world_name", "myridiculouslylongworldnameiscalledcuthbert");
         strOptions.put("creation.gamemode", "survival");
         strOptions.put("preferences.difficulty", "hard");
-        strOptions.put("preferences.key", "STICK");
+        strOptions.put("preferences.key", "GOLD_NUGGET");
         strOptions.put("storage.database", "sqlite");
         strOptions.put("storage.mysql.password", "mysecurepassword");
         strOptions.put("storage.mysql.url", "mysql://localhost:3306/TARDIS");

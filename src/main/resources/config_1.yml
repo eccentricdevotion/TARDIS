@@ -52,7 +52,7 @@ travel:
     terminal_step: 1
 # general preferences
 preferences:
-    key: STICK
+    key: GOLD_NUGGET
     use_worldguard: true
     respect_worldguard: true
     respect_towny: true
