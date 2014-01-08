@@ -26,6 +26,42 @@
 	<section>
 		<h1>Change log</h1>
 		<h2>What&rsquo;s been changed?</h2>
+		<h3>v2.6.4</h3>
+		<ul>
+			<li>Fixed TARDIS deletion</li>
+		</ul>
+		<h3>v2.6.3</h3>
+		<ul>
+			<li>Fixed ARS GUI throwing NPEs when scrolling the rooms &mdash; thanks to darthnsupreme for picking this one up</li>
+			<li>Further work on MySQL servers not persisting the database connection</li>
+			<li>Fix MySQL not returning generated keys</li>
+		</ul>
+		<h3>v2.6.2</h3>
+		<ul>
+			<li>Fixed startup error trying to copy a non-existent config file</li>
+			<li>Fixed a problem with some MySQL servers not persisting the database connection</li>
+			<li>Fixed the default key item not being set properly if using MySQL database</li>
+			<li>Fixed player key preference not being updated if using MySQL database</li>
+		</ul>
+		<h3>v2.6.1</h3>
+		<h4>Additions</h4>
+		<ul>
+			<li>Added support for using a MySQL database, those familiar with setting up plugins to use MySQL should have no problem doing the same for TARDIS &mdash; check config.yml for the required settings</li>
+			<li>Added new ocean biomes to the TARDIS submarine mode</li>
+			<li>Added a Do Not Disturb player preference &mdash; <code>/tardisprefs dnd [on|off]</code> &mdash; to prevent the use of <code>/ttravel [player]</code> command should the specified player not want to be travelled to</li>
+		</ul>
+		<h4>Changes</h4>
+		<ul>
+			<li>If <code>default_world</code> is <code>true</code> and the world specified by <code>default_world_name</code> doesn&rsquo;t exist, then the plugin tries to create it</li>
+			<li>TARDIS seed blocks now properly recognise all types of wood and logs</li>
+		</ul>
+		<h4>Bug fixes</h4>
+		<ul>
+			<li>Fixed CUSTOM TARDIS creation</li>
+			<li>Fixed submarine mode</li>
+			<li>Fixed player direction when using the TARDIS back door</li>
+			<li>Fixed missing blocks in the REDSTONE TARDIS &mdash; delete the old schematic to update to the new one</li>
+		</ul>
 		<h3>v2.6</h3>
 		<p>There are lots of changes in v2.6 &mdash; some of which are not compatible with previous TARDISes... please read this and the <a href="#v26b1">TARDIS v2.6-beta-1</a> and <a href="#v26b3">TARDIS v2.6-beta-3</a> change logs carefully!</p>
 		<h4>Additions</h4>
