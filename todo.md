@@ -5,11 +5,10 @@
    * Add note about disabling Factions in Vortex
 2. Advanced TARDIS console
    * Test all disks & circuits
-3. Add `/tardiskit [kit|list]` command so that servers on easy difficulty can supply players with the basics (or more if desired)
-4. Make condensables list configurable
-5. TARDIS exterior rendering / scanner room
+3. Make condensables list configurable
+4. TARDIS exterior rendering / scanner room
    * find a way to prevent items dropping between renders
-6. TARDIS Information System
+5. TARDIS Information System
     * add new features
     * auto log out?
     

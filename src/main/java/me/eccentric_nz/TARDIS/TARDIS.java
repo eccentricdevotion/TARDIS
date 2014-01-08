@@ -304,6 +304,7 @@ public class TARDIS extends JavaPlugin {
     private FileConfiguration roomsConfig;
     private FileConfiguration tagConfig;
     private FileConfiguration recipesConfig;
+    private FileConfiguration kitsConfig;
     public TARDISButtonListener buttonListener;
     public TARDISDoorListener doorListener;
     public TARDISRedstoneListener redstoneListener;
@@ -457,6 +458,7 @@ public class TARDIS extends JavaPlugin {
         tardisCSV.copy(getDataFolder() + File.separator + "rooms.yml", getResource("rooms.yml"));
         tardisCSV.copy(getDataFolder() + File.separator + "tag.yml", getResource("tag.yml"));
         tardisCSV.copy(getDataFolder() + File.separator + "recipes.yml", getResource("recipes.yml"));
+        tardisCSV.copy(getDataFolder() + File.separator + "kits.yml", getResource("kits.yml"));
         this.achievementConfig = YamlConfiguration.loadConfiguration(new File(getDataFolder(), "achievements.yml"));
         if (this.achievementConfig.getString("travel.message").equals("Life of the party!")) {
             this.achievementConfig.set("travel.message", "There and back again!");
@@ -471,6 +473,7 @@ public class TARDIS extends JavaPlugin {
         this.roomsConfig = YamlConfiguration.loadConfiguration(new File(getDataFolder(), "rooms.yml"));
         this.tagConfig = YamlConfiguration.loadConfiguration(new File(getDataFolder(), "tag.yml"));
         this.recipesConfig = YamlConfiguration.loadConfiguration(new File(getDataFolder(), "recipes.yml"));
+        this.kitsConfig = YamlConfiguration.loadConfiguration(new File(getDataFolder(), "kits.yml"));
     }
 
     /**
@@ -571,7 +574,7 @@ public class TARDIS extends JavaPlugin {
         getCommand("tardisbind").setTabCompleter(new TARDISBindTabComplete());
         getCommand("tardisbook").setExecutor(new TARDISBookCommands(this));
         getCommand("tardisgive").setExecutor(new TARDISGiveCommand(this));
-        getCommand("tardisgive").setTabCompleter(new TARDISGiveTabComplete());
+        getCommand("tardisgive").setTabCompleter(new TARDISGiveTabComplete(this));
         getCommand("tardisgravity").setExecutor(new TARDISGravityCommands(this));
         getCommand("tardisgravity").setTabCompleter(new TARDISGravityTabComplete());
         getCommand("tardisprefs").setExecutor(new TARDISPrefsCommands(this));
@@ -952,6 +955,10 @@ public class TARDIS extends JavaPlugin {
 
     public FileConfiguration getRecipesConfig() {
         return recipesConfig;
+    }
+
+    public FileConfiguration getKitsConfig() {
+        return kitsConfig;
     }
 
     public Calendar getBeforeCal() {

@@ -115,6 +115,12 @@ permissions:
   tardis.advanced:
     description: Allow players to utilise the TARDIS Advanced Console.
     default: op
+  tardis.kit.join:
+    description: Allow players to automatically get a TARDIS Item Kit when they join the server.
+    default: op
+  tardis.kit.create:
+    description: Allow players to automatically get a TARDIS Item Kit when they create a TARDIS.
+    default: op
   tardis.plank:
     description: Allow players to build the 'wood' TARDIS.
     default: op

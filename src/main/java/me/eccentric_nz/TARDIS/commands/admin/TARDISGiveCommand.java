@@ -53,6 +53,7 @@ public class TARDISGiveCommand implements CommandExecutor {
         items.put("e-circuit", "Emerald Environment Circuit");
         items.put("filter", "Perception Filter");
         items.put("key", "TARDIS Key");
+        items.put("kit", "TARDIS Item Kit");
         items.put("l-circuit", "TARDIS Locator Circuit");
         items.put("locator", "TARDIS Locator");
         items.put("m-circuit", "TARDIS Materialisation Circuit");
@@ -78,7 +79,23 @@ public class TARDISGiveCommand implements CommandExecutor {
                 }
                 String item = args[1].toLowerCase();
                 if (!items.containsKey(item)) {
-                    sender.sendMessage(plugin.pluginName + "Unknown item! Try one of: artron|a-circuit|bio-circuit|biome-disk|blank|c-circuit|d-circuit|e-circuit|filter|key|l-circuit|locator|m-circuit|oscillator|p-circuit|player-disk|preset-disk|r-circuit|remote|s-circuit|save-disk|sonic");
+                    sender.sendMessage(plugin.pluginName + "Unknown item! Try one of: artron|kit|a-circuit|bio-circuit|biome-disk|blank|c-circuit|d-circuit|e-circuit|filter|key|l-circuit|locator|m-circuit|oscillator|p-circuit|player-disk|preset-disk|r-circuit|remote|s-circuit|save-disk|sonic");
+                    return true;
+                }
+                if (item.equals("kit")) {
+                    Player p = plugin.getServer().getPlayer(args[0]);
+                    if (p == null) { // player must be online
+                        sender.sendMessage(plugin.pluginName + "Could not find a player with that name!");
+                        return true;
+                    }
+                    if (!plugin.getKitsConfig().contains("kits." + args[2])) {
+                        sender.sendMessage(plugin.pluginName + "Could not find a kit with that name!");
+                        return true;
+                    }
+                    for (String k : plugin.getKitsConfig().getStringList("kits." + args[2])) {
+                        this.giveItem(k, p);
+                    }
+                    p.sendMessage(plugin.pluginName + sender.getName() + " just gave you the TARDIS Item Kit " + args[2]);
                     return true;
                 }
                 int amount;
@@ -134,6 +151,21 @@ public class TARDISGiveCommand implements CommandExecutor {
         player.getInventory().addItem(result);
         player.updateInventory();
         player.sendMessage(plugin.pluginName + sender.getName() + " just gave you " + amount + " " + item_to_give);
+        return true;
+    }
+
+    private boolean giveItem(String item, Player player) {
+        ItemStack result;
+        if (plugin.incomposita.getShapelessRecipes().containsKey(item)) {
+            ShapelessRecipe recipe = plugin.incomposita.getShapelessRecipes().get(item);
+            result = recipe.getResult();
+        } else {
+            ShapedRecipe recipe = plugin.figura.getShapedRecipes().get(item);
+            result = recipe.getResult();
+        }
+        result.setAmount(1);
+        player.getInventory().addItem(result);
+        player.updateInventory();
         return true;
     }
 

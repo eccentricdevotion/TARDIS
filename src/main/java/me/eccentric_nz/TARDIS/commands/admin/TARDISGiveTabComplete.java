@@ -17,7 +17,11 @@
 package me.eccentric_nz.TARDIS.commands.admin;
 
 import com.google.common.collect.ImmutableList;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+import java.util.Set;
+import me.eccentric_nz.TARDIS.TARDIS;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
@@ -28,9 +32,15 @@ import org.bukkit.util.StringUtil;
  */
 public class TARDISGiveTabComplete implements TabCompleter {
 
-    private final ImmutableList<String> GIVE_SUBS = ImmutableList.of("artron", "a-circuit", "bio-circuit", "biome-disk", "blank", "c-circuit", "d-circuit", "e-circuit", "filter", "key", "l-circuit", "locator", "m-circuit", "oscillator", "p-circuit", "player-disk", "preset-disk", "r-circuit", "remote", "s-circuit", "save-disk", "sonic");
+    private final TARDIS plugin;
+    private final ImmutableList<String> GIVE_SUBS = ImmutableList.of("artron", "kit", "a-circuit", "bio-circuit", "biome-disk", "blank", "c-circuit", "d-circuit", "e-circuit", "filter", "key", "l-circuit", "locator", "m-circuit", "oscillator", "p-circuit", "player-disk", "preset-disk", "r-circuit", "remote", "s-circuit", "save-disk", "sonic");
+    private final Set<String> kits;
+    private final ImmutableList<String> KIT_SUBS;
 
-    public TARDISGiveTabComplete() {
+    public TARDISGiveTabComplete(TARDIS plugin) {
+        this.plugin = plugin;
+        this.kits = plugin.getKitsConfig().getConfigurationSection("kits").getKeys(false);
+        this.KIT_SUBS = ImmutableList.copyOf(kits);
     }
 
     @Override
@@ -40,6 +50,11 @@ public class TARDISGiveTabComplete implements TabCompleter {
             return null;
         } else if (args.length == 2) {
             return partial(lastArg, GIVE_SUBS);
+        } else {
+            String sub = args[1];
+            if (sub.equals("kit")) {
+                return partial(lastArg, KIT_SUBS);
+            }
         }
         return ImmutableList.of();
     }

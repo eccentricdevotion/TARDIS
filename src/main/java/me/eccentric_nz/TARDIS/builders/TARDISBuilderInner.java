@@ -22,8 +22,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import me.eccentric_nz.TARDIS.JSON.JSONArray;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
+import me.eccentric_nz.TARDIS.database.ResultSetAchievements;
 import me.eccentric_nz.TARDIS.enumeration.SCHEMATIC;
 import me.eccentric_nz.tardischunkgenerator.TARDISChunkGenerator;
 import org.bukkit.ChatColor;
@@ -36,7 +38,6 @@ import org.bukkit.block.Block;
 import org.bukkit.block.Sign;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
-import me.eccentric_nz.TARDIS.JSON.JSONArray;
 
 /**
  * The TARDIS was prone to a number of technical faults, ranging from depleted
@@ -686,6 +687,26 @@ public class TARDISBuilderInner {
         }
         // finished processing - update tardis table!
         qf.doUpdate("tardis", set, where);
+        // give kit?
+        if (plugin.getKitsConfig().getBoolean("give.create.enabled")) {
+            if (p.hasPermission("tardis.kit.create")) {
+                // check if they have the tardis kit
+                HashMap<String, Object> wherek = new HashMap<String, Object>();
+                wherek.put("player", p.getName());
+                wherek.put("name", "createkit");
+                ResultSetAchievements rsa = new ResultSetAchievements(plugin, wherek, false);
+                if (!rsa.resultSet()) {
+                    //add a record
+                    HashMap<String, Object> setk = new HashMap<String, Object>();
+                    setk.put("player", p.getName());
+                    setk.put("name", "createkit");
+                    qf.doInsert("achievements", setk);
+                    // give the join kit
+                    String kit = plugin.getKitsConfig().getString("give.create.kit");
+                    plugin.getServer().dispatchCommand(plugin.console, "tardisgive " + p.getName() + " kit " + kit);
+                }
+            }
+        }
     }
 
     /**
