@@ -230,6 +230,11 @@ public class TARDISBuilderInner {
                                 String bedrocloc = world.getName() + ":" + startx + ":" + starty + ":" + startz;
                                 set.put("beacon", bedrocloc);
                             }
+                            if (id == 25) { // noteblock
+                                // remember the location of this Disk Storage
+                                String storage = plugin.utils.makeLocationStr(world, startx, starty, startz);
+                                qf.insertSyncControl(dbID, 14, storage, 0);
+                            }
                             if (id == 35) { // wool
                                 switch (data) {
                                     case 1:
@@ -314,6 +319,11 @@ public class TARDISBuilderInner {
                                 // remember the location of this button
                                 String button = plugin.utils.makeLocationStr(world, startx, starty, startz);
                                 qf.insertSyncControl(dbID, 1, button, 0);
+                            }
+                            if (id == 77) { // jukebox
+                                // remember the location of this Advanced Console
+                                String advanced = plugin.utils.makeLocationStr(world, startx, starty, startz);
+                                qf.insertSyncControl(dbID, 15, advanced, 0);
                             }
                             if (id == 92) {
                                 /*
