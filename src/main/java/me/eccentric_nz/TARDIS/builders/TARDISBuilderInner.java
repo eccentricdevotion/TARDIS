@@ -320,7 +320,7 @@ public class TARDISBuilderInner {
                                 String button = plugin.utils.makeLocationStr(world, startx, starty, startz);
                                 qf.insertSyncControl(dbID, 1, button, 0);
                             }
-                            if (id == 77) { // jukebox
+                            if (id == 84) { // jukebox
                                 // remember the location of this Advanced Console
                                 String advanced = plugin.utils.makeLocationStr(world, startx, starty, startz);
                                 qf.insertSyncControl(dbID, 15, advanced, 0);
