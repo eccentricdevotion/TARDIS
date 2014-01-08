@@ -71,6 +71,7 @@ public class TARDISConfiguration {
         boolOptions.put("allow.sfx", true);
         boolOptions.put("allow.spawn_eggs", true);
         boolOptions.put("allow.tp_switch", true);
+        boolOptions.put("allow.wg_flag_set", true);
         boolOptions.put("conversions.conversion_done", false);
         boolOptions.put("conversions.location_conversion_done", false);
         boolOptions.put("creation.add_perms", true);

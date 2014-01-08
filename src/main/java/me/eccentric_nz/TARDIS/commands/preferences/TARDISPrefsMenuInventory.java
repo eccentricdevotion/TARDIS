@@ -72,6 +72,14 @@ public class TARDISPrefsMenuInventory {
             b_im.setLore(Arrays.asList(new String[]{b_value}));
             beacon.setItemMeta(b_im);
             options.add(beacon);
+//            // Build
+//            ItemStack build = new ItemStack(TARDISConstants.GUI_ITEMS.get(1), 1);
+//            ItemMeta i_im = build.getItemMeta();
+//            i_im.setDisplayName("Allow companion building");
+//            String i_value = (rsp.isBeaconOn()) ? "ON" : "OFF";
+//            i_im.setLore(Arrays.asList(new String[]{i_value}));
+//            build.setItemMeta(i_im);
+//            options.add(build);
             // DND
             ItemStack dnd = new ItemStack(TARDISConstants.GUI_ITEMS.get(2), 1);
             ItemMeta d_im = dnd.getItemMeta();

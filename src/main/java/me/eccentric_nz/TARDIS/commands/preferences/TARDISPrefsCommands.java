@@ -52,6 +52,7 @@ public class TARDISPrefsCommands implements CommandExecutor {
         this.plugin = plugin;
         firstArgs.add("auto");
         firstArgs.add("beacon");
+        firstArgs.add("build");
         firstArgs.add("dnd");
         firstArgs.add("eps");
         firstArgs.add("eps_message");
@@ -119,7 +120,11 @@ public class TARDISPrefsCommands implements CommandExecutor {
                         sender.sendMessage(plugin.pluginName + "You need to specify if " + pref + " should be on or off!");
                         return false;
                     }
-                    return new TARDISToggleOnOffCommand(plugin).doAbort(player, args, qf);
+                    if (pref.equals("build")) {
+                        return new TARDISBuildCommand(plugin).toggleCompanionBuilding(player, args);
+                    } else {
+                        return new TARDISToggleOnOffCommand(plugin).doAbort(player, args, qf);
+                    }
                 } else {
                     sender.sendMessage(plugin.pluginName + MESSAGE.NO_PERMS.getText());
                     return false;
