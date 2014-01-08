@@ -17,7 +17,9 @@
 package me.eccentric_nz.TARDIS.commands.admin;
 
 import com.google.common.collect.ImmutableList;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -55,7 +57,7 @@ public class TARDISAdminTabComplete implements TabCompleter {
             if (sub.equals("database")) {
                 return partial(lastArg, DB_SUBS);
             }
-            if (sub.equals("delete") || sub.equals("enter")) { // return null to default to online player name matching
+            if (sub.equals("delete") || sub.equals("enter") || sub.equals("purge")) { // return null to default to online player name matching
                 return null;
             } else {
                 return partial(lastArg, BOOL_SUBS);

@@ -232,7 +232,7 @@ public class TARDISExterminator {
         }
     }
 
-    private void cleanHashMaps(int id) {
+    public void cleanHashMaps(int id) {
         // remove protected blocks from the HashMap
         HashMap<String, Object> whereb = new HashMap<String, Object>();
         whereb.put("tardis_id", id);
@@ -275,10 +275,10 @@ public class TARDISExterminator {
         }
     }
 
-    private void cleanDatabase(int id) {
+    public void cleanDatabase(int id) {
         QueryFactory qf = new QueryFactory(plugin);
         List<String> tables = Arrays.asList(new String[]{"tardis", "blocks", "lamps", "ars", "doors", "controls", "gravity_well", "destinations", "homes", "current", "next", "back", "travellers", "chunks"});
-        // remove record from tardis table
+        // remove record from database tables
         for (String table : tables) {
             HashMap<String, Object> where = new HashMap<String, Object>();
             where.put("tardis_id", id);
