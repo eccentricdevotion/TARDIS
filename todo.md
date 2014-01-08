@@ -11,6 +11,8 @@
 5. TARDIS Information System
     * add new features
     * auto log out?
+6. Fix redstone lamp on OLD preset?
+7. Fix RAILS being removed in front of door - add to protected blocks
     
 ## Waiting on Bukkit API
 0. IDs are soon to be history... so convert all ID use to entity names
