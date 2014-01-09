@@ -5,10 +5,10 @@
    * Add note about disabling Factions in Vortex
 2. Advanced TARDIS console
    * Test all disks & circuits
-3. Make condensables list configurable
-4. TARDIS exterior rendering / scanner room
+   * `ArrayIndexOutOfBoundsException: 2` - line 80 _TARDISStorageListener.java_ - when checking for area disks to eject
+3. TARDIS exterior rendering / scanner room
    * find a way to prevent items dropping between renders
-5. TARDIS Information System
+4. TARDIS Information System
     * add new features
     * auto log out?
     
@@ -22,10 +22,9 @@
 2. TARDIS direction sign
 3. Configurable option to allow Gravity Wells outside of the TARDIS
 4. TARDIS invisiblity
-5. Artron storage blocks
-6. HADS + explosions + fireballs + lava
-7. Put farmland, crops, buttons, ladders, levers and signs on last when growing rooms
-8. Reskin mobs for Resource pack, and add new mob sounds
+5. HADS + explosions + fireballs + lava
+6. Put farmland, crops, buttons, ladders, levers and signs on last when growing rooms
+7. Reskin mobs for Resource pack, and add new mob sounds
    * Skeletons -> Cybermen
    * Wither Skeletons -> Vashta Nerada
    * Wolves -> K-9
@@ -36,8 +35,8 @@
    * Slimes -> Adipose
    * Witches -> Silurians
    * Villagers -> Ood
-9. Toggle both doors open when shift-clicking the door, and when exiting (if the preset has a door and the door is open) tp the player to the door location.
-10. Weeping Angels
+8. Toggle both doors open when shift-clicking the door, and when exiting (if the preset has a door and the door is open) tp the player to the door location.
+9. Weeping Angels
 
 # Minecraft API when available
 1. Recreate everything with the new API :)

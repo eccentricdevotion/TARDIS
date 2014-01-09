@@ -25,6 +25,7 @@ import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
+import org.bukkit.WorldType;
 import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Player;
 
@@ -53,58 +54,60 @@ public class TARDISCaveFinder {
             COMPASS d = rsc.getDirection();
             // Assume all non-nether/non-end world environments are NORMAL
             if (!w.getEnvironment().equals(World.Environment.NETHER) && !w.getEnvironment().equals(World.Environment.THE_END)) {
-                int limitx = 2000;
-                int limitz = 2000;
-                int step = 25;
-                // search in a random direction
-                Integer[] directions = new Integer[]{0, 1, 2, 3};
-                Collections.shuffle(Arrays.asList(directions));
-                for (int i = 0; i < 4; i++) {
-                    switch (directions[i]) {
-                        case 0:
-                            // east
-                            p.sendMessage(plugin.pluginName + "Looking east...");
-                            for (int east = startx; east < east + limitx; east += step) {
-                                Check chk = isThereRoom(w, east, startz, d);
-                                if (chk.isSafe()) {
-                                    p.sendMessage(plugin.pluginName + "Cave found in an easterly direction!");
-                                    return new Location(w, east, chk.getY(), startz);
+                if (!w.getWorldType().equals(WorldType.FLAT) && worldCheck(w)) {
+                    int limitx = 2000;
+                    int limitz = 2000;
+                    int step = 25;
+                    // search in a random direction
+                    Integer[] directions = new Integer[]{0, 1, 2, 3};
+                    Collections.shuffle(Arrays.asList(directions));
+                    for (int i = 0; i < 4; i++) {
+                        switch (directions[i]) {
+                            case 0:
+                                // east
+                                p.sendMessage(plugin.pluginName + "Looking east...");
+                                for (int east = startx; east < east + limitx; east += step) {
+                                    Check chk = isThereRoom(w, east, startz, d);
+                                    if (chk.isSafe()) {
+                                        p.sendMessage(plugin.pluginName + "Cave found in an easterly direction!");
+                                        return new Location(w, east, chk.getY(), startz);
+                                    }
                                 }
-                            }
-                            break;
-                        case 1:
-                            // south
-                            p.sendMessage(plugin.pluginName + "Looking south...");
-                            for (int south = startz; south < south + limitz; south += step) {
-                                Check chk = isThereRoom(w, startx, south, d);
-                                if (chk.isSafe()) {
-                                    p.sendMessage(plugin.pluginName + "Cave found in a southerly direction!");
-                                    return new Location(w, startx, chk.getY(), south);
+                                break;
+                            case 1:
+                                // south
+                                p.sendMessage(plugin.pluginName + "Looking south...");
+                                for (int south = startz; south < south + limitz; south += step) {
+                                    Check chk = isThereRoom(w, startx, south, d);
+                                    if (chk.isSafe()) {
+                                        p.sendMessage(plugin.pluginName + "Cave found in a southerly direction!");
+                                        return new Location(w, startx, chk.getY(), south);
+                                    }
                                 }
-                            }
-                            break;
-                        case 2:
-                            // west
-                            p.sendMessage(plugin.pluginName + "Looking west...");
-                            for (int west = startx; west > west - limitx; west -= step) {
-                                Check chk = isThereRoom(w, west, startz, d);
-                                if (chk.isSafe()) {
-                                    p.sendMessage(plugin.pluginName + "Cave found in a westerly direction!");
-                                    return new Location(w, west, chk.getY(), startz);
+                                break;
+                            case 2:
+                                // west
+                                p.sendMessage(plugin.pluginName + "Looking west...");
+                                for (int west = startx; west > west - limitx; west -= step) {
+                                    Check chk = isThereRoom(w, west, startz, d);
+                                    if (chk.isSafe()) {
+                                        p.sendMessage(plugin.pluginName + "Cave found in a westerly direction!");
+                                        return new Location(w, west, chk.getY(), startz);
+                                    }
                                 }
-                            }
-                            break;
-                        case 3:
-                            // north
-                            p.sendMessage(plugin.pluginName + "Looking north...");
-                            for (int north = startz; north > north - limitz; north -= step) {
-                                Check chk = isThereRoom(w, startx, north, d);
-                                if (chk.isSafe()) {
-                                    p.sendMessage(plugin.pluginName + "Cave found in a northerly direction!");
-                                    return new Location(w, startx, chk.getY(), north);
+                                break;
+                            case 3:
+                                // north
+                                p.sendMessage(plugin.pluginName + "Looking north...");
+                                for (int north = startz; north > north - limitz; north -= step) {
+                                    Check chk = isThereRoom(w, startx, north, d);
+                                    if (chk.isSafe()) {
+                                        p.sendMessage(plugin.pluginName + "Cave found in a northerly direction!");
+                                        return new Location(w, startx, chk.getY(), north);
+                                    }
                                 }
-                            }
-                            break;
+                                break;
+                        }
                     }
                 }
             } else {
@@ -182,6 +185,23 @@ public class TARDISCaveFinder {
             yy--;
         }
         return yy;
+    }
+
+    private boolean worldCheck(World w) {
+        Location spawn = w.getSpawnLocation();
+        int y = w.getHighestBlockYAt(spawn);
+        if (y < 15) {
+            return false;
+        } else {
+            // move 20 blocks north
+            spawn.setZ(spawn.getBlockZ() - 20);
+            int ny = w.getHighestBlockYAt(spawn);
+            spawn.setX(spawn.getBlockZ() + 20);
+            int ey = w.getHighestBlockYAt(spawn);
+            spawn.setZ(spawn.getBlockZ() + 20);
+            int sy = w.getHighestBlockYAt(spawn);
+            return (y != ny && y != ey && y != sy);
+        }
     }
 
     private class Check {
