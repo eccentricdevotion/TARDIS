@@ -34,6 +34,7 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
+import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
@@ -75,8 +76,15 @@ public class TARDISStorageListener implements Listener {
             STORAGE store = STORAGE.valueOf(tmp);
             saveCurrentStorage(inv, store.getTable(), (Player) event.getPlayer());
         } else if (!title.equals("§4TARDIS Console")) {
+            /**
+             * Fix incorrect Bukkit behaviour
+             *
+             * @see https://bukkit.atlassian.net/browse/BUKKIT-2788
+             * @see https://github.com/Bukkit/CraftBukkit/pull/1130
+             */
+            int isze = (inv.getType().equals(InventoryType.ANVIL)) ? 2 : inv.getSize();
             // scan the inventory for area disks and spit them out
-            for (int i = 0; i < inv.getSize(); i++) {
+            for (int i = 0; i < isze; i++) {
                 ItemStack stack = inv.getItem(i);
                 if (stack != null && stack.getType().equals(Material.RECORD_3) && stack.hasItemMeta()) {
                     ItemMeta ims = stack.getItemMeta();
