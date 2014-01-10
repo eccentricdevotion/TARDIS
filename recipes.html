@@ -1,0 +1,226 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="chrome=1">
+<title>TARDIS: Recipes</title>
+<link rel="stylesheet" href="stylesheets/styles.css">
+<link rel="stylesheet" href="stylesheets/pygment_trac.css">
+<script src="javascripts/scale.fix.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+<!--[if lt IE 9]>
+<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+<![endif]-->
+</head>
+<body>
+<div class="wrapper">
+	<header>
+		<h1>TARDIS</h1>
+		<p>A Bukkit plugin for all Doctor Who fans &mdash; create and use a TARDIS! It&rsquo;s bigger on the inside!</p>
+		<p class="view"><a href="https://github.com/eccentricdevotion/TARDIS">View the Project on GitHub <small>eccentricdevotion/TARDIS</small></a></p>
+		<ul>
+			<li><a href="/TARDIS/">Back <strong>home</strong></a></li>
+			<li><a href="contents.html"><strong>Contents</strong> page</a></li>
+		</ul>
+	</header>
+	<section>
+		<h1>Recipes</h1>
+		<p>Each of the TARDIS items has a configurable recipe. There are both shaped and shapeless recipes &mdash; generally the shapeless ones are used when turning (or upgrading) one TARDIS item into another.</p>
+		<p>The plugin relies on the items having a certain name, so you shouldn&rsquo;t change the recipe names, but the ingredients, amount and sometimes the result can be configured.</p>
+		<p>If after editing the recipes, things stop working, you will need to delete the edited file to revert it to the default recipes on the next server restart.</p>
+		<h3>Shaped recipes</h3>
+		<p>A shaped TARDIS recipe looks like this:</p>
+		<pre><code>shaped:
+    TARDIS Locator:
+        easy_shape: OIO,ICI,OIO
+        easy_ingredients:
+            O: GRAVEL
+            I: IRON_INGOT
+            C: 'WOOL:14'
+        hard_shape: OIO,ICI,OIO
+        hard_ingredients:
+            O: OBSIDIAN
+            I: IRON_INGOT
+            C: 'MAP:1965'
+        result: COMPASS
+        amount: 1
+        lore: ""</code></pre>
+		<style type="text/css">
+			table, table code { font-size:85%; }
+			td { vertical-align:top; }
+			td.noborder { border-bottom: none; }
+			tr.coption { background-color: #eee; }
+		</style>
+		<p>Options (below) surrounded by square brackets <code>[]</code> are areas that you can change. Do <strong>NOT</strong> type the square brackets.</p>
+		<table>
+			<tr>
+				<th>Option</th>
+				<th>Type</th>
+				<th>Value</th>
+			</tr>
+			<tr>
+				<th colspan="3">shaped:</th>
+			</tr>
+			<tr class="coption">
+				<td class="noborder">&nbsp;&nbsp;&nbsp;&nbsp;<code>item name</code></td>
+				<td class="noborder">string</td>
+				<td class="noborder">&nbsp;</td>
+			</tr>
+			<tr>
+				<td>&nbsp;</td>
+				<td colspan="2">You <strong>shouldn&rsquo;t</strong> change this or the recipe will break.</td>
+			</tr>
+			<tr class="coption">
+				<td class="noborder">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<code>easy_shape</code></td>
+				<td class="noborder">string</td>
+				<td class="noborder"><code>AAA,BBB,CCC</code></td>
+			</tr>
+			<tr>
+				<td>&nbsp;</td>
+				<td colspan="2">The recipe shape is the same as the workbench crafting area &mdash; a 3x3 grid &mdash; where <code>AAA</code> is the 3 top slots, <code>BBB</code> is the 3 middle slots, and <code>CCC</code> is the 3 bottom slots. The letters you type here matter, and relate to the ingredients that are used in the recipe. If a slot should be left <em>empty</em>, then use a dash <code>-</code> instead of a letter. You specify the ingredients in the next section.</td>
+			</tr>
+			<tr class="coption">
+				<td class="noborder">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<code>easy_ingredients</code></td>
+				<td class="noborder">&nbsp;</td>
+				<td class="noborder">&nbsp;</td>
+			</tr>
+			<tr class="coption">
+				<td class="noborder">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<code>A</code></td>
+				<td class="noborder">string</td>
+				<td class="noborder"><code>[material name]</code></td>
+			</tr>
+			<tr class="coption">
+				<td class="noborder">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<code>B</code></td>
+				<td class="noborder">string</td>
+				<td class="noborder"><code>[material name]</code></td>
+			</tr>
+			<tr class="coption">
+				<td class="noborder">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<code>C</code></td>
+				<td class="noborder">string:integer</td>
+				<td class="noborder"><code>'[material name:damage value]'</code></td>
+			</tr>
+			<tr>
+				<td>&nbsp;</td>
+				<td colspan="2">The number of ingredients listed here must be the same as the number of different letters in the recipe shape. For each different letter, you will specify a new ingredient. Ingredients should be specified using the <a href="http://jd.bukkit.org/apidocs/org/bukkit/Material.html">Bukkit Material ENUM</a>. If you need to specify a damage value (for example to set the colour of wool) then you <strong>NEED</strong> to separate the values with a colon <code>:</code> <strong>AND</strong> surround the values in single quotes <code>''</code>.</td>
+			</tr>
+			<tr class="coption">
+				<td class="noborder">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<code>hard_shape</code></td>
+				<td class="noborder">string</td>
+				<td class="noborder"><code>AAA,BBB,CCC</code></td>
+			</tr>
+			<tr class="coption">
+				<td class="noborder">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<code>hard_ingredients</code></td>
+				<td class="noborder">&nbsp;</td>
+				<td class="noborder">&nbsp;</td>
+			</tr>
+			<tr class="coption">
+				<td class="noborder">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<code>A</code></td>
+				<td class="noborder">string</td>
+				<td class="noborder"><code>[material name]</code></td>
+			</tr>
+			<tr class="coption">
+				<td class="noborder">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<code>B</code></td>
+				<td class="noborder">string</td>
+				<td class="noborder"><code>[material name]</code></td>
+			</tr>
+			<tr class="coption">
+				<td class="noborder">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<code>C</code></td>
+				<td class="noborder">string:integer</td>
+				<td class="noborder"><code>'[material name:damage value]'</code></td>
+			</tr>
+			<tr>
+				<td>&nbsp;</td>
+				<td colspan="2">The hard shape and ingredients are specified in the same way as for the easy ones, but are used when the TARDIS difficulty level is set to <code>hard</code> in the TARDIS config.</td>
+			</tr>
+			<tr class="coption">
+				<td class="noborder">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<code>result</code></td>
+				<td class="noborder">string:integer</td>
+				<td class="noborder"><code>'[material name:damage value]'</code></td>
+			</tr>
+			<tr>
+				<td>&nbsp;</td>
+				<td colspan="2">This is the <code>material name</code>, or <code>'material name:damage value'</code>, of the item that the player receives from crafting the recipe.</td>
+			<tr class="coption">
+				<td class="noborder">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<code>amount</code></td>
+				<td class="noborder">integer</td>
+				<td class="noborder"><code>[amount]</code></td>
+			</tr>
+			<tr>
+				<td>&nbsp;</td>
+				<td colspan="2">The amount of the item the player gets from this recipe.</td>
+			</tr>
+			<tr class="coption">
+				<td class="noborder">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<code>lore</code></td>
+				<td class="noborder">string:integer</td>
+				<td class="noborder"><code>"[lines separated by \n]"</code></td>
+			</tr>
+			<tr>
+				<td>&nbsp;</td>
+				<td colspan="2">The TARDIS item name will be set automatically from the name used in the recipe configuration section. If you also want the item to display custom lore, then you can specify that here. To set multiple lines, separate the different lines with <code>\n</code>. All the text you enter here must ne surrounded with double quotes <code>""</code>.</td>
+			</tr>
+		</table>
+		<h3>Shapeless recipes</h3>
+		<p>A shaped TARDIS recipe looks like this:</p>
+		<pre><code>shapeless:
+    Save Storage Disk:
+        recipe: RECORD_9,REDSTONE
+        result: RECORD_4
+        amount: 1
+        lore: "Blank"</code></pre>
+		<p>Options (below) surrounded by square brackets <code>[]</code> are areas that you can change. Do <strong>NOT</strong> type the square brackets.</p>
+		<table>
+			<tr>
+				<th>Option</th>
+				<th>Type</th>
+				<th>Default Value</th>
+			</tr>
+			<tr>
+				<th colspan="3">shapeless:</th>
+			</tr>
+			<tr class="coption">
+				<td class="noborder">&nbsp;&nbsp;&nbsp;&nbsp;<code>item&nbsp;name</code></td>
+				<td class="noborder">string</td>
+				<td class="noborder">&nbsp;</td>
+			</tr>
+			<tr>
+				<td>&nbsp;</td>
+				<td colspan="2">You <strong>shouldn&rsquo;t</strong> change this or the recipe will break.</td>
+			</tr>
+			<tr class="coption">
+				<td class="noborder">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<code>recipe</code></td>
+				<td class="noborder">'string:integer,string'</td>
+				<td class="noborder"><code>'[material,material name:damage value]'</code></td>
+			</tr>
+			<tr>
+				<td>&nbsp;</td>
+				<td colspan="2">A shapeless recipe is just a comma separated list of ingredients. If you specify any damage values, then the whole list should be enclosed in single quotes <code>''</code>.</td>
+			</tr>
+			<tr class="coption">
+				<td class="noborder">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<code>result</code></td>
+				<td class="noborder">string:integer</td>
+				<td class="noborder"><code>'[material name:damage value]'</code></td>
+			</tr>
+			<tr class="coption">
+				<td class="noborder">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<code>amount</code></td>
+				<td class="noborder">integer</td>
+				<td class="noborder"><code>[amount]</code></td>
+			</tr>
+			<tr class="coption">
+				<td class="noborder">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<code>lore</code></td>
+				<td class="noborder">string:integer</td>
+				<td class="noborder"><code>"[lines separated by \n]"</code></td>
+			</tr>
+			<tr>
+				<td>&nbsp;</td>
+				<td colspan="2">The <code>result</code>, <code>amount</code> and <code>lore</code> are set the same as for shaped recipes.</td>
+			</tr>
+		</table>
+	</section>
+</div>
+<footer>
+	<p>Project maintained by <a href="https://github.com/eccentricdevotion">eccentricdevotion</a></p>
+	<p>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></p>
+</footer>
+<!--[if !IE]><script>fixScale(document);</script><![endif]-->
+</body>
+</html>
