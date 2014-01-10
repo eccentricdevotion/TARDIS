@@ -1,0 +1,199 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="chrome=1">
+<title>TARDIS: Creation Configuration</title>
+<link rel="stylesheet" href="stylesheets/styles.css">
+<link rel="stylesheet" href="stylesheets/pygment_trac.css">
+<script src="javascripts/scale.fix.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+<!--[if lt IE 9]>
+<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+<![endif]-->
+</head>
+<body>
+<div class="wrapper">
+	<header>
+		<h1>TARDIS</h1>
+		<p>A Bukkit plugin for all Doctor Who fans &mdash; create and use a TARDIS! It&rsquo;s bigger on the inside!</p>
+		<p class="view"><a href="https://github.com/eccentricdevotion/TARDIS">View the Project on GitHub <small>eccentricdevotion/TARDIS</small></a></p>
+		<ul>
+			<li><a href="/TARDIS/">Back <strong>home</strong></a></li>
+			<li><a href="contents.html"><strong>Contents</strong> page</a></li>
+			<li><a href="configuration.html"><strong>Config</strong> page</a></li>
+		</ul>
+	</header>
+	<section>
+		<h1>TARDIS creation configuration options</h1>
+		<p>These are the creation configuration options.</p>
+		<style type="text/css">
+			table, table code { font-size:85%; }
+			td { vertical-align:top; }
+			td.noborder { border-bottom: none; }
+			tr.coption { background-color: #eee; }
+		</style>
+		<table>
+			<tr>
+				<th>Option</th>
+				<th>Type</th>
+				<th>Default Value</th>
+			</tr>
+			<tr>
+				<th colspan="4">creation:</th>
+			</tr>
+			<tr class="coption">
+				<td class="noborder">&nbsp;&nbsp;&nbsp;&nbsp;<code>create_worlds</code></td>
+				<td class="noborder">boolean</td>
+				<td class="noborder"><code>true</code></td>
+			</tr>
+			<tr>
+				<td>&nbsp;</td>
+				<td colspan="2">Sets whether TARDISes are created in their own separate worlds. Requires the TARDISChunkGenerator plugin and a multi-world plugin.</td>
+			</tr>
+			<tr class="coption">
+				<td class="noborder">&nbsp;&nbsp;&nbsp;&nbsp;<code>create_worlds_with_perms</code></td>
+				<td class="noborder">boolean</td>
+				<td class="noborder"><code>false</code></td>
+			</tr>
+			<tr>
+				<td>&nbsp;</td>
+				<td colspan="2">Sets whether TARDISes are created in their own separate worlds for players with the appropriate permission &mdash; <code>tardis.create_world</code>.</td>
+			</tr>
+			<tr class="coption">
+				<td class="noborder">&nbsp;&nbsp;&nbsp;&nbsp;<code>default_world</code></td>
+				<td class="noborder">boolean</td>
+				<td class="noborder"><code>false</code></td>
+			</tr>
+			<tr>
+				<td>&nbsp;</td>
+				<td colspan="2">Sets whether TARDISes are created in a shared world.</td>
+			</tr>
+			<tr class="coption">
+				<td class="noborder">&nbsp;&nbsp;&nbsp;&nbsp;<code>default_world_name</code></td>
+				<td class="noborder">string</td>
+				<td class="noborder"><code>TARDIS_TimeVortex</code></td>
+			</tr>
+			<tr>
+				<td>&nbsp;</td>
+				<td colspan="2">Sets the name of the default world. This is only used if <code>default_world</code> is true.</td>
+			</tr>
+			<tr class="coption">
+				<td class="noborder">&nbsp;&nbsp;&nbsp;&nbsp;<code>border_radius</code></td>
+				<td class="noborder">integer</td>
+				<td class="noborder"><code>256</code></td>
+			</tr>
+			<tr>
+				<td>&nbsp;</td>
+				<td colspan="2">Sets the distance of the WorldBorder barrier (only used if the plugin is installed on the server).</td>
+			</tr>
+			<tr class="coption">
+				<td class="noborder">&nbsp;&nbsp;&nbsp;&nbsp;<code>gamemode</code></td>
+				<td class="noborder">string</td>
+				<td class="noborder"><code>suvival</code></td>
+			</tr>
+			<tr>
+				<td>&nbsp;</td>
+				<td colspan="2">Sets the gamemode of TARDIS worlds when they are created.</td>
+			</tr>
+			<tr class="coption">
+				<td class="noborder">&nbsp;&nbsp;&nbsp;&nbsp;<code>keep_night</code></td>
+				<td class="noborder">boolean</td>
+				<td class="noborder"><code>true</code></td>
+			</tr>
+			<tr>
+				<td>&nbsp;</td>
+				<td colspan="2">Sets whether to keep the TARDIS world in perpetual night.</td>
+			</tr>
+			<tr class="coption">
+				<td class="noborder">&nbsp;&nbsp;&nbsp;&nbsp;<code>inventory_group</code></td>
+				<td class="noborder">string</td>
+				<td class="noborder"><code>'0'</code></td>
+			</tr>
+			<tr>
+				<td>&nbsp;</td>
+				<td colspan="2">If the Multiverse-Inventories plugin is enabled on the server, you can set the group that TARDIS worlds are added to when they are created.</td>
+			</tr>
+			<tr class="coption">
+				<td class="noborder">&nbsp;&nbsp;&nbsp;&nbsp;<code>add_perms</code></td>
+				<td class="noborder">boolean</td>
+				<td class="noborder"><code>true</code></td>
+			</tr>
+			<tr>
+				<td>&nbsp;</td>
+				<td colspan="2">Sets whether a TARDIS world is assigned permissions when the server uses a permissions plugin that has per-world configuration &mdash; see <a href="add-permissions.html">Add permissions</a>.</td>
+			</tr>
+			<tr class="coption">
+				<td class="noborder">&nbsp;&nbsp;&nbsp;&nbsp;<code>custom_schematic</code></td>
+				<td class="noborder">boolean</td>
+				<td class="noborder"><code>false</code></td>
+			</tr>
+			<tr>
+				<td>&nbsp;</td>
+				<td colspan="2">Sets whether the server will use a custom TARDIS console schematic &mdash; see <a href="schematics.html">Schematics</a>.</td>
+			</tr>
+			<tr class="coption">
+				<td class="noborder">&nbsp;&nbsp;&nbsp;&nbsp;<code>custom_schematic_seed</code></td>
+				<td class="noborder">string</td>
+				<td class="noborder"><code>OBSIDIAN</code></td>
+			</tr>
+			<tr>
+				<td>&nbsp;</td>
+				<td colspan="2">Sets the material for crafting the custom TARDIS console seed block.</td>
+			</tr>
+			<tr class="coption">
+				<td class="noborder">&nbsp;&nbsp;&nbsp;&nbsp;<code>custom_creeper_id</code></td>
+				<td class="noborder">integer</td>
+				<td class="noborder"><code>138</code></td>
+			</tr>
+			<tr>
+				<td>&nbsp;</td>
+				<td colspan="2">Sets the block id that the plugin should look for in the custom schematic to spawn the Artron Capacitor charged creeper on.</td>
+			</tr>
+			<tr class="coption">
+				<td class="noborder">&nbsp;&nbsp;&nbsp;&nbsp;<code>use_block_stack</code></td>
+				<td class="noborder">boolean</td>
+				<td class="noborder"><code>false</code></td>
+			</tr>
+			<tr>
+				<td>&nbsp;</td>
+				<td colspan="2">Sets whether players can use the legacy method of creating a TARDIS.</td>
+			</tr>
+			<tr class="coption">
+				<td class="noborder">&nbsp;&nbsp;&nbsp;&nbsp;<code>use_clay</code></td>
+				<td class="noborder">boolean</td>
+				<td class="noborder"><code>false</code></td>
+			</tr>
+			<tr>
+				<td>&nbsp;</td>
+				<td colspan="2">Sets whether the coloured wool in TARDIS console and room schematics is switched to stained clay instead.</td>
+			</tr>
+			<tr class="coption">
+				<td class="noborder">&nbsp;&nbsp;&nbsp;&nbsp;<code>count</code></td>
+				<td class="noborder">integer</td>
+				<td class="noborder"><code>0</code></td>
+			</tr>
+			<tr>
+				<td>&nbsp;</td>
+				<td colspan="2">Sets the maximum number of times a player can build and destroy a TARDIS. If set to <code>0</code> there is NO maximum.</td>
+			</tr>
+			<tr class="coption">
+				<td class="noborder">&nbsp;&nbsp;&nbsp;&nbsp;<code>materialise</code></td>
+				<td class="noborder">boolean</td>
+				<td class="noborder"><code>true</code></td>
+			</tr>
+			<tr>
+				<td>&nbsp;</td>
+				<td colspan="2">Sets whether the TARDIS police box simulates &rsquo;de/re-materialising&rsquo; when travelling.</td>
+			</tr>
+		</table>
+		<p><a href="configuration.html">Back to main configuration page</a></p>
+	</section>
+</div>
+<footer>
+	<p>Project maintained by <a href="https://github.com/eccentricdevotion">eccentricdevotion</a></p>
+	<p>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></p>
+</footer>
+<!--[if !IE]><script>fixScale(document);</script><![endif]-->
+</body>
+</html>

@@ -1,0 +1,105 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="chrome=1">
+<title>TARDIS: Room Growth Configuration</title>
+<link rel="stylesheet" href="stylesheets/styles.css">
+<link rel="stylesheet" href="stylesheets/pygment_trac.css">
+<script src="javascripts/scale.fix.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+<!--[if lt IE 9]>
+<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+<![endif]-->
+</head>
+<body>
+<div class="wrapper">
+	<header>
+		<h1>TARDIS</h1>
+		<p>A Bukkit plugin for all Doctor Who fans &mdash; create and use a TARDIS! It&rsquo;s bigger on the inside!</p>
+		<p class="view"><a href="https://github.com/eccentricdevotion/TARDIS">View the Project on GitHub <small>eccentricdevotion/TARDIS</small></a></p>
+		<ul>
+			<li><a href="/TARDIS/">Back <strong>home</strong></a></li>
+			<li><a href="contents.html"><strong>Contents</strong> page</a></li>
+			<li><a href="configuration.html"><strong>Config</strong> page</a></li>
+		</ul>
+	</header>
+	<section>
+		<h1>Room growth configuration options</h1>
+		<p>These are the room growth configuration options.</p>
+		<style type="text/css">
+			table, table code { font-size:85%; }
+			td { vertical-align:top; }
+			td.noborder { border-bottom: none; }
+			tr.coption { background-color: #eee; }
+		</style>
+		<table>
+			<tr>
+				<th>Option</th>
+				<th>Type</th>
+				<th>Default Value</th>
+			</tr>
+			<tr>
+				<th colspan="3">growth:</th>
+			</tr>
+			<tr class="coption">
+				<td class="noborder">&nbsp;&nbsp;&nbsp;&nbsp;<code>gravity_max_distance</code></td>
+				<td class="noborder">integer</td>
+				<td class="noborder"><code>16</code></td>
+			</tr>
+			<tr class="coption">
+				<td class="noborder">&nbsp;&nbsp;&nbsp;&nbsp;<code>gravity_max_velocity</code></td>
+				<td class="noborder">integer</td>
+				<td class="noborder"><code>5</code></td>
+			</tr>
+			<tr>
+				<td>&nbsp;</td>
+				<td colspan="2">Sets sets the maximum distance and velocity a gravity well can be set to.</td>
+			</tr>
+			<tr class="coption">
+				<td class="noborder">&nbsp;&nbsp;&nbsp;&nbsp;<code>rooms_require_blocks</code></td>
+				<td class="noborder">boolean</td>
+				<td class="noborder"><code>true</code></td>
+			</tr>
+			<tr>
+				<td>&nbsp;</td>
+				<td colspan="2">Sets whether growing a room requires the player to condense the materials required to grow the room in the TARDIS condenser.</td>
+			</tr>
+			<tr class="coption">
+				<td class="noborder">&nbsp;&nbsp;&nbsp;&nbsp;<code>rooms_condenser_percent</code></td>
+				<td class="noborder">integer</td>
+				<td class="noborder"><code>100</code></td>
+			</tr>
+			<tr>
+				<td>&nbsp;</td>
+				<td colspan="2">Sets the percentage of the actual blocks that a player needs to condense if <code>rooms_require_blocks: true</code></td>
+			</tr>
+			<tr class="coption">
+				<td class="noborder">&nbsp;&nbsp;&nbsp;&nbsp;<code>return_room_seed</code></td>
+				<td class="noborder">boolean</td>
+				<td class="noborder"><code>true</code></td>
+			</tr>
+			<tr>
+				<td>&nbsp;</td>
+				<td colspan="2">Sets whether the room seed block is returned to the player when they jettison the room.</td>
+			</tr>
+			<tr class="coption">
+				<td class="noborder">&nbsp;&nbsp;&nbsp;&nbsp;<code>room_speed</code></td>
+				<td class="noborder">integer</td>
+				<td class="noborder"><code>4</code></td>
+			</tr>
+			<tr>
+				<td>&nbsp;</td>
+				<td colspan="2">Sets the speed (in blocks per second) at which rooms are grown. Maximum speed is <code>20</code> which is one block per tick.</td>
+			</tr>
+		</table>
+		<p><a href="configuration.html">Back to main configuration page</a></p>
+	</section>
+</div>
+<footer>
+	<p>Project maintained by <a href="https://github.com/eccentricdevotion">eccentricdevotion</a></p>
+	<p>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></p>
+</footer>
+<!--[if !IE]><script>fixScale(document);</script><![endif]-->
+</body>
+</html>

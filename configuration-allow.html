@@ -1,0 +1,145 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="chrome=1">
+<title>TARDIS: Restrictions Configuration</title>
+<link rel="stylesheet" href="stylesheets/styles.css">
+<link rel="stylesheet" href="stylesheets/pygment_trac.css">
+<script src="javascripts/scale.fix.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+<!--[if lt IE 9]>
+<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+<![endif]-->
+</head>
+<body>
+<div class="wrapper">
+	<header>
+		<h1>TARDIS</h1>
+		<p>A Bukkit plugin for all Doctor Who fans &mdash; create and use a TARDIS! It&rsquo;s bigger on the inside!</p>
+		<p class="view"><a href="https://github.com/eccentricdevotion/TARDIS">View the Project on GitHub <small>eccentricdevotion/TARDIS</small></a></p>
+		<ul>
+			<li><a href="/TARDIS/">Back <strong>home</strong></a></li>
+			<li><a href="contents.html"><strong>Contents</strong> page</a></li>
+			<li><a href="configuration.html"><strong>Config</strong> page</a></li>
+		</ul>
+	</header>
+	<section>
+		<h1>TARDIS Restrictions configuration options</h1>
+		<p>These are the plugin restriction configuration options.</p>
+		<style type="text/css">
+			table, table code { font-size:85%; }
+			td { vertical-align:top; }
+			td.noborder { border-bottom: none; }
+			tr.coption { background-color: #eee; }
+		</style>
+		<table>
+			<tr>
+				<th>Option</th>
+				<th>Type</th>
+				<th>Default Value</th>
+			</tr>
+			<tr>
+				<th colspan="3">allow:</th>
+			</tr>
+			<tr class="coption">
+				<td class="noborder">&nbsp;&nbsp;&nbsp;&nbsp;<code>mob_farming</code></td>
+				<td class="noborder">boolean</td>
+				<td class="noborder"><code>true</code></td>
+			</tr>
+			<tr>
+				<td>&nbsp;</td>
+				<td colspan="2">Sets whether players can <a href="farming.html">farm mobs</a> when entering the TARDIS.</td>
+			</tr>
+			<tr class="coption">
+				<td class="noborder">&nbsp;&nbsp;&nbsp;&nbsp;<code>spawn_eggs</code></td>
+				<td class="noborder">boolean</td>
+				<td class="noborder"><code>true</code></td>
+			</tr>
+			<tr>
+				<td>&nbsp;</td>
+				<td colspan="2">Sets whether the player recieves mob spawn eggs when TARDIS mob farming (and there is no farm room grown).</td>
+			</tr>
+			<tr class="coption">
+				<td class="noborder">&nbsp;&nbsp;&nbsp;&nbsp;<code>emergency_npc</code></td>
+				<td class="noborder">boolean</td>
+				<td class="noborder"><code>true</code></td>
+			</tr>
+			<tr>
+				<td>&nbsp;</td>
+				<td colspan="2">Sets whether the <a href="emergency-program-one.html">Emergency Program One</a> feature is enabled. This setting will be disabled automatically if the Citizens plugin is not found.</td>
+			</tr>
+			<tr class="coption">
+				<td class="noborder">&nbsp;&nbsp;&nbsp;&nbsp;<code>achievements</code></td>
+				<td class="noborder">boolean</td>
+				<td class="noborder"><code>true</code></td>
+			</tr>
+			<tr>
+				<td>&nbsp;</td>
+				<td colspan="2">Sets whether players can gain TARDIS achievements.</td>
+			</tr>
+			<tr class="coption">
+				<td class="noborder">&nbsp;&nbsp;&nbsp;&nbsp;<code>autonomous</code></td>
+				<td class="noborder">boolean</td>
+				<td class="noborder"><code>true</code></td>
+			</tr>
+			<tr>
+				<td>&nbsp;</td>
+				<td colspan="2">Sets whether players can use the <a href="autonomous.html">autonomous function</a>.</td>
+			</tr>
+			<tr class="coption">
+				<td class="noborder">&nbsp;&nbsp;&nbsp;&nbsp;<code>hads</code></td>
+				<td class="noborder">boolean</td>
+				<td class="noborder"><code>true</code></td>
+			</tr>
+			<tr>
+				<td>&nbsp;</td>
+				<td colspan="2">Sets whether the TARDIS can <a href="hads.html">escape hostile</a> actions.</td>
+			</tr>
+			<tr class="coption">
+				<td class="noborder">&nbsp;&nbsp;&nbsp;&nbsp;<code>tp_switch</code></td>
+				<td class="noborder">boolean</td>
+				<td class="noborder"><code>true</code></td>
+			</tr>
+			<tr>
+				<td>&nbsp;</td>
+				<td colspan="2">Sets whether players can set and switch resource packs when entering and exiting the TARDIS.</td>
+			</tr>
+			<tr class="coption">
+				<td class="noborder">&nbsp;&nbsp;&nbsp;&nbsp;<code>all_blocks</code></td>
+				<td class="noborder">boolean</td>
+				<td class="noborder"><code>false</code></td>
+			</tr>
+			<tr>
+				<td>&nbsp;</td>
+				<td colspan="2">Sets whether the chameleon circuit is allowed to use precious blocks such as GOLD and DIAMOND.</td>
+			</tr>
+			<tr class="coption">
+				<td class="noborder">&nbsp;&nbsp;&nbsp;&nbsp;<code>sfx</code></td>
+				<td class="noborder">boolean</td>
+				<td class="noborder"><code>true</code></td>
+			</tr>
+			<tr>
+				<td>&nbsp;</td>
+				<td colspan="2">Sets whether sound effects are played in the TARDIS interior &mdash; this overrides user preferences if turned off.</td>
+			</tr>
+			<tr class="coption">
+				<td class="noborder">&nbsp;&nbsp;&nbsp;&nbsp;<code>wg_flag_set</code></td>
+				<td class="noborder">boolean</td>
+				<td class="noborder"><code>true</code></td>
+			</tr>
+			<tr>
+				<td>&nbsp;</td>
+				<td colspan="2">Sets whether players can set the build flag (allow, deny) in their TARDIS region.</td>
+			</tr>
+		</table>
+		<p><a href="configuration.html">Back to main configuration page</a></p>
+	</section>
+</div>
+<footer>
+	<p>Project maintained by <a href="https://github.com/eccentricdevotion">eccentricdevotion</a></p>
+	<p>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></p>
+</footer>
+<!--[if !IE]><script>fixScale(document);</script><![endif]-->
+</body>
+</html>

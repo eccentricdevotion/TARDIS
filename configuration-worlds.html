@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="chrome=1">
-<title>TARDIS: Configuration</title>
+<title>TARDIS: Worlds Configuration</title>
 <link rel="stylesheet" href="stylesheets/styles.css">
 <link rel="stylesheet" href="stylesheets/pygment_trac.css">
 <script src="javascripts/scale.fix.js"></script>
@@ -25,51 +25,8 @@
         </ul>
     </header>
     <section>
-        <h1>World configuration</h1>
-        <p>These configuration options relate to the plugin&rsquo;s use of worlds.</p>
-        <h2>Create worlds</h2>
-        <p>Set whether the (inner) TARDIS is constructed in its own world.</p>
-        <p>Setting this option to <code>true</code> requires that the TARDISChunkGenerator plugin and a multi-world plugin (preferably Multivers-Core) are also enabled on the server. If either of these options is unavailable, <code>create_worlds</code> will be automatically set to <code>false</code>.</p>
-        <pre><code>create_worlds: [true|false]</code></pre>
-        <p>The default is <code>true</code>.</p>
-        <h2>Game mode</h2>
-        <p>Set which game mode TARDIS worlds are set to upon creation.</p>
-        <pre><code>gamemode: [survival|creative]</code></pre>
-        <p>The default is <code>survival</code>.</p>
-        <h2>Keep night</h2>
-        <p>Set whether TARDIS worlds are always kept night to simulate space.</p>
-        <pre><code>keep_night: [true|false]</code></pre>
-        <p>The default is <code>true</code>.</p>
-        <h2>Inventory group</h2>
-        <p>If the Multiverse-Inventories plugin is enabled on the server, this option sets the world group TARDIS worlds are automatically added to when they are created. If you don&rsquo;t wish to use this feature (even if Multiverse-Inventories is installed) set it to <code>0</code></p>
-        <pre><code>inventory_group: [world group name|0]</code></pre>
-        <p>The default is <code>0</code>.</p>
-        <h2>Permissions</h2>
-        <p>If the server uses a permissions plugin with per-world config files (such as Essentials GroupManager), then you can automatically set the player's permissions for TARDIS worlds.</p>
-        <pre><code>add_perms: [true|false]</code></pre>
-        <p>The default is <code>true</code>.</p>
-        <p>To set up the permissions that the player receives, edit the <em>permissions.txt</em> file in the plugins/TARDIS folder. For more information on setting this up visit the <a href="add-permissions.html">Add permissions</a> page.</p>
-        <h2>Default world</h2>
-        <p>Set whether the (inner) TARDIS is constructed in a specific world (for instance a FLAT world).</p>
-        <pre><code>default_world: [true|false]</code></pre>
-        <p>The default is <code>false</code>.</p>
-        <h2>Default world name</h2>
-        <p>Set the default world that the TARDIS is constructed in when <code>default_world</code> is <code>true</code>.</p>
-        <pre><code>default_world_name: [World]</code></pre>
-        <p>The default is <code>myridiculouslylongworldnameiscalledcuthbert</code></p>
-        <h2>Include default world</h2>
-        <p>Toggle whether the default world is included in the possible destinations when time traveling in the TARDIS.</p>
-        <pre><code>include_default_world: [true|false]</code></pre>
-        <p>The default is <code>false</code>.</p>
-        <h2>The End</h2>
-        <p>Whether travel to End worlds should be enabled for the plugin</p>
-        <pre><code>the_end: [true|false]</code></pre>
-        <p>The default is <code>false</code>.</p>
-        <h2>The Nether</h2>
-        <p>Set whether NETHER worlds are included in random Time Travel destinations</p>
-        <pre><code>nether: [true|false]</code></pre>
-        <p>The default is <code>false</code>.</p>
         <h1>Worlds configuration section</h1>
+        <p>These configuration options relate to the plugin&rsquo;s use of worlds.</p>
         <p>The worlds section is a list of worlds on the server and whether they are enabled for time travel locations.</p>
         <p>The format is:</p>
         <pre><code>worlds:

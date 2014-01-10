@@ -1,0 +1,182 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="chrome=1">
+<title>TARDIS: Preferences Configuration</title>
+<link rel="stylesheet" href="stylesheets/styles.css">
+<link rel="stylesheet" href="stylesheets/pygment_trac.css">
+<script src="javascripts/scale.fix.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+<!--[if lt IE 9]>
+<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+<![endif]-->
+</head>
+<body>
+<div class="wrapper">
+	<header>
+		<h1>TARDIS</h1>
+		<p>A Bukkit plugin for all Doctor Who fans &mdash; create and use a TARDIS! It&rsquo;s bigger on the inside!</p>
+		<p class="view"><a href="https://github.com/eccentricdevotion/TARDIS">View the Project on GitHub <small>eccentricdevotion/TARDIS</small></a></p>
+		<ul>
+			<li><a href="/TARDIS/">Back <strong>home</strong></a></li>
+			<li><a href="contents.html"><strong>Contents</strong> page</a></li>
+			<li><a href="configuration.html"><strong>Config</strong> page</a></li>
+		</ul>
+	</header>
+	<section>
+		<h1>Preference configuration options</h1>
+		<p>These are the TARDIS preferences configuration options.</p>
+		<style type="text/css">
+			table, table code { font-size:85%; }
+			td { vertical-align:top; }
+			td.noborder { border-bottom: none; }
+			tr.coption { background-color: #eee; }
+		</style>
+		<table>
+			<tr>
+				<th>Option</th>
+				<th>Type</th>
+				<th>Default Value</th>
+			</tr>
+			<tr>
+				<th colspan="3">preferences:</th>
+			</tr>
+			<tr class="coption">
+				<td class="noborder">&nbsp;&nbsp;&nbsp;&nbsp;<code>key</code></td>
+				<td class="noborder">string</td>
+				<td class="noborder"><code>GOLD_NUGGET</code></td>
+			</tr>
+			<tr>
+				<td>&nbsp;</td>
+				<td colspan="2">Sets the TARDIS key item. You can use any valid Bukkit Material ENUM. A list can be found here: <a href="http://jd.bukkit.org/apidocs/org/bukkit/Material.html">http://jd.bukkit.org/apidocs/org/bukkit/Material.html</a></td>
+			</tr>
+			<tr class="coption">
+				<td class="noborder">&nbsp;&nbsp;&nbsp;&nbsp;<code>use_worldguard</code></td>
+				<td class="noborder">boolean</td>
+				<td class="noborder"><code>true</code></td>
+			</tr>
+			<tr>
+				<td>&nbsp;</td>
+				<td colspan="2">Sets whether the TARDIS interior becomes a protected WorldGuard region belonging to the player who created the TARDIS.</td>
+			</tr>
+			<tr class="coption">
+				<td class="noborder">&nbsp;&nbsp;&nbsp;&nbsp;<code>respect_worldguard</code></td>
+				<td class="noborder">boolean</td>
+				<td class="noborder"><code>true</code></td>
+			</tr>
+			<tr class="coption">
+				<td class="noborder">&nbsp;&nbsp;&nbsp;&nbsp;<code>respect_towny</code></td>
+				<td class="noborder">boolean</td>
+				<td class="noborder"><code>true</code></td>
+			</tr>
+			<tr class="coption">
+				<td class="noborder">&nbsp;&nbsp;&nbsp;&nbsp;<code>respect_worldborder</code></td>
+				<td class="noborder">boolean</td>
+				<td class="noborder"><code>true</code></td>
+			</tr>
+			<tr class="coption">
+				<td class="noborder">&nbsp;&nbsp;&nbsp;&nbsp;<code>respect_factions</code></td>
+				<td class="noborder">boolean</td>
+				<td class="noborder"><code>true</code></td>
+			</tr>
+			<tr>
+				<td>&nbsp;</td>
+				<td colspan="2">Sets whether time travelling respects protected regions (if players do not have rights to build in an area, they will be denied access).</td>
+			</tr>
+			<tr class="coption">
+				<td class="noborder">&nbsp;&nbsp;&nbsp;&nbsp;<code>sfx_volume</code></td>
+				<td class="noborder">integer</td>
+				<td class="noborder"><code>10</code></td>
+			</tr>
+			<tr>
+				<td>&nbsp;</td>
+				<td colspan="2">Sets the default volume of the TARDIS Resource Pack sounds. Using <code>10</code> is the same volume as the default sounds, lower values make the sounds quieter.</td>
+			</tr>
+			<tr class="coption">
+				<td class="noborder">&nbsp;&nbsp;&nbsp;&nbsp;<code>difficulty</code></td>
+				<td class="noborder">string</td>
+				<td class="noborder"><code>hard</code></td>
+			</tr>
+			<tr>
+				<td>&nbsp;</td>
+				<td colspan="2">Sets how hard it is for players to use the plugin. This usually affects the TARDIS crafting recipes, whether they can use certain commands and whether TARDIS functions are controlled by circuits being installed. Valid values are <code>easy</code> and <code>hard</code></td>
+			</tr>
+			<tr class="coption">
+				<td class="noborder">&nbsp;&nbsp;&nbsp;&nbsp;<code>strike_lightning</code></td>
+				<td class="noborder">boolean</td>
+				<td class="noborder"><code>true</code></td>
+			</tr>
+			<tr>
+				<td>&nbsp;</td>
+				<td colspan="2">Sets whether a TARDIS recharge point will strike lightning when recharging a TARDIS.</td>
+			</tr>
+			<tr class="coption">
+				<td class="noborder">&nbsp;&nbsp;&nbsp;&nbsp;<code>freeze_cooldown</code></td>
+				<td class="noborder">integer</td>
+				<td class="noborder"><code>60</code></td>
+			</tr>
+			<tr>
+				<td>&nbsp;</td>
+				<td colspan="2">Sets the cool down period (in seconds) between uses of the Sonic Screwdriver&rsquo;s player freeze function.</td>
+			</tr>
+			<tr class="coption">
+				<td class="noborder">&nbsp;&nbsp;&nbsp;&nbsp;<code>hads_damage</code></td>
+				<td class="noborder">integer</td>
+				<td class="noborder"><code>10</code></td>
+			</tr>
+			<tr>
+				<td>&nbsp;</td>
+				<td colspan="2">Sets the number of hits the Police Box will take before engaging HADS.</td>
+			</tr>
+			<tr class="coption">
+				<td class="noborder">&nbsp;&nbsp;&nbsp;&nbsp;<code>hads_distance</code></td>
+				<td class="noborder">integer</td>
+				<td class="noborder"><code>10</code></td>
+			</tr>
+			<tr>
+				<td>&nbsp;</td>
+				<td colspan="2">Sets the distnace in blocks the Police Box will travel when HADS is engaged.</td>
+			</tr>
+			<tr class="coption">
+				<td class="noborder">&nbsp;&nbsp;&nbsp;&nbsp;<code>malfunction</code></td>
+				<td class="noborder">integer</td>
+				<td class="noborder"><code>3</code></td>
+			</tr>
+			<tr>
+				<td>&nbsp;</td>
+				<td colspan="2">Sets the percentage chance the TARDIS will malfunction when travelling.</td>
+			<tr class="coption">
+				<td class="noborder">&nbsp;&nbsp;&nbsp;&nbsp;<code>malfunction_nether</code></td>
+				<td class="noborder">integer</td>
+				<td class="noborder"><code>3</code></td>
+			</tr>
+			<tr class="coption">
+				<td class="noborder">&nbsp;&nbsp;&nbsp;&nbsp;<code>malfunction_end</code></td>
+				<td class="noborder">integer</td>
+				<td class="noborder"><code>3</code></td>
+			</tr>
+			<tr>
+				<td>&nbsp;</td>
+				<td colspan="2">Sets the percentage chance a malfunction will deposit the TARDIS in the The End or the Nether.</td>
+			</tr>
+			<tr class="coption">
+				<td class="noborder">&nbsp;&nbsp;&nbsp;&nbsp;<code>use_default_condensables</code></td>
+				<td class="noborder">boolean</td>
+				<td class="noborder"><code>true</code></td>
+			</tr>
+			<tr>
+				<td>&nbsp;</td>
+				<td colspan="2">Sets whether to use the plugin settings for condenser values. If you want to set your own values, set this to <code>false</code> and edit <em>condensables.yml</em></td>
+			</tr>
+		</table>
+		<p><a href="configuration.html">Back to main configuration page</a></p>
+	</section>
+</div>
+<footer>
+	<p>Project maintained by <a href="https://github.com/eccentricdevotion">eccentricdevotion</a></p>
+	<p>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></p>
+</footer>
+<!--[if !IE]><script>fixScale(document);</script><![endif]-->
+</body>
+</html>

@@ -1,0 +1,177 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="chrome=1">
+<title>TARDIS: Travel Configuration</title>
+<link rel="stylesheet" href="stylesheets/styles.css">
+<link rel="stylesheet" href="stylesheets/pygment_trac.css">
+<script src="javascripts/scale.fix.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+<!--[if lt IE 9]>
+<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+<![endif]-->
+</head>
+<body>
+<div class="wrapper">
+	<header>
+		<h1>TARDIS</h1>
+		<p>A Bukkit plugin for all Doctor Who fans &mdash; create and use a TARDIS! It&rsquo;s bigger on the inside!</p>
+		<p class="view"><a href="https://github.com/eccentricdevotion/TARDIS">View the Project on GitHub <small>eccentricdevotion/TARDIS</small></a></p>
+		<ul>
+			<li><a href="/TARDIS/">Back <strong>home</strong></a></li>
+			<li><a href="contents.html"><strong>Contents</strong> page</a></li>
+			<li><a href="configuration.html"><strong>Config</strong> page</a></li>
+		</ul>
+	</header>
+	<section>
+		<h1>Travel configuration options</h1>
+		<p>These are the travel configuration options.</p>
+		<style type="text/css">
+			table, table code { font-size:85%; }
+			td { vertical-align:top; }
+			td.noborder { border-bottom: none; }
+			tr.coption { background-color: #eee; }
+		</style>
+		<table>
+			<tr>
+				<th>Option</th>
+				<th>Type</th>
+				<th>Default Value</th>
+			</tr>
+			<tr>
+				<th colspan="3">travel:</th>
+			</tr>
+			<tr class="coption">
+				<td class="noborder">&nbsp;&nbsp;&nbsp;&nbsp;<code>include_default_world</code></td>
+				<td class="noborder">boolean</td>
+				<td class="noborder"><code>false</code></td>
+			</tr>
+			<tr>
+				<td>&nbsp;</td>
+				<td colspan="2">Sets whether the default world is included in time travel destinations.</td>
+			</tr>
+			<tr class="coption">
+				<td class="noborder">&nbsp;&nbsp;&nbsp;&nbsp;<code>tp_radius</code></td>
+				<td class="noborder">integer</td>
+				<td class="noborder"><code>500</code></td>
+			</tr>
+			<tr>
+				<td>&nbsp;</td>
+				<td colspan="2">Sets the maximum distance (in blocks) you can time travel in the TARDIS. <strong>Note</strong> The actual values is about 4 times this (due to the multiplier repeater).</td>
+			</tr>
+			<tr class="coption">
+				<td class="noborder">&nbsp;&nbsp;&nbsp;&nbsp;<code>platform</code></td>
+				<td class="noborder">boolean</td>
+				<td class="noborder"><code>true</code></td>
+			</tr>
+			<tr>
+				<td>&nbsp;</td>
+				<td colspan="2">Sets whether a platform is created outside the Police Box door if the exit is located over AIR or WATER &mdash; this overrides user preferences if turned off.</td>
+			</tr>
+			<tr class="coption">
+				<td class="noborder">&nbsp;&nbsp;&nbsp;&nbsp;<code>chameleon</code></td>
+				<td class="noborder">boolean</td>
+				<td class="noborder"><code>true</code></td>
+			</tr>
+			<tr>
+				<td>&nbsp;</td>
+				<td colspan="2">Sets whether the TARDIS police box can change its appearance to match its surroundings.</td>
+			</tr>
+			<tr class="coption">
+				<td class="noborder">&nbsp;&nbsp;&nbsp;&nbsp;<code>give_key</code></td>
+				<td class="noborder">boolean</td>
+				<td class="noborder"><code>false</code></td>
+			</tr>
+			<tr>
+				<td>&nbsp;</td>
+				<td colspan="2">Sets whether the TARDIS key is given when changing worlds (and using a multi-world inventory plugin).</td>
+			</tr>
+			<tr class="coption">
+				<td class="noborder">&nbsp;&nbsp;&nbsp;&nbsp;<code>the_end</code></td>
+				<td class="noborder">boolean</td>
+				<td class="noborder"><code>false</code></td>
+			</tr>
+			<tr>
+				<td>&nbsp;</td>
+				<td colspan="2">Sets whether the TARDIS is allowed to travel to The End worlds.</td>
+			</tr>
+			<tr class="coption">
+				<td class="noborder">&nbsp;&nbsp;&nbsp;&nbsp;<code>nether</code></td>
+				<td class="noborder">boolean</td>
+				<td class="noborder"><code>false</code></td>
+			</tr>
+			<tr>
+				<td>&nbsp;</td>
+				<td colspan="2">Sets whether the TARDIS is allowed to travel to Nether worlds.</td>
+			</tr>
+			<tr class="coption">
+				<td class="noborder">&nbsp;&nbsp;&nbsp;&nbsp;<code>land_on_water</code></td>
+				<td class="noborder">boolean</td>
+				<td class="noborder"><code>true</code></td>
+			</tr>
+			<tr>
+				<td>&nbsp;</td>
+				<td colspan="2">Sets whether the TARDIS will land on water in the Overworld.</td>
+			</tr>
+			<tr class="coption">
+				<td class="noborder">&nbsp;&nbsp;&nbsp;&nbsp;<code>timeout</code></td>
+				<td class="noborder">integer</td>
+				<td class="noborder"><code>5</code></td>
+			</tr>
+			<tr class="coption">
+				<td class="noborder">&nbsp;&nbsp;&nbsp;&nbsp;<code>timeout_height</code></td>
+				<td class="noborder">integer</td>
+				<td class="noborder"><code>135</code></td>
+			</tr>
+			<tr>
+				<td>&nbsp;</td>
+				<td colspan="2">Sets the maximum time in seconds a random location task can take. If the task times out then the Police Box location is set at the <code>timeout_height</code> value. This prevents the plugin crashing when using skyblock type worlds.</td>
+			</tr>
+			<tr class="coption">
+				<td class="noborder">&nbsp;&nbsp;&nbsp;&nbsp;<code>random_attempts</code></td>
+				<td class="noborder">integer</td>
+				<td class="noborder"><code>30</code></td>
+			</tr>
+			<tr>
+				<td>&nbsp;</td>
+				<td colspan="2">Sets the maximum number of attempts to find a random location. This prevents the plugin crashing under certain circumstances.</td>
+			</tr>
+			<tr class="coption">
+				<td class="noborder">&nbsp;&nbsp;&nbsp;&nbsp;<code>exile</code></td>
+				<td class="noborder">boolean</td>
+				<td class="noborder"><code>false</code></td>
+			</tr>
+			<tr>
+				<td>&nbsp;</td>
+				<td colspan="2">Sets whether the TARDIS exile feature is enabled.</td>
+			</tr>
+			<tr class="coption">
+				<td class="noborder">&nbsp;&nbsp;&nbsp;&nbsp;<code>per_world_perms</code></td>
+				<td class="noborder">boolean</td>
+				<td class="noborder"><code>false</code></td>
+			</tr>
+			<tr>
+				<td>&nbsp;</td>
+				<td colspan="2">Sets whether players require the <code>tardis.travel.[world]</code> permission to travel to a world.</td>
+			</tr>
+			<tr class="coption">
+				<td class="noborder">&nbsp;&nbsp;&nbsp;&nbsp;<code>terminal_step</code></td>
+				<td class="noborder">integer</td>
+				<td class="noborder"><code>1</code></td>
+			</tr>
+			<tr>
+				<td>&nbsp;</td>
+				<td colspan="2">Sets the 4 step values that the TARDIS Destination Terminal GUI uses, where the steps are <code>10 * step</code> and <code>25 * step</code> etc.</td>
+			</tr>
+		</table>
+		<p><a href="configuration.html">Back to main configuration page</a></p>
+	</section>
+</div>
+<footer>
+	<p>Project maintained by <a href="https://github.com/eccentricdevotion">eccentricdevotion</a></p>
+	<p>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></p>
+</footer>
+<!--[if !IE]><script>fixScale(document);</script><![endif]-->
+</body>
+</html>
