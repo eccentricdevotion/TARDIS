@@ -47,7 +47,6 @@ public class TARDISDiskCraftListener implements Listener {
     @EventHandler
     public void onCraftBiomePresetDisk(InventoryClickEvent event) {
         final Player player = (Player) event.getWhoClicked();
-        String playerNameStr = player.getName();
         Inventory inv = event.getInventory();
         int slot = event.getRawSlot();
         if (inv.getType().equals(InventoryType.WORKBENCH) && slot == 0 && checkSlots(inv)) {
@@ -100,7 +99,7 @@ public class TARDISDiskCraftListener implements Listener {
                     }
                 }
             } else {
-                // check it is a Biome Storage Disk
+                // check it is a Preset Storage Disk
                 ItemStack is = inv.getItem(inv.first(Material.RECORD_6));
                 if (is != null && is.hasItemMeta()) {
                     ItemMeta im = is.getItemMeta();

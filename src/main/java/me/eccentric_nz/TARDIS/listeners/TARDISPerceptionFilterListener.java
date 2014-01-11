@@ -76,7 +76,7 @@ public class TARDISPerceptionFilterListener implements Listener {
     public void onPerceptioFilterRemove(InventoryClickEvent event) {
         if (event.getInventory().getType().equals(InventoryType.CRAFTING)) {
             int slot = event.getRawSlot();
-            if (slot == 6) {
+            if (slot >= 0 && slot == 6) {
                 ItemStack is = event.getCurrentItem();
                 if (is != null) {
                     if (is.hasItemMeta()) {

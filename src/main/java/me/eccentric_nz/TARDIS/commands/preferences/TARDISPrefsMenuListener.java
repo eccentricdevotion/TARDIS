@@ -60,7 +60,7 @@ public class TARDISPrefsMenuListener implements Listener {
         if (name.equals("§4Player Prefs Menu")) {
             event.setCancelled(true);
             int slot = event.getRawSlot();
-            if (slot < 18) {
+            if (slot >= 0 && slot < 18) {
                 ItemStack is = inv.getItem(slot);
                 if (is != null) {
                     ItemMeta im = is.getItemMeta();

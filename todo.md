@@ -5,7 +5,6 @@
    * Add note about disabling Factions in Vortex
 2. Advanced TARDIS console
    * Test all disks & circuits
-   * `ArrayIndexOutOfBoundsException: 2` - line 80 _TARDISStorageListener.java_ - when checking for area disks to eject
 3. TARDIS exterior rendering / scanner room
    * find a way to prevent items dropping between renders
 4. TARDIS Information System
