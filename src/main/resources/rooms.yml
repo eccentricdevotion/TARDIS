@@ -130,5 +130,5 @@ rooms:
     enabled: true
     cost: 550
     offset: -4
-    seed: BRICK
+    seed: HARD_CLAY
     user: false
