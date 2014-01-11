@@ -65,7 +65,7 @@ public class TARDISToggleOnOffCommand {
         return true;
     }
 
-    private void toggleBeacon(String name, boolean on) {
+    public void toggleBeacon(String name, boolean on) {
         HashMap<String, Object> whereb = new HashMap<String, Object>();
         whereb.put("owner", name);
         ResultSetTardis rs = new ResultSetTardis(plugin, whereb, "", false);

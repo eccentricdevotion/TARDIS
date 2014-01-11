@@ -2,7 +2,6 @@
 
 ## Current version `2.7-beta-1`
 1. Documentation & videos!
-   * Add note about disabling Factions in Vortex
 2. Advanced TARDIS console
    * Test all disks & circuits
 3. TARDIS exterior rendering / scanner room

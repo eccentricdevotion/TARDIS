@@ -71,11 +71,15 @@ public class TARDISPrefsMenuListener implements Listener {
                     HashMap<String, Object> set = new HashMap<String, Object>();
                     set.put(lookup.get(im.getDisplayName()), i);
                     HashMap<String, Object> where = new HashMap<String, Object>();
-                    where.put("player", ((Player) event.getWhoClicked()).getName());
+                    String p = ((Player) event.getWhoClicked()).getName();
+                    where.put("player", p);
                     new QueryFactory(plugin).doUpdate("player_prefs", set, where);
                     lore.set(0, value);
                     im.setLore(lore);
                     is.setItemMeta(im);
+                    if (im.getDisplayName().equals("Beacon")) {
+                        new TARDISToggleOnOffCommand(plugin).toggleBeacon(p, !bool);
+                    }
                 }
             }
         }
