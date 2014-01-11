@@ -4,6 +4,7 @@
 1. Documentation & videos!
 2. Advanced TARDIS console
    * Test all disks & circuits
+   * Add a blank storage disk section?
 3. TARDIS exterior rendering / scanner room
    * find a way to prevent items dropping between renders
 4. TARDIS Information System

@@ -30,7 +30,7 @@ import org.bukkit.util.StringUtil;
  */
 public class TARDISRecipeTabComplete implements TabCompleter {
 
-    private final List<String> ROOT_SUBS = ImmutableList.of("a-circuit", "bio-circuit", "biome-disk", "blank", "c-circuit", "cell", "d-circuit", "e-circuit", "filter", "key", "l-circuit", "locator", "m-circuit", "oscillator", "player-disk", "preset-disk", "p-circuit", "r-circuit", "remote", "s-circuit", "save-disk", "sonic");
+    private final List<String> ROOT_SUBS = ImmutableList.of("a-circuit", "ars-circuit", "bio-circuit", "biome-disk", "blank", "c-circuit", "cell", "d-circuit", "e-circuit", "filter", "i-circuit", "key", "l-circuit", "locator", "m-circuit", "mem-circuit", "oscillator", "player-disk", "preset-disk", "p-circuit", "r-circuit", "remote", "s-circuit", "save-disk", "scan-circuit", "sonic", "t-circuit");
 
     public TARDISRecipeTabComplete() {
     }

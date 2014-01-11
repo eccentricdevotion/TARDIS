@@ -51,6 +51,7 @@ public class TARDISRecipeCommands implements CommandExecutor {
     public TARDISRecipeCommands(TARDIS plugin) {
         this.plugin = plugin;
         firstArgs.add("a-circuit"); // Admin Circuit
+        firstArgs.add("ars-circuit"); // ARS Circuit
         firstArgs.add("bio-circuit"); // Bio-scanner Circuit
         firstArgs.add("biome-disk"); // Blank Biome Storage Disk
         firstArgs.add("blank"); // Blank Storage Disk
@@ -59,10 +60,12 @@ public class TARDISRecipeCommands implements CommandExecutor {
         firstArgs.add("d-circuit"); // Diamond Circuit
         firstArgs.add("e-circuit"); // Emerald Circuit
         firstArgs.add("filter"); // Perception Filter
+        firstArgs.add("i-circuit"); // Input Circuit
         firstArgs.add("key"); // TARDIS key
         firstArgs.add("l-circuit"); // Locator Circuit
         firstArgs.add("locator"); // TARDIS Locator
         firstArgs.add("m-circuit"); // Materialisation Circuit
+        firstArgs.add("mem-circuit"); // Memory Circuit
         firstArgs.add("oscillator"); // Sonic Oscillator
         firstArgs.add("p-circuit"); // Perception Circuit
         firstArgs.add("player-disk"); // Blank Player Disk
@@ -71,7 +74,9 @@ public class TARDISRecipeCommands implements CommandExecutor {
         firstArgs.add("remote"); // Stattenheim Remote
         firstArgs.add("s-circuit"); // Stattenheim Circuit
         firstArgs.add("save-disk"); // Blank Save Storage Disk
+        firstArgs.add("scan-circuit"); // Scanner Circuit
         firstArgs.add("sonic"); // Sonic Screwdriver
+        firstArgs.add("t-circuit"); // Temporal Circuit
     }
 
     @Override
@@ -94,79 +99,35 @@ public class TARDISRecipeCommands implements CommandExecutor {
                 return false;
             }
             if (!firstArgs.contains(args[0].toLowerCase(Locale.ENGLISH))) {
-                sender.sendMessage(plugin.pluginName + "That is not a valid recipe name! Try one of: remote|locator|l-circuit|m-circuit|s-circuit|c-circuit|sonic|blank|save-disk|preset-disk|biome-disk|player-disk");
-                return true;
-            }
-            if (args[0].equalsIgnoreCase("remote")) {
-                showShapedRecipe(player, "Stattenheim Remote");
-                return true;
-            }
-            if (args[0].equalsIgnoreCase("locator")) {
-                showShapedRecipe(player, "TARDIS Locator");
-                return true;
-            }
-            if (args[0].equalsIgnoreCase("l-circuit")) {
-                this.showShapedRecipe(player, "TARDIS Locator Circuit");
-                return true;
-            }
-            if (args[0].equalsIgnoreCase("m-circuit")) {
-                this.showShapedRecipe(player, "TARDIS Materialisation Circuit");
-                return true;
-            }
-            if (args[0].equalsIgnoreCase("s-circuit")) {
-                showShapedRecipe(player, "TARDIS Stattenheim Circuit");
-                return true;
-            }
-            if (args[0].equalsIgnoreCase("c-circuit")) {
-                showShapedRecipe(player, "TARDIS Chameleon Circuit");
-                return true;
-            }
-            if (args[0].equalsIgnoreCase("key")) {
-                this.showShapedRecipe(player, "TARDIS Key");
-                return true;
-            }
-            if (args[0].equalsIgnoreCase("blank")) {
-                this.showShapedRecipe(player, "Blank Storage Disk");
-                return true;
-            }
-            if (args[0].equalsIgnoreCase("save-disk")) {
-                this.showShapelessRecipe(player, "Save Storage Disk");
-                return true;
-            }
-            if (args[0].equalsIgnoreCase("preset-disk")) {
-                this.showShapelessRecipe(player, "Blank Preset Storage Disk");
-                return true;
-            }
-            if (args[0].equalsIgnoreCase("biome-disk")) {
-                this.showShapelessRecipe(player, "Blank Biome Storage Disk");
-                return true;
-            }
-            if (args[0].equalsIgnoreCase("player-disk")) {
-                this.showShapelessRecipe(player, "Player Storage Disk");
-                return true;
-            }
-            if (args[0].equalsIgnoreCase("cell")) {
-                this.showShapedRecipe(player, "Artron Storage Cell");
-                return true;
-            }
-            if (args[0].equalsIgnoreCase("sonic")) {
-                this.showShapedRecipe(player, "Sonic Screwdriver");
-                return true;
-            }
-            if (args[0].equalsIgnoreCase("oscillator")) {
-                this.showShapedRecipe(player, "Sonic Oscillator");
+                sender.sendMessage(plugin.pluginName + "That is not a valid recipe name! Try one of: a-circuit|ars-circuit|bio-circuit|biome-disk|blank|c-circuit|cell|d-circuit|e-circuit|filter|i-circuit|key|l-circuit|locator|m-circuit|mem-circuit|oscillator|player-disk|preset-disk|p-circuit|r-circuit|remote|s-circuit|save-disk|scan-circuit|sonic|t-circuit");
                 return true;
             }
             if (args[0].equalsIgnoreCase("a-circuit")) {
                 this.showShapedRecipe(player, "Server Admin Circuit");
                 return true;
             }
+            if (args[0].equalsIgnoreCase("ars-circuit")) {
+                this.showShapedRecipe(player, "TARDIS ARS Circuit");
+                return true;
+            }
             if (args[0].equalsIgnoreCase("bio-circuit")) {
                 this.showShapedRecipe(player, "Bio-scanner Circuit");
                 return true;
             }
-            if (args[0].equalsIgnoreCase("r-circuit")) {
-                this.showShapedRecipe(player, "Redstone Activator Circuit");
+            if (args[0].equalsIgnoreCase("biome-disk")) {
+                this.showShapelessRecipe(player, "Blank Biome Storage Disk");
+                return true;
+            }
+            if (args[0].equalsIgnoreCase("blank")) {
+                this.showShapedRecipe(player, "Blank Storage Disk");
+                return true;
+            }
+            if (args[0].equalsIgnoreCase("c-circuit")) {
+                showShapedRecipe(player, "TARDIS Chameleon Circuit");
+                return true;
+            }
+            if (args[0].equalsIgnoreCase("cell")) {
+                this.showShapedRecipe(player, "Artron Storage Cell");
                 return true;
             }
             if (args[0].equalsIgnoreCase("d-circuit")) {
@@ -177,12 +138,76 @@ public class TARDISRecipeCommands implements CommandExecutor {
                 this.showShapedRecipe(player, "Emerald Environment Circuit");
                 return true;
             }
+            if (args[0].equalsIgnoreCase("filter")) {
+                this.showShapedRecipe(player, "Perception Filter");
+                return true;
+            }
+            if (args[0].equalsIgnoreCase("i-circuit")) {
+                this.showShapedRecipe(player, "TARDIS Input Circuit");
+                return true;
+            }
+            if (args[0].equalsIgnoreCase("key")) {
+                this.showShapedRecipe(player, "TARDIS Key");
+                return true;
+            }
+            if (args[0].equalsIgnoreCase("l-circuit")) {
+                this.showShapedRecipe(player, "TARDIS Locator Circuit");
+                return true;
+            }
+            if (args[0].equalsIgnoreCase("locator")) {
+                showShapedRecipe(player, "TARDIS Locator");
+                return true;
+            }
+            if (args[0].equalsIgnoreCase("m-circuit")) {
+                this.showShapedRecipe(player, "TARDIS Materialisation Circuit");
+                return true;
+            }
+            if (args[0].equalsIgnoreCase("mem-circuit")) {
+                this.showShapedRecipe(player, "TARDIS Memory Circuit");
+                return true;
+            }
+            if (args[0].equalsIgnoreCase("oscillator")) {
+                this.showShapedRecipe(player, "Sonic Oscillator");
+                return true;
+            }
             if (args[0].equalsIgnoreCase("p-circuit")) {
                 this.showShapedRecipe(player, "Perception Circuit");
                 return true;
             }
-            if (args[0].equalsIgnoreCase("filter")) {
-                this.showShapedRecipe(player, "Perception Filter");
+            if (args[0].equalsIgnoreCase("player-disk")) {
+                this.showShapelessRecipe(player, "Player Storage Disk");
+                return true;
+            }
+            if (args[0].equalsIgnoreCase("preset-disk")) {
+                this.showShapelessRecipe(player, "Blank Preset Storage Disk");
+                return true;
+            }
+            if (args[0].equalsIgnoreCase("r-circuit")) {
+                this.showShapedRecipe(player, "Redstone Activator Circuit");
+                return true;
+            }
+            if (args[0].equalsIgnoreCase("remote")) {
+                showShapedRecipe(player, "Stattenheim Remote");
+                return true;
+            }
+            if (args[0].equalsIgnoreCase("s-circuit")) {
+                showShapedRecipe(player, "TARDIS Stattenheim Circuit");
+                return true;
+            }
+            if (args[0].equalsIgnoreCase("save-disk")) {
+                this.showShapelessRecipe(player, "Save Storage Disk");
+                return true;
+            }
+            if (args[0].equalsIgnoreCase("scan-circuit")) {
+                this.showShapedRecipe(player, "TARDIS Scanner Circuit");
+                return true;
+            }
+            if (args[0].equalsIgnoreCase("sonic")) {
+                this.showShapedRecipe(player, "Sonic Screwdriver");
+                return true;
+            }
+            if (args[0].equalsIgnoreCase("t-circuit")) {
+                this.showShapedRecipe(player, "TARDIS Temporal Circuit");
                 return true;
             }
         }
