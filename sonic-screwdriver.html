@@ -9,8 +9,8 @@
 <script src="javascripts/scale.fix.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
 <!--[if lt IE 9]>
-    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
+<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+<![endif]-->
 </head>
 <body>
 <div class="wrapper">
@@ -32,13 +32,39 @@
 		<p>The basic Sonic Screwdriver allows you to: open doors, press buttons and toggle levers from a distance. If used while sneaking and right-clicking air, it will open a GUI for setting Player Preferences.</p>
 		<h2>Upgrades</h2>
 		<p>There are 5 upgrades that you can give your Sonic:</p>
-		<ul>
-			<li>Bio-scanner Circuit &mdash; <code>/tardisrecipe bio-circuit</code></li>
-			<li>Redstone Activator Circuit &mdash; <code>/tardisrecipe r-circuit</code></li>
-			<li>Emerald Environment Circuit &mdash; <code>/tardisrecipe e-circuit</code></li>
-			<li>Diamond Disruptor Circuit &mdash; <code>/tardisrecipe d-circuit</code></li>
-			<li>Server Admin Circuit &mdash; <code>/tardisrecipe a-circuit</code></li>
-		</ul>
+		<style type="text/css">td{vertical-align:top;}</style>
+		<table>
+			<tr>
+				<th>Upgrade</th>
+				<th>Recipe</th>
+				<th>Permissions</th>
+			</tr>
+			<tr>
+				<td>Bio-scanner Circuit</td>
+				<td><code>/tardisrecipe bio-circuit</code></td>
+				<td><code>tardis.sonic.bio</code><br><code>tardis.sonic.freeze</code></td>
+			</tr>
+			<tr>
+				<td>Redstone Activator Circuit</td>
+				<td><code>/tardisrecipe r-circuit</code></td>
+				<td><code>tardis.sonic.redstone</code></td>
+			</tr>
+			<tr>
+				<td>Emerald Environment Circuit</td>
+				<td><code>/tardisrecipe e-circuit</code></td>
+				<td><code>tardis.sonic.emerald</code></td>
+			</tr>
+			<tr>
+				<td>Diamond Disruptor Circuit</td>
+				<td><code>/tardisrecipe d-circuit</code></td>
+				<td><code>tardis.sonic.diamond</code><br><code>tardis.sonic.silktouch</code></td>
+			</tr>
+			<tr>
+				<td>Server Admin Circuit</td>
+				<td><code>/tardisrecipe a-circuit</code></td>
+				<td><code>tardis.sonic.admin</code></td>
+			</tr>
+		</table>
 		<p>To upgrade your Sonic Screwdriver, you combine it with a new circuit in the crafting table. Each circuit has an associated permission, see the <a href="permissions.html">permissions page</a> for more details.</p>
 		<h2>Sonic abilities</h2>
 		<h3>Bio-scanner</h3>
