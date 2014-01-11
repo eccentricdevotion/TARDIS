@@ -232,10 +232,10 @@ public class TARDISMakeTardisCSV {
     public File copy(String filepath, InputStream in) {
         File file = new File(filepath);
         // for now always delete recipes...
-        if (file.exists() && filepath.contains("recipes")) {
-            plugin.debug("Deleting recipes.yml so we have a fresh copy...");
-            file.delete();
-        }
+//        if (file.exists() && filepath.contains("recipes")) {
+//            plugin.debug("Deleting recipes.yml so we have a fresh copy...");
+//            file.delete();
+//        }
         if (!file.exists()) {
             OutputStream out = null;
             try {
