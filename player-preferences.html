@@ -9,79 +9,84 @@
 <script src="javascripts/scale.fix.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
 <!--[if lt IE 9]>
-    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
+<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+<![endif]-->
 </head>
 <body>
 <div class="wrapper">
-    <header>
-        <h1>TARDIS</h1>
-        <p>A Bukkit plugin for all Doctor Who fans &mdash; create and use a TARDIS! It&rsquo;s bigger on the inside!</p>
-        <p class="view"><a href="https://github.com/eccentricdevotion/TARDIS">View the Project on GitHub <small>eccentricdevotion/TARDIS</small></a></p>
-        <ul>
-            <li><a href="/TARDIS/">Back <strong>home</strong></a></li>
-            <li><a href="commands.html"><strong>Commands</strong> page</a></li>
-            <li><a href="contents.html"><strong>Contents</strong> page</a></li>
-        </ul>
-    </header>
-    <section>
-        <h1>Player Preferences</h1>
-        <p>There are a number of specific player preferences that you can change:</p>
-        <ul>
-            <li>TARDIS key</li>
-            <li>Safety platform</li>
-            <li>Sound effects</li>
-            <li>Who quotes</li>
-            <li>Wall material</li>
-            <li>Floor material</li>
-            <li>Isomorphic controls</li>
-            <li>Autonomous homing function</li>
-            <li>HADS</li>
-            <li>Emergency Program One</li>
-            <li>Police Box sign</li>
-            <li>Police Box lamp</li>
-            <li>Beacon</li>
-            <li>Build flag</li>
-        </ul>
-        <p>Each preference can be set with a command.</p>
-        <h2>Player preference commands</h2>
-        <h3><code>/tardisprefs</code></h3>
-        <p>To toggle the TARDIS safety platform on or off, type:</p>
-        <pre><code>/tardisprefs platform [on|off]</code></pre>
-        <p>If the server admin has disabled the safety platform in the plugin config, this command will have no effect.</p>
-        <p>To toggle the TARDIS sound effects on or off, type:</p>
-        <pre><code>/tardisprefs sfx [on|off]</code></pre>
-        <p>If the server admin has disabled sound effects in the plugin config, this command will have no effect.</p>
-        <p>To toggle the Who quotes on or off, type:</p>
-        <pre><code>/tardisprefs quotes [on|off]</code></pre>
-        <p>To change the block room walls and floors a are grown with, type:</p>
-        <pre><code>/tardisprefs [wall|floor] [material]</code></pre>
-        <p>Where <code>[material]</code> is a block from the list on the <a href="walls.html">Wall materials</a> page. Type <code>/tardisprefs wall help</code> to see the list in-game.</p>
-        <p>To change whether the TARDIS Autonomous homing function takes the Police Box to the nearest recharge point or the Tardis &lsquo;home&rsquo; (whichever is closest) when the Timelord owner dies, type:</p>
-        <pre><code>/tardisprefs auto [on|off]</code></pre>
-        <p>If the server admin has disabled the autonomous homing function in the plugin config, this command will have no effect.</p>
-        <p>To toggle HADS on or off, type:</p>
-        <pre><code>/tardisprefs hads [on|off]</code></pre>
-        <p>To toggle the Isomorphic controls on or off, type:</p>
-        <pre><code>/tardisprefs isomorphic [on|off]</code></pre>
-        <p>To toggle whether the TARDIS console beacon is on or off during time travel, type:</p>
-        <pre><code>/tardisprefs beacon [on|off]</code></pre>
-        <p>To toggle the Police Box sign on or off, type:</p>
-        <pre><code>/tardisprefs sign [on|off]</code></pre>
-        <p>To set the type of block used as the Police Box lamp, type:</p>
-        <pre><code>/tardisprefs lamp [block id number]</code></pre>
-        <p>The server admin may have restricted the blocks that can be used as a lamp.</p>
-        <h2>Other preferences</h2>
-        <h3><code>/tardis chameleon</code></h3>
-        <p>You can toggle the Chameleon Circuit on or off with this command, type:</p>
-        <pre><code>/tardis chameleon [on|off]</code></pre>
-        <p>You can toggle the whether companions can build inside your TARDIS with this command, type:</p>
-        <pre><code>/tardis build [on|off]</code></pre>
-    </section>
+	<header>
+		<h1>TARDIS</h1>
+		<p>A Bukkit plugin for all Doctor Who fans &mdash; create and use a TARDIS! It&rsquo;s bigger on the inside!</p>
+		<p class="view"><a href="https://github.com/eccentricdevotion/TARDIS">View the Project on GitHub <small>eccentricdevotion/TARDIS</small></a></p>
+		<ul>
+			<li><a href="/TARDIS/">Back <strong>home</strong></a></li>
+			<li><a href="commands.html"><strong>Commands</strong> page</a></li>
+			<li><a href="contents.html"><strong>Contents</strong> page</a></li>
+		</ul>
+	</header>
+	<section>
+		<h1>Player Preferences</h1>
+		<p>There are a number of specific player preferences that you can change:</p>
+		<ul>
+			<li>TARDIS key</li>
+			<li>Safety platform</li>
+			<li>Sound effects</li>
+			<li>Who quotes</li>
+			<li>Wall material</li>
+			<li>Floor material</li>
+			<li>Isomorphic controls</li>
+			<li>Autonomous homing function</li>
+			<li>HADS</li>
+			<li>Emergency Program One</li>
+			<li>Police Box sign</li>
+			<li>Police Box lamp</li>
+			<li>Beacon</li>
+			<li>Build flag</li>
+			<li>Minecart sounds</li>
+		</ul>
+		<p>Each preference can be set with a command.</p>
+		<h2>Player preference commands</h2>
+		<h3><code>/tardisprefs</code></h3>
+		<p>To toggle the TARDIS safety platform on or off, type:</p>
+		<pre><code>/tardisprefs platform [on|off]</code></pre>
+		<p>If the server admin has disabled the safety platform in the plugin config, this command will have no effect.</p>
+		<p>To toggle the TARDIS sound effects on or off, type:</p>
+		<pre><code>/tardisprefs sfx [on|off]</code></pre>
+		<p>If the server admin has disabled sound effects in the plugin config, this command will have no effect.</p>
+		<p>To toggle the Who quotes on or off, type:</p>
+		<pre><code>/tardisprefs quotes [on|off]</code></pre>
+		<p>To change the block room walls and floors a are grown with, type:</p>
+		<pre><code>/tardisprefs [wall|floor] [material]</code></pre>
+		<p>Where <code>[material]</code> is a block from the list on the <a href="walls.html">Wall materials</a> page. Type <code>/tardisprefs wall help</code> to see the list in-game.</p>
+		<p>To change whether the TARDIS Autonomous homing function takes the Police Box to the nearest recharge point or the Tardis &lsquo;home&rsquo; (whichever is closest) when the Timelord owner dies, type:</p>
+		<pre><code>/tardisprefs auto [on|off]</code></pre>
+		<p>If the server admin has disabled the autonomous homing function in the plugin config, this command will have no effect.</p>
+		<p>To toggle HADS on or off, type:</p>
+		<pre><code>/tardisprefs hads [on|off]</code></pre>
+		<p>To toggle the Isomorphic controls on or off, type:</p>
+		<pre><code>/tardisprefs isomorphic [on|off]</code></pre>
+		<p>To toggle whether the TARDIS console beacon is on or off during time travel, type:</p>
+		<pre><code>/tardisprefs beacon [on|off]</code></pre>
+		<p>To toggle the Police Box sign on or off, type:</p>
+		<pre><code>/tardisprefs sign [on|off]</code></pre>
+		<p>To set the type of block used as the Police Box lamp, type:</p>
+		<pre><code>/tardisprefs lamp [block id number]</code></pre>
+		<p>The server admin may have restricted the blocks that can be used as a lamp.</p>
+		<h3><code>/tardisprefs build</code></h3>
+		<p>You can toggle the whether companions can build inside your TARDIS with this command, type:</p>
+		<pre><code>/tardis build [on|off]</code></pre>
+		<h3><code>/tardisprefs minecart</code></h3>
+		<p>You can choose whether to use TARDIS Resource Pack sounds or default Minecraft sounds for TARDIS doors and materialisation with this command, type:</p>
+		<pre><code>/tardisprefs minecart [on|off]</code></pre>
+		<h2>Other preferences</h2>
+		<h3><code>/tardis chameleon</code></h3>
+		<p>You can toggle the Chameleon Circuit on or off with this command, type:</p>
+		<pre><code>/tardis chameleon [on|off]</code></pre>
+	</section>
 </div>
 <footer>
-    <p>Project maintained by <a href="https://github.com/eccentricdevotion">eccentricdevotion</a></p>
-    <p>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></p>
+	<p>Project maintained by <a href="https://github.com/eccentricdevotion">eccentricdevotion</a></p>
+	<p>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></p>
 </footer>
 <!--[if !IE]><script>fixScale(document);</script><![endif]-->
 
