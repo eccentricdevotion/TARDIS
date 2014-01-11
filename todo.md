@@ -1,6 +1,6 @@
 # TODO
 
-## Current version `2.7-beta-1`
+## Current version `2.7-beta-2`
 1. Documentation & videos!
 2. Advanced TARDIS console
    * Test all disks & circuits
