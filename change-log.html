@@ -26,6 +26,61 @@
 	<section>
 		<h1>Change log</h1>
 		<h2>What&rsquo;s been changed?</h2>
+		<h3>v2.7-beta-1</h3>
+		<h4>Additions</h4>
+		<ul>
+			<li>Added a TARDIS Advanced Console, and a Disk Storage Container &mdash; <a href="http://eccentricdevotion.github.io/TARDIS/advanced-console.html">http://eccentricdevotion.github.io/TARDIS/advanced-console.html</a></li>
+			<li>Added blank, save, player, area, biome and preset Storage Disks to work with Advanced Console</li>
+			<li>Added new circuits to work with the Advanced Console</li>
+			<li>Implemented the TARDIS Interior Positioning System &mdash; <a href="http://eccentricdevotion.github.io/TARDIS/tips.html">http://eccentricdevotion.github.io/TARDIS/tips.html</a></li>
+			<li>Added TARDIS Item Kits &mdash; <a href="http://eccentricdevotion.github.io/TARDIS/kits.html">http://eccentricdevotion.github.io/TARDIS/kits.html</a></li>
+			<li>Added <code>/tardisgive [player] [item] [amount]</code> command for TARDIS items, kits and Artron Energy &mdash; <a href="http://eccentricdevotion.github.io/TARDIS/give-commands.html">http://eccentricdevotion.github.io/TARDIS/give-commands.html</a></li>
+			<li>Added the TARDIS Perception Filter &mdash; <a href="http://eccentricdevotion.github.io/TARDIS/perception-filter.html">http://eccentricdevotion.github.io/TARDIS/perception-filter.html</a></li>
+			<li>Added underground cave travel <code>/tardistravel cave</code> &mdash; and added cave to the <code>/tardisbind cmd</code> command</li>
+			<li>Added an upgradable Sonic Screwdriver &mdash; <a href="http://eccentricdevotion.github.io/TARDIS/sonic-screwdriver.html">http://eccentricdevotion.github.io/TARDIS/sonic-screwdriver.html</a></li>
+			<li>Added a command to make Emergency Program One appear &mdash; <code>/tardis ep1</code></li>
+			<li>Added an Exterior Rendering Room &mdash; <a href="http://eccentricdevotion.github.io/TARDIS/scanner.html">http://eccentricdevotion.github.io/TARDIS/scanner.html</a></li>
+			<li>Added a <code>/tardisroom required &lt;room&gt;</code> command to list what needs to be condensed to grow a room</li>
+			<li>Added 1.7 blocks to the condensables list</li>
+			<li>Added new 1.7 biomes to the TARDIS scanner</li>
+			<li>The plugin now uses a scoreboard to display current Artron Energy levels</li>
+			<li>Added Artron Storage Cells and the <code>/tardisartron [tardis|timelord] [amount]</code> command &mdash; <a href="http://eccentricdevotion.github.io/TARDIS/artron-cells.html">http://eccentricdevotion.github.io/TARDIS/artron-cells.html</a></li>
+			<li>Added <code>/tardisprefs minecart [on|off]</code> command to use the Minecraft door and minecart sounds instead of the resource pack sounds for entering/exiting the TARDIS and materialisation</li>
+			<li>Added a command to purge the database of TARDIS records when someone totally messes up their TARDIS (eg deletes the world the TARDIS is in) &mdash; <code>tardisadmin purge [player]</code></li>
+			<li>Added an option to allow the setting of the TARDIS WorldGuard regions build flag &mdash; <code>/tardisprefs build [on|off]</code> &mdash; set <code>allow: wg_flag_set: true</code> in the TARDIS config</li>
+		</ul>
+		<h4>Changes</h4>
+		<ul>
+			<li>Updated all console schematics to include the Advanced Console and Disk Storage container</li>
+			<li>Now that the plugin has Sonic Screwdrivers, the default key item has changed to a <code>GOLD_NUGGET</code></li>
+			<li>The config.yml file has been reorganised &mdash; previous settings should be retained, but you might want to check &mdash; <a href="http://eccentricdevotion.github.io/TARDIS/configuration.html">http://eccentricdevotion.github.io/TARDIS/configuration.html</a></li>
+			<li>The condensables list is now configurable &mdash; set <code>use_default_condensables: false</code> in the config and edit condensables.yml</li>
+			<li>TARDIS item recipes are now configurable &mdash; <a href="http://eccentricdevotion.github.io/TARDIS/recipes.html">http://eccentricdevotion.github.io/TARDIS/recipes.html</a></li>
+			<li>The ARS GUI is now keyed to the TARDIS rather than the player clicking the sign, though it will only allow the player whose TARDIS it is to reconfigure &mdash; this allows admins to view a player&rsquo;s ARS setup</li>
+			<li>There are new map files for the new TARDIS recipes and updated map files for existing TARDIS recipes. They will be copied to the <em>plugins/TARDIS</em> folder &mdash; please update the files in the <em>main world/data</em> folder.</li>
+			<li>Updated the code for texture pack switching to use resource packs &mdash; not sure that it actually works though... but I think that maybe it&rsquo;s not TARDISes fault</li>
+			<li>If using the TARDIS Resource Pack sounds the server can now configure how loud they play</li>
+			<li>When a player creates a TARDIS, the plugin now uses the configured key item, instead of the default database value</li>
+			<li>The plugin now allows the use of <code>tardis.area.*</code> to give access to all areas</li>
+			<li>The plugin now cancels any scheduled tasks on reload</li>
+			<li>You can now download a sounds only or textures only version of the TARDIS Resource Pack &mdash; <a href="http://minecraft.curseforge.com/texture-packs/tardis-tp/files/">http://minecraft.curseforge.com/texture-packs/tardis-tp/files/</a></li>
+		</ul>
+		<h4>Bug fixes</h4>
+		<ul>
+			<li>Fixed using a redstone lamp on OLD preset</li>
+			<li>Fix RAILS being removed in front of door (when you have a RAIL room)</li>
+			<li>Fixed player yaw when entering by the back door</li>
+			<li>Fixed submarine mode again</li>
+			<li>Fixed custom TARDIS creation</li>
+			<li>Doorways should be cleared better when using ARS / growing rooms</li>
+			<li>Fixed the ARS GUI showing multiple Stable rooms and throwing nasty NPE</li>
+			<li>Fixed the broken custom preset</li>
+			<li>Fixed TARDIS world creation with MultiWorld 5.0</li>
+			<li>Fixed the handbrake being toggled while TARDIS is materialising</li>
+			<li>Fixed the door being allowed to be opened while the TARDIS is materialising</li>
+			<li>Fixed the ARS use permissions</li>
+			<li>Fixed some of the item dropping when presets materialise</li>
+		</ul>
 		<h3>v2.6.4</h3>
 		<ul>
 			<li>Fixed TARDIS deletion</li>
@@ -426,7 +481,7 @@
 				<ul>
 					<li>An inventory based GUI for choosing a random destination accessed by clicking a sign</li>
 					<li>Use the <code>/tardis update terminal</code> command to add it</li>
-					<li>See: <a href="">https://vimeo.com/68899459</a></li>
+					<li>See: <a href="https://vimeo.com/68899459">https://vimeo.com/68899459</a></li>
 				</ul>
 			</li>
 			<li>Added an inventory based GUI for boolean (true|false) config values
@@ -516,7 +571,7 @@
 			<li>Added the start of an Architectural Reconfiguration System, another sign with an inventory based GUI
 				<ul>
 					<li>Use the <code>/tardis update ars</code> command to add it</li>
-					<li>See: <a href="">https://vimeo.com/68938409</a></li>
+					<li>See: <a href="https://vimeo.com/68938409">https://vimeo.com/68938409</a></li>
 				</ul>
 			</li>
 		</ul>
@@ -614,7 +669,7 @@
 		<h4>Additions</h4>
 		<ul>
 			<li>Added a config option to enable/disable the giving of spawn eggs when TARDIS mob farming</li>
-			<li>Added &lsquo;Emergency Program One&rsquo; &mdash; see: <a href="">https://vimeo.com/66056277</a>
+			<li>Added &lsquo;Emergency Program One&rsquo; &mdash; see: <a href="https://vimeo.com/66056277">https://vimeo.com/66056277</a>
 				<ul>
 					<li>Emergency Program One appears after a malfunction, or when a Time Lord dies, and the autonomous function is enabled</li>
 					<li>can be enabled/disabled in the config file &mdash; <code>emergency_npc: [true|false]</code></li>
@@ -625,7 +680,7 @@
 			</li>
 			<li>Added a permission for the <code>/tardisgravity</code> command &mdash; <code>tardis.gravity</code></li>
 			<li>Added two configurable gravity options: <code>gravity_max_distance</code> and <code>gravity_max_velocity</code></li>
-			<li>Added a TARDIS &lsquo;keyboard&rsquo; &mdash; see: <a href="">https://vimeo.com/66056277</a>
+			<li>Added a TARDIS &lsquo;keyboard&rsquo; &mdash; see: <a href="https://vimeo.com/66056277">https://vimeo.com/66056277</a>
 				<ol>
 					<li>Place a sign in the TARDIS control room</li>
 					<li>Use the command <code>/tardis update keyboard</code>, then click the sign</li>
@@ -634,7 +689,7 @@
 					<li>Click done and the destination will be set</li>
 				</ol>
 			</li>
-			<li>Added the ability to switch Texture Packs when entering/exiting the TARDIS &mdash; see: <a href="">https://vimeo.com/66056277</a>
+			<li>Added the ability to switch Texture Packs when entering/exiting the TARDIS &mdash; see: <a href="https://vimeo.com/66056277">https://vimeo.com/66056277</a>
 				<ul>
 					<li><strong>Requires</strong> Server Textures be turned ON in Minecraft Options</li>
 					<li>can be enabled/disabled in the config file &mdash; <code>allow_tp_switch: [true|false]</code></li>
@@ -645,14 +700,14 @@
 			<li>Chameleon blocks are now configurable &mdash; edit the allowed block ID list (<code>chameleon_blocks</code>) in blocks.yml</li>
 			<li>Added Police Box de-materialisation :)</li>
 			<li>Added <code>/tardis secondary door</code> command to add an exit door to secondary control rooms</li>
-			<li>Added <code>/tardis rescue [player]</code> command &mdash; see: <a href="">https://vimeo.com/66633682</a>
+			<li>Added <code>/tardis rescue [player]</code> command &mdash; see: <a href="https://vimeo.com/66633682">https://vimeo.com/66633682</a>
 				<ul>
 					<li>the player must accept the rescue attempt by typing <em>tardis rescue accept</em> in chat, and then stay in one spot</li>
 					<li>the Police Box will materialise around the player and transport them inside the TARDIS</li>
 				</ul>
 			</li>
 			<li>Added basic support for PermissionsEx to the <code>add_perms</code> feature &mdash; TARDIS worlds will inherit the permissions from the main server world</li>
-			<li>Added &lsquo;Hostile Action Displacement System&rsquo; (HADS) &mdash; the Police Box will move itself if it takes damage &mdash; see: <a href="">https://vimeo.com/66992762</a>
+			<li>Added &lsquo;Hostile Action Displacement System&rsquo; (HADS) &mdash; the Police Box will move itself if it takes damage &mdash; see: <a href="https://vimeo.com/66992762">https://vimeo.com/66992762</a>
 				<ul>
 					<li>can be enabled/disabled in the config file &mdash; <code>allow_hads: [true|false]</code></li>
 					<li>the displacement distance is configurable &mdash; <code>hads_distance: [amount]</code></li>
@@ -672,7 +727,7 @@
 				</ul>
 			</li>
 			<li>The <code>/tardisgravity</code> command can only be used in a TARDIS world</li>
-			<li>The TARDIS console &lsquo;world-repeater&rsquo; now always travels within the <strong>current</strong> world when on the 1-tick setting &mdash; see this ticket: <a href="">http://dev.bukkit.org/bukkit-mods/tardis/tickets/171-world-repeater/</a></li>
+			<li>The TARDIS console &lsquo;world-repeater&rsquo; now always travels within the <strong>current</strong> world when on the 1-tick setting &mdash; see this ticket: <a href="http://dev.bukkit.org/bukkit-mods/tardis/tickets/171-world-repeater/">http://dev.bukkit.org/bukkit-mods/tardis/tickets/171-world-repeater/</a></li>
 		</ul>
 		<h4>Fixes</h4>
 		<ul>
