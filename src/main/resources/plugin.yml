@@ -36,6 +36,8 @@ permissions:
       tardis.gravity: true
       tardis.texture: true
       tardis.temporal: true
+      tardis.advanced: true
+      tardis.storage: true
     default: op
   tardis.exile:
     description: Disallow players from travelling anywhere but to areas they have a permission node for.
