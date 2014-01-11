@@ -55,6 +55,7 @@ public class TARDISRecipeCommands implements CommandExecutor {
         firstArgs.add("biome-disk"); // Blank Biome Storage Disk
         firstArgs.add("blank"); // Blank Storage Disk
         firstArgs.add("c-circuit"); // Chameleon Circuit
+        firstArgs.add("cell"); // Artron Energy Cell
         firstArgs.add("d-circuit"); // Diamond Circuit
         firstArgs.add("e-circuit"); // Emerald Circuit
         firstArgs.add("filter"); // Perception Filter
@@ -142,6 +143,10 @@ public class TARDISRecipeCommands implements CommandExecutor {
             }
             if (args[0].equalsIgnoreCase("player-disk")) {
                 this.showShapelessRecipe(player, "Player Storage Disk");
+                return true;
+            }
+            if (args[0].equalsIgnoreCase("cell")) {
+                this.showShapedRecipe(player, "Artron Storage Cell");
                 return true;
             }
             if (args[0].equalsIgnoreCase("sonic")) {
