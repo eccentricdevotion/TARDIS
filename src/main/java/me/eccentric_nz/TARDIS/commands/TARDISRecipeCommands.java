@@ -249,6 +249,11 @@ public class TARDISRecipeCommands implements CommandExecutor {
                 im.setDisplayName(getDisplayName(ingredients.get(i).getData().getData()));
                 ingredients.get(i).setItemMeta(im);
             }
+            if (ingredients.get(i).getType().equals(Material.RECORD_9)) {
+                ItemMeta im = ingredients.get(i).getItemMeta();
+                im.setDisplayName("Blank Storage Disk");
+                ingredients.get(i).setItemMeta(im);
+            }
             view.setItem(i + 1, ingredients.get(i));
         }
     }
