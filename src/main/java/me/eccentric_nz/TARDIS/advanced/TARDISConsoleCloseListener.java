@@ -117,7 +117,6 @@ public class TARDISConsoleCloseListener implements Listener {
                             HashMap<String, Object> set_tardis = new HashMap<String, Object>();
                             HashMap<String, Object> where_next = new HashMap<String, Object>();
                             HashMap<String, Object> where_tardis = new HashMap<String, Object>();
-
                             // process any disks
                             List<String> lore = is.getItemMeta().getLore();
                             String first = lore.get(0);
@@ -256,6 +255,7 @@ public class TARDISConsoleCloseListener implements Listener {
                                 // update next
                                 where_next.put("tardis_id", id);
                                 qf.doUpdate("next", set_next, where_next);
+                                plugin.tardisHasDestination.put(id, plugin.getArtronConfig().getInt("travel"));
                             }
                             if (set_tardis.size() > 0) {
                                 // update tardis
