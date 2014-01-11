@@ -53,7 +53,7 @@ public class TARDISRecipeCommands implements CommandExecutor {
         firstArgs.add("a-circuit"); // Admin Circuit
         firstArgs.add("ars-circuit"); // ARS Circuit
         firstArgs.add("bio-circuit"); // Bio-scanner Circuit
-        firstArgs.add("biome-disk"); // Blank Biome Storage Disk
+        firstArgs.add("biome-disk"); // Biome Storage Disk
         firstArgs.add("blank"); // Blank Storage Disk
         firstArgs.add("c-circuit"); // Chameleon Circuit
         firstArgs.add("cell"); // Artron Energy Cell
@@ -68,12 +68,12 @@ public class TARDISRecipeCommands implements CommandExecutor {
         firstArgs.add("mem-circuit"); // Memory Circuit
         firstArgs.add("oscillator"); // Sonic Oscillator
         firstArgs.add("p-circuit"); // Perception Circuit
-        firstArgs.add("player-disk"); // Blank Player Disk
-        firstArgs.add("preset-disk"); // Blank Preset Storage Disk
+        firstArgs.add("player-disk"); // Player Storage Disk
+        firstArgs.add("preset-disk"); // Preset Storage Disk
         firstArgs.add("r-circuit"); // Redstone Circuit
         firstArgs.add("remote"); // Stattenheim Remote
         firstArgs.add("s-circuit"); // Stattenheim Circuit
-        firstArgs.add("save-disk"); // Blank Save Storage Disk
+        firstArgs.add("save-disk"); // Save Storage Disk
         firstArgs.add("scan-circuit"); // Scanner Circuit
         firstArgs.add("sonic"); // Sonic Screwdriver
         firstArgs.add("t-circuit"); // Temporal Circuit
@@ -115,7 +115,7 @@ public class TARDISRecipeCommands implements CommandExecutor {
                 return true;
             }
             if (args[0].equalsIgnoreCase("biome-disk")) {
-                this.showShapelessRecipe(player, "Blank Biome Storage Disk");
+                this.showShapelessRecipe(player, "Biome Storage Disk");
                 return true;
             }
             if (args[0].equalsIgnoreCase("blank")) {
@@ -179,7 +179,7 @@ public class TARDISRecipeCommands implements CommandExecutor {
                 return true;
             }
             if (args[0].equalsIgnoreCase("preset-disk")) {
-                this.showShapelessRecipe(player, "Blank Preset Storage Disk");
+                this.showShapelessRecipe(player, "Preset Storage Disk");
                 return true;
             }
             if (args[0].equalsIgnoreCase("r-circuit")) {
