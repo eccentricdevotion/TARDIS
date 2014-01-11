@@ -379,6 +379,7 @@ public class TARDISButtonListener implements Listener {
                                     player.sendMessage("§6> TARDIS §fM§6anual");
                                     player.sendMessage("§6> §fI§6tems");
                                     player.sendMessage("§6> §fC§6omponents");
+                                    player.sendMessage("§6> §fD§6isks");
                                     player.sendMessage("§6> C§fo§6mmands");
                                     player.sendMessage("§6> §fT§6ARDIS Types");
                                     player.sendMessage("§6> §fR§6ooms");
