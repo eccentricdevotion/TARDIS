@@ -601,7 +601,7 @@ public class TARDISDoorListener implements Listener {
                     // add energy to player
                     HashMap<String, Object> where = new HashMap<String, Object>();
                     where.put("player", name);
-                    int player_artron = (plugin.getConfig().getBoolean("creation.create_worlds")) ? plugin.getArtronConfig().getInt("player") : plugin.getArtronConfig().getInt("player") * 10;
+                    int player_artron = plugin.getArtronConfig().getInt("player");
                     qf.alterEnergyLevel("player_prefs", player_artron, where, p);
                     String pstr = p.getName();
                     if (plugin.trackSetTime.containsKey(pstr)) {
