@@ -16,7 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.commands.preferences;
 
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Locale;
 import me.eccentric_nz.TARDIS.TARDIS;
@@ -43,18 +42,19 @@ public class TARDISSetKeyCommand {
             return false;
         }
         String setMaterial = args[1].toUpperCase(Locale.ENGLISH);
-        if (!Arrays.asList(Material.values()).contains(Material.valueOf(setMaterial))) {
+        try {
+            Material go = Material.valueOf(setMaterial);
+        } catch (IllegalArgumentException e) {
             player.sendMessage(plugin.pluginName + ChatColor.RED + "That is not a valid Material! Try checking http://jd.bukkit.org/apidocs/org/bukkit/Material.html");
             return false;
-        } else {
-            String field = (plugin.getConfig().getString("storage.database").equals("sqlite")) ? "key" : "key_item";
-            HashMap<String, Object> setk = new HashMap<String, Object>();
-            setk.put(field, setMaterial);
-            HashMap<String, Object> where = new HashMap<String, Object>();
-            where.put("player", player.getName());
-            qf.doUpdate("player_prefs", setk, where);
-            player.sendMessage(plugin.pluginName + "Key preference saved.");
-            return true;
         }
+        String field = (plugin.getConfig().getString("storage.database").equals("sqlite")) ? "key" : "key_item";
+        HashMap<String, Object> setk = new HashMap<String, Object>();
+        setk.put(field, setMaterial);
+        HashMap<String, Object> where = new HashMap<String, Object>();
+        where.put("player", player.getName());
+        qf.doUpdate("player_prefs", setk, where);
+        player.sendMessage(plugin.pluginName + "Key preference saved.");
+        return true;
     }
 }

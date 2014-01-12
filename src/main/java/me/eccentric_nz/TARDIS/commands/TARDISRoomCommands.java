@@ -21,7 +21,6 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -306,7 +305,9 @@ public class TARDISRoomCommands implements CommandExecutor {
                     } catch (NumberFormatException nfe) {
                         // string seed
                         String setMaterial = args[1].toUpperCase(Locale.ENGLISH);
-                        if (!Arrays.asList(Material.values()).contains(Material.valueOf(setMaterial))) {
+                        try {
+                            Material go = Material.valueOf(setMaterial);
+                        } catch (IllegalArgumentException e) {
                             sender.sendMessage(plugin.pluginName + ChatColor.RED + "That is not a valid Material! Try checking http://jd.bukkit.org/apidocs/org/bukkit/Material.html");
                             return false;
                         }
