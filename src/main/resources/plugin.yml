@@ -516,26 +516,26 @@ commands:
     permission: tardis.book
     permission-message: You don't have the permission <permission> to use this command
   tardistexture:
-    aliases: [ttexture,ttext,ttp]
+    aliases: [tardisresource,tresource,ttexture,trp,ttp]
     description: Set texure pack preferences.
     usage: /<command> [on|off|in|out] [url]
     permission: tardis.texture
     permission-message: You don't have the permission <permission> to use this command
     'on':
-      description: Turns texture pack switching on.
+      description: Turns resource pack switching on.
       usage: /<command> on
     'off':
-      description: Turns texture pack switching off.
+      description: Turns resource pack switching off.
       usage: /<command> off
     in:
-      description: Set texure pack that is switched to inside the TARDIS.
+      description: Set resource pack that is switched to inside the TARDIS.
       usage: /<command> in [url]
     out:
-      description: Set texure pack that is switched to in the outside world.
+      description: Set resource pack that is switched to in the outside world.
       usage: /<command> out [url]
   tardisrecipe:
     aliases: [trecipe, trep]
     description: View TARDIS item recipes.
-    usage: /<command> [remote|locator|l-circuit|m-circuit|s-circuit|key|sonic-q|sonic-r|sonic-d|sonic-e|sonic-a]
-    permission: tardis.use
+    usage: /<command> [a-circuit|ars-circuit|bio-circuit|biome-disk|blank|c-circuit|cell|d-circuit|e-circuit|filter|i-circuit|key|l-circuit|locator|m-circuit|mem-circuit|oscillator|player-disk|preset-disk|p-circuit|r-circuit|remote|s-circuit|save-disk|scan-circuit|sonic|t-circuit]
+    permission: tardis.help
     permission-message: You don't have the permission <permission> to use this command
