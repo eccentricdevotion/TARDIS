@@ -1,6 +1,6 @@
 # TODO
 
-## Current version `2.7-beta-2`
+## Current version `2.7-beta-3`
 1. Documentation & videos!
 2. Advanced TARDIS console
    * Test all disks & circuits
@@ -8,7 +8,6 @@
 3. TARDIS exterior rendering / scanner room
    * find a way to prevent items dropping between renders
 4. TARDIS Information System
-    * add new features
     * auto log out?
     
 ## Waiting on Bukkit API
