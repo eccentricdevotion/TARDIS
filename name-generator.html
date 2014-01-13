@@ -1,0 +1,102 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="chrome=1">
+<title>TARDIS: Minecraft Name Generator</title>
+<link rel="stylesheet" href="stylesheets/styles.css">
+<link rel="stylesheet" href="stylesheets/pygment_trac.css">
+<script src="javascripts/scale.fix.js"></script>
+<script type="text/javascript" src="javascripts/words.js"></script>
+<style type="text/css">
+#random_name, #random_name a {
+	text-decoration: none;
+	color: #035;
+	font-size: 18px;
+	font-weight: 700;
+ }
+#random_name a:hover { text-decoration: underline; }
+#random_name {
+	background-color: #ddd;
+	padding: 6px 6px 6px 12px;
+	margin: 0 6px 12px 0;
+	min-width: 300px;
+	display: inline-block;
+	border: 1px solid #035;
+}
+</style>
+<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+<!--[if lt IE 9]>
+<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+<![endif]-->
+</head>
+<body>
+<div class="wrapper">
+	<header>
+		<h1>TARDIS</h1>
+		<p>A Bukkit plugin for all Doctor Who fans &mdash; create and use a TARDIS! It&rsquo;s bigger on the inside!</p>
+		<p class="view"><a href="https://github.com/eccentricdevotion/TARDIS">View the Project on GitHub <small>eccentricdevotion/TARDIS</small></a></p>
+		<ul>
+			<li><a href="/TARDIS/">Back <strong>home</strong></a></li>
+			<li><a href="contents.html"><strong>Contents</strong> page</a></li>
+		</ul>
+	</header>
+	<section>
+		<h1>Minecraft Name Generator</h1>
+		<form name="generator">
+			<p><span id="random_name">Click the button!</span> <a href="javascript:speak();"><img src="images/speak.png" alt="speak" width="17" height="17" /></a></p>
+			<p>
+				<input type="hidden" value="" id="speak" name="speak" />
+				<input type="button" value=" Generate random name " onClick="randomName();" />
+			</p>
+			<h3>Select word lists</h3>
+			<h4>First part</h4>
+			<ul>
+				<li>
+					<input type="radio" name="list1" id="list1a" value="0" checked="checked" />
+					&nbsp; Descriptive words</li>
+				<li>
+					<input type="radio" name="list1" id="list1b" value="1" />
+					&nbsp; Naming words</li>
+				<li>
+					<input type="radio" name="list1" id="list1c" value="2" />
+					&nbsp; Alternate descriptive words</li>
+				<li>
+					<input type="radio" name="list1" id="list1d" value="3" />
+					&nbsp; Animal names</li>
+				<li>
+					<input type="radio" name="list1" id="list1e" value="4" />
+					&nbsp; Art &amp; design words</li>
+			</ul>
+			<h4>Second part</h4>
+			<ul>
+				<li>
+					<input type="radio" name="list2" id="list2a" value="0" />
+					&nbsp; Descriptive words</li>
+				<li>
+					<input type="radio" name="list2" id="list2b" value="1" checked="checked" />
+					&nbsp; Naming words</li>
+				<li>
+					<input type="radio" name="list2" id="list2c" value="2" />
+					&nbsp; Alternate descriptive words</li>
+				<li>
+					<input type="radio" name="list2" id="list2d" value="3" />
+					&nbsp; Animal names</li>
+				<li>
+					<input type="radio" name="list2" id="list2e" value="4" />
+					&nbsp; Art &amp; design words</li>
+			</ul>
+		</form>
+		<h3>Instructions</h3>
+		<p>The generator combines two words/phrases to make new nonsense names. Select a list of words for the first part, and a list for the second part, then click the &lsquo;Generate random name&rsquo; button.</p>
+		<p>Click a word to look up it up in the dictionary.</p>
+		<p>Click the speaker icon to hear the name read aloud. (Could be slow depending on your current internet speed!)</p>
+	</section>
+</div>
+<footer>
+	<p>Project maintained by <a href="https://github.com/eccentricdevotion">eccentricdevotion</a></p>
+	<p>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></p>
+</footer>
+<!--[if !IE]><script>fixScale(document);</script><![endif]-->
+</body>
+</html>
