@@ -351,10 +351,11 @@ public class TARDISSonicListener implements Listener {
                                         }
                                     }
                                 } else {
-                                    plugin.redstoneListener.getPistons().add(b.getLocation().toString());
-                                    piston.setPowered(true);
-                                    plugin.redstoneListener.setExtension(b);
-                                    player.playSound(b.getLocation(), Sound.PISTON_EXTEND, 1.0f, 1.0f);
+                                    if (plugin.redstoneListener.setExtension(b)) {
+                                        plugin.redstoneListener.getPistons().add(b.getLocation().toString());
+                                        piston.setPowered(true);
+                                        player.playSound(b.getLocation(), Sound.PISTON_EXTEND, 1.0f, 1.0f);
+                                    }
                                 }
                                 b.setData(piston.getData());
                                 bs.update(true);
