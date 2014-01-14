@@ -23,6 +23,7 @@ import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.enumeration.MESSAGE;
 import org.bukkit.ChatColor;
+import org.bukkit.World;
 import org.bukkit.entity.Player;
 
 /**
@@ -91,10 +92,12 @@ public class TARDISRemoveCompanionCommand {
                 set.put("companions", newList);
                 QueryFactory qf = new QueryFactory(plugin);
                 qf.doUpdate("tardis", set, tid);
-                // if using WorldGuard, add them to the region membership
+                // if using WorldGuard, remove them from the region membership
                 if (plugin.worldGuardOnServer && plugin.getConfig().getBoolean("preferences.use_worldguard")) {
-
-                    plugin.getServer().dispatchCommand(plugin.console, "rg removemember tardis_" + player.getName() + " " + args[1].toLowerCase(Locale.ENGLISH) + " -w " + data[0]);
+                    World w = plugin.getServer().getWorld(data[0]);
+                    if (w != null) {
+                        plugin.wgutils.removeMemberFromRegion(w, player.getName(), args[1].toLowerCase(Locale.ENGLISH));
+                    }
                 }
                 player.sendMessage(plugin.pluginName + message);
                 return true;

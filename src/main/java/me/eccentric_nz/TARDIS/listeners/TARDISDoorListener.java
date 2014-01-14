@@ -564,7 +564,8 @@ public class TARDISDoorListener implements Listener {
      * they are exiting
      * @param from the world they are teleporting from
      * @param q whether the player will receive a TARDIS quote message
-     * @param sound an int representing the sound to play
+     * @param sound an integer representing the sound to play
+     * @param m whether to play the resource pack sound
      */
     @SuppressWarnings("deprecation")
     public void movePlayer(final Player p, Location l, final boolean exit, final World from, boolean q, final int sound, final boolean m) {

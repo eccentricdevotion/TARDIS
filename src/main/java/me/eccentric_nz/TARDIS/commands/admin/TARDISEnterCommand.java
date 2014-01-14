@@ -100,6 +100,10 @@ public class TARDISEnterCommand {
                         tmp_loc.setZ(getz + 0.5);
                         break;
                 }
+                // if WorldGuard is on the server check for TARDIS region protection and add admin as member
+                if (plugin.worldGuardOnServer && plugin.getConfig().getBoolean("preferences.use_worldguard")) {
+                    plugin.wgutils.addMemberToRegion(cw, args[1], player.getName());
+                }
                 // enter TARDIS!
                 cw.getChunkAt(tmp_loc).load();
                 float yaw = player.getLocation().getYaw();

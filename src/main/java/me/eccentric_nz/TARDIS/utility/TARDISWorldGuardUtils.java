@@ -273,6 +273,34 @@ public class TARDISWorldGuardUtils {
     }
 
     /**
+     * Adds a player to a region's membership.
+     *
+     * @param w the world the region is located in
+     * @param p the player whose region it is
+     * @param a the player to add
+     */
+    public void addMemberToRegion(World w, String p, String a) {
+        RegionManager rm = wg.getRegionManager(w);
+        if (rm.hasRegion("tardis_" + p)) {
+            plugin.getServer().dispatchCommand(plugin.console, "rg addmember tardis_" + p + " " + a + " -w " + w.getName());
+        }
+    }
+
+    /**
+     * Adds a player to a region's membership.
+     *
+     * @param w the world the region is located in
+     * @param p the player whose region it is
+     * @param a the player to add
+     */
+    public void removeMemberFromRegion(World w, String p, String a) {
+        RegionManager rm = wg.getRegionManager(w);
+        if (rm.hasRegion("tardis_" + p)) {
+            plugin.getServer().dispatchCommand(plugin.console, "rg removemember tardis_" + p + " " + a + " -w " + w.getName());
+        }
+    }
+
+    /**
      * Turns a location object into a BlockVector.
      *
      * @param location the Location to convert to BlockVector
