@@ -30,6 +30,7 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.inventory.meta.ItemMeta;
 
 /**
@@ -104,8 +105,20 @@ public class TARDISSonicEntityListener implements Listener {
             plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
                 @Override
                 public void run() {
-                    for (Enchantment e : player.getItemInHand().getEnchantments().keySet()) {
-                        player.getItemInHand().removeEnchantment(e);
+                    ItemMeta im = player.getItemInHand().getItemMeta();
+                    if (im.hasDisplayName() && im.getDisplayName().equals("Sonic Screwdriver")) {
+                        for (Enchantment e : player.getItemInHand().getEnchantments().keySet()) {
+                            player.getItemInHand().removeEnchantment(e);
+                        }
+                    } else {
+                        // find the screwdriver in the player's inventory
+                        PlayerInventory inv = player.getInventory();
+                        ItemStack stack = inv.getItem(inv.first(sonic));
+                        if (stack.containsEnchantment(Enchantment.DURABILITY)) {
+                            for (Enchantment e : stack.getEnchantments().keySet()) {
+                                stack.removeEnchantment(e);
+                            }
+                        }
                     }
                 }
             }, 60L);
