@@ -49,6 +49,7 @@ public class TARDISGiveCommand implements CommandExecutor {
         items.put("biome-disk", "Biome Storage Disk");
         items.put("blank", "Blank Storage Disk");
         items.put("c-circuit", "TARDIS Chameleon Circuit");
+        items.put("cell", "Artron Storage Cell");
         items.put("d-circuit", "Diamond Disruptor Circuit");
         items.put("e-circuit", "Emerald Environment Circuit");
         items.put("filter", "Perception Filter");
