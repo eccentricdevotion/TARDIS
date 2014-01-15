@@ -24,6 +24,7 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetControls;
 import me.eccentric_nz.TARDIS.database.ResultSetDiskStorage;
+import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.enumeration.DISK_CIRCUIT;
 import me.eccentric_nz.TARDIS.enumeration.MESSAGE;
@@ -65,20 +66,31 @@ public class TARDISConsoleListener implements Listener {
             return;
         }
         if (event.getAction().equals(Action.RIGHT_CLICK_BLOCK)) {
-            ItemStack disk = event.getPlayer().getItemInHand();
-            if (onlythese.contains(disk.getType()) && disk.hasItemMeta()) {
-                ItemMeta im = disk.getItemMeta();
-                if (im.hasDisplayName() && metanames.contains(im.getDisplayName())) {
-                    Block b = event.getClickedBlock();
-                    if (b != null && b.getType().equals(Material.JUKEBOX)) {
-                        // is it a TARDIS console?
-                        HashMap<String, Object> wherec = new HashMap<String, Object>();
-                        wherec.put("location", b.getLocation().toString());
-                        wherec.put("type", 15);
-                        ResultSetControls rsc = new ResultSetControls(plugin, wherec, false);
-                        if (rsc.resultSet()) {
-                            event.setCancelled(true);
-                            int id = rsc.getTardis_id();
+            Block b = event.getClickedBlock();
+            if (b != null && b.getType().equals(Material.JUKEBOX)) {
+                // is it a TARDIS console?
+                HashMap<String, Object> wherec = new HashMap<String, Object>();
+                wherec.put("location", b.getLocation().toString());
+                wherec.put("type", 15);
+                ResultSetControls rsc = new ResultSetControls(plugin, wherec, false);
+                if (rsc.resultSet()) {
+                    event.setCancelled(true);
+                    int id = rsc.getTardis_id();
+                    // determine key item
+                    HashMap<String, Object> wherek = new HashMap<String, Object>();
+                    wherek.put("player", p.getName());
+                    ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, wherek);
+                    String key;
+                    if (rsp.resultSet()) {
+                        key = (!rsp.getKey().isEmpty()) ? rsp.getKey() : plugin.getConfig().getString("preferences.key");
+                    } else {
+                        key = plugin.getConfig().getString("preferences.key");
+                    }
+                    onlythese.add(Material.valueOf(key));
+                    ItemStack disk = event.getPlayer().getItemInHand();
+                    if (onlythese.contains(disk.getType()) && disk.hasItemMeta()) {
+                        ItemMeta im = disk.getItemMeta();
+                        if (im.hasDisplayName() && metanames.contains(im.getDisplayName())) {
                             // only the time lord of this tardis
                             HashMap<String, Object> wheret = new HashMap<String, Object>();
                             wheret.put("tardis_id", id);
@@ -111,7 +123,11 @@ public class TARDISConsoleListener implements Listener {
                             }
                             // open gui
                             p.openInventory(inv);
+                        } else {
+                            p.sendMessage(plugin.pluginName + "You can only open the Advanced Console with a named TARDIS item.");
                         }
+                    } else {
+                        p.sendMessage(plugin.pluginName + "You can only open the Advanced Console with the TARDIS key, a sonic screwdriver, a circuit or a disk.");
                     }
                 }
             }
