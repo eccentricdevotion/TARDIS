@@ -74,15 +74,19 @@ public class TARDISArtronStorageCommand implements CommandExecutor {
                 sender.sendMessage(plugin.pluginName + "You must be holding an Artron Storage Cell in your hand!");
                 return true;
             }
+            if (is.getAmount() > 1) {
+                sender.sendMessage(plugin.pluginName + "You can only charge 1 Artron Storage Cell at a time!");
+                return true;
+            }
             ItemMeta im = is.getItemMeta();
             String name = im.getDisplayName();
             if (!name.equals("Artron Storage Cell")) {
-                sender.sendMessage(plugin.pluginName + "You must specify 'tardis' or 'timelord' energy to transfer!");
+                sender.sendMessage(plugin.pluginName + "You must be holding an Artron Storage Cell in your hand!");
                 return true;
             }
             String which = args[0].toLowerCase(Locale.ENGLISH);
             if (!firstArgs.contains(which)) {
-                sender.sendMessage(plugin.pluginName + "You must be holding an Artron Storage Cell in your hand!");
+                sender.sendMessage(plugin.pluginName + "You must specify 'tardis' or 'timelord' energy to transfer!");
                 return false;
             }
             // must be a timelord
