@@ -18,9 +18,9 @@ package me.eccentric_nz.TARDIS.chameleon;
 
 import java.util.Arrays;
 import java.util.List;
+import me.eccentric_nz.TARDIS.JSON.JSONArray;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.PRESET;
-import me.eccentric_nz.TARDIS.JSON.JSONArray;
 import me.eccentric_nz.TARDIS.utility.recalculators.TARDISButtonRecalculator;
 import me.eccentric_nz.TARDIS.utility.recalculators.TARDISLeverRecalculator;
 import me.eccentric_nz.TARDIS.utility.recalculators.TARDISMushroomRecalculator;
@@ -38,7 +38,7 @@ import me.eccentric_nz.TARDIS.utility.recalculators.TARDISTrapdoorRecalculator;
  */
 public class TARDISChameleonPreset {
 
-    private final List<Integer> problemBlocks = Arrays.asList(new Integer[]{50, 53, 63, 64, 67, 68, 69, 71, 77, 91, 96, 99, 106, 108, 109, 114, 128, 134, 135, 136, 143, 145, 156, 163, 164});
+    private final List<Integer> problemBlocks = Arrays.asList(new Integer[]{50, 53, 63, 64, 66, 67, 68, 69, 71, 77, 91, 96, 99, 106, 108, 109, 114, 128, 134, 135, 136, 143, 145, 156, 163, 164});
     public final TARDISAngelDownPreset angeld;
     public final TARDISAngelUpPreset angelu;
     public final TARDISAppertureSciencePreset apperture;
@@ -387,6 +387,16 @@ public class TARDISChameleonPreset {
                                         }
                                         break;
                                 }
+                            }
+                            break;
+                        case 66: // rails
+                            switch (d) {
+                                case WEST:
+                                    data[col][block] = (byte) 1;
+                                    break;
+                                default:
+                                    data[col][block] = (byte) 0;
+                                    break;
                             }
                             break;
                         case 69: // lever
