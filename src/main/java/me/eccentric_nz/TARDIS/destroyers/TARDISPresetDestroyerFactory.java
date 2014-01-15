@@ -240,28 +240,51 @@ public class TARDISPresetDestroyerFactory {
         int eyey = l.getBlockY() + 3;
         switch (d) {
             case NORTH:
-                leftx = l.getBlockX() + 1;
+                leftx = l.getBlockX() - 1;
                 leftz = l.getBlockZ() + 1;
-                rightx = l.getBlockX() - 1;
+                rightx = l.getBlockX() + 1;
                 rightz = l.getBlockZ() + 1;
                 break;
             case WEST:
                 leftx = l.getBlockX() + 1;
-                leftz = l.getBlockZ() - 1;
+                leftz = l.getBlockZ() + 1;
                 rightx = l.getBlockX() + 1;
-                rightz = l.getBlockZ() + 1;
+                rightz = l.getBlockZ() - 1;
                 break;
             case SOUTH:
-                leftx = l.getBlockX() - 1;
+                leftx = l.getBlockX() + 1;
                 leftz = l.getBlockZ() - 1;
-                rightx = l.getBlockX() + 1;
+                rightx = l.getBlockX() - 1;
                 rightz = l.getBlockZ() - 1;
                 break;
             default:
                 leftx = l.getBlockX() - 1;
-                leftz = l.getBlockZ() + 1;
+                leftz = l.getBlockZ() - 1;
                 rightx = l.getBlockX() - 1;
-                rightz = l.getBlockZ() - 1;
+                rightz = l.getBlockZ() + 1;
+                break;
+        }
+        plugin.utils.setBlock(w, leftx, eyey, leftz, 0, (byte) 0);
+        plugin.utils.setBlock(w, rightx, eyey, rightz, 0, (byte) 0);
+    }
+
+    public void destroyMineshaftTorches(Location l, COMPASS d) {
+        World w = l.getWorld();
+        int leftx, leftz, rightx, rightz;
+        int eyey = l.getBlockY() + 2;
+        switch (d) {
+            case NORTH:
+            case SOUTH:
+                leftx = l.getBlockX() - 1;
+                leftz = l.getBlockZ();
+                rightx = l.getBlockX() + 1;
+                rightz = l.getBlockZ();
+                break;
+            default:
+                leftx = l.getBlockX();
+                leftz = l.getBlockZ() - 1;
+                rightx = l.getBlockX();
+                rightz = l.getBlockZ() + 1;
                 break;
         }
         plugin.utils.setBlock(w, leftx, eyey, leftz, 0, (byte) 0);

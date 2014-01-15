@@ -104,6 +104,9 @@ public class TARDISDeinstaPreset {
             case DUCK:
                 plugin.destroyerP.destroyDuckEyes(l, d);
                 break;
+            case MINESHAFT:
+                plugin.destroyerP.destroyMineshaftTorches(l, d);
+                break;
             default:
                 break;
         }

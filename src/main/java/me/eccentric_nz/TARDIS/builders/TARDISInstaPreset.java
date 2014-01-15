@@ -16,6 +16,7 @@
  */
 package me.eccentric_nz.TARDIS.builders;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
@@ -66,6 +67,7 @@ public class TARDISInstaPreset {
     private final byte[] colours;
     private final Random rand;
     private final byte random_colour;
+    private final List<ProblemBlock> do_at_end = new ArrayList<ProblemBlock>();
 
     public TARDISInstaPreset(TARDIS plugin, Location location, PRESET preset, int tid, COMPASS d, String p, boolean mal, int lamp, boolean sub, int cham_id, byte cham_data, boolean rebuild, boolean minecart) {
         this.plugin = plugin;
@@ -243,7 +245,11 @@ public class TARDISInstaPreset {
                             light = (preset.equals(PRESET.NEW) || preset.equals(PRESET.OLD)) ? lamp : colids[yy];
                             ld = coldatas[yy];
                         }
-                        plugin.utils.setBlockAndRemember(world, xx, (y + yy), zz, light, ld, tid);
+                        if (colids[yy] == 50) {
+                            do_at_end.add(new ProblemBlock(new Location(world, xx, (y + yy), zz), light, ld));
+                        } else {
+                            plugin.utils.setBlockAndRemember(world, xx, (y + yy), zz, light, ld, tid);
+                        }
                         break;
                     case 64: // wood, iron & trap doors, rails
                     case 66:
@@ -283,7 +289,11 @@ public class TARDISInstaPreset {
                                 }
                             }
                         }
-                        plugin.utils.setBlockAndRemember(world, xx, (y + yy), zz, colids[yy], coldatas[yy], tid);
+                        if (colids[yy] == 66) {
+                            do_at_end.add(new ProblemBlock(new Location(world, xx, (y + yy), zz), colids[yy], coldatas[yy]));
+                        } else {
+                            plugin.utils.setBlockAndRemember(world, xx, (y + yy), zz, colids[yy], coldatas[yy], tid);
+                        }
                         break;
                     case 63:
                         if (preset.equals(PRESET.APPERTURE)) {
@@ -490,11 +500,18 @@ public class TARDISInstaPreset {
                         break;
                     default: // everything else
                         if (change) {
-                            plugin.utils.setBlockAndRemember(world, xx, (y + yy), zz, colids[yy], coldatas[yy], tid);
+                            if (colids[yy] == 69 || colids[yy] == 77 || colids[yy] == 143) {
+                                do_at_end.add(new ProblemBlock(new Location(world, xx, (y + yy), zz), colids[yy], coldatas[yy]));
+                            } else {
+                                plugin.utils.setBlockAndRemember(world, xx, (y + yy), zz, colids[yy], coldatas[yy], tid);
+                            }
                         }
                         break;
                 }
             }
+        }
+        for (ProblemBlock pb : do_at_end) {
+            plugin.utils.setBlockAndRemember(pb.getL().getWorld(), pb.getL().getBlockX(), pb.getL().getBlockY(), pb.getL().getBlockZ(), pb.getId(), pb.getData(), tid);
         }
         if (!rebuild) {
             // message travellers in tardis
@@ -519,5 +536,30 @@ public class TARDISInstaPreset {
         }
         plugin.tardisMaterialising.remove(Integer.valueOf(tid));
         plugin.inVortex.remove(Integer.valueOf(tid));
+    }
+
+    private class ProblemBlock {
+
+        Location l;
+        int id;
+        byte data;
+
+        public ProblemBlock(Location l, int id, byte data) {
+            this.l = l;
+            this.id = id;
+            this.data = data;
+        }
+
+        public Location getL() {
+            return l;
+        }
+
+        public int getId() {
+            return id;
+        }
+
+        public byte getData() {
+            return data;
+        }
     }
 }

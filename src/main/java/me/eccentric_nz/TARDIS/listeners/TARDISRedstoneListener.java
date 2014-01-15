@@ -80,7 +80,6 @@ public class TARDISRedstoneListener implements Listener {
 
     @SuppressWarnings("deprecation")
     public boolean setExtension(Block b) {
-        plugin.debug("setExtension called");
         BlockFace face = ((PistonBaseMaterial) b.getState().getData()).getFacing();
         Block l = b.getRelative(face);
         Material mat = l.getType();
@@ -106,7 +105,6 @@ public class TARDISRedstoneListener implements Listener {
 
     @SuppressWarnings("deprecation")
     private void extend(final Block b, final Block l) {
-        plugin.debug("extending");
         l.setType(Material.PISTON_EXTENSION);
         if (b.getType().equals(Material.PISTON_STICKY_BASE)) {
             l.setData((byte) (b.getData() - 8));

@@ -108,7 +108,10 @@ public class TARDISDirectionCommand {
             // destroy sign
             if (!hid) {
                 if (demat.equals(PRESET.DUCK)) {
-                    plugin.destroyerP.destroyDuckEyes(l, d);
+                    plugin.destroyerP.destroyDuckEyes(l, old_d);
+                }
+                if (demat.equals(PRESET.MINESHAFT)) {
+                    plugin.destroyerP.destroyMineshaftTorches(l, old_d);
                 }
                 plugin.destroyerP.destroyDoor(id);
                 plugin.destroyerP.destroySign(l, old_d, demat);
