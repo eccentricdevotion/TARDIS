@@ -101,7 +101,7 @@ public class TARDISConsoleCloseListener implements Listener {
                     TARDISCircuitChecker tcc = new TARDISCircuitChecker(plugin, id);
                     tcc.getCircuits();
                     // if no materialisation circuit exit
-                    if (!tcc.hasMaterialisation()) {
+                    if (!tcc.hasMaterialisation() && (inv.contains(Material.GREEN_RECORD) || inv.contains(Material.RECORD_3) || inv.contains(Material.RECORD_4) || inv.contains(Material.RECORD_12))) {
                         p.sendMessage(plugin.pluginName + "The Materialisation Circuit is missing from the console! No destination will be set.");
                         return;
                     }
