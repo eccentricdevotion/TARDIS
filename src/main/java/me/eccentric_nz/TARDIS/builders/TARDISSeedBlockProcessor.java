@@ -221,7 +221,7 @@ public class TARDISSeedBlockProcessor {
                     String key = (plugin.getConfig().getString("storage.database").equals("mysql")) ? "key_item" : "key";
                     String default_key = plugin.getConfig().getString("preferences.key");
                     setpp.put(key, default_key);
-                    qf.doInsert("player_prefs", setpp);
+                    qf.doSyncInsert("player_prefs", setpp);
                 } else {
                     HashMap<String, Object> wherepp = new HashMap<String, Object>();
                     wherepp.put("player", player.getName());
