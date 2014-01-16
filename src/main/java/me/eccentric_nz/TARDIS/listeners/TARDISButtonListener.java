@@ -387,9 +387,15 @@ public class TARDISButtonListener implements Listener {
                                     break;
                                 case 14:
                                     // Disk Storage
+                                    String name = player.getName();
+                                    // only the time lord of this tardis
+                                    if (!owner.equals(name)) {
+                                        player.sendMessage(plugin.pluginName + MESSAGE.NOT_OWNER.getText());
+                                        return;
+                                    }
                                     // do they have a storage record?
                                     HashMap<String, Object> wherestore = new HashMap<String, Object>();
-                                    wherestore.put("owner", player.getName());
+                                    wherestore.put("owner", name);
                                     ResultSetDiskStorage rsstore = new ResultSetDiskStorage(plugin, wherestore);
                                     ItemStack[] stack = new ItemStack[54];
                                     if (rsstore.resultSet()) {
