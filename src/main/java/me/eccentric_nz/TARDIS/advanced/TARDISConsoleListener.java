@@ -97,7 +97,7 @@ public class TARDISConsoleListener implements Listener {
                             wheret.put("owner", p.getName());
                             ResultSetTardis rs = new ResultSetTardis(plugin, wheret, "", false);
                             if (!rs.resultSet()) {
-                                p.sendMessage(plugin.pluginName + MESSAGE.NOT_OWNER);
+                                p.sendMessage(plugin.pluginName + MESSAGE.NOT_OWNER.getText());
                                 return;
                             }
                             Inventory inv = plugin.getServer().createInventory(p, 9, "§4TARDIS Console");

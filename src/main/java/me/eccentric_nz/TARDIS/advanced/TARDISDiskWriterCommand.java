@@ -69,7 +69,7 @@ public class TARDISDiskWriterCommand {
                 where.put("owner", player.getName());
                 ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
                 if (!rs.resultSet()) {
-                    player.sendMessage(plugin.pluginName + MESSAGE.NO_TARDIS);
+                    player.sendMessage(plugin.pluginName + MESSAGE.NO_TARDIS.getText());
                     return false;
                 } else {
                     int id = rs.getTardis_id();
@@ -136,7 +136,7 @@ public class TARDISDiskWriterCommand {
                 where.put("owner", player.getName());
                 ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
                 if (!rs.resultSet()) {
-                    player.sendMessage(plugin.pluginName + MESSAGE.NO_TARDIS);
+                    player.sendMessage(plugin.pluginName + MESSAGE.NO_TARDIS.getText());
                     return false;
                 } else {
                     lore.set(0, args[1]);

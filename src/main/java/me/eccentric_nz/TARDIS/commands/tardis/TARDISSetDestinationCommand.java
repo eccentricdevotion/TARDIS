@@ -48,7 +48,7 @@ public class TARDISSetDestinationCommand {
             where.put("owner", player.getName());
             ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
             if (!rs.resultSet()) {
-                player.sendMessage(plugin.pluginName + MESSAGE.NO_TARDIS);
+                player.sendMessage(plugin.pluginName + MESSAGE.NO_TARDIS.getText());
                 return false;
             }
             if (args.length < 2) {
@@ -129,7 +129,7 @@ public class TARDISSetDestinationCommand {
                 }
             }
         } else {
-            player.sendMessage(plugin.pluginName + MESSAGE.NO_PERMS);
+            player.sendMessage(plugin.pluginName + MESSAGE.NO_PERMS.getText());
             return false;
         }
     }
