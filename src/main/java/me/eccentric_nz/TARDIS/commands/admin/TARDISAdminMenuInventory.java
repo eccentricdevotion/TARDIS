@@ -54,7 +54,7 @@ public class TARDISAdminMenuInventory {
         Set<String> config = new TreeSet(plugin.getConfig().getKeys(true));
         for (String c : config) {
             String value = plugin.getConfig().getString(c);
-            if ((value.equalsIgnoreCase("true") || value.equalsIgnoreCase("false")) && !c.equals("conversion_done") && !c.equals("location_conversion_done")) {
+            if ((value.equalsIgnoreCase("true") || value.equalsIgnoreCase("false")) && !c.startsWith("conversions") && !c.startsWith("worlds")) {
                 ItemStack is = new ItemStack(TARDISConstants.GUI_ITEMS.get(i), 1);
                 ItemMeta im = is.getItemMeta();
                 im.setDisplayName(c);
