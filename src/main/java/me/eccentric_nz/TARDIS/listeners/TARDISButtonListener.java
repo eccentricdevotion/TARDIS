@@ -21,8 +21,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import me.eccentric_nz.TARDIS.ARS.TARDISARSInventory;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
@@ -406,13 +404,13 @@ public class TARDISButtonListener implements Listener {
                                                 stack = TARDISSerializeInventory.itemStacksFromString(STORAGE.SAVE_1.getEmpty());
                                             }
                                         } catch (IOException ex) {
-                                            Logger.getLogger(TARDISButtonListener.class.getName()).log(Level.SEVERE, null, ex);
+                                            plugin.debug("Could not get Storage Inventory: " + ex.getMessage());
                                         }
                                     } else {
                                         try {
                                             stack = TARDISSerializeInventory.itemStacksFromString(STORAGE.SAVE_1.getEmpty());
                                         } catch (IOException ex) {
-                                            Logger.getLogger(TARDISButtonListener.class.getName()).log(Level.SEVERE, null, ex);
+                                            plugin.debug("Could not get default Storage Inventory: " + ex.getMessage());
                                         }
                                         // make a record
                                         HashMap<String, Object> setstore = new HashMap<String, Object>();

@@ -20,10 +20,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetAreas;
 import me.eccentric_nz.TARDIS.database.ResultSetDiskStorage;
 import me.eccentric_nz.TARDIS.enumeration.STORAGE;
@@ -80,7 +77,7 @@ public class TARDISAreaDisks {
         try {
             stack = TARDISSerializeInventory.itemStacksFromString(STORAGE.AREA.getEmpty());
         } catch (IOException ex) {
-            Logger.getLogger(TARDISAreaDisks.class.getName()).log(Level.SEVERE, null, ex);
+            plugin.debug("Could not get make Area Disk Inventory: " + ex);
         }
         // set saved slots
         int i = 27;
@@ -172,7 +169,7 @@ public class TARDISAreaDisks {
                     }
                 }
             } catch (IOException ex) {
-                Logger.getLogger(TARDISAreaDisks.class.getName()).log(Level.SEVERE, null, ex);
+                plugin.debug("Could not get NEW Area Disk Inventory: " + ex);
             }
         }
         return serialized;
