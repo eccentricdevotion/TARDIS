@@ -142,6 +142,7 @@ public class TARDISSonicListener implements Listener {
                                 @Override
                                 public void run() {
                                     Location observerPos = player.getEyeLocation();
+                                    plugin.debug("eye location block: " + observerPos.getBlock().getType());
                                     TARDISVector3D observerDir = new TARDISVector3D(observerPos.getDirection());
                                     TARDISVector3D observerStart = new TARDISVector3D(observerPos);
                                     TARDISVector3D observerEnd = observerStart.add(observerDir.multiply(16));
@@ -170,6 +171,8 @@ public class TARDISSonicListener implements Listener {
                                                 frozenPlayers.remove(hitNme);
                                             }
                                         }, 100L);
+                                    } else {
+                                        standardSonic(player);
                                     }
                                 }
                             }, 20L);
@@ -179,67 +182,7 @@ public class TARDISSonicListener implements Listener {
                         return;
                     }
                     if (player.hasPermission("tardis.sonic.standard")) {
-                        Block targetBlock = player.getTargetBlock(plugin.tardisCommand.transparent, 50).getLocation().getBlock();
-                        Material blockType = targetBlock.getType();
-                        if (distance.contains(blockType)) {
-                            final BlockState bs = targetBlock.getState();
-                            switch (blockType) {
-                                case IRON_DOOR_BLOCK:
-                                case WOODEN_DOOR:
-                                    Block lowerdoor;
-                                    if (targetBlock.getData() >= 8) {
-                                        lowerdoor = targetBlock.getRelative(BlockFace.DOWN);
-                                    } else {
-                                        lowerdoor = targetBlock;
-                                    }
-                                    boolean allow = true;
-                                    // is Lockette or LWC on the server?
-                                    if (plugin.pm.isPluginEnabled("Lockette")) {
-                                        Lockette Lockette = (Lockette) plugin.pm.getPlugin("Lockette");
-                                        if (Lockette.isProtected(lowerdoor)) {
-                                            allow = false;
-                                        }
-                                    }
-                                    if (plugin.pm.isPluginEnabled("LWC")) {
-                                        LWC lwc = (LWC) plugin.pm.getPlugin("LWC");
-                                        if (!lwc.canAccessProtection(player, lowerdoor)) {
-                                            allow = false;
-                                        }
-                                    }
-                                    if (allow) {
-                                        BlockState bsl = lowerdoor.getState();
-                                        Door door = (Door) bsl.getData();
-                                        door.setOpen(!door.isOpen());
-                                        bsl.setData(door);
-                                        bsl.update(true);
-                                    }
-                                    break;
-                                case LEVER:
-                                    Lever lever = (Lever) bs.getData();
-                                    lever.setPowered(!lever.isPowered());
-                                    bs.setData(lever);
-                                    bs.update(true);
-                                    break;
-                                case STONE_BUTTON:
-                                case WOOD_BUTTON:
-                                    final Button button = (Button) bs.getData();
-                                    button.setPowered(true);
-                                    bs.setData(button);
-                                    bs.update(true);
-                                    long delay = (blockType.equals(Material.STONE_BUTTON)) ? 20L : 30L;
-                                    plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
-                                        @Override
-                                        public void run() {
-                                            button.setPowered(false);
-                                            bs.setData(button);
-                                            bs.update(true);
-                                        }
-                                    }, delay);
-                                    break;
-                                default:
-                                    break;
-                            }
-                        }
+                        standardSonic(player);
                         return;
                     }
                 }
@@ -447,23 +390,32 @@ public class TARDISSonicListener implements Listener {
             plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
                 @Override
                 public void run() {
-                    ItemMeta im = player.getItemInHand().getItemMeta();
-                    if (im.hasDisplayName() && im.getDisplayName().equals("Sonic Screwdriver")) {
-                        for (Enchantment e : player.getItemInHand().getEnchantments().keySet()) {
-                            player.getItemInHand().removeEnchantment(e);
+                    ItemStack is = player.getItemInHand();
+                    if (is.hasItemMeta()) {
+                        ItemMeta im = is.getItemMeta();
+                        if (im.hasDisplayName() && im.getDisplayName().equals("Sonic Screwdriver")) {
+                            for (Enchantment e : player.getItemInHand().getEnchantments().keySet()) {
+                                player.getItemInHand().removeEnchantment(e);
+                            }
+                        } else {
+                            // find the screwdriver in the player's inventory
+                            removeSonicEnchant(player.getInventory());
                         }
                     } else {
                         // find the screwdriver in the player's inventory
-                        PlayerInventory inv = player.getInventory();
-                        ItemStack stack = inv.getItem(inv.first(sonic));
-                        if (stack.containsEnchantment(Enchantment.DURABILITY)) {
-                            for (Enchantment e : stack.getEnchantments().keySet()) {
-                                stack.removeEnchantment(e);
-                            }
-                        }
+                        removeSonicEnchant(player.getInventory());
                     }
                 }
             }, (cooldown / 50L));
+        }
+    }
+
+    private void removeSonicEnchant(PlayerInventory inv) {
+        ItemStack stack = inv.getItem(inv.first(sonic));
+        if (stack.containsEnchantment(Enchantment.DURABILITY)) {
+            for (Enchantment e : stack.getEnchantments().keySet()) {
+                stack.removeEnchantment(e);
+            }
         }
     }
 
@@ -595,5 +547,70 @@ public class TARDISSonicListener implements Listener {
                 }
             }
         }, 140L);
+    }
+
+    @SuppressWarnings("deprecation")
+    private void standardSonic(Player player) {
+        Block targetBlock = player.getTargetBlock(plugin.tardisCommand.transparent, 50).getLocation().getBlock();
+        Material blockType = targetBlock.getType();
+        if (distance.contains(blockType)) {
+            final BlockState bs = targetBlock.getState();
+            switch (blockType) {
+                case IRON_DOOR_BLOCK:
+                case WOODEN_DOOR:
+                    Block lowerdoor;
+                    if (targetBlock.getData() >= 8) {
+                        lowerdoor = targetBlock.getRelative(BlockFace.DOWN);
+                    } else {
+                        lowerdoor = targetBlock;
+                    }
+                    boolean allow = true;
+                    // is Lockette or LWC on the server?
+                    if (plugin.pm.isPluginEnabled("Lockette")) {
+                        Lockette Lockette = (Lockette) plugin.pm.getPlugin("Lockette");
+                        if (Lockette.isProtected(lowerdoor)) {
+                            allow = false;
+                        }
+                    }
+                    if (plugin.pm.isPluginEnabled("LWC")) {
+                        LWC lwc = (LWC) plugin.pm.getPlugin("LWC");
+                        if (!lwc.canAccessProtection(player, lowerdoor)) {
+                            allow = false;
+                        }
+                    }
+                    if (allow) {
+                        BlockState bsl = lowerdoor.getState();
+                        Door door = (Door) bsl.getData();
+                        door.setOpen(!door.isOpen());
+                        bsl.setData(door);
+                        bsl.update(true);
+                    }
+                    break;
+                case LEVER:
+                    Lever lever = (Lever) bs.getData();
+                    lever.setPowered(!lever.isPowered());
+                    bs.setData(lever);
+                    bs.update(true);
+                    break;
+                case STONE_BUTTON:
+                case WOOD_BUTTON:
+                    final Button button = (Button) bs.getData();
+                    button.setPowered(true);
+                    bs.setData(button);
+                    bs.update(true);
+                    long delay = (blockType.equals(Material.STONE_BUTTON)) ? 20L : 30L;
+                    plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
+                        @Override
+                        public void run() {
+                            button.setPowered(false);
+                            bs.setData(button);
+                            bs.update(true);
+                        }
+                    }, delay);
+                    break;
+                default:
+                    break;
+            }
+        }
     }
 }
