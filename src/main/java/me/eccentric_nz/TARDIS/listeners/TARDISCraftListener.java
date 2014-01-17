@@ -77,6 +77,7 @@ public class TARDISCraftListener implements Listener {
         actions.add(InventoryAction.PLACE_ALL);
         actions.add(InventoryAction.PLACE_ONE);
         actions.add(InventoryAction.PLACE_SOME);
+        actions.add(InventoryAction.SWAP_WITH_CURSOR);
     }
 
     /**
@@ -90,6 +91,7 @@ public class TARDISCraftListener implements Listener {
         final Inventory inv = event.getInventory();
         int slot = event.getRawSlot();
         if (inv.getType().equals(InventoryType.WORKBENCH) && slot < 10) {
+            plugin.debug("action:" + event.getAction().toString());
             if (actions.contains(event.getAction())) {
                 plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
                     @Override
