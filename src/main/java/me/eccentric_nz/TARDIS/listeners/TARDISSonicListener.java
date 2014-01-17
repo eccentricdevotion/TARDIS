@@ -142,7 +142,6 @@ public class TARDISSonicListener implements Listener {
                                 @Override
                                 public void run() {
                                     Location observerPos = player.getEyeLocation();
-                                    plugin.debug("eye location block: " + observerPos.getBlock().getType());
                                     TARDISVector3D observerDir = new TARDISVector3D(observerPos.getDirection());
                                     TARDISVector3D observerStart = new TARDISVector3D(observerPos);
                                     TARDISVector3D observerEnd = observerStart.add(observerDir.multiply(16));
