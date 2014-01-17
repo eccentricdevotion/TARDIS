@@ -21,12 +21,15 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import me.eccentric_nz.TARDIS.JSON.JSONArray;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetARS;
 import me.eccentric_nz.TARDIS.database.ResultSetCondenser;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
+import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -35,9 +38,6 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
-import me.eccentric_nz.TARDIS.JSON.JSONArray;
-import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
-import org.bukkit.Material;
 
 /**
  * The architectural reconfiguration system is a component of the Doctor's
@@ -238,6 +238,10 @@ public class TARDISARSListener implements Listener {
                             } else {
                                 ItemStack ris = inv.getItem(slot);
                                 String room = TARDISARS.getARS(ris.getItemMeta().getDisplayName()).toString();
+                                if (!player.hasPermission("tardis.room." + room.toLowerCase())) {
+                                    setLore(inv, slot, "You don't have permission for this room!");
+                                    break;
+                                }
                                 if (room.equals("GRAVITY") || room.equals("ANTIGRAVITY")) {
                                     int updown = (room.equals("Gravity Well")) ? -1 : 1;
                                     if (checkSavedGrid(playerNameStr, selected_slot.get(playerNameStr), updown)) {
