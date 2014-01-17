@@ -787,7 +787,7 @@ public class TARDIS extends JavaPlugin {
     /**
      * Gets the server default texture pack. Will use the Minecraft default pack
      * if none is specified. Until Minecraft/Bukkit lets us set the TP back to
-     * Default, we'll have to host it on DropBo
+     * Default, we'll have to host it on DropBox
      *
      * @return The server specified texture pack.
      */

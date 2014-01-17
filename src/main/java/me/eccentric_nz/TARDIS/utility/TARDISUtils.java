@@ -102,7 +102,6 @@ public class TARDISUtils {
         set.put("tardis_id", id);
         set.put("location", l);
         int bid = b.getTypeId();
-        //if (bid != 0) {
         byte data = b.getData();
         set.put("block", bid);
         set.put("data", data);

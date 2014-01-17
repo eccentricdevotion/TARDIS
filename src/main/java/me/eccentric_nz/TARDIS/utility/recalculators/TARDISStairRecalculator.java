@@ -67,25 +67,33 @@ public class TARDISStairRecalculator {
                 }
                 break;
             case WEST:
-                if (col == 3 || col == 7) {
-                    switch (b) {
-                        case 0:
-                            recalc = (byte) 1;
-                            break;
-                        case 1:
-                            recalc = (byte) 0;
-                            break;
-                        case 4:
-                            recalc = (byte) 5;
-                            break;
-                        case 5:
-                            recalc = (byte) 4;
-                            break;
-                        default:
-                            recalc = b;
-                    }
-                } else {
-                    recalc = b;
+                switch (b) {
+                    case 0:
+                        recalc = (byte) 1;
+                        break;
+                    case 1:
+                        recalc = (byte) 0;
+                        break;
+                    case 2:
+                        recalc = (byte) 3;
+                        break;
+                    case 3:
+                        recalc = (byte) 2;
+                        break;
+                    case 4:
+                        recalc = (byte) 5;
+                        break;
+                    case 5:
+                        recalc = (byte) 4;
+                        break;
+                    case 6:
+                        recalc = (byte) 7;
+                        break;
+                    case 7:
+                        recalc = (byte) 6;
+                        break;
+                    default:
+                        recalc = b;
                 }
                 break;
             default:

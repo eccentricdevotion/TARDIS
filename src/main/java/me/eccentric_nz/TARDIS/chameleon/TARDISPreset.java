@@ -42,12 +42,12 @@ public class TARDISPreset {
     public TARDISPreset() {
     }
 
-    public void makePresets() {
+    public void makePresets(boolean assymetric) {
         TARDISChameleonPreset tcp = new TARDISChameleonPreset();
         for (COMPASS d : COMPASS.values()) {
-            blueprint.put(d, tcp.buildTARDISChameleonColumn(d, blueprint_id, blueprint_data, true));
-            stained.put(d, tcp.buildTARDISChameleonColumn(d, stained_id, stained_data, true));
-            glass.put(d, tcp.buildTARDISChameleonColumn(d, glass_id, glass_data, true));
+            blueprint.put(d, tcp.buildTARDISChameleonColumn(d, blueprint_id, blueprint_data, assymetric));
+            stained.put(d, tcp.buildTARDISChameleonColumn(d, stained_id, stained_data, assymetric));
+            glass.put(d, tcp.buildTARDISChameleonColumn(d, glass_id, glass_data, assymetric));
         }
     }
 

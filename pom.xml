@@ -301,7 +301,7 @@
         <dependency>
             <groupId>com.massivecraft</groupId>
             <artifactId>mcore</artifactId>
-            <version>7.0.0</version>
+            <version>7.0.1</version>
             <type>jar</type>
         </dependency>
         <dependency>
