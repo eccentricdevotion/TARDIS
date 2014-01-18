@@ -506,13 +506,10 @@ public class TARDISUtils {
      * @param qf an instance of the database QueyFactory
      */
     public void updateStorageId(String player, int id, QueryFactory qf) {
-        plugin.debug("Updating storgae table tardis_id field");
         HashMap<String, Object> where = new HashMap<String, Object>();
         where.put("owner", player);
         ResultSetDiskStorage rss = new ResultSetDiskStorage(plugin, where);
         if (rss.resultSet()) {
-            plugin.debug("found storage record - id was: " + rss.getTardis_id());
-            plugin.debug("it should be: " + id);
             HashMap<String, Object> wherej = new HashMap<String, Object>();
             wherej.put("owner", player);
             HashMap<String, Object> setj = new HashMap<String, Object>();
