@@ -34,6 +34,8 @@
 			<li><a href="#import">How do I import my TARDIS world into my multi-world plugin?</a></li>
 			<li><a href="#spawn">Non-op players can&rsquo;t break the blocks inside the TARDIS to grow rooms</a></li>
 			<li><a href="#handbrake">My Handbrake is not re-engaging!</a></li>
+			<li><a href="#stat">I can&rsquo;t craft the Stattenheim Circuit!</a></li>
+			<li><a href="#advanced">It says circuits are missing from the Advanced Console.</a></li>
 			<li><a href="#charging">My TARDIS isn&rsquo;t charging at a recharge beacon</a></li>
 			<li><a href="#sfx">I can&rsquo;t hear the custom sound effects</a></li>
 			<li><a href="#inside">It says I&rsquo;m still inside the TARDIS, but I&rsquo;m not</a></li>
@@ -114,6 +116,18 @@
 		<p><a href="#top">Back to top</a></p>
 		<h4 id="handbrake">My Handbrake is not re-engaging!</h4>
 		<p>To re-engage the handbrake you must <strong>LEFT</strong>-click the lever.</p>
+		<p><a href="#top">Back to top</a></p>
+		<h4 id="advanced">It says circuits are missing from the Advanced Console.</h4>
+		<p>There is a bug in TARDIS v2.7-beta-2, that doesn&rsquo;t update the Advanced Console database records corretly. You need to update to v2.7-beta-3 build #561 or higher and then use the <code>/tardis update advanced</code> command.</p>
+		<p><a href="#top">Back to top</a></p>
+		<h4 id="stat">I can&rsquo;t craft the Stattenheim Circuit!</h4>
+		<p>There are a couple of things you can try:</p>
+		<ul>
+			<li>Watch this video of the <a href="https://vimeo.com/83094452" target="_blank">Stattenheim Circuit being crafted</a> on a freshly installed server.</li>
+			<li>Set the TARDIS difficulty level to <code>easy</code> &mdash; the Stattenheim Remote doesn&rsquo;t use the Stattenheim Circuit in easy mode.</li>
+			<li>Change the recipe! All TARDIS item recipes are configurable as of TARDIS v2.7. Edit <em>recipes.yml</em>.</li>
+			<li>Use the <code>/tardisgive [player] s-circuit 1</code> command to give yourself the circuit.</li>
+		</ul>
 		<p><a href="#top">Back to top</a></p>
 		<h4 id="charging">My TARDIS isn&rsquo;t charging at a recharge beacon</h4>
 		<p>You must time travel to the recharge location.</p>
