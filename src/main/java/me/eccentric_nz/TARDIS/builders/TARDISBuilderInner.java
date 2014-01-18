@@ -142,6 +142,7 @@ public class TARDISBuilderInner {
         short l = d[2];
         byte data;
         String tmp;
+        String playerNameStr = p.getName();
         HashMap<Block, Byte> postDoorBlocks = new HashMap<Block, Byte>();
         HashMap<Block, Byte> postTorchBlocks = new HashMap<Block, Byte>();
         HashMap<Block, Byte> postSignBlocks = new HashMap<Block, Byte>();
@@ -324,6 +325,8 @@ public class TARDISBuilderInner {
                                 // remember the location of this Advanced Console
                                 String advanced = plugin.utils.makeLocationStr(world, startx, starty, startz);
                                 qf.insertSyncControl(dbID, 15, advanced, 0);
+                                // check if player has storage record, and update the tardis_id field
+                                plugin.utils.updateStorageId(playerNameStr, dbID, qf);
                             }
                             if (id == 92) {
                                 /*
@@ -407,7 +410,7 @@ public class TARDISBuilderInner {
                                         JSONArray json = new JSONArray(empty);
                                         HashMap<String, Object> seta = new HashMap<String, Object>();
                                         seta.put("tardis_id", dbID);
-                                        seta.put("player", p.getName());
+                                        seta.put("player", playerNameStr);
                                         seta.put("json", json.toString());
                                         qf.doInsert("ars", seta);
                                         break;
@@ -702,18 +705,18 @@ public class TARDISBuilderInner {
             if (p.hasPermission("tardis.kit.create")) {
                 // check if they have the tardis kit
                 HashMap<String, Object> wherek = new HashMap<String, Object>();
-                wherek.put("player", p.getName());
+                wherek.put("player", playerNameStr);
                 wherek.put("name", "createkit");
                 ResultSetAchievements rsa = new ResultSetAchievements(plugin, wherek, false);
                 if (!rsa.resultSet()) {
                     //add a record
                     HashMap<String, Object> setk = new HashMap<String, Object>();
-                    setk.put("player", p.getName());
+                    setk.put("player", playerNameStr);
                     setk.put("name", "createkit");
                     qf.doInsert("achievements", setk);
                     // give the join kit
                     String kit = plugin.getKitsConfig().getString("give.create.kit");
-                    plugin.getServer().dispatchCommand(plugin.console, "tardisgive " + p.getName() + " kit " + kit);
+                    plugin.getServer().dispatchCommand(plugin.console, "tardisgive " + playerNameStr + " kit " + kit);
                 }
             }
         }

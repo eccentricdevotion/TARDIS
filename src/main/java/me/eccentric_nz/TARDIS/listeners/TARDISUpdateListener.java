@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import me.eccentric_nz.TARDIS.JSON.JSONArray;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetControls;
@@ -41,7 +42,6 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractEvent;
-import me.eccentric_nz.TARDIS.JSON.JSONArray;
 
 /**
  * The TARDIS interior goes through occasional metamorphoses, sometimes by
@@ -549,6 +549,8 @@ public class TARDISUpdateListener implements Listener {
                 } else {
                     set.put("location", blockLocStr);
                 }
+                // check if player has storage record, and update the tardis_id field
+                plugin.utils.updateStorageId(playerNameStr, id, qf);
             }
             if (blockName.equalsIgnoreCase("advanced") && blockType.equals(Material.JUKEBOX)) {
                 HashMap<String, Object> wherel = new HashMap<String, Object>();
@@ -562,6 +564,8 @@ public class TARDISUpdateListener implements Listener {
                 } else {
                     set.put("location", blockLocStr);
                 }
+                // check if player has storage record, and update the tardis_id field
+                plugin.utils.updateStorageId(playerNameStr, id, qf);
             }
             if (set.size() > 0 || secondary) {
                 if (!secondary) {

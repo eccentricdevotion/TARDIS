@@ -21,6 +21,7 @@ import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetChunks;
+import me.eccentric_nz.TARDIS.database.ResultSetDiskStorage;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.enumeration.SCHEMATIC;
 import me.eccentric_nz.tardischunkgenerator.TARDISChunkGenerator;
@@ -494,5 +495,29 @@ public class TARDISUtils {
         ChunkGenerator gen = world.getGenerator();
         boolean special = (name.contains("TARDIS_TimeVortex") && (world.getWorldType().equals(WorldType.FLAT) || gen instanceof TARDISChunkGenerator));
         return name.equals("TARDIS_WORLD_" + player.getName()) || special;
+    }
+
+    /**
+     * Checks if player has storage record, and update the tardis_id field if
+     * they do.
+     *
+     * @param player the payer's name
+     * @param id the player's TARDIS ID
+     * @param qf an instance of the database QueyFactory
+     */
+    public void updateStorageId(String player, int id, QueryFactory qf) {
+        plugin.debug("Updating storgae table tardis_id field");
+        HashMap<String, Object> where = new HashMap<String, Object>();
+        where.put("owner", player);
+        ResultSetDiskStorage rss = new ResultSetDiskStorage(plugin, where);
+        if (rss.resultSet()) {
+            plugin.debug("found storage record - id was: " + rss.getTardis_id());
+            plugin.debug("it should be: " + id);
+            HashMap<String, Object> wherej = new HashMap<String, Object>();
+            wherej.put("owner", player);
+            HashMap<String, Object> setj = new HashMap<String, Object>();
+            setj.put("tardis_id", id);
+            qf.doUpdate("storage", setj, wherej);
+        }
     }
 }

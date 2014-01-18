@@ -9,7 +9,6 @@
    * find a way to prevent items dropping between renders
 4. TARDIS Information System
     * auto log out?
-5. Fix duck's feet when in WEST direction
     
 ## Waiting on Bukkit API
 0. IDs are soon to be history... so convert all ID use to entity names
