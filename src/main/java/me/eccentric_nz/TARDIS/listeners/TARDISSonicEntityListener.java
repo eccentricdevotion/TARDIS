@@ -105,23 +105,32 @@ public class TARDISSonicEntityListener implements Listener {
             plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
                 @Override
                 public void run() {
-                    ItemMeta im = player.getItemInHand().getItemMeta();
-                    if (im.hasDisplayName() && im.getDisplayName().equals("Sonic Screwdriver")) {
-                        for (Enchantment e : player.getItemInHand().getEnchantments().keySet()) {
-                            player.getItemInHand().removeEnchantment(e);
+                    ItemStack hand = player.getItemInHand();
+                    if (hand.hasItemMeta()) {
+                        ItemMeta im = hand.getItemMeta();
+                        if (im.hasDisplayName() && im.getDisplayName().equals("Sonic Screwdriver")) {
+                            for (Enchantment e : player.getItemInHand().getEnchantments().keySet()) {
+                                player.getItemInHand().removeEnchantment(e);
+                            }
+                        } else {
+                            removeSonicEnchant(player);
                         }
                     } else {
-                        // find the screwdriver in the player's inventory
-                        PlayerInventory inv = player.getInventory();
-                        ItemStack stack = inv.getItem(inv.first(sonic));
-                        if (stack.containsEnchantment(Enchantment.DURABILITY)) {
-                            for (Enchantment e : stack.getEnchantments().keySet()) {
-                                stack.removeEnchantment(e);
-                            }
-                        }
+                        removeSonicEnchant(player);
                     }
                 }
             }, 60L);
+        }
+    }
+
+    private void removeSonicEnchant(Player player) {
+        // find the screwdriver in the player's inventory
+        PlayerInventory inv = player.getInventory();
+        ItemStack stack = inv.getItem(inv.first(sonic));
+        if (stack.containsEnchantment(Enchantment.DURABILITY)) {
+            for (Enchantment e : stack.getEnchantments().keySet()) {
+                stack.removeEnchantment(e);
+            }
         }
     }
 
