@@ -18,6 +18,7 @@ package me.eccentric_nz.TARDIS.listeners;
 
 import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -35,15 +36,18 @@ import org.bukkit.inventory.meta.ItemMeta;
 public class TARDISAnvilListener implements Listener {
 
     private final TARDIS plugin;
-    HashMap<String, Integer> disallow = new HashMap<String, Integer>();
+    HashMap<String, Material> disallow = new HashMap<String, Material>();
 
     public TARDISAnvilListener(TARDIS plugin) {
         this.plugin = plugin;
-        disallow.put("TARDIS Locator", 345);
-        disallow.put("TARDIS Stattenheim Circuit", 358);
-        disallow.put("TARDIS Materialisation Circuit", 358);
-        disallow.put("TARDIS Locator Circuit", 358);
-        disallow.put("Stattenheim Remote", 318);
+        for (String r : plugin.getRecipesConfig().getConfigurationSection("shaped").getKeys(false)) {
+            String[] result = plugin.getRecipesConfig().getString("shaped." + r + ".result").split(":");
+            disallow.put(r, Material.valueOf(result[0]));
+        }
+        for (String q : plugin.getRecipesConfig().getConfigurationSection("shapeless").getKeys(false)) {
+            String[] result = plugin.getRecipesConfig().getString("shapeless." + q + ".result").split(":");
+            disallow.put(q, Material.valueOf(result[0]));
+        }
     }
 
     @SuppressWarnings("deprecation")
@@ -58,7 +62,7 @@ public class TARDISAnvilListener implements Listener {
                 ItemStack is = event.getCurrentItem();
                 if (is != null && is.hasItemMeta()) {
                     ItemMeta im = is.getItemMeta();
-                    if (im.hasDisplayName() && disallow.containsKey(im.getDisplayName()) && is.getTypeId() == disallow.get(im.getDisplayName())) {
+                    if (im.hasDisplayName() && disallow.containsKey(im.getDisplayName()) && is.getType() == disallow.get(im.getDisplayName())) {
                         player.sendMessage(plugin.pluginName + "You cannot name the item that!");
                         event.setCancelled(true);
                     }
