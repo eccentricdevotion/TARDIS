@@ -45,7 +45,6 @@ import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.World.Environment;
 import org.bukkit.block.Biome;
-import org.bukkit.block.Block;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -67,7 +66,7 @@ public class TARDISTravelCommands implements CommandExecutor {
 
     public TARDISTravelCommands(TARDIS plugin) {
         this.plugin = plugin;
-        for (Biome bi : org.bukkit.block.Biome.values()) {
+        for (Biome bi : Biome.values()) {
             if (!bi.equals(Biome.HELL) && !bi.equals(Biome.SKY)) {
                 BIOME_SUBS.add(bi.toString());
             }
@@ -406,6 +405,53 @@ public class TARDISTravelCommands implements CommandExecutor {
                         }
                         return true;
                     }
+                    if (args.length == 3 && args[0].startsWith("~") && player.hasPermission("tardis.timetravel.location")) {
+                        HashMap<String, Object> wherecl = new HashMap<String, Object>();
+                        wherecl.put("tardis_id", id);
+                        ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
+                        if (!rsc.resultSet()) {
+                            player.sendMessage(plugin.pluginName + "Could not get the current TARDIS location!");
+                            return true;
+                        }
+                        if (rsc.isSubmarine()) {
+                            player.sendMessage(plugin.pluginName + "You cannot use this command while under water!");
+                            return true;
+                        }
+                        // check args
+                        int rx = getRelativeCoordinate(args[0]);
+                        int ry = getRelativeCoordinate(args[1]);
+                        int rz = getRelativeCoordinate(args[2]);
+                        if (rx == Integer.MAX_VALUE || ry == Integer.MAX_VALUE || rz == Integer.MAX_VALUE) {
+                            player.sendMessage(plugin.pluginName + "Could not get relative location! Check all arguments start with '~'.");
+                            return true;
+                        }
+                        // add relative coordinates
+                        int x = rsc.getX() + rx;
+                        int y = rsc.getY() + ry;
+                        int z = rsc.getZ() + rz;
+                        // make location
+                        Location location = new Location(rsc.getWorld(), x, y, z);
+                        plugin.debug("relative location: " + location);
+                        // check location
+                        int count = this.checkLocation(location, player, id, tt);
+                        if (count > 0) {
+                            sender.sendMessage(plugin.pluginName + "The specified location would not be safe! Please try another.");
+                            return true;
+                        } else {
+                            set.put("world", location.getWorld().getName());
+                            set.put("x", location.getBlockX());
+                            set.put("y", location.getBlockY());
+                            set.put("z", location.getBlockZ());
+                            set.put("submarine", 0);
+                            qf.doUpdate("next", set, tid);
+                            sender.sendMessage(plugin.pluginName + "The specified location was saved succesfully. Please release the handbrake!");
+                            plugin.tardisHasDestination.put(id, travel);
+                            if (plugin.trackRescue.containsKey(Integer.valueOf(id))) {
+                                plugin.trackRescue.remove(Integer.valueOf(id));
+                            }
+                            return true;
+                        }
+                    }
                     if (args.length > 2 && args.length < 4) {
                         sender.sendMessage(plugin.pluginName + "Too few command arguments for co-ordinates travel!");
                         return false;
@@ -437,26 +483,9 @@ public class TARDISTravelCommands implements CommandExecutor {
                             return true;
                         }
                         z = plugin.utils.parseNum(args[args.length - 1]);
-                        Block block = w.getBlockAt(x, y, z);
-                        Location location = block.getLocation();
-                        if (!plugin.ta.areaCheckInExisting(location)) {
-                            sender.sendMessage(plugin.pluginName + "The location is in a TARDIS area! Please use " + ChatColor.AQUA + "/tardistravel area [area name]");
-                            return true;
-                        }
-                        respect = new TARDISPluginRespect(plugin);
-                        if (!respect.getRespect(player, location, true)) {
-                            return true;
-                        }
-                        HashMap<String, Object> wherecl = new HashMap<String, Object>();
-                        wherecl.put("tardis_id", id);
-                        ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
-                        if (!rsc.resultSet()) {
-                            player.sendMessage(plugin.pluginName + "Could not get the current TARDIS location!");
-                            return true;
-                        }
+                        Location location = new Location(w, x, y, z);
                         // check location
-                        int[] start_loc = tt.getStartLocation(location, rsc.getDirection());
-                        int count = tt.safeLocation(start_loc[0], location.getBlockY(), start_loc[2], start_loc[1], start_loc[3], w, rsc.getDirection());
+                        int count = this.checkLocation(location, player, id, tt);
                         if (count > 0) {
                             sender.sendMessage(plugin.pluginName + "The specified location would not be safe! Please try another.");
                             return true;
@@ -573,5 +602,42 @@ public class TARDISTravelCommands implements CommandExecutor {
             }
         }
         return l;
+    }
+
+    private int checkLocation(Location location, Player player, int id, TARDISTimeTravel tt) {
+        if (!plugin.ta.areaCheckInExisting(location)) {
+            player.sendMessage(plugin.pluginName + "The location is in a TARDIS area! Please use " + ChatColor.AQUA + "/tardistravel area [area name]");
+            return 1;
+        }
+        respect = new TARDISPluginRespect(plugin);
+        if (!respect.getRespect(player, location, true)) {
+            return 1;
+        }
+        HashMap<String, Object> wherecl = new HashMap<String, Object>();
+        wherecl.put("tardis_id", id);
+        ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
+        if (!rsc.resultSet()) {
+            player.sendMessage(plugin.pluginName + "Could not get the current TARDIS location!");
+            return 1;
+        }
+        // check location
+        int[] start_loc = tt.getStartLocation(location, rsc.getDirection());
+        return tt.safeLocation(start_loc[0], location.getBlockY(), start_loc[2], start_loc[1], start_loc[3], location.getWorld(), rsc.getDirection());
+    }
+
+    private int getRelativeCoordinate(String arg) {
+        if (arg.startsWith("~")) {
+            String value = arg.substring(1);
+            if (value.isEmpty()) {
+                return 0;
+            }
+            try {
+                return Integer.parseInt(value);
+            } catch (NumberFormatException nfe) {
+                plugin.debug("Could not convert relative coordinate! " + nfe.getMessage());
+                return Integer.MAX_VALUE;
+            }
+        }
+        return Integer.MAX_VALUE;
     }
 }
