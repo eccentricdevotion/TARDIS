@@ -1,24 +1,46 @@
 # TODO
 
-## Current version `2.5`
-1. Fast return switch
-2. TARDIS shield
-3. Permission-based world creation - player's without permission use the default world, those with it get a TARDIS_WORLD
-4. Make the Police Box configurable via a schematic
-5. Chameleon disable
+## Current version `2.7-beta-3`
+1. Documentation & videos!
+2. Advanced TARDIS console
+   * Test all disks & circuits
+   * Add a blank storage disk section?
+3. TARDIS exterior rendering / scanner room
+   * find a way to prevent items dropping between renders
+4. TARDIS Information System
+    * auto log out?
+    
+## Waiting on Bukkit API
+0. IDs are soon to be history... so convert all ID use to entity names
+1. Get/set horse speed (Attribute API)
+2. Achievements API
 
-## Next version `2.6+`
-1. Jettison the whole room (including walls), will require new room schematics...
-2. Architectural Reconfiguration System / Map room
-3. Add new Minecraft 1.6 items and blocks
-4. Add sounds with Resource packs?
+## Future version `2.8+`
+1. Custom room schematics in ARS (check they are 16x16x16)
+2. TARDIS direction sign
+3. Configurable option to allow Gravity Wells outside of the TARDIS
+4. TARDIS invisiblity
+5. HADS + explosions + fireballs + lava
+6. Put farmland, crops, buttons, ladders, levers and signs on last when growing rooms
+7. Reskin mobs for Resource pack, and add new mob sounds
+   * Skeletons -> Weeping Angels
+   * Wither Skeletons -> Vashta Nerada
+   * Wolves -> K-9
+   * Zombies -> Empty child
+   * Pigmen -> Sontarans
+   * Endermen -> The Silence
+   * Creepers -> Daleks
+   * Slimes -> Adipose
+   * Witches -> Silurians
+   * Villagers -> Ood
+8. Toggle both doors open when shift-clicking the door, and when exiting (if the preset has a door and the door is open) tp the player to the door location.
+9. Eject mobs and villagers
 
-## Minecraft API when available `3.0?`
+# Minecraft API when available
 1. Recreate everything with the new API :)
 2. Create custom blocks for the TARDIS and console.
 3. If using the LAPIS block have the walls a special TARDIS wall block.
 4. A TARDIS key and a crafting recipe for that item.
 5. A Sonic Screwdriver and a crafting recipe for that item.
-6. GUI (if allowed)
-7. Sounds (if allowed)
-8. Make the TARDIS Police Box an entity (if allowed)
+6. GUIs (if allowed)
+7. Make the TARDIS Police Box an entity (if allowed)
