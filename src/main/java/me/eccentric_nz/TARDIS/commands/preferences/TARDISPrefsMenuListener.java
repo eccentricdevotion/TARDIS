@@ -48,6 +48,7 @@ public class TARDISPrefsMenuListener implements Listener {
         lookup.put("Minecart Sounds", "minecart_on");
         lookup.put("Safety Platform", "platform_on");
         lookup.put("Who Quotes", "quotes_on");
+        lookup.put("Exterior Rendering Room", "renderer_on");
         lookup.put("Interior SFX", "sfx_on");
         lookup.put("Submarine Mode", "submarine_on");
         lookup.put("Resource Pack Switching", "texture_on");
@@ -67,9 +68,9 @@ public class TARDISPrefsMenuListener implements Listener {
                     List<String> lore = im.getLore();
                     boolean bool = (lore.get(0).equals("ON"));
                     String value = (bool) ? "OFF" : "ON";
-                    int i = (bool) ? 0 : 1;
+                    int b = (bool) ? 0 : 1;
                     HashMap<String, Object> set = new HashMap<String, Object>();
-                    set.put(lookup.get(im.getDisplayName()), i);
+                    set.put(lookup.get(im.getDisplayName()), b);
                     HashMap<String, Object> where = new HashMap<String, Object>();
                     String p = ((Player) event.getWhoClicked()).getName();
                     where.put("player", p);

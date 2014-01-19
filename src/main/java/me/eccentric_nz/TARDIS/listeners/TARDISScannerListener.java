@@ -25,6 +25,7 @@ import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
 import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetNextLocation;
+import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.rooms.TARDISExteriorRenderer;
@@ -222,7 +223,14 @@ public class TARDISScannerListener implements Listener {
                             }
                         }
                     }, 140L);
-                    if (!renderer.isEmpty()) {
+                    boolean extrend = true;
+                    HashMap<String, Object> wherer = new HashMap<String, Object>();
+                    wherer.put("player", player.getName());
+                    ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, wherer);
+                    if (rsp.resultSet()) {
+                        extrend = rsp.isRendererOn();
+                    }
+                    if (!renderer.isEmpty() && extrend) {
                         bsched.scheduleSyncDelayedTask(plugin, new Runnable() {
                             @Override
                             public void run() {

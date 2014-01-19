@@ -57,6 +57,7 @@ public class ResultSetPlayerPrefs {
     private String textureOut;
     private boolean DND;
     private boolean minecartOn;
+    private boolean rendererOn;
 
     /**
      * Creates a class instance that can be used to retrieve an SQL ResultSet
@@ -138,6 +139,7 @@ public class ResultSetPlayerPrefs {
                 this.textureOut = (tp_out.equals("default")) ? plugin.tp : tp_out;
                 this.DND = rs.getBoolean("dnd_on");
                 this.minecartOn = rs.getBoolean("minecart_on");
+                this.rendererOn = rs.getBoolean("renderer_on");
             } else {
                 return false;
             }
@@ -223,7 +225,7 @@ public class ResultSetPlayerPrefs {
         return textureIn;
     }
 
-    public String getTexture_out() {
+    public String getTextureOut() {
         return textureOut;
     }
 
@@ -241,5 +243,9 @@ public class ResultSetPlayerPrefs {
 
     public boolean isMinecartOn() {
         return minecartOn;
+    }
+
+    public boolean isRendererOn() {
+        return rendererOn;
     }
 }

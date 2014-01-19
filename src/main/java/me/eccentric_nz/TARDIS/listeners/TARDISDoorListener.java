@@ -384,7 +384,7 @@ public class TARDISDoorListener implements Listener {
                                                     }
                                                 }
                                                 if (plugin.getConfig().getBoolean("allow.tp_switch") && userTP) {
-                                                    new TARDISResourcePackChanger(plugin).changeRP(player, rsp.getTexture_out());
+                                                    new TARDISResourcePackChanger(plugin).changeRP(player, rsp.getTextureOut());
                                                 }
                                                 // remove player from traveller table
                                                 removeTraveller(playerNameStr);
@@ -520,7 +520,7 @@ public class TARDISDoorListener implements Listener {
                                             final Location outer_loc = obd_loc;
                                             movePlayer(player, outer_loc, true, playerWorld, userQuotes, 2, minecart);
                                             if (plugin.getConfig().getBoolean("allow.tp_switch") && userTP) {
-                                                new TARDISResourcePackChanger(plugin).changeRP(player, rsp.getTexture_out());
+                                                new TARDISResourcePackChanger(plugin).changeRP(player, rsp.getTextureOut());
                                             }
                                             // remove player from traveller table
                                             removeTraveller(playerNameStr);

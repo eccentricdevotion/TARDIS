@@ -72,14 +72,6 @@ public class TARDISPrefsMenuInventory {
             b_im.setLore(Arrays.asList(new String[]{b_value}));
             beacon.setItemMeta(b_im);
             options.add(beacon);
-//            // Build
-//            ItemStack build = new ItemStack(TARDISConstants.GUI_ITEMS.get(1), 1);
-//            ItemMeta i_im = build.getItemMeta();
-//            i_im.setDisplayName("Allow companion building");
-//            String i_value = (rsp.isBeaconOn()) ? "ON" : "OFF";
-//            i_im.setLore(Arrays.asList(new String[]{i_value}));
-//            build.setItemMeta(i_im);
-//            options.add(build);
             // DND
             ItemStack dnd = new ItemStack(TARDISConstants.GUI_ITEMS.get(2), 1);
             ItemMeta d_im = dnd.getItemMeta();
@@ -128,8 +120,16 @@ public class TARDISPrefsMenuInventory {
             q_im.setLore(Arrays.asList(new String[]{q_value}));
             quotes.setItemMeta(q_im);
             options.add(quotes);
+            // Renderer
+            ItemStack renderer = new ItemStack(TARDISConstants.GUI_ITEMS.get(8), 1);
+            ItemMeta r_im = renderer.getItemMeta();
+            r_im.setDisplayName("Exterior Rendering Room");
+            String i_value = (rsp.isRendererOn()) ? "ON" : "OFF";
+            r_im.setLore(Arrays.asList(new String[]{i_value}));
+            renderer.setItemMeta(r_im);
+            options.add(renderer);
             // sfx
-            ItemStack sfx = new ItemStack(TARDISConstants.GUI_ITEMS.get(8), 1);
+            ItemStack sfx = new ItemStack(TARDISConstants.GUI_ITEMS.get(9), 1);
             ItemMeta s_im = sfx.getItemMeta();
             s_im.setDisplayName("Interior SFX");
             String s_value = (rsp.isSfxOn()) ? "ON" : "OFF";
@@ -137,7 +137,7 @@ public class TARDISPrefsMenuInventory {
             sfx.setItemMeta(s_im);
             options.add(sfx);
             // submarine
-            ItemStack sub = new ItemStack(TARDISConstants.GUI_ITEMS.get(9), 1);
+            ItemStack sub = new ItemStack(TARDISConstants.GUI_ITEMS.get(10), 1);
             ItemMeta u_im = sub.getItemMeta();
             u_im.setDisplayName("Submarine Mode");
             String u_value = (rsp.isSubmarineOn()) ? "ON" : "OFF";
@@ -145,7 +145,7 @@ public class TARDISPrefsMenuInventory {
             sub.setItemMeta(u_im);
             options.add(sub);
             // texture
-            ItemStack tex = new ItemStack(TARDISConstants.GUI_ITEMS.get(10), 1);
+            ItemStack tex = new ItemStack(TARDISConstants.GUI_ITEMS.get(11), 1);
             ItemMeta t_im = tex.getItemMeta();
             t_im.setDisplayName("Resource Pack Switching");
             String t_value = (rsp.isTextureOn()) ? "ON" : "OFF";
