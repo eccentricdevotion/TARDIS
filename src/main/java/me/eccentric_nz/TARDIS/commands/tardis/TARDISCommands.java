@@ -24,7 +24,7 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.advanced.TARDISDiskWriterCommand;
 import me.eccentric_nz.TARDIS.enumeration.CMDS;
 import me.eccentric_nz.TARDIS.travel.TARDISPluginRespect;
-import org.bukkit.*;
+import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -197,7 +197,7 @@ public class TARDISCommands implements CommandExecutor {
                 }
                 if (args[0].equalsIgnoreCase("save")) {
                     ItemStack is = player.getItemInHand();
-                    if (is.hasItemMeta() && is.getItemMeta().getDisplayName().equals("Save Storage Disk")) {
+                    if (is != null && is.hasItemMeta() && is.getItemMeta().getDisplayName().equals("Save Storage Disk")) {
                         return new TARDISDiskWriterCommand(plugin).writeSave(player, args);
                     } else {
                         return new TARDISSaveLocationCommand(plugin).doSave(player, args);
