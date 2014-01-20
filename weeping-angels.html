@@ -1,0 +1,82 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="chrome=1">
+<title>TARDIS: Weeping Angels</title>
+<link rel="stylesheet" href="stylesheets/styles.css">
+<link rel="stylesheet" href="stylesheets/pygment_trac.css">
+<script src="javascripts/scale.fix.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+<!--[if lt IE 9]>
+<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+<![endif]-->
+</head>
+<body>
+<div class="wrapper">
+	<header>
+		<h1>TARDIS</h1>
+		<p>A Bukkit plugin for all Doctor Who fans &mdash; create and use a TARDIS! It&rsquo;s bigger on the inside!</p>
+		<p class="view"><a href="https://github.com/eccentricdevotion/TARDIS">View the Project on GitHub <small>eccentricdevotion/TARDIS</small></a></p>
+		<ul>
+			<li><a href="/TARDIS/">Back <strong>home</strong></a></li>
+			<li><a href="contents.html"><strong>Contents</strong> page</a></li>
+		</ul>
+	</header>
+	<section>
+		<p><a href="#video">Jump to video</a></p>
+		<h1>Weeping Angels</h1>
+		<p>TARDISWeepingAngels is a complementary add-on plugin that tranforms skeletons into terrifying Weeping Angels..</p>
+		<p><img src="https://dl.dropboxusercontent.com/u/53758864/weepingangel1.jpg" alt="Weeping Angel" /></p>
+		<p>You can download the TARDISWeepingAngels JAR available from the Bukkit page: <a href="http://dev.bukkit.org/bukkit-plugins/tardisweepingangels/" target="_blank">http://dev.bukkit.org/bukkit-plugins/tardisweepingangels/</a></p>
+		<p>And the TARDISWeepingAngels Resource Pack from the CurseForge page: <a href="http://minecraft.curseforge.com/texture-packs/tardisweeping-angels/" target="_blank">http://minecraft.curseforge.com/texture-packs/tardisweeping-angels/</a></p>
+		<h2>Features</h2>
+		<ul>
+			<li>Configurable spawn rate</li>
+			<li>Configurable drop on death</li>
+			<li>Configurable killing item</li>
+			<li>Only spawn them in the worlds you want</li>
+			<li>Can be frozen in place for a configurable time</li>
+			<li>Configurable TARDIS Key stealing</li>
+		</ul>
+		<h2>Information</h2>
+		<p>Weeping Angels only spawn at night in loaded chunks. They spawn with grey leather armour and a water lily helmet (their wings).</p>
+		<p>Weeping Angels can only be killed with the configured weapon &mdash; by default a DIAMOND_PICKAXE &mdash; hitting them with anything else has no effect. When they die they drop random amounts (1-3) of the configured items (STONE and COBBLESTONE by default).</p>
+		<p>The angels move pretty fast, but you can freeze them in place by looking at them and quickly pressing the sneak key. Better arm yourself or flee quickly though, as they&rsquo;ll be after you again in a snap &mdash; and if they touch you, you&rsquo;ll be teleported away to a random location. If configured, your TARDIS Key will also be stolen.</p>
+		<h2>Configuration</h2>
+		<p>The default config is shown below:</p>
+		<pre><code>spawn_rate:
+  how_many: 5
+  how_often: 400
+  max_per_world: 50
+worlds:
+  - world
+freeze_time: 100
+weapon: DIAMOND_PICKAXE
+drops:
+  - STONE
+  - COBBLESTONE
+angels_can_steal: true</code></pre>
+			<p>The <code>spawn_rate</code> section sets Angel spawning options.</p>
+		<ul>
+			<li><code>how_many</code> sets how many Angels to spawn each time.</li>
+			<li><code>how_often</code> is the time period (in server ticks &mdash; <em>20 ticks = 1 second</em>) between spawn attempts.</li>
+			<li><code>max_per_world</code> is the maximum number of Weeping Angels can be alive at one time.</li>
+		</ul>
+		<p>The <code>worlds</code> section allows you to list the worlds you want the angels to spawn in.</p>
+		<p><code>freeze_time</code> is the length of time (in server ticks) that the Angels remain motionless for.</p>
+		<p><code>weapon</code> sets the item that will kill a Weeping Angel.</p>
+		<p><code>drops</code> sets a list of items that drop when the Angel is killed.</p>
+		<p><code>angels_can_steal</code> sets whether the Angels can steal your TARDIS Key &mdash; requires the TARDIS plugin to be installed.</p>
+		<h3 id="video">Video</h3>
+		<p>Coming soon...</p>
+		<!--<iframe src="http://player.vimeo.com/video/66992762" width="600" height="366" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>-->
+	</section>
+</div>
+<footer>
+	<p>Project maintained by <a href="https://github.com/eccentricdevotion">eccentricdevotion</a></p>
+	<p>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></p>
+</footer>
+<!--[if !IE]><script>fixScale(document);</script><![endif]-->
+</body>
+</html>
