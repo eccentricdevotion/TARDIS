@@ -47,23 +47,25 @@ public class TARDISBlockPhysicsListener implements Listener {
         }
         if (plugin.inVortex.size() > 0) {
             Block block = event.getBlock();
-            MaterialData md = block.getState().getData();
-            if (md instanceof SimpleAttachableMaterialData) {
-                Block blockBehind = getBlockBehindAttachable(block, ((SimpleAttachableMaterialData) md).getFacing());
-                if (blockBehind != null) {
-                    if (blockBehind.getType().equals(Material.GLASS) || blockBehind.getType().equals(Material.ICE) || blockBehind.getType().equals(Material.STAINED_GLASS)) {
-                        event.setCancelled(true);
+            if (block != null) {
+                MaterialData md = block.getState().getData();
+                if (md instanceof SimpleAttachableMaterialData) {
+                    Block blockBehind = getBlockBehindAttachable(block, ((SimpleAttachableMaterialData) md).getFacing());
+                    if (blockBehind != null) {
+                        if (blockBehind.getType().equals(Material.GLASS) || blockBehind.getType().equals(Material.ICE) || blockBehind.getType().equals(Material.STAINED_GLASS)) {
+                            event.setCancelled(true);
+                        }
                     }
                 }
-            }
-            if (block.getType().equals(Material.VINE)) {
-                event.setCancelled(true);
-            }
-            if (block.getType().equals(Material.IRON_DOOR_BLOCK) || block.getType().equals(Material.WOODEN_DOOR)) {
-                Block blockBelow = getBlockBelow(block);
-                if (blockBelow != null) {
-                    if (blockBelow.getType().equals(Material.GLASS) || blockBelow.getType().equals(Material.ICE) || blockBelow.getType().equals(Material.WOODEN_DOOR) || blockBelow.getType().equals(Material.IRON_DOOR_BLOCK) || blockBelow.getType().equals(Material.STAINED_GLASS) || blockBelow.getType().equals(Material.AIR)) {
-                        event.setCancelled(true);
+                if (block.getType().equals(Material.VINE)) {
+                    event.setCancelled(true);
+                }
+                if (block.getType().equals(Material.IRON_DOOR_BLOCK) || block.getType().equals(Material.WOODEN_DOOR)) {
+                    Block blockBelow = getBlockBelow(block);
+                    if (blockBelow != null) {
+                        if (blockBelow.getType().equals(Material.GLASS) || blockBelow.getType().equals(Material.ICE) || blockBelow.getType().equals(Material.WOODEN_DOOR) || blockBelow.getType().equals(Material.IRON_DOOR_BLOCK) || blockBelow.getType().equals(Material.STAINED_GLASS) || blockBelow.getType().equals(Material.AIR)) {
+                            event.setCancelled(true);
+                        }
                     }
                 }
             }

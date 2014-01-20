@@ -77,8 +77,10 @@ public class TARDISUtils {
             m = 143;
             d = (byte) 3;
         }
-        b.setTypeId(m);
-        b.setData(d, true);
+        if (b != null) {
+            b.setTypeId(m);
+            b.setData(d, true);
+        }
     }
 
     /**
