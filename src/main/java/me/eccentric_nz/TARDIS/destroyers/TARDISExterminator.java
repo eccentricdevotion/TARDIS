@@ -81,6 +81,10 @@ public class TARDISExterminator {
                 String[] chunkworld = chunkLoc.split(":");
                 World cw = plugin.getServer().getWorld(chunkworld[0]);
                 int restore = getRestore(cw);
+                if (cw == null) {
+                    plugin.debug("The server could not find the TARDIS world, has it been deleted?");
+                    return false;
+                }
                 if (!cw.getName().contains("TARDIS_WORLD_")) {
                     plugin.destroyerI.destroyInner(schm, id, cw, restore, owner, tips);
                 }
@@ -198,6 +202,10 @@ public class TARDISExterminator {
                 }
                 String[] chunkworld = chunkLoc.split(":");
                 World cw = plugin.getServer().getWorld(chunkworld[0]);
+                if (cw == null) {
+                    player.sendMessage(plugin.pluginName + "The server could not find the TARDIS world, has it been deleted?");
+                    return true;
+                }
                 int restore = getRestore(cw);
                 if (!cw.getName().contains("TARDIS_WORLD_")) {
                     plugin.destroyerI.destroyInner(schm, id, cw, restore, playerNameStr, tips);
@@ -205,7 +213,7 @@ public class TARDISExterminator {
                 cleanDatabase(id);
                 cleanWorlds(cw, playerNameStr);
                 player.sendMessage(plugin.pluginName + "The TARDIS was removed from the world and database successfully.");
-                return true;
+                return false;
             } else {
                 // cancel the event because it's not the player's TARDIS
                 player.sendMessage(MESSAGE.NOT_OWNER.getText());

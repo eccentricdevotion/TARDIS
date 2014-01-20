@@ -58,6 +58,7 @@ public class TARDISBlockBreakListener implements Listener {
             Sign sign = (Sign) block.getState();
             String line1 = sign.getLine(1);
             String line2 = sign.getLine(2);
+            // TODO need to get the other sign texts and check them as well
             if (line1.equals(ChatColor.WHITE + "POLICE") && line2.equals(ChatColor.WHITE + "BOX")) {
                 event.setCancelled(true);
                 sign.update();

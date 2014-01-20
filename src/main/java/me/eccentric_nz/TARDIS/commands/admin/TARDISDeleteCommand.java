@@ -30,6 +30,7 @@ import me.eccentric_nz.TARDIS.enumeration.SCHEMATIC;
 import me.eccentric_nz.tardischunkgenerator.TARDISChunkGenerator;
 import org.bukkit.Location;
 import org.bukkit.World;
+import org.bukkit.World.Environment;
 import org.bukkit.WorldType;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -71,6 +72,10 @@ public class TARDISDeleteCommand {
             String[] cdata = chunkLoc.split(":");
             String name = cdata[0];
             World cw = plugin.getServer().getWorld(name);
+            if (cw == null) {
+                sender.sendMessage(plugin.pluginName + "The server could not find the TARDIS world, has it been deleted?");
+                return true;
+            }
             int restore = getRestore(cw);
             // check if player is in the TARDIS
             HashMap<String, Object> wheret = new HashMap<String, Object>();
@@ -155,10 +160,10 @@ public class TARDISDeleteCommand {
     }
 
     private int getRestore(World w) {
-        World.Environment env = w.getEnvironment();
-        if (w.getWorldType() == WorldType.FLAT || w.getName().equals("TARDIS_TimeVortex") || w.getGenerator() instanceof TARDISChunkGenerator) {
+        if (w == null || w.getWorldType() == WorldType.FLAT || w.getName().equals("TARDIS_TimeVortex") || w.getGenerator() instanceof TARDISChunkGenerator) {
             return 0;
         }
+        Environment env = w.getEnvironment();
         switch (env) {
             case NETHER:
                 return 87;
