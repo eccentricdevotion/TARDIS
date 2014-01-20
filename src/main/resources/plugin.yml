@@ -209,6 +209,9 @@ permissions:
   tardis.sonic.emerald:
     description: Allows the sonic screwdriver to be upgraded with Emerald Environment abilities.
     default: op
+  tardis.sonic.sort:
+    description: Allows a player to use the chest sorting function of the sonic screwdriver.
+    default: op
   tardis.store:
     description: Allows the Artron Energy to be stored in an Artron Storage Cell.
     default: op
