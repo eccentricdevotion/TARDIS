@@ -21,6 +21,7 @@
  */
 package me.eccentric_nz.TARDIS.sonic;
 
+import com.griefcraft.lwc.LWC;
 import java.util.Arrays;
 import me.eccentric_nz.TARDIS.TARDIS;
 import org.bukkit.Material;
@@ -34,6 +35,7 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.yi.acru.bukkit.Lockette.Lockette;
 
 /**
  * Borrowed from the SimpleSort plugin.
@@ -65,8 +67,24 @@ public class TARDISSonicSorterListener implements Listener {
                     Block block = event.getClickedBlock();
                     if (block != null && (block.getType() == Material.CHEST || block.getType() == Material.TRAPPED_CHEST)) {
                         Inventory inventory = ((InventoryHolder) block.getState()).getInventory();
-                        sortInventory(inventory, 0, inventory.getSize());
-                        player.sendMessage(plugin.pluginName + "Chest sonically sorted!");
+                        boolean allow = true;
+                        // is Lockette or LWC on the server?
+                        if (plugin.pm.isPluginEnabled("Lockette")) {
+                            Lockette Lockette = (Lockette) plugin.pm.getPlugin("Lockette");
+                            if (Lockette.isProtected(block)) {
+                                allow = false;
+                            }
+                        }
+                        if (plugin.pm.isPluginEnabled("LWC")) {
+                            LWC lwc = (LWC) plugin.pm.getPlugin("LWC");
+                            if (!lwc.canAccessProtection(player, block)) {
+                                allow = false;
+                            }
+                        }
+                        if (allow) {
+                            sortInventory(inventory, 0, inventory.getSize());
+                            player.sendMessage(plugin.pluginName + "Chest sonically sorted!");
+                        }
                     }
                 }
             }
