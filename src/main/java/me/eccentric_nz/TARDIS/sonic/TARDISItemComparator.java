@@ -43,11 +43,11 @@ public class TARDISItemComparator implements Comparator<ItemStack> {
         } else if (item1 == null && item2 == null) {
             return 0;
         } else if (item1 != null && item2 != null) {
-            if (item1.getType().ordinal() > item2.getType().ordinal()) {
+            if (item1.getType().toString().compareTo(item2.getType().toString()) > 0) {
                 return 1;
-            } else if (item1.getType().ordinal() < item2.getType().ordinal()) {
+            } else if (item1.getType().toString().compareTo(item2.getType().toString()) < 0) {
                 return -1;
-            } else if (item1.getType().ordinal() == item2.getType().ordinal()) {
+            } else if (item1.getType().toString().compareTo(item2.getType().toString()) == 0) {
                 if (item1.getDurability() > item2.getDurability()) {
                     return 1;
                 } else if (item1.getDurability() < item2.getDurability()) {
