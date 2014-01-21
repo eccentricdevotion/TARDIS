@@ -17,6 +17,7 @@
 package me.eccentric_nz.TARDIS.sonic;
 
 import com.griefcraft.lwc.LWC;
+import com.griefcraft.lwc.LWCPlugin;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -572,7 +573,8 @@ public class TARDISSonicListener implements Listener {
                         }
                     }
                     if (plugin.pm.isPluginEnabled("LWC")) {
-                        LWC lwc = (LWC) plugin.pm.getPlugin("LWC");
+                        LWCPlugin lwcplug = (LWCPlugin) plugin.pm.getPlugin("LWC");
+                        LWC lwc = lwcplug.getLWC();
                         if (!lwc.canAccessProtection(player, lowerdoor)) {
                             allow = false;
                         }
