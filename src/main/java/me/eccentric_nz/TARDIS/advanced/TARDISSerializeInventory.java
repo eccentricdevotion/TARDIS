@@ -28,8 +28,7 @@ import org.yaml.snakeyaml.external.biz.base64Coder.Base64Coder;
 
 /**
  *
- * @author original code by comphenix
- * @see https://gist.github.com/aadnk/8138186
+ * @author original code by comphenix - https://gist.github.com/aadnk/8138186
  */
 public class TARDISSerializeInventory {
 

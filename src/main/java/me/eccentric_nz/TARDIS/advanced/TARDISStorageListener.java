@@ -79,8 +79,8 @@ public class TARDISStorageListener implements Listener {
             /**
              * Fix incorrect Bukkit behaviour
              *
-             * @see https://bukkit.atlassian.net/browse/BUKKIT-2788
-             * @see https://github.com/Bukkit/CraftBukkit/pull/1130
+             * https://bukkit.atlassian.net/browse/BUKKIT-2788
+             * https://github.com/Bukkit/CraftBukkit/pull/1130
              */
             int isze = (inv.getType().equals(InventoryType.ANVIL)) ? 2 : inv.getSize();
             // scan the inventory for area disks and spit them out
