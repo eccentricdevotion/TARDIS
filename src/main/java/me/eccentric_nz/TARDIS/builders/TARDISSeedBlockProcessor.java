@@ -273,6 +273,8 @@ public class TARDISSeedBlockProcessor {
                 ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
                 if (rsc.resultSet()) {
                     player.sendMessage(plugin.pluginName + "You already have a TARDIS, you left it in " + rsc.getWorld().getName() + " at x:" + rsc.getX() + " y:" + rsc.getY() + " z:" + rsc.getZ());
+                } else {
+                    player.sendMessage(plugin.pluginName + "You already have a TARDIS, but we couldn't find it! Try calling it to you.");
                 }
                 return false;
             }

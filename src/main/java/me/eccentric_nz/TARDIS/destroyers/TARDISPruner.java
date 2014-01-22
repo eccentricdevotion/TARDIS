@@ -71,7 +71,6 @@ public class TARDISPruner {
                     wherecl.put("tardis_id", rs.getInt("tardis_id"));
                     ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
                     if (rsc.resultSet()) {
-
                         // double check that this is an unused TARDIS
                         Timestamp lastuse = new Timestamp(rs.getLong("lastuse"));
                         if (lastuse.before(prune)) {

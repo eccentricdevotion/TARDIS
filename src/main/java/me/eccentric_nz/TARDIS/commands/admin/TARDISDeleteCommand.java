@@ -26,6 +26,7 @@ import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
 import static me.eccentric_nz.TARDIS.destroyers.TARDISExterminator.deleteFolder;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
+import me.eccentric_nz.TARDIS.enumeration.MESSAGE;
 import me.eccentric_nz.TARDIS.enumeration.SCHEMATIC;
 import me.eccentric_nz.tardischunkgenerator.TARDISChunkGenerator;
 import org.bukkit.Location;
@@ -98,7 +99,7 @@ public class TARDISDeleteCommand {
                 d = rsc.getDirection();
             }
             if (bb_loc == null) {
-                sender.sendMessage(plugin.pluginName + "Could not get the location of the TARDIS!");
+                sender.sendMessage(plugin.pluginName + MESSAGE.NO_CURRENT.getText());
                 return true;
             }
             // destroy the TARDIS

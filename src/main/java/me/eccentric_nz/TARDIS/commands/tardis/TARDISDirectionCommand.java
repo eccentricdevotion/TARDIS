@@ -87,7 +87,7 @@ public class TARDISDirectionCommand {
             wherecl.put("tardis_id", id);
             final ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
             if (!rsc.resultSet()) {
-                player.sendMessage(plugin.pluginName + "Could not get the TARDIS location!");
+                player.sendMessage(plugin.pluginName + MESSAGE.NO_CURRENT.getText());
                 return true;
             }
             COMPASS old_d = rsc.getDirection();

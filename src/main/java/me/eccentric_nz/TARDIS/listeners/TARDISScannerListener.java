@@ -28,6 +28,7 @@ import me.eccentric_nz.TARDIS.database.ResultSetNextLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
+import me.eccentric_nz.TARDIS.enumeration.MESSAGE;
 import me.eccentric_nz.TARDIS.rooms.TARDISExteriorRenderer;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -119,7 +120,7 @@ public class TARDISScannerListener implements Listener {
                     } else {
                         ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherenl);
                         if (!rsc.resultSet()) {
-                            player.sendMessage(plugin.pluginName + "Could not get TARDIS's current destination!");
+                            player.sendMessage(plugin.pluginName + MESSAGE.NO_CURRENT.getText());
                             return;
                         }
                         scan_loc = new Location(rsc.getWorld(), rsc.getX(), rsc.getY(), rsc.getZ());

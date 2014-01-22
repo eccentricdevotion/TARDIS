@@ -124,7 +124,7 @@ public class ResultSetBackLocation {
                 plugin.debug("Error closing destinations table! " + e.getMessage());
             }
         }
-        return true;
+        return this.world != null;
     }
 
     public int getBack_id() {

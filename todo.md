@@ -16,7 +16,7 @@
 4. TARDIS invisiblity
 5. HADS + explosions + fireballs + lava
 6. Put farmland, crops, buttons, ladders, levers and signs on last when growing rooms
-
+7. Localisation
 8. Toggle both doors open when shift-clicking the door, and when exiting (if the preset has a door and the door is open) tp the player to the door location.
 
 ##Resource Pack

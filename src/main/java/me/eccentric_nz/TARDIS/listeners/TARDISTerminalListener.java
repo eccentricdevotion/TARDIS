@@ -23,6 +23,7 @@ import java.util.List;
 import java.util.Random;
 import java.util.Set;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.builders.TARDISEmergencyRelocation;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
@@ -193,6 +194,12 @@ public class TARDISTerminalListener implements Listener {
                 if (rsc.resultSet()) {
                     terminalUsers.put(name, rsc);
                     terminalIDs.put(name, id);
+                } else {
+                    Player p = (Player) holder;
+                    // emergency TARDIS relocation
+                    new TARDISEmergencyRelocation(plugin).relocate(id, p);
+                    close(p);
+                    return;
                 }
             }
             HashMap<String, Object> wherepp = new HashMap<String, Object>();

@@ -23,6 +23,7 @@ import java.util.List;
 import java.util.Random;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
+import me.eccentric_nz.TARDIS.builders.TARDISEmergencyRelocation;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetDoors;
@@ -304,7 +305,8 @@ public class TARDISDoorListener implements Listener {
                                     wherecl.put("tardis_id", rs.getTardis_id());
                                     ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
                                     if (!rsc.resultSet()) {
-                                        player.sendMessage(plugin.pluginName + MESSAGE.NO_CURRENT.getText());
+                                        // emergency TARDIS relocation
+                                        new TARDISEmergencyRelocation(plugin).relocate(id, player);
                                         return;
                                     }
                                     COMPASS d_backup = rsc.getDirection();
@@ -319,7 +321,8 @@ public class TARDISDoorListener implements Listener {
                                         userTP = false;
                                     }
                                     // get players direction
-                                    COMPASS pd = COMPASS.valueOf(plugin.utils.getPlayersDirection(player, false));                                    // get the other door direction
+                                    COMPASS pd = COMPASS.valueOf(plugin.utils.getPlayersDirection(player, false));
+                                    // get the other door direction
                                     final COMPASS d;
                                     HashMap<String, Object> other = new HashMap<String, Object>();
                                     other.put("tardis_id", id);

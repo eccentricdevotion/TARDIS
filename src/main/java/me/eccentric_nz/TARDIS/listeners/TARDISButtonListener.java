@@ -25,6 +25,7 @@ import me.eccentric_nz.TARDIS.ARS.TARDISARSInventory;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
 import me.eccentric_nz.TARDIS.advanced.TARDISSerializeInventory;
+import me.eccentric_nz.TARDIS.builders.TARDISEmergencyRelocation;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetBackLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetControls;
@@ -151,7 +152,8 @@ public class TARDISButtonListener implements Listener {
                                     wherecl.put("tardis_id", rs.getTardis_id());
                                     ResultSetCurrentLocation rscl = new ResultSetCurrentLocation(plugin, wherecl);
                                     if (!rscl.resultSet()) {
-                                        player.sendMessage(plugin.pluginName + ChatColor.RED + MESSAGE.NO_CURRENT.getText());
+                                        // emergency TARDIS relocation
+                                        new TARDISEmergencyRelocation(plugin).relocate(id, player);
                                         return;
                                     }
                                     COMPASS dir = rscl.getDirection();
@@ -291,6 +293,8 @@ public class TARDISButtonListener implements Listener {
                                                 player.sendMessage(plugin.pluginName + "You are already at the previous location. You need to travel somewhere else first!");
                                             }
                                         }
+                                    } else {
+                                        player.sendMessage(plugin.pluginName + "Could not get the previous location!");
                                     }
                                     break;
                                 case 9:

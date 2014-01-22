@@ -80,7 +80,7 @@ public class TARDISRebuildCommand {
             wherecl.put("tardis_id", rs.getTardis_id());
             final ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
             if (!rsc.resultSet()) {
-                player.sendMessage(plugin.pluginName + "Could not get the TARDIS location!");
+                player.sendMessage(plugin.pluginName + MESSAGE.NO_CURRENT.getText());
                 return true;
             }
             final Location l = new Location(rsc.getWorld(), rsc.getX(), rsc.getY(), rsc.getZ());

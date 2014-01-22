@@ -22,6 +22,7 @@ import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
+import me.eccentric_nz.TARDIS.enumeration.MESSAGE;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -114,7 +115,7 @@ public class TARDISCaveFinder {
                 p.sendMessage(plugin.pluginName + "You cannot travel to a cave in the " + w.getEnvironment().toString() + "!");
             }
         } else {
-            p.sendMessage(plugin.pluginName + "Could not get the TARDIS's current location!");
+            p.sendMessage(plugin.pluginName + MESSAGE.NO_CURRENT.getText());
         }
         return l;
     }

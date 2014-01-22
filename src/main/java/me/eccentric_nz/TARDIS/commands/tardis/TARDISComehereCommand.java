@@ -119,105 +119,113 @@ public class TARDISComehereCommand {
                 if (plugin.getConfig().getBoolean("travel.chameleon")) {
                     chamtmp = rs.isChamele_on();
                 }
-                final boolean hidden = rs.isHidden();
+                boolean hidden = rs.isHidden();
                 // get current police box location
                 HashMap<String, Object> wherecl = new HashMap<String, Object>();
                 wherecl.put("tardis_id", id);
                 final ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
-                if (rsc.resultSet()) {
-                    final COMPASS d = rsc.getDirection();
-                    TARDISTimeTravel tt = new TARDISTimeTravel(plugin);
-                    int count;
-                    boolean sub = false;
-                    Block b = eyeLocation.getBlock();
-                    if (b.getRelative(BlockFace.UP).getTypeId() == 8 || b.getRelative(BlockFace.UP).getTypeId() == 9) {
-                        count = (tt.isSafeSubmarine(eyeLocation, d)) ? 0 : 1;
-                        if (count == 0) {
-                            sub = true;
-                        }
-                    } else {
-                        int[] start_loc = tt.getStartLocation(eyeLocation, d);
-                        // safeLocation(int startx, int starty, int startz, int resetx, int resetz, World w, COMPASS d)
-                        count = tt.safeLocation(start_loc[0], eyeLocation.getBlockY(), start_loc[2], start_loc[1], start_loc[3], eyeLocation.getWorld(), d);
-                    }
-                    if (count > 0) {
-                        player.sendMessage(plugin.pluginName + "That location would grief existing blocks! Try somewhere else!");
-                        return true;
-                    }
-                    int ch = plugin.getArtronConfig().getInt("comehere");
-                    if (level < ch) {
-                        player.sendMessage(plugin.pluginName + ChatColor.RED + MESSAGE.NOT_ENOUGH_ENERGY.getText());
-                        return true;
-                    }
-                    final Player p = player;
-                    final boolean cham = chamtmp;
-                    World w = rsc.getWorld();
-                    if (w != null) {
-                        final Location oldSave = new Location(w, rsc.getX(), rsc.getY(), rsc.getZ());
-                        final QueryFactory qf = new QueryFactory(plugin);
-                        HashMap<String, Object> tid = new HashMap<String, Object>();
-                        tid.put("tardis_id", id);
-                        HashMap<String, Object> set = new HashMap<String, Object>();
-                        set.put("world", eyeLocation.getWorld().getName());
-                        set.put("x", eyeLocation.getBlockX());
-                        set.put("y", eyeLocation.getBlockY());
-                        set.put("z", eyeLocation.getBlockZ());
-                        set.put("submarine", (sub) ? 1 : 0);
-                        if (hidden) {
-                            HashMap<String, Object> sett = new HashMap<String, Object>();
-                            sett.put("hidden", 0);
-                            HashMap<String, Object> ttid = new HashMap<String, Object>();
-                            ttid.put("tardis_id", id);
-                            qf.doUpdate("tardis", sett, ttid);
-                        }
-                        qf.doUpdate("current", set, tid);
-                        // set fast return location
-                        HashMap<String, Object> bid = new HashMap<String, Object>();
-                        bid.put("tardis_id", id);
-                        HashMap<String, Object> bset = new HashMap<String, Object>();
-                        bset.put("world", rsc.getWorld().getName());
-                        bset.put("x", rsc.getX());
-                        bset.put("y", rsc.getY());
-                        bset.put("z", rsc.getZ());
-                        bset.put("direction", rsc.getDirection().toString());
-                        bset.put("submarine", rsc.isSubmarine());
-                        qf.doUpdate("back", bset, bid);
-                        player.sendMessage(plugin.pluginName + "The TARDIS is coming...");
-                        final boolean mat = plugin.getConfig().getBoolean("police_box.materialise");
-                        long delay = (mat) ? 1L : 180L;
-                        plugin.inVortex.add(Integer.valueOf(id));
-                        final boolean loc_is_sub = sub;
-                        Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
-                            @Override
-                            public void run() {
-                                if (!hidden) {
-                                    plugin.tardisDematerialising.add(Integer.valueOf(id));
-                                    plugin.destroyerP.destroyPreset(oldSave, d, id, false, mat, cham, p, rsc.isSubmarine());
-                                } else {
-                                    plugin.destroyerP.removeBlockProtection(id, qf);
-                                }
-                            }
-                        }, delay);
-                        Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
-                            @Override
-                            public void run() {
-                                plugin.builderP.buildPreset(id, eyeLocation, d, cham, p, false, false, loc_is_sub);
-                            }
-                        }, delay * 2);
-                        // remove energy from TARDIS
-                        HashMap<String, Object> wheret = new HashMap<String, Object>();
-                        wheret.put("tardis_id", id);
-                        qf.alterEnergyLevel("tardis", -ch, wheret, player);
-                        plugin.tardisHasDestination.remove(id);
-                        if (plugin.trackRescue.containsKey(Integer.valueOf(id))) {
-                            plugin.trackRescue.remove(Integer.valueOf(id));
-                        }
-                        return true;
+                if (!rsc.resultSet()) {
+                    hidden = true;
+                }
+                final COMPASS d = rsc.getDirection();
+                TARDISTimeTravel tt = new TARDISTimeTravel(plugin);
+                int count;
+                boolean sub = false;
+                Block b = eyeLocation.getBlock();
+                if (b.getRelative(BlockFace.UP).getTypeId() == 8 || b.getRelative(BlockFace.UP).getTypeId() == 9) {
+                    count = (tt.isSafeSubmarine(eyeLocation, d)) ? 0 : 1;
+                    if (count == 0) {
+                        sub = true;
                     }
                 } else {
-                    player.sendMessage(plugin.pluginName + "Could not get the previous location of the TARDIS!");
+                    int[] start_loc = tt.getStartLocation(eyeLocation, d);
+                    // safeLocation(int startx, int starty, int startz, int resetx, int resetz, World w, COMPASS d)
+                    count = tt.safeLocation(start_loc[0], eyeLocation.getBlockY(), start_loc[2], start_loc[1], start_loc[3], eyeLocation.getWorld(), d);
+                }
+                if (count > 0) {
+                    player.sendMessage(plugin.pluginName + "That location would grief existing blocks! Try somewhere else!");
                     return true;
                 }
+                int ch = plugin.getArtronConfig().getInt("comehere");
+                if (level < ch) {
+                    player.sendMessage(plugin.pluginName + ChatColor.RED + MESSAGE.NOT_ENOUGH_ENERGY.getText());
+                    return true;
+                }
+                final Player p = player;
+                final boolean cham = chamtmp;
+                World w = rsc.getWorld();
+                final QueryFactory qf = new QueryFactory(plugin);
+                Location oldSave = null;
+                HashMap<String, Object> bid = new HashMap<String, Object>();
+                bid.put("tardis_id", id);
+                HashMap<String, Object> bset = new HashMap<String, Object>();
+                if (w != null) {
+                    oldSave = new Location(w, rsc.getX(), rsc.getY(), rsc.getZ());
+                    // set fast return location
+                    bset.put("world", rsc.getWorld().getName());
+                    bset.put("x", rsc.getX());
+                    bset.put("y", rsc.getY());
+                    bset.put("z", rsc.getZ());
+                    bset.put("direction", rsc.getDirection().toString());
+                    bset.put("submarine", rsc.isSubmarine());
+                } else {
+                    // set fast return location
+                    bset.put("world", eyeLocation.getWorld().getName());
+                    bset.put("x", eyeLocation.getX());
+                    bset.put("y", eyeLocation.getY());
+                    bset.put("z", eyeLocation.getZ());
+                    bset.put("submarine", (sub) ? 1 : 0);
+                }
+                qf.doUpdate("back", bset, bid);
+                HashMap<String, Object> tid = new HashMap<String, Object>();
+                tid.put("tardis_id", id);
+                HashMap<String, Object> set = new HashMap<String, Object>();
+                set.put("world", eyeLocation.getWorld().getName());
+                set.put("x", eyeLocation.getBlockX());
+                set.put("y", eyeLocation.getBlockY());
+                set.put("z", eyeLocation.getBlockZ());
+                set.put("submarine", (sub) ? 1 : 0);
+                if (hidden) {
+                    HashMap<String, Object> sett = new HashMap<String, Object>();
+                    sett.put("hidden", 0);
+                    HashMap<String, Object> ttid = new HashMap<String, Object>();
+                    ttid.put("tardis_id", id);
+                    qf.doUpdate("tardis", sett, ttid);
+                }
+                qf.doUpdate("current", set, tid);
+                player.sendMessage(plugin.pluginName + "The TARDIS is coming...");
+                final boolean mat = plugin.getConfig().getBoolean("police_box.materialise");
+                long delay = (mat) ? 1L : 180L;
+                plugin.inVortex.add(Integer.valueOf(id));
+                final boolean loc_is_sub = sub;
+                final boolean hid = hidden;
+                final Location old = oldSave;
+                Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
+                    @Override
+                    public void run() {
+                        if (!hid) {
+                            plugin.tardisDematerialising.add(Integer.valueOf(id));
+                            plugin.destroyerP.destroyPreset(old, d, id, false, mat, cham, p, rsc.isSubmarine());
+                        } else {
+                            plugin.destroyerP.removeBlockProtection(id, qf);
+                        }
+                    }
+                }, delay);
+                Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
+                    @Override
+                    public void run() {
+                        plugin.builderP.buildPreset(id, eyeLocation, d, cham, p, false, false, loc_is_sub);
+                    }
+                }, delay * 2);
+                // remove energy from TARDIS
+                HashMap<String, Object> wheret = new HashMap<String, Object>();
+                wheret.put("tardis_id", id);
+                qf.alterEnergyLevel("tardis", -ch, wheret, player);
+                plugin.tardisHasDestination.remove(id);
+                if (plugin.trackRescue.containsKey(Integer.valueOf(id))) {
+                    plugin.trackRescue.remove(Integer.valueOf(id));
+                }
+                return true;
             } else {
                 player.sendMessage(plugin.pluginName + MESSAGE.NO_PERMS.getText());
                 return false;
@@ -226,6 +234,5 @@ public class TARDISComehereCommand {
             player.sendMessage(plugin.pluginName + "You need to craft a Stattenheim Remote Control! Type " + ChatColor.AQUA + "/tardisrecipe remote" + ChatColor.RESET + " to see how to make it.");
             return true;
         }
-        return false;
     }
 }

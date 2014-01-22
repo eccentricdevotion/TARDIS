@@ -225,7 +225,7 @@ public class TARDISTravelCommands implements CommandExecutor {
                                 wherecl.put("tardis_id", id);
                                 ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
                                 if (!rsc.resultSet()) {
-                                    player.sendMessage(plugin.pluginName + "Could not get the current TARDIS location!");
+                                    player.sendMessage(plugin.pluginName + MESSAGE.NO_CURRENT.getText());
                                     return true;
                                 }
                                 // check the to player's DND status
@@ -268,7 +268,7 @@ public class TARDISTravelCommands implements CommandExecutor {
                                 wherecl.put("tardis_id", rs.getTardis_id());
                                 ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
                                 if (!rsc.resultSet()) {
-                                    player.sendMessage(plugin.pluginName + "Could not get the current TARDIS location!");
+                                    player.sendMessage(plugin.pluginName + MESSAGE.NO_CURRENT.getText());
                                     return true;
                                 }
                                 Location nsob = searchBiome(player, id, biome, rsc.getWorld(), rsc.getX(), rsc.getZ());
@@ -356,7 +356,7 @@ public class TARDISTravelCommands implements CommandExecutor {
                                 wherecl.put("tardis_id", rs.getTardis_id());
                                 ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
                                 if (!rsc.resultSet()) {
-                                    player.sendMessage(plugin.pluginName + "Could not get the current TARDIS location!");
+                                    player.sendMessage(plugin.pluginName + MESSAGE.NO_CURRENT.getText());
                                     return true;
                                 }
                                 set.put("direction", rsc.getDirection().toString());
@@ -410,7 +410,7 @@ public class TARDISTravelCommands implements CommandExecutor {
                         wherecl.put("tardis_id", id);
                         ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
                         if (!rsc.resultSet()) {
-                            player.sendMessage(plugin.pluginName + "Could not get the current TARDIS location!");
+                            player.sendMessage(plugin.pluginName + MESSAGE.NO_CURRENT.getText());
                             return true;
                         }
                         if (rsc.isSubmarine()) {
@@ -536,7 +536,7 @@ public class TARDISTravelCommands implements CommandExecutor {
         wherecl.put("tardis_id", id);
         ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
         if (!rsc.resultSet()) {
-            p.sendMessage(plugin.pluginName + "Could not get the current TARDIS location!");
+            p.sendMessage(plugin.pluginName + MESSAGE.NO_CURRENT.getText());
             return null;
         }
         Location l = null;
@@ -617,7 +617,7 @@ public class TARDISTravelCommands implements CommandExecutor {
         wherecl.put("tardis_id", id);
         ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
         if (!rsc.resultSet()) {
-            player.sendMessage(plugin.pluginName + "Could not get the current TARDIS location!");
+            player.sendMessage(plugin.pluginName + MESSAGE.NO_CURRENT.getText());
             return 1;
         }
         // check location

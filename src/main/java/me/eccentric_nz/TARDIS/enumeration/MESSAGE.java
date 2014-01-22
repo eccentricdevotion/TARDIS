@@ -22,6 +22,7 @@ package me.eccentric_nz.TARDIS.enumeration;
  */
 public enum MESSAGE {
 
+    EMERGENCY("The world the TARDIS was in could not be found, attempting emergency relocation!"),
     NO_PERMS("You do not have permission to do that!"),
     NOT_OWNER("You are not the Timelord or Companion for this TARDIS!"),
     NO_TARDIS("You have not created a TARDIS yet!"),

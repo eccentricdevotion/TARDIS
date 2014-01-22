@@ -137,12 +137,12 @@ public class TARDISExterminator {
                 wherecl.put("z", bd_loc.getBlockZ());
                 ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
                 if (!rsc.resultSet()) {
-                    player.sendMessage(plugin.pluginName + ChatColor.RED + "Could not get TARDIS save location!");
+                    player.sendMessage(plugin.pluginName + ChatColor.RED + MESSAGE.NO_CURRENT.getText());
                     return false;
                 }
                 where.put("tardis_id", rsc.getTardis_id());
             } else {
-                player.sendMessage(plugin.pluginName + ChatColor.RED + "Could not get TARDIS save location!");
+                player.sendMessage(plugin.pluginName + ChatColor.RED + MESSAGE.NO_CURRENT.getText());
                 return false;
             }
         } else {
@@ -169,7 +169,7 @@ public class TARDISExterminator {
             wherecl.put("tardis_id", id);
             ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
             if (!rsc.resultSet()) {
-                player.sendMessage(plugin.pluginName + ChatColor.RED + "Could not get TARDIS location from sign!");
+                player.sendMessage(plugin.pluginName + ChatColor.RED + MESSAGE.NO_CURRENT.getText());
                 return false;
             }
             Location bb_loc = new Location(rsc.getWorld(), rsc.getX(), rsc.getY(), rsc.getZ());

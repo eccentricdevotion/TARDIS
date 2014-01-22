@@ -29,7 +29,6 @@ import me.eccentric_nz.TARDIS.database.ResultSetNextLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
-import me.eccentric_nz.TARDIS.enumeration.MESSAGE;
 import me.eccentric_nz.TARDIS.travel.TARDISMalfunction;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -112,6 +111,7 @@ public class TARDISHandbrakeListener implements Listener {
                             return;
                         }
                         final boolean cham = rs.isChamele_on();
+                        boolean hidden = rs.isHidden();
                         String beacon = rs.getBeacon();
                         String eps = rs.getEps();
                         String creeper = rs.getCreeper();
@@ -144,15 +144,17 @@ public class TARDISHandbrakeListener implements Listener {
                                         HashMap<String, Object> wherecl = new HashMap<String, Object>();
                                         wherecl.put("tardis_id", id);
                                         ResultSetCurrentLocation rscl = new ResultSetCurrentLocation(plugin, wherecl);
+                                        String resetw = "";
+                                        Location l = null;
                                         if (!rscl.resultSet()) {
-                                            player.sendMessage(plugin.pluginName + MESSAGE.NO_CURRENT.getText());
-                                            return;
+                                            hidden = true;
+                                        } else {
+                                            resetw = rscl.getWorld().getName();
+                                            l = new Location(rscl.getWorld(), rscl.getX(), rscl.getY(), rscl.getZ());
                                         }
                                         final COMPASS cd = rscl.getDirection();
                                         boolean sub = rscl.isSubmarine();
                                         COMPASS tmpd = cd;
-                                        Location l = new Location(rscl.getWorld(), rscl.getX(), rscl.getY(), rscl.getZ());
-                                        String resetw = rscl.getWorld().getName();
                                         boolean malfunction = false;
                                         boolean is_next_sub = false;
                                         if (plugin.getConfig().getInt("preferences.malfunction") > 0) {
@@ -226,7 +228,7 @@ public class TARDISHandbrakeListener implements Listener {
                                             }
                                             boolean mat = plugin.getConfig().getBoolean("police_box.materialise");
                                             plugin.inVortex.add(Integer.valueOf(id));
-                                            if (!rs.isHidden() && !plugin.trackReset.contains(resetw)) {
+                                            if (!hidden && !plugin.trackReset.contains(resetw)) {
                                                 plugin.tardisDematerialising.add(Integer.valueOf(Integer.valueOf(id)));
                                                 plugin.destroyerP.destroyPreset(l, cd, id, false, mat, cham, player, sub);
                                             } else {
@@ -267,16 +269,22 @@ public class TARDISHandbrakeListener implements Listener {
                                             wherecu.put("tardis_id", id);
                                             ResultSetCurrentLocation rscu = new ResultSetCurrentLocation(plugin, wherecu);
                                             if (!rscu.resultSet()) {
-                                                player.sendMessage(plugin.pluginName + MESSAGE.NO_CURRENT.getText());
-                                                return;
+                                                // back
+                                                setback.put("world", exit.getWorld().getName());
+                                                setback.put("x", exit.getX());
+                                                setback.put("y", exit.getY());
+                                                setback.put("z", exit.getZ());
+                                                setback.put("direction", exit.getDirection().toString());
+                                                setback.put("submarine", (is_next_sub) ? 1 : 0);
+                                            } else {
+                                                // back
+                                                setback.put("world", rscu.getWorld().getName());
+                                                setback.put("x", rscu.getX());
+                                                setback.put("y", rscu.getY());
+                                                setback.put("z", rscu.getZ());
+                                                setback.put("direction", rscu.getDirection().toString());
+                                                setback.put("submarine", (rscu.isSubmarine()) ? 1 : 0);
                                             }
-                                            // back
-                                            setback.put("world", rscu.getWorld().getName());
-                                            setback.put("x", rscu.getX());
-                                            setback.put("y", rscu.getY());
-                                            setback.put("z", rscu.getZ());
-                                            setback.put("direction", rscu.getDirection().toString());
-                                            setback.put("submarine", (rscu.isSubmarine()) ? 1 : 0);
                                             whereback.put("tardis_id", id);
                                             // update Police Box door direction
                                             setdoor.put("door_direction", sd.toString());
@@ -290,7 +298,7 @@ public class TARDISHandbrakeListener implements Listener {
                                             }
                                             set.put("lastuse", now);
                                             if (plugin.getAchivementConfig().getBoolean("travel.enabled") && !plugin.trackReset.contains(resetw)) {
-                                                if (l.getWorld().equals(exit.getWorld())) {
+                                                if (l != null && l.getWorld().equals(exit.getWorld())) {
                                                     dist = (int) l.distance(exit);
                                                 }
                                             }
