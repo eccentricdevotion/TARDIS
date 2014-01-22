@@ -155,10 +155,13 @@ public class TARDISDeinstaPreset {
             ArrayList<HashMap<String, String>> data = rsb.getData();
             for (HashMap<String, String> map : data) {
                 int bID = 0;
+                byte bd = (byte) 0;
                 if (map.get("block") != null) {
                     bID = plugin.utils.parseInt(map.get("block"));
                 }
-                byte bd = plugin.utils.parseByte(map.get("data"));
+                if (map.get("data") != null) {
+                    bd = plugin.utils.parseByte(map.get("data"));
+                }
                 String locStr = map.get("location");
                 String[] loc_data = locStr.split(",");
                 // x, y, z - 1, 2, 3

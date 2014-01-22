@@ -108,7 +108,6 @@ public class TARDISUtils {
         byte data = b.getData();
         set.put("block", bid);
         set.put("data", data);
-        //}
         set.put("police_box", 1);
         qf.doInsert("blocks", set);
         plugin.protectBlockMap.put(l, id);
