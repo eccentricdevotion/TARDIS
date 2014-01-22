@@ -310,6 +310,9 @@ public class TARDISConfiguration {
             if (config.contains("rooms.FIRST")) {
                 plugin.getConfig().set("rooms.FIRST", null);
             }
+            if (config.contains("creation.materialise")) {
+                plugin.getConfig().set("creation.materialise", null);
+            }
             if (config.contains("difficulty") && config.getString("difficulty").equals("normal")) {
                 plugin.getConfig().set("difficulty", "hard");
             }
