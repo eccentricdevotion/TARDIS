@@ -147,7 +147,7 @@ public class TARDISArtronCapacitorListener implements Listener {
                                             return;
                                         }
                                         List<String> lore = im.getLore();
-                                        int charge = plugin.utils.parseNum(lore.get(1));
+                                        int charge = plugin.utils.parseInt(lore.get(1));
                                         if (charge <= 0) {
                                             player.sendMessage(plugin.pluginName + "The Artron Storage Cell is not charged!");
                                             return;
@@ -177,15 +177,16 @@ public class TARDISArtronCapacitorListener implements Listener {
                                         String[] creeperData = creeper.split(":");
                                         String[] beaconData = beacon.split(":");
                                         World w = block.getLocation().getWorld();
-                                        float cx = 0, cy = 0, cz = 0, bx = 0, by = 0, bz = 0;
+                                        float cx = 0, cy = 0, cz = 0;
+                                        int bx = 0, by = 0, bz = 0;
                                         try {
-                                            cx = Float.parseFloat(creeperData[1]);
-                                            cy = Float.parseFloat(creeperData[2]) + 1;
-                                            cz = Float.parseFloat(creeperData[3]);
+                                            cx = plugin.utils.parseFloat(creeperData[1]);
+                                            cy = plugin.utils.parseFloat(creeperData[2]) + 1;
+                                            cz = plugin.utils.parseFloat(creeperData[3]);
                                             if (beaconData.length > 2) {
-                                                bx = Float.parseFloat(beaconData[1]);
-                                                by = Float.parseFloat(beaconData[2]);
-                                                bz = Float.parseFloat(beaconData[3]);
+                                                bx = plugin.utils.parseInt(beaconData[1]);
+                                                by = plugin.utils.parseInt(beaconData[2]);
+                                                bz = plugin.utils.parseInt(beaconData[3]);
                                             }
                                         } catch (NumberFormatException nfe) {
                                             plugin.debug("Couldn't convert to a float! " + nfe.getMessage());

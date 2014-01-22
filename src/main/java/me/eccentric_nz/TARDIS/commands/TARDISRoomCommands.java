@@ -90,7 +90,7 @@ public class TARDISRoomCommands implements CommandExecutor {
                             BufferedWriter bw = new BufferedWriter(new FileWriter(file, false));
                             for (Map.Entry<String, Integer> entry : blockIDs.entrySet()) {
                                 String[] data = entry.getKey().split(":");
-                                int bid = plugin.utils.parseNum(data[0]);
+                                int bid = plugin.utils.parseInt(data[0]);
                                 String mat = Material.getMaterial(bid).toString();
                                 String line = mat + " (" + entry.getKey() + "), " + entry.getValue();
                                 bw.write(line);
@@ -131,7 +131,7 @@ public class TARDISRoomCommands implements CommandExecutor {
                     sender.sendMessage(plugin.pluginName + name + " blocks:");
                     for (Map.Entry<String, Integer> entry : blockIDs.entrySet()) {
                         String[] block_data = entry.getKey().split(":");
-                        int bid = plugin.utils.parseNum(block_data[0]);
+                        int bid = plugin.utils.parseInt(block_data[0]);
                         String mat;
                         if (hasPrefs && block_data.length == 2 && (block_data[1].equals("1") || block_data[1].equals("8"))) {
                             mat = (block_data[1].equals("1")) ? wall : floor;
@@ -181,7 +181,7 @@ public class TARDISRoomCommands implements CommandExecutor {
                     sender.sendMessage(plugin.pluginName + "You need to condense the following blocks to grow a " + name + ":");
                     for (Map.Entry<String, Integer> entry : blockIDs.entrySet()) {
                         String[] block_data = entry.getKey().split(":");
-                        int bid = plugin.utils.parseNum(block_data[0]);
+                        int bid = plugin.utils.parseInt(block_data[0]);
                         String mat;
                         if (hasPrefs && block_data.length == 2 && (block_data[1].equals("1") || block_data[1].equals("8"))) {
                             mat = (block_data[1].equals("1")) ? wall : floor;
@@ -288,7 +288,7 @@ public class TARDISRoomCommands implements CommandExecutor {
                     // cost, offset or seed?
                     try {
                         // cost
-                        int num = Integer.parseInt(args[1]);
+                        int num = plugin.utils.parseInt(args[1]);
                         if (num > 0) {
                             plugin.getRoomsConfig().set("rooms." + name + ".cost", num);
                             sender.sendMessage(plugin.pluginName + "The " + name + " cost was set to " + num + "!");

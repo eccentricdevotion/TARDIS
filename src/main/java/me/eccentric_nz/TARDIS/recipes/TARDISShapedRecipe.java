@@ -53,7 +53,7 @@ public class TARDISShapedRecipe {
         int amount = plugin.getRecipesConfig().getInt("shaped." + s + ".amount");
         ItemStack is;
         if (result_iddata.length == 2) {
-            short result_data = Short.parseShort(result_iddata[1]);
+            short result_data = plugin.utils.parseShort(result_iddata[1]);
             is = new ItemStack(mat, amount, result_data);
         } else {
             is = new ItemStack(mat, amount);
@@ -80,7 +80,7 @@ public class TARDISShapedRecipe {
                 String[] recipe_iddata = plugin.getRecipesConfig().getString("shaped." + s + "." + difficulty + "_ingredients." + g).split(":");
                 Material m = Material.valueOf(recipe_iddata[0]);
                 if (recipe_iddata.length == 2) {
-                    int recipe_data = Integer.parseInt(recipe_iddata[1]);
+                    int recipe_data = plugin.utils.parseInt(recipe_iddata[1]);
                     r.setIngredient(c, m, recipe_data);
                 } else {
                     r.setIngredient(c, m);

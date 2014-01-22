@@ -74,7 +74,7 @@ public class TARDISAchievementFactory {
                 }
             } else {
                 int req = plugin.getAchivementConfig().getInt(name + ".required");
-                int have = plugin.utils.parseNum(rsa.getAmount());
+                int have = plugin.utils.parseInt(rsa.getAmount());
                 int sum = have + (Integer) obj;
                 if (sum >= req) {
                     achieved = true;
@@ -107,7 +107,7 @@ public class TARDISAchievementFactory {
                         qf.doUpdate("achievements", seta, wherem);
                     }
                 } else {
-                    seta.put("amount", plugin.utils.parseNum(rsa.getAmount()) + (Integer) obj);
+                    seta.put("amount", plugin.utils.parseInt(rsa.getAmount()) + (Integer) obj);
                     qf.doUpdate("achievements", seta, wherem);
                 }
             }

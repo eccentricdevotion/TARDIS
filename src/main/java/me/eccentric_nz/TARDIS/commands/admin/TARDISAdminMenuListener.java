@@ -19,6 +19,7 @@ package me.eccentric_nz.TARDIS.commands.admin;
 import java.util.Arrays;
 import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -48,12 +49,12 @@ public class TARDISAdminMenuListener implements Listener {
         this.plugin = plugin;
     }
 
-    @SuppressWarnings("deprecation")
+    // TODO move this somewhere more appropriate?
     @EventHandler(priority = EventPriority.NORMAL)
     public void onPlayerInteract(PlayerInteractEvent event) {
         Player p = event.getPlayer();
-        int inhand = p.getItemInHand().getTypeId();
-        if (event.getAction().equals(Action.RIGHT_CLICK_AIR) && inhand == 347 && p.hasPermission("tardis.temporal")) {
+        Material inhand = p.getItemInHand().getType();
+        if (event.getAction().equals(Action.RIGHT_CLICK_AIR) && inhand.equals(Material.WATCH) && p.hasPermission("tardis.temporal")) {
             p.resetPlayerTime();
             if (plugin.trackSetTime.containsKey(p.getName())) {
                 plugin.trackSetTime.remove(p.getName());

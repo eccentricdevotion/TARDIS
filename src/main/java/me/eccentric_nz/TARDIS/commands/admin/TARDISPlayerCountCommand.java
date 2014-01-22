@@ -42,7 +42,7 @@ public class TARDISPlayerCountCommand {
         if (rsc.resultSet()) {
             if (args.length == 3) {
                 // set count
-                int count = plugin.utils.parseNum(args[2]);
+                int count = plugin.utils.parseInt(args[2]);
                 HashMap<String, Object> setc = new HashMap<String, Object>();
                 setc.put("count", count);
                 HashMap<String, Object> wherec = new HashMap<String, Object>();

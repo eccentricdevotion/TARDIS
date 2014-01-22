@@ -315,9 +315,9 @@ public class TARDISFarmer {
                     // get location of farm room
                     String[] data = farm.split(":");
                     World world = plugin.getServer().getWorld(data[0]);
-                    int x = plugin.utils.parseNum(data[1]);
-                    int y = plugin.utils.parseNum(data[2]) + 1;
-                    int z = plugin.utils.parseNum(data[3]);
+                    int x = plugin.utils.parseInt(data[1]);
+                    int y = plugin.utils.parseInt(data[2]) + 1;
+                    int z = plugin.utils.parseInt(data[3]);
                     if (old_macd_had_a_chicken.size() > 0) {
                         Location chicken_pen = new Location(world, x + 3, y, z - 3);
                         while (!world.getChunkAt(chicken_pen).isLoaded()) {
@@ -427,9 +427,9 @@ public class TARDISFarmer {
                     // get location of stable room
                     String[] data = stable.split(":");
                     World world = plugin.getServer().getWorld(data[0]);
-                    int x = plugin.utils.parseNum(data[1]);
-                    int y = plugin.utils.parseNum(data[2]) + 1;
-                    int z = plugin.utils.parseNum(data[3]);
+                    int x = plugin.utils.parseInt(data[1]);
+                    int y = plugin.utils.parseInt(data[2]) + 1;
+                    int z = plugin.utils.parseInt(data[3]);
                     if (old_macd_had_a_horse.size() > 0) {
                         Location horse_pen = new Location(world, x + 0.5F, y, z + 0.5F);
                         while (!world.getChunkAt(horse_pen).isLoaded()) {
@@ -499,9 +499,9 @@ public class TARDISFarmer {
                     // get location of village room
                     String[] data = village.split(":");
                     World world = plugin.getServer().getWorld(data[0]);
-                    int x = plugin.utils.parseNum(data[1]);
-                    int y = plugin.utils.parseNum(data[2]) + 1;
-                    int z = plugin.utils.parseNum(data[3]);
+                    int x = plugin.utils.parseInt(data[1]);
+                    int y = plugin.utils.parseInt(data[2]) + 1;
+                    int z = plugin.utils.parseInt(data[3]);
                     if (old_macd_had_a_villager.size() > 0) {
                         Location v_room = new Location(world, x + 0.5F, y, z + 0.5F);
                         while (!world.getChunkAt(v_room).isLoaded()) {

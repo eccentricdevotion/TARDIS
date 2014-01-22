@@ -35,11 +35,11 @@ public class TARDISPruneCommand {
     public boolean startPruning(CommandSender sender, String[] args) {
         TARDISPruner pruner = new TARDISPruner(plugin);
         try {
-            int days = Integer.parseInt(args[1]);
+            int days = plugin.utils.parseInt(args[1]);
             pruner.prune(sender, days);
         } catch (NumberFormatException nfe) {
             if (args[1].equalsIgnoreCase("list") && args.length == 3) {
-                int days = plugin.utils.parseNum(args[2]);
+                int days = plugin.utils.parseInt(args[2]);
                 pruner.list(sender, days);
             }
         }

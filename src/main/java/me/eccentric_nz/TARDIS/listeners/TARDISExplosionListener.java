@@ -64,7 +64,7 @@ public class TARDISExplosionListener implements Listener {
             ArrayList<HashMap<String, String>> data = rs.getData();
             for (HashMap<String, String> map : data) {
                 String location = map.get("location");
-                int id = plugin.utils.parseNum(map.get("tardis_id"));
+                int id = plugin.utils.parseInt(map.get("tardis_id"));
                 String[] loc_tmp = location.split(",");
                 String[] wStr = loc_tmp[0].split("=");
                 String world = wStr[2].substring(0, wStr[2].length() - 1);
@@ -73,9 +73,9 @@ public class TARDISExplosionListener implements Listener {
                     String[] xStr = loc_tmp[1].split("=");
                     String[] yStr = loc_tmp[2].split("=");
                     String[] zStr = loc_tmp[3].split("=");
-                    int x = plugin.utils.parseNum(xStr[1].substring(0, (xStr[1].length() - 2)));
-                    int y = plugin.utils.parseNum(yStr[1].substring(0, (yStr[1].length() - 2)));
-                    int z = plugin.utils.parseNum(zStr[1].substring(0, (zStr[1].length() - 2)));
+                    int x = plugin.utils.parseInt(xStr[1].substring(0, (xStr[1].length() - 2)));
+                    int y = plugin.utils.parseInt(yStr[1].substring(0, (yStr[1].length() - 2)));
+                    int z = plugin.utils.parseInt(zStr[1].substring(0, (zStr[1].length() - 2)));
                     Block block = w.getBlockAt(x, y, z);
                     // if the block is a TARDIS block then remove it
                     if (e.blockList().contains(block)) {
@@ -88,9 +88,9 @@ public class TARDISExplosionListener implements Listener {
                         if (rsd.resultSet()) {
                             String doorLoc[] = rsd.getDoor_location().split(":");
                             COMPASS d = rsd.getDoor_direction();
-                            int dx = plugin.utils.parseNum(doorLoc[1]);
-                            int dy = plugin.utils.parseNum(doorLoc[2]);
-                            int dz = plugin.utils.parseNum(doorLoc[3]);
+                            int dx = plugin.utils.parseInt(doorLoc[1]);
+                            int dy = plugin.utils.parseInt(doorLoc[2]);
+                            int dz = plugin.utils.parseInt(doorLoc[3]);
                             Block door_bottom = w.getBlockAt(dx, dy, dz);
                             Block door_under = door_bottom.getRelative(BlockFace.DOWN);
                             Block door_top = door_bottom.getRelative(BlockFace.UP);

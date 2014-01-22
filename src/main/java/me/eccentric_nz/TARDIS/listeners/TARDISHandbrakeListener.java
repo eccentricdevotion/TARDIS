@@ -364,20 +364,14 @@ public class TARDISHandbrakeListener implements Listener {
         }
     }
 
-    @SuppressWarnings("deprecation")
     private void toggleBeacon(String str, boolean on) {
         String[] beaconData = str.split(":");
         World w = plugin.getServer().getWorld(beaconData[0]);
-        float bx = 0, by = 0, bz = 0;
-        try {
-            bx = Float.parseFloat(beaconData[1]);
-            by = Float.parseFloat(beaconData[2]);
-            bz = Float.parseFloat(beaconData[3]);
-        } catch (NumberFormatException nfe) {
-            plugin.debug("Couldn't convert to a float! " + nfe.getMessage());
-        }
+        int bx = plugin.utils.parseInt(beaconData[1]);
+        int by = plugin.utils.parseInt(beaconData[2]);
+        int bz = plugin.utils.parseInt(beaconData[3]);
         Location bl = new Location(w, bx, by, bz);
         Block b = bl.getBlock();
-        b.setTypeId((on) ? 20 : 7);
+        b.setType((on) ? Material.GLASS : Material.BEDROCK);
     }
 }

@@ -62,7 +62,7 @@ public class TARDISControlsConverter {
                 // insert values from tardis table
                 ps = connection.prepareStatement("INSERT INTO controls (tardis_id, type, location) VALUES (?,?,?)");
                 for (HashMap<String, String> map : data) {
-                    int id = plugin.utils.parseNum(map.get("tardis_id"));
+                    int id = plugin.utils.parseInt(map.get("tardis_id"));
                     String tmph;
                     if (map.get("handbrake") == null || map.get("handbrake").isEmpty()) {
                         tmph = estimateHandbrake(map.get("size"), map.get("chameleon"));
@@ -159,9 +159,9 @@ public class TARDISControlsConverter {
     private String estimateHandbrake(String size, String cham) {
         SCHEMATIC s = SCHEMATIC.valueOf(size);
         String[] data = cham.split(":");
-        int x = plugin.utils.parseNum(data[1]);
-        int y = plugin.utils.parseNum(data[2]);
-        int z = plugin.utils.parseNum(data[3]);
+        int x = plugin.utils.parseInt(data[1]);
+        int y = plugin.utils.parseInt(data[2]);
+        int z = plugin.utils.parseInt(data[3]);
         switch (s) {
             case DELUXE:
                 return data[0] + ":" + (x + 1) + ":" + (y + 1) + ":" + (z - 2);
@@ -173,9 +173,9 @@ public class TARDISControlsConverter {
     private String estimateButton(String size, String cham) {
         SCHEMATIC s = SCHEMATIC.valueOf(size);
         String[] data = cham.split(":");
-        int x = plugin.utils.parseNum(data[1]);
-        int y = plugin.utils.parseNum(data[2]);
-        int z = plugin.utils.parseNum(data[3]);
+        int x = plugin.utils.parseInt(data[1]);
+        int y = plugin.utils.parseInt(data[2]);
+        int z = plugin.utils.parseInt(data[3]);
         switch (s) {
             case DELUXE:
                 return data[0] + ":" + (x - 1) + ":" + y + ":" + (z - 1);
@@ -187,9 +187,9 @@ public class TARDISControlsConverter {
     private String estimateArtron(String size, String cham) {
         SCHEMATIC s = SCHEMATIC.valueOf(size);
         String[] data = cham.split(":");
-        int x = plugin.utils.parseNum(data[1]);
-        int y = plugin.utils.parseNum(data[2]);
-        int z = plugin.utils.parseNum(data[3]);
+        int x = plugin.utils.parseInt(data[1]);
+        int y = plugin.utils.parseInt(data[2]);
+        int z = plugin.utils.parseInt(data[3]);
         switch (s) {
             case DELUXE:
                 return data[0] + ":" + (x + 5) + ":" + y + ":" + (z - 1);
@@ -202,9 +202,9 @@ public class TARDISControlsConverter {
         String[] r = new String[4];
         SCHEMATIC s = SCHEMATIC.valueOf(size);
         String[] data = cham.split(":");
-        int x = plugin.utils.parseNum(data[1]);
-        int y = plugin.utils.parseNum(data[2]);
-        int z = plugin.utils.parseNum(data[3]);
+        int x = plugin.utils.parseInt(data[1]);
+        int y = plugin.utils.parseInt(data[2]);
+        int z = plugin.utils.parseInt(data[3]);
         switch (s) {
             case DELUXE:
                 r[0] = data[0] + ":" + (x + 2) + ":" + (y + 1) + ":" + (z - 3); // environment

@@ -196,8 +196,8 @@ public class TARDISRoomRunnable implements Runnable {
             // place one block
             tmp = s[level][row][col];
             String[] iddata = tmp.split(":");
-            id = plugin.utils.parseNum(iddata[0]);
-            data = Byte.parseByte(iddata[1]);
+            id = plugin.utils.parseInt(iddata[0]);
+            data = plugin.utils.parseByte(iddata[1]);
             if (id == 158 || id == -98) {
                 byte bit = data;
                 switch (bit) {

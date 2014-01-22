@@ -56,9 +56,9 @@ public class TARDISExteriorRenderer {
         String isRendered = ew.getName() + ":" + epbx + ":" + epby + ":" + epbz;
         String[] idata = interior.split(":");
         World iw = plugin.getServer().getWorld(idata[0]);
-        int ipbx = plugin.utils.parseNum(idata[1]);
-        int ipby = plugin.utils.parseNum(idata[2]) + 2;
-        int ipbz = plugin.utils.parseNum(idata[3]);
+        int ipbx = plugin.utils.parseInt(idata[1]);
+        int ipby = plugin.utils.parseInt(idata[2]) + 2;
+        int ipbz = plugin.utils.parseInt(idata[3]);
         final Location location = new Location(iw, ipbx, ipby, ipbz);
         if (plugin.trackRenderer.containsKey(id) && plugin.trackRenderer.get(id).equals(isRendered)) {
             p.sendMessage(plugin.pluginName + "Destination unchanged, no rendering needed, stand by for transmat...");

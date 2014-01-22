@@ -128,8 +128,8 @@ public class TARDISLampsCommand {
                 for (HashMap<String, String> map : data) {
                     String w = map.get("world");
                     World world = plugin.getServer().getWorld(w);
-                    int x = plugin.utils.parseNum(map.get("x"));
-                    int z = plugin.utils.parseNum(map.get("z"));
+                    int x = plugin.utils.parseInt(map.get("x"));
+                    int z = plugin.utils.parseInt(map.get("z"));
                     Chunk chunk = world.getChunkAt(x, z);
                     // find the lamps in the chunks
                     int bx = chunk.getX() << 4;

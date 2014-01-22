@@ -258,7 +258,7 @@ public class TARDISExterminator {
         if (rsg.resultSet()) {
             ArrayList<HashMap<String, String>> gdata = rsg.getData();
             for (HashMap<String, String> gmap : gdata) {
-                int direction = plugin.utils.parseNum(gmap.get("direction"));
+                int direction = plugin.utils.parseInt(gmap.get("direction"));
                 switch (direction) {
                     case 1:
                         plugin.gravityUpList.remove(gmap.get("location"));

@@ -69,9 +69,9 @@ public class TARDISEnterCommand {
                 World cw = plugin.getServer().getWorld(split[0]);
                 int cx = 0, cy = 0, cz = 0;
                 try {
-                    cx = Integer.parseInt(split[1]);
-                    cy = Integer.parseInt(split[2]);
-                    cz = Integer.parseInt(split[3]);
+                    cx = plugin.utils.parseInt(split[1]);
+                    cy = plugin.utils.parseInt(split[2]);
+                    cz = plugin.utils.parseInt(split[3]);
                 } catch (NumberFormatException nfe) {
                     plugin.debug("Could not convert to number!");
                 }

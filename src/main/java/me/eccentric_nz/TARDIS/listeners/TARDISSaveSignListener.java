@@ -104,9 +104,9 @@ public class TARDISSaveSignListener implements Listener {
                                 if (!save_dest.equals(current)) {
                                     HashMap<String, Object> set = new HashMap<String, Object>();
                                     set.put("world", lore.get(0));
-                                    set.put("x", plugin.utils.parseNum(lore.get(1)));
-                                    set.put("y", plugin.utils.parseNum(lore.get(2)));
-                                    set.put("z", plugin.utils.parseNum(lore.get(3)));
+                                    set.put("x", plugin.utils.parseInt(lore.get(1)));
+                                    set.put("y", plugin.utils.parseInt(lore.get(2)));
+                                    set.put("z", plugin.utils.parseInt(lore.get(3)));
                                     int l_size = lore.size();
                                     if (l_size >= 5) {
                                         if (!lore.get(4).isEmpty() && !lore.get(4).equals("§6Current location")) {
@@ -175,9 +175,9 @@ public class TARDISSaveSignListener implements Listener {
      */
     private Location getLocation(List<String> lore) {
         World w = plugin.getServer().getWorld(lore.get(0));
-        int x = plugin.utils.parseNum(lore.get(1));
-        int y = plugin.utils.parseNum(lore.get(2));
-        int z = plugin.utils.parseNum(lore.get(3));
+        int x = plugin.utils.parseInt(lore.get(1));
+        int y = plugin.utils.parseInt(lore.get(2));
+        int z = plugin.utils.parseInt(lore.get(3));
         return new Location(w, x, y, z);
     }
 

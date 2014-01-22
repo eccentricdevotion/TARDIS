@@ -106,7 +106,7 @@ public class TARDISGiveCommand implements CommandExecutor {
                     amount = 0;
                 } else {
                     try {
-                        amount = Integer.parseInt(args[2]);
+                        amount = plugin.utils.parseInt(args[2]);
                     } catch (NumberFormatException nfe) {
                         sender.sendMessage(plugin.pluginName + "Amount must be a number, 'full' or 'empty'! /tardisgive [player] [item] [amount]");
                         return true;

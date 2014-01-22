@@ -77,7 +77,7 @@ public class TARDISTemporalLocatorListener implements Listener {
      */
     private long getTime(List<String> lore) {
         String[] data = lore.get(0).split(" ");
-        return Long.parseLong(data[0]);
+        return plugin.utils.parseLong(data[0]);
     }
 
     /**
@@ -86,7 +86,6 @@ public class TARDISTemporalLocatorListener implements Listener {
      * @param p the player using the GUI
      */
     private void close(final Player p) {
-//        final String n = p.getName();
         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
             @Override
             public void run() {

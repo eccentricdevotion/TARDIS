@@ -476,13 +476,13 @@ public class TARDISTravelCommands implements CommandExecutor {
                             sender.sendMessage(plugin.pluginName + "The server does not allow time travel to this world!");
                             return true;
                         }
-                        x = plugin.utils.parseNum(args[args.length - 3]);
-                        y = plugin.utils.parseNum(args[args.length - 2]);
+                        x = plugin.utils.parseInt(args[args.length - 3]);
+                        y = plugin.utils.parseInt(args[args.length - 2]);
                         if (y == 0) {
                             sender.sendMessage(plugin.pluginName + "Y coordinate must be > 0!");
                             return true;
                         }
-                        z = plugin.utils.parseNum(args[args.length - 1]);
+                        z = plugin.utils.parseInt(args[args.length - 1]);
                         Location location = new Location(w, x, y, z);
                         // check location
                         int count = this.checkLocation(location, player, id, tt);

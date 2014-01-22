@@ -224,8 +224,8 @@ public class TARDISBuilderInner {
                     if (!tmp.equals("-")) {
                         if (tmp.contains(":")) {
                             String[] iddata = tmp.split(":");
-                            id = plugin.utils.parseNum(iddata[0]);
-                            data = Byte.parseByte(iddata[1]);
+                            id = plugin.utils.parseInt(iddata[0]);
+                            data = plugin.utils.parseByte(iddata[1]);
                             if (id == 7) {
                                 // remember bedrock location to block off the beacon light
                                 String bedrocloc = world.getName() + ":" + startx + ":" + starty + ":" + startz;
@@ -470,7 +470,7 @@ public class TARDISBuilderInner {
                                 qf.insertSyncControl(dbID, 6, woodbuttonloc, 0);
                             }
                         } else {
-                            id = plugin.utils.parseNum(tmp);
+                            id = plugin.utils.parseInt(tmp);
                             data = 0;
                         }
                         // if it's an iron/gold/diamond/emerald/beacon/redstone block put it in the blocks table

@@ -131,7 +131,7 @@ public class TARDISRoomCommand {
             }
             for (Map.Entry<String, Integer> entry : roomBlocks.entrySet()) {
                 String[] block_data = entry.getKey().split(":");
-                int bid = plugin.utils.parseNum(block_data[0]);
+                int bid = plugin.utils.parseInt(block_data[0]);
                 String mat;
                 String bdata;
                 if (hasPrefs && block_data.length == 2 && (block_data[1].equals("1") || block_data[1].equals("8"))) {

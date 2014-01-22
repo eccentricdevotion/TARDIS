@@ -109,9 +109,9 @@ public class TARDISLocationsConverter {
         HashMap<String, Object> set = new HashMap<String, Object>();
         set.put("tardis_id", id);
         set.put("world", data[0]);
-        set.put("x", Integer.parseInt(data[1]));
-        set.put("y", Integer.parseInt(data[2]));
-        set.put("z", Integer.parseInt(data[3]));
+        set.put("x", plugin.utils.parseInt(data[1]));
+        set.put("y", plugin.utils.parseInt(data[2]));
+        set.put("z", plugin.utils.parseInt(data[3]));
         int l = data.length;
         set.put("direction", (l > 4 && directions.contains(data[4])) ? data[4] : d);
         set.put("submarine", (l > 5 && data[5].equals("true")) ? 1 : 0);

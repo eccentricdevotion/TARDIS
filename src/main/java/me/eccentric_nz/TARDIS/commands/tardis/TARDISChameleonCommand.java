@@ -84,9 +84,9 @@ public class TARDISChameleonCommand {
                     int x, y, z;
                     String[] chamData = chamStr.split(":");
                     World w = plugin.getServer().getWorld(chamData[0]);
-                    x = plugin.utils.parseNum(chamData[1]);
-                    y = plugin.utils.parseNum(chamData[2]);
-                    z = plugin.utils.parseNum(chamData[3]);
+                    x = plugin.utils.parseInt(chamData[1]);
+                    y = plugin.utils.parseInt(chamData[2]);
+                    z = plugin.utils.parseInt(chamData[3]);
                     Block chamBlock = w.getBlockAt(x, y, z);
                     Material chamType = chamBlock.getType();
                     if (chamType == Material.WALL_SIGN || chamType == Material.SIGN_POST) {

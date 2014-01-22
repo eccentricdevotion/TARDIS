@@ -50,7 +50,7 @@ public class TARDISListTardisesCommand {
                     BufferedWriter bw = new BufferedWriter(new FileWriter(file, false));
                     for (HashMap<String, String> map : data) {
                         HashMap<String, Object> wherecl = new HashMap<String, Object>();
-                        wherecl.put("tardis_id", plugin.utils.parseNum(map.get("tardis_id")));
+                        wherecl.put("tardis_id", plugin.utils.parseInt(map.get("tardis_id")));
                         ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
                         if (!rsc.resultSet()) {
                             sender.sendMessage(plugin.pluginName + MESSAGE.NO_CURRENT.getText());
@@ -71,7 +71,7 @@ public class TARDISListTardisesCommand {
             // get all tardis positions - max 18
             int start = 0, end = 18;
             if (args.length > 1) {
-                int tmp = plugin.utils.parseNum(args[1]);
+                int tmp = plugin.utils.parseInt(args[1]);
                 start = (tmp * 18) - 18;
                 end = tmp * 18;
             }
@@ -82,7 +82,7 @@ public class TARDISListTardisesCommand {
                 ArrayList<HashMap<String, String>> data = rsl.getData();
                 for (HashMap<String, String> map : data) {
                     HashMap<String, Object> wherecl = new HashMap<String, Object>();
-                    wherecl.put("tardis_id", plugin.utils.parseNum(map.get("tardis_id")));
+                    wherecl.put("tardis_id", plugin.utils.parseInt(map.get("tardis_id")));
                     ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
                     if (!rsc.resultSet()) {
                         sender.sendMessage(plugin.pluginName + MESSAGE.NO_CURRENT.getText());

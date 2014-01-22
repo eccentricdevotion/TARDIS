@@ -168,8 +168,8 @@ public class TARDISUtils {
             String chunkstr = rs.getChunk();
             String[] split = chunkstr.split(":");
             World w = plugin.getServer().getWorld(split[0]);
-            cx = parseNum(split[1]);
-            cz = parseNum(split[2]);
+            cx = parseInt(split[1]);
+            cz = parseInt(split[2]);
             Chunk chunk = w.getChunkAt(cx, cz);
             startLoc[0] = (chunk.getBlock(0, 64, 0).getX());
             startLoc[1] = startLoc[0];
@@ -194,9 +194,9 @@ public class TARDISUtils {
         String[] data = s.split(":");
         World savedw = plugin.getServer().getWorld(data[0]);
         if (savedw != null) {
-            savedx = parseNum(data[1]);
-            savedy = parseNum(data[2]);
-            savedz = parseNum(data[3]);
+            savedx = parseInt(data[1]);
+            savedy = parseInt(data[2]);
+            savedz = parseInt(data[3]);
             Location dest = new Location(savedw, savedx, savedy, savedz, yaw, pitch);
             return dest;
         } else {
@@ -283,12 +283,92 @@ public class TARDISUtils {
      * @param i the string to convert to an int.
      * @return a number
      */
-    public int parseNum(String i) {
+    public int parseInt(String i) {
         int num = 0;
         try {
             num = Integer.parseInt(i);
         } catch (NumberFormatException n) {
-            plugin.debug("Could not convert to number, the string was: " + i);
+            plugin.debug("Could not convert to int, the string was: " + i);
+        }
+        return num;
+    }
+
+    /**
+     * Parses a string for a byte.
+     *
+     * @param i the string to convert to an byte.
+     * @return a number
+     */
+    public byte parseByte(String i) {
+        byte num = (byte) 0;
+        try {
+            num = Byte.parseByte(i);
+        } catch (NumberFormatException n) {
+            plugin.debug("Could not convert to byte, the string was: " + i);
+        }
+        return num;
+    }
+
+    /**
+     * Parses a string for a short.
+     *
+     * @param i the string to convert to a short.
+     * @return a number
+     */
+    public short parseShort(String i) {
+        short num = 0;
+        try {
+            num = Short.parseShort(i);
+        } catch (NumberFormatException n) {
+            plugin.debug("Could not convert to short, the string was: " + i);
+        }
+        return num;
+    }
+
+    /**
+     * Parses a string for a float.
+     *
+     * @param i the string to convert to an float.
+     * @return a floating point number
+     */
+    public float parseFloat(String i) {
+        float num = 0.0f;
+        try {
+            num = Float.parseFloat(i);
+        } catch (NumberFormatException n) {
+            plugin.debug("Could not convert to float, the string was: " + i);
+        }
+        return num;
+    }
+
+    /**
+     * Parses a string for a double.
+     *
+     * @param i the string to convert to an double.
+     * @return a floating point number
+     */
+    public double parseDouble(String i) {
+        double num = 0.0d;
+        try {
+            num = Double.parseDouble(i);
+        } catch (NumberFormatException n) {
+            plugin.debug("Could not convert to double, the string was: " + i);
+        }
+        return num;
+    }
+
+    /**
+     * Parses a string for a double.
+     *
+     * @param i the string to convert to an double.
+     * @return a floating point number
+     */
+    public long parseLong(String i) {
+        long num = 0L;
+        try {
+            num = Long.parseLong(i);
+        } catch (NumberFormatException n) {
+            plugin.debug("Could not convert to double, the string was: " + i);
         }
         return num;
     }
@@ -371,9 +451,9 @@ public class TARDISUtils {
         String[] yStr = loc_data[2].split("=");
         String[] zStr = loc_data[3].split("=");
         World w = plugin.getServer().getWorld(wStr[2].substring(0, (wStr[2].length() - 1)));
-        int x = plugin.utils.parseNum(xStr[1].substring(0, (xStr[1].length() - 2)));
-        int y = plugin.utils.parseNum(yStr[1].substring(0, (yStr[1].length() - 2)));
-        int z = plugin.utils.parseNum(zStr[1].substring(0, (zStr[1].length() - 2)));
+        int x = plugin.utils.parseInt(xStr[1].substring(0, (xStr[1].length() - 2)));
+        int y = plugin.utils.parseInt(yStr[1].substring(0, (yStr[1].length() - 2)));
+        int z = plugin.utils.parseInt(zStr[1].substring(0, (zStr[1].length() - 2)));
         return new Location(w, x, y, z);
     }
 

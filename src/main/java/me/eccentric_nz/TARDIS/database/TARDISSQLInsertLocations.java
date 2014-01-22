@@ -70,7 +70,7 @@ public class TARDISSQLInsertLocations implements Runnable {
                     if (entry.getValue().getClass().equals(String.class)) {
                         ps.setString(i, entry.getValue().toString());
                     } else {
-                        ps.setInt(i, plugin.utils.parseNum(entry.getValue().toString()));
+                        ps.setInt(i, plugin.utils.parseInt(entry.getValue().toString()));
                     }
                     i++;
                 }

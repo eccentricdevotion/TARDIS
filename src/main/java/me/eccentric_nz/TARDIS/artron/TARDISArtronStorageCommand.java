@@ -112,7 +112,7 @@ public class TARDISArtronStorageCommand implements CommandExecutor {
             }
             int amount;
             try {
-                amount = Integer.parseInt(args[1]);
+                amount = plugin.utils.parseInt(args[1]);
             } catch (NumberFormatException n) {
                 sender.sendMessage(plugin.pluginName + "The second command argument must be a number!");
                 return false;
@@ -130,7 +130,7 @@ public class TARDISArtronStorageCommand implements CommandExecutor {
                 }
             }
             List<String> lore = im.getLore();
-            int level = plugin.utils.parseNum(lore.get(1));
+            int level = plugin.utils.parseInt(lore.get(1));
             int new_amount = amount + level;
             int max = plugin.getArtronConfig().getInt("full_charge");
             if (new_amount > max) {

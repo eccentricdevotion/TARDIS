@@ -58,10 +58,10 @@ public class TARDISArea {
         if (rsa.resultSet()) {
             ArrayList<HashMap<String, String>> data = rsa.getData();
             for (HashMap<String, String> map : data) {
-                int minx = plugin.utils.parseNum(map.get("minx"));
-                int minz = plugin.utils.parseNum(map.get("minz"));
-                int maxx = plugin.utils.parseNum(map.get("maxx"));
-                int maxz = plugin.utils.parseNum(map.get("maxz"));
+                int minx = plugin.utils.parseInt(map.get("minx"));
+                int minz = plugin.utils.parseInt(map.get("minz"));
+                int maxx = plugin.utils.parseInt(map.get("maxx"));
+                int maxz = plugin.utils.parseInt(map.get("maxz"));
                 // is clicked block within a defined TARDIS area?
                 if (l.getX() <= maxx && l.getZ() <= maxz && l.getX() >= minx && l.getZ() >= minz) {
                     chk = false;
@@ -118,10 +118,10 @@ public class TARDISArea {
             ArrayList<HashMap<String, String>> data = rsa.getData();
             for (HashMap<String, String> map : data) {
                 String n = map.get("area_name");
-                int minx = plugin.utils.parseNum(map.get("minx"));
-                int minz = plugin.utils.parseNum(map.get("minz"));
-                int maxx = plugin.utils.parseNum(map.get("maxx"));
-                int maxz = plugin.utils.parseNum(map.get("maxz"));
+                int minx = plugin.utils.parseInt(map.get("minx"));
+                int minz = plugin.utils.parseInt(map.get("minz"));
+                int maxx = plugin.utils.parseInt(map.get("maxx"));
+                int maxz = plugin.utils.parseInt(map.get("maxz"));
                 // is time travel destination within a defined TARDIS area?
                 if (l.getX() <= maxx && l.getZ() <= maxz && l.getX() >= minx && l.getZ() >= minz) {
                     // does the player have permmission to travel here

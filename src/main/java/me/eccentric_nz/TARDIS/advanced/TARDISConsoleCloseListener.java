@@ -231,9 +231,9 @@ public class TARDISConsoleCloseListener implements Listener {
                                     case RECORD_4: // save
                                         ignore = true;
                                         String world = lore.get(1);
-                                        int x = plugin.utils.parseNum(lore.get(2));
-                                        int y = plugin.utils.parseNum(lore.get(3));
-                                        int z = plugin.utils.parseNum(lore.get(4));
+                                        int x = plugin.utils.parseInt(lore.get(2));
+                                        int y = plugin.utils.parseInt(lore.get(3));
+                                        int z = plugin.utils.parseInt(lore.get(4));
                                         if (current.getWorld().toString().equals(world) && current.getBlockX() == x && current.getBlockZ() == z) {
                                             continue;
                                         }

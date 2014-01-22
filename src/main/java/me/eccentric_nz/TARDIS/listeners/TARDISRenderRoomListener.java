@@ -71,9 +71,9 @@ public class TARDISRenderRoomListener implements Listener {
                 String doorLocStr = rsd.getDoor_location();
                 String[] split = doorLocStr.split(":");
                 World cw = plugin.getServer().getWorld(split[0]);
-                int cx = plugin.utils.parseNum(split[1]);
-                int cy = plugin.utils.parseNum(split[2]);
-                int cz = plugin.utils.parseNum(split[3]);
+                int cx = plugin.utils.parseInt(split[1]);
+                int cy = plugin.utils.parseInt(split[2]);
+                int cz = plugin.utils.parseInt(split[3]);
                 Location tmp_loc = new Location(cw, cx, cy, cz);
                 int getx = tmp_loc.getBlockX();
                 int getz = tmp_loc.getBlockZ();

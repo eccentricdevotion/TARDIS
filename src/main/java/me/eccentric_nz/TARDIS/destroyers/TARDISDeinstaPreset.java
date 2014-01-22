@@ -156,18 +156,18 @@ public class TARDISDeinstaPreset {
             for (HashMap<String, String> map : data) {
                 int bID = 0;
                 if (map.get("block") != null) {
-                    bID = plugin.utils.parseNum(map.get("block"));
+                    bID = plugin.utils.parseInt(map.get("block"));
                 }
-                byte bd = Byte.parseByte(map.get("data"));
+                byte bd = plugin.utils.parseByte(map.get("data"));
                 String locStr = map.get("location");
                 String[] loc_data = locStr.split(",");
                 // x, y, z - 1, 2, 3
                 String[] xStr = loc_data[1].split("=");
                 String[] yStr = loc_data[2].split("=");
                 String[] zStr = loc_data[3].split("=");
-                int rx = plugin.utils.parseNum(xStr[1].substring(0, (xStr[1].length() - 2)));
-                int ry = plugin.utils.parseNum(yStr[1].substring(0, (yStr[1].length() - 2)));
-                int rz = plugin.utils.parseNum(zStr[1].substring(0, (zStr[1].length() - 2)));
+                int rx = plugin.utils.parseInt(xStr[1].substring(0, (xStr[1].length() - 2)));
+                int ry = plugin.utils.parseInt(yStr[1].substring(0, (yStr[1].length() - 2)));
+                int rz = plugin.utils.parseInt(zStr[1].substring(0, (zStr[1].length() - 2)));
                 plugin.utils.setBlock(w, rx, ry, rz, bID, bd);
             }
         }

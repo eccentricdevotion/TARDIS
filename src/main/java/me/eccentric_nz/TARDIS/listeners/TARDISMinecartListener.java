@@ -142,9 +142,9 @@ public class TARDISMinecartListener implements Listener {
                         }
                     }
                     World w = plugin.getServer().getWorld(data[0]);
-                    int x = plugin.utils.parseNum(data[1]);
-                    int y = plugin.utils.parseNum(data[2]);
-                    int z = plugin.utils.parseNum(data[3]);
+                    int x = plugin.utils.parseInt(data[1]);
+                    int y = plugin.utils.parseInt(data[2]);
+                    int z = plugin.utils.parseInt(data[3]);
                     Location in_out = new Location(w, x, y, z);
                     if (mat.equals(Material.IRON_DOOR_BLOCK)) {
                         d = getDirection(in_out);
