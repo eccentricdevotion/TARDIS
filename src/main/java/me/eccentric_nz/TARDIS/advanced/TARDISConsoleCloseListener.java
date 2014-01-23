@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.builders.TARDISEmergencyRelocation;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetAreas;
 import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
@@ -73,15 +74,6 @@ public class TARDISConsoleCloseListener implements Listener {
             ResultSetTravellers rst = new ResultSetTravellers(plugin, wheret, false);
             if (rst.resultSet()) {
                 int id = rst.getTardis_id();
-                // get TARDIS's current location
-                HashMap<String, Object> wherecl = new HashMap<String, Object>();
-                wherecl.put("tardis_id", id);
-                ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
-                if (!rsc.resultSet()) {
-                    p.sendMessage(plugin.pluginName + "Could not get the current TARDIS location!");
-                    return;
-                }
-                Location current = new Location(rsc.getWorld(), rsc.getX(), rsc.getY(), rsc.getZ());
                 TARDISTimeTravel tt = new TARDISTimeTravel(plugin);
                 // loop through inventory contents and remove any items that are not disks or circuits
                 for (int i = 0; i < 9; i++) {
@@ -106,6 +98,15 @@ public class TARDISConsoleCloseListener implements Listener {
                         return;
                     }
                 }
+                // get TARDIS's current location
+                HashMap<String, Object> wherecl = new HashMap<String, Object>();
+                wherecl.put("tardis_id", id);
+                ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
+                if (!rsc.resultSet()) {
+                    new TARDISEmergencyRelocation(plugin).relocate(id, p);
+                    return;
+                }
+                Location current = new Location(rsc.getWorld(), rsc.getX(), rsc.getY(), rsc.getZ());
                 // loop through remaining inventory items and process the disks
                 for (int i = 0; i < 9; i++) {
                     ItemStack is = inv.getItem(i);
