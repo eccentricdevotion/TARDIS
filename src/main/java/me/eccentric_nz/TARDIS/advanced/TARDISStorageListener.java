@@ -277,10 +277,12 @@ public class TARDISStorageListener implements Listener {
                 }
                 // close inventory
                 p.closeInventory();
-                // open new inventory
-                Inventory inv = plugin.getServer().createInventory(p, 54, s.getTitle());
-                inv.setContents(stack);
-                p.openInventory(inv);
+                if (stack != null) {
+                    // open new inventory
+                    Inventory inv = plugin.getServer().createInventory(p, 54, s.getTitle());
+                    inv.setContents(stack);
+                    p.openInventory(inv);
+                }
             }
         }, 1L);
     }

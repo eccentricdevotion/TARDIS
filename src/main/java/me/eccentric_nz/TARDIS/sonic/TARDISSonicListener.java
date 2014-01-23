@@ -411,7 +411,11 @@ public class TARDISSonicListener implements Listener {
     }
 
     private void removeSonicEnchant(PlayerInventory inv) {
-        ItemStack stack = inv.getItem(inv.first(sonic));
+        int first = inv.first(sonic);
+        if (first < 0) {
+            return;
+        }
+        ItemStack stack = inv.getItem(first);
         if (stack.containsEnchantment(Enchantment.DURABILITY)) {
             for (Enchantment e : stack.getEnchantments().keySet()) {
                 stack.removeEnchantment(e);
