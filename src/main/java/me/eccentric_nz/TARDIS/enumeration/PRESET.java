@@ -26,62 +26,74 @@ import org.bukkit.Material;
  */
 public enum PRESET {
 
-    ANGEL(Material.FEATHER),
-    APPERTURE(Material.STICK),
-    CAKE(Material.CAKE),
-    CANDY(Material.SUGAR),
-    CHALICE(Material.QUARTZ),
-    CREEPY(Material.STRING),
-    DESERT(Material.SAND),
-    DUCK(Material.WOOD_BUTTON),
-    FACTORY(Material.IRON_INGOT),
-    FENCE(Material.IRON_FENCE),
-    FLOWER(Material.RED_ROSE),
-    GAZEBO(Material.FENCE),
-    GRAVESTONE(Material.ENDER_STONE),
-    HELIX(Material.SMOOTH_STAIRS),
-    JAIL(Material.SMOOTH_BRICK),
-    JUNGLE(Material.VINE),
-    LAMP(Material.GLOWSTONE_DUST),
-    LIBRARY(Material.BOOK),
-    LIGHTHOUSE(Material.TORCH),
-    MINESHAFT(Material.RAILS),
-    NETHER(Material.NETHERRACK),
-    NEW(Material.STEP),
-    OLD(Material.WOOL),
-    PANDORICA(Material.COAL),
-    PARTY(Material.FIREWORK),
-    PEANUT(Material.HARD_CLAY),
-    PINE(Material.LEAVES),
-    PORTAL(Material.WOOD_DOOR),
-    PUNKED(Material.PISTON_BASE),
-    RENDER(Material.FIRE),
-    ROBOT(Material.COBBLE_WALL),
-    SHROOM(Material.BROWN_MUSHROOM),
-    SNOWMAN(Material.SNOW_BALL),
-    STONE(Material.COBBLESTONE),
-    SUBMERGED(Material.DIRT),
-    SWAMP(Material.WATER_LILY),
-    TELEPHONE(Material.GLASS),
-    THEEND(Material.BEDROCK),
-    TOILET(Material.LEVER),
-    TOPSYTURVEY(Material.BUCKET),
-    TORCH(Material.FLINT_AND_STEEL),
-    VILLAGE(Material.COBBLESTONE),
-    WELL(Material.MOSSY_COBBLESTONE),
-    WINDMILL(Material.WOOD),
-    YELLOW(Material.GOLD_NUGGET),
-    CUSTOM(Material.OBSIDIAN);
+    ANGEL(Material.FEATHER, "WEEPING", "ANGELS HAVE"),
+    APPERTURE(Material.STICK, "APPERTURE", "SCIENCE"),
+    CAKE(Material.CAKE, "CAKE AND", "EAT IT TOO"),
+    CANDY(Material.SUGAR, "", ""),
+    CHALICE(Material.QUARTZ, "", ""),
+    CREEPY(Material.STRING, "HAUNTED", "HOUSE"),
+    DESERT(Material.SAND, "", ""),
+    DUCK(Material.WOOD_BUTTON, "", ""),
+    FACTORY(Material.IRON_INGOT, "", ""),
+    FENCE(Material.IRON_FENCE, "RANDOM", "FENCE"),
+    FLOWER(Material.RED_ROSE, "", ""),
+    GAZEBO(Material.FENCE, "CHILLED OUT", "GAZEBO"),
+    GRAVESTONE(Material.ENDER_STONE, "HERE", "LIES"),
+    HELIX(Material.SMOOTH_STAIRS, "INDUSTRIAL", "DOUBLE HELIX"),
+    JAIL(Material.SMOOTH_BRICK, "$50,000", "REWARD FOR"),
+    JUNGLE(Material.VINE, "", ""),
+    LAMP(Material.GLOWSTONE_DUST, "LONELY", "LAMP POST"),
+    LIBRARY(Material.BOOK, "LIBRARY OF", "TIME LORE"),
+    LIGHTHOUSE(Material.TORCH, "TINY", "LIGHTHOUSE"),
+    MINESHAFT(Material.RAILS, "ROAD TO", "EL DORADO"),
+    NETHER(Material.NETHERRACK, "", ""),
+    NEW(Material.STEP, "POLICE", "BOX"),
+    OLD(Material.WOOL, "POLICE", "BOX"),
+    PANDORICA(Material.COAL, "", ""),
+    PARTY(Material.FIREWORK, "PARTY", "TENT"),
+    PEANUT(Material.HARD_CLAY, "JAR OF", "PEANUT BUTTER"),
+    PINE(Material.LEAVES, "PINE", "TREE"),
+    PORTAL(Material.WOOD_DOOR, "PORTAL TO", "SOMEWHERE"),
+    PUNKED(Material.PISTON_BASE, "JUST GOT", "PUNKED"),
+    RENDER(Material.FIRE, "", ""),
+    ROBOT(Material.COBBLE_WALL, "WILL BE", "DELETED"),
+    SHROOM(Material.BROWN_MUSHROOM, "TRIPPY", "SPACE SHROOM"),
+    SNOWMAN(Material.SNOW_BALL, "TAKES ONE", "TO SNOW ONE"),
+    STONE(Material.COBBLESTONE, "STONE BRICK", "COLUMN"),
+    SUBMERGED(Material.DIRT, "", ""),
+    SWAMP(Material.WATER_LILY, "SIGN ABOVE", "THE DOOR"),
+    TELEPHONE(Material.GLASS, "TELEPHONE", "BOX"),
+    THEEND(Material.BEDROCK, "DRAGON", "SLAYING"),
+    TOILET(Material.LEVER, "", ""),
+    TOPSYTURVEY(Material.BUCKET, "Topsy-turvey", "BOX O' MARVEL"),
+    TORCH(Material.FLINT_AND_STEEL, "", ""),
+    VILLAGE(Material.COBBLESTONE, "VILLAGE", "HOUSE"),
+    WELL(Material.MOSSY_COBBLESTONE, "", ""),
+    WINDMILL(Material.WOOD, "VERY SMALL", "WINDMILL"),
+    YELLOW(Material.GOLD_NUGGET, "YELLOW", "SUBMARINE"),
+    CUSTOM(Material.OBSIDIAN, "", "");
 
     Material material;
+    String firstLine;
+    String secondLine;
     private final static Map<Material, PRESET> BY_MATERIAL = Maps.newHashMap();
 
-    private PRESET(Material material) {
+    private PRESET(Material material, String firstLine, String secondLine) {
         this.material = material;
+        this.firstLine = firstLine;
+        this.secondLine = secondLine;
     }
 
     public Material getMaterial() {
         return material;
+    }
+
+    public String getFirstLine() {
+        return firstLine;
+    }
+
+    public String getSecondLine() {
+        return secondLine;
     }
 
     public static PRESET getPreset(final Material mat) {

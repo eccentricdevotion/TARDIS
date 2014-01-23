@@ -16,7 +16,9 @@
  */
 package me.eccentric_nz.TARDIS.listeners;
 
+import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.enumeration.PRESET;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -37,9 +39,16 @@ import org.bukkit.event.block.BlockBreakEvent;
 public class TARDISBlockBreakListener implements Listener {
 
     private final TARDIS plugin;
+    private final HashMap<String, String> sign_lookup = new HashMap<String, String>();
 
     public TARDISBlockBreakListener(TARDIS plugin) {
         this.plugin = plugin;
+        int i = 0;
+        for (PRESET p : PRESET.values()) {
+            if (!p.getFirstLine().isEmpty() && !sign_lookup.containsKey(p.getFirstLine())) {
+                sign_lookup.put(ChatColor.WHITE + p.getFirstLine(), ChatColor.WHITE + p.getSecondLine());
+            }
+        }
     }
 
     /**
@@ -58,8 +67,8 @@ public class TARDISBlockBreakListener implements Listener {
             Sign sign = (Sign) block.getState();
             String line1 = sign.getLine(1);
             String line2 = sign.getLine(2);
-            // TODO need to get the other sign texts and check them as well
-            if (line1.equals(ChatColor.WHITE + "POLICE") && line2.equals(ChatColor.WHITE + "BOX")) {
+//            if (line1.equals(ChatColor.WHITE + "POLICE") && line2.equals(ChatColor.WHITE + "BOX")) {
+            if (sign_lookup.containsKey(line1) && line2.equals(sign_lookup.get(line1))) {
                 event.setCancelled(true);
                 sign.update();
                 Player player = event.getPlayer();

@@ -37,8 +37,8 @@ public class TARDISCustomPreset {
     private final EnumMap<COMPASS, TARDISChameleonColumn> blueprint = new EnumMap<COMPASS, TARDISChameleonColumn>(COMPASS.class);
     private final EnumMap<COMPASS, TARDISChameleonColumn> stained = new EnumMap<COMPASS, TARDISChameleonColumn>(COMPASS.class);
     private final EnumMap<COMPASS, TARDISChameleonColumn> glass = new EnumMap<COMPASS, TARDISChameleonColumn>(COMPASS.class);
-    String line_one;
-    String line_two;
+    String firstLine;
+    String secondLine;
 
     public TARDISCustomPreset() {
     }
@@ -85,11 +85,11 @@ public class TARDISCustomPreset {
             glass.put(d, tcp.buildTARDISChameleonColumn(d, custom_data[4], custom_data[5], asymmetric));
         }
         if (custom_data[6] != null && !custom_data[6].isEmpty()) {
-            this.line_one = custom_data[6];
-            this.line_two = custom_data[7];
+            this.firstLine = custom_data[6];
+            this.secondLine = custom_data[7];
         } else {
-            this.line_one = "CUSTOM TEXT";
-            this.line_two = "GOES HERE";
+            this.firstLine = "CUSTOM TEXT";
+            this.secondLine = "GOES HERE";
         }
     }
 
@@ -105,11 +105,11 @@ public class TARDISCustomPreset {
         return glass;
     }
 
-    public String getLine_one() {
-        return line_one;
+    public String getFirstLine() {
+        return firstLine;
     }
 
-    public String getLine_two() {
-        return line_two;
+    public String getSecondLine() {
+        return secondLine;
     }
 }

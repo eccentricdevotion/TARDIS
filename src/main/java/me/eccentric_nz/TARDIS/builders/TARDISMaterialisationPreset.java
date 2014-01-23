@@ -360,142 +360,40 @@ public class TARDISMaterialisationPreset implements Runnable {
                                         }
                                         String line1;
                                         String line2;
+                                        if (preset.equals(PRESET.CUSTOM)) {
+                                            line1 = plugin.presets.custom.getFirstLine();
+                                            line2 = plugin.presets.custom.getSecondLine();
+                                        } else {
+                                            line1 = preset.getFirstLine();
+                                            line2 = preset.getSecondLine();
+                                        }
                                         switch (preset) {
                                             case ANGEL:
-                                                line1 = "WEEPING";
-                                                line2 = "ANGELS HAVE";
+                                                s.setLine(0, ChatColor.WHITE + line1);
+                                                s.setLine(1, ChatColor.WHITE + line2);
                                                 s.setLine(3, ChatColor.WHITE + "TARDIS");
                                                 break;
                                             case APPERTURE:
-                                                line1 = "APPERTURE";
-                                                line2 = "SCIENCE";
+                                                s.setLine(1, ChatColor.WHITE + line1);
+                                                s.setLine(2, ChatColor.WHITE + line2);
                                                 s.setLine(3, ChatColor.WHITE + "LAB");
                                                 break;
-                                            case CAKE:
-                                                line1 = "CAKE AND";
-                                                line2 = "EAT IT TOO";
-                                                break;
-                                            case CREEPY:
-                                                line1 = "HAUNTED";
-                                                line2 = "HOUSE";
-                                                break;
-                                            case FENCE:
-                                                line1 = "RANDOM";
-                                                line2 = "FENCE";
-                                                break;
-                                            case GAZEBO:
-                                                line1 = "CHILLED OUT";
-                                                line2 = "GAZEBO";
-                                                break;
-                                            case GRAVESTONE:
-                                                line1 = "HERE";
-                                                line2 = "LIES";
-                                                break;
-                                            case HELIX:
-                                                line1 = "INDUSTRIAL";
-                                                line2 = "DOUBLE HELIX";
-                                                break;
                                             case JAIL:
-                                                line1 = "$50,000";
-                                                line2 = "REWARD FOR";
+                                                s.setLine(0, ChatColor.WHITE + line1);
+                                                s.setLine(1, ChatColor.WHITE + line2);
                                                 s.setLine(3, ChatColor.WHITE + "CAPTURE");
                                                 break;
-                                            case LAMP:
-                                                line1 = "LONELY";
-                                                line2 = "LAMP POST";
-                                                break;
-                                            case LIBRARY:
-                                                line1 = "LIBRARY OF";
-                                                line2 = "TIME LORE";
-                                                break;
-                                            case LIGHTHOUSE:
-                                                line1 = "TINY";
-                                                line2 = "LIGHTHOUSE";
-                                                break;
-                                            case MINESHAFT:
-                                                line1 = "ROAD TO";
-                                                line2 = "EL DORADO";
-                                                break;
-                                            case PARTY:
-                                                line1 = "PARTY";
-                                                line2 = "TENT";
-                                                break;
-                                            case PEANUT:
-                                                line1 = "JAR OF";
-                                                line2 = "PEANUT BUTTER";
-                                                break;
-                                            case PINE:
-                                                line1 = "PINE";
-                                                line2 = "TREE";
-                                                break;
-                                            case PORTAL:
-                                                line1 = "PORTAL TO";
-                                                line2 = "SOMEWHERE";
-                                                break;
-                                            case PUNKED:
-                                                line1 = "JUST GOT";
-                                                line2 = "PUNKED";
-                                                break;
-                                            case ROBOT:
-                                                line1 = "WILL BE";
-                                                line2 = "DELETED";
-                                                break;
-                                            case SHROOM:
-                                                line1 = "TRIPPY";
-                                                line2 = "SPACE SHROOM";
-                                                break;
-                                            case SNOWMAN:
-                                                line1 = "TAKES ONE";
-                                                line2 = "TO SNOW ONE";
-                                                break;
-                                            case STONE:
-                                                line1 = "STONE BRICK";
-                                                line2 = "COLUMN";
-                                                break;
-                                            case SWAMP:
-                                                line1 = "SIGN ABOVE";
-                                                line2 = "THE DOOR";
-                                                break;
-                                            case TELEPHONE:
-                                                line1 = "TELEPHONE";
-                                                line2 = "BOX";
-                                                break;
-                                            case TOPSYTURVEY:
-                                                line1 = "Topsy-turvey";
-                                                line2 = "BOX O' MARVEL";
-                                                break;
-                                            case VILLAGE:
-                                                line1 = "VILLAGE";
-                                                line2 = "HOUSE";
-                                                break;
-                                            case WINDMILL:
-                                                line1 = "VERY SMALL";
-                                                line2 = "WINDMILL";
-                                                break;
-                                            case YELLOW:
-                                                line1 = "YELLOW";
-                                                line2 = "SUBMARINE";
-                                                break;
                                             case THEEND:
-                                                line1 = "DRAGON";
-                                                line2 = "SLAYING";
+                                                s.setLine(1, ChatColor.WHITE + line1);
+                                                s.setLine(2, ChatColor.WHITE + line2);
                                                 s.setLine(3, ChatColor.WHITE + "HOT ROD");
                                                 break;
                                             case CUSTOM:
-                                                line1 = plugin.presets.custom.getLine_one();
-                                                line2 = plugin.presets.custom.getLine_two();
                                                 break;
                                             default:
-                                                line1 = "POLICE";
-                                                line2 = "BOX";
+                                                s.setLine(1, ChatColor.WHITE + line1);
+                                                s.setLine(2, ChatColor.WHITE + line2);
                                                 break;
-                                        }
-                                        if (preset.equals(PRESET.ANGEL) || preset.equals(PRESET.JAIL)) {
-                                            s.setLine(0, ChatColor.WHITE + line1);
-                                            s.setLine(1, ChatColor.WHITE + line2);
-                                        } else {
-                                            s.setLine(1, ChatColor.WHITE + line1);
-                                            s.setLine(2, ChatColor.WHITE + line2);
                                         }
                                         s.update();
                                     }
