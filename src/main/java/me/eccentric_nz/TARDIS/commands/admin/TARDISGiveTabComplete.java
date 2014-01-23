@@ -33,7 +33,7 @@ import org.bukkit.util.StringUtil;
 public class TARDISGiveTabComplete implements TabCompleter {
 
     private final TARDIS plugin;
-    private final ImmutableList<String> GIVE_SUBS = ImmutableList.of("artron", "kit", "a-circuit", "bio-circuit", "biome-disk", "blank", "cell", "c-circuit", "d-circuit", "e-circuit", "filter", "key", "l-circuit", "locator", "m-circuit", "oscillator", "p-circuit", "player-disk", "preset-disk", "r-circuit", "remote", "s-circuit", "save-disk", "sonic");
+    private final ImmutableList<String> GIVE_SUBS = ImmutableList.of("artron", "kit", "a-circuit", "bio-circuit", "biome-disk", "blank", "cell", "c-circuit", "d-circuit", "e-circuit", "filter", "key", "l-circuit", "locator", "m-circuit", "memory-circuit", "oscillator", "p-circuit", "player-disk", "preset-disk", "r-circuit", "remote", "s-circuit", "scanner-circuit", "save-disk", "sonic");
     private final Set<String> kits;
     private final ImmutableList<String> KIT_SUBS;
 

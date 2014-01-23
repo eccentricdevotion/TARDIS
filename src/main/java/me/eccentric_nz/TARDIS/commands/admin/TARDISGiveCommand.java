@@ -58,6 +58,7 @@ public class TARDISGiveCommand implements CommandExecutor {
         items.put("l-circuit", "TARDIS Locator Circuit");
         items.put("locator", "TARDIS Locator");
         items.put("m-circuit", "TARDIS Materialisation Circuit");
+        items.put("memory-circuit", "TARDIS Memory Circuit");
         items.put("oscillator", "Sonic Oscillator");
         items.put("p-circuit", "Perception Circuit");
         items.put("player-disk", "Player Storage Disk");
@@ -65,6 +66,7 @@ public class TARDISGiveCommand implements CommandExecutor {
         items.put("r-circuit", "Redstone Activator Circuit");
         items.put("remote", "Stattenheim Remote");
         items.put("s-circuit", "TARDIS Stattenheim Circuit");
+        items.put("scanner-circuit", "TARDIS Scanner Circuit");
         items.put("save-disk", "Save Storage Disk");
         items.put("sonic", "Sonic Screwdriver");
     }
@@ -80,7 +82,7 @@ public class TARDISGiveCommand implements CommandExecutor {
                 }
                 String item = args[1].toLowerCase();
                 if (!items.containsKey(item)) {
-                    sender.sendMessage(plugin.pluginName + "Unknown item! Try one of: artron|kit|a-circuit|bio-circuit|biome-disk|blank|c-circuit|d-circuit|e-circuit|filter|key|l-circuit|locator|m-circuit|oscillator|p-circuit|player-disk|preset-disk|r-circuit|remote|s-circuit|save-disk|sonic");
+                    sender.sendMessage(plugin.pluginName + "Unknown item! Try one of: artron|kit|a-circuit|bio-circuit|biome-disk|blank|c-circuit|d-circuit|e-circuit|filter|key|l-circuit|locator|m-circuit|memory-circuit|oscillator|p-circuit|player-disk|preset-disk|r-circuit|remote|s-circuit|scanner-circuit|save-disk|sonic");
                     return true;
                 }
                 if (item.equals("kit")) {
