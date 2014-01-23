@@ -37,7 +37,6 @@ import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 
 /**
  *
@@ -88,44 +87,39 @@ public class TARDISConsoleListener implements Listener {
                     }
                     onlythese.add(Material.valueOf(key));
                     ItemStack disk = event.getPlayer().getItemInHand();
-                    if (onlythese.contains(disk.getType()) && disk.hasItemMeta()) {
-                        ItemMeta im = disk.getItemMeta();
-                        if (im.hasDisplayName() && metanames.contains(im.getDisplayName())) {
-                            // only the time lord of this tardis
-                            HashMap<String, Object> wheret = new HashMap<String, Object>();
-                            wheret.put("tardis_id", id);
-                            wheret.put("owner", p.getName());
-                            ResultSetTardis rs = new ResultSetTardis(plugin, wheret, "", false);
-                            if (!rs.resultSet()) {
-                                p.sendMessage(plugin.pluginName + MESSAGE.NOT_OWNER.getText());
-                                return;
-                            }
-                            Inventory inv = plugin.getServer().createInventory(p, 9, "§4TARDIS Console");
-                            HashMap<String, Object> where = new HashMap<String, Object>();
-                            where.put("owner", p.getName());
-                            ResultSetDiskStorage rsds = new ResultSetDiskStorage(plugin, where);
-                            if (rsds.resultSet()) {
-                                String console = rsds.getConsole();
-                                if (!console.isEmpty()) {
-                                    try {
-                                        ItemStack[] stack = TARDISSerializeInventory.itemStacksFromString(console);
-                                        inv.setContents(stack);
-                                    } catch (IOException ex) {
-                                        plugin.debug("Could not read console from database!");
-                                    }
-                                }
-                            } else {
-                                // create new storage record
-                                HashMap<String, Object> setstore = new HashMap<String, Object>();
-                                setstore.put("owner", p.getName());
-                                setstore.put("tardis_id", id);
-                                new QueryFactory(plugin).doInsert("storage", setstore);
-                            }
-                            // open gui
-                            p.openInventory(inv);
-                        } else {
-                            p.sendMessage(plugin.pluginName + "You can only open the Advanced Console with a named TARDIS item.");
+                    if ((disk != null && onlythese.contains(disk.getType()) && disk.hasItemMeta()) || key.equals("AIR")) {
+                        // only the time lord of this tardis
+                        HashMap<String, Object> wheret = new HashMap<String, Object>();
+                        wheret.put("tardis_id", id);
+                        wheret.put("owner", p.getName());
+                        ResultSetTardis rs = new ResultSetTardis(plugin, wheret, "", false);
+                        if (!rs.resultSet()) {
+                            p.sendMessage(plugin.pluginName + MESSAGE.NOT_OWNER.getText());
+                            return;
                         }
+                        Inventory inv = plugin.getServer().createInventory(p, 9, "§4TARDIS Console");
+                        HashMap<String, Object> where = new HashMap<String, Object>();
+                        where.put("owner", p.getName());
+                        ResultSetDiskStorage rsds = new ResultSetDiskStorage(plugin, where);
+                        if (rsds.resultSet()) {
+                            String console = rsds.getConsole();
+                            if (!console.isEmpty()) {
+                                try {
+                                    ItemStack[] stack = TARDISSerializeInventory.itemStacksFromString(console);
+                                    inv.setContents(stack);
+                                } catch (IOException ex) {
+                                    plugin.debug("Could not read console from database!");
+                                }
+                            }
+                        } else {
+                            // create new storage record
+                            HashMap<String, Object> setstore = new HashMap<String, Object>();
+                            setstore.put("owner", p.getName());
+                            setstore.put("tardis_id", id);
+                            new QueryFactory(plugin).doInsert("storage", setstore);
+                        }
+                        // open gui
+                        p.openInventory(inv);
                     } else {
                         p.sendMessage(plugin.pluginName + "You can only open the Advanced Console with the TARDIS key, a sonic screwdriver, a circuit or a disk.");
                     }
