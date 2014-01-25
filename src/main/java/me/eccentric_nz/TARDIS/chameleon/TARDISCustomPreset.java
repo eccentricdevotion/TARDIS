@@ -80,9 +80,9 @@ public class TARDISCustomPreset {
         }
         TARDISChameleonPreset tcp = new TARDISChameleonPreset();
         for (COMPASS d : COMPASS.values()) {
-            blueprint.put(d, tcp.buildTARDISChameleonColumn(d, custom_data[0], custom_data[1], asymmetric));
-            stained.put(d, tcp.buildTARDISChameleonColumn(d, custom_data[2], custom_data[3], asymmetric));
-            glass.put(d, tcp.buildTARDISChameleonColumn(d, custom_data[4], custom_data[5], asymmetric));
+            blueprint.put(d, tcp.buildTARDISChameleonColumn(d, custom_data[0], custom_data[1], asymmetric, false, false));
+            stained.put(d, tcp.buildTARDISChameleonColumn(d, custom_data[2], custom_data[3], asymmetric, false, false));
+            glass.put(d, tcp.buildTARDISChameleonColumn(d, custom_data[4], custom_data[5], asymmetric, false, false));
         }
         if (custom_data[6] != null && !custom_data[6].isEmpty()) {
             this.firstLine = custom_data[6];
