@@ -40,7 +40,7 @@ public class TARDISBlockPhysicsListener implements Listener {
     }
 
     // prevent hatches from breaking
-    @EventHandler(priority = EventPriority.LOW)
+    @EventHandler(priority = EventPriority.HIGH)
     public void onBlockPhysics(BlockPhysicsEvent event) {
         if (event.isCancelled()) {
             return;
