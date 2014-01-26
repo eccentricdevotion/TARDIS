@@ -36,6 +36,7 @@
 			<li>Added relative coordinates travel &mdash; same permission as normal coordinates travel &mdash; similar to normal coordinates travel, but you don&rsquo;t need to specify a world, and the relative values MUST be proceeded by a tilde (<code>~</code>) e.g. <code>/tardistravel ~50 ~ ~90</code> moves you 50 blocks in the X direction, 0 blocks in the Y direction and 90 blocks in the Z direction</li>
 			<li>Added the ability for the Sonic Screwdriver to sort chests &mdash; permission <code>tardis.sonic.sort</code></li>
 			<li>Added an emergency relocation feature to move the TARDIS, and handle errors, if the world the TARDIS was in was deleted</li>
+			<li>If the TARDIS is hidden, but blocks have been placed in its location, you can unhide the TARDIS by hitting the blocks with the Admin Sonic Screwdriver</li>
 		</ul>
 		<h4>Changes</h4>
 		<ul>
@@ -45,6 +46,7 @@
 			<li>The Redstone Activator Sonic Screwdriver upgrade can now move single blocks in front of pistons</li>
 			<li>Allow the player&rsquo;s preferred TARDIS key (even if preference is AIR) to open the Advanced Console, and add better messaging if console won&rsquo;t open</li>
 			<li>Disk Storage only opens if it is the Time Lord&rsquo;s own TARDIS</li>
+			<li>To list TARDISes for pruning, you now need to use the <code>/tardisadmin prunelist [days]</code> command</li>
 		</ul>
 		<h4>Bug fixes</h4>
 		<ul>
@@ -64,6 +66,7 @@
 			<li>Added sensible defaults when parsing all numbers from strings</li>
 			<li>Removed double <code>materialise</code> config option</li>
 			<li>Fixed the Terminal GUI opening when SHIFT-RIGHT clicking the Scanner circuit in the Advanced Console</li>
+			<li>Fixed the `/tardisadmin prune` command removing TARDISes it shouldn&rsquo;t</li>
 		</ul>
 		<h3>v2.7-beta-2</h3>
 		<h4>Changes</h4>
