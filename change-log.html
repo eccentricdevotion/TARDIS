@@ -26,6 +26,56 @@
 	<section>
 		<h1>Change log</h1>
 		<h2>What&rsquo;s been changed?</h2>
+		<h3>v2.7</h3>
+		<h4>Additions</h4>
+		<ul>
+			<li>Added some aliases to the <code>/tardistexture</code> command &mdash; <code>/tardisresource</code> &mdash; <code>/tresource</code> &mdash; <code>/trp</code></li>
+			<li>Added the Artron Storage Cell, Memory and Scanner circuit to the <code>/tardisgive</code> command</li>
+			<li>Added missing room permissions to ARS</li>
+			<li>Added Exterior Rendering Room preference &mdash; <code>/tardisprefs renderer [on|off]</code></li>
+			<li>Added relative coordinates travel &mdash; same permission as normal coordinates travel &mdash; similar to normal coordinates travel, but you don&rsquo;t need to specify a world, and the relative values MUST be proceeded by a tilde (<code>~</code>) e.g. <code>/tardistravel ~50 ~ ~90</code> moves you 50 blocks in the X direction, 0 blocks in the Y direction and 90 blocks in the Z direction</li>
+			<li>Added the ability for the Sonic Screwdriver to sort chests &mdash; permission <code>tardis.sonic.sort</code></li>
+			<li>Added an emergency relocation feature to move the TARDIS, and handle errors, if the world the TARDIS was in was deleted</li>
+		</ul>
+		<h4>Changes</h4>
+		<ul>
+			<li>You can now break any sign to delete TARDIS, not just Police Box ones</li>
+			<li>Made the seed block appear without having to click the output slot, and also check player has permission to craft the TARDIS type</li>
+			<li>Reduced the amount of Artron Energy a Time Lord gets when travelling</li>
+			<li>The Redstone Activator Sonic Screwdriver upgrade can now move single blocks in front of pistons</li>
+			<li>Allow the player&rsquo;s preferred TARDIS key (even if preference is AIR) to open the Advanced Console, and add better messaging if console won&rsquo;t open</li>
+			<li>Disk Storage only opens if it is the Time Lord&rsquo;s own TARDIS</li>
+		</ul>
+		<h4>Bug fixes</h4>
+		<ul>
+			<li>Prevented Anvil renaming of materials to any TARDIS item</li>
+			<li>Fixed broken Advanced Console due to the <code>tardis_id</code> database field not being updated when player creates a new TARDIS, or had opened someone else&rsquo;s storage</li>
+			<li>Don&rsquo;t remove the enchantment from item in hand if it is not the Sonic Screwdriver</li>
+			<li>You can only charge 1 Artron Storage Cell at a time</li>
+			<li>Fixed Circuit missing message showing when there are no disks in the console</li>
+			<li>Fixed Sonic Screwdriver Bio-scanner upgrade stopping standard sonic functions</li>
+			<li>Fixed IllegalArgumentException when an invalid material is specified for the TARDIS Key or when adding a new room</li>
+			<li>Fixed an IndexOutOfBoundsException if a player puts a blank save disk in the console</li>
+			<li>Add admin as a region member when using the <code>/tardisadmin enter</code> command</li>
+			<li>Numerous fixes to TARDIS presets</li>
+			<li>Fixed Admin Menu showing extra items</li>
+			<li>Fixed the MySQL database updater</li>
+			<li>Fixed NPEs when doing a <code>/tardis save</code> to <code>/tardis save_player</code> and there was no item in hand</li>
+			<li>Added sensible defaults when parsing all numbers from strings</li>
+			<li>Removed double <code>materialise</code> config option</li>
+			<li>Fixed the Terminal GUI opening when SHIFT-RIGHT clicking the Scanner circuit in the Advanced Console</li>
+		</ul>
+		<h3>v2.7-beta-2</h3>
+		<h4>Changes</h4>
+		<ul>
+			<li>Updated the TARDIS Information System</li>
+		</ul>
+		<h4>Bug fixes</h4>
+		<ul>
+			<li>Fixed missing circuit recipes for the <code>/tardisrecipe</code> command</li>
+			<li>Fix broken recipe command for biome and preset disks</li>
+			<li>Fixed the Advanced Console not tracking the destination change</li>
+		</ul>
 		<h3>v2.7-beta-1</h3>
 		<h4>Additions</h4>
 		<ul>
