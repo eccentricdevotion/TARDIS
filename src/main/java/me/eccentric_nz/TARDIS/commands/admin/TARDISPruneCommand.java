@@ -16,8 +16,11 @@
  */
 package me.eccentric_nz.TARDIS.commands.admin;
 
+import java.io.File;
+import java.io.IOException;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.destroyers.TARDISPruner;
+import static me.eccentric_nz.TARDIS.files.TARDISConfigConverter.copyFile;
 import org.bukkit.command.CommandSender;
 
 /**
@@ -35,18 +38,35 @@ public class TARDISPruneCommand {
     public boolean startPruning(CommandSender sender, String[] args) {
         TARDISPruner pruner = new TARDISPruner(plugin);
         if (args[1].equalsIgnoreCase("list") && args.length == 3) {
-            int i = 0;
-            int days = plugin.utils.parseInt(args[2]);
-            pruner.list(sender, days);
+            sender.sendMessage(plugin.pluginName + "Please use the /tardisadmin prunelist command");
             return true;
-        } else {
+        }
+        try {
+            sender.sendMessage(plugin.pluginName + "Backing up TARDIS database...");
+            // backup database
+            File oldFile = new File(plugin.getDataFolder() + File.separator + "TARDIS.db");
+            File newFile = new File(plugin.getDataFolder() + File.separator + "TARDIS_" + System.currentTimeMillis() + ".db");
+            // back up the file
             try {
-                int days = plugin.utils.parseInt(args[1]);
-                pruner.prune(sender, days);
-            } catch (NumberFormatException nfe) {
+                copyFile(oldFile, newFile);
+            } catch (IOException ex) {
+                plugin.debug("Could not backup TARDIS.db! " + ex.getMessage());
                 return false;
             }
+            int days = Integer.parseInt(args[1]);
+            sender.sendMessage(plugin.pluginName + "Starting TARDIS prune...");
+            pruner.prune(sender, days);
+            return true;
+        } catch (NumberFormatException nfe) {
+            plugin.debug("Could not convert to integer");
+            return false;
         }
-        return false;
+    }
+
+    public boolean listPrunes(CommandSender sender, String[] args) {
+        int days = plugin.utils.parseInt(args[1]);
+        TARDISPruner pruner = new TARDISPruner(plugin);
+        pruner.list(sender, days);
+        return true;
     }
 }
