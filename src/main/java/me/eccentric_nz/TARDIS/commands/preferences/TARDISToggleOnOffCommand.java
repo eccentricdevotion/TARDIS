@@ -100,14 +100,9 @@ public class TARDISToggleOnOffCommand {
                 beaconData = beacon.split(":");
             }
             World w = plugin.getServer().getWorld(beaconData[0]);
-            int bx = 0, by = 0, bz = 0;
-            try {
-                bx = plugin.utils.parseInt(beaconData[1]);
-                by = plugin.utils.parseInt(beaconData[2]) + plusy;
-                bz = plugin.utils.parseInt(beaconData[3]);
-            } catch (NumberFormatException nfe) {
-                plugin.debug("Couldn't convert to a float! " + nfe.getMessage());
-            }
+            int bx = plugin.utils.parseInt(beaconData[1]);
+            int by = plugin.utils.parseInt(beaconData[2]) + plusy;
+            int bz = plugin.utils.parseInt(beaconData[3]);
             if (beacon.isEmpty()) {
                 // update the tardis table so we don't have to do this again
                 String beacon_loc = beaconData[0] + ":" + beaconData[1] + ":" + by + ":" + beaconData[3];

@@ -104,7 +104,7 @@ public class TARDISGravityCommands implements CommandExecutor {
                         return false;
                     }
                     try {
-                        values[1] = plugin.utils.parseDouble(args[1]);
+                        values[1] = Double.parseDouble(args[1]);
                         if (values[1] > plugin.getConfig().getDouble("growth.gravity_max_distance")) {
                             player.sendMessage(plugin.pluginName + "That distance is too far!");
                             return true;

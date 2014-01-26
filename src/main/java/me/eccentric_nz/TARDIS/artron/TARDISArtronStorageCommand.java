@@ -112,7 +112,7 @@ public class TARDISArtronStorageCommand implements CommandExecutor {
             }
             int amount;
             try {
-                amount = plugin.utils.parseInt(args[1]);
+                amount = Integer.parseInt(args[1]);
             } catch (NumberFormatException n) {
                 sender.sendMessage(plugin.pluginName + "The second command argument must be a number!");
                 return false;

@@ -67,14 +67,9 @@ public class TARDISEnterCommand {
                 String doorLocStr = rsi.getDoor_location();
                 String[] split = doorLocStr.split(":");
                 World cw = plugin.getServer().getWorld(split[0]);
-                int cx = 0, cy = 0, cz = 0;
-                try {
-                    cx = plugin.utils.parseInt(split[1]);
-                    cy = plugin.utils.parseInt(split[2]);
-                    cz = plugin.utils.parseInt(split[3]);
-                } catch (NumberFormatException nfe) {
-                    plugin.debug("Could not convert to number!");
-                }
+                int cx = plugin.utils.parseInt(split[1]);
+                int cy = plugin.utils.parseInt(split[2]);
+                int cz = plugin.utils.parseInt(split[3]);
                 Location tmp_loc = cw.getBlockAt(cx, cy, cz).getLocation();
                 int getx = tmp_loc.getBlockX();
                 int getz = tmp_loc.getBlockZ();

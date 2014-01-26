@@ -91,8 +91,6 @@ public class TARDISEPSRunnable implements Runnable {
                         pp.sendMessage(ChatColor.RED + "[Emergency Program One] " + ChatColor.RESET + "Right-click me to make me go away.");
                     }
                 }
-            } catch (NumberFormatException e) {
-                plugin.debug(e.getMessage());
             } catch (CommandException e) {
                 plugin.debug(e.getMessage());
             }
