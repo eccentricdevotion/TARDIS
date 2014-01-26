@@ -18,15 +18,21 @@ package me.eccentric_nz.TARDIS.listeners;
 
 import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetBlocks;
+import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
+import me.eccentric_nz.TARDIS.enumeration.MESSAGE;
 import me.eccentric_nz.TARDIS.utility.TARDISHostileDisplacement;
+import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockDamageEvent;
+import org.bukkit.inventory.ItemStack;
 
 /**
  * The Judoon are a race of rhinocerid humanoids frequently employed as a
@@ -60,10 +66,20 @@ public class TARDISBlockDamageListener implements Listener {
         where.put("location", l);
         ResultSetBlocks rsb = new ResultSetBlocks(plugin, where, false);
         if (rsb.resultSet()) {
+            int id = rsb.getTardis_id();
             String message = "You cannot break the TARDIS blocks!";
+            if (p.hasPermission("tardis.sonic.admin")) {
+                String[] split = plugin.getRecipesConfig().getString("shaped.Sonic Screwdriver.result").split(":");
+                Material sonic = Material.valueOf(split[0]);
+                ItemStack is = p.getItemInHand();
+                if (is != null && is.getType().equals(sonic)) {
+                    // unhide TARDIS
+                    unhide(id, p);
+                    return;
+                }
+            }
             boolean m = false;
             boolean isDoor = false;
-            int id = rsb.getTardis_id();
             if (HADS && !plugin.inVortex.contains(Integer.valueOf(id)) && isOwnerOnline(id)) {
                 if (b.getTypeId() == 71) {
                     if (isOwner(id, p.getName())) {
@@ -103,6 +119,43 @@ public class TARDISBlockDamageListener implements Listener {
             return plugin.getServer().getOfflinePlayer(rst.getOwner()).isOnline();
         } else {
             return false;
+        }
+    }
+
+    private void unhide(final int id, Player player) {
+        HashMap<String, Object> where = new HashMap<String, Object>();
+        where.put("tardis_id", id);
+        ResultSetTardis rst = new ResultSetTardis(plugin, where, "", false);
+        if (rst.resultSet() && rst.isHidden()) {
+            final Player p = (Player) plugin.getServer().getOfflinePlayer(rst.getOwner());
+            // unhide this tardis
+            boolean cham = false;
+            if (plugin.getConfig().getBoolean("travel.chameleon")) {
+                cham = rst.isChamele_on();
+            }
+            HashMap<String, Object> wherecl = new HashMap<String, Object>();
+            wherecl.put("tardis_id", id);
+            final ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
+            if (!rsc.resultSet()) {
+                player.sendMessage(plugin.pluginName + MESSAGE.NO_CURRENT.getText());
+            }
+            final Location l = new Location(rsc.getWorld(), rsc.getX(), rsc.getY(), rsc.getZ());
+            HashMap<String, Object> wheret = new HashMap<String, Object>();
+            wheret.put("tardis_id", id);
+            QueryFactory qf = new QueryFactory(plugin);
+            final boolean c = cham;
+            plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
+                @Override
+                public void run() {
+                    plugin.builderP.buildPreset(id, l, rsc.getDirection(), c, p, true, false, rsc.isSubmarine());
+                }
+            }, 5L);
+            // set hidden to false
+            HashMap<String, Object> whereh = new HashMap<String, Object>();
+            whereh.put("tardis_id", id);
+            HashMap<String, Object> seth = new HashMap<String, Object>();
+            seth.put("hidden", 0);
+            qf.doUpdate("tardis", seth, whereh);
         }
     }
 }

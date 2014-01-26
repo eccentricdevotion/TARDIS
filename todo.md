@@ -15,6 +15,9 @@
 10. TARDIS Information System
    * auto log out?
 11. Zero room
+12. Custom data classes for mat / demat
+13. Add TARDIS unhide ability to admin sonic
+14. `/tardisadmin` remote TARDIS commands
 
     
 ##Future version `2.9+`

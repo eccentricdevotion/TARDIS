@@ -177,19 +177,14 @@ public class TARDISArtronCapacitorListener implements Listener {
                                         String[] creeperData = creeper.split(":");
                                         String[] beaconData = beacon.split(":");
                                         World w = block.getLocation().getWorld();
-                                        float cx = 0, cy = 0, cz = 0;
                                         int bx = 0, by = 0, bz = 0;
-                                        try {
-                                            cx = plugin.utils.parseFloat(creeperData[1]);
-                                            cy = plugin.utils.parseFloat(creeperData[2]) + 1;
-                                            cz = plugin.utils.parseFloat(creeperData[3]);
-                                            if (beaconData.length > 2) {
-                                                bx = plugin.utils.parseInt(beaconData[1]);
-                                                by = plugin.utils.parseInt(beaconData[2]);
-                                                bz = plugin.utils.parseInt(beaconData[3]);
-                                            }
-                                        } catch (NumberFormatException nfe) {
-                                            plugin.debug("Couldn't convert to a float! " + nfe.getMessage());
+                                        float cx = plugin.utils.parseFloat(creeperData[1]);
+                                        float cy = plugin.utils.parseFloat(creeperData[2]) + 1;
+                                        float cz = plugin.utils.parseFloat(creeperData[3]);
+                                        if (beaconData.length > 2) {
+                                            bx = plugin.utils.parseInt(beaconData[1]);
+                                            by = plugin.utils.parseInt(beaconData[2]);
+                                            bz = plugin.utils.parseInt(beaconData[3]);
                                         }
                                         Location cl = new Location(w, cx, cy, cz);
                                         plugin.myspawn = true;

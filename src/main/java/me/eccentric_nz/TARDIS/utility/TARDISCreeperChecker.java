@@ -68,14 +68,9 @@ public class TARDISCreeperChecker {
                         String[] creeperData = map.get("creeper").split(":");
                         World w = plugin.getServer().getWorld(creeperData[0]);
                         if (w != null) {
-                            float cx = 0, cy = 0, cz = 0;
-                            try {
-                                cx = plugin.utils.parseFloat(creeperData[1]);
-                                cy = plugin.utils.parseFloat(creeperData[2]) + 1;
-                                cz = plugin.utils.parseFloat(creeperData[3]);
-                            } catch (NumberFormatException nfe) {
-                                plugin.debug("Couldn't convert to a float! " + nfe.getMessage());
-                            }
+                            float cx = plugin.utils.parseFloat(creeperData[1]);
+                            float cy = plugin.utils.parseFloat(creeperData[2]) + 1;
+                            float cz = plugin.utils.parseFloat(creeperData[3]);
                             Location l = new Location(w, cx, cy, cz);
                             plugin.myspawn = true;
                             Entity e = w.spawnEntity(l, EntityType.CREEPER);

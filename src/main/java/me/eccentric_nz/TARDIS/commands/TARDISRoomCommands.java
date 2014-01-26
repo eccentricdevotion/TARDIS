@@ -288,7 +288,7 @@ public class TARDISRoomCommands implements CommandExecutor {
                     // cost, offset or seed?
                     try {
                         // cost
-                        int num = plugin.utils.parseInt(args[1]);
+                        int num = Integer.parseInt(args[1]);
                         if (num > 0) {
                             plugin.getRoomsConfig().set("rooms." + name + ".cost", num);
                             sender.sendMessage(plugin.pluginName + "The " + name + " cost was set to " + num + "!");

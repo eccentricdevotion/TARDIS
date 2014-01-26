@@ -70,6 +70,7 @@ public class TARDISAdminCommands implements CommandExecutor {
         firstsStr.put("make_preset", "");
         firstsStr.put("playercount", "");
         firstsStr.put("prune", "");
+        firstsStr.put("prunelist", "");
         firstsStr.put("purge", "");
         firstsStr.put("recharger", "");
         firstsStr.put("reload", "");
@@ -202,6 +203,9 @@ public class TARDISAdminCommands implements CommandExecutor {
                 }
                 if (first.equals("prune")) {
                     return new TARDISPruneCommand(plugin).startPruning(sender, args);
+                }
+                if (first.equals("prunelist")) {
+                    return new TARDISPruneCommand(plugin).listPrunes(sender, args);
                 }
                 if (first.equals("purge")) {
                     return new TARDISPurgeCommand(plugin).clearAll(sender, args);
