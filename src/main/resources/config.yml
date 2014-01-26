@@ -1,73 +1,94 @@
 # config file
 debug: false
-check_for_updates: true
-key: STICK
-tp_radius: 500
-default_world: false
-default_world_name: myridiculouslylongworldnameiscalledcuthbert
-include_default_world: false
-platform: false
-chameleon: true
-all_blocks: false
-sfx: true
-give_key: false
-the_end: false
-nether: false
-use_worldguard: true
-respect_worldguard: true
-respect_towny: true
-respect_worldborder: true
-respect_factions: true
-land_on_water: true
-timeout: 5
-timeout_height: 135
-random_attempts: 30
-name_tardis: false
-border_radius: 256
-create_worlds: true
-create_worlds_with_perms: false
-gamemode: survival
-materialise: true
-confirm_timeout: 15
-keep_night: true
-count: 0
-emergency_npc: true
-gravity_max_distance: 15
-gravity_max_velocity: 5
-return_room_seed: true
-rooms_require_blocks: false
-rooms_condenser_percent: 100
-room_speed: 4
-inventory_group: 0
-add_perms: true
-allow_mob_farming: true
-spawn_eggs: true
-allow_achievements: true
-allow_autonomous: true
-allow_hads: true
-allow_tp_switch: true
-hads_damage: 10
-hads_distance: 10
-malfunction: 3
-malfunction_end: 3
-malfunction_nether: 3
-exile: false
-per_world_perms: false
-conversion_done: true
-location_conversion_done: true
-terminal_step: 1
-admin_item: 264
-wall_id: 35
-wall_data: 11
-tardis_lamp: 50
-platform_id: 35
-platform_data: 8
-plain_on: false
-stattenheim: FLINT
-use_clay: false
-difficulty: normal
-strike_lightning: true
-custom_schematic: false
-custom_schematic_seed: OBSIDIAN
-custom_creeper_id: 138
-use_block_stack: false
+# how the plugin persists data
+storage:
+    database: sqlite
+    mysql:
+        url: mysql://localhost:3306/TARDIS
+        user: bukkit
+        password: mysecurepassword
+# inner TARDIS
+creation:
+    create_worlds: true
+    create_worlds_with_perms: false
+    default_world: false
+    default_world_name: myridiculouslylongworldnameiscalledcuthbert
+    border_radius: 256
+    gamemode: survival
+    keep_night: true
+    inventory_group: 0
+    add_perms: true
+    custom_schematic: false
+    custom_schematic_seed: OBSIDIAN
+    custom_creeper_id: 138
+    use_block_stack: false
+    use_clay: false
+    count: 0
+# outer TARDIS
+police_box:
+    name_tardis: false
+    wall_id: 35
+    wall_data: 11
+    tardis_lamp: 50
+    platform_id: 35
+    platform_data: 8
+    materialise: true
+    confirm_timeout: 15
+# travel settings
+travel:
+    include_default_world: false
+    tp_radius: 500
+    platform: false
+    chameleon: true
+    give_key: false
+    the_end: false
+    nether: false
+    land_on_water: true
+    timeout: 5
+    timeout_height: 135
+    random_attempts: 30
+    exile: false
+    per_world_perms: false
+    terminal_step: 1
+# general preferences
+preferences:
+    key: GOLD_NUGGET
+    use_worldguard: true
+    respect_worldguard: true
+    respect_towny: true
+    respect_worldborder: true
+    respect_factions: true
+    sfx_volume: 10;
+    difficulty: hard
+    strike_lightning: true
+    freeze_cooldown: 60
+    hads_damage: 10
+    hads_distance: 10
+    malfunction: 3
+    malfunction_end: 3
+    malfunction_nether: 3
+    use_default_condensables: true
+# restrictions
+allow:
+    mob_farming: true
+    spawn_eggs: true
+    emergency_npc: true
+    achievements: true
+    autonomous: true
+    hads: true
+    tp_switch: true
+    all_blocks: false
+    sfx: true
+    wg_flag_set: true
+# room related
+growth:
+    gravity_max_distance: 15
+    gravity_max_velocity: 5
+    return_room_seed: true
+    rooms_require_blocks: false
+    rooms_condenser_percent: 100
+    room_speed: 4
+# don't touch
+conversions:
+    conversion_done: true
+    location_conversion_done: true
