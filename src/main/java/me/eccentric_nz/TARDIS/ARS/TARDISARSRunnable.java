@@ -18,10 +18,10 @@ package me.eccentric_nz.TARDIS.ARS;
 
 import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
+import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.rooms.TARDISRoomData;
 import me.eccentric_nz.TARDIS.rooms.TARDISRoomRunnable;
 import org.bukkit.Location;
@@ -83,7 +83,7 @@ public class TARDISARSRunnable implements Runnable {
             roomData.setFloor_data(floor_data);
             // get start locations
             Location l = new Location(w, slot.getX(), slot.getY(), slot.getZ());
-            roomData.setDirection(TARDISConstants.COMPASS.SOUTH);
+            roomData.setDirection(COMPASS.SOUTH);
             short[] dimensions = plugin.room_dimensions.get(whichroom);
             // set y offset - this needs to be how many blocks above ground 0 of the 16x16x16 chunk the room starts
             l.setY(l.getY() + TARDISARS.valueOf(whichroom).getOffset());
@@ -93,7 +93,7 @@ public class TARDISARSRunnable implements Runnable {
             roomData.setRoom(whichroom);
             roomData.setSchematic(plugin.room_schematics.get(whichroom));
             roomData.setDimensions(dimensions);
-            long delay = Math.round(20 / plugin.getConfig().getDouble("room_speed"));
+            long delay = Math.round(20 / plugin.getConfig().getDouble("growth.room_speed"));
             TARDISRoomRunnable runnable = new TARDISRoomRunnable(plugin, roomData, p);
             int taskID = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, runnable, delay, delay);
             runnable.setTask(taskID);

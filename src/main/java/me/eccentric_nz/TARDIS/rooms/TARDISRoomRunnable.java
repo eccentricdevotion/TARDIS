@@ -24,8 +24,9 @@ import java.util.Locale;
 import java.util.Map;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
-import me.eccentric_nz.TARDIS.TARDISConstants.COMPASS;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
+import me.eccentric_nz.TARDIS.enumeration.COMPASS;
+import me.eccentric_nz.TARDIS.enumeration.ROOM;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -48,7 +49,7 @@ public class TARDISRoomRunnable implements Runnable {
     private final Location l;
     String[][][] s;
     short[] dim;
-    private int id, task, level, row, col, h, w, c, startx, starty, startz, resetx, resetz;
+    private int id, task, level, row, col, h, w, c, startx, starty, startz, resetx, resety, resetz;
     private final int middle_id, floor_id, x, z, tardis_id;
     byte data, middle_data, floor_data;
     Block b;
@@ -112,6 +113,7 @@ public class TARDISRoomRunnable implements Runnable {
             starty = l.getBlockY();
             startz = l.getBlockZ();
             resetx = startx;
+            resety = starty;
             resetz = startz;
             world = l.getWorld();
             running = true;
@@ -194,8 +196,8 @@ public class TARDISRoomRunnable implements Runnable {
             // place one block
             tmp = s[level][row][col];
             String[] iddata = tmp.split(":");
-            id = plugin.utils.parseNum(iddata[0]);
-            data = Byte.parseByte(iddata[1]);
+            id = plugin.utils.parseInt(iddata[0]);
+            data = plugin.utils.parseByte(iddata[1]);
             if (id == 158 || id == -98) {
                 byte bit = data;
                 switch (bit) {
@@ -224,11 +226,11 @@ public class TARDISRoomRunnable implements Runnable {
             if (id == 55) {
                 data = 0;
             }
-            if (id == 35 && data == 7 && plugin.getConfig().getBoolean("use_clay")) {
+            if (id == 35 && data == 7 && plugin.getConfig().getBoolean("creation.use_clay")) {
                 id = 159;
             }
             if (id == 35 && data == 1) {
-                if (middle_id == 35 && middle_data == 1 && plugin.getConfig().getBoolean("use_clay")) {
+                if (middle_id == 35 && middle_data == 1 && plugin.getConfig().getBoolean("creation.use_clay")) {
                     id = 159;
                 } else {
                     id = middle_id;
@@ -236,7 +238,7 @@ public class TARDISRoomRunnable implements Runnable {
                 data = ((room.equals("GRAVITY") || room.equals("ANTIGRAVITY")) && middle_id == 35 && (middle_data == 5 || middle_data == 6)) ? 1 : middle_data;
             }
             if (id == 35 && data == 8) {
-                if (floor_id == 35 && floor_data == 8 && plugin.getConfig().getBoolean("use_clay")) {
+                if (floor_id == 35 && floor_data == 8 && plugin.getConfig().getBoolean("creation.use_clay")) {
                     id = 159;
                 } else {
                     id = floor_id;
@@ -260,19 +262,37 @@ public class TARDISRoomRunnable implements Runnable {
                 wheref.put("tardis_id", tardis_id);
                 qf.doUpdate("tardis", setf, wheref);
                 // replace with floor material
-                id = (floor_id == 35 && floor_data == 8 && plugin.getConfig().getBoolean("use_clay")) ? 159 : floor_id;
+                id = (floor_id == 35 && floor_data == 8 && plugin.getConfig().getBoolean("creation.use_clay")) ? 159 : floor_id;
                 data = floor_data;
             }
             // set stable
-            if (id == 88 && (room.equals("STABLE") || room.equals("VILLAGE"))) {
+            if (id == 88 && (room.equals("STABLE") || room.equals("VILLAGE") || room.equals("RENDERER"))) {
                 HashMap<String, Object> sets = new HashMap<String, Object>();
                 sets.put(room.toLowerCase(Locale.ENGLISH), world.getName() + ":" + startx + ":" + starty + ":" + startz);
                 HashMap<String, Object> wheres = new HashMap<String, Object>();
                 wheres.put("tardis_id", tardis_id);
                 qf.doUpdate("tardis", sets, wheres);
-                // replace with grass
-                id = (room.equals("VILLAGE")) ? 4 : 2;
-                data = 0;
+                // replace with correct block
+                switch (ROOM.valueOf(room)) {
+                    case VILLAGE:
+                        id = 4;
+                        data = 0;
+                        break;
+                    case STABLE:
+                        id = 2;
+                        data = 0;
+                        break;
+                    default:
+                        id = 35;
+                        data = 15;
+                        // add WorldGuard region
+                        if (plugin.worldGuardOnServer && plugin.getConfig().getBoolean("preferences.use_worldguard")) {
+                            Location one = new Location(world, startx - 6, starty, startz - 6);
+                            Location two = new Location(world, startx + 6, starty + 8, startz + 6);
+                            plugin.wgutils.addRendererProtection(p.getName(), one, two);
+                        }
+                        break;
+                }
             }
             // remember village doors
             if (id == 64 && room.equals("VILLAGE")) {
@@ -320,8 +340,28 @@ public class TARDISRoomRunnable implements Runnable {
                     id = 0;
                     data = (byte) 0;
                 } else {
-                    id = (middle_id == 35 && middle_data == 1 && plugin.getConfig().getBoolean("use_clay")) ? 159 : middle_id;
+                    id = (middle_id == 35 && middle_data == 1 && plugin.getConfig().getBoolean("creation.use_clay")) ? 159 : middle_id;
                     data = middle_data;
+                }
+            }
+            // always clear the door blocks on the north and west sides of adjacent spaces
+            if (id == 29) {
+                // only the bottom pistons
+                if (starty == (resety + 2)) {
+                    Block bottomdoorblock = null;
+                    // north
+                    if (startx == (resetx + 8) && startz == resetz) {
+                        bottomdoorblock = world.getBlockAt(startx, (starty + 2), (startz - 1));
+                    }
+                    // west
+                    if (startx == resetx && startz == (resetz + 8)) {
+                        bottomdoorblock = world.getBlockAt((startx - 1), (starty + 2), startz);
+                    }
+                    if (bottomdoorblock != null) {
+                        Block topdoorblock = bottomdoorblock.getRelative(BlockFace.UP);
+                        bottomdoorblock.setType(Material.AIR);
+                        topdoorblock.setType(Material.AIR);
+                    }
                 }
             }
             // always remove sponge

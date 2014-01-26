@@ -19,11 +19,11 @@ package me.eccentric_nz.TARDIS.commands.tardis;
 import java.util.ArrayList;
 import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetChunks;
 import me.eccentric_nz.TARDIS.database.ResultSetLamps;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
+import me.eccentric_nz.TARDIS.enumeration.MESSAGE;
 import org.bukkit.Chunk;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
@@ -50,10 +50,11 @@ public class TARDISLampsCommand {
      * @param owner the Timelord of the TARDIS
      * @return true if the TARDIS has not been updated, otherwise false
      */
+    @SuppressWarnings("deprecation")
     public boolean addLampBlocks(Player owner) {
         // check they have permission
         if (!owner.hasPermission("tardis.update")) {
-            owner.sendMessage(plugin.pluginName + TARDISConstants.NO_PERMS_MESSAGE);
+            owner.sendMessage(plugin.pluginName + MESSAGE.NO_PERMS.getText());
             return false;
         }
         HashMap<String, Object> where = new HashMap<String, Object>();
@@ -127,8 +128,8 @@ public class TARDISLampsCommand {
                 for (HashMap<String, String> map : data) {
                     String w = map.get("world");
                     World world = plugin.getServer().getWorld(w);
-                    int x = plugin.utils.parseNum(map.get("x"));
-                    int z = plugin.utils.parseNum(map.get("z"));
+                    int x = plugin.utils.parseInt(map.get("x"));
+                    int z = plugin.utils.parseInt(map.get("z"));
                     Chunk chunk = world.getChunkAt(x, z);
                     // find the lamps in the chunks
                     int bx = chunk.getX() << 4;

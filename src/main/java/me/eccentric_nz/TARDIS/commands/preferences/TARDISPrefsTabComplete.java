@@ -17,7 +17,10 @@
 package me.eccentric_nz.TARDIS.commands.preferences;
 
 import com.google.common.collect.ImmutableList;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.List;
 import me.eccentric_nz.TARDIS.rooms.TARDISWalls;
 import org.bukkit.Material;
 import org.bukkit.command.Command;
@@ -30,7 +33,7 @@ import org.bukkit.util.StringUtil;
  */
 public class TARDISPrefsTabComplete implements TabCompleter {
 
-    private final List<String> ROOT_SUBS = ImmutableList.of("auto", "beacon", "eps", "eps_message", "floor", "hads", "isomorphic", "key", "lamp", "plain", "platform", "quotes", "sfx", "sign", "submarine", "wall");
+    private final List<String> ROOT_SUBS = ImmutableList.of("auto", "build", "beacon", "dnd", "eps", "eps_message", "floor", "hads", "isomorphic", "key", "lamp", "minecart", "plain", "platform", "quotes", "renderer", "sfx", "sign", "submarine", "wall");
     private final List<String> ONOFF_SUBS = ImmutableList.of("on", "off");
     private final ImmutableList<String> KEY_SUBS;
     private final ImmutableList<String> MAT_SUBS;

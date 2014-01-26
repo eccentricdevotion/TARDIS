@@ -25,6 +25,7 @@ import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
+import me.eccentric_nz.TARDIS.enumeration.MESSAGE;
 import org.bukkit.command.CommandSender;
 
 /**
@@ -49,10 +50,10 @@ public class TARDISListTardisesCommand {
                     BufferedWriter bw = new BufferedWriter(new FileWriter(file, false));
                     for (HashMap<String, String> map : data) {
                         HashMap<String, Object> wherecl = new HashMap<String, Object>();
-                        wherecl.put("tardis_id", plugin.utils.parseNum(map.get("tardis_id")));
+                        wherecl.put("tardis_id", plugin.utils.parseInt(map.get("tardis_id")));
                         ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
                         if (!rsc.resultSet()) {
-                            sender.sendMessage(plugin.pluginName + "Could not get current TARDIS location!");
+                            sender.sendMessage(plugin.pluginName + MESSAGE.NO_CURRENT.getText());
                             return true;
                         }
                         String line = "Timelord: " + map.get("owner") + ", Location: " + rsc.getWorld().getName() + ":" + rsc.getX() + ":" + rsc.getY() + ":" + rsc.getZ();
@@ -70,7 +71,7 @@ public class TARDISListTardisesCommand {
             // get all tardis positions - max 18
             int start = 0, end = 18;
             if (args.length > 1) {
-                int tmp = plugin.utils.parseNum(args[1]);
+                int tmp = plugin.utils.parseInt(args[1]);
                 start = (tmp * 18) - 18;
                 end = tmp * 18;
             }
@@ -81,10 +82,10 @@ public class TARDISListTardisesCommand {
                 ArrayList<HashMap<String, String>> data = rsl.getData();
                 for (HashMap<String, String> map : data) {
                     HashMap<String, Object> wherecl = new HashMap<String, Object>();
-                    wherecl.put("tardis_id", plugin.utils.parseNum(map.get("tardis_id")));
+                    wherecl.put("tardis_id", plugin.utils.parseInt(map.get("tardis_id")));
                     ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
                     if (!rsc.resultSet()) {
-                        sender.sendMessage(plugin.pluginName + "Could not get current TARDIS location!");
+                        sender.sendMessage(plugin.pluginName + MESSAGE.NO_CURRENT.getText());
                         return true;
                     }
                     sender.sendMessage("Timelord: " + map.get("owner") + ", Location: " + rsc.getWorld().getName() + ":" + rsc.getX() + ":" + rsc.getY() + ":" + rsc.getZ());

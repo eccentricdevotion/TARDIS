@@ -37,7 +37,7 @@ import me.eccentric_nz.TARDIS.TARDIS;
  */
 public class ResultSetARS {
 
-    private final TARDISDatabase service = TARDISDatabase.getInstance();
+    private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getInstance();
     private final Connection connection = service.getConnection();
     private final TARDIS plugin;
     private final HashMap<String, Object> where;
@@ -82,6 +82,7 @@ public class ResultSetARS {
         }
         String query = "SELECT * FROM ars" + wheres;
         try {
+            service.testConnection(connection);
             statement = connection.prepareStatement(query);
             if (where != null) {
                 int s = 1;
@@ -89,7 +90,7 @@ public class ResultSetARS {
                     if (entry.getValue().getClass().equals(String.class)) {
                         statement.setString(s, entry.getValue().toString());
                     } else {
-                        statement.setInt(s, plugin.utils.parseNum(entry.getValue().toString()));
+                        statement.setInt(s, plugin.utils.parseInt(entry.getValue().toString()));
                     }
                     s++;
                 }
@@ -97,7 +98,6 @@ public class ResultSetARS {
             }
             rs = statement.executeQuery();
             if (rs.isBeforeFirst()) {
-                //plugin.debug(query);
                 while (rs.next()) {
                     this.id = rs.getInt("ars_id");
                     this.tardis_id = rs.getInt("tardis_id");
@@ -106,6 +106,9 @@ public class ResultSetARS {
                     this.south = rs.getInt("ars_z_south");
                     this.layer = rs.getInt("ars_y_layer");
                     this.json = rs.getString("json");
+                    if (rs.wasNull()) {
+                        this.json = "";
+                    }
                 }
             } else {
                 return false;

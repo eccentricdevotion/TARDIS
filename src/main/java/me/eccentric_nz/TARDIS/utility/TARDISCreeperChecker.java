@@ -70,9 +70,9 @@ public class TARDISCreeperChecker {
                         if (w != null) {
                             float cx = 0, cy = 0, cz = 0;
                             try {
-                                cx = Float.parseFloat(creeperData[1]);
-                                cy = Float.parseFloat(creeperData[2]) + 1;
-                                cz = Float.parseFloat(creeperData[3]);
+                                cx = plugin.utils.parseFloat(creeperData[1]);
+                                cy = plugin.utils.parseFloat(creeperData[2]) + 1;
+                                cz = plugin.utils.parseFloat(creeperData[3]);
                             } catch (NumberFormatException nfe) {
                                 plugin.debug("Couldn't convert to a float! " + nfe.getMessage());
                             }

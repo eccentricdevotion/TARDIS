@@ -21,7 +21,6 @@ import java.util.HashMap;
 import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.achievement.TARDISAchievementFactory;
-import me.eccentric_nz.TARDIS.artron.TARDISCondensables;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetCondenser;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
@@ -88,19 +87,18 @@ public class TARDISCondenserListener implements Listener {
                 }
                 QueryFactory qf = new QueryFactory(plugin);
                 int amount = 0;
-                TARDISCondensables tc = new TARDISCondensables();
                 // get the stacks in the inventory
                 for (ItemStack is : inv.getContents()) {
                     if (is != null) {
                         String item = is.getType().name();
-                        if (tc.condensables.containsKey(item)) {
+                        if (plugin.getCondensables().containsKey(item)) {
                             int stack_size = is.getAmount();
                             if (!zero.contains(item)) {
-                                amount += stack_size * tc.condensables.get(item);
+                                amount += stack_size * plugin.getCondensables().get(item);
                             }
                             int block_data = is.getTypeId();
                             inv.remove(is);
-                            if (plugin.getConfig().getBoolean("rooms_require_blocks")) {
+                            if (plugin.getConfig().getBoolean("growth.rooms_require_blocks")) {
                                 // check if the tardis has condensed this material before
                                 HashMap<String, Object> wherec = new HashMap<String, Object>();
                                 wherec.put("tardis_id", rs.getTardis_id());

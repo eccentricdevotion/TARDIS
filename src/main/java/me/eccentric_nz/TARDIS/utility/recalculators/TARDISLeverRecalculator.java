@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.TARDIS.utility.recalculators;
 
-import me.eccentric_nz.TARDIS.TARDISConstants;
+import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 
 /**
  *
@@ -32,7 +32,7 @@ public class TARDISLeverRecalculator {
      * @param d the new direction of the TARDIS
      * @return the recalculated byte
      */
-    public byte recalculate(byte b, TARDISConstants.COMPASS d) {
+    public byte recalculate(byte b, COMPASS d) {
         byte recalc;
         switch (d) {
             case SOUTH:

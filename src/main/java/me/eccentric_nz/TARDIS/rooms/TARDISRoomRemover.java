@@ -18,8 +18,8 @@ package me.eccentric_nz.TARDIS.rooms;
 
 import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.TARDISConstants.COMPASS;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
+import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -56,6 +56,7 @@ public class TARDISRoomRemover {
      *
      * @return false if the room has already been jettisoned
      */
+    @SuppressWarnings("deprecation")
     public boolean remove() {
         int check_distance = (r.equals("ARBORETUM")) ? 5 : 7;
         if (l.getBlock().getRelative(BlockFace.DOWN).getRelative(BlockFace.valueOf(d.toString()), check_distance).getType().equals(Material.AIR)) {
@@ -112,8 +113,8 @@ public class TARDISRoomRemover {
                 }
             }
         }
-        if (r.equals("FARM") || r.equals("STABLE") || r.equals("RAIL") || r.equals("VILLAGE")) {
-            // remove farm location from the database
+        if (r.equals("FARM") || r.equals("STABLE") || r.equals("RAIL") || r.equals("VILLAGE") || r.equals("RENDERER")) {
+            // remove stored location from the database
             HashMap<String, Object> set = new HashMap<String, Object>();
             set.put(r.toLowerCase(), "");
             HashMap<String, Object> where = new HashMap<String, Object>();

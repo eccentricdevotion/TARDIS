@@ -22,6 +22,7 @@ import java.sql.Statement;
 import java.util.HashMap;
 import java.util.Map;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.artron.TARDISArtronIndicator;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
@@ -32,7 +33,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 public class TARDISSQLAlterEnergy implements Runnable {
 
     private final TARDIS plugin;
-    private final TARDISDatabase service = TARDISDatabase.getInstance();
+    private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getInstance();
     private final Connection connection = service.getConnection();
     private final String table;
     private final int amount;
@@ -73,6 +74,11 @@ public class TARDISSQLAlterEnergy implements Runnable {
                 sbw.append(entry.getValue()).append(" AND ");
             }
         }
+        int tmp = 0;
+        if (where.containsKey("tardis_id")) {
+            tmp = (Integer) where.get("tardis_id");
+        }
+        final int id = tmp;
         where.clear();
         wheres = sbw.toString().substring(0, sbw.length() - 5);
         String query = "UPDATE " + table + " SET artron_level = artron_level + " + amount + " WHERE " + wheres;
@@ -80,11 +86,16 @@ public class TARDISSQLAlterEnergy implements Runnable {
             new BukkitRunnable() {
                 @Override
                 public void run() {
-                    p.sendMessage(plugin.pluginName + "You used " + Math.abs(amount) + " Artron Energy.");
+                    if (id > 0) {
+                        new TARDISArtronIndicator(plugin).showArtronLevel(p, id, true, Math.abs(amount));
+                    } else {
+                        p.sendMessage(plugin.pluginName + "You used " + Math.abs(amount) + " Artron Energy.");
+                    }
                 }
             }.runTask(plugin);
         }
         try {
+            service.testConnection(connection);
             statement = connection.createStatement();
             statement.executeUpdate(query);
         } catch (SQLException e) {

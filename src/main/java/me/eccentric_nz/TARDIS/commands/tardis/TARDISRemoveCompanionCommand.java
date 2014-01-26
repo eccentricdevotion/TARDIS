@@ -19,10 +19,11 @@ package me.eccentric_nz.TARDIS.commands.tardis;
 import java.util.HashMap;
 import java.util.Locale;
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
+import me.eccentric_nz.TARDIS.enumeration.MESSAGE;
 import org.bukkit.ChatColor;
+import org.bukkit.World;
 import org.bukkit.entity.Player;
 
 /**
@@ -44,16 +45,18 @@ public class TARDISRemoveCompanionCommand {
             ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
             String comps;
             int id;
+            String[] data;
             if (!rs.resultSet()) {
-                player.sendMessage(plugin.pluginName + TARDISConstants.NO_TARDIS);
+                player.sendMessage(plugin.pluginName + MESSAGE.NO_TARDIS.getText());
                 return false;
             } else {
-                id = rs.getTardis_id();
                 comps = rs.getCompanions();
                 if (comps == null || comps.isEmpty()) {
                     player.sendMessage(plugin.pluginName + "You have not added any TARDIS companions yet!");
                     return true;
                 }
+                id = rs.getTardis_id();
+                data = rs.getChunk().split(":");
             }
             if (args.length < 2) {
                 player.sendMessage(plugin.pluginName + "Too few command arguments!");
@@ -89,11 +92,18 @@ public class TARDISRemoveCompanionCommand {
                 set.put("companions", newList);
                 QueryFactory qf = new QueryFactory(plugin);
                 qf.doUpdate("tardis", set, tid);
+                // if using WorldGuard, remove them from the region membership
+                if (plugin.worldGuardOnServer && plugin.getConfig().getBoolean("preferences.use_worldguard")) {
+                    World w = plugin.getServer().getWorld(data[0]);
+                    if (w != null) {
+                        plugin.wgutils.removeMemberFromRegion(w, player.getName(), args[1].toLowerCase(Locale.ENGLISH));
+                    }
+                }
                 player.sendMessage(plugin.pluginName + message);
                 return true;
             }
         } else {
-            player.sendMessage(plugin.pluginName + TARDISConstants.NO_PERMS_MESSAGE);
+            player.sendMessage(plugin.pluginName + MESSAGE.NO_PERMS.getText());
             return false;
         }
     }

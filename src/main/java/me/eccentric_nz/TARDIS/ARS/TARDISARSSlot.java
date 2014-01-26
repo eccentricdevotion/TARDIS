@@ -88,7 +88,7 @@ public class TARDISARSSlot {
             case 8:
                 return c.getWorld().getChunkAt(cx + 4, cz).getBlock(0, 64, 0).getX();
             default:
-                return cx;
+                return c.getBlock(0, 64, 0).getX();
         }
     }
 
@@ -113,7 +113,7 @@ public class TARDISARSSlot {
             case 8:
                 return c.getWorld().getChunkAt(cx, cz + 4).getBlock(0, 64, 0).getZ();
             default:
-                return cz;
+                return c.getBlock(0, 64, 0).getZ();
         }
     }
 

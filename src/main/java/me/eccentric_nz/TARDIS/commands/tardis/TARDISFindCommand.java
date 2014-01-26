@@ -18,9 +18,9 @@ package me.eccentric_nz.TARDIS.commands.tardis;
 
 import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
+import me.eccentric_nz.TARDIS.enumeration.MESSAGE;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
@@ -37,13 +37,13 @@ public class TARDISFindCommand {
     }
 
     public boolean findTARDIS(Player player, String[] args) {
-        if (plugin.getConfig().getString("difficulty").equalsIgnoreCase("easy")) {
+        if (plugin.getConfig().getString("preferences.difficulty").equalsIgnoreCase("easy")) {
             if (player.hasPermission("tardis.find")) {
                 HashMap<String, Object> where = new HashMap<String, Object>();
                 where.put("owner", player.getName());
                 ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
                 if (!rs.resultSet()) {
-                    player.sendMessage(plugin.pluginName + TARDISConstants.NO_TARDIS);
+                    player.sendMessage(plugin.pluginName + MESSAGE.NO_TARDIS.getText());
                     return false;
                 }
                 HashMap<String, Object> wherecl = new HashMap<String, Object>();
@@ -53,11 +53,11 @@ public class TARDISFindCommand {
                     player.sendMessage(plugin.pluginName + "TARDIS was left at " + rsc.getWorld().getName() + " at x: " + rsc.getX() + " y: " + rsc.getY() + " z: " + rsc.getZ());
                     return true;
                 } else {
-                    player.sendMessage(plugin.pluginName + "Could not find TARDIS!");
+                    player.sendMessage(plugin.pluginName + MESSAGE.NO_CURRENT.getText());
                     return true;
                 }
             } else {
-                player.sendMessage(plugin.pluginName + TARDISConstants.NO_PERMS_MESSAGE);
+                player.sendMessage(plugin.pluginName + MESSAGE.NO_PERMS.getText());
                 return false;
             }
         } else {

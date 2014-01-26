@@ -36,7 +36,7 @@ import me.eccentric_nz.TARDIS.TARDIS;
  */
 public class ResultSetGravity {
 
-    private final TARDISDatabase service = TARDISDatabase.getInstance();
+    private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getInstance();
     private final Connection connection = service.getConnection();
     private final TARDIS plugin;
     private final HashMap<String, Object> where;
@@ -83,8 +83,8 @@ public class ResultSetGravity {
             wheres = " WHERE " + sbw.toString().substring(0, sbw.length() - 5);
         }
         String query = "SELECT * FROM gravity_well" + wheres;
-        //plugin.debug(query);
         try {
+            service.testConnection(connection);
             statement = connection.prepareStatement(query);
             if (where != null) {
                 int s = 1;
@@ -93,9 +93,9 @@ public class ResultSetGravity {
                         statement.setString(s, entry.getValue().toString());
                     } else {
                         if (entry.getValue().getClass().getName().contains("Double")) {
-                            statement.setDouble(s, Double.parseDouble(entry.getValue().toString()));
+                            statement.setDouble(s, plugin.utils.parseDouble(entry.getValue().toString()));
                         } else {
-                            statement.setInt(s, plugin.utils.parseNum(entry.getValue().toString()));
+                            statement.setInt(s, plugin.utils.parseInt(entry.getValue().toString()));
                         }
                     }
                     s++;

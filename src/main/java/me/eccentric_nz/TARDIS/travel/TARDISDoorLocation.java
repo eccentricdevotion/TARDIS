@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.TARDIS.travel;
 
-import me.eccentric_nz.TARDIS.TARDISConstants.COMPASS;
+import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import org.bukkit.Location;
 import org.bukkit.World;
 

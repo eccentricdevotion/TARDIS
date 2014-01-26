@@ -20,9 +20,9 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Locale;
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
+import me.eccentric_nz.TARDIS.enumeration.MESSAGE;
 import org.bukkit.entity.Player;
 
 /**
@@ -60,14 +60,14 @@ public class TARDISSecondaryCommand {
             wheret.put("player", player.getName());
             ResultSetTravellers rst = new ResultSetTravellers(plugin, wheret, false);
             if (!rst.resultSet()) {
-                player.sendMessage(plugin.pluginName + "You are not inside your TARDIS. You need to be to run this command!");
+                player.sendMessage(plugin.pluginName + MESSAGE.NOT_IN_TARDIS.getText());
                 return false;
             }
             plugin.trackSecondary.put(player.getName(), tardis_block);
             player.sendMessage(plugin.pluginName + "Click the TARDIS " + tardis_block + " to update its position.");
             return true;
         } else {
-            player.sendMessage(plugin.pluginName + TARDISConstants.NO_PERMS_MESSAGE);
+            player.sendMessage(plugin.pluginName + MESSAGE.NO_PERMS.getText());
             return false;
         }
     }

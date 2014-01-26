@@ -59,6 +59,7 @@ public class TARDISEPSRunnable implements Runnable {
     @Override
     public void run() {
         Location l = getSpawnLocation(id);
+        plugin.debug("Location:" + l);
         if (l != null) {
             try {
                 plugin.myspawn = true;
@@ -67,8 +68,8 @@ public class TARDISEPSRunnable implements Runnable {
                 // set yaw if npc spawn location has been changed
                 if (!eps.isEmpty()) {
                     String[] creep = creeper.split(":");
-                    double cx = Double.parseDouble(creep[1]);
-                    double cz = Double.parseDouble(creep[3]);
+                    double cx = plugin.utils.parseDouble(creep[1]);
+                    double cz = plugin.utils.parseDouble(creep[3]);
                     float yaw = getCorrectYaw(cx, cz, l.getX(), l.getZ());
                     l.setYaw(yaw);
                 }
@@ -107,12 +108,12 @@ public class TARDISEPSRunnable implements Runnable {
         if (!eps.isEmpty()) {
             String[] npc = eps.split(":");
             World w = plugin.getServer().getWorld(npc[0]);
-            int x = plugin.utils.parseNum(npc[1]);
-            int y = plugin.utils.parseNum(npc[2]);
-            int z = plugin.utils.parseNum(npc[3]);
+            int x = plugin.utils.parseInt(npc[1]);
+            int y = plugin.utils.parseInt(npc[2]);
+            int z = plugin.utils.parseInt(npc[3]);
             return new Location(w, x, y, z);
         } else {
-            if (plugin.getConfig().getBoolean("create_worlds")) {
+            if (plugin.getConfig().getBoolean("creation.create_worlds")) {
                 // get world spawn location
                 return plugin.getServer().getWorld("TARDIS_WORLD_" + tl.getName()).getSpawnLocation();
             } else {
@@ -123,20 +124,20 @@ public class TARDISEPSRunnable implements Runnable {
                 if (rsd.resultSet()) {
                     String[] door = rsd.getDoor_location().split(":");
                     World w = plugin.getServer().getWorld(door[0]);
-                    float x = Float.parseFloat(door[1]);
-                    float y = Float.parseFloat(door[2]);
-                    float z = Float.parseFloat(door[3]);
+                    int x = plugin.utils.parseInt(door[1]);
+                    int y = plugin.utils.parseInt(door[2]);
+                    int z = plugin.utils.parseInt(door[3]);
                     switch (rsd.getDoor_direction()) {
                         case NORTH:
-                            z -= 2F;
+                            z -= 2;
                             break;
                         case EAST:
-                            x += 1F;
-                            z -= 1F;
+                            x += 1;
+                            z -= 1;
                             break;
                         case WEST:
-                            x -= 1F;
-                            z -= 1F;
+                            x -= 1;
+                            z -= 1;
                             break;
                         default:
                             break;

@@ -26,7 +26,8 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.TARDISConstants;
+import me.eccentric_nz.TARDIS.enumeration.PRESET;
+import me.eccentric_nz.TARDIS.enumeration.SCHEMATIC;
 
 /**
  * Many facts, figures, and formulas are contained within the Matrix,
@@ -36,7 +37,7 @@ import me.eccentric_nz.TARDIS.TARDISConstants;
  */
 public class ResultSetTardis {
 
-    private final TARDISDatabase service = TARDISDatabase.getInstance();
+    private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getInstance();
     private final Connection connection = service.getConnection();
     private final TARDIS plugin;
     private final HashMap<String, Object> where;
@@ -45,9 +46,9 @@ public class ResultSetTardis {
     private int tardis_id;
     private String owner;
     private String chunk;
-    private TARDISConstants.SCHEMATIC schematic;
+    private int tips;
+    private SCHEMATIC schematic;
     private String replaced;
-    private String chest;
     private String companions;
     private String platform;
     private String save_sign;
@@ -55,8 +56,8 @@ public class ResultSetTardis {
     private boolean chamele_on;
     private int chameleon_id;
     private byte chameleon_data;
-    private TARDISConstants.PRESET preset;
-    private TARDISConstants.PRESET demat;
+    private PRESET preset;
+    private PRESET demat;
     private boolean adapti_on;
     private int artron_level;
     private int middle_id;
@@ -76,6 +77,7 @@ public class ResultSetTardis {
     private String eps;
     private String rail;
     private String village;
+    private String renderer;
     private final ArrayList<HashMap<String, String>> data = new ArrayList<HashMap<String, String>>();
 
     /**
@@ -120,6 +122,7 @@ public class ResultSetTardis {
         }
         String query = "SELECT * FROM tardis" + wheres + thelimit;
         try {
+            service.testConnection(connection);
             statement = connection.prepareStatement(query);
             if (where != null) {
                 int s = 1;
@@ -127,7 +130,7 @@ public class ResultSetTardis {
                     if (entry.getValue().getClass().equals(String.class)) {
                         statement.setString(s, entry.getValue().toString());
                     } else {
-                        statement.setInt(s, plugin.utils.parseNum(entry.getValue().toString()));
+                        statement.setInt(s, plugin.utils.parseInt(entry.getValue().toString()));
                     }
                     s++;
                 }
@@ -148,18 +151,27 @@ public class ResultSetTardis {
                     this.tardis_id = rs.getInt("tardis_id");
                     this.owner = rs.getString("owner");
                     this.chunk = rs.getString("chunk");
-                    this.schematic = TARDISConstants.SCHEMATIC.valueOf(rs.getString("size"));
+                    this.tips = rs.getInt("tips");
+                    this.schematic = SCHEMATIC.valueOf(rs.getString("size"));
                     this.replaced = rs.getString("replaced");
-                    this.chest = rs.getString("chest");
+                    if (rs.wasNull()) {
+                        this.replaced = "";
+                    }
                     this.companions = rs.getString("companions");
+                    if (rs.wasNull()) {
+                        this.companions = "";
+                    }
                     this.platform = rs.getString("platform");
+                    if (rs.wasNull()) {
+                        this.platform = "";
+                    }
                     this.save_sign = rs.getString("save_sign");
                     this.chameleon = rs.getString("chameleon");
                     this.chamele_on = rs.getBoolean("chamele_on");
                     this.chameleon_id = rs.getInt("chameleon_id");
                     this.chameleon_data = rs.getByte("chameleon_data");
-                    this.preset = TARDISConstants.PRESET.valueOf(rs.getString("chameleon_preset"));
-                    this.demat = TARDISConstants.PRESET.valueOf(rs.getString("chameleon_demat"));
+                    this.preset = PRESET.valueOf(rs.getString("chameleon_preset"));
+                    this.demat = PRESET.valueOf(rs.getString("chameleon_demat"));
                     this.adapti_on = rs.getBoolean("adapti_on");
                     this.artron_level = rs.getInt("artron_level");
                     this.middle_id = rs.getInt("middle_id");
@@ -179,6 +191,7 @@ public class ResultSetTardis {
                     this.eps = rs.getString("eps");
                     this.rail = rs.getString("rail");
                     this.village = rs.getString("village");
+                    this.renderer = rs.getString("renderer");
                 }
             } else {
                 return false;
@@ -213,16 +226,16 @@ public class ResultSetTardis {
         return chunk;
     }
 
-    public TARDISConstants.SCHEMATIC getSchematic() {
+    public int getTIPS() {
+        return tips;
+    }
+
+    public SCHEMATIC getSchematic() {
         return schematic;
     }
 
     public String getReplaced() {
         return replaced;
-    }
-
-    public String getChest() {
-        return chest;
     }
 
     public String getCompanions() {
@@ -253,11 +266,11 @@ public class ResultSetTardis {
         return chameleon_data;
     }
 
-    public TARDISConstants.PRESET getPreset() {
+    public PRESET getPreset() {
         return preset;
     }
 
-    public TARDISConstants.PRESET getDemat() {
+    public PRESET getDemat() {
         return demat;
     }
 
@@ -335,6 +348,10 @@ public class ResultSetTardis {
 
     public String getVillage() {
         return village;
+    }
+
+    public String getRenderer() {
+        return renderer;
     }
 
     public ArrayList<HashMap<String, String>> getData() {

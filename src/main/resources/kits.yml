@@ -1,0 +1,26 @@
+## TARDIS item kits
+give:
+    join:
+        enabled: false
+        kit: basic
+    create:
+        enabled: false
+        kit: circuits
+kits:
+    basic:
+        - TARDIS Key
+        - Sonic Screwdriver
+    deluxe:
+        - TARDIS Key
+        - Sonic Screwdriver
+        - TARDIS Locator
+        - Stattenheim Remote
+        - Perception Filter
+    circuits:
+        - TARDIS ARS Circuit
+        - TARDIS Chameleon Circuit
+        - TARDIS Input Circuit
+        - TARDIS Materialisation Circuit
+        - TARDIS Memory Circuit
+        - TARDIS Scanner Circuit
+        - TARDIS Temporal Circuit

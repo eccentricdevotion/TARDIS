@@ -21,11 +21,14 @@ import java.util.Locale;
 import java.util.Map;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
+import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
 import me.eccentric_nz.TARDIS.database.ResultSetCondenser;
 import me.eccentric_nz.TARDIS.database.ResultSetControls;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
+import me.eccentric_nz.TARDIS.enumeration.MESSAGE;
+import me.eccentric_nz.TARDIS.enumeration.SCHEMATIC;
 import me.eccentric_nz.TARDIS.rooms.TARDISCondenserData;
 import me.eccentric_nz.TARDIS.rooms.TARDISSeedData;
 import org.bukkit.Material;
@@ -80,17 +83,30 @@ public class TARDISRoomCommand {
             player.sendMessage(plugin.pluginName + "You cannot grow rooms unless your TARDIS was created in its own world!");
             return true;
         }
+        if (!rs.getRenderer().isEmpty() && room.equals("RENDERER")) {
+            player.sendMessage(plugin.pluginName + "You already have an exterior rendering room! Please jettison the existing room first.");
+            return true;
+        }
         int id = rs.getTardis_id();
+        TARDISCircuitChecker tcc = null;
+        if (plugin.getConfig().getString("preferences.difficulty").equals("hard")) {
+            tcc = new TARDISCircuitChecker(plugin, id);
+            tcc.getCircuits();
+        }
+        if (tcc != null && !tcc.hasARS()) {
+            player.sendMessage(plugin.pluginName + "The ARS Circuit is missing from the console!");
+            return true;
+        }
         int level = rs.getArtron_level();
         String chunk = rs.getChunk();
-        TARDISConstants.SCHEMATIC schm = rs.getSchematic();
+        SCHEMATIC schm = rs.getSchematic();
         // check they are in the tardis
         HashMap<String, Object> wheret = new HashMap<String, Object>();
         wheret.put("player", player.getName());
         wheret.put("tardis_id", id);
         ResultSetTravellers rst = new ResultSetTravellers(plugin, wheret, false);
         if (!rst.resultSet()) {
-            player.sendMessage(plugin.pluginName + "You are not inside your TARDIS. You need to be to run this command!");
+            player.sendMessage(plugin.pluginName + MESSAGE.NOT_IN_TARDIS.getText());
             return true;
         }
         // check they have enough artron energy
@@ -98,7 +114,7 @@ public class TARDISRoomCommand {
             player.sendMessage(plugin.pluginName + "The TARDIS does not have enough Artron Energy to grow this room!");
             return true;
         }
-        if (plugin.getConfig().getBoolean("rooms_require_blocks")) {
+        if (plugin.getConfig().getBoolean("growth.rooms_require_blocks")) {
             HashMap<String, Integer> blockIDCount = new HashMap<String, Integer>();
             boolean hasRequired = true;
             HashMap<String, Integer> roomBlocks = plugin.roomBlockCounts.get(room);
@@ -115,7 +131,7 @@ public class TARDISRoomCommand {
             }
             for (Map.Entry<String, Integer> entry : roomBlocks.entrySet()) {
                 String[] block_data = entry.getKey().split(":");
-                int bid = plugin.utils.parseNum(block_data[0]);
+                int bid = plugin.utils.parseInt(block_data[0]);
                 String mat;
                 String bdata;
                 if (hasPrefs && block_data.length == 2 && (block_data[1].equals("1") || block_data[1].equals("8"))) {
@@ -126,7 +142,7 @@ public class TARDISRoomCommand {
                     mat = Material.getMaterial(bid).toString();
                     bdata = String.format("%d", bid);
                 }
-                int tmp = Math.round((entry.getValue() / 100.0F) * plugin.getConfig().getInt("rooms_condenser_percent"));
+                int tmp = Math.round((entry.getValue() / 100.0F) * plugin.getConfig().getInt("growth.rooms_condenser_percent"));
                 int required = (tmp > 0) ? tmp : 1;
                 blockIDCount.put(bdata, required);
                 HashMap<String, Object> wherec = new HashMap<String, Object>();

@@ -18,10 +18,11 @@ package me.eccentric_nz.TARDIS.commands.tardis;
 
 import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.TARDISConstants;
+import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
+import me.eccentric_nz.TARDIS.enumeration.MESSAGE;
 import me.eccentric_nz.TARDIS.travel.TARDISPluginRespect;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -40,13 +41,14 @@ public class TARDISSetDestinationCommand {
         this.plugin = plugin;
     }
 
+    @SuppressWarnings("deprecation")
     public boolean doSetDestination(Player player, String[] args) {
         if (player.hasPermission("tardis.save")) {
             HashMap<String, Object> where = new HashMap<String, Object>();
             where.put("owner", player.getName());
             ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
             if (!rs.resultSet()) {
-                player.sendMessage(plugin.pluginName + TARDISConstants.NO_TARDIS);
+                player.sendMessage(plugin.pluginName + MESSAGE.NO_TARDIS.getText());
                 return false;
             }
             if (args.length < 2) {
@@ -61,6 +63,15 @@ public class TARDISSetDestinationCommand {
                 return false;
             } else {
                 int id = rs.getTardis_id();
+                TARDISCircuitChecker tcc = null;
+                if (plugin.getConfig().getString("preferences.difficulty").equals("hard")) {
+                    tcc = new TARDISCircuitChecker(plugin, id);
+                    tcc.getCircuits();
+                }
+                if (tcc != null && !tcc.hasMemory()) {
+                    player.sendMessage(plugin.pluginName + "The Memory Circuit is missing from the console!");
+                    return true;
+                }
                 // check they are not in the tardis
                 HashMap<String, Object> wherettrav = new HashMap<String, Object>();
                 wherettrav.put("player", player.getName());
@@ -78,7 +89,7 @@ public class TARDISSetDestinationCommand {
                     return true;
                 }
                 String world = l.getWorld().getName();
-                if (!plugin.getConfig().getBoolean("include_default_world") && plugin.getConfig().getBoolean("default_world") && world.equals(plugin.getConfig().getString("default_world_name"))) {
+                if (!plugin.getConfig().getBoolean("travel.include_default_world") && plugin.getConfig().getBoolean("creation.default_world") && world.equals(plugin.getConfig().getString("creation.default_world_name"))) {
                     player.sendMessage(plugin.pluginName + "The server admin will not allow you to set the TARDIS destination to this world!");
                     return true;
                 }
@@ -91,7 +102,7 @@ public class TARDISSetDestinationCommand {
                 if (!respect.getRespect(player, l, true)) {
                     return true;
                 }
-                if (player.hasPermission("tardis.exile") && plugin.getConfig().getBoolean("exile")) {
+                if (player.hasPermission("tardis.exile") && plugin.getConfig().getBoolean("travel.exile")) {
                     String areaPerm = plugin.ta.getExileArea(player);
                     if (plugin.ta.areaCheckInExile(areaPerm, l)) {
                         player.sendMessage(plugin.pluginName + "You exile status does not allow you to save the TARDIS to this location!");
@@ -118,7 +129,7 @@ public class TARDISSetDestinationCommand {
                 }
             }
         } else {
-            player.sendMessage(plugin.pluginName + TARDISConstants.NO_PERMS_MESSAGE);
+            player.sendMessage(plugin.pluginName + MESSAGE.NO_PERMS.getText());
             return false;
         }
     }

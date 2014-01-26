@@ -18,8 +18,9 @@ package me.eccentric_nz.TARDIS.chameleon;
 
 import java.util.Arrays;
 import java.util.List;
-import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.JSON.JSONArray;
+import me.eccentric_nz.TARDIS.enumeration.COMPASS;
+import me.eccentric_nz.TARDIS.enumeration.PRESET;
 import me.eccentric_nz.TARDIS.utility.recalculators.TARDISButtonRecalculator;
 import me.eccentric_nz.TARDIS.utility.recalculators.TARDISLeverRecalculator;
 import me.eccentric_nz.TARDIS.utility.recalculators.TARDISMushroomRecalculator;
@@ -37,7 +38,7 @@ import me.eccentric_nz.TARDIS.utility.recalculators.TARDISTrapdoorRecalculator;
  */
 public class TARDISChameleonPreset {
 
-    private final List<Integer> problemBlocks = Arrays.asList(new Integer[]{50, 53, 63, 64, 67, 68, 69, 71, 77, 91, 96, 99, 106, 109, 114, 128, 145, 156});
+    private final List<Integer> problemBlocks = Arrays.asList(new Integer[]{50, 53, 63, 64, 66, 67, 68, 69, 71, 77, 91, 96, 99, 106, 108, 109, 114, 128, 134, 135, 136, 143, 145, 156, 163, 164});
     public final TARDISAngelDownPreset angeld;
     public final TARDISAngelUpPreset angelu;
     public final TARDISAppertureSciencePreset apperture;
@@ -84,6 +85,7 @@ public class TARDISChameleonPreset {
     public final TARDISWindmillPreset windmill;
     public final TARDISYellowSubmarinePreset yellow;
     public final TARDISCustomPreset custom;
+    public final TARDISRenderPreset render;
     int r;
 
     public TARDISChameleonPreset() {
@@ -133,67 +135,69 @@ public class TARDISChameleonPreset {
         this.windmill = new TARDISWindmillPreset();
         this.yellow = new TARDISYellowSubmarinePreset();
         this.custom = new TARDISCustomPreset();
+        this.render = new TARDISRenderPreset();
     }
 
     public void makePresets() {
-        angeld.makePresets();
-        angelu.makePresets();
-        apperture.makePresets();
-        cake.makePresets();
-        candy.makePresets();
-        chalice.makePresets();
-        column.makePresets();
-        creepy.makePresets();
-        desert.makePresets();
-        duck.makePresets();
-        factory.makePresets();
-        fence.makePresets();
-        flower.makePresets();
-        gazebo.makePresets();
-        gravestone.makePresets();
-        helix.makePresets();
-        jail.makePresets();
-        jungle.makePresets();
-        lamp.makePresets();
-        library.makePresets();
-        lighthouse.makePresets();
-        mine.makePresets();
-        nether.makePresets();
-        pandorica.makePresets();
-        party.makePresets();
-        peanut.makePresets();
-        pine.makePresets();
-        police.makePresets();
-        portal.makePresets();
-        punked.makePresets();
-        robot.makePresets();
-        shroom.makePresets();
-        snowman.makePresets();
-        submerged.makePresets();
-        swamp.makePresets();
-        taller.makePresets();
-        telephone.makePresets();
-        theend.makePresets();
-        toilet.makePresets();
-        topsyturvey.makePresets();
-        torch.makePresets();
-        village.makePresets();
-        well.makePresets();
-        windmill.makePresets();
-        yellow.makePresets();
+        angeld.makePresets(true, false, false);
+        angelu.makePresets(true, false, false);
+        apperture.makePresets(false, false, false);
+        cake.makePresets(false, false, false);
+        candy.makePresets(true, false, true);
+        chalice.makePresets(false, false, false);
+        column.makePresets(false, false, false);
+        creepy.makePresets(false, false, false);
+        desert.makePresets(false, false, false);
+        duck.makePresets(true, true, false);
+        factory.makePresets(false, false, false);
+        fence.makePresets(true, false, false);
+        flower.makePresets(false, false, false);
+        gazebo.makePresets(false, false, false);
+        gravestone.makePresets(true, false, false);
+        helix.makePresets(false, false, false);
+        jail.makePresets(false, false, false);
+        jungle.makePresets(false, false, false);
+        lamp.makePresets(true, false, true);
+        library.makePresets(false, false, false);
+        lighthouse.makePresets(false, false, false);
+        mine.makePresets(false, false, false);
+        nether.makePresets(false, false, false);
+        pandorica.makePresets(false, false, false);
+        party.makePresets(false, false, false);
+        peanut.makePresets(false, false, false);
+        pine.makePresets(false, false, false);
+        police.makePresets(false, false, false);
+        portal.makePresets(false, false, false);
+        punked.makePresets(false, false, false);
+        robot.makePresets(true, false, false);
+        shroom.makePresets(false, false, false);
+        snowman.makePresets(true, false, false);
+        submerged.makePresets(true, false, false);
+        swamp.makePresets(false, false, false);
+        taller.makePresets(false, false, false);
+        telephone.makePresets(false, false, false);
+        theend.makePresets(false, false, false);
+        toilet.makePresets(true, false, false);
+        topsyturvey.makePresets(false, false, false);
+        torch.makePresets(true, false, true);
+        village.makePresets(false, false, false);
+        well.makePresets(false, false, false);
+        windmill.makePresets(true, false, false);
+        yellow.makePresets(false, false, false);
         custom.makePresets();
+        render.makePresets(false, false, false);
     }
 
-    public TARDISChameleonColumn buildTARDISChameleonColumn(TARDISConstants.COMPASS d, String id, String data, boolean assyemtric) {
+    public TARDISChameleonColumn buildTARDISChameleonColumn(COMPASS d, String id, String data, boolean asymmetric, boolean duck, boolean istorch) {
         TARDISChameleonColumn tcc = new TARDISChameleonColumn();
-        if (d.equals(TARDISConstants.COMPASS.EAST)) {
+        if (d.equals(COMPASS.EAST)) {
             tcc.setId(getIntArrayFromJSON(id));
             tcc.setData(getByteArrayFromJSON(data));
         } else {
-            int[][] id_arr = rotate2DIntArray(getIntArrayFromJSON(id), d, assyemtric);
-            byte[][] data_arr = rotate2DByteArray(getByteArrayFromJSON(data), d, assyemtric);
+            int[][] id_arr = rotate2DIntArray(getIntArrayFromJSON(id), d, asymmetric);
+            byte[][] data_arr = rotate2DByteArray(getByteArrayFromJSON(data), d, asymmetric);
             tcc.setId(id_arr);
-            tcc.setData(convertData(id_arr, data_arr, d));
+            tcc.setData(convertData(id_arr, data_arr, d, duck, istorch));
         }
         return tcc;
     }
@@ -234,7 +238,7 @@ public class TARDISChameleonPreset {
         return preset;
     }
 
-    private int[][] rotate2DIntArray(int[][] id, TARDISConstants.COMPASS d, boolean assymetric) {
+    private int[][] rotate2DIntArray(int[][] id, COMPASS d, boolean assymetric) {
         switch (d) {
             case NORTH:
                 int[] zero_s = id[0];
@@ -294,7 +298,7 @@ public class TARDISChameleonPreset {
         }
     }
 
-    private byte[][] rotate2DByteArray(byte[][] id, TARDISConstants.COMPASS d, boolean assymetric) {
+    private byte[][] rotate2DByteArray(byte[][] id, COMPASS d, boolean assymetric) {
         switch (d) {
             case NORTH:
                 byte[] zero_s = id[0];
@@ -348,7 +352,7 @@ public class TARDISChameleonPreset {
         }
     }
 
-    private byte[][] convertData(int[][] id, byte[][] data, TARDISConstants.COMPASS d) {
+    private byte[][] convertData(int[][] id, byte[][] data, COMPASS d, boolean duck, boolean istorch) {
         for (int col = 0; col < 10; col++) {
             for (int block = 0; block < 4; block++) {
                 if (problemBlocks.contains(id[col][block])) {
@@ -385,6 +389,16 @@ public class TARDISChameleonPreset {
                                 }
                             }
                             break;
+                        case 66: // rails
+                            switch (d) {
+                                case WEST:
+                                    data[col][block] = (byte) 1;
+                                    break;
+                                default:
+                                    data[col][block] = (byte) 0;
+                                    break;
+                            }
+                            break;
                         case 69: // lever
                             data[col][block] = new TARDISLeverRecalculator().recalculate(data[col][block], d);
                             break;
@@ -404,17 +418,24 @@ public class TARDISChameleonPreset {
                             break;
                         case 53: // oak wood stair
                         case 67: // cobble stair
+                        case 108: // brick stair
                         case 109: // smooth stair
                         case 114: // nether brick stair
                         case 128: // sandstone stair
+                        case 134: // spruce stair
+                        case 135: // birch stair
+                        case 136: // jungle stair
                         case 156: // quartz stair
-                            data[col][block] = new TARDISStairRecalculator().recalculate(data[col][block], d, col);
+                        case 163: // acacia stair
+                        case 164: // dark oak stair
+                            data[col][block] = new TARDISStairRecalculator().recalculate(data[col][block], d, col, duck);
                             break;
-                        case 77: // button
+                        case 77: // stone button
+                        case 143: // wood button
                             data[col][block] = new TARDISButtonRecalculator().recalculate(data[col][block], d);
                             break;
                         case 96: // trapdoor
-                            data[col][block] = new TARDISTrapdoorRecalculator().recalculate(data[col][block], d);
+                            data[col][block] = new TARDISTrapdoorRecalculator().recalculate(data[col][block], d, istorch);
                             break;
                         case 99: // mushroom
                             data[col][block] = new TARDISMushroomRecalculator().recalculate(data[col][block], d, col);
@@ -465,7 +486,7 @@ public class TARDISChameleonPreset {
         return data;
     }
 
-    public TARDISChameleonColumn getColumn(TARDISConstants.PRESET p, TARDISConstants.COMPASS d) {
+    public TARDISChameleonColumn getColumn(PRESET p, COMPASS d) {
         switch (p) {
             case ANGEL:
                 if (r == 0) {
@@ -527,6 +548,8 @@ public class TARDISChameleonPreset {
                 return portal.getBlueprint().get(d);
             case PUNKED:
                 return punked.getBlueprint().get(d);
+            case RENDER:
+                return render.getBlueprint().get(d);
             case ROBOT:
                 return robot.getBlueprint().get(d);
             case SHROOM:
@@ -564,7 +587,7 @@ public class TARDISChameleonPreset {
         }
     }
 
-    public TARDISChameleonColumn getGlass(TARDISConstants.PRESET p, TARDISConstants.COMPASS d) {
+    public TARDISChameleonColumn getGlass(PRESET p, COMPASS d) {
         switch (p) {
             case ANGEL:
                 if (r == 0) {
@@ -626,6 +649,8 @@ public class TARDISChameleonPreset {
                 return portal.getGlass().get(d);
             case PUNKED:
                 return punked.getGlass().get(d);
+            case RENDER:
+                return render.getGlass().get(d);
             case ROBOT:
                 return robot.getGlass().get(d);
             case SHROOM:
@@ -663,7 +688,7 @@ public class TARDISChameleonPreset {
         }
     }
 
-    public TARDISChameleonColumn getStained(TARDISConstants.PRESET p, TARDISConstants.COMPASS d) {
+    public TARDISChameleonColumn getStained(PRESET p, COMPASS d) {
         switch (p) {
             case ANGEL:
                 if (r == 0) {
@@ -725,6 +750,8 @@ public class TARDISChameleonPreset {
                 return portal.getStained().get(d);
             case PUNKED:
                 return punked.getStained().get(d);
+            case RENDER:
+                return render.getStained().get(d);
             case ROBOT:
                 return robot.getStained().get(d);
             case SHROOM:

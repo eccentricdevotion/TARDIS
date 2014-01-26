@@ -16,16 +16,18 @@
  */
 package me.eccentric_nz.TARDIS.builders;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.chameleon.TARDISChameleonColumn;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetDoors;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
+import me.eccentric_nz.TARDIS.enumeration.COMPASS;
+import me.eccentric_nz.TARDIS.enumeration.PRESET;
 import me.eccentric_nz.TARDIS.travel.TARDISDoorLocation;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -48,7 +50,7 @@ import org.bukkit.entity.Player;
 public class TARDISInstaPreset {
 
     private final TARDIS plugin;
-    private final TARDISConstants.COMPASS d;
+    private final COMPASS d;
     private final Location location;
     private final int tid;
     private final String p;
@@ -58,14 +60,16 @@ public class TARDISInstaPreset {
     private final int cham_id;
     private final byte cham_data;
     private final boolean rebuild;
+    private final boolean minecart;
     private Block sponge;
-    private final TARDISConstants.PRESET preset;
+    private final PRESET preset;
     private TARDISChameleonColumn column;
     private final byte[] colours;
     private final Random rand;
     private final byte random_colour;
+    private final List<ProblemBlock> do_at_end = new ArrayList<ProblemBlock>();
 
-    public TARDISInstaPreset(TARDIS plugin, Location location, TARDISConstants.PRESET preset, int tid, TARDISConstants.COMPASS d, String p, boolean mal, int lamp, boolean sub, int cham_id, byte cham_data, boolean rebuild) {
+    public TARDISInstaPreset(TARDIS plugin, Location location, PRESET preset, int tid, COMPASS d, String p, boolean mal, int lamp, boolean sub, int cham_id, byte cham_data, boolean rebuild, boolean minecart) {
         this.plugin = plugin;
         this.d = d;
         this.location = location;
@@ -78,6 +82,7 @@ public class TARDISInstaPreset {
         this.cham_id = cham_id;
         this.cham_data = cham_data;
         this.rebuild = rebuild;
+        this.minecart = minecart;
         colours = new byte[]{0, 1, 2, 3, 4, 5, 6, 9, 10, 11, 12, 13, 14};
         rand = new Random();
         random_colour = colours[rand.nextInt(13)];
@@ -87,17 +92,17 @@ public class TARDISInstaPreset {
      * Builds the TARDIS Preset.
      */
     public void buildPreset() {
-        if (preset.equals(TARDISConstants.PRESET.ANGEL)) {
+        if (preset.equals(PRESET.ANGEL)) {
             plugin.presets.setR(rand.nextInt(2));
         }
         column = plugin.presets.getColumn(preset, d);
-        int plusx, minusx, x, plusz, y, minusz, z, platform_id = plugin.getConfig().getInt("platform_id");
-        byte platform_data = (byte) plugin.getConfig().getInt("platform_data");
+        int plusx, minusx, x, plusz, y, minusz, z, platform_id = plugin.getConfig().getInt("police_box.platform_id");
+        byte platform_data = (byte) plugin.getConfig().getInt("police_box.platform_data");
         // get relative locations
         x = location.getBlockX();
         plusx = (location.getBlockX() + 1);
         minusx = (location.getBlockX() - 1);
-        if (preset.equals(TARDISConstants.PRESET.SUBMERGED)) {
+        if (preset.equals(PRESET.SUBMERGED)) {
             y = location.getBlockY() - 1;
         } else {
             y = location.getBlockY();
@@ -107,6 +112,7 @@ public class TARDISInstaPreset {
         minusz = (location.getBlockZ() - 1);
         final World world = location.getWorld();
         int signx = 0, signz = 0;
+        QueryFactory qf = new QueryFactory(plugin);
         // rescue player?
         if (plugin.trackRescue.containsKey(tid)) {
             String name = plugin.trackRescue.get(tid);
@@ -114,19 +120,17 @@ public class TARDISInstaPreset {
             if (saved != null) {
                 TARDISDoorLocation idl = plugin.doorListener.getDoor(1, tid);
                 Location l = idl.getL();
-                plugin.doorListener.movePlayer(saved, l, false, world, false, 0);
+                plugin.doorListener.movePlayer(saved, l, false, world, false, 0, minecart);
                 // put player into travellers table
                 HashMap<String, Object> set = new HashMap<String, Object>();
                 set.put("tardis_id", tid);
                 set.put("player", name);
-                QueryFactory qf = new QueryFactory(plugin);
                 qf.doInsert("travellers", set);
             }
             plugin.trackRescue.remove(tid);
         }
         // platform
         plugin.builderP.addPlatform(location, false, d, p, tid);
-        QueryFactory qf = new QueryFactory(plugin);
         switch (d) {
             case SOUTH:
                 //if (yaw >= 315 || yaw < 45)
@@ -198,15 +202,23 @@ public class TARDISInstaPreset {
                     break;
             }
             for (int yy = 0; yy < 4; yy++) {
+                boolean change = true;
+                if (yy == 0 && i == 9) {
+                    Block rail = world.getBlockAt(xx, y, zz);
+                    if (rail.getType().equals(Material.RAILS) || rail.getType().equals(Material.POWERED_RAIL)) {
+                        change = false;
+                        plugin.utils.setBlockAndRemember(world, xx, y, zz, rail.getTypeId(), rail.getData(), tid);
+                    }
+                }
                 switch (colids[yy]) {
                     case 2:
                     case 3:
-                        int subi = (preset.equals(TARDISConstants.PRESET.SUBMERGED)) ? cham_id : colids[yy];
-                        byte subd = (preset.equals(TARDISConstants.PRESET.SUBMERGED)) ? cham_data : coldatas[yy];
+                        int subi = (preset.equals(PRESET.SUBMERGED)) ? cham_id : colids[yy];
+                        byte subd = (preset.equals(PRESET.SUBMERGED)) ? cham_data : coldatas[yy];
                         plugin.utils.setBlockAndRemember(world, xx, (y + yy), zz, subi, subd, tid);
                         break;
                     case 7:
-                        if (preset.equals(TARDISConstants.PRESET.THEEND)) {
+                        if (preset.equals(PRESET.THEEND)) {
                             plugin.utils.setBlockAndRemember(world, xx, (y + yy), zz, 7, (byte) 5, tid);
                             world.getBlockAt(xx, (y + yy + 1), zz).setType(Material.FIRE);
                         } else {
@@ -214,9 +226,9 @@ public class TARDISInstaPreset {
                         }
                         break;
                     case 35:
-                        int chai = (preset.equals(TARDISConstants.PRESET.NEW) || preset.equals(TARDISConstants.PRESET.OLD)) ? cham_id : colids[yy];
-                        byte chad = (preset.equals(TARDISConstants.PRESET.NEW) || preset.equals(TARDISConstants.PRESET.OLD)) ? cham_data : coldatas[yy];
-                        if (preset.equals(TARDISConstants.PRESET.PARTY) || (preset.equals(TARDISConstants.PRESET.FLOWER) && coldatas[yy] == 0)) {
+                        int chai = (preset.equals(PRESET.NEW) || preset.equals(PRESET.OLD)) ? cham_id : colids[yy];
+                        byte chad = (preset.equals(PRESET.NEW) || preset.equals(PRESET.OLD)) ? cham_data : coldatas[yy];
+                        if (preset.equals(PRESET.PARTY) || (preset.equals(PRESET.FLOWER) && coldatas[yy] == 0)) {
                             chad = random_colour;
                         }
                         plugin.utils.setBlockAndRemember(world, xx, (y + yy), zz, chai, chad, tid);
@@ -224,58 +236,81 @@ public class TARDISInstaPreset {
                     case 50: // lamps, glowstone and torches
                     case 89:
                     case 124:
-                        int light = (preset.equals(TARDISConstants.PRESET.NEW) || preset.equals(TARDISConstants.PRESET.OLD)) ? lamp : colids[yy];
-                        plugin.utils.setBlockAndRemember(world, xx, (y + yy), zz, light, coldatas[yy], tid);
+                        int light;
+                        byte ld;
+                        if (sub && colids[yy] == 50) {
+                            light = 89;
+                            ld = 0;
+                        } else {
+                            light = (preset.equals(PRESET.NEW) || preset.equals(PRESET.OLD)) ? lamp : colids[yy];
+                            ld = coldatas[yy];
+                        }
+                        if (colids[yy] == 50) {
+                            do_at_end.add(new ProblemBlock(new Location(world, xx, (y + yy), zz), light, ld));
+                        } else {
+                            plugin.utils.setBlockAndRemember(world, xx, (y + yy), zz, light, ld, tid);
+                        }
                         break;
                     case 64: // wood, iron & trap doors, rails
                     case 66:
                     case 71:
                     case 96:
-                        if ((coldatas[yy] < 8 || colids[yy] == 96) && colids[yy] != 66) {
-                            // remember the door location
-                            String doorloc = world.getName() + ":" + xx + ":" + (y + yy) + ":" + zz;
-                            // should insert the door when tardis is first made, and then update location there after!
-                            HashMap<String, Object> whered = new HashMap<String, Object>();
-                            whered.put("door_type", 0);
-                            whered.put("tardis_id", tid);
-                            ResultSetDoors rsd = new ResultSetDoors(plugin, whered, false);
-                            HashMap<String, Object> setd = new HashMap<String, Object>();
-                            setd.put("door_location", doorloc);
-                            if (rsd.resultSet()) {
-                                HashMap<String, Object> whereid = new HashMap<String, Object>();
-                                whereid.put("door_id", rsd.getDoor_id());
-                                qf.doUpdate("doors", setd, whereid);
-                            } else {
-                                setd.put("tardis_id", tid);
-                                setd.put("door_type", 0);
-                                setd.put("door_direction", d.toString());
-                                qf.doInsert("doors", setd);
+                        if (coldatas[yy] < 8 || colids[yy] == 96) {
+                            if (colids[yy] != 66) {
+                                // remember the door location
+                                String doorloc = world.getName() + ":" + xx + ":" + (y + yy) + ":" + zz;
+                                // should insert the door when tardis is first made, and then update location there after!
+                                HashMap<String, Object> whered = new HashMap<String, Object>();
+                                whered.put("door_type", 0);
+                                whered.put("tardis_id", tid);
+                                ResultSetDoors rsd = new ResultSetDoors(plugin, whered, false);
+                                HashMap<String, Object> setd = new HashMap<String, Object>();
+                                setd.put("door_location", doorloc);
+                                if (rsd.resultSet()) {
+                                    HashMap<String, Object> whereid = new HashMap<String, Object>();
+                                    whereid.put("door_id", rsd.getDoor_id());
+                                    qf.doUpdate("doors", setd, whereid);
+                                } else {
+                                    setd.put("tardis_id", tid);
+                                    setd.put("door_type", 0);
+                                    setd.put("door_direction", d.toString());
+                                    qf.doInsert("doors", setd);
+                                }
                             }
-                        }
-                        if (yy == 0) {
                             // place block under door if block is in list of blocks an iron door cannot go on
-                            if (sub) {
-                                plugin.utils.setBlockAndRemember(world, xx, (y - 1), zz, 19, (byte) 0, tid);
-                                sponge = world.getBlockAt(xx, (y - 1), zz);
-                            } else if (!plugin.builderP.no_block_under_door.contains(preset)) {
-                                plugin.utils.setUnderDoorBlock(world, xx, (y - 1), zz, platform_id, platform_data, tid);
+                            if (yy == 0) {
+                                if (sub && plugin.worldGuardOnServer) {
+                                    int sy = y - 1;
+                                    plugin.utils.setBlockAndRemember(world, xx, sy, zz, 19, (byte) 0, tid);
+                                    sponge = world.getBlockAt(xx, sy, zz);
+                                    plugin.wgutils.sponge(sponge, true);
+                                } else if (!plugin.builderP.no_block_under_door.contains(preset)) {
+                                    plugin.utils.setUnderDoorBlock(world, xx, (y - 1), zz, platform_id, platform_data, tid);
+                                }
                             }
                         }
-                        plugin.utils.setBlockAndRemember(world, xx, (y + yy), zz, colids[yy], coldatas[yy], tid);
+                        if (colids[yy] == 66) {
+                            do_at_end.add(new ProblemBlock(new Location(world, xx, (y + yy), zz), colids[yy], coldatas[yy]));
+                        } else {
+                            plugin.utils.setBlockAndRemember(world, xx, (y + yy), zz, colids[yy], coldatas[yy], tid);
+                        }
                         break;
                     case 63:
+                        if (preset.equals(PRESET.APPERTURE)) {
+                            plugin.utils.setUnderDoorBlock(world, xx, (y - 1), zz, platform_id, platform_data, tid);
+                        }
                     case 68: // sign - if there is one
                         plugin.utils.setBlock(world, xx, (y + yy), zz, colids[yy], coldatas[yy]);
                         Block sign = world.getBlockAt(xx, (y + yy), zz);
                         if (sign.getType().equals(Material.WALL_SIGN) || sign.getType().equals(Material.SIGN_POST)) {
                             Sign s = (Sign) sign.getState();
-                            if (plugin.getConfig().getBoolean("name_tardis")) {
+                            if (plugin.getConfig().getBoolean("police_box.name_tardis")) {
                                 HashMap<String, Object> wheret = new HashMap<String, Object>();
                                 wheret.put("tardis_id", tid);
                                 ResultSetTardis rst = new ResultSetTardis(plugin, wheret, "", false);
                                 if (rst.resultSet()) {
                                     String owner;
-                                    if (preset.equals(TARDISConstants.PRESET.GRAVESTONE) || preset.equals(TARDISConstants.PRESET.PUNKED) || preset.equals(TARDISConstants.PRESET.ROBOT)) {
+                                    if (preset.equals(PRESET.GRAVESTONE) || preset.equals(PRESET.PUNKED) || preset.equals(PRESET.ROBOT)) {
                                         owner = (rst.getOwner().length() > 14) ? rst.getOwner().substring(0, 14) : rst.getOwner();
                                     } else {
                                         owner = (rst.getOwner().length() > 14) ? rst.getOwner().substring(0, 12) + "'s" : rst.getOwner() + "'s";
@@ -296,149 +331,47 @@ public class TARDISInstaPreset {
                             }
                             String line1;
                             String line2;
+                            if (preset.equals(PRESET.CUSTOM)) {
+                                line1 = plugin.presets.custom.getFirstLine();
+                                line2 = plugin.presets.custom.getSecondLine();
+                            } else {
+                                line1 = preset.getFirstLine();
+                                line2 = preset.getSecondLine();
+                            }
                             switch (preset) {
                                 case ANGEL:
-                                    line1 = "WEEPING";
-                                    line2 = "ANGELS HAVE";
+                                    s.setLine(0, ChatColor.WHITE + line1);
+                                    s.setLine(1, ChatColor.WHITE + line2);
                                     s.setLine(3, ChatColor.WHITE + "TARDIS");
                                     break;
                                 case APPERTURE:
-                                    line1 = "APPERTURE";
-                                    line2 = "SCIENCE";
+                                    s.setLine(1, ChatColor.WHITE + line1);
+                                    s.setLine(2, ChatColor.WHITE + line2);
                                     s.setLine(3, ChatColor.WHITE + "LAB");
                                     break;
-                                case CAKE:
-                                    line1 = "CAKE AND";
-                                    line2 = "EAT IT TOO";
-                                    break;
-                                case CREEPY:
-                                    line1 = "HAUNTED";
-                                    line2 = "HOUSE";
-                                    break;
-                                case FENCE:
-                                    line1 = "RANDOM";
-                                    line2 = "FENCE";
-                                    break;
-                                case GAZEBO:
-                                    line1 = "CHILLED OUT";
-                                    line2 = "GAZEBO";
-                                    break;
-                                case GRAVESTONE:
-                                    line1 = "HERE";
-                                    line2 = "LIES";
-                                    break;
-                                case HELIX:
-                                    line1 = "INDUSTRIAL";
-                                    line2 = "DOUBLE HELIX";
-                                    break;
                                 case JAIL:
-                                    line1 = "$50,000";
-                                    line2 = "REWARD FOR";
+                                    s.setLine(0, ChatColor.WHITE + line1);
+                                    s.setLine(1, ChatColor.WHITE + line2);
                                     s.setLine(3, ChatColor.WHITE + "CAPTURE");
                                     break;
-                                case LAMP:
-                                    line1 = "LONELY";
-                                    line2 = "LAMP POST";
-                                    break;
-                                case LIBRARY:
-                                    line1 = "LIBRARY OF";
-                                    line2 = "TIME LORE";
-                                    break;
-                                case LIGHTHOUSE:
-                                    line1 = "TINY";
-                                    line2 = "LIGHTHOUSE";
-                                    break;
-                                case MINESHAFT:
-                                    line1 = "ROAD TO";
-                                    line2 = "EL DORADO";
-                                    break;
-                                case PARTY:
-                                    line1 = "PARTY";
-                                    line2 = "TENT";
-                                    break;
-                                case PEANUT:
-                                    line1 = "JAR OF";
-                                    line2 = "PEANUT BUTTER";
-                                    break;
-                                case PINE:
-                                    line1 = "PINE";
-                                    line2 = "TREE";
-                                    break;
-                                case PORTAL:
-                                    line1 = "PORTAL TO";
-                                    line2 = "SOMEWHERE";
-                                    break;
-                                case PUNKED:
-                                    line1 = "JUST GOT";
-                                    line2 = "PUNKED";
-                                    break;
-                                case ROBOT:
-                                    line1 = "WILL BE";
-                                    line2 = "DELETED";
-                                    break;
-                                case SHROOM:
-                                    line1 = "TRIPPY";
-                                    line2 = "SPACE SHROOM";
-                                    break;
-                                case SNOWMAN:
-                                    line1 = "TAKES ONE";
-                                    line2 = "TO SNOW ONE";
-                                    break;
-                                case STONE:
-                                    line1 = "STONE BRICK";
-                                    line2 = "COLUMN";
-                                    break;
-                                case SWAMP:
-                                    line1 = "SIGN ABOVE";
-                                    line2 = "THE DOOR";
-                                    break;
-                                case TELEPHONE:
-                                    line1 = "TELEPHONE";
-                                    line2 = "BOX";
-                                    break;
-                                case TOPSYTURVEY:
-                                    line1 = "Topsy-turvey";
-                                    line2 = "BOX O' MARVEL";
-                                    break;
-                                case VILLAGE:
-                                    line1 = "VILLAGE";
-                                    line2 = "HOUSE";
-                                    break;
-                                case WINDMILL:
-                                    line1 = "VERY SMALL";
-                                    line2 = "WINDMILL";
-                                    break;
-                                case YELLOW:
-                                    line1 = "YELLOW";
-                                    line2 = "SUBMARINE";
-                                    break;
                                 case THEEND:
-                                    line1 = "DRAGON";
-                                    line2 = "SLAYING";
+                                    s.setLine(1, ChatColor.WHITE + line1);
+                                    s.setLine(2, ChatColor.WHITE + line2);
                                     s.setLine(3, ChatColor.WHITE + "HOT ROD");
                                     break;
                                 case CUSTOM:
-                                    line1 = plugin.presets.custom.getLine_one();
-                                    line2 = plugin.presets.custom.getLine_two();
                                     break;
                                 default:
-                                    line1 = "POLICE";
-                                    line2 = "BOX";
+                                    s.setLine(1, ChatColor.WHITE + line1);
+                                    s.setLine(2, ChatColor.WHITE + line2);
                                     break;
-                            }
-                            if (preset.equals(TARDISConstants.PRESET.ANGEL) || preset.equals(TARDISConstants.PRESET.JAIL)) {
-                                s.setLine(0, ChatColor.WHITE + line1);
-                                s.setLine(1, ChatColor.WHITE + line2);
-                            } else {
-                                s.setLine(1, ChatColor.WHITE + line1);
-                                s.setLine(2, ChatColor.WHITE + line2);
                             }
                             s.update();
                         }
                         break;
                     case 87:
                         plugin.utils.setBlockAndRemember(world, xx, (y + yy), zz, colids[yy], coldatas[yy], tid);
-                        if (preset.equals(TARDISConstants.PRESET.TORCH)) {
+                        if (preset.equals(PRESET.TORCH)) {
                             world.getBlockAt(xx, (y + yy + 1), zz).setType(Material.FIRE);
                         }
                         break;
@@ -447,30 +380,36 @@ public class TARDISInstaPreset {
                         plugin.utils.setBlockAndRemember(world, xx, (y + yy), zz, colids[yy], coldatas[yy], tid);
                         break;
                     case 144:
-                        plugin.utils.setBlockAndRemember(world, xx, (y + yy), zz, colids[yy], coldatas[yy], tid);
-                        Skull skull = (Skull) world.getBlockAt(xx, (y + yy), zz).getState();
-                        skull.setRotation(plugin.builderP.getSkullDirection(d));
-                        skull.update();
+                        if (sub) {
+                            plugin.utils.setBlock(world, xx, (y + yy), zz, 89, (byte) 0);
+                        } else {
+                            plugin.utils.setBlockAndRemember(world, xx, (y + yy), zz, colids[yy], coldatas[yy], tid);
+                            Skull skull = (Skull) world.getBlockAt(xx, (y + yy), zz).getState();
+                            skull.setRotation(plugin.builderP.getSkullDirection(d));
+                            skull.update();
+                        }
                         break;
                     case 152:
-                        if (lamp != 123 && (preset.equals(TARDISConstants.PRESET.NEW) || preset.equals(TARDISConstants.PRESET.OLD))) {
+                        if (lamp != 123 && (preset.equals(PRESET.NEW) || preset.equals(PRESET.OLD))) {
                             plugin.utils.setBlockAndRemember(world, xx, (y + yy), zz, cham_id, cham_data, tid);
                         } else {
                             plugin.utils.setBlockAndRemember(world, xx, (y + yy), zz, colids[yy], coldatas[yy], tid);
                         }
                         break;
                     default: // everything else
-//                        if (preset.equals(TARDISConstants.PRESET.SUBMERGED) && yy == 0) {
-//                            plugin.utils.setBlockAndRemember(world, xx, (y + yy), zz, colids[yy], coldatas[yy], tid);
-//                        } else {
-                        plugin.utils.setBlockAndRemember(world, xx, (y + yy), zz, colids[yy], coldatas[yy], tid);
-//                        }
+                        if (change) {
+                            if (colids[yy] == 69 || colids[yy] == 77 || colids[yy] == 143) {
+                                do_at_end.add(new ProblemBlock(new Location(world, xx, (y + yy), zz), colids[yy], coldatas[yy]));
+                            } else {
+                                plugin.utils.setBlockAndRemember(world, xx, (y + yy), zz, colids[yy], coldatas[yy], tid);
+                            }
+                        }
                         break;
                 }
             }
         }
-        if (sub && plugin.worldGuardOnServer) {
-            plugin.wgutils.sponge(sponge, true);
+        for (ProblemBlock pb : do_at_end) {
+            plugin.utils.setBlockAndRemember(pb.getL().getWorld(), pb.getL().getBlockX(), pb.getL().getBlockY(), pb.getL().getBlockZ(), pb.getId(), pb.getData(), tid);
         }
         if (!rebuild) {
             // message travellers in tardis
@@ -494,5 +433,31 @@ public class TARDISInstaPreset {
             }
         }
         plugin.tardisMaterialising.remove(Integer.valueOf(tid));
+        plugin.inVortex.remove(Integer.valueOf(tid));
+    }
+
+    private class ProblemBlock {
+
+        Location l;
+        int id;
+        byte data;
+
+        public ProblemBlock(Location l, int id, byte data) {
+            this.l = l;
+            this.id = id;
+            this.data = data;
+        }
+
+        public Location getL() {
+            return l;
+        }
+
+        public int getId() {
+            return id;
+        }
+
+        public byte getData() {
+            return data;
+        }
     }
 }

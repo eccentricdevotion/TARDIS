@@ -25,7 +25,7 @@ import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
-import me.eccentric_nz.TARDIS.utility.TARDISTexturePackChanger;
+import me.eccentric_nz.TARDIS.utility.TARDISResourcePackChanger;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.World;
@@ -63,7 +63,26 @@ public class TARDISJoinListener implements Listener {
         final Player player = event.getPlayer();
         String playerNameStr = player.getName();
         QueryFactory qf = new QueryFactory(plugin);
-        if (plugin.getConfig().getBoolean("allow_achievements")) {
+        if (plugin.getKitsConfig().getBoolean("give.join.enabled")) {
+            if (player.hasPermission("tardis.kit.join")) {
+                // check if they have the tardis kit
+                HashMap<String, Object> where = new HashMap<String, Object>();
+                where.put("player", playerNameStr);
+                where.put("name", "joinkit");
+                ResultSetAchievements rsa = new ResultSetAchievements(plugin, where, false);
+                if (!rsa.resultSet()) {
+                    //add a record
+                    HashMap<String, Object> set = new HashMap<String, Object>();
+                    set.put("player", playerNameStr);
+                    set.put("name", "joinkit");
+                    qf.doInsert("achievements", set);
+                    // give the join kit
+                    String kit = plugin.getKitsConfig().getString("give.join.kit");
+                    plugin.getServer().dispatchCommand(plugin.console, "tardisgive " + playerNameStr + " kit " + kit);
+                }
+            }
+        }
+        if (plugin.getConfig().getBoolean("allow.achievements")) {
             if (player.hasPermission("tardis.book")) {
                 // check if they have started building a TARDIS yet
                 HashMap<String, Object> where = new HashMap<String, Object>();
@@ -73,7 +92,7 @@ public class TARDISJoinListener implements Listener {
                 if (!rsa.resultSet()) {
                     //add a record
                     HashMap<String, Object> set = new HashMap<String, Object>();
-                    set.put("player", player.getName());
+                    set.put("player", playerNameStr);
                     set.put("name", "tardis");
                     qf.doInsert("achievements", set);
                     TARDISBook book = new TARDISBook(plugin);
@@ -82,7 +101,7 @@ public class TARDISJoinListener implements Listener {
                 }
             }
         }
-        if (plugin.getConfig().getBoolean("allow_tp_switch") && player.hasPermission("tardis.texture")) {
+        if (plugin.getConfig().getBoolean("allow.tp_switch") && player.hasPermission("tardis.texture")) {
             // are they in the TARDIS?
             HashMap<String, Object> where = new HashMap<String, Object>();
             where.put("player", playerNameStr);
@@ -93,11 +112,11 @@ public class TARDISJoinListener implements Listener {
                 wherep.put("player", playerNameStr);
                 final ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, wherep);
                 if (rsp.resultSet()) {
-                    if (rsp.isTexture_on()) {
+                    if (rsp.isTextureOn()) {
                         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
                             @Override
                             public void run() {
-                                new TARDISTexturePackChanger(plugin).changeTP(player, rsp.getTexture_in());
+                                new TARDISResourcePackChanger(plugin).changeRP(player, rsp.getTextureIn());
                             }
                         }, 50L);
                     }
@@ -135,5 +154,6 @@ public class TARDISJoinListener implements Listener {
             wherel.put("tardis_id", id);
             qf.doUpdate("tardis", set, wherel);
         }
+        plugin.filter.addPlayer(player);
     }
 }

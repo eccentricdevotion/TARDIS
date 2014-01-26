@@ -18,10 +18,10 @@ package me.eccentric_nz.TARDIS.listeners;
 
 import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.TARDISConstants.COMPASS;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
+import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.rooms.TARDISRoomDirection;
 import me.eccentric_nz.TARDIS.rooms.TARDISRoomRemover;
 import org.bukkit.Effect;
@@ -60,6 +60,7 @@ public class TARDISJettisonSeeder implements Listener {
      *
      * @param event a player clicking a block
      */
+    @SuppressWarnings("deprecation")
     @EventHandler(priority = EventPriority.MONITOR)
     public void onSeedBlockInteract(PlayerInteractEvent event) {
         final Player player = event.getPlayer();
@@ -77,9 +78,9 @@ public class TARDISJettisonSeeder implements Listener {
             where.put("player", playerNameStr);
             ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, where);
             if (rsp.resultSet()) {
-                key = (!rsp.getKey().isEmpty()) ? rsp.getKey() : plugin.getConfig().getString("key");
+                key = (!rsp.getKey().isEmpty()) ? rsp.getKey() : plugin.getConfig().getString("preferences.key");
             } else {
-                key = plugin.getConfig().getString("key");
+                key = plugin.getConfig().getString("preferences.key");
             }
             // only proceed if they are clicking a seed block with the TARDIS key!
             if (blockType.equals(Material.getMaterial(plugin.getArtronConfig().getString("jettison_seed"))) && inhand.equals(Material.getMaterial(key))) {
@@ -120,7 +121,11 @@ public class TARDISJettisonSeeder implements Listener {
                             del.put("secondary", secondary);
                             qf.doDelete("controls", del);
                         }
-                        if (plugin.getConfig().getBoolean("return_room_seed")) {
+                        if (r.equals("RENDERER")) {
+                            // remove WorldGuard protection
+                            plugin.wgutils.removeRendererRegion(l.getWorld(), playerNameStr);
+                        }
+                        if (plugin.getConfig().getBoolean("growth.return_room_seed")) {
                             // give the player back the room seed block
                             ItemStack is = new ItemStack(Material.getMaterial(plugin.getRoomsConfig().getString("rooms." + r + ".seed")));
                             Inventory inv = player.getInventory();

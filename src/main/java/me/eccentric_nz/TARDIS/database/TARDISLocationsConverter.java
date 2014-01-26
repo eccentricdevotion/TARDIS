@@ -33,7 +33,7 @@ import me.eccentric_nz.TARDIS.TARDIS;
  */
 public class TARDISLocationsConverter {
 
-    private final TARDISDatabase service = TARDISDatabase.getInstance();
+    private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getInstance();
     private final Connection connection = service.getConnection();
     private final TARDIS plugin;
     private final List<String> directions = Arrays.asList(new String[]{"NORTH", "SOUTH", "EAST", "WEST"});
@@ -61,6 +61,7 @@ public class TARDISLocationsConverter {
         String query = "SELECT tardis_id, direction, home, save, current, fast_return FROM tardis";
         int i = 0;
         try {
+            service.testConnection(connection);
             statement = connection.prepareStatement(query);
             rs = statement.executeQuery();
             if (rs.isBeforeFirst()) {
@@ -99,7 +100,7 @@ public class TARDISLocationsConverter {
         }
         if (i > 0) {
             plugin.console.sendMessage(plugin.pluginName + "Converted " + i + " TARDIS locations to new format");
-            plugin.getConfig().set("location_conversion_done", true);
+            plugin.getConfig().set("conversions.location_conversion_done", true);
             plugin.saveConfig();
         }
     }
@@ -108,9 +109,9 @@ public class TARDISLocationsConverter {
         HashMap<String, Object> set = new HashMap<String, Object>();
         set.put("tardis_id", id);
         set.put("world", data[0]);
-        set.put("x", Integer.parseInt(data[1]));
-        set.put("y", Integer.parseInt(data[2]));
-        set.put("z", Integer.parseInt(data[3]));
+        set.put("x", plugin.utils.parseInt(data[1]));
+        set.put("y", plugin.utils.parseInt(data[2]));
+        set.put("z", plugin.utils.parseInt(data[3]));
         int l = data.length;
         set.put("direction", (l > 4 && directions.contains(data[4])) ? data[4] : d);
         set.put("submarine", (l > 5 && data[5].equals("true")) ? 1 : 0);

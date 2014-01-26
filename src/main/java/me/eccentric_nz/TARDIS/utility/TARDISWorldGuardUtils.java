@@ -23,12 +23,12 @@ import com.sk89q.worldguard.domains.DefaultDomain;
 import com.sk89q.worldguard.protection.databases.ProtectionDatabaseException;
 import com.sk89q.worldguard.protection.flags.DefaultFlag;
 import com.sk89q.worldguard.protection.flags.Flag;
-import com.sk89q.worldguard.protection.flags.RegionGroup;
 import com.sk89q.worldguard.protection.flags.StateFlag.State;
 import com.sk89q.worldguard.protection.managers.RegionManager;
 import com.sk89q.worldguard.protection.regions.ProtectedCuboidRegion;
 import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.builders.TARDISTIPSData;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.block.Block;
@@ -82,8 +82,8 @@ public class TARDISWorldGuardUtils {
         RegionManager rm = wg.getRegionManager(one.getWorld());
         BlockVector b1;
         BlockVector b2;
-        int cube = plugin.getConfig().getInt("border_radius") * 16;
-        if (plugin.getConfig().getBoolean("create_worlds")) {
+        int cube = plugin.getConfig().getInt("creation.border_radius") * 16;
+        if (plugin.getConfig().getBoolean("creation.create_worlds")) {
             // make a big cuboid region
             b1 = new BlockVector(cube, 256, cube);
             b2 = new BlockVector(-cube, 0, -cube);
@@ -104,10 +104,49 @@ public class TARDISWorldGuardUtils {
         flags.put(DefaultFlag.LAVA_FLOW, State.DENY);
         flags.put(DefaultFlag.LIGHTER, State.DENY);
         flags.put(DefaultFlag.MOB_SPAWNING, State.DENY);
-        flags.put(DefaultFlag.CONSTRUCT, RegionGroup.OWNERS);
+        //flags.put(DefaultFlag.CONSTRUCT, RegionGroup.OWNERS);
         flags.put(DefaultFlag.CHEST_ACCESS, State.ALLOW);
         region.setFlags(flags);
         rm.addRegion(region);
+        try {
+            rm.save();
+        } catch (ProtectionDatabaseException e) {
+            plugin.console.sendMessage(plugin.pluginName + "could not create WorldGuard Protection for TARDIS! " + e);
+        }
+    }
+
+    /**
+     * Adds a WorldGuard protected region for a TIPS slot. This stops other
+     * players and mobs from griefing the TARDIS :)
+     *
+     * @param p the player to assign as the owner of the region
+     * @param data a TIPS Data container
+     * @param w the world we are creating the region in
+     */
+    public void addWGProtection(Player p, TARDISTIPSData data, World w) {
+        RegionManager rm = wg.getRegionManager(w);
+        BlockVector b1 = new BlockVector(data.getMinX(), 0, data.getMinZ());
+        BlockVector b2 = new BlockVector(data.getMaxX(), 256, data.getMaxZ());
+        String region_id = "tardis_" + p.getName();
+        ProtectedCuboidRegion region = new ProtectedCuboidRegion(region_id, b1, b2);
+        DefaultDomain dd = new DefaultDomain();
+        dd.addPlayer(p.getName());
+        region.setOwners(dd);
+        HashMap<Flag<?>, Object> flags = new HashMap<Flag<?>, Object>();
+        flags.put(DefaultFlag.ENTRY, State.DENY);
+        flags.put(DefaultFlag.TNT, State.DENY);
+        flags.put(DefaultFlag.CREEPER_EXPLOSION, State.DENY);
+        flags.put(DefaultFlag.FIRE_SPREAD, State.DENY);
+        flags.put(DefaultFlag.LAVA_FIRE, State.DENY);
+        flags.put(DefaultFlag.LAVA_FLOW, State.DENY);
+        flags.put(DefaultFlag.LIGHTER, State.DENY);
+        flags.put(DefaultFlag.MOB_SPAWNING, State.DENY);
+        flags.put(DefaultFlag.CHEST_ACCESS, State.ALLOW);
+        region.setFlags(flags);
+        rm.addRegion(region);
+        // deny access to anyone but the owner - companions will be added as the player defines them
+        // usage = "<id> <flag> [-w world] [-g group] [value]",
+        plugin.getServer().dispatchCommand(plugin.console, "rg flag " + region_id + " entry -w " + w.getName() + " -g nonmembers deny");
         try {
             rm.save();
         } catch (ProtectionDatabaseException e) {
@@ -141,13 +180,44 @@ public class TARDISWorldGuardUtils {
         flags.put(DefaultFlag.LAVA_FIRE, State.DENY);
         flags.put(DefaultFlag.LAVA_FLOW, State.DENY);
         flags.put(DefaultFlag.LIGHTER, State.DENY);
-        flags.put(DefaultFlag.CONSTRUCT, RegionGroup.OWNERS);
+        //flags.put(DefaultFlag.CONSTRUCT, RegionGroup.OWNERS);
         region.setFlags(flags);
         rm.addRegion(region);
         try {
             rm.save();
         } catch (ProtectionDatabaseException e) {
             plugin.console.sendMessage(plugin.pluginName + "could not create WorldGuard Protection for recharger! " + e);
+        }
+    }
+
+    /**
+     * Adds a WorldGuard protected region to exterior renderer room.
+     *
+     * @param name the name of the recharger
+     * @param one a start location of a cuboid region
+     * @param two an end location of a cuboid region
+     */
+    public void addRendererProtection(String name, Location one, Location two) {
+        RegionManager rm = wg.getRegionManager(one.getWorld());
+        BlockVector b1;
+        BlockVector b2;
+        b1 = makeBlockVector(one);
+        b2 = makeBlockVector(two);
+        ProtectedCuboidRegion region = new ProtectedCuboidRegion("renderer_" + name, b1, b2);
+        HashMap<Flag<?>, Object> flags = new HashMap<Flag<?>, Object>();
+        flags.put(DefaultFlag.TNT, State.DENY);
+        flags.put(DefaultFlag.CREEPER_EXPLOSION, State.DENY);
+        flags.put(DefaultFlag.FIRE_SPREAD, State.DENY);
+        flags.put(DefaultFlag.LAVA_FIRE, State.DENY);
+        flags.put(DefaultFlag.LAVA_FLOW, State.DENY);
+        flags.put(DefaultFlag.LIGHTER, State.DENY);
+        flags.put(DefaultFlag.LEAF_DECAY, State.DENY);
+        region.setFlags(flags);
+        rm.addRegion(region);
+        try {
+            rm.save();
+        } catch (ProtectionDatabaseException e) {
+            plugin.console.sendMessage(plugin.pluginName + "could not create WorldGuard Protection for exterior renderering room! " + e);
         }
     }
 
@@ -163,7 +233,7 @@ public class TARDISWorldGuardUtils {
         try {
             rm.save();
         } catch (ProtectionDatabaseException e) {
-            plugin.console.sendMessage(plugin.pluginName + "could not remove WorldGuard Protection! " + e);
+            plugin.console.sendMessage(plugin.pluginName + "could not remove WorldGuard Protection for TARDIS! " + e);
         }
     }
 
@@ -179,7 +249,54 @@ public class TARDISWorldGuardUtils {
         try {
             rm.save();
         } catch (ProtectionDatabaseException e) {
-            plugin.console.sendMessage(plugin.pluginName + "could not remove recharger WorldGuard Protection! " + e);
+            plugin.console.sendMessage(plugin.pluginName + "could not remove recharger WorldGuard Protection for recharger! " + e);
+        }
+    }
+
+    /**
+     * Removes the exterior rendering room region when the room is jettisoned or
+     * the TARDIS is deleted.
+     *
+     * @param w the world the region is located in
+     * @param p the player's name
+     */
+    public void removeRendererRegion(World w, String p) {
+        RegionManager rm = wg.getRegionManager(w);
+        if (rm.hasRegion("renderer_" + p)) {
+            rm.removeRegion("renderer_" + p);
+            try {
+                rm.save();
+            } catch (ProtectionDatabaseException e) {
+                plugin.console.sendMessage(plugin.pluginName + "could not remove WorldGuard Protection for renderer room! " + e);
+            }
+        }
+    }
+
+    /**
+     * Adds a player to a region's membership.
+     *
+     * @param w the world the region is located in
+     * @param p the player whose region it is
+     * @param a the player to add
+     */
+    public void addMemberToRegion(World w, String p, String a) {
+        RegionManager rm = wg.getRegionManager(w);
+        if (rm.hasRegion("tardis_" + p)) {
+            plugin.getServer().dispatchCommand(plugin.console, "rg addmember tardis_" + p + " " + a + " -w " + w.getName());
+        }
+    }
+
+    /**
+     * Adds a player to a region's membership.
+     *
+     * @param w the world the region is located in
+     * @param p the player whose region it is
+     * @param a the player to add
+     */
+    public void removeMemberFromRegion(World w, String p, String a) {
+        RegionManager rm = wg.getRegionManager(w);
+        if (rm.hasRegion("tardis_" + p)) {
+            plugin.getServer().dispatchCommand(plugin.console, "rg removemember tardis_" + p + " " + a + " -w " + w.getName());
         }
     }
 
@@ -195,11 +312,18 @@ public class TARDISWorldGuardUtils {
 
     /**
      * Sets a block with the properties of a sponge
+     *
+     * @param b the sponge block
+     * @param clear whether to set the sponge area or remove it
      */
     public void sponge(Block b, boolean clear) {
         if (clear) {
+            // remove water
+            plugin.debug("Clearing water");
             SpongeUtil.clearSpongeWater(wg, b.getWorld(), b.getX(), b.getY(), b.getZ());
         } else {
+            // put water back
+            plugin.debug("Restoring water");
             SpongeUtil.addSpongeWater(wg, b.getWorld(), b.getX(), b.getY(), b.getZ());
         }
     }

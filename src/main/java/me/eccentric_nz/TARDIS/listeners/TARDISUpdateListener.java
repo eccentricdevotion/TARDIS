@@ -20,20 +20,20 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import me.eccentric_nz.TARDIS.JSON.JSONArray;
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetControls;
 import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetDoors;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
-import me.eccentric_nz.tardischunkgenerator.TARDISChunkGenerator;
+import me.eccentric_nz.TARDIS.enumeration.MESSAGE;
+import me.eccentric_nz.TARDIS.enumeration.SCHEMATIC;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
-import org.bukkit.WorldType;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.block.Sign;
@@ -42,8 +42,6 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractEvent;
-import org.bukkit.generator.ChunkGenerator;
-import me.eccentric_nz.TARDIS.JSON.JSONArray;
 
 /**
  * The TARDIS interior goes through occasional metamorphoses, sometimes by
@@ -60,30 +58,25 @@ public class TARDISUpdateListener implements Listener {
     List<Material> validBlocks = new ArrayList<Material>();
     List<Material> validSigns = new ArrayList<Material>();
     HashMap<String, Integer> controls = new HashMap<String, Integer>();
-    List<String> mustbeinworld = new ArrayList<String>();
 
     public TARDISUpdateListener(TARDIS plugin) {
         this.plugin = plugin;
-        controls.put("ars", 10);
-        controls.put("artron", 6);
-        controls.put("back", 8);
-        controls.put("button", 1);
         controls.put("handbrake", 0);
-        controls.put("info", 13);
-        controls.put("keyboard", 7);
-        controls.put("light", 12);
-        controls.put("temporal", 11);
-        controls.put("terminal", 9);
+        controls.put("button", 1);
         controls.put("world-repeater", 2);
         controls.put("x-repeater", 3);
-        controls.put("y-repeater", 5);
         controls.put("z-repeater", 4);
-        mustbeinworld.add("ars");
-        mustbeinworld.add("creeper");
-        mustbeinworld.add("farm");
-        mustbeinworld.add("rail");
-        mustbeinworld.add("stable");
-        mustbeinworld.add("village");
+        controls.put("y-repeater", 5);
+        controls.put("artron", 6);
+        controls.put("keyboard", 7);
+        controls.put("back", 8);
+        controls.put("terminal", 9);
+        controls.put("ars", 10);
+        controls.put("temporal", 11);
+        controls.put("light", 12);
+        controls.put("info", 13);
+        controls.put("storage", 14);
+        controls.put("advanced", 15);
         validBlocks.add(Material.LEVER);
         validBlocks.add(Material.REDSTONE_COMPARATOR_OFF);
         validBlocks.add(Material.REDSTONE_COMPARATOR_ON);
@@ -103,6 +96,7 @@ public class TARDISUpdateListener implements Listener {
      *
      * @param event a player clicking on a block
      */
+    @SuppressWarnings("deprecation")
     @EventHandler(priority = EventPriority.MONITOR)
     public void onUpdateInteract(PlayerInteractEvent event) {
         final Player player = event.getPlayer();
@@ -134,12 +128,12 @@ public class TARDISUpdateListener implements Listener {
             where.put("owner", playerNameStr);
             ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
             if (!rs.resultSet()) {
-                player.sendMessage(plugin.pluginName + TARDISConstants.NO_TARDIS);
+                player.sendMessage(plugin.pluginName + MESSAGE.NO_TARDIS.getText());
                 return;
             }
             int id = rs.getTardis_id();
             String preset = rs.getPreset().toString();
-            TARDISConstants.SCHEMATIC schm = rs.getSchematic();
+            SCHEMATIC schm = rs.getSchematic();
             QueryFactory qf = new QueryFactory(plugin);
             String table = "tardis";
             HashMap<String, Object> tid = new HashMap<String, Object>();
@@ -183,8 +177,7 @@ public class TARDISUpdateListener implements Listener {
                 } else {
                     type = 2;
                     // check the world
-                    String wor = (plugin.getConfig().getBoolean("default_world")) ? plugin.getConfig().getString("default_world_name") : "TARDIS_";
-                    if (bw.getName().contains(wor)) {
+                    if (!plugin.utils.inTARDISWorld(player)) {
                         player.sendMessage(plugin.pluginName + "You didn't enter the TARDIS by the regular door, aborting...");
                         return;
                     }
@@ -206,7 +199,7 @@ public class TARDISUpdateListener implements Listener {
                 }
             }
             // check they are still in the TARDIS world
-            if (mustbeinworld.contains(blockName) && !inTARDISWorld(player)) {
+            if (!blockName.equals("backdoor") && !plugin.utils.inTARDISWorld(player)) {
                 player.sendMessage(plugin.pluginName + "You must be in a TARDIS world to update this block!");
                 return;
             }
@@ -544,6 +537,36 @@ public class TARDISUpdateListener implements Listener {
                     s.update();
                 }
             }
+            if (blockName.equalsIgnoreCase("storage") && blockType.equals(Material.NOTE_BLOCK)) {
+                HashMap<String, Object> wherel = new HashMap<String, Object>();
+                wherel.put("tardis_id", id);
+                wherel.put("type", 14);
+                ResultSetControls rsc = new ResultSetControls(plugin, wherel, false);
+                if (!rsc.resultSet()) {
+                    // insert control
+                    qf.insertControl(id, 14, blockLocStr, 0);
+                    secondary = true;
+                } else {
+                    set.put("location", blockLocStr);
+                }
+                // check if player has storage record, and update the tardis_id field
+                plugin.utils.updateStorageId(playerNameStr, id, qf);
+            }
+            if (blockName.equalsIgnoreCase("advanced") && blockType.equals(Material.JUKEBOX)) {
+                HashMap<String, Object> wherel = new HashMap<String, Object>();
+                wherel.put("tardis_id", id);
+                wherel.put("type", 15);
+                ResultSetControls rsc = new ResultSetControls(plugin, wherel, false);
+                if (!rsc.resultSet()) {
+                    // insert control
+                    qf.insertControl(id, 15, blockLocStr, 0);
+                    secondary = true;
+                } else {
+                    set.put("location", blockLocStr);
+                }
+                // check if player has storage record, and update the tardis_id field
+                plugin.utils.updateStorageId(playerNameStr, id, qf);
+            }
             if (set.size() > 0 || secondary) {
                 if (!secondary) {
                     qf.doUpdate(table, set, tid);
@@ -566,14 +589,5 @@ public class TARDISUpdateListener implements Listener {
             default:
                 return "EAST";
         }
-    }
-
-    private boolean inTARDISWorld(Player player) {
-        // check they are still in the TARDIS world
-        World world = player.getLocation().getWorld();
-        String name = world.getName();
-        ChunkGenerator gen = world.getGenerator();
-        boolean special = (name.contains("TARDIS_TimeVortex") && (world.getWorldType().equals(WorldType.FLAT) || gen instanceof TARDISChunkGenerator));
-        return name.equals("TARDIS_WORLD_" + player.getName()) || special;
     }
 }

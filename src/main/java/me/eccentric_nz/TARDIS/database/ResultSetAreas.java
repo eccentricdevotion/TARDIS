@@ -35,7 +35,7 @@ import me.eccentric_nz.TARDIS.TARDIS;
  */
 public class ResultSetAreas {
 
-    private final TARDISDatabase service = TARDISDatabase.getInstance();
+    private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getInstance();
     private final Connection connection = service.getConnection();
     private final TARDIS plugin;
     private final HashMap<String, Object> where;
@@ -85,8 +85,8 @@ public class ResultSetAreas {
             wheres = " WHERE " + sbw.toString().substring(0, sbw.length() - 5);
         }
         String query = "SELECT * FROM areas" + wheres;
-        //plugin.debug(query);
         try {
+            service.testConnection(connection);
             statement = connection.prepareStatement(query);
             if (where != null) {
                 int s = 1;
@@ -94,7 +94,7 @@ public class ResultSetAreas {
                     if (entry.getValue().getClass().equals(String.class)) {
                         statement.setString(s, entry.getValue().toString());
                     } else {
-                        statement.setInt(s, plugin.utils.parseNum(entry.getValue().toString()));
+                        statement.setInt(s, plugin.utils.parseInt(entry.getValue().toString()));
                     }
                     s++;
                 }

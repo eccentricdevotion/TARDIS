@@ -188,8 +188,8 @@ public class TARDISARSProcessor {
             String c = rs.getChunk();
             String[] data = c.split(":");
             World w = plugin.getServer().getWorld(data[0]);
-            int cx = plugin.utils.parseNum(data[1]);
-            int cz = plugin.utils.parseNum(data[2]);
+            int cx = plugin.utils.parseInt(data[1]);
+            int cz = plugin.utils.parseInt(data[2]);
             return w.getChunkAt(cx, cz);
         }
         return null;

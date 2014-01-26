@@ -76,6 +76,9 @@ public class TARDISInformationSystemListener implements Listener {
                     if (chat.equalsIgnoreCase("C")) {
                         processKey(p, TARDISInfoMenu.COMPONENTS);
                     }
+                    if (chat.equalsIgnoreCase("D")) {
+                        processKey(p, TARDISInfoMenu.DISKS);
+                    }
                     if (chat.equalsIgnoreCase("O")) {
                         processKey(p, TARDISInfoMenu.COMMANDS);
                     }
@@ -88,6 +91,12 @@ public class TARDISInformationSystemListener implements Listener {
                     break;
                 // SECOND level menu
                 case CONSOLE_BLOCKS:
+                    if (chat.equalsIgnoreCase("d")) {
+                        processKey(p, TARDISInfoMenu.ADVANCED);
+                    }
+                    if (chat.equalsIgnoreCase("S")) {
+                        processKey(p, TARDISInfoMenu.STORAGE);
+                    }
                     if (chat.equalsIgnoreCase("A")) {
                         showInfo(p, TARDISInfoMenu.CONSOLE_ARS);
                     }
@@ -121,14 +130,14 @@ public class TARDISInformationSystemListener implements Listener {
                     if (chat.equalsIgnoreCase("b`")) {
                         showInfo(p, TARDISInfoMenu.HANDBRAKE);
                     }
+                    break;
+                case CONSOLE_BLOCKS_2:
                     if (chat.equalsIgnoreCase("I")) {
                         showInfo(p, TARDISInfoMenu.INFO);
                     }
                     if (chat.equalsIgnoreCase("K")) {
                         showInfo(p, TARDISInfoMenu.KEYBOARD);
                     }
-                    break;
-                case CONSOLE_BLOCKS_2:
                     if (chat.equalsIgnoreCase("L")) {
                         showInfo(p, TARDISInfoMenu.LIGHT);
                     }
@@ -164,6 +173,12 @@ public class TARDISInformationSystemListener implements Listener {
                     }
                     break;
                 case ITEMS:
+                    if (chat.equalsIgnoreCase("A")) {
+                        processKey(p, TARDISInfoMenu.CELL);
+                    }
+                    if (chat.equalsIgnoreCase("F")) {
+                        processKey(p, TARDISInfoMenu.FILTER);
+                    }
                     if (chat.equalsIgnoreCase("K")) {
                         processKey(p, TARDISInfoMenu.KEY);
                     }
@@ -177,15 +192,68 @@ public class TARDISInformationSystemListener implements Listener {
                         processKey(p, TARDISInfoMenu.REMOTE);
                     }
                     break;
+                case DISKS:
+                    if (chat.equalsIgnoreCase("A")) {
+                        showInfo(p, TARDISInfoMenu.AREA_DISK);
+                    }
+                    if (chat.equalsIgnoreCase("B")) {
+                        processKey(p, TARDISInfoMenu.BLANK);
+                    }
+                    if (chat.equalsIgnoreCase("i")) {
+                        processKey(p, TARDISInfoMenu.BIOME_DISK);
+                    }
+                    if (chat.equalsIgnoreCase("P")) {
+                        processKey(p, TARDISInfoMenu.PLAYER_DISK);
+                    }
+                    if (chat.equalsIgnoreCase("r")) {
+                        processKey(p, TARDISInfoMenu.PRESET_DISK);
+                    }
+                    if (chat.equalsIgnoreCase("S")) {
+                        processKey(p, TARDISInfoMenu.SAVE_DISK);
+                    }
+                    break;
                 case COMPONENTS:
+                    if (chat.equalsIgnoreCase("A")) {
+                        processKey(p, TARDISInfoMenu.A_CIRCUIT);
+                    }
+                    if (chat.equalsIgnoreCase("B")) {
+                        processKey(p, TARDISInfoMenu.BIO_CIRCUIT);
+                    }
+                    if (chat.equalsIgnoreCase("C")) {
+                        processKey(p, TARDISInfoMenu.C_CIRCUIT);
+                    }
+                    if (chat.equalsIgnoreCase("D")) {
+                        processKey(p, TARDISInfoMenu.D_CIRCUIT);
+                    }
+                    if (chat.equalsIgnoreCase("E")) {
+                        processKey(p, TARDISInfoMenu.E_CIRCUIT);
+                    }
+                    if (chat.equalsIgnoreCase("h")) {
+                        processKey(p, TARDISInfoMenu.ARS_CIRCUIT);
+                    }
+                    if (chat.equalsIgnoreCase("I")) {
+                        processKey(p, TARDISInfoMenu.I_CIRCUIT);
+                    }
                     if (chat.equalsIgnoreCase("L")) {
                         processKey(p, TARDISInfoMenu.L_CIRCUIT);
                     }
                     if (chat.equalsIgnoreCase("M")) {
                         processKey(p, TARDISInfoMenu.M_CIRCUIT);
                     }
+                    if (chat.equalsIgnoreCase("P")) {
+                        processKey(p, TARDISInfoMenu.P_CIRCUIT);
+                    }
+                    if (chat.equalsIgnoreCase("R")) {
+                        processKey(p, TARDISInfoMenu.R_CIRCUIT);
+                    }
                     if (chat.equalsIgnoreCase("S")) {
                         processKey(p, TARDISInfoMenu.S_CIRCUIT);
+                    }
+                    if (chat.equalsIgnoreCase("T")) {
+                        processKey(p, TARDISInfoMenu.T_CIRCUIT);
+                    }
+                    if (chat.equalsIgnoreCase("y")) {
+                        processKey(p, TARDISInfoMenu.MEM_CIRCUIT);
                     }
                     break;
                 case MANUAL:
@@ -311,6 +379,9 @@ public class TARDISInformationSystemListener implements Listener {
                     if (chat.equalsIgnoreCase("R")) {
                         showRoomInfo(p, TARDISInfoMenu.RAIL);
                     }
+                    if (chat.equalsIgnoreCase("x")) {
+                        showRoomInfo(p, TARDISInfoMenu.RENDERER);
+                    }
                     if (chat.equalsIgnoreCase("S")) {
                         showRoomInfo(p, TARDISInfoMenu.STABLE);
                     }
@@ -392,6 +463,118 @@ public class TARDISInformationSystemListener implements Listener {
                         showRecipe(p, TARDISInfoMenu.REMOTE_RECIPE);
                     }
                     break;
+                case BIOME_DISK:
+                    if (chat.equalsIgnoreCase("I")) {
+                        showInfo(p, TARDISInfoMenu.BIOME_DISK_INFO);
+                    }
+                    if (chat.equalsIgnoreCase("R")) {
+                        showRecipe(p, TARDISInfoMenu.BIOME_DISK_RECIPE);
+                    }
+                    break;
+                case BLANK:
+                    if (chat.equalsIgnoreCase("I")) {
+                        showInfo(p, TARDISInfoMenu.BLANK_INFO);
+                    }
+                    if (chat.equalsIgnoreCase("R")) {
+                        showRecipe(p, TARDISInfoMenu.BLANK_RECIPE);
+                    }
+                    break;
+                case PLAYER_DISK:
+                    if (chat.equalsIgnoreCase("I")) {
+                        showInfo(p, TARDISInfoMenu.PLAYER_DISK_INFO);
+                    }
+                    if (chat.equalsIgnoreCase("R")) {
+                        showRecipe(p, TARDISInfoMenu.PLAYER_DISK_RECIPE);
+                    }
+                    break;
+                case PRESET_DISK:
+                    if (chat.equalsIgnoreCase("I")) {
+                        showInfo(p, TARDISInfoMenu.PRESET_DISK_INFO);
+                    }
+                    if (chat.equalsIgnoreCase("R")) {
+                        showRecipe(p, TARDISInfoMenu.PRESET_DISK_RECIPE);
+                    }
+                    break;
+                case SAVE_DISK:
+                    if (chat.equalsIgnoreCase("I")) {
+                        showInfo(p, TARDISInfoMenu.SAVE_DISK_INFO);
+                    }
+                    if (chat.equalsIgnoreCase("R")) {
+                        showRecipe(p, TARDISInfoMenu.SAVE_DISK_RECIPE);
+                    }
+                    break;
+                case A_CIRCUIT:
+                    if (chat.equalsIgnoreCase("I")) {
+                        showInfo(p, TARDISInfoMenu.A_CIRCUIT_INFO);
+                    }
+                    if (chat.equalsIgnoreCase("R")) {
+                        showRecipe(p, TARDISInfoMenu.A_CIRCUIT_RECIPE);
+                    }
+                    break;
+                case BIO_CIRCUIT:
+                    if (chat.equalsIgnoreCase("I")) {
+                        showInfo(p, TARDISInfoMenu.BIO_CIRCUIT_INFO);
+                    }
+                    if (chat.equalsIgnoreCase("R")) {
+                        showRecipe(p, TARDISInfoMenu.BIO_CIRCUIT_RECIPE);
+                    }
+                    break;
+                case C_CIRCUIT:
+                    if (chat.equalsIgnoreCase("I")) {
+                        showInfo(p, TARDISInfoMenu.C_CIRCUIT_INFO);
+                    }
+                    if (chat.equalsIgnoreCase("R")) {
+                        showRecipe(p, TARDISInfoMenu.C_CIRCUIT_RECIPE);
+                    }
+                    break;
+                case D_CIRCUIT:
+                    if (chat.equalsIgnoreCase("I")) {
+                        showInfo(p, TARDISInfoMenu.D_CIRCUIT_INFO);
+                    }
+                    if (chat.equalsIgnoreCase("R")) {
+                        showRecipe(p, TARDISInfoMenu.D_CIRCUIT_RECIPE);
+                    }
+                    break;
+                case E_CIRCUIT:
+                    if (chat.equalsIgnoreCase("I")) {
+                        showInfo(p, TARDISInfoMenu.E_CIRCUIT_INFO);
+                    }
+                    if (chat.equalsIgnoreCase("R")) {
+                        showRecipe(p, TARDISInfoMenu.E_CIRCUIT_RECIPE);
+                    }
+                    break;
+                case CELL:
+                    if (chat.equalsIgnoreCase("I")) {
+                        showInfo(p, TARDISInfoMenu.CELL_INFO);
+                    }
+                    if (chat.equalsIgnoreCase("R")) {
+                        showRecipe(p, TARDISInfoMenu.CELL_RECIPE);
+                    }
+                    break;
+                case FILTER:
+                    if (chat.equalsIgnoreCase("I")) {
+                        showInfo(p, TARDISInfoMenu.FILTER_INFO);
+                    }
+                    if (chat.equalsIgnoreCase("R")) {
+                        showRecipe(p, TARDISInfoMenu.FILTER_RECIPE);
+                    }
+                    break;
+                case ARS_CIRCUIT:
+                    if (chat.equalsIgnoreCase("I")) {
+                        showInfo(p, TARDISInfoMenu.ARS_CIRCUIT_INFO);
+                    }
+                    if (chat.equalsIgnoreCase("R")) {
+                        showRecipe(p, TARDISInfoMenu.ARS_CIRCUIT_RECIPE);
+                    }
+                    break;
+                case I_CIRCUIT:
+                    if (chat.equalsIgnoreCase("I")) {
+                        showInfo(p, TARDISInfoMenu.I_CIRCUIT_INFO);
+                    }
+                    if (chat.equalsIgnoreCase("R")) {
+                        showRecipe(p, TARDISInfoMenu.I_CIRCUIT_RECIPE);
+                    }
+                    break;
                 case L_CIRCUIT:
                     if (chat.equalsIgnoreCase("I")) {
                         showInfo(p, TARDISInfoMenu.L_CIRCUIT_INFO);
@@ -408,12 +591,44 @@ public class TARDISInformationSystemListener implements Listener {
                         showRecipe(p, TARDISInfoMenu.M_CIRCUIT_RECIPE);
                     }
                     break;
+                case P_CIRCUIT:
+                    if (chat.equalsIgnoreCase("I")) {
+                        showInfo(p, TARDISInfoMenu.P_CIRCUIT_INFO);
+                    }
+                    if (chat.equalsIgnoreCase("R")) {
+                        showRecipe(p, TARDISInfoMenu.P_CIRCUIT_RECIPE);
+                    }
+                    break;
+                case R_CIRCUIT:
+                    if (chat.equalsIgnoreCase("I")) {
+                        showInfo(p, TARDISInfoMenu.R_CIRCUIT_INFO);
+                    }
+                    if (chat.equalsIgnoreCase("R")) {
+                        showRecipe(p, TARDISInfoMenu.R_CIRCUIT_RECIPE);
+                    }
+                    break;
                 case S_CIRCUIT:
                     if (chat.equalsIgnoreCase("I")) {
                         showInfo(p, TARDISInfoMenu.S_CIRCUIT_INFO);
                     }
                     if (chat.equalsIgnoreCase("R")) {
                         showRecipe(p, TARDISInfoMenu.S_CIRCUIT_RECIPE);
+                    }
+                    break;
+                case T_CIRCUIT:
+                    if (chat.equalsIgnoreCase("I")) {
+                        showInfo(p, TARDISInfoMenu.T_CIRCUIT_INFO);
+                    }
+                    if (chat.equalsIgnoreCase("R")) {
+                        showRecipe(p, TARDISInfoMenu.T_CIRCUIT_RECIPE);
+                    }
+                    break;
+                case MEM_CIRCUIT:
+                    if (chat.equalsIgnoreCase("I")) {
+                        showInfo(p, TARDISInfoMenu.MEM_CIRCUIT_INFO);
+                    }
+                    if (chat.equalsIgnoreCase("R")) {
+                        showRecipe(p, TARDISInfoMenu.MEM_CIRCUIT_RECIPE);
                     }
                     break;
                 case TARDIS:
@@ -646,7 +861,7 @@ public class TARDISInformationSystemListener implements Listener {
                         showInfo(p, TARDISInfoMenu.SONIC_Q_INFO);
                     }
                     if (chat.equalsIgnoreCase("R")) {
-                        showRecipe(p, TARDISInfoMenu.SONIC_Q_RECIPE);
+                        showRecipe(p, TARDISInfoMenu.SONIC_RECIPE);
                     }
                     break;
                 case SONIC_R:
@@ -654,7 +869,7 @@ public class TARDISInformationSystemListener implements Listener {
                         showInfo(p, TARDISInfoMenu.SONIC_R_INFO);
                     }
                     if (chat.equalsIgnoreCase("R")) {
-                        showRecipe(p, TARDISInfoMenu.SONIC_R_RECIPE);
+                        showRecipe(p, TARDISInfoMenu.R_CIRCUIT_RECIPE);
                     }
                     break;
                 case SONIC_D:
@@ -662,7 +877,7 @@ public class TARDISInformationSystemListener implements Listener {
                         showInfo(p, TARDISInfoMenu.SONIC_D_INFO);
                     }
                     if (chat.equalsIgnoreCase("R")) {
-                        showRecipe(p, TARDISInfoMenu.SONIC_D_RECIPE);
+                        showRecipe(p, TARDISInfoMenu.D_CIRCUIT_RECIPE);
                     }
                     break;
                 case SONIC_E:
@@ -670,7 +885,7 @@ public class TARDISInformationSystemListener implements Listener {
                         showInfo(p, TARDISInfoMenu.SONIC_E_INFO);
                     }
                     if (chat.equalsIgnoreCase("R")) {
-                        showRecipe(p, TARDISInfoMenu.SONIC_E_RECIPE);
+                        showRecipe(p, TARDISInfoMenu.E_CIRCUIT_RECIPE);
                     }
                     break;
                 case SONIC_A:
@@ -678,7 +893,7 @@ public class TARDISInformationSystemListener implements Listener {
                         showInfo(p, TARDISInfoMenu.SONIC_A_INFO);
                     }
                     if (chat.equalsIgnoreCase("R")) {
-                        showRecipe(p, TARDISInfoMenu.SONIC_A_RECIPE);
+                        showRecipe(p, TARDISInfoMenu.A_CIRCUIT_RECIPE);
                     }
                     break;
                 default:

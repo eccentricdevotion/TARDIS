@@ -62,7 +62,7 @@ public class TARDISBlockLoader {
         if (rsg.resultSet()) {
             ArrayList<HashMap<String, String>> data = rsg.getData();
             for (HashMap<String, String> map : data) {
-                int i = plugin.utils.parseNum(map.get("direction"));
+                int i = plugin.utils.parseInt(map.get("direction"));
                 Double[] values = new Double[3];
                 values[0] = Double.valueOf(map.get("direction"));
                 values[1] = Double.valueOf(map.get("distance"));

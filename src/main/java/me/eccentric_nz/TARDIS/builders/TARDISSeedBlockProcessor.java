@@ -19,17 +19,18 @@ package me.eccentric_nz.TARDIS.builders;
 import java.util.HashMap;
 import java.util.Map;
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.TARDISConstants;
-import me.eccentric_nz.TARDIS.achievement.TARDISAchievementNotify;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetCount;
 import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
+import me.eccentric_nz.TARDIS.enumeration.COMPASS;
+import me.eccentric_nz.TARDIS.enumeration.SCHEMATIC;
+import org.bukkit.ChatColor;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
-import org.bukkit.Material;
 import org.bukkit.World;
+import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Player;
 
 /**
@@ -60,7 +61,7 @@ public class TARDISSeedBlockProcessor {
      */
     public boolean processBlock(TARDISBuildData seed, Location l, Player player) {
         if (player.hasPermission("tardis.create")) {
-            int max_count = plugin.getConfig().getInt("count");
+            int max_count = plugin.getConfig().getInt("creation.count");
             int player_count = 0;
             if (max_count > 0) {
                 HashMap<String, Object> wherec = new HashMap<String, Object>();
@@ -80,10 +81,10 @@ public class TARDISSeedBlockProcessor {
             where.put("owner", playerNameStr);
             ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
             if (!rs.resultSet()) {
-                final TARDISConstants.SCHEMATIC schm = seed.getSchematic();
+                final SCHEMATIC schm = seed.getSchematic();
                 switch (schm) {
                     case CUSTOM:
-                        if (!plugin.getConfig().getBoolean("custom_schematic")) {
+                        if (!plugin.getConfig().getBoolean("creation.custom_schematic")) {
                             player.sendMessage(plugin.pluginName + "The custom TARDIS schematic is not enabled on this server!");
                             return false;
                         } else if (!player.hasPermission("tardis.custom")) {
@@ -145,14 +146,15 @@ public class TARDISSeedBlockProcessor {
                 int cz;
                 String cw;
                 final World chunkworld;
-                if (plugin.getConfig().getBoolean("create_worlds") && !plugin.getConfig().getBoolean("default_world")) {
+                boolean tips = false;
+                if (plugin.getConfig().getBoolean("creation.create_worlds") && !plugin.getConfig().getBoolean("creation.default_world")) {
                     // create a new world to store this TARDIS
                     cw = "TARDIS_WORLD_" + playerNameStr;
                     TARDISSpace space = new TARDISSpace(plugin);
                     chunkworld = space.getTardisWorld(cw);
                     cx = 0;
                     cz = 0;
-                } else if (plugin.getConfig().getBoolean("default_world") && plugin.getConfig().getBoolean("create_worlds_with_perms") && player.hasPermission("tardis.create_world")) {
+                } else if (plugin.getConfig().getBoolean("creation.default_world") && plugin.getConfig().getBoolean("creation.create_worlds_with_perms") && player.hasPermission("tardis.create_world")) {
                     // create a new world to store this TARDIS
                     cw = "TARDIS_WORLD_" + playerNameStr;
                     TARDISSpace space = new TARDISSpace(plugin);
@@ -162,9 +164,10 @@ public class TARDISSeedBlockProcessor {
                 } else {
                     Chunk chunk = l.getChunk();
                     // check config to see whether we are using a default world to store TARDISes
-                    if (plugin.getConfig().getBoolean("default_world")) {
-                        cw = plugin.getConfig().getString("default_world_name");
+                    if (plugin.getConfig().getBoolean("creation.default_world")) {
+                        cw = plugin.getConfig().getString("creation.default_world_name");
                         chunkworld = plugin.getServer().getWorld(cw);
+                        tips = true;
                     } else {
                         chunkworld = chunk.getWorld();
                         cw = chunkworld.getName();
@@ -172,7 +175,7 @@ public class TARDISSeedBlockProcessor {
                     // get this chunk co-ords
                     cx = chunk.getX();
                     cz = chunk.getZ();
-                    if (plugin.utils.checkChunk(cw, cx, cz, schm)) {
+                    if (!plugin.getConfig().getBoolean("creation.default_world") && plugin.utils.checkChunk(cw, cx, cz, schm)) {
                         player.sendMessage(plugin.pluginName + "A TARDIS already exists at this location, please try another chunk!");
                         return false;
                     }
@@ -215,7 +218,10 @@ public class TARDISSeedBlockProcessor {
                 ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, wherep);
                 if (!rsp.resultSet()) {
                     setpp.put("player", player.getName());
-                    qf.doInsert("player_prefs", setpp);
+                    String key = (plugin.getConfig().getString("storage.database").equals("mysql")) ? "key_item" : "key";
+                    String default_key = plugin.getConfig().getString("preferences.key");
+                    setpp.put(key, default_key);
+                    qf.doSyncInsert("player_prefs", setpp);
                 } else {
                     HashMap<String, Object> wherepp = new HashMap<String, Object>();
                     wherepp.put("player", player.getName());
@@ -232,8 +238,8 @@ public class TARDISSeedBlockProcessor {
                 qf.insertLocations(setlocs);
                 // turn the block stack into a TARDIS
                 // police box needs to use chameleon id/data
-                plugin.builderP.buildPreset(lastInsertId, l, TARDISConstants.COMPASS.valueOf(d), false, player, false, false);
-                plugin.builderI.buildInner(schm, chunkworld, lastInsertId, player, middle_id, middle_data, floor_id, floor_data);
+                plugin.builderP.buildPreset(lastInsertId, l, COMPASS.valueOf(d), false, player, false, false, isSub(l));
+                plugin.builderI.buildInner(schm, chunkworld, lastInsertId, player, middle_id, middle_data, floor_id, floor_data, tips);
                 // set achievement completed
                 if (player.hasPermission("tardis.book")) {
                     HashMap<String, Object> seta = new HashMap<String, Object>();
@@ -242,8 +248,8 @@ public class TARDISSeedBlockProcessor {
                     wherea.put("player", player.getName());
                     wherea.put("name", "tardis");
                     qf.doUpdate("achievements", seta, wherea);
-                    TARDISAchievementNotify tan = new TARDISAchievementNotify(plugin);
-                    tan.sendAchievement(player, plugin.getAchivementConfig().getString("tardis.message"), Material.valueOf(plugin.getAchivementConfig().getString("tardis.icon")));
+                    player.sendMessage(ChatColor.YELLOW + "Achievement Get!");
+                    player.sendMessage(ChatColor.WHITE + plugin.getAchivementConfig().getString("tardis.message"));
                 }
                 if (max_count > 0) {
                     player.sendMessage(plugin.pluginName + "You have used up " + (player_count + 1) + " of " + max_count + " TARDIS builds!");
@@ -267,6 +273,8 @@ public class TARDISSeedBlockProcessor {
                 ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
                 if (rsc.resultSet()) {
                     player.sendMessage(plugin.pluginName + "You already have a TARDIS, you left it in " + rsc.getWorld().getName() + " at x:" + rsc.getX() + " y:" + rsc.getY() + " z:" + rsc.getZ());
+                } else {
+                    player.sendMessage(plugin.pluginName + "You already have a TARDIS, but we couldn't find it! Try calling it to you.");
                 }
                 return false;
             }
@@ -284,5 +292,15 @@ public class TARDISSeedBlockProcessor {
             }
         }
         return "ORANGE_WOOL";
+    }
+
+    private boolean isSub(Location l) {
+        switch (l.getBlock().getRelative(BlockFace.UP).getType()) {
+            case STATIONARY_WATER:
+            case WATER:
+                return true;
+            default:
+                return false;
+        }
     }
 }

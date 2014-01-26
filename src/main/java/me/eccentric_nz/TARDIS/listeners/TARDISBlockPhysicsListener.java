@@ -24,6 +24,8 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockPhysicsEvent;
+import org.bukkit.material.MaterialData;
+import org.bukkit.material.SimpleAttachableMaterialData;
 
 /**
  *
@@ -38,60 +40,55 @@ public class TARDISBlockPhysicsListener implements Listener {
     }
 
     // prevent hatches from breaking
-    @EventHandler(priority = EventPriority.LOW)
+    @EventHandler(priority = EventPriority.HIGH)
     public void onBlockPhysics(BlockPhysicsEvent event) {
         if (event.isCancelled()) {
             return;
         }
-        if (plugin.tardisMaterialising.size() > 0 || plugin.tardisDematerialising.size() > 0) {
+        if (plugin.inVortex.size() > 0) {
             Block block = event.getBlock();
-            if (block.getType() == Material.TRAP_DOOR) {
-                Block blockBehind = getBlockBehindHatch(block);
-                if (blockBehind != null) {
-                    if (blockBehind.getType().equals(Material.GLASS) || blockBehind.getType().equals(Material.ICE) || blockBehind.getType().equals(Material.STAINED_GLASS)) {
-                        event.setCancelled(true);
+            if (block != null) {
+                MaterialData md = block.getState().getData();
+                if (md instanceof SimpleAttachableMaterialData) {
+                    Block blockBehind = getBlockBehindAttachable(block, ((SimpleAttachableMaterialData) md).getFacing());
+                    if (blockBehind != null) {
+                        if (blockBehind.getType().equals(Material.GLASS) || blockBehind.getType().equals(Material.ICE) || blockBehind.getType().equals(Material.STAINED_GLASS)) {
+                            event.setCancelled(true);
+                        }
                     }
                 }
-            }
-            if (block.getType() == Material.VINE) {
-                event.setCancelled(true);
-            }
-            if (block.getType() == Material.IRON_DOOR_BLOCK || block.getType() == Material.WOODEN_DOOR) {
-                Block blockBelow = getBlockBelow(block);
-                if (blockBelow != null) {
-                    if (blockBelow.getType().equals(Material.GLASS) || blockBelow.getType().equals(Material.ICE) || blockBelow.getType().equals(Material.WOODEN_DOOR) || blockBelow.getType().equals(Material.IRON_DOOR_BLOCK) || blockBelow.getType().equals(Material.STAINED_GLASS) || blockBelow.getType().equals(Material.AIR)) {
-                        event.setCancelled(true);
+                if (block.getType().equals(Material.VINE)) {
+                    event.setCancelled(true);
+                }
+                if (block.getType().equals(Material.IRON_DOOR_BLOCK) || block.getType().equals(Material.WOODEN_DOOR)) {
+                    Block blockBelow = getBlockBelow(block);
+                    if (blockBelow != null) {
+                        if (blockBelow.getType().equals(Material.GLASS) || blockBelow.getType().equals(Material.ICE) || blockBelow.getType().equals(Material.WOODEN_DOOR) || blockBelow.getType().equals(Material.IRON_DOOR_BLOCK) || blockBelow.getType().equals(Material.STAINED_GLASS) || blockBelow.getType().equals(Material.AIR)) {
+                            event.setCancelled(true);
+                        }
                     }
                 }
             }
         }
     }
 
-    Block getBlockBehindHatch(Block block) {
-        switch (block.getData()) {
-            case 12:
-            case 8:
-            case 4:
-            case 0:
-                return block.getRelative(BlockFace.SOUTH);
-            case 13:
-            case 9:
-            case 5:
-            case 1:
-                return block.getRelative(BlockFace.NORTH);
-            case 14:
-            case 10:
-            case 6:
-            case 2:
-                return block.getRelative(BlockFace.EAST);
-            case 15:
-            case 11:
-            case 7:
-            case 3:
-                return block.getRelative(BlockFace.WEST);
+    Block getBlockBehindAttachable(Block block, BlockFace face) {
+        Block ret;
+        switch (face) {
+            case NORTH:
+                ret = block.getRelative(BlockFace.SOUTH);
+                break;
+            case WEST:
+                ret = block.getRelative(BlockFace.EAST);
+                break;
+            case SOUTH:
+                ret = block.getRelative(BlockFace.NORTH);
+                break;
             default:
-                return null;
+                ret = block.getRelative(BlockFace.WEST);
+                break;
         }
+        return ret;
     }
 
     Block getBlockBelow(Block block) {

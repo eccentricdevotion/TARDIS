@@ -47,7 +47,7 @@ public class TARDISTeleportListener implements Listener {
     }
 
     @EventHandler(priority = EventPriority.MONITOR)
-    public void onInteract(PlayerTeleportEvent event) {
+    public void onTeleport(PlayerTeleportEvent event) {
         TeleportCause cause = event.getCause();
         if (causes.contains(cause)) {
             String world_from = event.getFrom().getWorld().getName();

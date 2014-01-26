@@ -16,21 +16,28 @@
  */
 package me.eccentric_nz.TARDIS.listeners;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import me.eccentric_nz.TARDIS.ARS.TARDISARSInventory;
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.TARDISConstants;
+import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
+import me.eccentric_nz.TARDIS.advanced.TARDISSerializeInventory;
+import me.eccentric_nz.TARDIS.builders.TARDISEmergencyRelocation;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetBackLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetControls;
 import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
+import me.eccentric_nz.TARDIS.database.ResultSetDiskStorage;
 import me.eccentric_nz.TARDIS.database.ResultSetLamps;
 import me.eccentric_nz.TARDIS.database.ResultSetRepeaters;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
+import me.eccentric_nz.TARDIS.enumeration.COMPASS;
+import me.eccentric_nz.TARDIS.enumeration.MESSAGE;
+import me.eccentric_nz.TARDIS.enumeration.STORAGE;
 import me.eccentric_nz.TARDIS.info.TARDISInfoMenu;
 import me.eccentric_nz.TARDIS.travel.TARDISTemporalLocatorInventory;
 import me.eccentric_nz.TARDIS.travel.TARDISTerminalInventory;
@@ -60,7 +67,7 @@ public class TARDISButtonListener implements Listener {
 
     private final TARDIS plugin;
     private final List<Material> validBlocks = new ArrayList<Material>();
-    private final List<Integer> onlythese = Arrays.asList(new Integer[]{1, 8, 9, 10, 11, 12, 13});
+    private final List<Integer> onlythese = Arrays.asList(new Integer[]{1, 8, 9, 10, 11, 12, 13, 14});
     public ItemStack[] items;
     private final ItemStack[] tars;
     private final ItemStack[] clocks;
@@ -73,6 +80,8 @@ public class TARDISButtonListener implements Listener {
         validBlocks.add(Material.STONE_BUTTON);
         validBlocks.add(Material.LEVER);
         validBlocks.add(Material.WALL_SIGN);
+        validBlocks.add(Material.NOTE_BLOCK);
+        validBlocks.add(Material.JUKEBOX);
         this.items = new TARDISTerminalInventory().getTerminal();
         this.tars = new TARDISARSInventory().getTerminal();
         this.clocks = new TARDISTemporalLocatorInventory().getTerminal();
@@ -122,31 +131,34 @@ public class TARDISButtonListener implements Listener {
                             boolean set_dest = false;
                             String comps = rs.getCompanions();
                             String owner = rs.getOwner();
+                            TARDISCircuitChecker tcc = null;
+                            if (plugin.getConfig().getString("preferences.difficulty").equals("hard")) {
+                                tcc = new TARDISCircuitChecker(plugin, id);
+                                tcc.getCircuits();
+                            }
                             QueryFactory qf = new QueryFactory(plugin);
                             HashMap<String, Object> set = new HashMap<String, Object>();
                             switch (type) {
                                 case 1: // random location button
                                     if (!hb) {
-                                        player.sendMessage(plugin.pluginName + ChatColor.RED + "You cannot set a destination while the TARDIS is travelling!");
+                                        player.sendMessage(plugin.pluginName + ChatColor.RED + MESSAGE.NOT_WHILE_TRAVELLING.getText());
                                         return;
                                     }
                                     if (level < plugin.getArtronConfig().getInt("random")) {
-                                        player.sendMessage(plugin.pluginName + ChatColor.RED + "The TARDIS does not have enough Artron Energy to make this trip!");
+                                        player.sendMessage(plugin.pluginName + ChatColor.RED + MESSAGE.NOT_ENOUGH_ENERGY.getText());
                                         return;
-                                    }
-                                    if (plugin.trackSubmarine.contains(Integer.valueOf(id))) {
-                                        plugin.trackSubmarine.remove(Integer.valueOf(id));
                                     }
                                     HashMap<String, Object> wherecl = new HashMap<String, Object>();
                                     wherecl.put("tardis_id", rs.getTardis_id());
                                     ResultSetCurrentLocation rscl = new ResultSetCurrentLocation(plugin, wherecl);
                                     if (!rscl.resultSet()) {
-                                        player.sendMessage(plugin.pluginName + ChatColor.RED + "Could not get current TARDIS location!");
+                                        // emergency TARDIS relocation
+                                        new TARDISEmergencyRelocation(plugin).relocate(id, player);
                                         return;
                                     }
-                                    TARDISConstants.COMPASS dir = rscl.getDirection();
+                                    COMPASS dir = rscl.getDirection();
                                     Location cl = new Location(rscl.getWorld(), rscl.getX(), rscl.getY(), rscl.getZ());
-                                    if (player.hasPermission("tardis.exile") && plugin.getConfig().getBoolean("exile")) {
+                                    if (player.hasPermission("tardis.exile") && plugin.getConfig().getBoolean("travel.exile")) {
                                         // get the exile area
                                         String permArea = plugin.ta.getExileArea(player);
                                         player.sendMessage(plugin.pluginName + ChatColor.RED + " Notice:" + ChatColor.RESET + " Your travel has been restricted to the [" + permArea + "] area!");
@@ -177,7 +189,7 @@ public class TARDISButtonListener implements Listener {
                                                 environment = "NORMAL";
                                             }
                                             if (repeaters[0] >= 8 && repeaters[0] <= 11) { // third position
-                                                if (plugin.getConfig().getBoolean("nether") && player.hasPermission("tardis.nether")) {
+                                                if (plugin.getConfig().getBoolean("travel.nether") && player.hasPermission("tardis.nether")) {
                                                     // check they have enough artron energy to travel to the NETHER
                                                     if (level < nether_min) {
                                                         environment = "NORMAL";
@@ -191,7 +203,7 @@ public class TARDISButtonListener implements Listener {
                                                 }
                                             }
                                             if (repeaters[0] >= 12 && repeaters[0] <= 15) { // last position
-                                                if (plugin.getConfig().getBoolean("the_end") && player.hasPermission("tardis.end")) {
+                                                if (plugin.getConfig().getBoolean("travel.the_end") && player.hasPermission("tardis.end")) {
                                                     // check they have enough artron energy to travel to THE_END
                                                     if (level < the_end_min) {
                                                         environment = "NORMAL";
@@ -215,6 +227,7 @@ public class TARDISButtonListener implements Listener {
                                                 set.put("direction", dir.toString());
                                                 set.put("submarine", (plugin.trackSubmarine.contains(Integer.valueOf(id))) ? 1 : 0);
                                                 set_dest = true;
+                                                plugin.trackSubmarine.remove(Integer.valueOf(id));
                                                 String dchat = rand.getWorld().getName() + " at x: " + rand.getBlockX() + " y: " + rand.getBlockY() + " z: " + rand.getBlockZ();
                                                 boolean isTL = true;
                                                 if (comps != null && !comps.isEmpty()) {
@@ -251,11 +264,11 @@ public class TARDISButtonListener implements Listener {
                                     break;
                                 case 8:
                                     if (!hb) {
-                                        player.sendMessage(plugin.pluginName + ChatColor.RED + "You cannot set a destination while the TARDIS is travelling!");
+                                        player.sendMessage(plugin.pluginName + ChatColor.RED + MESSAGE.NOT_WHILE_TRAVELLING.getText());
                                         return;
                                     }
                                     if (level < plugin.getArtronConfig().getInt("random")) {
-                                        player.sendMessage(plugin.pluginName + ChatColor.RED + "The TARDIS does not have enough Artron Energy to make this trip!");
+                                        player.sendMessage(plugin.pluginName + ChatColor.RED + MESSAGE.NOT_ENOUGH_ENERGY.getText());
                                         return;
                                     }
                                     // fast return button
@@ -280,15 +293,21 @@ public class TARDISButtonListener implements Listener {
                                                 player.sendMessage(plugin.pluginName + "You are already at the previous location. You need to travel somewhere else first!");
                                             }
                                         }
+                                    } else {
+                                        player.sendMessage(plugin.pluginName + "Could not get the previous location!");
                                     }
                                     break;
                                 case 9:
                                     if (!hb) {
-                                        player.sendMessage(plugin.pluginName + ChatColor.RED + "You cannot set a destination while the TARDIS is travelling!");
+                                        player.sendMessage(plugin.pluginName + ChatColor.RED + MESSAGE.NOT_WHILE_TRAVELLING.getText());
                                         return;
                                     }
                                     if (level < plugin.getArtronConfig().getInt("random")) {
-                                        player.sendMessage(plugin.pluginName + ChatColor.RED + "The TARDIS does not have enough Artron Energy to make this trip!");
+                                        player.sendMessage(plugin.pluginName + ChatColor.RED + MESSAGE.NOT_ENOUGH_ENERGY.getText());
+                                        return;
+                                    }
+                                    if (tcc != null && !tcc.hasInput()) {
+                                        player.sendMessage(plugin.pluginName + "The Input Circuit is missing from the console!");
                                         return;
                                     }
                                     // terminal sign
@@ -302,13 +321,17 @@ public class TARDISButtonListener implements Listener {
                                         return;
                                     }
                                     // check they have permission to grow rooms
-                                    if (!player.hasPermission("tardis.room")) {
+                                    if (!player.hasPermission("tardis.ars")) {
                                         player.sendMessage(plugin.pluginName + "You do not have permission to grow rooms!");
                                         return;
                                     }
                                     // check they're in a compatible world
                                     if (!plugin.utils.canGrowRooms(rs.getChunk())) {
                                         player.sendMessage(plugin.pluginName + "You cannot grow rooms unless your TARDIS was created in its own world!");
+                                        return;
+                                    }
+                                    if (tcc != null && !tcc.hasARS()) {
+                                        player.sendMessage(plugin.pluginName + "The ARS Circuit is missing from the console!");
                                         return;
                                     }
                                     // ARS sign
@@ -318,6 +341,10 @@ public class TARDISButtonListener implements Listener {
                                     break;
                                 case 11:
                                     // Temporal Locator sign
+                                    if (tcc != null && !tcc.hasTemporal()) {
+                                        player.sendMessage(plugin.pluginName + "The Temporal Circuit is missing from the console!");
+                                        return;
+                                    }
                                     if (player.hasPermission("tardis.temporal")) {
                                         Inventory tmpl = plugin.getServer().createInventory(player, 27, "§4Temporal Locator");
                                         tmpl.setContents(clocks);
@@ -347,16 +374,57 @@ public class TARDISButtonListener implements Listener {
                                     }
                                     break;
                                 case 13:
+                                    // TIS
                                     plugin.trackInfoMenu.put(player.getName(), TARDISInfoMenu.TIS);
                                     player.sendMessage(ChatColor.GOLD + "-----------TARDIS Information System-----------");
                                     player.sendMessage(ChatColor.GOLD + "---*Please type a white letter to proceed*---");
                                     player.sendMessage("§6> TARDIS §fM§6anual");
                                     player.sendMessage("§6> §fI§6tems");
                                     player.sendMessage("§6> §fC§6omponents");
+                                    player.sendMessage("§6> §fD§6isks");
                                     player.sendMessage("§6> C§fo§6mmands");
                                     player.sendMessage("§6> §fT§6ARDIS Types");
                                     player.sendMessage("§6> §fR§6ooms");
                                     player.sendMessage("§6> §fE§6xit");
+                                    break;
+                                case 14:
+                                    // Disk Storage
+                                    String name = player.getName();
+                                    // only the time lord of this tardis
+                                    if (!owner.equals(name)) {
+                                        player.sendMessage(plugin.pluginName + MESSAGE.NOT_OWNER.getText());
+                                        return;
+                                    }
+                                    // do they have a storage record?
+                                    HashMap<String, Object> wherestore = new HashMap<String, Object>();
+                                    wherestore.put("owner", name);
+                                    ResultSetDiskStorage rsstore = new ResultSetDiskStorage(plugin, wherestore);
+                                    ItemStack[] stack = new ItemStack[54];
+                                    if (rsstore.resultSet()) {
+                                        try {
+                                            if (!rsstore.getSavesOne().isEmpty()) {
+                                                stack = TARDISSerializeInventory.itemStacksFromString(rsstore.getSavesOne());
+                                            } else {
+                                                stack = TARDISSerializeInventory.itemStacksFromString(STORAGE.SAVE_1.getEmpty());
+                                            }
+                                        } catch (IOException ex) {
+                                            plugin.debug("Could not get Storage Inventory: " + ex.getMessage());
+                                        }
+                                    } else {
+                                        try {
+                                            stack = TARDISSerializeInventory.itemStacksFromString(STORAGE.SAVE_1.getEmpty());
+                                        } catch (IOException ex) {
+                                            plugin.debug("Could not get default Storage Inventory: " + ex.getMessage());
+                                        }
+                                        // make a record
+                                        HashMap<String, Object> setstore = new HashMap<String, Object>();
+                                        setstore.put("owner", player.getName());
+                                        setstore.put("tardis_id", id);
+                                        qf.doInsert("storage", setstore);
+                                    }
+                                    Inventory inv = plugin.getServer().createInventory(player, 54, STORAGE.SAVE_1.getTitle());
+                                    inv.setContents(stack);
+                                    player.openInventory(inv);
                                     break;
                                 default:
                                     break;

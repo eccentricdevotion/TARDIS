@@ -18,6 +18,7 @@ package me.eccentric_nz.TARDIS.travel;
 
 import java.util.Arrays;
 import me.eccentric_nz.TARDIS.TARDIS;
+import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
@@ -44,93 +45,93 @@ public class TARDISTerminalInventory {
      */
     private ItemStack[] getItemStack() {
         // steps
-        int step = TARDIS.plugin.getConfig().getInt("terminal_step");
+        int step = TARDIS.plugin.getConfig().getInt("travel.terminal_step");
         // 10
-        ItemStack ten = new ItemStack(35, 1, (byte) 0);
+        ItemStack ten = new ItemStack(Material.WOOL, 1, (byte) 0);
         ItemMeta im10 = ten.getItemMeta();
         im10.setDisplayName("Step: " + (10 * step));
         ten.setItemMeta(im10);
         // 25
-        ItemStack twentyfive = new ItemStack(35, 1, (byte) 8);
+        ItemStack twentyfive = new ItemStack(Material.WOOL, 1, (byte) 8);
         ItemMeta im25 = twentyfive.getItemMeta();
         im25.setDisplayName("Step: " + (25 * step));
         twentyfive.setItemMeta(im25);
         // 50
-        ItemStack fifty = new ItemStack(35, 1, (byte) 7);
+        ItemStack fifty = new ItemStack(Material.WOOL, 1, (byte) 7);
         ItemMeta im50 = fifty.getItemMeta();
         im50.setDisplayName("Step: " + (50 * step));
         fifty.setItemMeta(im50);
         // 100
-        ItemStack onehundred = new ItemStack(35, 1, (byte) 15);
+        ItemStack onehundred = new ItemStack(Material.WOOL, 1, (byte) 15);
         ItemMeta im100 = onehundred.getItemMeta();
         im100.setDisplayName("Step: " + (100 * step));
         onehundred.setItemMeta(im100);
         // -ve
-        ItemStack neg = new ItemStack(35, 1, (byte) 14);
+        ItemStack neg = new ItemStack(Material.WOOL, 1, (byte) 14);
         ItemMeta nim = neg.getItemMeta();
         nim.setDisplayName("-ve");
         neg.setItemMeta(nim);
         // +ve
-        ItemStack pos = new ItemStack(35, 1, (byte) 5);
+        ItemStack pos = new ItemStack(Material.WOOL, 1, (byte) 5);
         ItemMeta pim = pos.getItemMeta();
         pim.setDisplayName("+ve");
         pos.setItemMeta(pim);
         // x
-        ItemStack x = new ItemStack(35, 1, (byte) 3);
+        ItemStack x = new ItemStack(Material.WOOL, 1, (byte) 3);
         ItemMeta xim = x.getItemMeta();
         xim.setDisplayName("X");
         xim.setLore(Arrays.asList(new String[]{"0"}));
         x.setItemMeta(xim);
         // z
-        ItemStack z = new ItemStack(35, 1, (byte) 4);
+        ItemStack z = new ItemStack(Material.WOOL, 1, (byte) 4);
         ItemMeta zim = z.getItemMeta();
         zim.setDisplayName("Z");
         zim.setLore(Arrays.asList(new String[]{"0"}));
         z.setItemMeta(zim);
         // multiplier
-        ItemStack m = new ItemStack(35, 1, (byte) 10);
+        ItemStack m = new ItemStack(Material.WOOL, 1, (byte) 10);
         ItemMeta mim = m.getItemMeta();
         mim.setDisplayName("Multiplier");
         mim.setLore(Arrays.asList(new String[]{"x1"}));
         m.setItemMeta(mim);
         // environments
         // current
-        ItemStack u = new ItemStack(18, 1, (byte) 0);
+        ItemStack u = new ItemStack(Material.LEAVES, 1, (byte) 0);
         ItemMeta uim = u.getItemMeta();
         uim.setDisplayName("Current world");
         u.setItemMeta(uim);
         // normal
-        ItemStack w = new ItemStack(3, 1);
+        ItemStack w = new ItemStack(Material.DIRT, 1);
         ItemMeta wim = w.getItemMeta();
         wim.setDisplayName("Normal world");
         w.setItemMeta(wim);
         // nether
-        ItemStack r = new ItemStack(87, 1);
+        ItemStack r = new ItemStack(Material.NETHERRACK, 1);
         ItemMeta rim = r.getItemMeta();
         rim.setDisplayName("Nether");
         r.setItemMeta(rim);
         // the end
-        ItemStack e = new ItemStack(121, 1);
+        ItemStack e = new ItemStack(Material.ENDER_STONE, 1);
         ItemMeta eim = e.getItemMeta();
         eim.setDisplayName("The End");
         e.setItemMeta(eim);
         // submarine
-        ItemStack sub = new ItemStack(326, 1);
+        ItemStack sub = new ItemStack(Material.WATER_BUCKET, 1);
         ItemMeta subim = sub.getItemMeta();
         subim.setDisplayName("Submarine");
         sub.setItemMeta(subim);
         // test
-        ItemStack t = new ItemStack(33, 1);
+        ItemStack t = new ItemStack(Material.PISTON_BASE, 1);
         ItemMeta tim = t.getItemMeta();
         tim.setDisplayName("Check destination");
         t.setItemMeta(tim);
         // set
-        ItemStack s = new ItemStack(47, 1);
+        ItemStack s = new ItemStack(Material.BOOKSHELF, 1);
         ItemMeta sim = s.getItemMeta();
         sim.setDisplayName("Set destination");
         s.setItemMeta(sim);
         // cancel
-        ItemStack c = new ItemStack(46, 1);
+        ItemStack c = new ItemStack(Material.TNT, 1);
         ItemMeta cim = c.getItemMeta();
         cim.setDisplayName("Cancel");
         c.setItemMeta(cim);

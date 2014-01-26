@@ -22,12 +22,16 @@ import java.util.List;
 import java.util.Map;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
+import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
 import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetNextLocation;
+import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
+import me.eccentric_nz.TARDIS.enumeration.COMPASS;
+import me.eccentric_nz.TARDIS.enumeration.MESSAGE;
+import me.eccentric_nz.TARDIS.rooms.TARDISExteriorRenderer;
 import org.bukkit.Location;
 import org.bukkit.Material;
-import org.bukkit.World;
 import org.bukkit.block.Biome;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Entity;
@@ -38,7 +42,6 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.scheduler.BukkitScheduler;
-//import org.getspout.spoutapi.SpoutManager;
 
 /**
  * The Scanner consists of a collection of thousands of instruments designed to
@@ -50,53 +53,11 @@ import org.bukkit.scheduler.BukkitScheduler;
  */
 public class TARDISScannerListener implements Listener {
 
-    public static List<Entity> getNearbyEntities(Location l, int radius) {
-        int chunkRadius = radius < 16 ? 1 : (radius - (radius % 16)) / 16;
-        List<Entity> radiusEntities = new ArrayList<Entity>();
-        for (int chX = 0 - chunkRadius; chX <= chunkRadius; chX++) {
-            for (int chZ = 0 - chunkRadius; chZ <= chunkRadius; chZ++) {
-                int x = (int) l.getX(), y = (int) l.getY(), z = (int) l.getZ();
-                for (Entity e : new Location(l.getWorld(), x + (chX * 16), y, z + (chZ * 16)).getChunk().getEntities()) {
-                    if (e.getLocation().distance(l) <= radius && e.getLocation().getBlock() != l.getBlock()) {
-                        radiusEntities.add(e);
-                    }
-                }
-            }
-        }
-        return radiusEntities;
-    }
     private final TARDIS plugin;
     List<Material> validBlocks = new ArrayList<Material>();
-    List<EntityType> entities = new ArrayList<EntityType>();
 
     public TARDISScannerListener(TARDIS plugin) {
         this.plugin = plugin;
-        entities.add(EntityType.BAT);
-        entities.add(EntityType.BLAZE);
-        entities.add(EntityType.CAVE_SPIDER);
-        entities.add(EntityType.CHICKEN);
-        entities.add(EntityType.COW);
-        entities.add(EntityType.CREEPER);
-        entities.add(EntityType.ENDERMAN);
-        entities.add(EntityType.GHAST);
-        entities.add(EntityType.HORSE);
-        entities.add(EntityType.IRON_GOLEM);
-        entities.add(EntityType.MAGMA_CUBE);
-        entities.add(EntityType.MUSHROOM_COW);
-        entities.add(EntityType.OCELOT);
-        entities.add(EntityType.PIG);
-        entities.add(EntityType.PIG_ZOMBIE);
-        entities.add(EntityType.PLAYER);
-        entities.add(EntityType.SHEEP);
-        entities.add(EntityType.SILVERFISH);
-        entities.add(EntityType.SKELETON);
-        entities.add(EntityType.SLIME);
-        entities.add(EntityType.SPIDER);
-        entities.add(EntityType.SQUID);
-        entities.add(EntityType.VILLAGER);
-        entities.add(EntityType.WITCH);
-        entities.add(EntityType.WOLF);
-        entities.add(EntityType.ZOMBIE);
         validBlocks.add(Material.LEVER);
         validBlocks.add(Material.REDSTONE_COMPARATOR_OFF);
         validBlocks.add(Material.REDSTONE_COMPARATOR_ON);
@@ -120,7 +81,6 @@ public class TARDISScannerListener implements Listener {
             if (validBlocks.contains(blockType)) {
                 // get clicked block location
                 Location b = block.getLocation();
-                World w = b.getWorld();
                 String bw = b.getWorld().getName();
                 int bx = b.getBlockX();
                 int by = b.getBlockY();
@@ -131,11 +91,21 @@ public class TARDISScannerListener implements Listener {
                 where.put("scanner", scanner_loc);
                 ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
                 if (rs.resultSet()) {
-                    int id = rs.getTardis_id();
+                    final int id = rs.getTardis_id();
+                    TARDISCircuitChecker tcc = null;
+                    if (plugin.getConfig().getString("preferences.difficulty").equals("hard")) {
+                        tcc = new TARDISCircuitChecker(plugin, id);
+                        tcc.getCircuits();
+                    }
+                    if (tcc != null && !tcc.hasScanner()) {
+                        player.sendMessage(plugin.pluginName + "The Scanner Circuit is missing from the console!");
+                        return;
+                    }
+                    final String renderer = rs.getRenderer();
                     plugin.utils.playTARDISSound(player.getLocation(), player, "tardis_scanner");
                     final Location scan_loc;
                     String whereisit;
-                    final TARDISConstants.COMPASS tardisDirection;
+                    final COMPASS tardisDirection;
                     HashMap<String, Object> wherenl = new HashMap<String, Object>();
                     wherenl.put("tardis_id", id);
                     if (plugin.tardisHasDestination.containsKey(Integer.valueOf(id))) {
@@ -150,7 +120,7 @@ public class TARDISScannerListener implements Listener {
                     } else {
                         ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherenl);
                         if (!rsc.resultSet()) {
-                            player.sendMessage(plugin.pluginName + "Could not get TARDIS's current destination!");
+                            player.sendMessage(plugin.pluginName + MESSAGE.NO_CURRENT.getText());
                             return;
                         }
                         scan_loc = new Location(rsc.getWorld(), rsc.getX(), rsc.getY(), rsc.getZ());
@@ -162,7 +132,7 @@ public class TARDISScannerListener implements Listener {
                     final List<String> playernames = new ArrayList<String>();
                     for (Entity k : getNearbyEntities(scan_loc, 16)) {
                         EntityType et = k.getType();
-                        if (entities.contains(et)) {
+                        if (TARDISConstants.ENTITY_TYPES.contains(et)) {
                             Integer entity_count = (scannedentities.containsKey(et)) ? scannedentities.get(et) : 0;
                             boolean visible = true;
                             if (et.equals(EntityType.PLAYER)) {
@@ -179,7 +149,7 @@ public class TARDISScannerListener implements Listener {
                         }
                     }
                     final long time = scan_loc.getWorld().getTime();
-                    final String daynight = getTime(time);
+                    final String daynight = plugin.utils.getTime(time);
                     // message the player
                     player.sendMessage(plugin.pluginName + "Scanner results for the TARDIS's " + whereisit);
                     player.sendMessage("World: " + scan_loc.getWorld().getName());
@@ -207,9 +177,9 @@ public class TARDISScannerListener implements Listener {
                     }, 60L);
                     // get weather
                     final String weather;
-                    if (biome.equals(Biome.DESERT) || biome.equals(Biome.DESERT_HILLS)) {
+                    if (biome.equals(Biome.DESERT) || biome.equals(Biome.DESERT_HILLS) || biome.equals(Biome.SAVANNA) || biome.equals(Biome.SAVANNA_MOUNTAINS) || biome.equals(Biome.SAVANNA_PLATEAU) || biome.equals(Biome.SAVANNA_PLATEAU_MOUNTAINS) || biome.equals(Biome.MESA) || biome.equals(Biome.MESA_BRYCE) || biome.equals(Biome.MESA_PLATEAU) || biome.equals(Biome.MESA_PLATEAU_MOUNTAINS)) {
                         weather = "dry as a bone";
-                    } else if (biome.equals(Biome.TAIGA) || biome.equals(Biome.TAIGA_HILLS) || biome.equals(Biome.ICE_PLAINS)) {
+                    } else if (biome.equals(Biome.ICE_PLAINS) || biome.equals(Biome.ICE_PLAINS_SPIKES) || biome.equals(Biome.FROZEN_OCEAN) || biome.equals(Biome.FROZEN_RIVER) || biome.equals(Biome.COLD_BEACH) || biome.equals(Biome.COLD_TAIGA) || biome.equals(Biome.COLD_TAIGA_HILLS) || biome.equals(Biome.COLD_TAIGA_MOUNTAINS)) {
                         weather = (scan_loc.getWorld().hasStorm()) ? "snowing" : "clear, but cold";
                     } else {
                         weather = (scan_loc.getWorld().hasStorm()) ? "raining" : "clear";
@@ -254,52 +224,40 @@ public class TARDISScannerListener implements Listener {
                             }
                         }
                     }, 140L);
+                    boolean extrend = true;
+                    HashMap<String, Object> wherer = new HashMap<String, Object>();
+                    wherer.put("player", player.getName());
+                    ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, wherer);
+                    if (rsp.resultSet()) {
+                        extrend = rsp.isRendererOn();
+                    }
+                    if (!renderer.isEmpty() && extrend) {
+                        bsched.scheduleSyncDelayedTask(plugin, new Runnable() {
+                            @Override
+                            public void run() {
+                                TARDISExteriorRenderer ter = new TARDISExteriorRenderer(plugin);
+                                ter.render(renderer, scan_loc, id, player, tardisDirection, time, biome);
+                            }
+                        }, 160L);
+                    }
                 }
             }
         }
     }
 
-    private String getTime(long t) {
-        if (t > 0 && t <= 2000) {
-            return "early morning";
+    public static List<Entity> getNearbyEntities(Location l, int radius) {
+        int chunkRadius = radius < 16 ? 1 : (radius - (radius % 16)) / 16;
+        List<Entity> radiusEntities = new ArrayList<Entity>();
+        for (int chX = 0 - chunkRadius; chX <= chunkRadius; chX++) {
+            for (int chZ = 0 - chunkRadius; chZ <= chunkRadius; chZ++) {
+                int x = (int) l.getX(), y = (int) l.getY(), z = (int) l.getZ();
+                for (Entity e : new Location(l.getWorld(), x + (chX * 16), y, z + (chZ * 16)).getChunk().getEntities()) {
+                    if (e.getLocation().distance(l) <= radius && e.getLocation().getBlock() != l.getBlock()) {
+                        radiusEntities.add(e);
+                    }
+                }
+            }
         }
-        if (t > 2000 && t <= 3500) {
-            return "mid morning";
-        }
-        if (t > 3500 && t <= 5500) {
-            return "late morning";
-        }
-        if (t > 5500 && t <= 6500) {
-            return "around noon";
-        }
-        if (t > 6500 && t <= 8000) {
-            return "afternoon";
-        }
-        if (t > 8000 && t <= 10000) {
-            return "mid afternoon";
-        }
-        if (t > 10000 && t <= 12000) {
-            return "late afternoon";
-        }
-        if (t > 12000 && t <= 14000) {
-            return "twilight";
-        }
-        if (t > 14000 && t <= 16000) {
-            return "evening";
-        }
-        if (t > 16000 && t <= 17500) {
-            return "late evening";
-        }
-        if (t > 17500 && t <= 18500) {
-            return "around midnight";
-        }
-        if (t > 18500 && t <= 20000) {
-            return "the small hours";
-        }
-        if (t > 20000 && t <= 22000) {
-            return "the wee hours";
-        } else {
-            return "pre-dawn";
-        }
+        return radiusEntities;
     }
 }

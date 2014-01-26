@@ -16,7 +16,7 @@ xcuserdata
 # svn & cvs
 .svn
 CVS
-/target
+/target/
 !/target/TARDIS.jar
 /sounds/
 /lib/

@@ -16,9 +16,7 @@
  */
 package me.eccentric_nz.TARDIS.ARS;
 
-import com.google.common.collect.Maps;
-import java.util.Map;
-import org.bukkit.util.Java15Compat;
+import java.util.HashMap;
 
 /**
  *
@@ -44,6 +42,7 @@ public enum TARDISARS {
     ANTIGRAVITY(24, "Anti-gravity Well", 1),
     TRENZALORE(45, "Trenzalore", 1),
     RAIL(49, "Rail Transfer Station", 1),
+    RENDERER(172, "Exterior Renderer", 1),
     GREENHOUSE(103, "Greenhouse", 1),
     HARMONY(109, "Eye of Harmony", 1),
     BAKER(121, "4th Doctor's Secondary Console", 1),
@@ -62,8 +61,8 @@ public enum TARDISARS {
     private final int id;
     private final String name;
     private final int offset;
-    private static TARDISARS[] byId = new TARDISARS[22];
-    private final static Map<String, TARDISARS> BY_NAME = Maps.newHashMap();
+    private final static HashMap<Integer, TARDISARS> BY_ID = new HashMap<Integer, TARDISARS>();
+    private final static HashMap<String, TARDISARS> BY_NAME = new HashMap<String, TARDISARS>();
 
     private TARDISARS(int id, String name, int offset) {
         this.id = id;
@@ -90,8 +89,8 @@ public enum TARDISARS {
      * @return ARS room if found, or null
      */
     public static TARDISARS getARS(final int id) {
-        if (byId.length > id && id >= 0) {
-            return byId[id];
+        if (BY_ID.containsKey(Integer.valueOf(id))) {
+            return BY_ID.get(id);
         } else {
             return SLOT;
         }
@@ -100,8 +99,8 @@ public enum TARDISARS {
     /**
      * Attempts to get the TARDISARS with the given name.
      *
-     * @param name Name of the material to get
-     * @return Material if found, or null
+     * @param name Name of the ARS to get
+     * @return ARS if found, or null
      */
     public static TARDISARS getARS(final String name) {
         return BY_NAME.get(name);
@@ -109,12 +108,7 @@ public enum TARDISARS {
 
     static {
         for (TARDISARS room : values()) {
-            if (byId.length > room.id) {
-                byId[room.id] = room;
-            } else {
-                byId = Java15Compat.Arrays_copyOfRange(byId, 0, room.id + 2);
-                byId[room.id] = room;
-            }
+            BY_ID.put(room.id, room);
             BY_NAME.put(room.getName(), room);
         }
     }

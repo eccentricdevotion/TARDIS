@@ -48,7 +48,7 @@ public class TARDISTagCommand {
             ArrayList<HashMap<String, String>> data = rs.getData();
             for (HashMap<String, String> map : data) {
                 String p = map.get("player");
-                long t = Long.parseLong(map.get("time"));
+                long t = plugin.utils.parseLong(map.get("time"));
                 player.sendMessage(p + ": " + ChatColor.GREEN + getHoursMinutesSeconds(t));
             }
         } else {

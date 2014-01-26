@@ -21,11 +21,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetLamps;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
+import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
@@ -44,13 +44,13 @@ public class TARDISMalfunction {
     private final TARDIS plugin;
     private final int id;
     private final Player p;
-    private final TARDISConstants.COMPASS dir;
+    private final COMPASS dir;
     private final Location handbrake_loc;
     private final String eps;
     private final String creeper;
     private final Random rand;
 
-    public TARDISMalfunction(TARDIS plugin, int id, Player p, TARDISConstants.COMPASS dir, Location handbrake_loc, String eps, String creeper) {
+    public TARDISMalfunction(TARDIS plugin, int id, Player p, COMPASS dir, Location handbrake_loc, String eps, String creeper) {
         this.plugin = plugin;
         this.id = id;
         this.p = p;
@@ -63,8 +63,8 @@ public class TARDISMalfunction {
 
     public boolean isMalfunction() {
         boolean mal = false;
-        if (plugin.getConfig().getInt("malfunction") > 0) {
-            int chance = 100 - plugin.getConfig().getInt("malfunction");
+        if (plugin.getConfig().getInt("preferences.malfunction") > 0) {
+            int chance = 100 - plugin.getConfig().getInt("preferences.malfunction");
             if (rand.nextInt(100) > chance) {
                 mal = true;
                 if (plugin.trackRescue.containsKey(Integer.valueOf(id))) {
@@ -83,8 +83,8 @@ public class TARDISMalfunction {
         ResultSetCurrentLocation rscl = new ResultSetCurrentLocation(plugin, wherecl);
         if (rscl.resultSet()) {
             Location cl = new Location(rscl.getWorld(), rscl.getX(), rscl.getY(), rscl.getZ());
-            int end = 100 - plugin.getConfig().getInt("malfunction_end");
-            int nether = end - plugin.getConfig().getInt("malfunction_nether");
+            int end = 100 - plugin.getConfig().getInt("preferences.malfunction_end");
+            int nether = end - plugin.getConfig().getInt("preferences.malfunction_nether");
             int r = rand.nextInt(100);
             TARDISTimeTravel tt = new TARDISTimeTravel(plugin);
             byte x = (byte) rand.nextInt(15);
@@ -121,12 +121,12 @@ public class TARDISMalfunction {
                 Location loc = plugin.utils.getLocationFromDB(map.get("location"), 0.0F, 0.0F);
                 lamps.add(loc.getBlock());
             }
-            if (plugin.pm.isPluginEnabled("Citizens") && plugin.getConfig().getBoolean("emergency_npc")) {
+            if (plugin.pm.isPluginEnabled("Citizens") && plugin.getConfig().getBoolean("allow.emergency_npc")) {
                 // get player prefs
                 HashMap<String, Object> wherep = new HashMap<String, Object>();
                 wherep.put("player", p.getName());
                 ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, wherep);
-                if (rsp.resultSet() && rsp.isEPS_on()) {
+                if (rsp.resultSet() && rsp.isEpsOn()) {
                     // schedule the NPC to appear
                     String message = "This is Emergency Programme One. Now listen, this is important. If this message is activated, then it can only mean one thing: we must be in danger, and I mean fatal. You're about to die any second with no chance of escape.";
                     HashMap<String, Object> wherev = new HashMap<String, Object>();

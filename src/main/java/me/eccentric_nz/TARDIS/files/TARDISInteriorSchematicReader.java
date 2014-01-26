@@ -25,7 +25,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.TARDISConstants;
+import me.eccentric_nz.TARDIS.enumeration.SCHEMATIC;
 import org.jnbt.ByteArrayTag;
 import org.jnbt.CompoundTag;
 import org.jnbt.NBTInputStream;
@@ -59,7 +59,7 @@ public class TARDISInteriorSchematicReader {
      * @param fileStr the path to the schematic file
      * @param s the schematic name
      */
-    public void readAndMakeInteriorCSV(String fileStr, TARDISConstants.SCHEMATIC s) {
+    public void readAndMakeInteriorCSV(String fileStr, SCHEMATIC s) {
         plugin.debug("Loading schematic: " + fileStr);
         FileInputStream fis = null;
         try {

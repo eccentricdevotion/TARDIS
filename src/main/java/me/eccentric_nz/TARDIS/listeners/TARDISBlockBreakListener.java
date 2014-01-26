@@ -16,7 +16,9 @@
  */
 package me.eccentric_nz.TARDIS.listeners;
 
+import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.enumeration.PRESET;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -37,9 +39,16 @@ import org.bukkit.event.block.BlockBreakEvent;
 public class TARDISBlockBreakListener implements Listener {
 
     private final TARDIS plugin;
+    private final HashMap<String, String> sign_lookup = new HashMap<String, String>();
 
     public TARDISBlockBreakListener(TARDIS plugin) {
         this.plugin = plugin;
+        int i = 0;
+        for (PRESET p : PRESET.values()) {
+            if (!p.getFirstLine().isEmpty() && !sign_lookup.containsKey(p.getFirstLine())) {
+                sign_lookup.put(ChatColor.WHITE + p.getFirstLine(), ChatColor.WHITE + p.getSecondLine());
+            }
+        }
     }
 
     /**
@@ -58,7 +67,8 @@ public class TARDISBlockBreakListener implements Listener {
             Sign sign = (Sign) block.getState();
             String line1 = sign.getLine(1);
             String line2 = sign.getLine(2);
-            if (line1.equals(ChatColor.WHITE + "POLICE") && line2.equals(ChatColor.WHITE + "BOX")) {
+//            if (line1.equals(ChatColor.WHITE + "POLICE") && line2.equals(ChatColor.WHITE + "BOX")) {
+            if (sign_lookup.containsKey(line1) && line2.equals(sign_lookup.get(line1))) {
                 event.setCancelled(true);
                 sign.update();
                 Player player = event.getPlayer();
@@ -66,7 +76,7 @@ public class TARDISBlockBreakListener implements Listener {
                     final String playerNameStr = player.getName();
                     // check it is their TARDIS
                     plugin.trackExterminate.put(playerNameStr, block);
-                    long timeout = plugin.getConfig().getLong("confirm_timeout");
+                    long timeout = plugin.getConfig().getLong("police_box.confirm_timeout");
                     player.sendMessage(plugin.pluginName + "Are you sure you want to delete the TARDIS? Type " + ChatColor.AQUA + "/tardis exterminate" + ChatColor.RESET + " within " + timeout + " seconds to proceed.");
                     plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
                         @Override

@@ -77,7 +77,7 @@ public class TARDISCreeperDeathListener implements Listener {
                             set.put("artron_level", amount);
                             qf.doInsert("player_prefs", set);
                         } else {
-                            int level = rsp.getArtron_level() + amount;
+                            int level = rsp.getArtronLevel() + amount;
                             HashMap<String, Object> wherea = new HashMap<String, Object>();
                             wherea.put("player", killer);
                             set.put("artron_level", level);

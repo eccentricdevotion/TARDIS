@@ -19,7 +19,6 @@ package me.eccentric_nz.TARDIS.listeners;
 import java.util.HashMap;
 import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.TARDISConstants.COMPASS;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetAreas;
 import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
@@ -27,6 +26,7 @@ import me.eccentric_nz.TARDIS.database.ResultSetHomeLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
+import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.travel.TARDISEPSRunnable;
 import org.bukkit.Location;
 import org.bukkit.World;
@@ -60,7 +60,7 @@ public class TARDISTimeLordDeathListener implements Listener {
      */
     @EventHandler(priority = EventPriority.MONITOR)
     public void onTimeLordDeath(PlayerDeathEvent event) {
-        if (plugin.getConfig().getBoolean("allow_autonomous")) {
+        if (plugin.getConfig().getBoolean("allow.autonomous")) {
             final Player player = event.getEntity();
             if (player.hasPermission("tardis.autonomous")) {
                 String playerNameStr = player.getName();
@@ -77,9 +77,9 @@ public class TARDISTimeLordDeathListener implements Listener {
                     ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, wherep);
                     if (rsp.resultSet()) {
                         // do they have the autonomous circuit on?
-                        if (rsp.isAuto_on()) {
+                        if (rsp.isAutoOn()) {
                             Location death_loc = player.getLocation();
-                            if (plugin.pm.isPluginEnabled("Citizens") && plugin.getConfig().getBoolean("emergency_npc") && rsp.isEPS_on()) {
+                            if (plugin.pm.isPluginEnabled("Citizens") && plugin.getConfig().getBoolean("allow.emergency_npc") && rsp.isEpsOn()) {
                                 // check if there are players in the TARDIS
                                 HashMap<String, Object> wherev = new HashMap<String, Object>();
                                 wherev.put("tardis_id", id);
@@ -88,7 +88,7 @@ public class TARDISTimeLordDeathListener implements Listener {
                                     List data = rst.getData();
                                     if (data.size() > 0 && !data.contains(playerNameStr)) {
                                         // schedule the NPC to appear
-                                        TARDISEPSRunnable EPS_runnable = new TARDISEPSRunnable(plugin, rsp.getEPS_message(), player, data, id, eps, creeper);
+                                        TARDISEPSRunnable EPS_runnable = new TARDISEPSRunnable(plugin, rsp.getEpsMessage(), player, data, id, eps, creeper);
                                         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, EPS_runnable, 20L);
                                     }
                                 }
@@ -115,7 +115,7 @@ public class TARDISTimeLordDeathListener implements Listener {
                             World hw = rsh.getWorld();
                             Location home_loc = new Location(hw, rsh.getX(), rsh.getY(), rsh.getZ());
                             COMPASS hd = rsh.getDirection();
-                            boolean sub = rsh.isSubmarine();
+                            final boolean sub = rsh.isSubmarine();
                             Location goto_loc;
                             boolean going_home = false;
                             // if home world is NOT the death world
@@ -150,7 +150,7 @@ public class TARDISTimeLordDeathListener implements Listener {
                                 final COMPASS fd = (going_home) ? hd : cd;
                                 // destroy police box
                                 if (!rs.isHidden()) {
-                                    plugin.destroyerP.destroyPreset(sl, cd, id, false, plugin.getConfig().getBoolean("materialise"), cham, player);
+                                    plugin.destroyerP.destroyPreset(sl, cd, id, false, plugin.getConfig().getBoolean("police_box.materialise"), cham, player, rsc.isSubmarine());
                                 } else {
                                     plugin.destroyerP.removeBlockProtection(id, qf);
                                     HashMap<String, Object> set = new HashMap<String, Object>();
@@ -160,18 +160,11 @@ public class TARDISTimeLordDeathListener implements Listener {
                                     qf.doUpdate("tardis", set, tid);
                                 }
                                 final Location auto_loc = goto_loc;
-                                if (sub && going_home) {
-                                    plugin.trackSubmarine.add(id);
-                                } else {
-                                    if (plugin.trackSubmarine.contains(Integer.valueOf(id))) {
-                                        plugin.trackSubmarine.remove(Integer.valueOf(id));
-                                    }
-                                }
                                 plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
                                     @Override
                                     public void run() {
                                         // rebuild police box - needs to be a delay
-                                        plugin.builderP.buildPreset(id, auto_loc, fd, cham, player, false, false);
+                                        plugin.builderP.buildPreset(id, auto_loc, fd, cham, player, false, false, sub);
                                     }
                                 }, 200L);
                                 // set current

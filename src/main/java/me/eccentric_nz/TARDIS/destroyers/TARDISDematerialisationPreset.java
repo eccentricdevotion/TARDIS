@@ -20,17 +20,18 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.TARDISConstants;
-import me.eccentric_nz.TARDIS.TARDISConstants.COMPASS;
 import me.eccentric_nz.TARDIS.chameleon.TARDISChameleonColumn;
 import me.eccentric_nz.TARDIS.database.ResultSetDoors;
+import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
+import me.eccentric_nz.TARDIS.enumeration.COMPASS;
+import me.eccentric_nz.TARDIS.enumeration.PRESET;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.Sound;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Player;
-//import org.getspout.spoutapi.SpoutManager;
 
 /**
  * A dematerialisation circuit was an essential part of a Type 40 TARDIS which
@@ -45,7 +46,7 @@ public class TARDISDematerialisationPreset implements Runnable {
     private final COMPASS d;
     private final int loops;
     private final Location location;
-    private final TARDISConstants.PRESET preset;
+    private final PRESET preset;
     private final int tid;
     public int task;
     private int i;
@@ -53,6 +54,7 @@ public class TARDISDematerialisationPreset implements Runnable {
     private final int cham_id;
     private final byte cham_data;
     private final Player player;
+    private final boolean sub;
     private final TARDISChameleonColumn column;
     private final TARDISChameleonColumn stained_column;
     private final TARDISChameleonColumn glass_column;
@@ -74,8 +76,9 @@ public class TARDISDematerialisationPreset implements Runnable {
      * @param cham_id the chameleon block id for the police box
      * @param cham_data the chameleon block data for the police box
      * @param player the player to play the sound to
+     * @param sub whether the location is submarine
      */
-    public TARDISDematerialisationPreset(TARDIS plugin, Location location, TARDISConstants.PRESET preset, int lamp, int tid, COMPASS d, int cham_id, byte cham_data, Player player) {
+    public TARDISDematerialisationPreset(TARDIS plugin, Location location, PRESET preset, int lamp, int tid, COMPASS d, int cham_id, byte cham_data, Player player, boolean sub) {
         this.plugin = plugin;
         this.d = d;
         this.loops = 18;
@@ -87,6 +90,7 @@ public class TARDISDematerialisationPreset implements Runnable {
         this.cham_id = cham_id;
         this.cham_data = cham_data;
         this.player = player;
+        this.sub = sub;
         column = plugin.presets.getColumn(preset, d);
         stained_column = plugin.presets.getStained(preset, d);
         glass_column = plugin.presets.getGlass(preset, d);
@@ -103,7 +107,7 @@ public class TARDISDematerialisationPreset implements Runnable {
         // get relative locations
         int x = location.getBlockX(), plusx = location.getBlockX() + 1, minusx = location.getBlockX() - 1;
         int y;
-        if (preset.equals(TARDISConstants.PRESET.SUBMERGED)) {
+        if (preset.equals(PRESET.SUBMERGED)) {
             y = location.getBlockY() - 1;
         } else {
             y = location.getBlockY();
@@ -160,7 +164,18 @@ public class TARDISDematerialisationPreset implements Runnable {
                     default:
                         break;
                 }
-                plugin.utils.playTARDISSound(location, player, "tardis_takeoff");
+                HashMap<String, Object> wherep = new HashMap<String, Object>();
+                wherep.put("player", player.getName());
+                ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, wherep);
+                boolean minecart = false;
+                if (rsp.resultSet()) {
+                    minecart = rsp.isMinecartOn();
+                }
+                if (!minecart) {
+                    plugin.utils.playTARDISSound(location, player, "tardis_takeoff");
+                } else {
+                    world.playSound(location, Sound.MINECART_INSIDE, 1.0F, 0.0F);
+                }
                 the_colour = getWoolColour(tid, preset);
             } else {
                 // just change the walls
@@ -207,17 +222,24 @@ public class TARDISDematerialisationPreset implements Runnable {
                             break;
                     }
                     for (int yy = 0; yy < 4; yy++) {
+                        boolean change = true;
+                        if (yy == 0 && n == 9) {
+                            Block rail = world.getBlockAt(xx, y, zz);
+                            if (rail.getType().equals(Material.RAILS) || rail.getType().equals(Material.POWERED_RAIL)) {
+                                change = false;
+                            }
+                        }
                         switch (colids[yy]) {
                             case 2:
                             case 3:
-                                int subi = (preset.equals(TARDISConstants.PRESET.SUBMERGED)) ? cham_id : colids[yy];
-                                byte subd = (preset.equals(TARDISConstants.PRESET.SUBMERGED)) ? cham_data : coldatas[yy];
+                                int subi = (preset.equals(PRESET.SUBMERGED)) ? cham_id : colids[yy];
+                                byte subd = (preset.equals(PRESET.SUBMERGED)) ? cham_data : coldatas[yy];
                                 plugin.utils.setBlock(world, xx, (y + yy), zz, subi, subd);
                                 break;
                             case 35: // wool
-                                int chai = (preset.equals(TARDISConstants.PRESET.NEW) || preset.equals(TARDISConstants.PRESET.OLD)) ? cham_id : colids[yy];
-                                byte chad = (preset.equals(TARDISConstants.PRESET.NEW) || preset.equals(TARDISConstants.PRESET.OLD)) ? cham_data : coldatas[yy];
-                                if (preset.equals(TARDISConstants.PRESET.PARTY) || (preset.equals(TARDISConstants.PRESET.FLOWER) && coldatas[yy] == 0)) {
+                                int chai = (preset.equals(PRESET.NEW) || preset.equals(PRESET.OLD)) ? cham_id : colids[yy];
+                                byte chad = (preset.equals(PRESET.NEW) || preset.equals(PRESET.OLD)) ? cham_data : coldatas[yy];
+                                if (preset.equals(PRESET.PARTY) || (preset.equals(PRESET.FLOWER) && coldatas[yy] == 0)) {
                                     chad = the_colour;
                                 }
                                 plugin.utils.setBlock(world, xx, (y + yy), zz, chai, chad);
@@ -227,17 +249,24 @@ public class TARDISDematerialisationPreset implements Runnable {
                             case 50: // lamps, glowstone and torches
                             case 89:
                             case 124:
-                                int light = (preset.equals(TARDISConstants.PRESET.NEW) || preset.equals(TARDISConstants.PRESET.OLD)) ? lamp : colids[yy];
+                                int light = (preset.equals(PRESET.NEW) || preset.equals(PRESET.OLD)) ? lamp : colids[yy];
                                 plugin.utils.setBlock(world, xx, (y + yy), zz, light, coldatas[yy]);
                                 break;
                             case 68: // except the sign
                                 break;
                             case 95:
                                 if (coldatas[yy] == -1) {
-                                    if (preset.equals(TARDISConstants.PRESET.PARTY) || (preset.equals(TARDISConstants.PRESET.FLOWER) && coldatas[yy] == 0)) {
+                                    if (preset.equals(PRESET.PARTY) || (preset.equals(PRESET.FLOWER) && coldatas[yy] == 0)) {
                                         chad = the_colour;
                                     } else {
-                                        chad = plugin.lookup.getStain().get(cham_id);
+                                        // if it was a wool / stained glass / stained clay block get the data from that
+                                        int[] finalids = column.getId()[n];
+                                        byte[] finaldatas = column.getData()[n];
+                                        if (finalids[yy] == 35 || finalids[yy] == 95 || finalids[yy] == 159 || finalids[yy] == 160 || finalids[yy] == 171) {
+                                            chad = finaldatas[yy];
+                                        } else {
+                                            chad = plugin.lookup.getStain().get(cham_id);
+                                        }
                                     }
                                     plugin.utils.setBlock(world, xx, (y + yy), zz, 95, chad);
                                 } else {
@@ -245,27 +274,29 @@ public class TARDISDematerialisationPreset implements Runnable {
                                 }
                                 break;
                             default: // everything else
-                                plugin.utils.setBlock(world, xx, (y + yy), zz, colids[yy], coldatas[yy]);
+                                if (change) {
+                                    plugin.utils.setBlock(world, xx, (y + yy), zz, colids[yy], coldatas[yy]);
+                                }
                                 break;
                         }
                     }
                 }
             }
         } else {
-            new TARDISDeinstaPreset(plugin).instaDestroyPreset(location, d, tid, false, preset);
+            new TARDISDeinstaPreset(plugin).instaDestroyPreset(location, d, tid, false, preset, sub);
             plugin.getServer().getScheduler().cancelTask(task);
             task = 0;
         }
     }
 
-    private byte getWoolColour(int id, TARDISConstants.PRESET p) {
+    private byte getWoolColour(int id, PRESET p) {
         HashMap<String, Object> where = new HashMap<String, Object>();
         where.put("tardis_id", id);
         where.put("door_type", 0);
         ResultSetDoors rs = new ResultSetDoors(plugin, where, false);
         if (rs.resultSet()) {
             Block b = plugin.utils.getLocationFromDB(rs.getDoor_location(), 0.0F, 0.0F).getBlock();
-            if (p.equals(TARDISConstants.PRESET.FLOWER)) {
+            if (p.equals(PRESET.FLOWER)) {
                 return b.getRelative(BlockFace.UP, 3).getData();
             } else {
                 for (BlockFace f : faces) {

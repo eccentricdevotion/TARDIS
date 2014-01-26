@@ -1,2 +1,395 @@
-## YAML Template.
----
+# TARDIS recipes
+# The plugin will break if you change the names!
+# -------------------
+# shaped recipes start here
+# -------------------
+shaped:
+    TARDIS Locator:
+        easy_shape: OIO,ICI,OIO
+        easy_ingredients:
+            O: GRAVEL
+            I: IRON_INGOT
+            C: 'WOOL:14'
+        hard_shape: OIO,ICI,OIO
+        hard_ingredients:
+            O: OBSIDIAN
+            I: IRON_INGOT
+            C: 'MAP:1965'
+        result: COMPASS
+        amount: 1
+        lore: ""
+    Stattenheim Remote:
+        easy_shape: OBO,-L-,RRR
+        easy_ingredients:
+            O: OBSIDIAN
+            B: STONE_BUTTON
+            L: 'INK_SACK:4'
+            R: REDSTONE
+        hard_shape: OBO,OLO,RRR
+        hard_ingredients:
+            O: OBSIDIAN
+            B: STONE_BUTTON
+            L: 'MAP:1963'
+            R: REDSTONE
+        result: FLINT
+        amount: 1
+        lore: "Right-click block\nto call TARDIS"
+    TARDIS Locator Circuit:
+        easy_shape: RQR,RIR,DRL
+        easy_ingredients:
+            R: REDSTONE
+            Q: QUARTZ
+            I: IRON_INGOT
+            D: DIODE
+            L: 'INK_SACK:4'
+        hard_shape: RQR,RIR,DRL
+        hard_ingredients:
+            R: REDSTONE
+            Q: QUARTZ
+            I: IRON_INGOT
+            D: DIODE
+            L: 'INK_SACK:4'
+        result: 'MAP:1965'
+        amount: 1
+        lore: ""
+    TARDIS Materialisation Circuit:
+        easy_shape: IDI,-L-,QRQ
+        easy_ingredients:
+            I: IRON_INGOT
+            R: REDSTONE
+            L: 'INK_SACK:4'
+            Q: QUARTZ
+        hard_shape: IDI,DLD,QRQ
+        hard_ingredients:
+            I: EYE_OF_ENDER
+            D: DIODE
+            R: REDSTONE
+            L: 'INK_SACK:4'
+            Q: QUARTZ
+        result: 'MAP:1964'
+        amount: 1
+        lore: ""
+    TARDIS Stattenheim Circuit:
+        easy_shape: ---,LRM,QQQ
+        easy_ingredients:
+            L: 'MAP:1965'
+            R: REDSTONE
+            M: 'MAP:1964'
+            Q: QUARTZ
+        hard_shape: ---,LRM,QQQ
+        hard_ingredients:
+            L: 'MAP:1965'
+            R: REDSTONE
+            M: 'MAP:1964'
+            Q: QUARTZ
+        result: 'MAP:1963'
+        amount: 1
+        lore: ""
+    TARDIS Chameleon Circuit:
+        easy_shape: -G-,RER,-G-
+        easy_ingredients:
+            G: GOLD_INGOT
+            E: DETECTOR_RAIL
+            R: REDSTONE
+        hard_shape: DGD,GEG,RMR
+        hard_ingredients:
+            D: DIODE
+            G: GOLD_INGOT
+            E: DETECTOR_RAIL
+            R: REDSTONE
+            M: 'MAP:1964'
+        result: 'MAP:1966'
+        amount: 1
+        lore: ""
+    TARDIS ARS Circuit:
+        easy_shape: SSS,T-T,RRR
+        easy_ingredients:
+            S: SEEDS
+            T: REDSTONE_TORCH_ON
+            R: REDSTONE
+        hard_shape: SSS,DPT,RRR
+        hard_ingredients:
+            S: SEEDS
+            D: DIODE
+            P: PISTON_BASE
+            T: REDSTONE_TORCH_ON
+            R: REDSTONE
+        result: 'MAP:1973'
+        amount: 1
+        lore: ""
+    TARDIS Temporal Circuit:
+        easy_shape: -I-,RWR,-I-
+        easy_ingredients:
+            I: IRON_INGOT
+            R: REDSTONE
+            W: WATCH
+        hard_shape: -I-,RWR,QIQ
+        hard_ingredients:
+            I: IRON_INGOT
+            R: REDSTONE
+            W: WATCH
+            Q: QUARTZ
+        result: 'MAP:1974'
+        amount: 1
+        lore: ""
+    TARDIS Memory Circuit:
+        easy_shape: -T-,TCT,-T-
+        easy_ingredients:
+            T: REDSTONE_TORCH_ON
+            C: CHEST
+        hard_shape: RTR,TCT,RTR
+        hard_ingredients:
+            R: 'SAND:1'
+            T: REDSTONE_TORCH_ON
+            C: TRAPPED_CHEST
+        result: 'MAP:1975'
+        amount: 1
+        lore: ""
+    TARDIS Input Circuit:
+        easy_shape: -R-,-S-,-R-
+        easy_ingredients:
+            R: REDSTONE
+            S: SIGN
+        hard_shape: -R-,-S-,-R-
+        hard_ingredients:
+            R: REDSTONE
+            S: SIGN
+        result: 'MAP:1976'
+        amount: 1
+        lore: ""
+    TARDIS Scanner Circuit:
+        easy_shape: GRG,RGR,GRG
+        easy_ingredients:
+            G: THIN_GLASS
+            R: REDSTONE
+        hard_shape: GRG,RER,GRG
+        hard_ingredients:
+            G: GLASS
+            E: SPIDER_EYE
+            R: REDSTONE
+        result: 'MAP:1977'
+        amount: 1
+        lore: ""
+    Perception Filter:
+        easy_shape: S-S,-S-,RGC
+        easy_ingredients:
+            S: STRING
+            R: REDSTONE
+            G: GOLD_NUGGET
+            C: REDSTONE_COMPARATOR
+        hard_shape: S-S,-S-,RGC
+        hard_ingredients:
+            S: STRING
+            R: REDSTONE
+            G: GOLD_NUGGET
+            C: 'MAP:1978'
+        result: GOLD_NUGGET
+        amount: 1
+        lore: ""
+    Perception Circuit:
+        easy_shape: IGI,CEC,DTD
+        easy_ingredients:
+            I: IRON_INGOT
+            G: GOLDEN_CARROT
+            C: REDSTONE_COMPARATOR
+            E: FERMENTED_SPIDER_EYE
+            D: DIODE
+            T: REDSTONE_TORCH_ON
+        hard_shape: IGI,CEC,DTD
+        hard_ingredients:
+            I: IRON_INGOT
+            G: GOLDEN_CARROT
+            C: REDSTONE_COMPARATOR
+            E: FERMENTED_SPIDER_EYE
+            D: DIODE
+            T: REDSTONE_TORCH_ON
+        result: 'MAP:1978'
+        amount: 1
+        lore: ""
+    TARDIS Key:
+        easy_shape: ---,-R-,-G-
+        easy_ingredients:
+            R: REDSTONE
+            G: GOLD_NUGGET
+        hard_shape: ---,-C-,-G-
+        hard_ingredients:
+            C: REDSTONE_COMPARATOR
+            G: GOLD_NUGGET
+        result: GOLD_NUGGET
+        amount: 1
+        lore: "Enter and exit your TARDIS"
+    Blank Storage Disk:
+        easy_shape: QQQ,Q-Q,QQQ
+        easy_ingredients:
+            Q: QUARTZ
+        hard_shape: QQQ,Q-Q,QQQ
+        hard_ingredients:
+            Q: QUARTZ
+        result: RECORD_9
+        amount: 1
+        lore: ""
+    Sonic Oscillator:
+        easy_shape: RQR,R-R,RQR
+        easy_ingredients:
+            Q: QUARTZ
+            R: REDSTONE
+        hard_shape: RQR,RBR,RQR
+        hard_ingredients:
+            Q: QUARTZ
+            R: REDSTONE
+            B: STONE_BUTTON
+        result: 'MAP:1967'
+        amount: 1
+        lore: ""
+    Sonic Screwdriver:
+        easy_shape: -Q-,-I-,-I-
+        easy_ingredients:
+            Q: QUARTZ
+            I: IRON_INGOT
+        hard_shape: -Q-,-I-,-O-
+        hard_ingredients:
+            Q: QUARTZ
+            I: IRON_INGOT
+            O: 'MAP:1967'
+        result: BLAZE_ROD
+        amount: 1
+        lore: ""
+    Server Admin Circuit:
+        easy_shape: BBB,BOB,BBB
+        easy_ingredients:
+            B: BEDROCK
+            O: 'MAP:1967'
+        hard_shape: BBB,BOB,BBB
+        hard_ingredients:
+            B: BEDROCK
+            O: 'MAP:1967'
+        result: 'MAP:1968'
+        amount: 1
+        lore: ""
+    Bio-scanner Circuit:
+        easy_shape: -E-,BRB,-E-
+        easy_ingredients:
+            R: REDSTONE
+            E: SPIDER_EYE
+            B: BONE
+        hard_shape: -E-,BRB,-E-
+        hard_ingredients:
+            R: DIODE
+            E: SPIDER_EYE
+            B: BONE
+        result: 'MAP:1969'
+        amount: 1
+        lore: ""
+    Redstone Activator Circuit:
+        easy_shape: RCR,-I-,RCR
+        easy_ingredients:
+            R: REDSTONE
+            C: REDSTONE_COMPARATOR
+            I: IRON_INGOT
+        hard_shape: RCR,-I-,RCR
+        hard_ingredients:
+            R: DIODE
+            C: REDSTONE_COMPARATOR
+            I: IRON_INGOT
+        result: 'MAP:1970'
+        amount: 1
+        lore: ""
+    Diamond Disruptor Circuit:
+        easy_shape: -R-,DSD,-R-
+        easy_ingredients:
+            R: REDSTONE
+            D: DIAMOND
+            S: SHEARS
+        hard_shape: -O-,DSD,-O-
+        hard_ingredients:
+            O: OBSIDIAN
+            D: DIAMOND
+            S: SHEARS
+        result: 'MAP:1971'
+        amount: 1
+        lore: ""
+    Emerald Environment Circuit:
+        easy_shape: -D-,LEL,-D-
+        easy_ingredients:
+            E: EMERALD
+            D: DIRT
+            L: LEAVES
+        hard_shape: -S-,LEL,-S-
+        hard_ingredients:
+            E: EMERALD
+            L: LEAVES
+            S: STONE
+        result: 'MAP:1972'
+        amount: 1
+        lore: ""
+    Artron Storage Cell:
+        easy_shape: -B-,-R-,-L-
+        easy_ingredients:
+            B: BUCKET
+            R: REDSTONE
+            L: 'STAINED_GLASS:5'
+        hard_shape: -B-,LRL,-L-
+        hard_ingredients:
+            B: BUCKET
+            L: 'STAINED_GLASS:5'
+            R: REDSTONE_BLOCK
+        result: BUCKET
+        amount: 1
+        lore: "Charge Level\n0"
+# -------------------
+# these are the shapeless recipes
+# -------------------
+shapeless:
+    Save Storage Disk:
+        recipe: RECORD_9,REDSTONE
+        result: RECORD_4
+        amount: 1
+        lore: "Blank"
+    Player Storage Disk:
+        recipe: RECORD_9,LAPIS_BLOCK
+        result: RECORD_12
+        amount: 1
+        lore: "Blank"
+    Biome Storage Disk:
+        recipe: RECORD_9,EMERALD
+        result: GREEN_RECORD
+        amount: 1
+        lore: "Blank"
+    Preset Storage Disk:
+        recipe: 'RECORD_9,MAP:1966'
+        result: RECORD_6
+        amount: 1
+        lore: "Blank"
+    Admin Upgrade:
+        recipe: 'BLAZE_ROD,MAP:1968'
+        result: BLAZE_ROD
+        amount: 1
+        lore: ""
+    Bio-scanner Upgrade:
+        recipe: 'BLAZE_ROD,MAP:1969'
+        result: BLAZE_ROD
+        amount: 1
+        lore: ""
+    Redstone Upgrade:
+        recipe: 'BLAZE_ROD,MAP:1970'
+        result: BLAZE_ROD
+        amount: 1
+        lore: ""
+    Diamond Upgrade:
+        recipe: 'BLAZE_ROD,MAP:1971'
+        result: BLAZE_ROD
+        amount: 1
+        lore: ""
+    Emerald Upgrade:
+        recipe: 'BLAZE_ROD,MAP:1972'
+        result: BLAZE_ROD
+        amount: 1
+        lore: ""
+# -------------------
+## furnace recipes are not used yet...
+# -------------------
+furnace:
+    Nuclear Wool:
+        recipe: '35:0'
+        result: '35:15'
+        lore: "Done to a crisp"

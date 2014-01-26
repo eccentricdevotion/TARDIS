@@ -65,7 +65,7 @@ public class TARDISRechargerCommand {
         plugin.getConfig().set("rechargers." + args[1] + ".y", l.getBlockY());
         plugin.getConfig().set("rechargers." + args[1] + ".z", l.getBlockZ());
         // if worldguard is on the server, protect a 3x3x3 area around beacon
-        if (plugin.worldGuardOnServer && plugin.getConfig().getBoolean("use_worldguard")) {
+        if (plugin.worldGuardOnServer && plugin.getConfig().getBoolean("preferences.use_worldguard")) {
             int minx = l.getBlockX() - 2;
             int maxx = l.getBlockX() + 2;
             int minz = l.getBlockZ() - 2;

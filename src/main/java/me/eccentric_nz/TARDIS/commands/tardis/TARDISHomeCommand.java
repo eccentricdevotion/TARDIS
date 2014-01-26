@@ -18,10 +18,11 @@ package me.eccentric_nz.TARDIS.commands.tardis;
 
 import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.TARDISConstants;
+import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
+import me.eccentric_nz.TARDIS.enumeration.MESSAGE;
 import me.eccentric_nz.TARDIS.travel.TARDISPluginRespect;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -40,10 +41,11 @@ public class TARDISHomeCommand {
         this.plugin = plugin;
     }
 
+    @SuppressWarnings("deprecation")
     public boolean setHome(Player player, String[] args) {
         if (player.hasPermission("tardis.timetravel")) {
             Location eyeLocation = player.getTargetBlock(plugin.tardisCommand.transparent, 50).getLocation();
-            if (!plugin.getConfig().getBoolean("include_default_world") && plugin.getConfig().getBoolean("default_world") && eyeLocation.getWorld().getName().equals(plugin.getConfig().getString("default_world_name"))) {
+            if (!plugin.getConfig().getBoolean("travel.include_default_world") && plugin.getConfig().getBoolean("creation.default_world") && eyeLocation.getWorld().getName().equals(plugin.getConfig().getString("creation.default_world_name"))) {
                 player.sendMessage(plugin.pluginName + "The server admin will not allow you to set the TARDIS home in this world!");
                 return true;
             }
@@ -74,6 +76,15 @@ public class TARDISHomeCommand {
                 return false;
             }
             int id = rs.getTardis_id();
+            TARDISCircuitChecker tcc = null;
+            if (plugin.getConfig().getString("preferences.difficulty").equals("hard")) {
+                tcc = new TARDISCircuitChecker(plugin, id);
+                tcc.getCircuits();
+            }
+            if (tcc != null && !tcc.hasMemory()) {
+                player.sendMessage(plugin.pluginName + "The Memory Circuit is missing from the console!");
+                return true;
+            }
             // check they are not in the tardis
             HashMap<String, Object> wherettrav = new HashMap<String, Object>();
             wherettrav.put("player", player.getName());
@@ -91,13 +102,23 @@ public class TARDISHomeCommand {
             set.put("x", eyeLocation.getBlockX());
             set.put("y", eyeLocation.getBlockY());
             set.put("z", eyeLocation.getBlockZ());
-            set.put("submarine", (plugin.trackSubmarine.contains(id)) ? 1 : 0);
+            set.put("submarine", isSub(eyeLocation) ? 1 : 0);
             qf.doUpdate("homes", set, tid);
             player.sendMessage(plugin.pluginName + "The new TARDIS home was set!");
             return true;
         } else {
-            player.sendMessage(plugin.pluginName + TARDISConstants.NO_PERMS_MESSAGE);
+            player.sendMessage(plugin.pluginName + MESSAGE.NO_PERMS.getText());
             return false;
+        }
+    }
+
+    private boolean isSub(Location l) {
+        switch (l.getBlock().getType()) {
+            case STATIONARY_WATER:
+            case WATER:
+                return true;
+            default:
+                return false;
         }
     }
 }

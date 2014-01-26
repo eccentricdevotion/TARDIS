@@ -33,7 +33,7 @@ import org.bukkit.World;
  */
 public class ResultSetPoliceBox {
 
-    private final TARDISDatabase service = TARDISDatabase.getInstance();
+    private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getInstance();
     private final Connection connection = service.getConnection();
     private final TARDIS plugin;
 
@@ -57,6 +57,7 @@ public class ResultSetPoliceBox {
         ResultSet rs = null;
         String query = "SELECT * FROM current";
         try {
+            service.testConnection(connection);
             statement = connection.prepareStatement(query);
             rs = statement.executeQuery();
             if (rs.isBeforeFirst()) {

@@ -35,14 +35,14 @@ public class TARDISPlayerCountCommand {
     }
 
     public boolean countPlayers(CommandSender sender, String[] args) {
-        int max_count = plugin.getConfig().getInt("count");
+        int max_count = plugin.getConfig().getInt("creation.count");
         HashMap<String, Object> where = new HashMap<String, Object>();
         where.put("player", args[1]);
         ResultSetCount rsc = new ResultSetCount(plugin, where, false);
         if (rsc.resultSet()) {
             if (args.length == 3) {
                 // set count
-                int count = plugin.utils.parseNum(args[2]);
+                int count = plugin.utils.parseInt(args[2]);
                 HashMap<String, Object> setc = new HashMap<String, Object>();
                 setc.put("count", count);
                 HashMap<String, Object> wherec = new HashMap<String, Object>();

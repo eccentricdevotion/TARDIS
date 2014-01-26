@@ -18,11 +18,12 @@ package me.eccentric_nz.TARDIS.commands.tardis;
 
 import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.TARDISConstants;
+import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetDestinations;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
+import me.eccentric_nz.TARDIS.enumeration.MESSAGE;
 import org.bukkit.entity.Player;
 
 /**
@@ -43,7 +44,7 @@ public class TARDISSaveLocationCommand {
             where.put("owner", player.getName());
             ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
             if (!rs.resultSet()) {
-                player.sendMessage(plugin.pluginName + TARDISConstants.NO_TARDIS);
+                player.sendMessage(plugin.pluginName + MESSAGE.NO_TARDIS.getText());
                 return false;
             }
             if (args.length < 2) {
@@ -51,10 +52,19 @@ public class TARDISSaveLocationCommand {
                 return false;
             }
             if (!args[1].matches("[A-Za-z0-9_]{2,16}")) {
-                player.sendMessage(plugin.pluginName + "That doesn't appear to be a valid save name (it may be too long or contains spaces).");
+                player.sendMessage(plugin.pluginName + "That doesn't appear to be a valid save name (it may be too long or contain spaces).");
                 return false;
             } else {
                 int id = rs.getTardis_id();
+                TARDISCircuitChecker tcc = null;
+                if (plugin.getConfig().getString("preferences.difficulty").equals("hard")) {
+                    tcc = new TARDISCircuitChecker(plugin, id);
+                    tcc.getCircuits();
+                }
+                if (tcc != null && !tcc.hasMemory()) {
+                    player.sendMessage(plugin.pluginName + "The Memory Circuit is missing from the console!");
+                    return true;
+                }
                 // check has unique name
                 HashMap<String, Object> wherename = new HashMap<String, Object>();
                 wherename.put("tardis_id", id);
@@ -70,7 +80,7 @@ public class TARDISSaveLocationCommand {
                 wherecl.put("tardis_id", rs.getTardis_id());
                 ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
                 if (!rsc.resultSet()) {
-                    player.sendMessage(plugin.pluginName + "Could not get current TARDIS location!");
+                    player.sendMessage(plugin.pluginName + MESSAGE.NO_CURRENT.getText());
                     return true;
                 }
                 QueryFactory qf = new QueryFactory(plugin);
@@ -82,7 +92,7 @@ public class TARDISSaveLocationCommand {
                 set.put("y", rsc.getY());
                 set.put("z", rsc.getZ());
                 set.put("direction", rsc.getDirection().toString());
-                set.put("submarine", (plugin.trackSubmarine.contains(id)) ? 1 : 0);
+                set.put("submarine", (rsc.isSubmarine()) ? 1 : 0);
                 if (qf.doSyncInsert("destinations", set) < 0) {
                     return false;
                 } else {
@@ -91,7 +101,7 @@ public class TARDISSaveLocationCommand {
                 }
             }
         } else {
-            player.sendMessage(plugin.pluginName + TARDISConstants.NO_PERMS_MESSAGE);
+            player.sendMessage(plugin.pluginName + MESSAGE.NO_PERMS.getText());
             return false;
         }
     }

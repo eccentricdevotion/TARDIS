@@ -35,6 +35,27 @@ public class TARDISSetIntegerCommand {
         this.plugin = plugin;
     }
 
+    public boolean setConfigInt(CommandSender sender, String[] args, String section) {
+        String first = (section.isEmpty()) ? args[0].toLowerCase() : section + "." + args[0].toLowerCase();
+        String a = args[1];
+        int val;
+        try {
+            val = Integer.parseInt(a);
+        } catch (NumberFormatException nfe) {
+            // not a number
+            sender.sendMessage(plugin.pluginName + ChatColor.RED + " The last argument must be a number!");
+            return false;
+        }
+        plugin.getConfig().set(first, val);
+        if (first.equals("terminal_step")) {
+            // reset the terminal inventory
+            plugin.buttonListener.items = new TARDISTerminalInventory().getTerminal();
+        }
+        plugin.saveConfig();
+        sender.sendMessage(plugin.pluginName + "The config was updated!");
+        return true;
+    }
+
     public boolean setConfigInt(CommandSender sender, String[] args) {
         String first = args[0];
         String a = args[1];
@@ -46,21 +67,12 @@ public class TARDISSetIntegerCommand {
             sender.sendMessage(plugin.pluginName + ChatColor.RED + " The last argument must be a number!");
             return false;
         }
-        if (plugin.tardisAdminCommand.firstsIntArtron.contains(first)) {
-            plugin.getArtronConfig().set(first, val);
-            try {
-                plugin.getArtronConfig().save(new File(plugin.getDataFolder(), "artron.yml"));
-            } catch (IOException io) {
-                plugin.debug("Could not save artron.yml, " + io);
-            }
-        } else {
-            plugin.getConfig().set(first, val);
-            if (first.equals("terminal_step")) {
-                // reset the terminal inventory
-                plugin.buttonListener.items = new TARDISTerminalInventory().getTerminal();
-            }
+        plugin.getArtronConfig().set(first, val);
+        try {
+            plugin.getArtronConfig().save(new File(plugin.getDataFolder(), "artron.yml"));
+        } catch (IOException io) {
+            plugin.debug("Could not save artron.yml, " + io);
         }
-        plugin.saveConfig();
         sender.sendMessage(plugin.pluginName + "The config was updated!");
         return true;
     }

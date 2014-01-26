@@ -26,7 +26,7 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.TARDISConstants;
+import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 
 /**
  * Many facts, figures, and formulas are contained within the Matrix,
@@ -36,7 +36,7 @@ import me.eccentric_nz.TARDIS.TARDISConstants;
  */
 public class ResultSetDoors {
 
-    private final TARDISDatabase service = TARDISDatabase.getInstance();
+    private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getInstance();
     private final Connection connection = service.getConnection();
     private final TARDIS plugin;
     private final HashMap<String, Object> where;
@@ -45,7 +45,7 @@ public class ResultSetDoors {
     private int tardis_id;
     private int door_type;
     private String door_location;
-    private TARDISConstants.COMPASS door_direction;
+    private COMPASS door_direction;
     private boolean locked;
     private final ArrayList<HashMap<String, String>> data = new ArrayList<HashMap<String, String>>();
 
@@ -84,8 +84,8 @@ public class ResultSetDoors {
             wheres = " WHERE " + sbw.toString().substring(0, sbw.length() - 5);
         }
         String query = "SELECT * FROM doors" + wheres;
-        //plugin.debug(query);
         try {
+            service.testConnection(connection);
             statement = connection.prepareStatement(query);
             if (where != null) {
                 int s = 1;
@@ -93,7 +93,7 @@ public class ResultSetDoors {
                     if (entry.getValue().getClass().equals(String.class)) {
                         statement.setString(s, entry.getValue().toString());
                     } else {
-                        statement.setInt(s, plugin.utils.parseNum(entry.getValue().toString()));
+                        statement.setInt(s, plugin.utils.parseInt(entry.getValue().toString()));
                     }
                     s++;
                 }
@@ -115,7 +115,7 @@ public class ResultSetDoors {
                     this.tardis_id = rs.getInt("tardis_id");
                     this.door_type = rs.getInt("door_type");
                     this.door_location = rs.getString("door_location");
-                    this.door_direction = TARDISConstants.COMPASS.valueOf(rs.getString("door_direction"));
+                    this.door_direction = COMPASS.valueOf(rs.getString("door_direction"));
                     this.locked = rs.getBoolean("locked");
                 }
             } else {
@@ -155,7 +155,7 @@ public class ResultSetDoors {
         return door_location;
     }
 
-    public TARDISConstants.COMPASS getDoor_direction() {
+    public COMPASS getDoor_direction() {
         return door_direction;
     }
 

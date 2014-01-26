@@ -17,7 +17,7 @@
 package me.eccentric_nz.TARDIS.rooms;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.TARDISConstants.SCHEMATIC;
+import me.eccentric_nz.TARDIS.enumeration.SCHEMATIC;
 
 /**
  *
@@ -81,8 +81,8 @@ public class TARDISSeedData {
 
     public void setChunkMinMax(String s) {
         String[] data = s.split(":");
-        int x = plugin.utils.parseNum(data[1]);
-        int z = plugin.utils.parseNum(data[2]);
+        int x = plugin.utils.parseInt(data[1]);
+        int z = plugin.utils.parseInt(data[2]);
         this.minx = x - 4;
         this.maxx = x + 4;
         this.minz = z - 4;

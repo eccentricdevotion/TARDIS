@@ -30,7 +30,7 @@ import me.eccentric_nz.TARDIS.TARDIS;
  */
 public class ResultSetTardisSign {
 
-    private final TARDISDatabase service = TARDISDatabase.getInstance();
+    private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getInstance();
     private final Connection connection = service.getConnection();
     private final TARDIS plugin;
     private final String where;
@@ -66,6 +66,7 @@ public class ResultSetTardisSign {
         ResultSet rs = null;
         String query = "SELECT * FROM tardis WHERE chameleon = ? OR save_sign = ?";
         try {
+            service.testConnection(connection);
             statement = connection.prepareStatement(query);
             statement.setString(1, where);
             statement.setString(2, where);

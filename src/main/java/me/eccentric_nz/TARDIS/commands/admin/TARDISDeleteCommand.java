@@ -20,15 +20,18 @@ import java.io.File;
 import java.util.HashMap;
 import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
 import static me.eccentric_nz.TARDIS.destroyers.TARDISExterminator.deleteFolder;
+import me.eccentric_nz.TARDIS.enumeration.COMPASS;
+import me.eccentric_nz.TARDIS.enumeration.MESSAGE;
+import me.eccentric_nz.TARDIS.enumeration.SCHEMATIC;
 import me.eccentric_nz.tardischunkgenerator.TARDISChunkGenerator;
 import org.bukkit.Location;
 import org.bukkit.World;
+import org.bukkit.World.Environment;
 import org.bukkit.WorldType;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -50,8 +53,13 @@ public class TARDISDeleteCommand {
         if (sender instanceof Player) {
             Player player = (Player) sender;
             if (player.getName().equals(args[1])) {
-                sender.sendMessage(plugin.pluginName + "To delete your own records, please disconnect and use the console.");
-                return true;
+                HashMap<String, Object> where = new HashMap<String, Object>();
+                where.put("player", player.getName());
+                ResultSetTravellers rst = new ResultSetTravellers(plugin, where, false);
+                if (rst.resultSet()) {
+                    sender.sendMessage(plugin.pluginName + "You cannot be in your TARDIS when you delete it!");
+                    return true;
+                }
             }
         }
         HashMap<String, Object> where = new HashMap<String, Object>();
@@ -59,11 +67,16 @@ public class TARDISDeleteCommand {
         ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
         if (rs.resultSet()) {
             int id = rs.getTardis_id();
-            TARDISConstants.SCHEMATIC schm = rs.getSchematic();
+            int tips = rs.getTIPS();
+            SCHEMATIC schm = rs.getSchematic();
             String chunkLoc = rs.getChunk();
             String[] cdata = chunkLoc.split(":");
             String name = cdata[0];
             World cw = plugin.getServer().getWorld(name);
+            if (cw == null) {
+                sender.sendMessage(plugin.pluginName + "The server could not find the TARDIS world, has it been deleted?");
+                return true;
+            }
             int restore = getRestore(cw);
             // check if player is in the TARDIS
             HashMap<String, Object> wheret = new HashMap<String, Object>();
@@ -77,7 +90,7 @@ public class TARDISDeleteCommand {
             }
             // get the current location
             Location bb_loc = null;
-            TARDISConstants.COMPASS d = TARDISConstants.COMPASS.EAST;
+            COMPASS d = COMPASS.EAST;
             HashMap<String, Object> wherecl = new HashMap<String, Object>();
             wherecl.put("tardis_id", id);
             ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
@@ -86,11 +99,11 @@ public class TARDISDeleteCommand {
                 d = rsc.getDirection();
             }
             if (bb_loc == null) {
-                sender.sendMessage(plugin.pluginName + "Could not get the location of the TARDIS!");
+                sender.sendMessage(plugin.pluginName + MESSAGE.NO_CURRENT.getText());
                 return true;
             }
             // destroy the TARDIS
-            if ((plugin.getConfig().getBoolean("create_worlds") && !plugin.getConfig().getBoolean("default_world")) || name.contains("TARDIS_WORLD_")) {
+            if ((plugin.getConfig().getBoolean("creation.create_worlds") && !plugin.getConfig().getBoolean("creation.default_world")) || name.contains("TARDIS_WORLD_")) {
                 // delete TARDIS world
                 List<Player> players = cw.getPlayers();
                 for (Player p : players) {
@@ -112,10 +125,10 @@ public class TARDISDeleteCommand {
                     plugin.debug("Could not delete world <" + name + ">");
                 }
             } else {
-                plugin.destroyerI.destroyInner(schm, id, cw, restore, args[1]);
+                plugin.destroyerI.destroyInner(schm, id, cw, restore, args[1], tips);
             }
             if (!rs.isHidden()) {
-                plugin.destroyerP.destroyPreset(bb_loc, d, id, false, false, false, null);
+                plugin.destroyerP.destroyPreset(bb_loc, d, id, false, false, false, null, rsc.isSubmarine());
             }
             // delete the TARDIS from the db
             HashMap<String, Object> wherec = new HashMap<String, Object>();
@@ -148,10 +161,10 @@ public class TARDISDeleteCommand {
     }
 
     private int getRestore(World w) {
-        World.Environment env = w.getEnvironment();
-        if (w.getWorldType() == WorldType.FLAT || w.getName().equals("TARDIS_TimeVortex") || w.getGenerator() instanceof TARDISChunkGenerator) {
+        if (w == null || w.getWorldType() == WorldType.FLAT || w.getName().equals("TARDIS_TimeVortex") || w.getGenerator() instanceof TARDISChunkGenerator) {
             return 0;
         }
+        Environment env = w.getEnvironment();
         switch (env) {
             case NETHER:
                 return 87;

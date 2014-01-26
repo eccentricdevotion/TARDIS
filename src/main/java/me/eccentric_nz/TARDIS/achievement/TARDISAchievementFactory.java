@@ -23,6 +23,7 @@ import java.util.Map;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetAchievements;
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
@@ -73,7 +74,7 @@ public class TARDISAchievementFactory {
                 }
             } else {
                 int req = plugin.getAchivementConfig().getInt(name + ".required");
-                int have = plugin.utils.parseNum(rsa.getAmount());
+                int have = plugin.utils.parseInt(rsa.getAmount());
                 int sum = have + (Integer) obj;
                 if (sum >= req) {
                     achieved = true;
@@ -83,8 +84,9 @@ public class TARDISAchievementFactory {
                 // award achievement!
                 int reward_amount = plugin.getAchivementConfig().getInt(name + ".reward_amount");
                 String reward_type = plugin.getAchivementConfig().getString(name + ".reward_type");
-                TARDISAchievementNotify tan = new TARDISAchievementNotify(plugin);
-                tan.sendAchievement(player, plugin.getAchivementConfig().getString(name + ".message"), Material.valueOf(plugin.getAchivementConfig().getString(name + ".icon")));
+                // TODO display a proper achievement
+                player.sendMessage(ChatColor.YELLOW + "Achievement Get!");
+                player.sendMessage(ChatColor.WHITE + plugin.getAchivementConfig().getString(name + ".message"));
                 if (reward_type.equalsIgnoreCase("XP")) {
                     new TARDISXPRewarder(player).changeExp(reward_amount);
                 } else {
@@ -105,7 +107,7 @@ public class TARDISAchievementFactory {
                         qf.doUpdate("achievements", seta, wherem);
                     }
                 } else {
-                    seta.put("amount", plugin.utils.parseNum(rsa.getAmount()) + (Integer) obj);
+                    seta.put("amount", plugin.utils.parseInt(rsa.getAmount()) + (Integer) obj);
                     qf.doUpdate("achievements", seta, wherem);
                 }
             }

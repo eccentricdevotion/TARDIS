@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.TARDIS.utility.recalculators;
 
-import me.eccentric_nz.TARDIS.TARDISConstants;
+import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 
 /**
  *
@@ -31,9 +31,10 @@ public class TARDISStairRecalculator {
      * @param b the byte stored in the preset data
      * @param d the new direction of the TARDIS
      * @param col the preset column that is being calculated
+     * @param duck whether this is the Rubber Duck preset
      * @return the recalculated byte
      */
-    public byte recalculate(byte b, TARDISConstants.COMPASS d, int col) {
+    public byte recalculate(byte b, COMPASS d, int col, boolean duck) {
         byte recalc;
         switch (d) {
             case SOUTH:
@@ -67,7 +68,7 @@ public class TARDISStairRecalculator {
                 }
                 break;
             case WEST:
-                if (col == 3 || col == 7) {
+                if (duck) {
                     switch (b) {
                         case 0:
                             recalc = (byte) 1;
@@ -75,17 +76,48 @@ public class TARDISStairRecalculator {
                         case 1:
                             recalc = (byte) 0;
                             break;
+                        case 2:
+                            recalc = (byte) 3;
+                            break;
+                        case 3:
+                            recalc = (byte) 2;
+                            break;
                         case 4:
                             recalc = (byte) 5;
                             break;
                         case 5:
                             recalc = (byte) 4;
                             break;
+                        case 6:
+                            recalc = (byte) 7;
+                            break;
+                        case 7:
+                            recalc = (byte) 6;
+                            break;
                         default:
                             recalc = b;
                     }
                 } else {
-                    recalc = b;
+                    if (col == 3 || col == 7) {
+                        switch (b) {
+                            case 0:
+                                recalc = (byte) 1;
+                                break;
+                            case 1:
+                                recalc = (byte) 0;
+                                break;
+                            case 4:
+                                recalc = (byte) 5;
+                                break;
+                            case 5:
+                                recalc = (byte) 4;
+                                break;
+                            default:
+                                recalc = b;
+                        }
+                    } else {
+                        recalc = b;
+                    }
                 }
                 break;
             default:

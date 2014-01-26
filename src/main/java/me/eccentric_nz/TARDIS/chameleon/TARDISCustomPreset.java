@@ -22,7 +22,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.EnumMap;
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.TARDISConstants;
+import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 
 /**
  * A chameleon conversion is a repair procedure that technicians perform on
@@ -34,11 +34,11 @@ import me.eccentric_nz.TARDIS.TARDISConstants;
  */
 public class TARDISCustomPreset {
 
-    private final EnumMap<TARDISConstants.COMPASS, TARDISChameleonColumn> blueprint = new EnumMap<TARDISConstants.COMPASS, TARDISChameleonColumn>(TARDISConstants.COMPASS.class);
-    private final EnumMap<TARDISConstants.COMPASS, TARDISChameleonColumn> stained = new EnumMap<TARDISConstants.COMPASS, TARDISChameleonColumn>(TARDISConstants.COMPASS.class);
-    private final EnumMap<TARDISConstants.COMPASS, TARDISChameleonColumn> glass = new EnumMap<TARDISConstants.COMPASS, TARDISChameleonColumn>(TARDISConstants.COMPASS.class);
-    String line_one;
-    String line_two;
+    private final EnumMap<COMPASS, TARDISChameleonColumn> blueprint = new EnumMap<COMPASS, TARDISChameleonColumn>(COMPASS.class);
+    private final EnumMap<COMPASS, TARDISChameleonColumn> stained = new EnumMap<COMPASS, TARDISChameleonColumn>(COMPASS.class);
+    private final EnumMap<COMPASS, TARDISChameleonColumn> glass = new EnumMap<COMPASS, TARDISChameleonColumn>(COMPASS.class);
+    String firstLine;
+    String secondLine;
 
     public TARDISCustomPreset() {
     }
@@ -79,37 +79,37 @@ public class TARDISCustomPreset {
             asymmetric = true;
         }
         TARDISChameleonPreset tcp = new TARDISChameleonPreset();
-        for (TARDISConstants.COMPASS d : TARDISConstants.COMPASS.values()) {
-            blueprint.put(d, tcp.buildTARDISChameleonColumn(d, custom_data[0], custom_data[1], asymmetric));
-            stained.put(d, tcp.buildTARDISChameleonColumn(d, custom_data[2], custom_data[3], asymmetric));
-            glass.put(d, tcp.buildTARDISChameleonColumn(d, custom_data[4], custom_data[5], asymmetric));
+        for (COMPASS d : COMPASS.values()) {
+            blueprint.put(d, tcp.buildTARDISChameleonColumn(d, custom_data[0], custom_data[1], asymmetric, false, false));
+            stained.put(d, tcp.buildTARDISChameleonColumn(d, custom_data[2], custom_data[3], asymmetric, false, false));
+            glass.put(d, tcp.buildTARDISChameleonColumn(d, custom_data[4], custom_data[5], asymmetric, false, false));
         }
         if (custom_data[6] != null && !custom_data[6].isEmpty()) {
-            this.line_one = custom_data[6];
-            this.line_two = custom_data[7];
+            this.firstLine = custom_data[6];
+            this.secondLine = custom_data[7];
         } else {
-            this.line_one = "CUSTOM TEXT";
-            this.line_two = "GOES HERE";
+            this.firstLine = "CUSTOM TEXT";
+            this.secondLine = "GOES HERE";
         }
     }
 
-    public EnumMap<TARDISConstants.COMPASS, TARDISChameleonColumn> getBlueprint() {
+    public EnumMap<COMPASS, TARDISChameleonColumn> getBlueprint() {
         return blueprint;
     }
 
-    public EnumMap<TARDISConstants.COMPASS, TARDISChameleonColumn> getStained() {
+    public EnumMap<COMPASS, TARDISChameleonColumn> getStained() {
         return stained;
     }
 
-    public EnumMap<TARDISConstants.COMPASS, TARDISChameleonColumn> getGlass() {
+    public EnumMap<COMPASS, TARDISChameleonColumn> getGlass() {
         return glass;
     }
 
-    public String getLine_one() {
-        return line_one;
+    public String getFirstLine() {
+        return firstLine;
     }
 
-    public String getLine_two() {
-        return line_two;
+    public String getSecondLine() {
+        return secondLine;
     }
 }

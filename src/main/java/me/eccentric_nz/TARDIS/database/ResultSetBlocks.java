@@ -35,7 +35,7 @@ import me.eccentric_nz.TARDIS.TARDIS;
  */
 public class ResultSetBlocks {
 
-    private final TARDISDatabase service = TARDISDatabase.getInstance();
+    private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getInstance();
     private final Connection connection = service.getConnection();
     private final TARDIS plugin;
     private final HashMap<String, Object> where;
@@ -84,6 +84,7 @@ public class ResultSetBlocks {
         }
         String query = "SELECT * FROM blocks" + wheres;
         try {
+            service.testConnection(connection);
             statement = connection.prepareStatement(query);
             if (where != null) {
                 int s = 1;
@@ -91,7 +92,7 @@ public class ResultSetBlocks {
                     if (entry.getValue().getClass().equals(String.class)) {
                         statement.setString(s, entry.getValue().toString());
                     } else {
-                        statement.setInt(s, plugin.utils.parseNum(entry.getValue().toString()));
+                        statement.setInt(s, plugin.utils.parseInt(entry.getValue().toString()));
                     }
                     s++;
                 }
@@ -99,7 +100,6 @@ public class ResultSetBlocks {
             }
             rs = statement.executeQuery();
             if (rs.isBeforeFirst()) {
-                //plugin.debug(query);
                 while (rs.next()) {
                     if (multiple) {
                         HashMap<String, String> row = new HashMap<String, String>();

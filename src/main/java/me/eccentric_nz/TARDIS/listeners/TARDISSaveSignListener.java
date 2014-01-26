@@ -73,73 +73,70 @@ public class TARDISSaveSignListener implements Listener {
                     HashMap<String, Object> where = new HashMap<String, Object>();
                     where.put("tardis_id", id);
                     ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, where);
+                    Location current = null;
                     if (rsc.resultSet()) {
-                        Location current = new Location(rsc.getWorld(), rsc.getX(), rsc.getY(), rsc.getZ());
-                        ItemStack is = inv.getItem(slot);
-                        if (is != null) {
-                            if (plugin.trackSubmarine.contains(Integer.valueOf(id))) {
-                                plugin.trackSubmarine.remove(Integer.valueOf(id));
+                        current = new Location(rsc.getWorld(), rsc.getX(), rsc.getY(), rsc.getZ());
+                    }
+                    ItemStack is = inv.getItem(slot);
+                    if (is != null) {
+                        ItemMeta im = is.getItemMeta();
+                        List<String> lore = im.getLore();
+                        Location save_dest = getLocation(lore);
+                        if (save_dest != null) {
+                            // check the player is allowed!
+                            TARDISPluginRespect respect = new TARDISPluginRespect(plugin);
+                            if (!respect.getRespect(player, save_dest, true)) {
+                                close(player);
+                                return;
                             }
-                            ItemMeta im = is.getItemMeta();
-                            List<String> lore = im.getLore();
-                            Location save_dest = getLocation(lore);
-                            if (save_dest != null) {
-                                // check the player is allowed!
-                                TARDISPluginRespect respect = new TARDISPluginRespect(plugin);
-                                if (!respect.getRespect(player, save_dest, true)) {
+                            if (!plugin.ta.areaCheckInExisting(save_dest)) {
+                                // save is in a TARDIS area, so check that the spot is not occupied
+                                HashMap<String, Object> wheresave = new HashMap<String, Object>();
+                                wheresave.put("world", lore.get(0));
+                                wheresave.put("x", lore.get(1));
+                                wheresave.put("y", lore.get(2));
+                                wheresave.put("z", lore.get(3));
+                                ResultSetCurrentLocation rsz = new ResultSetCurrentLocation(plugin, wheresave);
+                                if (rsz.resultSet()) {
+                                    player.sendMessage(plugin.pluginName + "A TARDIS already occupies this parking spot! Try using the " + ChatColor.AQUA + "/tardistravel area [name]" + ChatColor.RESET + " command instead.");
                                     close(player);
                                     return;
                                 }
-                                if (!plugin.ta.areaCheckInExisting(save_dest)) {
-                                    // save is in a TARDIS area, so check that the spot is not occupied
-                                    HashMap<String, Object> wheresave = new HashMap<String, Object>();
-                                    wheresave.put("world", lore.get(0));
-                                    wheresave.put("x", lore.get(1));
-                                    wheresave.put("y", lore.get(2));
-                                    wheresave.put("z", lore.get(3));
-                                    ResultSetCurrentLocation rsz = new ResultSetCurrentLocation(plugin, wheresave);
-                                    if (rsz.resultSet()) {
-                                        player.sendMessage(plugin.pluginName + "A TARDIS already occupies this parking spot! Try using the " + ChatColor.AQUA + "/tardistravel area [name]" + ChatColor.RESET + " command instead.");
-                                        close(player);
-                                        return;
-                                    }
-                                }
-                                if (!save_dest.equals(current)) {
-                                    HashMap<String, Object> set = new HashMap<String, Object>();
-                                    set.put("world", lore.get(0));
-                                    set.put("x", plugin.utils.parseNum(lore.get(1)));
-                                    set.put("y", plugin.utils.parseNum(lore.get(2)));
-                                    set.put("z", plugin.utils.parseNum(lore.get(3)));
-                                    int l_size = lore.size();
-                                    if (l_size >= 5) {
-                                        if (!lore.get(4).isEmpty() && !lore.get(4).equals("§6Current location")) {
-                                            set.put("direction", lore.get(4));
-                                        }
-                                        if (l_size > 5 && !lore.get(5).isEmpty() && lore.get(5).equals("true")) {
-                                            set.put("submarine", 1);
-                                            plugin.trackSubmarine.add(id);
-                                        } else {
-                                            set.put("submarine", 0);
-                                        }
-                                    }
-                                    HashMap<String, Object> wheret = new HashMap<String, Object>();
-                                    wheret.put("tardis_id", id);
-                                    new QueryFactory(plugin).doUpdate("next", set, wheret);
-                                    plugin.tardisHasDestination.put(id, plugin.getArtronConfig().getInt("random"));
-                                    if (plugin.trackRescue.containsKey(Integer.valueOf(id))) {
-                                        plugin.trackRescue.remove(Integer.valueOf(id));
-                                    }
-                                    close(player);
-                                    player.sendMessage(plugin.pluginName + im.getDisplayName() + " destination set. Please release the handbrake!");
-                                } else if (!lore.contains("§6Current location")) {
-                                    lore.add("§6Current location");
-                                    im.setLore(lore);
-                                    is.setItemMeta(im);
-                                }
-                            } else {
-                                close(player);
-                                player.sendMessage(plugin.pluginName + im.getDisplayName() + " is not a valid destination!");
                             }
+                            if (!save_dest.equals(current)) {
+                                HashMap<String, Object> set = new HashMap<String, Object>();
+                                set.put("world", lore.get(0));
+                                set.put("x", plugin.utils.parseInt(lore.get(1)));
+                                set.put("y", plugin.utils.parseInt(lore.get(2)));
+                                set.put("z", plugin.utils.parseInt(lore.get(3)));
+                                int l_size = lore.size();
+                                if (l_size >= 5) {
+                                    if (!lore.get(4).isEmpty() && !lore.get(4).equals("§6Current location")) {
+                                        set.put("direction", lore.get(4));
+                                    }
+                                    if (l_size > 5 && !lore.get(5).isEmpty() && lore.get(5).equals("true")) {
+                                        set.put("submarine", 1);
+                                    } else {
+                                        set.put("submarine", 0);
+                                    }
+                                }
+                                HashMap<String, Object> wheret = new HashMap<String, Object>();
+                                wheret.put("tardis_id", id);
+                                new QueryFactory(plugin).doUpdate("next", set, wheret);
+                                plugin.tardisHasDestination.put(id, plugin.getArtronConfig().getInt("random"));
+                                if (plugin.trackRescue.containsKey(Integer.valueOf(id))) {
+                                    plugin.trackRescue.remove(Integer.valueOf(id));
+                                }
+                                close(player);
+                                player.sendMessage(plugin.pluginName + im.getDisplayName() + " destination set. Please release the handbrake!");
+                            } else if (!lore.contains("§6Current location")) {
+                                lore.add("§6Current location");
+                                im.setLore(lore);
+                                is.setItemMeta(im);
+                            }
+                        } else {
+                            close(player);
+                            player.sendMessage(plugin.pluginName + im.getDisplayName() + " is not a valid destination!");
                         }
                     }
                 }
@@ -183,9 +180,12 @@ public class TARDISSaveSignListener implements Listener {
      */
     private Location getLocation(List<String> lore) {
         World w = plugin.getServer().getWorld(lore.get(0));
-        int x = plugin.utils.parseNum(lore.get(1));
-        int y = plugin.utils.parseNum(lore.get(2));
-        int z = plugin.utils.parseNum(lore.get(3));
+        if (w == null) {
+            return null;
+        }
+        int x = plugin.utils.parseInt(lore.get(1));
+        int y = plugin.utils.parseInt(lore.get(2));
+        int z = plugin.utils.parseInt(lore.get(3));
         return new Location(w, x, y, z);
     }
 

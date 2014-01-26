@@ -19,9 +19,9 @@ package me.eccentric_nz.TARDIS.destroyers;
 import java.util.Collections;
 import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.TARDISConstants;
-import static me.eccentric_nz.TARDIS.TARDISConstants.SCHEMATIC.BIGGER;
-import static me.eccentric_nz.TARDIS.TARDISConstants.SCHEMATIC.DELUXE;
+import me.eccentric_nz.TARDIS.enumeration.SCHEMATIC;
+import me.eccentric_nz.TARDIS.builders.TARDISInteriorPostioning;
+import me.eccentric_nz.TARDIS.builders.TARDISTIPSData;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -57,9 +57,10 @@ public class TARDISDestroyerInner {
      * @param i the Material type id of the replacement block, this will either
      * be 0 (AIR) or 1 (STONE).
      * @param p the name of the player who owns the TARDIS.
+     * @param slot the TIPS slot number
      */
     @SuppressWarnings("deprecation")
-    public void destroyInner(TARDISConstants.SCHEMATIC schm, int id, World w, int i, String p) {
+    public void destroyInner(SCHEMATIC schm, int id, World w, int i, String p, int slot) {
         // get dimensions
         short[] d;
         switch (schm) {
@@ -98,54 +99,58 @@ public class TARDISDestroyerInner {
         short width = d[1];
         short l = d[2];
         // destroy TARDIS
-        int level, row, col, x, y, z, startx, startz, resetx, resetz;
-        // calculate startx, starty, startz
-        int gsl[] = plugin.utils.getStartLocation(id);
-        startx = gsl[0];
-        resetx = gsl[1];
-        boolean below = (!plugin.getConfig().getBoolean("create_worlds") && !plugin.getConfig().getBoolean("default_world"));
-        int starty = (below) ? (14 + h) : (63 + h);
-        startz = gsl[2];
-        resetz = gsl[3];
-        x = gsl[4];
-        z = gsl[5];
-        for (level = 0; level < h; level++) {
-            for (row = 0; row < width; row++) {
-                for (col = 0; col < l; col++) {
-                    // set the block to stone / air
-                    Block b = w.getBlockAt(startx, starty, startz);
-                    Material m = b.getType();
-                    // if it's a chest clear the inventory first
-                    if (m.equals(Material.CHEST)) {
-                        Chest container = (Chest) b.getState();
-                        //Is it a double chest?
-                        Chest chest = getDoubleChest(b);
-                        if (chest != null) {
-                            chest.getInventory().clear();
-                            chest.getBlock().setTypeId(0);
-                            container.getBlock().setTypeId(0);
-                        } else if (container != null) {
-                            container.getInventory().clear();
-                            container.getBlock().setTypeId(0);
+        boolean below = (!plugin.getConfig().getBoolean("creation.create_worlds") && !plugin.getConfig().getBoolean("creation.default_world"));
+        if (below) {
+            int level, row, col, startx, startz, starty, resetx, resetz;
+            // calculate startx, starty, startz
+            int gsl[] = plugin.utils.getStartLocation(id);
+            startx = gsl[0];
+            resetx = gsl[1];
+            starty = 14 + h;
+            startz = gsl[2];
+            resetz = gsl[3];
+            for (level = 0; level < h; level++) {
+                for (row = 0; row < width; row++) {
+                    for (col = 0; col < l; col++) {
+                        // set the block to stone / air
+                        Block b = w.getBlockAt(startx, starty, startz);
+                        Material m = b.getType();
+                        // if it's a chest clear the inventory first
+                        if (m.equals(Material.CHEST)) {
+                            Chest container = (Chest) b.getState();
+                            //Is it a double chest?
+                            Chest chest = getDoubleChest(b);
+                            if (chest != null) {
+                                chest.getInventory().clear();
+                                chest.getBlock().setTypeId(0);
+                                container.getBlock().setTypeId(0);
+                            } else if (container != null) {
+                                container.getInventory().clear();
+                                container.getBlock().setTypeId(0);
+                            }
                         }
-                    }
-                    // if it's a furnace clear the inventory first
-                    if (m.equals(Material.FURNACE)) {
-                        Furnace fur = (Furnace) b.getState();
-                        fur.getInventory().clear();
-                    }
-                    if (!m.equals(Material.CHEST)) {
-                        if (w.getBlockAt(startx, starty, startz).getTypeId() != i) {
-                            plugin.utils.setBlock(w, startx, starty, startz, i, (byte) 0);
+                        // if it's a furnace clear the inventory first
+                        if (m.equals(Material.FURNACE)) {
+                            Furnace fur = (Furnace) b.getState();
+                            fur.getInventory().clear();
                         }
+                        if (!m.equals(Material.CHEST)) {
+                            if (w.getBlockAt(startx, starty, startz).getTypeId() != i) {
+                                plugin.utils.setBlock(w, startx, starty, startz, i, (byte) 0);
+                            }
+                        }
+                        startx += 1;
                     }
-                    startx += x;
+                    startx = resetx;
+                    startz += 1;
                 }
-                startx = resetx;
-                startz += z;
+                startz = resetz;
+                starty -= 1;
             }
-            startz = resetz;
-            starty -= 1;
+        } else {
+            TARDISInteriorPostioning tips = new TARDISInteriorPostioning(plugin);
+            TARDISTIPSData coords = tips.getTIPSData(slot);
+            tips.reclaimChunks(w, coords);
         }
         // remove blocks saved to blocks table (iron/gold/diamond/emerald)
         QueryFactory qf = new QueryFactory(plugin);

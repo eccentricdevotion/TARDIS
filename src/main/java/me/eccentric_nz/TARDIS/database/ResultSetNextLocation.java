@@ -23,7 +23,7 @@ import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.TARDISConstants;
+import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import org.bukkit.World;
 
 /**
@@ -34,7 +34,7 @@ import org.bukkit.World;
  */
 public class ResultSetNextLocation {
 
-    private final TARDISDatabase service = TARDISDatabase.getInstance();
+    private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getInstance();
     private final Connection connection = service.getConnection();
     private final TARDIS plugin;
     private final HashMap<String, Object> where;
@@ -44,7 +44,7 @@ public class ResultSetNextLocation {
     private int x;
     private int y;
     private int z;
-    private TARDISConstants.COMPASS direction;
+    private COMPASS direction;
     private boolean submarine;
 
     /**
@@ -80,6 +80,7 @@ public class ResultSetNextLocation {
         }
         String query = "SELECT * FROM next" + wheres;
         try {
+            service.testConnection(connection);
             statement = connection.prepareStatement(query);
             if (where != null) {
                 int s = 1;
@@ -87,7 +88,7 @@ public class ResultSetNextLocation {
                     if (entry.getValue().getClass().equals(String.class)) {
                         statement.setString(s, entry.getValue().toString());
                     } else {
-                        statement.setInt(s, plugin.utils.parseNum(entry.getValue().toString()));
+                        statement.setInt(s, plugin.utils.parseInt(entry.getValue().toString()));
                     }
                     s++;
                 }
@@ -102,7 +103,7 @@ public class ResultSetNextLocation {
                     this.x = rs.getInt("x");
                     this.y = rs.getInt("y");
                     this.z = rs.getInt("z");
-                    this.direction = TARDISConstants.COMPASS.valueOf(rs.getString("direction"));
+                    this.direction = COMPASS.valueOf(rs.getString("direction"));
                     this.submarine = rs.getBoolean("submarine");
                 }
             } else {
@@ -123,7 +124,7 @@ public class ResultSetNextLocation {
                 plugin.debug("Error closing destinations table! " + e.getMessage());
             }
         }
-        return true;
+        return this.world != null;
     }
 
     public int getNext_id() {
@@ -150,7 +151,7 @@ public class ResultSetNextLocation {
         return z;
     }
 
-    public TARDISConstants.COMPASS getDirection() {
+    public COMPASS getDirection() {
         return direction;
     }
 

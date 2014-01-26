@@ -22,12 +22,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetAreas;
 import me.eccentric_nz.TARDIS.database.ResultSetDestinations;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
+import me.eccentric_nz.TARDIS.enumeration.MESSAGE;
 import org.bukkit.ChatColor;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.command.Command;
@@ -59,14 +59,14 @@ public class TARDISBindCommands implements CommandExecutor {
         firstArgs.add("biome"); // type 4
         firstArgs.add("remove");
         firstArgs.add("update");
-        type_1 = Arrays.asList(new String[]{"hide", "rebuild", "home"});
+        type_1 = Arrays.asList(new String[]{"hide", "rebuild", "home", "cave"});
     }
 
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
         if (cmd.getName().equalsIgnoreCase("tardisbind")) {
             if (!sender.hasPermission("tardis.update")) {
-                sender.sendMessage(plugin.pluginName + TARDISConstants.NO_PERMS_MESSAGE);
+                sender.sendMessage(plugin.pluginName + MESSAGE.NO_PERMS.getText());
                 return false;
             }
             Player player = null;
@@ -97,7 +97,7 @@ public class TARDISBindCommands implements CommandExecutor {
             wheret.put("player", player.getName());
             ResultSetTravellers rst = new ResultSetTravellers(plugin, wheret, false);
             if (!rst.resultSet()) {
-                sender.sendMessage(plugin.pluginName + "You are not inside your TARDIS. You need to be to run this command!");
+                sender.sendMessage(plugin.pluginName + MESSAGE.NOT_IN_TARDIS.getText());
                 return false;
             }
             if (args[0].equalsIgnoreCase("update")) {
@@ -165,7 +165,7 @@ public class TARDISBindCommands implements CommandExecutor {
                 set.put("tardis_id", id);
                 if (args[0].equalsIgnoreCase("cmd")) { // type 1
                     if (!type_1.contains(args[1])) {
-                        sender.sendMessage(plugin.pluginName + "You can only bind the hide, rebuild and home commands!");
+                        sender.sendMessage(plugin.pluginName + "You can only bind the hide, cave, rebuild and home commands!");
                         return true;
                     }
                     set.put("dest_name", args[1].toLowerCase(Locale.ENGLISH));

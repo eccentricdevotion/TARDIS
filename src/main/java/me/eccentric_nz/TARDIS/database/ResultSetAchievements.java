@@ -37,7 +37,7 @@ import me.eccentric_nz.TARDIS.TARDIS;
  */
 public class ResultSetAchievements {
 
-    private final TARDISDatabase service = TARDISDatabase.getInstance();
+    private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getInstance();
     private final Connection connection = service.getConnection();
     private final TARDIS plugin;
     private final HashMap<String, Object> where;
@@ -67,6 +67,8 @@ public class ResultSetAchievements {
     /**
      * Retrieves an SQL ResultSet from the achievements table. This method
      * returns true if a matching record was found.
+     *
+     * @return true or false
      */
     public boolean resultSet() {
         PreparedStatement statement = null;
@@ -80,8 +82,8 @@ public class ResultSetAchievements {
             wheres = " WHERE " + sbw.toString().substring(0, sbw.length() - 5);
         }
         String query = "SELECT * FROM achievements" + wheres;
-        //plugin.debug(query);
         try {
+            service.testConnection(connection);
             statement = connection.prepareStatement(query);
             if (where != null) {
                 int s = 1;
@@ -89,7 +91,7 @@ public class ResultSetAchievements {
                     if (entry.getValue().getClass().equals(String.class)) {
                         statement.setString(s, entry.getValue().toString());
                     } else {
-                        statement.setInt(s, plugin.utils.parseNum(entry.getValue().toString()));
+                        statement.setInt(s, plugin.utils.parseInt(entry.getValue().toString()));
                     }
                     s++;
                 }
@@ -110,6 +112,9 @@ public class ResultSetAchievements {
                 this.player = rs.getString("player");
                 this.name = rs.getString("name");
                 this.amount = rs.getString("amount");
+                if (rs.wasNull()) {
+                    this.amount = "";
+                }
                 this.completed = rs.getBoolean("completed");
             } else {
                 return false;

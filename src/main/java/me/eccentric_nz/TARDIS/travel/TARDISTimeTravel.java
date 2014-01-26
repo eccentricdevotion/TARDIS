@@ -22,14 +22,13 @@ import java.util.List;
 import java.util.Random;
 import java.util.Set;
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
+import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.World.Environment;
-import org.bukkit.block.Biome;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Player;
@@ -65,7 +64,7 @@ public class TARDISTimeTravel {
         goodMaterials.add(Material.SAPLING);
         goodMaterials.add(Material.SNOW);
         respect = new TARDISPluginRespect(plugin);
-        this.attempts = plugin.getConfig().getInt("random_attempts");
+        this.attempts = plugin.getConfig().getInt("travel.random_attempts");
     }
 
     /**
@@ -88,13 +87,13 @@ public class TARDISTimeTravel {
      * @return a random Location
      */
     @SuppressWarnings("deprecation")
-    public Location randomDestination(Player p, byte rx, byte rz, byte ry, TARDISConstants.COMPASS d, String e, World this_world, boolean malfunction, Location current) {
+    public Location randomDestination(Player p, byte rx, byte rz, byte ry, COMPASS d, String e, World this_world, boolean malfunction, Location current) {
         int startx, starty, startz, resetx, resetz, listlen, rw;
         World randworld = null;
         int count;
         Random rand = new Random();
         // get max_radius from config
-        int max = plugin.getConfig().getInt("tp_radius");
+        int max = plugin.getConfig().getInt("travel.tp_radius");
         int quarter = (max + 4 - 1) / 4;
         int range = quarter + 1;
         int wherex = 0, highest = 252, wherez = 0;
@@ -114,12 +113,12 @@ public class TARDISTimeTravel {
                         env = "NORMAL";
                     }
                     if (e.equalsIgnoreCase(env)) {
-                        if (plugin.getConfig().getBoolean("include_default_world") || !plugin.getConfig().getBoolean("default_world")) {
+                        if (plugin.getConfig().getBoolean("travel.include_default_world") || !plugin.getConfig().getBoolean("creation.default_world")) {
                             if (plugin.getConfig().getBoolean("worlds." + o) || malfunction) {
                                 allowedWorlds.add(plugin.getServer().getWorld(o));
                             }
                         } else {
-                            if (!o.equals(plugin.getConfig().getString("default_world_name"))) {
+                            if (!o.equals(plugin.getConfig().getString("creation.default_world_name"))) {
                                 if (plugin.getConfig().getBoolean("worlds." + o) || malfunction) {
                                     allowedWorlds.add(plugin.getServer().getWorld(o));
                                 }
@@ -131,7 +130,7 @@ public class TARDISTimeTravel {
                         allowedWorlds.remove(this_world);
                     }
                     // remove the world if the player doesn't have permission
-                    if (allowedWorlds.size() > 1 && plugin.getConfig().getBoolean("per_world_perms") && !p.hasPermission("tardis.travel." + o)) {
+                    if (allowedWorlds.size() > 1 && plugin.getConfig().getBoolean("travel.per_world_perms") && !p.hasPermission("tardis.travel." + o)) {
                         allowedWorlds.remove(this_world);
                     }
                 }
@@ -194,7 +193,7 @@ public class TARDISTimeTravel {
         }
         // Assume every non-nether/non-END world qualifies as NORMAL.
         if (randworld != null && !randworld.getEnvironment().equals(Environment.NETHER) && !randworld.getEnvironment().equals(Environment.THE_END)) {
-            long timeout = System.currentTimeMillis() + (plugin.getConfig().getLong("timeout") * 1000);
+            long timeout = System.currentTimeMillis() + (plugin.getConfig().getLong("travel.timeout") * 1000);
             while (true) {
                 if (System.currentTimeMillis() < timeout) {
                     // reset count
@@ -205,13 +204,13 @@ public class TARDISTimeTravel {
                     highest = randworld.getHighestBlockYAt(wherex, wherez);
                     if (highest > 3) {
                         Block currentBlock = randworld.getBlockAt(wherex, highest, wherez);
-                        if ((currentBlock.getRelative(BlockFace.DOWN).getTypeId() == 8 || currentBlock.getRelative(BlockFace.DOWN).getTypeId() == 9) && plugin.getConfig().getBoolean("land_on_water") == false) {
+                        if ((currentBlock.getRelative(BlockFace.DOWN).getTypeId() == 8 || currentBlock.getRelative(BlockFace.DOWN).getTypeId() == 9) && plugin.getConfig().getBoolean("travel.land_on_water") == false) {
                             // check if submarine is on
                             HashMap<String, Object> wheres = new HashMap<String, Object>();
                             wheres.put("player", p.getName());
                             ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, wheres);
                             if (rsp.resultSet()) {
-                                if (rsp.isSubmarine_on() && currentBlock.getBiome().equals(Biome.OCEAN)) {
+                                if (rsp.isSubmarineOn() && plugin.utils.isOceanBiome(currentBlock.getBiome())) {
                                     // get submarine location
                                     p.sendMessage(plugin.pluginName + "Searching for underwater location...");
                                     Location underwater = submarine(currentBlock, d);
@@ -227,7 +226,7 @@ public class TARDISTimeTravel {
                                     } else {
                                         count = 1;
                                     }
-                                } else if (!rsp.isSubmarine_on()) {
+                                } else if (!rsp.isSubmarineOn()) {
                                     count = 1;
                                 }
                             } else {
@@ -264,7 +263,7 @@ public class TARDISTimeTravel {
                     if (!respect.getRespect(p, new Location(randworld, wherex, highest, wherez), false)) {
                         return null;
                     } else {
-                        highest = plugin.getConfig().getInt("timeout_height");
+                        highest = plugin.getConfig().getInt("travel.timeout_height");
                         break;
                     }
                 }
@@ -288,7 +287,7 @@ public class TARDISTimeTravel {
      * @return the number of unsafe blocks
      */
     @SuppressWarnings("deprecation")
-    public int safeLocation(int startx, int starty, int startz, int resetx, int resetz, World w, TARDISConstants.COMPASS d) {
+    public int safeLocation(int startx, int starty, int startz, int resetx, int resetz, World w, COMPASS d) {
         int level, row, col, rowcount, colcount, count = 0;
         switch (d) {
             case EAST:
@@ -327,7 +326,7 @@ public class TARDISTimeTravel {
      * @param loc
      * @param d the direction the Police Box is facing.
      */
-    public void testSafeLocation(Location loc, TARDISConstants.COMPASS d) {
+    public void testSafeLocation(Location loc, COMPASS d) {
         final World w = loc.getWorld();
         final int starty = loc.getBlockY();
         int sx, sz;
@@ -405,7 +404,7 @@ public class TARDISTimeTravel {
      * @param d the direction the Police Box is facing.
      * @return an array containing x and z coordinates
      */
-    public int[] getStartLocation(Location loc, TARDISConstants.COMPASS d) {
+    public int[] getStartLocation(Location loc, COMPASS d) {
         switch (d) {
             case EAST:
                 startLoc[0] = loc.getBlockX() - 2;
@@ -440,7 +439,7 @@ public class TARDISTimeTravel {
      * @return true or false
      */
     @SuppressWarnings("deprecation")
-    public boolean safeNether(World nether, int wherex, int wherez, TARDISConstants.COMPASS d, Player p) {
+    public boolean safeNether(World nether, int wherex, int wherez, COMPASS d, Player p) {
         boolean safe = false;
         int startx, starty, startz, resetx, resetz, count;
         int wherey = 100;
@@ -567,11 +566,11 @@ public class TARDISTimeTravel {
     }
 
     @SuppressWarnings("deprecation")
-    public Location submarine(Block b, TARDISConstants.COMPASS d) {
+    public Location submarine(Block b, COMPASS d) {
         Block block = b;
         while (true) {
             block = block.getRelative(BlockFace.DOWN);
-            if (!block.getType().equals(Material.STATIONARY_WATER) && !block.getType().equals(Material.WATER)) {
+            if (!block.getType().equals(Material.STATIONARY_WATER) && !block.getType().equals(Material.WATER) && !block.getType().equals(Material.ICE)) {
                 break;
             }
         }
@@ -587,7 +586,7 @@ public class TARDISTimeTravel {
     }
 
     @SuppressWarnings("deprecation")
-    public boolean isSafeSubmarine(Location l, TARDISConstants.COMPASS d) {
+    public boolean isSafeSubmarine(Location l, COMPASS d) {
         int[] s = getStartLocation(l, d);
         int level, row, col, rowcount, colcount, count = 0;
         int starty = l.getBlockY();

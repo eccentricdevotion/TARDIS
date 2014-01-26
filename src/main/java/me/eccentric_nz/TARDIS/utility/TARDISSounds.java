@@ -43,7 +43,7 @@ public class TARDISSounds {
      * don't have SFX set to false.
      */
     public static void randomTARDISSound() {
-        if (TARDIS.plugin.getConfig().getBoolean("sfx") == true) {
+        if (TARDIS.plugin.getConfig().getBoolean("allow.sfx") == true) {
             ResultSetTravellers rs = new ResultSetTravellers(TARDIS.plugin, null, true);
             if (rs.resultSet()) {
                 List<String> data = rs.getData();
@@ -53,7 +53,7 @@ public class TARDISSounds {
                     ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(TARDIS.plugin, where);
                     boolean userSFX;
                     if (rsp.resultSet()) {
-                        userSFX = rsp.isSFX_on();
+                        userSFX = rsp.isSfxOn();
                     } else {
                         userSFX = true;
                     }

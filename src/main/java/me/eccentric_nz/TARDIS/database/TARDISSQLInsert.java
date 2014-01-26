@@ -30,7 +30,7 @@ import me.eccentric_nz.TARDIS.TARDIS;
 public class TARDISSQLInsert implements Runnable {
 
     private final TARDIS plugin;
-    private final TARDISDatabase service = TARDISDatabase.getInstance();
+    private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getInstance();
     private final Connection connection = service.getConnection();
     private final String table;
     private final HashMap<String, Object> data;
@@ -64,6 +64,7 @@ public class TARDISSQLInsert implements Runnable {
         fields = sbf.toString().substring(0, sbf.length() - 1);
         questions = sbq.toString().substring(0, sbq.length() - 1);
         try {
+            service.testConnection(connection);
             ps = connection.prepareStatement("INSERT INTO " + table + " (" + fields + ") VALUES (" + questions + ")");
             int i = 1;
             for (Map.Entry<String, Object> entry : data.entrySet()) {
@@ -71,9 +72,9 @@ public class TARDISSQLInsert implements Runnable {
                     ps.setString(i, entry.getValue().toString());
                 } else {
                     if (entry.getValue().getClass().getName().contains("Double")) {
-                        ps.setDouble(i, Double.parseDouble(entry.getValue().toString()));
+                        ps.setDouble(i, plugin.utils.parseDouble(entry.getValue().toString()));
                     } else {
-                        ps.setInt(i, plugin.utils.parseNum(entry.getValue().toString()));
+                        ps.setInt(i, plugin.utils.parseInt(entry.getValue().toString()));
                     }
                 }
                 i++;

@@ -18,9 +18,9 @@ package me.eccentric_nz.TARDIS.rooms;
 
 import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.TARDISConstants.COMPASS;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
+import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
@@ -121,7 +121,7 @@ public class TARDISRoomBuilder {
             roomData.setDimensions(dimensions);
 
             // determine how often to place a block (in ticks) - `room_speed` is the number of blocks to place in a second (20 ticks)
-            long delay = Math.round(20 / plugin.getConfig().getDouble("room_speed"));
+            long delay = Math.round(20 / plugin.getConfig().getDouble("growth.room_speed"));
             TARDISRoomRunnable runnable = new TARDISRoomRunnable(plugin, roomData, p);
             int taskID = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, runnable, delay, delay);
             runnable.setTask(taskID);

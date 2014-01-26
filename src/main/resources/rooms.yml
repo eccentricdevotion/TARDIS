@@ -126,3 +126,9 @@ rooms:
     offset: -4
     seed: BRICK
     user: false
+  RENDERER:
+    enabled: true
+    cost: 550
+    offset: -4
+    seed: HARD_CLAY
+    user: false

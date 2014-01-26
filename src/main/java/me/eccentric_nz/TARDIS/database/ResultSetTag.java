@@ -34,7 +34,7 @@ import me.eccentric_nz.TARDIS.TARDIS;
  */
 public class ResultSetTag {
 
-    private final TARDISDatabase service = TARDISDatabase.getInstance();
+    private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getInstance();
     private final Connection connection = service.getConnection();
     private final TARDIS plugin;
     private final ArrayList<HashMap<String, String>> data = new ArrayList<HashMap<String, String>>();
@@ -61,10 +61,10 @@ public class ResultSetTag {
         ResultSet rs = null;
         String query = "SELECT * FROM tag ORDER BY time DESC LIMIT 5";
         try {
+            service.testConnection(connection);
             statement = connection.prepareStatement(query);
             rs = statement.executeQuery();
             if (rs.isBeforeFirst()) {
-                //plugin.debug(query);
                 while (rs.next()) {
                     HashMap<String, String> row = new HashMap<String, String>();
                     ResultSetMetaData rsmd = rs.getMetaData();

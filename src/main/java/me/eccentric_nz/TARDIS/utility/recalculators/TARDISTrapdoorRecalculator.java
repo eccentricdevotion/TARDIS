@@ -16,7 +16,9 @@
  */
 package me.eccentric_nz.TARDIS.utility.recalculators;
 
-import me.eccentric_nz.TARDIS.TARDISConstants;
+import me.eccentric_nz.TARDIS.enumeration.COMPASS;
+
+;
 
 /**
  *
@@ -30,9 +32,10 @@ public class TARDISTrapdoorRecalculator {
      *
      * @param b the byte stored in the preset data
      * @param d the new direction of the TARDIS
+     * @param torch whether this is the torch preset
      * @return the recalculated byte
      */
-    public byte recalculate(byte b, TARDISConstants.COMPASS d) {
+    public byte recalculate(byte b, COMPASS d, boolean torch) {
         byte recalc;
         switch (d) {
             case SOUTH:
@@ -90,57 +93,70 @@ public class TARDISTrapdoorRecalculator {
                 }
                 break;
             case WEST:
-                switch (b) {
-                    case 0:
-                        recalc = 1;
-                        break;
-                    case 1:
-                        recalc = 0;
-                        break;
-                    case 2:
-                        recalc = 3;
-                        break;
-                    case 3:
-                        recalc = 2;
-                        break;
-                    case 4:
-                        recalc = 5;
-                        break;
-                    case 5:
-                        recalc = 4;
-                        break;
-                    case 6:
-                        recalc = 7;
-                        break;
-                    case 7:
-                        recalc = 6;
-                        break;
-                    case 8:
-                        recalc = 9;
-                        break;
-                    case 9:
-                        recalc = 8;
-                        break;
-                    case 10:
-                        recalc = 11;
-                        break;
-                    case 11:
-                        recalc = 10;
-                        break;
-                    case 12:
-                        recalc = 13;
-                        break;
-                    case 13:
-                        recalc = 12;
-                        break;
-                    case 14:
-                        recalc = 15;
-                        break;
-                    case 15:
-                        recalc = 14;
-                        break;
-                    default:
-                        recalc = b;
+                if (torch) {
+                    switch (b) {
+                        case 14:
+                            recalc = 15;
+                            break;
+                        case 15:
+                            recalc = 14;
+                            break;
+                        default:
+                            recalc = b;
+                    }
+                } else {
+                    switch (b) {
+                        case 0:
+                            recalc = 1;
+                            break;
+                        case 1:
+                            recalc = 0;
+                            break;
+                        case 2:
+                            recalc = 3;
+                            break;
+                        case 3:
+                            recalc = 2;
+                            break;
+                        case 4:
+                            recalc = 5;
+                            break;
+                        case 5:
+                            recalc = 4;
+                            break;
+                        case 6:
+                            recalc = 7;
+                            break;
+                        case 7:
+                            recalc = 6;
+                            break;
+                        case 8:
+                            recalc = 9;
+                            break;
+                        case 9:
+                            recalc = 8;
+                            break;
+                        case 10:
+                            recalc = 11;
+                            break;
+                        case 11:
+                            recalc = 10;
+                            break;
+                        case 12:
+                            recalc = 13;
+                            break;
+                        case 13:
+                            recalc = 12;
+                            break;
+                        case 14:
+                            recalc = 15;
+                            break;
+                        case 15:
+                            recalc = 14;
+                            break;
+                        default:
+                            recalc = b;
+                    }
                 }
                 break;
             default:

@@ -19,10 +19,14 @@ package me.eccentric_nz.TARDIS.commands.tardis;
 import java.util.HashMap;
 import java.util.Locale;
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.TARDISConstants;
+import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
+import me.eccentric_nz.TARDIS.artron.TARDISArtronIndicator;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
+import me.eccentric_nz.TARDIS.enumeration.COMPASS;
+import me.eccentric_nz.TARDIS.enumeration.MESSAGE;
+import me.eccentric_nz.TARDIS.enumeration.PRESET;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
@@ -48,37 +52,45 @@ public class TARDISDirectionCommand {
             where.put("owner", player.getName());
             ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
             if (!rs.resultSet()) {
-                player.sendMessage(plugin.pluginName + TARDISConstants.NO_TARDIS);
+                player.sendMessage(plugin.pluginName + MESSAGE.NO_TARDIS.getText());
                 return false;
             }
             final int id = rs.getTardis_id();
+            TARDISCircuitChecker tcc = null;
+            if (plugin.getConfig().getString("preferences.difficulty").equals("hard")) {
+                tcc = new TARDISCircuitChecker(plugin, id);
+                tcc.getCircuits();
+            }
+            if (tcc != null && !tcc.hasMaterialisation()) {
+                player.sendMessage(plugin.pluginName + "The Materialisation Circuit is missing from the console!");
+                return true;
+            }
             int level = rs.getArtron_level();
             int amount = plugin.getArtronConfig().getInt("random");
             if (level < amount) {
                 player.sendMessage(plugin.pluginName + "The TARDIS does not have enough Artron Energy to change the Police Box direction!");
                 return true;
             }
-            if (plugin.tardisMaterialising.contains(id) || plugin.tardisDematerialising.contains(id)) {
-                player.sendMessage(plugin.pluginName + "You cannot do that while the TARDIS is materialising!");
+            if (plugin.inVortex.contains(Integer.valueOf(id))) {
+                player.sendMessage(plugin.pluginName + MESSAGE.NOT_WHILE_MAT.getText());
                 return true;
             }
             boolean tmp_cham = false;
-            if (plugin.getConfig().getBoolean("chameleon")) {
+            if (plugin.getConfig().getBoolean("travel.chameleon")) {
                 tmp_cham = rs.isChamele_on();
             }
             final boolean cham = tmp_cham;
-            String plat = rs.getPlatform();
             boolean hid = rs.isHidden();
-            TARDISConstants.PRESET demat = rs.getDemat();
+            PRESET demat = rs.getDemat();
             String dir = args[1].toUpperCase(Locale.ENGLISH);
             HashMap<String, Object> wherecl = new HashMap<String, Object>();
             wherecl.put("tardis_id", id);
-            ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
+            final ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
             if (!rsc.resultSet()) {
-                player.sendMessage(plugin.pluginName + "Could not get the TARDIS location!");
+                player.sendMessage(plugin.pluginName + MESSAGE.NO_CURRENT.getText());
                 return true;
             }
-            TARDISConstants.COMPASS old_d = rsc.getDirection();
+            COMPASS old_d = rsc.getDirection();
             QueryFactory qf = new QueryFactory(plugin);
             HashMap<String, Object> tid = new HashMap<String, Object>();
             HashMap<String, Object> set = new HashMap<String, Object>();
@@ -92,11 +104,14 @@ public class TARDISDirectionCommand {
             setd.put("door_direction", dir);
             qf.doUpdate("doors", setd, did);
             final Location l = new Location(rsc.getWorld(), rsc.getX(), rsc.getY(), rsc.getZ());
-            final TARDISConstants.COMPASS d = TARDISConstants.COMPASS.valueOf(dir);
+            final COMPASS d = COMPASS.valueOf(dir);
             // destroy sign
             if (!hid) {
-                if (demat.equals(TARDISConstants.PRESET.DUCK)) {
-                    plugin.destroyerP.destroyDuckEyes(l, d);
+                if (demat.equals(PRESET.DUCK)) {
+                    plugin.destroyerP.destroyDuckEyes(l, old_d);
+                }
+                if (demat.equals(PRESET.MINESHAFT)) {
+                    plugin.destroyerP.destroyMineshaftTorches(l, old_d);
                 }
                 plugin.destroyerP.destroyDoor(id);
                 plugin.destroyerP.destroySign(l, old_d, demat);
@@ -104,16 +119,16 @@ public class TARDISDirectionCommand {
             plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
                 @Override
                 public void run() {
-                    plugin.builderP.buildPreset(id, l, d, cham, player, true, false);
+                    plugin.builderP.buildPreset(id, l, d, cham, player, true, false, rsc.isSubmarine());
                 }
             }, 10L);
             HashMap<String, Object> wherea = new HashMap<String, Object>();
             wherea.put("tardis_id", id);
             qf.alterEnergyLevel("tardis", -amount, wherea, player);
-            player.sendMessage(plugin.pluginName + "You used " + amount + " Artron Energy changing the Police Box direction.");
+            new TARDISArtronIndicator(plugin).showArtronLevel(player, id, true, amount);
             return true;
         } else {
-            player.sendMessage(plugin.pluginName + TARDISConstants.NO_PERMS_MESSAGE);
+            player.sendMessage(plugin.pluginName + MESSAGE.NO_PERMS.getText());
             return false;
         }
     }

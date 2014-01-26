@@ -21,11 +21,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.TARDISConstants.COMPASS;
-import me.eccentric_nz.TARDIS.TARDISConstants.SCHEMATIC;
+import me.eccentric_nz.TARDIS.enumeration.SCHEMATIC;
 import me.eccentric_nz.TARDIS.achievement.TARDISAchievementFactory;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
+import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.rooms.TARDISCondenserData;
 import me.eccentric_nz.TARDIS.rooms.TARDISRoomBuilder;
 import me.eccentric_nz.TARDIS.rooms.TARDISRoomDirection;
@@ -93,9 +93,9 @@ public class TARDISRoomSeeder implements Listener {
             where.put("player", playerNameStr);
             ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, where);
             if (rsp.resultSet()) {
-                key = (!rsp.getKey().isEmpty()) ? rsp.getKey() : plugin.getConfig().getString("key");
+                key = (!rsp.getKey().isEmpty()) ? rsp.getKey() : plugin.getConfig().getString("preferences.key");
             } else {
-                key = plugin.getConfig().getString("key");
+                key = plugin.getConfig().getString("preferences.key");
             }
             // only proceed if they are clicking a seed block with the TARDIS key!
             if (plugin.seeds.containsKey(blockType) && inhand.equals(Material.getMaterial(key))) {
@@ -163,7 +163,7 @@ public class TARDISRoomSeeder implements Listener {
                     set.put("owner", playerNameStr);
                     qf.alterEnergyLevel("tardis", -amount, set, player);
                     // remove blocks from condenser table if rooms_require_blocks is true
-                    if (plugin.getConfig().getBoolean("rooms_require_blocks")) {
+                    if (plugin.getConfig().getBoolean("growth.rooms_require_blocks")) {
                         TARDISCondenserData c_data = plugin.roomCondenserData.get(playerNameStr);
                         for (Map.Entry<String, Integer> entry : c_data.getBlockIDCount().entrySet()) {
                             HashMap<String, Object> wherec = new HashMap<String, Object>();

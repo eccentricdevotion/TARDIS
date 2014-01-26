@@ -22,9 +22,11 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import me.eccentric_nz.TARDIS.JSON.JSONArray;
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
+import me.eccentric_nz.TARDIS.database.ResultSetAchievements;
+import me.eccentric_nz.TARDIS.enumeration.SCHEMATIC;
 import me.eccentric_nz.tardischunkgenerator.TARDISChunkGenerator;
 import org.bukkit.ChatColor;
 import org.bukkit.Chunk;
@@ -36,7 +38,6 @@ import org.bukkit.block.Block;
 import org.bukkit.block.Sign;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
-import me.eccentric_nz.TARDIS.JSON.JSONArray;
 
 /**
  * The TARDIS was prone to a number of technical faults, ranging from depleted
@@ -71,13 +72,15 @@ public class TARDISBuilderInner {
      * or 35 (if TARDIS was made via the creation stack), this material
      * determines the makeup of the TARDIS floors.
      * @param floor_data the data bit associated with the floor_id parameter.
+     * @param tips a boolean determining where this TARDIS will be built
+     * -------- false:own world, underground - true:default world--------
      */
     @SuppressWarnings("deprecation")
-    public void buildInner(TARDISConstants.SCHEMATIC schm, World world, int dbID, Player p, int middle_id, byte middle_data, int floor_id, byte floor_data) {
+    public void buildInner(SCHEMATIC schm, World world, int dbID, Player p, int middle_id, byte middle_data, int floor_id, byte floor_data, boolean tips) {
         String[][][] s;
         short[] d;
         int level, row, col, id, x, z, startx, startz, resetx, resetz, j = 2;
-        boolean below = (!plugin.getConfig().getBoolean("create_worlds") && !plugin.getConfig().getBoolean("default_world"));
+        boolean below = (!plugin.getConfig().getBoolean("creation.create_worlds") && !plugin.getConfig().getBoolean("creation.default_world"));
         int starty;
         if (below) {
             starty = 15;
@@ -139,6 +142,7 @@ public class TARDISBuilderInner {
         short l = d[2];
         byte data;
         String tmp;
+        String playerNameStr = p.getName();
         HashMap<Block, Byte> postDoorBlocks = new HashMap<Block, Byte>();
         HashMap<Block, Byte> postTorchBlocks = new HashMap<Block, Byte>();
         HashMap<Block, Byte> postSignBlocks = new HashMap<Block, Byte>();
@@ -152,28 +156,45 @@ public class TARDISBuilderInner {
         Block postTISBlock = null;
         Block postTemporalBlock = null;
         Block postKeyboardBlock = null;
+        QueryFactory qf = new QueryFactory(plugin);
+        HashMap<String, Object> set = new HashMap<String, Object>();
         // calculate startx, starty, startz
-        int gsl[] = plugin.utils.getStartLocation(dbID);
-        startx = gsl[0];
-        resetx = gsl[1];
-        startz = gsl[2];
-        resetz = gsl[3];
-        x = gsl[4];
-        z = gsl[5];
-        boolean own_world = plugin.getConfig().getBoolean("create_worlds");
+        TARDISTIPSData pos = null;
+        if (tips) { // default world - use TIPS
+            TARDISInteriorPostioning tintpos = new TARDISInteriorPostioning(plugin);
+            int slot = tintpos.getFreeSlot();
+            // save the slot
+            set.put("tips", slot);
+            pos = tintpos.getTIPSData(slot);
+            startx = pos.getCentreX();
+            resetx = pos.getCentreX();
+            startz = pos.getCentreZ();
+            plugin.debug("startx: " + startx + ", startz: " + startz);
+            resetz = pos.getCentreZ();
+            // get the correct chunk for ARS
+            Chunk c = world.getChunkAt(new Location(world, startx, starty, startz));
+            String chun = world.getName() + ":" + c.getX() + ":" + c.getZ();
+            set.put("chunk", chun);
+        } else {
+            int gsl[] = plugin.utils.getStartLocation(dbID);
+            startx = gsl[0];
+            resetx = gsl[1];
+            startz = gsl[2];
+            resetz = gsl[3];
+        }
+        boolean own_world = plugin.getConfig().getBoolean("creation.create_worlds");
         Location wg1 = new Location(world, startx, starty, startz);
         Location wg2 = new Location(world, startx + (w - 1), starty + (h - 1), startz + (l - 1));
-        QueryFactory qf = new QueryFactory(plugin);
         // get list of used chunks
         List<Chunk> chunkList = getChunks(world, wg1.getChunk().getX(), wg1.getChunk().getZ(), d);
         // update chunks list in DB
         for (Chunk c : chunkList) {
-            HashMap<String, Object> set = new HashMap<String, Object>();
-            set.put("tardis_id", dbID);
-            set.put("world", world.getName());
-            set.put("x", c.getX());
-            set.put("z", c.getZ());
-            qf.doInsert("chunks", set);
+            HashMap<String, Object> setc = new HashMap<String, Object>();
+            setc.put("tardis_id", dbID);
+            setc.put("world", world.getName());
+            setc.put("x", c.getX());
+            setc.put("z", c.getZ());
+            qf.doInsert("chunks", setc);
         }
         // if for some reason this is not a TARDIS world, set the blocks to air first
         if (below) {
@@ -181,10 +202,10 @@ public class TARDISBuilderInner {
                 for (row = 0; row < w; row++) {
                     for (col = 0; col < l; col++) {
                         plugin.utils.setBlock(world, startx, starty, startz, 0, (byte) 0);
-                        startx += x;
+                        startx += 1;
                     }
                     startx = resetx;
-                    startz += z;
+                    startz += 1;
                 }
                 startz = resetz;
                 starty += 1;
@@ -194,7 +215,6 @@ public class TARDISBuilderInner {
             starty = 15;
             startz = resetz;
         }
-        HashMap<String, Object> set = new HashMap<String, Object>();
         HashMap<String, Object> where = new HashMap<String, Object>();
         where.put("tardis_id", dbID);
         for (level = 0; level < h; level++) {
@@ -204,19 +224,24 @@ public class TARDISBuilderInner {
                     if (!tmp.equals("-")) {
                         if (tmp.contains(":")) {
                             String[] iddata = tmp.split(":");
-                            id = plugin.utils.parseNum(iddata[0]);
-                            data = Byte.parseByte(iddata[1]);
+                            id = plugin.utils.parseInt(iddata[0]);
+                            data = plugin.utils.parseByte(iddata[1]);
                             if (id == 7) {
                                 // remember bedrock location to block off the beacon light
                                 String bedrocloc = world.getName() + ":" + startx + ":" + starty + ":" + startz;
                                 set.put("beacon", bedrocloc);
+                            }
+                            if (id == 25) { // noteblock
+                                // remember the location of this Disk Storage
+                                String storage = plugin.utils.makeLocationStr(world, startx, starty, startz);
+                                qf.insertSyncControl(dbID, 14, storage, 0);
                             }
                             if (id == 35) { // wool
                                 switch (data) {
                                     case 1:
                                         switch (middle_id) {
                                             case 22: // if using the default Lapis Block - then use Orange Wool / Stained Clay
-                                                if (plugin.getConfig().getBoolean("use_clay")) {
+                                                if (plugin.getConfig().getBoolean("creation.use_clay")) {
                                                     id = 159;
                                                 }
                                                 break;
@@ -226,10 +251,10 @@ public class TARDISBuilderInner {
                                         }
                                         break;
                                     case 8:
-                                        if (!schm.equals(TARDISConstants.SCHEMATIC.ELEVENTH)) {
+                                        if (!schm.equals(SCHEMATIC.ELEVENTH)) {
                                             switch (floor_id) {
                                                 case 22: // if using the default Lapis Block - then use Light Grey Wool / Stained Clay
-                                                    if (plugin.getConfig().getBoolean("use_clay")) {
+                                                    if (plugin.getConfig().getBoolean("creation.use_clay")) {
                                                         id = 159;
                                                     }
                                                     break;
@@ -238,13 +263,13 @@ public class TARDISBuilderInner {
                                                     data = floor_data;
                                             }
                                         } else {
-                                            if (plugin.getConfig().getBoolean("use_clay")) {
+                                            if (plugin.getConfig().getBoolean("creation.use_clay")) {
                                                 id = 159;
                                             }
                                         }
                                         break;
                                     default:
-                                        if (plugin.getConfig().getBoolean("use_clay")) {
+                                        if (plugin.getConfig().getBoolean("creation.use_clay")) {
                                             id = 159;
                                         }
                                         break;
@@ -295,6 +320,13 @@ public class TARDISBuilderInner {
                                 // remember the location of this button
                                 String button = plugin.utils.makeLocationStr(world, startx, starty, startz);
                                 qf.insertSyncControl(dbID, 1, button, 0);
+                            }
+                            if (id == 84) { // jukebox
+                                // remember the location of this Advanced Console
+                                String advanced = plugin.utils.makeLocationStr(world, startx, starty, startz);
+                                qf.insertSyncControl(dbID, 15, advanced, 0);
+                                // check if player has storage record, and update the tardis_id field
+                                plugin.utils.updateStorageId(playerNameStr, dbID, qf);
                             }
                             if (id == 92) {
                                 /*
@@ -363,13 +395,13 @@ public class TARDISBuilderInner {
                                                 control = 173;
                                                 break;
                                             case ARS:
-                                                control = 159;
+                                                control = 155;
                                                 break;
                                             case PLANK:
-                                                control = 22;
+                                                control = 47;
                                                 break;
                                             case TOM:
-                                                control = 155;
+                                                control = 22;
                                                 break;
                                             default:
                                                 break;
@@ -378,7 +410,7 @@ public class TARDISBuilderInner {
                                         JSONArray json = new JSONArray(empty);
                                         HashMap<String, Object> seta = new HashMap<String, Object>();
                                         seta.put("tardis_id", dbID);
-                                        seta.put("player", p.getName());
+                                        seta.put("player", playerNameStr);
                                         seta.put("json", json.toString());
                                         qf.doInsert("ars", seta);
                                         break;
@@ -399,7 +431,7 @@ public class TARDISBuilderInner {
                                 // remember lamp blocks
                                 Block lamp = world.getBlockAt(startx, starty, startz);
                                 lampblocks.add(lamp);
-                                if (plugin.getConfig().getInt("malfunction") > 0) {
+                                if (plugin.getConfig().getInt("preferences.malfunction") > 0) {
                                     // remember lamp block locations for malfunction
                                     HashMap<String, Object> setlb = new HashMap<String, Object>();
                                     String lloc = world.getName() + ":" + startx + ":" + starty + ":" + startz;
@@ -408,7 +440,7 @@ public class TARDISBuilderInner {
                                     qf.doInsert("lamps", setlb);
                                 }
                             }
-                            if (id == 137 || id == -119 || ((schm.equals(TARDISConstants.SCHEMATIC.BIGGER) || schm.equals(TARDISConstants.SCHEMATIC.DELUXE)) && (id == 138 || id == -118))) {
+                            if (id == 137 || id == -119 || ((schm.equals(SCHEMATIC.BIGGER) || schm.equals(SCHEMATIC.DELUXE)) && (id == 138 || id == -118))) {
                                 /*
                                  * command block - remember it to spawn the creeper on.
                                  * could also be a beacon block, as the creeper sits
@@ -418,7 +450,7 @@ public class TARDISBuilderInner {
                                 set.put("creeper", creeploc);
                                 switch (schm) {
                                     case CUSTOM:
-                                        id = plugin.getConfig().getInt("custom_creeper_id");
+                                        id = plugin.getConfig().getInt("creation.custom_creeper_id");
                                         break;
                                     case BIGGER:
                                     case DELUXE:
@@ -438,7 +470,7 @@ public class TARDISBuilderInner {
                                 qf.insertSyncControl(dbID, 6, woodbuttonloc, 0);
                             }
                         } else {
-                            id = plugin.utils.parseNum(tmp);
+                            id = plugin.utils.parseInt(tmp);
                             data = 0;
                         }
                         // if it's an iron/gold/diamond/emerald/beacon/redstone block put it in the blocks table
@@ -520,10 +552,10 @@ public class TARDISBuilderInner {
                             plugin.utils.setBlock(world, startx, starty, startz, id, data);
                         }
                     }
-                    startx += x;
+                    startx += 1;
                 }
                 startx = resetx;
-                startz += z;
+                startz += 1;
             }
             startz = resetz;
             starty += 1;
@@ -657,11 +689,37 @@ public class TARDISBuilderInner {
             lamp.setType(Material.REDSTONE_LAMP_ON);
         }
         lampblocks.clear();
-        if (plugin.worldGuardOnServer && plugin.getConfig().getBoolean("use_worldguard")) {
-            plugin.wgutils.addWGProtection(p, wg1, wg2);
+        if (plugin.worldGuardOnServer && plugin.getConfig().getBoolean("preferences.use_worldguard")) {
+            if (tips) {
+                if (pos != null) {
+                    plugin.wgutils.addWGProtection(p, pos, world);
+                }
+            } else {
+                plugin.wgutils.addWGProtection(p, wg1, wg2);
+            }
         }
         // finished processing - update tardis table!
         qf.doUpdate("tardis", set, where);
+        // give kit?
+        if (plugin.getKitsConfig().getBoolean("give.create.enabled")) {
+            if (p.hasPermission("tardis.kit.create")) {
+                // check if they have the tardis kit
+                HashMap<String, Object> wherek = new HashMap<String, Object>();
+                wherek.put("player", playerNameStr);
+                wherek.put("name", "createkit");
+                ResultSetAchievements rsa = new ResultSetAchievements(plugin, wherek, false);
+                if (!rsa.resultSet()) {
+                    //add a record
+                    HashMap<String, Object> setk = new HashMap<String, Object>();
+                    setk.put("player", playerNameStr);
+                    setk.put("name", "createkit");
+                    qf.doInsert("achievements", setk);
+                    // give the join kit
+                    String kit = plugin.getKitsConfig().getString("give.create.kit");
+                    plugin.getServer().dispatchCommand(plugin.console, "tardisgive " + playerNameStr + " kit " + kit);
+                }
+            }
+        }
     }
 
     /**

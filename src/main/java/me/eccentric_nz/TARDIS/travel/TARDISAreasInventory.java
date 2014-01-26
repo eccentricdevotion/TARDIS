@@ -17,10 +17,10 @@
 package me.eccentric_nz.TARDIS.travel;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.database.ResultSetAreas;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -37,11 +37,9 @@ public class TARDISAreasInventory {
 
     private final TARDIS plugin;
     private final ItemStack[] terminal;
-    private final List<Integer> ids = new ArrayList<Integer>();
     Player p;
 
     public TARDISAreasInventory(TARDIS plugin, Player p) {
-        ids.addAll(Arrays.asList(new Integer[]{1, 2, 5, 7, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 29, 35, 41, 42, 45, 46, 47, 48, 49, 52, 56, 57, 58, 61, 73, 79, 80, 81, 82, 84, 86, 87, 88, 89, 98, 99, 100, 103, 110, 112, 118, 121, 123, 129, 133, 153, 155}));
         this.plugin = plugin;
         this.p = p;
         this.terminal = getItemStack();
@@ -52,6 +50,7 @@ public class TARDISAreasInventory {
      *
      * @return an Array of itemStacks (an inventory)
      */
+    @SuppressWarnings("deprecation")
     private ItemStack[] getItemStack() {
         List<ItemStack> areas = new ArrayList<ItemStack>();
         // saved destinations
@@ -62,8 +61,8 @@ public class TARDISAreasInventory {
             // cycle through areas
             for (HashMap<String, String> map : data) {
                 String name = map.get("area_name");
-                if (p.hasPermission("tardis.area." + name)) {
-                    ItemStack is = new ItemStack(ids.get(i), 1);
+                if (p.hasPermission("tardis.area." + name) || p.hasPermission("tardis.area.*")) {
+                    ItemStack is = new ItemStack(TARDISConstants.GUI_IDS.get(i), 1);
                     ItemMeta im = is.getItemMeta();
                     im.setDisplayName(name);
                     List<String> lore = new ArrayList<String>();

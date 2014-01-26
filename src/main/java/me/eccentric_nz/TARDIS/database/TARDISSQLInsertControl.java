@@ -29,7 +29,7 @@ import me.eccentric_nz.TARDIS.TARDIS;
 public class TARDISSQLInsertControl implements Runnable {
 
     private final TARDIS plugin;
-    private final TARDISDatabase service = TARDISDatabase.getInstance();
+    private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getInstance();
     private final Connection connection = service.getConnection();
     private final int id;
     private final int type;
@@ -58,6 +58,7 @@ public class TARDISSQLInsertControl implements Runnable {
     public void run() {
         Statement statement = null;
         try {
+            service.testConnection(connection);
             statement = connection.createStatement();
             String select = "SELECT c_id FROM controls WHERE tardis_id = " + id + " AND type = " + type + " AND secondary = " + s;
             ResultSet rs = statement.executeQuery(select);

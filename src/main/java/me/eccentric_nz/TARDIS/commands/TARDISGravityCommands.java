@@ -21,6 +21,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.enumeration.MESSAGE;
 import me.eccentric_nz.tardischunkgenerator.TARDISChunkGenerator;
 import org.bukkit.ChatColor;
 import org.bukkit.World;
@@ -78,7 +79,7 @@ public class TARDISGravityCommands implements CommandExecutor {
                 return false;
             }
             if (!player.hasPermission("tardis.gravity")) {
-                sender.sendMessage(plugin.pluginName + ChatColor.RED + "You do not have permission to use this command!");
+                sender.sendMessage(plugin.pluginName + MESSAGE.NO_PERMS.getText());
                 return true;
             }
             // check they are still in the TARDIS world
@@ -103,8 +104,8 @@ public class TARDISGravityCommands implements CommandExecutor {
                         return false;
                     }
                     try {
-                        values[1] = Double.parseDouble(args[1]);
-                        if (values[1] > plugin.getConfig().getDouble("gravity_max_distance")) {
+                        values[1] = plugin.utils.parseDouble(args[1]);
+                        if (values[1] > plugin.getConfig().getDouble("growth.gravity_max_distance")) {
                             player.sendMessage(plugin.pluginName + "That distance is too far!");
                             return true;
                         }
@@ -116,8 +117,8 @@ public class TARDISGravityCommands implements CommandExecutor {
                     values[1] = 0D;
                 }
                 if (args.length == 3) {
-                    values[2] = Double.parseDouble(args[2]);
-                    if (values[2] > plugin.getConfig().getDouble("gravity_max_velocity")) {
+                    values[2] = plugin.utils.parseDouble(args[2]);
+                    if (values[2] > plugin.getConfig().getDouble("growth.gravity_max_velocity")) {
                         player.sendMessage(plugin.pluginName + "That velocity is too fast!");
                         return true;
                     }

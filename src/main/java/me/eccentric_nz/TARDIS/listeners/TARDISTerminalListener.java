@@ -23,17 +23,17 @@ import java.util.List;
 import java.util.Random;
 import java.util.Set;
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.TARDISConstants;
+import me.eccentric_nz.TARDIS.builders.TARDISEmergencyRelocation;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
+import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.travel.TARDISPluginRespect;
 import me.eccentric_nz.TARDIS.travel.TARDISTimeTravel;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.World.Environment;
-import org.bukkit.block.Biome;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Player;
@@ -194,13 +194,19 @@ public class TARDISTerminalListener implements Listener {
                 if (rsc.resultSet()) {
                     terminalUsers.put(name, rsc);
                     terminalIDs.put(name, id);
+                } else {
+                    Player p = (Player) holder;
+                    // emergency TARDIS relocation
+                    new TARDISEmergencyRelocation(plugin).relocate(id, p);
+                    close(p);
+                    return;
                 }
             }
             HashMap<String, Object> wherepp = new HashMap<String, Object>();
             wherepp.put("player", name);
             ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, wherepp);
             if (rsp.resultSet()) {
-                String sub = (rsp.isSubmarine_on()) ? "true" : "false";
+                String sub = (rsp.isSubmarineOn()) ? "true" : "false";
                 ItemStack is = inv.getItem(44);
                 ItemMeta im = is.getItemMeta();
                 im.setLore(Arrays.asList(new String[]{sub}));
@@ -335,12 +341,12 @@ public class TARDISTerminalListener implements Listener {
         where.put("player", p.getName());
         ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, where);
         if (rsp.resultSet()) {
-            String bool = (rsp.isSubmarine_on()) ? "false" : "true";
+            String bool = (rsp.isSubmarineOn()) ? "false" : "true";
             ItemStack is = inv.getItem(44);
             ItemMeta im = is.getItemMeta();
             im.setLore(Arrays.asList(new String[]{bool}));
             is.setItemMeta(im);
-            int tf = (rsp.isSubmarine_on()) ? 0 : 1;
+            int tf = (rsp.isSubmarineOn()) ? 0 : 1;
             HashMap<String, Object> set = new HashMap<String, Object>();
             set.put("submarine_on", tf);
             HashMap<String, Object> wheret = new HashMap<String, Object>();
@@ -358,12 +364,12 @@ public class TARDISTerminalListener implements Listener {
             if (ww != null) {
                 String env = ww.getEnvironment().toString();
                 if (e.equalsIgnoreCase(env)) {
-                    if (plugin.getConfig().getBoolean("include_default_world") || !plugin.getConfig().getBoolean("default_world")) {
+                    if (plugin.getConfig().getBoolean("travel.include_default_world") || !plugin.getConfig().getBoolean("creation.default_world")) {
                         if (plugin.getConfig().getBoolean("worlds." + o)) {
                             allowedWorlds.add(o);
                         }
                     } else {
-                        if (!o.equals(plugin.getConfig().getString("default_world_name"))) {
+                        if (!o.equals(plugin.getConfig().getString("creation.default_world_name"))) {
                             if (plugin.getConfig().getBoolean("worlds." + o)) {
                                 allowedWorlds.add(o);
                             }
@@ -375,7 +381,7 @@ public class TARDISTerminalListener implements Listener {
                     allowedWorlds.remove(this_world);
                 }
                 // remove the world if the player doesn't have permission
-                if (allowedWorlds.size() > 1 && plugin.getConfig().getBoolean("per_world_perms") && !p.hasPermission("tardis.travel." + o)) {
+                if (allowedWorlds.size() > 1 && plugin.getConfig().getBoolean("travel.per_world_perms") && !p.hasPermission("tardis.travel." + o)) {
                     allowedWorlds.remove(this_world);
                 }
             }
@@ -401,11 +407,11 @@ public class TARDISTerminalListener implements Listener {
     private void checkSettings(Inventory inv, Player p) {
         String name = p.getName();
         // get x, z, m settings
-        int slotm = getValue(34, getSlot(inv, 28, 34), false, name) * plugin.getConfig().getInt("terminal_step");
+        int slotm = getValue(34, getSlot(inv, 28, 34), false, name) * plugin.getConfig().getInt("travel.terminal_step");
         int slotx = getValue(16, getSlot(inv, 10, 16), true, name) * slotm;
         int slotz = getValue(25, getSlot(inv, 19, 25), true, name) * slotm;
         List<String> lore = new ArrayList<String>();
-        TARDISConstants.COMPASS d = terminalUsers.get(name).getDirection();
+        COMPASS d = terminalUsers.get(name).getDirection();
         // what kind of world is it?
         Environment e;
         int[] slots = new int[]{36, 38, 40, 42};
@@ -475,21 +481,17 @@ public class TARDISTerminalListener implements Listener {
                             // check submarine
                             ItemMeta subim = inv.getItem(44).getItemMeta();
                             loc.setY(starty);
-                            if (subim.hasLore() && subim.getLore().get(0).equals("true") && loc.getBlock().getBiome().equals(Biome.OCEAN)) {
+                            if (subim.hasLore() && subim.getLore().get(0).equals("true") && plugin.utils.isOceanBiome(loc.getBlock().getBiome())) {
                                 Location subloc = tt.submarine(loc.getBlock(), d);
                                 if (subloc != null) {
                                     safe = 0;
                                     starty = subloc.getBlockY();
                                     terminalSub.put(name, true);
-                                    plugin.trackSubmarine.add(terminalIDs.get(name));
                                 } else {
                                     safe = 1;
                                 }
                             } else {
                                 safe = tt.safeLocation(start[0], starty, start[2], start[1], start[3], w, d);
-                                if (plugin.trackSubmarine.contains(Integer.valueOf(terminalIDs.get(name)))) {
-                                    plugin.trackSubmarine.remove(Integer.valueOf(terminalIDs.get(name)));
-                                }
                             }
                             if (safe == 0) {
                                 String save = world + ":" + slotx + ":" + starty + ":" + slotz + ":" + d.toString();

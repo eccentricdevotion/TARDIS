@@ -18,13 +18,12 @@ package me.eccentric_nz.TARDIS.commands.admin;
 
 import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetDoors;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
-import org.bukkit.Effect;
+import me.eccentric_nz.TARDIS.enumeration.COMPASS;
+import me.eccentric_nz.TARDIS.enumeration.MESSAGE;
 import org.bukkit.Location;
-import org.bukkit.Sound;
 import org.bukkit.World;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -51,7 +50,7 @@ public class TARDISEnterCommand {
             return true;
         }
         if (!player.hasPermission("tardis.skeletonkey")) {
-            sender.sendMessage(plugin.pluginName + "You do not have permission to run this command!");
+            sender.sendMessage(plugin.pluginName + MESSAGE.NO_PERMS.getText());
             return true;
         }
         HashMap<String, Object> where = new HashMap<String, Object>();
@@ -64,15 +63,15 @@ public class TARDISEnterCommand {
             wherei.put("tardis_id", id);
             ResultSetDoors rsi = new ResultSetDoors(plugin, wherei, false);
             if (rsi.resultSet()) {
-                TARDISConstants.COMPASS innerD = rsi.getDoor_direction();
+                COMPASS innerD = rsi.getDoor_direction();
                 String doorLocStr = rsi.getDoor_location();
                 String[] split = doorLocStr.split(":");
                 World cw = plugin.getServer().getWorld(split[0]);
                 int cx = 0, cy = 0, cz = 0;
                 try {
-                    cx = Integer.parseInt(split[1]);
-                    cy = Integer.parseInt(split[2]);
-                    cz = Integer.parseInt(split[3]);
+                    cx = plugin.utils.parseInt(split[1]);
+                    cy = plugin.utils.parseInt(split[2]);
+                    cz = plugin.utils.parseInt(split[3]);
                 } catch (NumberFormatException nfe) {
                     plugin.debug("Could not convert to number!");
                 }
@@ -101,13 +100,17 @@ public class TARDISEnterCommand {
                         tmp_loc.setZ(getz + 0.5);
                         break;
                 }
+                // if WorldGuard is on the server check for TARDIS region protection and add admin as member
+                if (plugin.worldGuardOnServer && plugin.getConfig().getBoolean("preferences.use_worldguard")) {
+                    plugin.wgutils.addMemberToRegion(cw, args[1], player.getName());
+                }
                 // enter TARDIS!
                 cw.getChunkAt(tmp_loc).load();
                 float yaw = player.getLocation().getYaw();
                 float pitch = player.getLocation().getPitch();
                 tmp_loc.setPitch(pitch);
                 // get players direction so we can adjust yaw if necessary
-                TARDISConstants.COMPASS d = TARDISConstants.COMPASS.valueOf(plugin.utils.getPlayersDirection(player, false));
+                COMPASS d = COMPASS.valueOf(plugin.utils.getPlayersDirection(player, false));
                 if (!innerD.equals(d)) {
                     switch (d) {
                         case NORTH:
@@ -127,7 +130,7 @@ public class TARDISEnterCommand {
                 tmp_loc.setYaw(yaw);
                 final Location tardis_loc = tmp_loc;
                 World playerWorld = player.getLocation().getWorld();
-                plugin.doorListener.movePlayer(player, tardis_loc, false, playerWorld, false, 3);
+                plugin.doorListener.movePlayer(player, tardis_loc, false, playerWorld, false, 3, true);
                 // put player into travellers table
                 QueryFactory qf = new QueryFactory(plugin);
                 HashMap<String, Object> set = new HashMap<String, Object>();

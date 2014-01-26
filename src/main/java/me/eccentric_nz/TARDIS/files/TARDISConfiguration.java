@@ -25,7 +25,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.TARDISConstants;
 import org.bukkit.ChatColor;
 import org.bukkit.World;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -57,52 +56,53 @@ public class TARDISConfiguration {
 
     public TARDISConfiguration(TARDIS plugin) {
         this.plugin = plugin;
-        this.configFile = new File(plugin.getDataFolder(), TARDISConstants.CONFIG_FILE_NAME);
+        this.configFile = new File(plugin.getDataFolder(), "config.yml");
         this.config = YamlConfiguration.loadConfiguration(configFile);
         this.artron_config = plugin.getArtronConfig();
         this.blocks_config = plugin.getBlocksConfig();
         this.rooms_config = plugin.getRoomsConfig();
         // boolean
-        boolOptions.put("add_perms", true);
-        boolOptions.put("all_blocks", false);
-        boolOptions.put("allow_achievements", true);
-        boolOptions.put("allow_autonomous", true);
-        boolOptions.put("allow_hads", true);
-        boolOptions.put("allow_mob_farming", true);
-        boolOptions.put("allow_tp_switch", true);
-        boolOptions.put("chameleon", true);
-        boolOptions.put("conversion_done", false);
-        boolOptions.put("create_worlds", true);
-        boolOptions.put("create_worlds_with_perms", false);
-        boolOptions.put("custom_schematic", false);
+        boolOptions.put("allow.achievements", true);
+        boolOptions.put("allow.all_blocks", false);
+        boolOptions.put("allow.autonomous", true);
+        boolOptions.put("allow.emergency_npc", true);
+        boolOptions.put("allow.hads", true);
+        boolOptions.put("allow.mob_farming", true);
+        boolOptions.put("allow.sfx", true);
+        boolOptions.put("allow.spawn_eggs", true);
+        boolOptions.put("allow.tp_switch", true);
+        boolOptions.put("allow.wg_flag_set", true);
+        boolOptions.put("conversions.conversion_done", false);
+        boolOptions.put("conversions.location_conversion_done", false);
+        boolOptions.put("creation.add_perms", true);
+        boolOptions.put("creation.create_worlds", true);
+        boolOptions.put("creation.create_worlds_with_perms", false);
+        boolOptions.put("creation.custom_schematic", false);
+        boolOptions.put("creation.default_world", false);
+        boolOptions.put("creation.keep_night", true);
+        boolOptions.put("creation.use_block_stack", false);
+        boolOptions.put("creation.use_clay", false);
         boolOptions.put("debug", false);
-        boolOptions.put("default_world", false);
-        boolOptions.put("emergency_npc", true);
-        boolOptions.put("exile", false);
-        boolOptions.put("give_key", false);
-        boolOptions.put("include_default_world", false);
-        boolOptions.put("keep_night", true);
-        boolOptions.put("land_on_water", true);
-        boolOptions.put("location_conversion_done", false);
-        boolOptions.put("materialise", true);
-        boolOptions.put("name_tardis", false);
-        boolOptions.put("nether", false);
-        boolOptions.put("per_world_perms", false);
-        boolOptions.put("plain_on", false);
-        boolOptions.put("platform", false);
-        boolOptions.put("respect_factions", true);
-        boolOptions.put("respect_towny", true);
-        boolOptions.put("respect_worldborder", true);
-        boolOptions.put("respect_worldguard", true);
-        boolOptions.put("return_room_seed", true);
-        boolOptions.put("rooms_require_blocks", false);
-        boolOptions.put("sfx", true);
-        boolOptions.put("spawn_eggs", true);
-        boolOptions.put("strike_lightning", true);
-        boolOptions.put("the_end", false);
-        boolOptions.put("use_clay", false);
-        boolOptions.put("use_block_stack", false);
-        boolOptions.put("use_worldguard", true);
+        boolOptions.put("police_box.materialise", true);
+        boolOptions.put("police_box.name_tardis", false);
+        boolOptions.put("preferences.respect_factions", true);
+        boolOptions.put("preferences.respect_towny", true);
+        boolOptions.put("preferences.respect_worldborder", true);
+        boolOptions.put("preferences.respect_worldguard", true);
+        boolOptions.put("preferences.strike_lightning", true);
+        boolOptions.put("preferences.use_worldguard", true);
+        boolOptions.put("preferences.use_default_condensables", true);
+        boolOptions.put("growth.return_room_seed", true);
+        boolOptions.put("growth.rooms_require_blocks", false);
+        boolOptions.put("travel.chameleon", true);
+        boolOptions.put("travel.exile", false);
+        boolOptions.put("travel.give_key", false);
+        boolOptions.put("travel.include_default_world", false);
+        boolOptions.put("travel.land_on_water", true);
+        boolOptions.put("travel.nether", false);
+        boolOptions.put("travel.per_world_perms", false);
+        boolOptions.put("travel.platform", false);
+        boolOptions.put("travel.the_end", false);
         roomBoolOptions.put("rooms.ANTIGRAVITY.enabled", true);
         roomBoolOptions.put("rooms.ANTIGRAVITY.user", false);
         roomBoolOptions.put("rooms.ARBORETUM.enabled", true);
@@ -133,6 +133,8 @@ public class TARDISConfiguration {
         roomBoolOptions.put("rooms.POOL.user", false);
         roomBoolOptions.put("rooms.RAIL.enabled", true);
         roomBoolOptions.put("rooms.RAIL.user", false);
+        roomBoolOptions.put("rooms.RENDERER.enabled", true);
+        roomBoolOptions.put("rooms.RENDERER.user", false);
         roomBoolOptions.put("rooms.STABLE.enabled", true);
         roomBoolOptions.put("rooms.STABLE.user", false);
         roomBoolOptions.put("rooms.TRENZALORE.enabled", true);
@@ -158,33 +160,35 @@ public class TARDISConfiguration {
         artronIntOptions.put("player", 25);
         artronIntOptions.put("random", 75);
         artronIntOptions.put("recharge_distance", 20);
+        artronIntOptions.put("render", 250);
         artronIntOptions.put("the_end_min", 5500);
         artronIntOptions.put("travel", 100);
-        intOptions.put("admin_item", 264);
-        intOptions.put("border_radius", 64);
-        intOptions.put("confirm_timeout", 15);
-        intOptions.put("count", 0);
-        intOptions.put("custom_creeper_id", 138);
-        intOptions.put("gravity_max_distance", 16);
-        intOptions.put("gravity_max_velocity", 5);
-        intOptions.put("hads_damage", 10);
-        intOptions.put("hads_distance", 10);
-        intOptions.put("inventory_group", 0);
-        intOptions.put("malfunction", 3);
-        intOptions.put("malfunction_end", 3);
-        intOptions.put("malfunction_nether", 3);
-        intOptions.put("platform_data", 8);
-        intOptions.put("platform_id", 35);
-        intOptions.put("random_attempts", 30);
-        intOptions.put("room_speed", 4);
-        intOptions.put("rooms_condenser_percent", 100);
-        intOptions.put("tardis_lamp", 50);
-        intOptions.put("terminal_step", 1);
-        intOptions.put("timeout", 5);
-        intOptions.put("timeout_height", 135);
-        intOptions.put("tp_radius", 256);
-        intOptions.put("wall_data", 11);
-        intOptions.put("wall_id", 35);
+        intOptions.put("creation.border_radius", 256);
+        intOptions.put("creation.count", 0);
+        intOptions.put("creation.custom_creeper_id", 138);
+        intOptions.put("creation.inventory_group", 0);
+        intOptions.put("police_box.confirm_timeout", 15);
+        intOptions.put("police_box.platform_data", 8);
+        intOptions.put("police_box.platform_id", 35);
+        intOptions.put("police_box.tardis_lamp", 50);
+        intOptions.put("police_box.wall_data", 11);
+        intOptions.put("police_box.wall_id", 35);
+        intOptions.put("preferences.freeze_cooldown", 60);
+        intOptions.put("preferences.hads_damage", 10);
+        intOptions.put("preferences.hads_distance", 10);
+        intOptions.put("preferences.malfunction", 3);
+        intOptions.put("preferences.malfunction_end", 3);
+        intOptions.put("preferences.malfunction_nether", 3);
+        intOptions.put("preferences.sfx_volume", 10);
+        intOptions.put("growth.gravity_max_distance", 16);
+        intOptions.put("growth.gravity_max_velocity", 5);
+        intOptions.put("growth.room_speed", 4);
+        intOptions.put("growth.rooms_condenser_percent", 100);
+        intOptions.put("travel.random_attempts", 30);
+        intOptions.put("travel.terminal_step", 1);
+        intOptions.put("travel.timeout", 5);
+        intOptions.put("travel.timeout_height", 135);
+        intOptions.put("travel.tp_radius", 256);
         roomIntOptions.put("rooms.ANTIGRAVITY.cost", 625);
         roomIntOptions.put("rooms.ANTIGRAVITY.offset", -3);
         roomIntOptions.put("rooms.ARBORETUM.cost", 325);
@@ -215,6 +219,8 @@ public class TARDISConfiguration {
         roomIntOptions.put("rooms.POOL.offset", -3);
         roomIntOptions.put("rooms.RAIL.cost", 650);
         roomIntOptions.put("rooms.RAIL.offset", -3);
+        roomIntOptions.put("rooms.RENDERER.cost", 650);
+        roomIntOptions.put("rooms.RENDERER.offset", -3);
         roomIntOptions.put("rooms.STABLE.cost", 350);
         roomIntOptions.put("rooms.STABLE.offset", -3);
         roomIntOptions.put("rooms.TRENZALORE.cost", 550);
@@ -228,12 +234,15 @@ public class TARDISConfiguration {
         roomIntOptions.put("rooms.WORKSHOP.cost", 400);
         roomIntOptions.put("rooms.WORKSHOP.offset", -3);
         // string
-        strOptions.put("custom_schematic_seed", "OBSIDIAN");
-        strOptions.put("default_world_name", "myridiculouslylongworldnameiscalledcuthbert");
-        strOptions.put("difficulty", "normal");
-        strOptions.put("gamemode", "survival");
-        strOptions.put("key", "STICK");
-        strOptions.put("stattenheim", "FLINT");
+        strOptions.put("creation.custom_schematic_seed", "OBSIDIAN");
+        strOptions.put("creation.default_world_name", "myridiculouslylongworldnameiscalledcuthbert");
+        strOptions.put("creation.gamemode", "survival");
+        strOptions.put("preferences.difficulty", "hard");
+        strOptions.put("preferences.key", "GOLD_NUGGET");
+        strOptions.put("storage.database", "sqlite");
+        strOptions.put("storage.mysql.password", "mysecurepassword");
+        strOptions.put("storage.mysql.url", "mysql://localhost:3306/TARDIS");
+        strOptions.put("storage.mysql.user", "bukkit");
         artronStrOptions.put("jettison_seed", "TNT");
         artronStrOptions.put("full_charge_item", "NETHER_STAR");
         roomStrOptions.put("rooms.ARBORETUM.seed", "LEAVES");
@@ -251,6 +260,7 @@ public class TARDISConfiguration {
         roomStrOptions.put("rooms.PASSAGE.seed", "CLAY");
         roomStrOptions.put("rooms.POOL.seed", "SNOW_BLOCK");
         roomStrOptions.put("rooms.RAIL.seed", "HOPPER");
+        roomStrOptions.put("rooms.RENDERER.seed", "HARD_CLAY");
         roomStrOptions.put("rooms.STABLE.seed", "HAY_BLOCK");
         roomStrOptions.put("rooms.TRENZALORE.seed", "BRICK");
         roomStrOptions.put("rooms.VAULT.seed", "DISPENSER");
@@ -266,36 +276,49 @@ public class TARDISConfiguration {
      * are removed.
      */
     public void checkConfig() {
-        int i = 0;
-        // boolean values
-        for (Map.Entry<String, Boolean> entry : boolOptions.entrySet()) {
-            if (!config.contains(entry.getKey())) {
-                plugin.getConfig().set(entry.getKey(), entry.getValue());
-                i++;
+        if (!config.contains("creation.create_worlds")) {
+            new TARDISConfigConverter(plugin).convert();
+        } else {
+            int i = 0;
+            // boolean values
+            for (Map.Entry<String, Boolean> entry : boolOptions.entrySet()) {
+                if (!config.contains(entry.getKey())) {
+                    plugin.getConfig().set(entry.getKey(), entry.getValue());
+                    i++;
+                }
             }
-        }
-        // int values
-        for (Map.Entry<String, Integer> entry : intOptions.entrySet()) {
-            if (!config.contains(entry.getKey())) {
-                plugin.getConfig().set(entry.getKey(), entry.getValue());
-                i++;
+            // int values
+            for (Map.Entry<String, Integer> entry : intOptions.entrySet()) {
+                if (!config.contains(entry.getKey())) {
+                    plugin.getConfig().set(entry.getKey(), entry.getValue());
+                    i++;
+                }
+                if (entry.getKey().equals("preferences.sfx_volume") && plugin.getConfig().getInt("preferences.sfx_volume") == 0) {
+                    plugin.getConfig().set("preferences.sfx_volume", 10);
+                }
             }
-        }
-        // string values
-        for (Map.Entry<String, String> entry : strOptions.entrySet()) {
-            if (!config.contains(entry.getKey())) {
-                plugin.getConfig().set(entry.getKey(), entry.getValue());
-                i++;
+            // string values
+            for (Map.Entry<String, String> entry : strOptions.entrySet()) {
+                if (!config.contains(entry.getKey())) {
+                    plugin.getConfig().set(entry.getKey(), entry.getValue());
+                    i++;
+                }
             }
-        }
-        if (!config.isConfigurationSection("rechargers")) {
-            plugin.getConfig().createSection("rechargers");
-        }
-        if (config.contains("rooms.FIRST")) {
-            plugin.getConfig().set("rooms.FIRST", null);
-        }
-        if (i > 0) {
-            plugin.console.sendMessage(plugin.pluginName + "Added " + ChatColor.AQUA + i + ChatColor.RESET + " new items to config");
+            if (!config.isConfigurationSection("rechargers")) {
+                plugin.getConfig().createSection("rechargers");
+            }
+            if (config.contains("rooms.FIRST")) {
+                plugin.getConfig().set("rooms.FIRST", null);
+            }
+            if (config.contains("creation.materialise")) {
+                plugin.getConfig().set("creation.materialise", null);
+            }
+            if (config.contains("difficulty") && config.getString("difficulty").equals("normal")) {
+                plugin.getConfig().set("difficulty", "hard");
+            }
+            if (i > 0) {
+                plugin.console.sendMessage(plugin.pluginName + "Added " + ChatColor.AQUA + i + ChatColor.RESET + " new items to config");
+            }
         }
         // worlds
         doWorlds();
@@ -354,7 +377,6 @@ public class TARDISConfiguration {
         // copy old settings and add any custom rooms
         if (config.contains("rooms")) {
             for (String r : config.getConfigurationSection("rooms").getKeys(false)) {
-                //if (!rooms_config.contains("rooms." + r)) {
                 rooms_config.set("rooms." + r + ".enabled", config.getBoolean("rooms." + r + ".enabled"));
                 rooms_config.set("rooms." + r + ".cost", config.getInt("rooms." + r + ".cost"));
                 if (!r.equalsIgnoreCase("ANTIGRAVITY")) {
@@ -362,7 +384,6 @@ public class TARDISConfiguration {
                 }
                 rooms_config.set("rooms." + r + ".seed", config.getString("rooms." + r + ".seed"));
                 rooms_config.set("rooms." + r + ".user", config.getBoolean("rooms." + r + ".user"));
-                //}
             }
             // remove old rooms section
             plugin.getConfig().set("rooms", null);

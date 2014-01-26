@@ -37,26 +37,39 @@ public class TARDISSetMaterialCommand {
         this.plugin = plugin;
     }
 
-    public boolean setConfigMaterial(CommandSender sender, String[] args) {
-        String first = args[0];
+    public boolean setConfigMaterial(CommandSender sender, String[] args, String section) {
+        String first = (section.isEmpty()) ? args[0].toLowerCase() : section + "." + args[0].toLowerCase();
         String setMaterial = args[1].toUpperCase(Locale.ENGLISH);
-        if (!Arrays.asList(Material.values()).contains(Material.valueOf(setMaterial))) {
+        if (!checkMaterial(setMaterial)) {
             sender.sendMessage(plugin.pluginName + ChatColor.RED + "That is not a valid Material! Try checking http://jd.bukkit.org/apidocs/org/bukkit/Material.html");
             return false;
         } else {
-            if (first.equals("full_charge_item") || first.equals("jettison_seed")) {
-                plugin.getArtronConfig().set(first, setMaterial);
-                try {
-                    plugin.getArtronConfig().save(new File(plugin.getDataFolder(), "artron.yml"));
-                } catch (IOException io) {
-                    plugin.debug("Could not save artron.yml, " + io);
-                }
-            } else {
-                plugin.getConfig().set(first, setMaterial);
-                plugin.saveConfig();
+            plugin.getConfig().set(first, setMaterial);
+            plugin.saveConfig();
+            sender.sendMessage(plugin.pluginName + "The config was updated!");
+            return true;
+        }
+    }
+
+    public boolean setConfigMaterial(CommandSender sender, String[] args) {
+        String first = args[0].toLowerCase();
+        String setMaterial = args[1].toUpperCase(Locale.ENGLISH);
+        if (!checkMaterial(setMaterial)) {
+            sender.sendMessage(plugin.pluginName + ChatColor.RED + "That is not a valid Material! Try checking http://jd.bukkit.org/apidocs/org/bukkit/Material.html");
+            return false;
+        } else {
+            plugin.getArtronConfig().set(first, setMaterial);
+            try {
+                plugin.getArtronConfig().save(new File(plugin.getDataFolder(), "artron.yml"));
+            } catch (IOException io) {
+                plugin.debug("Could not save artron.yml, " + io);
             }
             sender.sendMessage(plugin.pluginName + "The config was updated!");
             return true;
         }
+    }
+
+    private boolean checkMaterial(String setMaterial) {
+        return Arrays.asList(Material.values()).contains(Material.valueOf(setMaterial));
     }
 }

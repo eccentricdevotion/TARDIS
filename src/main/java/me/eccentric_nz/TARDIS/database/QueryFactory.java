@@ -34,7 +34,7 @@ import org.bukkit.entity.Player;
 public class QueryFactory {
 
     private final TARDIS plugin;
-    TARDISDatabase service = TARDISDatabase.getInstance();
+    TARDISDatabaseConnection service = TARDISDatabaseConnection.getInstance();
     Connection connection = service.getConnection();
 
     public QueryFactory(TARDIS plugin) {
@@ -77,19 +77,20 @@ public class QueryFactory {
         fields = sbf.toString().substring(0, sbf.length() - 1);
         questions = sbq.toString().substring(0, sbq.length() - 1);
         try {
-            ps = connection.prepareStatement("INSERT INTO " + table + " (" + fields + ") VALUES (" + questions + ")");
+            service.testConnection(connection);
+            ps = connection.prepareStatement("INSERT INTO " + table + " (" + fields + ") VALUES (" + questions + ")", PreparedStatement.RETURN_GENERATED_KEYS);
             int i = 1;
             for (Map.Entry<String, Object> entry : data.entrySet()) {
                 if (entry.getValue().getClass().equals(String.class)) {
                     ps.setString(i, entry.getValue().toString());
                 } else {
                     if (entry.getValue().getClass().getName().contains("Double")) {
-                        ps.setDouble(i, Double.parseDouble(entry.getValue().toString()));
+                        ps.setDouble(i, plugin.utils.parseDouble(entry.getValue().toString()));
                     }
                     if (entry.getValue().getClass().getName().contains("Long")) {
-                        ps.setLong(i, Long.parseLong(entry.getValue().toString()));
+                        ps.setLong(i, plugin.utils.parseLong(entry.getValue().toString()));
                     } else {
-                        ps.setInt(i, plugin.utils.parseNum(entry.getValue().toString()));
+                        ps.setInt(i, plugin.utils.parseInt(entry.getValue().toString()));
                     }
                 }
                 i++;
@@ -168,6 +169,7 @@ public class QueryFactory {
         values = sbw.toString().substring(0, sbw.length() - 5);
         String query = "DELETE FROM " + table + " WHERE " + values;
         try {
+            service.testConnection(connection);
             statement = connection.createStatement();
             return (statement.executeUpdate(query) > 0);
         } catch (SQLException e) {
@@ -239,6 +241,7 @@ public class QueryFactory {
     public void insertSyncControl(int id, int type, String l, int s) {
         Statement statement = null;
         try {
+            service.testConnection(connection);
             statement = connection.createStatement();
             String select = "SELECT c_id FROM controls WHERE tardis_id = " + id + " AND type = " + type + " AND secondary = " + s;
             ResultSet rs = statement.executeQuery(select);
@@ -287,8 +290,8 @@ public class QueryFactory {
         Statement statement = null;
         String query = "UPDATE condenser SET block_count = " + new_size + " WHERE tardis_id = " + id + " AND block_data = " + block_data;
         try {
+            service.testConnection(connection);
             statement = connection.createStatement();
-
             statement.executeUpdate(query);
         } catch (SQLException e) {
             plugin.debug("Update error for condenser! " + e.getMessage());

@@ -30,7 +30,7 @@ import me.eccentric_nz.TARDIS.TARDIS;
 public class TARDISSQLCondenserUpdate implements Runnable {
 
     private final TARDIS plugin;
-    private final TARDISDatabase service = TARDISDatabase.getInstance();
+    private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getInstance();
     private final Connection connection = service.getConnection();
     private final int amount;
     private final HashMap<String, Object> where;
@@ -68,6 +68,7 @@ public class TARDISSQLCondenserUpdate implements Runnable {
         wheres = sbw.toString().substring(0, sbw.length() - 5);
         String query = "UPDATE condenser SET block_count = block_count - " + amount + " WHERE " + wheres;
         try {
+            service.testConnection(connection);
             statement = connection.createStatement();
             statement.executeUpdate(query);
         } catch (SQLException e) {

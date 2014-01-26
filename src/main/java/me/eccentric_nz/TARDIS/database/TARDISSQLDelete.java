@@ -30,7 +30,7 @@ import me.eccentric_nz.TARDIS.TARDIS;
 public class TARDISSQLDelete implements Runnable {
 
     private final TARDIS plugin;
-    private final TARDISDatabase service = TARDISDatabase.getInstance();
+    private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getInstance();
     private final Connection connection = service.getConnection();
     private final String table;
     private final HashMap<String, Object> where;
@@ -67,6 +67,7 @@ public class TARDISSQLDelete implements Runnable {
         values = sbw.toString().substring(0, sbw.length() - 5);
         String query = "DELETE FROM " + table + " WHERE " + values;
         try {
+            service.testConnection(connection);
             statement = connection.createStatement();
             statement.executeUpdate(query);
         } catch (SQLException e) {

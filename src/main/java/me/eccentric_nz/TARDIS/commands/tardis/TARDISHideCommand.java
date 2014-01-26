@@ -18,11 +18,12 @@ package me.eccentric_nz.TARDIS.commands.tardis;
 
 import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.TARDISConstants;
+import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
+import me.eccentric_nz.TARDIS.enumeration.MESSAGE;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.World;
@@ -49,10 +50,19 @@ public class TARDISHideCommand {
             where.put("owner", player.getName());
             ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
             if (!rs.resultSet()) {
-                player.sendMessage(plugin.pluginName + TARDISConstants.NO_TARDIS);
+                player.sendMessage(plugin.pluginName + MESSAGE.NO_TARDIS.getText());
                 return false;
             }
             id = rs.getTardis_id();
+            TARDISCircuitChecker tcc = null;
+            if (plugin.getConfig().getString("preferences.difficulty").equals("hard")) {
+                tcc = new TARDISCircuitChecker(plugin, id);
+                tcc.getCircuits();
+            }
+            if (tcc != null && !tcc.hasMaterialisation()) {
+                player.sendMessage(plugin.pluginName + "The Materialisation Circuit is missing from the console!");
+                return true;
+            }
             HashMap<String, Object> wherein = new HashMap<String, Object>();
             wherein.put("player", player.getName());
             ResultSetTravellers rst = new ResultSetTravellers(plugin, wherein, false);
@@ -61,18 +71,18 @@ public class TARDISHideCommand {
                 return true;
             }
             int level = rs.getArtron_level();
-            if (plugin.tardisMaterialising.contains(id) || plugin.tardisDematerialising.contains(id)) {
-                player.sendMessage(plugin.pluginName + "You cannot do that while the TARDIS is materialising!");
+            if (plugin.inVortex.contains(Integer.valueOf(id))) {
+                player.sendMessage(plugin.pluginName + MESSAGE.NOT_WHILE_MAT.getText());
                 return true;
             }
-            if (plugin.getConfig().getBoolean("chameleon")) {
+            if (plugin.getConfig().getBoolean("travel.chameleon")) {
                 cham = rs.isChamele_on();
             }
             HashMap<String, Object> wherecl = new HashMap<String, Object>();
             wherecl.put("tardis_id", rs.getTardis_id());
             ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
             if (!rsc.resultSet()) {
-                player.sendMessage(plugin.pluginName + "Could not get the TARDIS location!");
+                player.sendMessage(plugin.pluginName + MESSAGE.NO_CURRENT.getText());
                 return true;
             }
             Location l = new Location(rsc.getWorld(), rsc.getX(), rsc.getY(), rsc.getZ());
@@ -84,7 +94,7 @@ public class TARDISHideCommand {
                 player.sendMessage(plugin.pluginName + ChatColor.RED + "The TARDIS does not have enough Artron Energy to hide!");
                 return false;
             }
-            plugin.destroyerP.destroyPreset(l, rsc.getDirection(), id, true, false, false, null);
+            plugin.destroyerP.destroyPreset(l, rsc.getDirection(), id, true, false, false, null, rsc.isSubmarine());
             player.sendMessage(plugin.pluginName + "The TARDIS Police Box was hidden! Use " + ChatColor.GREEN + "/tardis rebuild" + ChatColor.RESET + " to show it again.");
             qf.alterEnergyLevel("tardis", -hide, wheret, player);
             // set hidden to true
@@ -95,7 +105,7 @@ public class TARDISHideCommand {
             qf.doUpdate("tardis", seth, whereh);
             return true;
         } else {
-            player.sendMessage(plugin.pluginName + TARDISConstants.NO_PERMS_MESSAGE);
+            player.sendMessage(plugin.pluginName + MESSAGE.NO_PERMS.getText());
             return false;
         }
     }

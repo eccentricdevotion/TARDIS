@@ -20,7 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.TARDISConstants;
+import me.eccentric_nz.TARDIS.enumeration.CMDS;
 import org.bukkit.entity.Player;
 
 /**
@@ -37,12 +37,12 @@ public class TARDISHelpCommand {
 
     public boolean showHelp(Player player, String[] args) {
         if (args.length == 1) {
-            player.sendMessage(TARDISConstants.COMMANDS.split("\n"));
+            player.sendMessage(CMDS.COMMANDS.getHelp().split("\n"));
             return true;
         }
         if (args.length == 2) {
             List<String> cmds = new ArrayList<String>();
-            for (TARDISConstants.CMDS c : TARDISConstants.CMDS.values()) {
+            for (CMDS c : CMDS.values()) {
                 cmds.add(c.toString());
             }
             // check that the second arument is valid
@@ -50,78 +50,78 @@ public class TARDISHelpCommand {
                 player.sendMessage(plugin.pluginName + "That is not a valid help topic!");
                 return true;
             }
-            switch (TARDISConstants.fromString(args[1])) {
+            switch (CMDS.fromString(args[1])) {
                 case CREATE:
-                    player.sendMessage(TARDISConstants.COMMAND_CREATE.split("\n"));
+                    player.sendMessage(CMDS.CREATE.getHelp().split("\n"));
                     break;
                 case DELETE:
-                    player.sendMessage(TARDISConstants.COMMAND_DELETE.split("\n"));
+                    player.sendMessage(CMDS.DELETE.getHelp().split("\n"));
                     break;
                 case TIMETRAVEL:
-                    player.sendMessage(TARDISConstants.COMMAND_TIMETRAVEL.split("\n"));
+                    player.sendMessage(CMDS.TIMETRAVEL.getHelp().split("\n"));
                     break;
                 case LIST:
-                    player.sendMessage(TARDISConstants.COMMAND_LIST.split("\n"));
+                    player.sendMessage(CMDS.LIST.getHelp().split("\n"));
                     break;
                 case FIND:
-                    player.sendMessage(TARDISConstants.COMMAND_FIND.split("\n"));
+                    player.sendMessage(CMDS.FIND.getHelp().split("\n"));
                     break;
                 case SAVE:
-                    player.sendMessage(TARDISConstants.COMMAND_SAVE.split("\n"));
+                    player.sendMessage(CMDS.SAVE.getHelp().split("\n"));
                     break;
                 case REMOVESAVE:
-                    player.sendMessage(TARDISConstants.COMMAND_REMOVESAVE.split("\n"));
+                    player.sendMessage(CMDS.REMOVESAVE.getHelp().split("\n"));
                     break;
                 case ADD:
-                    player.sendMessage(TARDISConstants.COMMAND_ADD.split("\n"));
+                    player.sendMessage(CMDS.ADD.getHelp().split("\n"));
                     break;
                 case TRAVEL:
-                    player.sendMessage(TARDISConstants.COMMAND_TRAVEL.split("\n"));
+                    player.sendMessage(CMDS.TRAVEL.getHelp().split("\n"));
                     break;
                 case UPDATE:
-                    player.sendMessage(TARDISConstants.COMMAND_UPDATE.split("\n"));
+                    player.sendMessage(CMDS.UPDATE.getHelp().split("\n"));
                     break;
                 case REBUILD:
-                    player.sendMessage(TARDISConstants.COMMAND_REBUILD.split("\n"));
+                    player.sendMessage(CMDS.REBUILD.getHelp().split("\n"));
                     break;
                 case CHAMELEON:
-                    player.sendMessage(TARDISConstants.COMMAND_CHAMELEON.split("\n"));
+                    player.sendMessage(CMDS.CHAMELEON.getHelp().split("\n"));
                     break;
                 case SFX:
-                    player.sendMessage(TARDISConstants.COMMAND_SFX.split("\n"));
+                    player.sendMessage(CMDS.SFX.getHelp().split("\n"));
                     break;
                 case PLATFORM:
-                    player.sendMessage(TARDISConstants.COMMAND_PLATFORM.split("\n"));
+                    player.sendMessage(CMDS.PLATFORM.getHelp().split("\n"));
                     break;
                 case SETDEST:
-                    player.sendMessage(TARDISConstants.COMMAND_SETDEST.split("\n"));
+                    player.sendMessage(CMDS.SETDEST.getHelp().split("\n"));
                     break;
                 case HOME:
-                    player.sendMessage(TARDISConstants.COMMAND_HOME.split("\n"));
+                    player.sendMessage(CMDS.HOME.getHelp().split("\n"));
                     break;
                 case HIDE:
-                    player.sendMessage(TARDISConstants.COMMAND_HIDE.split("\n"));
+                    player.sendMessage(CMDS.HIDE.getHelp().split("\n"));
                     break;
                 case VERSION:
-                    player.sendMessage(TARDISConstants.COMMAND_HIDE.split("\n"));
+                    player.sendMessage(CMDS.HIDE.getHelp().split("\n"));
                     break;
                 case ADMIN:
-                    player.sendMessage(TARDISConstants.COMMAND_ADMIN.split("\n"));
+                    player.sendMessage(CMDS.ADMIN.getHelp().split("\n"));
                     break;
                 case AREA:
-                    player.sendMessage(TARDISConstants.COMMAND_AREA.split("\n"));
+                    player.sendMessage(CMDS.AREA.getHelp().split("\n"));
                     break;
                 case ROOM:
-                    player.sendMessage(TARDISConstants.COMMAND_ROOM.split("\n"));
+                    player.sendMessage(CMDS.ROOM.getHelp().split("\n"));
                     break;
                 case ARTRON:
-                    player.sendMessage(TARDISConstants.COMMAND_ARTRON.split("\n"));
+                    player.sendMessage(CMDS.ARTRON.getHelp().split("\n"));
                     break;
                 case BIND:
-                    player.sendMessage(TARDISConstants.COMMAND_BIND.split("\n"));
+                    player.sendMessage(CMDS.BIND.getHelp().split("\n"));
                     break;
                 default:
-                    player.sendMessage(TARDISConstants.COMMANDS.split("\n"));
+                    player.sendMessage(CMDS.COMMANDS.getHelp().split("\n"));
             }
         }
         return true;

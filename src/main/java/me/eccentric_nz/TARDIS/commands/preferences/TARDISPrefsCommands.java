@@ -21,9 +21,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
+import me.eccentric_nz.TARDIS.enumeration.MESSAGE;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -52,6 +52,8 @@ public class TARDISPrefsCommands implements CommandExecutor {
         this.plugin = plugin;
         firstArgs.add("auto");
         firstArgs.add("beacon");
+        firstArgs.add("build");
+        firstArgs.add("dnd");
         firstArgs.add("eps");
         firstArgs.add("eps_message");
         firstArgs.add("floor");
@@ -59,9 +61,11 @@ public class TARDISPrefsCommands implements CommandExecutor {
         firstArgs.add("isomorphic");
         firstArgs.add("key");
         firstArgs.add("lamp");
+        firstArgs.add("minecart");
         firstArgs.add("plain");
         firstArgs.add("platform");
         firstArgs.add("quotes");
+        firstArgs.add("renderer");
         firstArgs.add("sfx");
         firstArgs.add("submarine");
         firstArgs.add("wall");
@@ -95,9 +99,7 @@ public class TARDISPrefsCommands implements CommandExecutor {
                     // if no prefs record found, make one
                     if (!rsp.resultSet()) {
                         set.put("player", player.getName());
-                        //int plain = (plugin.getConfig().getBoolean("plain_on")) ? 1 : 0;
-                        //set.put("plain_on", plain);
-                        set.put("lamp", plugin.getConfig().getInt("tardis_lamp"));
+                        set.put("lamp", plugin.getConfig().getInt("police_box.tardis_lamp"));
                         qf.doInsert("player_prefs", set);
                     }
                     if (pref.equals("key")) {
@@ -119,9 +121,13 @@ public class TARDISPrefsCommands implements CommandExecutor {
                         sender.sendMessage(plugin.pluginName + "You need to specify if " + pref + " should be on or off!");
                         return false;
                     }
-                    return new TARDISToggleOnOffCommand(plugin).doAbort(player, args, qf);
+                    if (pref.equals("build")) {
+                        return new TARDISBuildCommand(plugin).toggleCompanionBuilding(player, args);
+                    } else {
+                        return new TARDISToggleOnOffCommand(plugin).doAbort(player, args, qf);
+                    }
                 } else {
-                    sender.sendMessage(plugin.pluginName + TARDISConstants.NO_PERMS_MESSAGE);
+                    sender.sendMessage(plugin.pluginName + MESSAGE.NO_PERMS.getText());
                     return false;
                 }
             }

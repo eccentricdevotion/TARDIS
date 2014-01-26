@@ -19,11 +19,12 @@ package me.eccentric_nz.TARDIS.commands.tardis;
 import java.util.HashMap;
 import java.util.Locale;
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.achievement.TARDISAchievementFactory;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
+import me.eccentric_nz.TARDIS.enumeration.MESSAGE;
 import org.bukkit.ChatColor;
+import org.bukkit.World;
 import org.bukkit.entity.Player;
 
 /**
@@ -45,12 +46,14 @@ public class TARDISAddCompanionCommand {
             ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
             String comps;
             int id;
+            String[] data;
             if (!rs.resultSet()) {
-                player.sendMessage(plugin.pluginName + TARDISConstants.NO_TARDIS);
+                player.sendMessage(plugin.pluginName + MESSAGE.NO_TARDIS.getText());
                 return false;
             } else {
                 id = rs.getTardis_id();
                 comps = rs.getCompanions();
+                data = rs.getChunk().split(":");
             }
             if (args.length < 2) {
                 player.sendMessage(plugin.pluginName + "Too few command arguments!");
@@ -79,10 +82,18 @@ public class TARDISAddCompanionCommand {
                     TARDISAchievementFactory taf = new TARDISAchievementFactory(plugin, player, "friends", 1);
                     taf.doAchievement(1);
                 }
+                // if using WorldGuard, add them to the region membership
+                if (plugin.worldGuardOnServer && plugin.getConfig().getBoolean("preferences.use_worldguard")) {
+                    //plugin.getServer().dispatchCommand(plugin.console, "rg addmember tardis_" + player.getName() + " " + args[1].toLowerCase(Locale.ENGLISH) + " -w " + data[0]);
+                    World w = plugin.getServer().getWorld(data[0]);
+                    if (w != null) {
+                        plugin.wgutils.addMemberToRegion(w, player.getName(), args[1].toLowerCase(Locale.ENGLISH));
+                    }
+                }
                 return true;
             }
         } else {
-            player.sendMessage(plugin.pluginName + TARDISConstants.NO_PERMS_MESSAGE);
+            player.sendMessage(plugin.pluginName + MESSAGE.NO_PERMS.getText());
             return false;
         }
     }

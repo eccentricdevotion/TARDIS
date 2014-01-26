@@ -30,7 +30,7 @@ import me.eccentric_nz.TARDIS.TARDIS;
 public class TARDISSQLUpdate implements Runnable {
 
     private final TARDIS plugin;
-    TARDISDatabase service = TARDISDatabase.getInstance();
+    TARDISDatabaseConnection service = TARDISDatabaseConnection.getInstance();
     Connection connection = service.getConnection();
     private final String table;
     private final HashMap<String, Object> data;
@@ -76,6 +76,7 @@ public class TARDISSQLUpdate implements Runnable {
         wheres = sbw.toString().substring(0, sbw.length() - 5);
         String query = "UPDATE " + table + " SET " + updates + " WHERE " + wheres;
         try {
+            service.testConnection(connection);
             statement = connection.prepareStatement(query);
             int s = 1;
             for (Map.Entry<String, Object> entry : data.entrySet()) {

@@ -17,14 +17,20 @@
 package me.eccentric_nz.TARDIS.destroyers;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
+import me.eccentric_nz.TARDIS.database.ResultSetBlocks;
 import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
+import me.eccentric_nz.TARDIS.database.ResultSetGravity;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
+import me.eccentric_nz.TARDIS.enumeration.COMPASS;
+import me.eccentric_nz.TARDIS.enumeration.MESSAGE;
+import me.eccentric_nz.TARDIS.enumeration.SCHEMATIC;
 import me.eccentric_nz.tardischunkgenerator.TARDISChunkGenerator;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -58,7 +64,8 @@ public class TARDISExterminator {
                 boolean hid = rs.isHidden();
                 String chunkLoc = rs.getChunk();
                 String owner = rs.getOwner();
-                TARDISConstants.SCHEMATIC schm = rs.getSchematic();
+                int tips = rs.getTIPS();
+                SCHEMATIC schm = rs.getSchematic();
                 HashMap<String, Object> wherecl = new HashMap<String, Object>();
                 wherecl.put("tardis_id", id);
                 ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
@@ -66,18 +73,23 @@ public class TARDISExterminator {
                     return false;
                 }
                 Location bb_loc = new Location(rsc.getWorld(), rsc.getX(), rsc.getY(), rsc.getZ());
-                TARDISConstants.COMPASS d = rsc.getDirection();
+                COMPASS d = rsc.getDirection();
                 if (!hid) {
-                    plugin.destroyerP.destroyPreset(bb_loc, d, id, false, false, false, null);
+                    plugin.destroyerP.destroyPreset(bb_loc, d, id, false, false, false, null, rsc.isSubmarine());
                 }
+                cleanHashMaps(id);
                 String[] chunkworld = chunkLoc.split(":");
                 World cw = plugin.getServer().getWorld(chunkworld[0]);
                 int restore = getRestore(cw);
-                if (!cw.getName().contains("TARDIS_WORLD_")) {
-                    plugin.destroyerI.destroyInner(schm, id, cw, restore, owner);
+                if (cw == null) {
+                    plugin.debug("The server could not find the TARDIS world, has it been deleted?");
+                    return false;
                 }
-                cleanDatabase(id);
+                if (!cw.getName().contains("TARDIS_WORLD_")) {
+                    plugin.destroyerI.destroyInner(schm, id, cw, restore, owner, tips);
+                }
                 cleanWorlds(cw, owner);
+                cleanDatabase(id);
                 return true;
             }
         } catch (Exception e) {
@@ -94,6 +106,7 @@ public class TARDISExterminator {
      * @param block the block that represents the Police Box sign
      * @return true or false depending on whether the TARIS could be deleted
      */
+    @SuppressWarnings("deprecation")
     public boolean exterminate(Player player, Block block) {
         int signx = 0, signz = 0;
         String playerNameStr = player.getName();
@@ -124,12 +137,12 @@ public class TARDISExterminator {
                 wherecl.put("z", bd_loc.getBlockZ());
                 ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
                 if (!rsc.resultSet()) {
-                    player.sendMessage(plugin.pluginName + ChatColor.RED + "Could not get TARDIS save location!");
+                    player.sendMessage(plugin.pluginName + ChatColor.RED + MESSAGE.NO_CURRENT.getText());
                     return false;
                 }
                 where.put("tardis_id", rsc.getTardis_id());
             } else {
-                player.sendMessage(plugin.pluginName + ChatColor.RED + "Could not get TARDIS save location!");
+                player.sendMessage(plugin.pluginName + ChatColor.RED + MESSAGE.NO_CURRENT.getText());
                 return false;
             }
         } else {
@@ -139,7 +152,8 @@ public class TARDISExterminator {
         if (rs.resultSet()) {
             int id = rs.getTardis_id();
             String chunkLoc = rs.getChunk();
-            TARDISConstants.SCHEMATIC schm = rs.getSchematic();
+            int tips = rs.getTIPS();
+            SCHEMATIC schm = rs.getSchematic();
             // need to check that a player is not currently in the TARDIS
             if (player.hasPermission("tardis.delete")) {
                 HashMap<String, Object> travid = new HashMap<String, Object>();
@@ -155,12 +169,12 @@ public class TARDISExterminator {
             wherecl.put("tardis_id", id);
             ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
             if (!rsc.resultSet()) {
-                player.sendMessage(plugin.pluginName + ChatColor.RED + "Could not get TARDIS location from sign!");
+                player.sendMessage(plugin.pluginName + ChatColor.RED + MESSAGE.NO_CURRENT.getText());
                 return false;
             }
             Location bb_loc = new Location(rsc.getWorld(), rsc.getX(), rsc.getY(), rsc.getZ());
             // get TARDIS direction
-            TARDISConstants.COMPASS d = rsc.getDirection();
+            COMPASS d = rsc.getDirection();
             switch (d) {
                 case EAST:
                     signx = -2;
@@ -184,21 +198,25 @@ public class TARDISExterminator {
             if (sign_loc.getBlockX() == bb_loc.getBlockX() + signx && sign_loc.getBlockY() + signy == bb_loc.getBlockY() && sign_loc.getBlockZ() == bb_loc.getBlockZ() + signz) {
                 if (!rs.isHidden()) {
                     // remove Police Box
-                    plugin.destroyerP.destroyPreset(bb_loc, d, id, false, false, false, null);
+                    plugin.destroyerP.destroyPreset(bb_loc, d, id, false, false, false, null, rsc.isSubmarine());
                 }
                 String[] chunkworld = chunkLoc.split(":");
                 World cw = plugin.getServer().getWorld(chunkworld[0]);
+                if (cw == null) {
+                    player.sendMessage(plugin.pluginName + "The server could not find the TARDIS world, has it been deleted?");
+                    return true;
+                }
                 int restore = getRestore(cw);
                 if (!cw.getName().contains("TARDIS_WORLD_")) {
-                    plugin.destroyerI.destroyInner(schm, id, cw, restore, playerNameStr);
+                    plugin.destroyerI.destroyInner(schm, id, cw, restore, playerNameStr, tips);
                 }
                 cleanDatabase(id);
                 cleanWorlds(cw, playerNameStr);
                 player.sendMessage(plugin.pluginName + "The TARDIS was removed from the world and database successfully.");
-                return true;
+                return false;
             } else {
                 // cancel the event because it's not the player's TARDIS
-                player.sendMessage(TARDISConstants.NOT_OWNER);
+                player.sendMessage(MESSAGE.NOT_OWNER.getText());
                 return false;
             }
         } else {
@@ -222,70 +240,65 @@ public class TARDISExterminator {
         }
     }
 
-    private void cleanDatabase(int id) {
+    public void cleanHashMaps(int id) {
+        // remove protected blocks from the HashMap
+        HashMap<String, Object> whereb = new HashMap<String, Object>();
+        whereb.put("tardis_id", id);
+        ResultSetBlocks rsb = new ResultSetBlocks(plugin, whereb, true);
+        if (rsb.resultSet()) {
+            ArrayList<HashMap<String, String>> bdata = rsb.getData();
+            for (HashMap<String, String> bmap : bdata) {
+                plugin.protectBlockMap.remove(bmap.get("location"));
+            }
+        }
+        // remove gravity well blocks from the HashMap
+        HashMap<String, Object> whereg = new HashMap<String, Object>();
+        whereg.put("tardis_id", id);
+        ResultSetGravity rsg = new ResultSetGravity(plugin, whereg, true);
+        if (rsg.resultSet()) {
+            ArrayList<HashMap<String, String>> gdata = rsg.getData();
+            for (HashMap<String, String> gmap : gdata) {
+                int direction = plugin.utils.parseInt(gmap.get("direction"));
+                switch (direction) {
+                    case 1:
+                        plugin.gravityUpList.remove(gmap.get("location"));
+                        break;
+                    case 2:
+                        plugin.gravityNorthList.remove(gmap.get("location"));
+                        break;
+                    case 3:
+                        plugin.gravityWestList.remove(gmap.get("location"));
+                        break;
+                    case 4:
+                        plugin.gravitySouthList.remove(gmap.get("location"));
+                        break;
+                    case 5:
+                        plugin.gravityEastList.remove(gmap.get("location"));
+                        break;
+                    default:
+                        plugin.gravityDownList.remove(gmap.get("location"));
+                        break;
+                }
+            }
+        }
+    }
+
+    public void cleanDatabase(int id) {
         QueryFactory qf = new QueryFactory(plugin);
-        // remove record from tardis table
-        HashMap<String, Object> tid = new HashMap<String, Object>();
-        tid.put("tardis_id", id);
-        qf.doDelete("tardis", tid);
-        // remove blocks from blocks table
-        HashMap<String, Object> bid = new HashMap<String, Object>();
-        bid.put("tardis_id", id);
-        qf.doDelete("blocks", bid);
-        // remove lamps from lamps table
-        HashMap<String, Object> eid = new HashMap<String, Object>();
-        eid.put("tardis_id", id);
-        qf.doDelete("lamps", eid);
-        // remove ARS data
-        HashMap<String, Object> aid = new HashMap<String, Object>();
-        aid.put("tardis_id", id);
-        qf.doDelete("ars", aid);
-        // remove doors from doors table
-        HashMap<String, Object> did = new HashMap<String, Object>();
-        did.put("tardis_id", id);
-        qf.doDelete("doors", did);
-        // remove controls from controls table
-        HashMap<String, Object> oid = new HashMap<String, Object>();
-        oid.put("tardis_id", id);
-        qf.doDelete("controls", oid);
-        // remove gravity wells
-        HashMap<String, Object> gid = new HashMap<String, Object>();
-        gid.put("tardis_id", id);
-        qf.doDelete("gravity_well", gid);
-        // remove saved destinations
-        HashMap<String, Object> lid = new HashMap<String, Object>();
-        lid.put("tardis_id", id);
-        qf.doDelete("destinations", lid);
-        // remove home location
-        HashMap<String, Object> hid = new HashMap<String, Object>();
-        hid.put("tardis_id", id);
-        qf.doDelete("homes", hid);
-        // remove current location
-        HashMap<String, Object> cid = new HashMap<String, Object>();
-        cid.put("tardis_id", id);
-        qf.doDelete("current", cid);
-        // remove next location
-        HashMap<String, Object> nid = new HashMap<String, Object>();
-        nid.put("tardis_id", id);
-        qf.doDelete("next", nid);
-        // remove back location
-        HashMap<String, Object> fid = new HashMap<String, Object>();
-        fid.put("tardis_id", id);
-        qf.doDelete("back", fid);
-        // remove travellers
-        HashMap<String, Object> vid = new HashMap<String, Object>();
-        vid.put("tardis_id", id);
-        qf.doDelete("travellers", vid);
-        // remove chunks
-        HashMap<String, Object> uid = new HashMap<String, Object>();
-        uid.put("tardis_id", id);
-        qf.doDelete("chunks", uid);
+        List<String> tables = Arrays.asList(new String[]{"tardis", "blocks", "lamps", "ars", "doors", "controls", "gravity_well", "destinations", "homes", "current", "next", "back", "travellers", "chunks"});
+        // remove record from database tables
+        for (String table : tables) {
+            HashMap<String, Object> where = new HashMap<String, Object>();
+            where.put("tardis_id", id);
+            qf.doDelete(table, where);
+        }
     }
 
     private void cleanWorlds(World w, String owner) {
         // remove world guard region protection
-        if (plugin.worldGuardOnServer && plugin.getConfig().getBoolean("use_worldguard")) {
+        if (plugin.worldGuardOnServer && plugin.getConfig().getBoolean("preferences.use_worldguard")) {
             plugin.wgutils.removeRegion(w, owner);
+            plugin.wgutils.removeRendererRegion(w, owner);
         }
         // unload and remove the world if it's a TARDIS_WORLD_ world
         if (w.getName().contains("TARDIS_WORLD_")) {

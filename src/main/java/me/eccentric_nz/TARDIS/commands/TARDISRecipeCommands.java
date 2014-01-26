@@ -17,11 +17,12 @@
 package me.eccentric_nz.TARDIS.commands;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.TARDISConstants;
+import me.eccentric_nz.TARDIS.enumeration.MAP;
+import me.eccentric_nz.TARDIS.enumeration.MESSAGE;
 import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -29,6 +30,8 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.ShapedRecipe;
+import org.bukkit.inventory.ShapelessRecipe;
 import org.bukkit.inventory.meta.ItemMeta;
 
 /**
@@ -47,19 +50,40 @@ public class TARDISRecipeCommands implements CommandExecutor {
 
     public TARDISRecipeCommands(TARDIS plugin) {
         this.plugin = plugin;
-        firstArgs.add("remote"); // Stattenheim Remote
-        firstArgs.add("locator"); // TARDIS Locator
+        firstArgs.add("a-circuit"); // Admin Circuit
+        firstArgs.add("ars-circuit"); // ARS Circuit
+        firstArgs.add("bio-circuit"); // Bio-scanner Circuit
+        firstArgs.add("biome-disk"); // Biome Storage Disk
+        firstArgs.add("blank"); // Blank Storage Disk
+        firstArgs.add("c-circuit"); // Chameleon Circuit
+        firstArgs.add("cell"); // Artron Energy Cell
+        firstArgs.add("d-circuit"); // Diamond Circuit
+        firstArgs.add("e-circuit"); // Emerald Circuit
+        firstArgs.add("filter"); // Perception Filter
+        firstArgs.add("i-circuit"); // Input Circuit
+        firstArgs.add("key"); // TARDIS key
         firstArgs.add("l-circuit"); // Locator Circuit
+        firstArgs.add("locator"); // TARDIS Locator
         firstArgs.add("m-circuit"); // Materialisation Circuit
+        firstArgs.add("mem-circuit"); // Memory Circuit
+        firstArgs.add("oscillator"); // Sonic Oscillator
+        firstArgs.add("p-circuit"); // Perception Circuit
+        firstArgs.add("player-disk"); // Player Storage Disk
+        firstArgs.add("preset-disk"); // Preset Storage Disk
+        firstArgs.add("r-circuit"); // Redstone Circuit
+        firstArgs.add("remote"); // Stattenheim Remote
         firstArgs.add("s-circuit"); // Stattenheim Circuit
+        firstArgs.add("save-disk"); // Save Storage Disk
+        firstArgs.add("scan-circuit"); // Scanner Circuit
         firstArgs.add("sonic"); // Sonic Screwdriver
+        firstArgs.add("t-circuit"); // Temporal Circuit
     }
 
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
         if (cmd.getName().equalsIgnoreCase("tardisrecipe")) {
-            if (!sender.hasPermission("tardis.use")) {
-                sender.sendMessage(plugin.pluginName + TARDISConstants.NO_PERMS_MESSAGE);
+            if (!sender.hasPermission("tardis.create")) {
+                sender.sendMessage(plugin.pluginName + MESSAGE.NO_PERMS.getText());
                 return false;
             }
             Player player = null;
@@ -75,124 +99,171 @@ public class TARDISRecipeCommands implements CommandExecutor {
                 return false;
             }
             if (!firstArgs.contains(args[0].toLowerCase(Locale.ENGLISH))) {
-                sender.sendMessage(plugin.pluginName + "That is not a valid recipe name! Try one of: remote|locator|l-circuit|m-circuit|s-circuit");
-                return false;
-            }
-            ItemStack obs = new ItemStack(Material.OBSIDIAN, 1);
-            ItemStack red = new ItemStack(Material.REDSTONE, 1);
-            ItemStack qtz = new ItemStack(Material.QUARTZ, 1);
-            ItemStack ing = new ItemStack(Material.IRON_INGOT, 1);
-            ItemStack dio = new ItemStack(Material.DIODE, 1);
-            ItemStack sti = new ItemStack(Material.STICK, 1);
-            ItemStack lap = new ItemStack(Material.INK_SACK, 1, (short) 4);
-            if (args[0].equalsIgnoreCase("remote")) {
-                plugin.trackRecipeView.add(player.getName());
-                InventoryView view = player.openWorkbench(null, true);
-                view.getTopInventory().setItem(1, obs);
-                view.getTopInventory().setItem(2, new ItemStack(Material.STONE_BUTTON, 1));
-                view.getTopInventory().setItem(3, obs);
-                view.getTopInventory().setItem(4, obs);
-                if (plugin.getConfig().getString("difficulty").equalsIgnoreCase("hard")) {
-                    ItemStack circuit = new ItemStack(Material.MAP, 1, (short) 1963);
-                    ItemMeta im = circuit.getItemMeta();
-                    im.setDisplayName("TARDIS Stattenheim Circuit");
-                    im.setLore(Arrays.asList(new String[]{"/tardisrecipe s-circuit"}));
-                    circuit.setItemMeta(im);
-                    view.getTopInventory().setItem(5, circuit);
-                } else {
-                    view.getTopInventory().setItem(5, lap);
-                }
-                view.getTopInventory().setItem(6, obs);
-                view.getTopInventory().setItem(7, red);
-                view.getTopInventory().setItem(8, red);
-                view.getTopInventory().setItem(9, red);
+                sender.sendMessage(plugin.pluginName + "That is not a valid recipe name! Try one of: a-circuit|ars-circuit|bio-circuit|biome-disk|blank|c-circuit|cell|d-circuit|e-circuit|filter|i-circuit|key|l-circuit|locator|m-circuit|mem-circuit|oscillator|player-disk|preset-disk|p-circuit|r-circuit|remote|s-circuit|save-disk|scan-circuit|sonic|t-circuit");
                 return true;
             }
-            if (args[0].equalsIgnoreCase("locator")) {
-                //recipe.shape("OIO", "ICI", "OIO");
-                plugin.trackRecipeView.add(player.getName());
-                InventoryView view = player.openWorkbench(null, true);
-                view.getTopInventory().setItem(1, obs);
-                view.getTopInventory().setItem(2, ing);
-                view.getTopInventory().setItem(3, obs);
-                view.getTopInventory().setItem(4, ing);
-                ItemStack circuit = new ItemStack(Material.MAP, 1, (short) 1965);
-                ItemMeta im = circuit.getItemMeta();
-                im.setDisplayName("TARDIS Locator Circuit");
-                im.setLore(Arrays.asList(new String[]{"/tardisrecipe l-circuit"}));
-                circuit.setItemMeta(im);
-                view.getTopInventory().setItem(5, circuit);
-                view.getTopInventory().setItem(6, ing);
-                view.getTopInventory().setItem(7, obs);
-                view.getTopInventory().setItem(8, ing);
-                view.getTopInventory().setItem(9, obs);
+            if (args[0].equalsIgnoreCase("a-circuit")) {
+                this.showShapedRecipe(player, "Server Admin Circuit");
+                return true;
+            }
+            if (args[0].equalsIgnoreCase("ars-circuit")) {
+                this.showShapedRecipe(player, "TARDIS ARS Circuit");
+                return true;
+            }
+            if (args[0].equalsIgnoreCase("bio-circuit")) {
+                this.showShapedRecipe(player, "Bio-scanner Circuit");
+                return true;
+            }
+            if (args[0].equalsIgnoreCase("biome-disk")) {
+                this.showShapelessRecipe(player, "Biome Storage Disk");
+                return true;
+            }
+            if (args[0].equalsIgnoreCase("blank")) {
+                this.showShapedRecipe(player, "Blank Storage Disk");
+                return true;
+            }
+            if (args[0].equalsIgnoreCase("c-circuit")) {
+                showShapedRecipe(player, "TARDIS Chameleon Circuit");
+                return true;
+            }
+            if (args[0].equalsIgnoreCase("cell")) {
+                this.showShapedRecipe(player, "Artron Storage Cell");
+                return true;
+            }
+            if (args[0].equalsIgnoreCase("d-circuit")) {
+                this.showShapedRecipe(player, "Diamond Disruptor Circuit");
+                return true;
+            }
+            if (args[0].equalsIgnoreCase("e-circuit")) {
+                this.showShapedRecipe(player, "Emerald Environment Circuit");
+                return true;
+            }
+            if (args[0].equalsIgnoreCase("filter")) {
+                this.showShapedRecipe(player, "Perception Filter");
+                return true;
+            }
+            if (args[0].equalsIgnoreCase("i-circuit")) {
+                this.showShapedRecipe(player, "TARDIS Input Circuit");
+                return true;
+            }
+            if (args[0].equalsIgnoreCase("key")) {
+                this.showShapedRecipe(player, "TARDIS Key");
                 return true;
             }
             if (args[0].equalsIgnoreCase("l-circuit")) {
-                //recipe.shape("RQR", "RIR", "DRL");
-                plugin.trackRecipeView.add(player.getName());
-                InventoryView view = player.openWorkbench(null, true);
-                view.getTopInventory().setItem(1, red);
-                view.getTopInventory().setItem(2, qtz);
-                view.getTopInventory().setItem(3, red);
-                view.getTopInventory().setItem(4, red);
-                view.getTopInventory().setItem(5, ing);
-                view.getTopInventory().setItem(6, red);
-                view.getTopInventory().setItem(7, dio);
-                view.getTopInventory().setItem(8, red);
-                view.getTopInventory().setItem(9, lap);
+                this.showShapedRecipe(player, "TARDIS Locator Circuit");
+                return true;
+            }
+            if (args[0].equalsIgnoreCase("locator")) {
+                showShapedRecipe(player, "TARDIS Locator");
                 return true;
             }
             if (args[0].equalsIgnoreCase("m-circuit")) {
-                // recipe.shape("IDI", "DLD", "QRQ");
-                plugin.trackRecipeView.add(player.getName());
-                InventoryView view = player.openWorkbench(null, true);
-                if (plugin.getConfig().getString("difficulty").equalsIgnoreCase("hard")) {
-                    ing = new ItemStack(Material.EYE_OF_ENDER, 1);
-                }
-                view.getTopInventory().setItem(1, ing);
-                view.getTopInventory().setItem(2, dio);
-                view.getTopInventory().setItem(3, ing);
-                view.getTopInventory().setItem(4, dio);
-                view.getTopInventory().setItem(5, lap);
-                view.getTopInventory().setItem(6, dio);
-                view.getTopInventory().setItem(7, qtz);
-                view.getTopInventory().setItem(8, red);
-                view.getTopInventory().setItem(9, qtz);
+                this.showShapedRecipe(player, "TARDIS Materialisation Circuit");
+                return true;
+            }
+            if (args[0].equalsIgnoreCase("mem-circuit")) {
+                this.showShapedRecipe(player, "TARDIS Memory Circuit");
+                return true;
+            }
+            if (args[0].equalsIgnoreCase("oscillator")) {
+                this.showShapedRecipe(player, "Sonic Oscillator");
+                return true;
+            }
+            if (args[0].equalsIgnoreCase("p-circuit")) {
+                this.showShapedRecipe(player, "Perception Circuit");
+                return true;
+            }
+            if (args[0].equalsIgnoreCase("player-disk")) {
+                this.showShapelessRecipe(player, "Player Storage Disk");
+                return true;
+            }
+            if (args[0].equalsIgnoreCase("preset-disk")) {
+                this.showShapelessRecipe(player, "Preset Storage Disk");
+                return true;
+            }
+            if (args[0].equalsIgnoreCase("r-circuit")) {
+                this.showShapedRecipe(player, "Redstone Activator Circuit");
+                return true;
+            }
+            if (args[0].equalsIgnoreCase("remote")) {
+                showShapedRecipe(player, "Stattenheim Remote");
                 return true;
             }
             if (args[0].equalsIgnoreCase("s-circuit")) {
-                //recipe.shape("AAA", "LRM", "QQQ");
-                plugin.trackRecipeView.add(player.getName());
-                InventoryView view = player.openWorkbench(null, true);
-                ItemStack lcircuit = new ItemStack(Material.MAP, 1, (short) 1965);
-                ItemMeta lim = lcircuit.getItemMeta();
-                lim.setDisplayName("TARDIS Locator Circuit");
-                lim.setLore(Arrays.asList(new String[]{"/tardisrecipe l-circuit"}));
-                lcircuit.setItemMeta(lim);
-                view.getTopInventory().setItem(4, lcircuit);
-                view.getTopInventory().setItem(5, red);
-                ItemStack mcircuit = new ItemStack(Material.MAP, 1, (short) 1964);
-                ItemMeta mim = mcircuit.getItemMeta();
-                mim.setDisplayName("TARDIS Materialisation Circuit");
-                mim.setLore(Arrays.asList(new String[]{"/tardisrecipe m-circuit"}));
-                mcircuit.setItemMeta(mim);
-                view.getTopInventory().setItem(6, mcircuit);
-                view.getTopInventory().setItem(7, qtz);
-                view.getTopInventory().setItem(8, qtz);
-                view.getTopInventory().setItem(9, qtz);
+                showShapedRecipe(player, "TARDIS Stattenheim Circuit");
+                return true;
+            }
+            if (args[0].equalsIgnoreCase("save-disk")) {
+                this.showShapelessRecipe(player, "Save Storage Disk");
+                return true;
+            }
+            if (args[0].equalsIgnoreCase("scan-circuit")) {
+                this.showShapedRecipe(player, "TARDIS Scanner Circuit");
                 return true;
             }
             if (args[0].equalsIgnoreCase("sonic")) {
-                // recipe.shape(" R ", " S ", " S ");
-                plugin.trackRecipeView.add(player.getName());
-                InventoryView view = player.openWorkbench(null, true);
-                view.getTopInventory().setItem(2, red);
-                view.getTopInventory().setItem(5, sti);
-                view.getTopInventory().setItem(8, sti);
+                this.showShapedRecipe(player, "Sonic Screwdriver");
+                return true;
+            }
+            if (args[0].equalsIgnoreCase("t-circuit")) {
+                this.showShapedRecipe(player, "TARDIS Temporal Circuit");
                 return true;
             }
         }
         return false;
+    }
+
+    public void showShapedRecipe(Player p, String str) {
+        ShapedRecipe recipe = plugin.figura.getShapedRecipes().get(str);
+        p.closeInventory();
+        plugin.trackRecipeView.add(p.getName());
+        final InventoryView view = p.openWorkbench(null, true);
+        final String[] recipeShape = recipe.getShape();
+        final Map<Character, ItemStack> ingredientMap = recipe.getIngredientMap();
+        for (int j = 0; j < recipeShape.length; j++) {
+            for (int k = 0; k < recipeShape[j].length(); k++) {
+                final ItemStack item = ingredientMap.get(recipeShape[j].toCharArray()[k]);
+                if (item == null) {
+                    continue;
+                }
+                if (item.getType().equals(Material.MAP)) {
+                    ItemMeta im = item.getItemMeta();
+                    im.setDisplayName(getDisplayName(item.getData().getData()));
+                    item.setItemMeta(im);
+                }
+                item.setAmount(0);
+                view.getTopInventory().setItem(j * 3 + k + 1, item);
+            }
+        }
+    }
+
+    public void showShapelessRecipe(Player player, String str) {
+        ShapelessRecipe recipe = plugin.incomposita.getShapelessRecipes().get(str);
+        final List<ItemStack> ingredients = recipe.getIngredientList();
+        plugin.trackRecipeView.add(player.getName());
+        final InventoryView view = player.openWorkbench(null, true);
+        for (int i = 0; i < ingredients.size(); i++) {
+            if (ingredients.get(i).getType().equals(Material.MAP)) {
+                ItemMeta im = ingredients.get(i).getItemMeta();
+                im.setDisplayName(getDisplayName(ingredients.get(i).getData().getData()));
+                ingredients.get(i).setItemMeta(im);
+            }
+            if (ingredients.get(i).getType().equals(Material.RECORD_9)) {
+                ItemMeta im = ingredients.get(i).getItemMeta();
+                im.setDisplayName("Blank Storage Disk");
+                ingredients.get(i).setItemMeta(im);
+            }
+            view.setItem(i + 1, ingredients.get(i));
+        }
+    }
+
+    private String getDisplayName(byte data) {
+        MAP map = MAP.getMap(data);
+        if (map != null) {
+            return map.getDisplayName();
+        } else {
+            return "Map #" + data;
+        }
     }
 }

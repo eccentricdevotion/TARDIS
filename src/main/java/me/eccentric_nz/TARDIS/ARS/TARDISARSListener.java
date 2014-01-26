@@ -21,12 +21,15 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import me.eccentric_nz.TARDIS.JSON.JSONArray;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetARS;
 import me.eccentric_nz.TARDIS.database.ResultSetCondenser;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
+import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -35,8 +38,6 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
-import me.eccentric_nz.TARDIS.JSON.JSONArray;
-import org.bukkit.Material;
 
 /**
  * The architectural reconfiguration system is a component of the Doctor's
@@ -84,7 +85,7 @@ public class TARDISARSListener implements Listener {
             event.setCancelled(true);
             final Player player = (Player) event.getWhoClicked();
             String playerNameStr = player.getName();
-            ids.put(playerNameStr, getTardisId(playerNameStr));
+            ids.put(playerNameStr, getTardisId(playerNameStr, player.isOp()));
             int slot = event.getRawSlot();
             if (slot != 10 && !hasLoadedMap.contains(playerNameStr)) {
                 player.sendMessage(plugin.pluginName + "You need to load the map first!");
@@ -237,18 +238,26 @@ public class TARDISARSListener implements Listener {
                             } else {
                                 ItemStack ris = inv.getItem(slot);
                                 String room = TARDISARS.getARS(ris.getItemMeta().getDisplayName()).toString();
-                                if (room.equals("Gravity Well") || room.equals("Anti-gravity Well")) {
+                                if (!player.hasPermission("tardis.room." + room.toLowerCase())) {
+                                    setLore(inv, slot, "You don't have permission for this room!");
+                                    break;
+                                }
+                                if (room.equals("GRAVITY") || room.equals("ANTIGRAVITY")) {
                                     int updown = (room.equals("Gravity Well")) ? -1 : 1;
                                     if (checkSavedGrid(playerNameStr, selected_slot.get(playerNameStr), updown)) {
                                         setLore(inv, slot, "Using a gravity well here would overwrite an existing room!");
                                         break;
                                     }
                                 }
-                                if (plugin.getConfig().getBoolean("rooms_require_blocks")) {
+                                if (plugin.getConfig().getBoolean("growth.rooms_require_blocks")) {
                                     if (!hasCondensables(playerNameStr, room)) {
                                         setLore(inv, slot, "You haven't condensed enough blocks for this room!");
                                         break;
                                     }
+                                }
+                                if (room.equals("RENDERER") && hasRenderer(playerNameStr)) {
+                                    setLore(inv, slot, "You already have one of these!");
+                                    break;
                                 }
                                 // setSlot(Inventory inv, int slot, ItemStack is, String player, boolean update)
                                 setSlot(inv, selected_slot.get(playerNameStr), ris, playerNameStr, true);
@@ -535,33 +544,38 @@ public class TARDISARSListener implements Listener {
                     hasLoadedMap.remove(n);
                 }
                 if (map_data.containsKey(n)) {
-                    saveAll(n);
-                    TARDISARSProcessor tap = new TARDISARSProcessor(plugin, ids.get(n));
-                    boolean changed = tap.compare3DArray(save_map_data.get(n).getData(), map_data.get(n).getData());
-                    if (changed && tap.checkCosts(tap.getChanged(), tap.getJettison())) {
-                        p.sendMessage(plugin.pluginName + "Architectural reconfiguration starting...");
-                        plugin.trackARS.add(ids.get(n));
-                        // do all jettisons first
-                        if (tap.getJettison().size() > 0) {
-                            p.sendMessage(plugin.pluginName + "Jettisoning " + tap.getJettison().size() + " rooms...");
-                            long del = 5L;
-                            for (Map.Entry<TARDISARSJettison, TARDISARS> map : tap.getJettison().entrySet()) {
-                                TARDISARSJettisonRunnable jr = new TARDISARSJettisonRunnable(plugin, map.getKey(), map.getValue(), ids.get(p.getName()), p);
-                                plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, jr, del);
-                                del += 5L;
+                    if (playerIsOwner(n, ids.get(n))) {
+                        saveAll(n);
+                        TARDISARSProcessor tap = new TARDISARSProcessor(plugin, ids.get(n));
+                        boolean changed = tap.compare3DArray(save_map_data.get(n).getData(), map_data.get(n).getData());
+                        if (changed && tap.checkCosts(tap.getChanged(), tap.getJettison())) {
+                            p.sendMessage(plugin.pluginName + "Architectural reconfiguration starting...");
+                            plugin.trackARS.add(ids.get(n));
+                            // do all jettisons first
+                            if (tap.getJettison().size() > 0) {
+                                p.sendMessage(plugin.pluginName + "Jettisoning " + tap.getJettison().size() + " rooms...");
+                                long del = 5L;
+                                for (Map.Entry<TARDISARSJettison, TARDISARS> map : tap.getJettison().entrySet()) {
+                                    TARDISARSJettisonRunnable jr = new TARDISARSJettisonRunnable(plugin, map.getKey(), map.getValue(), ids.get(p.getName()), p);
+                                    plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, jr, del);
+                                    del += 5L;
+                                }
                             }
-                        }
-                        // one every 40 seconds at default room_speed
-                        long period = 2400L * (Math.round(20 / plugin.getConfig().getDouble("room_speed")));
-                        long delay = 20L;
-                        for (Map.Entry<TARDISARSSlot, TARDISARS> map : tap.getChanged().entrySet()) {
-                            TARDISARSRunnable ar = new TARDISARSRunnable(plugin, map.getKey(), map.getValue(), p);
-                            plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, ar, delay);
-                            delay += period;
+                            // one every 40 seconds at default room_speed
+                            long period = 2400L * (Math.round(20 / plugin.getConfig().getDouble("growth.room_speed")));
+                            long delay = 20L;
+                            for (Map.Entry<TARDISARSSlot, TARDISARS> map : tap.getChanged().entrySet()) {
+                                TARDISARSRunnable ar = new TARDISARSRunnable(plugin, map.getKey(), map.getValue(), p);
+                                plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, ar, delay);
+                                delay += period;
+                            }
+                        } else {
+                            p.sendMessage(plugin.pluginName + tap.getError());
+                            // reset map to the previous version
+                            revert(n);
                         }
                     } else {
-                        p.sendMessage(plugin.pluginName + tap.getError());
-                        // reset map to the previous version
+                        p.sendMessage(plugin.pluginName + "Only the Timelord of this TARDIS can reconfigure rooms!");
                         revert(n);
                     }
                     map_data.remove(n);
@@ -585,7 +599,7 @@ public class TARDISARSListener implements Listener {
         }
         setLore(inv, 10, "Loading...");
         HashMap<String, Object> where = new HashMap<String, Object>();
-        where.put("player", player);
+        where.put("tardis_id", ids.get(player));
         ResultSetARS rs = new ResultSetARS(plugin, where);
         if (rs.resultSet()) {
             TARDISARSSaveData sd = new TARDISARSSaveData();
@@ -669,8 +683,9 @@ public class TARDISARSListener implements Listener {
 
     private void getRoomIdAndNames() {
         TARDISARS[] ars = TARDISARS.values();
+
         // less non-room types
-        int l = ars.length - 7;
+        int l = ars.length - notrooms.size();
         this.room_ids = new int[l];
         this.room_names = new String[l];
         int i = 0;
@@ -699,7 +714,7 @@ public class TARDISARSListener implements Listener {
         }
         for (Map.Entry<String, Integer> entry : roomBlocks.entrySet()) {
             String[] block_data = entry.getKey().split(":");
-            int bid = plugin.utils.parseNum(block_data[0]);
+            int bid = plugin.utils.parseInt(block_data[0]);
             String mat;
             String bdata;
             if (hasPrefs && block_data.length == 2 && (block_data[1].equals("1") || block_data[1].equals("8"))) {
@@ -709,7 +724,7 @@ public class TARDISARSListener implements Listener {
             } else {
                 bdata = String.format("%d", bid);
             }
-            int tmp = Math.round((entry.getValue() / 100.0F) * plugin.getConfig().getInt("rooms_condenser_percent"));
+            int tmp = Math.round((entry.getValue() / 100.0F) * plugin.getConfig().getInt("growth.rooms_condenser_percent"));
             int required = (tmp > 0) ? tmp : 1;
             HashMap<String, Object> wherec = new HashMap<String, Object>();
             wherec.put("tardis_id", ids.get(player));
@@ -726,19 +741,45 @@ public class TARDISARSListener implements Listener {
         return hasRequired;
     }
 
-    private int getTardisId(String p) {
+    private int getTardisId(String p, boolean isOP) {
         int id = 0;
         HashMap<String, Object> where = new HashMap<String, Object>();
-        where.put("owner", p);
-        ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
-        if (rs.resultSet()) {
-            id = rs.getTardis_id();
+        if (isOP) {
+            where.put("player", p);
+            ResultSetTravellers rs = new ResultSetTravellers(plugin, where, false);
+            if (rs.resultSet()) {
+                id = rs.getTardis_id();
+            }
+        } else {
+            where.put("owner", p);
+            ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
+            if (rs.resultSet()) {
+                id = rs.getTardis_id();
+            }
         }
         return id;
+    }
+
+    private boolean hasRenderer(String p) {
+        HashMap<String, Object> where = new HashMap<String, Object>();
+        where.put("tardis_id", ids.get(p));
+        ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
+        if (rs.resultSet()) {
+            return !rs.getRenderer().isEmpty();
+        }
+        return false;
     }
 
     private boolean checkSlotForConsole(Inventory inv, int slot) {
         Material m = inv.getItem(slot).getType();
         return (consoleBlocks.contains(m));
+    }
+
+    private boolean playerIsOwner(String player, int id) {
+        HashMap<String, Object> where = new HashMap<String, Object>();
+        where.put("tardis_id", id);
+        where.put("owner", player);
+        ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
+        return rs.resultSet();
     }
 }

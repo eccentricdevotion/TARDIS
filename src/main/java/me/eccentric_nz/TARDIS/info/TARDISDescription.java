@@ -28,17 +28,39 @@ package me.eccentric_nz.TARDIS.info;
 public enum TARDISDescription {
 
     KEY_INFO("The TARDIS key allows you to enter and exit the TARDIS."),
-    SONIC_INFO("The Sonic Screwdriver comes in 5 diffrent flavours, and each has its own special uses. Check out the Sonic Screwdriver types for further information."),
-    SONIC_Q_INFO("The Quartz Sonic Screwdriver is the base model, and has no specific functions. It will open doors at a distance, deadlock doors, and press buttons & levers at a distance."),
-    SONIC_R_INFO("The Redstone Sonic Screwdriver is useful for building redstone contraptions. It will power on redstone by right-clicking, power pistons, dispensers, hoppers, droppers, redstone tracks, and unlock deadlocked doors."),
-    SONIC_D_INFO("The Diamond Sonic Screwdriver can be used for immediately breaking iron fences, breaking glass, cutting spider web, igniting blocks, and remote detonation of TNT."),
-    SONIC_E_INFO("When you right-click the ground with a The Emerald Sonic Screwdriver, it tells you the same information as the TARDIS Scanner, but relative to you. You can also scan the health/hunger of players, and freeze players in place for a second or two."),
-    SONIC_A_INFO("The Admin Sonic Screwdriver allows you to scan a player's inventory, scan a player's level, or when right-clicking a TARDIS sign, see who is inside a TARDIS."),
+    SONIC_INFO("The Sonic Screwdriver comes with 5 different upgrades, and each has its own special uses. Check out the Sonic Screwdriver upgrades for further information."),
+    SONIC_Q_INFO("The Quartz Sonic Screwdriver is the base model, and has no specific functions. It will open doors at a distance,  press buttons & levers at a distance and open the Player Preferences GUI."),
+    SONIC_B_INFO("The Bio-scanner Sonic Screwdriver Upgrade is useful for scanning the health/hunger of players, and freezing players in place for a second or two."),
+    SONIC_R_INFO("The Redstone Sonic Screwdriver Upgrade is useful for building redstone contraptions. It will power on redstone by right-clicking, power pistons, lamps, and redstone tracks."),
+    SONIC_D_INFO("The Diamond Sonic Screwdriver Upgrade can be used for immediately breaking iron fences, glass, ice & packed ice, and cutting spider web."),
+    SONIC_E_INFO("When you right-click the ground with a The Emerald Sonic Screwdriver Upgrade, it tells you the same information as the TARDIS Scanner, but relative to you."),
+    SONIC_A_INFO("The Admin Sonic Screwdriver Upgrade allows you to open the TARDIS Admin GUI, scan a player's inventory, or when right-clicking a TARDIS door, see who is inside a TARDIS."),
     LOCATOR_INFO("The TARDIS Locator is a craftable compass that will point the way towards a Time Lord's TARDIS."),
     REMOTE_INFO("The Stattenheim Remote is a craftable item used to summon a Time Lord's TARDIS."),
     L_CIRCUIT_INFO("The Locator Circuit is used in crafting the TARDIS Locator."),
-    M_CIRCUIT_INFO("The Materialisation Circuit enables a TARDIS to dematerialize. It is used in crafting a Stattenhiem Circuit."),
+    M_CIRCUIT_INFO("The Materialisation Circuit enables a TARDIS to dematerialize. It is used in crafting a Stattenhiem Circuit, and is a component of the TARDIS Advanced Console."),
     S_CIRCUIT_INFO("The Stattenheim Circuit is used in the crafting of a Stattenhiem Remote. This circuit combines the Materialization Circuit and the Locator Circuit to allow the two to fit in the remote's casing."),
+    OSCILLATOR_INFO("The Oscillator Circuit is used in crafting the Sonic Screwdriver."),
+    BIO_CIRCUIT_INFO("The Bio-scanner Circuit is used to upgrade the Sonic Screwdriver."),
+    R_CIRCUIT_INFO("The Redstone Activator Circuit is used to upgrade the Sonic Screwdriver."),
+    D_CIRCUIT_INFO("The Diamond Disruptor Circuit is used to upgrade the Sonic Screwdriver."),
+    E_CIRCUIT_INFO("The Emerald Environment Circuit is used to upgrade the Sonic Screwdriver."),
+    A_CIRCUIT_INFO("The Server Admin Circuit is used to upgrade the Sonic Screwdriver."),
+    C_CIRCUIT_INFO("The Chamelon Circuit is used in crafting the Preset Storage Disks and is a component of the TARDIS Advanced Console."),
+    I_CIRCUIT_INFO("The Input Circuit is a component of the TARDIS Advanced Console and is required to use the Destination Terminal and the TARDIS Keyboard."),
+    MEM_CIRCUIT_INFO("The Memory Circuit is a component of the TARDIS Advanced Console and is required to use the Save Sign."),
+    T_CIRCUIT_INFO("The Temporal Circuit is a component of the TARDIS Advanced Console and is required to use the Temporal Locator."),
+    ARS_CIRCUIT_INFO("The ARS Circuit is a component of the TARDIS Advanced Console and is required to use the Architectural Reconfiguration System."),
+    SCAN_CIRCUIT_INFO("The Scanner Circuit is a component of the TARDIS Advanced Console and is required to use the TARDIS Scanner and Exterior Rendering room."),
+    P_CIRCUIT_INFO("The Perception Circuit is used in crafting the Perception Filter."),
+    FILTER_INFO("The Perception Filter is used to make yourself less noticeable."),
+    AREA_DISK("An Area Storage Disk lets you travel to a TARDIS Area. These disks are not craftable."),
+    BLANK_INFO("A Blank Storage Disk is a craftable disk that is the base disk for crafting into another sort of TARDIS disk."),
+    BIOME_DISK_INFO("A Biome Storage Disk is a craftable disk that lets you travel to specific biomes."),
+    PLAYER_DISK_INFO("A Player Storage Disk is a craftable disk that lets you travel to players."),
+    PRESET_DISK_INFO("A Preset Storage Disk is a craftable disk that lets you set the TARDIS exterior preset."),
+    SAVE_DISK_INFO("A Save Storage Disk is a craftable disk that lets you travel to a saved location."),
+    CELL_INFO("An Artron Storage Cell lets you store and transfer Artron Energy."),
     BUDGET("Small, but cosy - good if you don’t like walking too far to the console :)"),
     BIGGER("Big enough to swing a cat."),
     DELUXE("Luxury in a box."),
@@ -64,9 +86,11 @@ public enum TARDISDescription {
     PASSAGE("To get from here to there."),
     POOL("Grab your togs!"),
     RAIL("You need this room to transport items into the TARDIS with a storgae minecart."),
+    RENDERER("This room shows you the environment outside the TARDIS's current location."),
     STABLE("Giddyup, here come the horses..."),
     TRENZALORE("The final resting place of the Doctor."),
     VAULT("Some extra storage space."),
+    VILLAGE("A home for the weary trader."),
     WOOD("A secondary console room made of wood."),
     WORKSHOP("Craft, smelt, brew, enchant and repair."),
     MALFUNCTIONS("When the TARDIS travels, there is a chance of a malfunctioning happening that deposits the TARDIS in an unexpected location."),
@@ -74,6 +98,10 @@ public enum TARDISDescription {
             + "USAGE: Right-click.\n"
             + "UPDATING: /tardis update ARS\n"
             + "BLOCK: SIGN"),
+    ADVANCED("The TARDIS Advanced Console is the TARDISes control centre, it enables TARDIS Circuits and processes location Storage Disks.\n"
+            + "USAGE: Right-click.\n"
+            + "UPDATING: /tardis update advanced\n"
+            + "BLOCK: JUKEBOX"),
     ARTRON(" INFO: When pressed, it performs various Artron Energy functions.\n"
             + "USAGE: Right-click with the TARDIS key to initialise the Artron Energy Capacitor.\n"
             + "USAGE: Right-click while sneaking to transfer Time Lord energy.\n"
@@ -150,6 +178,10 @@ public enum TARDISDescription {
             + "USAGE: Right-click the block that horses are to spawn on.\n"
             + "UPDATING: /tardis update stable\n"
             + "BLOCK: any"),
+    STORAGE("The Disk Storage Container lets you store Storage Disks and Circuits.\n"
+            + "USAGE: Right-click.\n"
+            + "UPDATING: /tardis update storage\n"
+            + "BLOCK: NOTEBLOCK"),
     TERMINAL(" INFO: The Terminal is the GUI alternative to setting TARDIS coordinates.\n"
             + "USAGE: Right-click.\n"
             + "UPDATING: /tardis update terminal\n"

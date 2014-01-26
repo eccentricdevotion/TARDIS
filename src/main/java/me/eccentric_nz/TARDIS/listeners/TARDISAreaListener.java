@@ -84,24 +84,24 @@ public class TARDISAreaListener implements Listener {
                         return;
                     }
                     int y = block_loc.getBlockY();
-                    if (y != (plugin.utils.parseNum(firstblock[2]))) {
+                    if (y != (plugin.utils.parseInt(firstblock[2]))) {
                         player.sendMessage(plugin.pluginName + ChatColor.RED + "Area start and end blocks must be at the same Y co-ordinate! Try again with a FLAT area.");
                         return;
                     }
                     int minx, minz, maxx, maxz;
-                    if (plugin.utils.parseNum(firstblock[1]) < block_loc.getBlockX()) {
-                        minx = plugin.utils.parseNum(firstblock[1]);
+                    if (plugin.utils.parseInt(firstblock[1]) < block_loc.getBlockX()) {
+                        minx = plugin.utils.parseInt(firstblock[1]);
                         maxx = block_loc.getBlockX();
                     } else {
                         minx = block_loc.getBlockX();
-                        maxx = plugin.utils.parseNum(firstblock[1]);
+                        maxx = plugin.utils.parseInt(firstblock[1]);
                     }
-                    if (plugin.utils.parseNum(firstblock[3]) < block_loc.getBlockZ()) {
-                        minz = plugin.utils.parseNum(firstblock[3]);
+                    if (plugin.utils.parseInt(firstblock[3]) < block_loc.getBlockZ()) {
+                        minz = plugin.utils.parseInt(firstblock[3]);
                         maxz = block_loc.getBlockZ();
                     } else {
                         minz = block_loc.getBlockZ();
-                        maxz = plugin.utils.parseNum(firstblock[3]);
+                        maxz = plugin.utils.parseInt(firstblock[3]);
                     }
                     String n = plugin.trackName.get(playerNameStr);
                     QueryFactory qf = new QueryFactory(plugin);
