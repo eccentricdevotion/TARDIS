@@ -1,15 +1,7 @@
 # TODO
 
-##Current version `2.7-beta-3`
-1. Videos!
-2. Advanced TARDIS console
-   * Test all disks & circuits
-3. TARDIS exterior rendering / scanner room
-   * find a way to prevent items dropping between renders
-4. TARDIS Information System
-    * auto log out?
-    
-##Future version `2.8+`
+##Current version `2.8`
+0. Videos!
 1. Custom room schematics in ARS (check they are 16x16x16)
 2. TARDIS direction sign
 3. Configurable option to allow Gravity Wells outside of the TARDIS
@@ -18,15 +10,25 @@
 6. Put farmland, crops, buttons, ladders, levers and signs on last when growing rooms
 7. Localisation
 8. Toggle both doors open when shift-clicking the door, and when exiting (if the preset has a door and the door is open) tp the player to the door location.
+9. TARDIS exterior rendering / scanner room
+   * find a way to prevent items dropping between renders
+10. TARDIS Information System
+   * auto log out?
+11. Zero room
 
-##Resource Pack
+    
+##Future version `2.9+`
+* ?
+
+
+##Resource Pack / TARDISWeepingAngels
 Reskin mobs for Resource pack, and add new mob sounds
 
-* Skeletons -> Weeping Angels
+* Skeletons -> Weeping Angels - __done__
 * Wither Skeletons -> Vashta Nerada
 * Wolves -> K-9
-* Zombies -> Empty child
-* Pigmen -> Sontarans
+* Zombies -> Cybermen
+* Pigmen -> Ice Warriors - __done__
 * Endermen -> The Silence
 * Creepers -> Daleks
 * Slimes -> Adipose
