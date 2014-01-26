@@ -197,7 +197,7 @@ public class TARDISCommands implements CommandExecutor {
                 }
                 if (args[0].equalsIgnoreCase("save")) {
                     ItemStack is = player.getItemInHand();
-                    if (is != null && is.hasItemMeta() && is.getItemMeta().getDisplayName().equals("Save Storage Disk")) {
+                    if (is != null && is.hasItemMeta() && is.getItemMeta().hasDisplayName() && is.getItemMeta().getDisplayName().equals("Save Storage Disk")) {
                         return new TARDISDiskWriterCommand(plugin).writeSave(player, args);
                     } else {
                         return new TARDISSaveLocationCommand(plugin).doSave(player, args);
@@ -205,7 +205,7 @@ public class TARDISCommands implements CommandExecutor {
                 }
                 if (args[0].equalsIgnoreCase("save_player")) {
                     ItemStack is = player.getItemInHand();
-                    if (is != null && is.hasItemMeta() && is.getItemMeta().getDisplayName().equals("Player Storage Disk")) {
+                    if (is != null && is.hasItemMeta() && is.getItemMeta().hasDisplayName() && is.getItemMeta().getDisplayName().equals("Player Storage Disk")) {
                         return new TARDISDiskWriterCommand(plugin).writePlayer(player, args);
                     } else {
                         sender.sendMessage(plugin.pluginName + "You must be holding a Player Storage Disk in your hand!");
