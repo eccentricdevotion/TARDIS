@@ -57,6 +57,11 @@ public class TARDISArtronIndicator {
                 isFiltered = true;
             }
         }
+        final Scoreboard currentScoreboard = p.getScoreboard();
+//        Objective obj = currentScoreboard.getObjective(DisplaySlot.SIDEBAR);
+//        if (obj != null && !obj.getDisplayName().equals("Artron Energy")) {
+//            isFiltered = true;
+//        }
         // get Artron level
         HashMap<String, Object> where = new HashMap<String, Object>();
         where.put("tardis_id", id);
@@ -91,7 +96,8 @@ public class TARDISArtronIndicator {
                     plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
                         @Override
                         public void run() {
-                            p.setScoreboard(manager.getNewScoreboard());
+                            //p.setScoreboard(manager.getNewScoreboard());
+                            p.setScoreboard(currentScoreboard);
                         }
                     }, 150L);
                 }
