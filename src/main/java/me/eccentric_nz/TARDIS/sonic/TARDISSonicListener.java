@@ -380,7 +380,7 @@ public class TARDISSonicListener implements Listener {
         }
     }
 
-    private void playSonicSound(final Player player, long now, long cooldown, String sound) {
+    public void playSonicSound(final Player player, long now, long cooldown, String sound) {
         if ((!timeout.containsKey(player.getName()) || timeout.get(player.getName()) < now)) {
             ItemMeta im = player.getItemInHand().getItemMeta();
             im.addEnchant(Enchantment.DURABILITY, 1, true);

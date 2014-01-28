@@ -311,6 +311,7 @@ public class TARDIS extends JavaPlugin {
     public TARDISButtonListener buttonListener;
     public TARDISDoorListener doorListener;
     public TARDISRedstoneListener redstoneListener;
+    public TARDISSonicListener sonicListener;
     public TARDISChameleonPreset presets;
     public TARDISMultiverseInventoriesChecker tmic;
     public TARDISWalls tw;
@@ -553,7 +554,8 @@ public class TARDIS extends JavaPlugin {
             pm.registerEvents(new TARDISWorldResetListener(this), this);
         }
         pm.registerEvents(new TARDISSonicUpgradeListener(this), this);
-        pm.registerEvents(new TARDISSonicListener(this), this);
+        this.sonicListener = new TARDISSonicListener(this);
+        pm.registerEvents(sonicListener, this);
         pm.registerEvents(new TARDISSonicEntityListener(this), this);
         pm.registerEvents(new TARDISSonicSorterListener(this), this);
         pm.registerEvents(new TARDISRenderRoomListener(this), this);

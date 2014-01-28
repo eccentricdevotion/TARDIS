@@ -20,7 +20,6 @@ import java.util.HashMap;
 import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
 import org.bukkit.Material;
-import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -30,7 +29,6 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.inventory.meta.ItemMeta;
 
 /**
@@ -61,7 +59,7 @@ public class TARDISSonicEntityListener implements Listener {
                 Entity ent = event.getRightClicked();
                 if (ent instanceof Player) {
                     final Player scanned = (Player) ent;
-                    playSonicSound(player, now);
+                    plugin.sonicListener.playSonicSound(player, now, 3050L, "sonic_screwdriver");
                     if (player.hasPermission("tardis.admin") && lore != null && lore.contains("Admin Upgrade")) {
                         player.sendMessage(plugin.pluginName + "Opening player's inventory, please wait...");
                         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
@@ -91,45 +89,6 @@ public class TARDISSonicEntityListener implements Listener {
                         }, 40L);
                     }
                 }
-            }
-        }
-    }
-
-    private void playSonicSound(final Player player, long now) {
-        if ((!timeout.containsKey(player.getName()) || timeout.get(player.getName()) < now)) {
-            ItemMeta im = player.getItemInHand().getItemMeta();
-            im.addEnchant(Enchantment.DURABILITY, 1, true);
-            player.getItemInHand().setItemMeta(im);
-            timeout.put(player.getName(), now + 3050);
-            plugin.utils.playTARDISSound(player.getLocation(), player, "sonic_screwdriver");
-            plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
-                @Override
-                public void run() {
-                    ItemStack hand = player.getItemInHand();
-                    if (hand.hasItemMeta()) {
-                        ItemMeta im = hand.getItemMeta();
-                        if (im.hasDisplayName() && im.getDisplayName().equals("Sonic Screwdriver")) {
-                            for (Enchantment e : player.getItemInHand().getEnchantments().keySet()) {
-                                player.getItemInHand().removeEnchantment(e);
-                            }
-                        } else {
-                            removeSonicEnchant(player);
-                        }
-                    } else {
-                        removeSonicEnchant(player);
-                    }
-                }
-            }, 60L);
-        }
-    }
-
-    private void removeSonicEnchant(Player player) {
-        // find the screwdriver in the player's inventory
-        PlayerInventory inv = player.getInventory();
-        ItemStack stack = inv.getItem(inv.first(sonic));
-        if (stack.containsEnchantment(Enchantment.DURABILITY)) {
-            for (Enchantment e : stack.getEnchantments().keySet()) {
-                stack.removeEnchantment(e);
             }
         }
     }
