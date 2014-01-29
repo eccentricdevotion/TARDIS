@@ -135,8 +135,6 @@ public class TARDISUtils {
         Block b = w.getBlockAt(x, y, z);
         int bid = b.getTypeId();
         if (ids.contains(bid)) {
-            b.setTypeId(m);
-            b.setData(d, true);
             // remember replaced block location, TypeId and Data so we can restore it later
             String l = b.getLocation().toString();
             QueryFactory qf = new QueryFactory(plugin);
@@ -148,6 +146,9 @@ public class TARDISUtils {
             set.put("police_box", 1);
             qf.doInsert("blocks", set);
             plugin.protectBlockMap.put(l, id);
+            // set the block
+            b.setTypeId(m);
+            b.setData(d, true);
         }
     }
 
