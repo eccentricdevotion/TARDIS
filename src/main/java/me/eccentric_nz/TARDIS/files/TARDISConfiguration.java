@@ -72,6 +72,7 @@ public class TARDISConfiguration {
         boolOptions.put("allow.spawn_eggs", true);
         boolOptions.put("allow.tp_switch", true);
         boolOptions.put("allow.wg_flag_set", true);
+        boolOptions.put("allow.zero_room", false);
         boolOptions.put("conversions.conversion_done", false);
         boolOptions.put("conversions.location_conversion_done", false);
         boolOptions.put("creation.add_perms", true);
@@ -147,6 +148,8 @@ public class TARDISConfiguration {
         roomBoolOptions.put("rooms.WOOD.user", false);
         roomBoolOptions.put("rooms.WORKSHOP.enabled", true);
         roomBoolOptions.put("rooms.WORKSHOP.user", false);
+        roomBoolOptions.put("rooms.ZERO.enabled", true);
+        roomBoolOptions.put("rooms.ZERO.user", false);
         // integer
         artronIntOptions.put("autonomous", 100);
         artronIntOptions.put("backdoor", 100);
@@ -163,6 +166,7 @@ public class TARDISConfiguration {
         artronIntOptions.put("render", 250);
         artronIntOptions.put("the_end_min", 5500);
         artronIntOptions.put("travel", 100);
+        artronIntOptions.put("zero", 250);
         intOptions.put("creation.border_radius", 256);
         intOptions.put("creation.count", 0);
         intOptions.put("creation.custom_creeper_id", 138);
@@ -176,6 +180,7 @@ public class TARDISConfiguration {
         intOptions.put("preferences.freeze_cooldown", 60);
         intOptions.put("preferences.hads_damage", 10);
         intOptions.put("preferences.hads_distance", 10);
+        intOptions.put("preferences.heal_speed", 1000);
         intOptions.put("preferences.malfunction", 3);
         intOptions.put("preferences.malfunction_end", 3);
         intOptions.put("preferences.malfunction_nether", 3);
@@ -190,49 +195,51 @@ public class TARDISConfiguration {
         intOptions.put("travel.timeout_height", 135);
         intOptions.put("travel.tp_radius", 256);
         roomIntOptions.put("rooms.ANTIGRAVITY.cost", 625);
-        roomIntOptions.put("rooms.ANTIGRAVITY.offset", -3);
+        roomIntOptions.put("rooms.ANTIGRAVITY.offset", -4);
         roomIntOptions.put("rooms.ARBORETUM.cost", 325);
         roomIntOptions.put("rooms.ARBORETUM.offset", -4);
         roomIntOptions.put("rooms.BAKER.cost", 350);
-        roomIntOptions.put("rooms.BAKER.offset", -3);
+        roomIntOptions.put("rooms.BAKER.offset", -4);
         roomIntOptions.put("rooms.BEDROOM.cost", 475);
-        roomIntOptions.put("rooms.BEDROOM.offset", -3);
+        roomIntOptions.put("rooms.BEDROOM.offset", -4);
         roomIntOptions.put("rooms.EMPTY.cost", 250);
-        roomIntOptions.put("rooms.EMPTY.offset", -3);
+        roomIntOptions.put("rooms.EMPTY.offset", -4);
         roomIntOptions.put("rooms.FARM.cost", 350);
-        roomIntOptions.put("rooms.FARM.offset", -3);
+        roomIntOptions.put("rooms.FARM.offset", -4);
         roomIntOptions.put("rooms.GRAVITY.cost", 625);
-        roomIntOptions.put("rooms.GRAVITY.offset", -19);
+        roomIntOptions.put("rooms.GRAVITY.offset", -20);
         roomIntOptions.put("rooms.GREENHOUSE.cost", 450);
-        roomIntOptions.put("rooms.GREENHOUSE.offset", -3);
+        roomIntOptions.put("rooms.GREENHOUSE.offset", -4);
         roomIntOptions.put("rooms.HARMONY.cost", 450);
-        roomIntOptions.put("rooms.HARMONY.offset", -3);
+        roomIntOptions.put("rooms.HARMONY.offset", -4);
         roomIntOptions.put("rooms.KITCHEN.cost", 450);
-        roomIntOptions.put("rooms.KITCHEN.offset", -3);
+        roomIntOptions.put("rooms.KITCHEN.offset", -4);
         roomIntOptions.put("rooms.LIBRARY.cost", 550);
-        roomIntOptions.put("rooms.LIBRARY.offset", -3);
+        roomIntOptions.put("rooms.LIBRARY.offset", -4);
         roomIntOptions.put("rooms.MUSHROOM.cost", 350);
-        roomIntOptions.put("rooms.MUSHROOM.offset", -3);
+        roomIntOptions.put("rooms.MUSHROOM.offset", -4);
         roomIntOptions.put("rooms.PASSAGE.cost", 200);
-        roomIntOptions.put("rooms.PASSAGE.offset", -3);
+        roomIntOptions.put("rooms.PASSAGE.offset", -4);
         roomIntOptions.put("rooms.POOL.cost", 450);
-        roomIntOptions.put("rooms.POOL.offset", -3);
+        roomIntOptions.put("rooms.POOL.offset", -4);
         roomIntOptions.put("rooms.RAIL.cost", 650);
-        roomIntOptions.put("rooms.RAIL.offset", -3);
+        roomIntOptions.put("rooms.RAIL.offset", -4);
         roomIntOptions.put("rooms.RENDERER.cost", 650);
-        roomIntOptions.put("rooms.RENDERER.offset", -3);
+        roomIntOptions.put("rooms.RENDERER.offset", -4);
         roomIntOptions.put("rooms.STABLE.cost", 350);
-        roomIntOptions.put("rooms.STABLE.offset", -3);
+        roomIntOptions.put("rooms.STABLE.offset", -4);
         roomIntOptions.put("rooms.TRENZALORE.cost", 550);
-        roomIntOptions.put("rooms.TRENZALORE.offset", -3);
+        roomIntOptions.put("rooms.TRENZALORE.offset", -4);
         roomIntOptions.put("rooms.VAULT.cost", 350);
-        roomIntOptions.put("rooms.VAULT.offset", -3);
+        roomIntOptions.put("rooms.VAULT.offset", -4);
         roomIntOptions.put("rooms.VILLAGE.cost", 550);
-        roomIntOptions.put("rooms.VILLAGE.offset", -3);
+        roomIntOptions.put("rooms.VILLAGE.offset", -4);
         roomIntOptions.put("rooms.WOOD.cost", 350);
-        roomIntOptions.put("rooms.WOOD.offset", -3);
+        roomIntOptions.put("rooms.WOOD.offset", -4);
         roomIntOptions.put("rooms.WORKSHOP.cost", 400);
-        roomIntOptions.put("rooms.WORKSHOP.offset", -3);
+        roomIntOptions.put("rooms.WORKSHOP.offset", -4);
+        roomIntOptions.put("rooms.ZERO.cost", 650);
+        roomIntOptions.put("rooms.ZERO.offset", -4);
         // string
         strOptions.put("creation.custom_schematic_seed", "OBSIDIAN");
         strOptions.put("creation.default_world_name", "myridiculouslylongworldnameiscalledcuthbert");
@@ -267,6 +274,7 @@ public class TARDISConfiguration {
         roomStrOptions.put("rooms.VILLAGE.seed", "LOG");
         roomStrOptions.put("rooms.WOOD.seed", "WOOD");
         roomStrOptions.put("rooms.WORKSHOP.seed", "NETHER_BRICK");
+        roomStrOptions.put("rooms.ZERO.seed", "WOOD_BUTTON");
     }
 
     /**
