@@ -75,7 +75,7 @@ public class TARDISEmergencyRelocation {
                 p.sendMessage(plugin.pluginName + "Emergency Relocation complete.");
                 HashMap<String, Object> wherea = new HashMap<String, Object>();
                 wherea.put("tardis_id", id);
-                qf.alterEnergyLevel("tardis", plugin.getArtronConfig().getInt("travel"), wherea, p);
+                qf.alterEnergyLevel("tardis", -plugin.getArtronConfig().getInt("travel"), wherea, p);
             }
         }
     }
