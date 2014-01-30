@@ -41,6 +41,10 @@ public class TARDISZeroRoomBuilder {
     }
 
     public boolean build(Player p, int tips, int id) {
+        if (!plugin.getConfig().getBoolean("allow.zero_room")) {
+            p.sendMessage(plugin.pluginName + "This server does not allow Zero rooms!");
+            return true;
+        }
         TARDISInteriorPostioning tintpos = new TARDISInteriorPostioning(plugin);
         int slot = tips;
         if (tips == -1) {
