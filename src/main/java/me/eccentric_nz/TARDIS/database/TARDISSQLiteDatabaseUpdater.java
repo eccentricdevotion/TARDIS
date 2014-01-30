@@ -98,6 +98,7 @@ public class TARDISSQLiteDatabaseUpdater {
         tardisupdates.add("tardis_init INTEGER DEFAULT 0");
         tardisupdates.add("tips INTEGER DEFAULT '-1'");
         tardisupdates.add("village TEXT DEFAULT ''");
+        tardisupdates.add("zero TEXT DEFAULT ''");
     }
 
     /**

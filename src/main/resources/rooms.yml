@@ -132,3 +132,9 @@ rooms:
     offset: -4
     seed: HARD_CLAY
     user: false
+  ZERO:
+    enabled: true
+    cost: 650
+    offset: -4
+    seed: WOOD_BUTTON
+    user: false

@@ -39,6 +39,7 @@ import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.MESSAGE;
 import me.eccentric_nz.TARDIS.enumeration.STORAGE;
 import me.eccentric_nz.TARDIS.info.TARDISInfoMenu;
+import me.eccentric_nz.TARDIS.rooms.TARDISExteriorRenderer;
 import me.eccentric_nz.TARDIS.travel.TARDISTemporalLocatorInventory;
 import me.eccentric_nz.TARDIS.travel.TARDISTerminalInventory;
 import me.eccentric_nz.TARDIS.travel.TARDISTimeTravel;
@@ -67,7 +68,7 @@ public class TARDISButtonListener implements Listener {
 
     private final TARDIS plugin;
     private final List<Material> validBlocks = new ArrayList<Material>();
-    private final List<Integer> onlythese = Arrays.asList(new Integer[]{1, 8, 9, 10, 11, 12, 13, 14});
+    private final List<Integer> onlythese = Arrays.asList(new Integer[]{1, 8, 9, 10, 11, 12, 13, 14, 16, 17});
     public ItemStack[] items;
     private final ItemStack[] tars;
     private final ItemStack[] clocks;
@@ -425,6 +426,31 @@ public class TARDISButtonListener implements Listener {
                                     Inventory inv = plugin.getServer().createInventory(player, 54, STORAGE.SAVE_1.getTitle());
                                     inv.setContents(stack);
                                     player.openInventory(inv);
+                                    break;
+                                case 16:
+                                    // enter zero room
+                                    int zero_amount = plugin.getArtronConfig().getInt("zero");
+                                    if (level < zero_amount) {
+                                        player.sendMessage(plugin.pluginName + ChatColor.RED + MESSAGE.NOT_ENOUGH_ZERO_ENERGY.getText());
+                                        return;
+                                    }
+                                    player.sendMessage(plugin.pluginName + "Zero room ready, stand by for transmat...");
+                                    final Location zero = plugin.utils.getLocationFromDB(rs.getZero(), 0.0F, 0.0F);
+                                    plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            new TARDISExteriorRenderer(plugin).transmat(player, COMPASS.SOUTH, zero);
+                                        }
+                                    }, 20L);
+                                    plugin.zeroRoomOccupants.add(player.getName());
+                                    HashMap<String, Object> wherez = new HashMap<String, Object>();
+                                    wherez.put("tardis_id", id);
+                                    qf.alterEnergyLevel("tardis", -zero_amount, wherez, player);
+                                    break;
+                                case 17:
+                                    // exit zero room
+                                    plugin.rendererListener.transmat(player);
+                                    plugin.zeroRoomOccupants.remove(player.getName());
                                     break;
                                 default:
                                     break;

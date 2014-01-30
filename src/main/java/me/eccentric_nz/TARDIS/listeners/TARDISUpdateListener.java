@@ -77,6 +77,8 @@ public class TARDISUpdateListener implements Listener {
         controls.put("info", 13);
         controls.put("storage", 14);
         controls.put("advanced", 15);
+        controls.put("zero", 16); // enter control
+        // zero room exit control = 17
         validBlocks.add(Material.LEVER);
         validBlocks.add(Material.REDSTONE_COMPARATOR_OFF);
         validBlocks.add(Material.REDSTONE_COMPARATOR_ON);
@@ -560,6 +562,21 @@ public class TARDISUpdateListener implements Listener {
                 if (!rsc.resultSet()) {
                     // insert control
                     qf.insertControl(id, 15, blockLocStr, 0);
+                    secondary = true;
+                } else {
+                    set.put("location", blockLocStr);
+                }
+                // check if player has storage record, and update the tardis_id field
+                plugin.utils.updateStorageId(playerNameStr, id, qf);
+            }
+            if (blockName.equalsIgnoreCase("zero") && (validBlocks.contains(blockType) || validSigns.contains(blockType))) {
+                HashMap<String, Object> wherez = new HashMap<String, Object>();
+                wherez.put("tardis_id", id);
+                wherez.put("type", 16);
+                ResultSetControls rsc = new ResultSetControls(plugin, wherez, false);
+                if (!rsc.resultSet()) {
+                    // insert control
+                    qf.insertControl(id, 16, blockLocStr, 0);
                     secondary = true;
                 } else {
                     set.put("location", blockLocStr);

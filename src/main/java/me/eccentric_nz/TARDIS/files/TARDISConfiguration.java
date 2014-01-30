@@ -180,7 +180,7 @@ public class TARDISConfiguration {
         intOptions.put("preferences.freeze_cooldown", 60);
         intOptions.put("preferences.hads_damage", 10);
         intOptions.put("preferences.hads_distance", 10);
-        intOptions.put("preferences.heal_speed", 1000);
+        intOptions.put("preferences.heal_speed", 200);
         intOptions.put("preferences.malfunction", 3);
         intOptions.put("preferences.malfunction_end", 3);
         intOptions.put("preferences.malfunction_nether", 3);

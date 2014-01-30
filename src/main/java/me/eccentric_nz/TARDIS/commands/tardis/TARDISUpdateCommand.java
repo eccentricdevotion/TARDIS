@@ -40,14 +40,14 @@ public class TARDISUpdateCommand {
 
     public boolean startUpdate(Player player, String[] args) {
         if (player.hasPermission("tardis.update")) {
-            String[] validBlockNames = {"advanced", "ars", "artron", "back", "backdoor", "button", "chameleon", "condenser", "creeper", "door", "eps", "farm", "handbrake", "info", "keyboard", "light", "rail", "save-sign", "scanner", "stable", "storage", "temporal", "terminal", "village", "world-repeater", "x-repeater", "y-repeater", "z-repeater"};
+            String[] validBlockNames = {"advanced", "ars", "artron", "back", "backdoor", "button", "chameleon", "condenser", "creeper", "door", "eps", "farm", "handbrake", "info", "keyboard", "light", "rail", "save-sign", "scanner", "stable", "storage", "temporal", "terminal", "village", "world-repeater", "x-repeater", "y-repeater", "z-repeater", "zero"};
             if (args.length < 2) {
                 player.sendMessage(plugin.pluginName + "Too few command arguments!");
                 return false;
             }
             String tardis_block = args[1].toLowerCase(Locale.ENGLISH);
             if (!Arrays.asList(validBlockNames).contains(tardis_block)) {
-                player.sendMessage(plugin.pluginName + "That is not a valid TARDIS block name! Try one of : door|button|world-repeater|x-repeater|z-repeater|y-repeater|chameleon|save-sign|artron|handbrake|condenser|scanner|backdoor|keyboard|creeper|eps|back|terminal|ars|temporal|light|farm|stable|rail|info|village");
+                player.sendMessage(plugin.pluginName + "That is not a valid TARDIS block name! Try one of : door|button|world-repeater|x-repeater|z-repeater|y-repeater|chameleon|save-sign|artron|handbrake|condenser|scanner|backdoor|keyboard|creeper|eps|back|terminal|ars|temporal|light|farm|stable|rail|info|village|zero");
                 return false;
             }
             if (tardis_block.equals("advanced") && !player.hasPermission("tardis.advanced")) {
@@ -93,6 +93,10 @@ public class TARDISUpdateCommand {
                 }
                 if (tardis_block.equals("rail") && rs.getRail().isEmpty()) {
                     player.sendMessage(plugin.pluginName + "You need to grow a rail room before you can update its position.");
+                    return true;
+                }
+                if (tardis_block.equals("zero") && rs.getZero().isEmpty()) {
+                    player.sendMessage(plugin.pluginName + "You need to grow a zero room before you can update its entry button.");
                     return true;
                 }
             }

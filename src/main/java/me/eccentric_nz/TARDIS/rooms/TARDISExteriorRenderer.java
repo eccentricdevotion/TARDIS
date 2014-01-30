@@ -281,7 +281,7 @@ public class TARDISExteriorRenderer {
                 10L);
     }
 
-    private void transmat(Player player, COMPASS d, Location loc) {
+    public void transmat(Player player, COMPASS d, Location loc) {
         float yaw = player.getLocation().getYaw();
         float pitch = player.getLocation().getPitch();
         loc.setPitch(pitch);

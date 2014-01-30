@@ -114,6 +114,7 @@ public class TARDISAdminCommands implements CommandExecutor {
         firstsBool.put("use_block_stack", "creation");
         firstsBool.put("use_clay", "creation");
         firstsBool.put("use_worldguard", "preferences");
+        firstsBool.put("zero_room", "allow");
         // integer
         firstsInt.put("border_radius", "creation");
         firstsInt.put("confirm_timeout", "police_box");
@@ -123,6 +124,7 @@ public class TARDISAdminCommands implements CommandExecutor {
         firstsInt.put("gravity_max_velocity", "growth");
         firstsInt.put("hads_damage", "preferences");
         firstsInt.put("hads_distance", "preferences");
+        firstsInt.put("heal_speed", "preferences");
         firstsInt.put("malfunction", "preferences");
         firstsInt.put("malfunction_end", "preferences");
         firstsInt.put("malfunction_nether", "preferences");
@@ -253,7 +255,11 @@ public class TARDISAdminCommands implements CommandExecutor {
                 }
                 // checks if its a boolean config option
                 if (firstsBool.containsKey(first)) {
-                    return new TARDISSetBooleanCommand(plugin).setConfigBool(sender, args, firstsBool.get(first));
+                    if (first.equals("zero_room")) {
+                        return new TARDISSetZeroRoomCommand(plugin).setConfigZero(sender, args);
+                    } else {
+                        return new TARDISSetBooleanCommand(plugin).setConfigBool(sender, args, firstsBool.get(first));
+                    }
                 }
                 // checks if its a number config option
                 if (firstsInt.containsKey(first)) {

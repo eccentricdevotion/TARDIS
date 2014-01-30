@@ -54,7 +54,7 @@ public class TARDISRenderRoomListener implements Listener {
         }
     }
 
-    private void transmat(final Player p) {
+    public void transmat(final Player p) {
         p.sendMessage(plugin.pluginName + "Stand by for transmat...");
         // get the TARDIS the player is in
         HashMap<String, Object> wherep = new HashMap<String, Object>();

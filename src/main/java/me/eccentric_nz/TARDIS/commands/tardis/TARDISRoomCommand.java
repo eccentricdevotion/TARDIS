@@ -22,6 +22,7 @@ import java.util.Map;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
+import me.eccentric_nz.TARDIS.builders.TARDISZeroRoomBuilder;
 import me.eccentric_nz.TARDIS.database.ResultSetCondenser;
 import me.eccentric_nz.TARDIS.database.ResultSetControls;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
@@ -100,6 +101,7 @@ public class TARDISRoomCommand {
         int level = rs.getArtron_level();
         String chunk = rs.getChunk();
         SCHEMATIC schm = rs.getSchematic();
+        int tips = rs.getTIPS();
         // check they are in the tardis
         HashMap<String, Object> wheret = new HashMap<String, Object>();
         wheret.put("player", player.getName());
@@ -168,6 +170,9 @@ public class TARDISRoomCommand {
             c_data.setBlockIDCount(blockIDCount);
             c_data.setTardis_id(id);
             plugin.roomCondenserData.put(player.getName(), c_data);
+        }
+        if (room.equals("ZERO")) {
+            return new TARDISZeroRoomBuilder(plugin).build(player, tips, id);
         }
         TARDISSeedData sd = new TARDISSeedData(plugin);
         sd.setId(id);

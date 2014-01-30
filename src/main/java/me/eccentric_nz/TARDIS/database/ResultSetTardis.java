@@ -78,6 +78,7 @@ public class ResultSetTardis {
     private String rail;
     private String village;
     private String renderer;
+    private String zero;
     private final ArrayList<HashMap<String, String>> data = new ArrayList<HashMap<String, String>>();
 
     /**
@@ -192,6 +193,7 @@ public class ResultSetTardis {
                     this.rail = rs.getString("rail");
                     this.village = rs.getString("village");
                     this.renderer = rs.getString("renderer");
+                    this.zero = rs.getString("zero");
                 }
             } else {
                 return false;
@@ -352,6 +354,10 @@ public class ResultSetTardis {
 
     public String getRenderer() {
         return renderer;
+    }
+
+    public String getZero() {
+        return zero;
     }
 
     public ArrayList<HashMap<String, String>> getData() {

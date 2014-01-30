@@ -53,7 +53,8 @@ public enum SCHEMATIC {
     VAULT("vault.schematic"),
     VILLAGE("village.schematic"),
     WOOD("wood.schematic"),
-    WORKSHOP("workshop.schematic");
+    WORKSHOP("workshop.schematic"),
+    ZERO("zero.schematic");
 
     String file;
 

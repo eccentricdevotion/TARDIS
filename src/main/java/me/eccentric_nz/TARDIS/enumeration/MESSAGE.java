@@ -28,9 +28,11 @@ public enum MESSAGE {
     NO_TARDIS("You have not created a TARDIS yet!"),
     NO_CURRENT("Could not get current TARDIS location!"),
     NOT_ENOUGH_ENERGY("The TARDIS does not have enough Artron Energy to make this trip!"),
+    NOT_ENOUGH_ZERO_ENERGY("The TARDIS does not have enough Artron Energy for the Zero Room!"),
     NOT_IN_TARDIS("You are not inside your TARDIS. You need to be to use this feature!"),
     NOT_WHILE_TRAVELLING("You cannot set a destination while the TARDIS is travelling!"),
-    NOT_WHILE_MAT("You cannot do that while the TARDIS is materialising!");
+    NOT_WHILE_MAT("You cannot do that while the TARDIS is materialising!"),
+    NOT_IN_ZERO("You cannot do that in the Zero Room!");
 
     String text;
 

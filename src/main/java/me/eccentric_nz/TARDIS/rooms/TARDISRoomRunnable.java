@@ -266,7 +266,7 @@ public class TARDISRoomRunnable implements Runnable {
                 data = floor_data;
             }
             // set stable
-            if (id == 88 && (room.equals("STABLE") || room.equals("VILLAGE") || room.equals("RENDERER"))) {
+            if (id == 88 && (room.equals("STABLE") || room.equals("VILLAGE") || room.equals("RENDERER") || room.equals("ZERO"))) {
                 HashMap<String, Object> sets = new HashMap<String, Object>();
                 sets.put(room.toLowerCase(Locale.ENGLISH), world.getName() + ":" + startx + ":" + starty + ":" + startz);
                 HashMap<String, Object> wheres = new HashMap<String, Object>();
@@ -281,6 +281,10 @@ public class TARDISRoomRunnable implements Runnable {
                     case STABLE:
                         id = 2;
                         data = 0;
+                        break;
+                    case ZERO:
+                        id = 171;
+                        data = 6;
                         break;
                     default:
                         id = 35;
@@ -469,6 +473,14 @@ public class TARDISRoomRunnable implements Runnable {
                             loc_str = plugin.utils.makeLocationStr(world, startx, starty, startz);
                     }
                     qf.insertControl(tardis_id, type, loc_str, secondary);
+                }
+            }
+            if (room.equals("ZERO")) {
+                // remember the button
+                String loc_str;
+                if (id == -113 || id == 143) {
+                    loc_str = plugin.utils.makeLocationStr(world, startx, starty, startz);
+                    qf.insertControl(tardis_id, 17, loc_str, 0);
                 }
             }
             startx += x;

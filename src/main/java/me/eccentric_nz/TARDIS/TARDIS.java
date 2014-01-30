@@ -134,11 +134,13 @@ import me.eccentric_nz.TARDIS.listeners.TARDISTerminalListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISTimeLordDeathListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISUpdateListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISWorldResetListener;
+import me.eccentric_nz.TARDIS.listeners.TARDISZeroRoomChatListener;
 import me.eccentric_nz.TARDIS.recipes.TARDISShapedRecipe;
 import me.eccentric_nz.TARDIS.recipes.TARDISShapelessRecipe;
 import me.eccentric_nz.TARDIS.rooms.TARDISCondenserData;
 import me.eccentric_nz.TARDIS.rooms.TARDISSeedData;
 import me.eccentric_nz.TARDIS.rooms.TARDISWalls;
+import me.eccentric_nz.TARDIS.rooms.TARDISZeroRoomRunnable;
 import me.eccentric_nz.TARDIS.sonic.TARDISSonicEntityListener;
 import me.eccentric_nz.TARDIS.sonic.TARDISSonicListener;
 import me.eccentric_nz.TARDIS.sonic.TARDISSonicSorterListener;
@@ -266,6 +268,7 @@ public class TARDIS extends JavaPlugin {
     public HashMap<String, TARDISInfoMenu> trackInfoMenu = new HashMap<String, TARDISInfoMenu>();
     public List<String> trackRecipeView = new ArrayList<String>();
     public List<String> trackReset = new ArrayList<String>();
+    public List<String> zeroRoomOccupants = new ArrayList<String>();
     public List<String> trackFarming = new ArrayList<String>();
     public List<Integer> trackMinecart = new ArrayList<Integer>();
     public List<Integer> trackSubmarine = new ArrayList<Integer>();
@@ -312,6 +315,7 @@ public class TARDIS extends JavaPlugin {
     public TARDISDoorListener doorListener;
     public TARDISRedstoneListener redstoneListener;
     public TARDISSonicListener sonicListener;
+    public TARDISRenderRoomListener rendererListener;
     public TARDISChameleonPreset presets;
     public TARDISMultiverseInventoriesChecker tmic;
     public TARDISWalls tw;
@@ -355,6 +359,7 @@ public class TARDIS extends JavaPlugin {
             loadTowny();
             loadWorldBorder();
             loadFactions();
+            startZeroHealing();
 
             quote = quotes();
             quotelen = quote.size();
@@ -456,7 +461,7 @@ public class TARDIS extends JavaPlugin {
     }
 
     /**
-     * Loads the custom config files.
+     * Loads the custom configuration files.
      */
     private void loadCustomConfigs() {
         //TODO - change file copy method - just send the file name and process it there?
@@ -558,7 +563,8 @@ public class TARDIS extends JavaPlugin {
         pm.registerEvents(sonicListener, this);
         pm.registerEvents(new TARDISSonicEntityListener(this), this);
         pm.registerEvents(new TARDISSonicSorterListener(this), this);
-        pm.registerEvents(new TARDISRenderRoomListener(this), this);
+        rendererListener = new TARDISRenderRoomListener(this);
+        pm.registerEvents(rendererListener, this);
         pm.registerEvents(new TARDISDiskCraftListener(this), this);
         pm.registerEvents(new TARDISStorageListener(this), this);
         pm.registerEvents(new TARDISConsoleListener(this), this);
@@ -566,6 +572,9 @@ public class TARDIS extends JavaPlugin {
         pm.registerEvents(new TARDISConsoleCloseListener(this), this);
         pm.registerEvents(new TARDISPerceptionFilterListener(this), this);
         pm.registerEvents(new TARDISPrefsMenuListener(this), this);
+        if (getConfig().getBoolean("allow.zero_room")) {
+            pm.registerEvents(new TARDISZeroRoomChatListener(this), this);
+        }
     }
 
     /**
@@ -632,7 +641,7 @@ public class TARDIS extends JavaPlugin {
     }
 
     /**
-     * Starts a repeating tasks that plays TARDIS sound effects to players while
+     * Starts a repeating task that plays TARDIS sound effects to players while
      * they are inside the TARDIS.
      */
     private void startSound() {
@@ -642,6 +651,16 @@ public class TARDIS extends JavaPlugin {
                 TARDISSounds.randomTARDISSound();
             }
         }, 60L, 1500L);
+    }
+
+    /**
+     * Starts a repeating task that heals players 1/2 a heart per cycle when
+     * they are in the Zero room.
+     */
+    private void startZeroHealing() {
+        if (getConfig().getBoolean("allow.zero_room")) {
+            this.getServer().getScheduler().scheduleSyncRepeatingTask(this, new TARDISZeroRoomRunnable(this), 20L, getConfig().getLong("preferences.heal_speed"));
+        }
     }
 
     /**
@@ -789,9 +808,9 @@ public class TARDIS extends JavaPlugin {
     }
 
     /**
-     * Gets the server default texture pack. Will use the Minecraft default pack
-     * if none is specified. Until Minecraft/Bukkit lets us set the TP back to
-     * Default, we'll have to host it on DropBox
+     * Gets the server default resource pack. Will use the Minecraft default
+     * pack if none is specified. Until Minecraft/Bukkit lets us set the RP back
+     * to Default, we'll have to host it on DropBox
      *
      * @return The server specified texture pack.
      */

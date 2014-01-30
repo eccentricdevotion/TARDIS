@@ -43,5 +43,6 @@ public enum ROOM {
     VAULT,
     VILLAGE,
     WOOD,
-    WORKSHOP;
+    WORKSHOP,
+    ZERO;
 }
