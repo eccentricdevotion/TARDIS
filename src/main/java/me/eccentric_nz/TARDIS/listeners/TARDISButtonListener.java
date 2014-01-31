@@ -449,8 +449,8 @@ public class TARDISButtonListener implements Listener {
                                     break;
                                 case 17:
                                     // exit zero room
-                                    plugin.rendererListener.transmat(player);
                                     plugin.zeroRoomOccupants.remove(player.getName());
+                                    plugin.rendererListener.transmat(player);
                                     break;
                                 default:
                                     break;

@@ -31,6 +31,11 @@
             <id>onarandombox</id>
             <url>http://repo.onarandombox.com/content/groups/public</url>
         </repository>
+        <repository>
+            <id>comphenix-rep</id>
+            <name>Comphenix Repository</name>
+            <url>http://repo.comphenix.net/content/groups/public</url>
+        </repository>
     </repositories>
     <scm>
         <connection>scm:git:ssh://github.com/eccentricdevotion/TARDIS</connection>
@@ -318,6 +323,21 @@
             <groupId>org.yi.acru.bukkit</groupId>
             <artifactId>lockette</artifactId>
             <version>1.7.12</version>
+        </dependency>
+        <dependency>
+            <groupId>com.comphenix.protocol</groupId>
+            <artifactId>ProtocolLib</artifactId>
+            <version>3.2.0</version>
+            <exclusions>
+                <exclusion>
+                    <artifactId>BukkitExecutors</artifactId>
+                    <groupId>com.comphenix.executors</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>cglib-nodep</artifactId>
+                    <groupId>cglib</groupId>
+                </exclusion>
+            </exclusions>
         </dependency>
     </dependencies>
 </project>

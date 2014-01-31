@@ -135,6 +135,7 @@ import me.eccentric_nz.TARDIS.listeners.TARDISTimeLordDeathListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISUpdateListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISWorldResetListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISZeroRoomChatListener;
+import me.eccentric_nz.TARDIS.listeners.TARDISZeroRoomPacketListener;
 import me.eccentric_nz.TARDIS.recipes.TARDISShapedRecipe;
 import me.eccentric_nz.TARDIS.recipes.TARDISShapelessRecipe;
 import me.eccentric_nz.TARDIS.rooms.TARDISCondenserData;
@@ -574,6 +575,9 @@ public class TARDIS extends JavaPlugin {
         pm.registerEvents(new TARDISPrefsMenuListener(this), this);
         if (getConfig().getBoolean("allow.zero_room")) {
             pm.registerEvents(new TARDISZeroRoomChatListener(this), this);
+            if (pm.isPluginEnabled("ProtocolLib")) {
+                new TARDISZeroRoomPacketListener(this);
+            }
         }
     }
 
