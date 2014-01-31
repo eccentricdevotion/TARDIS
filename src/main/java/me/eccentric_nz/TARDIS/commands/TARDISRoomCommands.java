@@ -255,6 +255,10 @@ public class TARDISRoomCommands implements CommandExecutor {
                 sender.sendMessage(plugin.pluginName + "Room added, please set the COST, SEED BLOCK and OFFSET, and then enable it!");
                 return true;
             } else {
+                if (!sender.hasPermission("tardis.admin")) {
+                    sender.sendMessage(plugin.pluginName + MESSAGE.NO_PERMS.getText());
+                    return false;
+                }
                 // check they have specified a valid room
                 String name = args[0].toUpperCase(Locale.ENGLISH);
                 if (!plugin.getRoomsConfig().contains("rooms." + name)) {

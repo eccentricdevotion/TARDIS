@@ -3,7 +3,7 @@ description: A plugin for all Doctor Who fans - create and use a TARDIS! Telepor
 main: me.eccentric_nz.TARDIS.TARDIS
 name: TARDIS
 startup: postworld
-softdepend: [Multiverse-Core,Multiverse-Adventure,Multiverse-Inventories,MultiWorld,My Worlds,WorldGuard,WorldBorder,Towny,Citizens]
+softdepend: [Multiverse-Core,Multiverse-Adventure,Multiverse-Inventories,MultiWorld,My Worlds,WorldGuard,WorldBorder,Towny,Citizens,ProtocolLib]
 website: http://dev.bukkit.org/bukkit-plugins/tardis/
 dev-url: http://dev.bukkit.org/bukkit-plugins/tardis/
 url: http://eccentricdevotion.github.io/TARDIS/
@@ -389,7 +389,7 @@ commands:
     aliases: troom
     description: Set TARDIS room configuration options, and add new rooms.
     usage: /<command> add [name] or /<command> [name] [boolean|integer|string] or /<command> blocks [name|save]
-    permission: tardis.admin
+    permission: tardis.create
     permission-message: You don't have the permission <permission> to use this command
     add:
       description: Add a new custom room schematic.
