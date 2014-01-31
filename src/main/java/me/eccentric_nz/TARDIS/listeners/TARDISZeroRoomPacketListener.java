@@ -26,6 +26,7 @@ import com.comphenix.protocol.events.PacketEvent;
 import com.comphenix.protocol.wrappers.WrappedChatComponent;
 import java.util.Arrays;
 import me.eccentric_nz.TARDIS.JSON.JSONArray;
+import me.eccentric_nz.TARDIS.JSON.JSONException;
 import me.eccentric_nz.TARDIS.JSON.JSONObject;
 import me.eccentric_nz.TARDIS.TARDIS;
 import org.bukkit.event.Listener;
@@ -55,24 +56,31 @@ public final class TARDISZeroRoomPacketListener implements Listener {
                         boolean send = false;
                         WrappedChatComponent chat = event.getPacket().getChatComponents().read(0);
                         String json = chat.getJson();
-                        JSONObject data = new JSONObject(json);
-                        if (data.has("extra")) {
-                            JSONArray extra = data.getJSONArray("extra");
-                            for (int i = 0; i < extra.length(); i++) {
-                                if (extra.get(i) instanceof String) {
-                                    return;
-                                }
-                                JSONObject tmp = (JSONObject) extra.get(i);
-                                if (tmp.has("text")) {
-                                    String text = (String) tmp.get("text");
-                                    if (text.toLowerCase().contains("broadcast")) {
-                                        send = true;
-                                        break;
+                        if (!json.isEmpty()) {
+                            try {
+                                JSONObject data = new JSONObject(json);
+                                if (data.has("extra")) {
+                                    JSONArray extra = data.getJSONArray("extra");
+                                    for (int i = 0; i < extra.length(); i++) {
+                                        if (extra.get(i) instanceof String) {
+                                            return;
+                                        }
+                                        JSONObject tmp = (JSONObject) extra.get(i);
+                                        if (tmp.has("text")) {
+                                            String text = (String) tmp.get("text");
+                                            if (text.toLowerCase().contains("broadcast")) {
+                                                send = true;
+                                                break;
+                                            }
+                                        }
+                                    }
+                                    if (send == false && instance.zeroRoomOccupants.contains(event.getPlayer().getName())) {
+                                        event.setCancelled(true);
                                     }
                                 }
-                            }
-                            if (send == false && instance.zeroRoomOccupants.contains(event.getPlayer().getName())) {
-                                event.setCancelled(true);
+                            } catch (JSONException e) {
+                                instance.debug("Invalid JSON in packet! " + e.getMessage());
+                                instance.debug(json);
                             }
                         }
                     }
