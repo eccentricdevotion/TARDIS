@@ -22,6 +22,7 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
 import me.eccentric_nz.TARDIS.chameleon.TARDISChameleonInventory;
 import me.eccentric_nz.TARDIS.database.ResultSetTardisSign;
+import me.eccentric_nz.TARDIS.enumeration.MESSAGE;
 import me.eccentric_nz.TARDIS.travel.TARDISSaveSignInventory;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -84,7 +85,7 @@ public class TARDISSignListener implements Listener {
                 if (rs.resultSet()) {
                     event.setCancelled(true);
                     if (rs.isIso_on() && !player.getName().equals(rs.getOwner()) && event.isCancelled() && !player.hasPermission("tardis.skeletonkey")) {
-                        player.sendMessage(plugin.pluginName + "The isomorphic security lockout has been engaged... Hands off the controls!");
+                        player.sendMessage(plugin.pluginName + MESSAGE.ISO_ON.getText());
                         return;
                     }
                     String line1;
@@ -112,7 +113,7 @@ public class TARDISSignListener implements Listener {
                     } else {
                         if (event.getAction().equals(Action.RIGHT_CLICK_BLOCK)) {
                             if (tcc != null && !tcc.hasMemory()) {
-                                player.sendMessage(plugin.pluginName + "The Memory Circuit is missing from the console!");
+                                player.sendMessage(plugin.pluginName + MESSAGE.NO_MEM_CIRCUIT.getText());
                                 return;
                             }
                             TARDISSaveSignInventory sst = new TARDISSaveSignInventory(plugin, rs.getTardis_id());

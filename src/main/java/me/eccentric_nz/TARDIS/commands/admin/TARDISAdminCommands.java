@@ -22,6 +22,7 @@ import java.util.List;
 import java.util.Locale;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.CMDS;
+import me.eccentric_nz.TARDIS.enumeration.MESSAGE;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -183,7 +184,7 @@ public class TARDISAdminCommands implements CommandExecutor {
                     return new TARDISListTardisesCommand(plugin).listTardises(sender, args);
                 }
                 if (args.length < 2) {
-                    sender.sendMessage(plugin.pluginName + "Too few command arguments!");
+                    sender.sendMessage(plugin.pluginName + MESSAGE.TOO_FEW_ARGS.getText());
                     return false;
                 }
                 if (first.equals("config")) {
@@ -269,7 +270,7 @@ public class TARDISAdminCommands implements CommandExecutor {
                     return new TARDISSetIntegerCommand(plugin).setConfigInt(sender, args);
                 }
                 plugin.saveConfig();
-                sender.sendMessage(plugin.pluginName + "The config was updated!");
+                sender.sendMessage(plugin.pluginName + MESSAGE.CONFIG_UPDATED.getText());
                 return true;
             } else {
                 sender.sendMessage(plugin.pluginName + ChatColor.RED + " You must be an Admin to run this command.");

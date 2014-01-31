@@ -40,7 +40,7 @@ public class TARDISJettisonCommand {
     public boolean startJettison(Player player, String[] args) {
         if (player.hasPermission("tardis.room")) {
             if (args.length < 2) {
-                player.sendMessage(plugin.pluginName + "Too few command arguments!");
+                player.sendMessage(plugin.pluginName + MESSAGE.TOO_FEW_ARGS.getText());
                 return false;
             }
             String room = args[1].toUpperCase(Locale.ENGLISH);
@@ -60,7 +60,7 @@ public class TARDISJettisonCommand {
             where.put("owner", player.getName());
             ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
             if (!rs.resultSet()) {
-                player.sendMessage(plugin.pluginName + "You are not a Timelord. You need to create a TARDIS first before using this command!");
+                player.sendMessage(plugin.pluginName + MESSAGE.NOT_A_TIMELORD.getText());
                 return true;
             }
             int id = rs.getTardis_id();

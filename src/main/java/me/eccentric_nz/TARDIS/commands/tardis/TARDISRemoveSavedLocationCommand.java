@@ -39,7 +39,7 @@ public class TARDISRemoveSavedLocationCommand {
     public boolean doRemoveSave(Player player, String[] args) {
         if (player.hasPermission("tardis.save")) {
             if (args.length < 2) {
-                player.sendMessage(plugin.pluginName + "Too few command arguments!");
+                player.sendMessage(plugin.pluginName + MESSAGE.TOO_FEW_ARGS.getText());
                 return false;
             }
             HashMap<String, Object> where = new HashMap<String, Object>();

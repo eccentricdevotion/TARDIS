@@ -83,12 +83,12 @@ public class TARDISTravelCommands implements CommandExecutor {
         // check there is the right number of arguments
         if (cmd.getName().equalsIgnoreCase("tardistravel")) {
             if (player == null) {
-                sender.sendMessage(plugin.pluginName + ChatColor.RED + " This command can only be run by a player");
+                sender.sendMessage(plugin.pluginName + MESSAGE.MUST_BE_PLAYER.getText());
                 return true;
             }
             if (player.hasPermission("tardis.timetravel")) {
                 if (args.length < 1) {
-                    sender.sendMessage(plugin.pluginName + "Too few command arguments!");
+                    sender.sendMessage(plugin.pluginName + MESSAGE.TOO_FEW_ARGS.getText());
                     return false;
                 }
                 QueryFactory qf = new QueryFactory(plugin);

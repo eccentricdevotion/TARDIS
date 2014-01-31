@@ -48,7 +48,7 @@ public class TARDISSaveLocationCommand {
                 return false;
             }
             if (args.length < 2) {
-                player.sendMessage(plugin.pluginName + "Too few command arguments!");
+                player.sendMessage(plugin.pluginName + MESSAGE.TOO_FEW_ARGS.getText());
                 return false;
             }
             if (!args[1].matches("[A-Za-z0-9_]{2,16}")) {
@@ -62,7 +62,7 @@ public class TARDISSaveLocationCommand {
                     tcc.getCircuits();
                 }
                 if (tcc != null && !tcc.hasMemory()) {
-                    player.sendMessage(plugin.pluginName + "The Memory Circuit is missing from the console!");
+                    player.sendMessage(plugin.pluginName + MESSAGE.NO_MEM_CIRCUIT.getText());
                     return true;
                 }
                 // check has unique name

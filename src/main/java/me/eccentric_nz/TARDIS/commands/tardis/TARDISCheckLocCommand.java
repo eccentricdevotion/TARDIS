@@ -21,6 +21,7 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
+import me.eccentric_nz.TARDIS.enumeration.MESSAGE;
 import me.eccentric_nz.TARDIS.travel.TARDISTimeTravel;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -51,7 +52,7 @@ public class TARDISCheckLocCommand {
         where.put("owner", player.getName());
         ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
         if (!rs.resultSet()) {
-            player.sendMessage(plugin.pluginName + "You must be the Timelord of a TARDIS to use this command!");
+            player.sendMessage(plugin.pluginName + MESSAGE.NOT_A_TIMELORD.getText());
             return true;
         }
         HashMap<String, Object> wherecl = new HashMap<String, Object>();

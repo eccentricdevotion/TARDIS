@@ -117,7 +117,7 @@ public class TARDISStattenheimListener implements Listener {
                     // check the world is not excluded
                     String world = remoteLocation.getWorld().getName();
                     if (!plugin.getConfig().getBoolean("worlds." + world)) {
-                        player.sendMessage(plugin.pluginName + "You cannot bring the TARDIS Police Box to this world");
+                        player.sendMessage(plugin.pluginName + MESSAGE.NO_PB_IN_WORLD.getText());
                         return;
                     }
                     // check they are a timelord
@@ -135,7 +135,7 @@ public class TARDISStattenheimListener implements Listener {
                         tcc.getCircuits();
                     }
                     if (tcc != null && !tcc.hasMaterialisation()) {
-                        player.sendMessage(plugin.pluginName + "The Materialisation Circuit is missing from the console!");
+                        player.sendMessage(plugin.pluginName + MESSAGE.NO_MAT_CIRCUIT.getText());
                         return;
                     }
                     boolean hidden = rs.isHidden();
@@ -147,7 +147,7 @@ public class TARDISStattenheimListener implements Listener {
                     wherettrav.put("tardis_id", id);
                     ResultSetTravellers rst = new ResultSetTravellers(plugin, wherettrav, false);
                     if (rst.resultSet()) {
-                        player.sendMessage(plugin.pluginName + "You cannot bring the Police Box here because you are inside a TARDIS!");
+                        player.sendMessage(plugin.pluginName + MESSAGE.NO_PB_IN_TARDIS.getText());
                         return;
                     }
                     if (plugin.inVortex.contains(Integer.valueOf(id))) {

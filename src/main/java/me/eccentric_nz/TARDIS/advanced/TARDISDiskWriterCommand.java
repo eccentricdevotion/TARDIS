@@ -58,7 +58,7 @@ public class TARDISDiskWriterCommand {
                     return true;
                 }
                 if (args.length < 2) {
-                    player.sendMessage(plugin.pluginName + "Too few command arguments!");
+                    player.sendMessage(plugin.pluginName + MESSAGE.TOO_FEW_ARGS.getText());
                     return false;
                 }
                 if (!args[1].matches("[A-Za-z0-9_]{2,16}")) {
@@ -121,11 +121,11 @@ public class TARDISDiskWriterCommand {
                     return true;
                 }
                 if (args.length < 2) {
-                    player.sendMessage(plugin.pluginName + "Too few command arguments!");
+                    player.sendMessage(plugin.pluginName + MESSAGE.TOO_FEW_ARGS.getText());
                     return false;
                 }
                 if (!args[1].matches("[A-Za-z0-9_]{2,16}")) {
-                    player.sendMessage(plugin.pluginName + "That doesn't appear to be a valid username");
+                    player.sendMessage(plugin.pluginName + MESSAGE.NOT_VALID_NAME.getText());
                     return false;
                 }
                 if (player.getName().equalsIgnoreCase(args[1])) {

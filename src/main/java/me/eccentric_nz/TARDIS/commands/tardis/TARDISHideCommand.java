@@ -60,7 +60,7 @@ public class TARDISHideCommand {
                 tcc.getCircuits();
             }
             if (tcc != null && !tcc.hasMaterialisation()) {
-                player.sendMessage(plugin.pluginName + "The Materialisation Circuit is missing from the console!");
+                player.sendMessage(plugin.pluginName + MESSAGE.NO_MAT_CIRCUIT.getText());
                 return true;
             }
             HashMap<String, Object> wherein = new HashMap<String, Object>();

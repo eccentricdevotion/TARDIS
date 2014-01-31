@@ -18,6 +18,7 @@ package me.eccentric_nz.TARDIS.commands.tardis;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.destroyers.TARDISExterminator;
+import me.eccentric_nz.TARDIS.enumeration.MESSAGE;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
@@ -35,7 +36,7 @@ public class TARDISExterminateCommand {
 
     public boolean doExterminate(CommandSender sender, Player player) {
         if (player == null) {
-            sender.sendMessage(plugin.pluginName + "You must be a player to run this command!");
+            sender.sendMessage(plugin.pluginName + MESSAGE.MUST_BE_PLAYER.getText());
             return false;
         }
         if (!plugin.trackExterminate.containsKey(player.getName())) {

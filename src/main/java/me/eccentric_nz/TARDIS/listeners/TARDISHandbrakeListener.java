@@ -29,6 +29,7 @@ import me.eccentric_nz.TARDIS.database.ResultSetNextLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
+import me.eccentric_nz.TARDIS.enumeration.MESSAGE;
 import me.eccentric_nz.TARDIS.travel.TARDISMalfunction;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -90,7 +91,7 @@ public class TARDISHandbrakeListener implements Listener {
                         tcc.getCircuits();
                     }
                     if (tcc != null && !tcc.hasMaterialisation()) {
-                        player.sendMessage(plugin.pluginName + "The Materialisation Circuit is missing from the console!");
+                        player.sendMessage(plugin.pluginName + MESSAGE.NO_MAT_CIRCUIT.getText());
                         return;
                     }
                     HashMap<String, Object> wherei = new HashMap<String, Object>();
@@ -107,7 +108,7 @@ public class TARDISHandbrakeListener implements Listener {
                         event.setCancelled(true);
                         String owner = rs.getOwner();
                         if (rs.isIso_on() && !player.getName().equals(owner) && event.isCancelled() && !player.hasPermission("tardis.skeletonkey")) { // check if cancelled so we don't get double messages from the bind listener
-                            player.sendMessage(plugin.pluginName + "The isomorphic security lockout has been engaged... Hands off the controls!");
+                            player.sendMessage(plugin.pluginName + MESSAGE.ISO_ON.getText());
                             return;
                         }
                         final boolean cham = rs.isChamele_on();

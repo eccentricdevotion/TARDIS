@@ -17,6 +17,7 @@
 package me.eccentric_nz.TARDIS.commands.tardis;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.enumeration.MESSAGE;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
@@ -34,7 +35,7 @@ public class TARDISRescueCommand {
 
     public boolean startRescue(final Player player, String[] args) {
         if (args.length < 2) {
-            player.sendMessage(plugin.pluginName + "Too few command arguments!");
+            player.sendMessage(plugin.pluginName + MESSAGE.TOO_FEW_ARGS.getText());
             return true;
         }
         if (player.hasPermission("tardis.timetravel.player")) {

@@ -77,7 +77,7 @@ public class TARDISGiveCommand implements CommandExecutor {
         if (cmd.getName().equalsIgnoreCase("tardisgive")) {
             if (sender instanceof ConsoleCommandSender || sender.hasPermission("tardis.admin")) {
                 if (args.length < 3) {
-                    sender.sendMessage(plugin.pluginName + "Too few command arguments! /tardisgive [player] [item] [amount]");
+                    sender.sendMessage(plugin.pluginName + MESSAGE.TOO_FEW_ARGS.getText() + " /tardisgive [player] [item] [amount]");
                     return true;
                 }
                 String item = args[1].toLowerCase();

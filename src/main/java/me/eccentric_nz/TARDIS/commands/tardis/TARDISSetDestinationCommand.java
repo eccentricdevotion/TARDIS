@@ -52,7 +52,7 @@ public class TARDISSetDestinationCommand {
                 return false;
             }
             if (args.length < 2) {
-                player.sendMessage(plugin.pluginName + "Too few command arguments!");
+                player.sendMessage(plugin.pluginName + MESSAGE.TOO_FEW_ARGS.getText());
                 return false;
             }
             if (!args[1].matches("[A-Za-z0-9_]{2,16}")) {
@@ -69,7 +69,7 @@ public class TARDISSetDestinationCommand {
                     tcc.getCircuits();
                 }
                 if (tcc != null && !tcc.hasMemory()) {
-                    player.sendMessage(plugin.pluginName + "The Memory Circuit is missing from the console!");
+                    player.sendMessage(plugin.pluginName + MESSAGE.NO_MEM_CIRCUIT.getText());
                     return true;
                 }
                 // check they are not in the tardis
@@ -78,7 +78,7 @@ public class TARDISSetDestinationCommand {
                 wherettrav.put("tardis_id", id);
                 ResultSetTravellers rst = new ResultSetTravellers(plugin, wherettrav, false);
                 if (rst.resultSet()) {
-                    player.sendMessage(plugin.pluginName + "You cannot bring the Police Box here because you are inside a TARDIS!");
+                    player.sendMessage(plugin.pluginName + MESSAGE.NO_PB_IN_TARDIS.getText());
                     return true;
                 }
                 // get location player is looking at
@@ -95,7 +95,7 @@ public class TARDISSetDestinationCommand {
                 }
                 // check the world is not excluded
                 if (!plugin.getConfig().getBoolean("worlds." + world)) {
-                    player.sendMessage(plugin.pluginName + "You cannot bring the TARDIS Police Box to this world");
+                    player.sendMessage(plugin.pluginName + MESSAGE.NO_PB_IN_WORLD.getText());
                     return true;
                 }
                 TARDISPluginRespect respect = new TARDISPluginRespect(plugin);

@@ -74,11 +74,11 @@ public class TARDISBindCommands implements CommandExecutor {
                 player = (Player) sender;
             }
             if (player == null) {
-                sender.sendMessage(plugin.pluginName + "You must be a player to run this command!");
+                sender.sendMessage(plugin.pluginName + MESSAGE.MUST_BE_PLAYER.getText());
                 return false;
             }
             if (args.length < 1) {
-                sender.sendMessage(plugin.pluginName + "Too few command arguments!");
+                sender.sendMessage(plugin.pluginName + MESSAGE.TOO_FEW_ARGS.getText());
                 return false;
             }
             if (!firstArgs.contains(args[0].toLowerCase(Locale.ENGLISH))) {
@@ -89,7 +89,7 @@ public class TARDISBindCommands implements CommandExecutor {
             where.put("owner", player.getName());
             ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
             if (!rs.resultSet()) {
-                sender.sendMessage(plugin.pluginName + "You are not a Timelord. You need to create a TARDIS first before using this command!");
+                sender.sendMessage(plugin.pluginName + MESSAGE.NOT_A_TIMELORD.getText());
                 return false;
             }
             int id = rs.getTardis_id();
@@ -114,7 +114,7 @@ public class TARDISBindCommands implements CommandExecutor {
                 return true;
             }
             if (args.length < 2) {
-                sender.sendMessage(plugin.pluginName + "Too few command arguments!");
+                sender.sendMessage(plugin.pluginName + MESSAGE.TOO_FEW_ARGS.getText());
                 return false;
             }
             if (args[0].equalsIgnoreCase("remove")) {

@@ -91,11 +91,11 @@ public class TARDISRecipeCommands implements CommandExecutor {
                 player = (Player) sender;
             }
             if (player == null) {
-                sender.sendMessage(plugin.pluginName + "You must be a player to run this command!");
+                sender.sendMessage(plugin.pluginName + MESSAGE.MUST_BE_PLAYER.getText());
                 return false;
             }
             if (args.length < 1) {
-                sender.sendMessage(plugin.pluginName + "Too few command arguments!");
+                sender.sendMessage(plugin.pluginName + MESSAGE.TOO_FEW_ARGS.getText());
                 return false;
             }
             if (!firstArgs.contains(args[0].toLowerCase(Locale.ENGLISH))) {

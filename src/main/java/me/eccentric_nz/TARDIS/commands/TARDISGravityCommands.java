@@ -75,7 +75,7 @@ public class TARDISGravityCommands implements CommandExecutor {
                 player = (Player) sender;
             }
             if (player == null) {
-                sender.sendMessage(plugin.pluginName + ChatColor.RED + "This command can only be run by a player");
+                sender.sendMessage(plugin.pluginName + ChatColor.RED + MESSAGE.MUST_BE_PLAYER.getText());
                 return false;
             }
             if (!player.hasPermission("tardis.gravity")) {

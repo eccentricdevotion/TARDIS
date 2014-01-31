@@ -338,7 +338,7 @@ public class TARDISDoorListener implements Listener {
                                         case 4:
                                             // is the TARDIS materialising?
                                             if (plugin.inVortex.contains(Integer.valueOf(id))) {
-                                                player.sendMessage(plugin.pluginName + "The TARDIS is still travelling... you would get lost in the time vortex!");
+                                                player.sendMessage(plugin.pluginName + MESSAGE.LOST_IN_VORTEX.getText());
                                                 return;
                                             }
                                             // player is in the TARDIS - always exit to current location
@@ -392,13 +392,13 @@ public class TARDISDoorListener implements Listener {
                                                 // remove player from traveller table
                                                 removeTraveller(playerNameStr);
                                             } else {
-                                                player.sendMessage(plugin.pluginName + "The TARDIS is still travelling... you would get lost in the time vortex!");
+                                                player.sendMessage(plugin.pluginName + MESSAGE.LOST_IN_VORTEX.getText());
                                             }
                                             break;
                                         case 0:
                                             // is the TARDIS materialising?
                                             if (plugin.inVortex.contains(Integer.valueOf(id))) {
-                                                player.sendMessage(plugin.pluginName + "The TARDIS is still travelling... you would get lost in the time vortex!");
+                                                player.sendMessage(plugin.pluginName + MESSAGE.LOST_IN_VORTEX.getText());
                                                 return;
                                             }
                                             boolean chkCompanion = false;

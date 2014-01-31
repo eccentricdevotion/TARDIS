@@ -19,6 +19,7 @@ package me.eccentric_nz.TARDIS.commands.admin;
 import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
+import me.eccentric_nz.TARDIS.enumeration.MESSAGE;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -75,7 +76,7 @@ public class TARDISRechargerCommand {
             plugin.wgutils.addRechargerProtection(player, args[1], wg1, wg2);
         }
         plugin.saveConfig();
-        sender.sendMessage(plugin.pluginName + "The config was updated!");
+        sender.sendMessage(plugin.pluginName + MESSAGE.CONFIG_UPDATED.getText());
         return true;
     }
 }

@@ -49,7 +49,7 @@ public class TARDISEmergencyProgrammeCommand {
             where.put("owner", p.getName());
             ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
             if (!rs.resultSet()) {
-                p.sendMessage(plugin.pluginName + "You are not a Timelord. You need to create a TARDIS first before using this command!");
+                p.sendMessage(plugin.pluginName + MESSAGE.NOT_A_TIMELORD.getText());
                 return true;
             }
             int id = rs.getTardis_id();

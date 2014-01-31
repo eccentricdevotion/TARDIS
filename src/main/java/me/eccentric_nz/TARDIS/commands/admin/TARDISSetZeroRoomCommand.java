@@ -19,6 +19,7 @@ package me.eccentric_nz.TARDIS.commands.admin;
 import java.util.Locale;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.builders.TARDISSpace;
+import me.eccentric_nz.TARDIS.enumeration.MESSAGE;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 
@@ -43,7 +44,7 @@ public class TARDISSetZeroRoomCommand {
         }
         plugin.getConfig().set("allow.zero_room", Boolean.valueOf(tf));
         plugin.saveConfig();
-        sender.sendMessage(plugin.pluginName + "The config was updated!");
+        sender.sendMessage(plugin.pluginName + MESSAGE.CONFIG_UPDATED.getText());
         if (tf.equals("true") && plugin.getServer().getWorld("TARDIS_Zero_Room") == null) {
             sender.sendMessage(plugin.pluginName + "The TARDIS_Zero_Room does not exist, attempting to create it!");
             new TARDISSpace(plugin).createDefaultWorld("TARDIS_Zero_Room");

@@ -23,6 +23,7 @@ import java.util.Locale;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.advanced.TARDISDiskWriterCommand;
 import me.eccentric_nz.TARDIS.enumeration.CMDS;
+import me.eccentric_nz.TARDIS.enumeration.MESSAGE;
 import me.eccentric_nz.TARDIS.travel.TARDISPluginRespect;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
@@ -132,7 +133,7 @@ public class TARDISCommands implements CommandExecutor {
                 return new TARDISVersionCommand(plugin).displayVersion(sender, player);
             }
             if (player == null) {
-                sender.sendMessage(plugin.pluginName + ChatColor.RED + " This command can only be run by a player");
+                sender.sendMessage(plugin.pluginName + MESSAGE.MUST_BE_PLAYER.getText());
                 return false;
             } else {
                 if (args[0].equalsIgnoreCase("arsremove")) {

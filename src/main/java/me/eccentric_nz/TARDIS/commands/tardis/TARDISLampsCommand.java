@@ -153,7 +153,7 @@ public class TARDISLampsCommand {
             }
             return true;
         } else {
-            owner.sendMessage(plugin.pluginName + "You are not a Time Lord!");
+            owner.sendMessage(plugin.pluginName + MESSAGE.NOT_A_TIMELORD.getText());
             return false;
         }
     }

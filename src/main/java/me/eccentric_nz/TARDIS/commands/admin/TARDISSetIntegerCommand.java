@@ -19,6 +19,7 @@ package me.eccentric_nz.TARDIS.commands.admin;
 import java.io.File;
 import java.io.IOException;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.enumeration.MESSAGE;
 import me.eccentric_nz.TARDIS.travel.TARDISTerminalInventory;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
@@ -52,7 +53,7 @@ public class TARDISSetIntegerCommand {
             plugin.buttonListener.items = new TARDISTerminalInventory().getTerminal();
         }
         plugin.saveConfig();
-        sender.sendMessage(plugin.pluginName + "The config was updated!");
+        sender.sendMessage(plugin.pluginName + MESSAGE.CONFIG_UPDATED.getText());
         return true;
     }
 
@@ -73,7 +74,7 @@ public class TARDISSetIntegerCommand {
         } catch (IOException io) {
             plugin.debug("Could not save artron.yml, " + io);
         }
-        sender.sendMessage(plugin.pluginName + "The config was updated!");
+        sender.sendMessage(plugin.pluginName + MESSAGE.CONFIG_UPDATED.getText());
         return true;
     }
 }

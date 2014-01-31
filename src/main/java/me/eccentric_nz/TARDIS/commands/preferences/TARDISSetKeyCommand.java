@@ -20,6 +20,7 @@ import java.util.HashMap;
 import java.util.Locale;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
+import me.eccentric_nz.TARDIS.enumeration.MESSAGE;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -45,7 +46,7 @@ public class TARDISSetKeyCommand {
         try {
             Material go = Material.valueOf(setMaterial);
         } catch (IllegalArgumentException e) {
-            player.sendMessage(plugin.pluginName + ChatColor.RED + "That is not a valid Material! Try checking http://jd.bukkit.org/apidocs/org/bukkit/Material.html");
+            player.sendMessage(plugin.pluginName + ChatColor.RED + MESSAGE.NOT_VALID_MATERIAL.getText());
             return false;
         }
         String field = (plugin.getConfig().getString("storage.database").equals("sqlite")) ? "key" : "key_item";

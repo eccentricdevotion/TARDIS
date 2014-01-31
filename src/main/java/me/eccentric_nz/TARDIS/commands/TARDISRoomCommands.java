@@ -71,7 +71,7 @@ public class TARDISRoomCommands implements CommandExecutor {
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
         if (cmd.getName().equalsIgnoreCase("tardisroom")) {
             if (args.length < 2) {
-                sender.sendMessage(plugin.pluginName + "Too few command arguments!");
+                sender.sendMessage(plugin.pluginName + MESSAGE.TOO_FEW_ARGS.getText());
                 return false;
             }
             if (args[0].toLowerCase(Locale.ENGLISH).equals("blocks")) {
@@ -312,7 +312,7 @@ public class TARDISRoomCommands implements CommandExecutor {
                         try {
                             Material go = Material.valueOf(setMaterial);
                         } catch (IllegalArgumentException e) {
-                            sender.sendMessage(plugin.pluginName + ChatColor.RED + "That is not a valid Material! Try checking http://jd.bukkit.org/apidocs/org/bukkit/Material.html");
+                            sender.sendMessage(plugin.pluginName + ChatColor.RED + MESSAGE.NOT_VALID_MATERIAL.getText());
                             return false;
                         }
                         // check seed material is not already in use

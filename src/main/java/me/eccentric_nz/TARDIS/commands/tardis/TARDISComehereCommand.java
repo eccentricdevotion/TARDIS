@@ -80,7 +80,7 @@ public class TARDISComehereCommand {
                 // check the world is not excluded
                 String world = eyeLocation.getWorld().getName();
                 if (!plugin.getConfig().getBoolean("worlds." + world)) {
-                    player.sendMessage(plugin.pluginName + "You cannot bring the TARDIS Police Box to this world");
+                    player.sendMessage(plugin.pluginName + MESSAGE.NO_PB_IN_WORLD.getText());
                     return true;
                 }
                 // check they are a timelord
@@ -88,7 +88,7 @@ public class TARDISComehereCommand {
                 where.put("owner", player.getName());
                 final ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
                 if (!rs.resultSet()) {
-                    player.sendMessage(plugin.pluginName + "You must be the Timelord of the TARDIS to use this command!");
+                    player.sendMessage(plugin.pluginName + MESSAGE.NOT_A_TIMELORD.getText());
                     return true;
                 }
                 final int id = rs.getTardis_id();
@@ -98,7 +98,7 @@ public class TARDISComehereCommand {
                     tcc.getCircuits();
                 }
                 if (tcc != null && !tcc.hasMaterialisation()) {
-                    player.sendMessage(plugin.pluginName + "The Materialisation Circuit is missing from the console!");
+                    player.sendMessage(plugin.pluginName + MESSAGE.NO_MAT_CIRCUIT.getText());
                     return true;
                 }
                 // check they are not in the tardis
@@ -107,7 +107,7 @@ public class TARDISComehereCommand {
                 wherettrav.put("tardis_id", id);
                 ResultSetTravellers rst = new ResultSetTravellers(plugin, wherettrav, false);
                 if (rst.resultSet()) {
-                    player.sendMessage(plugin.pluginName + "You cannot bring the Police Box here because you are inside a TARDIS!");
+                    player.sendMessage(plugin.pluginName + MESSAGE.NO_PB_IN_TARDIS.getText());
                     return true;
                 }
                 if (plugin.inVortex.contains(Integer.valueOf(id))) {

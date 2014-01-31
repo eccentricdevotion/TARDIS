@@ -62,7 +62,7 @@ public class TARDISDirectionCommand {
                 tcc.getCircuits();
             }
             if (tcc != null && !tcc.hasMaterialisation()) {
-                player.sendMessage(plugin.pluginName + "The Materialisation Circuit is missing from the console!");
+                player.sendMessage(plugin.pluginName + MESSAGE.NO_MAT_CIRCUIT.getText());
                 return true;
             }
             int level = rs.getArtron_level();

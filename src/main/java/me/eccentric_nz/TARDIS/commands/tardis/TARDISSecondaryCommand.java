@@ -41,7 +41,7 @@ public class TARDISSecondaryCommand {
         if (player.hasPermission("tardis.update")) {
             String[] validBlockNames = {"button", "world-repeater", "x-repeater", "z-repeater", "y-repeater", "artron", "handbrake", "door", "back"};
             if (args.length < 2) {
-                player.sendMessage(plugin.pluginName + "Too few command arguments!");
+                player.sendMessage(plugin.pluginName + MESSAGE.TOO_FEW_ARGS.getText());
                 return false;
             }
             String tardis_block = args[1].toLowerCase(Locale.ENGLISH);
@@ -53,7 +53,7 @@ public class TARDISSecondaryCommand {
             where.put("owner", player.getName());
             ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
             if (!rs.resultSet()) {
-                player.sendMessage(plugin.pluginName + "You are not a Timelord. You need to create a TARDIS first before using this command!");
+                player.sendMessage(plugin.pluginName + MESSAGE.NOT_A_TIMELORD.getText());
                 return false;
             }
             HashMap<String, Object> wheret = new HashMap<String, Object>();

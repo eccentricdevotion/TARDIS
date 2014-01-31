@@ -42,7 +42,7 @@ public class TARDISUpdateCommand {
         if (player.hasPermission("tardis.update")) {
             String[] validBlockNames = {"advanced", "ars", "artron", "back", "backdoor", "button", "chameleon", "condenser", "creeper", "door", "eps", "farm", "handbrake", "info", "keyboard", "light", "rail", "save-sign", "scanner", "stable", "storage", "temporal", "terminal", "village", "world-repeater", "x-repeater", "y-repeater", "z-repeater", "zero"};
             if (args.length < 2) {
-                player.sendMessage(plugin.pluginName + "Too few command arguments!");
+                player.sendMessage(plugin.pluginName + MESSAGE.TOO_FEW_ARGS.getText());
                 return false;
             }
             String tardis_block = args[1].toLowerCase(Locale.ENGLISH);
@@ -74,7 +74,7 @@ public class TARDISUpdateCommand {
             where.put("owner", player.getName());
             ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
             if (!rs.resultSet()) {
-                player.sendMessage(plugin.pluginName + "You are not a Timelord. You need to create a TARDIS first before using this command!");
+                player.sendMessage(plugin.pluginName + MESSAGE.NOT_A_TIMELORD.getText());
                 return false;
             }
             // must grow a room first

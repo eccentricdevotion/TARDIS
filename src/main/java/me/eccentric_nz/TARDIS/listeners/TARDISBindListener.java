@@ -98,7 +98,7 @@ public class TARDISBindListener implements Listener {
                         if (rs.resultSet()) {
                             String owner = rs.getOwner();
                             if (rs.isIso_on() && !player.getName().equals(owner) && !event.isCancelled()) {
-                                player.sendMessage(plugin.pluginName + "The isomorphic security lockout has been engaged... Hands off the controls!");
+                                player.sendMessage(plugin.pluginName + MESSAGE.ISO_ON.getText());
                                 return;
                             }
                             HashMap<String, Object> whereb = new HashMap<String, Object>();

@@ -21,6 +21,7 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetGravity;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
+import me.eccentric_nz.TARDIS.enumeration.MESSAGE;
 import me.eccentric_nz.TARDIS.rooms.TARDISGravityWellRunnable;
 import org.bukkit.Location;
 import org.bukkit.World;
@@ -189,7 +190,7 @@ public class TARDISGravityWellListener implements Listener {
                 where.put("owner", player.getName());
                 ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
                 if (!rs.resultSet()) {
-                    player.sendMessage(plugin.pluginName + "You are not a Timelord. You need to create a TARDIS first before using this command!");
+                    player.sendMessage(plugin.pluginName + MESSAGE.NOT_A_TIMELORD.getText());
                     return;
                 }
                 int id = rs.getTardis_id();

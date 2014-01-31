@@ -21,6 +21,7 @@ import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetAreas;
+import me.eccentric_nz.TARDIS.enumeration.MESSAGE;
 import org.bukkit.ChatColor;
 import org.bukkit.World;
 import org.bukkit.block.Block;
@@ -64,7 +65,7 @@ public class TARDISAreaCommands implements CommandExecutor {
                 return false;
             }
             if (player == null) {
-                sender.sendMessage(plugin.pluginName + ChatColor.RED + "This command can only be run by a player");
+                sender.sendMessage(plugin.pluginName + ChatColor.RED + MESSAGE.MUST_BE_PLAYER.getText());
                 return false;
             }
             if (args[0].equals("start")) {
