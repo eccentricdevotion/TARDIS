@@ -60,14 +60,13 @@ public class TARDISSonicEntityListener implements Listener {
                 if (ent instanceof Player) {
                     final Player scanned = (Player) ent;
                     plugin.sonicListener.playSonicSound(player, now, 3050L, "sonic_screwdriver");
-                    if (player.hasPermission("tardis.admin") && lore != null && lore.contains("Admin Upgrade")) {
+                    if (player.hasPermission("tardis.sonic.admin") && lore != null && lore.contains("Admin Upgrade")) {
                         player.sendMessage(plugin.pluginName + "Opening player's inventory, please wait...");
                         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
                             @Override
                             public void run() {
                                 Inventory pinv = scanned.getInventory();
                                 ItemStack[] items = pinv.getContents();
-                                plugin.debug("inventory size: " + pinv.getSize());
                                 Inventory menu = plugin.getServer().createInventory(player, pinv.getSize(), "§4" + scanned.getName() + "'s Inventory");
                                 menu.setContents(items);
                                 player.openInventory(menu);

@@ -132,7 +132,7 @@ public class TARDISSonicListener implements Listener {
                                 menu.setContents(items);
                                 player.openInventory(menu);
                             }
-                        }, 40L);
+                        }, 35L);
                         return;
                     }
                     if (player.hasPermission("tardis.sonic.freeze") && lore != null && lore.contains("Bio-scanner Upgrade")) {
