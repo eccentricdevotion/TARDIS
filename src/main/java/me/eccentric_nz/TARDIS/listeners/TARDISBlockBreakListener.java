@@ -18,6 +18,7 @@ package me.eccentric_nz.TARDIS.listeners;
 
 import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.enumeration.MESSAGE;
 import me.eccentric_nz.TARDIS.enumeration.PRESET;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -60,6 +61,12 @@ public class TARDISBlockBreakListener implements Listener {
      */
     @EventHandler(priority = EventPriority.LOW)
     public void onSignBreak(BlockBreakEvent event) {
+        Player player = event.getPlayer();
+        if (plugin.zeroRoomOccupants.contains(player.getName())) {
+            event.setCancelled(true);
+            player.sendMessage(plugin.pluginName + MESSAGE.NOT_IN_ZERO.getText());
+            return;
+        }
         Block block = event.getBlock();
         Material blockType = block.getType();
         if (blockType == Material.WALL_SIGN) {
@@ -71,7 +78,6 @@ public class TARDISBlockBreakListener implements Listener {
             if (sign_lookup.containsKey(line1) && line2.equals(sign_lookup.get(line1))) {
                 event.setCancelled(true);
                 sign.update();
-                Player player = event.getPlayer();
                 if (player.hasPermission("tardis.exterminate")) {
                     final String playerNameStr = player.getName();
                     // check it is their TARDIS

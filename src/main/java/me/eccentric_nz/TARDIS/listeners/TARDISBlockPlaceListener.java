@@ -28,6 +28,7 @@ import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
+import me.eccentric_nz.TARDIS.enumeration.MESSAGE;
 import me.eccentric_nz.TARDIS.enumeration.SCHEMATIC;
 import me.eccentric_nz.TARDIS.utility.TARDISUtils;
 import org.bukkit.ChatColor;
@@ -39,7 +40,6 @@ import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
-import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockPlaceEvent;
 
@@ -85,8 +85,14 @@ public class TARDISBlockPlaceListener implements Listener {
      * @param event a player placing a block
      */
     @SuppressWarnings("deprecation")
-    @EventHandler(priority = EventPriority.MONITOR)
+    @EventHandler
     public void onPlayerBlockPlace(BlockPlaceEvent event) {
+        final Player player = event.getPlayer();
+        if (plugin.zeroRoomOccupants.contains(player.getName())) {
+            event.setCancelled(true);
+            player.sendMessage(plugin.pluginName + MESSAGE.NOT_IN_ZERO.getText());
+            return;
+        }
         Block block = event.getBlockPlaced();
         // only listen for redstone torches
         if (block.getType() == Material.REDSTONE_TORCH_ON) {
@@ -97,7 +103,6 @@ public class TARDISBlockPlaceListener implements Listener {
             // only continue if the redstone torch is placed on top of [JUST ABOUT ANY] BLOCK on top of an IRON/GOLD/DIAMOND_BLOCK
             if (plugin.getBlocksConfig().getStringList("tardis_blocks").contains(blockBelow.getType().toString()) && blocks.contains(blockBottom.getType())) {
                 final SCHEMATIC schm;
-                final Player player = event.getPlayer();
                 int max_count = plugin.getConfig().getInt("creation.count");
                 int player_count = 0;
                 if (max_count > 0) {
