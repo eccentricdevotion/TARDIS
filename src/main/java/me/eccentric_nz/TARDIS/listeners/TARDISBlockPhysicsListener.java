@@ -20,6 +20,7 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
+import org.bukkit.block.BlockState;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -40,7 +41,7 @@ public class TARDISBlockPhysicsListener implements Listener {
     }
 
     // prevent hatches from breaking
-    @EventHandler(priority = EventPriority.HIGH)
+    @EventHandler(priority = EventPriority.LOW)
     public void onBlockPhysics(BlockPhysicsEvent event) {
         if (event.isCancelled()) {
             return;
@@ -48,12 +49,15 @@ public class TARDISBlockPhysicsListener implements Listener {
         if (plugin.inVortex.size() > 0) {
             Block block = event.getBlock();
             if (block != null) {
-                MaterialData md = block.getState().getData();
-                if (md instanceof SimpleAttachableMaterialData) {
-                    Block blockBehind = getBlockBehindAttachable(block, ((SimpleAttachableMaterialData) md).getFacing());
-                    if (blockBehind != null) {
-                        if (blockBehind.getType().equals(Material.GLASS) || blockBehind.getType().equals(Material.ICE) || blockBehind.getType().equals(Material.STAINED_GLASS)) {
-                            event.setCancelled(true);
+                BlockState state = block.getState();
+                if (state != null) {
+                    MaterialData md = state.getData();
+                    if (md instanceof SimpleAttachableMaterialData) {
+                        Block blockBehind = getBlockBehindAttachable(block, ((SimpleAttachableMaterialData) md).getFacing());
+                        if (blockBehind != null) {
+                            if (blockBehind.getType().equals(Material.GLASS) || blockBehind.getType().equals(Material.ICE) || blockBehind.getType().equals(Material.STAINED_GLASS)) {
+                                event.setCancelled(true);
+                            }
                         }
                     }
                 }
