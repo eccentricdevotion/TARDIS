@@ -434,18 +434,22 @@ public class TARDISButtonListener implements Listener {
                                         player.sendMessage(plugin.pluginName + ChatColor.RED + MESSAGE.NOT_ENOUGH_ZERO_ENERGY.getText());
                                         return;
                                     }
-                                    player.sendMessage(plugin.pluginName + "Zero room ready, stand by for transmat...");
                                     final Location zero = plugin.utils.getLocationFromDB(rs.getZero(), 0.0F, 0.0F);
-                                    plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
-                                        @Override
-                                        public void run() {
-                                            new TARDISExteriorRenderer(plugin).transmat(player, COMPASS.SOUTH, zero);
-                                        }
-                                    }, 20L);
-                                    plugin.zeroRoomOccupants.add(player.getName());
-                                    HashMap<String, Object> wherez = new HashMap<String, Object>();
-                                    wherez.put("tardis_id", id);
-                                    qf.alterEnergyLevel("tardis", -zero_amount, wherez, player);
+                                    if (zero != null) {
+                                        player.sendMessage(plugin.pluginName + "Zero room ready, stand by for transmat...");
+                                        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
+                                            @Override
+                                            public void run() {
+                                                new TARDISExteriorRenderer(plugin).transmat(player, COMPASS.SOUTH, zero);
+                                            }
+                                        }, 20L);
+                                        plugin.zeroRoomOccupants.add(player.getName());
+                                        HashMap<String, Object> wherez = new HashMap<String, Object>();
+                                        wherez.put("tardis_id", id);
+                                        qf.alterEnergyLevel("tardis", -zero_amount, wherez, player);
+                                    } else {
+                                        player.sendMessage(plugin.pluginName + "You don't have a Zero room!");
+                                    }
                                     break;
                                 case 17:
                                     // exit zero room
