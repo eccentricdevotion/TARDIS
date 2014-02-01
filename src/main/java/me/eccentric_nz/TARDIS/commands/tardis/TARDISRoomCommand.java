@@ -131,35 +131,49 @@ public class TARDISRoomCommand {
                 wall = rsp.getWall();
                 floor = rsp.getFloor();
             }
+            HashMap<Integer, Integer> item_counts = new HashMap<Integer, Integer>();
             for (Map.Entry<String, Integer> entry : roomBlocks.entrySet()) {
                 String[] block_data = entry.getKey().split(":");
                 int bid = plugin.utils.parseInt(block_data[0]);
                 String mat;
                 String bdata;
+                int block_id;
                 if (hasPrefs && block_data.length == 2 && (block_data[1].equals("1") || block_data[1].equals("8"))) {
                     mat = (block_data[1].equals("1")) ? wall : floor;
                     int[] iddata = plugin.tw.blocks.get(mat);
                     bdata = String.format("%d", iddata[0]);
+                    block_id = iddata[0];
                 } else {
-                    mat = Material.getMaterial(bid).toString();
                     bdata = String.format("%d", bid);
+                    block_id = bid;
                 }
                 int tmp = Math.round((entry.getValue() / 100.0F) * plugin.getConfig().getInt("growth.rooms_condenser_percent"));
                 int required = (tmp > 0) ? tmp : 1;
-                blockIDCount.put(bdata, required);
+                if (blockIDCount.containsKey(bdata)) {
+                    blockIDCount.put(bdata, blockIDCount.get(bdata) + required);
+                } else {
+                    blockIDCount.put(bdata, required);
+                }
+                if (item_counts.containsKey(block_id)) {
+                    item_counts.put(block_id, item_counts.get(block_id) + required);
+                } else {
+                    item_counts.put(block_id, required);
+                }
+            }
+            for (Map.Entry<Integer, Integer> map : item_counts.entrySet()) {
                 HashMap<String, Object> wherec = new HashMap<String, Object>();
                 wherec.put("tardis_id", id);
-                wherec.put("block_data", bdata);
+                wherec.put("block_data", map.getKey());
                 ResultSetCondenser rsc = new ResultSetCondenser(plugin, wherec, false);
                 if (rsc.resultSet()) {
-                    if (rsc.getBlock_count() < required) {
+                    if (rsc.getBlock_count() < map.getValue()) {
                         hasRequired = false;
-                        int diff = required - rsc.getBlock_count();
-                        player.sendMessage(plugin.pluginName + "You need to condense " + diff + " more " + mat + "!");
+                        int diff = map.getValue() - rsc.getBlock_count();
+                        player.sendMessage(plugin.pluginName + "You need to condense " + diff + " more " + Material.getMaterial(map.getKey()).toString() + "!");
                     }
                 } else {
                     hasRequired = false;
-                    player.sendMessage(plugin.pluginName + "You need to condense a minimum of " + required + " " + mat);
+                    player.sendMessage(plugin.pluginName + "You need to condense a minimum of " + map.getValue() + " " + Material.getMaterial(map.getKey()).toString());
                 }
             }
             if (hasRequired == false) {
