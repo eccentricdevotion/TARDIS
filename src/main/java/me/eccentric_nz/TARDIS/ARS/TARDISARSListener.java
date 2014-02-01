@@ -565,7 +565,7 @@ public class TARDISARSListener implements Listener {
                             long period = 2400L * (Math.round(20 / plugin.getConfig().getDouble("growth.room_speed")));
                             long delay = 20L;
                             for (Map.Entry<TARDISARSSlot, TARDISARS> map : tap.getChanged().entrySet()) {
-                                TARDISARSRunnable ar = new TARDISARSRunnable(plugin, map.getKey(), map.getValue(), p);
+                                TARDISARSRunnable ar = new TARDISARSRunnable(plugin, map.getKey(), map.getValue(), p, ids.get(p.getName()));
                                 plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, ar, delay);
                                 delay += period;
                             }
@@ -712,26 +712,34 @@ public class TARDISARSListener implements Listener {
             wall = rsp.getWall();
             floor = rsp.getFloor();
         }
+        HashMap<Integer, Integer> item_counts = new HashMap<Integer, Integer>();
         for (Map.Entry<String, Integer> entry : roomBlocks.entrySet()) {
             String[] block_data = entry.getKey().split(":");
             int bid = plugin.utils.parseInt(block_data[0]);
             String mat;
-            String bdata;
+            int bdata;
             if (hasPrefs && block_data.length == 2 && (block_data[1].equals("1") || block_data[1].equals("8"))) {
                 mat = (block_data[1].equals("1")) ? wall : floor;
                 int[] iddata = plugin.tw.blocks.get(mat);
-                bdata = String.format("%d", iddata[0]);
+                bdata = iddata[0];
             } else {
-                bdata = String.format("%d", bid);
+                bdata = bid;
             }
             int tmp = Math.round((entry.getValue() / 100.0F) * plugin.getConfig().getInt("growth.rooms_condenser_percent"));
             int required = (tmp > 0) ? tmp : 1;
+            if (item_counts.containsKey(bdata)) {
+                item_counts.put(bdata, (item_counts.get(bdata) + required));
+            } else {
+                item_counts.put(bdata, required);
+            }
+        }
+        for (Map.Entry<Integer, Integer> map : item_counts.entrySet()) {
             HashMap<String, Object> wherec = new HashMap<String, Object>();
             wherec.put("tardis_id", ids.get(player));
-            wherec.put("block_data", bdata);
+            wherec.put("block_data", map.getKey());
             ResultSetCondenser rsc = new ResultSetCondenser(plugin, wherec, false);
             if (rsc.resultSet()) {
-                if (rsc.getBlock_count() < required) {
+                if (rsc.getBlock_count() < map.getValue()) {
                     hasRequired = false;
                 }
             } else {

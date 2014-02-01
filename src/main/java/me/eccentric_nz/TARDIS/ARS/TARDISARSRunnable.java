@@ -17,6 +17,7 @@
 package me.eccentric_nz.TARDIS.ARS;
 
 import java.util.HashMap;
+import java.util.Map;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
@@ -39,12 +40,14 @@ public class TARDISARSRunnable implements Runnable {
     private final TARDISARS room;
     private final Player p;
     private int id;
+    private final int tardis_id;
 
-    public TARDISARSRunnable(TARDIS plugin, TARDISARSSlot slot, TARDISARS room, Player p) {
+    public TARDISARSRunnable(TARDIS plugin, TARDISARSSlot slot, TARDISARS room, Player p, int tardis_id) {
         this.plugin = plugin;
         this.slot = slot;
         this.room = room;
         this.p = p;
+        this.tardis_id = tardis_id;
     }
 
     @Override
@@ -97,9 +100,19 @@ public class TARDISARSRunnable implements Runnable {
             TARDISRoomRunnable runnable = new TARDISRoomRunnable(plugin, roomData, p);
             int taskID = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, runnable, delay, delay);
             runnable.setTask(taskID);
+            QueryFactory qf = new QueryFactory(plugin);
+            // remove blocks from condenser table if rooms_require_blocks is true
+            if (plugin.getConfig().getBoolean("growth.rooms_require_blocks")) {
+                HashMap<Integer, Integer> roomBlockCounts = getRoomBlockCounts(room.toString(), p.getName());
+                for (Map.Entry<Integer, Integer> entry : roomBlockCounts.entrySet()) {
+                    HashMap<String, Object> wherec = new HashMap<String, Object>();
+                    wherec.put("tardis_id", tardis_id);
+                    wherec.put("block_data", entry.getKey());
+                    qf.alterCondenserBlockCount(entry.getValue(), wherec);
+                }
+            }
             // take their energy!
             int amount = plugin.getRoomsConfig().getInt("rooms." + whichroom + ".cost");
-            QueryFactory qf = new QueryFactory(plugin);
             HashMap<String, Object> set = new HashMap<String, Object>();
             set.put("owner", p.getName());
             qf.alterEnergyLevel("tardis", -amount, set, p);
@@ -111,5 +124,42 @@ public class TARDISARSRunnable implements Runnable {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    private HashMap<Integer, Integer> getRoomBlockCounts(String room, String player) {
+        HashMap<Integer, Integer> blockIDCount = new HashMap<Integer, Integer>();
+        HashMap<String, Integer> roomBlocks = plugin.roomBlockCounts.get(room);
+        String wall = "ORANGE_WOOL";
+        String floor = "LIGHT_GREY_WOOL";
+        HashMap<String, Object> wherepp = new HashMap<String, Object>();
+        boolean hasPrefs = false;
+        wherepp.put("player", player);
+        ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, wherepp);
+        if (rsp.resultSet()) {
+            hasPrefs = true;
+            wall = rsp.getWall();
+            floor = rsp.getFloor();
+        }
+        for (Map.Entry<String, Integer> entry : roomBlocks.entrySet()) {
+            String[] block_data = entry.getKey().split(":");
+            int bid = plugin.utils.parseInt(block_data[0]);
+            String mat;
+            int bdata;
+            if (hasPrefs && block_data.length == 2 && (block_data[1].equals("1") || block_data[1].equals("8"))) {
+                mat = (block_data[1].equals("1")) ? wall : floor;
+                int[] iddata = plugin.tw.blocks.get(mat);
+                bdata = iddata[0];
+            } else {
+                bdata = bid;
+            }
+            int tmp = Math.round((entry.getValue() / 100.0F) * plugin.getConfig().getInt("growth.rooms_condenser_percent"));
+            int required = (tmp > 0) ? tmp : 1;
+            if (blockIDCount.containsKey(bdata)) {
+                blockIDCount.put(bdata, (blockIDCount.get(bdata) + required));
+            } else {
+                blockIDCount.put(bdata, required);
+            }
+        }
+        return blockIDCount;
     }
 }
