@@ -45,6 +45,7 @@ public class TARDISGiveCommand implements CommandExecutor {
         this.full = this.plugin.getArtronConfig().getInt("full_charge");
         items.put("artron", "");
         items.put("a-circuit", "Server Admin Circuit");
+        items.put("ars-circuit", "TARDIS ARS Circuit");
         items.put("bio-circuit", "Bio-scanner Circuit");
         items.put("biome-disk", "Biome Storage Disk");
         items.put("blank", "Blank Storage Disk");
@@ -82,7 +83,7 @@ public class TARDISGiveCommand implements CommandExecutor {
                 }
                 String item = args[1].toLowerCase();
                 if (!items.containsKey(item)) {
-                    sender.sendMessage(plugin.pluginName + "Unknown item! Try one of: artron|kit|a-circuit|bio-circuit|biome-disk|blank|c-circuit|d-circuit|e-circuit|filter|key|l-circuit|locator|m-circuit|memory-circuit|oscillator|p-circuit|player-disk|preset-disk|r-circuit|remote|s-circuit|scanner-circuit|save-disk|sonic");
+                    sender.sendMessage(plugin.pluginName + "Unknown item! Try one of: artron|kit|a-circuit|ars-circuit|bio-circuit|biome-disk|blank|c-circuit|d-circuit|e-circuit|filter|key|l-circuit|locator|m-circuit|memory-circuit|oscillator|p-circuit|player-disk|preset-disk|r-circuit|remote|s-circuit|scanner-circuit|save-disk|sonic");
                     return true;
                 }
                 if (item.equals("kit")) {
