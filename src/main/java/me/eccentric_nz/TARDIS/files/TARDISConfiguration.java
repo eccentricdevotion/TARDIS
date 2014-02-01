@@ -244,6 +244,7 @@ public class TARDISConfiguration {
         strOptions.put("creation.custom_schematic_seed", "OBSIDIAN");
         strOptions.put("creation.default_world_name", "myridiculouslylongworldnameiscalledcuthbert");
         strOptions.put("creation.gamemode", "survival");
+        strOptions.put("police_box.sign_colour", "WHITE");
         strOptions.put("preferences.difficulty", "hard");
         strOptions.put("preferences.key", "GOLD_NUGGET");
         strOptions.put("storage.database", "sqlite");

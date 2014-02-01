@@ -47,7 +47,7 @@ public class TARDISBlockBreakListener implements Listener {
         int i = 0;
         for (PRESET p : PRESET.values()) {
             if (!p.getFirstLine().isEmpty() && !sign_lookup.containsKey(p.getFirstLine())) {
-                sign_lookup.put(ChatColor.WHITE + p.getFirstLine(), ChatColor.WHITE + p.getSecondLine());
+                sign_lookup.put(getSignColour() + p.getFirstLine(), getSignColour() + p.getSecondLine());
             }
         }
     }
@@ -95,5 +95,16 @@ public class TARDISBlockBreakListener implements Listener {
                 }
             }
         }
+    }
+
+    private ChatColor getSignColour() {
+        ChatColor colour;
+        String cc = plugin.getConfig().getString("police_box.sign_colour");
+        try {
+            colour = ChatColor.valueOf(cc);
+        } catch (IllegalArgumentException e) {
+            colour = ChatColor.WHITE;
+        }
+        return colour;
     }
 }

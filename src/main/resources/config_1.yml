@@ -34,6 +34,7 @@ police_box:
     platform_data: 8
     materialise: true
     confirm_timeout: 15
+    sign_colour: WHITE
 # travel settings
 travel:
     include_default_world: false

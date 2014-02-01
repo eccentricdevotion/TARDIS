@@ -388,7 +388,7 @@ commands:
   tardisroom:
     aliases: troom
     description: Set TARDIS room configuration options, and add new rooms.
-    usage: /<command> add [name] or /<command> [name] [boolean|integer|string] or /<command> blocks [name|save]
+    usage: /<command> add [name] or /<command> [name] [boolean|integer|string] or /<command> blocks [name|save] or /<command> required [room]
     permission: tardis.create
     permission-message: You don't have the permission <permission> to use this command
     add:

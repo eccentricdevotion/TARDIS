@@ -36,6 +36,7 @@ public class TARDISAdminTabComplete implements TabCompleter {
     private final ImmutableList<String> BOOL_SUBS = ImmutableList.of("true", "false");
     private final ImmutableList<String> DB_SUBS = ImmutableList.of("mysql", "sqlite");
     private final ImmutableList<String> CONFIG_SUBS = ImmutableList.of("worlds", "rechargers", "storage", "creation", "police_box", "travel", "preferences", "allow", "growth", "rooms");
+    private final ImmutableList<String> COLOURS = ImmutableList.of("AQUA", "BLACK", "BLUE", "DARK_AQUA", "DARK_BLUE", "DARK_GRAY", "DARK_GREEN", "DARK_PURPLE", "DARK_RED", "GOLD", "GRAY", "GREEN", "LIGHT_PURPLE", "RED", "WHITE", "YELLOW");
 
     public TARDISAdminTabComplete(TARDIS plugin) {
         this.plugin = plugin;
@@ -53,6 +54,9 @@ public class TARDISAdminTabComplete implements TabCompleter {
             }
             if (sub.equals("difficulty")) {
                 return partial(lastArg, DIFFICULTY_SUBS);
+            }
+            if (sub.equals("sign_colour")) {
+                return partial(lastArg, COLOURS);
             }
             if (sub.equals("database")) {
                 return partial(lastArg, DB_SUBS);

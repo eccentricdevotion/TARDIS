@@ -67,6 +67,7 @@ public class TARDISInstaPreset {
     private final byte[] colours;
     private final Random rand;
     private final byte random_colour;
+    private final ChatColor sign_colour;
     private final List<ProblemBlock> do_at_end = new ArrayList<ProblemBlock>();
 
     public TARDISInstaPreset(TARDIS plugin, Location location, PRESET preset, int tid, COMPASS d, String p, boolean mal, int lamp, boolean sub, int cham_id, byte cham_data, boolean rebuild, boolean minecart) {
@@ -86,6 +87,7 @@ public class TARDISInstaPreset {
         colours = new byte[]{0, 1, 2, 3, 4, 5, 6, 9, 10, 11, 12, 13, 14};
         rand = new Random();
         random_colour = colours[rand.nextInt(13)];
+        this.sign_colour = getSignColour();
     }
 
     /**
@@ -340,30 +342,30 @@ public class TARDISInstaPreset {
                             }
                             switch (preset) {
                                 case ANGEL:
-                                    s.setLine(0, ChatColor.WHITE + line1);
-                                    s.setLine(1, ChatColor.WHITE + line2);
-                                    s.setLine(3, ChatColor.WHITE + "TARDIS");
+                                    s.setLine(0, sign_colour + line1);
+                                    s.setLine(1, sign_colour + line2);
+                                    s.setLine(3, sign_colour + "TARDIS");
                                     break;
                                 case APPERTURE:
-                                    s.setLine(1, ChatColor.WHITE + line1);
-                                    s.setLine(2, ChatColor.WHITE + line2);
-                                    s.setLine(3, ChatColor.WHITE + "LAB");
+                                    s.setLine(1, sign_colour + line1);
+                                    s.setLine(2, sign_colour + line2);
+                                    s.setLine(3, sign_colour + "LAB");
                                     break;
                                 case JAIL:
-                                    s.setLine(0, ChatColor.WHITE + line1);
-                                    s.setLine(1, ChatColor.WHITE + line2);
-                                    s.setLine(3, ChatColor.WHITE + "CAPTURE");
+                                    s.setLine(0, sign_colour + line1);
+                                    s.setLine(1, sign_colour + line2);
+                                    s.setLine(3, sign_colour + "CAPTURE");
                                     break;
                                 case THEEND:
-                                    s.setLine(1, ChatColor.WHITE + line1);
-                                    s.setLine(2, ChatColor.WHITE + line2);
-                                    s.setLine(3, ChatColor.WHITE + "HOT ROD");
+                                    s.setLine(1, sign_colour + line1);
+                                    s.setLine(2, sign_colour + line2);
+                                    s.setLine(3, sign_colour + "HOT ROD");
                                     break;
                                 case CUSTOM:
                                     break;
                                 default:
-                                    s.setLine(1, ChatColor.WHITE + line1);
-                                    s.setLine(2, ChatColor.WHITE + line2);
+                                    s.setLine(1, sign_colour + line1);
+                                    s.setLine(2, sign_colour + line2);
                                     break;
                             }
                             s.update();
@@ -459,5 +461,16 @@ public class TARDISInstaPreset {
         public byte getData() {
             return data;
         }
+    }
+
+    private ChatColor getSignColour() {
+        ChatColor colour;
+        String cc = plugin.getConfig().getString("police_box.sign_colour");
+        try {
+            colour = ChatColor.valueOf(cc);
+        } catch (IllegalArgumentException e) {
+            colour = ChatColor.WHITE;
+        }
+        return colour;
     }
 }

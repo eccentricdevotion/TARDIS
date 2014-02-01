@@ -75,6 +75,7 @@ public class TARDISAdminCommands implements CommandExecutor {
         firstsStr.put("purge", "");
         firstsStr.put("recharger", "");
         firstsStr.put("reload", "");
+        firstsStr.put("sign_colour", "police_box");
         firstsStrArtron.add("full_charge_item");
         firstsStrArtron.add("jettison_seed");
         // boolean
@@ -197,6 +198,9 @@ public class TARDISAdminCommands implements CommandExecutor {
                         return true;
                     }
                     plugin.getConfig().set("database", dbtype);
+                }
+                if (first.equals("sign_colour")) {
+                    return new TARDISSignColourCommand(plugin).setColour(sender, args);
                 }
                 if (first.equals("make_preset")) {
                     return new TARDISMakePresetCommand(plugin).scanBlocks(sender, args);
