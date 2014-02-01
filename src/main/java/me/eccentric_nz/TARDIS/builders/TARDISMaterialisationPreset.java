@@ -536,7 +536,11 @@ public class TARDISMaterialisationPreset implements Runnable {
                                             int[] finalids = column.getId()[n];
                                             byte[] finaldatas = column.getData()[n];
                                             if (finalids[yy] == 35 || finalids[yy] == 95 || finalids[yy] == 159 || finalids[yy] == 160 || finalids[yy] == 171) {
-                                                chad = finaldatas[yy];
+                                                if (preset.equals(PRESET.NEW) || preset.equals(PRESET.OLD)) {
+                                                    chad = cham_data;
+                                                } else {
+                                                    chad = finaldatas[yy];
+                                                }
                                             } else {
                                                 chad = plugin.lookup.getStain().get(cham_id);
                                             }
