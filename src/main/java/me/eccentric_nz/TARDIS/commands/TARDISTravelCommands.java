@@ -133,7 +133,7 @@ public class TARDISTravelCommands implements CommandExecutor {
                     player.sendMessage(plugin.pluginName + ChatColor.RED + " Notice:" + ChatColor.RESET + " Your travel has been restricted to the [" + permArea + "] area!");
                     Location l = plugin.ta.getNextSpot(permArea);
                     if (l == null) {
-                        player.sendMessage(plugin.pluginName + "All available parking spots are taken in this area!");
+                        player.sendMessage(plugin.pluginName + MESSAGE.NO_MORE_SPOTS.getText());
                         return true;
                     }
                     set.put("world", l.getWorld().getName());
@@ -389,7 +389,7 @@ public class TARDISTravelCommands implements CommandExecutor {
                         }
                         Location l = plugin.ta.getNextSpot(rsa.getArea_name());
                         if (l == null) {
-                            sender.sendMessage(plugin.pluginName + "All available parking spots are taken in this area!");
+                            sender.sendMessage(plugin.pluginName + MESSAGE.NO_MORE_SPOTS.getText());
                             return true;
                         }
                         set.put("world", l.getWorld().getName());

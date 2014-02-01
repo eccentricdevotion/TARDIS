@@ -111,7 +111,7 @@ public class TARDISRoomCommands implements CommandExecutor {
                     return true;
                 } else {
                     if (!rooms.contains(name)) {
-                        sender.sendMessage(plugin.pluginName + "Could not find a room with that name");
+                        sender.sendMessage(plugin.pluginName + MESSAGE.COULD_NOT_FIND_ROOM.getText());
                         return true;
                     }
                     HashMap<String, Integer> blockIDs = plugin.roomBlockCounts.get(name);
@@ -157,7 +157,7 @@ public class TARDISRoomCommands implements CommandExecutor {
                 String name = args[1].toUpperCase(Locale.ENGLISH);
                 Set<String> rooms = plugin.getRoomsConfig().getConfigurationSection("rooms").getKeys(false);
                 if (!rooms.contains(name)) {
-                    sender.sendMessage(plugin.pluginName + "Could not find a room with that name!");
+                    sender.sendMessage(plugin.pluginName + MESSAGE.COULD_NOT_FIND_ROOM.getText());
                     return true;
                 }
                 HashMap<String, Integer> blockIDs = plugin.roomBlockCounts.get(name);
@@ -262,7 +262,7 @@ public class TARDISRoomCommands implements CommandExecutor {
                 // check they have specified a valid room
                 String name = args[0].toUpperCase(Locale.ENGLISH);
                 if (!plugin.getRoomsConfig().contains("rooms." + name)) {
-                    sender.sendMessage(plugin.pluginName + "Could not find a room by that name!");
+                    sender.sendMessage(plugin.pluginName + MESSAGE.COULD_NOT_FIND_ROOM.getText());
                     return false;
                 }
                 String option = args[1].toLowerCase(Locale.ENGLISH);

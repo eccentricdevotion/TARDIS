@@ -88,7 +88,7 @@ public class TARDISGiveCommand implements CommandExecutor {
                 if (item.equals("kit")) {
                     Player p = plugin.getServer().getPlayer(args[0]);
                     if (p == null) { // player must be online
-                        sender.sendMessage(plugin.pluginName + "Could not find a player with that name!");
+                        sender.sendMessage(plugin.pluginName + MESSAGE.COULD_NOT_FIND_NAME.getText());
                         return true;
                     }
                     if (!plugin.getKitsConfig().contains("kits." + args[2])) {
@@ -116,14 +116,14 @@ public class TARDISGiveCommand implements CommandExecutor {
                 }
                 if (item.equals("artron")) {
                     if (plugin.getServer().getOfflinePlayer(args[0]) == null) {
-                        sender.sendMessage(plugin.pluginName + "Could not find a player with that name!");
+                        sender.sendMessage(plugin.pluginName + MESSAGE.COULD_NOT_FIND_NAME.getText());
                         return true;
                     }
                     return this.giveArtron(sender, args[0], amount);
                 } else {
                     Player p = plugin.getServer().getPlayer(args[0]);
                     if (p == null) { // player must be online
-                        sender.sendMessage(plugin.pluginName + "Could not find a player with that name!");
+                        sender.sendMessage(plugin.pluginName + MESSAGE.COULD_NOT_FIND_NAME.getText());
                         return true;
                     }
                     return this.giveItem(sender, item, amount, p);

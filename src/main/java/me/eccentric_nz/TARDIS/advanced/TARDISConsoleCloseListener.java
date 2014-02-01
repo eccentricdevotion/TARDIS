@@ -142,7 +142,7 @@ public class TARDISConsoleCloseListener implements Listener {
                                         }
                                         Location l = plugin.ta.getNextSpot(rsa.getArea_name());
                                         if (l == null) {
-                                            p.sendMessage(plugin.pluginName + "All available parking spots are taken in this area!");
+                                            p.sendMessage(plugin.pluginName + MESSAGE.NO_MORE_SPOTS.getText());
                                             continue;
                                         }
                                         set_next.put("world", l.getWorld().getName());

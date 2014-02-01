@@ -165,7 +165,7 @@ public class TARDISButtonListener implements Listener {
                                         player.sendMessage(plugin.pluginName + ChatColor.RED + " Notice:" + ChatColor.RESET + " Your travel has been restricted to the [" + permArea + "] area!");
                                         Location l = plugin.ta.getNextSpot(permArea);
                                         if (l == null) {
-                                            player.sendMessage(plugin.pluginName + "All available parking spots are taken in this area!");
+                                            player.sendMessage(plugin.pluginName + MESSAGE.NO_MORE_SPOTS.getText());
                                         } else {
                                             set.put("world", l.getWorld().getName());
                                             set.put("x", l.getBlockX());

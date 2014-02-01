@@ -20,6 +20,7 @@ import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
+import me.eccentric_nz.TARDIS.enumeration.MESSAGE;
 import me.eccentric_nz.TARDIS.travel.TARDISSaveSignInventory;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
@@ -70,7 +71,7 @@ public class TARDISAreaSignListener implements Listener {
                         String area = im.getDisplayName();
                         Location l = plugin.ta.getNextSpot(area);
                         if (l == null) {
-                            player.sendMessage(plugin.pluginName + "All available parking spots are taken in this area!");
+                            player.sendMessage(plugin.pluginName + MESSAGE.NO_MORE_SPOTS.getText());
                             close(player);
                             return;
                         }

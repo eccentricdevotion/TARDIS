@@ -178,7 +178,7 @@ public class TARDISBindCommands implements CommandExecutor {
                     if (p == null) {
                         OfflinePlayer offp = plugin.getServer().getOfflinePlayer(args[1]);
                         if (offp == null) {
-                            sender.sendMessage(plugin.pluginName + "Could not find a player with that name on this server!");
+                            sender.sendMessage(plugin.pluginName + MESSAGE.COULD_NOT_FIND_NAME.getText());
                             return true;
                         }
                     }
