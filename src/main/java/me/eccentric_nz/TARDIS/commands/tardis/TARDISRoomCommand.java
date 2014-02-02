@@ -58,13 +58,8 @@ public class TARDISRoomCommand {
             buf.append(rl).append(", ");
         }
         String roomlist = buf.toString().substring(0, buf.length() - 2);
-        if (room.equals("HELP")) {
-            player.sendMessage(plugin.pluginName + "There are currently " + plugin.tardisCommand.roomArgs.size() + " room types! They are: " + roomlist + ".");
-            player.sendMessage("View a TARDIS room gallery at http://eccentricdevotion.github.com/TARDIS/room-gallery.html");
-            return true;
-        }
-        if (!plugin.tardisCommand.roomArgs.contains(room)) {
-            player.sendMessage(plugin.pluginName + "That is not a valid room type! Try one of: " + roomlist + ".");
+        if (room.equals("HELP") || !plugin.tardisCommand.roomArgs.contains(room)) {
+            new TARDISRoomLister(plugin, player).list();
             return true;
         }
         String perm = "tardis.room." + args[1].toLowerCase(Locale.ENGLISH);

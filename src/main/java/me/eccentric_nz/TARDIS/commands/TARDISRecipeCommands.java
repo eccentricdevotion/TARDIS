@@ -65,7 +65,7 @@ public class TARDISRecipeCommands implements CommandExecutor {
         firstArgs.add("l-circuit"); // Locator Circuit
         firstArgs.add("locator"); // TARDIS Locator
         firstArgs.add("m-circuit"); // Materialisation Circuit
-        firstArgs.add("mem-circuit"); // Memory Circuit
+        firstArgs.add("memory-circuit"); // Memory Circuit
         firstArgs.add("oscillator"); // Sonic Oscillator
         firstArgs.add("p-circuit"); // Perception Circuit
         firstArgs.add("player-disk"); // Player Storage Disk
@@ -74,7 +74,7 @@ public class TARDISRecipeCommands implements CommandExecutor {
         firstArgs.add("remote"); // Stattenheim Remote
         firstArgs.add("s-circuit"); // Stattenheim Circuit
         firstArgs.add("save-disk"); // Save Storage Disk
-        firstArgs.add("scan-circuit"); // Scanner Circuit
+        firstArgs.add("scanner-circuit"); // Scanner Circuit
         firstArgs.add("sonic"); // Sonic Screwdriver
         firstArgs.add("t-circuit"); // Temporal Circuit
     }
@@ -91,15 +91,19 @@ public class TARDISRecipeCommands implements CommandExecutor {
                 player = (Player) sender;
             }
             if (player == null) {
-                sender.sendMessage(plugin.pluginName + MESSAGE.MUST_BE_PLAYER.getText());
-                return false;
+                if (!firstArgs.contains(args[0].toLowerCase(Locale.ENGLISH))) {
+                    new TARDISRecipeLister(plugin, sender).list();
+                } else {
+                    sender.sendMessage(plugin.pluginName + MESSAGE.MUST_BE_PLAYER.getText());
+                }
+                return true;
             }
             if (args.length < 1) {
                 sender.sendMessage(plugin.pluginName + MESSAGE.TOO_FEW_ARGS.getText());
                 return false;
             }
             if (!firstArgs.contains(args[0].toLowerCase(Locale.ENGLISH))) {
-                sender.sendMessage(plugin.pluginName + "That is not a valid recipe name! Try one of: a-circuit|ars-circuit|bio-circuit|biome-disk|blank|c-circuit|cell|d-circuit|e-circuit|filter|i-circuit|key|l-circuit|locator|m-circuit|mem-circuit|oscillator|player-disk|preset-disk|p-circuit|r-circuit|remote|s-circuit|save-disk|scan-circuit|sonic|t-circuit");
+                new TARDISRecipeLister(plugin, sender).list();
                 return true;
             }
             if (args[0].equalsIgnoreCase("a-circuit")) {
@@ -162,7 +166,7 @@ public class TARDISRecipeCommands implements CommandExecutor {
                 this.showShapedRecipe(player, "TARDIS Materialisation Circuit");
                 return true;
             }
-            if (args[0].equalsIgnoreCase("mem-circuit")) {
+            if (args[0].equalsIgnoreCase("memory-circuit")) {
                 this.showShapedRecipe(player, "TARDIS Memory Circuit");
                 return true;
             }
@@ -198,7 +202,7 @@ public class TARDISRecipeCommands implements CommandExecutor {
                 this.showShapelessRecipe(player, "Save Storage Disk");
                 return true;
             }
-            if (args[0].equalsIgnoreCase("scan-circuit")) {
+            if (args[0].equalsIgnoreCase("scanner-circuit")) {
                 this.showShapedRecipe(player, "TARDIS Scanner Circuit");
                 return true;
             }

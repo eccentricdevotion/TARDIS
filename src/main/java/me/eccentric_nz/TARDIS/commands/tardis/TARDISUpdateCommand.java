@@ -47,8 +47,8 @@ public class TARDISUpdateCommand {
             }
             String tardis_block = args[1].toLowerCase(Locale.ENGLISH);
             if (!Arrays.asList(validBlockNames).contains(tardis_block)) {
-                player.sendMessage(plugin.pluginName + "That is not a valid TARDIS block name! Try one of : door|button|world-repeater|x-repeater|z-repeater|y-repeater|chameleon|save-sign|artron|handbrake|condenser|scanner|backdoor|keyboard|creeper|eps|back|terminal|ars|temporal|light|farm|stable|rail|info|village|zero");
-                return false;
+                new TARDISUpdateLister(plugin, player).list();
+                return true;
             }
             if (tardis_block.equals("advanced") && !player.hasPermission("tardis.advanced")) {
                 player.sendMessage(plugin.pluginName + "You do not have permission to create an Advanced Console!");

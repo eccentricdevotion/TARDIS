@@ -54,6 +54,7 @@ public class TARDISGiveCommand implements CommandExecutor {
         items.put("d-circuit", "Diamond Disruptor Circuit");
         items.put("e-circuit", "Emerald Environment Circuit");
         items.put("filter", "Perception Filter");
+        items.put("i-circuit", "TARDIS Input Circuit");
         items.put("key", "TARDIS Key");
         items.put("kit", "TARDIS Item Kit");
         items.put("l-circuit", "TARDIS Locator Circuit");
@@ -70,6 +71,7 @@ public class TARDISGiveCommand implements CommandExecutor {
         items.put("scanner-circuit", "TARDIS Scanner Circuit");
         items.put("save-disk", "Save Storage Disk");
         items.put("sonic", "Sonic Screwdriver");
+        items.put("t-circuit", "TARDIS Temporal Circuit");
     }
 
     @Override
@@ -77,13 +79,17 @@ public class TARDISGiveCommand implements CommandExecutor {
         // If the player typed /tardisgive then do the following...
         if (cmd.getName().equalsIgnoreCase("tardisgive")) {
             if (sender instanceof ConsoleCommandSender || sender.hasPermission("tardis.admin")) {
+                if (args.length == 1 && args[0].equalsIgnoreCase("list")) {
+                    new TARDISGiveLister(plugin, sender).list();
+                    return true;
+                }
                 if (args.length < 3) {
                     sender.sendMessage(plugin.pluginName + MESSAGE.TOO_FEW_ARGS.getText() + " /tardisgive [player] [item] [amount]");
                     return true;
                 }
                 String item = args[1].toLowerCase();
                 if (!items.containsKey(item)) {
-                    sender.sendMessage(plugin.pluginName + "Unknown item! Try one of: artron|kit|a-circuit|ars-circuit|bio-circuit|biome-disk|blank|c-circuit|d-circuit|e-circuit|filter|key|l-circuit|locator|m-circuit|memory-circuit|oscillator|p-circuit|player-disk|preset-disk|r-circuit|remote|s-circuit|scanner-circuit|save-disk|sonic");
+                    new TARDISGiveLister(plugin, sender).list();
                     return true;
                 }
                 if (item.equals("kit")) {
