@@ -92,6 +92,7 @@ public class TARDISScannerListener implements Listener {
                 ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
                 if (rs.resultSet()) {
                     final int id = rs.getTardis_id();
+                    int level = rs.getArtron_level();
                     TARDISCircuitChecker tcc = null;
                     if (plugin.getConfig().getString("preferences.difficulty").equals("hard")) {
                         tcc = new TARDISCircuitChecker(plugin, id);
@@ -232,13 +233,18 @@ public class TARDISScannerListener implements Listener {
                         extrend = rsp.isRendererOn();
                     }
                     if (!renderer.isEmpty() && extrend) {
-                        bsched.scheduleSyncDelayedTask(plugin, new Runnable() {
-                            @Override
-                            public void run() {
-                                TARDISExteriorRenderer ter = new TARDISExteriorRenderer(plugin);
-                                ter.render(renderer, scan_loc, id, player, tardisDirection, time, biome);
-                            }
-                        }, 160L);
+                        int required = plugin.getArtronConfig().getInt("render");
+                        if (level > required) {
+                            bsched.scheduleSyncDelayedTask(plugin, new Runnable() {
+                                @Override
+                                public void run() {
+                                    TARDISExteriorRenderer ter = new TARDISExteriorRenderer(plugin);
+                                    ter.render(renderer, scan_loc, id, player, tardisDirection, time, biome);
+                                }
+                            }, 160L);
+                        } else {
+                            player.sendMessage(plugin.pluginName + "You don't have enough Artron Energy to enter the Exterior Rendering Room!");
+                        }
                     }
                 }
             }
