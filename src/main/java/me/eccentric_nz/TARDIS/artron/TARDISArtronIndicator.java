@@ -96,7 +96,6 @@ public class TARDISArtronIndicator {
                     plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
                         @Override
                         public void run() {
-                            //p.setScoreboard(manager.getNewScoreboard());
                             p.setScoreboard(currentScoreboard);
                         }
                     }, 150L);

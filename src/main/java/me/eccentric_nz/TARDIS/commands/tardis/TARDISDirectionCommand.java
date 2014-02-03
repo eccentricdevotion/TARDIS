@@ -115,17 +115,20 @@ public class TARDISDirectionCommand {
                 }
                 plugin.destroyerP.destroyDoor(id);
                 plugin.destroyerP.destroySign(l, old_d, demat);
+                plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
+                    @Override
+                    public void run() {
+                        plugin.builderP.buildPreset(id, l, d, cham, player, true, false, rsc.isSubmarine());
+                    }
+                }, 10L);
             }
-            plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
-                @Override
-                public void run() {
-                    plugin.builderP.buildPreset(id, l, d, cham, player, true, false, rsc.isSubmarine());
-                }
-            }, 10L);
             HashMap<String, Object> wherea = new HashMap<String, Object>();
             wherea.put("tardis_id", id);
             qf.alterEnergyLevel("tardis", -amount, wherea, player);
             new TARDISArtronIndicator(plugin).showArtronLevel(player, id, true, amount);
+            if (hid) {
+                player.sendMessage(plugin.pluginName + "Direction changed.");
+            }
             return true;
         } else {
             player.sendMessage(plugin.pluginName + MESSAGE.NO_PERMS.getText());
